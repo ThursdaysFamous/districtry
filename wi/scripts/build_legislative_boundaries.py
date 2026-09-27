@@ -119,13 +119,26 @@ others cannot:
                         is gone rather than a chord cut across a corner, and
                         pooling the two makes the ceiling a function of the
                         smallest ring in the state.
-  * check_dropped_rings()
-                     -- every ring check_fidelity set aside must be declared in
-                        ACCEPTED_DROPPED_RINGS, every declaration must still be
-                        found, and each one's reader answers are VERIFIED by
-                        placing a point inside the ring and asking both feature
-                        sets which districts contain it. Wisconsin is the first
-                        instance in the fleet where a ring went at all.
+  * dropped_rings.check()
+                     -- every ring whose loss costs a reader the right answer
+                        must be declared in ACCEPTED_DROPPED_RINGS, every
+                        declaration must still be found, and each one's reader
+                        answers are VERIFIED by placing a point inside the ring
+                        and asking both feature sets which districts contain it.
+                        Wisconsin is the first instance in the fleet where a ring
+                        went at all.
+
+                        IT IS THE SHARED MODULE SINCE 2026-09-27, not this
+                        builder's own gate. `wi/scripts/dropped_rings.py` was
+                        lifted out of here for the supervisory layer, which drops
+                        402 rings against this family's one, and this builder then
+                        kept a hand-written copy of the same question for a day.
+                        Two readers of one question is where this fleet's
+                        recurring defect starts, and the module's own fixture
+                        selftest is a gate in CI where the copy here was exercised
+                        only by an operator build. It decides the dropped set ONCE
+                        for both gates: check_fidelity() is handed the signatures
+                        rather than re-deriving them from its own threshold.
 If any gate fails, nothing is written.
 
 `--check` IS THE CI GATE, and it closes the gap the change that added these gates
@@ -159,6 +172,8 @@ import random
 import subprocess
 import sys
 import tempfile
+
+import dropped_rings as drings
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
@@ -260,22 +275,12 @@ SIMPLIFY = ["dp", "keep-shapes", "interval=7"]
 # the measurement the setting rests on (ACCEPTED_DROPPED_RINGS below).
 FIDELITY_MAX_M = 15.0
 
-# A SOURCE RING COUNTS AS DROPPED when none of its own vertices survived, and
-# this is the threshold for "survived", in metres. Simplification KEEPS a subset
-# of the source vertices, so a retained ring holds at least one of its own
-# exactly and its minimum distance to the drawn line is 0 up to floating point;
-# a dropped ring has every vertex off that line. 1 m is far above the float
-# noise and far below any real stray.
-#
-# The one way this reads wrong is safe: a dropped ring lying exactly on ANOTHER
-# ring's drawn line would measure as retained, and its stray would then be held
-# to FIDELITY_MAX_M -- stricter than the declaration table, never looser.
-RETAINED_RING_M = 1.0
-
-# How close a dropped ring's centre must be to a declared one to be the same
-# ring, in metres, and how far its area may differ.
-RING_MATCH_M = 25.0
-RING_MATCH_AREA = 0.10
+# THE DROPPED-RING THRESHOLDS ARE THE SHARED MODULE'S, NOT A SECOND COPY.
+# `dropped_rings.RETAINED_RING_M` is the distance at which a source vertex counts
+# as having survived, `RING_MATCH_M` and `RING_MATCH_AREA` are how close a dropped
+# ring must be to a declared one to be the same ring. They lived here as well
+# until 2026-09-27, which is the two-readers shape this repo keeps paying for: two
+# files agreeing about a threshold by coincidence rather than by construction.
 
 # Rings the simplifier drops, declared one by one. THE CEILING ABOVE IS MEASURED
 # ON RETAINED RINGS ONLY, because a dropped ring is a different failure: it is a
@@ -304,6 +309,22 @@ RING_MATCH_AREA = 0.10
 # every other ring is eligible for removal like any other geometry. Any state
 # whose districts carry islands or shoreline slivers must measure rings rather
 # than features.
+# Holes that no district covered and the drawn output now fills. They are NOT
+# declared one by one -- see `dropped_rings.check` -- but the COUNT is held
+# exactly, so a rebuild that starts closing a different number of them stops and
+# gets read.
+#
+# ZERO, AND THAT IS A MEASUREMENT RATHER THAN AN OMISSION. Measured 2026-09-27 on
+# the TIGERweb source both chambers carry, against the shipped files (which the
+# same pipeline reproduces byte for byte): the whole family drops exactly ONE
+# ring statewide, the Door County one declared below, and closes no coverage gap
+# anywhere. The supervisory layer at the same threshold closes 229, which is the
+# difference between a state-published district map and a county-by-county
+# dissolve: TIGER's chambers tile Wisconsin with one water pseudo-district per
+# chamber and carry no slivers between neighbours, so there are no uncovered
+# holes for simplification to fill.
+GAP_CLOSED = 0
+
 ACCEPTED_DROPPED_RINGS = [
     {
         # A 31.7 m2 outer ring -- a separate PART of district 1, not a hole -- on
@@ -339,6 +360,17 @@ ACCEPTED_DROPPED_RINGS = [
         # coarser also lose -- but the WATER half of that sentence does not, and
         # the dry-land reading makes this declaration matter MORE rather than
         # less: it is ground a person can stand on.
+        #
+        # THE CORRECTION MISSED THIS ENTRY'S OWN `why` FIELD FOR A DAY, and how
+        # is worth more than the fact. Three copies of the false claim were found
+        # and fixed on 2026-09-26 by grepping for "open Lake Michigan"; the
+        # fourth was in the `why` below, where the string is split across a line
+        # break as "open Lake " / "Michigan on the", so the phrase matches no
+        # line and grep reported the file clean. A LINE-BASED SEARCH CANNOT FIND
+        # A WRAPPED STRING: when sweeping a claim out of a tree, grep for the
+        # shortest single-line fragment ("Lake Michigan", "open Lake") or read
+        # the declarations, and never take a zero from a phrase long enough to
+        # wrap as evidence of absence.
         "lat": 45.41074, "lng": -86.85963, "verts": 6, "m2": 31.7,
         # A point PROVABLY INSIDE the ring, measured at build time and re-used by
         # `--check`, which has no source to scan. Six decimals: the sixth is about
@@ -348,15 +380,21 @@ ACCEPTED_DROPPED_RINGS = [
         # 3.91 m, comparable to this ring's half-width. The unrounded centroid
         # (45.410745,-86.859628) is inside; the ROUNDED one is not, which is the
         # whole of the mistake this entry corrects.
-        "interior": {"lat": 45.410736, "lng": -86.859659},
+        "interior": {"lat": 45.410736, "lng": -86.859659, "decimals": 6},
         "features": ["wi-assembly:1", "wi-assembly:State House Districts not defined",
                      "wi-senate:1", "wi-senate:State Senate Districts not defined"],
+        # THE MEASURED CLASS, not a label: the reader is told a DIFFERENT district
+        # rather than none, so this is `wrong-name`. `dropped_rings.check` compares
+        # it against what it computed and fails on a mismatch, which is what stops
+        # a declaration describing the wrong harm.
+        "kind": "wrong-name",
         "answer_before": {"wi-senate": ["1"], "wi-assembly": ["1"]},
         "answer_after": {"wi-senate": ["State Senate Districts not defined"],
                          "wi-assembly": ["State House Districts not defined"]},
-        "why": "no dp interval from 4 to 15 retains it; 31.7 m2 of open Lake "
-               "Michigan on the Michigan water line, and the reader answers it "
-               "does move are recorded above rather than claimed harmless",
+        "why": "no dp interval from 4 to 15 retains it; 31.7 m2 on Washington "
+               "Island, dry land by TIGER's own hydrography, and the reader "
+               "answers it does move are recorded above rather than claimed "
+               "harmless",
         "date": "2026-09-26",
     },
 ]
@@ -480,117 +518,9 @@ def check_nesting(built):
     return True, "%d pairing(s) share every boundary vertex exactly" % checked
 
 
-# --- the fidelity gate: how far the TRUE line strays from the drawn one -----
-def _mscale(lat):
-    return (111320.0 * math.cos(math.radians(lat)), 110540.0)
-
-
-def _seg_dist_m(p, a, b, sx, sy):
-    px, py = p[0] * sx, p[1] * sy
-    ax, ay = a[0] * sx, a[1] * sy
-    bx, by = b[0] * sx, b[1] * sy
-    dx, dy = bx - ax, by - ay
-    d2 = dx * dx + dy * dy
-    if d2 == 0:
-        return math.hypot(px - ax, py - ay)
-    t = ((px - ax) * dx + (py - ay) * dy) / d2
-    t = 0.0 if t < 0 else (1.0 if t > 1 else t)
-    return math.hypot(px - (ax + t * dx), py - (ay + t * dy))
-
-
-def _rings(geom):
-    if geom["type"] == "Polygon":
-        return list(geom["coordinates"])
-    if geom["type"] == "MultiPolygon":
-        return [r for poly in geom["coordinates"] for r in poly]
-    return []
-
-
-def _index_segments(rings, cell=0.01):
-    grid = {}
-    for r in rings:
-        for i in range(len(r) - 1):
-            a, b = (r[i][0], r[i][1]), (r[i + 1][0], r[i + 1][1])
-            x0, x1 = sorted((a[0], b[0]))
-            y0, y1 = sorted((a[1], b[1]))
-            for gx in range(int(math.floor(x0 / cell)), int(math.floor(x1 / cell)) + 1):
-                for gy in range(int(math.floor(y0 / cell)), int(math.floor(y1 / cell)) + 1):
-                    grid.setdefault((gx, gy), []).append((a, b))
-    return grid, cell
-
-
-def _dist_to_drawn(p, grid, cell, sx, sy):
-    gx, gy = int(math.floor(p[0] / cell)), int(math.floor(p[1] / cell))
-    best = float("inf")
-    rad = 0
-    while rad <= 4:
-        for i in range(gx - rad, gx + rad + 1):
-            for j in range(gy - rad, gy + rad + 1):
-                if rad and abs(i - gx) != rad and abs(j - gy) != rad:
-                    continue
-                for a, b in grid.get((i, j), ()):
-                    d = _seg_dist_m(p, a, b, sx, sy)
-                    if d < best:
-                        best = d
-        # one band past the first hit, so a nearer segment just outside the
-        # band that produced it cannot be missed
-        if best < float("inf") and rad >= 1:
-            break
-        rad += 1
-    return best
-
-
-def _ring_centre(ring):
-    """The mean of a ring's DISTINCT vertices, as (lng, lat).
-
-    Stated rather than left to a library so a declared centre is reproducible:
-    the closing vertex repeats the first, and including it pulls the mean.
-    """
-    pts = ring[:-1] if len(ring) > 1 and ring[0] == ring[-1] else ring
-    return (sum(p[0] for p in pts) / len(pts), sum(p[1] for p in pts) / len(pts))
-
-
-def _ring_verts(ring):
-    """A ring's DISTINCT vertex count — the closing repeat is not a vertex."""
-    return len(ring) - 1 if len(ring) > 1 and ring[0] == ring[-1] else len(ring)
-
-
-def _ring_area_m2(ring):
-    """Shoelace area in square metres, on the local metre scaling.
-
-    These rings are metres across, so a flat approximation at the ring's own
-    latitude is exact to far more precision than the declaration needs.
-    """
-    sx, sy = _mscale(ring[0][1])
-    a = 0.0
-    for i in range(len(ring) - 1):
-        a += (ring[i][0] * sx) * (ring[i + 1][1] * sy) - (ring[i + 1][0] * sx) * (ring[i][1] * sy)
-    return abs(a) / 2.0
-
-
-def _ring_interior_point(ring):
-    """A point provably inside the ring, or None.
-
-    A centroid can fall outside a concave ring, so this scans a grid across the
-    ring's own bounding box and returns the first point the even-odd test puts
-    inside. A ring too thin for the finest grid returns None, which the caller
-    reports rather than guessing at.
-    """
-    xs = [p[0] for p in ring]
-    ys = [p[1] for p in ring]
-    for n in (7, 15, 31, 63):
-        for i in range(1, n):
-            for j in range(1, n):
-                pt = (min(xs) + (max(xs) - min(xs)) * i / n,
-                      min(ys) + (max(ys) - min(ys)) * j / n)
-                if _point_in_ring(pt, ring):
-                    return pt
-    return None
-
-
-def check_fidelity(source_features, drawn_features, limit=None):
+def check_fidelity(source_features, drawn_features, dropped_sigs, limit=None):
     """No point on a RETAINED ring of the TRUE boundary may lie further than
-    `limit` from the drawn line. Returns (ok, message, dropped_rings).
+    `limit` from the drawn line. Returns (ok, message).
 
     The direction matters and the obvious one gates nothing: simplification KEEPS
     a subset of the source vertices, so every drawn vertex already sits on the
@@ -601,39 +531,38 @@ def check_fidelity(source_features, drawn_features, limit=None):
     AND IT MEASURES IT ON RETAINED RINGS ONLY. A ring none of whose own vertices
     survived is not a stray the interval controls -- it is a shape that is gone,
     and pooling the two makes this ceiling a function of the smallest ring in the
-    state (see RETAINED_RING_M and ACCEPTED_DROPPED_RINGS). The dropped rings are
-    returned rather than swallowed, and check_dropped_rings() is what holds them
-    to their declarations.
+    state (see ACCEPTED_DROPPED_RINGS).
+
+    WHICH RINGS THOSE ARE IS THE CALLER'S ANSWER, in `dropped_sigs`, and that is
+    the whole of what this migration changed here: this function used to decide it
+    a second time with its own copy of the retained-ring threshold, so the fidelity
+    gate and the dropped-ring gate agreed about the dropped set by coincidence
+    rather than by construction. `dropped_rings.classify` decides it once and
+    `dropped_rings.check` holds those rings to their declarations.
     """
     limit = FIDELITY_MAX_M if limit is None else limit
     src = _by_basename(source_features)
     drawn = _by_basename(drawn_features)
     worst, where, wkey = 0.0, None, None
     over = 0
-    dropped = []
+    dropped = 0
     for key, sf in src.items():
         if key not in drawn:
             continue
-        dr = _rings(drawn[key]["geometry"])
-        sr = _rings(sf["geometry"])
+        dr = drings.rings(drawn[key]["geometry"])
+        sr = drings.rings(sf["geometry"])
         if not dr or not sr:
             continue
-        sx, sy = _mscale(sr[0][0][1])
-        grid, cell = _index_segments(dr)
+        sx, sy = drings.mscale(sr[0][0][1])
+        grid, cell = drings.index_segments(dr)
         dworst = 0.0
         dwhere = None
         for r in sr:
-            ds = [_dist_to_drawn((pt[0], pt[1]), grid, cell, sx, sy) for pt in r]
-            if min(ds) > RETAINED_RING_M:
-                dropped.append({
-                    "basename": key,
-                    "centre": _ring_centre(r),
-                    "verts": _ring_verts(r),
-                    "m2": _ring_area_m2(r),
-                    "worst": max(ds),
-                    "ring": r,
-                })
+            # The caller's answer, not a second reading of it (see the docstring).
+            if drings.ring_signature(r) in dropped_sigs:
+                dropped += 1
                 continue
+            ds = [drings.dist_to_drawn((pt[0], pt[1]), grid, cell, sx, sy) for pt in r]
             for pt, d in zip(r, ds):
                 if d > dworst:
                     dworst, dwhere = d, (pt[0], pt[1])
@@ -649,10 +578,10 @@ def check_fidelity(source_features, drawn_features, limit=None):
     if over:
         return False, ("%d district(s) stray further than %.0f m from the true line; "
                        "worst is %s at %.1f m (%.5f,%.5f)"
-                       % (over, limit, _name_district(wkey), worst, where[1], where[0])), dropped
+                       % (over, limit, _name_district(wkey), worst, where[1], where[0]))
     return True, ("worst stray %.1f m on retained rings, %s; ceiling %.0f m; "
                   "%d ring(s) dropped"
-                  % (worst, _name_district(wkey), limit, len(dropped))), dropped
+                  % (worst, _name_district(wkey), limit, dropped))
 
 
 def _name_district(key):
@@ -660,244 +589,22 @@ def _name_district(key):
         "the water pseudo-district (%s)" % key)
 
 
-def check_dropped_rings(found, sources, built):
-    """Every dropped ring must be declared, and every declaration must be found.
-
-    `found` is {chamber: [ring dicts from check_fidelity]}. One RING GEOMETRY can
-    be dropped from several features at once -- a sliver on the water boundary
-    sits in a land district and in the water pseudo-district, in both chambers --
-    so declarations are keyed by the ring and carry the features they appear in.
-
-    THE READER-ANSWER FIELDS ARE VERIFIED, NOT TAKEN ON TRUST: for each declared
-    ring the gate finds a point provably inside it and asks the SOURCE features
-    and the DRAWN features which districts contain it, then fails if either
-    answer differs from the declaration. That is the only thing separating a
-    dropped ring whose loss moves no reader's answer from one whose loss tells a
-    reader they are in no district at all.
-
-    THE ANSWERS ARE DECLARED PER CHAMBER, because the after-answer differs by
-    chamber even for one ring: the Door County ring leaves Senate 1 for the Senate
-    water row and Assembly 1 for the ASSEMBLY water row, which are different
-    strings. Testing one chamber and assuming the other would leave half of each
-    declaration unchecked.
-
-    AND A ROUNDED CENTROID IS NOT AN INTERIOR POINT. The first reading of this
-    ring tested its centroid rounded to four decimals, which for a ring 7.5 m
-    across lands OUTSIDE it, and so measured the surrounding water: it reported
-    that no reader's answer moved, when 610 of 900 points provably inside the ring
-    move from district 1 to the water pseudo-district. That is why the point comes
-    from _ring_interior_point and never from a rounded coordinate.
-    """
-    # Group the findings by ring geometry, across chambers.
-    groups = []
-    for chamber, rings in sorted(found.items()):
-        for r in rings:
-            label = "%s:%s" % (chamber, r["basename"])
-            for g in groups:
-                if _ring_dist_m(g["centre"], r["centre"]) <= RING_MATCH_M \
-                   and g["verts"] == r["verts"]:
-                    g["features"].append(label)
-                    g["worst"] = max(g["worst"], r["worst"])
-                    break
-            else:
-                groups.append({
-                    "centre": r["centre"], "verts": r["verts"], "m2": r["m2"],
-                    "worst": r["worst"], "features": [label], "ring": r["ring"],
-                    "chambers": [chamber],
-                })
-    for g in groups:
-        g["features"].sort()
-        g["chambers"] = sorted(set(f.split(":", 1)[0] for f in g["features"]))
-
-    problems = []
-    matched = set()
-    for g in groups:
-        hit = None
-        for i, e in enumerate(ACCEPTED_DROPPED_RINGS):
-            if _ring_dist_m((e["lng"], e["lat"]), g["centre"]) <= RING_MATCH_M \
-               and e["verts"] == g["verts"]:
-                hit = i
-                break
-        if hit is None:
-            problems.append(
-                "UNDECLARED dropped ring at %.5f,%.5f — %d vertices, %.1f m2, "
-                "worst %.1f m, dropped from %s. Declare it in "
-                "ACCEPTED_DROPPED_RINGS with the answer a reader gets before and "
-                "after, or change SIMPLIFY so it survives."
-                % (g["centre"][1], g["centre"][0], g["verts"], g["m2"], g["worst"],
-                   ", ".join(g["features"])))
-            continue
-        matched.add(hit)
-        e = ACCEPTED_DROPPED_RINGS[hit]
-        if e["m2"] and abs(g["m2"] - e["m2"]) > RING_MATCH_AREA * e["m2"]:
-            problems.append(
-                "the ring at %.5f,%.5f measures %.1f m2 where its declaration "
-                "says %.1f m2 — same place and vertex count, different ring"
-                % (g["centre"][1], g["centre"][0], g["m2"], e["m2"]))
-        if list(e["features"]) != g["features"]:
-            problems.append(
-                "the ring at %.5f,%.5f is dropped from %s where its declaration "
-                "says %s" % (g["centre"][1], g["centre"][0],
-                             ", ".join(g["features"]), ", ".join(e["features"])))
-        if sorted(e["answer_before"]) != g["chambers"] \
-           or sorted(e["answer_after"]) != g["chambers"]:
-            problems.append(
-                "the ring at %.5f,%.5f is dropped in %s, so its answer_before and "
-                "answer_after must each name exactly those chambers"
-                % (g["centre"][1], g["centre"][0], ", ".join(g["chambers"])))
-            continue
-        # THE DECLARED point is the test point, not a freshly scanned one, because
-        # `--check` has no source ring to scan and must re-ask the same question
-        # offline. It is proved to be inside the ring here, which is the half that
-        # cannot be done offline.
-        pt = None
-        if e.get("interior"):
-            pt = (e["interior"]["lng"], e["interior"]["lat"])
-            if not _point_in_ring(pt, g["ring"]):
-                problems.append(
-                    "the ring at %.5f,%.5f declares an interior point at %.6f,%.6f "
-                    "that is NOT inside it — a rounded centroid is the usual cause"
-                    % (g["centre"][1], g["centre"][0], pt[1], pt[0]))
-                continue
-        else:
-            scanned = _ring_interior_point(g["ring"])
-            problems.append(
-                "the ring at %.5f,%.5f declares no interior point, so --check "
-                "cannot re-ask its reader answers offline; record "
-                '"interior": {"lat": %s, "lng": %s}'
-                % (g["centre"][1], g["centre"][0],
-                   ("%.6f" % scanned[1]) if scanned else "?",
-                   ("%.6f" % scanned[0]) if scanned else "?"))
-            continue
-        for chamber in g["chambers"]:
-            got = {
-                "before": sorted(_districts_at(
-                    _model(sources[chamber]["features"], "BASENAME"), pt)),
-                "after": sorted(_districts_at(
-                    _model(built[chamber]["features"], "BASENAME"), pt)),
-            }
-            for label in ("before", "after"):
-                want = sorted(e["answer_" + label].get(chamber) or [])
-                if got[label] != want:
-                    problems.append(
-                        "the ring at %.5f,%.5f: a reader at %.5f,%.5f is in %s %s "
-                        "in %s, where its declaration says %s"
-                        % (g["centre"][1], g["centre"][0], pt[1], pt[0],
-                           chamber, got[label] or ["no district"], label, want))
-
-    for i, e in enumerate(ACCEPTED_DROPPED_RINGS):
-        if i not in matched:
-            problems.append(
-                "ORPHANED declaration: no dropped ring matches the one at %.5f,%.5f "
-                "(%d vertices) any more — retire the entry"
-                % (e["lat"], e["lng"], e["verts"]))
-
-    if problems:
-        return False, "; ".join(problems)
-    if not groups:
-        return True, "no ring was dropped"
-    return True, "; ".join(
-        "one ring dropped from %d feature(s) and declared: %.5f,%.5f (%d verts, "
-        "%.1f m2, worst %.1f m) — %s"
-        % (len(g["features"]), g["centre"][1], g["centre"][0], g["verts"], g["m2"],
-           g["worst"], _ring_answer_text(ACCEPTED_DROPPED_RINGS, g))
-        for g in groups)
-
-
-def _ring_answer_text(entries, g):
-    """Per chamber, what a reader inside the ring reads before and after."""
-    for e in entries:
-        if _ring_dist_m((e["lng"], e["lat"]), g["centre"]) <= RING_MATCH_M \
-           and e["verts"] == g["verts"]:
-            return "; ".join(
-                "%s: %s -> %s" % (c,
-                                  ", ".join(e["answer_before"].get(c) or ["no district"]),
-                                  ", ".join(e["answer_after"].get(c) or ["no district"]))
-                for c in g["chambers"])
-    return "?"
-
-
-def _ring_dist_m(a, b):
-    sx, sy = _mscale(a[1])
-    return math.hypot((a[0] - b[0]) * sx, (a[1] - b[1]) * sy)
-
-
-# --- point-in-polygon mirroring index.html's even-odd test (so validation
-#     agrees with what the app computes at runtime) — fleet-standard copy ---
-def _point_in_ring(pt, ring):
-    x, y = pt
-    inside = False
-    j = len(ring) - 1
-    for i in range(len(ring)):
-        xi, yi = ring[i][0], ring[i][1]
-        xj, yj = ring[j][0], ring[j][1]
-        if ((yi > y) != (yj > y)) and (x < (xj - xi) * (y - yi) / (yj - yi) + xi):
-            inside = not inside
-        j = i
-    return inside
-
-
-def _point_in_geometry(pt, geom):
-    if geom["type"] == "Polygon":
-        inside = False
-        for ring in geom["coordinates"]:
-            if _point_in_ring(pt, ring):
-                inside = not inside
-        return inside
-    if geom["type"] == "MultiPolygon":
-        for poly in geom["coordinates"]:
-            inside = False
-            for ring in poly:
-                if _point_in_ring(pt, ring):
-                    inside = not inside
-            if inside:
-                return True
-    return False
-
-
-def _bbox(geom):
-    b = [1e9, 1e9, -1e9, -1e9]
-
-    def walk(c):
-        if c and isinstance(c[0], (int, float)):
-            b[0], b[1] = min(b[0], c[0]), min(b[1], c[1])
-            b[2], b[3] = max(b[2], c[0]), max(b[3], c[1])
-        else:
-            for x in c:
-                walk(x)
-
-    walk(geom["coordinates"])
-    return b
-
-
-def _model(features, key_prop):
-    return [(f["properties"].get(key_prop), f["geometry"], _bbox(f["geometry"])) for f in features]
-
-
-def _districts_at(model, pt):
-    hits = []
-    for key, geom, bb in model:
-        if bb[0] <= pt[0] <= bb[2] and bb[1] <= pt[1] <= bb[3] and _point_in_geometry(pt, geom):
-            hits.append(key)
-    return hits
-
-
 def validate(source_features, result_features, key_prop, samples=2000, seed=2024):
     """Refuse the build unless simplification preserves district coverage over
     the state envelope vs the full-precision fetch — the project's 2,000
     uniform-random-point protocol. Any point landing in two result districts
     is a topology break."""
-    src = _model(source_features, key_prop)
-    new = _model(result_features, key_prop)
+    src = drings.model(source_features, key_prop)
+    new = drings.model(result_features, key_prop)
     rng = random.Random(seed)
     agree = overlaps = 0
     for _ in range(samples):
         pt = (rng.uniform(STATE_BBOX["minLng"], STATE_BBOX["maxLng"]),
               rng.uniform(STATE_BBOX["minLat"], STATE_BBOX["maxLat"]))
-        s_hits = _districts_at(new, pt)
+        s_hits = drings.districts_at(new, pt)
         if len(s_hits) > 1:
             overlaps += 1
-        o_hits = _districts_at(src, pt)
+        o_hits = drings.districts_at(src, pt)
         o = o_hits[0] if len(o_hits) == 1 else (None if not o_hits else "MULTI")
         s = s_hits[0] if len(s_hits) == 1 else (None if not s_hits else "MULTI")
         if o == s:
@@ -972,22 +679,44 @@ def build_family():
         raise RuntimeError("nesting check failed: %s" % msg)
     print("nesting: %s" % msg, file=sys.stderr)
 
+    # gates 3 and 4 share ONE reading of which rings went. `classify` decides it
+    # across the whole family at once, because a ring on a shared edge is dropped
+    # from both chambers and is one ring rather than two, and hands back the
+    # signature of each so the fidelity gate can skip exactly those rather than
+    # re-deciding with a second copy of the threshold.
+    records, dstats = drings.classify({
+        name: {"source": sources[name]["features"],
+               "drawn": built[name]["features"],
+               "key": "BASENAME"}
+        for name in FAMILY})
+    # `signatures` is PLURAL and the union is what this gate needs. A record is a
+    # cluster of rings that coincide on the ground and differ byte for byte --
+    # district 1 and the water pseudo-district each trace the Door sliver with
+    # their own vertices -- so taking one signature per record leaves the other
+    # ring looking retained, and check_fidelity then measures a shape that is gone
+    # into the stray. That is not hypothetical: it read 17.5 m against a 15 m
+    # ceiling the first time this was wired up with a singular field.
+    dropped_sigs = {sig for r in records for sig in r["signatures"]}
+
     # gate 3, against the source: how far the true line strays from the drawn one
-    dropped = {}
     for name in FAMILY:
-        ok, msg, drops = check_fidelity(sources[name]["features"], built[name]["features"])
-        dropped[name] = drops
+        ok, msg = check_fidelity(sources[name]["features"], built[name]["features"],
+                                 dropped_sigs)
         if not ok:
             raise RuntimeError("%s fidelity check failed: %s" % (name, msg))
         print("fidelity %s: %s" % (name, msg), file=sys.stderr)
 
-    # gate 4, on the rings gate 3 set aside: every dropped ring declared, every
+    # gate 4, on the rings gate 3 set aside: every harming drop declared, every
     # declaration still found, and each one's reader answers verified rather than
     # trusted. This is the gate that distinguishes a lost sliver nobody can reach
     # from one that would tell a reader they are in no district.
-    ok, msg = check_dropped_rings(dropped, sources, built)
+    ok, msg = drings.check(records, dstats, ACCEPTED_DROPPED_RINGS, GAP_CLOSED)
     if not ok:
-        raise RuntimeError("dropped-ring check failed: %s" % msg)
+        raise RuntimeError(
+            "dropped-ring check failed: %s\n"
+            "  Each harming drop needs a declaration in ACCEPTED_DROPPED_RINGS "
+            "carrying its measured kind, features, reader answers and an interior "
+            "point. Re-measure rather than editing a declaration to match." % msg)
     print("dropped rings: %s" % msg, file=sys.stderr)
 
     # every gate passed — now write
@@ -1028,17 +757,18 @@ def check_shipped():
     whether a ring is still being dropped AT ALL (an undeclared drop is invisible
     offline, because nothing here knows what the true boundary carries), and every
     declaration's BEFORE answer. Those stay build-time, in check_fidelity() and
-    check_dropped_rings(). So a green `--check` means the shipped files still nest
+    dropped_rings.check(). So a green `--check` means the shipped files still nest
     and still say what the declarations claim they say -- not that the declarations
-    are complete.
+    are complete. GAP_CLOSED is build-time for the same reason: a hole the drawn
+    output fills leaves no trace in the drawn output.
 
     A THIRD BLIND SPOT, FOUND BY NEGATIVE-TESTING THIS FUNCTION: it cannot tell that
     a declared interior point is actually INSIDE its ring. Rounded back to four
     decimals -- the exact defect the Door County entry corrects -- the point falls
     outside the ring and still passes here, because the water pseudo-district it
     lands in is what the declaration says a reader reads. Only the build path can
-    catch that, and it does: check_dropped_rings() refuses a declared point that
-    _point_in_ring rejects.
+    catch that, and it does: dropped_rings.check() refuses a declared point that
+    dropped_rings.point_in_ring rejects.
     """
     built = {}
     for name in FAMILY:
@@ -1071,8 +801,8 @@ def check_shipped():
                     "the declaration at %.5f,%.5f names chamber %s, which this "
                     "builder does not build" % (e["lat"], e["lng"], chamber))
                 continue
-            got = sorted(_districts_at(
-                _model(built[chamber]["features"], "BASENAME"), pt))
+            got = sorted(drings.districts_at(
+                drings.model(built[chamber]["features"], "BASENAME"), pt))
             want = sorted(e["answer_after"][chamber] or [])
             if got != want:
                 problems.append(

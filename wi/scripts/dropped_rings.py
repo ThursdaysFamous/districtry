@@ -6,8 +6,11 @@ a multipolygon is one feature, so once one ring survives the guarantee is met an
 every hole and every detached part is eligible for removal like any other
 geometry. Some of those losses cost a reader the right answer and some cost
 nothing, and AREA DOES NOT TELL THEM APART. Measured on this state's own layers:
-a 31.7 m2 ring in Lake Michigan moves 610 of 900 points inside it from district 1
-to the water pseudo-district, while far larger dropped rings move nothing at all.
+a 31.7 m2 ring on Washington Island moves 610 of 900 points inside it from
+district 1 to the water pseudo-district, while far larger dropped rings move
+nothing at all. (That ring was described here as being IN Lake Michigan until
+2026-09-27, which was an inference from its coordinate rather than a measurement;
+TIGER's areal hydrography finds no water at it. CLAUDE.md carries the rule.)
 An aggregate dropped-area ceiling would therefore license the drops that cost a
 reader an answer and fail on the ones that cost nothing, which is why this module
 computes the answer for every dropped ring instead.
@@ -479,9 +482,11 @@ def _merge_coincident(groups):
             span = max(m2, o["m2"], 1e-6) * RING_MATCH_AREA
             if d <= RING_MATCH_M and abs(m2 - o["m2"]) <= max(span, 0.01):
                 o["features"].extend(g["features"])
+                o["signatures"].extend(g["signatures"])
                 break
         else:
             out.append({"ring": g["ring"], "features": list(g["features"]),
+                        "signatures": list(g["signatures"]),
                         "centre": c, "m2": m2})
     return {i: o for i, o in enumerate(out)}
 
@@ -494,12 +499,31 @@ def classify(layers):
     grouping is by `ring_signature` and each record names every feature it was
     dropped from.
 
+    A RECORD CARRIES `signatures`, PLURAL, so a caller can ask whether a given
+    source ring was dropped without re-deciding it with a second copy of the
+    threshold. Plural because a record is a CLUSTER: `_merge_coincident` folds
+    rings that coincide on the ground but differ byte for byte, which is what two
+    districts tracing one sliver with their own vertices produces. Measured on
+    Wisconsin's chambers, the Door County sliver has TWO signatures behind one
+    record — district 1's tracing and the water pseudo-district's — so a singular
+    field covers one of them and a caller filtering on it sees the other ring as
+    retained. That is not hypothetical: it is how the chambers builder's fidelity
+    gate failed on 17.5 m the first time this field was wired up, which is the
+    same two-readers defect arriving through the fix for it.
+
+    THE ANSWER IS RECORDED PER LAYER BECAUSE IT DIFFERS BY LAYER FOR ONE RING.
+    Wisconsin's Door County ring leaves Senate 1 for the SENATE water row and
+    Assembly 1 for the ASSEMBLY water row, which are different strings; testing
+    one layer and assuming the other would leave half of every declaration in a
+    multi-layer family unchecked. Carried here from the chambers builder's own
+    hand-written gate, which this replaces.
+
     Returns (records, stats). A record is::
 
         {"m2", "verts", "features": ["layer:key", ...], "kinds": [...],
          "kind": "wrong-name", "harm": True, "interior": {"lat", "lng"},
          "answers": {layer: {"before": [...], "after": [...]}},
-         "sampled": n, "mixed": False}
+         "signatures": [ring_signature(r), ...], "sampled": n, "mixed": False}
 
     `mixed` is a ring that answers DIFFERENTLY at different points inside itself.
     It is reported rather than reduced to one pair, because no single declaration
@@ -514,7 +538,8 @@ def classify(layers):
                       model(spec["drawn"], spec["key"]))
         for key, ring in find_dropped(spec["source"], spec["drawn"], spec["key"]):
             sig = ring_signature(ring)
-            g = groups.setdefault(sig, {"ring": ring, "features": []})
+            g = groups.setdefault(sig, {"ring": ring, "features": [],
+                                       "signatures": [sig]})
             g["features"].append("%s:%s" % (name, key))
     groups = _merge_coincident(groups)
 
@@ -533,6 +558,7 @@ def classify(layers):
             stats[KIND_DEGENERATE] += 1
             records.append({"m2": m2, "verts": ring_verts(ring),
                             "centre": ring_centre(ring),
+                            "signatures": sorted(set(g["signatures"])),
                             "features": sorted(g["features"]),
                             "kinds": [KIND_DEGENERATE], "kind": KIND_DEGENERATE,
                             "harm": False, "interior": None, "answers": {},
@@ -575,6 +601,7 @@ def classify(layers):
                              "before_all": list(sb), "after_all": list(sa)}
         records.append({"m2": m2, "verts": ring_verts(ring),
                         "centre": ring_centre(ring), "ring": ring,
+                        "signatures": sorted(set(g["signatures"])),
                         "features": sorted(g["features"]),
                         "kinds": sorted(kinds) or [KIND_UNCHANGED], "kind": kind,
                         "harm": harm,
@@ -858,8 +885,15 @@ def _selftest():
     ck("a moved gap-closed count FAILS", not ok and "declares" in msg, msg)
 
     # 11. two districts drawing ONE sliver separately are one record, not two
+    #
+    # THE OFFSET MUST SURVIVE 6-DECIMAL ROUNDING or this fixture tests the wrong
+    # mechanism. It was 1e-7 until 2026-09-27, which `ring_signature` rounds away,
+    # so the two rings shared a signature and were folded by the grouping dict
+    # while `_merge_coincident` — the thing this case exists to exercise — was
+    # never reached. 2e-6 degrees is about 0.2 m: distinct signatures, same ground,
+    # comfortably inside RING_MATCH_M and RING_MATCH_AREA.
     a = _sq(-88.50, 44.50, 0.0002, 0.0002)
-    b = [[p[0] + 1e-7, p[1] + 1e-7] for p in a]          # same ground, other vertices
+    b = [[p[0] + 2e-6, p[1] + 2e-6] for p in a]          # same ground, other vertices
     src = [_feat("P", _poly(_sq(-88.60, 44.40, 0.02, 0.02), a)),
            _feat("Q", _poly(_sq(-88.52, 44.40, 0.02, 0.02), b))]
     drw = [_feat("P", _poly(_sq(-88.60, 44.40, 0.02, 0.02))),
@@ -868,6 +902,15 @@ def _selftest():
     ck("one sliver drawn twice is ONE record naming both districts",
        st["rings"] == 1 and recs and sorted(recs[0]["features"]) == ["L:P", "L:Q"],
        "rings=%d features=%s" % (st["rings"], recs[0]["features"] if recs else None))
+    # ... and the record must name EVERY signature it folded, because a caller
+    # filtering source rings on `signatures` sees any it omits as retained. This
+    # is the chambers builder's fidelity gate, which failed on 17.5 m when the
+    # field was singular.
+    want = {ring_signature(a), ring_signature(b)}
+    got = set(recs[0]["signatures"]) if recs else set()
+    ck("a merged record names every signature it folded",
+       len(want) == 2 and got == want,
+       "distinct source signatures=%d, record carries %d" % (len(want), len(got)))
 
     # 12. the interior point's precision rises for a ring 6 decimals cannot hold
     NARROW = [[-88.9950, 44.00500], [-88.994990, 44.00500],
