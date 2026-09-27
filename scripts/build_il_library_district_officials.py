@@ -56,6 +56,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from scraper_common import substantive_changes, emit_changes_output  # noqa: E402  (shared machinery — do not fork)
 from il_library_district_officials_scraper import (  # noqa: E402
     shipped_cards, statewide_library_counties)
+from comptroller_afr import suspect_names_in  # noqa: E402  (shared — do not fork)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
@@ -122,10 +123,29 @@ def main():
         problems.append("no fiscal year on: %s" % ", ".join(undated[:8]))
     if unplaced:
         problems.append("no filing county on: %s" % ", ".join(unplaced[:8]))
+
+    # A NAME THIS SOURCE FILED IN A SHAPE NOBODY TYPED IS REFUSED, NOT SHIPPED.
+    # comptroller_afr.normalise_filed_name already restores a middle initial's
+    # comma to its period and prints that it did; anything with a comma left
+    # over is unexplained, so it stops the write the way the floors above do.
+    # The one shape this admits is the suffix comma the source genuinely files,
+    # which is `Juan Martinez, Jr.` here and `John Shea, Jr.` in the special
+    # districts -- the only two of the 1,622 names across the eight AFR-derived
+    # rosters that carry a comma at all, measured 2026-09-27.
+    #
+    # WHY HERE RATHER THAN IN THE SCRAPER. The scraper's job is to report what
+    # the filing says; refusing to publish is the builder's, and a reader is
+    # better served by last week's correct spelling than by this week's broken
+    # one. #1226 is the case: the FY2026 filing prints the Director as
+    # `Jaclyn G,` in two of its three populated slots.
+    for where, name, why in suspect_names_in(libraries):
+        problems.append("%s: %r has %s" % (where, name, why))
+
     if problems:
         for problem in problems:
             print("  %s" % problem, file=sys.stderr)
-        fail("refusing to write a payload that lost coverage")
+        fail("refusing to write a payload that lost coverage or carries a "
+             "name the filer did not type")
 
     out = {
         "source": payload.get("source"),
