@@ -17750,13 +17750,10 @@ function initChiExplorer() {
     return fetchJSONWithRetry("data/app/boone-district-officials.json", {}, 2);
   });
   function withBooneOfficials(loadGeometry) {
-    return makeCached(function () {
-      return Promise.all([
-        loadGeometry(),
-        loadBooneDistrictOfficials().catch(function () { return null; })
-      ]).then(function (results) {
-        var geojson = results[0], roster = results[1];
-        var byName = (roster && roster.districts) || {};
+    function roster() { return loadBooneDistrictOfficials().catch(function () { return null; }); }
+    return withStamp(loadGeometry, function (geojson) {
+      return roster().then(function (data) {
+        var byName = (data && data.districts) || {};
         geojson.features.forEach(function (f) {
           var name = findPropCI(f.properties || {}, ["district"]);
           var hit = name != null ? byName[String(name)] : null;
@@ -17764,7 +17761,7 @@ function initChiExplorer() {
         });
         return geojson;
       });
-    });
+    }, roster);
   }
   var loadBooneParkDistricts = withBooneOfficials(makeCached(function () {
     return fetchJSONWithRetry("data/app/boone-park-districts.json", {}, 2);
