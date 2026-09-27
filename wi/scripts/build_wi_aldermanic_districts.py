@@ -352,59 +352,116 @@ LOCAL_COMPOSITION = {
 }
 
 # 9% (the supervisory build's retain) measured 99.675% agreement here — city
-# districts are small, so the same retain cuts proportionally deeper; 25%
-# clears the 99.9% bar with the file still compact.
-# THE DROPPED-RING QUESTION HAS NOW BEEN ASKED, and the block that used to stand
-# here said it had not been. Measured 2026-09-27 on the July 2026 filing, 866
-# districts over 1,442 source rings, every candidate setting run against the same
-# fetch and the same dissolve:
+# districts are small, so the same retain cuts proportionally deeper.
 #
-#   setting                  rings  dropped  RING-HARM  POINTS  total  gzipped
-#   visvalingam 25%           1354       70          1       0      1  600,983  <- stays
-#   dp interval=1             1354       68          1       0      1  649,211
-#   dp interval=5             1349       73          1       4      5  417,512
-#   dp interval=15            1339       80          2   FAILS      -  319,702
+# THE SETTING WAS visvalingam 25% UNTIL 2026-09-27 (LATER THE SAME DAY), AND A
+# THIRD INSTRUMENT RETIRED IT. The block that used to stand here chose between
+# settings on two instruments — RING-HARM, a dropped ring that changes what a
+# reader is told, and POINTS, `validate()`'s 4,000-point sample of boundary
+# DISPLACEMENT — and broke a tie on gzipped file size. Both readings were
+# honest and neither could see what the third one measures: how far the RETAINED
+# boundary moved. `dropped_rings.check_fidelity` measures that, and at this
+# layer's own ceiling (below) it FAILS visvalingam 25% on FORTY-NINE vertices,
+# worst 54.2 m, every one of them at a point where the answer changes. The
+# worst is City of Wisconsin Dells district 2, where a reader on ground the true
+# line puts inside the district is told no district at all. It passes only at
+# 86.89 m, ten times the median source step, which gates nothing — the same
+# shape the NG911 layers measured at 126 m.
 #
-# THE OUTCOME IS A MEASUREMENT AND NO SETTINGS CHANGE. visvalingam 25% ties
-# dp interval=1 at one changed answer and is 48,228 bytes smaller gzipped, so it
-# wins outright; dp interval=5 costs four more; dp interval=15 does not clear the
-# builder's own >=99.9% point-agreement gate at all (99.650%), so it was never
-# eligible however small it is.
+# RE-MEASURED 2026-09-27 ON THE JULY 2026 FILING, 866 districts, both settings
+# run against the same fetch and the same dissolve, with the EXACT retained test
+# (#1224) rather than the superseded one the old table was measured with:
 #
-# TWO INSTRUMENTS COUNT CHANGED ANSWERS AND ONE OF THEM ALMOST PICKED THE WRONG
-# SETTING. RING-HARM is a dropped ring that changes what a reader is told;
-# POINTS is `validate()`'s 4,000-point sample, which measures boundary
-# DISPLACEMENT and cannot see a 6 m2 ring. They are blind to each other in
-# opposite directions. Read alone, ring-harm ties three settings at 1 and the
-# file-size tiebreak picks dp interval=5 — which is what a first pass of this
-# change did, writing dp5 in and rebuilding before the point column existed. The
-# builder's own output caught it: 3996/4000 where the shipped setting reads
-# 4000/4000, printed on the line under the dropped-ring verdict. A TIEBREAK
-# APPLIED ON ONE INSTRUMENT IS NOT A TIEBREAK; count every changed answer first.
+#   setting            rings  dropped  gap-closed  RING-HARM  POINTS  fidelity @ 9.56 m
+#   visvalingam 25%              88          84          2    0/4000  FAILS (49 vertices, worst 54.2 m)
+#   dp interval=1                88          84          2    0/4000  PASSES, nothing excluded
 #
-# GZIPPED IS THE COLUMN, NOT RAW, and it did not change the ordering here — but
-# `scripts/build_legislative_boundaries.py` records raw and gzipped disagreeing
-# in SIGN on its own files, so raw could not have settled it and measuring both
-# was the only way to know that.
+# THE TWO ANSWER INSTRUMENTS NO LONGER DISTINGUISH THEM AT ALL. Both settings
+# drop the SAME 88 rings — the same 84 that close a coverage gap and the same
+# two declared harms, Wausau 11 and New Richmond 2 — and both agree with the
+# ward fabric at 4000 of 4000 sample points. The old table read 70 dropped
+# against 68 with one harm each, and those columns were floors: the instrument
+# then in use asked whether ANY of a source ring's vertices survived, so a ring
+# joined to the main body at one shared vertex read as retained after vanishing
+# whole. So the tie is exact and the fidelity gate is the only instrument that
+# separates them.
 #
-# WHAT DID CHANGE IS THAT THE QUESTION IS NOW GATED. The dissolve and the
-# simplify are two mapshaper calls so there IS a source to compare against, and
-# every dropped ring is answer-tested on every run against the declaration below.
-SIMPLIFY = ["-simplify", "visvalingam", "keep-shapes", "25%"]
-SIMPLIFY_LABEL = "visvalingam 25%"
+# THE SIZE OBJECTION THAT CHOSE visvalingam WAS APPLIED TO A QUANTITY NOBODY
+# DOWNLOADS. This layer is drawn and answered from `aldermanic-district.pmtiles`
+# (registered with `tiles:` in wi/index.html), and the whole file is fetched only
+# to pin a comparison. Measured on the two COMMITTED states, so anyone can
+# reproduce it from git: the gzipped JSON grows 48,156 bytes (604,265 ->
+# 652,421 at `gzip -9`, +7.97%) and THE ARCHIVE GROWS 7,923 BYTES (1,190,687 ->
+# 1,198,610, +0.67%). The column the tiebreak used moves six times as many bytes
+# and twelve times the proportion, which is the same finding the NG911 quartet
+# recorded hours earlier (its JSON grew 97.3% and its archives 15.9%). A SIZE
+# OBJECTION IS MEASURED ON WHAT A READER FETCHES.
+#
+# THE ARCHIVE BYTES ARE GOOD TO ABOUT A HUNDRED, NOT TO THE BYTE: tippecanoe's
+# output is not byte-identical run to run, measured here at 10 and 58 bytes apart
+# rebuilding the same input twice. That is why `--committed` decodes the archive
+# and compares ANSWERS rather than hashing it, and why no byte count above is
+# quoted as an identity.
+#
+# WHY THE ALGORITHM AND NOT THE DIAL, for the third time in this fleet:
+# Visvalingam thresholds triangle AREA, which does not bound how far the drawn
+# line strays, because successive below-threshold removals compound — a staircase
+# along a street grid becomes a chord across it. Douglas-Peucker thresholds
+# perpendicular DEVIATION, so the stray is bounded by the interval itself
+# (approximately: mapshaper applies it through a spherical approximation, and the
+# NG911 psap layer measured 1.2x its interval). `scripts/build_legislative_
+# boundaries.py` reached this on Illinois's chambers and the NG911 quartet
+# reached it on county 911 filings; this is a third layer family.
+#
+# dp interval=5 and 15 were measured in the old table and are not re-run: 5 cost
+# four of the 4,000 sample points where every setting above costs none, and 15
+# did not clear the builder's own >=99.9% point-agreement gate at all (99.650%),
+# so neither was ever eligible however small its file.
+#
+# GZIPPED IS THE COLUMN FOR THE JSON, NOT RAW — `scripts/build_legislative_
+# boundaries.py` records raw and gzipped disagreeing in SIGN on its own files —
+# but the ARCHIVE is the column that decides.
+SIMPLIFY = ["-simplify", "dp", "keep-shapes", "interval=1"]
+SIMPLIFY_LABEL = "dp interval=1"
 
 # Rings the simplifier drops that CLOSE A GAP — ground no district covered before
 # or after — measured at the shipped setting rather than assumed. Held so the
 # number cannot drift silently; a change means the filing moved and wants reading.
 GAP_CLOSED = 84
 
+# HOW FAR THE RETAINED BOUNDARY MAY MOVE at a point where a reader's ANSWER
+# changes, in metres. Derived from THIS layer's own geometry and never borrowed:
+# 1.10x the median length of its source line's own segments (8.689 m over 370,170
+# retained-ring segments on the July 2026 filing), which is the ratio
+# `scripts/build_legislative_boundaries.py` uses for Illinois's chambers. THE
+# RULE THAT TRANSFERS BETWEEN LAYER FAMILIES IS THAT THE CEILING COMES OFF THE
+# LAYER'S OWN STEP — never the ratio and never the metres. Illinois's 25 m came
+# off a 17.9 m street grid and the NG911 quartet's 2.70-3.77 m off county 911
+# filing seams drawn five times finer than this ward fabric.
+#
+# PINNED RATHER THAN DERIVED AT BUILD TIME, which is the whole point of writing
+# it down: a ceiling recomputed from the source on every run rises whenever the
+# source gets coarser, so it can never fail. The builder PRINTS the measured step
+# beside it, so a step that drifts is visible without the ceiling moving with it.
+#
+# A METRE-CEILING ALONE WOULD GATE THE WRONG THING, which is measured on the
+# sibling NG911 layers rather than argued here: there, seven vertices stray past
+# their own ceiling on real geometry that costs no reader anything. So
+# `check_fidelity` asks the metres AND the answer, through four measured
+# predicates whose counts it prints every run. On this layer at this setting it
+# excludes nothing at all — every retained vertex is inside the ceiling.
+FIDELITY_MAX_M = 9.56
+
 ACCEPTED_DROPPED_RINGS = [
     {
         # CITY OF WAUSAU DISTRICT 11, a 6.35 m2 ring of 4 vertices. Every setting drops
-        # it — visvalingam at 25%, which ships, and Douglas-Peucker at 1, 5 and
-        # 15 m — so the alternative is not a finer setting but a different
-        # simplifier, which is the same conclusion the supervisory layer's Door
-        # County ring reached.
+        # it — Douglas-Peucker at 1, which ships, and at 5 and 15 m, and
+        # visvalingam at 25%, which shipped until 2026-09-27 — so the alternative
+        # is not a finer setting of either simplifier, which is the same
+        # conclusion the supervisory layer's Door County ring reached. (This
+        # comment said "visvalingam at 25%, which ships" until the fidelity gate
+        # retired that setting; the list of settings that drop the ring is
+        # unchanged, and so is every measured field below.)
         #
         # IT IS DRY LAND, MEASURED AND NOT INFERRED. TIGER's areal hydrography
         # returns NO water polygon at EITHER the ring's centre or its interior
@@ -1078,6 +1135,33 @@ def main():
     # and the rebuild had changed 397 features.
     records, dstats = drings.classify({
         LAYER_NAME: {"source": source["features"], "drawn": feats, "key": "KEY"}})
+
+    # THE UNION OF EACH RECORD'S SIGNATURES, never one per record: rings that
+    # coincide on the ground and differ byte for byte are folded into one record,
+    # so taking a single signature leaves the other ring looking retained and the
+    # fidelity gate then measures a shape that is gone.
+    dropped_sigs = {sig for r in records for sig in r["signatures"]}
+
+    # HOW FAR THE RETAINED BOUNDARY MOVED, which is a different question from the
+    # one below. `check` asks what a whole DROPPED ring costs a reader; a retained
+    # ring keeps only a subset of its vertices, so the drawn line can cut a chord
+    # across a narrow excursion and hand its ground to whoever is next door — or,
+    # on this layer, to nobody, because it covers municipalities rather than the
+    # whole state. That was measured by nothing here until 2026-09-27.
+    src_by_key = {f["properties"]["KEY"]: f["geometry"] for f in source["features"]}
+    steps = drings.source_step_m(src_by_key, dropped_sigs)
+    fok, fmsg = drings.check_fidelity(source["features"], feats, "KEY",
+                                      dropped_sigs, FIDELITY_MAX_M)
+    print("fidelity: median source step %.2f m, ceiling %.2f m (%.2fx); %s"
+          % (steps[len(steps) // 2], FIDELITY_MAX_M,
+             FIDELITY_MAX_M / steps[len(steps) // 2], fmsg), file=sys.stderr)
+    if not fok:
+        raise RuntimeError(
+            "fidelity check failed: %s\n"
+            "  A chord has been drawn across ground that changes hands. Re-measure "
+            "at a finer setting rather than raising FIDELITY_MAX_M, which is "
+            "derived from this layer's own median source step." % fmsg)
+
     dok, dmsg = drings.check(records, dstats, ACCEPTED_DROPPED_RINGS, GAP_CLOSED)
     print("dropped rings: %s" % dmsg, file=sys.stderr)
     if not dok:
