@@ -194,17 +194,33 @@ def main():
                                     robots=why, rows=rows)
         print("il-gis-board-scraper: %-10s %3d row(s)" % (spec["key"], len(rows)))
 
-    # A COUNTY LOST IS THE WHOLE RUN. These seven are one weekly job and the
-    # builder refuses to write a partial set, so stopping here keeps the failure
-    # where it can be read rather than in a diff that silently drops a county.
-    if problems:
-        fail("; ".join(problems))
+    # A COUNTY LOST IS NOT THE WHOLE RUN, and it used to be (changed 2026-09-27).
+    # maps.wingis.org stopped answering GitHub's runners that day — three 30 s
+    # connect timeouts on robots.txt — and this exited 1 having read the other
+    # six counties, so none of the six refreshed either. Now a county that could
+    # not be read is recorded under `_unread` with the reason, and
+    # build_il_gis_board_rosters.py keeps that county's shipped file, marked as
+    # not re-read, instead of dropping it: a failed read is a reason not to READ
+    # a host, never a reason to unpublish the members it last served (the
+    # operator's ruling of 2026-09-19). A run that reads NO county still fails,
+    # because that says more about the runner's network than about seven hosts.
+    for problem in problems:
+        print("il-gis-board-scraper: NOT READ — %s" % problem, file=sys.stderr)
+    if not payload:
+        fail("no county could be read; " + "; ".join(problems))
+    unread = {spec["key"]: next(p for p in problems if p.startswith(spec["county"] + ":"))
+              for spec in COUNTIES if spec["key"] not in payload}
+    if unread:
+        payload["_unread"] = unread
 
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=1, ensure_ascii=False)
-    print("il-gis-board-scraper: wrote %s — %d county(ies), %d row(s)"
-          % (out_path, len(payload), sum(len(v["rows"]) for v in payload.values())))
+    read = {k: v for k, v in payload.items() if k != "_unread"}
+    print("il-gis-board-scraper: wrote %s — %d county(ies), %d row(s)%s"
+          % (out_path, len(read), sum(len(v["rows"]) for v in read.values()),
+             ", %d not read (%s)" % (len(unread), ", ".join(sorted(unread)))
+             if unread else ""))
 
 
 if __name__ == "__main__":

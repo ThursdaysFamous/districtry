@@ -50,6 +50,7 @@ Usage:
 """
 
 import argparse
+import datetime
 import glob
 import json
 import os
@@ -270,6 +271,51 @@ def build(spec, snapshot):
             for k in sorted(districts, key=district_sort)}, seats
 
 
+# What a preserved file says about itself, read by build_county_pages.py. The
+# reason is FIXED rather than the scraper's error text, because the error text
+# differs every week (a timeout's duration, a retry count) and a file that
+# changes every week opens a bot pull request every week. The error itself is
+# printed on every run instead.
+NOT_READ_KEY = "_notRead"
+NOT_READ_WHY = "the county's map service did not answer this project's weekly refresh"
+
+
+def preserve(spec, path, problem):
+    """Keep a county whose service could not be read, marked as not re-read.
+
+    A failed read stops the fetch and never unpublishes what was already read
+    (the operator's ruling of 2026-09-19): the members stay on the county's page
+    exactly as the service last published them. What changes is that the file
+    now SAYS it was not re-read, and from when, because a page that went on
+    saying its copy is "up to a week" behind the live card would be false from
+    the second missed week. `since` is the date of the FIRST run that could not
+    read the service, so the last successful read was before it; it is kept
+    across runs, so the file changes on the week the service stops answering
+    and on the week it answers again, and on no week in between. A county never
+    read has no file to keep, and fails.
+    """
+    if not os.path.exists(path):
+        fail("%s could not be read (%s) and has no shipped roster to keep — "
+             "there is nothing to preserve" % (spec["county"], problem))
+    with open(path, encoding="utf-8") as f:
+        roster = json.load(f)
+    seats = sum(len(v.get("members") or []) for k, v in roster.items()
+                if k != NOT_READ_KEY and isinstance(v, dict))
+    if seats < SEATS[spec["key"]]:
+        fail("%s could not be read and its shipped roster holds %d seat(s), below "
+             "the floor of %d — refusing to keep a roster that would not have "
+             "been written" % (spec["county"], seats, SEATS[spec["key"]]))
+    marker = roster.get(NOT_READ_KEY) or {}
+    since = marker.get("since") or datetime.date.today().isoformat()
+    roster[NOT_READ_KEY] = {"since": since, "why": NOT_READ_WHY}
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(roster, f, ensure_ascii=False)
+    print("build-il-gis-board-rosters: %-10s PRESERVED — not re-read since %s; "
+          "%d seat(s) kept as last published (%s)"
+          % (spec["key"], since, seats, problem))
+    return seats
+
+
 def check_app_registration():
     """Every county here must have a board card, and every county with a board
     card and no roster file must be here or in NO_ROSTER.
@@ -339,7 +385,9 @@ def main():
         fail("no scrape at %s — run scripts/il_gis_board_scraper.py first" % args.raw)
     with open(args.raw, encoding="utf-8") as f:
         snapshots = json.load(f)
-    missing = [c["key"] for c in COUNTIES if c["key"] not in snapshots]
+    unread = snapshots.get("_unread") or {}
+    missing = [c["key"] for c in COUNTIES
+               if c["key"] not in snapshots and c["key"] not in unread]
     if missing:
         fail("the scrape is missing %s — a partial set would drop a county's "
              "page without saying so" % ", ".join(missing))
@@ -347,8 +395,11 @@ def main():
     os.makedirs(OUT_DIR, exist_ok=True)
     total = 0
     for spec in COUNTIES:
-        roster, seats = build(spec, snapshots[spec["key"]])
         path = os.path.join(OUT_DIR, "%s-county-board-members.json" % spec["key"])
+        if spec["key"] in unread:
+            total += preserve(spec, path, unread[spec["key"]])
+            continue
+        roster, seats = build(spec, snapshots[spec["key"]])
         with open(path, "w", encoding="utf-8") as f:
             json.dump(roster, f, ensure_ascii=False)
         total += seats

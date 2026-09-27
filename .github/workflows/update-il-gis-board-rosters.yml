@@ -104,6 +104,6 @@ jobs:
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
             gh pr create --title "Update the seven GIS-only Illinois county board rosters" \
-              --body "Automated weekly refresh of Effingham, Kankakee, Madison, McLean, St. Clair, Whiteside and Winnebago county board members from the same county GIS services the map cards call (\`scripts/il_gis_board_scraper.py\` + \`build_il_gis_board_rosters.py\`), with their \`il/county-board/*.html\` pages regenerated from it. The map cards read those services live and are unaffected. Review before merging." \
+              --body "Automated weekly refresh of Effingham, Kankakee, Madison, McLean, St. Clair, Whiteside and Winnebago county board members from the same county GIS services the map cards call (\`scripts/il_gis_board_scraper.py\` + \`build_il_gis_board_rosters.py\`), with their \`il/county-board/*.html\` pages regenerated from it. The map cards read those services live and are unaffected. A county whose service did not answer keeps the members it last published, and its file gains a \`_notRead\` marker with the date of the first run that could not read it, which its page states; the marker goes the week the service answers again, and the run log names the error. Review before merging." \
               --base main --head "$branch"
           fi
