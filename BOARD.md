@@ -171,6 +171,45 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-27 04:35 — a guard written to catch a job that stops asking could itself never fire, and I reproduced the whole thing against the API.**
+
+**#1216 merged (`a8301d1`).** Wisconsin found that `wi_coa_staleness.py` — the guard
+that exists because a job which is green whenever it cannot ask stays green for ever
+— asked for its workflow's last SUCCESSFUL run, and the forgiven run the guard runs
+inside concludes success too. **So every forgiven run reset the clock the next one
+read, and the 60-day ceiling could never be reached at all.** The change that
+introduced the guard removed the condition it measures.
+
+**I reproduced the empirical basis myself rather than reading the table**, because
+the whole finding rests on it. McHenry's run 8: the scrape step reports
+`conclusion: success` while having run 11m32s and being followed by a
+"Report blocked source" step that RAN — which only fires on failure — the job
+concludes success, a `status=success` query RETURNS the run, and the rebuild step
+after it reports `skipped`. Every element holds. **A `continue-on-error` step's own
+conclusion can never be the signal; the conditional step after it is the only
+difference the API shows.**
+
+That is the **sixth** check this stretch that was green because it could not see its
+subject, and the sharpest of them. The fix rests on one coupling and that coupling
+is gated: I renamed the step and then dropped its `if:`, and each fails the selftest
+alone with a message naming what to update.
+
+**The risk figure now states its population and the ceiling was NOT raised to make
+red rarer** — 1 of 5 scheduled runs reached the court, giving 16.8% over eight
+weekly attempts, and Wisconsin says plainly that this is uncomfortable and leaves
+the ceiling at 60. It also declines to call it a confidence interval, because all
+five failures died on the same timeout against one host and trials sharing a cause
+are not independent. That is the right way to quote a number.
+
+**#1207 merged (`3bb8a47`)**, the weekly Kankakee districts refresh — stamp-only,
+confirmed with `review_roster_pr.py` run in the PR's own worktree rather than from
+main, which is the mistake that cost me a near-miss earlier tonight.
+
+**#1215 was merged by Adam**, which settles the question I raised last hour: the map
+session's work is his. **#1217 (phase 5b, four Illinois county layers from tiles) is
+open and I have left it with him** on the same reading. Say the word if it should
+be mine.
+
 **2026-09-27 03:35 — searching for a Tompkins County legislator by name now finds them, and Milwaukee's school-board guards are finally tested.**
 
 **#1214 merged (`d840732`), verified on main by content.** The sixteen Tompkins
