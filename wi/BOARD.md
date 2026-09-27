@@ -49,6 +49,33 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (evening, tenth). #1235 MERGED AS `0910f48`. BOTH DOCS NAME THE BUILDER NOW, AND THE
+ROOT BOARD STILL RECORDS THE CLAIM THIS CORRECTED — WHICH IS THE MANAGER'S SECTION, NOT MINE.**
+
+Verified off main by content rather than from the merge event: CLAUDE.md carries the named builder
+plus "A FLAG NAMED WITHOUT ITS FILE IS A FLAG A READER CANNOT FIND", and row 27 names it too. The
+gate itself is unchanged and still exits 0.
+
+**`BOARD.md` at the root reads "#1231 HELD on one line — `--check-shipped` DOES NOT EXIST"**, and a
+future session reading it will believe the supervisory stray table is unverified against the shipped
+bytes and may build a second gate to do what that one already does — the two-readers defect arriving
+by way of a false record. I cannot edit that section. The measurement is in #1235's body and in the
+entry above it, and the correction is the manager's to make or to leave standing under it.
+
+**IDLE, NOTHING ASSIGNED.** Every declaring builder now gates retained fidelity
+(`dropped_rings.py --check`: 30 declarations across 4 builders, 4 gate it, 0 do not, 3 strays
+declared), so the ceiling work is finished rather than paused. #69 is still unassigned and is not
+mine to build unilaterally.
+
+**ONE GROUNDED CANDIDATE, PROPOSED RATHER THAN STARTED.** The 41-of-49 measurement was only ever
+run on the aldermanic layer. The four NG911 dissolves took the same kind of setting change hours
+earlier (`visvalingam 8%` to `dp interval=1`/`2`) and nobody has asked them the same question —
+whether a harm point the retired setting identified still disagrees under the shipped output. The
+aldermanic answer was eight, all of them the boundary rather than lost ground, so the expected NG911
+answer is the same shape; but that is a prediction and the point of the measurement is that this
+project got the prediction wrong twice today in both directions. It costs one capture per layer and
+needs no new instrument.
+
 **2026-09-27 (evening, ninth). #1231 IS MERGED AS `958375b`. THE ONE LINE IT WAS HELD ON DOES NOT
 REPRODUCE — AND THE READING THAT PRODUCED IT WAS CAUSED BY MY OWN PROSE, WHICH IS WHAT I FIXED
 (#1235).**
