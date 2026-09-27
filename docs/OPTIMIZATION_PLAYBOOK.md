@@ -1452,7 +1452,15 @@ missed** and was caught by CI, not locally: its library loader stamped the
 officials in a wrapper of its own, and the local run's random points never
 landed in Boone. The card probe now also places up to three points inside
 each county's own districts and fails if no county answers any of them, so a
-county's entry is always asked.
+county's entry is always asked. **It also checks every county the archive
+holds WHOLE, with no points** (`countyStampCheck`, engine `exports`): the
+county's own files, run through its loader's `decorate`, must give exactly
+the features the loader returns, or the probe fails naming the county. Four
+live loaders stamp outside `withStamp` today — Kendall's and LaSalle's and
+Grundy's precincts and Tazewell's board, found by the coordinating session's
+sweep — and none of their counties is in an archive, so nothing is wrong now;
+the check is what fails the day one of them enters one. Reintroducing Boone's
+old loader fails it on Boone alone, before any point is compared.
 
 **If an archive fails, the layer draws from its whole files for the session**
 (`redrawFromFile`), because a county layer's live counties still need drawing;
