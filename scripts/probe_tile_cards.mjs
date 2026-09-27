@@ -15,8 +15,11 @@
 // WHICH POINTS. For each layer, pairs of points either side of randomly chosen
 // district edges, 3-25 m out, so neighbouring districts are both asked, and a
 // few more well inside districts. The archives are gated to answer as the file
-// does at every point 2 m or more from an edge, so 3 m is the nearest honest
-// distance. Seeded, so a run is repeatable.
+// does at every point 2 m or more from an edge, so a point is kept only if it
+// is that far from EVERY edge: 3-25 m from the chosen edge can still be on
+// another one at a corner, and the first CI run of phase 5b failed five
+// layers on points 0.09-0.48 m from a second edge. Seeded PER LAYER, from the
+// layer's own name, so adding a layer does not move another layer's points.
 //
 // One fresh page per layer: a layer whose whole file is loaded answers every
 // later query from it, so a page shared between layers would stop testing the
@@ -48,8 +51,33 @@ const TAGS = process.env.TAGS ? process.env.TAGS.split(",") : instances();
 const ONLY = process.env.LAYERS ? new Set(process.env.LAYERS.split(",")) : null;
 const SOURCES = JSON.parse(readFileSync(join(ROOT, "layer-sources.json"), "utf8"));
 
+const EDGE_TOLERANCE_M = 2; // scripts/build_vector_tiles.py's gate
 let seed = 13;
 function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+function seedFor(name) {
+  let h = 13;
+  for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) % 2147483648;
+  seed = h;
+}
+// metres from the point to the nearest edge of any feature, in a local
+// equirectangular frame (exact enough at a few metres)
+function edgeDistanceM(pt, polys) {
+  const kx = 111320 * Math.cos(pt.lat * Math.PI / 180), ky = 110574;
+  let best = Infinity;
+  for (const f of polys) {
+    for (const ring of rings(f.geometry)) {
+      for (let i = 1; i < ring.length; i++) {
+        const ax = (ring[i - 1][0] - pt.lng) * kx, ay = (ring[i - 1][1] - pt.lat) * ky;
+        const bx = (ring[i][0] - pt.lng) * kx, by = (ring[i][1] - pt.lat) * ky;
+        const dx = bx - ax, dy = by - ay, len2 = dx * dx + dy * dy;
+        const t = len2 ? Math.max(0, Math.min(1, -(ax * dx + ay * dy) / len2)) : 0;
+        const d = Math.hypot(ax + t * dx, ay + t * dy);
+        if (d < best) best = d;
+      }
+    }
+  }
+  return best;
+}
 
 function rings(geom) {
   if (!geom) return [];
@@ -86,7 +114,9 @@ function pointsFor(features) {
     const v = ring[Math.floor(rnd() * ring.length)];
     out.push({ lng: (v[0] + cx) / 2, lat: (v[1] + cy) / 2 });
   }
-  return out;
+  const kept = out.filter((p) => edgeDistanceM(p, polys) >= EDGE_TOLERANCE_M);
+  kept.dropped = out.length - kept.length;
+  return kept;
 }
 
 function tiledLayers(tag) {
@@ -114,6 +144,7 @@ try {
         return existsSync(p) ? (JSON.parse(readFileSync(p, "utf8")).features || []) : [];
       });
       if (!feats.length) { console.log(`  FAIL  ${tag}:${id} — layer-sources.json names no file to place points in`); problems++; continue; }
+      seedFor(`${tag}:${id}`);
       const pts = pointsFor(feats);
       const ctx = await browser.newContext({ serviceWorkers: "block" });
       const page = await ctx.newPage();
@@ -156,7 +187,7 @@ try {
       answered += res.filter((r) => r.file && !/^error:/.test(r.file)).length;
       layersDone++;
       const ok = !bad.length && !errs.length && !notTiled.length && !hoverBad.length;
-      console.log(`  ${ok ? "ok  " : "FAIL"}  ${tag}:${id} — ${res.length} points, ${res.filter((r) => r.file).length} with a district, ` +
+      console.log(`  ${ok ? "ok  " : "FAIL"}  ${tag}:${id} — ${res.length} points (${pts.dropped} dropped within ${EDGE_TOLERANCE_M} m of an edge), ${res.filter((r) => r.file).length} with a district, ` +
         `${bad.length} differ, ${errs.length} errored` +
         (county ? `, ${hoverBad.length} hover names differ` : `, ${notTiled.length} not answered from tiles`));
       if (county) {
