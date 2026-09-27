@@ -46,6 +46,83 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-27, THE COUNTY TIER IS OPEN: TOMPKINS SHIPS AS #1209, and the two findings
+worth your time are a gate that could not see its own defect and a footnote that was
+true about the wrong thing.** 16 single-member districts, geometry from the county's own
+GIS, sixteen legislators from the county's own two pages, the coverage ring now disjoint
+with Tompkins as its own outer ring. 103 of 103 no-browser invocations green (re-run
+AFTER merging #1205 in), all six smoke tests green, `page_consistency_test.mjs` red on
+95 cert-interception failures with zero non-cert failures and nothing this change
+touches named. Ready for review; I do not merge my own.
+
+**WHAT A READER GETS.** A click anywhere in Tompkins County answers "County Legislature
+District 2 · Veronica Pillar (Democratic)" with her e-mail, her committees, a link to
+her own page, and the Legislature's office and switchboard. The layer is
+coverage-hidden everywhere else, including inside the city, which has no county
+government to answer for. New York's other 56 counties still read as the middle band
+your own #1184 change made honest — which is what made growing the ring one county at a
+time a true statement rather than a partial one.
+
+**FINDING 1, AND IT IS THE ONE I WOULD WANT TOLD ABOUT: A GATE THAT MEASURES ONE LIST
+WHILE THE WRITER TAKES ANOTHER IS INVISIBLE TO EVERY GATE IN THE REPO.** My builder's
+first draft passed the chord-stray gate, the partition gate, the population identity and
+the offline `--check`, and shipped the 197 KB SOURCE file instead of the 18 KB simplified
+one. Nothing was wrong except which list reached `strip()`: both gates read the BUILT
+features, correctly, while the writer was handed the fetched ones. I caught it by
+reading the byte count in my own OK line, not by any check. The builder now asserts the
+WRITTEN vertex count against the BUILT one. **I think this generalises past my file** —
+any builder whose gates take one collection and whose writer takes another has the same
+hole, and the cheap closing move is an identity assertion between what was measured and
+what was written. Worth a sweep if you want one; I have not done it.
+
+**FINDING 2: `NO HONEST ANALOG¹` WAS TRUE ABOUT FIVE COUNTIES AND WAS READ AS AN ANSWER
+ABOUT AN INSTANCE.** The guidebook's New York cell for county legislature cited a
+footnote saying NYC's counties have no legislature — *Board of Estimate v. Morris*, 1989
+— and that footnote is still exactly right. It stopped being an answer to the cell's
+question on 2026-09-19, when this instance went statewide. Same shape as Knox ("the
+website refuses us", true of the website) and Vermilion ("the Clerk has no shapefiles",
+true of the Clerk). **A drop rationale scoped to part of an instance needs re-reading the
+day the instance's scope moves**, and nothing in the repo prompts that.
+
+**TWO GATES WERE READING TEXT WHERE THEY MEANT COMMANDS, both fixed with negative
+tests.** `validate_workflow_deps.py` demanded `requests` for a scraper that uses
+`urllib.request`: its FLEET_SHARED branch re-enters `closure()` with the shared module's
+name as `entry`, so a module the workflow merely IMPORTS was read as though the runner
+executed it and every function-local import became a hard pip requirement — its own
+docstring already stated the opposite contract. And `validate_workflow_checkout.py`
+failed my workflow for EXPLAINING why it uses no depth-limited fetch; every one of these
+jobs carries that comment, and whether it trips the gate came down to **where the line
+happened to wrap** (`ny-update-council-roster.yml` passes with the same sentence only
+because its break falls between `git fetch` and `--depth`). A verdict that turns on line
+wrapping teaches the next author to mangle a comment, so shell comments are now stripped
+before the command patterns match.
+
+**A CORRECTION TO MY OWN RECORD FROM YESTERDAY.** #1204's proof section inferred "a
+four-year term on the odd-year cycle" from the Board of Elections' election list. The
+county's own Legislature page says THREE years, current term 2026-2028 — which seats at
+November 2025, 2022 and 2019 and makes the 2021 District 5 contest an unexpired-term
+election, the entire basis of the inference. An election list bounds a cycle and does not
+measure a term, and the county published the term one page away. The FORM does not depend
+on it, which is why the error survived the proof and was caught by a different reader.
+
+**WHAT I RECORDED RATHER THAN BUILT, and the reason is that nothing would have reminded
+anyone.** The sixteen legislators reach a reader and not a crawler:
+`build_county_pages.py` enumerates whatever an `INSTANCES` adapter reads, New York has
+none, and **its registration gate cannot see this roster** — keyed `board` plus 1..16
+with a filename naming a county rather than the word, it matches neither of that gate's
+two signals and stays invisible. That is the Cass/Greene/Scott/Moultrie shape, an
+absence with nothing on file to notice it, so it is written into the guidebook as the
+next item: an `INSTANCES` entry plus an adapter whose shape already exists, since
+Illinois's `il_districted` reads one file per county keyed by district. **If you would
+rather that shipped inside this PR than after it, say so and I will fold it in** — I
+scoped it out because the card answers today and Michigan's commissioner districts
+shipped nameless for ten days before its roster landed.
+
+**STILL UNCHOSEN AND NOT GUESSED AT**: the board-of-supervisors reference county (it
+should be picked by which county publishes a maintained supervisor roster, a measurement
+nobody has taken) and Otsego's form. Those are the next two questions for county 2, and
+neither is blocking.
+
 **2026-09-26, #1204 IS GREEN AND MERGES CLEAN — ready for review.** `smoke` completed
 `success` on head `8909b44` (23:24:14 → 23:36:15 UTC), no review threads and no
 comments, and `git merge-tree --write-tree` against main's tip `dd64961` exits with
