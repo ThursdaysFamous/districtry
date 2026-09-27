@@ -1,0 +1,343 @@
+  /* ---------- layers drawn from vector tiles (docs/OPTIMIZATION_PLAYBOOK.md
+   * §10, phase 4). A layer registered with `tiles: "<archive url>"` is read
+   * from its archive (vector-tiles block) instead of its whole GeoJSON file:
+   *
+   *   - the CARD answers from the deepest tile under the selected point, a
+   *     few kilobytes, wherever the reader is zoomed. That needs only
+   *     DecompressionStream, so it holds on the raster fallback too.
+   *   - the MAP draws the layer with MapLibre GL, which every app already
+   *     loads for its basemap, in one shared canvas in its own pane
+   *     (dstTileOverlays) just below Leaflet's overlay pane, a screen of tiles
+   *     at a time, with detail rising as the reader zooms. Without WebGL the
+   *     layer is drawn from its GeoJSON file exactly as before.
+   *   - the whole GeoJSON file is still what the comparison features read
+   *     (the pin, the relationship outlines, the stats), so it is fetched in
+   *     the background when one of them needs it, never on switch-on.
+   *
+   * The highlight, the fade of the other districts, the fill scaling by
+   * layer count and the outline-only mode are the same styles the Leaflet
+   * path reads (baseStyleFor, highlightStyleFor, fadedStyle), expressed as GL
+   * paint with a feature-state for the selected district. Two things differ
+   * and are recorded rather than hidden: the drop shadow under the lit
+   * district is a blurred line rather than a CSS filter, and a layer drawn
+   * from tiles sits below every Leaflet-drawn layer rather than at its size
+   * rank among them (tile layers are ranked among themselves). ---------- */
+  var TILE_PANE = "dstTileOverlays";
+  var TILE_SOURCE_LAYER = "d";
+  var tileGLLayer = null;   // the shared L.maplibreGL, made on first use
+  var tileGLReady = null;   // resolves with its MapLibre map once it has loaded
+  var tileProtocolAdded = false;
+
+  function tileCardAvailable(mod) {
+    return !!(mod && mod.tiles && typeof DecompressionStream !== "undefined" && typeof TextDecoder !== "undefined");
+  }
+  function tileDrawAvailable(mod) {
+    return tileCardAvailable(mod) && !!baseIsVector && !!window.maplibregl && !!L.maplibreGL;
+  }
+  function tileArchiveFor(mod) {
+    return openTileArchive(new URL(mod.tiles, document.baseURI).href);
+  }
+
+  // The card's feature: from the whole file when it is already in memory
+  // (a comparison fetched it), otherwise from the tile under the point. A
+  // failed tile read falls back to the whole file, so the card still answers.
+  function tileFeatureAt(mod, load, point) {
+    var cached = load.cached ? load.cached() : null;
+    if (cached) return Promise.resolve(findFeatureContaining(cached, point));
+    var rt = layerRuntime[mod.id];
+    return tileFeaturesAt(tileArchiveFor(mod), point).then(function (fc) {
+      var feature = findFeatureContaining(fc, point);
+      rt.tileAnswer = { point: point, feature: feature };
+      return feature;
+    }, function (err) {
+      console.warn("[" + mod.id + "] tile read failed, loading the whole file:", err);
+      return load().then(function (geojson) { return findFeatureContaining(geojson, point); });
+    });
+  }
+
+  function tileDashArray(style) {
+    if (!style || !style.dashArray) return null;
+    var w = style.weight || 1;
+    var parts = String(style.dashArray).split(/[\s,]+/).map(Number).filter(function (n) { return n > 0; });
+    return parts.length ? parts.map(function (n) { return n / w; }) : null;
+  }
+
+  function ensureTileGL() {
+    if (tileGLReady) return tileGLReady;
+    if (!tileProtocolAdded) {
+      tileProtocolAdded = true;
+      // dxpm://<layer id>/<z>/<x>/<y>: one tile of that layer's archive
+      maplibregl.addProtocol("dxpm", function (params) {
+        var m = /^dxpm:\/\/([^/]+)\/(\d+)\/(\d+)\/(\d+)/.exec(params.url);
+        var mod = m && getLayerById(decodeURIComponent(m[1]));
+        if (!mod) return Promise.resolve({ data: new ArrayBuffer(0) });
+        return tileArchiveFor(mod).getTile(+m[2], +m[3], +m[4]).then(function (bytes) {
+          if (!bytes) return { data: new ArrayBuffer(0) };
+          return { data: bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) };
+        });
+      });
+    }
+    var pane = map.getPane(TILE_PANE) || map.createPane(TILE_PANE);
+    pane.style.zIndex = "395"; // above the basemap (200), below Leaflet's overlays (400)
+    pane.style.pointerEvents = "none";
+    tileGLLayer = L.maplibreGL({
+      style: { version: 8, sources: {}, layers: [] },
+      pane: TILE_PANE, attributionControl: false, interactive: false
+    });
+    tileGLLayer.addTo(map);
+    var gl = tileGLLayer.getMaplibreMap();
+    tileGLReady = new Promise(function (resolve) {
+      if (gl.isStyleLoaded()) resolve(gl);
+      else gl.once("load", function () { resolve(gl); });
+    });
+    return tileGLReady;
+  }
+
+  function tileIds(mod) {
+    var s = "dx-" + mod.id;
+    return { source: s, fill: s + "-fill", shadow: s + "-shadow", line: s + "-line", hl: s + "-hl" };
+  }
+
+  // The GL paint for a layer's current state: no selection, or a selection
+  // (the lit district by feature-state, every other one faded).
+  function tilePaint(mod) {
+    var rt = layerRuntime[mod.id];
+    var base = baseStyleFor(mod) || {};
+    var selected = rt.tileSelectedId != null;
+    var hl = highlightStyleFor(mod), faded = fadedStyle(base);
+    var isSel = ["boolean", ["feature-state", "sel"], false];
+    var baseOpacity = base.opacity == null ? 1 : base.opacity;
+    return {
+      fill: {
+        "fill-color": base.fillColor || base.color || "#000",
+        "fill-opacity": selected ? ["case", isSel, hl.fillOpacity, faded.fillOpacity] : (base.fillOpacity || 0)
+      },
+      line: {
+        "line-color": base.color || "#000",
+        "line-width": selected ? faded.weight : (base.weight || 1),
+        "line-opacity": selected ? ["case", isSel, 0, faded.opacity] : baseOpacity
+      },
+      hl: {
+        "line-color": hl.color,
+        "line-width": hl.weight,
+        "line-opacity": ["case", isSel, 1, 0]
+      },
+      shadow: {
+        "line-color": "#000",
+        "line-width": hl.weight + 4,
+        "line-blur": 4,
+        "line-translate": [0, 2],
+        "line-opacity": ["case", isSel, 0.28, 0]
+      },
+      dash: tileDashArray(base)
+    };
+  }
+
+  var TileOverlay = L.Layer.extend({
+    initialize: function (mod) {
+      this.mod = mod;
+      this.dxTiles = true;
+      this._dxOn = false;
+    },
+    onAdd: function () {
+      var self = this, mod = this.mod;
+      this._dxOn = true;
+      ensureTileGL().then(function (gl) {
+        if (!self._dxOn || gl.getSource(tileIds(mod).source)) { self.restyle(); return; }
+        return tileArchiveFor(mod).header.then(function (h) {
+          if (!self._dxOn || gl.getSource(tileIds(mod).source)) return;
+          var ids = tileIds(mod), paint = tilePaint(mod);
+          gl.addSource(ids.source, {
+            type: "vector",
+            tiles: ["dxpm://" + encodeURIComponent(mod.id) + "/{z}/{x}/{y}"],
+            minzoom: h.minZoom, maxzoom: h.maxZoom,
+            bounds: h.bounds
+          });
+          var common = { source: ids.source, "source-layer": TILE_SOURCE_LAYER };
+          gl.addLayer(Object.assign({ id: ids.fill, type: "fill", paint: paint.fill }, common));
+          gl.addLayer(Object.assign({ id: ids.shadow, type: "line", paint: paint.shadow }, common));
+          var line = Object.assign({ id: ids.line, type: "line", paint: paint.line }, common);
+          if (paint.dash) line.paint["line-dasharray"] = paint.dash;
+          gl.addLayer(line);
+          gl.addLayer(Object.assign({ id: ids.hl, type: "line", paint: paint.hl }, common));
+          // a district lit before the source existed (the card can answer
+          // first) carries its state over now
+          var sel = layerRuntime[mod.id].tileSelectedId;
+          if (sel != null) gl.setFeatureState({ source: ids.source, sourceLayer: TILE_SOURCE_LAYER, id: sel }, { sel: true });
+          self.restyle();
+          reorderActiveLayers();
+        });
+      }).catch(function (err) { console.error("[" + mod.id + "] tile overlay failed:", err); });
+      return this;
+    },
+    onRemove: function () {
+      this._dxOn = false;
+      var mod = this.mod, gl = tileGLLayer && tileGLLayer.getMaplibreMap();
+      if (!gl) return this;
+      var ids = tileIds(mod);
+      [ids.hl, ids.line, ids.shadow, ids.fill].forEach(function (id) { if (gl.getLayer(id)) gl.removeLayer(id); });
+      if (gl.getSource(ids.source)) gl.removeSource(ids.source);
+      layerRuntime[mod.id].tileSelectedId = null;
+      layerRuntime[mod.id].tileEdgeId = null;
+      return this;
+    },
+    // the Leaflet path's per-path iteration has nothing to visit here
+    eachLayer: function () { return this; },
+    bringToFront: function () {
+      var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
+      if (!gl) return this;
+      var ids = tileIds(this.mod);
+      [ids.fill, ids.shadow, ids.line, ids.hl].forEach(function (id) { if (gl.getLayer(id)) gl.moveLayer(id); });
+      return this;
+    },
+    restyle: function () {
+      var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
+      var ids = tileIds(this.mod);
+      if (!gl || !gl.getLayer(ids.fill)) return this;
+      var paint = tilePaint(this.mod);
+      ["fill", "line", "hl", "shadow"].forEach(function (part) {
+        Object.keys(paint[part]).forEach(function (prop) { gl.setPaintProperty(ids[part], prop, paint[part][prop]); });
+      });
+      return this;
+    },
+    // Light one district (by its tile feature id), or none.
+    setSelected: function (id) {
+      var rt = layerRuntime[this.mod.id];
+      var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
+      var ids = tileIds(this.mod);
+      if (gl && gl.getSource(ids.source)) {
+        if (rt.tileSelectedId != null && rt.tileSelectedId !== id) {
+          gl.setFeatureState({ source: ids.source, sourceLayer: TILE_SOURCE_LAYER, id: rt.tileSelectedId }, { sel: false });
+        }
+        if (id != null) gl.setFeatureState({ source: ids.source, sourceLayer: TILE_SOURCE_LAYER, id: id }, { sel: true });
+      }
+      rt.tileSelectedId = id;
+      this.restyle();
+      return this;
+    },
+    // The district drawn under a map point, for the hover popup: what the
+    // canvas shows, so at a low zoom it is the simplified shape the reader
+    // sees. Properties parsed back as the card's are (vector-tiles block).
+    featureAt: function (point) {
+      var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
+      var ids = tileIds(this.mod);
+      if (!gl || !gl.getLayer(ids.fill)) return null;
+      var px = gl.project([point.lng, point.lat]);
+      var hits = gl.queryRenderedFeatures(px, { layers: [ids.fill] });
+      if (!hits.length) return null;
+      var props = {};
+      var src = hits[0].properties || {};
+      for (var k in src) {
+        if (!src.hasOwnProperty(k) || k === "_s" || k === "_i") continue;
+        var v = src[k];
+        if (typeof v === "string" && /^\s*[\[{]/.test(v)) { try { v = JSON.parse(v); } catch (e) { /* ordinary text */ } }
+        props[k] = v;
+      }
+      return { type: "Feature", id: hits[0].id, properties: props, geometry: null };
+    }
+  });
+
+  function isTileDrawn(mod) {
+    var rt = layerRuntime[mod.id];
+    return !!(rt && rt.overlayLayer && rt.overlayLayer.dxTiles);
+  }
+
+  // The highlight pass for a layer drawn from tiles: light the district the
+  // card answered for this point, by its feature id. The card's answer is
+  // the tile's, which the builder's gate holds to the file.
+  function updateTileHighlight(mod) {
+    var rt = layerRuntime[mod.id];
+    var answer = rt.tileAnswer;
+    var feature = answer && answer.point === state.selectedPoint ? answer.feature : null;
+    if (!feature && rt.geojson && state.selectedPoint) feature = findFeatureContaining(rt.geojson, state.selectedPoint);
+    var id = feature && feature.id != null ? feature.id : null;
+    rt.overlayLayer.setSelected(id);
+    rt.highlightApplied = id != null;
+    rt.highlightSignature = id != null ? highlightSignature(rt) : null;
+    // no geometry until tileEdgesForStreets has the real edges in view: the
+    // card's tile piece carries its tile's clip lines, which are not edges
+    if (rt.tileEdgeId !== id) rt.highlightedLayer = id != null ? { feature: { type: "Feature", properties: {}, geometry: null } } : null;
+    rt.tileEdgeId = id;
+    if (id != null) tileEdgesForStreets(mod, id);
+    scheduleBoundaryStreets();
+  }
+
+  /* The lit district's edges in view, for the boundary-street names
+   * (basemap block), which a tile piece alone cannot give: the card's tile
+   * holds only the few kilometres around the point, and its edges include
+   * the tile's own clip lines. So at the zooms that name streets, the
+   * deepest tiles under the view are read and every segment lying along a
+   * tile's clip line is dropped, leaving the district's real edges as runs
+   * of line. ---------- */
+  var TILE_EDGE_MAX_TILES = 36;
+  function tileEdgesForStreets(mod, id) {
+    var rt = layerRuntime[mod.id];
+    if (typeof boundaryStreetsOn === "undefined" || !boundaryStreetsOn || map.getZoom() < BOUNDARY_STREET_MINZOOM) return;
+    var b = map.getBounds(), archive = tileArchiveFor(mod);
+    var key = id + "|" + map.getZoom() + "|" + b.toBBoxString();
+    if (rt.tileEdgeKey === key) return;
+    rt.tileEdgeKey = key;
+    archive.header.then(function (h) {
+      var z = h.maxZoom;
+      var nw = tileXYFor(b.getWest(), b.getNorth(), z), se = tileXYFor(b.getEast(), b.getSouth(), z);
+      var jobs = [];
+      for (var x = nw.x; x <= se.x; x++) {
+        for (var y = nw.y; y <= se.y; y++) jobs.push([x, y]);
+      }
+      if (jobs.length > TILE_EDGE_MAX_TILES) return null;
+      return Promise.all(jobs.map(function (xy) {
+        return archive.getTile(z, xy[0], xy[1]).then(function (bytes) {
+          if (!bytes) return [];
+          var d = decodeTileLayer(bytes, TILE_SOURCE_LAYER), ext = d.extent, runs = [];
+          d.features.forEach(function (f) {
+            if (f.id !== id) return;
+            f.rings.forEach(function (ring) {
+              var run = null;
+              for (var i = 1; i < ring.length; i++) {
+                var a = ring[i - 1], c = ring[i];
+                var clip = (a[0] <= 0 && c[0] <= 0) || (a[0] >= ext && c[0] >= ext) ||
+                  (a[1] <= 0 && c[1] <= 0) || (a[1] >= ext && c[1] >= ext);
+                if (clip) { run = null; continue; }
+                if (!run) { run = [tileToLngLat(z, xy[0], xy[1], a[0], a[1], ext)]; runs.push(run); }
+                run.push(tileToLngLat(z, xy[0], xy[1], c[0], c[1], ext));
+              }
+            });
+          });
+          return runs;
+        });
+      }));
+    }).then(function (perTile) {
+      if (!perTile || rt.tileEdgeKey !== key || rt.tileSelectedId !== id) return;
+      var runs = [].concat.apply([], perTile);
+      // matchBoundaryStreets reads each ring as a run of segments and never
+      // closes it, so open runs of real edge are exactly what it needs
+      rt.highlightedLayer = { feature: { type: "Feature", properties: {}, geometry: { type: "MultiPolygon", coordinates: [runs] } } };
+      scheduleBoundaryStreets();
+    }).catch(function () { /* the street names are an extra; the district stays lit */ });
+  }
+  map.on("moveend", function () {
+    layers.forEach(function (mod) {
+      var rt = layerRuntime[mod.id];
+      if (state.layersOn[mod.id] && isTileDrawn(mod) && rt.tileSelectedId != null) tileEdgesForStreets(mod, rt.tileSelectedId);
+    });
+  });
+
+  // The whole GeoJSON file, fetched in the background for a comparison
+  // feature that reads every district (the pin, the relationship outlines,
+  // the stats). Drawing stays on the tiles.
+  function ensureTileGeojson(mod) {
+    var rt = layerRuntime[mod.id];
+    if (rt.geojson) return Promise.resolve(rt.geojson);
+    if (rt.tileGeojsonPromise) return rt.tileGeojsonPromise;
+    rt.overlayLoaded = true; // what the stats screen reads as "still downloading"
+    rt.tileGeojsonPromise = mod.overlay.load().then(function (geojson) {
+      rt.geojson = geojson;
+      rt.tileGeojsonPromise = null;
+      return geojson;
+    }, function (err) {
+      rt.overlayLoaded = false;
+      rt.tileGeojsonPromise = null;
+      throw err;
+    });
+    return rt.tileGeojsonPromise;
+  }

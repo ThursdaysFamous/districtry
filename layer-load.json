@@ -1,5 +1,5 @@
 {
- "measured": "2026-09-26",
+ "measured": "2026-09-27",
  "network": {
   "method": "chromium",
   "profile": "slow4g",
@@ -6964,24 +6964,34 @@
       "point": 0,
       "error": null,
       "relevant": true,
-      "card_ms": 12708,
+      "card_ms": 897,
       "card_state": "result",
-      "highlight_ms": 12708,
-      "overlay_ms": 12708,
-      "features": 369,
-      "requests": 1,
-      "bytes": 2365491,
-      "bytes_before_card": 2365491,
-      "requests_before_card": 1,
-      "local_bytes": 2365491,
+      "highlight_ms": 897,
+      "overlay_ms": 42,
+      "features": 0,
+      "requests": 7,
+      "bytes": 27476,
+      "bytes_before_card": 27106,
+      "requests_before_card": 5,
+      "local_bytes": 27476,
       "hosts": [
        "(this site)"
       ],
       "largest": [
        {
         "host": "(this site)",
-        "path": "/wi/data/app/school-districts-unified.json",
-        "bytes": 2365491
+        "path": "/wi/data/app/tiles/school-district-unified.pmtiles",
+        "bytes": 16471
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/tiles/school-district-unified.pmtiles",
+        "bytes": 10058
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/tiles/school-district-unified.pmtiles",
+        "bytes": 207
        }
       ],
       "unfinished": 0,

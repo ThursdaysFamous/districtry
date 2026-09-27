@@ -344,7 +344,14 @@
     }
 
     // turning on: (1) build/attach the overlay, (2) run the query if a point exists
-    if (rt.geojson) {
+    if (tileDrawAvailable(mod)) {
+      // drawn from vector tiles: nothing to download before drawing, and the
+      // whole file only if a comparison asks for it (tile-overlay block)
+      if (!rt.overlayLayer) rt.overlayLayer = new TileOverlay(mod);
+      if (rt.relevant !== false) rt.overlayLayer.addTo(map);
+      refreshActiveLayerOpacities();
+      reorderActiveLayers();
+    } else if (rt.geojson) {
       // geometry already cached from an earlier toggle. The Leaflet layer graph is
       // released on toggle-off (P11), so rebuild it synchronously from the cached
       // geojson (no refetch) unless a re-entrant path already rebuilt it.
@@ -713,7 +720,11 @@
       refreshActiveLayerOpacities(); // one fewer visible fill — the rest get more opaque
       refreshRelationshipOutlines();
     } else {
-      if (state.layersOn[mod.id] && rt.geojson) {
+      if (state.layersOn[mod.id] && tileDrawAvailable(mod)) {
+        if (!rt.overlayLayer) rt.overlayLayer = new TileOverlay(mod);
+        rt.overlayLayer.addTo(map);
+        reorderActiveLayers();
+      } else if (state.layersOn[mod.id] && rt.geojson) {
         // back in coverage with the layer still on — reattach from the cached
         // geojson (addLayer is a no-op if it's already on the map); the dispatch,
         // which shares this selection's memoized relevance, repopulates the card

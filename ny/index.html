@@ -8005,7 +8005,13 @@ function initNycExplorer() {
       cardPromise: null,
       // the first overlay load's promise (onLayerToggled), which the hover
       // roster prefetch waits for
-      overlayPromise: null
+      overlayPromise: null,
+      // a layer drawn from vector tiles (tile-overlay block): the card's
+      // answer for the selected point, the lit district's tile feature id,
+      // the background fetch of the whole file a comparison needs, and the
+      // view whose edges were last read for the boundary-street names
+      tileAnswer: null, tileSelectedId: null, tileGeojsonPromise: null,
+      tileEdgeKey: null, tileEdgeId: null
     };
   }
 
@@ -8085,6 +8091,7 @@ function initNycExplorer() {
   function restyleOverlayFeatures(mod) {
     var rt = layerRuntime[mod.id];
     if (!rt || !rt.overlayLayer) return;
+    if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); return; }
     rt.overlayLayer.eachLayer(function (subLayer) {
       if (subLayer.setStyle && subLayer.feature) subLayer.setStyle(baseStyleFor(mod, subLayer.feature));
     });
@@ -8111,6 +8118,8 @@ function initNycExplorer() {
   function rescaleLayerFill(mod) {
     var rt = layerRuntime[mod.id];
     if (!rt.overlayLayer) return;
+    // a tile-drawn layer's paint reads the count itself (tilePaint)
+    if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); if (rt.highlightApplied) rt.highlightSignature = highlightSignature(rt); return; }
     if (rt.highlightApplied) { rt.highlightSignature = highlightSignature(rt); return; }
     if (rt.outlineOnly) return; // outline-only layers carry no fill to rescale
     var fillOpacity = scaledFillOpacity(mod);
@@ -8246,6 +8255,7 @@ function initNycExplorer() {
     rt.highlightSignature = null;
     scheduleBoundaryStreets(); // basemap: the streets this district's edge follows
     if (!rt.overlayLayer) return;
+    if (rt.overlayLayer.dxTiles) { rt.overlayLayer.setSelected(null); return; }
     rt.overlayLayer.eachLayer(function (subLayer) {
       if (subLayer.setStyle) subLayer.setStyle(baseStyleFor(mod, subLayer.feature));
       if (subLayer._path) subLayer._path.classList.remove(HIGHLIGHT_CLASS);
@@ -8259,6 +8269,12 @@ function initNycExplorer() {
     // the one a click happens to land inside would defeat the type coloring, so
     // skip the highlight/fade sweep and just keep the per-feature base styling.
     if (mod.overlay && mod.overlay.styleForFeature) { clearLayerHighlight(mod); return; }
+    // drawn from vector tiles: lit by feature id from the card's answer
+    if (rt.overlayLayer && rt.overlayLayer.dxTiles) {
+      if (!state.selectedPoint) { clearLayerHighlight(mod); return; }
+      updateTileHighlight(mod);
+      return;
+    }
     if (!rt.overlayLayer || !rt.geojson || !state.selectedPoint) {
       clearLayerHighlight(mod);
       showProvisionalHighlight(mod); // the point answer's district, until the full set is in
@@ -8324,6 +8340,647 @@ function initNycExplorer() {
     return mod.color || "#14181C";
   }
   /* ==== ENGINE:END layer-registry ==== */
+
+  /* ==== ENGINE:BEGIN vector-tiles ==== */
+  /* ---------- vector tiles: read a PMTiles archive, decode its tiles ----------
+   * A layer drawn from tiles (docs/OPTIMIZATION_PLAYBOOK.md §10, phase 4)
+   * reads one archive, data/app/tiles/<layer>.pmtiles, built and gated by
+   * scripts/build_vector_tiles.py. The archive is one file; a tile is a byte
+   * range in it, so a reader downloads the tiles under the map and the one
+   * under the selected point, never the whole state. No library: the format
+   * is a 127-byte header, gzipped directories of varints and gzipped tiles,
+   * and a tile is a small protocol buffer. Written here, in the engine's own
+   * style, rather than vendoring two packages the app would then trust with
+   * every card answer; scripts/validate_vector_tiles.mjs holds both halves
+   * to the Python decoders the builder's gate already trusts.
+   *
+   * openTileArchive(url[, fetchRange]) returns { header, getTile(z, x, y) }:
+   * header resolves to the parsed header, getTile to the tile's bytes,
+   * decompressed, or null where the archive holds no tile. A server that
+   * ignores Range (python -m http.server does) answers 200 with the whole
+   * file, which is kept and sliced, so the reader is correct everywhere and
+   * saves bytes only where ranges work. ---------- */
+  var tileArchives = {};
+  function tileRangeFetcher(url) {
+    var whole = null;
+    return function (offset, length) {
+      if (whole) return whole.then(function (buf) { return buf.slice(offset, offset + length); });
+      return fetch(url, { headers: { Range: "bytes=" + offset + "-" + (offset + length - 1) } }).then(function (res) {
+        if (res.status === 206) return res.arrayBuffer();
+        if (!res.ok) throw new Error("tile archive " + url + ": HTTP " + res.status);
+        whole = res.arrayBuffer();
+        return whole.then(function (buf) { return buf.slice(offset, offset + length); });
+      });
+    };
+  }
+  function tileGunzip(bytes) {
+    if (bytes.length < 2 || bytes[0] !== 0x1f || bytes[1] !== 0x8b) return Promise.resolve(bytes);
+    var stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+    return new Response(stream).arrayBuffer().then(function (ab) { return new Uint8Array(ab); });
+  }
+  // A varint of up to 53 bits, which is every offset and tile id an archive
+  // holds; bit operators stop at 32, so this multiplies instead.
+  function tileVarint(r) {
+    var val = 0, mul = 1, b;
+    do {
+      b = r.buf[r.pos++];
+      val += (b & 0x7f) * mul;
+      mul *= 128;
+    } while (b & 0x80);
+    return val;
+  }
+  function tileU64(view, at) {
+    return view.getUint32(at, true) + view.getUint32(at + 4, true) * 4294967296;
+  }
+  function parseTileHeader(buf) {
+    var bytes = new Uint8Array(buf), view = new DataView(buf);
+    var magic = String.fromCharCode.apply(null, bytes.subarray(0, 7));
+    if (magic !== "PMTiles" || bytes[7] !== 3) throw new Error("not a PMTiles v3 archive");
+    return {
+      rootOffset: tileU64(view, 8), rootLength: tileU64(view, 16),
+      leafOffset: tileU64(view, 40), leafLength: tileU64(view, 48),
+      dataOffset: tileU64(view, 56), dataLength: tileU64(view, 64),
+      internalCompression: bytes[97], tileCompression: bytes[98], tileType: bytes[99],
+      minZoom: bytes[100], maxZoom: bytes[101],
+      bounds: [view.getInt32(102, true) / 1e7, view.getInt32(106, true) / 1e7,
+        view.getInt32(110, true) / 1e7, view.getInt32(114, true) / 1e7]
+    };
+  }
+  function parseTileDirectory(bytes) {
+    var r = { buf: bytes, pos: 0 };
+    var n = tileVarint(r), entries = new Array(n), i, last = 0;
+    for (i = 0; i < n; i++) { last += tileVarint(r); entries[i] = { tileId: last, offset: 0, length: 0, runLength: 1 }; }
+    for (i = 0; i < n; i++) entries[i].runLength = tileVarint(r);
+    for (i = 0; i < n; i++) entries[i].length = tileVarint(r);
+    for (i = 0; i < n; i++) {
+      var v = tileVarint(r);
+      entries[i].offset = (v === 0 && i > 0) ? entries[i - 1].offset + entries[i - 1].length : v - 1;
+    }
+    return entries;
+  }
+  // The Hilbert-curve tile id the format keys every tile by.
+  function zxyToTileId(z, x, y) {
+    var acc = 0, t;
+    for (t = 0; t < z; t++) acc += Math.pow(4, t);
+    var d = 0, s, rx, ry, tmp;
+    for (s = Math.pow(2, z) / 2; s >= 1; s /= 2) {
+      rx = (x & s) > 0 ? 1 : 0;
+      ry = (y & s) > 0 ? 1 : 0;
+      d += s * s * ((3 * rx) ^ ry);
+      if (ry === 0) {
+        if (rx === 1) { x = s - 1 - x; y = s - 1 - y; }
+        tmp = x; x = y; y = tmp;
+      }
+    }
+    return acc + d;
+  }
+  function findTileEntry(entries, tileId) {
+    var m = 0, n = entries.length - 1;
+    while (m <= n) {
+      var k = (m + n) >> 1, cmp = tileId - entries[k].tileId;
+      if (cmp > 0) m = k + 1;
+      else if (cmp < 0) n = k - 1;
+      else return entries[k];
+    }
+    if (n >= 0 && (entries[n].runLength === 0 || tileId - entries[n].tileId < entries[n].runLength)) return entries[n];
+    return null;
+  }
+  function openTileArchive(url, fetchRange) {
+    if (!fetchRange && tileArchives[url]) return tileArchives[url];
+    var get = fetchRange || tileRangeFetcher(url);
+    var dirs = {};
+    var header = get(0, 16384).then(function (buf) {
+      var h = parseTileHeader(buf);
+      // the root directory sits inside the first 16 KB by the format's rule
+      dirs[h.rootOffset] = tileGunzip(new Uint8Array(buf.slice(h.rootOffset, h.rootOffset + h.rootLength)))
+        .then(parseTileDirectory);
+      return h;
+    });
+    function directory(offset, length) {
+      if (!dirs[offset]) {
+        dirs[offset] = get(offset, length).then(function (buf) {
+          return tileGunzip(new Uint8Array(buf));
+        }).then(parseTileDirectory);
+      }
+      return dirs[offset];
+    }
+    var archive = {
+      header: header,
+      getTile: function (z, x, y) {
+        return header.then(function (h) {
+          var id = zxyToTileId(z, x, y);
+          function walk(offset, length, depth) {
+            return directory(offset, length).then(function (entries) {
+              var e = findTileEntry(entries, id);
+              if (!e) return null;
+              if (e.runLength > 0) {
+                return get(h.dataOffset + e.offset, e.length).then(function (buf) {
+                  var bytes = new Uint8Array(buf);
+                  return h.tileCompression === 2 ? tileGunzip(bytes) : bytes;
+                });
+              }
+              if (depth >= 3) return null; // the format nests at most three leaf levels
+              return walk(h.leafOffset + e.offset, e.length, depth + 1);
+            });
+          }
+          return walk(h.rootOffset, h.rootLength, 0);
+        });
+      }
+    };
+    if (!fetchRange) tileArchives[url] = archive;
+    return archive;
+  }
+
+  /* ---------- decode one layer of a Mapbox vector tile. Returns
+   * { extent, features: [{ id, properties, rings }] } with each feature's
+   * rings in tile coordinates (0..extent) and only polygons kept — every
+   * ring of a feature in one list, which the even-odd test reads correctly
+   * because the builder made each feature's geometry valid. A string
+   * property that reads as a JSON array or object is parsed back into one:
+   * the tile format carries no arrays, so the builder wrote them as JSON text
+   * and refuses any source string that would read that way by accident. */
+  var tileTextDecoder = typeof TextDecoder !== "undefined" ? new TextDecoder() : null;
+  function tileSkip(r, wire) {
+    if (wire === 0) tileVarint(r);
+    else if (wire === 1) r.pos += 8;
+    else if (wire === 2) { var len = tileVarint(r); r.pos += len; }
+    else if (wire === 5) r.pos += 4;
+    else throw new Error("vector tile: wire type " + wire);
+  }
+  function tileZigzag(n) { return (n % 2 === 0) ? n / 2 : -(n + 1) / 2; }
+  function tileValue(r, end) {
+    var v = null;
+    while (r.pos < end) {
+      var tag = tileVarint(r), field = Math.floor(tag / 8), wire = tag % 8;
+      if (field === 1) { var len = tileVarint(r); v = tileTextDecoder.decode(r.buf.subarray(r.pos, r.pos + len)); r.pos += len; }
+      else if (field === 2) { v = new DataView(r.buf.buffer, r.buf.byteOffset + r.pos, 4).getFloat32(0, true); r.pos += 4; }
+      else if (field === 3) { v = new DataView(r.buf.buffer, r.buf.byteOffset + r.pos, 8).getFloat64(0, true); r.pos += 8; }
+      else if (field === 4) { v = tileVarint(r); if (v >= 9223372036854775808) v -= 18446744073709551616; }
+      else if (field === 5) v = tileVarint(r);
+      else if (field === 6) v = tileZigzag(tileVarint(r));
+      else if (field === 7) v = tileVarint(r) !== 0;
+      else tileSkip(r, wire);
+    }
+    if (typeof v === "string") {
+      var s = v.replace(/^\s+/, "");
+      if (s.charAt(0) === "[" || s.charAt(0) === "{") {
+        try { var parsed = JSON.parse(v); if (parsed && typeof parsed === "object") v = parsed; } catch (e) { /* ordinary text */ }
+      }
+    }
+    return v;
+  }
+  function tilePacked(r) {
+    var len = tileVarint(r), end = r.pos + len, out = [];
+    while (r.pos < end) out.push(tileVarint(r));
+    return out;
+  }
+  function tileRings(cmds) {
+    var rings = [], ring = null, x = 0, y = 0, i = 0;
+    while (i < cmds.length) {
+      var c = cmds[i++], id = c & 7, count = c >> 3;
+      if (id === 1 || id === 2) {
+        for (var k = 0; k < count; k++) {
+          x += tileZigzag(cmds[i++]);
+          y += tileZigzag(cmds[i++]);
+          if (id === 1) { ring = [[x, y]]; rings.push(ring); }
+          else ring.push([x, y]);
+        }
+      } else if (id === 7) {
+        if (ring && ring.length) ring.push([ring[0][0], ring[0][1]]);
+      } else {
+        break;
+      }
+    }
+    return rings;
+  }
+  function decodeTileLayer(bytes, name) {
+    var r = { buf: bytes, pos: 0 };
+    while (r.pos < bytes.length) {
+      var tag = tileVarint(r);
+      if (Math.floor(tag / 8) !== 3 || tag % 8 !== 2) { tileSkip(r, tag % 8); continue; }
+      var end = tileVarint(r) + r.pos;
+      var layer = { name: null, extent: 4096, keys: [], values: [], raw: [] };
+      while (r.pos < end) {
+        var t = tileVarint(r), f = Math.floor(t / 8);
+        if (f === 1) { var ln = tileVarint(r); layer.name = tileTextDecoder.decode(bytes.subarray(r.pos, r.pos + ln)); r.pos += ln; }
+        else if (f === 2) { var fl = tileVarint(r); layer.raw.push([r.pos, r.pos + fl]); r.pos += fl; }
+        else if (f === 3) { var kl = tileVarint(r); layer.keys.push(tileTextDecoder.decode(bytes.subarray(r.pos, r.pos + kl))); r.pos += kl; }
+        else if (f === 4) { var vl = tileVarint(r), vend = r.pos + vl; layer.values.push(tileValue(r, vend)); r.pos = vend; }
+        else if (f === 5) layer.extent = tileVarint(r);
+        else tileSkip(r, t % 8);
+      }
+      r.pos = end;
+      if (layer.name !== name) continue;
+      var features = [];
+      layer.raw.forEach(function (span) {
+        var fr = { buf: bytes, pos: span[0] }, feat = { id: null, type: 0, tags: [], geom: [] };
+        while (fr.pos < span[1]) {
+          var ft = tileVarint(fr), ff = Math.floor(ft / 8);
+          if (ff === 1) feat.id = tileVarint(fr);
+          else if (ff === 2) feat.tags = tilePacked(fr);
+          else if (ff === 3) feat.type = tileVarint(fr);
+          else if (ff === 4) feat.geom = tilePacked(fr);
+          else tileSkip(fr, ft % 8);
+        }
+        if (feat.type !== 3) return; // polygons only
+        var props = {};
+        for (var i = 0; i + 1 < feat.tags.length; i += 2) props[layer.keys[feat.tags[i]]] = layer.values[feat.tags[i + 1]];
+        features.push({ id: feat.id, properties: props, rings: tileRings(feat.geom) });
+      });
+      return { extent: layer.extent, features: features };
+    }
+    return { extent: 4096, features: [] };
+  }
+
+  // Tile coordinates <-> longitude/latitude, Web Mercator.
+  function tileXYFor(lng, lat, z) {
+    var n = Math.pow(2, z), latR = lat * Math.PI / 180;
+    var xf = (lng + 180) / 360 * n;
+    var yf = (1 - Math.log(Math.tan(latR) + 1 / Math.cos(latR)) / Math.PI) / 2 * n;
+    return { x: Math.floor(xf), y: Math.floor(yf), fx: xf - Math.floor(xf), fy: yf - Math.floor(yf) };
+  }
+  function tileToLngLat(z, x, y, px, py, extent) {
+    var n = Math.pow(2, z);
+    var lng = (x + px / extent) / n * 360 - 180;
+    var m = Math.PI * (1 - 2 * (y + py / extent) / n);
+    return [lng, Math.atan((Math.exp(m) - Math.exp(-m)) / 2) * 180 / Math.PI];
+  }
+
+  /* The features of the archive's deepest tile containing `point`, as
+   * GeoJSON in longitude/latitude — the piece of each district inside that
+   * tile, not the whole district. Answers a card: the builder's gate proves
+   * the deepest tile answers as the source file does at every point a metre
+   * or more from an edge. `_s` and `_i` (which source file, which feature in
+   * it) are the builder's bookkeeping and are removed; `_c`, a county key,
+   * is kept for the dispatcher. */
+  function tileFeaturesAt(archive, point) {
+    return archive.header.then(function (h) {
+      var z = h.maxZoom, t = tileXYFor(point.lng, point.lat, z);
+      return archive.getTile(z, t.x, t.y).then(function (bytes) {
+        var decoded = bytes ? decodeTileLayer(bytes, "d") : { extent: 4096, features: [] };
+        return {
+          type: "FeatureCollection",
+          features: decoded.features.map(function (f) {
+            var props = {};
+            for (var k in f.properties) if (f.properties.hasOwnProperty(k) && k !== "_s" && k !== "_i") props[k] = f.properties[k];
+            return {
+              type: "Feature", id: f.id, properties: props,
+              geometry: { type: "Polygon", coordinates: f.rings.map(function (ring) {
+                return ring.map(function (p) { return tileToLngLat(z, t.x, t.y, p[0], p[1], decoded.extent); });
+              }) }
+            };
+          })
+        };
+      });
+    });
+  }
+  /* ==== ENGINE:END vector-tiles ==== */
+
+  /* ==== ENGINE:BEGIN tile-overlay ==== */
+  /* ---------- layers drawn from vector tiles (docs/OPTIMIZATION_PLAYBOOK.md
+   * §10, phase 4). A layer registered with `tiles: "<archive url>"` is read
+   * from its archive (vector-tiles block) instead of its whole GeoJSON file:
+   *
+   *   - the CARD answers from the deepest tile under the selected point, a
+   *     few kilobytes, wherever the reader is zoomed. That needs only
+   *     DecompressionStream, so it holds on the raster fallback too.
+   *   - the MAP draws the layer with MapLibre GL, which every app already
+   *     loads for its basemap, in one shared canvas in its own pane
+   *     (dstTileOverlays) just below Leaflet's overlay pane, a screen of tiles
+   *     at a time, with detail rising as the reader zooms. Without WebGL the
+   *     layer is drawn from its GeoJSON file exactly as before.
+   *   - the whole GeoJSON file is still what the comparison features read
+   *     (the pin, the relationship outlines, the stats), so it is fetched in
+   *     the background when one of them needs it, never on switch-on.
+   *
+   * The highlight, the fade of the other districts, the fill scaling by
+   * layer count and the outline-only mode are the same styles the Leaflet
+   * path reads (baseStyleFor, highlightStyleFor, fadedStyle), expressed as GL
+   * paint with a feature-state for the selected district. Two things differ
+   * and are recorded rather than hidden: the drop shadow under the lit
+   * district is a blurred line rather than a CSS filter, and a layer drawn
+   * from tiles sits below every Leaflet-drawn layer rather than at its size
+   * rank among them (tile layers are ranked among themselves). ---------- */
+  var TILE_PANE = "dstTileOverlays";
+  var TILE_SOURCE_LAYER = "d";
+  var tileGLLayer = null;   // the shared L.maplibreGL, made on first use
+  var tileGLReady = null;   // resolves with its MapLibre map once it has loaded
+  var tileProtocolAdded = false;
+
+  function tileCardAvailable(mod) {
+    return !!(mod && mod.tiles && typeof DecompressionStream !== "undefined" && typeof TextDecoder !== "undefined");
+  }
+  function tileDrawAvailable(mod) {
+    return tileCardAvailable(mod) && !!baseIsVector && !!window.maplibregl && !!L.maplibreGL;
+  }
+  function tileArchiveFor(mod) {
+    return openTileArchive(new URL(mod.tiles, document.baseURI).href);
+  }
+
+  // The card's feature: from the whole file when it is already in memory
+  // (a comparison fetched it), otherwise from the tile under the point. A
+  // failed tile read falls back to the whole file, so the card still answers.
+  function tileFeatureAt(mod, load, point) {
+    var cached = load.cached ? load.cached() : null;
+    if (cached) return Promise.resolve(findFeatureContaining(cached, point));
+    var rt = layerRuntime[mod.id];
+    return tileFeaturesAt(tileArchiveFor(mod), point).then(function (fc) {
+      var feature = findFeatureContaining(fc, point);
+      rt.tileAnswer = { point: point, feature: feature };
+      return feature;
+    }, function (err) {
+      console.warn("[" + mod.id + "] tile read failed, loading the whole file:", err);
+      return load().then(function (geojson) { return findFeatureContaining(geojson, point); });
+    });
+  }
+
+  function tileDashArray(style) {
+    if (!style || !style.dashArray) return null;
+    var w = style.weight || 1;
+    var parts = String(style.dashArray).split(/[\s,]+/).map(Number).filter(function (n) { return n > 0; });
+    return parts.length ? parts.map(function (n) { return n / w; }) : null;
+  }
+
+  function ensureTileGL() {
+    if (tileGLReady) return tileGLReady;
+    if (!tileProtocolAdded) {
+      tileProtocolAdded = true;
+      // dxpm://<layer id>/<z>/<x>/<y>: one tile of that layer's archive
+      maplibregl.addProtocol("dxpm", function (params) {
+        var m = /^dxpm:\/\/([^/]+)\/(\d+)\/(\d+)\/(\d+)/.exec(params.url);
+        var mod = m && getLayerById(decodeURIComponent(m[1]));
+        if (!mod) return Promise.resolve({ data: new ArrayBuffer(0) });
+        return tileArchiveFor(mod).getTile(+m[2], +m[3], +m[4]).then(function (bytes) {
+          if (!bytes) return { data: new ArrayBuffer(0) };
+          return { data: bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) };
+        });
+      });
+    }
+    var pane = map.getPane(TILE_PANE) || map.createPane(TILE_PANE);
+    pane.style.zIndex = "395"; // above the basemap (200), below Leaflet's overlays (400)
+    pane.style.pointerEvents = "none";
+    tileGLLayer = L.maplibreGL({
+      style: { version: 8, sources: {}, layers: [] },
+      pane: TILE_PANE, attributionControl: false, interactive: false
+    });
+    tileGLLayer.addTo(map);
+    var gl = tileGLLayer.getMaplibreMap();
+    tileGLReady = new Promise(function (resolve) {
+      if (gl.isStyleLoaded()) resolve(gl);
+      else gl.once("load", function () { resolve(gl); });
+    });
+    return tileGLReady;
+  }
+
+  function tileIds(mod) {
+    var s = "dx-" + mod.id;
+    return { source: s, fill: s + "-fill", shadow: s + "-shadow", line: s + "-line", hl: s + "-hl" };
+  }
+
+  // The GL paint for a layer's current state: no selection, or a selection
+  // (the lit district by feature-state, every other one faded).
+  function tilePaint(mod) {
+    var rt = layerRuntime[mod.id];
+    var base = baseStyleFor(mod) || {};
+    var selected = rt.tileSelectedId != null;
+    var hl = highlightStyleFor(mod), faded = fadedStyle(base);
+    var isSel = ["boolean", ["feature-state", "sel"], false];
+    var baseOpacity = base.opacity == null ? 1 : base.opacity;
+    return {
+      fill: {
+        "fill-color": base.fillColor || base.color || "#000",
+        "fill-opacity": selected ? ["case", isSel, hl.fillOpacity, faded.fillOpacity] : (base.fillOpacity || 0)
+      },
+      line: {
+        "line-color": base.color || "#000",
+        "line-width": selected ? faded.weight : (base.weight || 1),
+        "line-opacity": selected ? ["case", isSel, 0, faded.opacity] : baseOpacity
+      },
+      hl: {
+        "line-color": hl.color,
+        "line-width": hl.weight,
+        "line-opacity": ["case", isSel, 1, 0]
+      },
+      shadow: {
+        "line-color": "#000",
+        "line-width": hl.weight + 4,
+        "line-blur": 4,
+        "line-translate": [0, 2],
+        "line-opacity": ["case", isSel, 0.28, 0]
+      },
+      dash: tileDashArray(base)
+    };
+  }
+
+  var TileOverlay = L.Layer.extend({
+    initialize: function (mod) {
+      this.mod = mod;
+      this.dxTiles = true;
+      this._dxOn = false;
+    },
+    onAdd: function () {
+      var self = this, mod = this.mod;
+      this._dxOn = true;
+      ensureTileGL().then(function (gl) {
+        if (!self._dxOn || gl.getSource(tileIds(mod).source)) { self.restyle(); return; }
+        return tileArchiveFor(mod).header.then(function (h) {
+          if (!self._dxOn || gl.getSource(tileIds(mod).source)) return;
+          var ids = tileIds(mod), paint = tilePaint(mod);
+          gl.addSource(ids.source, {
+            type: "vector",
+            tiles: ["dxpm://" + encodeURIComponent(mod.id) + "/{z}/{x}/{y}"],
+            minzoom: h.minZoom, maxzoom: h.maxZoom,
+            bounds: h.bounds
+          });
+          var common = { source: ids.source, "source-layer": TILE_SOURCE_LAYER };
+          gl.addLayer(Object.assign({ id: ids.fill, type: "fill", paint: paint.fill }, common));
+          gl.addLayer(Object.assign({ id: ids.shadow, type: "line", paint: paint.shadow }, common));
+          var line = Object.assign({ id: ids.line, type: "line", paint: paint.line }, common);
+          if (paint.dash) line.paint["line-dasharray"] = paint.dash;
+          gl.addLayer(line);
+          gl.addLayer(Object.assign({ id: ids.hl, type: "line", paint: paint.hl }, common));
+          // a district lit before the source existed (the card can answer
+          // first) carries its state over now
+          var sel = layerRuntime[mod.id].tileSelectedId;
+          if (sel != null) gl.setFeatureState({ source: ids.source, sourceLayer: TILE_SOURCE_LAYER, id: sel }, { sel: true });
+          self.restyle();
+          reorderActiveLayers();
+        });
+      }).catch(function (err) { console.error("[" + mod.id + "] tile overlay failed:", err); });
+      return this;
+    },
+    onRemove: function () {
+      this._dxOn = false;
+      var mod = this.mod, gl = tileGLLayer && tileGLLayer.getMaplibreMap();
+      if (!gl) return this;
+      var ids = tileIds(mod);
+      [ids.hl, ids.line, ids.shadow, ids.fill].forEach(function (id) { if (gl.getLayer(id)) gl.removeLayer(id); });
+      if (gl.getSource(ids.source)) gl.removeSource(ids.source);
+      layerRuntime[mod.id].tileSelectedId = null;
+      layerRuntime[mod.id].tileEdgeId = null;
+      return this;
+    },
+    // the Leaflet path's per-path iteration has nothing to visit here
+    eachLayer: function () { return this; },
+    bringToFront: function () {
+      var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
+      if (!gl) return this;
+      var ids = tileIds(this.mod);
+      [ids.fill, ids.shadow, ids.line, ids.hl].forEach(function (id) { if (gl.getLayer(id)) gl.moveLayer(id); });
+      return this;
+    },
+    restyle: function () {
+      var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
+      var ids = tileIds(this.mod);
+      if (!gl || !gl.getLayer(ids.fill)) return this;
+      var paint = tilePaint(this.mod);
+      ["fill", "line", "hl", "shadow"].forEach(function (part) {
+        Object.keys(paint[part]).forEach(function (prop) { gl.setPaintProperty(ids[part], prop, paint[part][prop]); });
+      });
+      return this;
+    },
+    // Light one district (by its tile feature id), or none.
+    setSelected: function (id) {
+      var rt = layerRuntime[this.mod.id];
+      var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
+      var ids = tileIds(this.mod);
+      if (gl && gl.getSource(ids.source)) {
+        if (rt.tileSelectedId != null && rt.tileSelectedId !== id) {
+          gl.setFeatureState({ source: ids.source, sourceLayer: TILE_SOURCE_LAYER, id: rt.tileSelectedId }, { sel: false });
+        }
+        if (id != null) gl.setFeatureState({ source: ids.source, sourceLayer: TILE_SOURCE_LAYER, id: id }, { sel: true });
+      }
+      rt.tileSelectedId = id;
+      this.restyle();
+      return this;
+    },
+    // The district drawn under a map point, for the hover popup: what the
+    // canvas shows, so at a low zoom it is the simplified shape the reader
+    // sees. Properties parsed back as the card's are (vector-tiles block).
+    featureAt: function (point) {
+      var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
+      var ids = tileIds(this.mod);
+      if (!gl || !gl.getLayer(ids.fill)) return null;
+      var px = gl.project([point.lng, point.lat]);
+      var hits = gl.queryRenderedFeatures(px, { layers: [ids.fill] });
+      if (!hits.length) return null;
+      var props = {};
+      var src = hits[0].properties || {};
+      for (var k in src) {
+        if (!src.hasOwnProperty(k) || k === "_s" || k === "_i") continue;
+        var v = src[k];
+        if (typeof v === "string" && /^\s*[\[{]/.test(v)) { try { v = JSON.parse(v); } catch (e) { /* ordinary text */ } }
+        props[k] = v;
+      }
+      return { type: "Feature", id: hits[0].id, properties: props, geometry: null };
+    }
+  });
+
+  function isTileDrawn(mod) {
+    var rt = layerRuntime[mod.id];
+    return !!(rt && rt.overlayLayer && rt.overlayLayer.dxTiles);
+  }
+
+  // The highlight pass for a layer drawn from tiles: light the district the
+  // card answered for this point, by its feature id. The card's answer is
+  // the tile's, which the builder's gate holds to the file.
+  function updateTileHighlight(mod) {
+    var rt = layerRuntime[mod.id];
+    var answer = rt.tileAnswer;
+    var feature = answer && answer.point === state.selectedPoint ? answer.feature : null;
+    if (!feature && rt.geojson && state.selectedPoint) feature = findFeatureContaining(rt.geojson, state.selectedPoint);
+    var id = feature && feature.id != null ? feature.id : null;
+    rt.overlayLayer.setSelected(id);
+    rt.highlightApplied = id != null;
+    rt.highlightSignature = id != null ? highlightSignature(rt) : null;
+    // no geometry until tileEdgesForStreets has the real edges in view: the
+    // card's tile piece carries its tile's clip lines, which are not edges
+    if (rt.tileEdgeId !== id) rt.highlightedLayer = id != null ? { feature: { type: "Feature", properties: {}, geometry: null } } : null;
+    rt.tileEdgeId = id;
+    if (id != null) tileEdgesForStreets(mod, id);
+    scheduleBoundaryStreets();
+  }
+
+  /* The lit district's edges in view, for the boundary-street names
+   * (basemap block), which a tile piece alone cannot give: the card's tile
+   * holds only the few kilometres around the point, and its edges include
+   * the tile's own clip lines. So at the zooms that name streets, the
+   * deepest tiles under the view are read and every segment lying along a
+   * tile's clip line is dropped, leaving the district's real edges as runs
+   * of line. ---------- */
+  var TILE_EDGE_MAX_TILES = 36;
+  function tileEdgesForStreets(mod, id) {
+    var rt = layerRuntime[mod.id];
+    if (typeof boundaryStreetsOn === "undefined" || !boundaryStreetsOn || map.getZoom() < BOUNDARY_STREET_MINZOOM) return;
+    var b = map.getBounds(), archive = tileArchiveFor(mod);
+    var key = id + "|" + map.getZoom() + "|" + b.toBBoxString();
+    if (rt.tileEdgeKey === key) return;
+    rt.tileEdgeKey = key;
+    archive.header.then(function (h) {
+      var z = h.maxZoom;
+      var nw = tileXYFor(b.getWest(), b.getNorth(), z), se = tileXYFor(b.getEast(), b.getSouth(), z);
+      var jobs = [];
+      for (var x = nw.x; x <= se.x; x++) {
+        for (var y = nw.y; y <= se.y; y++) jobs.push([x, y]);
+      }
+      if (jobs.length > TILE_EDGE_MAX_TILES) return null;
+      return Promise.all(jobs.map(function (xy) {
+        return archive.getTile(z, xy[0], xy[1]).then(function (bytes) {
+          if (!bytes) return [];
+          var d = decodeTileLayer(bytes, TILE_SOURCE_LAYER), ext = d.extent, runs = [];
+          d.features.forEach(function (f) {
+            if (f.id !== id) return;
+            f.rings.forEach(function (ring) {
+              var run = null;
+              for (var i = 1; i < ring.length; i++) {
+                var a = ring[i - 1], c = ring[i];
+                var clip = (a[0] <= 0 && c[0] <= 0) || (a[0] >= ext && c[0] >= ext) ||
+                  (a[1] <= 0 && c[1] <= 0) || (a[1] >= ext && c[1] >= ext);
+                if (clip) { run = null; continue; }
+                if (!run) { run = [tileToLngLat(z, xy[0], xy[1], a[0], a[1], ext)]; runs.push(run); }
+                run.push(tileToLngLat(z, xy[0], xy[1], c[0], c[1], ext));
+              }
+            });
+          });
+          return runs;
+        });
+      }));
+    }).then(function (perTile) {
+      if (!perTile || rt.tileEdgeKey !== key || rt.tileSelectedId !== id) return;
+      var runs = [].concat.apply([], perTile);
+      // matchBoundaryStreets reads each ring as a run of segments and never
+      // closes it, so open runs of real edge are exactly what it needs
+      rt.highlightedLayer = { feature: { type: "Feature", properties: {}, geometry: { type: "MultiPolygon", coordinates: [runs] } } };
+      scheduleBoundaryStreets();
+    }).catch(function () { /* the street names are an extra; the district stays lit */ });
+  }
+  map.on("moveend", function () {
+    layers.forEach(function (mod) {
+      var rt = layerRuntime[mod.id];
+      if (state.layersOn[mod.id] && isTileDrawn(mod) && rt.tileSelectedId != null) tileEdgesForStreets(mod, rt.tileSelectedId);
+    });
+  });
+
+  // The whole GeoJSON file, fetched in the background for a comparison
+  // feature that reads every district (the pin, the relationship outlines,
+  // the stats). Drawing stays on the tiles.
+  function ensureTileGeojson(mod) {
+    var rt = layerRuntime[mod.id];
+    if (rt.geojson) return Promise.resolve(rt.geojson);
+    if (rt.tileGeojsonPromise) return rt.tileGeojsonPromise;
+    rt.overlayLoaded = true; // what the stats screen reads as "still downloading"
+    rt.tileGeojsonPromise = mod.overlay.load().then(function (geojson) {
+      rt.geojson = geojson;
+      rt.tileGeojsonPromise = null;
+      return geojson;
+    }, function (err) {
+      rt.overlayLoaded = false;
+      rt.tileGeojsonPromise = null;
+      throw err;
+    });
+    return rt.tileGeojsonPromise;
+  }
+  /* ==== ENGINE:END tile-overlay ==== */
 
   /* ==== ENGINE:BEGIN poi-geocode ==== */
   var poiGeocodeCache = {}; // address string -> {lat,lng} | null, avoids re-geocoding the same address
@@ -8783,7 +9440,14 @@ function initNycExplorer() {
     }
 
     // turning on: (1) build/attach the overlay, (2) run the query if a point exists
-    if (rt.geojson) {
+    if (tileDrawAvailable(mod)) {
+      // drawn from vector tiles: nothing to download before drawing, and the
+      // whole file only if a comparison asks for it (tile-overlay block)
+      if (!rt.overlayLayer) rt.overlayLayer = new TileOverlay(mod);
+      if (rt.relevant !== false) rt.overlayLayer.addTo(map);
+      refreshActiveLayerOpacities();
+      reorderActiveLayers();
+    } else if (rt.geojson) {
       // geometry already cached from an earlier toggle. The Leaflet layer graph is
       // released on toggle-off (P11), so rebuild it synchronously from the cached
       // geojson (no refetch) unless a re-entrant path already rebuilt it.
@@ -9152,7 +9816,11 @@ function initNycExplorer() {
       refreshActiveLayerOpacities(); // one fewer visible fill — the rest get more opaque
       refreshRelationshipOutlines();
     } else {
-      if (state.layersOn[mod.id] && rt.geojson) {
+      if (state.layersOn[mod.id] && tileDrawAvailable(mod)) {
+        if (!rt.overlayLayer) rt.overlayLayer = new TileOverlay(mod);
+        rt.overlayLayer.addTo(map);
+        reorderActiveLayers();
+      } else if (state.layersOn[mod.id] && rt.geojson) {
         // back in coverage with the layer still on — reattach from the cached
         // geojson (addLayer is a no-op if it's already on the map); the dispatch,
         // which shares this selection's memoized relevance, repopulates the card
@@ -9992,11 +10660,17 @@ function initNycExplorer() {
         return (v == null || v === "") ? null : String(v);
       } : undefined,
       overlay: { load: load, style: opts.style },
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       // point-first by default (queryFeatureAt): a loader that can answer a
       // spatial point query does, while the full set downloads for the
       // overlay; every other loader takes the load-then-contain path verbatim
       query: function (point, seq) {
-        return queryFeatureAt(load, point).then(function (feature) {
+        var mod = getLayerById(opts.id);
+        var found = tileCardAvailable(mod) ? tileFeatureAt(mod, load, point) : queryFeatureAt(load, point);
+        return found.then(function (feature) {
           if (!feature) return null;
           var props = feature.properties || {};
           var result = { seq: seq };
@@ -13446,11 +14120,14 @@ function initNycExplorer() {
       var id = LAYER_AREA_RANK[i];
       if (!state.layersOn[id]) continue;
       var rt = layerRuntime[id];
-      if (!rt || !rt.geojson) continue;
+      // a layer drawn from tiles holds no geojson until a comparison asks
+      // for it; the canvas answers what is drawn under the cursor instead
+      var tiled = rt && !rt.geojson && rt.overlayLayer && rt.overlayLayer.dxTiles;
+      if (!rt || (!rt.geojson && !tiled)) continue;
       if (rt.relevant === false) continue; // relevance-hidden at the selected point (mod.coverage) — hidden means hidden, on every surface
       var mod = getLayerById(id);
       if (!mod || !mod.overlay || !mod.overlay.style) continue;
-      var feature = findFeatureContaining(rt.geojson, point);
+      var feature = tiled ? rt.overlayLayer.featureAt(point) : findFeatureContaining(rt.geojson, point);
       if (feature) out.push({ mod: mod, feature: feature });
     }
     return out;
@@ -14095,6 +14772,19 @@ function initNycExplorer() {
     relationshipGroup.clearLayers();
     relLabelGroup.clearLayers();
     relLabels = [];
+    // a comparison reads every district of every switched-on layer: a layer
+    // drawn from tiles fetches its whole file for it now, and this refresh
+    // runs again when that arrives (tile-overlay block)
+    if (pinnedParentId) {
+      layers.forEach(function (m) {
+        var r = layerRuntime[m.id];
+        if (state.layersOn[m.id] && r && !r.geojson && r.overlayLayer && r.overlayLayer.dxTiles && !r.tileGeojsonPromise) {
+          ensureTileGeojson(m).then(refreshRelationshipOutlines, function (err) {
+            console.error("[" + m.id + "] whole file for the comparison failed:", err);
+          });
+        }
+      });
+    }
     var parentFeature = relationshipParentFeature();
     relCounts = parentFeature ? drawRelationshipOutlines(parentFeature) : null;
     updateRelLegend();
@@ -14266,8 +14956,12 @@ function initNycExplorer() {
   function appendPinControl(mod) {
     if (!mod.overlay || !mod.overlay.style) return; // polygon layers only
     var rt = layerRuntime[mod.id];
-    if (!rt || !rt.geojson || !state.selectedPoint) return;
-    if (!findFeatureContaining(rt.geojson, state.selectedPoint)) return;
+    if (!rt || !state.selectedPoint) return;
+    // a layer drawn from tiles has the card's own answer to go on until its
+    // whole file is fetched for the comparison (tile-overlay block)
+    var here = rt.geojson ? findFeatureContaining(rt.geojson, state.selectedPoint)
+      : (rt.tileAnswer && rt.tileAnswer.point === state.selectedPoint ? rt.tileAnswer.feature : null);
+    if (!here) return;
     var btn = document.createElement("button");
     btn.type = "button";
     btn.className = "pin-parent-btn";
@@ -14951,6 +15645,9 @@ function initNycExplorer() {
         // makes no request of its own, and says so here
         subOf: mod.subOf || null,
         sharesParentLoader: !!(parent && parent.overlay && mod.overlay && parent.overlay.load === mod.overlay.load),
+        // drawn from a vector-tile archive: its whole file is fetched only when
+        // asked (loadWholeFile below), so the probe asks before reading
+        tiles: isTileDrawn(mod) ? mod.tiles : null,
         // one short key per loaded feature, so the probe can tell which of
         // this site's files the layer DRAWS: a file the app also loads at boot
         // is subtracted with the boot requests, and matching features finds it
@@ -14977,6 +15674,24 @@ function initNycExplorer() {
         highlight: !!rt.highlightApplied || !!rt.provisionalLayer,
         features: (rt.geojson && rt.geojson.features && rt.geojson.features.length) || 0
       };
+    },
+    // A tile-drawn layer's whole GeoJSON file, which it otherwise fetches
+    // only for a comparison; what scripts/probe_layer_sources.mjs asks for
+    // so it can still say which file the layer's districts come from.
+    // A tile-drawn layer's state: whether it is on the tile canvas, the lit
+    // district's tile feature id, and how many runs of real edge the
+    // boundary-street names have to follow (tileEdgesForStreets)
+    tileState: function (id) {
+      var mod = getLayerById(id), rt = layerRuntime[id];
+      if (!mod || !rt) return null;
+      var g = rt.highlightedLayer && rt.highlightedLayer.feature && rt.highlightedLayer.feature.geometry;
+      return { drawn: isTileDrawn(mod), selected: rt.tileSelectedId,
+        edgeRuns: g && g.type === "MultiPolygon" && g.coordinates[0] ? g.coordinates[0].length : 0 };
+    },
+    loadWholeFile: function (id) {
+      var mod = getLayerById(id);
+      if (!mod || !isTileDrawn(mod)) return Promise.resolve(false);
+      return ensureTileGeojson(mod).then(function () { return true; });
     },
     loadCountyEntry: function (id, key) {
       var mod = getLayerById(id);

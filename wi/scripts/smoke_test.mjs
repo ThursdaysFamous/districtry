@@ -511,6 +511,34 @@ try {
   }
 
 
+  // 2t. SCHOOL DISTRICTS ARE DRAWN AND ANSWERED FROM VECTOR TILES (engine
+  //     tile-overlay block; docs/OPTIMIZATION_PLAYBOOK.md §10, phase 4). The
+  //     layer's whole GeoJSON file, 2.3 MB gzipped, is refused here, so the
+  //     card can only answer from the tile under the point, and the district
+  //     can only be lit on the tile canvas. Where the vector basemap booted,
+  //     that canvas must exist; where it did not, the layer falls back to the
+  //     file and this check asks only for the card.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    let wholeFile = 0;
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=school-district-unified`, (p) =>
+      p.route("**/data/app/school-districts-unified.json", (r) => { wholeFile++; return r.abort(); }));
+    const info = await cardText(page, "school-district-unified");
+    const vector = await page.evaluate((n) => window[n].basemap().vector, EXPORTS_NAME);
+    const lit = await page
+      .waitForFunction((n) => { const s = window[n].layerLoadState("school-district-unified"); return s && s.highlight; },
+        EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+      .then(() => true, () => false);
+    const canvas = await page.evaluate(() => !!document.querySelector(".leaflet-dstTileOverlays-pane canvas"));
+    check(
+      "school districts answer from tiles with the whole file refused, and are lit on the tile canvas",
+      !info.error && info.text.includes(EXPECT_DISTRICT["school-district-unified"]) &&
+        (!vector || (lit && canvas && wholeFile === 0)),
+      JSON.stringify({ card: info.text.slice(0, 60), vector, lit, canvas, wholeFileRequests: wholeFile })
+    );
+    await context.close();
+  }
+
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged
   //     with its own source and pointed at the canonical deployment), and the
