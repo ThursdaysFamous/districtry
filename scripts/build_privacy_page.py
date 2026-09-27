@@ -458,6 +458,12 @@ def measure(rel, name, url, tag):
     # as requesting no tiles at all.
     app["tiles"] = "basemaps.cartocdn.com" in src_all
     app["cdn"] = "cdnjs.cloudflare.com" in src_all
+    # A layer drawn from a vector-tile archive (engine tile-overlay block)
+    # asks this site's host for its map a piece at a time — the pieces under
+    # the view and, for the card, the one under the selected point — where
+    # every other same-origin layer downloads one whole file. Measured from
+    # the registration itself, `tiles: "data/app/tiles/…"`.
+    app["vector_tiles"] = bool(re.search(r'\btiles:\s*"data/app/tiles/', src))
     app["address_list_hosts"] = measure_address_list(src, app["name"])
 
     # A layer that asks a government server about the SELECTED POINT rather than
@@ -935,6 +941,12 @@ def render_recipient_rows(apps):
         if not users:
             fail("no surface requests %s any more — the recipients table names it, "
                  "so either the fleet changed or the measurement is broken" % label)
+        tiled = [a["name"] for a in users if a.get("vector_tiles")]
+        if label == "GitHub Pages" and tiled:
+            what += (" In %s, a layer drawn from vector tiles requests its map a piece at a "
+                     "time, so those requests also describe the area you are looking at and, "
+                     "to answer its card, <strong>the square of about 3.5 km around the point "
+                     "you select</strong>." % esc(", ".join(tiled)))
         rows.append(recipient_row(label, sub, policy, what, when,
                                   ", ".join(a["name"] for a in users) + "."))
     for host in sorted({h for a in apps for h in a["geocoders"]}):
@@ -1455,7 +1467,8 @@ PRIVACY_BODY = """
       %(storage)s
       <p><strong>A cache of each app's own files.</strong> A service worker stores the app shell
         when you first visit, and each layer's boundary file and officeholder roster the first
-        time you switch that layer on, so the map loads fast and those layers work offline.
+        time you switch that layer on (for a layer drawn from vector tiles, the pieces of its
+        map you have looked at), so the map loads fast and those layers work offline.
         It holds published public data — district shapes and rosters — not anything about you.</p>
       <p><strong>No app here sets a cookie of its own.</strong> Google Analytics, where it runs,
         sets its own.</p>

@@ -34,11 +34,17 @@
         return (v == null || v === "") ? null : String(v);
       } : undefined,
       overlay: { load: load, style: opts.style },
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       // point-first by default (queryFeatureAt): a loader that can answer a
       // spatial point query does, while the full set downloads for the
       // overlay; every other loader takes the load-then-contain path verbatim
       query: function (point, seq) {
-        return queryFeatureAt(load, point).then(function (feature) {
+        var mod = getLayerById(opts.id);
+        var found = tileCardAvailable(mod) ? tileFeatureAt(mod, load, point) : queryFeatureAt(load, point);
+        return found.then(function (feature) {
           if (!feature) return null;
           var props = feature.properties || {};
           var result = { seq: seq };

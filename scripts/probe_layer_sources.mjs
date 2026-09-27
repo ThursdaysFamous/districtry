@@ -165,6 +165,13 @@ async function visit(browser, job) {
     await settle(rec, 6000, 60000);
     if (job.mode === "layer") {
       out.info = await page.evaluate(`(${FIND_EXPORTS}).layerSources(${JSON.stringify(job.id)})`);
+      // a layer drawn from vector tiles holds no features until its whole
+      // file is asked for; ask, so its file is matched like any other
+      if (out.info && out.info.tiles) {
+        await page.evaluate(`(${FIND_EXPORTS}).loadWholeFile(${JSON.stringify(job.id)})`);
+        await settle(rec, 1000, 30000);
+        out.info = await page.evaluate(`(${FIND_EXPORTS}).layerSources(${JSON.stringify(job.id)})`);
+      }
     }
     if (job.mode === "counties") {
       const info = await page.evaluate(`(${FIND_EXPORTS}).layerSources(${JSON.stringify(job.id)})`);
@@ -306,6 +313,7 @@ for (const tag of TAGS) {
       }
       entry.counties = { live, shipped, failed, files };
     }
+    if (info.tiles) entry.tiles = info.tiles;
     if (info.subOf) entry.sub_of = info.subOf;
     if (info.sharesParentLoader) entry.shares_parent_loader = true;
     const liveCounties = entry.counties ? entry.counties.live.length : 0;

@@ -1,0 +1,292 @@
+  /* ---------- vector tiles: read a PMTiles archive, decode its tiles ----------
+   * A layer drawn from tiles (docs/OPTIMIZATION_PLAYBOOK.md §10, phase 4)
+   * reads one archive, data/app/tiles/<layer>.pmtiles, built and gated by
+   * scripts/build_vector_tiles.py. The archive is one file; a tile is a byte
+   * range in it, so a reader downloads the tiles under the map and the one
+   * under the selected point, never the whole state. No library: the format
+   * is a 127-byte header, gzipped directories of varints and gzipped tiles,
+   * and a tile is a small protocol buffer. Written here, in the engine's own
+   * style, rather than vendoring two packages the app would then trust with
+   * every card answer; scripts/validate_vector_tiles.mjs holds both halves
+   * to the Python decoders the builder's gate already trusts.
+   *
+   * openTileArchive(url[, fetchRange]) returns { header, getTile(z, x, y) }:
+   * header resolves to the parsed header, getTile to the tile's bytes,
+   * decompressed, or null where the archive holds no tile. A server that
+   * ignores Range (python -m http.server does) answers 200 with the whole
+   * file, which is kept and sliced, so the reader is correct everywhere and
+   * saves bytes only where ranges work. ---------- */
+  var tileArchives = {};
+  function tileRangeFetcher(url) {
+    var whole = null;
+    return function (offset, length) {
+      if (whole) return whole.then(function (buf) { return buf.slice(offset, offset + length); });
+      return fetch(url, { headers: { Range: "bytes=" + offset + "-" + (offset + length - 1) } }).then(function (res) {
+        if (res.status === 206) return res.arrayBuffer();
+        if (!res.ok) throw new Error("tile archive " + url + ": HTTP " + res.status);
+        whole = res.arrayBuffer();
+        return whole.then(function (buf) { return buf.slice(offset, offset + length); });
+      });
+    };
+  }
+  function tileGunzip(bytes) {
+    if (bytes.length < 2 || bytes[0] !== 0x1f || bytes[1] !== 0x8b) return Promise.resolve(bytes);
+    var stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+    return new Response(stream).arrayBuffer().then(function (ab) { return new Uint8Array(ab); });
+  }
+  // A varint of up to 53 bits, which is every offset and tile id an archive
+  // holds; bit operators stop at 32, so this multiplies instead.
+  function tileVarint(r) {
+    var val = 0, mul = 1, b;
+    do {
+      b = r.buf[r.pos++];
+      val += (b & 0x7f) * mul;
+      mul *= 128;
+    } while (b & 0x80);
+    return val;
+  }
+  function tileU64(view, at) {
+    return view.getUint32(at, true) + view.getUint32(at + 4, true) * 4294967296;
+  }
+  function parseTileHeader(buf) {
+    var bytes = new Uint8Array(buf), view = new DataView(buf);
+    var magic = String.fromCharCode.apply(null, bytes.subarray(0, 7));
+    if (magic !== "PMTiles" || bytes[7] !== 3) throw new Error("not a PMTiles v3 archive");
+    return {
+      rootOffset: tileU64(view, 8), rootLength: tileU64(view, 16),
+      leafOffset: tileU64(view, 40), leafLength: tileU64(view, 48),
+      dataOffset: tileU64(view, 56), dataLength: tileU64(view, 64),
+      internalCompression: bytes[97], tileCompression: bytes[98], tileType: bytes[99],
+      minZoom: bytes[100], maxZoom: bytes[101],
+      bounds: [view.getInt32(102, true) / 1e7, view.getInt32(106, true) / 1e7,
+        view.getInt32(110, true) / 1e7, view.getInt32(114, true) / 1e7]
+    };
+  }
+  function parseTileDirectory(bytes) {
+    var r = { buf: bytes, pos: 0 };
+    var n = tileVarint(r), entries = new Array(n), i, last = 0;
+    for (i = 0; i < n; i++) { last += tileVarint(r); entries[i] = { tileId: last, offset: 0, length: 0, runLength: 1 }; }
+    for (i = 0; i < n; i++) entries[i].runLength = tileVarint(r);
+    for (i = 0; i < n; i++) entries[i].length = tileVarint(r);
+    for (i = 0; i < n; i++) {
+      var v = tileVarint(r);
+      entries[i].offset = (v === 0 && i > 0) ? entries[i - 1].offset + entries[i - 1].length : v - 1;
+    }
+    return entries;
+  }
+  // The Hilbert-curve tile id the format keys every tile by.
+  function zxyToTileId(z, x, y) {
+    var acc = 0, t;
+    for (t = 0; t < z; t++) acc += Math.pow(4, t);
+    var d = 0, s, rx, ry, tmp;
+    for (s = Math.pow(2, z) / 2; s >= 1; s /= 2) {
+      rx = (x & s) > 0 ? 1 : 0;
+      ry = (y & s) > 0 ? 1 : 0;
+      d += s * s * ((3 * rx) ^ ry);
+      if (ry === 0) {
+        if (rx === 1) { x = s - 1 - x; y = s - 1 - y; }
+        tmp = x; x = y; y = tmp;
+      }
+    }
+    return acc + d;
+  }
+  function findTileEntry(entries, tileId) {
+    var m = 0, n = entries.length - 1;
+    while (m <= n) {
+      var k = (m + n) >> 1, cmp = tileId - entries[k].tileId;
+      if (cmp > 0) m = k + 1;
+      else if (cmp < 0) n = k - 1;
+      else return entries[k];
+    }
+    if (n >= 0 && (entries[n].runLength === 0 || tileId - entries[n].tileId < entries[n].runLength)) return entries[n];
+    return null;
+  }
+  function openTileArchive(url, fetchRange) {
+    if (!fetchRange && tileArchives[url]) return tileArchives[url];
+    var get = fetchRange || tileRangeFetcher(url);
+    var dirs = {};
+    var header = get(0, 16384).then(function (buf) {
+      var h = parseTileHeader(buf);
+      // the root directory sits inside the first 16 KB by the format's rule
+      dirs[h.rootOffset] = tileGunzip(new Uint8Array(buf.slice(h.rootOffset, h.rootOffset + h.rootLength)))
+        .then(parseTileDirectory);
+      return h;
+    });
+    function directory(offset, length) {
+      if (!dirs[offset]) {
+        dirs[offset] = get(offset, length).then(function (buf) {
+          return tileGunzip(new Uint8Array(buf));
+        }).then(parseTileDirectory);
+      }
+      return dirs[offset];
+    }
+    var archive = {
+      header: header,
+      getTile: function (z, x, y) {
+        return header.then(function (h) {
+          var id = zxyToTileId(z, x, y);
+          function walk(offset, length, depth) {
+            return directory(offset, length).then(function (entries) {
+              var e = findTileEntry(entries, id);
+              if (!e) return null;
+              if (e.runLength > 0) {
+                return get(h.dataOffset + e.offset, e.length).then(function (buf) {
+                  var bytes = new Uint8Array(buf);
+                  return h.tileCompression === 2 ? tileGunzip(bytes) : bytes;
+                });
+              }
+              if (depth >= 3) return null; // the format nests at most three leaf levels
+              return walk(h.leafOffset + e.offset, e.length, depth + 1);
+            });
+          }
+          return walk(h.rootOffset, h.rootLength, 0);
+        });
+      }
+    };
+    if (!fetchRange) tileArchives[url] = archive;
+    return archive;
+  }
+
+  /* ---------- decode one layer of a Mapbox vector tile. Returns
+   * { extent, features: [{ id, properties, rings }] } with each feature's
+   * rings in tile coordinates (0..extent) and only polygons kept — every
+   * ring of a feature in one list, which the even-odd test reads correctly
+   * because the builder made each feature's geometry valid. A string
+   * property that reads as a JSON array or object is parsed back into one:
+   * the tile format carries no arrays, so the builder wrote them as JSON text
+   * and refuses any source string that would read that way by accident. */
+  var tileTextDecoder = typeof TextDecoder !== "undefined" ? new TextDecoder() : null;
+  function tileSkip(r, wire) {
+    if (wire === 0) tileVarint(r);
+    else if (wire === 1) r.pos += 8;
+    else if (wire === 2) { var len = tileVarint(r); r.pos += len; }
+    else if (wire === 5) r.pos += 4;
+    else throw new Error("vector tile: wire type " + wire);
+  }
+  function tileZigzag(n) { return (n % 2 === 0) ? n / 2 : -(n + 1) / 2; }
+  function tileValue(r, end) {
+    var v = null;
+    while (r.pos < end) {
+      var tag = tileVarint(r), field = Math.floor(tag / 8), wire = tag % 8;
+      if (field === 1) { var len = tileVarint(r); v = tileTextDecoder.decode(r.buf.subarray(r.pos, r.pos + len)); r.pos += len; }
+      else if (field === 2) { v = new DataView(r.buf.buffer, r.buf.byteOffset + r.pos, 4).getFloat32(0, true); r.pos += 4; }
+      else if (field === 3) { v = new DataView(r.buf.buffer, r.buf.byteOffset + r.pos, 8).getFloat64(0, true); r.pos += 8; }
+      else if (field === 4) { v = tileVarint(r); if (v >= 9223372036854775808) v -= 18446744073709551616; }
+      else if (field === 5) v = tileVarint(r);
+      else if (field === 6) v = tileZigzag(tileVarint(r));
+      else if (field === 7) v = tileVarint(r) !== 0;
+      else tileSkip(r, wire);
+    }
+    if (typeof v === "string") {
+      var s = v.replace(/^\s+/, "");
+      if (s.charAt(0) === "[" || s.charAt(0) === "{") {
+        try { var parsed = JSON.parse(v); if (parsed && typeof parsed === "object") v = parsed; } catch (e) { /* ordinary text */ }
+      }
+    }
+    return v;
+  }
+  function tilePacked(r) {
+    var len = tileVarint(r), end = r.pos + len, out = [];
+    while (r.pos < end) out.push(tileVarint(r));
+    return out;
+  }
+  function tileRings(cmds) {
+    var rings = [], ring = null, x = 0, y = 0, i = 0;
+    while (i < cmds.length) {
+      var c = cmds[i++], id = c & 7, count = c >> 3;
+      if (id === 1 || id === 2) {
+        for (var k = 0; k < count; k++) {
+          x += tileZigzag(cmds[i++]);
+          y += tileZigzag(cmds[i++]);
+          if (id === 1) { ring = [[x, y]]; rings.push(ring); }
+          else ring.push([x, y]);
+        }
+      } else if (id === 7) {
+        if (ring && ring.length) ring.push([ring[0][0], ring[0][1]]);
+      } else {
+        break;
+      }
+    }
+    return rings;
+  }
+  function decodeTileLayer(bytes, name) {
+    var r = { buf: bytes, pos: 0 };
+    while (r.pos < bytes.length) {
+      var tag = tileVarint(r);
+      if (Math.floor(tag / 8) !== 3 || tag % 8 !== 2) { tileSkip(r, tag % 8); continue; }
+      var end = tileVarint(r) + r.pos;
+      var layer = { name: null, extent: 4096, keys: [], values: [], raw: [] };
+      while (r.pos < end) {
+        var t = tileVarint(r), f = Math.floor(t / 8);
+        if (f === 1) { var ln = tileVarint(r); layer.name = tileTextDecoder.decode(bytes.subarray(r.pos, r.pos + ln)); r.pos += ln; }
+        else if (f === 2) { var fl = tileVarint(r); layer.raw.push([r.pos, r.pos + fl]); r.pos += fl; }
+        else if (f === 3) { var kl = tileVarint(r); layer.keys.push(tileTextDecoder.decode(bytes.subarray(r.pos, r.pos + kl))); r.pos += kl; }
+        else if (f === 4) { var vl = tileVarint(r), vend = r.pos + vl; layer.values.push(tileValue(r, vend)); r.pos = vend; }
+        else if (f === 5) layer.extent = tileVarint(r);
+        else tileSkip(r, t % 8);
+      }
+      r.pos = end;
+      if (layer.name !== name) continue;
+      var features = [];
+      layer.raw.forEach(function (span) {
+        var fr = { buf: bytes, pos: span[0] }, feat = { id: null, type: 0, tags: [], geom: [] };
+        while (fr.pos < span[1]) {
+          var ft = tileVarint(fr), ff = Math.floor(ft / 8);
+          if (ff === 1) feat.id = tileVarint(fr);
+          else if (ff === 2) feat.tags = tilePacked(fr);
+          else if (ff === 3) feat.type = tileVarint(fr);
+          else if (ff === 4) feat.geom = tilePacked(fr);
+          else tileSkip(fr, ft % 8);
+        }
+        if (feat.type !== 3) return; // polygons only
+        var props = {};
+        for (var i = 0; i + 1 < feat.tags.length; i += 2) props[layer.keys[feat.tags[i]]] = layer.values[feat.tags[i + 1]];
+        features.push({ id: feat.id, properties: props, rings: tileRings(feat.geom) });
+      });
+      return { extent: layer.extent, features: features };
+    }
+    return { extent: 4096, features: [] };
+  }
+
+  // Tile coordinates <-> longitude/latitude, Web Mercator.
+  function tileXYFor(lng, lat, z) {
+    var n = Math.pow(2, z), latR = lat * Math.PI / 180;
+    var xf = (lng + 180) / 360 * n;
+    var yf = (1 - Math.log(Math.tan(latR) + 1 / Math.cos(latR)) / Math.PI) / 2 * n;
+    return { x: Math.floor(xf), y: Math.floor(yf), fx: xf - Math.floor(xf), fy: yf - Math.floor(yf) };
+  }
+  function tileToLngLat(z, x, y, px, py, extent) {
+    var n = Math.pow(2, z);
+    var lng = (x + px / extent) / n * 360 - 180;
+    var m = Math.PI * (1 - 2 * (y + py / extent) / n);
+    return [lng, Math.atan((Math.exp(m) - Math.exp(-m)) / 2) * 180 / Math.PI];
+  }
+
+  /* The features of the archive's deepest tile containing `point`, as
+   * GeoJSON in longitude/latitude — the piece of each district inside that
+   * tile, not the whole district. Answers a card: the builder's gate proves
+   * the deepest tile answers as the source file does at every point a metre
+   * or more from an edge. `_s` and `_i` (which source file, which feature in
+   * it) are the builder's bookkeeping and are removed; `_c`, a county key,
+   * is kept for the dispatcher. */
+  function tileFeaturesAt(archive, point) {
+    return archive.header.then(function (h) {
+      var z = h.maxZoom, t = tileXYFor(point.lng, point.lat, z);
+      return archive.getTile(z, t.x, t.y).then(function (bytes) {
+        var decoded = bytes ? decodeTileLayer(bytes, "d") : { extent: 4096, features: [] };
+        return {
+          type: "FeatureCollection",
+          features: decoded.features.map(function (f) {
+            var props = {};
+            for (var k in f.properties) if (f.properties.hasOwnProperty(k) && k !== "_s" && k !== "_i") props[k] = f.properties[k];
+            return {
+              type: "Feature", id: f.id, properties: props,
+              geometry: { type: "Polygon", coordinates: f.rings.map(function (ring) {
+                return ring.map(function (p) { return tileToLngLat(z, t.x, t.y, p[0], p[1], decoded.extent); });
+              }) }
+            };
+          })
+        };
+      });
+    });
+  }

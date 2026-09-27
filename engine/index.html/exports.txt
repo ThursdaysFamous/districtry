@@ -71,6 +71,9 @@
         // makes no request of its own, and says so here
         subOf: mod.subOf || null,
         sharesParentLoader: !!(parent && parent.overlay && mod.overlay && parent.overlay.load === mod.overlay.load),
+        // drawn from a vector-tile archive: its whole file is fetched only when
+        // asked (loadWholeFile below), so the probe asks before reading
+        tiles: isTileDrawn(mod) ? mod.tiles : null,
         // one short key per loaded feature, so the probe can tell which of
         // this site's files the layer DRAWS: a file the app also loads at boot
         // is subtracted with the boot requests, and matching features finds it
@@ -97,6 +100,24 @@
         highlight: !!rt.highlightApplied || !!rt.provisionalLayer,
         features: (rt.geojson && rt.geojson.features && rt.geojson.features.length) || 0
       };
+    },
+    // A tile-drawn layer's whole GeoJSON file, which it otherwise fetches
+    // only for a comparison; what scripts/probe_layer_sources.mjs asks for
+    // so it can still say which file the layer's districts come from.
+    // A tile-drawn layer's state: whether it is on the tile canvas, the lit
+    // district's tile feature id, and how many runs of real edge the
+    // boundary-street names have to follow (tileEdgesForStreets)
+    tileState: function (id) {
+      var mod = getLayerById(id), rt = layerRuntime[id];
+      if (!mod || !rt) return null;
+      var g = rt.highlightedLayer && rt.highlightedLayer.feature && rt.highlightedLayer.feature.geometry;
+      return { drawn: isTileDrawn(mod), selected: rt.tileSelectedId,
+        edgeRuns: g && g.type === "MultiPolygon" && g.coordinates[0] ? g.coordinates[0].length : 0 };
+    },
+    loadWholeFile: function (id) {
+      var mod = getLayerById(id);
+      if (!mod || !isTileDrawn(mod)) return Promise.resolve(false);
+      return ensureTileGeojson(mod).then(function () { return true; });
     },
     loadCountyEntry: function (id, key) {
       var mod = getLayerById(id);

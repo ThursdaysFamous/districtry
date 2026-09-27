@@ -3902,6 +3902,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/school-district-unified.pmtiles",
      "source": "shipped"
     },
     "school-district-elementary": {

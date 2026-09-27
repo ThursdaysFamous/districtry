@@ -77,6 +77,9 @@ FONT_BRANCH = re.compile(r'new URL\("fonts/", self\.registration\.scope\)')
 # served without revalidation, so the same rule holds: once the BASE's worker
 # carries the branch, a changed file there needs a CACHE_NAME bump.
 POPULATION_BRANCH = re.compile(r'new URL\("data/app/population/", self\.registration\.scope\)')
+# Vector-tile archives (data/app/tiles/) are cached a byte range at a time
+# and never revalidated, so the same rule holds for them.
+TILES_BRANCH = re.compile(r'new URL\("data/app/tiles/", self\.registration\.scope\)')
 
 
 def _git(*args):
@@ -145,6 +148,12 @@ def _cache_first(sw_text, tag):
             for name in sorted(os.listdir(pop)):
                 if name.endswith(".json"):
                     files.add("%s/data/app/population/%s" % (tag, name))
+    if TILES_BRANCH.search(sw_text or ""):
+        tiles = os.path.join(REPO_ROOT, tag, "data", "app", "tiles")
+        if os.path.isdir(tiles):
+            for name in sorted(os.listdir(tiles)):
+                if name.endswith(".pmtiles"):
+                    files.add("%s/data/app/tiles/%s" % (tag, name))
     if FONT_BRANCH.search(sw_text or ""):
         fonts = os.path.join(REPO_ROOT, tag, "fonts")
         if os.path.isdir(fonts):

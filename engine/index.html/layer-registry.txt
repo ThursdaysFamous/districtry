@@ -40,7 +40,13 @@
       cardPromise: null,
       // the first overlay load's promise (onLayerToggled), which the hover
       // roster prefetch waits for
-      overlayPromise: null
+      overlayPromise: null,
+      // a layer drawn from vector tiles (tile-overlay block): the card's
+      // answer for the selected point, the lit district's tile feature id,
+      // the background fetch of the whole file a comparison needs, and the
+      // view whose edges were last read for the boundary-street names
+      tileAnswer: null, tileSelectedId: null, tileGeojsonPromise: null,
+      tileEdgeKey: null, tileEdgeId: null
     };
   }
 
@@ -120,6 +126,7 @@
   function restyleOverlayFeatures(mod) {
     var rt = layerRuntime[mod.id];
     if (!rt || !rt.overlayLayer) return;
+    if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); return; }
     rt.overlayLayer.eachLayer(function (subLayer) {
       if (subLayer.setStyle && subLayer.feature) subLayer.setStyle(baseStyleFor(mod, subLayer.feature));
     });
@@ -146,6 +153,8 @@
   function rescaleLayerFill(mod) {
     var rt = layerRuntime[mod.id];
     if (!rt.overlayLayer) return;
+    // a tile-drawn layer's paint reads the count itself (tilePaint)
+    if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); if (rt.highlightApplied) rt.highlightSignature = highlightSignature(rt); return; }
     if (rt.highlightApplied) { rt.highlightSignature = highlightSignature(rt); return; }
     if (rt.outlineOnly) return; // outline-only layers carry no fill to rescale
     var fillOpacity = scaledFillOpacity(mod);
@@ -281,6 +290,7 @@
     rt.highlightSignature = null;
     scheduleBoundaryStreets(); // basemap: the streets this district's edge follows
     if (!rt.overlayLayer) return;
+    if (rt.overlayLayer.dxTiles) { rt.overlayLayer.setSelected(null); return; }
     rt.overlayLayer.eachLayer(function (subLayer) {
       if (subLayer.setStyle) subLayer.setStyle(baseStyleFor(mod, subLayer.feature));
       if (subLayer._path) subLayer._path.classList.remove(HIGHLIGHT_CLASS);
@@ -294,6 +304,12 @@
     // the one a click happens to land inside would defeat the type coloring, so
     // skip the highlight/fade sweep and just keep the per-feature base styling.
     if (mod.overlay && mod.overlay.styleForFeature) { clearLayerHighlight(mod); return; }
+    // drawn from vector tiles: lit by feature id from the card's answer
+    if (rt.overlayLayer && rt.overlayLayer.dxTiles) {
+      if (!state.selectedPoint) { clearLayerHighlight(mod); return; }
+      updateTileHighlight(mod);
+      return;
+    }
     if (!rt.overlayLayer || !rt.geojson || !state.selectedPoint) {
       clearLayerHighlight(mod);
       showProvisionalHighlight(mod); // the point answer's district, until the full set is in

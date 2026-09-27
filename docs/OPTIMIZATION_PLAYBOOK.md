@@ -1225,3 +1225,85 @@ full set is still downloading, so whether that request is seen is a race.
 `probe_point_transmission.mjs` pins loaders uncached for exactly this reason;
 this probe does not. Recorded here rather than fixed. The run also measured
 New York's `nys-central-hs-district` for the first time.
+### Phase 4 shipped: one layer drawn and answered from tiles (2026-09-27)
+
+Wisconsin's unified school districts (`wi` `school-district-unified`) is the
+first layer drawn from its archive, `wi/data/app/tiles/school-district-unified.pmtiles`.
+A layer opts in with `tiles: "<archive url>"` in its `registerPolygonLayer`
+call; nothing else in the app changes for layers that do not.
+
+**Measured with `scripts/probe_layer_load.mjs` on Slow 4G**, at the Wisconsin
+anchor, the same layer with and without the `tiles:` line:
+
+| Opened at zoom | Card, file | Card, tiles | Bytes, file | Bytes, tiles |
+|---|---|---|---|---|
+| 8 | 12.6 s | 0.76 s | 2,365 KB | 122 KB |
+| 11 | 12.6 s | 0.73 s | 2,365 KB | 45 KB |
+| 14 | 12.6 s | 0.79 s | 2,365 KB | 31 KB |
+
+The plan's target was a card under a second at any zoom; it answers in under
+0.8 s at all three, and in 0.90 s (27 KB) at the app's default zoom, the run
+recorded in `layer-load.json`. The district is lit at the same moment, because the lit
+district is chosen by the card's own answer. The byte count at zoom 8 is the
+tiles for a screen of the state; closer in it falls, where the whole file never
+did.
+
+**How it is built, in three engine blocks:**
+
+- `vector-tiles` reads a PMTiles v3 archive and decodes a Mapbox vector tile
+  with no library: a 127-byte header, gzipped directories of varints walked by
+  Hilbert tile id, and a small protocol buffer per tile, read by byte range
+  (a server that ignores Range gets the whole file, kept and sliced, so local
+  `python -m http.server` still works). `scripts/validate_vector_tiles.py`
+  runs the block AS SHIPPED in Node against the committed archives and holds
+  it to the `pmtiles` and `mapbox-vector-tile` packages the builder's gate
+  trusts: 198 tiles vertex for vertex and 500 point answers. Broken on purpose
+  it failed a wrong Hilbert rotation, a wrong zigzag, and a wrong directory
+  offset.
+- `tile-overlay` answers the card from the deepest tile under the point (only
+  `DecompressionStream` is needed, so the raster fallback gets it too) and
+  draws the layer on one shared MapLibre canvas in its own pane, 395, just
+  under Leaflet's overlay pane. The highlight, the fade of every other
+  district, the fill scaling by layer count and the outline-only mode are the
+  same styles the Leaflet path reads, as GL paint with a feature-state for the
+  lit district. The hover popup asks the canvas what is drawn under the
+  cursor. The pin, the relationship outlines and the stats still read the
+  whole file, which is fetched in the background the moment a comparison is
+  pinned, never on switch-on. The boundary-street names read the deepest tiles
+  in view and drop every segment on a tile's clip line.
+- `sw-handlers` caches each byte range under its own key and hands it back as
+  the 206 the page asked for, since the Cache API refuses a 206. Measured with
+  the worker on: a first visit fetched 9 ranges, 40 KB; the second only the
+  16 KB header the first read before the worker took control; the third
+  nothing. `check_cache_version.py` treats everything under `data/app/tiles/`
+  as cache-first.
+
+**Two things differ from the Leaflet path, and are recorded rather than
+hidden.** The drop shadow under the lit district is a blurred GL line rather
+than a CSS filter. And a layer drawn from tiles sits BELOW every Leaflet-drawn
+layer rather than at its size rank among them: tile layers are ranked among
+themselves, but one canvas cannot interleave with SVG paths. School districts
+are among the larger layers, so the smaller layers still draw over them; a
+larger Leaflet layer (a county) now does too, and phase 5 removes the split by
+moving every shipped layer onto the canvas.
+
+**What guards it.** `vector-tiles.yml` now also runs
+`build_vector_tiles.py --committed`, which holds every SHIPPED archive to
+today's file without tippecanoe — a boundary file changed without rebuilding
+its archive leaves the app answering from the old districts, and this fails
+it (tested by renaming one district in the source) — and requires the
+archives shipped and the layers registered with `tiles:` to be the same set.
+Wisconsin's smoke check 2t refuses the 2.3 MB file and requires the card to
+answer and the district to be lit on the tile canvas; with the `tiles:` line
+removed it fails, naming three refused requests.
+
+**Privacy.** Fetching the tile under the selected point tells this site's host
+which square of about 3.5 km the reader picked, where downloading the whole
+file told it nothing. The privacy page names it in the GitHub Pages row for the
+apps that register a tile layer, measured from the registration.
+
+**The source probe asks for the whole file.** A tile-drawn layer loads no
+features until a comparison asks, so `probe_layer_sources.mjs` would have
+matched no file to it and the builder would have lost the layer. The probe
+now calls `loadWholeFile` for a layer whose `layerSources()` reports `tiles`,
+and records the archive beside the file.

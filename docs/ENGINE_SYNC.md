@@ -256,7 +256,7 @@ rather than re-running the failed sibling run.
 > in the changelog. A changelog that promises a clean adoption and doesn't
 > deliver one costs every sibling a red CI run and a manual repair.
 
-## Current ENGINE block inventory (63 in index.html + 2 in sw.js)
+## Current ENGINE block inventory (65 in index.html + 2 in sw.js)
 
 index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`,
 `basemap`, `body-map-toolbar`, `brand-names`, `cached-loaders`, `card-helpers`,
@@ -275,7 +275,7 @@ index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`,
 `selection-controls`, `socrata-loader`, `socrata-point-loader`, `state`,
 `styles-app`, `styles-card-v2`, `styles-core`, `styles-districtry-skin`,
 `styles-footer`, `styles-hover-responsive`, `styles-markers`,
-`styles-sibling-result`.
+`styles-sibling-result`, `tile-overlay`, `vector-tiles`.
 (Count and list re-synced against `check_engine_parity.py` output while
 adding the two card blocks — the previous list said 45 but had drifted,
 missing `map-chrome-classes`, `map-pan-filter`, and `styles-markers`.
