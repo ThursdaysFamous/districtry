@@ -36,7 +36,8 @@ built from it. --check is offline and holds the tree to it:
 
   1. every MIRRORS row is registered with `tiles:` in its app, its archive
      exists, and the app's own loader call names the same service, layer and
-     fields;
+     fields; every ZIP_MIRRORS row (phase 6b) the same, with the app's own
+     bounding-box constant in place of the loader call;
   2. every archive's bytes hash to what the record says was built;
   3. nothing is recorded that MIRRORS does not list.
 
@@ -71,7 +72,7 @@ ARCGIS_BLOCK = os.path.join(REPO_ROOT, "engine", "index.html", "arcgis-loader.tx
 # esriRingsToParts assigns a hole to its shell with pointInRing, which lives here
 PIP_BLOCK = os.path.join(REPO_ROOT, "engine", "index.html", "point-in-polygon.txt")
 SERVICES = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
-STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55"}
+STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": "06"}
 # WHO THIS FETCHES AS, and it used to be nobody: the first version shelled out to
 # curl with no -A, so the Census saw `curl/8.x` and nothing read robots.txt.
 # Nothing was breached — measured 2026-09-27 as that client, the host's
@@ -101,6 +102,55 @@ MIRRORS = [
     ("wi", "school-district-elementary", "School", 2, "GEOID,NAME,STATE"),
 ]
 
+# THE ZIP LAYERS (phase 6b). TIGERweb's ZCTA layer has NO STATE field — a ZCTA
+# can cross a state line — so every app fetches it by a bounding box instead,
+# and each row carries that app's own box constant. --check fails when the
+# constant in index.html stops matching, the same guarantee the rows above get
+# from the loader call.
+#
+# FULL DETAIL, NOT THE APP'S WHOLE-SET SIMPLIFICATION (the operator's choice,
+# 2026-09-27). The apps ask the server for maxAllowableOffset=0.0005 (~55 m)
+# because the raw statewide set is ~40 MB; an archive holds the raw set in a
+# fraction of that, so the mirror leaves the simplification out and the card,
+# read from the tile, answers from the ZCTA as the Census drew it.
+#
+# PAGED, BECAUSE THE SERVER CANNOT ANSWER IT WHOLE: asked for Illinois's box at
+# full detail in one response, TIGERweb returned `{"code": 500, "message":
+# "Error performing query operation"}` for 2,184 ZCTAs (measured 2026-09-27),
+# and answered 250 at a time in about 2 s and 5.4 MB a page. A run counts the
+# box first and refuses a set that does not add up to that count.
+ZIP_MIRRORS = [
+    ("il", "zip-code", "IL_BBOX_ENVELOPE", (-91.6, 36.9, -87.0, 42.6)),
+    ("ia", "zip-code", "IA_BBOX_ENVELOPE", (-96.69, 40.32, -90.09, 43.55)),
+    ("mi", "zip-code", "MI_BBOX_ENVELOPE", (-90.42, 41.69, -82.12, 48.31)),
+    ("wi", "zip-code", "WI_BBOX_ENVELOPE", (-93.09, 42.29, -86.04, 47.51)),
+    ("ny", "nys-zip-code", "NY_ZCTA_ENVELOPE", (-79.77, 40.47, -71.77, 45.02)),
+    ("ca", "zip-code", "SF_BBOX_ENVELOPE", (-122.62, 37.58, -122.28, 37.96)),
+]
+ZCTA_SERVICE, ZCTA_INDEX, ZCTA_FIELDS = "PUMA_TAD_TAZ_UGA_ZCTA", 11, "ZCTA5"
+PAGE_SIZE = 250
+# IN-STATE ONLY (the operator's choice, 2026-09-27). A box holding a state
+# holds its neighbours' ZCTAs too — measured that day, 2,007 of the 3,833 in New
+# York's box are New Jersey, Connecticut, Pennsylvania, Massachusetts and
+# Vermont ZCTAs, and Michigan's reaches Chicago — and at full detail they were
+# about half of New York's 15.6 MB archive. So a ZCTA is kept only where it
+# overlaps the app's own state (the Census States layer, fetched from the same
+# host) by more than this many square degrees, about 100 m² at these latitudes:
+# a ZCTA that merely touches the state line shares an edge, not ground. What it
+# costs is stated rather than implied: a reader who clicks OUTSIDE the state
+# gets no ZIP card where the live layer answered one; inside the state every
+# answer is unchanged.
+STATE_OVERLAP_MIN = 1e-8
+
+
+def rows():
+    """Every mirrored layer as one record, whichever way it is fetched."""
+    out = [dict(tag=t, layer=l, service=s, index=i, fields=f, env_var=None, env=None)
+           for t, l, s, i, f in MIRRORS]
+    out += [dict(tag=t, layer=l, service=ZCTA_SERVICE, index=ZCTA_INDEX, fields=ZCTA_FIELDS,
+                 env_var=v, env=e) for t, l, v, e in ZIP_MIRRORS]
+    return out
+
 def fail(msg):
     print("mirror-tiger-tiles: FAIL — " + msg, file=sys.stderr)
     sys.exit(1)
@@ -114,10 +164,20 @@ def archive_path(tag, layer):
     return os.path.join(REPO_ROOT, tag, "data", "app", "tiles", layer + ".pmtiles")
 
 
-def query_url(tag, service, index, fields):
-    where = urllib.parse.quote("STATE='%s'" % STATE_FIPS[tag])
-    return ("%s%s/MapServer/%d/query?where=%s&outFields=%s&outSR=4326&f=json&geometryPrecision=5"
-            % (SERVICES, service, index, where, fields))
+def query_url(row):
+    """The query recorded for a layer. A box row's is the query WITHOUT its
+    page window; fetch_pages adds resultOffset/resultRecordCount per page."""
+    if row["env"] is None:
+        where = urllib.parse.quote("STATE='%s'" % STATE_FIPS[row["tag"]])
+        return ("%s%s/MapServer/%d/query?where=%s&outFields=%s&outSR=4326&f=json&geometryPrecision=5"
+                % (SERVICES, row["service"], row["index"], where, row["fields"]))
+    xmin, ymin, xmax, ymax = row["env"]
+    env = json.dumps({"xmin": xmin, "ymin": ymin, "xmax": xmax, "ymax": ymax}, separators=(",", ":"))
+    return ("%s%s/MapServer/%d/query?where=%s&geometry=%s&geometryType=esriGeometryEnvelope"
+            "&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=%s&outSR=4326&f=json"
+            "&geometryPrecision=5&orderByFields=OBJECTID"
+            % (SERVICES, row["service"], row["index"], urllib.parse.quote("1=1"),
+               urllib.parse.quote(env), row["fields"]))
 
 
 def sha256_bytes(b):
@@ -163,6 +223,17 @@ def loader_call_names(html, service, index, fields):
     return any(re.search(p, html) for p in pats)
 
 
+def envelope_matches(html, row):
+    """Does this app's index.html still declare the box the row fetches, and
+    use it in a ZCTA query for layer 11's ZCTA5?"""
+    m = re.search(r"var\s+%s\s*=\s*\{\s*xmin:\s*([-\d.]+),\s*ymin:\s*([-\d.]+),"
+                  r"\s*xmax:\s*([-\d.]+),\s*ymax:\s*([-\d.]+)\s*\}" % re.escape(row["env_var"]), html)
+    if not m or tuple(float(x) for x in m.groups()) != tuple(row["env"]):
+        return False
+    return ("JSON.stringify(%s)" % row["env_var"]) in html and "PUMA_TAD_TAZ_UGA_ZCTA" in html \
+        and "outFields=ZCTA5" in html
+
+
 def registered_tiles(html):
     return set(m for m in re.findall(r'\btiles:\s*"data/app/tiles/([^"/]+)\.pmtiles"', html))
 
@@ -184,23 +255,98 @@ fs.writeFileSync(process.argv[5], JSON.stringify(fc));
 
 
 def fetch(url, dest):
-    got = subprocess.run(["curl", "-sS", "--fail", "--retry", "3", "--retry-delay", "5",
+    # --retry-all-errors: plain --retry skips a reset connection (curl exit 35),
+    # which the Census server does to a runner often enough to fail a CI run.
+    got = subprocess.run(["curl", "-sS", "--fail", "--retry", "3", "--retry-all-errors", "--retry-delay", "5",
                           "--max-time", "300", "-A", USER_AGENT, "-o", dest, url],
                          capture_output=True, text=True)
     if got.returncode != 0:
         raise RuntimeError("curl failed (%d): %s" % (got.returncode, got.stderr.strip()[-300:]))
 
 
-def fetch_as_geojson(tag, service, index, fields, work):
-    url = query_url(tag, service, index, fields)
-    raw = os.path.join(work, "esri.json")
-    fetch(url, raw)
-    with open(raw, encoding="utf-8") as fh:
+def read_json(path):
+    with open(path, encoding="utf-8") as fh:
         payload = json.load(fh)
     if payload.get("error"):
         raise RuntimeError("TIGERweb answered an error: %s" % json.dumps(payload["error"])[:300])
-    if payload.get("exceededTransferLimit"):
-        raise RuntimeError("TIGERweb capped the response (exceededTransferLimit) — the set needs paging")
+    return payload
+
+
+def fetch_pages(url, work):
+    """A box row's set, PAGE_SIZE at a time, held to the server's own count."""
+    count_path = os.path.join(work, "count.json")
+    fetch(url.replace("&f=json", "&f=json&returnCountOnly=true"), count_path)
+    want = read_json(count_path).get("count")
+    if not isinstance(want, int) or want <= 0:
+        raise RuntimeError("TIGERweb gave no count for the box")
+    feats, shell, offset = [], None, 0
+    while True:
+        page = os.path.join(work, "page-%d.json" % offset)
+        fetch("%s&resultOffset=%d&resultRecordCount=%d" % (url, offset, PAGE_SIZE), page)
+        payload = read_json(page)
+        got = payload.get("features") or []
+        shell = shell or payload
+        feats += got
+        offset += len(got)
+        if not got or not payload.get("exceededTransferLimit"):
+            break
+    if len(feats) != want:
+        raise RuntimeError("the pages hold %d features and the server counts %d in the box" % (len(feats), want))
+    shell = dict(shell)
+    shell["features"] = feats
+    shell.pop("exceededTransferLimit", None)
+    return shell
+
+
+_STATE_SHAPES = {}
+
+
+def state_shape(tag, work):
+    """The app's state as one shapely geometry, from TIGERweb's States layer,
+    converted by the engine's own esriToGeoJSON like every set here."""
+    if tag not in _STATE_SHAPES:
+        from shapely.geometry import shape
+        from shapely.ops import unary_union
+        url = ("%sState_County/MapServer/0/query?where=%s&outFields=STATE&outSR=4326&f=json"
+               "&geometryPrecision=5" % (SERVICES, urllib.parse.quote("STATE='%s'" % STATE_FIPS[tag])))
+        raw, out = os.path.join(work, "state.json"), os.path.join(work, "state.geojson")
+        fetch(url, raw)
+        if not (read_json(raw).get("features")):
+            raise RuntimeError("TIGERweb returned no outline for state %s" % STATE_FIPS[tag])
+        got = subprocess.run(["node", "-e", CONVERT, ARCGIS_BLOCK, PIP_BLOCK, raw, "STATE", out],
+                             capture_output=True, text=True)
+        if got.returncode != 0:
+            raise RuntimeError("the engine's esriToGeoJSON did not run on the state: %s" % got.stderr[:400])
+        with open(out, encoding="utf-8") as fh:
+            _STATE_SHAPES[tag] = unary_union([shape(f["geometry"]).buffer(0)
+                                              for f in json.load(fh)["features"]])
+    return _STATE_SHAPES[tag]
+
+
+def keep_in_state(fc, tag, work):
+    """Drop the features that do not overlap the app's own state."""
+    from shapely.geometry import shape
+    st = state_shape(tag, work)
+    kept = [f for f in fc["features"]
+            if f.get("geometry") and shape(f["geometry"]).buffer(0).intersection(st).area > STATE_OVERLAP_MIN]
+    dropped = len(fc["features"]) - len(kept)
+    fc["features"] = kept
+    return dropped
+
+
+def fetch_as_geojson(row, work):
+    url = query_url(row)
+    fields = row["fields"]
+    raw = os.path.join(work, "esri.json")
+    if row["env"] is None:
+        fetch(url, raw)
+        payload = read_json(raw)
+        if payload.get("exceededTransferLimit"):
+            raise RuntimeError("TIGERweb capped the response (exceededTransferLimit) — the set needs paging")
+    else:
+        payload = fetch_pages(url, work)
+        with open(raw, "w", encoding="utf-8") as fh:
+            json.dump(payload, fh)
     feats = payload.get("features") or []
     if not feats:
         raise RuntimeError("TIGERweb returned no features")
@@ -212,8 +358,13 @@ def fetch_as_geojson(tag, service, index, fields, work):
     with open(out, encoding="utf-8") as fh:
         fc = json.load(fh)
     # canonical form, so the hash moves only when the data does: features in
-    # GEOID order (the server's order is not promised), keys sorted
-    fc["features"].sort(key=lambda f: str((f.get("properties") or {}).get("GEOID")))
+    # GEOID order (ZCTA5 for the ZIP layer, which has no GEOID in its fields;
+    # the server's order is not promised), keys sorted
+    sort_field = fields.split(",")[0]
+    fc["features"].sort(key=lambda f: str((f.get("properties") or {}).get(sort_field)))
+    row["_dropped"] = keep_in_state(fc, row["tag"], work) if row["env"] is not None else 0
+    if not fc["features"]:
+        raise RuntimeError("no feature overlaps the state")
     canon = json.dumps(fc, sort_keys=True, separators=(",", ":")).encode()
     with open(out, "wb") as fh:
         fh.write(canon)
@@ -265,23 +416,23 @@ def refresh(only, force, n_points, seed):
     if not shutil.which("curl") or not shutil.which("node"):
         fail("needs curl and node on PATH")
     rec = load_record()
-    rows = [r for r in MIRRORS if not only or any(o in (r[0], key(r[0], r[1])) for o in only)]
-    if not rows:
+    todo = [r for r in rows() if not only or any(o in (r["tag"], key(r["tag"], r["layer"])) for o in only)]
+    if not todo:
         fail("--only matched no mirrored layer")
     # robots.txt is read before the first fetch of the host, as the client that
     # fetches; a refusal stops the run and leaves every committed archive as it is.
     from scraper_common import require_robots_allowed
-    why = require_robots_allowed(query_url(*[rows[0][i] for i in (0, 2, 3, 4)]),
-                                 USER_AGENT, label="mirror-tiger-tiles")
+    why = require_robots_allowed(query_url(todo[0]), USER_AGENT, label="mirror-tiger-tiles")
     print("mirror-tiger-tiles: robots.txt — %s" % why, flush=True)
     changed, failed, replaced = [], [], set()
     tmp = tempfile.mkdtemp(prefix="tiger-mirror-")
     try:
-        for tag, layer, service, index, fields in rows:
+        for row in todo:
+            tag, layer = row["tag"], row["layer"]
             k = key(tag, layer)
             work = tempfile.mkdtemp(dir=tmp)
             try:
-                url, path, n, digest = fetch_as_geojson(tag, service, index, fields, work)
+                url, path, n, digest = fetch_as_geojson(row, work)
             except RuntimeError as e:
                 print("  FAIL  %-36s %s" % (k, e), flush=True)
                 failed.append(k)
@@ -314,7 +465,17 @@ def refresh(only, force, n_points, seed):
                 "data_sha256": digest,
                 "archive_sha256": sha256_file(arch),
             }
+            if row["env"] is not None:
+                rec[k]["page_size"] = PAGE_SIZE
+                rec[k]["in_state"] = STATE_FIPS[tag]
+                rec[k]["out_of_state_dropped"] = row["_dropped"]
+                with open(path, encoding="utf-8") as fh:
+                    # one comma-joined string, so the record stays a page long
+                    rec[k]["kept"] = ",".join(sorted(str(f["properties"][row["fields"]])
+                                                     for f in json.load(fh)["features"]))
             changed.append(k)
+            if row.get("_dropped"):
+                print("        %-36s %d out-of-state ZCTA(s) dropped" % (k, row["_dropped"]), flush=True)
             print("  %-4s  %-36s %d features%s, %.1f MB set -> %.2f MB archive; %d/%d points "
                   "under %g m differ, %d/%d beyond"
                   % ("new" if not old else "moved" if old.get("data_sha256") != digest else "built", k, n,
@@ -329,7 +490,7 @@ def refresh(only, force, n_points, seed):
     bump_cache(replaced)
     if failed:
         fail("%d layer(s) not mirrored: %s — nothing was written for them" % (len(failed), ", ".join(failed)))
-    print("mirror-tiger-tiles: OK — %d of %d layer(s) rebuilt" % (len(changed), len(rows)))
+    print("mirror-tiger-tiles: OK — %d of %d layer(s) rebuilt" % (len(changed), len(todo)))
 
 
 # ---- check ---------------------------------------------------------------------
@@ -339,7 +500,10 @@ def check():
     problems = []
     listed = set()
     html_by_tag = {}
-    for tag, layer, service, index, fields in MIRRORS:
+    all_rows = rows()
+    for row in all_rows:
+        tag, layer, service, index, fields = (row["tag"], row["layer"], row["service"],
+                                              row["index"], row["fields"])
         k = key(tag, layer)
         if k in listed:
             problems.append("%s is listed twice in MIRRORS" % k)
@@ -350,7 +514,12 @@ def check():
         html = html_by_tag[tag]
         if layer not in registered_tiles(html):
             problems.append("%s is mirrored but %s/index.html does not register it with tiles:" % (k, tag))
-        if not loader_call_names(html, service, index, fields):
+        if row["env"] is not None:
+            if not envelope_matches(html, row):
+                problems.append("%s: %s/index.html no longer declares %s = %s for its ZCTA query — "
+                                "the archive would cover a different box from the one the app "
+                                "fetches; update ZIP_MIRRORS and --refresh" % (k, tag, row["env_var"], row["env"]))
+        elif not loader_call_names(html, service, index, fields):
             problems.append("%s: no tigerStatewideLoader call in %s/index.html names %s layer %d "
                             "with fields %s — the archive would hold something the card does not "
                             "read; update MIRRORS and --refresh" % (k, tag, service, index, fields))
@@ -359,7 +528,7 @@ def check():
         if not r:
             problems.append("%s has no entry in tiger-mirror.json — run --refresh --only %s" % (k, k))
             continue
-        if r.get("query") != query_url(tag, service, index, fields):
+        if r.get("query") != query_url(row):
             problems.append("%s was fetched with %s, which is not the query MIRRORS makes today — "
                             "--refresh it" % (k, r.get("query")))
         if not os.path.isfile(arch):
@@ -374,7 +543,7 @@ def check():
         fail("\n  " + "\n  ".join(problems))
     oldest = min((r["fetched"] for r in rec.values()), default=None)
     print("mirror-tiger-tiles: OK — %d mirrored layer(s) registered, their loaders unchanged and "
-          "their archives the ones recorded (oldest fetch %s)" % (len(MIRRORS), oldest))
+          "their archives the ones recorded (oldest fetch %s)" % (len(all_rows), oldest))
 
 
 def main():

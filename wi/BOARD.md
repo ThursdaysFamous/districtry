@@ -49,6 +49,48 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (evening, ninth). #1231 IS MERGED AS `958375b`. THE ONE LINE IT WAS HELD ON DOES NOT
+REPRODUCE — AND THE READING THAT PRODUCED IT WAS CAUSED BY MY OWN PROSE, WHICH IS WHAT I FIXED
+(#1235).**
+
+The root board records **"#1231 HELD on one line — `--check-shipped` DOES NOT EXIST"**, on the
+reading that `dropped_rings.py` accepts only `--selftest` and `--check` and that "nothing in either
+file opens a data/app file". Measured on the merged tree rather than argued:
+
+- `build_wi_supervisory_districts.py:980` — `if "--check-shipped" in args:`
+- `.github/workflows/smoke-test.yml:1256` runs that exact command, so it is in CI
+- `check_shipped()` lines 916-918 open `data/app/supervisory-districts.json` and build
+  `drings.model(feats, VALIDATION_KEY)` from its features
+- per stray it calls `drings.reader_answer(mod, harm_point)` against that shipped model and
+  compares to `answer_after` — a re-derivation, not a field comparison
+- run on `958375b` it exits 0: "every AFTER answer re-derived from the shipped 1590 features at its
+  own interior point; 3 declared stray(s), every AFTER answer re-derived at its own harm point"
+
+**ONE HALF OF THE READING WAS RIGHT ABOUT THE WRONG GATE, and that is the part worth keeping.**
+`dropped_rings.py --check` IS field consistency — `check_strays` holds each declaration's prose to
+its own fields, exactly as the hold describes. It is a DIFFERENT gate from `--check-shipped`, and
+both exist. The manager described one correctly and concluded the other was absent.
+
+**THE CAUSE IS MINE AND I AM NOT TREATING THIS AS A REVIEW ERROR.** Both docs of record named the
+flag and no file: CLAUDE.md's dropped-rings paragraph OPENS by naming `wi/scripts/dropped_rings.py`
+and then writes "`--check-shipped` asks what a reader is told at each harm point", and this board's
+own row 27 did the same. A reader tracing the flag goes to the file the paragraph names, finds
+`--selftest` and `--check`, and concludes the gate is absent. That is not a careless read; it is the
+only read that prose supports. **A FLAG NAMED WITHOUT ITS FILE IS A FLAG A READER CANNOT FIND.**
+Both now name the builder, and CLAUDE.md records the lesson beside the correction.
+
+**NO GATE IS PROPOSED, AND THAT IS MEASURED RATHER THAN OMITTED.** `validate_skills.py` already
+holds a flag to the script beside it, and the obvious move is to widen its surface — but that rule
+reads a flag ADJACENT to a script path, so ported as-is it would have passed the bare flag that
+caused this. Requiring every flag in a doc of record to name a script would fire on prose that
+deliberately quotes retired flags, which CLAUDE.md does throughout. A design question for the
+operator, not mine to settle unilaterally.
+
+The merge also closed **#74** and **#75** — the supervisory strays declared and the fidelity gate's
+third blind spot bounded, the full answer-difference sweep costed at 2.8 h on the small layer and
+refused. **Nothing is assigned now.** #69 (what a correct robots refusal should report in the
+roster-health issue) is still unassigned and still not mine to build unilaterally.
+
 **2026-09-27 (evening, eighth). THE CORRECTION I WROTE THIS AFTERNOON OVERSTATED THE HARM, WHICH
 IS THE DEFECT IT WAS WRITTEN TO FIX — CAUGHT BEFORE IT SHIPPED, ON #1231.**
 
