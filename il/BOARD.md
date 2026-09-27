@@ -50,6 +50,57 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-27. #1226's CORRUPTED DIRECTOR NAME IS THE COMPTROLLER'S OWN FILING,
+AND THAT FILING DISAGREES WITH ITSELF INSIDE ONE DOCUMENT.** The held refresh
+would have replaced `Jaclyn G. Trujillo` with `Jaclyn G, Trujillo` on Walnut
+Public Library District (006/030/10, Bureau County, Director). Read from the
+primary source through this repository's own parser, robots.txt first via
+`robots_policy` as the token `comptroller_afr` sends (allowed, no crawl delay,
+no content signal): **the FY2026 contact table prints the forename cell three
+times and does not agree with itself — `Jaclyn G,` in slots A and C, `Jaclyn G.`
+in slot D.** FY2025 printed a THIRD spelling in that same slot D, `Jaclyn G`
+with no punctuation at all. So the parse did not introduce it; one person has
+been filed three ways across two filings, and both years were read through the
+same code, which is what rules the parser out.
+
+**THE OBVIOUS FIX WOULD HAVE SHIPPED THE CORRUPTION.** Voting across the slots
+is the first thing anyone reaches for, and the bad spelling holds TWO of the
+three populated slots — a majority picks the comma. Nor is "take the slot that
+looks right" available: slot D is in `BOARD_ONLY_SLOTS` for the measured
+duplicate-trap reasons already in that module, so a head filed there is
+deliberately never read, and reopening it to win one character back would
+readmit 27 measured duplicates. The Director ships from slot C, a published
+slot, which is exactly where the comma is.
+
+**SO IT IS NORMALISED, NARROWLY AND NEVER SILENTLY.** A comma is rewritten only
+where it sits immediately after a single capital letter that itself sits between
+a given name and a surname, in `comptroller_afr.normalise_filed_name`, with a
+warning naming both spellings printed once per correction rather than once per
+read — every slot's name is built twice and a unit can file one person three
+times, so an unguarded append printed one correction six times. Measured against
+the corpus before it was written: of the **1,622 names across the eight
+AFR-derived rosters, exactly two carry a comma at all** — `Juan Martinez, Jr.`
+and `John Shea, Jr.` — and neither matches the pattern. A surname-first value
+(`Auter, Tara`) is left alone too; that is a different defect with its own
+remedy in the Vermilion scraper.
+
+**AND THE BUILDER NOW REFUSES WHAT THE NORMALISER CANNOT EXPLAIN**, the way the
+count floors refuse rather than write: any comma whose right-hand side is not a
+filed suffix stops the write and names the value. Negative-tested three ways on
+doctored payloads — the clean payload passes, the comma is refused by name and
+reason, and a legitimate `, Jr.` is not.
+
+**THE PARSER'S OWN SELFTEST EXISTED AND RAN NOWHERE**, which is the finding that
+outlives this name. `comptroller_afr.py --selftest` has proved
+`LOCALITY_CORRECTIONS` in all three directions for weeks and was in no workflow
+and in no skill, so eight scrapers import a parser whose proof nobody ran. It is
+in CI now with four new checks for the comma, and all six were broken on purpose
+to confirm they can fail: disabling the normaliser reds three, making the guard
+permissive reds two. The gate pair moved with it and was RE-MEASURED rather than
+incremented — the battery is **92 / 121**, well past the 84/113 I last recorded,
+because other sessions have been adding gates all day.
+
+
 **2026-09-26, AFTER #1185. NINETEEN LIBRARY CARDS NAME NO TRUSTEE AND NO GAP
 RECORD SAYS SO, and I found it by asking what the corrected record does NOT
 cover.** `statewide-library-officials` scopes to the 72 counties dispatching
