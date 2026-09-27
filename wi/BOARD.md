@@ -39,6 +39,61 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (01:45). #1211 MERGED as `02dae76`, verified on main by content, and #57(b) IS
+OPEN AS #1213 — where my own scoping was wrong THREE TIMES and every correction came from
+running something instead of grepping for it.**
+
+**WHAT I GOT WRONG, because it is the useful part.** I scoped #57(b) from greps and wrote
+three false things into the task. (1) "No guard exists in the mps scraper at all" — it has
+FIVE and its builder three, and I had grepped `raise RuntimeError` where this pair's idiom
+is `raise SystemExit`. (2) "The host is in no `validate_robots.py` sweep" — it is, both
+URLs, monthly, and that is *why* nobody noticed the scraper never asked: an audit reporting
+a host permitted reads exactly like the question having been answered. (3) That the
+user-agent artifact licensed the rename — it recorded `token-ok` at `/about/board`, the
+INDEX, while the scraper reads `/about/board/directors`, which is the wrong-address defect
+CLAUDE.md already records for 60 hosts. All three are corrected on the task and in the
+files. This is the same defect class as the battery-enumeration rule I helped write: a
+pattern you just wrote does not feel like remembering, and it is not reading the file.
+
+**WHAT #1213 DOES.** The eight guards now reach a gate — an 11-case `--selftest` over
+synthetic fixtures plus a CI step — and each case was negative-tested by removing its own
+guard, each then failing alone. robots.txt is read before the first fetch, `Crawl-delay: 5`
+is honoured across the two fetches (a plain sleep, the shape HostPacer's own docstring
+prescribes for one host on one thread), and the pinned Chrome/124 string is replaced by the
+districtry token — measured at the directors page on the rung the file uses: HTTP 200,
+187,326 bytes, and the whole parse, nine seats with both roles, every term and contact url,
+the office block and the committee witness matching nine surnames. **The pair reproduces the
+shipped roster byte for byte**, so it is mechanism with no data change.
+
+**BEING THE FIRST WISCONSIN CALLER OF `scraper_common` FOUND A DEFECT IN THE DEPS GATE.**
+`validate_workflow_deps.closure()` recursed into a FLEET_SHARED module with that module as
+its own `entry`, and an entry is read WITH function-local imports — so a library's
+`requests`-inside-`fetch()` became a hard requirement, demanding `requests` in the pip line
+of a weekly workflow whose scraper uses stdlib urllib. That defeats the design
+`scraper_common`'s docstring names that very gate as the reason for. `as_entry=False` now,
+negative-tested by moving `requests` to module scope there, which fails loudly across many
+workflows — narrower, not blinder. Nothing could have revealed it before: `scraper_common`
+is the first FLEET_SHARED module with any function-local third-party import, AST-checked
+against the other three.
+
+**Two of my own selftest fixtures were wrong first, both caught by what they were testing**:
+every fixture member was a "Fixture", so the distinct-surname witness read 1 against its
+floor of 5; and two assertions hardcoded names I then renamed. The expected values derive
+from the fixture table now, so the second class cannot recur.
+
+**PAIR RE-MEASURED AFTER THE LAST EDIT: 89 named steps, 118 invocations (108 no browser, 10
+Chromium).** #1208 merged mid-work and did not move it. The rename moved two gated figures —
+browser-string files 103 to 102, token-only 64 to 63 — restated in all three files the gate
+reads, with the caller change recorded in the artifact.
+
+**Verified:** the selftest, a live run green in 11.9 s including the pacing, the full pair
+reproducing the shipped roster, `validate_workflow_deps` across 135 workflows and 905 entry
+points, **108 of 108** no-browser gates re-derived from the workflow, Wisconsin's Chromium
+smoke test, and an AST sweep.
+
+**Queue after this:** #57(c), where the defect is not the 6% figure but that the docstring
+names NEITHER denominator.
+
 **2026-09-27 (01:10). #1211 IS OPEN: the chambers builder now reads ONE dropped-ring
 mechanism, and the migration found a real defect in the module BY FAILING.** #1206 merged
 as `81c84fd`, so the branch came off hold and reset onto it.
