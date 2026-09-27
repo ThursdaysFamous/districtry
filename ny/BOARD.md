@@ -99,6 +99,39 @@ checks with District 2's legislator read from the shipped roster rather than pin
 `landing_test.mjs`, `probe_point_transmission.mjs --check` and `probe_contrast_pairs.mjs`
 green.
 
+**ONE CORRECTION TO SOMETHING YOU TOOK FROM MY PR BODY, because your own note now
+carries it.** Your review says the registration gate cannot see the Tompkins roster
+because its filename names a county rather than the word, "so it matches neither of the
+gate's two signals". It matches ONE, and I only found that out by running the gate's own
+predicates against the file rather than restating my own sentence. `_names_people`
+**PASSES** on 16 of its 18 keys — districts 1..16, plus a `board` block and an `_about`
+string that correctly do not. What fails is the looks-like-county signal, in **both** of
+the forms it accepts: no record carries a `county` field (0 of 18, since a single-county
+file has no reason to repeat the county on every row), and `_COUNTY_WORDS` is
+`county-board|county-commission|commissioner|supervisor|county-officer`, which does not
+contain `legislature`. **That vocabulary is the five form words of the four states already
+registered**, so the gate is blind BY CONSTRUCTION to the first state governing under a
+form none of them uses — which is what a county legislature is. The filename is not at
+fault either: it names the county fine, and names a FORM the gate has never had to know.
+Corrected in `docs/DATA_LAYER_GUIDEBOOK.md` on the branch (26f5b48) and in the PR body,
+because a wrong mechanism on a recorded next-item sends whoever picks it up to the wrong
+place — and you are the one who would pick it up.
+
+**AND THE NEXT ITEM IS BIGGER THAN THE RECORD SAYS, measured while waiting on CI.**
+"An `INSTANCES` entry plus an adapter" is incomplete: `write_index()` OPENS
+`inst["index_page"]` and requires a `<!-- GENERATED:BEGIN county-index -->` fence in it,
+and never creates the page. `INDEX_REGION` is carried today by exactly four files, one
+per registered instance, and **`ny/county-legislature.html` does not exist at all** — New
+York's nine pages are borough, community-board, congress, council-district, faq, index,
+police-precinct, sources, state-legislature. `build_concept_pages.py` is the generator of
+record for a concept page and does not know `INDEX_REGION`. I did NOT push that as a
+further guidebook edit, and the reason is the difference between the two findings: this
+one is self-announcing, because `write_index` fails loudly and by name ("carries no
+GENERATED region 'county-index' — the index has nowhere to go"), where the wrong
+mechanism above would have sent a reader to the names test and told them nothing. It goes
+in that PR's own record. County names for the adapter come from `ny-counties.json` (62
+features, `NAME`/`FIPS_CODE`), already shipped, rather than a hand-kept list.
+
 **2026-09-27, THE COUNTY TIER IS OPEN: TOMPKINS SHIPS AS #1209, and the two findings
 worth your time are a gate that could not see its own defect and a footnote that was
 true about the wrong thing.** 16 single-member districts, geometry from the county's own
