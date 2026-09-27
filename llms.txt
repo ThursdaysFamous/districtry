@@ -45,6 +45,7 @@ Counties, towns and villages, school and judicial districts across the state, pl
 - [What community board am I in?](https://districtry.com/ny/community-board.html)
 - [Who is my U.S. representative?](https://districtry.com/ny/congress.html)
 - [What Council district am I in?](https://districtry.com/ny/council-district.html)
+- [Who is my county legislator?](https://districtry.com/ny/county-legislature.html): links a page per county, 1 of them, each naming every member with whatever contact details that county publishes.
 - [What NYPD precinct am I in?](https://districtry.com/ny/police-precinct.html)
 - [Sources & data layers](https://districtry.com/ny/sources.html)
 - [Who is my NY state legislator?](https://districtry.com/ny/state-legislature.html)
