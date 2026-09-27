@@ -244,10 +244,10 @@ function fingerprint(f) {
 const fileKeys = new Map();
 function keysOf(url) {
   if (!fileKeys.has(url)) {
-    let keys = new Set();
+    let keys = [];
     try {
       const doc = JSON.parse(readFileSync(join(ROOT, url.replace(/^\/+/, "")), "utf8"));
-      if (doc && Array.isArray(doc.features)) keys = new Set(doc.features.map(fingerprint));
+      if (doc && Array.isArray(doc.features)) keys = doc.features.map(fingerprint);
     } catch (e) { /* not a file on disk, or not GeoJSON: draws nothing */ }
     fileKeys.set(url, keys);
   }
@@ -257,13 +257,30 @@ function keysOf(url) {
 // feature among the layer's loaded features — because build_vector_tiles.py
 // numbers the files in this order and the app sorts a tile's features by it:
 // where districts overlap, a card takes the first one holding the point.
+//
+// EACH LOADED FEATURE IS CLAIMED BY ONE FILE, in that order, and a file left
+// claiming nothing is not drawn. A file can repeat another's geometry exactly:
+// New York's Tompkins coverage outline is the Tompkins feature of its county
+// file, fingerprint and all, so matching alone charged the outline to the
+// county layer and build_vector_tiles.py --committed then held the archive to
+// two Tompkins features where the layer draws one. A layer that genuinely
+// loads a geometry twice lists its fingerprint twice, so both files still
+// claim it.
 function drawnFiles(reqs, prints) {
-  const order = new Map();
-  (prints || []).forEach((k, i) => { if (!order.has(k)) order.set(k, i); });
+  const order = new Map(), left = new Map();
+  (prints || []).forEach((k, i) => {
+    if (!order.has(k)) order.set(k, i);
+    left.set(k, (left.get(k) || 0) + 1);
+  });
   if (!order.size) return [];
   const urls = [...new Set(reqs.filter((x) => x.kind === "local").map((x) => x.url))];
-  const first = (u) => Math.min(...[...keysOf(u)].map((k) => order.has(k) ? order.get(k) : Infinity));
-  return urls.filter((u) => first(u) < Infinity).sort((a, b) => first(a) - first(b) || (a < b ? -1 : 1));
+  const first = (u) => Math.min(...keysOf(u).map((k) => order.has(k) ? order.get(k) : Infinity));
+  return urls.filter((u) => first(u) < Infinity).sort((a, b) => first(a) - first(b) || (a < b ? -1 : 1))
+    .filter((u) => {
+      let claimed = 0;
+      for (const k of keysOf(u)) if (left.get(k) > 0) { left.set(k, left.get(k) - 1); claimed++; }
+      return claimed > 0;
+    });
 }
 
 // ---- summarise --------------------------------------------------------------

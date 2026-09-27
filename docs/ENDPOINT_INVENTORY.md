@@ -151,15 +151,15 @@ measured until the next run describes it.
 | Township / County Subdivision (`township`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
 | Municipality (`municipality`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
 | Judicial Subcircuit (`judicial-subcircuit`) | 4 of 9 county sources, from `gis.cookcountyil.gov`, `services.arcgis.com`, `services3.arcgis.com`; 5 shipped with the app | — |
-| County Board District (`county-board`) | 27 of 64 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`; 37 shipped with the app | — |
-| Fire Protection District (`fire-district`) | 17 of 26 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.leecountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`; 9 shipped with the app | — |
+| County Board District (`county-board`) | 25 of 64 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.co.kendall.il.us`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`; 37 shipped with the app; 2 did not answer the probe (winnebago, boone) | `gis.cookcountyil.gov` |
+| Fire Protection District (`fire-district`) | 16 of 26 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.leecountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 9 shipped with the app; 1 did not answer the probe (iroquois) | — |
 | DuPage Special Police District (`dupage-county-special-police`) | `services.arcgis.com` | — |
 | Park District (`park-district`) | 10 of 18 county sources, from `gis.cookcountyil.gov`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 8 shipped with the app | — |
 | Library District (`library-district`) | 12 of 91 county sources, from `gis.cookcountyil.gov`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 79 shipped with the app | — |
 | CPS Network (High School, admin office) (`cps-hs-network`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
 | CPS Network (K-8, admin office) (`cps-network`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
-| City Ward (`ward`) | 28 of 28 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.cityofchicago.org`, `gis.aurora.il.us`, `gis.cookcountyil.gov`, `gis.mcleancountyil.gov`, `gis.peoriacounty.gov`, `maps.boonecountyil.org`, `maps.cityofevanston.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services8.arcgis.com`, `services9.arcgis.com`, `webapps.bataviail.gov`; 0 shipped with the app | `data.cityofchicago.org` |
-| Ward Precinct (`ward-precinct`) | `data.cityofchicago.org` | — |
+| City Ward (`ward`) | 26 of 28 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.cityofchicago.org`, `gis.aurora.il.us`, `gis.cookcountyil.gov`, `gis.mcleancountyil.gov`, `gis.peoriacounty.gov`, `maps.cityofevanston.org`, `maps.co.kendall.il.us`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services8.arcgis.com`, `services9.arcgis.com`, `webapps.bataviail.gov`; 0 shipped with the app; 2 did not answer the probe (rockford, belvidere) | `data.cityofchicago.org` |
+| Ward Precinct (`ward-precinct`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
 | Police District (`police-district`) | `services2.arcgis.com` | `services2.arcgis.com` |
 | Police Beat (`police-beat`) | `services2.arcgis.com` | `services2.arcgis.com` |
 | CCPSA District Council (`ccpsa-district-council`) | `services2.arcgis.com` | — |
@@ -167,7 +167,7 @@ measured until the next run describes it.
 | ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
 | CPS High School Zone (`cps-high`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
 | CPS Middle School Zone (`cps-middle`) | `data.cityofchicago.org` | — |
-| Voting Precinct (`county-precinct`) | 37 of 83 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.macoupincountyil.gov`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.lasallecounty.org`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.grundyco.org`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`, `tigerweb.geo.census.gov`; 46 shipped with the app | — |
+| Voting Precinct (`county-precinct`) | 35 of 83 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.macoupincountyil.gov`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.lasallecounty.org`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.co.kendall.il.us`, `maps.grundyco.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`, `tigerweb.geo.census.gov`; 46 shipped with the app; 2 did not answer the probe (boone, winnebago) | — |
 | Special Service Area (`ssa`) | `data.cityofchicago.org` | — |
 | TIF District (`tif-district`) | `gis.cookcountyil.gov` | — |
 | CPS Elementary School Zone (`cps-elementary`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
@@ -192,13 +192,12 @@ measured until the next run describes it.
 | ZIP Code (MODZCTA) (`zip-code`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
 | ZIP Code (`nys-zip-code`) | — | `tigerweb.geo.census.gov` |
 | Neighborhood (NTA) (`neighborhood`) | `data.cityofnewyork.us` | — |
-| High School Zone (`hs-zone`) | `data.cityofnewyork.us` | — |
+| High School Zone (`hs-zone`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
 | Middle School Zone (`ms-zone`) | `data.cityofnewyork.us` | — |
-| Elementary School Zone (`es-zone`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
+| Elementary School Zone (`es-zone`) | `data.cityofnewyork.us` | — |
 
-- Drawn from this site's own files: `county`, `nys-central-hs-district`, `nys-school-district`, `municipality`, `village`, `borough`, `judicial-district`, `borough-president`, `district-attorney`, `congress`, `municipal-court`, `state-senate`, `state-assembly`.
+- Drawn from this site's own files: `county`, `nys-central-hs-district`, `nys-school-district`, `municipality`, `village`, `borough`, `judicial-district`, `borough-president`, `district-attorney`, `congress`, `municipal-court`, `state-senate`, `state-assembly`, `county-legislature`.
 - Point layers (locations, not shapes): `school-site`, `police-station`, `fire-station`, `post-office`, `library`, `early-voting`, `polling-place`.
-- **Not measured** — declared since the probe ran: `county-legislature`.
 
 #### ca — 4 of 16 layers fetch their shapes
 
