@@ -1522,6 +1522,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
   .share-popover-embed { display: block; resize: none; box-sizing: border-box; }
   .share-popover-coords { flex: 1 1 auto; font-family: var(--font-mono); font-size: 12px; color: var(--ink); }
+  /* The QR sits on its own white card, in BOTH themes and on purpose: an
+     inverted QR (light modules on dark) fails on many scanners, and the quiet
+     zone has to stay light for the same reason. So this is the one thing in the
+     app that does not follow the theme, and the white ground is drawn by the
+     SVG itself rather than by this rule — the padding here only keeps it off
+     the panel edge. Sized in a viewBox of whole modules, so it stays crisp at
+     any width and a denser view simply draws a bigger code rather than
+     shrinking its modules until nothing scans. */
+  .share-popover-qr { display: flex; justify-content: center; margin: 2px 0 4px; }
+  .share-popover-qr svg { width: 168px; height: 168px; max-width: 100%; border-radius: 4px; }
+  @media (max-width: 767px) { .share-popover-qr svg { width: 208px; height: 208px; } }
   .share-copy-btn {
     flex: 0 0 auto;
     background: transparent;
@@ -6322,6 +6333,451 @@ function initChiExplorer() {
     syncUrlHash();
   }
 
+  /* ==== ENGINE:BEGIN qr-code ==== */
+  /* ---------- QR code, encoded here in the browser ---------- */
+  //
+  // WHY THIS IS HAND WRITTEN, AND WHY A QR SERVICE IS NOT AN OPTION AT ALL.
+  // Every QR image API takes its payload in the URL of the image request. The
+  // payload here is a permalink, and a permalink carries the reader's selected
+  // point at full precision (`#point=41.88250,-87.62850`). Today that point
+  // sits in the URL FRAGMENT, which a browser never sends to any server; a QR
+  // API needs it in the query string, which is sent. So a third-party QR would
+  // transmit a reader's exact selected location to a host the privacy page
+  // does not name, on a site whose stated standard is that a selected point is
+  // rounded to two decimals before anything leaves the browser. It fails our
+  // own rule, which is why this is local code rather than a preference.
+  //
+  // A cdnjs bundle would add no new recipient (Leaflet and MapLibre are already
+  // served from there) but would add a blocking fetch for something that lives
+  // inside a popover, and a QR encoder is a completely specified algorithm. So
+  // it is written here and held to `segno` by scripts/validate_qr_code.py, the
+  // same shape as geometry-measure against shapely and the PMTiles reader
+  // against the Python decoders.
+  //
+  // LEVELS L AND M ONLY. Nothing here needs Q or H: measured 2026-09-27, the
+  // longest share URL an app can hand out is 663 bytes (all 40 Illinois layers
+  // on, with a pin and the stats flag), which is version 18 at L and 20 at M,
+  // and level M is what ships. qrEncode throws on any other level rather than
+  // quietly picking one.
+
+  // Error-correction codewords per block, and block count, indexed by version
+  // 1..40 (index 0 unused). Everything else about a version is DERIVED from
+  // these two plus the matrix geometry, because a fourth table is a fourth
+  // chance to mistype a number the gate would then have to catch.
+  var QR_ECC_PER_BLOCK = {
+    L: [0, 7, 10, 15, 20, 26, 18, 20, 24, 30, 18, 20, 24, 26, 30, 22, 24, 28, 30, 28,
+        28, 28, 28, 28, 30, 30, 26, 28, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30],
+    M: [0, 10, 16, 26, 18, 24, 16, 18, 22, 22, 26, 30, 22, 22, 24, 24, 28, 28, 26, 26,
+        26, 26, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28]
+  };
+  var QR_BLOCKS = {
+    L: [0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 4, 4, 4, 4, 4, 6, 6, 6, 6, 7,
+        8, 8, 9, 9, 10, 12, 12, 12, 13, 14, 15, 16, 17, 18, 19, 19, 20, 21, 22, 24, 25],
+    M: [0, 1, 1, 1, 2, 2, 4, 4, 4, 5, 5, 5, 8, 9, 9, 10, 10, 11, 13, 14,
+        16, 17, 17, 18, 20, 21, 23, 25, 26, 28, 29, 31, 33, 35, 37, 38, 40, 43, 45, 47, 49]
+  };
+  var QR_PAD_BYTES = [0xEC, 0x11];
+
+  // Data + error-correction MODULES for a version: the matrix minus every
+  // function pattern. Codewords are that over eight.
+  function qrRawDataModules(ver) {
+    var n = (16 * ver + 128) * ver + 64;
+    if (ver >= 2) {
+      var align = Math.floor(ver / 7) + 2;
+      n -= (25 * align - 10) * align - 55;
+      if (ver >= 7) n -= 36;
+    }
+    return n;
+  }
+  function qrTotalCodewords(ver) { return Math.floor(qrRawDataModules(ver) / 8); }
+  function qrDataCodewords(ver, level) {
+    return qrTotalCodewords(ver) - QR_ECC_PER_BLOCK[level][ver] * QR_BLOCKS[level][ver];
+  }
+
+  function qrAlignPositions(ver) {
+    if (ver === 1) return [];
+    var size = ver * 4 + 17;
+    var count = Math.floor(ver / 7) + 2;
+    var step = (ver === 32) ? 26 : Math.ceil((ver * 4 + 4) / (count * 2 - 2)) * 2;
+    var out = [6];
+    for (var pos = size - 7; out.length < count; pos -= step) out.splice(1, 0, pos);
+    return out;
+  }
+
+  // UTF-8 bytes, written out rather than taken from the deprecated
+  // unescape(encodeURIComponent(s)) pair.
+  function qrUtf8Bytes(str) {
+    var out = [], i, c, next;
+    for (i = 0; i < str.length; i++) {
+      c = str.charCodeAt(i);
+      if (c >= 0xD800 && c <= 0xDBFF && i + 1 < str.length) {
+        next = str.charCodeAt(i + 1);
+        if (next >= 0xDC00 && next <= 0xDFFF) {
+          c = 0x10000 + ((c - 0xD800) << 10) + (next - 0xDC00);
+          i++;
+        }
+      }
+      if (c < 0x80) out.push(c);
+      else if (c < 0x800) out.push(0xC0 | (c >> 6), 0x80 | (c & 63));
+      else if (c < 0x10000) out.push(0xE0 | (c >> 12), 0x80 | ((c >> 6) & 63), 0x80 | (c & 63));
+      else out.push(0xF0 | (c >> 18), 0x80 | ((c >> 12) & 63), 0x80 | ((c >> 6) & 63), 0x80 | (c & 63));
+    }
+    return out;
+  }
+
+  /* --- GF(256), the field the error-correction codewords live in --- */
+  var QR_EXP = new Array(512), QR_LOG = new Array(256);
+  (function () {
+    var x = 1, i;
+    for (i = 0; i < 255; i++) {
+      QR_EXP[i] = x;
+      QR_LOG[x] = i;
+      x <<= 1;
+      if (x & 0x100) x ^= 0x11D; // the QR field's primitive polynomial
+    }
+    for (i = 255; i < 512; i++) QR_EXP[i] = QR_EXP[i - 255];
+  })();
+  function qrMul(a, b) {
+    if (a === 0 || b === 0) return 0;
+    return QR_EXP[QR_LOG[a] + QR_LOG[b]];
+  }
+  function qrGenerator(degree) {
+    var poly = [1], i, j, next;
+    for (i = 0; i < degree; i++) {
+      next = poly.concat([0]);
+      for (j = 0; j < poly.length; j++) {
+        next[j + 1] ^= qrMul(poly[j], QR_EXP[i]);
+      }
+      poly = next;
+    }
+    return poly; // degree+1 coefficients, highest first, leading 1
+  }
+  function qrRemainder(data, degree) {
+    var gen = qrGenerator(degree);
+    var rem = [], i, j, factor;
+    for (i = 0; i < degree; i++) rem.push(0);
+    for (i = 0; i < data.length; i++) {
+      factor = data[i] ^ rem.shift();
+      rem.push(0);
+      for (j = 0; j < degree; j++) rem[j] ^= qrMul(gen[j + 1], factor);
+    }
+    return rem;
+  }
+
+  /* --- bit stream --- */
+  function qrBits() {
+    return { bits: [], push: function (val, len) {
+      for (var i = len - 1; i >= 0; i--) this.bits.push((val >>> i) & 1);
+    } };
+  }
+
+  function qrCodewords(bytes, ver, level) {
+    var capacity = qrDataCodewords(ver, level) * 8;
+    var bs = qrBits(), i;
+    bs.push(4, 4);                                   // byte mode
+    bs.push(bytes.length, ver <= 9 ? 8 : 16);        // character count
+    for (i = 0; i < bytes.length; i++) bs.push(bytes[i], 8);
+    if (bs.bits.length > capacity) return null;
+    bs.push(0, Math.min(4, capacity - bs.bits.length));       // terminator
+    while (bs.bits.length % 8 !== 0) bs.bits.push(0);          // to a byte edge
+    var words = [];
+    for (i = 0; i < bs.bits.length; i += 8) {
+      var b = 0;
+      for (var k = 0; k < 8; k++) b = (b << 1) | bs.bits[i + k];
+      words.push(b);
+    }
+    for (i = 0; words.length < qrDataCodewords(ver, level); i++) {
+      words.push(QR_PAD_BYTES[i % 2]);
+    }
+    return words;
+  }
+
+  // Split into blocks, add each block's error correction, then interleave —
+  // data column by column, then error correction column by column.
+  function qrInterleave(words, ver, level) {
+    var blocks = QR_BLOCKS[level][ver], ecLen = QR_ECC_PER_BLOCK[level][ver];
+    var total = qrTotalCodewords(ver), dataLen = qrDataCodewords(ver, level);
+    var shortLen = Math.floor(dataLen / blocks), longCount = dataLen % blocks;
+    var dat = [], ecc = [], at = 0, i, j, len;
+    for (i = 0; i < blocks; i++) {
+      len = shortLen + (i >= blocks - longCount ? 1 : 0);
+      dat.push(words.slice(at, at + len));
+      ecc.push(qrRemainder(words.slice(at, at + len), ecLen));
+      at += len;
+    }
+    var out = [];
+    for (j = 0; j < shortLen + 1; j++) {
+      for (i = 0; i < blocks; i++) if (j < dat[i].length) out.push(dat[i][j]);
+    }
+    for (j = 0; j < ecLen; j++) {
+      for (i = 0; i < blocks; i++) out.push(ecc[i][j]);
+    }
+    if (out.length !== total) throw new Error("qr: interleave produced " + out.length + " of " + total);
+    return out;
+  }
+
+  /* --- the matrix --- */
+  function qrBlank(size) {
+    var m = [], r, c, row;
+    for (r = 0; r < size; r++) {
+      row = [];
+      for (c = 0; c < size; c++) row.push(null); // null = not yet a function module
+      m.push(row);
+    }
+    return m;
+  }
+  function qrSetFunction(m, fn, r, c, dark) {
+    if (r < 0 || c < 0 || r >= m.length || c >= m.length) return;
+    m[r][c] = dark;
+    fn[r][c] = true;
+  }
+  function qrDrawFunctionPatterns(m, fn, ver) {
+    var size = m.length, i, j, pos, dr, dc, dist;
+    // timing patterns
+    for (i = 0; i < size; i++) {
+      qrSetFunction(m, fn, 6, i, i % 2 === 0);
+      qrSetFunction(m, fn, i, 6, i % 2 === 0);
+    }
+    // three finder patterns with their separators
+    var corners = [[0, 0], [0, size - 7], [size - 7, 0]];
+    for (i = 0; i < corners.length; i++) {
+      for (dr = -1; dr <= 7; dr++) {
+        for (dc = -1; dc <= 7; dc++) {
+          dist = Math.max(Math.abs(dr - 3), Math.abs(dc - 3));
+          qrSetFunction(m, fn, corners[i][0] + dr, corners[i][1] + dc, dist !== 2 && dist !== 4);
+        }
+      }
+    }
+    // alignment patterns, skipping the three that would sit on a finder
+    pos = qrAlignPositions(ver);
+    for (i = 0; i < pos.length; i++) {
+      for (j = 0; j < pos.length; j++) {
+        if ((i === 0 && j === 0) || (i === 0 && j === pos.length - 1) ||
+            (i === pos.length - 1 && j === 0)) continue;
+        for (dr = -2; dr <= 2; dr++) {
+          for (dc = -2; dc <= 2; dc++) {
+            qrSetFunction(m, fn, pos[i] + dr, pos[j] + dc,
+              Math.max(Math.abs(dr), Math.abs(dc)) !== 1);
+          }
+        }
+      }
+    }
+    // Reserve the format areas by drawing them with a placeholder mask: the
+    // reservation must cover EXACTLY the fifteen format positions and no more.
+    // A loop over (8, 0..8) and (0..8, 8) instead of this covers the same cells
+    // plus (6, 8) and (8, 6), which are TIMING modules, and overwriting those
+    // two broke the timing pattern in a way only a matrix comparison shows.
+    qrDrawFormat(m, fn, "M", 0);
+    if (ver >= 7) qrDrawVersion(m, fn, ver);
+  }
+  function qrDrawVersion(m, fn, ver) {
+    var rem = ver, i, bit, a, b;
+    for (i = 0; i < 12; i++) rem = (rem << 1) ^ ((rem >>> 11) * 0x1F25);
+    var data = (ver << 12) | rem;
+    var size = m.length;
+    for (i = 0; i < 18; i++) {
+      bit = ((data >>> i) & 1) === 1;
+      a = size - 11 + (i % 3);
+      b = Math.floor(i / 3);
+      qrSetFunction(m, fn, a, b, bit);
+      qrSetFunction(m, fn, b, a, bit);
+    }
+  }
+  function qrDrawFormat(m, fn, level, mask) {
+    var levelBits = { L: 1, M: 0 }[level]; // Q is 3 and H is 2; neither ships
+    var data = (levelBits << 3) | mask, rem = data, i, bit, size = m.length;
+    for (i = 0; i < 10; i++) rem = (rem << 1) ^ ((rem >>> 9) * 0x537);
+    var bits = ((data << 10) | rem) ^ 0x5412;
+    // First copy: bits 0-5 down column 8, then the bend around (8, 8).
+    for (i = 0; i <= 5; i++) qrSetFunction(m, fn, i, 8, ((bits >>> i) & 1) === 1);
+    qrSetFunction(m, fn, 7, 8, ((bits >>> 6) & 1) === 1);
+    qrSetFunction(m, fn, 8, 8, ((bits >>> 7) & 1) === 1);
+    qrSetFunction(m, fn, 8, 7, ((bits >>> 8) & 1) === 1);
+    for (i = 9; i < 15; i++) qrSetFunction(m, fn, 8, 14 - i, ((bits >>> i) & 1) === 1);
+    // Second copy: along row 8 from the right edge, then up column 8 at the bottom.
+    for (i = 0; i < 8; i++) qrSetFunction(m, fn, 8, size - 1 - i, ((bits >>> i) & 1) === 1);
+    for (i = 8; i < 15; i++) qrSetFunction(m, fn, size - 15 + i, 8, ((bits >>> i) & 1) === 1);
+    qrSetFunction(m, fn, size - 8, 8, true); // the always-dark module
+  }
+
+  // Two modules wide, upward then downward, right to left, skipping column 6.
+  function qrPlaceData(m, fn, words) {
+    var size = m.length, i = 0, right, vert, j, r, c, upward, dark;
+    for (right = size - 1; right >= 1; right -= 2) {
+      if (right === 6) right = 5;
+      for (vert = 0; vert < size; vert++) {
+        for (j = 0; j < 2; j++) {
+          c = right - j;
+          upward = ((right + 1) & 2) === 0;
+          r = upward ? size - 1 - vert : vert;
+          if (fn[r][c]) continue;
+          dark = false;
+          if (i < words.length * 8) dark = ((words[i >>> 3] >>> (7 - (i & 7))) & 1) === 1;
+          m[r][c] = dark;
+          i++;
+        }
+      }
+    }
+  }
+  function qrMaskBit(mask, r, c) {
+    switch (mask) {
+      case 0: return (r + c) % 2 === 0;
+      case 1: return r % 2 === 0;
+      case 2: return c % 3 === 0;
+      case 3: return (r + c) % 3 === 0;
+      case 4: return (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0;
+      case 5: return ((r * c) % 2) + ((r * c) % 3) === 0;
+      case 6: return (((r * c) % 2) + ((r * c) % 3)) % 2 === 0;
+      case 7: return (((r + c) % 2) + ((r * c) % 3)) % 2 === 0;
+    }
+    throw new Error("qr: bad mask " + mask);
+  }
+  function qrApplyMask(m, fn, mask) {
+    for (var r = 0; r < m.length; r++) {
+      for (var c = 0; c < m.length; c++) {
+        if (!fn[r][c] && qrMaskBit(mask, r, c)) m[r][c] = !m[r][c];
+      }
+    }
+  }
+
+  // The four penalty rules, scored as the spec states them.
+  function qrPenalty(m) {
+    var size = m.length, score = 0, r, c, i, run, colour, dark = 0;
+    var runHistory;
+    function finder(hist) {
+      // 1:1:3:1:1 with four light modules on one side, counted once per side
+      var n = hist[1], out = 0;
+      if (n > 0 && hist[2] === n && hist[3] === n * 3 && hist[4] === n && hist[5] === n) {
+        if (hist[0] >= n * 4 || hist[6] >= n * 4) out = 1;
+      }
+      return out;
+    }
+    function scanLine(get) {
+      var runLen = 0, prev = false, hist = [0, 0, 0, 0, 0, 0, 0], k, v;
+      for (k = 0; k < size; k++) {
+        v = get(k);
+        if (k > 0 && v !== prev) {
+          hist.pop(); hist.unshift(runLen);
+          if (!prev) score += qrPENALTY_N3 * finder(hist);
+          runLen = 0;
+        }
+        if (runLen === 0 || v === prev) runLen++;
+        if (runLen === 5) score += qrPENALTY_N1;
+        else if (runLen > 5) score += 1;
+        prev = v;
+      }
+      hist.pop(); hist.unshift(runLen);
+      if (prev) { hist.pop(); hist.unshift(0); }
+      if (hist.length >= 7) score += qrPENALTY_N3 * finder(hist);
+    }
+    for (r = 0; r < size; r++) scanLine(function (c2) { return m[r][c2]; });
+    for (c = 0; c < size; c++) scanLine(function (r2) { return m[r2][c]; });
+    for (r = 0; r < size - 1; r++) {
+      for (c = 0; c < size - 1; c++) {
+        colour = m[r][c];
+        if (colour === m[r][c + 1] && colour === m[r + 1][c] && colour === m[r + 1][c + 1]) {
+          score += qrPENALTY_N2;
+        }
+      }
+    }
+    for (r = 0; r < size; r++) for (c = 0; c < size; c++) if (m[r][c]) dark++;
+    var total = size * size;
+    var k2 = Math.ceil(Math.abs(dark * 20 - total * 10) / total) - 1;
+    return score + k2 * qrPENALTY_N4;
+  }
+  var qrPENALTY_N1 = 3, qrPENALTY_N2 = 3, qrPENALTY_N3 = 40, qrPENALTY_N4 = 10;
+
+  /* --- the one entry point that produces a matrix --- */
+  //   qrEncode(text, { level: "M", mask: <0..7 or null> })
+  //     -> { version: n, size: n, modules: [[bool, ...], ...], mask: n }
+  // Returns null when the text does not fit version 40 at that level, so a
+  // caller can say so rather than draw something that will not scan.
+  function qrEncode(text, opts) {
+    opts = opts || {};
+    var level = opts.level || "M";
+    if (!QR_ECC_PER_BLOCK[level]) throw new Error("qr: level " + level + " is not shipped");
+    var bytes = qrUtf8Bytes(String(text));
+    var ver, words = null;
+    for (ver = 1; ver <= 40; ver++) {
+      words = qrCodewords(bytes, ver, level);
+      if (words) break;
+    }
+    if (!words) return null;
+    var all = qrInterleave(words, ver, level);
+    var size = ver * 4 + 17;
+    var best = null, bestScore = Infinity, mask, m, fn, r, c;
+    var masks = (opts.mask === 0 || opts.mask) ? [opts.mask] : [0, 1, 2, 3, 4, 5, 6, 7];
+    for (var mi = 0; mi < masks.length; mi++) {
+      mask = masks[mi];
+      m = qrBlank(size);
+      fn = [];
+      for (r = 0; r < size; r++) { fn.push([]); for (c = 0; c < size; c++) fn[r].push(false); }
+      qrDrawFunctionPatterns(m, fn, ver);
+      qrPlaceData(m, fn, all);
+      qrApplyMask(m, fn, mask);
+      qrDrawFormat(m, fn, level, mask);
+      for (r = 0; r < size; r++) for (c = 0; c < size; c++) if (m[r][c] === null) m[r][c] = false;
+      var score = masks.length === 1 ? 0 : qrPenalty(m);
+      if (score < bestScore) { bestScore = score; best = { modules: m, mask: mask }; }
+    }
+    return { version: ver, size: size, modules: best.modules, mask: best.mask, level: level };
+  }
+
+  // An SVG of one path, sized in whole modules so it stays crisp at any width.
+  // DELIBERATELY NOT THEMED: dark modules on a white ground with a white quiet
+  // zone, in both themes, because an inverted QR fails on many scanners. The
+  // quiet zone is the specified four modules.
+  function qrSvg(text, opts) {
+    opts = opts || {};
+    var code = qrEncode(text, opts);
+    if (!code) return null;
+    var quiet = opts.quiet == null ? 4 : opts.quiet;
+    var span = code.size + quiet * 2;
+    var d = [], r, c;
+    for (r = 0; r < code.size; r++) {
+      for (c = 0; c < code.size; c++) {
+        if (code.modules[r][c]) d.push("M" + (c + quiet) + " " + (r + quiet) + "h1v1h-1z");
+      }
+    }
+    // `path` is handed out beside the string so a caller can build the element
+    // through the DOM instead of assigning innerHTML. Every character of it
+    // comes from integers this block computed, but the rule here is that markup
+    // is not assembled as text where an element will do.
+    var path = d.join("");
+    return {
+      version: code.version,
+      size: code.size,
+      span: span,
+      path: path,
+      svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + span + ' ' + span +
+        '" shape-rendering="crispEdges" role="img">' +
+        '<rect width="' + span + '" height="' + span + '" fill="#ffffff"/>' +
+        '<path d="' + path + '" fill="#000000"/></svg>'
+    };
+  }
+
+  // The same code as an SVG ELEMENT, built through the DOM. Returns null when
+  // the text is too long for any version, so a caller can say so.
+  function qrSvgElement(text, opts) {
+    var code = qrSvg(text, opts);
+    if (!code) return null;
+    var NS = "http://www.w3.org/2000/svg";
+    var svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", "0 0 " + code.span + " " + code.span);
+    svg.setAttribute("shape-rendering", "crispEdges");
+    svg.setAttribute("role", "img");
+    var ground = document.createElementNS(NS, "rect");
+    ground.setAttribute("width", String(code.span));
+    ground.setAttribute("height", String(code.span));
+    ground.setAttribute("fill", "#ffffff");
+    svg.appendChild(ground);
+    var path = document.createElementNS(NS, "path");
+    path.setAttribute("d", code.path);
+    path.setAttribute("fill", "#000000");
+    svg.appendChild(path);
+    return { element: svg, version: code.version, size: code.size };
+  }
+  /* ==== ENGINE:END qr-code ==== */
   /* ==== ENGINE:BEGIN permalink ==== */
   /* =========================================================================
    * SHAREABLE URL — #point=lat,lng&layers=id1,id2&pin=id&stats=1&zoom=N mirrors the
@@ -6512,6 +6968,15 @@ function initChiExplorer() {
       "?utm_source=share&utm_medium=link" + location.hash;
   }
 
+  // The QR's own URL. Same view, but `utm_medium=qr`, because a scan and a
+  // pasted link are different mediums and a feature nobody can measure is one
+  // nobody can evaluate.
+  function shareQrUrl() {
+    syncUrlHash();
+    return location.origin + location.pathname +
+      "?utm_source=share&utm_medium=qr" + location.hash;
+  }
+
   function buildEmbedSnippet() {
     syncUrlHash();
     // Canonical base, not location: a snippet grabbed on a preview/localhost
@@ -6616,6 +7081,54 @@ function initChiExplorer() {
       note.textContent = "The link opens the map at this exact point, with the layers you have on.";
       popover.appendChild(note);
 
+      // THE QR IS NOT THEMED: dark modules on white with a white quiet zone in
+      // both tiers, because an inverted QR fails on many scanners. It is built
+      // through the DOM rather than as markup, and encoded here — no request is
+      // made and nothing is sent, which is the whole reason it is not an image
+      // from a QR service (see engine/index.html/qr-code.txt).
+      // A touch device keeps its platform share sheet, as the first thing in the
+      // popover rather than instead of it: the popover is now the one share
+      // surface everywhere, because the QR has to be reachable on a phone too
+      // and the OS sheet cannot host it. One extra tap for the native path is
+      // the cost, and it is the reason this row is first.
+      if (!hoverCapable && navigator.share) {
+        var nativeRow = document.createElement("div");
+        nativeRow.className = "share-popover-row share-popover-row-end";
+        var nativeBtn = document.createElement("button");
+        nativeBtn.type = "button";
+        nativeBtn.className = "share-popover-copy";
+        nativeBtn.textContent = "Share\u2026";
+        nativeBtn.addEventListener("click", function () {
+          trackEvent("share-native");
+          navigator.share({ title: appDisplayName(), url: shareLinkUrl() })
+            .catch(function () { /* dismissed, or the platform refused — nothing to undo */ });
+        });
+        nativeRow.appendChild(nativeBtn);
+        popover.appendChild(nativeRow);
+      }
+
+      var qrLabel = document.createElement("div");
+      qrLabel.className = "share-popover-label";
+      qrLabel.textContent = "Scan with a phone";
+      popover.appendChild(qrLabel);
+      var qrRow = document.createElement("div");
+      qrRow.className = "share-popover-qr";
+      var drawn = qrSvgElement(shareQrUrl(), { level: "M" });
+      if (drawn) {
+        drawn.element.setAttribute("aria-label", "QR code for this view");
+        qrRow.appendChild(drawn.element);
+        popover.appendChild(qrRow);
+        trackEvent("share-qr");
+      } else {
+        // Unreachable for any view this app can produce — the longest share URL
+        // measured 663 bytes against version 40's 2,953 — but a reader is told
+        // rather than shown an empty box if it ever happens.
+        var qrNote = document.createElement("p");
+        qrNote.className = "share-popover-note";
+        qrNote.textContent = "This view's link is too long for a QR code. Copy it instead.";
+        popover.appendChild(qrNote);
+      }
+
       var linkRow = document.createElement("div");
       linkRow.className = "share-popover-row";
       var linkInput = document.createElement("input");
@@ -6676,15 +7189,6 @@ function initChiExplorer() {
     }
 
     btn.addEventListener("click", function () {
-      // Touch-first devices with a native share sheet get the platform
-      // surface (the expected mobile pattern); hover-capable devices get
-      // the popover. A dismissed sheet needs no cleanup.
-      if (!hoverCapable && navigator.share) {
-        trackEvent("share-native");
-        navigator.share({ title: appDisplayName(), url: shareLinkUrl() })
-          .catch(function () { /* user dismissed, or the platform refused — nothing to undo */ });
-        return;
-      }
       if (popover) closePopover(true); else openPopover();
     });
 
@@ -34860,7 +35364,21 @@ function initChiExplorer() {
     matchBoundaryStreets: matchBoundaryStreets, // exposed so the smoke test can hold the boundary-street matcher to a fixture, with no CARTO fetch
     boundaryStreets: function () { return { on: boundaryStreetsOn, available: !!baseLabels, names: boundaryStreetNames }; }, // which street names the boundary-street layer is showing, and their colours
     boundaryStreetLabels: function () { return measureBoundaryStreetLabels(); }, // per boundary street: its coloured labels on screen, and any ordinary copy of its name printed inside the stretch
-    basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; } // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
+    basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; }, // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
+    // The QR encoder and the URL it is given, so a test can hold the drawn code
+    // to the payload it should carry rather than only counting that something
+    // was drawn. Two URLs that differ by `utm_medium=link` against `qr` produce
+    // different matrices, which is what makes that assertion sharp.
+    qrDarkModules: function (text) {
+      var code = qrEncode(text, { level: "M" });
+      if (!code) return null;
+      var n = 0;
+      for (var r = 0; r < code.size; r++) {
+        for (var c = 0; c < code.size; c++) if (code.modules[r][c]) n++;
+      }
+      return { dark: n, size: code.size, version: code.version };
+    },
+    shareUrls: function () { return { link: shareLinkUrl(), qr: shareQrUrl() }; }
   };
   /* ==== ENGINE:END exports ==== */
   window.ChiExplorer = EXPLORER_EXPORTS;

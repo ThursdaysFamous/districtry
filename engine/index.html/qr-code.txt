@@ -403,12 +403,41 @@
         if (code.modules[r][c]) d.push("M" + (c + quiet) + " " + (r + quiet) + "h1v1h-1z");
       }
     }
+    // `path` is handed out beside the string so a caller can build the element
+    // through the DOM instead of assigning innerHTML. Every character of it
+    // comes from integers this block computed, but the rule here is that markup
+    // is not assembled as text where an element will do.
+    var path = d.join("");
     return {
       version: code.version,
       size: code.size,
+      span: span,
+      path: path,
       svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + span + ' ' + span +
         '" shape-rendering="crispEdges" role="img">' +
         '<rect width="' + span + '" height="' + span + '" fill="#ffffff"/>' +
-        '<path d="' + d.join("") + '" fill="#000000"/></svg>'
+        '<path d="' + path + '" fill="#000000"/></svg>'
     };
+  }
+
+  // The same code as an SVG ELEMENT, built through the DOM. Returns null when
+  // the text is too long for any version, so a caller can say so.
+  function qrSvgElement(text, opts) {
+    var code = qrSvg(text, opts);
+    if (!code) return null;
+    var NS = "http://www.w3.org/2000/svg";
+    var svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", "0 0 " + code.span + " " + code.span);
+    svg.setAttribute("shape-rendering", "crispEdges");
+    svg.setAttribute("role", "img");
+    var ground = document.createElementNS(NS, "rect");
+    ground.setAttribute("width", String(code.span));
+    ground.setAttribute("height", String(code.span));
+    ground.setAttribute("fill", "#ffffff");
+    svg.appendChild(ground);
+    var path = document.createElementNS(NS, "path");
+    path.setAttribute("d", code.path);
+    path.setAttribute("fill", "#000000");
+    svg.appendChild(path);
+    return { element: svg, version: code.version, size: code.size };
   }

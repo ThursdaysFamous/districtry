@@ -317,6 +317,11 @@ def measure_address_list(src, name):
 # report form became openable by a link (#feedback): which way it was opened,
 # a link to it copied, and which way a report left. None carries what the
 # reader wrote — the text is in the address HASH, which analytics never sees.
+# `share-qr` joined on 2026-09-27 with the QR code in the share popover. It
+# records that a QR was DRAWN for a view, and nothing about the view: the code
+# itself is encoded in the browser, so no request is made and the permalink it
+# carries — which holds the selected point at full precision — reaches nobody.
+# That is the reason the encoder is ours rather than a QR service's URL.
 # `boundary-streets/on` and `boundary-streets/off` joined on 2026-09-25 with
 # the map's "Boundary streets" button (name the streets a selected district's
 # edge runs along). They record the switch and nothing about the map.
@@ -327,7 +332,7 @@ EXPECTED_EVENTS = ["address-search", "boundary-streets/", "compare-stats-link/",
                    "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
                    "geolocate-success", "layer/", "metro-portal-go/", "more-item/", "more-open", "select",
-                   "share-native", "share-open", "share-permalink"]
+                   "share-native", "share-open", "share-permalink", "share-qr"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
 
 
