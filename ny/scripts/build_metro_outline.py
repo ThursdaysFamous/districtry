@@ -71,16 +71,38 @@ of New York County, and a reader zoomed into the harbour would see the map
 claim the Statue of Liberty is outside the area this app serves.
 
 WHY THE COUNTY LIST HERE IS SHORT AND WILL GROW. METRO_COUNTY_FIPS is the
-five boroughs only, because that is where a county-keyed layer answers today
-— the borough/council/community-board tier and (once it ships) the
-five-borough election-district layer. It is NOT "every county with a
-statewide layer": the three legislative layers answer everywhere in New York
-and are not a reason to add a county here (the county-keyed honesty test,
-§3.5.1 — never join the ring for a rich statewide answer). DISPATCH_COUNTY_FIPS
-is empty because no county-dispatched concept exists yet; it gains an entry
-the day the first tranche-1 county (Westchester, Suffolk, Nassau or Erie)
-ships a board or precinct layer, exactly as Illinois's dispatch table grew
-county by county.
+five boroughs plus TOMPKINS, which is where a county-keyed layer answers
+today — the borough/council/community-board tier, and since 2026-09-27 the
+county-legislature layer. It is NOT "every county with a statewide layer":
+the three legislative layers answer everywhere in New York and are not a
+reason to add a county here (the county-keyed honesty test, §3.5.1 — never
+join the ring for a rich statewide answer). DISPATCH_COUNTY_FIPS gained its
+first entry with Tompkins, exactly as Illinois's dispatch table grew county
+by county.
+
+TOMPKINS RATHER THAN TRANCHE 1, ON A RECORDED RULING. This docstring used to
+say the first entry would be Westchester, Suffolk, Nassau or Erie — the four
+docs/NY_EXPANSION_PLAN.md names — and it is Tompkins instead, on the
+manager's ruling of 2026-09-26: the decision the first county settles is the
+county-legislature FORM, and a large county with a messier publisher would
+conflate two unknowns (whether the route is wrong, or whether that county's
+data is). A large board-of-supervisors county would have settled nothing
+about the legislature form at all, because it has no districts. Size buys a
+measurement worth taking later, on a county whose form is no longer in
+question.
+
+AND THE RING IS NOW DISJOINT, WHICH IS THE FIRST-ISLAND CASE. Tompkins sits
+about 150 miles from the five boroughs with no served neighbour, so the
+coverage geometry is a MultiPolygon carrying Tompkins as its own OUTER ring
+rather than as a hole — the §3.5.1 checklist's first item, and the pass-4
+nesting bug it was written against (a second ring inside one Polygon renders
+identically under the wash and answers False to every containment test
+inside it). Its INSIDE anchor is Ithaca. The corridor between island and
+mainland needs no new anchors: OUTSIDE is exhaustive over every county this
+ring does not serve, so Cortland, Cayuga, Seneca, Schuyler, Chemung, Tioga
+and Broome — the counties a reader would cross getting there — are each
+already proven washed. metro_bbox and permalink_gate are already statewide
+(they widened at go-live), so checklist item 5 costs nothing here.
 
 WHY A BUILD STEP RATHER THAN A LIVE FETCH, AND WHY THE SAME TOLERANCE FOR
 BOTH FILES. The in-browser dissolve this mirrors cancels an interior border
@@ -132,6 +154,11 @@ METRO_COUNTY_FIPS = (
     "061",  # New York (Manhattan)
     "081",  # Queens
     "085",  # Richmond (Staten Island)
+    "109",  # Tompkins — the county tier's first county (2026-09-27), and the
+            # first county in this ring that is not a borough. It is DETACHED
+            # from the five: about 150 miles up the state, with no served
+            # neighbour, so this ring is now a disjoint MultiPolygon and the
+            # first-island checklist in docs/EXPANSION_GUIDE.md §3.5.1 applies.
 )
 
 # Empty on purpose: no county-dispatched concept has shipped yet. It gains its
@@ -142,7 +169,7 @@ METRO_COUNTY_FIPS = (
 # of this file carries the same empty dict for the same reason (no per-county
 # dispatch layer exists there either), and the assertion below passes
 # trivially against it.
-DISPATCH_COUNTY_FIPS = {}
+DISPATCH_COUNTY_FIPS = {"tompkins": "109"}
 
 _UNLISTED = sorted(set(DISPATCH_COUNTY_FIPS.values()) - set(METRO_COUNTY_FIPS))
 assert not _UNLISTED, (
@@ -182,6 +209,10 @@ INSIDE = {
     "New York": (40.7580, -73.9855),     # Times Square, Manhattan
     "Queens": (40.7654, -73.8318),       # Flushing
     "Richmond": (40.6437, -74.0765),     # St. George, Staten Island (Borough Hall)
+    # Moved here from OUTSIDE on 2026-09-27, unchanged: the point was measured
+    # against the state's own county fabric on 2026-09-18 and did not move
+    # because the county's service tier did.
+    "Tompkins": (42.4425, -76.50046),    # Ithaca (city)
 }
 
 OUTSIDE = {
@@ -234,7 +265,6 @@ OUTSIDE = {
     "Suffolk": (40.84445, -72.92411),         # Brookhaven (town)
     "Sullivan": (41.6507, -74.6736),          # Thompson (town)
     "Tioga": (42.09211, -76.19299),           # Owego (town)
-    "Tompkins": (42.4425, -76.50046),         # Ithaca (city)
     "Ulster": (41.92749, -73.99551),          # Kingston (city)
     "Warren": (43.36922, -73.68534),          # Queensbury (town)
     "Washington": (43.34363, -73.5396),       # Kingsbury (town)
