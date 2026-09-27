@@ -725,10 +725,27 @@ def find_dropped(source_features, drawn_features, key_prop):
     still unclaimed. Where that leaves no single candidate this RAISES rather than
     guessing, because picking one would silently attribute a drop to the wrong ring.
 
-    AND THE COUNT IS GATED AGAINST ARITHMETIC NOBODY HERE CONTROLS: per key, the
-    number of unclaimed source rings must equal len(source rings) - len(drawn
-    rings). That identity held on all four NG911 layers at 165, 118, 10 and 149, so
-    the test is checked against the ring counts rather than trusted.
+    THAT SENTENCE CLAIMED A GATE THAT DOES NOT EXIST, and it stays above its
+    correction: "AND THE COUNT IS GATED AGAINST ARITHMETIC NOBODY HERE CONTROLS:
+    per key, the number of unclaimed source rings must equal len(source rings) -
+    len(drawn rings). That identity held on all four NG911 layers at 165, 118, 10
+    and 149, so the test is checked against the ring counts rather than trusted."
+    The identity is TRUE BY CONSTRUCTION: the loop above gives every drawn ring
+    exactly one free source ring or raises, so len(claimed) == len(dr) whenever
+    this returns, hence len(out) == len(sr) - len(dr) always. Verified by trying to
+    build a return value that violates it -- a drawn ring matching no source ring,
+    two drawn rings wanting one source ring, more drawn rings than source rings --
+    and every attempt RAISES instead of returning. Nothing outside the function
+    asserts it either; the 165/118/10/149 reading was a development measurement and
+    nothing re-checks it. Adding that assertion anywhere would be the vacuous gate
+    two post-checks were already removed for.
+
+    WHAT ACTUALLY PROTECTS THIS, both real and both in code: the RAISE above, which
+    is what makes the removes-but-never-moves assumption checkable rather than
+    assumed -- a simplifier that MOVED a vertex would fail the subset test and stop
+    the build -- and each declaring builder's PINNED per-layer counts beside its
+    `ACCEPTED_DROPPED_RINGS`, so a change in the dropped set fails until a person
+    re-reads it. Neither is arithmetic this function controls.
     """
     src, drawn = _by_key(source_features, key_prop), _by_key(drawn_features, key_prop)
     out = []
