@@ -3803,6 +3803,11 @@
       "file": "update-layer-sources.yml",
       "purpose": "Where each layer's shapes come from, fleet-wide (browser probe -> layer-sources.json + the endpoint inventory's table); PR only when a result changes",
       "schedule": "Sun 09:17 UTC"
+    },
+    {
+      "file": "update-tiger-tiles.yml",
+      "purpose": "Re-mirror the Census TIGERweb layers the apps draw from vector tiles, fleet-wide (scripts/mirror_tiger_tiles.py -> the archives + tiger-mirror.json); rebuilds and gates only a layer whose fetched set changed, moves the cache name of each app whose archive it replaced, and opens a PR only then",
+      "schedule": "Sun 10:41 UTC"
     }
   ],
   "geocoder": {

@@ -119,12 +119,12 @@ prose.
 
 | instance | layers that send the point | registered layers |
 |---|---|---|
-| il | 19 | 40 |
+| il | 13 | 40 |
 | ny | 5 | 35 |
 | ca | 0 | 16 |
-| wi | 6 | 31 |
-| ia | 3 | 20 |
-| mi | 5 | 15 |
+| wi | 2 | 31 |
+| ia | 1 | 20 |
+| mi | 1 | 15 |
 
 ### Where each layer's shapes come from
 

@@ -12411,6 +12411,7 @@ function initWisconsinExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "County Subdivision",
     // Every subdivision belongs to exactly one county BY CONSTRUCTION, which
@@ -12566,6 +12567,7 @@ function initWisconsinExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City or Village",
     // the honest words for "outside every incorporated place in Wisconsin",
@@ -13231,6 +13233,7 @@ function initWisconsinExplorer() {
 
   registerPolygonLayer({
     id: "school-district-secondary",
+    tiles: "data/app/tiles/school-district-secondary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Union High)",
     loader: loadWiSchoolSecondary,
@@ -13244,6 +13247,7 @@ function initWisconsinExplorer() {
 
   registerPolygonLayer({
     id: "school-district-elementary",
+    tiles: "data/app/tiles/school-district-elementary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Elementary)",
     loader: loadWiSchoolElementary,
