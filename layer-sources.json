@@ -3777,6 +3777,7 @@
      "loaded_geometry": [
       "Polygon"
      ],
+     "tiles": "data/app/tiles/wi-court-of-appeals.pmtiles",
      "source": "shipped"
     },
     "us-house": {
@@ -3790,6 +3791,7 @@
      "loaded_geometry": [
       "Polygon"
      ],
+     "tiles": "data/app/tiles/us-house.pmtiles",
      "source": "shipped"
     },
     "wtcs-district": {
@@ -3804,6 +3806,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/wtcs-district.pmtiles",
      "source": "shipped"
     },
     "wi-senate": {
@@ -3818,6 +3821,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/wi-senate.pmtiles",
      "source": "shipped"
     },
     "wi-assembly": {
@@ -3832,6 +3836,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/wi-assembly.pmtiles",
      "source": "shipped"
     },
     "wi-circuit-court": {
@@ -3845,6 +3850,7 @@
      "loaded_geometry": [
       "Polygon"
      ],
+     "tiles": "data/app/tiles/wi-circuit-court.pmtiles",
      "source": "shipped"
     },
     "county": {
@@ -3858,6 +3864,7 @@
      "loaded_geometry": [
       "Polygon"
      ],
+     "tiles": "data/app/tiles/county.pmtiles",
      "source": "shipped"
     },
     "psap-area": {
@@ -3872,6 +3879,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/psap-area.pmtiles",
      "source": "shipped"
     },
     "school-district-secondary": {
@@ -3933,6 +3941,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/ems-service.pmtiles",
      "source": "shipped"
     },
     "law-service": {
@@ -3947,6 +3956,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/law-service.pmtiles",
      "source": "shipped"
     },
     "fire-service": {
@@ -3961,6 +3971,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/fire-service.pmtiles",
      "source": "shipped"
     },
     "county-board": {
@@ -3975,6 +3986,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/county-board.pmtiles",
      "source": "shipped"
     },
     "county-subdivision": {
@@ -4036,6 +4048,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/mpd-district.pmtiles",
      "source": "shipped"
     },
     "mps-school-board": {
@@ -4051,6 +4064,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/mps-school-board.pmtiles",
      "source": "shipped"
     },
     "mpd-squad-area": {
@@ -4065,6 +4079,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/mpd-squad-area.pmtiles",
      "sub_of": "mpd-district",
      "source": "shipped"
     },
@@ -4080,6 +4095,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/aldermanic-district.pmtiles",
      "source": "shipped"
     },
     "ward": {
@@ -4108,6 +4124,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/milwaukee-neighborhoods.pmtiles",
      "source": "shipped"
     },
     "madison-neighborhood-assoc": {
@@ -4121,12 +4138,13 @@
      "loaded_geometry": [
       "Polygon"
      ],
+     "tiles": "data/app/tiles/madison-neighborhood-assoc.pmtiles",
      "source": "shipped"
     },
     "tid-district": {
      "files": [
-      "/wi/data/app/madison-tid-districts.json",
-      "/wi/data/app/tid-districts.json"
+      "/wi/data/app/tid-districts.json",
+      "/wi/data/app/madison-tid-districts.json"
      ],
      "whole_set": [],
      "at_point": [],
@@ -4136,6 +4154,7 @@
       "MultiPolygon",
       "Polygon"
      ],
+     "tiles": "data/app/tiles/tid-district.pmtiles",
      "source": "shipped"
     },
     "police-station": {

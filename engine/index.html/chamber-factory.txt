@@ -89,6 +89,7 @@
         return extractDistrictNumber(feature.properties || {}, opts.districtFields);
       },
       overlay: { load: loadChamber, style: opts.style },
+      tiles: opts.tiles, // optional vector-tile archive (tile-overlay block)
       // boundary resolution is point-first by default (queryFeatureAt); the
       // roster stays a whole-file fetch — it's the small half of the join
       query: function (point, seq) {

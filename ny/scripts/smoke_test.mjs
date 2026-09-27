@@ -429,7 +429,12 @@ try {
       return {
         boro: boroEl ? boroEl.innerText.replace(/\s+/g, " ").trim() : "(none)",
         jud: judBlock ? judBlock.innerText.replace(/\s+/g, " ").trim() : "(none)",
-        highlights: document.querySelectorAll("#map .region-highlight").length,
+        // lit, read from the app: both layers are drawn from vector tiles
+        // since phase 5, on a GL canvas with no SVG path to count
+        highlights: ["borough", "judicial-district"].filter((id) => {
+          const st = window.NycExplorer.layerLoadState(id);
+          return st && st.highlight;
+        }).length,
       };
     }, POINT2);
     check(
@@ -537,13 +542,22 @@ try {
     const page = await booted(
       context,
       `${BASE}#point=${NYC_POINT}&layers=borough,judicial-district`,
-      (p) => p.route("**/data/app/borough-boundaries.json", (r) => r.fulfill({ status: 503, body: "down" }))
+      // the file AND the tile archive it is drawn from since phase 5: a card
+      // whose tile read fails falls back to the file, so both must be down
+      async (p) => {
+        await p.route("**/data/app/borough-boundaries.json", (r) => r.fulfill({ status: 503, body: "down" }));
+        await p.route("**/data/app/tiles/borough.pmtiles", (r) => r.fulfill({ status: 503, body: "down" }));
+      }
     );
     await page
       .waitForFunction(
         () => {
+          // both settled: the failing card errored AND the surviving one is
+          // no longer loading — with tiles the error can come first
           const el = document.getElementById("card-borough");
-          return el && el.classList.contains("state-error");
+          const other = document.getElementById("card-judicial-district");
+          return el && el.classList.contains("state-error") &&
+            other && !other.querySelector(".loading-row");
         },
         null,
         { timeout: QUERY_TIMEOUT }

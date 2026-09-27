@@ -1,10 +1,10 @@
 name: Vector tiles
 
-# Builds a vector-tile archive for every shipped polygon layer a change touches
-# and holds each one to the file it came from (scripts/build_vector_tiles.py;
-# docs/OPTIMIZATION_PLAYBOOK.md §10, phase 3). Nothing is committed or
-# deployed: until a layer's renderer ships the archives are built and thrown
-# away, and this run is what says they would be correct.
+# Holds the vector-tile archives to the files they come from
+# (docs/OPTIMIZATION_PLAYBOOK.md §10, phases 3-5): the archives the apps SHIP
+# under <tag>/data/app/tiles/ against today's files, the app's own tile reader
+# against the Python decoders, a fresh build of every layer a change touches,
+# and every tiled layer's CARD against the card its whole file gives.
 #
 # ITS OWN WORKFLOW, NOT A STEP IN smoke-test.yml, because of what it costs.
 # Building and gating the whole fleet took 3 min 25 s four at a time and 11
@@ -26,8 +26,17 @@ on:
       - "scripts/build_vector_tiles.py"
       - "scripts/validate_vector_tiles.py"
       - "scripts/requirements.txt"
+      - "scripts/probe_tile_cards.mjs"
+      # a card is the layer's own query code: an app or engine change can
+      # alter what a tiled layer's card says without touching any boundary
+      - "*/index.html"
+      - "engine/**"
       - ".github/workflows/vector-tiles.yml"
   workflow_dispatch: {}
+
+# the same pin smoke-test.yml carries, so the cache key and the install agree
+env:
+  PLAYWRIGHT_VERSION: "1.56.1"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -50,6 +59,12 @@ jobs:
       # was measured with
       - name: Install tippecanoe and the tile readers
         run: |
+          # the runner image's Google Chrome apt source is unused here and once
+          # served a Packages file whose hash did not match its own Release
+          # file, failing every apt-get update (smoke-test.yml records it)
+          sudo find /etc/apt/sources.list.d -maxdepth 1 -type f \
+               \( -name '*.list' -o -name '*.sources' \) \
+               -exec grep -q 'dl\.google\.com' {} \; -print -delete 2>/dev/null || true
           sudo apt-get update -q
           sudo apt-get install -y -q tippecanoe
           tippecanoe --version
@@ -77,3 +92,29 @@ jobs:
           else
             python3 scripts/build_vector_tiles.py
           fi
+
+      # Every layer drawn from tiles prints the same card from its tiles as
+      # from its whole file (scripts/probe_tile_cards.mjs): the archive gates
+      # above prove the tile holds the file's districts, and only the app's
+      # own query code can say what a card makes of them.
+      - name: Cache Playwright Chromium
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ env.PLAYWRIGHT_VERSION }}-${{ runner.os }}
+
+      - name: Install Playwright + Chromium
+        timeout-minutes: 15
+        run: |
+          npm install "playwright@${PLAYWRIGHT_VERSION}"
+          npx playwright install-deps chromium
+          if [ "${{ steps.pw-cache.outputs.cache-hit }}" != "true" ]; then
+            npx playwright install chromium
+          fi
+
+      - name: Every tiled layer's card matches its card from the whole file
+        run: |
+          python3 -m http.server 8000 >/dev/null 2>&1 &
+          sleep 2
+          BASE_URL=http://localhost:8000 node scripts/probe_tile_cards.mjs

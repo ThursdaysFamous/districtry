@@ -942,11 +942,14 @@ def render_recipient_rows(apps):
             fail("no surface requests %s any more — the recipients table names it, "
                  "so either the fleet changed or the measurement is broken" % label)
         tiled = [a["name"] for a in users if a.get("vector_tiles")]
+        mapped = [a["name"] for a in users if a.get("has_map")]
         if label == "GitHub Pages" and tiled:
+            where = ("every app" if set(tiled) == set(mapped) else
+                     ", ".join(tiled[:-1]) + " and " + tiled[-1] if len(tiled) > 1 else tiled[0])
             what += (" In %s, a layer drawn from vector tiles requests its map a piece at a "
                      "time, so those requests also describe the area you are looking at and, "
-                     "to answer its card, <strong>the square of about 3.5 km around the point "
-                     "you select</strong>." % esc(", ".join(tiled)))
+                     "to answer its card, <strong>the square of about 7 km around the point "
+                     "you select</strong>." % esc(where))
         rows.append(recipient_row(label, sub, policy, what, when,
                                   ", ".join(a["name"] for a in users) + "."))
     for host in sorted({h for a in apps for h in a["geocoders"]}):

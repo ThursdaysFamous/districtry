@@ -7759,6 +7759,15 @@ function initIowaExplorer() {
 
   function registerLayer(mod) {
     layers.push(mod);
+    // a layer drawn from a vector-tile archive: its boundary loader answers
+    // a point from the tile under it (queryFeatureAt, featureSetAt)
+    // (several layers can share one loader, as New York's borough, borough
+    // president and district attorney do: each is lit from the one answer)
+    if (mod.tiles && mod.overlay && mod.overlay.load) {
+      var tl = mod.overlay.load;
+      if (!tl.tileMod) tl.tileMod = mod;
+      (tl.tileMods = tl.tileMods || []).push(mod);
+    }
     layerRuntime[mod.id] = {
       overlayLayer: null, overlayLoaded: false, cardBody: null, geojson: null,
       highlightedLayer: null, poiMarker: null, block: null, pinBtn: null,
@@ -8247,6 +8256,9 @@ function initIowaExplorer() {
         .then(parseTileDirectory);
       return h;
     });
+    // an archive that could not be opened is forgotten, so a Retry asks again
+    // rather than being handed the same failure
+    header.then(null, function () { if (tileArchives[url] === archive) delete tileArchives[url]; });
     function directory(offset, length) {
       if (!dirs[offset]) {
         dirs[offset] = get(offset, length).then(function (buf) {
@@ -8409,6 +8421,13 @@ function initIowaExplorer() {
       var z = h.maxZoom, t = tileXYFor(point.lng, point.lat, z);
       return archive.getTile(z, t.x, t.y).then(function (bytes) {
         var decoded = bytes ? decodeTileLayer(bytes, "d") : { extent: 4096, features: [] };
+        // in the order the whole file holds them (`_s` the source file in
+        // the order the app loads the files, `_i` the feature within it): a
+        // card that takes the first district holding the point, where
+        // districts overlap, must take the same one the file gives it
+        decoded.features.sort(function (a, b) {
+          return ((a.properties._s || 0) - (b.properties._s || 0)) || ((a.properties._i || 0) - (b.properties._i || 0));
+        });
         return {
           type: "FeatureCollection",
           features: decoded.features.map(function (f) {
@@ -8468,21 +8487,48 @@ function initIowaExplorer() {
     return openTileArchive(new URL(mod.tiles, document.baseURI).href);
   }
 
-  // The card's feature: from the whole file when it is already in memory
-  // (a comparison fetched it), otherwise from the tile under the point. A
-  // failed tile read falls back to the whole file, so the card still answers.
+  // The card's feature, from the tile under the point — even when the whole
+  // file is in memory (a comparison fetched it, or the app loads it at boot):
+  // the highlight lights the district by the tile's feature id, which only a
+  // tile answer carries, and scripts/probe_tile_cards.mjs holds the two
+  // answers equal. A failed tile read falls back to the whole file, so the
+  // card still answers.
   function tileFeatureAt(mod, load, point) {
-    var cached = load.cached ? load.cached() : null;
-    if (cached) return Promise.resolve(findFeatureContaining(cached, point));
     var rt = layerRuntime[mod.id];
     return tileFeaturesAt(tileArchiveFor(mod), point).then(function (fc) {
       var feature = findFeatureContaining(fc, point);
       rt.tileAnswer = { point: point, feature: feature };
+      tileAnswerShared(load, rt.tileAnswer);
       return feature;
     }, function (err) {
       console.warn("[" + mod.id + "] tile read failed, loading the whole file:", err);
       return load().then(function (geojson) { return findFeatureContaining(geojson, point); });
     });
+  }
+
+  // Every feature near the point, for a layer that reads more than the one
+  // district holding it (overlapping service areas, several associations at
+  // one spot): the tile under the point when the loader's layer is drawn
+  // from tiles, otherwise the whole file, exactly as before. The tile holds
+  // every feature crossing it, so each one containing the point is there.
+  function featureSetAt(load, point) {
+    var mod = load.tileMod;
+    if (!mod || !tileCardAvailable(mod)) return load();
+    return tileFeaturesAt(tileArchiveFor(mod), point).then(function (fc) {
+      layerRuntime[mod.id].tileAnswer = { point: point, feature: findFeatureContaining(fc, point) };
+      tileAnswerShared(load, layerRuntime[mod.id].tileAnswer);
+      return fc;
+    }, function (err) {
+      console.warn("[" + mod.id + "] tile read failed, loading the whole file:", err);
+      return load();
+    });
+  }
+
+  // Every layer drawn from the same loader takes the same answer: their
+  // archives are built from the same file, so a feature's id is the same in
+  // each, and each lights it (updateTileHighlight).
+  function tileAnswerShared(load, answer) {
+    (load.tileMods || []).forEach(function (m) { layerRuntime[m.id].tileAnswer = answer; });
   }
 
   function tileDashArray(style) {
@@ -8597,7 +8643,17 @@ function initIowaExplorer() {
           self.restyle();
           reorderActiveLayers();
         });
-      }).catch(function (err) { console.error("[" + mod.id + "] tile overlay failed:", err); });
+      }).catch(function (err) {
+        console.error("[" + mod.id + "] tile overlay failed:", err);
+        // the Leaflet path's rule (onLayerToggled): never silent, and never
+        // over a verified answer already on the card for this selection
+        var rt = layerRuntime[mod.id];
+        if (self._dxOn && state.layersOn[mod.id] && rt.resultSeq !== state.sequence) {
+          setCardError(mod, "Couldn't load this layer's boundaries. It won't affect other layers.");
+        }
+        if (map.hasLayer(self)) map.removeLayer(self);
+        rt.overlayLayer = null; // Retry re-runs onLayerToggled, which makes a fresh one
+      });
       return this;
     },
     onRemove: function () {
@@ -10425,6 +10481,12 @@ function initIowaExplorer() {
    * neither hook takes exactly the pre-existing path (load, then contain),
    * which is what keeps this default-on safe for every layer. ---------- */
   function queryFeatureAt(load, point) {
+    // a loader whose layer is drawn from a vector-tile archive answers from
+    // the tile under the point and never starts the whole download
+    // (tile-overlay block); registerLayer marks it. First, even when the whole
+    // file happens to be in memory: the highlight lights the district by the
+    // TILE's feature id, which only a tile answer carries
+    if (load.tileMod && tileCardAvailable(load.tileMod)) return tileFeatureAt(load.tileMod, load, point);
     var cached = load.cached ? load.cached() : null;
     if (cached) return Promise.resolve(findFeatureContaining(cached, point));
     // fire (or join) the shared full download either way — the overlay and
@@ -10495,9 +10557,7 @@ function initIowaExplorer() {
       // spatial point query does, while the full set downloads for the
       // overlay; every other loader takes the load-then-contain path verbatim
       query: function (point, seq) {
-        var mod = getLayerById(opts.id);
-        var found = tileCardAvailable(mod) ? tileFeatureAt(mod, load, point) : queryFeatureAt(load, point);
-        return found.then(function (feature) {
+        return queryFeatureAt(load, point).then(function (feature) {
           if (!feature) return null;
           var props = feature.properties || {};
           var result = { seq: seq };
@@ -11044,6 +11104,7 @@ function initIowaExplorer() {
         return extractDistrictNumber(feature.properties || {}, opts.districtFields);
       },
       overlay: { load: loadChamber, style: opts.style },
+      tiles: opts.tiles, // optional vector-tile archive (tile-overlay block)
       // boundary resolution is point-first by default (queryFeatureAt); the
       // roster stays a whole-file fetch — it's the small half of the join
       query: function (point, seq) {
@@ -11304,6 +11365,7 @@ function initIowaExplorer() {
 
   registerLayer({
     id: "county",
+    tiles: "data/app/tiles/county.pmtiles", // vector tiles (engine tile-overlay block)
     group: "geography",
     label: "County",
     overlay: {
@@ -11499,6 +11561,7 @@ function initIowaExplorer() {
 
   registerIlgaChamber({
     id: "us-house",
+    tiles: "data/app/tiles/us-house.pmtiles", // vector tiles (engine tile-overlay block)
     label: "U.S. House",
     layerIndex: 0, // fallback only — loadDistricts (pre-built) is used when present
     loadDistricts: loadCongressDistricts,
@@ -11535,6 +11598,7 @@ function initIowaExplorer() {
 
   registerIlgaChamber({
     id: "ia-senate",
+    tiles: "data/app/tiles/ia-senate.pmtiles", // vector tiles (engine tile-overlay block)
     label: "Iowa Senate District",
     layerIndex: 1, // TIGERweb SLDU — fallback only; loadDistricts is used when present
     loadDistricts: loadIaSenateDistricts,
@@ -11548,6 +11612,7 @@ function initIowaExplorer() {
 
   registerIlgaChamber({
     id: "ia-house",
+    tiles: "data/app/tiles/ia-house.pmtiles", // vector tiles (engine tile-overlay block)
     label: "Iowa House District",
     layerIndex: 2, // TIGERweb SLDL — fallback only; loadDistricts is used when present
     loadDistricts: loadIaHouseDistricts,
@@ -11599,6 +11664,7 @@ function initIowaExplorer() {
 
   registerLayer({
     id: "county-supervisor",
+    tiles: "data/app/tiles/county-supervisor.pmtiles", // vector tiles (engine tile-overlay block)
     group: "political",
     label: "County Supervisor District",
     overlay: {
@@ -11778,6 +11844,7 @@ function initIowaExplorer() {
 
   registerPolygonLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles (engine tile-overlay block)
     group: "schools",
     label: "School District (Unified)",
     loader: loadSchoolDistrictsUnified,
@@ -11815,6 +11882,7 @@ function initIowaExplorer() {
 
   registerPolygonLayer({
     id: "school-director-district",
+    tiles: "data/app/tiles/school-director-district.pmtiles", // vector tiles (engine tile-overlay block)
     group: "schools",
     subOf: "school-district-unified",
     label: "School Director District",
@@ -13015,6 +13083,7 @@ function initIowaExplorer() {
 
   registerPolygonLayer({
     id: "precinct",
+    tiles: "data/app/tiles/precinct.pmtiles", // vector tiles (engine tile-overlay block)
     group: "political",
     label: "Precinct",
     loader: loadIaPrecincts,
@@ -13062,6 +13131,7 @@ function initIowaExplorer() {
 
   registerLayer({
     id: "ia-judicial-district",
+    tiles: "data/app/tiles/ia-judicial-district.pmtiles", // vector tiles (engine tile-overlay block)
     group: "political",
     label: "Judicial District",
     overlay: {
@@ -13188,6 +13258,7 @@ function initIowaExplorer() {
 
   registerPolygonLayer({
     id: "community-college",
+    tiles: "data/app/tiles/community-college.pmtiles", // vector tiles (engine tile-overlay block)
     group: "schools",
     label: "Community College",
     loader: loadIaCommunityColleges,
@@ -13228,6 +13299,7 @@ function initIowaExplorer() {
 
   registerLayer({
     id: "cc-director-district",
+    tiles: "data/app/tiles/cc-director-district.pmtiles", // vector tiles (engine tile-overlay block)
     group: "schools",
     subOf: "community-college",
     label: "CC Director District",
@@ -13360,6 +13432,7 @@ function initIowaExplorer() {
 
   registerLayer({
     id: "iowa-aea",
+    tiles: "data/app/tiles/iowa-aea.pmtiles", // vector tiles (engine tile-overlay block)
     group: "schools",
     label: "Area Education Agency",
     overlay: {
@@ -15092,7 +15165,9 @@ function initIowaExplorer() {
         sharesParentLoader: !!(parent && parent.overlay && mod.overlay && parent.overlay.load === mod.overlay.load),
         // drawn from a vector-tile archive: its whole file is fetched only when
         // asked (loadWholeFile below), so the probe asks before reading
-        tiles: isTileDrawn(mod) ? mod.tiles : null,
+        // from the registration, not the overlay: a layer hidden at this
+        // point (mod.coverage) detaches its overlay and is still tiled
+        tiles: tileDrawAvailable(mod) ? mod.tiles : null,
         // one short key per loaded feature, so the probe can tell which of
         // this site's files the layer DRAWS: a file the app also loads at boot
         // is subtracted with the boot requests, and matching features finds it
@@ -15133,9 +15208,59 @@ function initIowaExplorer() {
       return { drawn: isTileDrawn(mod), selected: rt.tileSelectedId,
         edgeRuns: g && g.type === "MultiPolygon" && g.coordinates[0] ? g.coordinates[0].length : 0 };
     },
+    // A tile-drawn layer's own query at each point, answered first from its
+    // tiles and then from its whole file, as JSON with every `seq` and
+    // `geometry` dropped (a tile answer carries the piece of a district
+    // inside one tile, which is not what a card reads). What
+    // scripts/probe_tile_cards.mjs compares: the card a reader sees must be
+    // the same either way. The tile answers run first, while the whole file
+    // is not yet in memory, or the loader would answer them from it.
+    tileCardCheck: function (id, points) {
+      var mod = getLayerById(id), load = mod && mod.overlay && mod.overlay.load;
+      if (!load || !load.tileMod) return Promise.reject(new Error(id + " is not drawn from tiles"));
+      var rt = layerRuntime[id], viaTiles = [];
+      function run(out, record) {
+        return points.reduce(function (chain, p, i) {
+          return chain.then(function () {
+            if (record) rt.tileAnswer = null;
+            return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+              out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                return k === "seq" || k === "geometry" ? undefined : v;
+              }));
+              // whether the tile path really answered: a query that reaches
+              // its boundaries some other way passes the comparison while
+              // downloading the whole file and lighting nothing
+              if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
+            }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+          });
+        }, Promise.resolve());
+      }
+      var tiled = [], whole = [], keep = load.tileMod;
+      return run(tiled, true).then(function () {
+        load.tileMod = null;
+        return run(whole);
+      }).then(function () {
+        load.tileMod = keep;
+        return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i] }; });
+      }, function (e) { load.tileMod = keep; throw e; });
+    },
+    // The colour a layer's outline is painted in right now, whichever way it
+    // is drawn: the tile canvas's paint, or a Leaflet path's stroke. What the
+    // smoke tests read to see the dark theme repaint a live overlay.
+    overlayColor: function (id) {
+      var mod = getLayerById(id), rt = layerRuntime[id];
+      if (!mod || !rt || !rt.overlayLayer) return null;
+      if (rt.overlayLayer.dxTiles) {
+        var gl = tileGLLayer && tileGLLayer.getMaplibreMap(), ids = tileIds(mod);
+        return gl && gl.getLayer(ids.line) ? gl.getPaintProperty(ids.line, "line-color") : null;
+      }
+      var color = null;
+      rt.overlayLayer.eachLayer(function (l) { if (!color && l.options && l.options.color) color = l.options.color; });
+      return color;
+    },
     loadWholeFile: function (id) {
       var mod = getLayerById(id);
-      if (!mod || !isTileDrawn(mod)) return Promise.resolve(false);
+      if (!mod || !tileDrawAvailable(mod)) return Promise.resolve(false);
       return ensureTileGeojson(mod).then(function () { return true; });
     },
     loadCountyEntry: function (id, key) {

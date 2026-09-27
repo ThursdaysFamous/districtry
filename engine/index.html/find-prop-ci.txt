@@ -68,6 +68,12 @@
    * neither hook takes exactly the pre-existing path (load, then contain),
    * which is what keeps this default-on safe for every layer. ---------- */
   function queryFeatureAt(load, point) {
+    // a loader whose layer is drawn from a vector-tile archive answers from
+    // the tile under the point and never starts the whole download
+    // (tile-overlay block); registerLayer marks it. First, even when the whole
+    // file happens to be in memory: the highlight lights the district by the
+    // TILE's feature id, which only a tile answer carries
+    if (load.tileMod && tileCardAvailable(load.tileMod)) return tileFeatureAt(load.tileMod, load, point);
     var cached = load.cached ? load.cached() : null;
     if (cached) return Promise.resolve(findFeatureContaining(cached, point));
     // fire (or join) the shared full download either way — the overlay and

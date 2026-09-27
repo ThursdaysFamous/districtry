@@ -174,8 +174,13 @@ def main():
               % args.base)
         return 0
 
+    # MODIFIED files only: a file ADDED since the base is one no returning
+    # visitor can hold a copy of, so it owes no bump. The listed files never
+    # needed saying (a new file is in no base list), but the prefix branches
+    # (fonts, population, tiles) take every file in their folder, and a new
+    # vector-tile archive read as a changed one until 2026-09-27.
     changed = {l.strip() for l in
-               _git("diff", "--name-only", args.base, "--").stdout.split("\n")
+               _git("diff", "--name-only", "--diff-filter=M", args.base, "--").stdout.split("\n")
                if l.strip()}
     problems, checked = [], 0
     for tag in _instances():

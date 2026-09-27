@@ -73,7 +73,9 @@
         sharesParentLoader: !!(parent && parent.overlay && mod.overlay && parent.overlay.load === mod.overlay.load),
         // drawn from a vector-tile archive: its whole file is fetched only when
         // asked (loadWholeFile below), so the probe asks before reading
-        tiles: isTileDrawn(mod) ? mod.tiles : null,
+        // from the registration, not the overlay: a layer hidden at this
+        // point (mod.coverage) detaches its overlay and is still tiled
+        tiles: tileDrawAvailable(mod) ? mod.tiles : null,
         // one short key per loaded feature, so the probe can tell which of
         // this site's files the layer DRAWS: a file the app also loads at boot
         // is subtracted with the boot requests, and matching features finds it
@@ -114,9 +116,59 @@
       return { drawn: isTileDrawn(mod), selected: rt.tileSelectedId,
         edgeRuns: g && g.type === "MultiPolygon" && g.coordinates[0] ? g.coordinates[0].length : 0 };
     },
+    // A tile-drawn layer's own query at each point, answered first from its
+    // tiles and then from its whole file, as JSON with every `seq` and
+    // `geometry` dropped (a tile answer carries the piece of a district
+    // inside one tile, which is not what a card reads). What
+    // scripts/probe_tile_cards.mjs compares: the card a reader sees must be
+    // the same either way. The tile answers run first, while the whole file
+    // is not yet in memory, or the loader would answer them from it.
+    tileCardCheck: function (id, points) {
+      var mod = getLayerById(id), load = mod && mod.overlay && mod.overlay.load;
+      if (!load || !load.tileMod) return Promise.reject(new Error(id + " is not drawn from tiles"));
+      var rt = layerRuntime[id], viaTiles = [];
+      function run(out, record) {
+        return points.reduce(function (chain, p, i) {
+          return chain.then(function () {
+            if (record) rt.tileAnswer = null;
+            return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+              out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                return k === "seq" || k === "geometry" ? undefined : v;
+              }));
+              // whether the tile path really answered: a query that reaches
+              // its boundaries some other way passes the comparison while
+              // downloading the whole file and lighting nothing
+              if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
+            }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+          });
+        }, Promise.resolve());
+      }
+      var tiled = [], whole = [], keep = load.tileMod;
+      return run(tiled, true).then(function () {
+        load.tileMod = null;
+        return run(whole);
+      }).then(function () {
+        load.tileMod = keep;
+        return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i] }; });
+      }, function (e) { load.tileMod = keep; throw e; });
+    },
+    // The colour a layer's outline is painted in right now, whichever way it
+    // is drawn: the tile canvas's paint, or a Leaflet path's stroke. What the
+    // smoke tests read to see the dark theme repaint a live overlay.
+    overlayColor: function (id) {
+      var mod = getLayerById(id), rt = layerRuntime[id];
+      if (!mod || !rt || !rt.overlayLayer) return null;
+      if (rt.overlayLayer.dxTiles) {
+        var gl = tileGLLayer && tileGLLayer.getMaplibreMap(), ids = tileIds(mod);
+        return gl && gl.getLayer(ids.line) ? gl.getPaintProperty(ids.line, "line-color") : null;
+      }
+      var color = null;
+      rt.overlayLayer.eachLayer(function (l) { if (!color && l.options && l.options.color) color = l.options.color; });
+      return color;
+    },
     loadWholeFile: function (id) {
       var mod = getLayerById(id);
-      if (!mod || !isTileDrawn(mod)) return Promise.resolve(false);
+      if (!mod || !tileDrawAvailable(mod)) return Promise.resolve(false);
       return ensureTileGeojson(mod).then(function () { return true; });
     },
     loadCountyEntry: function (id, key) {

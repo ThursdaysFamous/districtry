@@ -243,14 +243,20 @@ def check(path, seed):
     return problems, len(js["tiles"]), features, len(points), answered
 
 
+def _check(path):
+    return check(path, seed=13)
+
+
 def main():
     paths = sys.argv[1:] or sorted(glob.glob(os.path.join(REPO_ROOT, "*", "data", "app", "tiles", "*.pmtiles")))
     if not paths:
         print("validate-vector-tiles: OK — no archive is committed yet, so there is nothing the app reads")
         return
     failed = 0
-    for p in paths:
-        problems, tiles, feats, pts, answered = check(p, seed=13)
+    from concurrent.futures import ProcessPoolExecutor
+    with ProcessPoolExecutor(max_workers=min(4, os.cpu_count() or 1)) as pool:
+        results = list(pool.map(_check, paths))
+    for p, (problems, tiles, feats, pts, answered) in zip(paths, results):
         rel = os.path.relpath(p, REPO_ROOT)
         print("  %-4s  %s: %d tiles (%d features) decode as Python decodes them; %d points, %d inside "
               "a district, answer as the tile does" % ("FAIL" if problems else "ok", rel, tiles, feats, pts, answered))

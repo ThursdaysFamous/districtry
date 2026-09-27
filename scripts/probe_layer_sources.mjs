@@ -253,11 +253,17 @@ function keysOf(url) {
   }
   return fileKeys.get(url);
 }
+// In the order the app LOADS them — by the position of each file's first
+// feature among the layer's loaded features — because build_vector_tiles.py
+// numbers the files in this order and the app sorts a tile's features by it:
+// where districts overlap, a card takes the first one holding the point.
 function drawnFiles(reqs, prints) {
-  const want = new Set(prints || []);
-  if (!want.size) return [];
+  const order = new Map();
+  (prints || []).forEach((k, i) => { if (!order.has(k)) order.set(k, i); });
+  if (!order.size) return [];
   const urls = [...new Set(reqs.filter((x) => x.kind === "local").map((x) => x.url))];
-  return urls.filter((u) => [...keysOf(u)].some((k) => want.has(k))).sort();
+  const first = (u) => Math.min(...[...keysOf(u)].map((k) => order.has(k) ? order.get(k) : Infinity));
+  return urls.filter((u) => first(u) < Infinity).sort((a, b) => first(a) - first(b) || (a < b ? -1 : 1));
 }
 
 // ---- summarise --------------------------------------------------------------
@@ -290,7 +296,7 @@ for (const tag of TAGS) {
     const entry = {
       // this site's own data/app files the layer draws, what
       // build_vector_tiles.py tiles (see drawnFiles)
-      files: [...new Set(runs.flatMap((r) => drawnFiles(r.requests, r.info && r.info.fingerprints)))].sort(),
+      files: [...new Set(runs.flatMap((r) => drawnFiles(r.requests, r.info && r.info.fingerprints)))],
       whole_set: [...new Set(shapes.filter((x) => !x.atPoint).map((x) => x.host))].sort(),
       at_point: [...new Set(shapes.filter((x) => x.atPoint).map((x) => x.host))].sort(),
       points_from: hostsOf(reqs, "points"),

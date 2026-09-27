@@ -38,21 +38,48 @@
     return openTileArchive(new URL(mod.tiles, document.baseURI).href);
   }
 
-  // The card's feature: from the whole file when it is already in memory
-  // (a comparison fetched it), otherwise from the tile under the point. A
-  // failed tile read falls back to the whole file, so the card still answers.
+  // The card's feature, from the tile under the point — even when the whole
+  // file is in memory (a comparison fetched it, or the app loads it at boot):
+  // the highlight lights the district by the tile's feature id, which only a
+  // tile answer carries, and scripts/probe_tile_cards.mjs holds the two
+  // answers equal. A failed tile read falls back to the whole file, so the
+  // card still answers.
   function tileFeatureAt(mod, load, point) {
-    var cached = load.cached ? load.cached() : null;
-    if (cached) return Promise.resolve(findFeatureContaining(cached, point));
     var rt = layerRuntime[mod.id];
     return tileFeaturesAt(tileArchiveFor(mod), point).then(function (fc) {
       var feature = findFeatureContaining(fc, point);
       rt.tileAnswer = { point: point, feature: feature };
+      tileAnswerShared(load, rt.tileAnswer);
       return feature;
     }, function (err) {
       console.warn("[" + mod.id + "] tile read failed, loading the whole file:", err);
       return load().then(function (geojson) { return findFeatureContaining(geojson, point); });
     });
+  }
+
+  // Every feature near the point, for a layer that reads more than the one
+  // district holding it (overlapping service areas, several associations at
+  // one spot): the tile under the point when the loader's layer is drawn
+  // from tiles, otherwise the whole file, exactly as before. The tile holds
+  // every feature crossing it, so each one containing the point is there.
+  function featureSetAt(load, point) {
+    var mod = load.tileMod;
+    if (!mod || !tileCardAvailable(mod)) return load();
+    return tileFeaturesAt(tileArchiveFor(mod), point).then(function (fc) {
+      layerRuntime[mod.id].tileAnswer = { point: point, feature: findFeatureContaining(fc, point) };
+      tileAnswerShared(load, layerRuntime[mod.id].tileAnswer);
+      return fc;
+    }, function (err) {
+      console.warn("[" + mod.id + "] tile read failed, loading the whole file:", err);
+      return load();
+    });
+  }
+
+  // Every layer drawn from the same loader takes the same answer: their
+  // archives are built from the same file, so a feature's id is the same in
+  // each, and each lights it (updateTileHighlight).
+  function tileAnswerShared(load, answer) {
+    (load.tileMods || []).forEach(function (m) { layerRuntime[m.id].tileAnswer = answer; });
   }
 
   function tileDashArray(style) {
@@ -167,7 +194,17 @@
           self.restyle();
           reorderActiveLayers();
         });
-      }).catch(function (err) { console.error("[" + mod.id + "] tile overlay failed:", err); });
+      }).catch(function (err) {
+        console.error("[" + mod.id + "] tile overlay failed:", err);
+        // the Leaflet path's rule (onLayerToggled): never silent, and never
+        // over a verified answer already on the card for this selection
+        var rt = layerRuntime[mod.id];
+        if (self._dxOn && state.layersOn[mod.id] && rt.resultSeq !== state.sequence) {
+          setCardError(mod, "Couldn't load this layer's boundaries. It won't affect other layers.");
+        }
+        if (map.hasLayer(self)) map.removeLayer(self);
+        rt.overlayLayer = null; // Retry re-runs onLayerToggled, which makes a fresh one
+      });
       return this;
     },
     onRemove: function () {

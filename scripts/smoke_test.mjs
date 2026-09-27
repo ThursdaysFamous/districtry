@@ -990,7 +990,10 @@ try {
         if (el && !el.querySelector(".loading-row") && districtRe.test(cardTextNow())) break;
         await new Promise((r) => setTimeout(r, 100));
       }
-      const highlights = document.querySelectorAll("#map .region-highlight").length;
+      // lit, read from the app rather than counted as SVG paths: the anchor
+      // layers are drawn from vector tiles since phase 5, on a GL canvas
+      const st = window[n].layerLoadState("school-board");
+      const highlights = st && st.highlight ? 1 : 0;
       return { text: el ? cardTextNow() : "(no card)", highlights };
     }, { n: EXPORTS_NAME, lat: MOVE_POINT.lat, lng: MOVE_POINT.lng, district: MOVE_POINT.district });
     check(
@@ -1015,9 +1018,10 @@ try {
     // layer graph is released on toggle-off and rebuilt from the cached geojson on
     // toggle-on — the highlight can only reappear (afterOn === before) if that
     // rebuild produced a working, highlightable overlay with no refetch.
-    const toggled = await page.evaluate(async () => {
+    const toggled = await page.evaluate(async ({ n, ids }) => {
       const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-      const count = () => document.querySelectorAll("#map .region-highlight").length;
+      // lit layers, read from the app (see smoke-move-point)
+      const count = () => ids.filter((id) => { const st = window[n].layerLoadState(id); return st && st.highlight; }).length;
       const box = document.getElementById("toggle-ccbr");
       const before = count();
       box.click(); // ccbr off
@@ -1026,7 +1030,7 @@ try {
       box.click(); // ccbr back on
       for (let i = 0; i < 100; i++) { if (count() >= before) break; await wait(100); }
       return { before, afterOff, afterOn: count() };
-    });
+    }, { n: EXPORTS_NAME, ids: OFFLINE });
     check(
       "layer toggle preserves other layers' highlights (opacity rescale, P8)",
       toggled.before >= 2 && toggled.afterOff === toggled.before - 1 && toggled.afterOn === toggled.before,
@@ -1497,7 +1501,10 @@ try {
     const refetched = [];
     context.on("request", (r) => {
       const path = new URL(r.url()).pathname;
-      if (counting && r.serviceWorker() && /\/data\/app\/[^/]*districts\.json$/.test(path)) refetched.push(path);
+      // a boundary file, or a byte range of a tile archive: these three
+      // layers are drawn from tiles since phase 5, so their ranges are what
+      // a returning visitor would otherwise download again
+      if (counting && r.serviceWorker() && /\/data\/app\/([^/]*districts\.json|tiles\/[^/]+\.pmtiles)$/.test(path)) refetched.push(path + (r.headers().range ? " " + r.headers().range : ""));
     });
     const page = await booted(context, `${BASE}#point=${POINT}&layers=${layers.join(",")}`);
     const controlled = await page
@@ -1531,7 +1538,12 @@ try {
     const page = await booted(
       context,
       `${BASE}#point=${POINT}&layers=school-board,ccbr`,
-      (p) => p.route("**/data/app/school-board-districts.json", (r) => r.fulfill({ status: 503, body: "down" }))
+      // the file AND the tile archive it is drawn from since phase 5: a card
+      // whose tile read fails falls back to the file, so both must be down
+      async (p) => {
+        await p.route("**/data/app/school-board-districts.json", (r) => r.fulfill({ status: 503, body: "down" }));
+        await p.route("**/data/app/tiles/school-board.pmtiles", (r) => r.fulfill({ status: 503, body: "down" }));
+      }
     );
     await page
       .waitForFunction(
@@ -1572,7 +1584,10 @@ try {
     const page = await booted(
       context,
       `${BASE}#layers=school-board`,
-      (p) => p.route("**/data/app/school-board-districts.json", (r) => r.fulfill({ status: 503, body: "down" }))
+      async (p) => {
+        await p.route("**/data/app/school-board-districts.json", (r) => r.fulfill({ status: 503, body: "down" }));
+        await p.route("**/data/app/tiles/school-board.pmtiles", (r) => r.fulfill({ status: 503, body: "down" }));
+      }
     );
     await page
       .waitForFunction(
@@ -1646,7 +1661,7 @@ try {
     const page = await booted(context, `${BASE}#point=${POINT}&layers=${OFFLINE[0]}`);
     await page.waitForFunction(() => !!window[EXPORTS_NAME] && !!window[EXPORTS_NAME].setTheme,
       null, { timeout: QUERY_TIMEOUT }).catch(() => {});
-    const read = () => page.evaluate((n) => {
+    const read = () => page.evaluate(({ n, id: OFFLINE0 }) => {
       const path = document.querySelector("#map path");
       // The vector basemap is a GL canvas with no tile <img> whose src names
       // its style, so the basemap kind comes from the debug namespace; the
@@ -1658,9 +1673,11 @@ try {
         meta: document.querySelector('meta[name="theme-color"]')?.content,
         tiles: (document.querySelector(".leaflet-tile-pane img")?.src || "").match(/(light|dark)_all/)?.[1]
           || (base ? (base.kind === "dark_all" ? "dark" : "light") : null),
-        stroke: path ? path.getAttribute("stroke") : null,
+        // the anchor layer's own outline colour, read from the app: it is
+        // drawn on the tile canvas since phase 5, so there is no SVG path
+        stroke: window[n] && window[n].overlayColor ? window[n].overlayColor(OFFLINE0) : (path ? path.getAttribute("stroke") : null),
       };
-    }, EXPORTS_NAME);
+    }, { n: EXPORTS_NAME, id: OFFLINE[0] });
     await page.evaluate((n) => window[n].setTheme("light", false), EXPORTS_NAME);
     await page.waitForTimeout(400);
     const light = await read();
