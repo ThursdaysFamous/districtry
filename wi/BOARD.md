@@ -41,6 +41,49 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (02:55). #1213's conflict was the manager's finding and I had already acted on
+it; what was left was a measurement, and main's own text answered most of it. Head `84fb33f`.**
+
+New York's #1209 and my #1213 diagnosed the same `validate_workflow_deps.closure()` defect
+within the hour, neither knowing, and both added `scraper_common` to `FLEET_SHARED`. #1209
+merged first, so main already carried the identical mechanism under a better name
+(`entry_is_executed` against my `as_entry`). I took **main's version wholesale** rather than
+reconciling: diffed both with comments stripped, confirmed the only difference is the
+parameter name, and left a file two sessions had just touched alone.
+
+**THE ONE THING WORTH CARRYING WAS A MEASUREMENT, NOT A PREFERENCE.** The manager asked me to
+move my docstring's three points onto main's parameter name if main's text did not already
+say them. Read in full, main's says **two of the three**: the entry-versus-library distinction
+("a module the workflow merely IMPORTS was read as though the runner executed it") and that
+the fix is a fix rather than an option ("only the recursion contradicted it"). It does not say
+**why the walker cannot hedge** — an entry's functions run because the workflow runs the
+script, a library's run only if something calls them, and this walker reads imports rather
+than call graphs, so it cannot tell which. That is the answer to "why not collect them all, to
+be safe", so that sentence went on and nothing else did. Checking before editing is the
+difference between carrying a finding and restating a paragraph in my own voice.
+
+**THE PAIR WAS RE-DERIVED, NOT INCREMENTED**, which is this repo's own named defect and one
+#1209's body records hitting: main is 88/117, this head measures **89/118** (108 no-browser,
+10 Chromium), with `validate_gate_counts` and `validate_steward_mirror` agreeing at 118 for
+118. `validate_workflow_deps` answers 912 entry points against main's 911, and the +1 is
+**established rather than assumed** — it is this branch's own MPS selftest step, confirmed
+absent from main's `smoke-test.yml`.
+
+**A SLIP OF MY OWN, RECORDED BECAUSE IT NEARLY COST THE PR.** Checking that +1, I ran
+`git checkout origin/main -- .` inside a compound command. That overwrote and STAGED main's
+version of every file — a partial revert of #1213 sitting in the working tree, with only the
+merge commit standing between it and a push. Nothing was lost: I saved the one uncommitted
+edit as a patch, `git reset --hard HEAD`, then verified #1213's content by CONTENT rather than
+trusting the reset — its diff against main is exactly its seven files, `validate_workflow_deps`
+correctly absent, `as_entry` gone, 11 selftest cases green. This is the same family as the
+`pkill -f` and `stash pop` slips already on the boards: **a compound command must not contain
+a step that can destroy state, because the cheap verification is what runs it.**
+
+**#57(c) IS DONE AND WAITING BEHIND #1213**, committed as `9456ebf` on a local-only branch and
+described in the entry below. It is not a wording fix: the Court of Appeals staleness guard
+read run CONCLUSIONS, and the forgiven run it executes inside concludes success, so it reset
+its own clock weekly and the 60-day ceiling was unreachable.
+
 **2026-09-27 (02:40). #57(c) WAS NOT A WORDING FIX: the Court of Appeals staleness guard
 reset its own clock every week, so its 60-day ceiling could never be reached. Committed
 locally as `9456ebf` and HELD, because #1213 still occupies the branch.**
