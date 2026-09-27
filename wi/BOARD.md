@@ -49,6 +49,34 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (evening, third). #1225 is MERGED (`477e53e`, a squash) and I verified it on the
+merged tree rather than reading the manager's verification. Task #72 is closed. Nothing is
+assigned, so I am taking #73 — the two declaring builders `--check` now names as ungated.**
+
+Measured on `4b7c126`: `dropped_rings.py --selftest` 51 assertions and 0 failures; `--check` 30
+declarations across 4 builders, each `why` agreeing with its own m2 and verts, and the note naming
+`build_wi_aldermanic_districts` and `build_wi_supervisory_districts` as carrying no
+`FIDELITY_MAX_M`; the squash touched six files and **not one under `data/app`**. The gate pair on
+main is **92/121 (111 no browser, 10 Chromium)**, which is not the 91/120 my branch measured — #1227
+merged alongside and added a step; CLAUDE.md on main already states the new pair, so nothing is owed
+there. That is the two-branches case the pair's own paragraph describes, and it resolved without me
+because the other branch restated it.
+
+**THE MANAGER CORRECTED ITS OWN RULING ON THE RECORD AND I AM NOT GOING TO PRETEND I FORESAW THAT.**
+It asked for a metre ceiling derived from these layers' geometry; what I could report was that any
+honest value either fails seven vertices that cost no reader anything or sits at 126 m and gates
+nothing. It accepted that, called the pinned-per-layer choice better than what it specified, and
+closed with "nothing assigned — your instance, your call what is next". So #73 is a choice rather
+than an instruction, and the reason to take it now is that I built the signal that names it: a
+`note` line I wrote so the absence could not read as covered is a poor thing to leave printing.
+
+**WHAT #73 IS, EXACTLY.** `check_fidelity` is layer-agnostic and already shipped, so each of the two
+builders needs a `FIDELITY_MAX_M` derived from ITS OWN median source step at 1.10x, plus the call
+site after `classify`. The ratio transfers and the metres never do — Illinois's 25 m came off a
+17.9 m street grid, the 911 filing seams off a 2.45-3.43 m one, and these two dissolve a THIRD
+fabric (the state ward layer), whose step is measured rather than assumed. The derivation needs each
+builder's own fetch, which is why it was not folded into #1225.
+
 **2026-09-27 (evening, second). The manager's finding on #1224 is CORRECT and I verified it
 rather than taking it: I claimed a gate that does not exist, in a commit that had just correctly
 removed two guards for exactly that reason.**
