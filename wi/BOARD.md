@@ -48,6 +48,50 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (evening). #72 is COMPLETE: the classify fix and all four floors merged as #1224, and
+the ceiling is PR #1225. Nothing left on the ruling's list.**
+
+The ceiling ships as `FIDELITY_MAX_M = {fire 3.77, law 3.51, psap 2.70, ems 3.17}`, each 1.10x its
+own layer's median source step (3.43/3.19/2.45/2.88 m) — the chambers builder's ratio, with the RULE
+that transfers being that the ceiling comes off the layer's own geometry rather than the ratio or
+the metres. All four pass end to end against the live OEC service, and **no shipped byte changed**.
+
+**PINNED AND NOT DERIVED AT BUILD TIME**, which is the point of writing a ceiling down: one
+recomputed from the source every run rises whenever the source gets coarser, so it can never fail.
+The builder prints each layer's measured step beside its ceiling, so a drifting step is visible
+without the ceiling moving with it.
+
+**THE EXCLUSION IS FOUR MEASURED PREDICATES AND NOT A PINNED LIST**, as the ruling required, and
+every count prints every run: a SPUR (the vertex's two ring neighbours closer together than the
+output's own coordinate cell, so the ring encloses no area — this alone clears fire's two worst
+vertices at 109.8 and 16.6 m), a vertex whose whole neighbourhood is answered identically, one whose
+every difference lies inside a ring `classify` already reports dropped (failing there too would
+demand one harm be written in two tables), and the GAP-CLOSED direction.
+
+**THE SELFTEST FOUND THE FOURTH PREDICATE RATHER THAN REASONING PRODUCING IT.** Assertion 16
+asserted that closing a 64 m notch with nobody next door changes no answer; it changes one, from NO
+AGENCY to A. `classify` calls that gap-closed and not harm, so the gate now reads the direction the
+same way. Two more defects were caught the same way, both mine, both kept above their corrections:
+`reader_answer` answers None and never `""`, so a first `!= ""` filter read every gap-closing
+difference as harm and then PRINTED "NO DISTRICT" beside the harm it claimed; and assertion 17
+first tested a direction simplification cannot produce, swapping the arguments so the notch was in
+the DRAWN ring — every source vertex then sat at 0 and a clean pass read as a gate blind to false
+silences.
+
+**THE SCAN IS EXACT AND CHEAP**: a source vertex the drawn rings still carry is at distance 0 by SET
+MEMBERSHIP, no geometry query, which takes 3.95M vertices down to the handful removed. Run both
+ways on all four layers the output is byte-identical, every excluded count included.
+
+`--check` gains the one invariant it can see offline — a builder's `FIDELITY_MAX_M` and `GAP_CLOSED`
+must name the same layers, so a layer cannot gain a dropped-ring gate and silently lack a fidelity
+one (negative-tested by removing `ems`) — and **NAMES the two declaring builders still carrying no
+ceiling**, the aldermanic and supervisory dissolves, rather than leaving that absence silent. Each
+needs a ceiling off its own median source step, which needs that builder's own fetch: that is the
+next piece of this work and is not started.
+
+One nit fixed on re-reading my own docstring: it said "three MEASURED PREDICATES" and listed four,
+and claimed the pass message names a worst stray it does not name.
+
 **2026-09-27 (later). #1224 is GREEN. #72's ceiling measured, and the naive ceiling would be
 either vacuous or wrong — reporting before writing one, per the pre-committed rule.**
 
