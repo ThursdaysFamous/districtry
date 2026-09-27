@@ -38,6 +38,65 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (00:15). THE SHIPPED SUPERVISORY MAP GIVES 62 WRONG OR MISSING ANSWERS ON
+GROUND A PERSON CAN STAND ON, and measuring that disproved a claim I had already
+published and the manager had already reasoned from.** #1206 stays green and unchanged
+in substance; the two pushes since are comment-only (`eab022c`, `6b4612f`).
+
+**THE MANAGER HELD ON ONE QUESTION AND PRE-COMMITTED THE RULE**: if any harm at
+interval=7 sits on land a reader can stand on, merge interval=4; if every one is open
+water or a self-overlap sliver, take interval=7 and keep 280 KB. **Thirteen of fifteen
+at interval=7 are on DRY LAND**, so the first branch applies and interval=4 ships as it
+was. The two biggest are not marginal — 1,571.98 m2 inside ONALASKA CITY, where a reader
+is told La Crosse 18 and the truth is La Crosse 19, and 978 m2 inside KENOSHA CITY.
+
+**MEASURED AGAINST TIGER'S AREAL HYDROGRAPHY, WITH THE CONTROLS RUN FIRST.** A point
+inside a water polygon is water; the Marathon anchor returns none, open Lake Michigan
+returns "Lk Michigan", Lake Winnebago returns "Lk Winnebago". At the shipped setting 62
+of 73 harms are dry — 58,994 m2 of the 67,185, 29 patches over 1,000 m2 — and every one
+of the eleven water harms is a false silence in a Door County bay or on Green Lake.
+
+**MY OWN "OPEN WATER" CLAIM WAS WRONG AND IT WAS LOAD-BEARING.** I wrote into the
+builder's comment and the PR body that Door 4's 36.75 m2 residual is "36.75 m2 of open
+water", "in Lake Michigan off the peninsula". TIGER puts it on DRY LAND in GARDNER TOWN.
+I inferred water from the coordinates and from Door being a peninsula, and shipped the
+inference as a measurement. The manager then reasoned FROM it — "your own comment weighs
+it exactly as that. So my proxy is superseded" — so a wrong sentence of mine was doing
+work in somebody else's decision. Corrected in the comment and in both declarations'
+`why`, naming the old claim. **The dry-land reading makes the declared harm worse rather
+than better**: it is ground a person can be on, so the declaration is doing more work
+than I had claimed for it.
+
+**TWO WRONG TESTS PRECEDED THE RIGHT ONE AND BOTH ARE RECORDED, NOT JUST THE WINNER.**
+The first was TAUTOLOGICAL: a wrong-name ring's "parents" are by construction the
+districts that claim it, so subtracting them can only ever yield empty — it reported 0
+of 15 on the county fabric, which is not a finding about geography at all. The second
+answered a WEAKER question, since a town's polygon can include its own shoreline water,
+so "inside Gardner town" proves nothing. **And its first version READ AN API ERROR AS AN
+EMPTY ANSWER**: it asked for fields the layer does not carry, the service returned an
+error object with no `features` key, and `.get("features", [])` turned that into "outside
+every subdivision" for all fifteen points, one of them plainly inside La Crosse County.
+**Fifteen of fifteen answering the same implausible way is what raised suspicion, and
+testing the query on a point whose answer I already knew is what proved it** — the
+Marathon anchor, which returns "Marathon town". The hydrography script runs its controls
+first for that reason and raises on an error key.
+
+**A SECOND INSTRUMENT ERROR IN THE SAME PASS**: I read layer 0 as Incorporated Places
+when it is Estates (places are layer 4), so every point reported "(no place)". Both of
+these are the same class — an instrument that answers confidently about the wrong thing —
+and neither was caught by reasoning about the answers. Only a control caught them.
+
+**PERMISSION ASKED BEFORE THE FIRST FETCH** through `scraper_common.require_robots_allowed`:
+tigerweb.geo.census.gov serves no robots.txt, and it is the host the app already queries
+for every reader.
+
+**WHAT IS QUEUED BEHIND #1206**: the chambers migration onto `dropped_rings.py`, then
+#57(b)'s mps ladder and #57(c), the stale risk figure in `wi_coa_staleness.py` — that
+file states "about 6%" from a 2-in-7 success rate, and the SCHEDULED rate is 1 of 5,
+giving 16.8%. #57(a) is deferred on the manager's ruling: no forgiveness for a job that
+has never failed on schedule, re-open on the first scheduled failure.
+
+
 **2026-09-26 (night). TASK #65 IS BUILT AND OPEN AS #1206, AND THE GATE'S FIRST
 ACT WAS TO FIND THAT THE SHIPPED SUPERVISORY MAP TELLS 73 READERS THE WRONG
 DISTRICT.** The ruled shape was right and I did not re-argue it: the answer and
