@@ -184,13 +184,22 @@ SIMPLIFY = ["dp", "keep-shapes", "interval=4"]
 # THE "STITCHING ARTEFACT RATHER THAN A DELIBERATE VOID" READING IS MEASURED AND
 # NOT MERELY ARGUED, and the test is COMPLEXITY as well as size: a real void — a
 # lake, an airfield, a non-jurisdictional parcel — would be both large and finely
-# traced. On these 229 rings the two are ANTI-CORRELATED. The largest is 1,153 m2
+# traced. On these 235 rings the two are ANTI-CORRELATED. The largest is 1,153 m2
 # with FOUR vertices, a quadrilateral; the most complex are 54, 49 and 37 vertices
 # and every one of those is under 6 m2, sub-metre wiggles between two finely-drawn
-# Waukesha wards. Of the 19 rings at or above 100 m2, eleven are triangles or
-# quadrilaterals and the most complex has 28. Median area 1.54 m2. Not one ring is
+# Waukesha wards. Of the 20 rings at or above 100 m2, eleven are triangles or
+# quadrilaterals and the most complex has 28. Median area 1.34 m2. Not one ring is
 # both large and complex, which is what a deliberate void would be.
-GAP_CLOSED = 229
+#
+# RE-MEASURED 2026-09-27 OVER 235 RINGS, having been measured over 229 — the exact
+# retained test found six more with no setting changed. Two figures moved with it
+# and are corrected above: the median 1.54 -> 1.34 m2, and the count at or above
+# 100 m2 19 -> 20. The largest, the three most complex, the eleven simple large
+# ones and the 28-vertex maximum are unchanged, and so is the conclusion. A
+# characterisation of a SET goes stale when the set grows, even where the sentence
+# it supports stays true, so it is re-derived from the build's own classification
+# rather than carried forward.
+GAP_CLOSED = 235
 
 # Rings whose loss changes the district a reader is told they are in. Written from
 # the builder's own gate output, never by hand — run the build, read the UNDECLARED
@@ -258,6 +267,80 @@ ACCEPTED_DROPPED_RINGS = [
                "no interval resolves because the source disagrees with itself "
                "there; dry land in Darlington town by the same hydrography test",
         "date": "2026-09-26",
+    },
+    {
+        # LAFAYETTE COUNTY AGAIN, 2.86 m2 on the line between districts 13 and 14,
+        # and the SECOND of three Lafayette rings this table now carries. The
+        # 0.84 m2 entry below already records the cause: the county's own
+        # submission overlaps itself, and LTSB's statewide geometry does that on
+        # 0.017% of its area. What is new is that the EXACT retained test sees
+        # them at all — the old any-vertex test read a ring joined to its
+        # district's main body by one shared vertex as retained, so a ring that
+        # vanished whole measured as kept and its answer change was never
+        # counted.
+        #
+        # DRY LAND, measured 2026-09-27 against TIGER's areal hydrography with
+        # four controls answering first (Marathon dry, Lake Michigan, Lake
+        # Winnebago and Lake Mendota water). TIGER puts it in SHULLSBURG CITY.
+        "lat": 42.566190, "lng": -90.221222, "verts": 4, "m2": 2.86,
+        "interior": {"lat": 42.566190, "lng": -90.221241, "decimals": 6},
+        "features": ["county-supervisory:5506514"],
+        "kind": "wrong-name",
+        "answer_before": {"county-supervisory": ["5506514"]},
+        "answer_after": {"county-supervisory": ["5506513"]},
+        "why": "2.86 m2 of self-overlap between two districts of one county, "
+               "which no interval resolves because the source disagrees with "
+               "itself there; dry land in Shullsburg city by the hydrography "
+               "test, and which of the two districts is right is not something "
+               "this build can know",
+        "date": "2026-09-27",
+    },
+    {
+        # ST. CROIX COUNTY, districts 11 and 12, and THE SAME GROUND AS THE
+        # ALDERMANIC LAYER'S OWN 1.24 m2 RING. Both layers are dissolved from the
+        # state's ward fabric, so a sliver in that fabric is inherited by
+        # everything drawn from it — which is why the same 5 vertices at the same
+        # coordinates appear in two tables in two different builders.
+        #
+        # THE TWO LAYERS PAY FOR IT DIFFERENTLY, and that is the reason both
+        # declarations exist rather than one: the supervisory layer tiles the
+        # whole state, so losing the ring hands the reader the neighbouring
+        # district (a wrong name), while the aldermanic layer covers only
+        # municipalities, so losing it hands the reader NOTHING (a false
+        # silence). One sliver, two harms, because the two layers cover
+        # different ground.
+        #
+        # DRY LAND by the same hydrography read, in STAR PRAIRIE TOWN.
+        "lat": 45.126489, "lng": -92.569594, "verts": 5, "m2": 1.24,
+        "interior": {"lat": 45.126485, "lng": -92.569614, "decimals": 6},
+        "features": ["county-supervisory:5510911", "county-supervisory:5510912"],
+        "kind": "wrong-name",
+        "answer_before": {"county-supervisory": ["5510912"]},
+        "answer_after": {"county-supervisory": ["5510911"]},
+        "why": "1.24 m2 where two districts of one county both drew the same "
+               "ground, the same sliver the aldermanic layer declares because "
+               "both dissolve the state's ward fabric; dry land in Star Prairie "
+               "town by the hydrography test",
+        "date": "2026-09-27",
+    },
+    {
+        # LAFAYETTE COUNTY, THE THIRD, 0.27 m2 between districts 3 and 13 — and
+        # the smallest ring any declaration in this fleet carries. Its interior
+        # point and its centre are the same to six decimals, which is what a ring
+        # a quarter of a square metre across looks like at the precision this
+        # file ships at.
+        #
+        # DRY LAND by the same hydrography read, in SEYMOUR TOWN.
+        "lat": 42.646030, "lng": -90.220670, "verts": 4, "m2": 0.27,
+        "interior": {"lat": 42.646030, "lng": -90.220670, "decimals": 6},
+        "features": ["county-supervisory:5506513"],
+        "kind": "wrong-name",
+        "answer_before": {"county-supervisory": ["5506513"]},
+        "answer_after": {"county-supervisory": ["5506503"]},
+        "why": "0.27 m2 of self-overlap between two districts of one county, "
+               "the third such ring in Lafayette; dry land in Seymour town by "
+               "the hydrography test",
+        "date": "2026-09-27",
     },
 ]
 PRECISION = "0.000001"    # 6 decimals ~= 0.11 m

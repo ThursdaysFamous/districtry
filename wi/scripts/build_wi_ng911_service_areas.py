@@ -254,7 +254,16 @@ def simplify_label(name):
 # it is still an inference; the count is held so a rebuild that closes a
 # different number of them stops and gets read. These move with the setting —
 # measured at the settings above.
-GAP_CLOSED = {"fire": 78, "law": 53, "psap": 6, "ems": 75}
+#
+# THEY ALSO MOVE WITH THE INSTRUMENT, AND ON 2026-09-27 THAT IS WHAT MOVED
+# THREE OF THEM: fire 78 -> 82, law 53 -> 59 and ems 75 -> 77 with the settings
+# above untouched and the shipped geometry byte-identical. `find_dropped` used
+# to ask whether ANY of a source ring's vertices survived anywhere in its
+# agency's drawn geometry; a ring joined to the main body at one shared vertex
+# answered yes after vanishing whole. So every count this table has ever held
+# was a FLOOR, and the same blindness put five real answer changes in the harm
+# table below (four on law, one on psap, whose count did not move at all).
+GAP_CLOSED = {"fire": 82, "law": 59, "psap": 6, "ems": 77}
 
 # Every dropped ring that changes the agency a reader is told answers at their
 # point, declared one by one, per layer. `drings.check` FAILS the build on an
@@ -567,12 +576,131 @@ ACCEPTED_DROPPED_RINGS = {
                    "of them chosen",
             "date": "2026-09-27",
         },
+        # FOUR MORE RINGS, FOUND ONLY WHEN THE RETAINED TEST BECAME EXACT
+        # (2026-09-27). The old test asked whether ANY of a source ring's
+        # vertices survived anywhere in its agency's drawn geometry, so a ring
+        # joined to the main body at one shared vertex read as retained after
+        # vanishing whole. This layer's gap-closed count moved 53 -> 59 in the
+        # same change, which is the same blindness counted on the harmless side.
+        #
+        # TWO OF THEM ARE NOT DANE COUNTY AT ALL and neither county was guessed
+        # at. The 51.11 m2 one is Marquette County's own filing reaching into
+        # Waushara, and the two Brown County ones are one municipal department's
+        # zone against another's. Both were established from TIGER's county layer
+        # rather than from the agency names, which is how the psap entry below
+        # stopped being called a county-line sliver.
+        {
+            "lat": 43.982814, "lng": -89.212088, "verts": 3, "m2": 51.11,
+            "interior": {"lat": 43.982788, "lng": -89.215457, "decimals": 6},
+            "features": ["law:MASON" + SEP + "co.marquette.wi.us"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["MASON" + SEP + "co.marquette.wi.us"]},
+            "answer_after": {"law": ["Marion PD/Waushara SO" + SEP + "wausharacountywi.gov"]},
+            "why": "51.11 m2 in Marion town, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "0.13 m wide over an 812 m span and the longest ring this "
+                   "builder declares; both its ends sit in WAUSHARA county "
+                   "within 100 m of the Marquette line, so this is Marquette's "
+                   "filing reaching across it, and a reader is answered "
+                   "Waushara's agency where Marquette's filing claims the ground",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 43.018722, "lng": -89.242425, "verts": 4, "m2": 20.20,
+            "interior": {"lat": 43.016213, "lng": -89.238099, "decimals": 6},
+            "features": ["law:Sheriff" + SEP + "countyofdane.com"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Sheriff" + SEP + "countyofdane.com"]},
+            "answer_after": {"law": ["State Patrol" + SEP + "wsp.wi.gov"]},
+            "why": "20.20 m2 in McFarland village, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "0.05 m wide over a 765 m span; Dane is the only county "
+                   "within 2 km, so this is two agencies' filings inside one "
+                   "county rather than a boundary, and a reader is answered "
+                   "State Patrol where the filing says Sheriff",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 44.454239, "lng": -88.175166, "verts": 3, "m2": 3.22,
+            "interior": {"lat": 44.454239, "lng": -88.175404, "decimals": 6},
+            "features": ["law:Hobart-Lawrence Police Department Law Zone HL2"
+                         + SEP + "browncountywi.gov"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Hobart-Lawrence Police Department Law Zone HL2"
+                                      + SEP + "browncountywi.gov"]},
+            "answer_after": {"law": ["Oneida Police Department Law Zone HLOB"
+                                     + SEP + "browncountywi.gov"]},
+            "why": "3.22 m2 in Hobart village, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "0.11 m wide over a 58 m span; a reader is answered Oneida "
+                   "Police Department where the filing says Hobart-Lawrence",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 44.513650, "lng": -88.172516, "verts": 3, "m2": 1.72,
+            "interior": {"lat": 44.513473, "lng": -88.173323, "decimals": 6},
+            "features": ["law:Hobart-Lawrence Police Department Law Zone HL1"
+                         + SEP + "browncountywi.gov"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Hobart-Lawrence Police Department Law Zone HL1"
+                                      + SEP + "browncountywi.gov"]},
+            "answer_after": {"law": ["Oneida Police Department Law Zone HLOB"
+                                     + SEP + "browncountywi.gov"]},
+            "why": "1.72 m2 in Hobart village, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "0.03 m wide over a 137 m span; a reader is answered Oneida "
+                   "Police Department where the filing says Hobart-Lawrence",
+            "date": "2026-09-27",
+        },
     ],
-    # PSAP AND EMS DECLARE NOTHING, AND THAT IS A MEASUREMENT RATHER THAN AN
-    # OMISSION: at the settings above, NO dropped ring changes any answer on
-    # either layer. At visvalingam 8 per cent psap changed 28 answers (23 of them
-    # readers told NO answering point answers where one does) and ems 44.
-    "psap": [],
+    "psap": [
+        # THIS ENTRY REPLACED A CLAIM THAT PSAP DECLARED NOTHING. The sentence
+        # here read "PSAP AND EMS DECLARE NOTHING, AND THAT IS A MEASUREMENT
+        # RATHER THAN AN OMISSION: at the settings above, NO dropped ring changes
+        # any answer on either layer", and it was true of the instrument that
+        # measured it and false of the layer. It stays quoted because the reason
+        # it was wrong is the finding: the old retained test asked whether ANY of
+        # a source ring's vertices survived anywhere in its agency's drawn
+        # geometry, so a ring joined to the main body at one shared vertex read as
+        # retained after vanishing whole. It remains true of EMS, whose list is
+        # still empty below and whose gap-closed count did move (75 -> 77).
+        #
+        # PSAP'S OWN GAP-CLOSED COUNT DID NOT MOVE — 6 before and after — so
+        # nothing in the counts hinted at this ring. That is worth stating: on
+        # this layer the exact test changed no harmless number at all and still
+        # turned up an answer nobody was counting.
+        #
+        # At visvalingam 8 per cent psap changed 28 answers (23 of them readers
+        # told NO answering point answers where one does) and ems 44.
+        #
+        # IT IS NOT A COUNTY-LINE SLIVER, WHICH IS WHAT IT LOOKED LIKE. Two
+        # counties' PSAPs are named, so the first reading was that the ring sits
+        # on the line between them. Measured against TIGER's county layer, both
+        # ends are in CALUMET and Outagamie appears only at 2 km, not at 500 m —
+        # so Outagamie's PSAP filing reaches about a kilometre into Calumet, and
+        # the ring is where the two overlap inside Appleton city, which straddles
+        # both counties. The agency names were the wrong instrument for that
+        # question.
+        {
+            "lat": 44.229038, "lng": -88.358372, "verts": 3, "m2": 0.54,
+            "interior": {"lat": 44.2290365, "lng": -88.3584619, "decimals": 7},
+            "features": ["psap:Calumet County PSAP" + SEP + "calumetcounty.org"],
+            "kind": "wrong-name",
+            "answer_before": {"psap": ["Calumet County PSAP" + SEP + "calumetcounty.org"]},
+            "answer_after": {"psap": ["Outagamie County PSAP" + SEP + "outagamie.org"]},
+            "why": "0.54 m2 in Appleton city, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "0.04 m wide over a 25 m span; both ends are in Calumet "
+                   "county with Outagamie no nearer than 2 km, so this is one "
+                   "county's filing reaching into another rather than a line "
+                   "between them, and a reader is answered Outagamie's PSAP "
+                   "where the filing says Calumet's",
+            "date": "2026-09-27",
+        },
+    ],
+    # EMS DECLARES NOTHING AND THAT IS STILL A MEASUREMENT: at the setting above,
+    # no dropped ring changes any answer on this layer, re-measured 2026-09-27
+    # under the exact retained test that gave psap its entry.
     "ems": [],
 }
 PRECISION = "0.000001"     # 6 decimals ~= 0.11 m
