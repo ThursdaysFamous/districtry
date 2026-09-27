@@ -407,7 +407,6 @@ try {
     await page.waitForFunction((n) => !!window[n] && !!window[n].setTheme,
       EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
     const read = () => page.evaluate(({ n, id: OFFLINE0 }) => {
-      const path = document.querySelector("#map path");
       // The vector basemap is a GL canvas with no tile <img> whose src names
       // its style, so the basemap kind comes from the debug namespace; the
       // raster-fallback img sampler stays for a boot that fell back.
@@ -430,15 +429,34 @@ try {
         // Measured 2026-09-27: at this block's 400 ms settle the mask is
         // usually absent and the check passes vacuously; at 1500 ms it is
         // present on 8 of 8 loads and the check fails. It could only pass by
-        // not measuring.
-        stroke: window[n] && window[n].overlayColor ? window[n].overlayColor(OFFLINE0) : (path ? path.getAttribute("stroke") : null),
+        // not measuring. THE `#map path` FALLBACK IS GONE RATHER THAN KEPT for
+        // an app without the export: `overlayColor` is an engine export and is
+        // in all six apps (measured 2026-09-27), so the fallback was dead code
+        // whose only remaining effect was to supply the null the assertion used
+        // to pass on — the tigerStatewideLoader lesson, that dead code is not
+        // free because a measurement is only as honest as the code it reads.
+        stroke: window[n] && window[n].overlayColor ? window[n].overlayColor(OFFLINE0) : null,
       };
     }, { n: EXPORTS_NAME, id: OFFLINE[0] });
+    // `overlayColor` returns null whenever the colour is NOT MEASURABLE YET —
+    // the layer has no runtime or overlayLayer, a tile layer's GL line layer is
+    // not built, or a Leaflet overlay carries no colour on any sub-layer — so
+    // the read is waited for rather than sampled, and the assertion below FAILS
+    // on a null instead of short-circuiting past it. BOTH reads wait, because a
+    // theme flip replaces the GL style and the line layer is rebuilt after it.
+    const overlayReady = () => page.waitForFunction(({ n, id }) => {
+      const c = window[n] && window[n].overlayColor && window[n].overlayColor(id);
+      return typeof c === "string" && !!c;
+    }, { n: EXPORTS_NAME, id: OFFLINE[0] }, { timeout: QUERY_TIMEOUT })
+      .then(() => true, () => false);
+
     await page.evaluate((n) => window[n].setTheme("light", false), EXPORTS_NAME);
     await page.waitForTimeout(400);
+    await overlayReady();
     const light = await read();
     await page.evaluate((n) => window[n].setTheme("dark", false), EXPORTS_NAME);
     await page.waitForTimeout(600);
+    await overlayReady();
     const dark = await read();
 
     check("dark mode flips the theme attribute and the painted ground",
@@ -451,7 +469,7 @@ try {
       light.tiles === null || dark.tiles === null || (light.tiles === "light" && dark.tiles === "dark"),
       `${light.tiles} -> ${dark.tiles}`);
     check("dark mode repaints a live overlay from the derived palette",
-      light.stroke === null || dark.stroke === null || light.stroke !== dark.stroke,
+      !!light.stroke && !!dark.stroke && light.stroke !== dark.stroke,
       `${light.stroke} -> ${dark.stroke}`);
     await context.close();
   }
