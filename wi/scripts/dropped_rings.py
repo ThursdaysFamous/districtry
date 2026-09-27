@@ -576,21 +576,57 @@ def check_fidelity(source_features, drawn_features, key_prop, dropped_sigs,
     disagreement smaller than the gap between its points is missed, and the
     exclusion is per VERTEX rather than per region, so a long excursion whose
     middle changes hands while both its ends agree could clear on each vertex
-    separately. AND A THIRD, FOUND BY MEASUREMENT RATHER THAN REASONING AND WORTH
-    MORE THAN THE OTHER TWO: this sweeps discs only around vertices that stray past
-    the ceiling, so a source-vs-drawn answer difference lying near NO over-limit
-    vertex is never sampled. That is not hypothetical. On the aldermanic layer, 49
-    vertices failed a 9.56 m ceiling under `visvalingam 25%`; measured at each one's
-    own harm point, `dp interval=1` agrees with the ward fabric at 41 and STILL
-    DISAGREES AT 8, every one a false silence, and it passes this gate with nothing
-    excluded -- because it RETAINS those vertices, so their stray is 0 by set
-    membership and nothing looks 54 m away. None of the 8 lies inside a ring
-    `classify` reports dropped, so that gate is not covering them either. A GATE
-    THAT PASSES IS NOT A LAYER WHOSE ANSWERS ARE ALL RIGHT, and closing this would
-    need a different instrument -- a sweep for every answer difference rather than
-    discs around the vertices that moved furthest -- which is not attempted here.
-    All three are why the ceiling is kept near one source step instead of being
-    widened until nothing fails. AND THE DECLARED AREA IS NOT MEASURED HERE:
+    separately. AND A THIRD, FOUND BY MEASUREMENT RATHER THAN REASONING: this
+    sweeps discs only around vertices that stray past the ceiling, so a
+    source-vs-drawn answer difference lying near NO over-limit vertex is never
+    sampled. That is not hypothetical -- on the aldermanic layer, 49 vertices
+    failed a 9.56 m ceiling under `visvalingam 25%`, and measured at each one's own
+    harm point the shipped `dp interval=1` agrees with the ward fabric at 41 and
+    still disagrees at 8, passing this gate with nothing excluded, because it
+    RETAINS those vertices so their stray is 0 by set membership.
+
+    BUT THE BLIND SPOT IS BOUNDED BY THE CEILING, AND EVERY RUN NOW PRINTS HOW MUCH
+    OF THAT HEADROOM IT USED. A vertex over the ceiling IS swept, out to its own
+    stray, and cleared only by a predicate that reads that sweep; a vertex under it
+    is never swept at all. So the unsampled ground is the ground around the vertices
+    at or under the ceiling, and the deepest of THOSE strays is the bound -- not the
+    deepest stray anywhere, which the supervisory layer answers at 1,747.992 m
+    against a 5.50 m ceiling while every one of those deep strays is measured, swept
+    and either cleared or declared. A difference lies between the source line and
+    the drawn line, and `find_dropped` raises unless every drawn ring's vertices are
+    a subset of one source ring, so the bound rests on an enforced property.
+
+    Measured on the aldermanic layer at `dp interval=1`: deepest unswept stray
+    1.015 m of a 9.56 m ceiling, over 371,517 removed vertices (p99.9 0.986 m, seven
+    over 1 m, none over the ceiling), and the eight differences are slivers of
+    3.49-18.56 m2 whose deepest point is 0.434-0.869 m inside the source line --
+    under the bound, which is the two measurements agreeing independently. Five of
+    the eight harm points sit closer to the source line than one output cell.
+
+    SO THE EIGHT ARE THE BOUNDARY AND NOT LOST GROUND, and the first draft of this
+    paragraph said otherwise by quoting 54.2, 44.0 and 28.9 m beside them. THOSE
+    ARE VERTEX-TO-LINE DISTANCES UNDER THE RETIRED SETTING, NOT THE DEPTH OF ANY
+    SURVIVING DIFFERENCE -- a distance to an edge is not a size, which is a
+    correction this project had already made one level up in the same day and which
+    was reproduced here in the very sentence written to fix a different
+    overstatement. The control that settles it: the 41 `dp interval=1` DID fix sit a
+    median 0.221 m from the source line against the eight's 0.076 m, so `harm[0]`
+    is systematically a near-line point and the 49/41/8 split was never about depth
+    at all.
+
+    A GATE THAT PASSES IS NOT A LAYER WHOSE ANSWERS ARE ALL RIGHT -- that stands,
+    and so does the blind spot; what is wrong is the illustration. CLOSING IT WITH A
+    SWEEP WAS COSTED AND REFUSED: on this layer a disc around every removed vertex
+    is 74.6M samples (2.8 h at the 7,279 answer-pairs/s measured here), a +/-2 m
+    boundary strip at 1 m spacing 49.7M (114 min) and a uniform 1 m grid 322 days --
+    and this is the SMALL layer, the four NG911 dissolves carrying 3,953,583 source
+    vertices against its 371,919. A sweep asking "does any answer differ" would also
+    fail every layer always, because simplification moves the line by design. The
+    reportable quantity is a difference's DEPTH, which the deepest stray already
+    bounds and every run already prints.
+
+    All three blind spots are why the ceiling is kept near one source step instead
+    of being widened until nothing fails. AND THE DECLARED AREA IS NOT MEASURED HERE:
     gridding a neighbourhood at 1 m takes minutes per vertex against a
     point-in-polygon model of every district in the state, so `m2` is recorded
     with its method and `check_strays` holds only the prose to it.
@@ -607,6 +643,22 @@ def check_fidelity(source_features, drawn_features, key_prop, dropped_sigs,
                 dropped_rings_by_sig.setdefault(sig, r)
 
     worst, wkey, wat = 0.0, None, None
+    # THE DEEPEST STRAY AT OR UNDER THE CEILING, which is what BOUNDS the third
+    # blind spot below -- and it is NOT the deepest stray anywhere, which a first
+    # draft printed until the supervisory layer answered 1,747.992 m against a
+    # 5.50 m ceiling. A vertex OVER the ceiling is swept out to its own stray and
+    # cleared only by a predicate that reads that sweep, so its ground is sampled;
+    # a vertex UNDER it is never swept at all. So the unsampled ground is bounded by
+    # the ceiling, and this says how much of that headroom the run actually used:
+    # 1.015 m of 9.56 m on the aldermanic layer at `dp interval=1`. Printing the
+    # overall maximum instead would have read as a 1.7 km blind spot on a layer
+    # whose every deep stray is measured, swept and accounted for.
+    #
+    # A difference lies between the source line and the drawn line, and
+    # `find_dropped` raises unless every drawn ring's vertices are a subset of one
+    # source ring, so the bound rests on an enforced property rather than an
+    # assumed one.
+    deepest = 0.0
     fails = []
     matched = set()
     n_spur = n_agree = n_declared = n_gap = n_accepted = 0
@@ -635,6 +687,8 @@ def check_fidelity(source_features, drawn_features, key_prop, dropped_sigs,
                     continue
                 d = dist_to_drawn((v[0], v[1]), grid, cell, sx, sy)
                 if d <= limit:
+                    if d > deepest:
+                        deepest = d
                     continue
                 a, b = r[(i - 1) % n], r[(i + 1) % n]
                 span = math.hypot((b[0] - a[0]) * sx, (b[1] - a[1]) * sy)
@@ -723,12 +777,18 @@ def check_fidelity(source_features, drawn_features, key_prop, dropped_sigs,
         return False, ("%d vertex/vertices stray past %.1f m where the answer "
                        "changes; worst %.1f m on %r at %.6f,%.6f, where "
                        "%.6f,%.6f is answered %r and would be answered %r; "
-                       "excluded %s\n--- measured rows for ACCEPTED_STRAYS ---\n%s"
+                       "deepest unswept stray %.3f m; excluded %s"
+                       "\n--- measured rows for ACCEPTED_STRAYS ---\n%s"
                        % (len(fails), limit, d, key, v[1], v[0], p[1], p[0],
                           p[2] if p[2] is not None else "NO DISTRICT",
-                          p[3] if p[3] is not None else "NO DISTRICT", excl, rows))
+                          p[3] if p[3] is not None else "NO DISTRICT",
+                          deepest, excl, rows))
+    # THE PASS STATES ITS BOUND AS WELL AS ITS CEILING. "Nothing reached 9.56 m"
+    # invites the reading that the ground out to 9.56 m is unaccounted for; this
+    # says how much of it the run used, which is what bounds the unswept ground.
     return True, ("no retained vertex strays past %.1f m where the answer changes; "
-                  "excluded %s" % (limit, excl))
+                  "deepest unswept stray %.3f m, which bounds the ground no disc "
+                  "was drawn around; excluded %s" % (limit, deepest, excl))
 
 
 def _answer_diffs_around(smod, dmod, v, reach, sx, sy):
@@ -1936,6 +1996,27 @@ def _selftest():
     ok2, msg2 = check_fidelity(src, drw, "K", set(), 500.0)
     ck("the same geometry passes under a ceiling above its stray", ok2,
        "got %r" % msg2)
+
+    # 14b. THAT PASS MUST STATE ITS BOUND, NOT ONLY ITS CEILING, and the bound is
+    # the deepest stray AT OR UNDER the ceiling rather than the deepest anywhere. A
+    # number no caller can read is the shape this project keeps finding wrong.
+    bound = re.search(r"deepest unswept stray ([\d.]+) m", msg2)
+    ck("a passing fidelity run names the deepest stray it left unswept",
+       bound is not None and 60.0 < float(bound.group(1)) < 70.0,
+       "got %r" % msg2)
+
+    # 14c. AND THE SAME GEOMETRY REPORTS ~0 UNDER THE LOW CEILING, which is the
+    # asymmetry that makes the number mean anything: under 500 m the 64 m notch is
+    # never swept, so it bounds the blind spot; under 10 m it is over the ceiling,
+    # so a disc IS drawn around it and it is accounted for rather than unswept. A
+    # first draft tracked the deepest stray ANYWHERE and reported the same 64 m
+    # both ways -- which on the real supervisory layer read as a 1,747.992 m blind
+    # spot against a 5.50 m ceiling, on a layer whose every deep stray is measured,
+    # swept and either cleared by a predicate or declared.
+    fbound = re.search(r"deepest unswept stray ([\d.]+) m", msg)
+    ck("a stray the ceiling DOES catch is not counted as unswept",
+       fbound is not None and float(fbound.group(1)) < 1.0,
+       "pass %r vs fail %r" % (msg2, msg))
 
     # 15. a SPUR is excluded by the measured predicate and counted, not failed.
     # The vertex sits 150 m out with its two neighbours at the same point, so the
