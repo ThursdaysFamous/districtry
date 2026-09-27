@@ -225,7 +225,6 @@ try {
         continue;
       }
       await ctx.close();
-      const bad = res.filter((r) => r.tiles !== r.file);
       const county = res.some((r) => "inArchive" in r);
       // the tile path must be what answered: a query reaching its boundaries
       // another way compares equal while downloading the whole file. For a
@@ -234,9 +233,14 @@ try {
       const notTiled = county ? [] : res.filter((r) => !r.viaTiles);
       const hoverBad = res.filter((r) => r.hoverTiles != null && r.hoverTiles !== r.hoverFile);
       // a county layer's live counties answer from their own servers, so an
-      // error both runs share is that server, not the tiles; one run erroring
-      // alone is a difference, and counted above
-      const sameErr = (r) => county && r.tiles === r.file && /^error:/.test(r.tiles || "");
+      // error in BOTH runs is that server, not the tiles: the file run reads an
+      // archived county from same-origin files and touches the network only
+      // for a live one. The two messages need not match — one run can time out
+      // ("signal is aborted") where the other fails to connect ("Failed to
+      // fetch"), which failed CI on 2026-09-27 at a southern live county. One
+      // run erroring alone is still a difference, and stays in `bad`
+      const sameErr = (r) => county && /^error:/.test(r.tiles || "") && /^error:/.test(r.file || "");
+      const bad = res.filter((r) => r.tiles !== r.file && !sameErr(r));
       const errs = res.filter((r) => !sameErr(r) && (/^error:/.test(r.tiles || "") || /^error:/.test(r.file || "") ||
         /^error:/.test(r.hoverTiles || "")));
       const liveErrs = res.filter(sameErr);
@@ -271,7 +275,7 @@ try {
         console.log(`          ${archived.length} archived counties answered, ${archived.length - own.length} from tiles` +
           (own.length ? `; from their own file (the entry reads its loader directly): ${own.join(", ")}` : "") +
           `; ${Object.keys(byCounty).length - archived.length} live counties answered from their own source` +
-          (liveErrs.length ? `; ${liveErrs.length} point(s) errored the same way from both, a live source this run could not reach` : ""));
+          (liveErrs.length ? `; ${liveErrs.length} point(s) errored in both runs, a live source this run could not reach` : ""));
       }
       if (stamps) console.log(`          ${stamps.length} archived counties checked whole: ${stamps.length - stampBad.length} load exactly what their files give through decorate` +
         (stampBad.length ? `; ${stampBad.length} do not` : ""));
