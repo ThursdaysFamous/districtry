@@ -72,6 +72,14 @@ ARCGIS_BLOCK = os.path.join(REPO_ROOT, "engine", "index.html", "arcgis-loader.tx
 PIP_BLOCK = os.path.join(REPO_ROOT, "engine", "index.html", "point-in-polygon.txt")
 SERVICES = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
 STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55"}
+# WHO THIS FETCHES AS, and it used to be nobody: the first version shelled out to
+# curl with no -A, so the Census saw `curl/8.x` and nothing read robots.txt.
+# Nothing was breached — measured 2026-09-27 as that client, the host's
+# robots.txt path answers HTTP 200 with 189 bytes of an F5 "Request Rejected"
+# page, which robots_policy reads as absent, allow-all — but every other fetcher
+# here names itself and asks first, and user-agent-measurements.json already
+# records this host serving a districtry token (verdict token-ok).
+USER_AGENT = "districtry tiger-tile mirror (+https://districtry.com/)"
 
 # (tag, layer id, service, layer index, outFields) — one app loader call each.
 MIRRORS = [
@@ -177,7 +185,8 @@ fs.writeFileSync(process.argv[5], JSON.stringify(fc));
 
 def fetch(url, dest):
     got = subprocess.run(["curl", "-sS", "--fail", "--retry", "3", "--retry-delay", "5",
-                          "--max-time", "300", "-o", dest, url], capture_output=True, text=True)
+                          "--max-time", "300", "-A", USER_AGENT, "-o", dest, url],
+                         capture_output=True, text=True)
     if got.returncode != 0:
         raise RuntimeError("curl failed (%d): %s" % (got.returncode, got.stderr.strip()[-300:]))
 
@@ -259,6 +268,12 @@ def refresh(only, force, n_points, seed):
     rows = [r for r in MIRRORS if not only or any(o in (r[0], key(r[0], r[1])) for o in only)]
     if not rows:
         fail("--only matched no mirrored layer")
+    # robots.txt is read before the first fetch of the host, as the client that
+    # fetches; a refusal stops the run and leaves every committed archive as it is.
+    from scraper_common import require_robots_allowed
+    why = require_robots_allowed(query_url(*[rows[0][i] for i in (0, 2, 3, 4)]),
+                                 USER_AGENT, label="mirror-tiger-tiles")
+    print("mirror-tiger-tiles: robots.txt — %s" % why, flush=True)
     changed, failed, replaced = [], [], set()
     tmp = tempfile.mkdtemp(prefix="tiger-mirror-")
     try:
