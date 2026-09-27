@@ -171,6 +171,56 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-27 00:35 — Wisconsin's county-supervisor map has been telling readers the wrong district on ground they can stand on, and it is fixed.**
+
+**#1206, merged (`81c84fd`), verified on main by content.** The shipped supervisory
+geometry gave **62 wrong or missing answers on dry land**, 29 of them on patches
+over 1,000 m², the largest 3,496 m² answering *Sheboygan 10* where the truth is
+*Sheboygan 20*. The cause is one property of the simplifier: `keep-shapes`
+protects a SHAPE and not a RING, so once one ring of a multipolygon survives,
+every hole and detached part is eligible for removal. Nothing measured it and the
+adjacent check could not — the builder's 10,000-point agreement gate scatters
+points over the whole state, and the lost rings total 0.0222 km² of 169,635, about
+0.0013 of one expected hit. Blind by construction, which is the fourth independent
+instance of that shape in two days.
+
+**The interval was settled by a rule I pre-committed before the measurement
+existed**, so the session did not have to guess which way I would go: if any harm
+at interval=7 sits on land a reader can stand on, interval=4 ships and the 402 KB
+is paid for. I verified the deciding object myself rather than reading the table —
+one 1,571.98 m² ring at 43.893508,-91.190077, dry land inside Onalaska city, where
+the shipped map answers *La Crosse 18* and the fix answers *La Crosse 19*, and on
+main it now answers 19. Cost reproduced at **+411,935 bytes gzipped, +38.6%**,
+against the stated +402 KB, with 1,590 districts and a byte-identical district-id
+set. Cache v41 → v42, so a returning visitor gets the new lines.
+
+**TWO RETRACTIONS BY THE SESSION ITSELF, BOTH AGAINST ITS OWN INTEREST, AND THEY
+ARE THE BEST THING IN THE CHANGE.** It had my ruling in hand accepting in writing
+that Door 4's residual is "open water", no gate could see it, the coordinates look
+offshore, and the water reading made its own declared harm smaller. It measured
+anyway, against TIGER's areal hydrography with controls run first, and got **dry
+land in Gardner town** — worse for it. Then it found the same sentence in the
+SIBLING builder, where #1193 called its 31.7 m² Door ring "open water" in three
+places, and TIGER puts that ring and its declared interior point in **Washington
+town — Washington Island, which is inhabited**. It corrected both in one change
+rather than leaving one builder right and one wrong, without asking. I reproduced
+all four points myself with a known-answer control on the subdivision layer
+(downtown Madison → `Madison city`), which is exactly the check whose absence had
+caused its own API-error defect: a query asking for fields the layer does not
+carry returned an error object with no `features` key, and `.get("features", [])`
+turned that into "outside every subdivision" for fifteen of fifteen points. **Of
+the four green-but-blind gates found in two days, this is the only one caught by
+the session that wrote it.**
+
+**THE HEAD MOVED FIVE TIMES DURING REVIEW AND I RE-RAN THE WHOLE BATTERY ON EACH
+ONE**, regenerating the list from the tree under test rather than reusing a
+result, because the gates live in the files each commit touched — the rule this
+session's own cached-105 finding put into `docs/MANAGER.md` yesterday, applied to
+the change that taught it. 107 of 107 green on the final head. I then asked
+Wisconsin to hold pushes on that branch: re-verifying each head is right, but I
+cannot converge on a head that keeps moving while CI is mid-run, and a session
+that finds something mid-review should tell me rather than push.
+
 **2026-09-26 23:45 — a Michigan commissioner's name reads correctly now, and that is the whole of what a reader gained this hour.**
 
 **#1203, merged.** Berrien County's card showed **Alex R. ott** with a lowercase
