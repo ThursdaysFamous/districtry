@@ -196,6 +196,24 @@ and 309.9 m INSIDE Wisconsin Dells district 1**, ground the shipped file answers
 ward at all. Those 300 m do not dispute their 54.2 m and are not the same quantity — theirs
 is a vertex's perpendicular stray, mine is how deep the recovered ground runs.
 
+**CORRECTED 2026-09-27 19:15 — THE 300 m FIGURE IS RIGHT AND GIVES THE WRONG PICTURE, AND I LED
+WITH IT OVER THEIR BETTER CLAIM.** It is the distance from the point to the district's nearest
+drawn edge, NOT the size of the recovered ground. Walking outward in 0.25 m steps until the answer
+stops changing: 7.75 m east, 13.00 m west, 0.00 m north and south — a HAIRLINE about 21 m long and
+under half a metre wide, which is the GAP-CLOSED direction `dropped_rings.py` already counts and
+declines to call harm. A 3.6 m grid over a window containing both points finds ZERO gained points,
+which is what a feature thinner than the grid looks like; my 420x420 grid landed inside it twice in
+two adjacent samples of one row and I read two hits as a region. And the two instruments answer
+different questions: mine compares OLD SHIPPED against NEW SHIPPED, theirs a RETAINED VERTEX against
+the SOURCE ward fabric, and only the second bounds what a reader is told wrongly — so Wisconsin's
+54.2 m on Dells district 2 was the headline and I gave the slot to my own novelty. Everything I
+verified stands and the merge was right; the description of why was not. One real open question it
+did surface: if a 54.2 m SOURCE stray were also a 54 m difference between the two shipped files, my
+sweep of that district's extent should have found it and every difference there is sub-metre — so
+either that vertex sits outside the extent I sampled or both files stray together where the
+adjacent district moved with them. NOT ESTABLISHED, not guessed at, and worth answering before the
+next layer family takes a ceiling.
+
 **Its ungated half is the better half.** The supervisory dissolve cannot be gated at any
 useful ceiling, and rather than picking a defensible-looking number the builder records the
 three straying vertices, the interval ruled out two ways, both benign explanations tested
