@@ -8,6 +8,18 @@
   var locateBtn = document.getElementById("locate-btn");
   var geoStatusEl = document.getElementById("geo-status");
 
+  function selectLocated(lat, lng) {
+    geoStatusEl.textContent = "";
+    geoResultsList.innerHTML = "";
+    // rounded to ~1km (2 decimal places) — coarse enough that it can't
+    // pin an individual's address, fine enough to see which part of the
+    // city geolocation gets used from. Path stays fixed so GoatCounter
+    // groups every hit under one "geolocate-success" event; the
+    // approximate area only shows up in the per-hit title.
+    trackEvent("geolocate-success", lat.toFixed(2) + "," + lng.toFixed(2));
+    setSelectedPoint(lat, lng);
+  }
+
   locateBtn.addEventListener("click", function () {
     trackEvent("geolocate");
     if (!("geolocation" in navigator)) {
@@ -24,37 +36,25 @@
       function (pos) {
         locateBtn.disabled = false;
         var lat = pos.coords.latitude, lng = pos.coords.longitude;
-        if (lat < METRO_BBOX.minLat || lat > METRO_BBOX.maxLat || lng < METRO_BBOX.minLng || lng > METRO_BBOX.maxLng) {
-          // easter egg: standing inside a sibling metro? offer its explorer,
-          // deep-linking the located point (the URL fragment stays client-side,
-          // same exposure as the sibling's own geolocate → permalink flow)
-          var siblingHere = siblingMetroAt(lat, lng);
-          if (siblingHere) {
+        // Which app answers where the reader is standing is the hand-off's own
+        // question (ENGINE metro-portal placeOwner), asked of the same outlines,
+        // so a located point and a clicked one can never be routed differently.
+        geoStatusEl.textContent = "Locating…";
+        placeOwner(lat, lng).then(function (owner) {
+          if (owner === "here") { selectLocated(lat, lng); return; }
+          if (owner) {
+            // standing inside a sibling's area: send them there, deep-linking
+            // the located point (the URL fragment stays client-side, same
+            // exposure as the sibling's own geolocate → permalink flow)
             geoStatusEl.textContent = "You're outside " + METRO_NAME + " — but " +
-              siblingDisplayName(siblingHere) + " covers where you are.";
+              siblingDisplayName(owner) + " covers where you are.";
             geoStatusEl.className = "geo-status";
-            offerMetroPortal(siblingHere, {
-              point: { lat: lat, lng: lng },
-              source: "geolocate",
-              title: "You're in " + siblingHere.label + "!",
-              note: "This is " + appDisplayName() + " — but " + siblingHere.label +
-                " has one of its own, and it can look up the spot you're standing on."
-            });
+            offerMetroPortal(owner, { point: { lat: lat, lng: lng }, source: "geolocate" });
             return;
           }
           geoStatusEl.textContent = "Your current location looks like it's outside the " + METRO_NAME + " area this app covers.";
           geoStatusEl.className = "geo-status err";
-          return;
-        }
-        geoStatusEl.textContent = "";
-        geoResultsList.innerHTML = "";
-        // rounded to ~1km (2 decimal places) — coarse enough that it can't
-        // pin an individual's address, fine enough to see which part of the
-        // city geolocation gets used from. Path stays fixed so GoatCounter
-        // groups every hit under one "geolocate-success" event; the
-        // approximate area only shows up in the per-hit title.
-        trackEvent("geolocate-success", lat.toFixed(2) + "," + lng.toFixed(2));
-        setSelectedPoint(lat, lng);
+        });
       },
       function (err) {
         locateBtn.disabled = false;

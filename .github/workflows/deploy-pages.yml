@@ -272,6 +272,9 @@ jobs:
           # --selftest), and neither gate can see what the deploy publishes.
           test -f _site/robots.txt || { echo "::error::assemble produced no robots.txt — the Content-Signal reservation would not be served"; exit 1; }
           test -f _site/llms.txt   || { echo "::error::assemble produced no llms.txt — robots.txt points clients at it"; exit 1; }
+          # Every app fetches ../fleet-outlines.json to decide which app a
+          # selected point belongs to; without it no reader is handed off.
+          test -f _site/fleet-outlines.json || { echo "::error::assemble produced no fleet-outlines.json — the apps could not hand a reader to a sibling"; exit 1; }
           grep -q '^Content-Signal:' _site/robots.txt || { echo "::error::the published robots.txt carries no Content-Signal line"; exit 1; }
           # The FLOSS/fund manifest and its wellKnown proof. rsync -a copies
           # dotfolders (which is why .git/.github/.claude are excluded above),

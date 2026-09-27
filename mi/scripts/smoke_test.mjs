@@ -352,6 +352,33 @@ try {
     await context.close();
   }
 
+  // 1a2. A SELECTION GOES TO THE APP THAT ANSWERS THERE. Michigan's own box
+  //     is water-inclusive and runs west to -90.42, so under the rectangle
+  //     rule it held Chicago, Milwaukee and Madison and none of them handed
+  //     off from here. Decided by state outlines now (ENGINE metro-portal +
+  //     fleet-outlines.json); the sibling apps are stubbed so a wrong route
+  //     cannot leave for the real site.
+  {
+    const cases = [
+      { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
+      { name: "Milwaukee", lat: 43.04, lng: -87.91, want: "https://districtry.com/wi/" },
+    ];
+    for (const c of cases) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, BASE, async (p) => {
+        await p.route("https://districtry.com/**", (route) =>
+          route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
+      });
+      await page.evaluate(({ c, n }) => {
+        window[n].map.fire("click", { latlng: window.L.latLng(c.lat, c.lng) });
+      }, { c, n: EXPORTS_NAME });
+      const went = await page.waitForURL((u) => u.href.startsWith(c.want + "#point="), { timeout: QUERY_TIMEOUT })
+        .then(() => page.url(), () => null);
+      check(`a click on ${c.name} from Michigan opens ${c.want} with the point`, !!went, went || page.url());
+      await context.close();
+    }
+  }
+
   // 1b. The search box retries a zero-result query with the unit fragment
   //     stripped. Stubbed geocoder, so this is deterministic and needs no
   //     external network: the stub answers ONLY the cleaned form, which is what

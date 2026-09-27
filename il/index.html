@@ -6696,14 +6696,17 @@ function initChiExplorer() {
   // Selecting a place a SIBLING serves hands the reader over, with the point,
   // instead of drawing empty cards for it here (ENGINE metro-portal).
   map.on("click", function (e) {
-    if (handoffSelection(e.latlng.lat, e.latlng.lng, "map-click")) return;
-    setSelectedPoint(e.latlng.lat, e.latlng.lng, { skipPan: true });
+    var lat = e.latlng.lat, lng = e.latlng.lng;
+    function select() { setSelectedPoint(lat, lng, { skipPan: true }); }
+    if (handoffSelection(lat, lng, "map-click", select)) return;
+    select();
   });
 
   document.getElementById("kbd-select-btn").addEventListener("click", function () {
     var c = map.getCenter();
-    if (handoffSelection(c.lat, c.lng, "kbd-select")) return;
-    setSelectedPoint(c.lat, c.lng, { skipPan: true });
+    function select() { setSelectedPoint(c.lat, c.lng, { skipPan: true }); }
+    if (handoffSelection(c.lat, c.lng, "kbd-select", select)) return;
+    select();
   });
 
   /* ==== ENGINE:END selection-controls ==== */
@@ -6717,6 +6720,18 @@ function initChiExplorer() {
 
   var locateBtn = document.getElementById("locate-btn");
   var geoStatusEl = document.getElementById("geo-status");
+
+  function selectLocated(lat, lng) {
+    geoStatusEl.textContent = "";
+    geoResultsList.innerHTML = "";
+    // rounded to ~1km (2 decimal places) — coarse enough that it can't
+    // pin an individual's address, fine enough to see which part of the
+    // city geolocation gets used from. Path stays fixed so GoatCounter
+    // groups every hit under one "geolocate-success" event; the
+    // approximate area only shows up in the per-hit title.
+    trackEvent("geolocate-success", lat.toFixed(2) + "," + lng.toFixed(2));
+    setSelectedPoint(lat, lng);
+  }
 
   locateBtn.addEventListener("click", function () {
     trackEvent("geolocate");
@@ -6734,37 +6749,25 @@ function initChiExplorer() {
       function (pos) {
         locateBtn.disabled = false;
         var lat = pos.coords.latitude, lng = pos.coords.longitude;
-        if (lat < METRO_BBOX.minLat || lat > METRO_BBOX.maxLat || lng < METRO_BBOX.minLng || lng > METRO_BBOX.maxLng) {
-          // easter egg: standing inside a sibling metro? offer its explorer,
-          // deep-linking the located point (the URL fragment stays client-side,
-          // same exposure as the sibling's own geolocate → permalink flow)
-          var siblingHere = siblingMetroAt(lat, lng);
-          if (siblingHere) {
+        // Which app answers where the reader is standing is the hand-off's own
+        // question (ENGINE metro-portal placeOwner), asked of the same outlines,
+        // so a located point and a clicked one can never be routed differently.
+        geoStatusEl.textContent = "Locating…";
+        placeOwner(lat, lng).then(function (owner) {
+          if (owner === "here") { selectLocated(lat, lng); return; }
+          if (owner) {
+            // standing inside a sibling's area: send them there, deep-linking
+            // the located point (the URL fragment stays client-side, same
+            // exposure as the sibling's own geolocate → permalink flow)
             geoStatusEl.textContent = "You're outside " + METRO_NAME + " — but " +
-              siblingDisplayName(siblingHere) + " covers where you are.";
+              siblingDisplayName(owner) + " covers where you are.";
             geoStatusEl.className = "geo-status";
-            offerMetroPortal(siblingHere, {
-              point: { lat: lat, lng: lng },
-              source: "geolocate",
-              title: "You're in " + siblingHere.label + "!",
-              note: "This is " + appDisplayName() + " — but " + siblingHere.label +
-                " has one of its own, and it can look up the spot you're standing on."
-            });
+            offerMetroPortal(owner, { point: { lat: lat, lng: lng }, source: "geolocate" });
             return;
           }
           geoStatusEl.textContent = "Your current location looks like it's outside the " + METRO_NAME + " area this app covers.";
           geoStatusEl.className = "geo-status err";
-          return;
-        }
-        geoStatusEl.textContent = "";
-        geoResultsList.innerHTML = "";
-        // rounded to ~1km (2 decimal places) — coarse enough that it can't
-        // pin an individual's address, fine enough to see which part of the
-        // city geolocation gets used from. Path stays fixed so GoatCounter
-        // groups every hit under one "geolocate-success" event; the
-        // approximate area only shows up in the per-hit title.
-        trackEvent("geolocate-success", lat.toFixed(2) + "," + lng.toFixed(2));
-        setSelectedPoint(lat, lng);
+        });
       },
       function (err) {
         locateBtn.disabled = false;
@@ -7346,7 +7349,8 @@ function initChiExplorer() {
   /* ==== ENGINE:BEGIN metro-portal ==== */
   /* =========================================================================
    * SIBLING-METRO HANDOFF — every instance knows where its siblings live
-   * (METRO_EXPLORERS[].bbox). When the map centre, a searched address or a
+   * (fleet-outlines.json; METRO_EXPLORERS[].bbox for the search rows' coarse
+   * pass). When the map centre, a selected point, a searched address or a
    * geolocation fix lands inside a sibling's area, the reader goes STRAIGHT
    * there, carrying the zoom they were at (and the point, when there is one)
    * so the map they arrive on is framed like the one they left.
@@ -7410,45 +7414,149 @@ function initChiExplorer() {
     opts = opts || {};
     if (!metro || metroHandedOff) return false;
     var here = opts.point || null;
-    // NEVER hand off a place this instance also answers for. Fleet bboxes
-    // meet at shared borders — the Illinois line runs through both Chicago's
-    // box and Wisconsin's — and a silent redirect on both sides of that strip
-    // would bounce a reader back and forth with nothing on screen to stop it.
-    // The card's "Stay" button used to be that stop; this is.
-    if (here && pointInMetroBbox(here.lat, here.lng, METRO_BBOX)) return false;
+    // NEVER hand off a place this instance also answers for. Outlines meet at
+    // shared borders, and a silent redirect on both sides of that line would
+    // bounce a reader back and forth with nothing on screen to stop it. Every
+    // caller has already asked placeOwner(); this is the last word on it.
+    if (here && servedHereNow(here.lat, here.lng) === true) return false;
     metroHandedOff = true;
     trackEvent("metro-portal-go/" + metro.id, opts.source || "wander");
     window.location.href = metroPortalUrl(metro, here, map.getZoom());
     return true;
   }
 
-  /* A SELECTION on a place this instance does not serve, but a sibling does:
-   * a map click, or the keyboard "select the centre" button. Returns true when
-   * the reader has been sent onward, so the caller stops — selecting a point we
-   * are navigating away from just builds cards nobody will see.
+  /* ---------- which app a place belongs to: outlines, not rectangles ----------
+   * Until 2026-09-27 every decision below was made with bounding boxes: stay
+   * if the point is inside THIS app's box, else go to the sibling whose box
+   * holds it, nearest box centre winning. Simulated over 35 real places in all
+   * six apps, 79 selections went to the wrong place, because a box is not a
+   * state. Illinois's box reaches into Iowa, so Davenport did nothing from
+   * Illinois; Michigan's runs west across the lake and held Chicago, Milwaukee
+   * and Madison; overlapping sibling boxes sent Marquette to Wisconsin; and the
+   * boxes claim places nobody serves, so Gary went to Illinois and Hartford to
+   * New York.
+   *
+   * Two outlines decide it now. THIS app's own, at full detail, is the one the
+   * coverage wash already retained (the region band where there is one, else
+   * the coverage rings), so a selection inside it is answered here at once with
+   * no fetch. Anything else is settled against ../fleet-outlines.json, every
+   * live instance's widest outline simplified to about 200 m and generated by
+   * scripts/build_fleet_outlines.py, fetched once and only when a selection
+   * first leaves this app's own outline. Its own entry is asked first, so a
+   * point on a border this app also draws stays here, and a point no live
+   * instance covers stays here too, where the app says so, rather than being
+   * sent to an app that has nothing to show. */
+  var FLEET_OUTLINES_URL = "../fleet-outlines.json";
+  var fleetOutlines = null;
+  var fleetOutlinesLoading = null;
+
+  function loadFleetOutlines() {
+    if (fleetOutlines) return Promise.resolve(fleetOutlines);
+    if (!fleetOutlinesLoading) {
+      fleetOutlinesLoading = fetchJSONWithRetry(FLEET_OUTLINES_URL, {}, 1)
+        .then(function (data) {
+          if (!data || !data.outlines) throw new Error("fleet-outlines.json has no outlines");
+          fleetOutlines = data.outlines;
+          return fleetOutlines;
+        })
+        ["catch"](function (err) {
+          fleetOutlinesLoading = null;  // a later selection may try again
+          throw err;
+        });
+    }
+    return fleetOutlinesLoading;
+  }
+
+  /* true / false from the outline this app drew its wash with; null while
+   * that has not loaded, which is not an answer either way. */
+  function servedHereNow(lat, lng) {
+    var pt = { lat: lat, lng: lng };
+    if (typeof coverageRegionPolys !== "undefined" && coverageRegionPolys && coverageRegionPolys.length) {
+      return pointInGeometry(pt, { type: "MultiPolygon", coordinates: coverageRegionPolys });
+    }
+    if (typeof coverageMaskRings !== "undefined" && coverageMaskRings && coverageMaskRings.length) {
+      return pointInGeometry(pt, { type: "Polygon", coordinates: coverageMaskRings });
+    }
+    return null;
+  }
+
+  /* The sibling whose fleet outline holds the point, or null. Two can only
+   * both hold it along a shared border, where the simplified outlines overlap
+   * by a few hundred metres; the nearer box centre settles that. */
+  function fleetSiblingAt(lat, lng) {
+    var pt = { lat: lat, lng: lng };
+    var best = null, bestDist = Infinity;
+    for (var i = 0; i < METRO_EXPLORERS.length; i++) {
+      var m = METRO_EXPLORERS[i];
+      if (m.id === THIS_METRO || !fleetOutlines[m.id]) continue;
+      if (!pointInGeometry(pt, fleetOutlines[m.id])) continue;
+      var dist = 0;
+      if (validMetroBbox(m.bbox)) {
+        var dLat = lat - (m.bbox.minLat + m.bbox.maxLat) / 2;
+        var dLng = lng - (m.bbox.minLng + m.bbox.maxLng) / 2;
+        dist = dLat * dLat + dLng * dLng;
+      }
+      if (dist < bestDist) { best = m; bestDist = dist; }
+    }
+    return best;
+  }
+
+  /* Resolves to "here" (this app answers there), a METRO_EXPLORERS entry (a
+   * sibling does), or null (no live instance does). If the fleet file cannot
+   * be read, only this app's own outline is left to go on: inside it is
+   * "here", outside it is null, and with neither loaded this app's box is the
+   * last resort. Nobody is sent to a sibling on a guess. */
+  function placeOwner(lat, lng) {
+    var own = servedHereNow(lat, lng);
+    if (own === true) return Promise.resolve("here");
+    return loadFleetOutlines().then(function () {
+      if (fleetOutlines[THIS_METRO] &&
+          pointInGeometry({ lat: lat, lng: lng }, fleetOutlines[THIS_METRO])) return "here";
+      return fleetSiblingAt(lat, lng);
+    }, function () {
+      if (own === false) return null;
+      return pointInMetroBbox(lat, lng, METRO_BBOX) ? "here" : null;
+    });
+  }
+
+  /* A SELECTION: a map click, or the keyboard "select the centre" button.
+   * `proceed` selects the point here, and runs unless the reader is sent on.
+   * Returns true when it has taken over (the caller stops and `proceed` runs
+   * later, if at all), false when the point is plainly this app's and the
+   * caller should select it now.
    *
    * Panning already hands off on `moveend`, but only when the CENTRE crosses.
    * A reader looking at Illinois can click Wisconsin near the top of the map
    * without the centre ever leaving Illinois, which is exactly the case this
    * covers: the click carries the point, so they arrive with it selected
    * rather than merely somewhere in the neighbourhood. */
-  function handoffSelection(lat, lng, source) {
+  var handoffSeq = 0;
+  function handoffSelection(lat, lng, source, proceed) {
     if (metroHandedOff) return false;
-    if (pointInMetroBbox(lat, lng, METRO_BBOX)) return false;  // we serve it; no handoff
-    var metro = siblingMetroAt(lat, lng);
-    if (!metro) return false;                                  // nobody serves it; the app says so honestly
-    return offerMetroPortal(metro, { point: { lat: lat, lng: lng }, source: source || "select" });
+    if (servedHereNow(lat, lng) === true) return false;       // ours; no fetch, no wait
+    var seq = ++handoffSeq;
+    placeOwner(lat, lng).then(function (owner) {
+      if (seq !== handoffSeq) return;                         // a newer selection took over
+      if (owner && owner !== "here" &&
+          offerMetroPortal(owner, { point: { lat: lat, lng: lng }, source: source || "select" })) return;
+      if (typeof proceed === "function") proceed();           // ours, or nobody's: the app says which
+    });
+    return true;
   }
 
+  var wanderSeq = 0;
   map.on("moveend", function () {
     if (metroHandedOff) return;
     var c = map.getCenter();
-    // The centre is a place this instance serves, so it is not a handoff — it
-    // is a reader looking at their own map near its edge.
-    if (pointInMetroBbox(c.lat, c.lng, METRO_BBOX)) return;
-    var metro = siblingMetroAt(c.lat, c.lng);
-    if (!metro) return;
-    offerMetroPortal(metro, { source: "wander" });
+    // Only once this app's own outline has loaded and says the centre has left
+    // it. Before then, or while it is inside, the reader is looking at their
+    // own map near its edge.
+    if (servedHereNow(c.lat, c.lng) !== false) return;
+    var seq = ++wanderSeq;
+    placeOwner(c.lat, c.lng).then(function (owner) {
+      if (seq !== wanderSeq || !owner || owner === "here") return;
+      offerMetroPortal(owner, { source: "wander" });
+    });
   });
   /* ==== ENGINE:END metro-portal ==== */
   /* =========================================================================
@@ -7668,17 +7776,27 @@ function initChiExplorer() {
     inFlightController = new AbortController();
     var signal = inFlightController.signal;
     // one UNBOUNDED whole-coverage query, classified into metros locally
-    // (siblingMetroAt) — exactly one extra request per home-metro miss no
-    // matter how many sibling metros exist; hits outside every sibling metro
+    // (fleetSiblingAt) — exactly one extra request per home-metro miss no
+    // matter how many sibling metros exist (plus fleet-outlines.json, once
+    // per page load); hits outside every sibling metro
     // are dropped. geocodeUnbounded is the fork's provider (the home search
     // box may be scoped to the city, so this lookup needs its own wider call).
+    // Each hit is classified by the same fleet outlines a click is
+    // (ENGINE metro-portal), so a searched address and a clicked one go to
+    // the same app; only if that file cannot be read do the boxes decide.
     return geocodeUnbounded(query, signal)
       .then(function (results) {
+        return loadFleetOutlines().then(function () { return { results: results, outlines: true }; },
+          function () { return { results: results, outlines: false }; });
+      })
+      .then(function (got) {
         if (signal.aborted) return;
+        var results = got.results;
         var perMetro = {}; // id -> rows rendered
         var labels = [];
         results.forEach(function (r) {
-          var metro = siblingMetroAt(parseFloat(r.lat), parseFloat(r.lon));
+          var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
+          var metro = got.outlines ? fleetSiblingAt(lat, lng) : siblingMetroAt(lat, lng);
           if (!metro) return; // not inside any sibling metro
           perMetro[metro.id] = (perMetro[metro.id] || 0) + 1;
           if (perMetro[metro.id] > SIBLING_ROWS_PER_METRO) return;

@@ -1,13 +1,16 @@
   // Selecting a place a SIBLING serves hands the reader over, with the point,
   // instead of drawing empty cards for it here (ENGINE metro-portal).
   map.on("click", function (e) {
-    if (handoffSelection(e.latlng.lat, e.latlng.lng, "map-click")) return;
-    setSelectedPoint(e.latlng.lat, e.latlng.lng, { skipPan: true });
+    var lat = e.latlng.lat, lng = e.latlng.lng;
+    function select() { setSelectedPoint(lat, lng, { skipPan: true }); }
+    if (handoffSelection(lat, lng, "map-click", select)) return;
+    select();
   });
 
   document.getElementById("kbd-select-btn").addEventListener("click", function () {
     var c = map.getCenter();
-    if (handoffSelection(c.lat, c.lng, "kbd-select")) return;
-    setSelectedPoint(c.lat, c.lng, { skipPan: true });
+    function select() { setSelectedPoint(c.lat, c.lng, { skipPan: true }); }
+    if (handoffSelection(c.lat, c.lng, "kbd-select", select)) return;
+    select();
   });
 
