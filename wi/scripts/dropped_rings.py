@@ -80,16 +80,24 @@ target-driven.
 import math
 import re
 
-# A SOURCE RING COUNTS AS DROPPED when none of its own vertices survived, and
-# this is the threshold for "survived", in metres. Simplification KEEPS a subset
-# of the source vertices, so a retained ring holds at least one of its own
-# exactly and its minimum distance to the drawn line is 0 up to floating point;
-# a dropped ring has every vertex off that line. 1 m is far above the float noise
-# and far below any real stray.
+# THIS IS NO LONGER THE RETAINED-RING TEST, AND THE COMMENT THAT STOOD HERE WAS
+# WRONG ABOUT THE ONE CASE IT EXCUSED (corrected 2026-09-27). It read:
 #
-# The one way this reads wrong is safe: a dropped ring lying exactly on ANOTHER
-# ring's drawn line would measure as retained, and its stray would then be held
-# to the caller's fidelity ceiling -- stricter than a declaration, never looser.
+#   "A SOURCE RING COUNTS AS DROPPED when none of its own vertices survived, and
+#    this is the threshold for 'survived' ... The one way this reads wrong is safe:
+#    a dropped ring lying exactly on ANOTHER ring's drawn line would measure as
+#    retained, and its stray would then be held to the caller's fidelity ceiling
+#    -- stricter than a declaration, never looser."
+#
+# Safe for the FIDELITY CEILING and not for the thing this module is for. A ring
+# that reads as retained is never put to `classify`'s answer test, so a ring that
+# is GONE has its answer measured by nothing -- and the shape that triggers it, a
+# zero-width spur joined to the main body, turned out to be the modal small-ring
+# shape on the NG911 layers rather than a corner. `find_dropped` now answers by an
+# exact vertex-subset test with no threshold at all; see its docstring.
+#
+# WHAT THE CONSTANT STILL DOES is set `SAMPLE_STEP_M` below: it is finer than any
+# simplification interval this fleet ships, which is the property that use needs.
 RETAINED_RING_M = 1.0
 
 # The largest area a ring may have and still be reported `degenerate` — i.e. no
@@ -505,11 +513,43 @@ def _by_key(features, key_prop):
 
 
 def find_dropped(source_features, drawn_features, key_prop):
-    """[(key, ring)] for every SOURCE ring none of whose vertices survived.
+    """[(key, ring)] for every SOURCE ring the drawn output does not carry.
 
-    Compared feature by feature: a ring belongs to one district, so the question
-    is whether THAT district's drawn geometry kept it, not whether some other
+    Compared feature by feature: a ring belongs to one district, so the question is
+    whether THAT district's drawn geometry kept it, not whether some other
     district's line happens to pass through it.
+
+    IT IS EXACT AND USES NO DISTANCE THRESHOLD, AND THE THRESHOLD IT REPLACED WAS
+    UNDERCOUNTING (corrected 2026-09-27). This asked whether ANY ONE of a source
+    ring's vertices lay within `RETAINED_RING_M` of the feature's drawn geometry,
+    and called the ring retained if one did. A ZERO-WIDTH SPUR JOINED TO THE MAIN
+    BODY SATISFIES THAT BY CONSTRUCTION — its join vertex sits on the main body's
+    own drawn line — so a spur that is entirely gone read as retained, and its
+    ANSWER went unmeasured. Measured on Wisconsin's four NG911 layers that is not a
+    corner case but the modal small-ring shape: 138 of the 241 rings under 200 m2
+    have a mean width under 0.5 m, and the narrowest print 0.000 m over spans of
+    32 m, 470 m, 691 m and 2,289 m. The old test missed 31 rings across those four
+    layers (fire 7, law 14, psap 3, ems 7), so EVERY harm count this module has
+    produced before this change is a FLOOR rather than a count.
+
+    WHAT REPLACES IT NEEDS NOTHING MEASURED. `-simplify` REMOVES vertices; it does
+    not move them and does not merge rings, and both sides are written at the same
+    `precision=`, so every drawn ring's vertices are an exact SUBSET of the vertices
+    of one source ring. Claim each drawn ring to its source ring; the unclaimed
+    source rings are the dropped ones.
+
+    A SMALL DRAWN RING CAN SIT INSIDE TWO SOURCE RINGS' VERTEX SETS, and that is
+    resolved by ELIMINATION rather than by a heuristic. Measured, one case exists on
+    these layers: Appleton Police's 4-vertex drawn ring is a subset of both a
+    71-vertex ring and a 9-vertex ring that share those four vertices. Unambiguous
+    claims are taken first; an ambiguous drawn ring then takes the one candidate
+    still unclaimed. Where that leaves no single candidate this RAISES rather than
+    guessing, because picking one would silently attribute a drop to the wrong ring.
+
+    AND THE COUNT IS GATED AGAINST ARITHMETIC NOBODY HERE CONTROLS: per key, the
+    number of unclaimed source rings must equal len(source rings) - len(drawn
+    rings). That identity held on all four NG911 layers at 165, 118, 10 and 149, so
+    the test is checked against the ring counts rather than trusted.
     """
     src, drawn = _by_key(source_features, key_prop), _by_key(drawn_features, key_prop)
     out = []
@@ -520,11 +560,37 @@ def find_dropped(source_features, drawn_features, key_prop):
         dr, sr = rings(df["geometry"]), rings(sf["geometry"])
         if not dr or not sr:
             continue
-        sx, sy = mscale(sr[0][0][1])
-        grid, cell = index_segments(dr)
-        for r in sr:
-            if min(dist_to_drawn((p[0], p[1]), grid, cell, sx, sy) for p in r) > RETAINED_RING_M:
-                out.append((key, r))
+        vsets = [set(map(tuple, r)) for r in sr]
+        hits = []
+        for d in dr:
+            dv = set(map(tuple, d))
+            hits.append([i for i, vs in enumerate(vsets) if dv <= vs])
+        claimed = set()
+        for cand in sorted(range(len(dr)), key=lambda j: len(hits[j])):
+            free = [i for i in hits[cand] if i not in claimed]
+            if len(free) == 1:
+                claimed.add(free[0])
+                continue
+            raise RuntimeError(
+                "%r drawn ring %d of %d (%d vertices) matches %d source ring(s) and "
+                "%d of them are still unclaimed; a drawn ring's vertices are a subset "
+                "of exactly one source ring's unless two source rings share them, and "
+                "that is resolved by elimination. Picking one here would attribute a "
+                "dropped ring to the wrong shape, so this stops instead."
+                % (key, cand, len(dr), len(dr[cand]), len(hits[cand]), len(free)))
+        # NO POST-CHECK HERE, AND TWO WERE WRITTEN AND REMOVED. A draft asserted
+        # `len(claimed) == len(dr)` and then that the unclaimed count equals
+        # len(sr) - len(dr); NEITHER CAN FIRE. The loop above adds exactly one
+        # element per drawn ring or raises, and `free` excludes what is already
+        # claimed, so the first is true by construction and the second follows from
+        # it arithmetically. Shipping a guard that cannot fail is the vacuous-gate
+        # failure this repository records elsewhere, so the identity is checked
+        # where it is not implied -- against the ring counts, outside this function,
+        # which is how it was verified at 165, 118, 10 and 149 on the NG911 layers.
+        for i in range(len(sr)):
+            if i in claimed:
+                continue
+            out.append((key, sr[i]))
     return out
 
 
@@ -1124,6 +1190,50 @@ def _selftest():
     ck("a ring answering two ways is reported mixed", st["mixed"] == 1, "got %s" % st)
     ok, msg = check(recs, st, [], st[KIND_GAP_CLOSED])
     ck("a mixed ring FAILS", not ok and "differently at different" in msg, msg)
+
+    # 6a. THE CASE THE OLD RETAINED TEST MISSED, which is what makes this fixture
+    #     worth having: a separate source ring SHARING A VERTEX with the main body.
+    #     The old test asked whether ANY vertex was within RETAINED_RING_M of the
+    #     feature's drawn geometry and called the ring retained when one was, so a
+    #     hairline joined to the main body read as kept while being entirely gone.
+    TOUCH = [[-89.00, 44.00], [-88.9980, 44.000002], [-88.9990, 44.000004],
+             [-89.00, 44.00]]
+    sf = _feat("A", _multi([OUT], [TOUCH]))
+    df = _feat("A", _poly(OUT))
+    got = find_dropped([sf], [df], "K")
+    ck("a ring sharing a vertex with the main body is found dropped",
+       len(got) == 1 and ring_signature(got[0][1]) == ring_signature(TOUCH),
+       "found %d" % len(got))
+    # ... and this is the property that made the old test miss it, asserted rather
+    # than described, so the fixture cannot quietly stop exercising the fix.
+    _g, _c = index_segments(rings(df["geometry"]))
+    _sx, _sy = mscale(TOUCH[0][1])
+    ck("the fixture really is the shape the old threshold called retained",
+       min(dist_to_drawn((p[0], p[1]), _g, _c, _sx, _sy) for p in TOUCH)
+       <= RETAINED_RING_M,
+       "its nearest vertex is further than RETAINED_RING_M, so it tests nothing")
+
+    # 6b. A SMALL DRAWN RING INSIDE TWO SOURCE RINGS' VERTEX SETS resolves by
+    #     elimination, never by picking. Measured, one real case exists: Appleton
+    #     Police's 4-vertex drawn ring is a subset of both a 71-vertex ring and a
+    #     9-vertex ring that share those four vertices.
+    SHARED = [[-88.50, 44.50], [-88.49, 44.50], [-88.49, 44.51], [-88.50, 44.50]]
+    BIG = SHARED[:-1] + [[-88.48, 44.52], [-88.50, 44.52], [-88.50, 44.50]]
+    sf = _feat("A", _multi([BIG], [SHARED]))
+    df = _feat("A", _multi([BIG], [SHARED]))
+    got = find_dropped([sf], [df], "K")
+    ck("two source rings sharing a vertex set resolve by elimination, nothing dropped",
+       got == [], "found %d" % len(got))
+
+    # 6c. ... and where elimination leaves no single candidate it RAISES rather than
+    #     attributing the drop to the wrong shape.
+    df = _feat("A", _poly(SHARED))
+    try:
+        find_dropped([sf], [df], "K")
+        ck("an unresolvable ambiguity RAISES", False, "it returned instead")
+    except RuntimeError as exc:
+        ck("an unresolvable ambiguity RAISES", "resolved by elimination" in str(exc),
+           str(exc)[:90])
 
     # 7a. ... and PASSES once every pair it shows is declared. This fixture's hole
     #      answers E before and D after on its left half, where E covers, and
