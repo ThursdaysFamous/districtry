@@ -50,6 +50,44 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-27, LATER. #1227 IS UP WITH THE REFRESHED ROSTER, AND #1226 CAN BE
+CLOSED — YOUR CALL, AND I HAVE NOT PUSHED TO THE BOT BRANCH.** The live 378-unit
+re-scrape read through the fixed parser fired the normalisation **exactly once
+across all 198 filings**, printing it: `Walnut - a Public Library District in
+Bureau County: filed name 'Jaclyn G, Trujillo' carries a comma after the middle
+initial; shipped as 'Jaclyn G. Trujillo'`. Its diff is four lines in one file —
+the `generated` stamp and three `filedFor` 2025 → 2026 bumps, for Cissna Park,
+Neoga and Walnut. **The same three genuine filings #1226 found, with no name
+moved.**
+
+**THE SUPERSESSION IS MEASURED RATHER THAN ASSERTED, AND MEASURING IT FOUND THE
+BLAST RADIUS WAS TWICE WHAT I HAD WRITTEN DOWN.** #1226's diff is fourteen lines
+across three files against my four across one, so I read its file list instead of
+assuming the difference was the name alone. Its extra ten are the corrupted name
+in the roster, **the same name TWICE on `il/library-district.html` — the
+officeholder table row and the `ld+json` graph** — and `sitemap.xml` `lastmod`
+churn from having run on a different day. I had been describing this as one card;
+a reader would have met the typo in two places on a served page as well. Because
+the shipped name does not move here, the page and the sitemap are owed nothing,
+and `build_officeholder_tables.py --check`, `validate_structured_data.py` and
+`build_sitemap.py --check` say so rather than my saying so.
+
+**AND A BATTERY THAT RAN THROUGH A REBASE IS GREEN FOR THE WRONG REASON.** The
+stop hook caught that I had committed both of these as `adam@overberg.co`, so I
+re-authored them with `git rebase --exec` — under a battery that was still
+running. A rebase checks out each intermediate tree in turn, and two of the
+gates in that list read the working tree against a base:
+`check_roster_retention.py --base origin/main` is the one that matters here,
+because during the window where the tree held the code fix WITHOUT the refreshed
+roster it would have compared that roster against an identical copy of itself and
+passed, telling me nothing about the change it exists to check. It reported 0 of
+111 and I did not trust it; re-run clean on the settled tree it is 0 of 111 again,
+which is now worth something. **Re-run the battery after any rebase or merge
+underneath it, not only after an edit** — the same reason `validate_gate_counts.py`
+exists for the gate pair, one level up: the reading moves when the tree moves
+under you, with nothing in any diff to look at.
+
+
 **2026-09-27. #1226's CORRUPTED DIRECTOR NAME IS THE COMPTROLLER'S OWN FILING,
 AND THAT FILING DISAGREES WITH ITSELF INSIDE ONE DOCUMENT.** The held refresh
 would have replaced `Jaclyn G. Trujillo` with `Jaclyn G, Trujillo` on Walnut
