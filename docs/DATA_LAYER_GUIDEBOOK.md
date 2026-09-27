@@ -3379,6 +3379,92 @@ promoting it would put `il/index.html` in this diff for no reader-visible gain.
 its own change with the Illinois smoke test as the witness, and it is recorded
 here so the next county does not write a second copy instead.
 
+## Tompkins's sixteen legislators reach a crawler, and registering one state cost six edits rather than two (2026-09-27)
+
+**THE ABSENCE IS CLOSED.** `ny/county-legislature.html` and
+`ny/county-legislature/tompkins.html` ship, and all sixteen names are in the
+served bytes — verified by reading the page back, which is the check
+`build_county_pages.py` runs beside byte-equality precisely because a beautiful
+empty template passes the latter. The instance count goes 4 to 5 and the fleet's
+per-county pages 329 to 330.
+
+**THE RECORD SAID "AN `INSTANCES` ENTRY PLUS AN ADAPTER" AND THAT WAS TWO OF
+SIX.** The adapter and the registry entry were the easy half. What the gates
+then asked for, each one a real registration rather than a formality:
+
+- **The topic page itself, which no generator writes.** `write_index()` OPENS
+  `inst["index_page"]` and requires a `GENERATED:BEGIN county-index` fence in
+  it; it never creates the file. The four existing county index pages are
+  hand-authored — `build_concept_pages.py` names them only as sibling links —
+  so this one is too, built on New York's own `borough.html` shell so its
+  identity block, ENGINE fences and instance assets are that instance's rather
+  than another state's. That is the `mi/sources.html` defect, which shipped
+  Iowa's whole identity block because a page was cloned and only its GENERATED
+  regions were ever regenerated.
+- **The front door, twice.** `build_landing_page.py` refuses a question page
+  with no row in `QUESTION_ROWS` ("the front door links it nowhere") and then
+  refuses one with no `CHIP_TOPIC` ("its link would read as a bare place
+  name"). A county's governing body is a board in Illinois and Wisconsin, a
+  board of supervisors in Iowa, a board of commissioners in Michigan and a
+  legislature in New York, and a reader asking who sits on it does not know
+  which word their state uses — so it joins the existing row rather than
+  getting one of its own, and its chip reads "county legislature", distinct
+  from the other three.
+- **`docs/EAM_STATUS.md` and `llms.txt`**, both of which COUNT per-county
+  pages, so the weekly roster job regenerates and stages both. Staging a file a
+  run does not rebuild would leave the bot PR failing a gate on a change nobody
+  wrote.
+
+**THE STAGING GATE FAILED A CORRECT WORKFLOW, AND FIXING IT FOUND A HOLE
+UNDERNEATH.** `check_workflows()` read only the LINE carrying `git add `, so a
+`git add` split across lines with a trailing backslash staged the pages
+correctly and measured as staging nothing — the same defect
+`validate_workflow_checkout.py` had the same day, a gate whose verdict turns on
+where a line happens to wrap. Continuations are joined now. **And the negative
+test on that fix immediately leaked**: with the directory dropped but
+`ny/county-legislature.html` kept, the check still passed, because `want` was
+matched as a SUBSTRING and `ny/county-legislature` sits inside
+`ny/county-legislature.html`. So a workflow staging the index page and none of
+the per-county pages underneath it would have passed. The directory is matched
+as a path TOKEN now, and both spellings the fleet uses are accepted.
+
+**MY FIRST READING OF THAT WAS THAT 63 OF 64 WORKFLOWS WERE PASSING VACUOUSLY,
+AND IT WAS MY OWN TEST THAT WAS WRONG.** The probe asked whether each `git add`
+contained `<tag>/<concept>/` with a trailing slash. The fleet writes the bare
+directory — `git add il/data/app/wayne-county-board-members.json il/county-board
+il/county-board.html …` — which git stages identically and the gate matches
+correctly, so `dir:False` was an artifact of the trailing slash I had demanded.
+Reading one real workflow before publishing the sweep is what caught it. **The
+hole is LATENT, not live: no workflow in the fleet stages the index page
+alone**, and the sweep that appeared to find 63 defects found none.
+
+**THE BROWSER GATE CAUGHT A DEFECT NO STATIC CHECK COULD.** The page was
+assembled by taking the brand-mark line out of the model page with "the first
+line containing `districtry-mark`" — which is the CSS rule
+`.districtry-mark { width: 34px; … }` at line 326, not the `<svg>` in the
+masthead 430 lines later. So the `<h1>` carried a CSS declaration as visible
+text. The HTML stayed well-formed, every static gate passed, and
+`page_consistency_test.mjs`'s "carries the mark" assertion failed in both
+themes — the only thing in the repository that could see it.
+
+**TWO THINGS THE ADAPTER REFUSES OR RECORDS RATHER THAN GUESSES.** A roster
+naming one of New York City's five counties is REFUSED with the reason, because
+the city absorbed their county governments and *Board of Estimate v. Morris*
+(1989) struck down the nearest equivalent without replacing it — the concept
+matrix has recorded that since before the tier opened, and an adapter that
+enumerates whatever ships needs the fact in code rather than in prose. And the
+boundary file spells St Lawrence County without a period where the county writes
+"St. Lawrence"; nothing turns on it until that county ships a roster, so it is
+named in the adapter's docstring so whoever ships it decides deliberately
+instead of discovering it on a page.
+
+**THE COUNTY NAMES ARE DERIVED, NOT LISTED.** Illinois needs a name table
+because its roster filenames are slugs and its records carry no county field;
+New York's records carry none either, but its app already ships
+`ny-counties.json`, so the slug-to-name map is read from that — 62 names,
+measured 2026-09-27 as no two slugging alike and every one slugging to its own
+lowercase-hyphenated form. Nothing here can go stale.
+
 ## The board card's location row, and a column that outlived its own document (2026-09-06)
 
 **THE GAP.** `county-board-office-addresses` was Illinois's largest card-order gap: of 63

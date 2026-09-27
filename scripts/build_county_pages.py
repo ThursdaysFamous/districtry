@@ -197,6 +197,22 @@ INSTANCES = [
          app_name="districtry Michigan", app_url="https://districtry.com/mi/",
          district_word="District", member_word="Commissioner",
          adapters=("mi_commissioners",)),
+    # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
+    # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
+    # rather than the county tier: a county legislature is elected from
+    # districts, a board of supervisors is the towns' own supervisors
+    # sitting ex officio, and Otsego's board of representatives is its own
+    # question. The adapter enumerates whatever ships and the form is
+    # proven per county first, so this list never names a county.
+    dict(tag="ny", state="New York", concept="county-legislature",
+         index_page="county-legislature.html",
+         heading="%(county)s County Legislature",
+         page_title="%(county)s County Legislature",
+         phrase="county legislature", index_label="County legislatures",
+         all_label="All New York county legislatures",
+         app_name="districtry New York", app_url="https://districtry.com/ny/",
+         district_word="District", member_word="Legislator",
+         adapters=("ny_legislature",)),
 ]
 
 
@@ -954,6 +970,122 @@ def _nobody_key(inst, county):
     return "%s/%s" % (inst["tag"], county)
 
 
+# New York's county names, derived from the boundary file its own app ships
+# (NYS ITS Civil Boundaries, 62 features) rather than a list kept here. The
+# Illinois table above exists because that instance has no such file in
+# data/app; New York does, so nothing here can go stale. Measured 2026-09-27:
+# 62 names, no two slugging alike, and every one slugs to its own
+# lowercase-hyphenated form.
+NY_COUNTIES_FILE = "ny-counties.json"
+
+# THE FIVE BOROUGHS HAVE NO COUNTY LEGISLATURE AND A ROSTER FOR ONE WOULD BE AN
+# ERROR, not a county to add. New York City absorbed its five counties'
+# governments; the Board of Estimate that had been the nearest thing was struck
+# down in Board of Estimate of City of New York v. Morris (1989) and not
+# replaced. So a file naming one of these is refused with the reason rather than
+# rendered — the concept matrix has recorded this since before the tier opened,
+# and an adapter that enumerates whatever ships needs the fact in code.
+NY_NO_LEGISLATURE = {"bronx", "kings", "new-york", "queens", "richmond"}
+
+
+def _ny_name_by_slug():
+    path = os.path.join(app_data("ny"), NY_COUNTIES_FILE)
+    names = {f["properties"]["NAME"]
+             for f in _read(path)["features"]
+             if (f.get("properties") or {}).get("NAME")}
+    return {slug_of(n): n for n in names}, path
+
+
+def ny_legislature(inst):
+    """New York: one file per county, keyed by district, for the counties that
+    elect a county legislature FROM districts.
+
+    THREE FORMS AND ONLY ONE OF THEM HAS DISTRICTS TO INDEX. A New York county
+    is governed by a county legislature elected from districts, by a board of
+    SUPERVISORS who are the towns' own supervisors sitting ex officio, or — in
+    Otsego — by a board of representatives whose form is its own question. Only
+    the first has a district for a page to be about: a town-elected supervisor
+    belongs on the municipality that elected them, and putting one on a county
+    page would say they were elected countywide. So this reads the files that
+    exist and the tier grows one county at a time, with the form proven per
+    county before any roster is written.
+
+    THE COUNTY COMES FROM THE FILENAME, because these records carry no `county`
+    field — measured 2026-09-27, 0 of 18 keys in the first county's file — and
+    there is no reason for a single-county file to repeat the county on every
+    row. That is also exactly why `check_registration()` cannot see these files
+    and the New York tier had to be registered by hand: its two signals are
+    "names people" and "looks like county", this shape passes the first and
+    fails both forms of the second, and `_COUNTY_WORDS` holds the five form
+    words of the states that were already registered with no `legislature`
+    among them.
+
+    TWO KEYS THAT ARE NOT DISTRICTS, skipped and counted rather than guessed
+    at: a `board` block carrying the body's own office, telephone and term (the
+    Cook County second-address rule — a number printed against every member is
+    the switchboard and belongs to nobody), and an `_about` string.
+
+    ONE NAMING QUESTION IS RECORDED RATHER THAN DECIDED. The boundary file
+    spells St Lawrence County without a period, which is what a heading would
+    print, while the county writes "St. Lawrence". Nothing turns on it until
+    that county ships a roster, and it is named here so whoever ships it
+    decides deliberately instead of discovering it on a page."""
+    name_by_slug, names_path = _ny_name_by_slug()
+    data_dir = app_data(inst["tag"])
+    paths = sorted(glob.glob(os.path.join(data_dir, "*-legislature-members.json")))
+    out, problems, nameless, used = {}, [], set(), []
+    for path in paths:
+        slug = re.sub(r"-legislature-members\.json$", "", os.path.basename(path))
+        if slug in NY_NO_LEGISLATURE:
+            problems.append(
+                "%s names %r, one of New York City's five counties, which have "
+                "no county legislature — the city absorbed their governments and "
+                "Board of Estimate v. Morris (1989) struck down the nearest "
+                "thing without replacing it. A roster here is an error rather "
+                "than a county to index"
+                % (os.path.relpath(path, REPO_ROOT), slug))
+            continue
+        name = name_by_slug.get(slug)
+        if name is None:
+            problems.append(
+                "%s names county slug %r, which %s does not carry — either the "
+                "filename is wrong or the two have diverged"
+                % (os.path.relpath(path, REPO_ROOT), slug,
+                   os.path.relpath(names_path, REPO_ROOT)))
+            continue
+        used.append(path)
+        data = _read(path)
+        districts, skipped, source = [], [], None
+        for key in sorted(data, key=district_sort_key):
+            entry = data[key]
+            if not isinstance(entry, dict):
+                skipped.append(key)          # `_about`, a string
+                continue
+            source = source or entry.get("sourceUrl")
+            if isinstance(entry.get("members"), list):
+                districts.append(district(key, entry["members"],
+                                          entry.get("vacancies") or 0))
+            else:
+                skipped.append(key)          # the `board` block
+        if not _count_named(districts, []):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append(
+                    "%s names nobody — %d key(s), no name on any district. "
+                    "Either the roster regressed, or this county belongs in "
+                    "NAMES_NOBODY with a reason"
+                    % (os.path.relpath(path, REPO_ROOT), len(data)))
+            nameless.add(name)
+            continue
+        out[name] = {"districts": districts, "sourceUrl": source, "extras": [],
+                     "skipped": skipped, "slug": slug, "at_large": False,
+                     "source_file": path}
+    note = ("ny   %d county legislature(s) read; New York's other counties elect "
+            "a board of supervisors or, in Otsego, a board of representatives, "
+            "and neither has a district to index" % len(out))
+    return out, problems, nameless, used + [names_path], note
+
+
+
 def _count_named(districts, extras):
     n = sum(1 for d in districts for m in d["members"]
             if (m.get("name") or "").strip())
@@ -972,7 +1104,8 @@ def _count_named(districts, extras):
 ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "ia_at_large": ia_at_large,
             "wi_seats": wi_seats, "ia_supervisors": ia_supervisors,
-            "mi_commissioners": mi_commissioners}
+            "mi_commissioners": mi_commissioners,
+            "ny_legislature": ny_legislature}
 
 
 # Party, as the fleet's rosters actually spell it. MEASURED 2026-09-13 across
@@ -1835,6 +1968,22 @@ def verify_page(inst, name, rec, at_large, html):
 WORKFLOW_DIR = os.path.join(REPO_ROOT, ".github", "workflows")
 
 
+def _join_continuations(text):
+    """Shell lines with trailing backslashes joined into one, so a command split
+    across lines is matched as the one command it is."""
+    out, buf = [], ""
+    for line in text.splitlines():
+        stripped = line.rstrip()
+        if stripped.endswith("\\"):
+            buf += stripped[:-1] + " "
+            continue
+        out.append(buf + line)
+        buf = ""
+    if buf:
+        out.append(buf)
+    return out
+
+
 def check_workflows(read_by_instance):
     """Every weekly job that rewrites a roster these pages read must regenerate
     them in the same run, and must stage THAT INSTANCE'S pages.
@@ -1878,9 +2027,28 @@ def check_workflows(read_by_instance):
                     "%s rewrites %s and never runs scripts/build_county_pages.py "
                     "— its bot PR would ship a page naming the members it just "
                     "replaced" % (rel, ", ".join(sorted(hits))))
-            staged = [ln for ln in text.splitlines() if "git add " in ln]
+            # A `git add` MAY SPAN LINES, so its continuations are joined
+            # before matching. Reading only the line carrying `git add ` failed a
+            # workflow that stages the pages correctly on a second line, which is
+            # the defect validate_workflow_checkout.py had the same day in the
+            # other direction: a gate whose verdict turns on where a line happens
+            # to wrap. That one teaches the next author to mangle a comment; this
+            # one teaches them to write one unreadable line. The shell's own rule
+            # is that a trailing backslash continues the command, so that is the
+            # rule applied here.
+            staged = [ln for ln in _join_continuations(text) if "git add " in ln]
             want = "%s/%s" % (inst["tag"], inst["concept"])
-            if not any(want in ln for ln in staged):
+            # THE DIRECTORY AS A PATH TOKEN, NEVER A SUBSTRING. `il/county-board`
+            # is a substring of `il/county-board.html`, so a substring test passes
+            # a workflow that stages the INDEX page and none of the per-county
+            # pages underneath it — measured by dropping the directory from one
+            # workflow, which the substring version waved through. The fleet
+            # writes the bare directory (`git add il/county-board
+            # il/county-board.html`), and git takes either that or a trailing
+            # slash, so both spellings are accepted and the `.html` beside them
+            # no longer stands in for them.
+            if not any(tok == want or tok.startswith(want + "/")
+                       for ln in staged for tok in ln.split()):
                 problems.append(
                     "%s rewrites %s and stages no %s/ — the regenerated pages "
                     "would not be in its commit"
