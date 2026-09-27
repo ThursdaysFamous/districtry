@@ -34,6 +34,15 @@ metro fork. Never edit it in one fork only.*
 > `ls engine/` and `python3 scripts/check_engine_parity.py ny/index.html`
 > are the authority.
 >
+> **THAT LAST SENTENCE STOPPED BEING TRUE ON 2026-09-27 AND IS KEPT ABOVE
+> UNDER THIS CORRECTION.** This instance now carries
+> `county-layer-dispatcher` too: the county tier's first county, Tompkins,
+> registers `county-legislature` as a dispatched concept, so the fence was
+> added and the inventory below re-derived. The fence sets are identical
+> again, and the weekly fleet-status run is what caught the stale count —
+> nothing gates this document against its own instance's fences on a pull
+> request.
+>
 > **SUPERSEDED IN PART — 2026-07-13.** The manual porting loop below (struck
 > through) is retired by `docs/MECHANIZATION_PLAYBOOK.md` Conversion 1 in the
 > Chicago repo: the engine is now distributed as a **published, hash-verified
@@ -268,12 +277,12 @@ rather than re-running the failed sibling run.
 > in the changelog. A changelog that promises a clean adoption and doesn't
 > deliver one costs every sibling a red CI run and a manual repair.
 
-## Current ENGINE block inventory (62 in index.html + 2 in sw.js)
+## Current ENGINE block inventory (63 in index.html + 2 in sw.js)
 
 index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`, `basemap`,
 `body-map-toolbar`, `brand-names`, `cached-loaders`, `card-helpers`,
-`chamber-factory`, `compare-stats`, `coverage-gaps`, `cps-network-factory`,
-`districtry-behavior`, `districtry-theme`, `exports`,
+`chamber-factory`, `compare-stats`, `county-layer-dispatcher`,
+`coverage-gaps`, `cps-network-factory`, `districtry-behavior`, `districtry-theme`, `exports`,
 `extract-district-number`, `feedback`, `fetch-retry`, `find-prop-ci`,
 `footer-independence`, `gaps-html`, `gaps-modal-html`, `geocoder-search`,
 `geocoder-shell`, `geolocation`, `geometry-measure`, `groups`, `haversine`, `hover-explorer`,

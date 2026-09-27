@@ -32,6 +32,17 @@ action rather than a literal `git add` line is invisible to it, as is one that
 shallows the clone by some route other than `--depth`. And it says nothing about
 whether the dates the sitemap ends up with are RIGHT — only that the job was
 given the history it needs to compute them.
+
+IT READS COMMANDS AND NOT COMMENTS, since 2026-09-27. Reading the text meant
+that a workflow EXPLAINING why it does not use `--depth` failed for saying so:
+every one of these jobs carries a comment about the flag, and whether it trips
+this gate came down to where the line happened to wrap — `ny-update-council-
+roster.yml` passes with the same sentence only because its break falls between
+`git fetch` and `--depth`. A gate whose verdict turns on line wrapping teaches
+the next author to mangle a comment rather than to write a correct workflow, so
+shell comments are stripped from the text before the command patterns are
+matched. The same strip is applied to `git add`, which is the conservative
+direction: a `git add` inside a comment is not a staged file either.
 """
 import re
 import sys
@@ -42,6 +53,16 @@ WORKFLOWS = Path(".github/workflows")
 STAGES_SITEMAP = re.compile(r"git add[^\n]*\bsitemap\.xml\b")
 FULL_DEPTH = re.compile(r"^\s*fetch-depth:\s*0\s*$", re.M)
 SHALLOW_FETCH = re.compile(r"git fetch[^\n]*--depth")
+# `#` to end of line, on a line that has something before it or not. YAML keys
+# and quoted strings can contain `#`, but the patterns above only ever match
+# shell inside a `run:` block, so stripping shell comments cannot hide a
+# command from them.
+SHELL_COMMENT = re.compile(r"(?m)#[^\n]*$")
+
+
+def commands_only(text):
+    """The workflow text with shell comments removed — see the docstring."""
+    return SHELL_COMMENT.sub("", text)
 
 
 def main() -> int:
@@ -57,7 +78,7 @@ def main() -> int:
     errors = []
     checked = 0
     for path in paths:
-        text = path.read_text()
+        text = commands_only(path.read_text())
         if not STAGES_SITEMAP.search(text):
             continue
         checked += 1

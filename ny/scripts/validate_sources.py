@@ -351,6 +351,23 @@ PROVENANCE = [
      "vintage": "28 elected-judge districts (map-type view; v3 route)",
      "expected_successor": "rare statutory redraws",
      "note": "Redrawn ~never; re-download via build_embedded_boundaries.py if it is."},
+    # THE COUNTY TIER'S FIRST COUNTY, 2026-09-27. A different publisher from
+    # everything above: Tompkins County's own ArcGIS Online org, not NYS ITS and
+    # not TIGERweb. One entry covers both files this builder writes, because
+    # tompkins-county-outline.json is a SLICE of the already-watched
+    # ny-counties.json rather than a fetch of its own — the coverage test and the
+    # county card have to answer about the same Tompkins, so it is cut from the
+    # file the card reads. What a rename or a retirement here costs is one
+    # county's whole card, which is why the district service is named rather than
+    # the org: an org-level probe would pass while the layer moved.
+    {"layer": "Tompkins County legislature districts (offline anchor, county GIS)",
+     "app_file": "tompkins-legislature-districts.json",
+     "source_url": "https://services.arcgis.com/oJbAAWNInLrxvF0A/arcgis/rest/services/LegislativeDistrictBoundaries/FeatureServer/0?f=json",
+     "builder": os.path.join(REPO_ROOT, "scripts", "build_tompkins_legislature.py"),
+     "builder_ref": "LegislativeDistrictBoundaries/FeatureServer/0",
+     "vintage": "16 single-member districts balanced on the 2020 census (every district's published population re-derived to the person from the Census 2020 blocks inside it at build time)",
+     "expected_successor": "the 2031 plan on the 2030 census; before then, updated in place. A rename surfaces as unreachable",
+     "note": "Also writes tompkins-county-outline.json, which is a slice of ny-counties.json and rides that entry's source. The service's own Member/URL columns are deliberately NOT read — the roster comes from the county's own pages, and the weekly job re-reads that column only as a drift witness."},
 ]
 
 # Live named services the app queries at runtime. These aren't year-versioned
