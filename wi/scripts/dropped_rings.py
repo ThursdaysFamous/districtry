@@ -77,6 +77,7 @@ hard it looked cannot say which rings need declaring, so nothing here is
 target-driven.
 """
 
+import json
 import math
 import re
 
@@ -517,7 +518,7 @@ FIDELITY_SPOKES = 24
 
 
 def check_fidelity(source_features, drawn_features, key_prop, dropped_sigs,
-                   limit, cell_m=OUTPUT_CELL_M):
+                   limit, cell_m=OUTPUT_CELL_M, accepted=()):
     """Does the true line stray past `limit` anywhere a reader's ANSWER changes?
 
     Returns (ok, message). On a failure the message names the worst surviving
@@ -552,12 +553,47 @@ def check_fidelity(source_features, drawn_features, key_prop, dropped_sigs,
         the direction the same way. A difference from one district to another, or
         from a district to nothing, is harm and fails.
 
+    A VERTEX NO PREDICATE CLEARS CAN BE DECLARED, and `accepted` is that table --
+    the `ACCEPTED_DROPPED_RINGS` shape, for harm no setting removes. Each entry
+    names the vertex, its measured stray, how much ground changes hands and the
+    (before, after) pairs it costs, and the gate re-verifies the stray and the
+    pairs on every run while FAILING on an entry that matches nothing. The
+    default is still FAIL: an over-limit vertex no predicate clears and no entry
+    declares stops the build.
+
+    TWO EASIER ANSWERS WERE REFUSED, and the second is the one that looks like a
+    measurement. A PER-KEY CEILING is a pinned list of coordinates with the answer
+    test thrown away -- it would excuse every future stray on the same district
+    silently, which is what a declaration exists not to do. And the FIFTH
+    PREDICATE that suggests itself is a ratio: on the supervisory layer each of
+    the three strays fills more ground than it costs (46, 10 and 18 m2 of
+    gap-closed against 5, 1 and 2 m2 of harm, about nine times over in all three),
+    and "the ground gained exceeds the ground lost" would excuse real harm
+    wherever something else outweighs it. A reader told the wrong district gains
+    nothing from a neighbour's gap being filled. A ratio is not a licence.
+
     WHAT IT CANNOT SEE is stated rather than implied: the disc is a sample, so a
     disagreement smaller than the gap between its points is missed, and the
     exclusion is per VERTEX rather than per region, so a long excursion whose
     middle changes hands while both its ends agree could clear on each vertex
-    separately. Both are why the ceiling is kept near one source step instead of
-    being widened until nothing fails.
+    separately. AND A THIRD, FOUND BY MEASUREMENT RATHER THAN REASONING AND WORTH
+    MORE THAN THE OTHER TWO: this sweeps discs only around vertices that stray past
+    the ceiling, so a source-vs-drawn answer difference lying near NO over-limit
+    vertex is never sampled. That is not hypothetical. On the aldermanic layer, 49
+    vertices failed a 9.56 m ceiling under `visvalingam 25%`; measured at each one's
+    own harm point, `dp interval=1` agrees with the ward fabric at 41 and STILL
+    DISAGREES AT 8, every one a false silence, and it passes this gate with nothing
+    excluded -- because it RETAINS those vertices, so their stray is 0 by set
+    membership and nothing looks 54 m away. None of the 8 lies inside a ring
+    `classify` reports dropped, so that gate is not covering them either. A GATE
+    THAT PASSES IS NOT A LAYER WHOSE ANSWERS ARE ALL RIGHT, and closing this would
+    need a different instrument -- a sweep for every answer difference rather than
+    discs around the vertices that moved furthest -- which is not attempted here.
+    All three are why the ceiling is kept near one source step instead of being
+    widened until nothing fails. AND THE DECLARED AREA IS NOT MEASURED HERE:
+    gridding a neighbourhood at 1 m takes minutes per vertex against a
+    point-in-polygon model of every district in the state, so `m2` is recorded
+    with its method and `check_strays` holds only the prose to it.
     """
     src = {k: f["geometry"] for k, f in _by_key(source_features, key_prop).items()}
     drawn = {k: f["geometry"] for k, f in _by_key(drawn_features, key_prop).items()}
@@ -572,7 +608,8 @@ def check_fidelity(source_features, drawn_features, key_prop, dropped_sigs,
 
     worst, wkey, wat = 0.0, None, None
     fails = []
-    n_spur = n_agree = n_declared = n_gap = 0
+    matched = set()
+    n_spur = n_agree = n_declared = n_gap = n_accepted = 0
     for key, sgeom in src.items():
         if key not in drawn:
             continue
@@ -627,25 +664,69 @@ def check_fidelity(source_features, drawn_features, key_prop, dropped_sigs,
                 if not harm:
                     n_gap += 1
                     continue
-                fails.append((d, key, v, harm[0]))
+                rec = {"key": key, "lng": v[0], "lat": v[1],
+                       "stray_m": d, "answers": _stray_answers(harm),
+                       "harm_point": harm[0]}
+                hit = next((dec for dec in accepted if _stray_match(rec, dec)), None)
+                if hit is not None:
+                    n_accepted += 1
+                    matched.add(id(hit))
+                    continue
+                fails.append((d, key, v, harm[0], rec))
                 if d > worst:
                     worst, wkey, wat = d, key, v
 
     excl = ("%d spur(s) on a span under %.3f m, %d vertex/vertices whose own "
             "neighbourhood is answered identically, %d whose every difference lies "
             "inside a ring already declared as dropped, %d whose every difference "
-            "only fills ground the source answered with nothing"
-            % (n_spur, cell_m, n_agree, n_declared, n_gap))
+            "only fills ground the source answered with nothing, %d declared"
+            % (n_spur, cell_m, n_agree, n_declared, n_gap, n_accepted))
+
+    # AN ENTRY THAT MATCHES NOTHING FAILS, which is what stops the table
+    # outliving the geometry it describes -- the property `ACCEPTED_DROPS`,
+    # `EXPECTED_UNREACHABLE` and `ACCEPTED_SHORTFALLS` already have. A refiling
+    # that moves one of these vertices turns this red rather than passing with a
+    # declaration nobody has re-read.
+    orphans = [dec for dec in accepted if id(dec) not in matched]
+    if orphans:
+        return False, ("%d stray declaration(s) match no over-limit vertex: %s; "
+                       "excluded %s"
+                       % (len(orphans),
+                          "; ".join("%r at %.6f,%.6f" % (o.get("key"), o.get("lat"),
+                                                         o.get("lng"))
+                                    for o in orphans), excl))
     if fails:
-        fails.sort(reverse=True)
-        d, key, v, p = fails[0]
+        fails.sort(key=lambda row: -row[0])
+        d, key, v, p, _rec = fails[0]
+        # THE MEASURED ROWS, so a declaration is pasted rather than re-derived.
+        # Every field `_stray_match` reads is here; `m2` is not, because this gate
+        # does not measure it -- grid the neighbourhood and record the method.
+        rows = "\n".join(
+            "  " + json.dumps({"key": r[4]["key"],
+                               "lat": round(r[4]["lat"], 6),
+                               "lng": round(r[4]["lng"], 6),
+                               "stray_m": round(r[4]["stray_m"], 1),
+                               "answers": [list(pair) for pair in r[4]["answers"]],
+                               # A POINT THE SHIPPED BYTES CAN BE ASKED ABOUT, so a
+                               # declaration's central claim is checkable offline
+                               # the way a dropped ring's interior point is. Seven
+                               # decimals because this is a COMPUTED point on the
+                               # sample disc rather than a source vertex; that is
+                               # about a centimetre, and every one of these sits
+                               # metres inside the patch it demonstrates.
+                               "harm_point": {
+                                   "lat": round(r[4]["harm_point"][1], 7),
+                                   "lng": round(r[4]["harm_point"][0], 7),
+                                   "answer_after": r[4]["harm_point"][3]}},
+                              sort_keys=True)
+            for r in fails)
         return False, ("%d vertex/vertices stray past %.1f m where the answer "
                        "changes; worst %.1f m on %r at %.6f,%.6f, where "
                        "%.6f,%.6f is answered %r and would be answered %r; "
-                       "excluded %s"
+                       "excluded %s\n--- measured rows for ACCEPTED_STRAYS ---\n%s"
                        % (len(fails), limit, d, key, v[1], v[0], p[1], p[0],
                           p[2] if p[2] is not None else "NO DISTRICT",
-                          p[3] if p[3] is not None else "NO DISTRICT", excl))
+                          p[3] if p[3] is not None else "NO DISTRICT", excl, rows))
     return True, ("no retained vertex strays past %.1f m where the answer changes; "
                   "excluded %s" % (limit, excl))
 
@@ -1027,6 +1108,145 @@ def _why_disagreements(dec):
     return out
 
 
+# METRES IN PROSE, never `m2`: there is no word boundary between `m` and `2`, so
+# `\bm\b` matches "127.7 m" and declines "6.35 m2" without a lookahead.
+_WHY_STRAY = re.compile(r"(?<![\d.])(\d+(?:\.\d+)?)\s*m\b")
+
+
+def _decimals(text):
+    return len(text.split(".")[1]) if "." in text else 0
+
+
+def _rounds_to(text, value):
+    """Is `text` a valid rounding of `value` AT ITS OWN PRECISION?
+
+    The same rule `_why_disagreements` applies to an area, extracted because the
+    stray table needs it three times: for a declared stray against the measured
+    one, and for each figure the prose repeats. A figure written MORE precisely
+    than what it describes fails, which is the inconsistency pointing the other
+    way.
+    """
+    if value is None:
+        return False
+    return abs(float(text) - float(value)) <= 0.5 * (10 ** -_decimals(text))
+
+
+def _stray_why_disagreements(dec):
+    """Numbers a stray declaration's `why` that its own fields contradict.
+
+    `_why_disagreements` for the other table, and for the same reason: `why` is
+    the field a person reads to decide whether an entry still holds, and nothing
+    else in this gate reads it. It holds the prose to the DECLARED values rather
+    than to the measurement, because two numbers a reader sees at once are what
+    went wrong on the aldermanic table.
+
+    THE AREA IS THE ONE FIGURE THIS GATE DOES NOT MEASURE, so the prose check is
+    all that holds it consistent. Measuring how much ground changes hands needs a
+    1 m grid over the whole neighbourhood -- minutes per vertex against a
+    point-in-polygon model of every district in the state -- which a build cannot
+    afford, so `m2` is recorded with its method and date and re-verified by a
+    person. The stray and the answers ARE measured every run.
+    """
+    why = dec.get("why") or ""
+    out = []
+    for text in _WHY_AREA.findall(why):
+        if not _rounds_to(text, dec.get("m2")):
+            out.append("its `why` states %s m2 where its `m2` is %s"
+                       % (text, dec.get("m2")))
+    for text in _WHY_STRAY.findall(why):
+        if not _rounds_to(text, dec.get("stray_m")):
+            out.append("its `why` states %s m where its `stray_m` is %s"
+                       % (text, dec.get("stray_m")))
+    return out
+
+
+def check_strays(declarations):
+    """Every stray declaration's `why` agrees with its own fields. Offline.
+
+    `check_prose` for the retained-boundary table. It runs in `--check` for the
+    reason that one does: the build path needs the network and mapshaper, so the
+    prose of a table edited by hand would be read by nobody until the next
+    rebuild.
+    """
+    problems = []
+    for d in declarations:
+        missing = [f for f in ("key", "lat", "lng", "stray_m", "m2", "answers",
+                               "harm_point", "why", "date") if f not in d]
+        if missing:
+            problems.append("declaration at %s,%s is missing %s"
+                            % (d.get("lat"), d.get("lng"), ", ".join(missing)))
+            continue
+        if not d["answers"] or any(len(pair) != 2 for pair in d["answers"]):
+            problems.append("declaration at %.6f,%.6f must carry at least one "
+                            "[before, after] pair" % (d["lat"], d["lng"]))
+        hp = d["harm_point"] or {}
+        if hp.get("lat") is None or hp.get("lng") is None or "answer_after" not in hp:
+            problems.append("declaration at %.6f,%.6f needs a harm_point with lat, "
+                            "lng and answer_after" % (d["lat"], d["lng"]))
+        elif hp["answer_after"] not in [pair[1] for pair in d["answers"]]:
+            # THE POINT HAS TO DEMONSTRATE ONE OF THE DECLARED PAIRS. Without this
+            # the offline re-derivation would be asking about an answer the
+            # declaration never claims, and would pass while the table said
+            # something else.
+            problems.append("declaration at %.6f,%.6f has a harm_point answered %r, "
+                            "which is not the `after` of any pair it declares"
+                            % (d["lat"], d["lng"], hp["answer_after"]))
+        for said in _stray_why_disagreements(d):
+            problems.append("declaration at %.6f,%.6f contradicts itself: %s"
+                            % (d["lat"], d["lng"], said))
+    if problems:
+        return False, "; ".join(problems)
+    return True, ("%d stray declaration(s): each `why` agrees with its own m2 and "
+                  "stray_m" % len(declarations))
+
+
+def _answer_sort_key(pair):
+    """A total order over (before, after) pairs that admits None.
+
+    Plain `sorted` raises the moment it compares None with a string in the same
+    position, and a vertex on a coverage edge produces exactly that mixture -- one
+    pair naming a district and another naming none. Sorting on `str` instead would
+    make the pair ("A", None) and the pair ("A", "None") sort equal, so the key
+    carries the is-None flag separately.
+    """
+    return (pair[0] is None, pair[0] or "", pair[1] is None, pair[1] or "")
+
+
+def _stray_answers(harm):
+    """The DISTINCT (before, after) pairs a vertex's own neighbourhood shows.
+
+    Never `harm[0]`. A ring the source answers several ways inside cannot be
+    summarised by one pair -- the law layer paid for that on its Brown County
+    rings -- and the same holds for a vertex: a declaration matched on the first
+    pair would keep covering the vertex after a second, different answer change
+    appeared beside it.
+    """
+    return sorted({(p[2], p[3]) for p in harm}, key=_answer_sort_key)
+
+
+def _stray_match(rec, dec):
+    """Is `dec` a declaration of THIS vertex's stray?
+
+    Exact on the key and the coordinates, because a source vertex is an exact
+    value -- LTSB serves 6 decimals, measured -- so a tolerance here would let
+    one declaration cover a neighbour. The stray must be a valid rounding of the
+    measured one at the declaration's OWN precision, which fails in both
+    directions: a stray that grows past 0.05 m on a 1-decimal entry stops
+    matching, and so does one that shrinks.
+    """
+    if dec.get("key") != rec["key"]:
+        return False
+    if round(dec["lng"], 6) != round(rec["lng"], 6):
+        return False
+    if round(dec["lat"], 6) != round(rec["lat"], 6):
+        return False
+    if not _rounds_to(("%.10f" % dec["stray_m"]).rstrip("0").rstrip("."),
+                      rec["stray_m"]):
+        return False
+    return sorted((tuple(pair) for pair in dec["answers"]),
+                  key=_answer_sort_key) == rec["answers"]
+
+
 def check_prose(declarations):
     """Every declaration's `why` agrees with its own fields. Offline, no geometry.
 
@@ -1088,6 +1308,7 @@ def _check_all_declarations():
         return 1
     status = 0
     total = 0
+    n_strays = 0
     with_ceiling = []
     without = []
     for name in mods:
@@ -1106,9 +1327,28 @@ def _check_all_declarations():
         # hand-kept-pair defect this repo keeps paying for, and it is checkable
         # offline even though the CEILING'S OWN DERIVATION is not: that needs the
         # median source step, which needs the fetch.
+        # THE STRAY TABLE'S OWN PROSE, read offline for the reason `check_prose` is:
+        # the build path needs the network and mapshaper, so a table edited by hand
+        # would be read by nobody until the next rebuild.
+        strays = getattr(mod, "ACCEPTED_STRAYS", None)
+        if strays:
+            sok, smsg = check_strays(strays)
+            print("  %s %s: %s" % ("ok  " if sok else "FAIL", name, smsg))
+            if not sok:
+                status = 1
+            n_strays += len(strays)
+
         ceil = getattr(mod, "FIDELITY_MAX_M", None)
         gaps = getattr(mod, "GAP_CLOSED", None)
         if ceil is None:
+            # A STRAY TABLE WITH NO CEILING DECLARES AGAINST NOTHING. `accepted` is
+            # only ever consulted by `check_fidelity`, so such a table would sit in
+            # the tree describing harm no gate is measuring.
+            if strays:
+                print("  FAIL %s: carries %d ACCEPTED_STRAYS and no FIDELITY_MAX_M, "
+                      "so nothing measures the strays it declares"
+                      % (name, len(strays)))
+                status = 1
             without.append(name)
             continue
         with_ceiling.append(name)
@@ -1133,8 +1373,8 @@ def _check_all_declarations():
         print("  note %d declaring builder(s) carry no FIDELITY_MAX_M, so their "
               "retained boundary is ungated: %s" % (len(without), ", ".join(without)))
     print("dropped-ring declarations: %d across %d builder(s); %d gate retained "
-          "fidelity, %d do not%s"
-          % (total, len(mods), len(with_ceiling), len(without),
+          "fidelity, %d do not; %d retained stray(s) declared%s"
+          % (total, len(mods), len(with_ceiling), len(without), n_strays,
              "" if not status else " — FAILED"))
     return status
 
@@ -1738,6 +1978,66 @@ def _selftest():
                                [_feat("A", _poly(NOTCH_DRAWN))], "K", set(), 10.0)
     ck("cutting off a spike nobody else covers FAILS as a false silence",
        not ok5 and "NO DISTRICT" in msg5, "got %r" % msg5)
+
+    # THE DECLARATION TABLE, on the same spike the assertion above fails. The row
+    # is the one that failure PRINTS, so these assertions also prove the printed
+    # row is a valid declaration rather than a description of one.
+    SPIKE_DEC = {"key": "A", "lat": 44.005, "lng": -89.0008, "stray_m": 64.1,
+                 "m2": 12.0, "answers": [["A", None]],
+                 "harm_point": {"lat": 44.005, "lng": -89.0007333,
+                                "answer_after": None},
+                 "why": "a 64.1 m spike no interval retains; 12 m2 of ground moves "
+                        "from A to no district at all",
+                 "date": "2026-09-27"}
+
+    def fid(accepted, src=SPIKE_SRC):
+        return check_fidelity([_feat("A", _poly(src))],
+                              [_feat("A", _poly(NOTCH_DRAWN))], "K", set(), 10.0,
+                              accepted=accepted)
+
+    ok6, msg6 = fid([SPIKE_DEC])
+    ck("a declared stray passes AND is counted",
+       ok6 and "1 declared" in msg6, "got %r" % msg6)
+
+    # An entry nothing matches FAILS, which is what stops the table outliving the
+    # geometry. Two ways in: a key no vertex carries, and a stray that has moved.
+    ok7, msg7 = fid([SPIKE_DEC, dict(SPIKE_DEC, key="Z")])
+    ck("a declaration matching no over-limit vertex FAILS as an orphan",
+       not ok7 and "match no over-limit vertex" in msg7 and "'Z'" in msg7,
+       "got %r" % msg7)
+
+    ok8, msg8 = fid([dict(SPIKE_DEC, stray_m=70.0)])
+    ck("a declared stray that no longer measures the same FAILS",
+       not ok8 and "match no over-limit vertex" in msg8, "got %r" % msg8)
+
+    # The whole PAIR SET has to agree: a declaration matched on one pair would go
+    # on covering the vertex after a second, different answer change appeared.
+    ok9, msg9 = fid([dict(SPIKE_DEC, answers=[["A", "B"]])])
+    ck("a declaration naming the wrong answer pair FAILS",
+       not ok9 and "match no over-limit vertex" in msg9, "got %r" % msg9)
+
+    okA, msgA = check_strays([SPIKE_DEC])
+    ck("a stray declaration whose prose agrees with its fields passes",
+       okA and "1 stray declaration" in msgA, "got %r" % msgA)
+
+    okB, msgB = check_strays([dict(SPIKE_DEC, m2=6.0)])
+    ck("a stray declaration whose `why` contradicts its own m2 FAILS",
+       not okB and "12 m2" in msgB, "got %r" % msgB)
+
+    okC, msgC = check_strays([dict(SPIKE_DEC, stray_m=64.9)])
+    ck("a stray declaration whose `why` contradicts its own stray_m FAILS",
+       not okC and "64.1 m" in msgC, "got %r" % msgC)
+
+    okD, msgD = check_strays([{k: v for k, v in SPIKE_DEC.items() if k != "m2"}])
+    ck("a stray declaration missing a required field FAILS",
+       not okD and "missing m2" in msgD, "got %r" % msgD)
+
+    # The point has to demonstrate one of the pairs the entry declares, or the
+    # offline re-derivation asks about an answer the table never claims.
+    okE, msgE = check_strays([dict(
+        SPIKE_DEC, harm_point=dict(SPIKE_DEC["harm_point"], answer_after="B"))])
+    ck("a harm_point answered by no declared pair FAILS",
+       not okE and "not the `after` of any pair" in msgE, "got %r" % msgE)
 
     print("%s — %d failure(s)" % ("dropped_rings selftest", len(fails)))
     return 1 if fails else 0

@@ -201,51 +201,104 @@ SIMPLIFY = ["dp", "keep-shapes", "interval=4"]
 # rather than carried forward.
 GAP_CLOSED = 235
 
-# THIS BUILDER CARRIES NO `FIDELITY_MAX_M`, AND THAT IS A MEASUREMENT RATHER THAN
-# AN OMISSION. `dropped_rings.py --check` names it as ungated on every run so the
-# absence cannot read as covered; here is what was measured on 2026-09-27, so the
-# next reader does not repeat it.
+# HOW FAR THE RETAINED BOUNDARY MAY MOVE at a point where a reader's ANSWER
+# changes, in metres. 1.10x this layer's own median source step (5.002 m over
+# 1,578,262 retained-ring segments on the July 2026 filing), which is the ratio
+# `scripts/build_legislative_boundaries.py` uses for Illinois's chambers. THE RULE
+# THAT TRANSFERS IS THAT THE CEILING COMES OFF THE LAYER'S OWN STEP -- never the
+# ratio and never the metres. PINNED rather than derived at build time, because a
+# ceiling recomputed from the source rises whenever the source gets coarser and can
+# therefore never fail; the builder prints the measured step beside it.
+FIDELITY_MAX_M = 5.50
+
+# Retained vertices whose stray past that ceiling changes what a reader is told,
+# and which NO SIMPLIFICATION SETTING REMOVES. Same shape and same discipline as
+# ACCEPTED_DROPPED_RINGS below: written from the gate's own printed rows, never by
+# hand, and `check_fidelity` re-verifies each entry's STRAY and its whole
+# (before, after) PAIR SET every run and FAILS on an entry that matches nothing.
 #
-# `check_fidelity` holds the RETAINED boundary to a ceiling derived from the
-# layer's own geometry — 1.10x its median source step, which here is 5.002 m over
-# 1,578,262 retained-ring segments, so 5.50 m. At that ceiling exactly THREE
-# retained vertices stray where a reader's answer changes, and NO CEILING BELOW
-# ABOUT 128 m PASSES THEM:
+# WHY A TABLE AND NOT A BIGGER NUMBER, measured 2026-09-27. At 5.50 m exactly three
+# vertices fail, and no ceiling below about 128 m passes them, which would gate
+# nothing. The interval is not the cause: the statewide run at `dp interval=1`
+# fails the same three at the same distances, and re-simplifying the two features
+# ALONE drops them at interval 4, 2, 1 and 0.5 and keeps them only at 0.1. A
+# small-input test is valid here and usually is not -- dp's interval is absolute
+# metres, where a retain PERCENTAGE would have lied, which is the trap the chambers
+# builder records paying for.
 #
-#   Jefferson district 20   -88.709919,42.976026   127.7 m
-#   Monroe district 9       -90.552772,43.984725   126.7 m
-#   Monroe district 9       -90.552777,43.984868   110.9 m
+# TWO EXPLANATIONS WERE TESTED AND BOTH FAILED. Not topology with the neighbouring
+# district: each excursion is gone with its feature simplified by itself. And not a
+# hairline narrower than one output cell, which is what the SPUR predicate covers:
+# the nearest non-adjacent part of the same ring is 127.7 m, 15.8 m and 110.9 m
+# away, so there is real ground inside it. Each vertex is the LAST distinct vertex
+# of a huge main ring, or its neighbour, and the drawn ring carries no segment
+# within 110 m of it -- a whole excursion absent rather than a vertex displaced.
+# WHAT REMOVED IT IS NOT ESTABLISHED AND IS NOT GUESSED AT.
 #
-# THE INTERVAL IS NOT THE CAUSE, measured two ways. The full statewide run at
-# `dp interval=1` fails the same three vertices at the same distances. And
-# re-simplifying the two features ALONE — valid here because dp's interval is
-# absolute metres rather than a percentage of the dataset, which is the small-input
-# trap `scripts/build_legislative_boundaries.py` records paying for — drops all
-# three at interval 4, 2, 1 and 0.5 and keeps them only at 0.1.
+# THE `m2` IS GRIDDED AT 1 m AND IS THE ONE FIELD THE GATE DOES NOT RE-MEASURE:
+# each figure counts the 1 m cells whose answer differs between the source and the
+# drawn output, so it is a FLOOR at that resolution, and measuring it costs minutes
+# per vertex against a point-in-polygon model of all 1,590 districts. `check_strays`
+# holds the prose to the field instead. Each of the three ALSO fills a larger patch
+# the source answered with nothing -- 46, 10 and 18 m2 -- which is the gap-closed
+# direction this project counts and does not call harm; those figures are here
+# rather than in a `why` because the prose check reads every `m2` in a `why` against
+# that entry's own field, so a second area in the prose is a contradiction.
 #
-# TWO EXPLANATIONS WERE TESTED AND BOTH FAILED. It is not topology with the
-# neighbouring district: the excursion is gone with the feature simplified by
-# itself. And it is not a hairline narrower than the output cell, which is what
-# the SPUR predicate covers: the nearest non-adjacent part of the same ring is
-# 127.7 m, 15.8 m and 110.9 m away, so there is real ground inside it. Each
-# vertex is the LAST distinct vertex of a huge main ring, or its neighbour, and
-# the drawn ring carries no segment within 110 m of it — a whole excursion absent
-# rather than a vertex displaced. WHAT REMOVED IT IS NOT ESTABLISHED and is not
-# guessed at.
-#
-# WHAT IT COSTS A READER IS SMALL AND MEASURED, gridded at 1 m so each figure is a
-# floor: 5 m2, 1 m2 and 2 m2 of ground move from one district to another
-# (5505525 -> 5505520, and 5508102 -> 5508109 twice). Each also fills a larger
-# patch the source answered with nothing — 46, 10 and 18 m2 — which is the
-# gap-closed direction this project counts and does not call harm.
-#
-# SO THIS IS A THIRD HARM CLASS, and a ceiling is the wrong instrument for it: not
-# a whole ring that vanished, which `classify` measures and the table below
-# declares, and not a bounded stray, which a ceiling holds. Gating it wants a
-# declaration in the shape of `ACCEPTED_DROPPED_RINGS` — measured fields,
-# re-audited every run, failing when orphaned or stale — or a fifth measured
-# predicate if one turns out to fit. RAISING THE CEILING TO 128 m IS NOT THE
-# ANSWER: it would pass these three and gate nothing else.
+# AND A RATIO IS NOT A LICENCE. Every one of the three gains about nine times the
+# ground it loses, and a fifth predicate reading "the ground gained exceeds the
+# ground lost" would excuse real harm wherever something else outweighs it. A
+# reader told the wrong district gains nothing from a neighbour's gap being filled.
+ACCEPTED_STRAYS = [
+    {
+        # JEFFERSON COUNTY DISTRICT 20, the last distinct vertex of its main ring.
+        # Its two ring neighbours sit 2.4 m apart at the same latitude and it lies
+        # 127.7 m north of them, so the tail of the ring is a long narrow excursion
+        # the drawn output does not carry at all. 5 of the 51 differing 1 m cells
+        # move between districts; the other 46 fill ground the source answered with
+        # nothing.
+        "key": "5505520", "lat": 42.976026, "lng": -88.709919,
+        "stray_m": 127.7, "m2": 5.0,
+        "answers": [["5505525", "5505520"]],
+        # A point inside the 5 m2 that moves, so `--check-shipped` can ask the
+        # bytes this repository ships what a reader is told there, with no fetch
+        # and no simplifier.
+        "harm_point": {"lat": 42.9748709, "lng": -88.709919,
+                       "answer_after": "5505520"},
+        "why": "127.7 m of a narrow excursion the drawn ring does not carry, which "
+               "no tested dp interval from 4 down to 0.5 retains; 5 m2 of ground "
+               "moves from Jefferson County district 25 to district 20",
+        "date": "2026-09-27",
+    },
+    {
+        # MONROE COUNTY DISTRICT 9, and the entry below is its immediate ring
+        # neighbour 15.8 m away -- two vertices on one excursion, declared
+        # separately because the gate excludes per VERTEX and a single entry would
+        # leave the other failing.
+        "key": "5508109", "lat": 43.984725, "lng": -90.552772,
+        "stray_m": 126.7, "m2": 1.0,
+        "answers": [["5508102", "5508109"]],
+        "harm_point": {"lat": 43.985871, "lng": -90.552772,
+                       "answer_after": "5508109"},
+        "why": "126.7 m on the same absent excursion as the entry below it, which "
+               "no tested dp interval from 4 down to 0.5 retains; 1 m2 of ground "
+               "moves from Monroe County district 2 to district 9",
+        "date": "2026-09-27",
+    },
+    {
+        "key": "5508109", "lat": 43.984868, "lng": -90.552777,
+        "stray_m": 110.9, "m2": 2.0,
+        "answers": [["5508102", "5508109"]],
+        # The two Monroe entries' harm points sit 0.44 m apart on one latitude,
+        # which is what two vertices on one excursion produce; they are distinct
+        # points and each is asked about separately.
+        "harm_point": {"lat": 43.985871, "lng": -90.552777,
+                       "answer_after": "5508109"},
+        "why": "110.9 m on the same absent excursion as the entry above it; 2 m2 "
+               "of ground moves from Monroe County district 2 to district 9",
+        "date": "2026-09-27",
+    },
+]
 
 # Rings whose loss changes the district a reader is told they are in. Written from
 # the builder's own gate output, never by hand — run the build, read the UNDECLARED
@@ -886,6 +939,27 @@ def check_shipped():
                 "at the declared interior point %.7f,%.7f the SHIPPED file answers "
                 "%s; the declaration says the reader would be answered %s"
                 % (ip["lat"], ip["lng"], got or ["NO DISTRICT"], want or ["NO DISTRICT"]))
+    # EVERY DECLARED STRAY'S AFTER ANSWER, from the same shipped bytes. Without
+    # this the stray table's central claim — a reader standing there is told THIS
+    # district — would be re-verified only on an operator build with a 40 MB fetch,
+    # so a rebuild that moved the boundary back could leave the table describing
+    # harm the shipped file no longer does. `reader_answer` rather than
+    # `districts_at`, because that is the function the declaration's `after` came
+    # from and the one whose answer a reader is shown.
+    sok, smsg = drings.check_strays(ACCEPTED_STRAYS)
+    if not sok:
+        problems.append(smsg)
+    for d in ACCEPTED_STRAYS:
+        hp = d.get("harm_point") or {}
+        if hp.get("lat") is None or hp.get("lng") is None:
+            continue
+        got = drings.reader_answer(mod, (hp["lng"], hp["lat"]))
+        if got != hp.get("answer_after"):
+            problems.append(
+                "at the declared harm point %.7f,%.7f the SHIPPED file answers %s; "
+                "the declaration says the reader is answered %s"
+                % (hp["lat"], hp["lng"], got or "NO DISTRICT",
+                   hp.get("answer_after") or "NO DISTRICT"))
     if GAP_CLOSED is None and ACCEPTED_DROPPED_RINGS:
         problems.append("GAP_CLOSED is unset, so nothing holds the number of "
                         "coverage gaps this simplification closes")
@@ -894,8 +968,10 @@ def check_shipped():
               file=sys.stderr)
         return 1
     print("OK %d declared dropped ring(s); every AFTER answer re-derived from the "
-          "shipped %d features at its own interior point; GAP_CLOSED %s"
-          % (len(ACCEPTED_DROPPED_RINGS), len(feats), GAP_CLOSED), file=sys.stderr)
+          "shipped %d features at its own interior point; %d declared stray(s), "
+          "every AFTER answer re-derived at its own harm point; GAP_CLOSED %s"
+          % (len(ACCEPTED_DROPPED_RINGS), len(feats), len(ACCEPTED_STRAYS),
+             GAP_CLOSED), file=sys.stderr)
     return 0
 
 
@@ -951,6 +1027,36 @@ def main():
     records, dstats = drings.classify({
         LAYER_NAME: {"source": feats, "drawn": simplified["features"],
                      "key": VALIDATION_KEY}})
+
+    # THE UNION OF EACH RECORD'S SIGNATURES, never one per record: rings that
+    # coincide on the ground and differ byte for byte are folded into one record,
+    # so taking a single signature leaves the other ring looking retained and the
+    # fidelity gate then measures a shape that is gone.
+    dropped_sigs = {sig for r in records for sig in r["signatures"]}
+
+    # HOW FAR THE RETAINED BOUNDARY MOVED, a different question from the one below:
+    # `check` asks what a whole DROPPED ring costs a reader, and a retained ring
+    # keeps only a subset of its vertices, so the drawn line can cut a chord across
+    # a narrow excursion and hand its ground to whoever is next door. The three
+    # vertices this layer cannot avoid are declared in ACCEPTED_STRAYS, and an entry
+    # there that matches nothing fails the build.
+    src_by_key = {f["properties"][VALIDATION_KEY]: f["geometry"] for f in feats}
+    steps = drings.source_step_m(src_by_key, dropped_sigs)
+    fok, fmsg = drings.check_fidelity(feats, simplified["features"], VALIDATION_KEY,
+                                      dropped_sigs, FIDELITY_MAX_M,
+                                      accepted=ACCEPTED_STRAYS)
+    print("fidelity: median source step %.2f m, ceiling %.2f m (%.2fx); %s"
+          % (steps[len(steps) // 2], FIDELITY_MAX_M,
+             FIDELITY_MAX_M / steps[len(steps) // 2], fmsg), file=sys.stderr)
+    if not fok:
+        raise RuntimeError(
+            "fidelity check failed: %s\n"
+            "  A chord has been drawn across ground that changes hands. Re-measure "
+            "at a finer interval, or — where no interval retains it, which this "
+            "layer has three of — paste the printed row into ACCEPTED_STRAYS with "
+            "its own gridded m2 and why. Never raise FIDELITY_MAX_M, which is "
+            "derived from this layer's own median source step." % fmsg)
+
     gap_closed = (dstats[drings.KIND_GAP_CLOSED] if GAP_CLOSED is None else GAP_CLOSED)
     dok, dmsg = drings.check(records, dstats, ACCEPTED_DROPPED_RINGS, gap_closed)
     print("dropped rings: %s" % dmsg, file=sys.stderr)
