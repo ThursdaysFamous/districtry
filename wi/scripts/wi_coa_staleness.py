@@ -119,6 +119,10 @@ import sys
 import urllib.error
 import urllib.request
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)))), "scripts"))
+import workflow_run_evidence  # noqa: E402  (shared reader — do not fork)
+
 REPO = os.environ.get("GITHUB_REPOSITORY", "ThursdaysFamous/districtry")
 WORKFLOW = "update-wi-court-of-appeals-roster.yml"
 DEFAULT_CEILING_DAYS = 60
@@ -198,24 +202,29 @@ def run_started(run):
 def run_verified(jobs_payload, step=VERIFY_STEP):
     """True when this run's own `step` RAN rather than being skipped.
 
-    This is the whole correction. The obvious reading — the run concluded
-    success — is true of a forgiven run too, because the scrape step carries
-    continue-on-error and the steps after it are skipped rather than failed.
-    Measured on update-mchenry-county-board-roster run 8 (2026-08-28), whose
-    scrape genuinely failed: the API reported that step's conclusion as
-    "success", the job as success, and a `?status=success` query returned the
-    run. Its conditional rebuild step read "skipped" in the same payload, and
-    that is not masked, so it is the only difference the API will show.
+    ONE READER, NOT A SECOND COPY. This used to carry the classifier itself,
+    five lines identical to `workflow_run_evidence.run_did_work`, which the
+    fleet's roster-health watchdog and weekly fleet report both read. Two
+    readers of one question is where this project's recurring defect starts,
+    and here it is not hypothetical: this guard and that report would have been
+    free to disagree about the same runs of the same workflow. The shared module
+    is stdlib-only, so importing it costs this script nothing it did not already
+    have.
+
+    The correction itself is recorded there. In short: the obvious reading — the
+    run concluded success — is true of a forgiven run too, because the scrape
+    step carries continue-on-error and the steps after it are SKIPPED rather
+    than failed. Measured on update-mchenry-county-board-roster run 8
+    (2026-08-28), whose scrape genuinely failed: the API reported that step's
+    conclusion as "success", the job as success, and a `?status=success` query
+    returned the run, while its conditional rebuild step read "skipped" in the
+    same payload. That is not masked, so it is the only difference the API shows.
 
     A run whose payload carries no such step reads as NOT verified, which is
     the safe direction; a rename that made every run read that way is what
     check_workflow_coupling() refuses.
     """
-    for job in jobs_payload.get("jobs") or []:
-        for s in job.get("steps") or []:
-            if s.get("name") == step:
-                return s.get("conclusion") == "success"
-    return False
+    return workflow_run_evidence.run_did_work(jobs_payload, step)
 
 
 def last_verification(repo=REPO, workflow=WORKFLOW, timeout=30,

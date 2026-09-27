@@ -127,7 +127,7 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # member, and #809 measured six callers reading one as data and thirty-one
 # more blaming the county for it. What an ArcGIS error IS must not be
 # answered differently per instance, which is this list's own test.
-# All four are stdlib-only AT MODULE SCOPE, which is why none needs a pip line --
+# All five are stdlib-only AT MODULE SCOPE, which is why none needs a pip line --
 # arcgis_error bases its exception on requests.RequestException only WHERE
 # REQUESTS IS THERE, and on RuntimeError otherwise, and `scraper_common` imports
 # `requests`, `urllib.request` and `robots_policy` inside the functions that use
@@ -142,7 +142,17 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # URL" MEANS must not be answered differently per instance, which is this list's
 # own test — and over a hundred files already send its pinned UA constants, so a
 # per-instance copy would be a second answer to both questions at once.
-FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error", "scraper_common"}
+#
+# `workflow_run_evidence` (2026-09-27) is the fifth, and it meets this list's own
+# test more plainly than most: it answers "is this run evidence that the refresh
+# happened", which `check_roster_workflow_health.py` and `fleet_status.py` both
+# read and which `wi/scripts/wi_coa_staleness.py` now reads instead of the copy
+# it shipped with. Two readers of one question is where this fleet's recurring
+# defect starts, and here it was not hypothetical: the Court of Appeals guard and
+# the roster-health report were free to disagree about the same runs of the same
+# workflow. Stdlib-only throughout — `re` and `sys`, nothing function-local.
+FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error", "scraper_common",
+                "workflow_run_evidence"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")

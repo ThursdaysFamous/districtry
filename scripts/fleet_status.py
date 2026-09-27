@@ -424,6 +424,15 @@ def workflow_health(repo, wf_file):
     workflow_run_evidence.py is the one reader of that question; the roster-health
     watchdog, which had the same defect, asks it too. Several runs are fetched
     now because the newest one may not be evidence.
+
+    AND A RUN THAT STARTED IS NOT ALWAYS A RUN THAT WORKED. Six of these
+    workflows forgive a fetch that fails, so their runs conclude success having
+    refreshed nothing — measured 2026-09-27, 14 of 56 successful runs across the
+    six. Where `workflow_run_evidence.verify_step` names the step whose running
+    proves the work happened, the conclusion is reported WITH whether that step
+    ran, so a green row cannot stand for a run that scraped nothing. This reports
+    the latest run rather than a history, so it qualifies that run and does not
+    keep a clock; the roster-health watchdog keeps the clock.
     """
     try:
         runs = api_get("/repos/%s/actions/workflows/%s/runs?per_page=10&status=completed"
@@ -444,7 +453,23 @@ def workflow_health(repo, wf_file):
                         coverage.append(re.sub(r"^\S+\s", "", line).strip())
     except Exception:  # noqa: BLE001 — coverage is best-effort garnish, never a failure
         pass
-    return (run.get("conclusion") or "?", (run.get("run_started_at") or "")[:10], coverage[:4])
+    conclusion = run.get("conclusion") or "?"
+    # One request, and only for a workflow that forgives something.
+    try:
+        with open(os.path.join(os.path.dirname(os.path.dirname(
+                os.path.abspath(__file__))), ".github", "workflows", wf_file),
+                encoding="utf-8") as fh:
+            witness = workflow_run_evidence.verify_step(fh.read())
+    except OSError:
+        witness = None
+    if witness is not None and conclusion == "success":
+        try:
+            jobs = api_get("/repos/%s/actions/runs/%d/jobs" % (repo, run["id"]))
+        except (urllib.error.URLError, LookupError):
+            jobs = None                  # unreadable is unknown, never a no
+        if jobs is not None and not workflow_run_evidence.run_did_work(jobs, witness):
+            conclusion = "success, but refreshed nothing (its `%s` step did not run)" % witness
+    return (conclusion, (run.get("run_started_at") or "")[:10], coverage[:4])
 
 
 def open_bot_prs(repo):
