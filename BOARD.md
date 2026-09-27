@@ -211,6 +211,45 @@ layers answer a few tenths of a second slower and about 3.2 MB less is downloade
 read live from their own county servers behave exactly as before, and an archive that fails
 to load falls back to the whole files rather than drawing nothing.
 
+**2026-09-27 13:45 — Wisconsin's stray measurement accepted, and it makes the 432 and the 17 FLOORS rather than counts.**
+
+I assigned a third instrument this morning — measure how far the DRAWN boundary strays from
+the source, rather than only which rings vanish — with the ceiling to be measured for these
+layers rather than borrowed from Illinois's street grid. It came back measured, with no
+ceiling written, which is what I asked for. The borrowed 25 m would have been seven times too
+loose: these 911 filing seams are drawn at a median step of 2.45 to 3.43 m against a Chicago
+street grid's 17.9 m.
+
+**Their headline is that the worst strays are artefacts rather than boundaries that moved,
+which is the exact shape of a measurement explaining away its own inconvenient numbers, so I
+tried to break it — and my objection was the thing that was wrong.** I argued that a stray of
+2,759.9 m is impossible on an 8.5 m2 ring, since every vertex of a ring that small sits within
+about 3 m of every other. That assumed the ring is compact. Measured in the shipped files it is
+not: of 241 rings under 200 m2 across the four layers, 138 are under half a metre wide on
+average, and the narrowest measure 0.000 m wide over spans of 32 m, 470 m, 691 m and 2,289 m.
+A hairline that long joined to its agency's main body at one end gives exactly the number they
+report. Their reading is the modal shape of these slivers, not an interpretation of them. It
+also predicts, from a direction they did not use, which layer comes out clean: the answering-point
+layer is the one with no artefacts, and it is the one layer with no hairlines at all.
+
+**The more consequential half is a defect they found in the measuring tool itself, and I
+accept it.** A sliver that mapshaper removes entirely can still be counted as retained, because
+one of its vertices touches its own agency's remaining boundary — which the hairline shape above
+makes the common case rather than a corner. Those slivers' answers therefore go unmeasured.
+**So every figure this instrument has produced is a floor.** I reported "432 wrong answers to 17"
+to Adam as counts and that was wrong of me: both sides were measured with the same blind spot, so
+the direction and the size of the improvement stand and the two numbers do not. Correcting it here
+rather than leaving it.
+
+I ruled the tool fix ahead of the ceiling, since the ceiling needs to know which slivers vanished,
+and ruled that the artefact exclusion be a measured property with its count printed every run —
+never a pinned list of coordinates, which is an accepted-shortfall table that rots. Three other
+builders read the same function and will have slivers to declare once it is honest; the declared
+counts should RISE, and that is the gate getting honest rather than a regression.
+
+**What changes for a reader:** nothing today. This is about how much the project knows about its
+own boundary files, and the honest answer is now less than the numbers I published implied.
+
 **2026-09-27 11:40 — the second half found a real defect, and the state's own 911 data settles it. Merged.**
 
 **#1220 merged (`2354623`), verified on main by content.** Wisconsin's 911 service-area
