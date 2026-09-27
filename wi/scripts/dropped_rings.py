@@ -495,6 +495,185 @@ def measure_stray(src_by_key, drawn_by_key, dropped_sigs=()):
                      "worst_at": wat, "dropped": dropped}
 
 
+# THE OUTPUT'S OWN COORDINATE CELL, in metres: 6 decimals of latitude, which is
+# the narrower of the two axes at Wisconsin's latitudes (a degree of longitude is
+# shorter, so its cell is smaller still -- taking the latitude cell is therefore
+# the CONSERVATIVE reading, and a ring this measurement calls narrower than the
+# cell is narrower on both axes). A ring narrower than this cannot be drawn by the
+# file it ships in, so a vertex whose two ring neighbours sit closer together than
+# one cell is on a SPUR: the ring doubles back through it, it encloses no area, and
+# its distance from the drawn line is the length of that spur rather than a
+# boundary anyone can stand beside. Callers shipping at a different precision pass
+# their own.
+OUTPUT_CELL_M = 0.111
+
+# The disc a fidelity failure's own neighbourhood is swept over, as shells x spokes
+# out to the vertex's own stray distance -- so the far shell lands where the drawn
+# line runs and the near ones cover the ground between. 12 x 24 is 288 points per
+# over-limit vertex, which is cheap because an over-limit vertex is rare: on
+# Wisconsin's four NG911 layers, 79 of 3,953,583 source vertices stray over 2 m.
+FIDELITY_SHELLS = 12
+FIDELITY_SPOKES = 24
+
+
+def check_fidelity(source_features, drawn_features, key_prop, dropped_sigs,
+                   limit, cell_m=OUTPUT_CELL_M):
+    """Does the true line stray past `limit` anywhere a reader's ANSWER changes?
+
+    Returns (ok, message). On a failure the message names the worst surviving
+    stray, where it is and which way the answer moves; on a pass it names the limit
+    nothing reached. EITHER WAY IT NAMES EVERY EXCLUDED COUNT, so a run that
+    excludes a great deal says so rather than reading as a clean pass.
+
+    THE METRES ALONE ARE THE WRONG SUBJECT, and that is measured rather than
+    asserted. On Wisconsin's four NG911 layers a ceiling derived from their own
+    median source step lands at 2.45-3.43 m; at that value it fails seven vertices
+    that cost no reader anything, and set high enough to pass them it is 126 m and
+    gates nothing. So this couples the two: a vertex over the limit is a FAILURE
+    unless one of FOUR MEASURED PREDICATES clears it. None of them is a pinned list
+    of coordinates, and each one's count is printed every run.
+
+      * SPUR -- the vertex's two ring neighbours sit closer together than one
+        output cell, so the ring is narrower there than the file can draw and
+        encloses no area. Its stray is a spur's length.
+      * AGREES -- the disc around it, out to its own stray distance, is answered
+        identically by the source features and the drawn features at every one of
+        FIDELITY_SHELLS x FIDELITY_SPOKES points. Nothing there changes hands.
+      * DECLARED RING -- every point that DOES differ lies inside a ring
+        `dropped_sigs` names. `classify` already measured that ring's answer change
+        and `check` already requires it declared, so failing here too would demand
+        the same harm be written down in two tables.
+      * GAP CLOSED -- every difference is a point the SOURCE answered with nothing
+        and the drawn output answers with a district. This one was found by the
+        selftest rather than reasoned out: assertion 16 asserted that closing a
+        64 m notch with nobody next door changes no answer, and it changes one --
+        from NO AGENCY to A. `classify` calls that `gap-closed`, holds the COUNT
+        rather than declaring each ring, and does not call it harm, so this reads
+        the direction the same way. A difference from one district to another, or
+        from a district to nothing, is harm and fails.
+
+    WHAT IT CANNOT SEE is stated rather than implied: the disc is a sample, so a
+    disagreement smaller than the gap between its points is missed, and the
+    exclusion is per VERTEX rather than per region, so a long excursion whose
+    middle changes hands while both its ends agree could clear on each vertex
+    separately. Both are why the ceiling is kept near one source step instead of
+    being widened until nothing fails.
+    """
+    src = {k: f["geometry"] for k, f in _by_key(source_features, key_prop).items()}
+    drawn = {k: f["geometry"] for k, f in _by_key(drawn_features, key_prop).items()}
+    smod = model(source_features, key_prop)
+    dmod = model(drawn_features, key_prop)
+    dropped_rings_by_sig = {}
+    for k, geom in src.items():
+        for r in rings(geom):
+            sig = ring_signature(r)
+            if sig in dropped_sigs:
+                dropped_rings_by_sig.setdefault(sig, r)
+
+    worst, wkey, wat = 0.0, None, None
+    fails = []
+    n_spur = n_agree = n_declared = n_gap = 0
+    for key, sgeom in src.items():
+        if key not in drawn:
+            continue
+        dr = rings(drawn[key])
+        sr = rings(sgeom)
+        if not dr or not sr:
+            continue
+        grid, cell = index_segments(dr)
+        # A SOURCE VERTEX THE DRAWN RINGS STILL CARRY IS AT DISTANCE 0 BY SET
+        # MEMBERSHIP, so it needs no geometry query at all. Simplification keeps
+        # most vertices, so this skips the great majority of the scan exactly
+        # rather than approximately: measured on these four layers it is 3.95M
+        # vertices asked down to the handful that were removed.
+        kept = {(pt[0], pt[1]) for ring in dr for pt in ring}
+        for r in sr:
+            if ring_signature(r) in dropped_sigs or len(r) < 3:
+                continue
+            sx, sy = mscale(r[0][1])
+            n = len(r) - 1 if r[0] == r[-1] else len(r)
+            for i in range(n):
+                v = r[i]
+                if (v[0], v[1]) in kept:
+                    continue
+                d = dist_to_drawn((v[0], v[1]), grid, cell, sx, sy)
+                if d <= limit:
+                    continue
+                a, b = r[(i - 1) % n], r[(i + 1) % n]
+                span = math.hypot((b[0] - a[0]) * sx, (b[1] - a[1]) * sy)
+                if span < cell_m:
+                    n_spur += 1
+                    continue
+                diffs = _answer_diffs_around(smod, dmod, v, d, sx, sy)
+                if not diffs:
+                    n_agree += 1
+                    continue
+                if all(any(point_in_ring((p[0], p[1]), rr)
+                           for rr in dropped_rings_by_sig.values())
+                       for p in diffs):
+                    n_declared += 1
+                    continue
+                # THE DIRECTION DECIDES, exactly as `classify`'s kinds do: a point
+                # the source answered with nothing and the output answers with a
+                # district is the gap-closed direction, which this project counts
+                # and does not call harm. Anything else -- one district for
+                # another, or a district for nothing -- is harm.
+                # `reader_answer` answers None for "no district", never "".
+                # The first draft tested `!= ""`, which is True of None, so every
+                # gap-closing difference read as harm -- and its own message then
+                # printed "NO DISTRICT" beside the harm it had just claimed, which
+                # is what gave it away.
+                harm = [p for p in diffs if p[2] is not None]
+                if not harm:
+                    n_gap += 1
+                    continue
+                fails.append((d, key, v, harm[0]))
+                if d > worst:
+                    worst, wkey, wat = d, key, v
+
+    excl = ("%d spur(s) on a span under %.3f m, %d vertex/vertices whose own "
+            "neighbourhood is answered identically, %d whose every difference lies "
+            "inside a ring already declared as dropped, %d whose every difference "
+            "only fills ground the source answered with nothing"
+            % (n_spur, cell_m, n_agree, n_declared, n_gap))
+    if fails:
+        fails.sort(reverse=True)
+        d, key, v, p = fails[0]
+        return False, ("%d vertex/vertices stray past %.1f m where the answer "
+                       "changes; worst %.1f m on %r at %.6f,%.6f, where "
+                       "%.6f,%.6f is answered %r and would be answered %r; "
+                       "excluded %s"
+                       % (len(fails), limit, d, key, v[1], v[0], p[1], p[0],
+                          p[2] if p[2] is not None else "NO DISTRICT",
+                          p[3] if p[3] is not None else "NO DISTRICT", excl))
+    return True, ("no retained vertex strays past %.1f m where the answer changes; "
+                  "excluded %s" % (limit, excl))
+
+
+def _answer_diffs_around(smod, dmod, v, reach, sx, sy):
+    """Points on a disc around `v` where the source and drawn answers differ.
+
+    The disc reaches out to `v`'s own stray distance, so its far shell lands where
+    the drawn line runs. Returns the differing points, so the caller can ask
+    whether each is inside a ring already declared dropped rather than taking a
+    single yes or no.
+    """
+    out = []
+    for j in range(1, FIDELITY_SHELLS + 1):
+        rad = reach * j / float(FIDELITY_SHELLS)
+        for k in range(FIDELITY_SPOKES):
+            th = 2 * math.pi * k / FIDELITY_SPOKES
+            p = (v[0] + rad * math.cos(th) / sx, v[1] + rad * math.sin(th) / sy)
+            before = reader_answer(smod, p)
+            after = reader_answer(dmod, p)
+            if before != after:
+                # (lng, lat, before, after) -- the caller reads the DIRECTION off
+                # `before`, so it cannot be recovered by a second query that might
+                # disagree with this one.
+                out.append((p[0], p[1], before, after))
+    return out
+
+
 def pct(sorted_vals, q):
     """The q-th percentile (0..100) of an already-sorted list, or 0.0 if empty."""
     if not sorted_vals:
@@ -546,10 +725,27 @@ def find_dropped(source_features, drawn_features, key_prop):
     still unclaimed. Where that leaves no single candidate this RAISES rather than
     guessing, because picking one would silently attribute a drop to the wrong ring.
 
-    AND THE COUNT IS GATED AGAINST ARITHMETIC NOBODY HERE CONTROLS: per key, the
-    number of unclaimed source rings must equal len(source rings) - len(drawn
-    rings). That identity held on all four NG911 layers at 165, 118, 10 and 149, so
-    the test is checked against the ring counts rather than trusted.
+    THAT SENTENCE CLAIMED A GATE THAT DOES NOT EXIST, and it stays above its
+    correction: "AND THE COUNT IS GATED AGAINST ARITHMETIC NOBODY HERE CONTROLS:
+    per key, the number of unclaimed source rings must equal len(source rings) -
+    len(drawn rings). That identity held on all four NG911 layers at 165, 118, 10
+    and 149, so the test is checked against the ring counts rather than trusted."
+    The identity is TRUE BY CONSTRUCTION: the loop above gives every drawn ring
+    exactly one free source ring or raises, so len(claimed) == len(dr) whenever
+    this returns, hence len(out) == len(sr) - len(dr) always. Verified by trying to
+    build a return value that violates it -- a drawn ring matching no source ring,
+    two drawn rings wanting one source ring, more drawn rings than source rings --
+    and every attempt RAISES instead of returning. Nothing outside the function
+    asserts it either; the 165/118/10/149 reading was a development measurement and
+    nothing re-checks it. Adding that assertion anywhere would be the vacuous gate
+    two post-checks were already removed for.
+
+    WHAT ACTUALLY PROTECTS THIS, both real and both in code: the RAISE above, which
+    is what makes the removes-but-never-moves assumption checkable rather than
+    assumed -- a simplifier that MOVED a vertex would fail the subset test and stop
+    the build -- and each declaring builder's PINNED per-layer counts beside its
+    `ACCEPTED_DROPPED_RINGS`, so a change in the dropped set fails until a person
+    re-reads it. Neither is arithmetic this function controls.
     """
     src, drawn = _by_key(source_features, key_prop), _by_key(drawn_features, key_prop)
     out = []
@@ -892,8 +1088,11 @@ def _check_all_declarations():
         return 1
     status = 0
     total = 0
+    with_ceiling = []
+    without = []
     for name in mods:
-        decs = getattr(importlib.import_module(name), "ACCEPTED_DROPPED_RINGS")
+        mod = importlib.import_module(name)
+        decs = getattr(mod, "ACCEPTED_DROPPED_RINGS")
         if isinstance(decs, dict):        # a multi-layer builder keys by layer
             decs = [d for layer in sorted(decs) for d in decs[layer]]
         total += len(decs)
@@ -901,8 +1100,42 @@ def _check_all_declarations():
         print("  %s %s: %s" % ("ok  " if ok else "FAIL", name, msg))
         if not ok:
             status = 1
-    print("dropped-ring declarations: %d across %d builder(s)%s"
-          % (total, len(mods), "" if not status else " — FAILED"))
+
+        # A BUILDER'S TWO PER-LAYER TABLES MUST NAME THE SAME LAYERS. A layer that
+        # gains a dropped-ring gate and silently lacks a fidelity ceiling is the
+        # hand-kept-pair defect this repo keeps paying for, and it is checkable
+        # offline even though the CEILING'S OWN DERIVATION is not: that needs the
+        # median source step, which needs the fetch.
+        ceil = getattr(mod, "FIDELITY_MAX_M", None)
+        gaps = getattr(mod, "GAP_CLOSED", None)
+        if ceil is None:
+            without.append(name)
+            continue
+        with_ceiling.append(name)
+        if isinstance(ceil, dict) and isinstance(gaps, dict):
+            if set(ceil) != set(gaps):
+                print("  FAIL %s: FIDELITY_MAX_M names %s and GAP_CLOSED names %s; "
+                      "a layer with one and not the other is gated by half"
+                      % (name, sorted(ceil), sorted(gaps)))
+                status = 1
+        elif isinstance(ceil, dict) != isinstance(gaps, dict):
+            print("  FAIL %s: FIDELITY_MAX_M is %s and GAP_CLOSED is %s; one is "
+                  "per-layer and the other is not"
+                  % (name, type(ceil).__name__, type(gaps).__name__))
+            status = 1
+
+    # NAMED AND COUNTED RATHER THAN SILENT. These builders gate what their dissolve
+    # DROPS and not how far their retained boundary MOVED, which is a real gap and
+    # not a decision -- `check_fidelity` is layer-agnostic and each one needs its
+    # own ceiling derived from its own median source step, which needs that
+    # builder's fetch.
+    if without:
+        print("  note %d declaring builder(s) carry no FIDELITY_MAX_M, so their "
+              "retained boundary is ungated: %s" % (len(without), ", ".join(without)))
+    print("dropped-ring declarations: %d across %d builder(s); %d gate retained "
+          "fidelity, %d do not%s"
+          % (total, len(mods), len(with_ceiling), len(without),
+             "" if not status else " — FAILED"))
     return status
 
 
@@ -1439,6 +1672,72 @@ def _selftest():
            q6 is None or nd >= 6, "decimals=%s" % nd)
     else:
         ck("a ring too small for 6 decimals records more of them", True)
+
+    # 13. check_fidelity: a genuine chord across ground that changes hands FAILS.
+    # A's source has a 60 m notch bitten out of its left edge which B fills; the
+    # drawn A closes the notch, so A now covers ground the source gave to B.
+    WIDE = _sq(-89.00, 44.00, 0.02, 0.01)
+    NOTCH_SRC = [[-89.00, 44.000], [-88.99, 44.000], [-88.99, 44.010],
+                 [-89.00, 44.010], [-89.00, 44.007],
+                 [-88.9992, 44.005],            # ~64 m in from the edge
+                 [-89.00, 44.003], [-89.00, 44.000]]
+    NOTCH_DRAWN = [[-89.00, 44.000], [-88.99, 44.000], [-88.99, 44.010],
+                   [-89.00, 44.010], [-89.00, 44.000]]
+    FILLER = [[-89.00, 44.003], [-88.9992, 44.005], [-89.00, 44.007],
+              [-89.002, 44.007], [-89.002, 44.003], [-89.00, 44.003]]
+    src = [_feat("A", _poly(NOTCH_SRC)), _feat("B", _poly(FILLER))]
+    drw = [_feat("A", _poly(NOTCH_DRAWN)), _feat("B", _poly(FILLER))]
+    ok, msg = check_fidelity(src, drw, "K", set(), 10.0)
+    ck("a chord across ground that changes hands FAILS the fidelity gate",
+       not ok and "where the answer changes" in msg, "got %r" % msg)
+
+    # 14. ... and the SAME geometry passes when the ceiling is above the stray,
+    # which is what proves 13 failed on the metres rather than on the shape.
+    ok2, msg2 = check_fidelity(src, drw, "K", set(), 500.0)
+    ck("the same geometry passes under a ceiling above its stray", ok2,
+       "got %r" % msg2)
+
+    # 15. a SPUR is excluded by the measured predicate and counted, not failed.
+    # The vertex sits 150 m out with its two neighbours at the same point, so the
+    # ring doubles back through it and encloses nothing.
+    SPUR_SRC = [[-89.00, 44.000], [-88.99, 44.000], [-88.99, 44.010],
+                [-89.00, 44.010], [-89.00, 44.005],
+                [-89.0019, 44.005],             # ~150 m out
+                [-89.00, 44.005], [-89.00, 44.000]]
+    ok3, msg3 = check_fidelity([_feat("A", _poly(SPUR_SRC))],
+                               [_feat("A", _poly(NOTCH_DRAWN))], "K", set(), 10.0)
+    ck("a zero-width spur is excluded as a spur and counted",
+       ok3 and "1 spur(s)" in msg3, "got %r" % msg3)
+
+    # 16. THE SAME NOTCH WITH NOBODY NEXT DOOR IS THE GAP-CLOSED DIRECTION, and
+    # this assertion is why the gate reads a direction at all. It first asserted
+    # that closing the notch "changes no answer", and it changes one: from NO
+    # AGENCY to A. That is what `classify` calls gap-closed, counts, and does not
+    # call harm -- so the gate counts it here too rather than failing.
+    ok4, msg4 = check_fidelity([_feat("A", _poly(NOTCH_SRC))],
+                               [_feat("A", _poly(NOTCH_DRAWN))], "K", set(), 10.0)
+    ck("filling ground the source answered with nothing is counted, not failed",
+       ok4 and "answered with nothing" in msg4, "got %r" % msg4)
+
+    # 17. A FALSE SILENCE FAILS, which is the direction that makes 16 an exclusion
+    # rather than a hole. A's source pushes a 64 m SPIKE out past its own edge and
+    # the drawn output cuts the chord across its base, so a reader in the spike was
+    # told A and is now told nothing, with no neighbour to step in.
+    #
+    # THE FIRST DRAFT OF THIS ASSERTION TESTED A DIRECTION SIMPLIFICATION CANNOT
+    # PRODUCE: it swapped the two arguments, making the drawn ring the one with the
+    # notch. The stray is measured SOURCE vertex to nearest DRAWN segment, and a
+    # simplified ring's vertices are a subset of its source's, so every source
+    # vertex sat at 0 and nothing was over the limit. The gate reported a clean
+    # pass and the assertion read as a gate that could not see a false silence.
+    SPIKE_SRC = [[-89.00, 44.000], [-88.99, 44.000], [-88.99, 44.010],
+                 [-89.00, 44.010], [-89.00, 44.007],
+                 [-89.0008, 44.005],            # ~64 m OUT past the edge
+                 [-89.00, 44.003], [-89.00, 44.000]]
+    ok5, msg5 = check_fidelity([_feat("A", _poly(SPIKE_SRC))],
+                               [_feat("A", _poly(NOTCH_DRAWN))], "K", set(), 10.0)
+    ck("cutting off a spike nobody else covers FAILS as a false silence",
+       not ok5 and "NO DISTRICT" in msg5, "got %r" % msg5)
 
     print("%s — %d failure(s)" % ("dropped_rings selftest", len(fails)))
     return 1 if fails else 0

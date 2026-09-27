@@ -1255,7 +1255,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped
 
-      - name: Every dropped-ring declaration's prose agrees with its own fields
+      - name: Every dropped-ring declaration's prose agrees with its own fields, and no layer is gated by half
         if: ${{ !cancelled() }}
         run: python3 wi/scripts/dropped_rings.py --check
 
