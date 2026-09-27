@@ -1469,6 +1469,58 @@ try {
     await context.close();
   }
 
+  // 2l. A REPEAT VISIT DOWNLOADS NO BOUNDARY FILE IT ALREADY HAS. Until
+  //     2026-09-26 the worker served a cached boundary file and fetched it
+  //     again in the background on every hit, so a returning visitor paid the
+  //     full download of every layer they opened on every visit. It now serves
+  //     the cached copy alone; a changed file reaches them through a
+  //     CACHE_NAME bump, which check_cache_version.py enforces. The first load
+  //     runs before the worker takes control, so the files are cached on the
+  //     second and counted on the third, and the cards must still answer.
+  {
+    const layers = ["school-board", "ccbr", "il-supreme-court"];
+    const context = await browser.newContext();
+    // Once the worker controls the page, a request it lets through reaches
+    // the network from the worker, where a page-level route (booted()'s) does
+    // not see it; the vendored libraries have to be routed on the context.
+    if (VENDORED_LEAFLET) {
+      await context.route("**/cdnjs.cloudflare.com/**/leaflet.js", (r) =>
+        r.fulfill({ status: 200, contentType: "application/javascript", body: VENDORED_LEAFLET.js }));
+      await context.route("**/cdnjs.cloudflare.com/**/leaflet.css", (r) =>
+        r.fulfill({ status: 200, contentType: "text/css", body: VENDORED_LEAFLET.css }));
+    }
+    if (VENDORED_MAPLIBRE) {
+      await context.route("**/cdnjs.cloudflare.com/**/maplibre-gl.min.js", (r) =>
+        r.fulfill({ status: 200, contentType: "application/javascript", body: VENDORED_MAPLIBRE.js }));
+    }
+    let counting = false;
+    const refetched = [];
+    context.on("request", (r) => {
+      const path = new URL(r.url()).pathname;
+      if (counting && r.serviceWorker() && /\/data\/app\/[^/]*districts\.json$/.test(path)) refetched.push(path);
+    });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=${layers.join(",")}`);
+    const controlled = await page
+      .waitForFunction(() => !!(navigator.serviceWorker && navigator.serviceWorker.controller), null, { timeout: QUERY_TIMEOUT })
+      .then(() => true, () => false);
+    const settled = () => page.waitForFunction(
+      (a) => !!window[a.ns] && a.ids.every((id) => { const s = window[a.ns].layerLoadState(id); return s && s.card === "result" && s.overlay; }),
+      { ids: layers, ns: EXPORTS_NAME }, { timeout: QUERY_TIMEOUT }
+    ).then(() => true, () => false);
+    await page.reload({ waitUntil: "domcontentloaded" });
+    const cachedOk = await settled();
+    counting = true;
+    await page.reload({ waitUntil: "domcontentloaded" });
+    const repeatOk = await settled();
+    await page.waitForTimeout(1500);
+    check(
+      "a repeat visit's service worker fetches no boundary file it already cached",
+      controlled && cachedOk && repeatOk && refetched.length === 0,
+      JSON.stringify({ controlled, cachedOk, repeatOk, refetched })
+    );
+    await context.close();
+  }
+
   // ==== TEMPLATE:BEGIN smoke-failure-isolation ====
   // 3. A failing data source degrades to that layer's error card + Retry, in
   //    isolation — the app's per-layer failure-isolation rule. (Named on two

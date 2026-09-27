@@ -106,10 +106,12 @@ own; the runbook's per-source vintage watch was never built.
 
 In `metro-worksheet.json` (or the instance's): `data_files.geometry[]`
 `min_features` / `max_features` for each rebuilt file (the validator's floors
-are emitted from them); **`sw.cache_name`** — `cacheFirst` in `sw.js` is
-stale-while-revalidate, so without a bump every returning visitor gets one
-stale answer per file on the first visit after deploy; the bump precaches the
-new geometry and purges the old cache, and no gate reminds you; the
+are emitted from them); **`sw.cache_name`** — `sw.js` serves boundary files from its
+cache with no revalidation (since 2026-09-26), so without a bump a returning
+visitor keeps the OLD file for good; the bump purges the old cache, the new
+file is fetched the first time a layer uses it, and
+`check_cache_version.py` fails a change that edits a cache-first file without
+one; the
 `sw-version-history` TEMPLATE comment in `il/sw.js` is abandoned since the
 rebrand — do not extend it; `anchors[].expected`, `anchor_point`,
 `negative_point` if an anchor layer moved (they emit the smoke test's
