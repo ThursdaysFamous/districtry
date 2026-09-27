@@ -949,6 +949,20 @@ jobs:
           python3 wi/scripts/wi_coa_scraper.py --selftest
           python3 wi/scripts/wi_coa_staleness.py --selftest
 
+      # THE MPS BOARD SCRAPE'S EIGHT GUARDS, HELD TO A FIXTURE OFFLINE. The pair
+      # carried five guards in the scraper and three in the builder from the day
+      # it was written, and every one was exercised only by the live weekly run —
+      # so a guard was proved by the source still being well-formed, which is the
+      # opposite of what it is for. Eleven cases, no socket opened; each was
+      # negative-tested on introduction by removing its own guard, and each then
+      # failed alone. What it does NOT prove is that the parse still matches the
+      # page MPS serves, because the fixtures are this project's own HTML; the
+      # weekly run answers that and the COA staleness ceiling above is the shape
+      # that notices when it stops.
+      - name: The MPS board scrape's guards fire on doctored pages
+        if: ${{ !cancelled() }}
+        run: python3 wi/scripts/mps_school_board_scraper.py --selftest
+
       # THE LTSB FILING WATCHER'S OWN FAILURE PATHS. The monthly job is the only
       # thing that runs that check, and it runs the happy path eleven times a
       # year; without this its WARNs would first execute in the filing window

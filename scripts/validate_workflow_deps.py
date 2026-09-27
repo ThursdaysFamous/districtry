@@ -252,7 +252,12 @@ def closure(entry, scripts_dir, entry_is_executed=True):
     re-enters this function with the shared module's own name as `entry`, which
     made `include_local` true for it — so a module the workflow merely IMPORTS
     was read as though the runner executed it, and every function-local import
-    inside it became a hard pip requirement. Found when New York's first
+    inside it became a hard pip requirement. The distinction is not one this
+    walker could hedge on: an entry's functions run because the workflow runs
+    the script, while a library's run only if something calls them, and this
+    walker reads imports rather than call graphs, so it cannot tell which.
+    Reading a library's function-local imports as requirements is therefore
+    wrong rather than conservative. Found when New York's first
     county-legislature scraper imported `scraper_common`, whose `fetch()` imports
     `requests` inside itself: the gate demanded `requests` for a scraper that
     uses `urllib.request` and reads robots.txt through the stdlib path. The
