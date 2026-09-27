@@ -45,6 +45,66 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (11:20). #1220 OPENED — the NG911 half of the assigned dropped-ring work. Task #71
+complete; #1219 (aldermanic) merged as `c8a276d`. Nothing else assigned.**
+
+**THE ANSWER WAS THE WORST IN THE FLEET, AND THE GATE MEANT TO CATCH IT READ 100% FOUR TIMES.**
+At the `visvalingam 8%` these four layers shipped at, 850 rings were dropped against the
+full-precision dissolve and **432 changed the agency a reader is told answers at their point** —
+fire 229/64, law 389/296, psap 37/28, ems 195/44 — while all four builds reported 4000/4000
+(100.000%) name-set agreement. 4,000 points over a 169,000 km2 state cannot land in a hairline
+along a county-filing seam. Most were WRONG NAMES, not silences (law 264 of 296): Somers Fire &
+Rescue as Kenosha Fire, the Oneida Nation's own police department as City of Green Bay PD, Wausau
+PD as the Marathon County Sheriff.
+
+Now Douglas-Peucker **per layer** — `interval=1` for fire, law and ems, `interval=2` for psap —
+and 17 answers change, every one declared with its area, interior point, measured surface and the
+answer it costs. psap and ems declare NOTHING, which is a measurement. The archives a reader
+actually downloads grew 15.9% (7.78 MB to 9.01 MB); the JSON, fetched only to pin a comparison,
+grew 97.3% — quoting the JSON alone overstates the cost six times.
+
+**THE GRID PROBLEM IS CLOSED BY A MEASUREMENT RATHER THAN A PREFERENCE.** "Lowest harm wins" would
+always pick the finest setting tried, making the choice of grid the whole decision — so
+`interval=0.5` was measured: fire changes the same ONE answer there for 23% more bytes, so the
+tie-break picks interval=1. Fire's one remaining ring is a 15.19 m triangle whose middle vertex
+sits 0.175 m off its own base, which is 1.6 of the 6-decimal coordinate cells the file ships at.
+The floor is the output precision.
+
+**ONE DESIGN CHANGE BEYOND THE ASSIGNED SCOPE, FLAGGED IN THE PR BODY FOR A REVIEWER.** A mixed
+ring — one the source answers several ways inside — was an unconditional failure in
+`dropped_rings.check` with no remedy, which made the gate unusable by any publisher who files
+OVERLAPPING polygons. Wisconsin's law layer is exactly that, deliberately: plain `-dissolve`
+rather than `-dissolve2` exists to keep the sheriff/PD concurrent jurisdiction. Its four mixed
+rings are one hairline under 1 m2 inside a THREE-way overlap of three Brown County agencies' own
+filings. They are declarable now by declaring EVERY pair, held to the measured set exactly; the
+refusal stands for a mixed ring nobody described and for one described with a single pair. The
+shipped setting has TWELVE of them, so this never favoured the status quo.
+
+**AND THE `why`-AGREEMENT GUARD AGREED WITH THE MANAGER LANDED HERE**, plus `--check` in CI over
+every declaring builder, discovered from the tree. It reproduces #1219's defect exactly: the
+aldermanic `why` broken back to 6.06 m2 beside an m2 of 6.35 fails and names it. `_match`'s area
+tolerance is 10%, so that gate never had a chance of it.
+
+**THREE THINGS THE GATES CAUGHT IN MY OWN WORK, all worth the next session's attention.** My
+generator formatted every interior point to 6 decimals and `interior_at_precision` deliberately
+raises it for a ring 6 cannot hold — 7 of 17 need 7 decimals, one needs 8, and the gate failed all
+seven by name. A control caught my own assumption before it reached a finding: I expected TIGER to
+answer `Lk Mendota` and it answers `Mendota Lk`. And 16 of 17 rings are dry land while one is
+inside Wingra Creek — the shorter prose wanted to assert the surface once for the group, which
+would have been wrong.
+
+**A FOUR-HOUR HANG, RECORDED IN CLAUDE.md, THAT LOOKS NOTHING LIKE AN ERROR.** A hand-written
+extraction of the battery swept in the skill's `python3 -m http.server 8000 &`, and a backgrounded
+process inside `$(...)` holds the substitution's pipe open forever — so the loop prints "running"
+and then nothing. The three wrong methods already recorded there all reported a SHORT COUNT, which
+at least prints. This one invites you to keep waiting.
+
+Verified locally before the push: static battery **110 of 110**, `wi` browser smoke test all pass,
+`probe_tile_cards.mjs` 63 layers / 3,136 points / 0 differ, `build_vector_tiles.py --committed` 63
+archives, `dropped_rings.py --selftest` 36 assertions and `--check` 21 declarations across 4
+builders, pair re-measured at **91/120** with the mirror 120 for 120. `cache_name` bumped to
+districtry-wi-shell-v44. CI `smoke` and `tiles` both running at the time of writing.
+
 **2026-09-27 (05:30). #1218 MERGED and verified on main by CONTENT. Tasks #57 and #68 are complete.
 Nothing is assigned. One thing PROPOSED and not started, below.**
 
