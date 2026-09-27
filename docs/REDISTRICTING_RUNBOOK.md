@@ -90,7 +90,7 @@ of 2021, and `scripts/build_il_court_justices.py` holds a transcription of its c
 weekly roster run refuses to write unless the counties the court's own district pages name still
 match it, so a redraw surfaces as a failing refresh rather than as silence.
 
-### NYC (34 layers)
+### NYC (35 layers)
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
@@ -100,6 +100,7 @@ match it, so a redraw surfaces as a failing refresh rather than as silence.
 | Community districts | Rarely (charter) | NYC charter | none expected |
 | NYPD precincts (78) | Administrative-rare | NYPD | geometry, anchor, roster join |
 | Borough | Never (geography) | geography | none |
+| County legislature (Tompkins 16) | Decennial-county | the county's own reapportionment | geometry, the block-population identity the builder gates on (it moves to the 2030 census), roster join by district number |
 | School districts/zones | Annual | DOE | dataset rotation |
 | Election districts | Frequent (BOE) | NYC BOE | geometry |
 | Judicial districts (13) | Statute (rare) | Judiciary Law §140 | the county-to-district lookup the layer dissolves on |

@@ -58,7 +58,7 @@ const OFFLINE = ["judicial-district", "county", "nys-school-district", "municipa
 const EXPECT_DISTRICT = { "judicial-district": "3", "county": "Albany", "nys-school-district": "ALBANY", "municipality": "Albany" };
 const NEGATIVE_POINT = "41.76370,-72.68510"; // Downtown Hartford, Connecticut — outside New York State and 66 km from the nearest geometry this instance ships. NOT a water point: the county, school-district, cities-towns, villages and three legislative files are all water-inclusive off Long Island and in Lake Ontario, so a mid-Sound or mid-lake click is positive, not negative
 const APP_NAME = "districtry New York";
-const EXPECT_LAYERS = 34; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
+const EXPECT_LAYERS = 35; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
 // ==== GENERATED:END smoke-config ====
 const POINT2 = "40.69354,-73.98963"; // Brooklyn Borough Hall (Brooklyn) — the re-classify hop stays fork test code
 // THE CITY GROUND TRUTH SURVIVES THE GO-LIVE AS FORK TEST CODE. The worksheet's
@@ -392,6 +392,58 @@ try {
       !/State education code/i.test(upper.text) && !/\b\d{12}\b/.test(upper.text),
       upper.text.slice(0, 80));
     await context.close();
+  }
+
+  // 2c. THE COUNTY TIER'S FIRST COUNTY. county-legislature is a dispatched
+  //     concept with one entry today, so its two claims are that the entry
+  //     ANSWERS inside Tompkins and that the layer is coverage-HIDDEN
+  //     everywhere else. The second half is the one worth having: the layer's
+  //     coverage is the OR of its entries' county tests, so a broken test would
+  //     show a "County Legislature District" toggle to a reader in Albany or
+  //     Brooklyn whose county has no legislature this app can answer for.
+  //
+  //     THE LEGISLATOR'S NAME IS NOT A LITERAL HERE. Pinning it would make this
+  //     check go red the first time Tompkins holds an election, which is not a
+  //     regression; pinning nothing would let a broken roster join pass. So the
+  //     card's name is compared against the SHIPPED roster's own entry for the
+  //     district the geometry answered — which proves the join and never goes
+  //     stale. The district number IS a literal, because the plan is Census
+  //     2020 geometry and moves only at a redistricting (ny/WATCH.md's row).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const ITHACA = "42.4425,-76.50046";          // the coverage ring's own INSIDE anchor
+    const page = await booted(context, `${BASE}#point=${ITHACA}&layers=county-legislature`);
+    const roster = JSON.parse(readFileSync(
+      join(INSTANCE_DIR, "data/app/tompkins-legislature-members.json"), "utf8"));
+    const leg = await cardText(page, "county-legislature");
+    const expectName = roster["2"].members[0].name;
+    check("county-legislature answers inside Tompkins (District 2) and names the body",
+      !leg.error && /District\s*2\b/.test(leg.text) && /Tompkins County Legislature/.test(leg.text),
+      leg.text.slice(0, 80));
+    check("the card's legislator is the one the shipped roster names for that district",
+      leg.text.includes(expectName), `${expectName} | ${leg.text.slice(0, 80)}`);
+    check("the card credits the county's own GIS, which is the licence's Credits clause",
+      /Tompkins County ITS GIS Division/.test(leg.text), leg.text.slice(-90));
+    await context.close();
+  }
+  {
+    // hidden where no county in the table covers the point: upstate outside
+    // Tompkins, and inside the city, which has no county government at all.
+    for (const [where, pt] of [["the upstate anchor, outside Tompkins", POINT],
+                               ["New York City, which absorbed its counties", NYC_POINT]]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=county-legislature`);
+      const shown = await page.evaluate(() => {
+        const card = document.getElementById("card-county-legislature");
+        const block = card && card.closest(".layer-block");
+        const toggle = document.querySelector('[data-layer="county-legislature"]');
+        const visible = (el) => !!el && !el.hidden && el.offsetParent !== null;
+        return { card: visible(block), toggle: visible(toggle) };
+      });
+      check(`county-legislature stays hidden at ${where}`,
+        !shown.card && !shown.toggle, JSON.stringify(shown));
+      await context.close();
+    }
   }
 
   // 2b. THE CITY GROUND TRUTH, kept as fork test code at its own literal. These

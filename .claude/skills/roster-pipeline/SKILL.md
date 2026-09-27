@@ -188,7 +188,14 @@ NEW until one interval has passed.
 
 **Dispatch the workflow the day it ships and read the log.** A green
 `validate_index.py` says nothing about whether the job runs, and the sandbox
-is not CI's address. A fetch failure on the first dispatch is a SAMPLE, not a
+is not CI's address. **IT CANNOT BE DISPATCHED BEFORE THE MERGE, and that is
+GitHub's rule rather than a permission problem** (measured 2026-09-27 on
+`ny-update-tompkins-legislature-roster.yml`): the Actions workflow registry is
+built from the DEFAULT branch, so a dispatch of a file that exists only on a
+feature branch answers **404 Not Found** — the same body a missing repository
+gives, which is what makes it easy to misread as the PAT. `actions_list`
+`list_workflows` confirms it: every row's `html_url` names `blob/main/`. So the
+dispatch is the first thing to do AFTER the merge, not part of the PR. A fetch failure on the first dispatch is a SAMPLE, not a
 verdict — runner addresses are scored individually, and §3.5.1's DeKalb
 bullets say how many draws before you write anything down.
 

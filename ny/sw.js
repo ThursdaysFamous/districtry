@@ -29,7 +29,7 @@
 // geometry anchors (borough / judicial-district / municipal-court) to
 // GEOMETRY_URLS below; the Thread 5 pipeline filled ROSTER_URLS.
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "nyc-district-explorer-shell-v19";
+const CACHE_NAME = "nyc-district-explorer-shell-v20";
 
 const SHELL_URLS = [
   "./",
@@ -66,6 +66,8 @@ const GEOMETRY_URLS = [
   "./data/app/congress-districts.json",
   "./data/app/state-senate-districts.json",
   "./data/app/state-assembly-districts.json",
+  "./data/app/tompkins-legislature-districts.json",
+  "./data/app/tompkins-county-outline.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -80,6 +82,7 @@ const ROSTER_URLS = [
   "./data/app/ny-assembly-members.json",
   "./data/app/cec-members.json",
   "./data/app/borough-officials.json",
+  "./data/app/tompkins-legislature-members.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

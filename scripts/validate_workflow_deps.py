@@ -127,10 +127,22 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # member, and #809 measured six callers reading one as data and thirty-one
 # more blaming the county for it. What an ArcGIS error IS must not be
 # answered differently per instance, which is this list's own test.
-# All three are stdlib-only, which is why none needs a pip line --
+# All four are stdlib-only AT MODULE SCOPE, which is why none needs a pip line --
 # arcgis_error bases its exception on requests.RequestException only WHERE
-# REQUESTS IS THERE, and on RuntimeError otherwise.
-FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error"}
+# REQUESTS IS THERE, and on RuntimeError otherwise, and `scraper_common` imports
+# `requests`, `urllib.request` and `robots_policy` inside the functions that use
+# them.
+#
+# `scraper_common` (2026-09-27) is the fourth, added when New York's first
+# county-legislature scraper imported it and this gate reported it as a missing
+# pip package. It clears the bar above as squarely as any of them: its own
+# docstring is the argument, that robots.txt is read before the first fetch of a
+# host and that the rule was enacted by seven files out of a hundred-odd until
+# `require_robots_allowed` existed to be called. What "may this client fetch this
+# URL" MEANS must not be answered differently per instance, which is this list's
+# own test — and over a hundred files already send its pinned UA constants, so a
+# per-instance copy would be a second answer to both questions at once.
+FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error", "scraper_common"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")
@@ -228,12 +240,24 @@ def module_scope_imports(path, include_local=False):
     return mods
 
 
-def closure(entry, scripts_dir):
+def closure(entry, scripts_dir, entry_is_executed=True):
     """Every module in `scripts_dir` reachable from entry via module-scope imports.
 
     The entry point is read with its function-local imports included, because
     running a script runs its functions; everything it merely imports is read at
     module scope only.
+
+    `entry_is_executed=False` IS WHAT MAKES THAT SENTENCE TRUE OF A SHARED
+    MODULE, and it was missing until 2026-09-27. The FLEET_SHARED branch below
+    re-enters this function with the shared module's own name as `entry`, which
+    made `include_local` true for it — so a module the workflow merely IMPORTS
+    was read as though the runner executed it, and every function-local import
+    inside it became a hard pip requirement. Found when New York's first
+    county-legislature scraper imported `scraper_common`, whose `fetch()` imports
+    `requests` inside itself: the gate demanded `requests` for a scraper that
+    uses `urllib.request` and reads robots.txt through the stdlib path. The
+    docstring above was already the intended contract; only the recursion
+    contradicted it.
 
     `scripts_dir` is the instance's own directory: a sibling import inside
     ny/scripts/ resolves against ny/scripts/, never against Chicago's root
@@ -253,7 +277,7 @@ def closure(entry, scripts_dir):
         path = os.path.join(scripts_dir, name + ".py")
         if not os.path.exists(path):
             continue
-        for mod in module_scope_imports(path, include_local=(name == entry)):
+        for mod in module_scope_imports(path, include_local=(name == entry and entry_is_executed)):
             if mod in sys.stdlib_module_names or mod in ALWAYS_AVAILABLE:
                 continue
             if os.path.exists(os.path.join(scripts_dir, mod + ".py")):
@@ -263,7 +287,7 @@ def closure(entry, scripts_dir):
                 # A declared shared module, reached only because this instance
                 # has no file of that name. Walked in the ROOT tree so its own
                 # third-party imports are still checked.
-                sub_seen, sub_third = closure(mod, ROOT_SCRIPTS)
+                sub_seen, sub_third = closure(mod, ROOT_SCRIPTS, entry_is_executed=False)
                 seen |= {"%s (root)" % n for n in sub_seen}
                 third_party |= sub_third
             else:
