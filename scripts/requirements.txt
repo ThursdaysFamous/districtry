@@ -123,3 +123,14 @@ openpyxl==3.1.5
 # requests, so the heavyweight google-api-python-client stack is not installed.
 # Used by scripts/verify_google_api_access.py (.github/workflows/verify-google-api-access.yml).
 google-auth==2.41.1
+
+# Vector tiles (docs/OPTIMIZATION_PLAYBOOK.md §10, phase 3). The archives are
+# BUILT by tippecanoe, a C++ tool installed from apt, not pip; these two READ
+# them back so scripts/build_vector_tiles.py can hold each archive to the file
+# it came from. mapbox-vector-tile decodes a tile (and pulls in protobuf and
+# pyclipper, pinned beside it so a transitive bump cannot change a decode);
+# pmtiles reads one tile out of an archive.
+mapbox-vector-tile==2.2.0
+pmtiles==3.8.1
+protobuf==6.33.6
+pyclipper==1.4.0

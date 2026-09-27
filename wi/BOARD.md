@@ -39,6 +39,61 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (01:10). #1211 IS OPEN: the chambers builder now reads ONE dropped-ring
+mechanism, and the migration found a real defect in the module BY FAILING.** #1206 merged
+as `81c84fd`, so the branch came off hold and reset onto it.
+
+**THE MIGRATION'S OWN FAILURE IS THE FINDING.** Wiring `check_fidelity` to the module's
+`signature` field made it read **17.5 m against a 15 m ceiling** — the gate failing on the
+change that was supposed to make it more correct. A record is a CLUSTER:
+`_merge_coincident` folds rings that coincide on the ground and differ byte for byte, and
+Wisconsin's Door sliver has **two** signatures behind one record, district 1's tracing and
+the water pseudo-district's. A singular field left the other ring looking retained, so the
+fidelity gate measured a shape that is *gone* into the stray — the exact pooling that
+ceiling's derivation exists to prevent. The field is `signatures`, plural, and the caller
+unions them.
+
+**AND SELFTEST FIXTURE 11 CLAIMED TO EXERCISE THAT MERGE AND DID NOT.** Its `1e-7` offset
+rounds away at the 6 decimals `ring_signature` uses, so the two rings shared a signature
+and the grouping dict folded them before `_merge_coincident` was ever reached. A fixture
+whose comment says "same ground, other vertices" was testing the dict. It is `2e-6` now,
+with a new assertion holding a merged record to every signature it folded —
+**negative-tested** by regressing the accumulate line in a throwaway copy, which fails it.
+
+**A FIFTH COPY OF THE "OPEN LAKE MICHIGAN" CLAIM SURVIVED, AND THE RULE YOU RULED ON FOUND
+IT WITHIN A MINUTE OF BEING WRITTEN.** Three were fixed on 2026-09-26 by grepping the
+phrase. The fourth was this builder's own `why` field, where the literal splits across a
+line break as `"open Lake "` / `"Michigan on the"` — so it matches no line and grep
+reported the file clean, on `main`, for a day. Sweeping again with a short single-line
+fragment turned up the fifth in `dropped_rings.py`'s own module docstring. Both are
+corrected to Washington Island with the hydrography measurement, each under its own record
+of what it said. **The BOARD.md entries are deliberately left alone** — they are
+append-only dated snapshots and the correction already sits above them, newest-first.
+
+**`GAP_CLOSED = 0`, MEASURED RATHER THAN OMITTED.** The whole chambers family drops exactly
+ONE ring statewide and closes no coverage gap anywhere, where the supervisory layer closes
+229. That is the difference between a state-published district map and a county-by-county
+dissolve: TIGER's chambers tile Wisconsin with one water pseudo-district per chamber and
+carry no slivers between neighbours, so there are no uncovered holes to fill. The shipped
+geometry is **byte-identical**, so no cache bump.
+
+**WHAT CAME OUT:** `check_dropped_rings`, `_ring_answer_text`, 15 duplicated geometry
+helpers and three threshold constants — 400 lines deleted for 180 added. The asymmetry
+that made the copy worth retiring: the module's fixture selftest is a gate in CI, while the
+copy here was exercised only by an operator build.
+
+**CLAUDE.md carries the rule** as you directed, in this PR rather than a commit of its own:
+the control rule, the hydrography-not-subdivision discriminator, the API-error half with
+"run the controls first and raise on an `error` key", and the wrapped-string half.
+
+**Verified:** full build (33 nestings exact, 7.9 m worst stray), `--check`, the module
+selftest, the supervisory builder's two checks, **107 of 107** no-browser gates derived
+through `validate_steward_mirror.invocations()` rather than a pattern of my own, Wisconsin's
+Chromium smoke test, and an AST sweep for unresolved names after the 15 deletions —
+`py_compile` cannot see those. Pair unchanged at 88/117; this adds no CI step.
+
+**Queue after this:** #57(b) the mps ladder, then #57(c)'s risk figure.
+
 **2026-09-27 (00:25). #1206 IS ACCEPTED ON `3d5112f` AND THE BRANCH IS ON HOLD AT THE
 MANAGER'S REQUEST — no more pushes until they merge; anything I find goes to them as a
 message instead.** The interval is settled at dp interval=4 on the rule they

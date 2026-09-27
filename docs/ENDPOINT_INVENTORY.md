@@ -128,7 +128,7 @@ prose.
 
 ### Where each layer's shapes come from
 
-Measured **2026-09-26** in a real browser by `scripts/probe_layer_sources.mjs`,
+Measured **2026-09-27** in a real browser by `scripts/probe_layer_sources.mjs`,
 which switches each layer on alone and reads every response the page
 fetches from another host. A layer **fetches** its shapes when a response
 carries polygon or line geometry: either the whole set, downloaded once
@@ -147,7 +147,7 @@ measured until the next run describes it.
 | Water Reclamation District (MWRD) (`mwrd`) | `gis.cookcountyil.gov` | — |
 | High School District (`school-district-secondary`) | `tigerweb.geo.census.gov` | — |
 | Unified School District (`school-district-unified`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
-| Elementary School District (`school-district-elementary`) | `tigerweb.geo.census.gov` | — |
+| Elementary School District (`school-district-elementary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
 | Township / County Subdivision (`township`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
 | Municipality (`municipality`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
 | Judicial Subcircuit (`judicial-subcircuit`) | 4 of 9 county sources, from `gis.cookcountyil.gov`, `services.arcgis.com`, `services3.arcgis.com`; 5 shipped with the app | — |
@@ -159,7 +159,7 @@ measured until the next run describes it.
 | CPS Network (High School, admin office) (`cps-hs-network`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
 | CPS Network (K-8, admin office) (`cps-network`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
 | City Ward (`ward`) | 28 of 28 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.cityofchicago.org`, `gis.aurora.il.us`, `gis.cookcountyil.gov`, `gis.mcleancountyil.gov`, `gis.peoriacounty.gov`, `maps.boonecountyil.org`, `maps.cityofevanston.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services8.arcgis.com`, `services9.arcgis.com`, `webapps.bataviail.gov`; 0 shipped with the app | `data.cityofchicago.org` |
-| Ward Precinct (`ward-precinct`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
+| Ward Precinct (`ward-precinct`) | `data.cityofchicago.org` | — |
 | Police District (`police-district`) | `services2.arcgis.com` | `services2.arcgis.com` |
 | Police Beat (`police-beat`) | `services2.arcgis.com` | `services2.arcgis.com` |
 | CCPSA District Council (`ccpsa-district-council`) | `services2.arcgis.com` | — |
@@ -192,13 +192,13 @@ measured until the next run describes it.
 | ZIP Code (MODZCTA) (`zip-code`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
 | ZIP Code (`nys-zip-code`) | — | `tigerweb.geo.census.gov` |
 | Neighborhood (NTA) (`neighborhood`) | `data.cityofnewyork.us` | — |
-| High School Zone (`hs-zone`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
-| Middle School Zone (`ms-zone`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
+| High School Zone (`hs-zone`) | `data.cityofnewyork.us` | — |
+| Middle School Zone (`ms-zone`) | `data.cityofnewyork.us` | — |
 | Elementary School Zone (`es-zone`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
 
-- Drawn from this site's own files: `county`, `nys-school-district`, `municipality`, `village`, `borough`, `judicial-district`, `borough-president`, `district-attorney`, `congress`, `municipal-court`, `state-senate`, `state-assembly`.
+- Drawn from this site's own files: `county`, `nys-central-hs-district`, `nys-school-district`, `municipality`, `village`, `borough`, `judicial-district`, `borough-president`, `district-attorney`, `congress`, `municipal-court`, `state-senate`, `state-assembly`.
 - Point layers (locations, not shapes): `school-site`, `police-station`, `fire-station`, `post-office`, `library`, `early-voting`, `polling-place`.
-- **Not measured** — declared since the probe ran: `nys-central-hs-district`, `county-legislature`.
+- **Not measured** — declared since the probe ran: `county-legislature`.
 
 #### ca — 4 of 16 layers fetch their shapes
 

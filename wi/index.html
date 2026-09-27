@@ -14989,6 +14989,18 @@ function initWisconsinExplorer() {
   // the member list stays engine; the window property it lands on is fork-
   // branded, so the assignment below stays outside the fence (twinned with
   // each fork's smoke_test.mjs).
+  // A feature's geometry as a short key: its coordinate count and its first
+  // coordinate to six decimals. What layerSources and loadCountyEntry report,
+  // and what scripts/probe_layer_sources.mjs computes for a file's features.
+  function geometryFingerprint(f) {
+    var n = 0, first = null;
+    (function walk(c) {
+      if (typeof c[0] === "number") { n++; if (!first) first = c; return; }
+      for (var i = 0; i < c.length; i++) walk(c[i]);
+    })((f && f.geometry && f.geometry.coordinates) || []);
+    return n + ":" + (first ? first[0].toFixed(6) + "," + first[1].toFixed(6) : "");
+  }
+
   var EXPLORER_EXPORTS = {
     state: state,
     map: map, // debug/programmatic map control (lets tests drive panning, e.g. the sibling-metro handoff)
@@ -15031,7 +15043,8 @@ function initWisconsinExplorer() {
       var mod = getLayerById(id), rt = layerRuntime[id];
       if (!mod) return null;
       var types = {};
-      ((rt && rt.geojson && rt.geojson.features) || []).forEach(function (f) {
+      var features = (rt && rt.geojson && rt.geojson.features) || [];
+      features.forEach(function (f) {
         if (f && f.geometry && f.geometry.type) types[f.geometry.type] = true;
       });
       var parent = mod.subOf ? getLayerById(mod.subOf) : null;
@@ -15043,7 +15056,11 @@ function initWisconsinExplorer() {
         // parent's requests; one drawing the SAME loaded set as its parent
         // makes no request of its own, and says so here
         subOf: mod.subOf || null,
-        sharesParentLoader: !!(parent && parent.overlay && mod.overlay && parent.overlay.load === mod.overlay.load)
+        sharesParentLoader: !!(parent && parent.overlay && mod.overlay && parent.overlay.load === mod.overlay.load),
+        // one short key per loaded feature, so the probe can tell which of
+        // this site's files the layer DRAWS: a file the app also loads at boot
+        // is subtracted with the boot requests, and matching features finds it
+        fingerprints: features.map(geometryFingerprint)
       };
     },
     // What scripts/probe_layer_load.mjs polls while one layer loads: whether
@@ -15076,7 +15093,11 @@ function initWisconsinExplorer() {
         ((geojson && geojson.features) || []).forEach(function (f) {
           if (f && f.geometry && f.geometry.type) types[f.geometry.type] = true;
         });
-        return { features: ((geojson && geojson.features) || []).length, geometryTypes: Object.keys(types).sort() };
+        return {
+          features: ((geojson && geojson.features) || []).length,
+          geometryTypes: Object.keys(types).sort(),
+          fingerprints: ((geojson && geojson.features) || []).map(geometryFingerprint)
+        };
       });
     },
     cleanPoiAddress: cleanPoiAddress, // exposed so the smoke test can regression-guard the office-pin address cleaner (a recurring break point) without any network call

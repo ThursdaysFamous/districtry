@@ -3344,6 +3344,20 @@ this change: the card answers today, the crawlable page is a different tier, and
 Michigan's commissioner districts shipped with no names at all for ten days
 before its roster landed.
 
+**AND IT IS INVISIBLE TO THE VECTOR-TILE GATE UNTIL THE WEEKLY PROBE RUNS,
+which is the same shape one gate over.** `scripts/build_vector_tiles.py` (#1208,
+merged the same night) builds and checks an archive per shipped polygon layer,
+and it reads which files a layer draws from `layer-sources.json` — written by
+`scripts/probe_layer_sources.mjs`, which runs weekly against `main`. So on the
+day a layer ships, that file does not know it: simulated on this PR, the gate
+selects ZERO layers and prints "no layer draws a changed file", although the
+change adds a shipped polygon file. Nothing a reader gets is affected — #1208's
+own docstring says the archives are built and thrown away until a renderer ships
+— and the Sunday probe closes it on its own. It is recorded because the window
+is a property of every new layer rather than of this one, and because a gate
+that answers OK by not knowing a layer exists reads exactly like a gate that
+checked it.
+
 **`polygonCountyEntry` IS ILLINOIS-LOCAL AND WAS DELIBERATELY NOT PROMOTED.**
 `registerCountyLayer` is an engine block and New York now carries its fence; the
 declarative `fields`-and-`people` adapter beside it in `il/index.html` is not,

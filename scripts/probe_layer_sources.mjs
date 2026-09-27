@@ -219,6 +219,40 @@ await Promise.all(Array.from({ length: CONC }, async () => {
 await browser.close();
 console.log("");
 
+// ---- which of this site's files a layer draws --------------------------------
+// The same key the app's geometryFingerprint gives a feature: its coordinate
+// count and first coordinate to six decimals. A file is one the layer DRAWS
+// when at least one of its features is among the layer's loaded features —
+// matched rather than subtracted, because a file the app also fetches at boot
+// (a coverage test's, say) disappears with the boot requests, and a coverage
+// outline fetched only once the layer is on would otherwise read as drawn.
+function fingerprint(f) {
+  let n = 0, first = null;
+  (function walk(c) {
+    if (typeof c[0] === "number") { n++; if (!first) first = c; return; }
+    for (const x of c) walk(x);
+  })((f && f.geometry && f.geometry.coordinates) || []);
+  return n + ":" + (first ? first[0].toFixed(6) + "," + first[1].toFixed(6) : "");
+}
+const fileKeys = new Map();
+function keysOf(url) {
+  if (!fileKeys.has(url)) {
+    let keys = new Set();
+    try {
+      const doc = JSON.parse(readFileSync(join(ROOT, url.replace(/^\/+/, "")), "utf8"));
+      if (doc && Array.isArray(doc.features)) keys = new Set(doc.features.map(fingerprint));
+    } catch (e) { /* not a file on disk, or not GeoJSON: draws nothing */ }
+    fileKeys.set(url, keys);
+  }
+  return fileKeys.get(url);
+}
+function drawnFiles(reqs, prints) {
+  const want = new Set(prints || []);
+  if (!want.size) return [];
+  const urls = [...new Set(reqs.filter((x) => x.kind === "local").map((x) => x.url))];
+  return urls.filter((u) => [...keysOf(u)].some((k) => want.has(k))).sort();
+}
+
 // ---- summarise --------------------------------------------------------------
 const hostsOf = (reqs, kind) => [...new Set(reqs.filter((x) => x.kind === kind).map((x) => x.host))].sort();
 const prior = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : { apps: {} };
@@ -247,6 +281,9 @@ for (const tag of TAGS) {
     const types = new Set(runs.flatMap((r) => (r.info && r.info.geometryTypes) || []));
     const shapes = reqs.filter((x) => x.kind === "shape");
     const entry = {
+      // this site's own data/app files the layer draws, what
+      // build_vector_tiles.py tiles (see drawnFiles)
+      files: [...new Set(runs.flatMap((r) => drawnFiles(r.requests, r.info && r.info.fingerprints)))].sort(),
       whole_set: [...new Set(shapes.filter((x) => !x.atPoint).map((x) => x.host))].sort(),
       at_point: [...new Set(shapes.filter((x) => x.atPoint).map((x) => x.host))].sort(),
       points_from: hostsOf(reqs, "points"),
@@ -255,14 +292,19 @@ for (const tag of TAGS) {
     };
     const c = mine.find((r) => r.id === id && r.mode === "counties");
     if (c && c.counties && c.counties.length) {
-      const live = [], shipped = [], failed = [];
+      const live = [], shipped = [], failed = [], files = {};
       for (const k of c.counties) {
         const shapeHosts = hostsOf(k.requests, "shape");
         if (shapeHosts.length) live.push({ key: k.key, hosts: shapeHosts });
         else if (!k.ok) failed.push({ key: k.key, hosts: hostsOf(k.requests, "unanswered"), error: k.error });
-        else shipped.push(k.key);
+        else {
+          shipped.push(k.key);
+          // matched against every file this visit fetched, since a file two
+          // counties share is requested once, by whichever loaded first
+          files[k.key] = drawnFiles(c.requests, k.fingerprints);
+        }
       }
-      entry.counties = { live, shipped, failed };
+      entry.counties = { live, shipped, failed, files };
     }
     if (info.subOf) entry.sub_of = info.subOf;
     if (info.sharesParentLoader) entry.shares_parent_loader = true;
