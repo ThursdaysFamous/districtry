@@ -406,7 +406,7 @@ try {
     await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
     await page.waitForFunction((n) => !!window[n] && !!window[n].setTheme,
       EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
-    const read = () => page.evaluate((n) => {
+    const read = () => page.evaluate(({ n, id: OFFLINE0 }) => {
       const path = document.querySelector("#map path");
       // The vector basemap is a GL canvas with no tile <img> whose src names
       // its style, so the basemap kind comes from the debug namespace; the
@@ -418,9 +418,14 @@ try {
         meta: document.querySelector('meta[name="theme-color"]')?.content,
         tiles: (document.querySelector(".leaflet-tile-pane img")?.src || "").match(/(light|dark)_all/)?.[1]
           || (base ? (base.kind === "dark_all" ? "dark" : "light") : null),
-        stroke: path ? path.getAttribute("stroke") : null,
+        // the anchor layer's own outline colour, read from the app: it is
+        // drawn on the tile canvas since phase 5, so it has no SVG path and
+        // the first "#map path" is the scope mask's, stroke "none" in both
+        // themes — which failed this check whenever the wash painted first.
+        // Illinois's copy of this check made the same move in phase 5.
+        stroke: window[n] && window[n].overlayColor ? window[n].overlayColor(OFFLINE0) : (path ? path.getAttribute("stroke") : null),
       };
-    }, EXPORTS_NAME);
+    }, { n: EXPORTS_NAME, id: OFFLINE[0] });
     await page.evaluate((n) => window[n].setTheme("light", false), EXPORTS_NAME);
     await page.waitForTimeout(400);
     const light = await read();
