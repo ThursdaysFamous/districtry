@@ -75,7 +75,9 @@ belongs on that instance's board instead.
 | task | owner | state | opened |
 |---|---|---|---|
 | **~~#1221~~ MERGED (`f381c10`) — the stamp check verified both ways; and THE CONDITION I PRESCRIBED WOULD NOT HAVE WORKED** | map/basemap | **merged 2026-09-27** | 2026-09-27 |
-| **#1222 HELD — two `unanswered` entries are transients; probe re-dispatched rather than published as measured** | map/basemap (bot) | **held 2026-09-27; waiting on the re-run** | 2026-09-27 |
+| **#1222 STILL HELD — the transient cleared, and its red `tiles` job found a MEASUREMENT feeding a GATE: a coverage-test file charged to New York's county layer** | map/basemap (bot) | **held 2026-09-27; waiting on the file attribution** | 2026-09-27 |
+| **~~#1224~~ MERGED (`ae7e1c0`) — every dropped-ring count in the fleet was a floor; nine wrong answers were counted nowhere** | Wisconsin | **merged 2026-09-27** | 2026-09-27 |
+| **#1223 open (TIGERweb tiles, phase 6a) — both jobs green, not yet reviewed** | map/basemap | **queued 2026-09-27** | 2026-09-27 |
 | **A county that stamps properties after the fetch is safe only while it is OUTSIDE its layer's archive, and nothing static says so — the Boone defect, generalised** | map/layer-load session | **routed 2026-09-27** | 2026-09-27 | Found reviewing #1217, which is merged. A tile carries the file's own properties and nothing the app adds after the fetch, so a post-fetch stamp outside `withStamp` is a card that silently loses content — exactly what CI caught on Boone's library card, which named no board. **I swept `il/index.html` for every post-fetch property assignment: nine, of which FOUR sit in plain `makeCached` loaders exposing no `decorate`** — `loadKendallPrecincts` (`dxTownshipName`), `loadLasallePrecincts` and `loadGrundyPrecincts` (polling place, address, phone) and `loadTazewellCountyBoard` (`dxDistrict`). **Decoding each archive's own metadata and crossing its county list against those four, the only stamping county inside an archive is Boone, in fire and library — the case already fixed.** Kendall, LaSalle, Grundy and Tazewell answer live, so the tile path never reaches them and the tree is correct TODAY. **The risk is the next tranche**: adding any of those four counties to an archive loses that card's township name, polling place or district key, and the browser probe catches it only where it places a point — which is why Boone was missed locally until the probe learned to place up to three points per county. **The check needs no browser**: intersect each archive's declared counties with the loaders that stamp outside `withStamp` and fail on any overlap. Your call whether it belongs in `build_vector_tiles.py`'s gate or its own. |
 | **#1197's residue: three documents still argue from an install-time precache that no longer exists, one of them un-correcting a correction** | map/layer-load session | **assigned 2026-09-26** | 2026-09-26 | Found sweeping for the same word #1200 fixed in code. It is yours because #1197 is yours and the residue is fleet docs rather than one instance's record. **(1) `docs/DATA_LAYER_GUIDEBOOK.md`, the library-district county-file paragraph, is the serious one**: it quotes `PRECACHE_URLS` as `SHELL_URLS.concat(GEOMETRY_URLS)` — now literally false code — and says an installing visitor background-fetches all 65 county files, 13.09 MB to 14.22 MB. Worse, that passage exists to CORRECT an earlier draft's "only the county you clicked is fetched", and after #1197 **that sentence is true again**, so a recorded correction has been un-corrected by a later change and the record now teaches the wrong half. Keep the disproved sentence under its correction, as this repo does everywhere else, rather than deleting either. **(2) the same document's interval rationale** says interval=25 was free because "the four cache-first files a first visit precaches go from 738,250 to 735,339 gzipped" — the bytes are still the bytes, but the argument's premise (that a first visit pays them) is gone, and I already recorded that claim as stale in #1198's merge. **(3) `ca/docs/OPTIMIZATION_PLAYBOOK.md` lines 75 and 79** are a live RECOMMENDATION resting on a false premise: `sf-neighborhoods.json` "is ~half of the geometry the service worker precaches at install" and re-simplifying would cut "the SW precache payload ~25%". Somebody acting on that would be optimising a cost that no longer exists. **The root playbook is clean and I checked rather than assumed**: its section 10 already records phase 2 as shipped and its finding 4 is the dated measurement the phase fixed, which is the right shape for the other three too. |
 | **~~#1198 (New York)~~ MERGED — the village lines were drawn 1.6 km from the state's own, and the third gate today that could not see its subject** | New York | 2026-09-26 | 2026-09-26 | **MERGED (`3e0ad00`), verified on main by content.** The county, town and village layers come off ONE state service and were being drawn three times, each in its own mapshaper run, so a shared line could not survive identically: villages strayed up to **1,604.8 m** with **31.28%** of vertices over 25 m, and coterminous town/village pairs — one government, one boundary — disagreed by 77-320 m. Measured here off the shipped vertex sets rather than the body: county vertices also present in the town layer **52.17% → 97.64%** (97.64 and not 100 is correct, the publisher's own share being 98.4%), and the judicial file **6,207 of 6,208 → 3,623 of 3,623 exact**, because it now dissolves the SHIPPED counties with no simplify step. `CACHE_NAME` v18 → v19, so a returning visitor gets the new lines. Woodbury's 1,484 m is the state's own two layers disagreeing and ships unsmoothed; smoothing it would be this repo inventing a line the state does not draw. The manifest's claim that `NYS_Civil_Boundaries` covered the state and metro outlines was FALSE — `build_metro_outline.py` names it zero times and TIGERweb's `State_County` was watched by nothing for those two files. **Third independent instance today of a gate green because it cannot see its subject**: its 2,000-point check had a 57.1% chance of finding nothing (0.0101 deg² in a 35.88 deg² envelope, 0.56 expected hits, arithmetic reproduced here), and its classification answered 99.95% on a file drawn 1.6 km out of place. Two body claims the tree no longer supports are recorded in the merge rather than carried: the −2,911-byte gzip delta (−1,722 at level 6, −1,536 at level 9, reproduced from git) and "the four cache-first files a first visit precaches", stale since #1197 retired precaching an hour earlier. Battery 105 of 105 after re-merging main. |
@@ -212,6 +214,50 @@ downloading every other shipped county's boundary after the card. Three of those
 layers answer a few tenths of a second slower and about 3.2 MB less is downloaded. Counties
 read live from their own county servers behave exactly as before, and an archive that fails
 to load falls back to the whole files rather than drawing nothing.
+
+**2026-09-27 17:05 — the ring-count fix merged: nine places where Wisconsin's maps name the wrong agency were counted nowhere. And a weekly measurement is now feeding a gate the wrong file.**
+
+**#1224 merged (`ae7e1c0`).** This is the ruling from earlier today coming back, and the answer is
+worse than I expected in the useful direction. The tool that measures what a simplified map loses
+asked whether ANY ONE corner of a shape survived — and a hairline sliver joined to its parent at one
+corner satisfies that even after vanishing completely. So slivers that were gone read as kept, and
+what a reader is told inside them was measured by nothing. **Nine of them change the agency named at
+that point, and none was counted.** I counted the nine from the diff rather than from the author's
+table, and the splits agree.
+
+**No boundary moved and no data file changed by a single byte** — I checked that first, because it is
+the claim everything else rests on. What changed is the counting: every dropped-ring figure this
+project has published, including the 432 and the 17 I corrected to you earlier, was a floor.
+
+Two things I verified rather than accepted. The new test is exact and its failure is loud: it claims
+each drawn shape to the one source shape containing it and STOPS if any shape matches none, which is
+what protects the assumption the whole method rests on. And I checked one "dry land" claim against
+the Census's own water map with three controls first — that sliver sits in a lakeside village, the
+exact shape of the Door County error this project already paid for, and it is dry land.
+
+One finding, prose not code: the docstring says the count is "gated against arithmetic nobody here
+controls" and nothing gates it. Inside the function that identity is true by construction, which the
+author worked out and correctly stopped checking; outside it, no builder checks it either. The real
+protection is the raise plus the pinned counts. Merged anyway — a sentence is not worth leaving nine
+wrong answers unmeasured — with the correction asked for as a follow-up.
+
+**#1222 is still held, and its red CI was worth more than the hold.** The Chicago transient cleared,
+confirming the hold. Then its `tiles` job went red on New York's county archive, and the archive is
+fine: the weekly measurement had begun charging a COVERAGE-TEST file to the county layer's list of
+files it draws from. The same field is what the tile gate compares an archive against, so a
+measurement error became a red build. The arithmetic settles it without a judgement call — the
+pooled files answer Tompkins TWICE and the tile answers it once, and a county layer never has two
+overlapping shapes at one point. #1223 passing the same gate against main's file list confirms it
+from the other side. Routed to the map session, which owns both the probe and the tile builder.
+
+Two Illinois GIS hosts (Boone's and Winnebago's) are recorded as not answering the probe and I could
+settle NEITHER: both fail from this sandbox through my own egress — a 502 on the tunnel, and a
+certificate error whose chain is my gateway's re-signature rather than the origin's. The weekly jobs
+that read them last ran four days ago, and a green run is not evidence it did its work. Recorded as
+unsettled rather than reported as a fault.
+
+**What changes for a reader:** nothing on the site today. What changed is how much the project can
+see about its own maps, and the honest figure is lower than what I published this morning.
 
 **2026-09-27 15:35 — the tile-card gate merged, my own prescribed fix was a no-op, and a weekly measurement is held because two of its claims are transients.**
 
