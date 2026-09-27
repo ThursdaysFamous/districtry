@@ -1403,7 +1403,8 @@ change can break the card without touching an archive.
 
 **Not yet on tiles (phase 5b).** The county-dispatched layers — Illinois's
 county board, county precinct, fire, park and library districts and judicial
-subcircuits, and the Iowa and Michigan city-ward layers — read one file per
+subcircuits, the Iowa and Michigan city-ward layers, and New York's county
+legislature (Tompkins, which landed on main the same day) — read one file per
 county and some counties live, so their archive needs the county key on every
 feature and a dispatch that picks the tile path per county. Phase 6 is the
 live sources.
