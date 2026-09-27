@@ -8747,9 +8747,11 @@ function initChiExplorer() {
    * every card answer; scripts/validate_vector_tiles.mjs holds both halves
    * to the Python decoders the builder's gate already trusts.
    *
-   * openTileArchive(url[, fetchRange]) returns { header, getTile(z, x, y) }:
-   * header resolves to the parsed header, getTile to the tile's bytes,
-   * decompressed, or null where the archive holds no tile. A server that
+   * openTileArchive(url[, fetchRange]) returns { header, metadata,
+   * getTile(z, x, y) }: header resolves to the parsed header, metadata to the
+   * archive's JSON metadata (the builder writes a county-dispatched layer's
+   * county keys there), getTile to the tile's bytes, decompressed, or null
+   * where the archive holds no tile. A server that
    * ignores Range (python -m http.server does) answers 200 with the whole
    * file, which is kept and sliced, so the reader is correct everywhere and
    * saves bytes only where ranges work. ---------- */
@@ -8791,6 +8793,7 @@ function initChiExplorer() {
     if (magic !== "PMTiles" || bytes[7] !== 3) throw new Error("not a PMTiles v3 archive");
     return {
       rootOffset: tileU64(view, 8), rootLength: tileU64(view, 16),
+      metadataOffset: tileU64(view, 24), metadataLength: tileU64(view, 32),
       leafOffset: tileU64(view, 40), leafLength: tileU64(view, 48),
       dataOffset: tileU64(view, 56), dataLength: tileU64(view, 64),
       internalCompression: bytes[97], tileCompression: bytes[98], tileType: bytes[99],
@@ -8841,14 +8844,16 @@ function initChiExplorer() {
   function openTileArchive(url, fetchRange) {
     if (!fetchRange && tileArchives[url]) return tileArchives[url];
     var get = fetchRange || tileRangeFetcher(url);
-    var dirs = {};
+    var dirs = {}, first = null;
     var header = get(0, 16384).then(function (buf) {
       var h = parseTileHeader(buf);
+      first = buf;
       // the root directory sits inside the first 16 KB by the format's rule
       dirs[h.rootOffset] = tileGunzip(new Uint8Array(buf.slice(h.rootOffset, h.rootOffset + h.rootLength)))
         .then(parseTileDirectory);
       return h;
     });
+    var metadata = null;
     // an archive that could not be opened is forgotten, so a Retry asks again
     // rather than being handed the same failure
     header.then(null, function () { if (tileArchives[url] === archive) delete tileArchives[url]; });
@@ -8862,6 +8867,21 @@ function initChiExplorer() {
     }
     var archive = {
       header: header,
+      // read on first use; the metadata follows the root directory and is
+      // usually inside the first 16 KB already
+      get metadata() {
+        if (!metadata) {
+          metadata = header.then(function (h) {
+            var end = h.metadataOffset + h.metadataLength;
+            return end <= first.byteLength ? first.slice(h.metadataOffset, end) : get(h.metadataOffset, h.metadataLength);
+          }).then(function (buf) {
+            return tileGunzip(new Uint8Array(buf));
+          }).then(function (bytes) {
+            return JSON.parse(tileTextDecoder.decode(bytes));
+          });
+        }
+        return metadata;
+      },
       getTile: function (z, x, y) {
         return header.then(function (h) {
           var id = zxyToTileId(z, x, y);
@@ -9050,8 +9070,9 @@ function initChiExplorer() {
    *   - the MAP draws the layer with MapLibre GL, which every app already
    *     loads for its basemap, in one shared canvas in its own pane
    *     (dstTileOverlays) just below Leaflet's overlay pane, a screen of tiles
-   *     at a time, with detail rising as the reader zooms. Without WebGL the
-   *     layer is drawn from its GeoJSON file exactly as before.
+   *     at a time, with detail rising as the reader zooms. Without WebGL, or
+   *     once its archive has failed to load, the layer is drawn from its
+   *     GeoJSON file exactly as before.
    *   - the whole GeoJSON file is still what the comparison features read
    *     (the pin, the relationship outlines, the stats), so it is fetched in
    *     the background when one of them needs it, never on switch-on.
@@ -9071,7 +9092,9 @@ function initChiExplorer() {
   var tileProtocolAdded = false;
 
   function tileCardAvailable(mod) {
-    return !!(mod && mod.tiles && typeof DecompressionStream !== "undefined" && typeof TextDecoder !== "undefined");
+    // once its archive has failed to draw, a layer reads its whole files for
+    // the rest of the session rather than asking the archive again per click
+    return !!(mod && mod.tiles && !mod.tileDrawFailed && typeof DecompressionStream !== "undefined" && typeof TextDecoder !== "undefined");
   }
   function tileDrawAvailable(mod) {
     return tileCardAvailable(mod) && !!baseIsVector && !!window.maplibregl && !!L.maplibreGL;
@@ -9105,6 +9128,13 @@ function initChiExplorer() {
   // from tiles, otherwise the whole file, exactly as before. The tile holds
   // every feature crossing it, so each one containing the point is there.
   function featureSetAt(load, point) {
+    if (load.tileCounty) {
+      return tileCountySetAt(load, point).then(function (fc) {
+        if (!fc) return load();
+        noteCountyTileAnswer(load, point, findFeatureContaining(fc, point));
+        return fc;
+      });
+    }
     var mod = load.tileMod;
     if (!mod || !tileCardAvailable(mod)) return load();
     return tileFeaturesAt(tileArchiveFor(mod), point).then(function (fc) {
@@ -9122,6 +9152,60 @@ function initChiExplorer() {
   // each, and each lights it (updateTileHighlight).
   function tileAnswerShared(load, answer) {
     (load.tileMods || []).forEach(function (m) { layerRuntime[m.id].tileAnswer = answer; });
+  }
+
+  /* ---------- a county-dispatched layer drawn from tiles (phase 5b). One
+   * archive holds every county whose boundaries the app ships, each feature
+   * carrying its county key as `_c`, and the archive's metadata lists those
+   * keys (scripts/build_vector_tiles.py writes them into its description). A
+   * county whose boundaries come from a live service is not in it: its card
+   * reads its own source as before, and its districts are drawn by Leaflet
+   * beside the tiles (TileOverlay's live part, loaded by mod.tileLive). The
+   * dispatcher marks each entry's boundary loader with tileCounty, so an
+   * entry whose query goes through queryFeatureAt or featureSetAt answers
+   * from the tile under the point; one that calls its loader directly still
+   * downloads its own county's file for its card, and only that file. */
+  function countyTileKeys(mod) {
+    if (!mod.tileKeysPromise) {
+      mod.tileKeysPromise = tileArchiveFor(mod).metadata.then(function (meta) {
+        var keys = {}, d = null;
+        try { d = JSON.parse((meta && meta.description) || "null"); } catch (e) { d = null; }
+        ((d && d.counties) || []).forEach(function (k) { keys[k] = true; });
+        return keys;
+      }, function (err) {
+        mod.tileKeysPromise = null; // asked again next time rather than pinned
+        throw err;
+      });
+    }
+    return mod.tileKeysPromise;
+  }
+
+  // The loader's own county's features in the tile under the point, with
+  // whatever the loader adds to each feature after its fetch (load.decorate:
+  // Illinois's officials stamped from a roster), or null when this county is
+  // not in the archive, tiles cannot be read here, or the read failed — the
+  // caller then reads the county's own source, exactly as before.
+  function tileCountySetAt(load, point) {
+    var tc = load.tileCounty;
+    if (!tc || tc.mod.tilesOff || !tileCardAvailable(tc.mod)) return Promise.resolve(null);
+    return countyTileKeys(tc.mod).then(function (keys) {
+      if (!keys[tc.key]) return null;
+      return tileFeaturesAt(tileArchiveFor(tc.mod), point).then(function (fc) {
+        var own = { type: "FeatureCollection", features: fc.features.filter(function (f) {
+          if (f.properties._c !== tc.key) return false;
+          delete f.properties._c;
+          return true;
+        }) };
+        return load.decorate ? load.decorate(own) : own;
+      });
+    }).then(null, function (err) {
+      console.warn("[" + tc.mod.id + "] tile read failed, reading " + tc.key + "'s own source:", err);
+      return null;
+    });
+  }
+
+  function noteCountyTileAnswer(load, point, feature) {
+    layerRuntime[load.tileCounty.mod.id].tileAnswer = { point: point, feature: feature };
   }
 
   function tileDashArray(style) {
@@ -9172,7 +9256,7 @@ function initChiExplorer() {
   function tilePaint(mod) {
     var rt = layerRuntime[mod.id];
     var base = baseStyleFor(mod) || {};
-    var selected = rt.tileSelectedId != null;
+    var selected = rt.tileSelectedId != null || !!rt.tileLiveSelected;
     var hl = highlightStyleFor(mod), faded = fadedStyle(base);
     var isSel = ["boolean", ["feature-state", "sel"], false];
     var baseOpacity = base.opacity == null ? 1 : base.opacity;
@@ -9207,10 +9291,16 @@ function initChiExplorer() {
       this.mod = mod;
       this.dxTiles = true;
       this._dxOn = false;
+      // a county layer's live counties, drawn by Leaflet beside the tiles
+      this.live = null;
+      this.liveFC = null;
+      this.liveSelected = null;
+      this.liveGen = 0;
     },
     onAdd: function () {
       var self = this, mod = this.mod;
       this._dxOn = true;
+      this.startLive();
       ensureTileGL().then(function (gl) {
         if (!self._dxOn || gl.getSource(tileIds(mod).source)) { self.restyle(); return; }
         return tileArchiveFor(mod).header.then(function (h) {
@@ -9237,20 +9327,28 @@ function initChiExplorer() {
           reorderActiveLayers();
         });
       }).catch(function (err) {
-        console.error("[" + mod.id + "] tile overlay failed:", err);
-        // the Leaflet path's rule (onLayerToggled): never silent, and never
-        // over a verified answer already on the card for this selection
+        // The archive could not be drawn, so the layer is drawn from its
+        // whole files for the rest of the session, exactly as before tiles:
+        // the Leaflet path then either draws it or reports its own failure in
+        // the card (never over a verified answer already on it). A county
+        // layer's live counties would otherwise go undrawn with it.
+        console.error("[" + mod.id + "] tile overlay failed, drawing from the whole file:", err);
         var rt = layerRuntime[mod.id];
-        if (self._dxOn && state.layersOn[mod.id] && rt.resultSeq !== state.sequence) {
-          setCardError(mod, "Couldn't load this layer's boundaries. It won't affect other layers.");
-        }
+        mod.tileDrawFailed = true;
         if (map.hasLayer(self)) map.removeLayer(self);
-        rt.overlayLayer = null; // Retry re-runs onLayerToggled, which makes a fresh one
+        if (rt.overlayLayer === self) rt.overlayLayer = null;
+        if (self._dxOn || state.layersOn[mod.id]) redrawFromFile(mod);
       });
       return this;
     },
     onRemove: function () {
       this._dxOn = false;
+      this.liveGen++; // a live load still in flight draws nothing now
+      if (this.live) map.removeLayer(this.live);
+      this.live = null;
+      this.liveFC = null;
+      this.liveSelected = null;
+      layerRuntime[this.mod.id].tileLiveSelected = false;
       var mod = this.mod, gl = tileGLLayer && tileGLLayer.getMaplibreMap();
       if (!gl) return this;
       var ids = tileIds(mod);
@@ -9263,6 +9361,7 @@ function initChiExplorer() {
     // the Leaflet path's per-path iteration has nothing to visit here
     eachLayer: function () { return this; },
     bringToFront: function () {
+      if (this.live) this.live.bringToFront();
       var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
       if (!gl) return this;
       var ids = tileIds(this.mod);
@@ -9270,6 +9369,7 @@ function initChiExplorer() {
       return this;
     },
     restyle: function () {
+      this.styleLive();
       var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
       var ids = tileIds(this.mod);
       if (!gl || !gl.getLayer(ids.fill)) return this;
@@ -9279,9 +9379,12 @@ function initChiExplorer() {
       });
       return this;
     },
-    // Light one district (by its tile feature id), or none.
-    setSelected: function (id) {
+    // Light one district (by its tile feature id, or a live county's feature
+    // drawn beside the tiles), or none.
+    setSelected: function (id, liveFeature) {
       var rt = layerRuntime[this.mod.id];
+      this.liveSelected = liveFeature || null;
+      rt.tileLiveSelected = !!liveFeature;
       var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
       var ids = tileIds(this.mod);
       if (gl && gl.getSource(ids.source)) {
@@ -9300,21 +9403,112 @@ function initChiExplorer() {
     featureAt: function (point) {
       var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
       var ids = tileIds(this.mod);
-      if (!gl || !gl.getLayer(ids.fill)) return null;
-      var px = gl.project([point.lng, point.lat]);
-      var hits = gl.queryRenderedFeatures(px, { layers: [ids.fill] });
-      if (!hits.length) return null;
-      var props = {};
+      var hits = gl && gl.getLayer(ids.fill) ? gl.queryRenderedFeatures(gl.project([point.lng, point.lat]), { layers: [ids.fill] }) : [];
+      if (!hits.length) return this.liveFC ? findFeatureContaining(this.liveFC, point) : null;
+      var props = {}, county = null;
       var src = hits[0].properties || {};
       for (var k in src) {
         if (!src.hasOwnProperty(k) || k === "_s" || k === "_i") continue;
+        if (k === "_c") { county = src[k]; continue; }
         var v = src[k];
         if (typeof v === "string" && /^\s*[\[{]/.test(v)) { try { v = JSON.parse(v); } catch (e) { /* ordinary text */ } }
         props[k] = v;
       }
-      return { type: "Feature", id: hits[0].id, properties: props, geometry: null };
+      // a county layer's hover names the district through its county's
+      // entry, which the dispatcher finds by dxCounty
+      var out = { type: "Feature", id: hits[0].id, properties: props, geometry: null };
+      if (county != null) out.dxCounty = county;
+      return out;
+    },
+
+    // The live counties' districts, loaded and drawn beside the tiles.
+    // mod.tileLive calls back with each county's features as it lands and
+    // resolves with the first; a generation count drops a load that was
+    // still in flight when the layer came off the map.
+    startLive: function () {
+      var self = this, mod = this.mod;
+      if (!mod.tileLive || this.liveFC) return;
+      var gen = ++this.liveGen;
+      this.liveFC = { type: "FeatureCollection", features: [] };
+      mod.tileLive(function (features) {
+        if (gen === self.liveGen) self.addLive(features);
+      }).then(function (fc) {
+        if (gen === self.liveGen) self.addLive(fc.features);
+      }, function (err) {
+        console.warn("[" + mod.id + "] the counties drawn from their own sources did not load:", err);
+      });
+    },
+    addLive: function (features) {
+      if (!this._dxOn || !this.liveFC) return;
+      // the first county arrives both in the resolved collection and, when
+      // a second lands before that resolution is handled, beside it
+      var fresh = features.filter(function (f) {
+        if (f.dxLiveDrawn) return false;
+        f.dxLiveDrawn = true;
+        return true;
+      });
+      if (!fresh.length) return;
+      Array.prototype.push.apply(this.liveFC.features, fresh);
+      var batch = { type: "FeatureCollection", features: fresh };
+      if (!this.live) {
+        this.live = buildOverlayLayer(this.mod, batch);
+        this.live.addTo(map);
+      } else {
+        this.live.addData(batch);
+      }
+      this.styleLive();
+      reorderActiveLayers();
+      if (state.selectedPoint && state.layersOn[this.mod.id] && findFeatureContaining(batch, state.selectedPoint)) {
+        updateLayerHighlight(this.mod);
+      }
+    },
+    // the live counties' paths in the layer's current state: the lit one in
+    // the highlight style, the rest faded while anything is lit, else plain
+    styleLive: function () {
+      if (!this.live) return;
+      var mod = this.mod, rt = layerRuntime[mod.id], sel = this.liveSelected;
+      var anySelected = !!sel || rt.tileSelectedId != null;
+      var base = baseStyleFor(mod) || {};
+      var faded = fadedStyle(base), lit = Object.assign({}, base, highlightStyleFor(mod));
+      this.live.eachLayer(function (sub) {
+        var on = !!sel && sub.feature === sel;
+        if (sub.setStyle) sub.setStyle(on ? lit : anySelected ? faded : base);
+        if (sub._path) sub._path.classList[on ? "add" : "remove"](HIGHLIGHT_CLASS);
+        if (on && sub.bringToFront) sub.bringToFront();
+      });
     }
   });
+
+  // The Leaflet path's load for a layer whose tiles failed, as a toggle-on
+  // would run it, without re-running the card's query.
+  function redrawFromFile(mod) {
+    var rt = layerRuntime[mod.id];
+    if (!state.layersOn[mod.id]) return;
+    if (rt.geojson) {
+      rt.overlayLayer = buildOverlayLayer(mod, rt.geojson);
+      if (rt.relevant !== false) rt.overlayLayer.addTo(map);
+      refreshActiveLayerOpacities();
+      reorderActiveLayers();
+      if (state.selectedPoint) updateLayerHighlight(mod);
+      return;
+    }
+    rt.overlayLoaded = true;
+    (rt.tileGeojsonPromise || mod.overlay.load()).then(function (geojson) {
+      rt.geojson = geojson;
+      if (!state.layersOn[mod.id] || rt.overlayLayer) return;
+      rt.overlayLayer = buildOverlayLayer(mod, geojson);
+      if (rt.relevant !== false) rt.overlayLayer.addTo(map);
+      refreshActiveLayerOpacities();
+      reorderActiveLayers();
+      if (state.selectedPoint) updateLayerHighlight(mod);
+    }, function (err) {
+      rt.overlayLoaded = false; // Retry (onLayerToggled) loads again
+      console.error("[" + mod.id + "] overlay load failed:", err);
+      if (state.layersOn[mod.id] && rt.resultSeq !== state.sequence) {
+        setCardError(mod, "Couldn't load this layer's boundaries. It won't affect other layers.");
+      }
+    });
+  }
 
   function isTileDrawn(mod) {
     var rt = layerRuntime[mod.id];
@@ -9327,12 +9521,35 @@ function initChiExplorer() {
   function updateTileHighlight(mod) {
     var rt = layerRuntime[mod.id];
     var answer = rt.tileAnswer;
-    var feature = answer && answer.point === state.selectedPoint ? answer.feature : null;
-    if (!feature && rt.geojson && state.selectedPoint) feature = findFeatureContaining(rt.geojson, state.selectedPoint);
+    var point = state.selectedPoint;
+    var answered = !!(answer && answer.point === point);
+    var feature = answered ? answer.feature : null;
+    if (!feature && rt.geojson && point) feature = findFeatureContaining(rt.geojson, point);
     var id = feature && feature.id != null ? feature.id : null;
-    rt.overlayLayer.setSelected(id);
-    rt.highlightApplied = id != null;
-    rt.highlightSignature = id != null ? highlightSignature(rt) : null;
+    // a county layer's live counties are drawn by Leaflet beside the tiles
+    var live = id == null && point && rt.overlayLayer.liveFC ? findFeatureContaining(rt.overlayLayer.liveFC, point) : null;
+    // a county whose card read its own file (an entry that calls its loader
+    // directly) left no tile answer: find the district in the tile itself,
+    // once per point, and light it when it arrives
+    if (id == null && !live && !answered && point && mod.tileLive && rt.tileLookupPoint !== point) {
+      rt.tileLookupPoint = point;
+      tileFeaturesAt(tileArchiveFor(mod), point).then(function (fc) {
+        var f = findFeatureContaining(fc, point);
+        if (!f || point !== state.selectedPoint || (rt.tileAnswer && rt.tileAnswer.point === point)) return;
+        rt.tileAnswer = { point: point, feature: f };
+        if (state.layersOn[mod.id] && isTileDrawn(mod)) updateTileHighlight(mod);
+      }).then(null, function () { /* the district stays unlit; the card is unaffected */ });
+    }
+    rt.overlayLayer.setSelected(id, live);
+    rt.highlightApplied = id != null || !!live;
+    rt.highlightSignature = rt.highlightApplied ? highlightSignature(rt) : null;
+    if (live) {
+      // a live county's feature is whole, so its own edges name the streets
+      rt.highlightedLayer = { feature: live };
+      rt.tileEdgeId = null;
+      scheduleBoundaryStreets();
+      return;
+    }
     // no geometry until tileEdgesForStreets has the real edges in view: the
     // card's tile piece carries its tile's clip lines, which are not edges
     if (rt.tileEdgeId !== id) rt.highlightedLayer = id != null ? { feature: { type: "Feature", properties: {}, geometry: null } } : null;
@@ -11120,6 +11337,20 @@ function initChiExplorer() {
     // file happens to be in memory: the highlight lights the district by the
     // TILE's feature id, which only a tile answer carries
     if (load.tileMod && tileCardAvailable(load.tileMod)) return tileFeatureAt(load.tileMod, load, point);
+    // one county of a county-dispatched layer drawn from tiles: the tile
+    // under the point when this county is in the layer's archive, else the
+    // county's own source below (tile-overlay block)
+    if (load.tileCounty) {
+      return tileCountySetAt(load, point).then(function (fc) {
+        if (!fc) return queryFeatureAtSource(load, point);
+        var feature = findFeatureContaining(fc, point);
+        noteCountyTileAnswer(load, point, feature);
+        return feature;
+      });
+    }
+    return queryFeatureAtSource(load, point);
+  }
+  function queryFeatureAtSource(load, point) {
     var cached = load.cached ? load.cached() : null;
     if (cached) return Promise.resolve(findFeatureContaining(cached, point));
     // fire (or join) the shared full download either way — the overlay and
@@ -15431,14 +15662,30 @@ function initChiExplorer() {
   /* One stamper for both counties: the payloads are the same shape because
    * they come from the same filings, so only the roster file and the property
    * holding the district's name differ. */
+  /* A boundary loader whose features gain properties after the fetch — the
+   * officials stamped from a roster below. The stamp is also exposed as
+   * `decorate`, so a card answered from a vector tile (queryFeatureAt, when
+   * the layer is drawn from tiles) gets the same properties the file's
+   * features do: the tile holds the file's own properties and nothing the
+   * app adds. `prefetch` starts the stamp's own fetches beside the boundary
+   * download rather than after it. Every stamp here is safe to run twice on
+   * the same roster record: each assignment writes the value it wrote the
+   * first time. */
+  function withStamp(loadGeometry, stamp, prefetch) {
+    var loaded = makeCached(function () {
+      if (prefetch) prefetch();
+      return loadGeometry().then(stamp);
+    });
+    loaded.decorate = function (geojson) {
+      return Promise.resolve(loadGeometry.decorate ? loadGeometry.decorate(geojson) : geojson).then(stamp);
+    };
+    return loaded;
+  }
   function withAfrOfficials(loadGeometry, loadRoster, nameKeys, rosterKey) {
-    return makeCached(function () {
-      return Promise.all([
-        loadGeometry(),
-        loadRoster().catch(function () { return null; })
-      ]).then(function (results) {
-        var geojson = results[0], roster = results[1];
-        var byName = (roster && roster[rosterKey || "districts"]) || {};
+    function roster() { return loadRoster().catch(function () { return null; }); }
+    return withStamp(loadGeometry, function (geojson) {
+      return roster().then(function (data) {
+        var byName = (data && data[rosterKey || "districts"]) || {};
         (geojson.features || []).forEach(function (f) {
           var name = findPropCI(f.properties || {}, nameKeys);
           var hit = name != null ? byName[String(name)] : null;
@@ -15446,7 +15693,7 @@ function initChiExplorer() {
         });
         return geojson;
       });
-    });
+    }, roster);
   }
   function withPeoriaOfficials(loadGeometry) {
     return withAfrOfficials(loadGeometry, loadPeoriaDistrictOfficials,
@@ -15509,15 +15756,16 @@ function initChiExplorer() {
   function withLibraryOfficials(loadGeometry) {
     var stamped = withAfrOfficials(loadGeometry, loadIlLibraryOfficials,
                                    ["library"], "libraries");
-    return makeCached(function () {
+    function extras() {
       return Promise.all([
-        stamped(),
         loadIlLibraryContacts().catch(function () { return null; }),
         loadIlLibraryTrustees().catch(function () { return null; })
-      ]).then(function (results) {
-        var geojson = results[0];
-        var byName = (results[1] && results[1].libraries) || {};
-        var trustees = (results[2] && results[2].libraries) || {};
+      ]);
+    }
+    return withStamp(stamped, function (geojson) {
+      return extras().then(function (results) {
+        var byName = (results[0] && results[0].libraries) || {};
+        var trustees = (results[1] && results[1].libraries) || {};
         (geojson.features || []).forEach(function (f) {
           var props = f.properties || {};
           var extra = byName[String(props.library)];
@@ -15562,7 +15810,7 @@ function initChiExplorer() {
         });
         return geojson;
       });
-    });
+    }, extras);
   }
   /* The SAME directory, for the four counties whose library cards read their
    * OWN roster file instead of the statewide one — Woodford, Grundy, Kankakee
@@ -15598,15 +15846,16 @@ function initChiExplorer() {
    * there only where the filing names none, and that rule is worth porting
    * deliberately rather than as a side effect of this one. */
   function withCountyLibraryPhone(stamped) {
-    return makeCached(function () {
+    function rosters() {
       return Promise.all([
-        stamped(),
         loadIlLibraryOfficials().catch(function () { return null; }),
         loadIlLibraryContacts().catch(function () { return null; })
-      ]).then(function (results) {
-        var geojson = results[0];
-        var filings = (results[1] && results[1].libraries) || {};
-        var contacts = (results[2] && results[2].libraries) || {};
+      ]);
+    }
+    return withStamp(stamped, function (geojson) {
+      return rosters().then(function (results) {
+        var filings = (results[0] && results[0].libraries) || {};
+        var contacts = (results[1] && results[1].libraries) || {};
         var nameByCode = {};
         Object.keys(filings).forEach(function (name) {
           var code = filings[name] && filings[name].comptrollerCode;
@@ -15626,7 +15875,7 @@ function initChiExplorer() {
         });
         return geojson;
       });
-    });
+    }, rosters);
   }
 
   /* The officeholder block under a district whose officers come from its own
@@ -21957,11 +22206,21 @@ function initChiExplorer() {
     // fetch actually FAILED: a merely slow county appends whenever it arrives,
     // while a failed one stays off the overlay until reload — its card/query
     // path (fetched per query, below) keeps working and keeps its own Retry.
-    function loadUnion() {
+    //
+    // `list` is the entries to load and `onAppend` what to do with each county
+    // after the first. A layer drawn from tiles (opts.tiles) loads the whole
+    // union only for a comparison and draws none of it (appendToUnion), and
+    // loads its LIVE counties alone for the map (spec.tileLive), where an
+    // empty list is simply no live county rather than a failure.
+    function loadUnion(list, onAppend, emptyOk) {
       var fc = { type: "FeatureCollection", features: [] };
       return new Promise(function (resolve, reject) {
-        var resolved = false, pending = entries.length, anySuccess = false;
-        if (!pending) { reject(new Error(opts.label + ": no source responded")); return; }
+        var resolved = false, pending = list.length, anySuccess = false;
+        if (!pending) {
+          if (emptyOk) resolve(fc);
+          else reject(new Error(opts.label + ": no source responded"));
+          return;
+        }
         function loadEntry(entry) {
           return entry.loadGeometry().then(function (geojson) {
             var wrapped = (geojson.features || []).map(function (f) {
@@ -21970,7 +22229,7 @@ function initChiExplorer() {
             anySuccess = true;
             Array.prototype.push.apply(fc.features, wrapped);
             if (!resolved) { resolved = true; resolve(fc); }
-            else drawAppendedCountyFeatures(wrapped);
+            else onAppend(wrapped);
           }, function () { /* down county: absent from the drawing (tradeoff above) */ })
             .catch(function () { /* a drawing hiccup in one county must not skew the settle count */ })
             .then(function () {
@@ -21991,13 +22250,21 @@ function initChiExplorer() {
         // at once as before.
         var point = state.selectedPoint;
         (point ? coverageMatches(point) : Promise.resolve({ matches: [] })).then(function (r) {
-          if (!r.matches.length) { entries.forEach(loadEntry); return; }
-          var rest = entries.filter(function (entry) { return r.matches.indexOf(entry) === -1; });
-          Promise.all(r.matches.map(loadEntry)).then(function () {
+          var first = r.matches.filter(function (entry) { return list.indexOf(entry) !== -1; });
+          if (!first.length) { list.forEach(loadEntry); return; }
+          var rest = list.filter(function (entry) { return first.indexOf(entry) === -1; });
+          Promise.all(first.map(loadEntry)).then(function () {
             afterCard(spec, function () { rest.forEach(loadEntry); });
           });
         });
       });
+    }
+
+    // A county landing after the first: onto the Leaflet union, unless the
+    // layer is drawn from tiles, which draw it already (or, for a live county,
+    // the tile overlay's own live part does)
+    function appendToUnion(features) {
+      if (!isTileDrawn(spec)) drawAppendedCountyFeatures(features);
     }
 
     // Draw one late-arriving county onto the already-built union overlay. Its
@@ -22092,7 +22359,7 @@ function initChiExplorer() {
         var entry = byKey[feature.dxCounty];
         return entry && entry.hoverName ? entry.hoverName(feature) : null;
       },
-      overlay: { load: loadUnion, style: opts.style },
+      overlay: { load: function () { return loadUnion(entries, appendToUnion, false); }, style: opts.style },
       // the selected district from whichever entry answered the card
       // point-first (queryFeatureAt keeps it on that entry's own loader), so
       // it can be lit before the entry's whole set has joined the union
@@ -22201,6 +22468,23 @@ function initChiExplorer() {
         }
       } : undefined
     };
+    // Drawn from a vector-tile archive of the counties whose boundaries the
+    // app ships (tile-overlay block, docs/OPTIMIZATION_PLAYBOOK.md §10 phase
+    // 5b). Each entry's boundary loader learns its layer and key, so a query
+    // through queryFeatureAt reads the tile; the live counties are loaded and
+    // drawn beside the tiles, point-first as the union is.
+    if (opts.tiles) {
+      spec.tiles = opts.tiles;
+      spec.tileLive = function (onAppend) {
+        return countyTileKeys(spec).then(function (keys) {
+          return loadUnion(entries.filter(function (entry) { return !keys[entry.key]; }), onAppend, true);
+        });
+      };
+      entries.forEach(function (entry) {
+        var load = entry.loadGeometry;
+        if (load && !load.tileCounty) load.tileCounty = { mod: spec, key: entry.key };
+      });
+    }
     registerLayer(spec);
   }
   /* ==== ENGINE:END county-layer-dispatcher ==== */
@@ -22318,8 +22602,20 @@ function initChiExplorer() {
           : Promise.resolve(false);
         return gate.then(function (isExcluded) {
           if (isExcluded) return { seq: seq, excluded: true };
-          return opts.loader().then(function (geojson) {
-            var hit = findFeatureContainingOrNear(geojson, point, opts.snapFeet);
+          // a county in its layer's tile archive answers from the tile under
+          // the point (tileCountySetAt); only a miss on an entry that snaps to
+          // a nearby district (opts.snapFeet) then needs the whole county,
+          // since the nearest edge may lie in another tile. Every other county
+          // reads its own source exactly as before.
+          return tileCountySetAt(opts.loader, point).then(function (fc) {
+            var feature = fc ? findFeatureContaining(fc, point) : null;
+            if (fc) noteCountyTileAnswer(opts.loader, point, feature);
+            if (feature) return { feature: feature, snappedFt: null };
+            if (fc && !opts.snapFeet) return null;
+            return opts.loader().then(function (geojson) {
+              return findFeatureContainingOrNear(geojson, point, opts.snapFeet);
+            });
+          }).then(function (hit) {
             if (!hit) return null;
             var props = hit.feature.properties || {};
             var result = { seq: seq };
@@ -22422,6 +22718,7 @@ function initChiExplorer() {
    * label never obscures which body a district belongs to. ---------- */
   registerCountyLayer({
     id: "county-board",
+    tiles: "data/app/tiles/county-board.pmtiles", // the shipped counties, drawn from vector tiles (engine tile-overlay block)
     group: "political",
     label: "County Board District",
     // The location row for the counties whose own roster publishes no board
@@ -22957,7 +23254,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadLasalleBoardDistricts(),
+            featureSetAt(loadLasalleBoardDistricts, point),
             loadLasalleBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -23035,7 +23332,7 @@ function initChiExplorer() {
           return (v == null || v === "") ? null : String(v);
         },
         query: function (point, seq) {
-          return loadKankakeeCountyBoard().then(function (geojson) {
+          return featureSetAt(loadKankakeeCountyBoard, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -23094,7 +23391,7 @@ function initChiExplorer() {
         hoverName: winnebagoBoardDistrict,
         query: function (point, seq) {
           return Promise.all([
-            loadWinnebagoCountyBoard(),
+            featureSetAt(loadWinnebagoCountyBoard, point),
             loadWinnebagoBoardContact().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -23171,7 +23468,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadLivingstonCountyBoard(),
+            featureSetAt(loadLivingstonCountyBoard, point),
             loadLivingstonBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -23235,7 +23532,7 @@ function initChiExplorer() {
           return (v == null || v === "") ? null : String(v);
         },
         query: function (point, seq) {
-          return loadMcleanCountyBoard().then(function (geojson) {
+          return featureSetAt(loadMcleanCountyBoard, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -23292,7 +23589,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadWoodfordBoardDistricts(),
+            featureSetAt(loadWoodfordBoardDistricts, point),
             loadWoodfordBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -23355,7 +23652,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadLoganCountyBoard(),
+            featureSetAt(loadLoganCountyBoard, point),
             loadLoganBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -23442,7 +23739,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadSangamonCountyBoard(),
+            featureSetAt(loadSangamonCountyBoard, point),
             loadSangamonBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -23509,7 +23806,7 @@ function initChiExplorer() {
           return (v == null || v === "") ? null : String(v);
         },
         query: function (point, seq) {
-          return loadMadisonCountyBoard().then(function (geojson) {
+          return featureSetAt(loadMadisonCountyBoard, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -23578,7 +23875,7 @@ function initChiExplorer() {
           return (v == null || v === "") ? null : String(v);
         },
         query: function (point, seq) {
-          return loadStClairCountyBoard().then(function (geojson) {
+          return featureSetAt(loadStClairCountyBoard, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -23637,7 +23934,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadDekalbCountyBoard(),
+            featureSetAt(loadDekalbCountyBoard, point),
             loadDekalbBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -23704,7 +24001,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadOgleCountyBoard(),
+            featureSetAt(loadOgleCountyBoard, point),
             loadOgleBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -23766,7 +24063,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadStephensonCountyBoard(),
+            featureSetAt(loadStephensonCountyBoard, point),
             loadStephensonBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -23841,7 +24138,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadCarrollCountyBoard(),
+            featureSetAt(loadCarrollCountyBoard, point),
             loadCarrollBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -23901,7 +24198,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadLeeCountyBoard(),
+            featureSetAt(loadLeeCountyBoard, point),
             loadLeeBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -23959,7 +24256,7 @@ function initChiExplorer() {
           return whitesideDistrictNumber(feature);
         },
         query: function (point, seq) {
-          return loadWhitesideCountyBoard().then(function (geojson) {
+          return featureSetAt(loadWhitesideCountyBoard, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -24015,7 +24312,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadRockIslandCountyBoard(),
+            featureSetAt(loadRockIslandCountyBoard, point),
             loadRockIslandBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -24083,7 +24380,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadBooneCountyBoard(),
+            featureSetAt(loadBooneCountyBoard, point),
             loadBooneBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -24150,7 +24447,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadGrundyBoardDistricts(),
+            featureSetAt(loadGrundyBoardDistricts, point),
             loadGrundyBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -24237,7 +24534,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadHenryBoardDistricts(),
+            featureSetAt(loadHenryBoardDistricts, point),
             loadHenryBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -24300,7 +24597,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadJeffersonBoardDistricts(),
+            featureSetAt(loadJeffersonBoardDistricts, point),
             loadJeffersonBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -24396,7 +24693,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadMaconBoardDistricts(),
+            featureSetAt(loadMaconBoardDistricts, point),
             loadMaconBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -24459,7 +24756,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadMenardDistricts(),
+            featureSetAt(loadMenardDistricts, point),
             loadMenardCommissioners().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -24528,7 +24825,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadMontgomeryBoardDistricts(),
+            featureSetAt(loadMontgomeryBoardDistricts, point),
             loadMontgomeryBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -24596,7 +24893,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadShelbyBoardDistricts(),
+            featureSetAt(loadShelbyBoardDistricts, point),
             loadShelbyBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -24689,7 +24986,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadWhiteBoardDistricts(),
+            featureSetAt(loadWhiteBoardDistricts, point),
             loadWhiteBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -24780,7 +25077,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadJoDaviessBoardDistricts(),
+            featureSetAt(loadJoDaviessBoardDistricts, point),
             loadJoDaviessBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -24888,7 +25185,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadColesCountyBoard(),
+            featureSetAt(loadColesCountyBoard, point),
             loadColesBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -24963,7 +25260,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadKnoxBoardDistricts(),
+            featureSetAt(loadKnoxBoardDistricts, point),
             loadKnoxBoardMembers().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25059,7 +25356,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadClarkBoardDistricts(),
+            featureSetAt(loadClarkBoardDistricts, point),
             loadClarkBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25148,7 +25445,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadCrawfordBoardDistricts(),
+            featureSetAt(loadCrawfordBoardDistricts, point),
             loadCrawfordBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25220,7 +25517,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadRichlandBoardDistricts(),
+            featureSetAt(loadRichlandBoardDistricts, point),
             loadRichlandBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25289,7 +25586,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadWayneBoardDistricts(),
+            featureSetAt(loadWayneBoardDistricts, point),
             loadWayneBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25359,7 +25656,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadClayBoardDistricts(),
+            featureSetAt(loadClayBoardDistricts, point),
             loadClayBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25431,7 +25728,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadJacksonBoardDistricts(),
+            featureSetAt(loadJacksonBoardDistricts, point),
             loadJacksonBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25534,7 +25831,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadDouglasBoardDistricts(),
+            featureSetAt(loadDouglasBoardDistricts, point),
             loadDouglasBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25623,7 +25920,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadVermilionBoardDistricts(),
+            featureSetAt(loadVermilionBoardDistricts, point),
             loadVermilionBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25707,7 +26004,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadMercerBoardDistricts(),
+            featureSetAt(loadMercerBoardDistricts, point),
             loadMercerBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25776,7 +26073,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadEdgarBoardDistricts(),
+            featureSetAt(loadEdgarBoardDistricts, point),
             loadEdgarBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25849,7 +26146,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadFranklinBoardDistricts(),
+            featureSetAt(loadFranklinBoardDistricts, point),
             loadFranklinBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25918,7 +26215,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadClintonBoardDistricts(),
+            featureSetAt(loadClintonBoardDistricts, point),
             loadClintonBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -25985,7 +26282,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadHancockBoardDistricts(),
+            featureSetAt(loadHancockBoardDistricts, point),
             loadHancockBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26052,7 +26349,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadWarrenBoardDistricts(),
+            featureSetAt(loadWarrenBoardDistricts, point),
             loadWarrenBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26120,7 +26417,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadPeoriaCountyBoard(),
+            featureSetAt(loadPeoriaCountyBoard, point),
             loadPeoriaBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26183,7 +26480,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadTazewellCountyBoard(),
+            featureSetAt(loadTazewellCountyBoard, point),
             loadTazewellBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var roster = results[1];
@@ -26264,7 +26561,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadAdamsCountyBoard(),
+            featureSetAt(loadAdamsCountyBoard, point),
             loadAdamsBoardMembers().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26365,7 +26662,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadMcdonoughBoardDistricts(),
+            featureSetAt(loadMcdonoughBoardDistricts, point),
             loadMcdonoughBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26425,7 +26722,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadFultonCountyBoard(),
+            featureSetAt(loadFultonCountyBoard, point),
             loadFultonBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26489,7 +26786,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadStarkBoardDistricts(),
+            featureSetAt(loadStarkBoardDistricts, point),
             loadStarkBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26544,7 +26841,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadIroquoisCountyBoard(),
+            featureSetAt(loadIroquoisCountyBoard, point),
             loadIroquoisBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26609,7 +26906,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadDewittBoardDistricts(),
+            featureSetAt(loadDewittBoardDistricts, point),
             loadDewittBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26668,7 +26965,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadWashingtonBoardDistricts(),
+            featureSetAt(loadWashingtonBoardDistricts, point),
             loadWashingtonBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26727,7 +27024,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadCassBoardDistricts(),
+            featureSetAt(loadCassBoardDistricts, point),
             loadCassBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26788,7 +27085,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadMarshallBoardDistricts(),
+            featureSetAt(loadMarshallBoardDistricts, point),
             loadMarshallBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26852,7 +27149,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadMasonBoardDistricts(),
+            featureSetAt(loadMasonBoardDistricts, point),
             loadMasonBoardMembers().catch(function () { return {}; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -26917,7 +27214,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadEffinghamCountyBoard().then(function (geojson) {
+          return featureSetAt(loadEffinghamCountyBoard, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -26980,7 +27277,7 @@ function initChiExplorer() {
           return (v == null || v === "") ? null : String(v);
         },
         query: function (point, seq) {
-          return loadChristianBoardDistricts().then(function (geojson) {
+          return featureSetAt(loadChristianBoardDistricts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -27242,6 +27539,7 @@ function initChiExplorer() {
   });
   registerCountyLayer({
     id: "fire-district",
+    tiles: "data/app/tiles/fire-district.pmtiles", // the shipped counties, drawn from vector tiles (engine tile-overlay block)
     group: "safety",
     label: "Fire Protection District",
     style: { color: "#B0342A", weight: 1.5, fillColor: "#D0564C", fillOpacity: 0.05, dashArray: "5 3" },
@@ -28091,6 +28389,7 @@ function initChiExplorer() {
   });
   registerCountyLayer({
     id: "library-district",
+    tiles: "data/app/tiles/library-district.pmtiles", // the shipped counties, drawn from vector tiles (engine tile-overlay block)
     group: "geography",
     label: "Library District",
     style: { color: "#00695C", weight: 1.5, fillColor: "#4DB6AC", fillOpacity: 0.05, dashArray: "3 3" },
@@ -28659,6 +28958,7 @@ function initChiExplorer() {
   }
   registerCountyLayer({
     id: "county-precinct",
+    tiles: "data/app/tiles/county-precinct.pmtiles", // the shipped counties, drawn from vector tiles (engine tile-overlay block)
     group: "geography",
     subOf: "township",
     label: "Voting Precinct",
@@ -28869,7 +29169,7 @@ function initChiExplorer() {
         // — read off the Elections Maps page, not inferred), and the polling
         // place is stamped at load with the election it was published for.
         query: function (point, seq) {
-          return loadKanePrecincts().then(function (geojson) {
+          return featureSetAt(loadKanePrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -29300,7 +29600,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadMacoupinPrecincts().then(function (geojson) {
+          return featureSetAt(loadMacoupinPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -29343,7 +29643,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadMadisonPrecincts(),
+            featureSetAt(loadMadisonPrecincts, point),
             loadMadisonCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -29403,7 +29703,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadStClairPrecincts(),
+            featureSetAt(loadStClairPrecincts, point),
             loadStClairCountyBoard().catch(function () { return null; }),
             loadStClairPolling().catch(function () { return null; })
           ]).then(function (results) {
@@ -29469,7 +29769,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadWinnebagoPrecincts(),
+            featureSetAt(loadWinnebagoPrecincts, point),
             loadWinnebagoCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -29524,7 +29824,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadDekalbPrecincts(),
+            featureSetAt(loadDekalbPrecincts, point),
             loadDekalbCountyBoard().catch(function () { return null; }),
             loadDekalbPrecinctTownships().catch(function () { return null; })
           ]).then(function (results) {
@@ -29590,7 +29890,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadLeePrecincts(),
+            featureSetAt(loadLeePrecincts, point),
             loadLeeCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -29654,7 +29954,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadWhitesidePrecincts(),
+            featureSetAt(loadWhitesidePrecincts, point),
             loadWhitesidePollingPlaces().catch(function () { return null; }),
             loadWhitesideCountyBoard().catch(function () { return null; }),
             loadWhitesideClerkPolling().catch(function () { return null; })
@@ -29743,7 +30043,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadRockIslandPrecincts(),
+            featureSetAt(loadRockIslandPrecincts, point),
             loadRockIslandCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -29792,7 +30092,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadMcleanPrecincts(),
+            featureSetAt(loadMcleanPrecincts, point),
             loadMcleanCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -29849,7 +30149,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadLoganPrecincts(),
+            featureSetAt(loadLoganPrecincts, point),
             loadLoganCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -29906,7 +30206,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadSangamonPrecincts(),
+            featureSetAt(loadSangamonPrecincts, point),
             loadSangamonCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -29965,7 +30265,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadCarrollPrecincts(),
+            featureSetAt(loadCarrollPrecincts, point),
             loadCarrollCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -30024,7 +30324,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadWoodfordPrecincts(),
+            featureSetAt(loadWoodfordPrecincts, point),
             loadWoodfordBoardDistricts().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -30083,7 +30383,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadPeoriaPrecincts(),
+            featureSetAt(loadPeoriaPrecincts, point),
             loadPeoriaCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -30143,7 +30443,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadTazewellPrecincts(),
+            featureSetAt(loadTazewellPrecincts, point),
             loadTazewellCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -30208,7 +30508,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadAdamsPrecincts().then(function (geojson) {
+          return featureSetAt(loadAdamsPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -30262,7 +30562,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadMcdonoughPrecincts(),
+            featureSetAt(loadMcdonoughPrecincts, point),
             loadMcdonoughBoardDistricts().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -30327,7 +30627,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadFultonPrecincts(),
+            featureSetAt(loadFultonPrecincts, point),
             loadFultonCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -30389,7 +30689,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadJeffersonPrecincts(),
+            featureSetAt(loadJeffersonPrecincts, point),
             loadJeffersonBoardDistricts().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -30447,7 +30747,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadHenryPrecincts(),
+            featureSetAt(loadHenryPrecincts, point),
             loadHenryBoardDistricts().catch(function () { return null; }),
             loadHenryPolling().catch(function () { return null; })
           ]).then(function (results) {
@@ -30517,7 +30817,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadMontgomeryPrecincts(),
+            featureSetAt(loadMontgomeryPrecincts, point),
             loadMontgomeryBoardDistricts().catch(function () { return null; }),
             loadMontgomeryPolling().catch(function () { return null; })
           ]).then(function (results) {
@@ -30582,7 +30882,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadOglePrecincts(),
+            featureSetAt(loadOglePrecincts, point),
             loadOgleCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -30648,7 +30948,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadStephensonPrecincts(),
+            featureSetAt(loadStephensonPrecincts, point),
             loadStephensonCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -30710,7 +31010,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadMaconPrecincts().then(function (geojson) {
+          return featureSetAt(loadMaconPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -30757,7 +31057,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadStarkPrecincts(),
+            featureSetAt(loadStarkPrecincts, point),
             loadStarkBoardDistricts().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -30805,7 +31105,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadIroquoisPrecincts(),
+            featureSetAt(loadIroquoisPrecincts, point),
             loadIroquoisCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -30863,7 +31163,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadMonroePrecincts().then(function (geojson) {
+          return featureSetAt(loadMonroePrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -30908,7 +31208,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadRandolphPrecincts().then(function (geojson) {
+          return featureSetAt(loadRandolphPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var name = findPropCI(feature.properties || {}, ["name"]);
@@ -30945,7 +31245,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadDewittPrecincts(),
+            featureSetAt(loadDewittPrecincts, point),
             loadDewittBoardDistricts().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -30994,7 +31294,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadEffinghamPrecincts().then(function (geojson) {
+          return featureSetAt(loadEffinghamPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31049,7 +31349,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadHamiltonPrecincts().then(function (geojson) {
+          return featureSetAt(loadHamiltonPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31107,7 +31407,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadWhitePrecincts(),
+            featureSetAt(loadWhitePrecincts, point),
             loadWhitePolling().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -31174,7 +31474,7 @@ function initChiExplorer() {
         },
         query: function (point, seq) {
           return Promise.all([
-            loadColesPrecincts(),
+            featureSetAt(loadColesPrecincts, point),
             loadColesCountyBoard().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
@@ -31245,7 +31545,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadClarkPrecincts().then(function (geojson) {
+          return featureSetAt(loadClarkPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31289,7 +31589,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadCrawfordPrecincts().then(function (geojson) {
+          return featureSetAt(loadCrawfordPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31336,7 +31636,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadRichlandPrecincts().then(function (geojson) {
+          return featureSetAt(loadRichlandPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31379,7 +31679,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadWaynePrecincts().then(function (geojson) {
+          return featureSetAt(loadWaynePrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31424,7 +31724,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadJacksonPrecincts().then(function (geojson) {
+          return featureSetAt(loadJacksonPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31479,7 +31779,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadShelbyPrecincts().then(function (geojson) {
+          return featureSetAt(loadShelbyPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31536,7 +31836,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadWarrenPrecincts().then(function (geojson) {
+          return featureSetAt(loadWarrenPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31591,7 +31891,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadHancockPrecincts().then(function (geojson) {
+          return featureSetAt(loadHancockPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31636,7 +31936,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadDouglasPrecincts().then(function (geojson) {
+          return featureSetAt(loadDouglasPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31686,7 +31986,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadMercerPrecincts().then(function (geojson) {
+          return featureSetAt(loadMercerPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31729,7 +32029,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadEdgarPrecincts().then(function (geojson) {
+          return featureSetAt(loadEdgarPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31777,7 +32077,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadFranklinPrecincts().then(function (geojson) {
+          return featureSetAt(loadFranklinPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -31825,7 +32125,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadCalhounPrecincts().then(function (geojson) {
+          return featureSetAt(loadCalhounPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -31862,7 +32162,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadJoDaviessPrecincts().then(function (geojson) {
+          return featureSetAt(loadJoDaviessPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -31899,7 +32199,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadGallatinPrecincts().then(function (geojson) {
+          return featureSetAt(loadGallatinPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -31942,7 +32242,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadPutnamPrecincts().then(function (geojson) {
+          return featureSetAt(loadPutnamPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -31978,7 +32278,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadMarshallPrecincts().then(function (geojson) {
+          return featureSetAt(loadMarshallPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32016,7 +32316,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadLivingstonPrecincts().then(function (geojson) {
+          return featureSetAt(loadLivingstonPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32058,7 +32358,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadCumberlandPrecincts().then(function (geojson) {
+          return featureSetAt(loadCumberlandPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32097,7 +32397,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadJohnsonPrecincts().then(function (geojson) {
+          return featureSetAt(loadJohnsonPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32133,7 +32433,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadPerryPrecincts().then(function (geojson) {
+          return featureSetAt(loadPerryPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32173,7 +32473,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadPulaskiPrecincts().then(function (geojson) {
+          return featureSetAt(loadPulaskiPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32213,7 +32513,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadHardinPrecincts().then(function (geojson) {
+          return featureSetAt(loadHardinPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32249,7 +32549,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadCassPrecincts().then(function (geojson) {
+          return featureSetAt(loadCassPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32284,7 +32584,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadGreenePrecincts().then(function (geojson) {
+          return featureSetAt(loadGreenePrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32318,7 +32618,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadScottPrecincts().then(function (geojson) {
+          return featureSetAt(loadScottPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32353,7 +32653,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadMoultriePrecincts().then(function (geojson) {
+          return featureSetAt(loadMoultriePrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32388,7 +32688,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadMenardPrecincts().then(function (geojson) {
+          return featureSetAt(loadMenardPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32423,7 +32723,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadSchuylerPrecincts().then(function (geojson) {
+          return featureSetAt(loadSchuylerPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             return {
@@ -32458,7 +32758,7 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return loadMorganPrecincts().then(function (geojson) {
+          return featureSetAt(loadMorganPrecincts, point).then(function (geojson) {
             var feature = findFeatureContaining(geojson, point);
             if (!feature) return null;
             var props = feature.properties || {};
@@ -34342,10 +34642,73 @@ function initChiExplorer() {
     // scripts/probe_tile_cards.mjs compares: the card a reader sees must be
     // the same either way. The tile answers run first, while the whole file
     // is not yet in memory, or the loader would answer them from it.
+    //
+    // A county-dispatched layer turns its tiles off for the second run
+    // (mod.tilesOff), and each answer also says whether the county that
+    // answered is in the archive at all (`inArchive`): a live county, or a
+    // point just over a county line, is answered from its own source by
+    // design, and the probe does not count it against the tiles. It also
+    // compares the HOVER name: the canvas names a district from the tile's
+    // own properties, with nothing a loader stamps after its fetch, so a
+    // hover that reads a stamped property would differ from the file's.
     tileCardCheck: function (id, points) {
       var mod = getLayerById(id), load = mod && mod.overlay && mod.overlay.load;
       if (!load || !load.tileMod) return Promise.reject(new Error(id + " is not drawn from tiles"));
       var rt = layerRuntime[id], viaTiles = [];
+      if (mod.countyEntries) {
+        var countyResults = [], hovers = [];
+        var byKey = {};
+        mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
+        function hoverPair(p) {
+          return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+            var tf = findFeatureContaining(fc, p);
+            var key = tf && tf.properties._c, entry = key != null && byKey[key];
+            if (!entry || !entry.loadGeometry) return null;
+            var props = {};
+            for (var k in tf.properties) if (tf.properties.hasOwnProperty(k) && k !== "_c") props[k] = tf.properties[k];
+            var tiles = mod.hoverName({ type: "Feature", properties: props, dxCounty: key });
+            return Promise.resolve(entry.loadGeometry()).then(function (g) {
+              var ff = findFeatureContaining(g, p);
+              return { tiles: tiles, file: ff ? mod.hoverName({ type: "Feature", properties: ff.properties, dxCounty: key }) : null };
+            });
+          }).then(null, function (e) { return { tiles: "error: " + String(e && e.message || e), file: null }; });
+        }
+        return countyTileKeys(mod).then(function (keys) {
+          function runCounty(out, record) {
+            return points.reduce(function (chain, p, i) {
+              return chain.then(function () {
+                rt.tileAnswer = null;
+                return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+                  out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                    return k === "seq" || k === "geometry" ? undefined : v;
+                  }));
+                  if (record) {
+                    countyResults.push({ via: !!(rt.tileAnswer && rt.tileAnswer.point === p),
+                      county: r ? r.dxCounty : null, inArchive: !!(r && keys[r.dxCounty]) });
+                    return hoverPair(p).then(function (h) { hovers.push(h); });
+                  }
+                }, function (e) {
+                  out.push("error: " + String(e && e.message || e));
+                  if (record) { countyResults.push({ via: false, county: null, inArchive: false }); hovers.push(null); }
+                });
+              });
+            }, Promise.resolve());
+          }
+          var tiled = [], whole = [];
+          return runCounty(tiled, true).then(function () {
+            mod.tilesOff = true;
+            return runCounty(whole);
+          }).then(function () {
+            mod.tilesOff = false;
+            return points.map(function (p, i) {
+              var c = countyResults[i];
+              var h = hovers[i];
+              return { point: p, tiles: tiled[i], file: whole[i], viaTiles: c.via, county: c.county, inArchive: c.inArchive,
+                hoverTiles: h ? h.tiles : null, hoverFile: h ? h.file : null };
+            });
+          }, function (e) { mod.tilesOff = false; throw e; });
+        });
+      }
       function run(out, record) {
         return points.reduce(function (chain, p, i) {
           return chain.then(function () {

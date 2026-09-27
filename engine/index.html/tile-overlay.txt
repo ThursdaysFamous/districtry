@@ -8,8 +8,9 @@
    *   - the MAP draws the layer with MapLibre GL, which every app already
    *     loads for its basemap, in one shared canvas in its own pane
    *     (dstTileOverlays) just below Leaflet's overlay pane, a screen of tiles
-   *     at a time, with detail rising as the reader zooms. Without WebGL the
-   *     layer is drawn from its GeoJSON file exactly as before.
+   *     at a time, with detail rising as the reader zooms. Without WebGL, or
+   *     once its archive has failed to load, the layer is drawn from its
+   *     GeoJSON file exactly as before.
    *   - the whole GeoJSON file is still what the comparison features read
    *     (the pin, the relationship outlines, the stats), so it is fetched in
    *     the background when one of them needs it, never on switch-on.
@@ -29,7 +30,9 @@
   var tileProtocolAdded = false;
 
   function tileCardAvailable(mod) {
-    return !!(mod && mod.tiles && typeof DecompressionStream !== "undefined" && typeof TextDecoder !== "undefined");
+    // once its archive has failed to draw, a layer reads its whole files for
+    // the rest of the session rather than asking the archive again per click
+    return !!(mod && mod.tiles && !mod.tileDrawFailed && typeof DecompressionStream !== "undefined" && typeof TextDecoder !== "undefined");
   }
   function tileDrawAvailable(mod) {
     return tileCardAvailable(mod) && !!baseIsVector && !!window.maplibregl && !!L.maplibreGL;
@@ -63,6 +66,13 @@
   // from tiles, otherwise the whole file, exactly as before. The tile holds
   // every feature crossing it, so each one containing the point is there.
   function featureSetAt(load, point) {
+    if (load.tileCounty) {
+      return tileCountySetAt(load, point).then(function (fc) {
+        if (!fc) return load();
+        noteCountyTileAnswer(load, point, findFeatureContaining(fc, point));
+        return fc;
+      });
+    }
     var mod = load.tileMod;
     if (!mod || !tileCardAvailable(mod)) return load();
     return tileFeaturesAt(tileArchiveFor(mod), point).then(function (fc) {
@@ -80,6 +90,60 @@
   // each, and each lights it (updateTileHighlight).
   function tileAnswerShared(load, answer) {
     (load.tileMods || []).forEach(function (m) { layerRuntime[m.id].tileAnswer = answer; });
+  }
+
+  /* ---------- a county-dispatched layer drawn from tiles (phase 5b). One
+   * archive holds every county whose boundaries the app ships, each feature
+   * carrying its county key as `_c`, and the archive's metadata lists those
+   * keys (scripts/build_vector_tiles.py writes them into its description). A
+   * county whose boundaries come from a live service is not in it: its card
+   * reads its own source as before, and its districts are drawn by Leaflet
+   * beside the tiles (TileOverlay's live part, loaded by mod.tileLive). The
+   * dispatcher marks each entry's boundary loader with tileCounty, so an
+   * entry whose query goes through queryFeatureAt or featureSetAt answers
+   * from the tile under the point; one that calls its loader directly still
+   * downloads its own county's file for its card, and only that file. */
+  function countyTileKeys(mod) {
+    if (!mod.tileKeysPromise) {
+      mod.tileKeysPromise = tileArchiveFor(mod).metadata.then(function (meta) {
+        var keys = {}, d = null;
+        try { d = JSON.parse((meta && meta.description) || "null"); } catch (e) { d = null; }
+        ((d && d.counties) || []).forEach(function (k) { keys[k] = true; });
+        return keys;
+      }, function (err) {
+        mod.tileKeysPromise = null; // asked again next time rather than pinned
+        throw err;
+      });
+    }
+    return mod.tileKeysPromise;
+  }
+
+  // The loader's own county's features in the tile under the point, with
+  // whatever the loader adds to each feature after its fetch (load.decorate:
+  // Illinois's officials stamped from a roster), or null when this county is
+  // not in the archive, tiles cannot be read here, or the read failed — the
+  // caller then reads the county's own source, exactly as before.
+  function tileCountySetAt(load, point) {
+    var tc = load.tileCounty;
+    if (!tc || tc.mod.tilesOff || !tileCardAvailable(tc.mod)) return Promise.resolve(null);
+    return countyTileKeys(tc.mod).then(function (keys) {
+      if (!keys[tc.key]) return null;
+      return tileFeaturesAt(tileArchiveFor(tc.mod), point).then(function (fc) {
+        var own = { type: "FeatureCollection", features: fc.features.filter(function (f) {
+          if (f.properties._c !== tc.key) return false;
+          delete f.properties._c;
+          return true;
+        }) };
+        return load.decorate ? load.decorate(own) : own;
+      });
+    }).then(null, function (err) {
+      console.warn("[" + tc.mod.id + "] tile read failed, reading " + tc.key + "'s own source:", err);
+      return null;
+    });
+  }
+
+  function noteCountyTileAnswer(load, point, feature) {
+    layerRuntime[load.tileCounty.mod.id].tileAnswer = { point: point, feature: feature };
   }
 
   function tileDashArray(style) {
@@ -130,7 +194,7 @@
   function tilePaint(mod) {
     var rt = layerRuntime[mod.id];
     var base = baseStyleFor(mod) || {};
-    var selected = rt.tileSelectedId != null;
+    var selected = rt.tileSelectedId != null || !!rt.tileLiveSelected;
     var hl = highlightStyleFor(mod), faded = fadedStyle(base);
     var isSel = ["boolean", ["feature-state", "sel"], false];
     var baseOpacity = base.opacity == null ? 1 : base.opacity;
@@ -165,10 +229,16 @@
       this.mod = mod;
       this.dxTiles = true;
       this._dxOn = false;
+      // a county layer's live counties, drawn by Leaflet beside the tiles
+      this.live = null;
+      this.liveFC = null;
+      this.liveSelected = null;
+      this.liveGen = 0;
     },
     onAdd: function () {
       var self = this, mod = this.mod;
       this._dxOn = true;
+      this.startLive();
       ensureTileGL().then(function (gl) {
         if (!self._dxOn || gl.getSource(tileIds(mod).source)) { self.restyle(); return; }
         return tileArchiveFor(mod).header.then(function (h) {
@@ -195,20 +265,28 @@
           reorderActiveLayers();
         });
       }).catch(function (err) {
-        console.error("[" + mod.id + "] tile overlay failed:", err);
-        // the Leaflet path's rule (onLayerToggled): never silent, and never
-        // over a verified answer already on the card for this selection
+        // The archive could not be drawn, so the layer is drawn from its
+        // whole files for the rest of the session, exactly as before tiles:
+        // the Leaflet path then either draws it or reports its own failure in
+        // the card (never over a verified answer already on it). A county
+        // layer's live counties would otherwise go undrawn with it.
+        console.error("[" + mod.id + "] tile overlay failed, drawing from the whole file:", err);
         var rt = layerRuntime[mod.id];
-        if (self._dxOn && state.layersOn[mod.id] && rt.resultSeq !== state.sequence) {
-          setCardError(mod, "Couldn't load this layer's boundaries. It won't affect other layers.");
-        }
+        mod.tileDrawFailed = true;
         if (map.hasLayer(self)) map.removeLayer(self);
-        rt.overlayLayer = null; // Retry re-runs onLayerToggled, which makes a fresh one
+        if (rt.overlayLayer === self) rt.overlayLayer = null;
+        if (self._dxOn || state.layersOn[mod.id]) redrawFromFile(mod);
       });
       return this;
     },
     onRemove: function () {
       this._dxOn = false;
+      this.liveGen++; // a live load still in flight draws nothing now
+      if (this.live) map.removeLayer(this.live);
+      this.live = null;
+      this.liveFC = null;
+      this.liveSelected = null;
+      layerRuntime[this.mod.id].tileLiveSelected = false;
       var mod = this.mod, gl = tileGLLayer && tileGLLayer.getMaplibreMap();
       if (!gl) return this;
       var ids = tileIds(mod);
@@ -221,6 +299,7 @@
     // the Leaflet path's per-path iteration has nothing to visit here
     eachLayer: function () { return this; },
     bringToFront: function () {
+      if (this.live) this.live.bringToFront();
       var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
       if (!gl) return this;
       var ids = tileIds(this.mod);
@@ -228,6 +307,7 @@
       return this;
     },
     restyle: function () {
+      this.styleLive();
       var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
       var ids = tileIds(this.mod);
       if (!gl || !gl.getLayer(ids.fill)) return this;
@@ -237,9 +317,12 @@
       });
       return this;
     },
-    // Light one district (by its tile feature id), or none.
-    setSelected: function (id) {
+    // Light one district (by its tile feature id, or a live county's feature
+    // drawn beside the tiles), or none.
+    setSelected: function (id, liveFeature) {
       var rt = layerRuntime[this.mod.id];
+      this.liveSelected = liveFeature || null;
+      rt.tileLiveSelected = !!liveFeature;
       var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
       var ids = tileIds(this.mod);
       if (gl && gl.getSource(ids.source)) {
@@ -258,21 +341,112 @@
     featureAt: function (point) {
       var gl = tileGLLayer && tileGLLayer.getMaplibreMap();
       var ids = tileIds(this.mod);
-      if (!gl || !gl.getLayer(ids.fill)) return null;
-      var px = gl.project([point.lng, point.lat]);
-      var hits = gl.queryRenderedFeatures(px, { layers: [ids.fill] });
-      if (!hits.length) return null;
-      var props = {};
+      var hits = gl && gl.getLayer(ids.fill) ? gl.queryRenderedFeatures(gl.project([point.lng, point.lat]), { layers: [ids.fill] }) : [];
+      if (!hits.length) return this.liveFC ? findFeatureContaining(this.liveFC, point) : null;
+      var props = {}, county = null;
       var src = hits[0].properties || {};
       for (var k in src) {
         if (!src.hasOwnProperty(k) || k === "_s" || k === "_i") continue;
+        if (k === "_c") { county = src[k]; continue; }
         var v = src[k];
         if (typeof v === "string" && /^\s*[\[{]/.test(v)) { try { v = JSON.parse(v); } catch (e) { /* ordinary text */ } }
         props[k] = v;
       }
-      return { type: "Feature", id: hits[0].id, properties: props, geometry: null };
+      // a county layer's hover names the district through its county's
+      // entry, which the dispatcher finds by dxCounty
+      var out = { type: "Feature", id: hits[0].id, properties: props, geometry: null };
+      if (county != null) out.dxCounty = county;
+      return out;
+    },
+
+    // The live counties' districts, loaded and drawn beside the tiles.
+    // mod.tileLive calls back with each county's features as it lands and
+    // resolves with the first; a generation count drops a load that was
+    // still in flight when the layer came off the map.
+    startLive: function () {
+      var self = this, mod = this.mod;
+      if (!mod.tileLive || this.liveFC) return;
+      var gen = ++this.liveGen;
+      this.liveFC = { type: "FeatureCollection", features: [] };
+      mod.tileLive(function (features) {
+        if (gen === self.liveGen) self.addLive(features);
+      }).then(function (fc) {
+        if (gen === self.liveGen) self.addLive(fc.features);
+      }, function (err) {
+        console.warn("[" + mod.id + "] the counties drawn from their own sources did not load:", err);
+      });
+    },
+    addLive: function (features) {
+      if (!this._dxOn || !this.liveFC) return;
+      // the first county arrives both in the resolved collection and, when
+      // a second lands before that resolution is handled, beside it
+      var fresh = features.filter(function (f) {
+        if (f.dxLiveDrawn) return false;
+        f.dxLiveDrawn = true;
+        return true;
+      });
+      if (!fresh.length) return;
+      Array.prototype.push.apply(this.liveFC.features, fresh);
+      var batch = { type: "FeatureCollection", features: fresh };
+      if (!this.live) {
+        this.live = buildOverlayLayer(this.mod, batch);
+        this.live.addTo(map);
+      } else {
+        this.live.addData(batch);
+      }
+      this.styleLive();
+      reorderActiveLayers();
+      if (state.selectedPoint && state.layersOn[this.mod.id] && findFeatureContaining(batch, state.selectedPoint)) {
+        updateLayerHighlight(this.mod);
+      }
+    },
+    // the live counties' paths in the layer's current state: the lit one in
+    // the highlight style, the rest faded while anything is lit, else plain
+    styleLive: function () {
+      if (!this.live) return;
+      var mod = this.mod, rt = layerRuntime[mod.id], sel = this.liveSelected;
+      var anySelected = !!sel || rt.tileSelectedId != null;
+      var base = baseStyleFor(mod) || {};
+      var faded = fadedStyle(base), lit = Object.assign({}, base, highlightStyleFor(mod));
+      this.live.eachLayer(function (sub) {
+        var on = !!sel && sub.feature === sel;
+        if (sub.setStyle) sub.setStyle(on ? lit : anySelected ? faded : base);
+        if (sub._path) sub._path.classList[on ? "add" : "remove"](HIGHLIGHT_CLASS);
+        if (on && sub.bringToFront) sub.bringToFront();
+      });
     }
   });
+
+  // The Leaflet path's load for a layer whose tiles failed, as a toggle-on
+  // would run it, without re-running the card's query.
+  function redrawFromFile(mod) {
+    var rt = layerRuntime[mod.id];
+    if (!state.layersOn[mod.id]) return;
+    if (rt.geojson) {
+      rt.overlayLayer = buildOverlayLayer(mod, rt.geojson);
+      if (rt.relevant !== false) rt.overlayLayer.addTo(map);
+      refreshActiveLayerOpacities();
+      reorderActiveLayers();
+      if (state.selectedPoint) updateLayerHighlight(mod);
+      return;
+    }
+    rt.overlayLoaded = true;
+    (rt.tileGeojsonPromise || mod.overlay.load()).then(function (geojson) {
+      rt.geojson = geojson;
+      if (!state.layersOn[mod.id] || rt.overlayLayer) return;
+      rt.overlayLayer = buildOverlayLayer(mod, geojson);
+      if (rt.relevant !== false) rt.overlayLayer.addTo(map);
+      refreshActiveLayerOpacities();
+      reorderActiveLayers();
+      if (state.selectedPoint) updateLayerHighlight(mod);
+    }, function (err) {
+      rt.overlayLoaded = false; // Retry (onLayerToggled) loads again
+      console.error("[" + mod.id + "] overlay load failed:", err);
+      if (state.layersOn[mod.id] && rt.resultSeq !== state.sequence) {
+        setCardError(mod, "Couldn't load this layer's boundaries. It won't affect other layers.");
+      }
+    });
+  }
 
   function isTileDrawn(mod) {
     var rt = layerRuntime[mod.id];
@@ -285,12 +459,35 @@
   function updateTileHighlight(mod) {
     var rt = layerRuntime[mod.id];
     var answer = rt.tileAnswer;
-    var feature = answer && answer.point === state.selectedPoint ? answer.feature : null;
-    if (!feature && rt.geojson && state.selectedPoint) feature = findFeatureContaining(rt.geojson, state.selectedPoint);
+    var point = state.selectedPoint;
+    var answered = !!(answer && answer.point === point);
+    var feature = answered ? answer.feature : null;
+    if (!feature && rt.geojson && point) feature = findFeatureContaining(rt.geojson, point);
     var id = feature && feature.id != null ? feature.id : null;
-    rt.overlayLayer.setSelected(id);
-    rt.highlightApplied = id != null;
-    rt.highlightSignature = id != null ? highlightSignature(rt) : null;
+    // a county layer's live counties are drawn by Leaflet beside the tiles
+    var live = id == null && point && rt.overlayLayer.liveFC ? findFeatureContaining(rt.overlayLayer.liveFC, point) : null;
+    // a county whose card read its own file (an entry that calls its loader
+    // directly) left no tile answer: find the district in the tile itself,
+    // once per point, and light it when it arrives
+    if (id == null && !live && !answered && point && mod.tileLive && rt.tileLookupPoint !== point) {
+      rt.tileLookupPoint = point;
+      tileFeaturesAt(tileArchiveFor(mod), point).then(function (fc) {
+        var f = findFeatureContaining(fc, point);
+        if (!f || point !== state.selectedPoint || (rt.tileAnswer && rt.tileAnswer.point === point)) return;
+        rt.tileAnswer = { point: point, feature: f };
+        if (state.layersOn[mod.id] && isTileDrawn(mod)) updateTileHighlight(mod);
+      }).then(null, function () { /* the district stays unlit; the card is unaffected */ });
+    }
+    rt.overlayLayer.setSelected(id, live);
+    rt.highlightApplied = id != null || !!live;
+    rt.highlightSignature = rt.highlightApplied ? highlightSignature(rt) : null;
+    if (live) {
+      // a live county's feature is whole, so its own edges name the streets
+      rt.highlightedLayer = { feature: live };
+      rt.tileEdgeId = null;
+      scheduleBoundaryStreets();
+      return;
+    }
     // no geometry until tileEdgesForStreets has the real edges in view: the
     // card's tile piece carries its tile's clip lines, which are not edges
     if (rt.tileEdgeId !== id) rt.highlightedLayer = id != null ? { feature: { type: "Feature", properties: {}, geometry: null } } : null;

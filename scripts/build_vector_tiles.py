@@ -390,6 +390,23 @@ def collect(tag, layer, pairs):
     return feats, files, skipped
 
 
+def county_keys(feats):
+    return sorted({f["_key"] for f in feats if f["_key"] is not None})
+
+
+def archive_counties(archive_path):
+    """The county keys an archive's metadata declares, or None if it
+    declares none."""
+    from pmtiles.reader import Reader, MmapSource
+    with open(archive_path, "rb") as fh:
+        meta = Reader(MmapSource(fh)).metadata()
+    try:
+        d = json.loads(meta.get("description") or "null")
+    except ValueError:
+        return None
+    return d.get("counties") if isinstance(d, dict) else None
+
+
 def build(feats, out_path, workdir):
     seq = os.path.join(workdir, "in.geojsonseq")
     with open(seq, "w", encoding="utf-8") as fh:
@@ -397,7 +414,15 @@ def build(feats, out_path, workdir):
             fh.write(json.dumps({"type": "Feature", "id": f["id"], "geometry": f["tile_geometry"],
                                  "properties": f["properties"]},
                                 separators=(",", ":")) + "\n")
-    cmd = ["tippecanoe", "-o", out_path, "-l", LAYER_NAME, "-P"] + TIPPECANOE_ARGS + [seq]
+    cmd = ["tippecanoe", "-o", out_path, "-l", LAYER_NAME, "-P"] + TIPPECANOE_ARGS
+    # A county-dispatched layer's archive names the counties it holds, so the
+    # app can tell a county drawn from the tiles from one it reads live
+    # (tile-overlay block, countyTileKeys). tippecanoe writes the description
+    # into the archive's JSON metadata, which follows the root directory.
+    keys = county_keys(feats)
+    if keys:
+        cmd += ["-N", json.dumps({"counties": keys}, separators=(",", ":"))]
+    cmd.append(seq)
     got = subprocess.run(cmd, capture_output=True, text=True)
     if got.returncode != 0:
         fail("tippecanoe failed on %s: %s" % (out_path, got.stderr.strip()[-400:]))
@@ -492,6 +517,15 @@ def gate(tag, layer, feats, archive_path, n_points, seed):
 
     arch = Archive(archive_path)
     problems = []
+    # 0. the counties the archive says it holds are the counties it was built
+    # from: the app draws a county from the tiles only if the archive names it
+    # and reads every other county live, so a stale list draws a county twice
+    # or not at all
+    want_keys = county_keys(feats) or None
+    got_keys = archive_counties(archive_path)
+    if want_keys != got_keys:
+        problems.append("the archive declares counties %s, and it was built from %s"
+                        % (got_keys, want_keys))
     try:
         # 1. presence and properties, in the deepest tile under a point
         # inside each feature. PRESENCE, not containment: on a district a

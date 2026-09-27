@@ -10,9 +10,11 @@
    * every card answer; scripts/validate_vector_tiles.mjs holds both halves
    * to the Python decoders the builder's gate already trusts.
    *
-   * openTileArchive(url[, fetchRange]) returns { header, getTile(z, x, y) }:
-   * header resolves to the parsed header, getTile to the tile's bytes,
-   * decompressed, or null where the archive holds no tile. A server that
+   * openTileArchive(url[, fetchRange]) returns { header, metadata,
+   * getTile(z, x, y) }: header resolves to the parsed header, metadata to the
+   * archive's JSON metadata (the builder writes a county-dispatched layer's
+   * county keys there), getTile to the tile's bytes, decompressed, or null
+   * where the archive holds no tile. A server that
    * ignores Range (python -m http.server does) answers 200 with the whole
    * file, which is kept and sliced, so the reader is correct everywhere and
    * saves bytes only where ranges work. ---------- */
@@ -54,6 +56,7 @@
     if (magic !== "PMTiles" || bytes[7] !== 3) throw new Error("not a PMTiles v3 archive");
     return {
       rootOffset: tileU64(view, 8), rootLength: tileU64(view, 16),
+      metadataOffset: tileU64(view, 24), metadataLength: tileU64(view, 32),
       leafOffset: tileU64(view, 40), leafLength: tileU64(view, 48),
       dataOffset: tileU64(view, 56), dataLength: tileU64(view, 64),
       internalCompression: bytes[97], tileCompression: bytes[98], tileType: bytes[99],
@@ -104,14 +107,16 @@
   function openTileArchive(url, fetchRange) {
     if (!fetchRange && tileArchives[url]) return tileArchives[url];
     var get = fetchRange || tileRangeFetcher(url);
-    var dirs = {};
+    var dirs = {}, first = null;
     var header = get(0, 16384).then(function (buf) {
       var h = parseTileHeader(buf);
+      first = buf;
       // the root directory sits inside the first 16 KB by the format's rule
       dirs[h.rootOffset] = tileGunzip(new Uint8Array(buf.slice(h.rootOffset, h.rootOffset + h.rootLength)))
         .then(parseTileDirectory);
       return h;
     });
+    var metadata = null;
     // an archive that could not be opened is forgotten, so a Retry asks again
     // rather than being handed the same failure
     header.then(null, function () { if (tileArchives[url] === archive) delete tileArchives[url]; });
@@ -125,6 +130,21 @@
     }
     var archive = {
       header: header,
+      // read on first use; the metadata follows the root directory and is
+      // usually inside the first 16 KB already
+      get metadata() {
+        if (!metadata) {
+          metadata = header.then(function (h) {
+            var end = h.metadataOffset + h.metadataLength;
+            return end <= first.byteLength ? first.slice(h.metadataOffset, end) : get(h.metadataOffset, h.metadataLength);
+          }).then(function (buf) {
+            return tileGunzip(new Uint8Array(buf));
+          }).then(function (bytes) {
+            return JSON.parse(tileTextDecoder.decode(bytes));
+          });
+        }
+        return metadata;
+      },
       getTile: function (z, x, y) {
         return header.then(function (h) {
           var id = zxyToTileId(z, x, y);

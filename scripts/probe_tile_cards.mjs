@@ -27,6 +27,15 @@
 //     TAGS=wi LAYERS=county node scripts/probe_tile_cards.mjs
 //
 // BASE_URL overrides the server; POINTS the pairs per layer (default 20).
+//
+// A COUNTY-DISPATCHED LAYER (phase 5b) holds only its shipped counties in
+// its archive. Its points come from those counties' files, and each answer
+// says which county gave it and whether that county is in the archive: a
+// point over a county line into a live county, or a county whose entry calls
+// its loader directly, is answered from its own source by design and is
+// counted, not failed. What fails is a card or a HOVER name that differs:
+// the canvas names a district from the tile's own properties, with nothing a
+// loader adds after its fetch.
 
 import { chromium } from "playwright";
 import { existsSync, readFileSync } from "node:fs";
@@ -98,7 +107,8 @@ try {
     if (!layers.length) continue;
     for (const id of layers) {
       const rec = SOURCES.apps[tag] && SOURCES.apps[tag].layers[id];
-      const files = (rec && rec.files) || [];
+      const countyFiles = rec && rec.counties && rec.counties.files;
+      const files = countyFiles ? Object.values(countyFiles).flat() : ((rec && rec.files) || []);
       const feats = files.flatMap((f) => {
         const p = join(ROOT, f.replace(/^\/+/, ""));
         return existsSync(p) ? (JSON.parse(readFileSync(p, "utf8")).features || []) : [];
@@ -128,18 +138,46 @@ try {
       }
       await ctx.close();
       const bad = res.filter((r) => r.tiles !== r.file);
+      const county = res.some((r) => "inArchive" in r);
       // the tile path must be what answered: a query reaching its boundaries
-      // another way compares equal while downloading the whole file
-      const notTiled = res.filter((r) => !r.viaTiles);
-      const errs = res.filter((r) => /^error:/.test(r.tiles || "") || /^error:/.test(r.file || ""));
+      // another way compares equal while downloading the whole file. For a
+      // county layer, only where the answering county's entry reads its
+      // boundaries through queryFeatureAt at all; the rest are counted below
+      const notTiled = county ? [] : res.filter((r) => !r.viaTiles);
+      const hoverBad = res.filter((r) => r.hoverTiles != null && r.hoverTiles !== r.hoverFile);
+      // a county layer's live counties answer from their own servers, so an
+      // error both runs share is that server, not the tiles; one run erroring
+      // alone is a difference, and counted above
+      const sameErr = (r) => county && r.tiles === r.file && /^error:/.test(r.tiles || "");
+      const errs = res.filter((r) => !sameErr(r) && (/^error:/.test(r.tiles || "") || /^error:/.test(r.file || "") ||
+        /^error:/.test(r.hoverTiles || "")));
+      const liveErrs = res.filter(sameErr);
       compared += res.length;
       answered += res.filter((r) => r.file && !/^error:/.test(r.file)).length;
       layersDone++;
-      const ok = !bad.length && !errs.length && !notTiled.length;
+      const ok = !bad.length && !errs.length && !notTiled.length && !hoverBad.length;
       console.log(`  ${ok ? "ok  " : "FAIL"}  ${tag}:${id} — ${res.length} points, ${res.filter((r) => r.file).length} with a district, ` +
-        `${bad.length} differ, ${errs.length} errored, ${notTiled.length} not answered from tiles`);
+        `${bad.length} differ, ${errs.length} errored` +
+        (county ? `, ${hoverBad.length} hover names differ` : `, ${notTiled.length} not answered from tiles`));
+      if (county) {
+        const byCounty = {};
+        for (const r of res) {
+          if (!r.county) continue;
+          const c = byCounty[r.county] = byCounty[r.county] || { in: r.inArchive, tiles: 0, n: 0 };
+          c.n++; if (r.viaTiles) c.tiles++;
+        }
+        const archived = Object.entries(byCounty).filter(([, c]) => c.in);
+        const own = archived.filter(([, c]) => !c.tiles).map(([k]) => k);
+        console.log(`          ${archived.length} archived counties answered, ${archived.length - own.length} from tiles` +
+          (own.length ? `; from their own file (the entry reads its loader directly): ${own.join(", ")}` : "") +
+          `; ${Object.keys(byCounty).length - archived.length} live counties answered from their own source` +
+          (liveErrs.length ? `; ${liveErrs.length} point(s) errored the same way from both, a live source this run could not reach` : ""));
+      }
       for (const r of [...bad, ...errs].slice(0, 3)) {
         console.log(`          ${r.point.lat.toFixed(6)},${r.point.lng.toFixed(6)}: tiles ${String(r.tiles).slice(0, 160)} | file ${String(r.file).slice(0, 160)}`);
+      }
+      for (const r of hoverBad.slice(0, 3)) {
+        console.log(`          ${r.point.lat.toFixed(6)},${r.point.lng.toFixed(6)}: hover from the tile ${r.hoverTiles} | from the file ${r.hoverFile}`);
       }
       if (!ok) problems++;
     }

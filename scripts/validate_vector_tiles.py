@@ -83,7 +83,8 @@ function ringsInside(pt, rings) {
     const fc = await api.tileFeaturesAt(archive, { lng, lat });
     points.push(fc.features.filter((f) => ringsInside([lng, lat], f.geometry.coordinates)).map((f) => f.id).sort((a, b) => a - b));
   }
-  process.stdout.write(JSON.stringify({ header: { minZoom: header.minZoom, maxZoom: header.maxZoom, bounds: header.bounds }, tiles, points }));
+  const metadata = await archive.metadata;
+  process.stdout.write(JSON.stringify({ header: { minZoom: header.minZoom, maxZoom: header.maxZoom, bounds: header.bounds }, tiles, points, metadata }));
 })().catch((e) => { console.error(e && e.stack || e); process.exit(1); });
 """
 
@@ -187,6 +188,10 @@ def check(path, seed):
         problems = []
         if js["header"]["maxZoom"] != header["max_zoom"] or js["header"]["minZoom"] != header["min_zoom"]:
             problems.append("header zooms %s against %s" % (js["header"], header))
+        # the metadata, which carries a county layer's county keys: the app
+        # draws a county from the tiles only if the metadata names it
+        if js.get("metadata") != reader.metadata():
+            problems.append("the metadata reads back differently in Node")
 
         def py_decode(z, x, y):
             raw = reader.get(z, x, y)
