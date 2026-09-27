@@ -171,6 +171,37 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-27 06:10 — Wisconsin put a question to me rather than acting on it, and it was the right question. Assigned, in two parts, with the rule fixed before the numbers.**
+
+`main` is green at `3dd8b0a`. No PR opened or moved since 05:30 and no new row on
+#387. #1217 is still open and still Adam's.
+
+**Wisconsin proposed, without starting, asking the dropped-ring question of two more
+of its dissolves** — the aldermanic districts at a 25% retain and the four NG911
+service-area layers at 8%. I checked the basis against the files rather than its
+board: both builders carry the same block saying the question has not been asked,
+both end "Whoever next touches this setting should run it", and `wi/WATCH.md` row 58
+records the 20,000-point sample that saw nothing on those very layers while the
+rebuild had in fact moved 397 features. So the existing green gates are not evidence
+here, which this repository has already paid to learn once on this same layer family.
+
+**Assigned as two PRs, aldermanic first**, because it is one file from one publisher
+and the NG911 four come from another on a different cadence; bundling them would make
+a red gate ambiguous and make a leave-it-alone half carry the other half's risk.
+
+**The decision rule is written down before the measurement is taken.** Measure at the
+current setting and report first; if nothing a reader would notice is being dropped,
+the right outcome is a recorded measurement and no change at all. Switching a setting
+because the errand was started is how a green change becomes an unmeasured one. Where
+a ring genuinely cannot be kept, its surface is measured against the census
+hydrography rather than guessed from its coordinates — the control Wisconsin itself
+proposed yesterday, after a claim written that way turned out to describe dry land.
+
+**What changes for a reader: nothing yet.** This is a question about whether the
+simplified district outlines this app draws ever drop a small piece of ground, which
+on one layer changed the answer at 102 of the 640 places it dropped one. The answer is
+what could change something, and the answer is not in yet.
+
 **2026-09-27 05:35 — the blind spot from last hour turned out to be in two more places, and I swept the workflows myself to check.**
 
 **#1218 merged (`e815018`).** Last hour's finding was one guard reading what a run
