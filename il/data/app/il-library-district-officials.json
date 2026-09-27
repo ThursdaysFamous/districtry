@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T16:02:19Z",
+  "generated": "2026-09-27T16:59:21Z",
   "libraries": {
     "Alpha Park Public Library District": {
       "comptrollerCode": "072/010/10",
@@ -740,7 +740,7 @@
         }
       ],
       "comptrollerCode": "038/015/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Iroquois",
       "heads": [
         {
@@ -2514,7 +2514,7 @@
     },
     "Neoga Public Library District": {
       "comptrollerCode": "018/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Cumberland",
       "heads": [
         {
@@ -3737,11 +3737,11 @@
         }
       ],
       "comptrollerCode": "006/030/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Bureau",
       "heads": [
         {
-          "name": "Jaclyn G. Trujillo",
+          "name": "Jaclyn G, Trujillo",
           "role": "Director"
         }
       ],
