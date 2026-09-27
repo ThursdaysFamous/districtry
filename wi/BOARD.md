@@ -49,6 +49,39 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (evening, fifth). #1228 is MERGED (`a265c71`) and task #73 is closed. Taking #74:
+the supervisory dissolve's retained boundary, which no ceiling can gate.**
+
+Verified on the merged tree: `dropped_rings.py --check` reports 30 declarations across four
+builders, **3 gate retained fidelity and 1 does not**, naming `build_wi_supervisory_districts`;
+the gate pair is 92/121. The squash carries eight files and the only shipped bytes in it are the
+aldermanic geometry and its archive, which is the setting change the ceiling forced.
+
+**WHAT #74 HAS TO DECIDE, and the two easy answers are both wrong.** The three strays are real
+harm — 5, 1 and 2 m2 of ground moving from one district to another, gridded at 1 m — and no
+practical simplification setting removes them. **A per-key ceiling is not the answer**: giving
+Jefferson 20 and Monroe 9 a higher number is a pinned list of coordinates with the answer test
+thrown away, and it would excuse every future stray on those two keys silently. **NOR IS A FIFTH
+MEASURED PREDICATE, and the one that suggests itself is the trap**: each of the three gains more
+ground than it loses — 46, 10 and 18 m2 of gap closed against 5, 1 and 2 m2 of harm, about nine
+times over in all three cases — and "the ground gained exceeds the ground lost" would excuse real
+harm wherever something else outweighs it. A reader who is told the wrong district does not gain
+anything from a neighbour's gap being filled. A ratio is not a licence.
+
+**So it wants a DECLARATION in the `ACCEPTED_DROPPED_RINGS` shape**, which is what this project
+already does with harm it cannot avoid: each entry naming the vertex, its measured stray, the
+answer it costs and why, re-audited every run so an entry that matches nothing FAILS as orphaned
+and a stray that MOVES fails in either direction. The four measured predicates stay exactly as
+they are and keep clearing what they already clear; the table only ever covers a vertex all four
+have declined.
+
+**One thing I will state rather than gate, and say so in the code**: the m2 that changes hands
+needs a 1 m grid over the whole neighbourhood, minutes per vertex, so the gate re-verifies the
+STRAY and the ANSWER PAIR (both of which it already computes) and carries the area as recorded
+prose with its method and date. A number recorded and not gated is exactly the shape this project
+keeps finding wrong, so the `why` prose check has to hold the sentence to the declaration's own
+field the way `check_prose` already holds a dropped ring's `why` to its `m2` and `verts`.
+
 **2026-09-27 (evening, fourth). #73 SPLIT IN TWO ON A MEASUREMENT. The aldermanic dissolve
 has a ceiling and it RETIRED THE SETTING chosen that morning; the supervisory dissolve
 cannot have one at any interval, which is measured and recorded rather than forced.**
