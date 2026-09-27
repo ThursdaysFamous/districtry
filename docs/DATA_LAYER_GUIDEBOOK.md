@@ -3331,12 +3331,22 @@ and it enumerates whatever an INSTANCE entry's adapter reads. New York has no
 entry, so `ny/county-legislature/tompkins.html` does not exist and these
 sixteen names appear in no served byte of this site — exactly the absence that
 generator was written for, one instance later. **Its registration gate does not
-see it**, and that is the part worth recording rather than the omission: the
-gate flags a roster whose records name people AND whose shape or filename says
-county, and `tompkins-legislature-members.json` is keyed `board` plus 1..16 with
-a filename naming a county rather than the word, so it is classified as neither
-and stays invisible. This is the Cass/Greene/Scott/Moultrie shape — an absence
-with nothing on file to notice it — which is why it is written here instead of
+see it, and MEASURING why corrected this paragraph's own first answer.** That
+answer said the file "is classified as neither shape", which is wrong: the gate
+requires TWO signals and this file gives exactly one. Run against it,
+`_names_people` PASSES on 16 of its 18 keys — districts 1..16, plus a `board`
+block and an `_about` string that correctly do not. What fails is the
+looks-like-county signal, in **both** of the forms it accepts: no record carries
+a `county` field (0 of 18, because a single-county file has no reason to repeat
+the county on every row), and `_COUNTY_WORDS` is
+`county-board|county-commission|commissioner|supervisor|county-officer`, which
+does not contain `legislature`. **That vocabulary is the five form words of the
+four states already registered**, so the gate is blind by construction to the
+first state that governs under a form none of them uses — which is precisely
+what a county legislature is. The filename is not the problem either: it names
+the county fine. It names a FORM the gate has never had to know. This is
+the Cass/Greene/Scott/Moultrie shape — an absence with nothing on file to
+notice it — which is why it is written here instead of
 being left to be noticed. The work is an `INSTANCES` entry plus an adapter whose
 shape already exists (Illinois's `il_districted` reads one file per county keyed
 by district, which is this file exactly), and it is the next item rather than
