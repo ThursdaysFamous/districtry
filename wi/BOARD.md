@@ -46,6 +46,64 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (13:05). Task #72 assigned and MEASURED. Reporting before any ceiling is written,
+per the pre-committed rule. Nothing pushed to a PR yet.**
+
+`dropped_rings.py` gained `measure_stray` (source vertex to nearest DRAWN segment, retained rings
+only, dropped set handed in by `classify`), `source_step_m` and `pct`, with six selftest
+assertions — 42 in total now. Two of the six are the properties the measurement exists for: that
+measuring the OTHER way round answers ~0 whatever the setting, and that a dropped ring pooled into
+the stray blows the number up, which is the 17.5 m defect the chambers gate already paid for.
+
+**MEASURED, at the shipped dp settings, over 3,953,583 source vertices across the four layers:**
+
+| layer | median step | stray median | p90 | p99 | p99.9 | raw MAX | features over 5 m |
+|---|---|---|---|---|---|---|---|
+| fire (dp 1) | 3.43 m | 0.086 | 0.57 | 0.9 | **1.0** | 109.8 | 3 of 1046 |
+| law (dp 1) | 3.19 m | 0.086 | 0.57 | 0.9 | **1.0** | 415.6 | 16 of 639 |
+| psap (dp 2) | 2.45 m | 0.245 | 1.15 | 1.8 | **2.0** | **2.4** | **0 of 95** |
+| ems (dp 1) | 2.88 m | 0.099 | 0.58 | 0.9 | **1.0** | 2759.9 | 7 of 580 |
+
+**THE THIRD INSTRUMENT AGREES WITH THE DROPPED-RING CHOICE, EMPHATICALLY.** At the visvalingam 8%
+it replaced: fire 772 of 1046 features stray over 5 m against 3, law 587 of 639 against 16, psap 81
+of 95 against 0, ems 458 of 580 against 7; medians 1.1-1.5 m against 0.086-0.245. Rule 3's conflict
+case does not arise — nothing has to be re-decided.
+
+**A BORROWED 25 m WOULD HAVE BEEN SEVEN TIMES TOO LOOSE, which is the manager's point measured.**
+Illinois's ceiling came from a median source step of 17.9 m. These layers' median step is
+**2.45 to 3.43 m** — a county 911 filing seam is drawn five times finer than a Chicago street grid.
+
+**THE RAW MAXIMA ARE NOT MEASUREMENTS OF THE QUANTITY A CEILING GOVERNS, AND THE TELL WAS FREE.**
+On law and ems the worst stray is IDENTICAL under both algorithms — 415.6 m on Village of Sussex
+and 2,759.9 m on Rock County Public Safety Agency, same feature, same coordinate. A stray the
+simplifier caused moves when the simplifier changes. So every vertex over 5 m was classified, all
+67 of them (0.0017% of the vertices), and NONE is the retained boundary moving:
+
+- **SPUR, 16.** Neighbour span measured at exactly **0.00 m** — the tip of a zero-width spur in the
+  source, on rings 92.3% to 100% retained. Sturgeon Bay's 109.8 m sits on a 12,330-vertex ring of
+  which 12,330 are within a metre. Removing a zero-area spur costs no area and no answer.
+- **VANISHED-RING, 34.** Rings with 9.1% to 40% of their vertices surviving — gone, not strayed.
+  Rock County's 2.76 km is an 8.5 m2 sliver with 2 of 10 vertices left.
+- **OTHER, 17.** Dominated by near-spurs (Barron 69.9 m out on a 1.72 m base, Pepin 150.9 on 1.67)
+  and 4-vertex rings sitting either side of my 50% retained cut.
+
+**THE MORE SERIOUS FINDING IS IN `classify`, NOT IN THE STRAY.** Those 34 rings are absent from the
+drawn output and `classify` does not call them dropped, so they are neither declared nor counted.
+The mechanism is the one `RETAINED_RING_M`'s own comment predicts: a ring counts as retained when
+ANY ONE of its vertices survives within a metre, and a vanished sliver lying on a NEIGHBOUR's drawn
+line satisfies that. The comment calls the misreading "safe" because it makes the fidelity ceiling
+stricter — true of the ceiling, and it means those rings' ANSWERS go unmeasured, which is the half
+that matters. Not fixed here: `find_dropped` is read by three other builders and a stricter retained
+test would discover rings they must then declare, so it is measured before it is changed.
+
+**WHAT THE MEASUREMENT IMPLIES FOR THE CEILING**, stated before it is written: the interval is the
+bound. dp guarantees a retained vertex's perpendicular deviation is under the interval, and measured,
+p99.9 lands EXACTLY on it — 1.0 m at interval=1, 2.0 m at interval=2, on all four layers — while
+psap, the one layer with no artefacts at all, tops out at 2.4 m against its 2 m interval, i.e. 1.2x.
+So the ceiling is a small multiple of each layer's own interval, and a gate that held the RAW max to
+it would fail today on 67 vertices that are spurs, spikes and vanished rings rather than on any
+boundary that moved.
+
 **2026-09-27 (11:45). #1220 MERGED (`2354623`) and verified on main independently. Task #71
 complete. Nothing assigned. ONE follow-up PROPOSED below, not started.**
 
