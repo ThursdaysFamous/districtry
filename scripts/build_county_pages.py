@@ -402,7 +402,14 @@ def il_districted(inst):
         used.append(path)
         data = _read(path)
         districts, skipped, source, extras = [], [], None, []
+        # A roster build_il_gis_board_rosters.py KEPT because the county's
+        # service did not answer carries `_notRead`, the date of the first run
+        # that could not read it. It is a statement about the file, not a
+        # district, and it changes what districted_body may say about the copy.
+        not_read = data.get("_notRead") if isinstance(data.get("_notRead"), dict) else None
         for key in sorted(data, key=district_sort_key):
+            if key == "_notRead":
+                continue
             entry = data[key]
             if not isinstance(entry, dict):
                 skipped.append(key)
@@ -433,7 +440,8 @@ def il_districted(inst):
             continue
         out[name] = {"districts": districts, "sourceUrl": source, "extras": extras,
                      "skipped": skipped, "slug": slug, "at_large": False,
-                     "source_file": path}
+                     "source_file": path,
+                     "not_read_since": (not_read or {}).get("since")}
     return out, problems, nameless, used, None
 
 
@@ -1368,6 +1376,15 @@ def districted_body(inst, name, rec):
             % esc(inst["phrase"]) if app_reads else
             "the map's %s card reads the same source live, so a card can be up "
             "to a week newer than this page" % esc(inst["phrase"]))
+    # "Up to a week" is false of a copy nobody could re-read. The names stay —
+    # a failed read never unpublishes what was read — and the sentence says how
+    # old they are instead.
+    if rec.get("not_read_since") and not app_reads:
+        same = ("this page has not been re-read since %s, because the county's "
+                "map service has not answered this project's weekly refresh since "
+                "then, so these are the names it published before that day; the "
+                "map's %s card asks the same service directly"
+                % (esc(rec["not_read_since"]), esc(inst["phrase"])))
     # A RECORD MAY STATE WHERE ITS NAMES CAME FROM, and the default below
     # cannot serve one that did not come from the county. "exactly as the
     # county publishes them" is true of every roster scraped from a county's
@@ -1386,12 +1403,14 @@ def districted_body(inst, name, rec):
     else:
         out.append(
             '<p class="lede">The %s is elected by district. This page '
-            'lists %s %s and the %s who %s them, exactly as the county publishes '
+            'lists %s %s and the %s who %s them, exactly as the county %s '
             'them — %s.</p>'
             % (esc(heading_of(inst, name)), n_dist,
                "district" if n_dist == 1 else "districts",
                "member" if named == 1 else "%d members" % named,
-               "holds" if named == 1 else "hold", same))
+               "holds" if named == 1 else "hold",
+               "published" if rec.get("not_read_since") and not app_reads
+               else "publishes", same))
     out.append('<a class="cta" href="../#layers=%s,county">'
                'Find your %s County district on the map →</a>'
                % (esc(inst["concept"]), esc(name)))
