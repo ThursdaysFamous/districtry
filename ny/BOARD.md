@@ -48,6 +48,87 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-27 — #1209 MERGED, THE ROSTER JOB RAN CLEAN ON ITS FIRST DISPATCH, AND THE
+CRAWLABLE PAGE IS #1214, GREEN. The finding worth your time is that my own record
+under-scoped the work by four edits, and every one of the four was found by a gate
+rather than by me.**
+
+**THE ROSTER PIPELINE IS PROVEN AGAINST LIVE SOURCES.** Dispatched the minute #1209
+landed (run 36288496463, success, every step green, the PR step SKIPPED exactly as
+predicted because the scraper writes the same `asOf`). The log is worth one read: robots
+read BEFORE the first fetch of both county pages, `services.arcgis.com` robots refused
+HTTP 403 and correctly read as allow (the documented API case), the role join PRINTED
+(Chair to district 6, Vice Chair to district 7, on surname), **0 map-column drifts** so
+the county's own `Member` column still agrees with its page, and the switchboard given to
+nobody — nine personal telephones, seven members with none rather than the body's.
+
+**#1214 SHIPS THE SIXTEEN NAMES INTO THE SERVED BYTES.** `ny/county-legislature.html`
+plus `ny/county-legislature/tompkins.html`, verified by reading the page BACK rather than
+by byte-equality, which a correct empty template passes. Fleet per-county pages 329 to
+330, instances 4 to 5. Green on `smoke`, merge-clean, no threads. Only `smoke` runs on it
+and that is correct rather than a suppressed trigger — `vector-tiles.yml` fires on
+`*/data/app/*.json` and this PR touches none.
+
+**MY RECORD SAID "AN `INSTANCES` ENTRY PLUS AN ADAPTER" AND THAT WAS TWO OF SIX.** The
+adapter and the registry entry were the easy half. The other four were each refused by a
+gate, in this order: the topic page (`write_index()` opens `inst["index_page"]` and
+requires a `GENERATED:BEGIN county-index` fence — it never creates the file, and the four
+existing county index pages are hand-authored, since `build_concept_pages.py` names them
+only as sibling LINKS); `QUESTION_ROWS` ("the front door links it nowhere"); `CHIP_TOPIC`
+("its link would read as a bare place name"); and `EAM_STATUS.md` + `llms.txt`, both of
+which COUNT per-county pages. **I had told you that omission was safe because
+`write_index` fails loudly by name.** It does — and it was the FOURTH gate to fire, not
+the first. The lesson is not that the gates caught it; it is that a scope I had measured
+and written down was still short by four, so the record now names all six.
+
+**TWO GATE DEFECTS, AND THE SECOND WAS IN MY OWN FIX.** `check_workflows()` read only the
+LINE carrying `git add `, so a command split with a trailing backslash staged the pages
+and measured as staging nothing — the same wrap-dependent defect
+`validate_workflow_checkout.py` had this morning. Joining continuations fixed that and
+**leaked immediately**: with the directory dropped and `ny/county-legislature.html` kept,
+the check still PASSED, because `want` was matched as a SUBSTRING and
+`ny/county-legislature` sits inside that filename. A workflow staging the index page and
+none of the per-county pages underneath it would have sailed through. Matched as a path
+TOKEN now, negative-tested three ways (dropping the directory fails, the one-line fleet
+form passes, all 64 workflows pass).
+
+**AND I NEARLY PUBLISHED A SWEEP SAYING 63 OF 64 WORKFLOWS WERE PASSING VACUOUSLY.** My
+probe demanded `<tag>/<concept>/` with a trailing slash; the fleet writes the bare
+directory (`git add … il/county-board il/county-board.html …`), which git stages
+identically and the gate has always matched correctly. `dir:False` was an artifact of the
+slash I required. Reading ONE real workflow before writing it down is what stopped it, and
+the hole is LATENT rather than live — no workflow stages the index page alone. **That is
+the third time today I have been wrong in the same direction: asserting from a pattern I
+wrote rather than from the thing itself** (the others were the battery figure I re-ran
+instead of re-derived, and the registration mechanism you and I both carried). The
+counterweight each time was a control I could have skipped.
+
+**ONE DEFECT ONLY THE BROWSER COULD SEE.** The page took its brand mark from "the first
+line containing `districtry-mark`", which is the CSS rule at line 326 rather than the
+`<svg>` 430 lines later, so the `<h1>` shipped a CSS declaration as visible text.
+Well-formed HTML, every static gate green, and `page_consistency_test.mjs`'s "carries the
+mark" failed in both themes. Nothing else in the repository could have found it.
+
+**THE ADAPTER REFUSES RATHER THAN RENDERS, AND RECORDS RATHER THAN DECIDES.** A roster
+naming one of New York City's five counties FAILS the build with the reason — the city
+absorbed their governments and *Board of Estimate v. Morris* (1989) struck down the
+nearest equivalent without replacing it, which the concept matrix has said in prose since
+before the tier opened and now says in code. The page tells a city reader the same thing
+and points them at the Council district. And the boundary file spells `St Lawrence`
+without a period where the county writes "St. Lawrence" — named in the docstring so
+whoever ships that county decides deliberately instead of discovering it on a page. County
+names are DERIVED from the shipped `ny-counties.json`, not listed: 62, no two slugging
+alike.
+
+**VERIFIED AFTER THE LAST EDIT, not before it**: 107 of 107 no-browser invocations, all
+six instance smoke tests, `landing_test.mjs`, `probe_point_transmission.mjs --check`,
+`probe_contrast_pairs.mjs` (107 pages now, mine swept). `page_consistency_test.mjs` red on
+cert interception alone, ZERO non-cert. Gate pair unmoved at 88/117 — no gate added.
+
+**STILL OPEN AND STILL NOT GUESSED AT**: the board-of-supervisors reference county, and
+Otsego's form. I have not started either, because #1214 is unmerged and the branch
+discipline here is one piece per PR.
+
 **2026-09-27, LATER — #1209 IS UNBLOCKED: the doc line you held it on resolves to 65,
 and correcting my own two published figures turned up a third defect of the class this
 repo keeps paying for.**
