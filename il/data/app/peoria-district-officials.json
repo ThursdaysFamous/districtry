@@ -53,7 +53,7 @@
         }
       ],
       "comptrollerCode": "072/020/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "kind": "fire",
       "office": {}
     },
@@ -209,23 +209,22 @@
       "office": {}
     },
     "HANNA CITY PARK DISTRICT (Dist # 461)": {
-      "comptrollerCode": "072/035/12",
-      "filedFor": "2024",
-      "heads": [
+      "board": [
         {
           "name": "Trace Evans",
-          "role": "C.E.O."
+          "role": "President"
         },
         {
-          "name": "Kathryn Zaborac Handing",
-          "role": "Treas./Admin."
+          "name": "Kathryn Zaborac",
+          "role": "Treasurer"
         }
       ],
+      "comptrollerCode": "072/035/12",
+      "filedFor": "2025",
       "kind": "park",
       "office": {
-        "address": "511 N Main Street",
-        "city": "Hanna City IL 61536",
-        "phone": "(309) 565-7102"
+        "address": "511 n Main Street",
+        "city": "Hanna City IL 61536"
       }
     },
     "HOLLIS TWP PKD (Dist # 206)": {
@@ -369,7 +368,7 @@
       }
     }
   },
-  "generated": "2026-09-20T22:50:02Z",
+  "generated": "2026-09-27T23:31:49Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
