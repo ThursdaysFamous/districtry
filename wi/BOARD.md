@@ -43,6 +43,58 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (04:40). #1216 MERGED at 04:25Z and verified on main by CONTENT. Task #68 is its
+generalisation and is open as [#1218](https://github.com/ThursdaysFamous/districtry/pull/1218),
+subscribed. Task #68 is complete; task #69 is the one finding I did not fix.**
+
+**THE MERGE DELETED THE BRANCH, AND THAT IS WHY MY PUSH READ `[new branch]`** — the same mechanism
+as last night's `--force-with-lease` `stale info`, seen from the other side. Worse, #1216 was
+**SQUASH**-merged, so `1444876` is not an ancestor of main and my branch still carried it: a PR from
+that branch would have REPLAYED an already-merged diff, `wi/WATCH.md` and the COA workflow included.
+Caught with `merge-base --is-ancestor` before opening anything. The documented remedy applied
+exactly — one unmerged commit rebased onto main's tip, force-with-lease — and the branch now shows
+`origin/main...HEAD` as one commit over eight files with no replay.
+
+**I HELD #68 UNPUSHED AND THAT WAS THE WRONG CALL.** My reasoning was that committing to the branch
+would widen an already-green #1216, which was true; what it left out is that the branch instruction
+is that ALL work goes there, and that unpushed work in an ephemeral container is a real risk. The
+stop hook is what said so. The outcome was fine because the merge landed in the meantime, but the
+judgement was wrong on its own terms and would not have been rescued by luck a second time.
+
+**#68's FIX IS IN THE MODULE BOTH CONSUMERS ALREADY READ** — `workflow_run_evidence.py`, whose own
+docstring had this recorded as an adjacent unfixed limitation — not a second reader in the health
+script. `verify_step` derives the step whose running proves a workflow did its work; `run_did_work`
+reads whether it ran. `fleet_status.py` had the SAME blind spot, which the task never mentioned.
+`wi_coa_staleness.py` now IMPORTS that reader rather than the copy #1216 gave it: that guard and the
+roster-health report being free to disagree about one workflow's runs is the two-readers defect, and
+it was not hypothetical. Swept across all 136 workflow files the derivation finds exactly six, no
+false positives, and watch-mason correctly finds none because it rebuilds nothing.
+
+**FOUR ERRORS OF MY OWN, ALL CAUGHT BY MEASURING RATHER THAN READING.** My first ablation reported
+both derivation guards as changing nothing, because they were the same rule twice and each masked
+the other. My replay figures were 5 and 6 by hand and are **4 and 5 by code** (nine flips), the hand
+count having double-counted dates that read FAILING either way. My first wiring reported UNMEASURED
+where a floor proves STALE — eight runs rebuilding nothing prove eight weeks of not refreshing, so
+it was WEAKER than the truth. And **three of my twelve negative tests were vacuous on the first
+attempt**: two fixtures did not exercise the guard they were written for, and one anchor never
+matched so the test ran against an unmodified copy. All fixed before any guard was trusted.
+
+**`validate_workflow_deps.py` — the gate #1213 was about — caught the new import and was right to**,
+since it cannot follow a `sys.path` hop. `workflow_run_evidence` joins `FLEET_SHARED` as the fifth,
+negative-tested both ways. Pair re-derived **89/118 to 90/119**; CI had never run the health script
+at all, it being a workflow's own, so its verdict logic had shipped untested.
+
+**NO VERDICT IS WRONG TODAY** and the PR says so: DeKalb's clock reads 8 days against a
+conclusion-based 1, both inside its limit. 110 of 110 static gates, Illinois's and Wisconsin's
+browser gates, 31 + 16 + 13 selftest assertions.
+
+**TASK #69 IS THE FINDING I DID NOT FIX.** The single FAILING row in the live roster-health report is
+`update-county-clerk-roster.yml`, and it fails for the RIGHT reason — `il_county_clerk_scraper.py`
+declines ISBE's 29-byte `Disallow: /`. A correct refusal reported as a broken refresh will hold #387
+open for ever, which is the wallpaper that file's own docstring warns about. Forgiving the step would
+make it green while refreshing nothing, the exact defect #68 and #1216 exist to close, so the remedy
+needs deciding — probably the `ROBOTS_DECLINED`/`blocked` inversion the link and source gates use.
+
 **2026-09-27 (04:30). #1216 is GREEN, CLEAN and THREAD-FREE and waits on its reviewer. Task #68 is
 BUILT AND VERIFIED BUT DELIBERATELY UNPUSHED, because #1216 owns the designated branch and adding to
 it would widen a PR that is already green.** Patch held at `t68/task68-final.patch`, 880 lines over 6
