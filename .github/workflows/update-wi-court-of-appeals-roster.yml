@@ -21,8 +21,11 @@ name: Update WI Court of Appeals roster
 # back next week" instead of red. That would be a hole on its own, because a
 # job that is green whenever it cannot ask stays green forever if it stops
 # asking, so wi_coa_staleness.py reads this workflow's own run history and
-# fails the job once 60 days pass with no successful verification. Everything
-# else the scraper can fail on stays red.
+# fails the job once 60 days pass with no verification. It counts the runs whose
+# REBUILD step ran, NOT the runs that concluded success — a forgiven run
+# concludes success too, so reading conclusions had the guard resetting its own
+# clock every week (measured and fixed 2026-09-27). Everything else the scraper
+# can fail on stays red.
 
 on:
   schedule:
@@ -103,7 +106,14 @@ jobs:
       # does not change when a fetch fails, so every content guard in the tree
       # keeps passing on a bench nobody has checked in months. This measures the
       # one thing none of them do — how long since this workflow last actually
-      # succeeded — from its own run history, and turns the job red past 60 days.
+      # READ THE BENCH — and turns the job red past 60 days.
+      #
+      # Not "how long since it concluded success": the forgiven run this step is
+      # part of concludes success as well, so that reading reset the clock it was
+      # meant to advance, and the ceiling could never be reached at all. It walks
+      # the successful runs and accepts one only where the rebuild step below RAN
+      # rather than being skipped, which is the only difference the API shows —
+      # a continue-on-error step's own failure is masked there as "success".
       - name: Decide whether an unreachable host is forgivable
         env:
           GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
@@ -121,6 +131,12 @@ jobs:
           fi
           python3 wi/scripts/wi_coa_staleness.py --ceiling-days 60
 
+      # THIS STEP'S NAME AND CONDITION ARE READ BY wi_coa_staleness.py, which
+      # tells a run that reached the court from one that was forgiven by whether
+      # this step ran or was skipped. Rename it, or make it unconditional, and
+      # that guard would go on reporting confidently about nothing — so it fails
+      # loudly on either, naming VERIFY_STEP as the thing to update. Change the
+      # two together.
       - name: Rebuild the Court of Appeals roster
         if: steps.scrape.outputs.code == '0'
         run: python3 wi/scripts/build_wi_coa_roster.py
