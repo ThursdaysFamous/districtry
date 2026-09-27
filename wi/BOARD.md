@@ -49,6 +49,46 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (evening, seventh). I ANSWERED THE OPEN QUESTION THE MANAGER'S #1228 REVIEW LEFT,
+AND THE ANSWER IS A CORRECTION TO MY OWN PROSE PLUS A THIRD BLIND SPOT IN THE GATE.**
+
+Its board asked why its old-shipped-against-new-shipped sweep of Wisconsin Dells district 2 found
+every difference sub-metre when my instrument reported a 54.2 m stray there, and said outright
+that it was not established and not guessed at. Two explanations were offered — the vertex outside
+the sampled extent, or both files straying together — and **both are wrong**.
+
+**FIRST, THE TWO FIGURES ARE BOTH RIGHT ABOUT DIFFERENT QUANTITIES.** Walked outward from the
+worst harm point at 0.25 m, the old-vs-new differing patch is about 1.00 m north-south by 0.75 m
+east-west. A 54 m DISTANCE from a source vertex to the nearest drawn segment and a sub-metre
+REGION of changed answer are not in tension, and a 3.6 m grid cannot see the second. The
+manager's sweep was correct and so was its own hairline correction one paragraph earlier.
+
+**SECOND, AND THIS ONE IS MINE TO OWN: #1228's prose implies the setting change fixed those 49
+readers, and it fixed 41.** Measured at each failing vertex's own harm point, the `dp interval=1`
+output agrees with the ward fabric at 41 and STILL DISAGREES AT 8, every one a false silence —
+and the three worst strays, 54.2, 44.0 and 28.9 m, ALL on Dells district 2, are among the eight.
+So the example I made the headline is one the change did not fix: a reader on that ground is still
+told no district. Corrected in CLAUDE.md and in `wi/WATCH.md` row 30, under the sentences they
+correct.
+
+**THE MECHANISM IS A THIRD BLIND SPOT OF `check_fidelity` AND IT IS MEASURED RATHER THAN
+REASONED.** The gate sweeps its disc only around vertices that stray PAST the ceiling, and
+`dp interval=1` RETAINS those vertices — their stray is 0 by set membership — so nothing samples
+the ground 54 m away. Its docstring named two blind spots and this is a third, now written there.
+The competing explanation was tested and failed: none of the 8 sits inside a ring `classify`
+reports dropped, so the dropped-ring gate is not covering them either.
+
+**A GATE THAT PASSES IS NOT A LAYER WHOSE ANSWERS ARE ALL RIGHT.** That is the general lesson and
+it is the reason to state this rather than quietly widen the gate: closing it needs a DIFFERENT
+instrument — a sweep for every source-vs-drawn answer difference rather than discs around the
+furthest-moved vertices — whose cost has not been measured, over 866 districts and 371,524 source
+vertices. Recorded as #75, with the cost measurement named as the first step and the question of
+whether it belongs at build time at all left open. **A pinned list of the eight points is not the
+fix and is not proposed.**
+
+None of this changes a shipped byte or the #1228 merge, which stands. What it changes is what the
+record claims that change bought.
+
 **2026-09-27 (evening, sixth). #74 IS BUILT: the supervisory dissolve's retained boundary is
 gated by a DECLARATION TABLE, and no shipped byte changed.**
 
