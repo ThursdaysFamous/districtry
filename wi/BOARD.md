@@ -49,6 +49,59 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (evening, sixth). #74 IS BUILT: the supervisory dissolve's retained boundary is
+gated by a DECLARATION TABLE, and no shipped byte changed.**
+
+`ACCEPTED_STRAYS` in `build_wi_supervisory_districts.py` carries its three vertices — Jefferson 20
+at 127.7 m, Monroe 9 at 126.7 and 110.9 m — each with the stray, the m2 that moves, the whole
+(before, after) pair set and a HARM POINT. `check_fidelity` takes it as `accepted` and now prints
+`no retained vertex strays past 5.5 m where the answer changes; ... 3 declared`, with
+`--check` reading **4 gate retained fidelity, 0 do not; 3 retained stray(s) declared** and the
+note gone. The geometry rebuilt byte-identical: the only files this change touches are two
+scripts and two documents.
+
+**FOUR PROPERTIES, and each one is there because a table without it rots.** An entry that matches
+nothing FAILS as an orphan, which is what stops the table outliving the geometry — a refiling that
+moves one of these vertices turns the build red rather than passing on a declaration nobody has
+re-read. The declared stray must be a valid rounding of the MEASURED one at its own precision, so
+it fails in BOTH directions. The match is on the WHOLE PAIR SET and never `harm[0]`, because a
+declaration matched on one pair would go on covering the vertex after a second, different answer
+change appeared beside it — the law layer's Brown County lesson at vertex scale. And the match is
+EXACT on the key and the coordinates, measured rather than assumed: LTSB serves six decimals, so
+a tolerance there would let one entry cover a neighbouring vertex.
+
+**AND THE AFTER ANSWER IS RE-DERIVED FROM THE SHIPPED BYTES**, which is the property I nearly
+left out. Without it the table's central claim — a reader standing there is told THIS district —
+would be re-verified only on an operator build with a 40 MB fetch, so `--check-shipped` asks the
+shipped file what a reader is told at each harm point, `reader_answer` rather than `districts_at`
+because that is the function the declaration's `after` came from. **Both halves were
+negative-tested**: a wrong `answer_after` fails twice over (the internal-consistency rule and the
+re-derivation), and a harm point moved 540 m fails with the shipped file answering `5505525` —
+the neighbouring district, which independently confirms the patch is the thin strip between the
+two.
+
+**THE `m2` IS THE ONE FIELD NO GATE RE-MEASURES AND THE DOCSTRING SAYS SO.** Gridding a
+neighbourhood at 1 m costs minutes per vertex against a point-in-polygon model of all 1,590
+districts, so the figure is recorded with its method and `check_strays` holds only the prose to
+it. A number recorded and not gated is the shape this project keeps finding wrong, so it is
+stated rather than left for a reader to discover — and it forced one drafting rule worth writing
+down: the prose check reads EVERY `m2` in a `why` against that entry's own field, so the
+gap-closed areas (46, 10 and 18 m2) live in the comment above the table rather than inside a
+`why`, where a second area is a contradiction by construction.
+
+**Two easier answers were refused before any code was written, and the board carries that
+reasoning from before the fact rather than after.** A per-key ceiling is a pinned list of
+coordinates with the answer test thrown away. And the fifth predicate that suggests itself is a
+RATIO — every one of the three fills about nine times the ground it costs — which would excuse
+real harm wherever something else outweighs it. A reader told the wrong district gains nothing
+from a neighbour's gap being filled.
+
+**One latent defect found while writing it, in my own new code**: `sorted` over (before, after)
+pairs raises the moment it compares None with a string in the same position, which is exactly
+what a vertex on a coverage edge produces — one pair naming a district and another naming none.
+It has a key carrying the is-None flag separately, because sorting on `str` would make
+`("A", None)` and `("A", "None")` sort equal. Selftest 51 → 60.
+
 **2026-09-27 (evening, fifth). #1228 is MERGED (`a265c71`) and task #73 is closed. Taking #74:
 the supervisory dissolve's retained boundary, which no ceiling can gate.**
 
