@@ -14326,6 +14326,11 @@ function initWisconsinExplorer() {
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,
+    // The archive keeps only the ZCTAs inside this app's own state (scripts/
+    // mirror_tiger_tiles.py, STATE_OVERLAP_MIN), so an empty card here is a fact
+    // about the archive, not about the place: the generic "isn't inside any
+    // district" would be false for a point in, say, a neighbouring state's ZIP.
+    emptyNote: "No ZIP code here. This map holds Wisconsin's ZIP codes only, so a point outside Wisconsin gets none.",
     // dotted outline (distinct pattern from County Subdivision's long dash) + different hue
     style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
     fields: [

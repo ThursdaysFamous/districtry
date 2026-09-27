@@ -138,8 +138,16 @@ PAGE_SIZE = 250
 # host) by more than this many square degrees, about 100 m² at these latitudes:
 # a ZCTA that merely touches the state line shares an edge, not ground. What it
 # costs is stated rather than implied: a reader who clicks OUTSIDE the state
-# gets no ZIP card where the live layer answered one; inside the state every
-# answer is unchanged.
+# gets no ZIP card where the live layer answered one, and each app's emptyNote
+# says so. THE FILTER changes no answer inside the state (measured 2026-09-27:
+# every dropped ZCTA that touches the state holds 0.00 m2 of it). FULL DETAIL,
+# the other half of the same change, DOES: the app's own loader asks for a
+# maxAllowableOffset=0.0005 simplification and this archive is the Census's own
+# drawing, so ground near an edge moves to the ZCTA the Census puts it in.
+# Measured that day around Chicago, 0.49% of 3,514 km2 (218 ZCTAs) and 0.71% of
+# 1,426 km2 (140 ZCTAs), the share depending on the box; every change is toward
+# the Census's edges, and it is largest for small ZCTAs, where an edge's move is
+# a bigger share of the whole (5.6% of 60208's area in the second box).
 STATE_OVERLAP_MIN = 1e-8
 
 

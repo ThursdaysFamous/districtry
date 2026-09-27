@@ -822,6 +822,20 @@ try {
     }
   }
 
+  // 1i2. THE ZIP CARD OUTSIDE THE STATE SAYS WHY IT IS EMPTY. The ZIP archive
+  //      holds Illinois's ZCTAs only (scripts/mirror_tiger_tiles.py), so Gary,
+  //      Indiana gets no ZIP code — and the card must say that is the map's
+  //      limit, never the generic "isn't inside any district", which would be
+  //      false of a point inside Indiana's 46402.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=41.60000,-87.34000&layers=zip-code`);
+    const zip = await cardText(page, "zip-code");
+    check("the ZIP card in Gary, Indiana says the map holds Illinois's ZIP codes only",
+      /Illinois's ZIP codes only/.test(zip.text) && !/isn't inside any district/.test(zip.text), zip.text);
+    await context.close();
+  }
+
   // 1h. THE REPORT FORM OPENS FROM A LINK. `#feedback=<text>` beside a point
   //     opens the form with that text filled in, counted once as opened by a
   //     link; "Copy a link to this form" hands back a link carrying the view

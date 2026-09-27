@@ -11607,6 +11607,11 @@ function initNycExplorer() {
     label: "ZIP Code",
     coverage: outsideNycCoverage,
     loader: loadNysZipCodes,
+    // The archive keeps only the ZCTAs inside this app's own state (scripts/
+    // mirror_tiger_tiles.py, STATE_OVERLAP_MIN), so an empty card here is a fact
+    // about the archive, not about the place: the generic "isn't inside any
+    // district" would be false for a point in, say, a neighbouring state's ZIP.
+    emptyNote: "No ZIP code here. This map holds New York State's ZIP codes only, so a point outside the state gets none.",
     style: { color: "#4E6E9C", weight: 1.5, fillColor: "#4E6E9C", fillOpacity: 0.05, dashArray: "1 4" },
     pill: true,
     fields: [
