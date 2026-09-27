@@ -435,7 +435,17 @@ ACCEPTED_DROPPED_RINGS = [
         # is stated rather than called negligible: it is ground a person can be on.
         #
         # EVERY FIGURE HERE CAME OFF THE GATE, AND THE FIRST DRAFT OF THIS ENTRY
-        # GOT TWO OF THEM WRONG. It said 6.06 m2, read off a `%f`-rounded
+        # GOT TWO OF THEM WRONG — and a THIRD copy of the first of them survived
+        # into review, inside `why` below, where the manager session caught it.
+        # `check()` validates `kind`, `features`, the two answers, `interior` and
+        # `m2`/`lat`/`lng`, and never reads `why` or `date`: so the gate corrected
+        # every copy it can see and left the one it cannot, in this same
+        # dictionary. `why` is the first field a maintainer reads to decide
+        # whether an entry still holds, and it is the field that carried "open
+        # Lake Michigan" through five copies elsewhere in this repo.
+        #
+        # THE 6.06 IN THE NEXT SENTENCE IS DELIBERATE — it names the first draft's
+        # error and must stay. It said 6.06 m2, read off a `%f`-rounded
         # `0.000006 km2` rather than the measurement, and it put the INTERIOR
         # point in `lat`/`lng`, where the matcher wants the RING's centre — 50.6 m
         # away, so it matched no dropped ring and the check refused the build and
@@ -450,7 +460,7 @@ ACCEPTED_DROPPED_RINGS = [
         "answer_before": {"aldermanic": ["84475-11"]},
         "answer_after": {"aldermanic": []},
         "why": "no tested setting retains it — visvalingam 25% and dp at 1, 5 and "
-               "15 m all drop it; 6.06 m2 of DRY LAND measured against TIGER's "
+               "15 m all drop it; 6.35 m2 of DRY LAND measured against TIGER's "
                "areal hydrography rather than guessed from the coordinates, which "
                "the census places in Maine village though its key is Wausau's, "
                "and the answer it costs is recorded above rather than called harmless",
