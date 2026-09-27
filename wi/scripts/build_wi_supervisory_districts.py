@@ -129,16 +129,30 @@ EXPECT_WARDS_MIN = 7000   # LTSB ward layer, ~7,161 as of July 2026
 #     dp interval=7       15      4,246 m2   1,572 m2         9           1   +11.7%
 #     dp interval=10      21      7,082 m2   1,572 m2        15           2   -2.3%
 #
-# THE AREA COLUMNS ARE WHY interval=4 AND NOT 7, AND THE COUNT ALONE COULD NOT
-# HAVE SETTLED IT. A harm in a 0.84 m2 sliver and a harm in a lobe a reader can
-# stand in are both `1` to a counter and are not the same thing to a reader,
-# because nobody selects a point inside a square metre. THE DECIDING OBJECT IS ONE
-# RING: 1,571.98 m2 at 43.893508,-91.190077, about 40 m by 40 m on land in La
-# Crosse County, where a reader is told La Crosse 18 and the truth is La Crosse 19.
-# It is dropped at every interval from 5 to 25 and RETAINED at 4. Interval=4's two
-# remaining harms are a 36.8 m2 Door County water islet and a 0.84 m2 Lafayette
-# self-overlap; NOTHING over 100 m2 survives, where interval=7 leaves nine such and
-# interval=10 fifteen.
+# WHETHER A READER CAN STAND THERE IS MEASURED, NOT INFERRED FROM THE COORDINATES,
+# and it is what settles interval=4 against 7. Each harm's interior point is put to
+# TIGER's own AREAL HYDROGRAPHY layer: a point inside a water polygon is water, and
+# the controls run first — the instance's own Marathon anchor returns no polygon,
+# open Lake Michigan returns "Lk Michigan", Lake Winnebago returns "Lk Winnebago".
+# A county subdivision is NOT the test, because a town's polygon can include its
+# own shoreline water, so "inside Gardner town" proves nothing on its own.
+#
+#     setting            harms   on DRY LAND   dry area    largest dry   dry >=1000
+#     visvalingam 9%        73            62   58,994 m2      3,496 m2           29
+#     dp interval=7         15            13
+#     dp interval=4          2             2         38 m2       37 m2            0
+#
+# THE SHIPPED MAP THEREFORE GIVES 62 WRONG OR MISSING ANSWERS ON GROUND A PERSON
+# CAN STAND ON, 29 of them on patches over 1,000 m2. Every one of the eleven water
+# harms is a false silence in a Door County bay or on Green Lake.
+#
+# AND THE DECIDING OBJECT IS ONE RING: 1,571.98 m2 at 43.893508,-91.190077, about
+# 40 m by 40 m, DRY LAND inside ONALASKA CITY, where a reader is told La Crosse 18
+# and the truth is La Crosse 19. Dropped at every interval from 5 to 25, RETAINED
+# at 4. Interval=7 also loses a 978 m2 patch inside KENOSHA CITY. A count alone
+# could not have settled this — a 0.84 m2 sliver and a standable lobe are both `1`
+# to a counter — and neither could area alone, since area cannot tell a bay from a
+# street.
 #
 # This instance already decides these by magnitude rather than by count: Lincoln's
 # disputed lobe was WITHHELD because it was a majority of its district, and
@@ -183,17 +197,29 @@ GAP_CLOSED = 229
 # lines, and paste what it measured. Each FAILS when nothing matches it.
 ACCEPTED_DROPPED_RINGS = [
     {
-        # DOOR COUNTY DISTRICT 4, a 36.75 m2 detached part in Lake Michigan off the
-        # peninsula. Door is the county this would be: it is a peninsula with
-        # islands, so its districts carry detached parts, and `keep-shapes` protects
-        # a SHAPE rather than a RING — once the mainland part survives, every islet
-        # is eligible for removal like any other geometry.
+        # DOOR COUNTY DISTRICT 4, a 36.75 m2 detached part of the district — a
+        # separate outer ring rather than a hole, which is why its loss is a
+        # silence and not a gap closed. `keep-shapes` protects a SHAPE and not a
+        # RING, so once the main part survives this one is eligible for removal
+        # like any other geometry.
+        #
+        # IT IS ON DRY LAND, AND AN EARLIER VERSION OF THIS COMMENT SAID OPEN
+        # WATER. Measured 2026-09-27 against TIGER's own areal hydrography layer —
+        # the discriminator, since a county subdivision's polygon can include its
+        # own shoreline water and "inside Gardner town" therefore proves nothing —
+        # this point returns NO water polygon, where a control in open Lake
+        # Michigan returns "Lk Michigan" and one in Lake Winnebago returns
+        # "Lk Winnebago". TIGER puts it in GARDNER TOWN, Door County. Door is
+        # still the county this would be, a peninsula with islands whose districts
+        # carry detached parts, but this particular ring is a sliver on dry ground
+        # near the county's edge rather than an islet offshore.
         #
         # A READER STANDING THERE IS TOLD DOOR 4 TODAY AND WOULD BE TOLD NOTHING,
-        # which is the false-silence half of the two harms this table is for. It is
-        # declared rather than avoided because no tested interval retains it and it
-        # is 36.75 m2 of open water; the alternative is a setting that costs the
-        # whole state a third again of a cache-first file for one islet.
+        # which is the false-silence half of the two harms this table is for, and
+        # the dry-land measurement makes that worse rather than better: it is
+        # ground a person can be on. It is declared rather than avoided because no
+        # tested dp interval from 4 to 25 retains it, so the alternative is not a
+        # finer setting but a different simplifier.
         "lat": 44.829563, "lng": -87.564510, "verts": 18, "m2": 36.75,
         # Inside the ring at 6 decimals, checked rather than assumed — the build
         # path refuses a point `point_in_ring` rejects, and `--check-shipped`
@@ -203,9 +229,10 @@ ACCEPTED_DROPPED_RINGS = [
         "kind": "false-silence",
         "answer_before": {"county-supervisory": ["5502904"]},
         "answer_after": {"county-supervisory": []},
-        "why": "no tested dp interval from 4 to 25 retains it; 36.75 m2 of Lake "
-               "Michigan off the Door peninsula, and the answer it costs is "
-               "recorded above rather than claimed harmless",
+        "why": "no tested dp interval from 4 to 25 retains it; 36.75 m2 of DRY "
+               "LAND in Gardner town, Door County, measured against TIGER's areal "
+               "hydrography rather than guessed from the coordinates, and the "
+               "answer it costs is recorded above rather than claimed harmless",
         "date": "2026-09-26",
     },
     {
@@ -228,7 +255,8 @@ ACCEPTED_DROPPED_RINGS = [
         "answer_before": {"county-supervisory": ["5506503"]},
         "answer_after": {"county-supervisory": ["5506507"]},
         "why": "0.84 m2 of self-overlap between two districts of one county, which "
-               "no interval resolves because the source disagrees with itself there",
+               "no interval resolves because the source disagrees with itself "
+               "there; dry land in Darlington town by the same hydrography test",
         "date": "2026-09-26",
     },
 ]
