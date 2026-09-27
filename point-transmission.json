@@ -40,13 +40,12 @@
       ]
     },
     "ia": {
-      "layers_sending_point": 1,
-      "layers": [
-        "zip-code"
-      ],
+      "layers_sending_point": 0,
+      "layers": [],
       "layers_holding_hook_but_silent": [
         "county-subdivision",
-        "municipality"
+        "municipality",
+        "zip-code"
       ],
       "layers_unexercised": [],
       "atpoint_sites": [
@@ -54,7 +53,7 @@
         "load",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 1,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
         "cc-director-district",
         "city-ward",
@@ -79,7 +78,7 @@
       ]
     },
     "il": {
-      "layers_sending_point": 13,
+      "layers_sending_point": 12,
       "layers": [
         "ccpsa-district-council",
         "community-area",
@@ -92,8 +91,7 @@
         "police-beat",
         "police-district",
         "ward",
-        "ward-precinct",
-        "zip-code"
+        "ward-precinct"
       ],
       "layers_holding_hook_but_silent": [
         "county",
@@ -102,7 +100,8 @@
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
-        "township"
+        "township",
+        "zip-code"
       ],
       "layers_unexercised": [],
       "atpoint_sites": [
@@ -113,7 +112,7 @@
         "loadPoliceDistricts",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 5,
+      "atpoint_hooks_fired": 4,
       "layer_ids": [
         "ccbr",
         "ccpsa-district-council",
@@ -158,15 +157,14 @@
       ]
     },
     "mi": {
-      "layers_sending_point": 1,
-      "layers": [
-        "zip-code"
-      ],
+      "layers_sending_point": 0,
+      "layers": [],
       "layers_holding_hook_but_silent": [
         "county-subdivision",
         "municipality",
         "school-district-elementary",
-        "school-district-unified"
+        "school-district-unified",
+        "zip-code"
       ],
       "layers_unexercised": [],
       "atpoint_sites": [
@@ -174,7 +172,7 @@
         "load",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 1,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
         "city-ward",
         "county",
@@ -194,17 +192,17 @@
       ]
     },
     "ny": {
-      "layers_sending_point": 5,
+      "layers_sending_point": 4,
       "layers": [
         "es-zone",
         "hs-zone",
         "ms-zone",
-        "nys-zip-code",
         "zip-code"
       ],
       "layers_holding_hook_but_silent": [
         "community-district",
         "council",
+        "nys-zip-code",
         "police-precinct",
         "police-sector"
       ],
@@ -213,7 +211,7 @@
         "load",
         "loadNysZipCodes"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 1,
       "layer_ids": [
         "borough",
         "borough-president",
@@ -253,16 +251,16 @@
       ]
     },
     "wi": {
-      "layers_sending_point": 2,
+      "layers_sending_point": 1,
       "layers": [
-        "ward",
-        "zip-code"
+        "ward"
       ],
       "layers_holding_hook_but_silent": [
         "county-subdivision",
         "municipality",
         "school-district-elementary",
-        "school-district-secondary"
+        "school-district-secondary",
+        "zip-code"
       ],
       "layers_unexercised": [],
       "atpoint_sites": [
@@ -271,7 +269,7 @@
         "loadWards",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 1,
       "layer_ids": [
         "aldermanic-district",
         "county",

@@ -189,12 +189,36 @@ try {
       // ships no file: its points come from the set the record says was
       // fetched, asked for again through curl (which honours a proxy where
       // Node's fetch does not). Esri rings are enough to place points.
+      // THE REFERENCE FOR A BOX-FETCHED LAYER IS THE SET ITS ARCHIVE WAS BUILT
+      // FROM, NOT THE APP'S OWN WHOLE SET. The ZIP layers' whole-set loader asks
+      // the server for a ~55 m simplification, while their archives are built
+      // at full detail and in-state only, so near every edge the two disagree
+      // because the tile is the more accurate. The app's whole-set request is
+      // answered below from this set instead; the mirror's own gate already
+      // holds the archive to it.
+      let referenceSet = null;
       if (!feats.length && MIRROR[`${tag}:${id}`]) {
         try {
-          const body = execFileSync("curl", ["-sS", "--fail", "--retry", "3", "--max-time", "300",
-            MIRROR[`${tag}:${id}`].query], { maxBuffer: 1 << 30 });
-          for (const f of JSON.parse(body).features || []) {
-            if (f.geometry && f.geometry.rings) feats.push({ geometry: { type: "Polygon", coordinates: f.geometry.rings } });
+          // A box-fetched layer (the ZIP layers) is recorded with the page size
+          // its mirror fetched at, because the server cannot answer it whole.
+          const rec = MIRROR[`${tag}:${id}`];
+          for (let offset = 0; ; ) {
+            const url = rec.page_size
+              ? `${rec.query}&resultOffset=${offset}&resultRecordCount=${rec.page_size}` : rec.query;
+            const page = JSON.parse(execFileSync("curl", ["-sS", "--fail", "--retry", "3", "--max-time", "300",
+              "-A", "districtry tiger-tile mirror (+https://districtry.com/)", url], { maxBuffer: 1 << 30 }));
+            const got = page.features || [];
+            if (rec.page_size && !referenceSet) referenceSet = Object.assign({}, page, { features: [] });
+            // an in-state mirror keeps only some of the box (rec.kept); a point in
+            // a ZCTA it dropped has no tile answer by design, so none is placed there
+            const kept = rec.kept ? new Set(rec.kept.split(",")) : null;
+            for (const f of got) {
+              if (kept && !kept.has(String((f.attributes || {}).ZCTA5))) continue;
+              if (referenceSet) referenceSet.features.push(f);
+              if (f.geometry && f.geometry.rings) feats.push({ geometry: { type: "Polygon", coordinates: f.geometry.rings } });
+            }
+            offset += got.length;
+            if (!rec.page_size || !got.length || !page.exceededTransferLimit) break;
           }
         } catch (e) {
           console.log(`  FAIL  ${tag}:${id} — could not fetch the mirrored set to place points: ${String(e).slice(0, 200)}`);
@@ -231,6 +255,13 @@ try {
             contentType: f.endsWith(".css") ? "text/css" : "application/javascript" });
         return route.continue();
       });
+      if (referenceSet) {
+        delete referenceSet.exceededTransferLimit;
+        const body = JSON.stringify(referenceSet);
+        // only the whole-set envelope query; a point query is not answered here
+        await page.route((u) => /PUMA_TAD_TAZ_UGA_ZCTA/.test(u.href) && /esriGeometryEnvelope/.test(decodeURIComponent(u.href)),
+          (route) => route.fulfill({ body, contentType: "application/json" }));
+      }
       let res, stamps = null;
       try {
         await page.goto(`${BASE}${tag}/`, { waitUntil: "domcontentloaded" });
