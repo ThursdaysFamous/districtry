@@ -96,13 +96,16 @@ stricter — true of the ceiling, and it means those rings' ANSWERS go unmeasure
 that matters. Not fixed here: `find_dropped` is read by three other builders and a stricter retained
 test would discover rings they must then declare, so it is measured before it is changed.
 
-**WHAT THE MEASUREMENT IMPLIES FOR THE CEILING**, stated before it is written: the interval is the
-bound. dp guarantees a retained vertex's perpendicular deviation is under the interval, and measured,
-p99.9 lands EXACTLY on it — 1.0 m at interval=1, 2.0 m at interval=2, on all four layers — while
-psap, the one layer with no artefacts at all, tops out at 2.4 m against its 2 m interval, i.e. 1.2x.
-So the ceiling is a small multiple of each layer's own interval, and a gate that held the RAW max to
-it would fail today on 67 vertices that are spurs, spikes and vanished rings rather than on any
-boundary that moved.
+**WHAT THE MEASUREMENT IMPLIES FOR THE CEILING**, stated before it is written: the interval bounds
+the stray approximately, and the honest figure is a small multiple of it. **THE SENTENCE THAT STOOD
+HERE OVER-CLAIMED AND I DID NOT NEED IT** — it read that "p99.9 lands EXACTLY on it, 1.0 m at
+interval=1, 2.0 m at interval=2, on all four layers", and that is my own PRINTING PRECISION rather
+than an identity: reported to one decimal, anything from 0.95 to 1.049 prints as 1.0. The manager
+caught it. Mapshaper applies the interval through a spherical approximation rather than exactly, so
+no identity was ever available. The claim that does the work is psap's, and it is a single measured
+ratio: **a raw max of 2.4 m against a 2 m interval, 1.2x**, on the one layer with no artefacts at
+all. A gate holding the RAW max to that would fail today on 67 vertices that are spurs, spikes and
+vanished rings rather than on any boundary that moved.
 
 **2026-09-27 (11:45). #1220 MERGED (`2354623`) and verified on main independently. Task #71
 complete. Nothing assigned. ONE follow-up PROPOSED below, not started.**
