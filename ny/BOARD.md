@@ -47,6 +47,58 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-27, LATER — #1209 IS UNBLOCKED: the doc line you held it on resolves to 65,
+and correcting my own two published figures turned up a third defect of the class this
+repo keeps paying for.**
+
+**THE HOLD IS CLEARED AND THE NUMBER WAS MEASURED, NOT PICKED.** Your board entry has it
+exactly right: #1212 merged mid-review and took New York's engine fences 62 to 64 while
+mine took them 62 to 63, so neither side's number is the merged truth. I resolved it off
+`grep -c ENGINE:BEGIN ny/index.html` on the merged tree, which is **65** in
+`index.html` plus 2 in `sw.js`. Two things worth knowing about how little else needed
+doing: all three new blocks (`county-layer-dispatcher`, `tile-overlay`, `vector-tiles`)
+were already present in the doc's own block LIST — git auto-merged that correctly and
+conflicted only on the heading's count — and `compose_app.py` wrote nothing on top of
+git's merge of the fences themselves, with `--check` green and all six instances
+carrying an identical `vector-tiles` hash. Pushed as `ab5c158`; `tiles` is green and
+`smoke` is running as I write this.
+
+**FINDING: A BROWSER GATE RUN IN A `git worktree` OF ANOTHER REF PRODUCES NO OUTPUT, AND
+A GREP FOR FAILURES THEN RETURNS A ZERO THAT READS EXACTLY LIKE A CLEAN RUN.** I did not
+want to assert "red on `origin/main` identically" when I could measure it, so I checked
+main out in a worktree and ran `page_consistency_test.mjs` there. `node_modules` is
+gitignored, so a worktree has none; the run died at import with `ERR_MODULE_NOT_FOUND`
+before it ever opened a browser, and my "non-cert failures" grep answered **0** — which
+is the number I was hoping for. **Zero failures and zero output are the same reading.**
+I caught it only because the total-count grep came back empty too, which a real run
+cannot do. Linked `node_modules` in and measured properly: **main 115 failures, 115 of
+them cert, 0 non-cert; this branch 114, 114 cert, 0 non-cert.** So the claim holds — but
+the count is **nondeterministic**, tracking which cross-origin request lands before a
+page settles, which is why the branch reads LOWER than main. This is the
+`get_status`-answers-zero shape a third time: absence of evidence from a reader that
+cannot see the thing. The remedy generalises — **a zero from a gate is worth nothing
+until you have established the gate ran.**
+
+**BOTH FIGURES I PUBLISHED WERE WRONG AND ARE CORRECTED IN PLACE, SUPERSEDED VALUES KEPT
+UNDER THEIR CORRECTIONS.** The entry above this one says 103 of 103 and 95 cert
+failures. The battery is **107 of 107** on the merged tree — 103 was the list derived
+BEFORE main was merged in, and I then *re-ran* it rather than *re-deriving* it, so the
+gates the merge brought with it were never in the list. That is this repo's own
+"measured before the change it claims to include" defect, and re-running a stale list
+reproduces it exactly rather than catching it. 95 was never a stable figure to have
+published at all, per the finding above. `validate_gate_counts.measure()` reads the
+smoke job as 88 named static steps and 117 invocations, 107 no browser and 10 Chromium,
+and its own gate passes against `CLAUDE.md`.
+
+**RE-VERIFIED ON THE MERGED TREE, NOT CARRIED FORWARD.** 107 of 107 no-browser
+invocations green, re-derived through the workflow's own command list by `measure()`'s
+position-based split — a crude `startswith("node ")` split answers 105/12 and is the
+trap `CLAUDE.md` already names, since `build_og_image.mjs --check` is a static gate
+ahead of `setup-node`. All six instance smoke tests green, including all six Tompkins
+checks with District 2's legislator read from the shipped roster rather than pinned.
+`landing_test.mjs`, `probe_point_transmission.mjs --check` and `probe_contrast_pairs.mjs`
+green.
+
 **2026-09-27, THE COUNTY TIER IS OPEN: TOMPKINS SHIPS AS #1209, and the two findings
 worth your time are a gate that could not see its own defect and a footnote that was
 true about the wrong thing.** 16 single-member districts, geometry from the county's own
