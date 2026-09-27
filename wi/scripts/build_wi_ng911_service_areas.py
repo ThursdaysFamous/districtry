@@ -249,6 +249,38 @@ def simplify_label(name):
     return " ".join(a for a in SIMPLIFY[name] if a != "keep-shapes")
 
 
+# HOW FAR THE TRUE LINE MAY STRAY FROM THE CHORD DRAWN FOR IT, per layer, at a
+# point where a reader's ANSWER changes. `dropped_rings.check_fidelity` is the
+# measurement and its docstring carries the three exclusions; this is the number.
+#
+# EACH CEILING IS DERIVED FROM ITS OWN LAYER'S MEDIAN SOURCE STEP -- how far that
+# layer's true line runs before it turns -- at 1.10x, which is the chambers
+# builder's own ratio (15 m against a 13.59 m step). What transfers between layer
+# families is the RULE that the ceiling comes from the layer's own geometry, never
+# the ratio and never the metres: Illinois's 25 m came off a 17.9 m street-grid
+# step, and these seams are drawn five times finer than that.
+#
+#   layer   median step   x1.10    worst surviving vertex at that ceiling
+#   fire      3.43 m      3.77 m   none
+#   law       3.19 m      3.51 m   none
+#   psap      2.45 m      2.70 m   none
+#   ems       2.88 m      3.17 m   none
+#
+# THE VALUES ARE PINNED RATHER THAN DERIVED AT BUILD TIME, and that is the whole
+# point of writing them down: a ceiling recomputed from the source on every run
+# rises whenever the source gets coarser, so it can never fail. The builder PRINTS
+# each layer's measured step beside its ceiling, so a step that drifts is visible
+# without the ceiling moving with it.
+#
+# A METRE-CEILING ALONE WOULD GATE THE WRONG THING HERE, measured 2026-09-27 rather
+# than argued: at these values, seven vertices stray past their layer's ceiling on
+# geometry that is real (spans 1.7 to 58.3 m, not artefacts) and costs no reader
+# anything -- six are answered identically all round, and the seventh's differences
+# lie inside the 3.22 m2 ring this builder already declares. Set high enough to
+# pass them the ceiling is 126 m and gates nothing. So the gate asks the metres AND
+# the answer, and its excluded counts print every run.
+FIDELITY_MAX_M = {"fire": 3.77, "law": 3.51, "psap": 2.70, "ems": 3.17}
+
 # Holes that NO agency covered and the drawn output now fills, per layer, pinned
 # exactly. `dropped_rings` argues why these are not declared one by one and why
 # it is still an inference; the count is held so a rebuild that closes a
@@ -971,6 +1003,35 @@ def build(layer, check_only):
     # identifies an agency on both sides, and the strip drops it.
     records, dstats = drings.classify({
         layer["name"]: {"source": src_feats, "drawn": out_feats, "key": "KEY"}})
+
+    # THE UNION OF EACH RECORD'S SIGNATURES, never one per record: `_merge_coincident`
+    # folds rings that coincide on the ground and differ byte for byte, so taking a
+    # single signature leaves the other ring looking retained and the fidelity gate
+    # then measures a shape that is gone. The chambers builder pays for that lesson
+    # in a comment of its own, having read 17.5 m against a 15 m ceiling on a ring
+    # that was not there.
+    dropped_sigs = {sig for r in records for sig in r["signatures"]}
+
+    # How far the RETAINED boundary moved, at a point where the answer changes.
+    # This is a different question from the one below: `check` asks what whole
+    # DROPPED rings cost a reader, and a retained ring whose chord cuts across a
+    # narrow excursion costs the same and was measured by nothing until now.
+    src_by_key = {f["properties"]["KEY"]: f["geometry"] for f in src_feats}
+    steps = drings.source_step_m(src_by_key, dropped_sigs)
+    limit = FIDELITY_MAX_M[layer["name"]]
+    fok, fmsg = drings.check_fidelity(src_feats, out_feats, "KEY",
+                                      dropped_sigs, limit)
+    print("%s fidelity: median source step %.2f m, ceiling %.2f m (%.2fx); %s"
+          % (layer["name"], steps[len(steps) // 2], limit,
+             limit / steps[len(steps) // 2], fmsg), file=sys.stderr)
+    if not fok:
+        raise RuntimeError(
+            "%s fidelity check failed: %s\n"
+            "  A chord has been drawn across ground that changes hands. Re-measure "
+            "at a finer interval rather than raising FIDELITY_MAX_M, which is "
+            "derived from this layer's own median source step."
+            % (layer["name"], fmsg))
+
     dok, dmsg = drings.check(records, dstats,
                              ACCEPTED_DROPPED_RINGS[layer["name"]],
                              GAP_CLOSED[layer["name"]])
