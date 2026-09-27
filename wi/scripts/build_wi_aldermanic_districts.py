@@ -396,7 +396,7 @@ SIMPLIFY_LABEL = "visvalingam 25%"
 # Rings the simplifier drops that CLOSE A GAP — ground no district covered before
 # or after — measured at the shipped setting rather than assumed. Held so the
 # number cannot drift silently; a change means the filing moved and wants reading.
-GAP_CLOSED = 67
+GAP_CLOSED = 84
 
 ACCEPTED_DROPPED_RINGS = [
     {
@@ -464,6 +464,48 @@ ACCEPTED_DROPPED_RINGS = [
                "areal hydrography rather than guessed from the coordinates, which "
                "the census places in Maine village though its key is Wausau's, "
                "and the answer it costs is recorded above rather than called harmless",
+        "date": "2026-09-27",
+    },
+    {
+        # NEW RICHMOND CITY WARD 2, a 1.24 m2 sliver, and THE SECOND ENTRY IN THIS
+        # TABLE WITH THE SAME SHAPE AS THE FIRST: its key is a city's and the
+        # census puts the ground outside that city. Measured 2026-09-27 with a
+        # control (a point in the middle of New Richmond returns the city), no
+        # incorporated place contains this point at all, and TIGER's county
+        # subdivision layer puts it in STAR PRAIRIE TOWN. That is exactly why its
+        # loss is a SILENCE rather than a wrong name: the ring is the part of the
+        # city's ward that lies outside the city's own census boundary, so when it
+        # goes, no aldermanic district covers the spot and no neighbour steps in.
+        #
+        # THE SAME GROUND IS DECLARED IN THE SUPERVISORY BUILDER, as a WRONG NAME
+        # rather than a silence. Both layers dissolve the state's ward fabric, so
+        # a sliver in that fabric is inherited by both; the supervisory layer
+        # tiles the whole state, so a reader there gets St. Croix district 11
+        # instead of 12, while here they get nothing. One sliver, two harms,
+        # because the two layers cover different ground.
+        #
+        # FOUND ONLY BECAUSE THE RETAINED TEST BECAME EXACT. The old test asked
+        # whether ANY of a source ring's vertices survived anywhere in its
+        # district's drawn geometry, so a ring joined to the main body at one
+        # shared vertex read as retained after vanishing whole. This layer's
+        # gap-closed count moved 67 -> 84 in the same change, which is the same
+        # blindness counted on the harmless side.
+        #
+        # DRY LAND, by TIGER's areal hydrography with four controls answering
+        # first (Marathon dry; Lake Michigan, Lake Winnebago and Lake Mendota
+        # water).
+        "lat": 45.126489, "lng": -92.569594, "verts": 5, "m2": 1.24,
+        "interior": {"lat": 45.126485, "lng": -92.569614, "decimals": 6},
+        "features": ["aldermanic:57100-02"],
+        "kind": "false-silence",
+        "answer_before": {"aldermanic": ["57100-02"]},
+        "answer_after": {"aldermanic": []},
+        "why": "1.24 m2 of dry land in Star Prairie town measured against "
+               "TIGER's areal hydrography, carrying New Richmond city's own ward "
+               "key although no incorporated place contains it, which is why "
+               "losing it leaves the spot with no district rather than a "
+               "neighbour's; the supervisory layer declares the same sliver "
+               "because both dissolve the state's ward fabric",
         "date": "2026-09-27",
     },
 ]
