@@ -49,6 +49,74 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (evening, fourth). #73 SPLIT IN TWO ON A MEASUREMENT. The aldermanic dissolve
+has a ceiling and it RETIRED THE SETTING chosen that morning; the supervisory dissolve
+cannot have one at any interval, which is measured and recorded rather than forced.**
+
+**The aldermanic half.** Its own ceiling is 9.56 m — 1.10x an 8.689 m median source step over
+370,170 retained-ring segments, the chambers builder's ratio applied to this layer's own
+geometry. `visvalingam 25%` FAILS it on FORTY-NINE vertices, worst 54.2 m, every one at a point
+where the answer changes; the worst is City of Wisconsin Dells district 2, where a reader on
+ground the true line puts inside the district is told no district at all. It passes only at
+86.89 m, ten times the median step, which gates nothing — the NG911 126 m shape again.
+`dp interval=1` passes at 9.56 m with NOTHING excluded, so that is what ships, and the builder
+now runs its own fidelity gate on every run.
+
+**THE TWO ANSWER INSTRUMENTS NO LONGER SEPARATE THE TWO SETTINGS AT ALL, which is why the
+morning's choice was right and is no longer.** Re-measured with #1224's exact retained test,
+both drop the SAME 88 rings — the same 84 gap-closed and the same two declared harms, Wausau 11
+and New Richmond 2, `check` passing against the existing table for both — and both agree with
+the ward fabric 4000/4000. The old table's 70-against-68 with one harm each were floors of the
+superseded instrument. So the tie is exact and the fidelity gate is the only instrument left
+that distinguishes them.
+
+**AND THE TIEBREAK THAT SETTLED IT WAS TAKEN ON A QUANTITY NOBODY DOWNLOADS.** This layer is
+drawn and answered from `aldermanic-district.pmtiles`. Measured on the two committed states so
+anyone can reproduce it from git: the gzipped JSON grows 48,156 bytes (+7.97%) and THE ARCHIVE
+GROWS 7,923 (1,190,687 -> 1,198,610, +0.67%). That is the NG911 quartet's own finding of the
+same morning, on a second layer family, and it is the reason a 48 KB objection did not survive
+contact with the thing a reader fetches. Also measured: **tippecanoe is not byte-deterministic**,
+10 and 58 bytes apart rebuilding the same input, which is why `--committed` decodes an archive
+and compares ANSWERS, and why no archive byte count here is an identity. `cache_name` bumped to
+v45 and the archive rebuilt in the same change.
+
+**The supervisory half cannot be gated and I am not going to force it.** At its own 5.50 m
+(1.10x a 5.002 m step over 1,578,262 segments) exactly THREE retained vertices stray where the
+answer changes — Jefferson 20 at 127.7 m, and two adjacent vertices on Monroe 9 at 126.7 and
+110.9 m — and no ceiling below about 128 m passes them. **The interval is not the cause,
+measured twice**: the full statewide run at `dp interval=1` fails the same three at the same
+distances, and re-simplifying the two features ALONE drops them at interval 4, 2, 1 and 0.5 and
+keeps them only at 0.1. A small-input test is valid here and usually is not — dp's interval is
+absolute metres, where a retain PERCENTAGE would have lied, which is the trap the chambers
+builder records paying for.
+
+**BOTH BENIGN EXPLANATIONS WERE TESTED AND BOTH FAILED.** Not topology with the neighbouring
+district: the excursion is gone with the feature simplified by itself. And not a hairline under
+one output cell, which is what the SPUR predicate covers: the nearest non-adjacent part of the
+same ring is 127.7 m, 15.8 m and 110.9 m away, so there is real ground inside it. Each vertex
+is the LAST distinct vertex of a huge main ring or its neighbour, and the drawn ring carries no
+segment within 110 m of it — a whole excursion absent rather than a vertex displaced. **What
+removed it is NOT ESTABLISHED and I am not guessing.** I had two hypotheses and the measurements
+killed both, which is the third time today that reasoning about geometry lost to measuring it.
+
+**WHAT IT COSTS IS SMALL AND MEASURED**, gridded at 1 m so each figure is a floor: 5, 1 and
+2 m2 of ground move from one district to another, each beside a LARGER patch — 46, 10 and
+18 m2 — that the source answered with nothing, which is the gap-closed direction the gate
+already declines to call harm. **So this is a THIRD harm class**: neither a whole ring that
+vanished, which `classify` measures and `ACCEPTED_DROPPED_RINGS` declares, nor a bounded stray,
+which a ceiling holds. Gating it wants a declaration of that same shape — measured fields,
+re-audited every run, failing when orphaned or stale — or a fifth measured predicate if one
+turns out to fit, and that is a change to code four builders read, so it is #74 rather than a
+line in this PR. Recorded in the builder's own comment above `GAP_CLOSED`, in `wi/WATCH.md`
+row 27 and in CLAUDE.md, and `--check` names the ungated builder every run so the absence
+cannot read as covered.
+
+**One sandbox lesson, second time in a day with a different tool.** `pkill -f "sweep.py
+supervisory"` killed MY OWN polling shell, because the shell's argv carries the pattern as the
+pkill argument — the `pgrep -f` self-match from this morning, one command along. The job exited
+144 and the patch it had just applied looked like it had not run. Match on a pid, or exclude
+`$$`.
+
 **2026-09-27 (evening, third). #1225 is MERGED (`477e53e`, a squash) and I verified it on the
 merged tree rather than reading the manager's verification. Task #72 is closed. Nothing is
 assigned, so I am taking #73 — the two declaring builders `--check` now names as ungated.**
