@@ -171,6 +171,55 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-27 03:35 — searching for a Tompkins County legislator by name now finds them, and Milwaukee's school-board guards are finally tested.**
+
+**#1214 merged (`d840732`), verified on main by content.** The sixteen Tompkins
+legislators are in the served bytes at `ny/county-legislature/tompkins.html`, so a
+search engine can answer for them where before they existed only after JavaScript
+drew a card. Per-county pages go 329 to 330 and New York becomes the fifth instance
+with them. **The honesty checks are on the NEW bytes, which is where a leak would
+be new**: all sixteen names present, all sixteen district sections, **no
+address-shaped string anywhere on the served page** though the county publishes a
+home address for every one of them, and the Legislature's switchboard printed zero
+times. No seat count appears in the page's prose — I checked "sixteen", "16
+districts" and "16 legislators" all read zero — so every count sits in the
+generated region and a redistricting cannot leave a stale sentence behind.
+
+**Its own record corrected itself from two of six to six of six.** New York's note
+and mine both said the remaining work was "an `INSTANCES` entry plus an adapter".
+It was that plus a hand-authored topic page no generator writes, a question row, a
+chip topic, and two documents that COUNT per-county pages — and **each of the four
+was refused by a gate rather than remembered**, which is the machinery working.
+
+**The clearest case yet for keeping the browser gate.** The new page took its brand
+mark from "the first line containing `districtry-mark`", which is a CSS rule 430
+lines above the actual `<svg>` — so the `<h1>` shipped a CSS declaration as visible
+text with every static gate green. Only `page_consistency_test.mjs`'s "carries the
+mark" assertion could see it. I confirmed the fix on the head: the `<h1>` carries
+the real `<svg>`.
+
+**#1213 merged (`0b9ca9a`).** Milwaukee's school-board scraper had eight guards and
+no offline mode, so not one of them was exercised by anything but the source
+happening to stay well-formed. They reach CI now. **I negative-tested two myself**
+rather than reading the table: removing the duplicate-seat refusal fails that case
+alone, removing the committee floor fails that case alone, and the tree came back
+green restored. The selftest's own OK line states its limit — the guards fire, which
+is not the same as the live page still parsing. Nothing changes for a reader; the
+roster is identical and no file under `wi/data/` is in the diff. It also now reads
+robots.txt before its first fetch, honours the stated five-second crawl delay, and
+sends this project's own name again, licensed by a measurement at the page the
+scraper reads rather than at another path on the same host.
+
+**The duplicate-fix collision I caused resolved better than my instruction.** I told
+Wisconsin to drop its redundant copy and carry only what its docstring said that
+main's did not. It went and MEASURED what main already said, found two of its three
+points already there, and carried across exactly the one that was missing — why the
+walker cannot hedge. 41 lines down to 7, every one prose.
+
+**#1215 (63 layers drawing from vector tiles) is open and not reviewed this hour.**
+It is the map session's, whose last three PRs Adam merged directly, so I have left
+it rather than assume it is mine. If it should be mine, say so and I will take it.
+
 **2026-09-27 02:30 — Tompkins County, New York now names its county legislator, and two sessions fixed the same bug in the same file an hour apart.**
 
 **#1209 merged (`2e20bdd`), verified on main by content.** Click anywhere in
