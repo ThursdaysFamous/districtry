@@ -574,8 +574,57 @@ function cacheOnlyElseNetwork(request) {
   );
 }
 
+// Vector-tile archives (data/app/tiles/*.pmtiles): the app reads a tile as
+// a byte range of one file, and the Cache API refuses a 206, so each range is
+// cached under its own key and handed back as the 206 the page asked for.
+// Cache-only-else-network like the other boundary data: an archive's bytes
+// change only with a CACHE_NAME bump, which check_cache_version.py enforces
+// for everything under data/app/tiles/. A server that ignores Range answers
+// 200 with the whole file, which is passed through uncached; the page slices
+// it (engine vector-tiles block).
+function rangeKey(request) {
+  const url = new URL(request.url);
+  url.searchParams.set("dxrange", request.headers.get("range"));
+  return url.href;
+}
+function cachedRange(request) {
+  const key = rangeKey(request);
+  return caches.match(key).then((hit) => {
+    if (hit) {
+      return hit.arrayBuffer().then((body) => new Response(body, {
+        status: 206,
+        headers: {
+          "Content-Type": hit.headers.get("Content-Type") || "application/octet-stream",
+          "Content-Range": hit.headers.get("X-Content-Range") || ""
+        }
+      }));
+    }
+    return fetch(request).then((response) => {
+      if (response.status === 206) {
+        const clone = response.clone();
+        clone.arrayBuffer().then((body) =>
+          caches.open(CACHE_NAME).then((cache) => cache.put(key, new Response(body, {
+            status: 200,
+            headers: {
+              "Content-Type": clone.headers.get("Content-Type") || "application/octet-stream",
+              "X-Content-Range": clone.headers.get("Content-Range") || ""
+            }
+          })))
+        );
+      }
+      return response;
+    });
+  });
+}
+
 self.addEventListener("fetch", (event) => {
   const href = new URL(event.request.url).href;
+
+  if (event.request.headers.has("range") &&
+      href.startsWith(new URL("data/app/tiles/", self.registration.scope).href)) {
+    event.respondWith(cachedRange(event.request));
+    return;
+  }
 
   // Page navigations (including an installed PWA's ./index.html start_url and
   // any deep /index.html bookmark): network-first so an online visitor always

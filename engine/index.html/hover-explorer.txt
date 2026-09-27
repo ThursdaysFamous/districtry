@@ -61,11 +61,14 @@
       var id = LAYER_AREA_RANK[i];
       if (!state.layersOn[id]) continue;
       var rt = layerRuntime[id];
-      if (!rt || !rt.geojson) continue;
+      // a layer drawn from tiles holds no geojson until a comparison asks
+      // for it; the canvas answers what is drawn under the cursor instead
+      var tiled = rt && !rt.geojson && rt.overlayLayer && rt.overlayLayer.dxTiles;
+      if (!rt || (!rt.geojson && !tiled)) continue;
       if (rt.relevant === false) continue; // relevance-hidden at the selected point (mod.coverage) — hidden means hidden, on every surface
       var mod = getLayerById(id);
       if (!mod || !mod.overlay || !mod.overlay.style) continue;
-      var feature = findFeatureContaining(rt.geojson, point);
+      var feature = tiled ? rt.overlayLayer.featureAt(point) : findFeatureContaining(rt.geojson, point);
       if (feature) out.push({ mod: mod, feature: feature });
     }
     return out;

@@ -326,6 +326,19 @@
     relationshipGroup.clearLayers();
     relLabelGroup.clearLayers();
     relLabels = [];
+    // a comparison reads every district of every switched-on layer: a layer
+    // drawn from tiles fetches its whole file for it now, and this refresh
+    // runs again when that arrives (tile-overlay block)
+    if (pinnedParentId) {
+      layers.forEach(function (m) {
+        var r = layerRuntime[m.id];
+        if (state.layersOn[m.id] && r && !r.geojson && r.overlayLayer && r.overlayLayer.dxTiles && !r.tileGeojsonPromise) {
+          ensureTileGeojson(m).then(refreshRelationshipOutlines, function (err) {
+            console.error("[" + m.id + "] whole file for the comparison failed:", err);
+          });
+        }
+      });
+    }
     var parentFeature = relationshipParentFeature();
     relCounts = parentFeature ? drawRelationshipOutlines(parentFeature) : null;
     updateRelLegend();
@@ -497,8 +510,12 @@
   function appendPinControl(mod) {
     if (!mod.overlay || !mod.overlay.style) return; // polygon layers only
     var rt = layerRuntime[mod.id];
-    if (!rt || !rt.geojson || !state.selectedPoint) return;
-    if (!findFeatureContaining(rt.geojson, state.selectedPoint)) return;
+    if (!rt || !state.selectedPoint) return;
+    // a layer drawn from tiles has the card's own answer to go on until its
+    // whole file is fetched for the comparison (tile-overlay block)
+    var here = rt.geojson ? findFeatureContaining(rt.geojson, state.selectedPoint)
+      : (rt.tileAnswer && rt.tileAnswer.point === state.selectedPoint ? rt.tileAnswer.feature : null);
+    if (!here) return;
     var btn = document.createElement("button");
     btn.type = "button";
     btn.className = "pin-parent-btn";

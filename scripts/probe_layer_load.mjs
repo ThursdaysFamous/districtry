@@ -153,6 +153,15 @@ const server = createSecureServer({ key: readFileSync(join(certDir, "key.pem")),
   }
   const f = readRepo(u.pathname);
   if (!f) { res.writeHead(404); return res.end(); }
+  // A vector-tile archive is read a byte range at a time, which GitHub Pages
+  // answers with 206 (checked 2026-09-26); served whole, the probe would
+  // measure the tile layer as downloading its entire archive.
+  const range = !f.gz && /^bytes=(\d+)-(\d+)$/.exec(req.headers.range || "");
+  if (range) {
+    const a = +range[1], b = Math.min(+range[2], f.buf.length - 1);
+    res.writeHead(206, { "content-type": f.type, "content-range": `bytes ${a}-${b}/${f.buf.length}` });
+    return res.end(f.buf.subarray(a, b + 1));
+  }
   res.writeHead(200, { "content-type": f.type, ...(f.gz ? { "content-encoding": "gzip" } : {}) });
   res.end(f.buf);
 });
