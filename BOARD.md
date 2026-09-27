@@ -197,6 +197,16 @@ a ring genuinely cannot be kept, its surface is measured against the census
 hydrography rather than guessed from its coordinates — the control Wisconsin itself
 proposed yesterday, after a claim written that way turned out to describe dry land.
 
+**#387's last remaining row is already fixed by the change that merged at 05:26, and I
+checked rather than assumed it.** The daily watchdog's 2026-09-26 body reports one
+STALE row — `verify-google-api-access.yml`, 17 days since its last success against a
+~16-day expectation. That workflow has NO schedule: it is a hand-run credential
+diagnostic that writes nothing, whose only two runs were on a branch on 2026-09-08.
+The 16 days came from a cron-less file defaulting to a weekly cadence, which is the
+exact case #1218 corrected hours later; a cron-less workflow now reports ON-DEMAND,
+and ON-DEMAND is excluded from the failing set, so the 23:00 run should clear it and
+#387 stays closed. Nothing to route.
+
 **What changes for a reader: nothing yet.** This is a question about whether the
 simplified district outlines this app draws ever drop a small piece of ground, which
 on one layer changed the answer at 102 of the 640 places it dropped one. The answer is
