@@ -558,8 +558,63 @@ def changed_since(ref):
     return set(got.stdout.split())
 
 
+def committed_archives():
+    """{(tag, layer): path} for every archive an app ships, and the layers an
+    app registers with `tiles:` — which must be the same set."""
+    import glob
+    import re
+    shipped = {}
+    for path in sorted(glob.glob(os.path.join(REPO_ROOT, "*", "data", "app", "tiles", "*.pmtiles"))):
+        rel = os.path.relpath(path, REPO_ROOT).split(os.sep)
+        shipped[(rel[0], os.path.splitext(rel[-1])[0])] = path
+    registered = set()
+    for index in sorted(glob.glob(os.path.join(REPO_ROOT, "*", "index.html"))):
+        if not os.path.isfile(index):
+            continue  # engine/index.html is the engine's block directory
+        tag = os.path.basename(os.path.dirname(index))
+        for m in re.finditer(r'\btiles:\s*"data/app/tiles/([^"/]+)\.pmtiles"', open(index, encoding="utf-8").read()):
+            registered.add((tag, m.group(1)))
+    return shipped, registered
+
+
+def check_committed(n_points, seed):
+    """Hold every SHIPPED archive to the file it was built from, today. A
+    change to a boundary file that forgets to rebuild its archive leaves the
+    app drawing and answering from the old districts; this is what catches it,
+    and it needs no tippecanoe."""
+    shipped, registered = committed_archives()
+    if set(shipped) != registered:
+        fail("the archives shipped under */data/app/tiles/ (%s) and the layers registered with "
+             "`tiles:` (%s) differ; an archive nothing draws, or a layer whose archive is "
+             "missing" % (sorted("%s:%s" % k for k in shipped) or "none",
+                          sorted("%s:%s" % k for k in registered) or "none"))
+    if not shipped:
+        print("build-vector-tiles: OK — no app ships an archive yet")
+        return
+    jobs = {(t, l): pairs for t, l, pairs in plan([])}
+    failed = 0
+    for (tag, layer), path in sorted(shipped.items()):
+        if (tag, layer) not in jobs:
+            fail("%s:%s ships an archive but layer-sources.json names no shipped file for it"
+                 % (tag, layer))
+        feats, files, _ = collect(tag, layer, jobs[(tag, layer)])
+        problems, st = gate(tag, layer, feats, path, n_points, seed)
+        print("  %-4s  %s:%s (committed) — %d features; %d/%d points under %g m differ, %d/%d beyond"
+              % ("FAIL" if problems else "ok", tag, layer, len(feats), st["near_bad"], st["near"],
+                 EDGE_TOLERANCE_M, st["far_bad"], st["far"]))
+        for p in problems:
+            print("          " + p)
+        failed += bool(problems)
+    if failed:
+        fail("%d shipped archive(s) no longer answer as their files do — rebuild with "
+             "--only <tag:layer> --out and copy the archive into <tag>/data/app/tiles/" % failed)
+    print("build-vector-tiles: OK — %d shipped archive(s) answer as their files do" % len(shipped))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    ap.add_argument("--committed", action="store_true",
+                    help="check the archives the apps ship against today's files (no tippecanoe)")
     ap.add_argument("--only", action="append", default=[],
                     help="an app tag (il) or tag:layer (wi:school-districts-unified); repeatable")
     ap.add_argument("--changed-since", metavar="REF",
@@ -572,6 +627,9 @@ def main():
     ap.add_argument("--jobs", type=int, default=min(4, os.cpu_count() or 1),
                     help="archives built at once (default: up to 4)")
     args = ap.parse_args()
+    if args.committed:
+        check_committed(args.points, args.seed)
+        return
 
     jobs = plan(args.only)
     if not jobs:

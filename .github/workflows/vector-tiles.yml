@@ -20,8 +20,11 @@ on:
   pull_request:
     paths:
       - "*/data/app/*.json"
+      - "*/data/app/tiles/**"
       - "layer-sources.json"
+      - "engine/index.html/vector-tiles.txt"
       - "scripts/build_vector_tiles.py"
+      - "scripts/validate_vector_tiles.py"
       - "scripts/requirements.txt"
       - ".github/workflows/vector-tiles.yml"
   workflow_dispatch: {}
@@ -51,6 +54,21 @@ jobs:
           sudo apt-get install -y -q tippecanoe
           tippecanoe --version
           pip install -c scripts/requirements.txt shapely numpy mapbox-vector-tile pmtiles
+
+      # the app's own reader (engine/index.html/vector-tiles.txt) runs in Node
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # The archives the apps SHIP, held to today's files: a boundary file
+      # changed without rebuilding its archive leaves the app drawing and
+      # answering from the old districts. No tippecanoe needed.
+      - name: Every shipped archive answers as its file does today
+        run: python3 scripts/build_vector_tiles.py --committed
+
+      # The app's own tile reader, run as shipped, against the Python decoders
+      - name: The app's tile reader decodes the shipped archives as Python does
+        run: python3 scripts/validate_vector_tiles.py
 
       - name: Every changed layer's archive answers as its file does
         run: |

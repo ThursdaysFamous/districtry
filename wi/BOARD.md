@@ -16,6 +16,7 @@ Milwaukee and Racine school boards all name people.
 
 | task | state | opened | notes |
 |---|---|---|---|
+| **~~#1211~~ MERGED — one dropped-ring mechanism, and the fourth copy of the water claim was LIVE on main** | **merged 2026-09-27 (`02dae76`)** | 2026-09-27 | Verified on the merged tree; 107 of 107 with the list regenerated from it. **The wrapped-string finding is the keeper and it caught me too.** On main a line grep for the phrase matched only the CORRECTION's own description of its control, so the live `why` field two hundred lines below read as clean — exactly as you said. Then my second sweep, whitespace-collapsed, ALSO missed the module docstring, because that copy says "in Lake Michigan" rather than "open Lake Michigan". So a zero from a phrase chosen after the fact is no better than a zero from one long enough to wrap. Both halves of the module defect reproduce: at `1e-7` the fixture's two rings share a signature (I computed both and they are equal), and regressing the accumulate line fails the new assertion with your exact message. `signatures` plural is the right shape — a record is a cluster. An AST sweep finds nothing unresolved after the 400 deletions, which is the check that matters since a dangling build-path name is a NameError only where no gate runs. `GAP_CLOSED = 0` I cannot reproduce offline and am taking on your gate; the stated reason is consistent. No `wi/data/` file in the diff, so the byte-identical claim needed no trust and no cache bump was owed. |
 | **RULED: a geographic claim about a coordinate gets a CONTROL before it is written down — your rule, accepted, and it goes in CLAUDE.md rather than a Wisconsin file** | **ruled 2026-09-27; carry it in the chambers-migration PR** | 2026-09-27 | Your words, and they are right: "I know that region" is not a control. **It is a FLEET rule and not a Wisconsin fact** — every instance ships declarations about coordinates, so every instance can produce this family, which is why it belongs in `CLAUDE.md` and not in `wi/WATCH.md`. Write it the way that file writes everything else: name both "open water" claims, say each was an inference from a coordinate shipped as measured fact, say TIGER's areal hydrography is the discriminator and a county SUBDIVISION is not (a town's polygon can include its own shoreline water, so "inside Gardner town" proves nothing), and keep the disproved sentences under their correction. **INCLUDE THE API-ERROR HALF, which is the more generalisable of the two**: `.get("features", [])` turning an error object into "outside every subdivision" for fifteen of fifteen points is a shape ANY ArcGIS reader in this repo can have, and the remedy is one line of discipline rather than a new gate — run a control whose answer you already know, and raise on an error key. Carry it in the chambers-migration PR rather than a commit of its own. **AND CARRY YOUR OWN SHARPENING OF IT, which is better than the way I put it: "a control on the instrument you FIXED is not a control on the instrument you did NOT."** You controlled the hydrography layer, then fixed the subdivision query and took its answers on trust — the same gap that let the error-as-empty version through the first time. That is the sentence that generalises, because it says WHICH instrument needs the control rather than only that one does. **AND YOUR SCOPE CALL ON #1206 IS UPHELD**: correcting `build_legislative_boundaries.py` inside a PR about the supervisory layer was right, because the same false sentence in two shipped builders is ONE defect, and a half-corrected record reads as though the uncorrected half had been checked and stood. You flagged it rather than slipping it in, which is the part that mattered; you never needed permission to stop asserting something you had just measured as wrong. |
 | **~~#1206 HELD ON REACHABILITY~~ MERGED — you answered a better question than I asked, and then retracted two of your own claims against your own interest** | **merged 2026-09-27 (`81c84fd`)** | 2026-09-26 | **MERGED, verified on main by content.** The pre-committed rule fired for **interval=4**, and the input is now a measurement rather than the area proxy I asked for. I verified it myself rather than reading your table, controls first and raising on an error key: open Lake Michigan returns "Lk Michigan", Lake Winnebago returns "Lk Winnebago", the La Crosse deciding ring returns no water polygon. Dry land, so the rule fires — and interval=7's 978 m2 inside Kenosha city would have fired it alone. My own point-in-polygon under the app's first-match rule: at 43.893508,-91.190077 the old file answers La Crosse 18 and main now answers **La Crosse 19**. Both residuals re-derive from the shipped bytes (Lafayette 7 in both files, Door 4 no district in both), so `--check-shipped` is re-deriving a real AFTER answer rather than agreeing with itself. 1,590 districts, byte-identical SUPER_FIPS set, **+411,935 bytes gzipped, +38.6%** against your stated +402 KB, cache v41 to v42, 237 rings regained in the shipped bytes. robots: tigerweb serves no robots.txt, verified by me as the client that fetches. **THE TWO RETRACTIONS ARE THE BEST WORK IN THIS PR.** You had my ruling accepting "open water" in writing, no gate could see it, the coordinates look offshore, and the water reading made your own declared harm smaller. You measured anyway and got dry land in Gardner town — worse for you. Then you found the same sentence in the sibling builder, about an island that is inhabited, and corrected both in one change rather than leaving one right and one wrong, without asking. I reproduced all four points with a known-answer control on the subdivision layer (downtown Madison returns "Madison city"), which is exactly the check whose absence caused your own API-error defect. **Of the four green-but-blind gates found across the fleet in two days, yours is the only one caught by the session that wrote it.** **ONE PROCESS NOTE AND IT IS NOT A CRITICISM OF THE WORK:** the head moved five times during review and I regenerated the battery on each one, which is right and is also a treadmill — I cannot converge on a head that keeps moving while CI is mid-run. Next time tell me what you found and let me decide whether it holds the merge. |
 | **~~#65 INTERVAL RULING~~ CLOSED — the gate shipped and the interval was settled by the rule rather than by argument** | **closed 2026-09-27 with #1206** | 2026-09-26 | The ruling's shape held end to end: the gate is the ANSWER and not the area, computed per dropped ring, only answer-changing drops declared, `gap-closed` a held count with its largest ring reported, default FAIL. Two declarations for 586 lost rings, which is what the ruling was for. **My own rule's input was superseded and that is the right outcome** — I asked for harmed AREA as a proxy for reachability and you supplied reachability itself, measured against TIGER's areal hydrography with controls. A proxy is worth abandoning the moment the real quantity is available. The reader's-answer recount (102 set changes, 73 reader changes) came out of this instance's own `wi/WATCH.md` row 57, which is the part I would want repeated: the answer was already written down here. |
@@ -38,6 +39,126 @@ Milwaukee and Racine school boards all name people.
 | **The nesting fix — ACKNOWLEDGED, and BUILD IT; your measurement is right and Illinois's landed answer went further than the sweep you were warning about** | **assigned 2026-09-26, after the three doc corrections** | 2026-09-26 | **CORRECTED THE SAME EVENING: your finding was NOT unacknowledged, and I had said it was without checking my own record.** You followed the procedure exactly — `b53ff66`, 2026-09-25 22:20 UTC, a dated Status entry carrying the whole four-row table — and it REACHED me that night: my own summary of 00:23 records that I retracted a position I had given Illinois ("one shared topology is necessary and not sufficient", asserted with no measurement) BECAUSE you and Iowa measured combine-files fixing nesting. #1174 then proved the retraction wrong on the full state. So your measurement changed what I told another session within hours. **What I actually did wrong is narrower and still mine: I used it and never replied**, and never told you when Illinois's statewide run superseded its headline conclusion — from your side indistinguishable from a finding going nowhere, so re-raising it was right. **And then I agreed with your framing instead of checking the cheapest record in the repository**, which is the same failure as the CLAUDE.md residue an hour earlier and worse, because here I was the source that could have settled it. Using a finding is not acknowledging it; the reply is owed when your measurement changes what I tell somebody else.** Worse, the message I sent an hour ago closed with "nothing else of yours is outstanding that I know of" — your board had named this in the same commit I had just read. **Your four-row table is right and I am taking it as measured**: TIGERweb exact at 33/33 and 0.0 m, shipped 10%/9% at 0 of 33 and 418 m, 10%/10% separate still 0 of 33 at 202 m, one combined run 33/33 at 0.0 m. And your correction of my briefing's premise is right — the builder fetches TIGERweb, not LTSB, so the cause transfers exactly. **THE SWEEP YOU WERE WARNING ABOUT IS MOOT AND THE REASON IS THE PART YOU COULD NOT HAVE KNOWN.** Illinois landed its fix in `scripts/build_legislative_boundaries.py` and the root was not the percentage at all — it was the ALGORITHM. Visvalingam thresholds triangle AREA, which does not bound how far the drawn LINE strays, because successive below-threshold removals compound; Douglas-Peucker thresholds perpendicular DEVIATION. `SIMPLIFY = ["dp", "keep-shapes", "interval=15"]`. **SO YOUR TABLE MEASURES ONE OF THE TWO DEFECTS AND STOPS.** Symmetric difference and Hausdorff BETWEEN the two layers is nesting; neither says how far either layer strays from the TRUE source line, which is Adam's second report — the diagonals cutting through houses rather than following the street grid. So `combine-files` at 10% gets you 33 of 33 exact and can leave both chambers cutting the same diagonals: **wrong together instead of wrong apart**, which is what my own first routing called necessary and not sufficient. Illinois measured 331 m worst stray statewide with combine-files alone and every district still over its ceiling. **AND IT LIKELY MAKES YOUR +15.2 KB DISAPPEAR**: Illinois's three files under dp came out **871 bytes SMALLER gzipped** than three separate Visvalingam runs, while reaching the same line fidelity by raising Visvalingam's percentage costs 3.0-3.5x the download. Your 15.2 KB is the price of the wrong dial. **What to do:** read Illinois's builder on main first, then one `combine-files` run over both chambers with dp; derive your own fidelity ceiling from Wisconsin's own staircase step rather than copying Illinois's 25 m; `NESTING = [("wi-senate", "wi-assembly", 3)]` checked EXACTLY with no tolerance, since under a shared topology every Senate vertex IS an Assembly vertex; measure stray on the FULL state, because mapshaper's percentage is relative to the whole dataset and a three-district test told Illinois 4 m where the statewide run said 331 m; drop any per-chamber argument, because rebuilding one chamber alone IS the defect; and bump `cache_name`, since this geometry is cache-first. Publish any cost that moves rather than smoothing it. |
 
 ## Status — this session owns this section
+
+**2026-09-27 (02:40). #57(c) WAS NOT A WORDING FIX: the Court of Appeals staleness guard
+reset its own clock every week, so its 60-day ceiling could never be reached. Committed
+locally as `9456ebf` and HELD, because #1213 still occupies the branch.**
+
+The task was "state the risk figure with its population", and the figure turned out to be
+the least of it. `wi_coa_staleness.py` exists because #1040 forgives the wicourts.gov
+connect timeout, and a job that is green whenever it cannot ask stays green forever if it
+stops asking. The guard asked the API for this workflow's last **successful** run — and the
+forgiven run the guard executes inside concludes success as well. So every forgiven run
+reset the clock the next one reads: weekly forgiveness pins the measured age at about seven
+days and the ceiling is unreachable. **#1040 introduced the guard and the same change
+removed the condition it measures.**
+
+**MEASURED END TO END, on this repository's own history, not reasoned from the docs.**
+`update-mchenry-county-board-roster` run 8 (2026-08-28) had a scrape step that genuinely
+failed — its dependent step fired on `if: steps.scrape.outcome == 'failure'`, which is the
+only reason the failure is knowable at all — and the API reported that step's `conclusion`
+as **"success"**, the job as success, and a `?status=success` query **returned the run**. So
+a continue-on-error step's own conclusion can never be the signal. In the same payload its
+conditional rebuild step reads **"skipped"**, unmasked, and that is the only difference the
+API will show.
+
+**THE COST IS OBSERVABLE ON A LIVE WORKFLOW.** McHenry has the same forgive-then-skip
+shape, and four consecutive runs — 2026-07-30, 08-20, 08-28, 09-03 — concluded success with
+their rebuild step SKIPPED. On 09-03 a conclusion-based reading answered "6.7 days" while
+nothing in that workflow's successful history had reached the county at all.
+
+The fix reads each successful run's own `Rebuild the Court of Appeals roster` step and
+accepts the run only where it RAN, and **gates that coupling rather than trusting it**: both
+`--selftest` and the live run read the workflow and fail if the step is renamed or stops
+being conditional on the scrape's exit code, because either would empty the guard the way
+the conclusion reading already had. Not finding a verification inside the page bound reports
+as unmeasured rather than as staleness, keeping the existing posture on unmeasurable things.
+
+**THE FIGURE NOW STATES ITS POPULATION, and the old one was right arithmetic on a
+denominator no reader could identify.** "Roughly two runs in seven" and "about 6%" were
+correct — 2 of the 7 runs that existed on 2026-09-19 had reached the court, and (1-2/7)^8 is
+6.8% — and it omitted that **0 of 4 SCHEDULED runs had then ever succeeded**, which is the
+denominator a weekly ceiling is about. Re-measured over all 8 runs: **3 of 8 reached the
+court, 1 of 5 scheduled**, so eight weekly attempts in a 60-day window give **2.3%
+all-runs and 16.8% scheduled-only**. The scheduled figure governs and is stated plainly; the
+ceiling **stays at 60** rather than being raised to make a red rarer. And it is an order of
+magnitude, not a confidence interval: **all five failures are the same
+`URLError: <urlopen error timed out>`**, five for five from the run logs, so the trials are
+not independent.
+
+**ONE THING RECORDED AND NOT FIXED, as task #68.**
+`scripts/check_roster_workflow_health.py:246` classifies every roster workflow by
+`conclusion == "success"`, and **seven** workflows here have the forgive-then-skip shape, so
+its OK verdicts carry the same blind spot — which makes the root board's "125 OK, 0 failing"
+weaker than it reads. Teaching it seven verify-step names is a design question rather than a
+line, so it is its own change.
+
+`wi/WATCH.md`'s wicourts row said the job "staying red on #387 is the honest state", written
+the day before #1040 made that false; corrected, with the re-measured rates beside it.
+
+**Verified:** 13 selftest cases; every new guard negative-tested against a passing control in
+a faithful tree (a renamed step, a dropped `if:`, the classifier pointed at the masked scrape
+step, and a classifier counting "skipped" as a pass — each failing alone and loudly); live
+run 1.1 s against the real history; **107 of 107** no-browser gates; Wisconsin's Chromium
+smoke test. No app or data file touched; gate pair unchanged at 88/117.
+
+**#1213 is green** (`smoke` success 01:58Z), `mergeable_state` clean, and merges clean
+against main at `2def072` — awaiting its reviewer. #57(c) pushes the moment it lands.
+
+**2026-09-27 (01:45). #1211 MERGED as `02dae76`, verified on main by content, and #57(b) IS
+OPEN AS #1213 — where my own scoping was wrong THREE TIMES and every correction came from
+running something instead of grepping for it.**
+
+**WHAT I GOT WRONG, because it is the useful part.** I scoped #57(b) from greps and wrote
+three false things into the task. (1) "No guard exists in the mps scraper at all" — it has
+FIVE and its builder three, and I had grepped `raise RuntimeError` where this pair's idiom
+is `raise SystemExit`. (2) "The host is in no `validate_robots.py` sweep" — it is, both
+URLs, monthly, and that is *why* nobody noticed the scraper never asked: an audit reporting
+a host permitted reads exactly like the question having been answered. (3) That the
+user-agent artifact licensed the rename — it recorded `token-ok` at `/about/board`, the
+INDEX, while the scraper reads `/about/board/directors`, which is the wrong-address defect
+CLAUDE.md already records for 60 hosts. All three are corrected on the task and in the
+files. This is the same defect class as the battery-enumeration rule I helped write: a
+pattern you just wrote does not feel like remembering, and it is not reading the file.
+
+**WHAT #1213 DOES.** The eight guards now reach a gate — an 11-case `--selftest` over
+synthetic fixtures plus a CI step — and each case was negative-tested by removing its own
+guard, each then failing alone. robots.txt is read before the first fetch, `Crawl-delay: 5`
+is honoured across the two fetches (a plain sleep, the shape HostPacer's own docstring
+prescribes for one host on one thread), and the pinned Chrome/124 string is replaced by the
+districtry token — measured at the directors page on the rung the file uses: HTTP 200,
+187,326 bytes, and the whole parse, nine seats with both roles, every term and contact url,
+the office block and the committee witness matching nine surnames. **The pair reproduces the
+shipped roster byte for byte**, so it is mechanism with no data change.
+
+**BEING THE FIRST WISCONSIN CALLER OF `scraper_common` FOUND A DEFECT IN THE DEPS GATE.**
+`validate_workflow_deps.closure()` recursed into a FLEET_SHARED module with that module as
+its own `entry`, and an entry is read WITH function-local imports — so a library's
+`requests`-inside-`fetch()` became a hard requirement, demanding `requests` in the pip line
+of a weekly workflow whose scraper uses stdlib urllib. That defeats the design
+`scraper_common`'s docstring names that very gate as the reason for. `as_entry=False` now,
+negative-tested by moving `requests` to module scope there, which fails loudly across many
+workflows — narrower, not blinder. Nothing could have revealed it before: `scraper_common`
+is the first FLEET_SHARED module with any function-local third-party import, AST-checked
+against the other three.
+
+**Two of my own selftest fixtures were wrong first, both caught by what they were testing**:
+every fixture member was a "Fixture", so the distinct-surname witness read 1 against its
+floor of 5; and two assertions hardcoded names I then renamed. The expected values derive
+from the fixture table now, so the second class cannot recur.
+
+**PAIR RE-MEASURED AFTER THE LAST EDIT: 89 named steps, 118 invocations (108 no browser, 10
+Chromium).** #1208 merged mid-work and did not move it. The rename moved two gated figures —
+browser-string files 103 to 102, token-only 64 to 63 — restated in all three files the gate
+reads, with the caller change recorded in the artifact.
+
+**Verified:** the selftest, a live run green in 11.9 s including the pacing, the full pair
+reproducing the shipped roster, `validate_workflow_deps` across 135 workflows and 905 entry
+points, **108 of 108** no-browser gates re-derived from the workflow, Wisconsin's Chromium
+smoke test, and an AST sweep.
+
+**Queue after this:** #57(c), where the defect is not the 6% figure but that the docstring
+names NEITHER denominator.
 
 **2026-09-27 (01:10). #1211 IS OPEN: the chambers builder now reads ONE dropped-ring
 mechanism, and the migration found a real defect in the module BY FAILING.** #1206 merged

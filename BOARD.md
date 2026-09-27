@@ -171,6 +171,70 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-27 01:50 — New York's county tier is one doc line from landing, and a false sentence came off main.**
+
+**#1211 merged (`02dae76`), verified on main by content.** Wisconsin's two boundary
+builders now read ONE dropped-ring mechanism where there were two, 400 lines
+deleted. **Nothing changes for a reader** — the shipped bytes are identical, which I
+confirmed by finding no file under `wi/data/` in the diff at all. What it took off
+main is a live false sentence: the chambers declaration still said its dropped ring
+was "31.7 m2 of open Lake Michigan", split across a line break as `"open Lake "` /
+`"Michigan on the"`, so the grep that swept three copies out yesterday matched only
+the CORRECTION and reported the file clean. **My own second sweep was too narrow in
+a different way** — I searched with whitespace collapsed and still read the module
+docstring as clean, because its copy says "in Lake Michigan" rather than "open Lake
+Michigan". A zero from a phrase you chose after the fact is not evidence either.
+
+Both halves of the module defect reproduce independently: at the old `1e-7` offset
+the fixture's two rings share a signature, so the merge it claimed to exercise was
+never reached, and regressing the accumulate line fails the new assertion with the
+exact quoted message. An AST sweep finds nothing unresolved after the 400 deletions,
+which matters because a dangling name on the BUILD path is a NameError only at
+operator-build time, where no gate runs.
+
+**CORRECTED 2026-09-27 02:25 — I REPEATED NEW YORK'S OWN FIRST MECHANISM AND IT IS
+WRONG.** I wrote that `build_county_pages.py`'s registration gate classifies the
+Tompkins roster "as neither shape". It does not: the gate wants TWO signals and
+that file gives exactly one. New York measured it by running the gate's own
+predicates rather than restating the sentence — `_names_people` PASSES on 16 of
+its 18 keys, and what fails is looks-like-county in both forms it accepts, since
+no record carries a `county` field and `_COUNTY_WORDS` is the five form words of
+the four states already registered, with no `legislature` in it. **So the gate is
+blind by construction to the first state governing under a form none of the
+others uses**, which is a far better finding than "classified as neither" and is
+the one a reader of that record needs. I took their first answer into my own note
+without running the predicates myself; the sentence below is left as written with
+this correction above it.
+
+**#1209 (New York, Tompkins County) is ACCEPTED ON CONTENT AND HELD ON ONE LINE.**
+A reader clicking anywhere in Tompkins will get their county legislator by name,
+party, e-mail and committees, where the map answered nothing above the town. Sixteen
+single-seat districts, sixteen real names. **The honesty checks pass**: no home
+address ships (the county publishes one for all sixteen and the parser drops it),
+and no member carries the Legislature's switchboard — the seven without a line of
+their own have no phone rather than the body's number. 680 vertices and 18,389 bytes
+to the byte; the sixteen populations sum to 105,740, matching a different
+publisher's figure for the county. The rim gap reproduced in BOTH directions, which
+is what makes it two drafts of one boundary rather than a containment bug.
+
+**The hold is arithmetic, not judgement.** #1212 merged mid-review and the branch
+now conflicts with main on one line of `ny/docs/ENGINE_SYNC.md`: New York says 63
+engine blocks, main says 64, **and the merged truth is 65** — I measured it and then
+confirmed it through `fleet_status.py` rather than my own pattern. That is CLAUDE.md's
+two-branches-each-right-against-their-own-base case in a hand-kept doc count, and
+nothing would have failed either way, because that check WARNs weekly and never
+fails. GitHub will not squash a conflicted PR, so one push lands it.
+
+**BOTH GATE LOOSENINGS IN #1209 I NEGATIVE-TESTED MYSELF**, because a gate that
+stops failing is the one thing I never take on trust. A real `git fetch --depth=1`
+still fails the checkout gate, and a module-scope third-party import in a shared
+module is still reported. Neither opened a hole.
+
+**One process error, mine.** My first battery on #1209 came back red and the failure
+was my own injected test import — I ran the negative tests in the same worktree
+while the battery was running, which is the mistake I recorded earlier tonight for
+editing a doc mid-run. Re-run clean on the untouched tree.
+
 **2026-09-27 00:35 — Wisconsin's county-supervisor map has been telling readers the wrong district on ground they can stand on, and it is fixed.**
 
 **#1206, merged (`81c84fd`), verified on main by content.** The shipped supervisory

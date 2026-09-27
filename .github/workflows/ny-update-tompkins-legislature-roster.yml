@@ -1,0 +1,98 @@
+name: Update Tompkins County Legislature roster
+
+# Weekly refresh of ny/data/app/tompkins-legislature-members.json from Tompkins
+# County's own Legislature page and its own contact sheet. Opens a PR, never
+# commits to main.
+#
+# THE `ny-` PREFIX IS LOAD-BEARING. GitHub Actions reads workflows only from the
+# repository ROOT's .github/workflows, so this file has to live here to run at
+# all — and at the root it shares a namespace with five other instances. Every
+# path below is instance-scoped for the same reason, and the bot branch is
+# `bot/ny-…` so it cannot clash with another instance's PR branch.
+#
+# WHAT THIS RUN CHECKS BESIDES THE NAMES. The scraper also re-reads the county
+# GIS layer's own `Member` column and prints a DRIFT line when it stops agreeing
+# with the county's roster page. That column is never shipped — Coles County's
+# equivalent named six of twelve people who had left the board — so this is the
+# county disagreeing with itself, reported for a human rather than resolved by
+# the machine. The run stays green; the printed line is the signal.
+
+on:
+  schedule:
+    - cron: "0 13 * * 5" # Friday 13:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI: a PR opened with the default GITHUB_TOKEN fires no workflows, which
+      # left every bot PR with zero checks. Falls back to github.token when the
+      # secret is absent, so the refresh still runs — it just goes back to
+      # opening unchecked PRs.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because the PR step regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit; under a depth-1 checkout every entry takes today's date.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      # pdfplumber, for the county's one-page contact sheet — the only source
+      # for party, the sixteen e-mails, the Chair and Vice Chair and the body's
+      # own office. The roster page publishes none of those.
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt pdfplumber
+      - name: Scrape the Legislature roster and contact sheet
+        run: python3 ny/scripts/tompkins_legislature_scraper.py --out /tmp/tompkins-legislature.json
+      - name: Rebuild roster
+        run: python3 ny/scripts/build_tompkins_legislature_roster.py --in /tmp/tompkins-legislature.json
+      - name: Validate app + data files
+        run: python3 ny/scripts/validate_index.py ny/index.html
+      # The absolute gate on every shipped officeholder name, run here as well
+      # as in the smoke job: this is the run that WRITES the names, so catching
+      # a non-name here costs one red job instead of one reviewed PR.
+      - name: Validate officeholder names
+        run: python3 scripts/validate_officeholder_names.py
+      - name: Check for changes
+        id: diff
+        run: git diff --quiet -- ny/data/app/ && echo "changed=false" >> "$GITHUB_OUTPUT" || echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/ny-tompkins-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip rather than from the checkout
+          # this run started with: these runs take minutes, and a branch that
+          # also differs from main in .github/workflows/ reads to GitHub as the
+          # push updating a workflow and is refused for a token without
+          # `workflow` scope. Full history, for the same reason as fetch-depth: 0
+          # above — `git fetch --depth=1` RE-SHALLOWS a complete clone.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 ny/scripts/build_tompkins_legislature_roster.py --in /tmp/tompkins-legislature.json
+          # about.html reads every roster the fleet's own table generator knows,
+          # and the sitemap follows any page it rewrites. Both are no-ops when
+          # this roster moves nobody into a page, and running them is cheaper
+          # than a red gate on the bot's own PR.
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add ny/data/app/tompkins-legislature-members.json about.html sitemap.xml
+          git commit -m "Update Tompkins County Legislature roster from the county's own pages"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create --title "Update Tompkins County Legislature roster" \
+              --body "Automated weekly refresh of Tompkins County's sixteen legislators (\`ny/scripts/tompkins_legislature_scraper.py\` + \`build_tompkins_legislature_roster.py\`). Geometry is untouched; people come from the county's own Legislature page and contact sheet, joined by district number. The run also re-reads the county GIS layer's \`Member\` column as a drift witness and prints any disagreement — that column is never shipped. Review before merging." \
+              --base main --head "$branch"
+          fi

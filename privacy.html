@@ -602,7 +602,8 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">sf-school-type-filter</code> on San Francisco. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
       <p><strong>A cache of each app's own files.</strong> A service worker stores the app shell
         when you first visit, and each layer's boundary file and officeholder roster the first
-        time you switch that layer on, so the map loads fast and those layers work offline.
+        time you switch that layer on (for a layer drawn from vector tiles, the pieces of its
+        map you have looked at), so the map loads fast and those layers work offline.
         It holds published public data — district shapes and rosters — not anything about you.</p>
       <p><strong>No app here sets a cookie of its own.</strong> Google Analytics, where it runs,
         sets its own.</p>
@@ -624,7 +625,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
         <tbody>
           <tr>
             <td class="who"><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Pages</a><small>hosting</small></td>
-            <td>The ordinary web-server request for each file — your IP address, browser, and the page you asked for. GitHub, not this project, keeps those logs.</td>
+            <td>The ordinary web-server request for each file — your IP address, browser, and the page you asked for. GitHub, not this project, keeps those logs. In Wisconsin, a layer drawn from vector tiles requests its map a piece at a time, so those requests also describe the area you are looking at and, to answer its card, <strong>the square of about 3.5 km around the point you select</strong>.</td>
             <td>Every visit.</td>
             <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan.</td>
           </tr>
