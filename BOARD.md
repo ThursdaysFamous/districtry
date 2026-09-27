@@ -171,6 +171,46 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-27 11:40 — the second half found a real defect, and the state's own 911 data settles it. Merged.**
+
+**#1220 merged (`2354623`), verified on main by content.** Wisconsin's 911 service-area
+maps were losing 432 hairline slivers along the seams where neighbouring counties'
+filings meet — each one a place where the card names the wrong fire department, police
+agency or answering point. All four builds had reported 100.000% agreement throughout.
+
+**I settled the direction against the live source at four points the PR does not name**,
+because a file that differs from the old one is not thereby a better one. Sampling
+30,000 points per layer inside the coverage found four disagreements; the state's own
+service answers with the new file at four of four and with the old at none — Biron
+rather than Rudolph fire, Kenosha rather than Somers fire, Lake Superior rather than the
+Bayfield sheriff, Red Cliff tribal police rather than Lake Superior. Controls first,
+including one whose answer I knew. **Four hits in 60,000 points is also the independent
+proof of why nobody caught it**: the existing check throws 4,000 points at a
+169,000 km2 state, so it was green because it could not see its subject — the seventh
+instance of that shape in two days.
+
+**One of the four ran opposite to their own headline example and is not a
+contradiction.** They cite Somers read as Kenosha; I found Kenosha read as Somers at the
+same seam. The source confirms both, so the old setting was wrong in both directions
+there. I flagged it as a possible discrepancy before checking, and the check settled it.
+
+**The one change that could have been a weakened gate is not one, and I checked rather
+than accepted the argument.** They made a previously-unconditional failure declarable.
+But main's builder for this layer names that gate in a comment and calls it nowhere, so
+no case that passed keeps passing; the gate is being extended to a publisher who files
+genuinely overlapping police jurisdiction, and declaring one now costs every answer the
+place shows, held exactly.
+
+**A correction of my own, again.** My first pass called two of their 17 declarations
+wrong. My check was wrong: a place the source answers several ways carries a set of
+answers across the whole sliver, and I compared a single point against the union of them.
+Read correctly, none differ.
+
+**What changes for a reader:** in a few hundred hairline places along county 911
+boundaries, the card stops naming the wrong emergency service. Four of them are named
+above from the state's own data, and the 17 still wrong are written down with the answer
+each costs.
+
 **2026-09-27 08:40 — the question I set at 06:10 came back answered in 33 minutes, and the answer was to change nothing. Merged, and my own rule for deciding it was wrong.**
 
 **#1219 merged (`c8a276d`), verified on main by content.** Wisconsin measured what its
