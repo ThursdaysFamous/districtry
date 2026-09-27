@@ -82,13 +82,13 @@ MIN_REGISTER_LAYER = 5
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "judicial-district", "county", "nys-central-hs-district",
-    "nys-school-district", "municipality", "village", "borough",
-    "borough-president", "district-attorney", "congress", "municipal-court",
-    "state-senate", "school-district", "cec", "fire-battalion", "council",
-    "community-district", "election-district", "state-assembly",
-    "police-sector", "police-precinct", "nys-zip-code", "zip-code",
-    "neighborhood", "hs-zone", "ms-zone", "es-zone", "school-site",
-    "police-station", "fire-station", "post-office", "library",
+    "nys-school-district", "municipality", "county-legislature", "village",
+    "borough", "borough-president", "district-attorney", "congress",
+    "municipal-court", "state-senate", "school-district", "cec",
+    "fire-battalion", "council", "community-district", "election-district",
+    "state-assembly", "police-sector", "police-precinct", "nys-zip-code",
+    "zip-code", "neighborhood", "hs-zone", "ms-zone", "es-zone",
+    "school-site", "police-station", "fire-station", "post-office", "library",
     "early-voting", "polling-place",
 ]
 
@@ -112,6 +112,8 @@ GEOMETRY_FILES = {
     "congress-districts.json": (26, 26),  # 26 NY U.S. House districts; pre-built from TIGERweb by scripts/build_legislative_boundaries.py (R2-2)
     "state-senate-districts.json": (63, 63),  # 63 NY State Senate districts; pre-built from TIGERweb layer 1
     "state-assembly-districts.json": (150, 150),  # 150 NY State Assembly districts; pre-built from TIGERweb layer 2
+    "tompkins-legislature-districts.json": (16, 16),  # Tompkins County's 16 county-legislature districts (ny/scripts/build_tompkins_legislature.py), the county's own GIS simplified with Douglas-Peucker at a 25 m interval — the same interval the county fabric ships at, because the districts' outer edge is the county line. The bounds are EXACT rather than a floor: the county elects one legislator per district and that count cannot move between censuses.
+    "tompkins-county-outline.json": (1, 1),  # Tompkins County sliced verbatim from ny-counties.json, so the county-legislature layer's coverage test and the county card cannot disagree about where Tompkins is — and what a Data gaps record needs in order to name this county.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -124,6 +126,7 @@ ROSTER_FILES = {
     "ny-assembly-members.json": 145,
     "cec-members.json": 0,  # honest placeholder (floor 0): CEC members are decentralized across 32 independent council sites with no scrapable central source or Open Data dataset; card links to the DOE hub (see scripts/cec_scraper.py)
     "borough-officials.json": 5,  # 10 offices (5 BP + 5 DA), operator-maintained from official sites; floor 5 = one entry per borough (build_borough_officials.py keys by borough)
+    "tompkins-legislature-members.json": 17,  # The 16 legislators keyed by district plus one `board` key carrying the Legislature's own office, switchboard, fax and term — so 17 keys, not 16. People from the county's own Legislature page and contact sheet, never from the boundary layer's own member column.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at
@@ -136,6 +139,7 @@ DYNAMIC_REFERENCE = frozenset({
     "manhattan-county-outline.json",
     "queens-county-outline.json",
     "staten-island-county-outline.json",
+    "tompkins-county-outline.json",
 })
 # ==== GENERATED:END validator-config ====
 

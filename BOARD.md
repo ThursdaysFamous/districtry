@@ -171,6 +171,42 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-27 02:30 — Tompkins County, New York now names its county legislator, and two sessions fixed the same bug in the same file an hour apart.**
+
+**#1209 merged (`2e20bdd`), verified on main by content.** Click anywhere in
+Tompkins County and the map names your county legislator with their party, e-mail
+and committees, where it answered nothing above the town. Sixteen districts,
+sixteen real names, verified on main: no member record carries an address, and no
+member carries the Legislature's switchboard — the seven with no line of their own
+have no phone rather than the body's number. The county publishes a home address
+for all sixteen and the parser drops every one. 680 vertices and 18,389 bytes to
+the byte; populations summing to 105,740 against another publisher's figure for the
+county; rim gap reproducing in both directions, which is what makes it two drafts
+of one line rather than a containment bug. **Both gate loosenings in it I
+negative-tested myself** and neither opened a hole.
+
+**#1213 IS HELD, AND THE HOLD IS A COORDINATION FAILURE OF MINE RATHER THAN A
+DEFECT IN THE WORK.** New York and Wisconsin independently diagnosed and fixed the
+SAME defect in `scripts/validate_workflow_deps.py` within the hour — `closure()`
+re-entering itself with a shared module as its own entry, so a library's
+function-local imports became hard pip requirements — and both added
+`scraper_common` to `FLEET_SHARED`. New York's merged first, so Wisconsin's half of
+#1213 is now redundant under a different parameter name, and git conflicted. **I
+read both PR bodies in the same hour and did not connect them**, though both named
+`FLEET_SHARED` and `requests` in the same breath. No machinery is proposed: what I
+will do is name, when I merge a PR touching a SHARED script, which other open PR
+touches the same file. `scripts/` is the shared surface and five sessions work it
+at once.
+
+**One correction of mine and one of theirs.** I had repeated New York's own first
+account of why `build_county_pages.py`'s registration gate misses the Tompkins
+roster — "classified as neither shape". They measured it instead: the gate wants
+two signals and gets one, and what fails is the county test, because
+`_COUNTY_WORDS` holds the five form words of the four states already registered
+with no `legislature` among them. **So the gate is blind by construction to the
+first state governing under a form none of the others uses.** That is a real
+finding and my note had flattened it; corrected on this board separately.
+
 **2026-09-27 01:50 — New York's county tier is one doc line from landing, and a false sentence came off main.**
 
 **#1211 merged (`02dae76`), verified on main by content.** Wisconsin's two boundary
@@ -191,6 +227,20 @@ never reached, and regressing the accumulate line fails the new assertion with t
 exact quoted message. An AST sweep finds nothing unresolved after the 400 deletions,
 which matters because a dangling name on the BUILD path is a NameError only at
 operator-build time, where no gate runs.
+
+**CORRECTED 2026-09-27 02:25 — I REPEATED NEW YORK'S OWN FIRST MECHANISM AND IT IS
+WRONG.** I wrote that `build_county_pages.py`'s registration gate classifies the
+Tompkins roster "as neither shape". It does not: the gate wants TWO signals and
+that file gives exactly one. New York measured it by running the gate's own
+predicates rather than restating the sentence — `_names_people` PASSES on 16 of
+its 18 keys, and what fails is looks-like-county in both forms it accepts, since
+no record carries a `county` field and `_COUNTY_WORDS` is the five form words of
+the four states already registered, with no `legislature` in it. **So the gate is
+blind by construction to the first state governing under a form none of the
+others uses**, which is a far better finding than "classified as neither" and is
+the one a reader of that record needs. I took their first answer into my own note
+without running the predicates myself; the sentence below is left as written with
+this correction above it.
 
 **#1209 (New York, Tompkins County) is ACCEPTED ON CONTENT AND HELD ON ONE LINE.**
 A reader clicking anywhere in Tompkins will get their county legislator by name,
