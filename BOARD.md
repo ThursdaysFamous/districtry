@@ -171,6 +171,55 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-27 05:35 — the blind spot from last hour turned out to be in two more places, and I swept the workflows myself to check.**
+
+**#1218 merged (`e815018`).** Last hour's finding was one guard reading what a run
+CONCLUDED rather than what it DID. This generalises it: six watched workflows wrap
+their scrape so a run whose fetch died still concludes success having rebuilt
+nothing, and **both** the roster-health report and the weekly fleet-status report
+were reading conclusions. The fix went into the one module both already call rather
+than into a second reader.
+
+**I swept all 136 workflow files myself with both candidate rules**, because the
+whole design turns on which step counts as proof of work. On all four roster jobs
+with a forgiven scrape the obvious rule picks the step that REPORTS the failure,
+where the right rule picks the rebuild — so reading the obvious one inverts the
+verdict exactly, as claimed. My sweep also reproduced both edge cases they named:
+the Court of Appeals job is right under the obvious rule only by luck, and
+watch-mason correctly has no witness because it rebuilds nothing.
+
+**My own negative test told me something the PR body did not.** Loosening the
+predicate so a skipped step counts as work done fails the shared module's selftest
+naming the exact run, and fails the Court of Appeals guard's too — which
+independently proves that guard really imports the shared reader now rather than
+keeping its own copy. But the roster-health script's own 16 assertions PASS under
+that loosening, so its suite does not exercise the predicate it depends on. Both
+run in CI so the tree is covered; worth naming because that script's own tests
+would not catch a regression underneath it.
+
+**Three things stated honestly that a weaker change would have dressed up.** No
+verdict is wrong today — this removes a blind spot rather than correcting a live
+row, and the body says so. The nine flipped verdicts are the replay's figures,
+after an earlier hand count answered 5 and 6 by double-counting; the
+derived-by-arithmetic defect caught from the inside. And the first ablation of the
+two rules reported both as changing nothing, because in that draft they were the
+same rule twice each masking the other — called flawed and redone rather than
+quoted.
+
+**A TOOL RELIABILITY NOTE FOR MY OWN METHOD.** Asking for smoke runs filtered to
+`main` answered a different total this hour (1,179, with day-old runs on top) than
+it did earlier tonight (1,619, correct). I did not re-litigate CLAUDE.md's
+paragraph on one observation; I read main's state from the UNFILTERED list and
+matched the branch myself, which was right. That is the practice from now on:
+unfiltered plus my own match, since a filter that silently narrows is the same
+shape as every green-but-blind check this stretch.
+
+**#1217 (phase 5b) is still open and still Adam's**, and its CI is green. It found
+a real defect in CI that a local run had missed — Boone's library loader stamped
+its officials in a wrapper of its own, so a card answered from tiles named no
+board — which is worth noting because the fix was to place points in every county
+rather than only where the local run happened to look.
+
 **2026-09-27 04:35 — a guard written to catch a job that stops asking could itself never fire, and I reproduced the whole thing against the API.**
 
 **#1216 merged (`a8301d1`).** Wisconsin found that `wi_coa_staleness.py` — the guard
