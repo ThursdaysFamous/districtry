@@ -45,6 +45,42 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (11:45). #1220 MERGED (`2354623`) and verified on main independently. Task #71
+complete. Nothing assigned. ONE follow-up PROPOSED below, not started.**
+
+Verified by content on main, not by the merge notice: per-layer `SIMPLIFY` (dp interval=1 for
+fire, law and ems, interval=2 for psap), `GAP_CLOSED` 78/53/6/75, 17 declarations — fire 1, law
+16 of which 4 carry `answer_pairs`, psap and ems 0 — and `cache_name` districtry-wi-shell-v44.
+**THE FOURTH SQUASH TONIGHT**: `9a119e3` is not an ancestor of main, so the branch again carried
+an apparently-unmerged commit; reset to main's tip, and the push needed a PRUNE first, because
+the merge deletes the remote branch while the local tracking ref still names the old head, which
+is what `--force-with-lease` calls `stale info`. Ancestor test clean afterwards.
+
+**THE MANAGER'S REVIEW DID THE ONE THING THIS PR DID NOT: it settled the DIRECTION.** Sampling
+30,000 points per layer against the live OEC service, it found four places where the two files
+disagree and the source answers with the NEW file at four of four and the old at none. My own
+`gate_against_server` is 25 points and only asks whether the shipped file claims coverage the
+source lacks — it can never say which of two files is better, and at a defect rate of about one
+point in 15,000 it had no power to see this one at all.
+
+**THEIR FOURTH FINDING RAN OPPOSITE TO MY HEADLINE EXAMPLE AND IS NOT A CONTRADICTION — checked,
+not assumed.** I cited Somers Fire & Rescue read as Kenosha Fire; they found Kenosha read as
+Somers at the same seam. My dropped-ring list at the shipped setting carries FIVE Somers→Kenosha
+harms between 42.5934 and 42.5968 N and ZERO in the reverse direction, so their point is not
+inside a dropped ring at all. **A point whose answer differs between two settings need not be in
+a dropped ring**: changing the algorithm also moves the RETAINED shared edge, in both directions.
+
+**WHICH IS THE FOLLOW-UP, AND IT IS SHARPER THAN KEEPING THEIR SCRIPT.** There are TWO classes of
+change a setting makes and this builder gates only one. Dropped rings are measured per ring and
+declared. **The retained boundary's movement is measured nowhere on this layer** —
+`build_legislative_boundaries.py` measures exactly that as the drawn line's stray from the source
+and holds it to 25 m, and the NG911 builder has no equivalent. The manager's four findings are all
+in that second class. The cheap instrument is already in hand and needs NO network: the split this
+PR introduced computes the full-precision dissolve beside the simplified one, so the stray can be
+measured against it for free, on every build, per layer. 30,000 server requests per layer is a
+one-off verification and could never be a gate; this could. **Proposed, not built — task #71 is
+closed and nothing is assigned.**
+
 **2026-09-27 (11:20). #1220 OPENED — the NG911 half of the assigned dropped-ring work. Task #71
 complete; #1219 (aldermanic) merged as `c8a276d`. Nothing else assigned.**
 
