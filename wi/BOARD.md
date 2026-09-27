@@ -49,6 +49,56 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (evening, eighth). THE CORRECTION I WROTE THIS AFTERNOON OVERSTATED THE HARM, WHICH
+IS THE DEFECT IT WAS WRITTEN TO FIX — CAUGHT BEFORE IT SHIPPED, ON #1231.**
+
+That correction called 54.2, 44.0 and 28.9 m the three worst of the eight differences
+`dp interval=1` still gets wrong. **Those are vertex-to-line distances under the RETIRED setting,
+not the depth of anything a reader is told wrong** — a distance to an edge quoted as a size, which
+is the manager's own `1de6c0a` correction one level down, reproduced in the very sentence written
+to fix a different overstatement. The 41-of-49 figure stands; what was wrong was the illustration.
+
+**THE EIGHT ARE THE BOUNDARY, NOT LOST GROUND.** Each differing region is a sliver of
+**3.49-18.56 m² whose deepest point is 0.434-0.869 m inside the source line**, and five of the
+eight harm points sit closer to that line than one output cell. **THE CONTROL IS WHAT SETTLES IT
+AND I NEARLY WROTE THE FINDING WITHOUT ONE**: the 41 the change did fix sit a median 0.221 m from
+the source line against the eight's 0.076 m, so `harm[0]` is systematically a near-line point and
+the 49/41/8 split was never about depth at all. Had I measured only the eight I would have
+reported their closeness as distinctive when it is how every one of the 49 was selected.
+
+**THE BLIND SPOT IS BOUNDED AND EVERY RUN NOW PRINTS THE BOUND.** A vertex over the ceiling IS
+swept, out to its own stray, and cleared only by a predicate that reads that sweep; one under it is
+never swept. So the deepest stray **at or under** the ceiling bounds the unsampled ground:
+**1.015 m of 9.56 m** aldermanic, **5.219 m of 5.50 m** supervisory — the supervisory dissolve
+using 95% of its headroom, which is worth a reader of that build log knowing. The eight measured
+depths sit under the first, two instruments agreeing independently.
+
+**THE DEEPEST STRAY ANYWHERE IS THE WRONG QUANTITY AND MY FIRST DRAFT PRINTED IT.** The
+supervisory layer answers **1,747.992 m** against a 5.50 m ceiling, which would have read as a
+1.7 km blind spot on a layer whose every deep stray is measured, swept and either cleared or
+declared. **A FIXTURE COULD NOT HAVE SHOWN THIS** — the selftest's notch has one stray, so both
+definitions agree there; it was caught by running the real message on both real layers before
+believing the number. Selftest 14c now pins the asymmetry: the same 64 m notch reports ~64 m
+unswept under a 500 m ceiling and ~0 under a 10 m one.
+
+**THE SWEEP IS COSTED AND REFUSED RATHER THAN LEFT OPEN.** Measured at 7,279 answer-pairs/s on the
+aldermanic layer (866 features, 371,919 source vertices, 258,932 removed, 12,436 km of boundary):
+a disc around every removed vertex is 74.6M samples / **2.8 h**; a ±2 m boundary strip at 1 m
+spacing 49.7M / **114 min**; a uniform grid over the layer's bbox **322 days** at 1 m, 12.9 days
+at 5 m. **And this is the SMALL layer** — the four NG911 dissolves carry 3,953,583 source vertices
+against its 371,919. Not a build-time gate and not worth a monthly job either, because a sweep
+asking "does any answer differ" fails every layer always: a simplification moves the line by
+design. The reportable quantity is a difference's DEPTH, which the printed bound gives for nothing.
+
+**What is NOT closed, stated so it cannot read as covered**: the bound says how deep a hidden
+difference can be, not that none exists. Blind spots 1 (the disc is a sample) and 2 (the exclusion
+is per vertex, not per region) are unchanged, and all three remain why the ceiling stays near one
+source step rather than being widened until nothing fails.
+
+#1231 is green on `2019e9a` and the correction is pushed as `1ca610b`, so CI is re-running; I
+commented on the PR rather than letting the earlier tick read as a review of this head. No shipped
+byte changes. Task #74 and #75 both wait on that merge; #69 is still unassigned.
+
 **2026-09-27 (evening, seventh). I ANSWERED THE OPEN QUESTION THE MANAGER'S #1228 REVIEW LEFT,
 AND THE ANSWER IS A CORRECTION TO MY OWN PROSE PLUS A THIRD BLIND SPOT IN THE GATE.**
 
