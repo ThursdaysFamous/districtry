@@ -47,6 +47,61 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (late). #72's classify fix and all four re-measured floors are PR #1224. The
+ceiling is still unwritten and comes next, per the ruling's ORDER.**
+
+Every dropped-ring count in the fleet was a FLOOR. `find_dropped` asked whether ANY of a source
+ring's vertices survived anywhere in its own feature's drawn geometry, so a ring joined to the main
+body at one shared vertex answered yes after vanishing whole. The exact test — whole vertex set a
+subset of one drawn ring, ambiguity resolved by elimination — finds 165/118/10/149 dropped rings
+across the NG911 layers against the old 158/104/7/142. **Thirty-one rings missed on that layer
+alone**, and the witness is ring-count arithmetic rather than the instrument agreeing with itself.
+
+**NOT ONE BYTE OF ANY `data/app` FILE CHANGED.** Only the counting moved:
+
+| builder | gap-closed before | after | new declared harms |
+|---|---|---|---|
+| ng911 fire | 78 | **82** | — |
+| ng911 law | 53 | **59** | **4** |
+| ng911 psap | 6 | **6** | **1** |
+| ng911 ems | 75 | **77** | — |
+| aldermanic | 67 | **84** | **1** |
+| supervisory | 229 | **235** | **3** |
+| chambers | 0 | 0 | unchanged, stated as a measurement |
+
+Nine rings changed the answer a reader is told and were counted nowhere. All four builders pass
+with the new floors; `--check` holds all 30 declarations' prose to their own fields.
+
+**PSAP IS THE ONE WORTH NAMING: its gap-closed count did not move at all.** Nothing in the numbers
+hinted at its ring — on that layer the old test was wrong about exactly one thing and looked right
+about everything else, so the counts were never going to surface it. Its own comment read "PSAP AND
+EMS DECLARE NOTHING, AND THAT IS A MEASUREMENT RATHER THAN AN OMISSION", true of the instrument and
+false of the layer; quoted above its correction, and still true of EMS.
+
+**TWO OF MY OWN GUESSES DIED TO THE CONTROLS-FIRST RULE, both about which counties are involved.**
+The 51.11 m2 law ring looked like a Marquette/Waushara county-line sliver from its two agency names;
+both ends are in Waushara within 100 m of the line, so it is Marquette's filing reaching across. The
+psap ring looked the same way; both ends are in Calumet with Outagamie no nearer than 2 km.
+**Agency names are not an instrument for geography.** A roads query for the Dane ring had its
+CONTROL FAIL — nothing returned beside the Capitol — so no road is named anywhere. All nine are dry
+land by TIGER's areal hydrography, four controls answering first.
+
+**ONE SLIVER IS DECLARED IN TWO BUILDERS AS TWO DIFFERENT HARMS.** St. Croix 45.126485,-92.569614
+is in the ward fabric both layers dissolve. Supervisory tiles the whole state, so its loss is a
+wrong name (district 11 for 12); aldermanic covers only municipalities, so its loss is a silence.
+Measured with a control, no incorporated place contains the point although its key is New Richmond
+city's ward 2 — which is why that half is a silence.
+
+**A CHARACTERISATION OF A SET GOES STALE WHEN THE SET GROWS.** The supervisory anti-correlation
+paragraph was measured over 229 rings and is re-derived over 235: median 1.54 -> 1.34 m2, count at
+or above 100 m2 19 -> 20. Largest, three most complex, eleven simple large ones and the conclusion
+unchanged. Re-derived anyway, because the sentence staying true is not the same as the figures
+being current.
+
+Two post-checks in the exact test's first draft **could not fire** — both implied by the
+construction above them — and are removed with the reason written where they were, rather than kept
+as a guard that cannot fail.
+
 **2026-09-27 (13:05). Task #72 assigned and MEASURED. Reporting before any ceiling is written,
 per the pre-committed rule. Nothing pushed to a PR yet.**
 
