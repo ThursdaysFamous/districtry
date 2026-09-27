@@ -49,6 +49,57 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-27, 04:00 — READING THE ROSTER INSTEAD OF COUNTING IT WORKED IMMEDIATELY, and
+SCHOHARIE IS THE CANDIDATE. It is not yet the answer, for one stated reason: the criterion
+says MAINTAINED and nothing on that page dates it.**
+
+**WHAT THE CORRECT METHOD FOUND, in one fetch.** The Revize `staff_directory` renders a real
+HTML table — `Department Name | Name | Address/Fax | Town | Phone` — carrying **sixteen
+supervisors, one per town, for all sixteen of Schoharie's towns** (Blenheim, Broome, Carlisle,
+Cobleskill, Conesville, Esperance, Fulton, Gilboa, Jefferson, Middleburgh, Richmondville,
+Schoharie, Seward, Sharon, Summit, Wright — exactly the sixteen the site's own nav lists).
+Party on all sixteen, a telephone on all nineteen rows, and the Chairman and Vice Chairman
+named. **The TOWN IS A COLUMN**, which is the board-of-supervisors shape stated outright by
+the source: the seat IS the town, so this county needs no geometry, no dispatch entry and no
+toggle — only roster rows on the `municipality` card that already answers there.
+
+**FOUR TRAPS, NAMED NOW SO THE BUILD DOES NOT MEET THEM BLIND.**
+
+1. **The `Town` column is a town for sixteen rows and a JOB TITLE for three** — Clerk, Deputy
+   Clerk, Deputy Clerk share the table. A parser keyed on that column ships "Deputy Clerk" as
+   a seat. The Jackson shape: a column that is a district for most rows and an office for the
+   rest.
+2. **HOME ADDRESSES ARE PUBLISHED on ten of the nineteen rows** — "832 South Mountain Rd,
+   Gilboa", "PO Box 928, N. Blenheim", "137 Prairie Road, Sloansville". They never ship, and
+   the parser must match them in order to drop them, with the match FAILING loudly if it
+   stops recognising them — the Warren rule Tompkins already follows.
+3. **Roles sit inside the name cell** ("William Federice (R), Chairman of the Board"), the
+   Vermilion trap.
+4. **A THIRD PARTY VALUE.** Thirteen R, two D and one **C** (Conservative, Gilboa). The
+   fleet's `PARTY_NAMES` carries two parties and notation for them; this needs a third before
+   a page prints it verbatim beside the others.
+
+**WHY IT IS NOT YET THE ANSWER.** The criterion on this board is a MAINTAINED roster, and the
+page carries no date in any form: no `Last-Modified`, no `ETag`, `no-store` caching, no
+"updated" text, and every year-looking token in it is a Schoharie ZIP code (12066, 12043,
+12076, 12093). So the page proves the roster is COMPLETE and well-structured and says nothing
+about whether it is CURRENT — which is the Coles distinction exactly, where a published
+column was a stale snapshot that got six of twelve names wrong.
+
+**THE CORROBORATION ROUTE IS IDENTIFIED AND IS NOT A SIMPLE READ.** The board links its own
+minutes archive on a SECOND HOST, `www2.schohariecounty-ny.gov` — the Knox lesson, a county
+having more than one host, and its robots.txt is another soft 404 serving 15,858 bytes of HTML
+(correctly read as absent, allow). The archive runs to 2026, so it is live. But its index
+names no supervisor and is a **JSF postback form** (`javax.faces`, one form, no GET links per
+year), so reaching a roll call means driving a ViewState POST rather than fetching a document.
+That is a scraper to write, not a check to run, and I stopped there rather than build one at
+four in the morning on a research question.
+
+**SO THE STATE IS: Schoharie measured complete, currency unestablished, route to currency
+identified and priced.** The next step is that JSF read (or any other independent witness to
+the same sixteen names), and only then is the reference county settled. Otsego's form is still
+untouched.
+
 **2026-09-27, LATER — #1214 MERGED. I then went after the board-of-supervisors
 reference county and DID NOT GET IT. What I got instead is the route to it, two
 reusable measurements, and a method of my own disproved three times on one page — which
