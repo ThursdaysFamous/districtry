@@ -201,6 +201,52 @@ SIMPLIFY = ["dp", "keep-shapes", "interval=4"]
 # rather than carried forward.
 GAP_CLOSED = 235
 
+# THIS BUILDER CARRIES NO `FIDELITY_MAX_M`, AND THAT IS A MEASUREMENT RATHER THAN
+# AN OMISSION. `dropped_rings.py --check` names it as ungated on every run so the
+# absence cannot read as covered; here is what was measured on 2026-09-27, so the
+# next reader does not repeat it.
+#
+# `check_fidelity` holds the RETAINED boundary to a ceiling derived from the
+# layer's own geometry — 1.10x its median source step, which here is 5.002 m over
+# 1,578,262 retained-ring segments, so 5.50 m. At that ceiling exactly THREE
+# retained vertices stray where a reader's answer changes, and NO CEILING BELOW
+# ABOUT 128 m PASSES THEM:
+#
+#   Jefferson district 20   -88.709919,42.976026   127.7 m
+#   Monroe district 9       -90.552772,43.984725   126.7 m
+#   Monroe district 9       -90.552777,43.984868   110.9 m
+#
+# THE INTERVAL IS NOT THE CAUSE, measured two ways. The full statewide run at
+# `dp interval=1` fails the same three vertices at the same distances. And
+# re-simplifying the two features ALONE — valid here because dp's interval is
+# absolute metres rather than a percentage of the dataset, which is the small-input
+# trap `scripts/build_legislative_boundaries.py` records paying for — drops all
+# three at interval 4, 2, 1 and 0.5 and keeps them only at 0.1.
+#
+# TWO EXPLANATIONS WERE TESTED AND BOTH FAILED. It is not topology with the
+# neighbouring district: the excursion is gone with the feature simplified by
+# itself. And it is not a hairline narrower than the output cell, which is what
+# the SPUR predicate covers: the nearest non-adjacent part of the same ring is
+# 127.7 m, 15.8 m and 110.9 m away, so there is real ground inside it. Each
+# vertex is the LAST distinct vertex of a huge main ring, or its neighbour, and
+# the drawn ring carries no segment within 110 m of it — a whole excursion absent
+# rather than a vertex displaced. WHAT REMOVED IT IS NOT ESTABLISHED and is not
+# guessed at.
+#
+# WHAT IT COSTS A READER IS SMALL AND MEASURED, gridded at 1 m so each figure is a
+# floor: 5 m2, 1 m2 and 2 m2 of ground move from one district to another
+# (5505525 -> 5505520, and 5508102 -> 5508109 twice). Each also fills a larger
+# patch the source answered with nothing — 46, 10 and 18 m2 — which is the
+# gap-closed direction this project counts and does not call harm.
+#
+# SO THIS IS A THIRD HARM CLASS, and a ceiling is the wrong instrument for it: not
+# a whole ring that vanished, which `classify` measures and the table below
+# declares, and not a bounded stray, which a ceiling holds. Gating it wants a
+# declaration in the shape of `ACCEPTED_DROPPED_RINGS` — measured fields,
+# re-audited every run, failing when orphaned or stale — or a fifth measured
+# predicate if one turns out to fit. RAISING THE CEILING TO 128 m IS NOT THE
+# ANSWER: it would pass these three and gate nothing else.
+
 # Rings whose loss changes the district a reader is told they are in. Written from
 # the builder's own gate output, never by hand — run the build, read the UNDECLARED
 # lines, and paste what it measured. Each FAILS when nothing matches it.
