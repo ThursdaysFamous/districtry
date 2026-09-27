@@ -58,6 +58,25 @@ DEFAULT_BRANCH is a constant here rather than fetched, and here rather than in
 each caller, because one literal in the one module both scripts read cannot
 disagree with itself.
 
+AND A SECOND QUESTION, ADDED 2026-09-27: DID THE RUN DO THE WORK? Six of these
+workflows forgive a fetch that fails, so a run whose scrape died concludes
+SUCCESS and rebuilt nothing. `verify_step` derives, from the workflow file, the
+step whose running proves the work happened, and `run_did_work` reads whether it
+ran. Measured across the six on 2026-09-27: 14 of 56 successful runs had not
+rebuilt anything, and reading conclusions instead of that step put McHenry's
+watchdog verdict at OK on four dates and Kendall's on five, nine in all, while
+NEITHER county had ever been reached — every one in the dangerous direction. The
+forgiven step's own conclusion cannot be the signal, because this API reports a
+forgiven failure as `success`; the step gated on it is the one it leaves
+unmasked, as `skipped`.
+
+THE REMAINING LIMITATION IS NARROWER AND STILL OPEN. A refresh can report success
+while the builder RUNS and skips a county, and the shipped file does not move —
+which is how #982 froze Illinois's municipal roster for eleven days with nothing
+going red. Nothing here sees that: the witness answers whether the builder ran,
+never what it wrote. `check_roster_retention.py` is the gate that reads what a
+builder wrote, and it reads the file rather than the run.
+
 WHAT THIS DELIBERATELY DOES NOT DECIDE. A run that DID start is kept whatever
 branch it ran on, so a workflow_dispatch against a feature branch still counts as
 a success — and in this repository those are real refreshes, dispatched to reach
@@ -66,15 +85,14 @@ roster, both 2026-09-19). Whether such a run should clear the staleness clock fo
 the SHIPPED roster is a fair question and a different one: it produced data on a
 branch, not on main. Narrowing successes to the default branch would move several
 workflows this change has not measured one by one, so the question is recorded
-here rather than answered. It is adjacent to a limitation already on the record —
-a refresh can report success while the builder skips a county and the shipped
-file does not move, which is how #982 froze Illinois's municipal roster for
-eleven days with nothing going red.
+here rather than answered. It is adjacent to the narrower limitation
+recorded above, which is still open.
 
 Run `python3 scripts/workflow_run_evidence.py --selftest` for the predicate's
 cases, which are the runs measured above.
 """
 
+import re
 import sys
 
 DEFAULT_BRANCH = "main"
@@ -130,6 +148,139 @@ def job_counter(api_get, repo):
     return count
 
 
+# --------------------------------------------------------------- did it do the work?
+
+_STEP_NAME = re.compile(r"^(\s*)- name:\s*(.+?)\s*$")
+_STEP_ID = re.compile(r"^\s*id:\s*(\S+)\s*$")
+_FORGIVEN = re.compile(r"^\s*continue-on-error:\s*true\s*$")
+_STEP_IF = re.compile(r"^(\s*)if:\s*(.*)$")
+# A step's condition asserting that another step SUCCEEDED, in the two spellings
+# this repository uses: GitHub's own `outcome`, and a script's exit code captured
+# as a step output by a workflow that wants to branch on it.
+_SUCCEEDED = re.compile(r"steps\.([A-Za-z0-9_-]+)\.(?:outcome\s*==\s*'success'"
+                        r"|outputs\.[A-Za-z0-9_]+\s*==\s*'0')")
+_FAILED = re.compile(r"steps\.([A-Za-z0-9_-]+)\.(?:outcome\s*==\s*'failure'"
+                     r"|outputs\.[A-Za-z0-9_]+\s*!=\s*'0')")
+_BLOCK_SCALAR = ("|", ">", "|-", ">-", "|+", ">+")
+
+
+def workflow_steps(text):
+    """`{name, id, forgiven, cond}` per step of a workflow file, in file order.
+
+    Deliberately a line reader rather than a YAML parse: this module is stdlib
+    only, it is imported by a step running inside one of these workflows, and
+    every shape it has to read is a step key at a fixed indent. A folded `if: |`
+    block is joined into one condition string, which `update-municipal-officials`
+    needs — its condition runs 22 lines.
+    """
+    steps, cur, if_indent = [], None, None
+    for raw in text.split("\n"):
+        m = _STEP_NAME.match(raw)
+        if m:
+            if cur is not None:
+                steps.append(cur)
+            cur = {"name": m.group(2), "id": None, "forgiven": False, "cond": ""}
+            if_indent = None
+            continue
+        if cur is None:
+            continue
+        if if_indent is not None:
+            stripped = raw.strip()
+            indent = len(raw) - len(raw.lstrip())
+            if stripped and indent > if_indent:
+                cur["cond"] = (cur["cond"] + " " + stripped).strip()
+                continue
+            if_indent = None
+        m = _STEP_ID.match(raw)
+        if m and cur["id"] is None:
+            cur["id"] = m.group(1)
+            continue
+        if _FORGIVEN.match(raw):
+            cur["forgiven"] = True
+            continue
+        m = _STEP_IF.match(raw)
+        if m:
+            cond = m.group(2).strip()
+            cur["cond"] = "" if cond in _BLOCK_SCALAR else cond
+            if_indent = len(m.group(1))
+    if cur is not None:
+        steps.append(cur)
+    return steps
+
+
+def verify_step(text):
+    """The name of the step whose execution proves this workflow did its work.
+
+    None where the workflow forgives nothing (its conclusion already means what
+    it says) or where no step asserts a forgiven step SUCCEEDED, which is the
+    honest answer for a watcher that never rebuilds anything.
+
+    TWO RULES, AND THE NAIVE DERIVATION IS WRONG ON SIX OF SEVEN. "The first step
+    whose `if:` reads another step's outcome" picks, on six of the seven
+    workflows that forgive a step, the step that REPORTS THE FAILURE —
+    `Report blocked source on the standing issue`, `Track a blocked or broken
+    source`, watch-mason's `Open or update the tracking issue`. Reading any of
+    those as the witness inverts the verdict exactly: every forgiven run would
+    read as having done the work and every real one as not. So a condition must
+    assert a forgiven step SUCCEEDED, and a condition that also asserts anything
+    FAILED is a reporter rather than a witness.
+
+    On this tree those two rules are redundant with each other — either alone
+    gives the right answer on all seven — because the reporters here are gated on
+    failure ALONE. The second is still load-bearing for a shape the tree does
+    contain: `update-municipal-officials`'s `Track a township build refusal` is
+    `steps.scrape_cook.outcome == 'success' && steps.build_townships.outcome ==
+    'failure'`, which the first rule accepts and the second rejects. It is masked
+    only by that step sitting after the rebuild in file order, which is not a
+    property worth depending on.
+
+    THE FIRST MATCH, NOT ANY MATCH. Several later steps are gated the same way
+    and are weaker witnesses: `Open or update pull request` also requires that
+    the data CHANGED, so a run that refreshed a roster to the same content would
+    read as not having done the work.
+
+    A name that is not unique among the workflow's steps returns None, because
+    the jobs API is keyed by step name and two steps sharing one would make the
+    lookup ambiguous. No workflow here has that shape today.
+    """
+    steps = workflow_steps(text)
+    forgiven = set(s["id"] for s in steps if s["forgiven"] and s["id"])
+    if not forgiven:
+        return None
+    for step in steps:
+        cond = step["cond"]
+        if not cond or _FAILED.search(cond):
+            continue
+        if not any(g in forgiven for g in _SUCCEEDED.findall(cond)):
+            continue
+        if sum(1 for other in steps if other["name"] == step["name"]) != 1:
+            return None
+        return step["name"]
+    return None
+
+
+def run_did_work(jobs_payload, step):
+    """True where `step` RAN in this run, read from the jobs API's step list.
+
+    THE FORGIVEN STEP'S OWN CONCLUSION CANNOT BE THE SIGNAL. A
+    `continue-on-error` step that failed is reported `conclusion: "success"` by
+    this API — measured on `update-mchenry-county-board-roster` run 8
+    (2026-08-28), whose `if: steps.scrape.outcome == 'failure'` step fired, so
+    the failure is knowable only from the conditional step. The step gated on it
+    is the one the API leaves unmasked, as `skipped`.
+
+    A missing step reads False: a run whose job list does not carry the witness
+    at all did not run it. That is the same direction as `skipped` and the
+    opposite of the `never_started` rule above, where an unreadable run is KEPT —
+    there the expensive direction is silence about a frozen roster, and here a
+    False only ever makes the report look FURTHER from fresh, never closer.
+    """
+    for job in jobs_payload.get("jobs") or []:
+        for entry in job.get("steps") or []:
+            if entry.get("name") == step:
+                return entry.get("conclusion") == "success"
+    return False
+
 # Measured 2026-09-23 against the live API; see the module docstring.
 _PHANTOM_OTHER_BRANCH = {
     "id": 35782165269, "name": ".github/workflows/update-mps-school-board-roster.yml",
@@ -160,6 +311,153 @@ _DISPATCH_ON_BRANCH = {
     "created_at": "2026-09-19T16:05:23Z", "updated_at": "2026-09-19T16:15:39Z",
 }
 
+# The forgive-then-skip shape, trimmed from update-mchenry-county-board-roster.yml
+# with its step names, ids, `continue-on-error` and every `if:` verbatim. The
+# reporter sits BEFORE the rebuild there, which is what makes the naive
+# derivation pick it.
+_WF_FORGIVE_THEN_SKIP = """
+name: Update McHenry County Board roster
+jobs:
+  refresh:
+    steps:
+      - name: Scrape McHenry County Board member roster
+        id: scrape
+        continue-on-error: true
+        run: python3 scripts/mchenry_county_board_scraper.py
+      - name: Report blocked source on the standing issue
+        if: steps.scrape.outcome == 'failure'
+        run: gh issue comment
+      - name: Rebuild roster data file
+        if: steps.scrape.outcome == 'success'
+        run: python3 scripts/build_mchenry_county_board.py
+      - name: Open or update pull request
+        if: steps.scrape.outcome == 'success' && steps.diff.outputs.changed == 'true'
+        run: gh pr create
+"""
+
+# watch-mason-roster-source.yml's shape: a watcher forgives its fetch and gates
+# only an issue on the failure. There is no step whose running proves a refresh,
+# because it refreshes nothing.
+_WF_WATCHER = """
+name: Watch Mason County Board roster source
+jobs:
+  watch:
+    steps:
+      - name: Check the published directory
+        id: watch
+        continue-on-error: true
+        run: python3 scripts/mason_roster_watch.py
+      - name: Open or update the tracking issue
+        if: steps.watch.outputs.code != '0'
+        run: gh issue comment
+"""
+
+# update-municipal-officials.yml's mixed condition, which asserts a forgiven step
+# succeeded AND another failed. Placed FIRST here, which the real file does not
+# do, so the guard is tested rather than masked by file order.
+_WF_MIXED_FIRST = """
+jobs:
+  refresh:
+    steps:
+      - name: Scrape the Cook County Clerk directory of elected officials
+        id: scrape_cook
+        continue-on-error: true
+        run: python3 scripts/cook_municipal_officials_scraper.py
+      - name: Track a township build refusal
+        if: steps.scrape_cook.outcome == 'success' && steps.build_townships.outcome == 'failure'
+        run: gh issue comment
+      - name: Rebuild roster data file
+        if: steps.scrape_cook.outcome == 'success'
+        run: python3 scripts/build_municipal_officials_roster.py
+"""
+
+# A folded condition, which update-municipal-officials.yml needs: its own runs 22
+# lines. Two steps share a name here, which makes the jobs-API lookup ambiguous.
+_WF_FOLDED = """
+jobs:
+  refresh:
+    steps:
+      - name: Scrape one
+        id: one
+        continue-on-error: true
+        run: true
+      - name: Track a blocked or broken source
+        if: |
+          steps.one.outcome == 'failure' ||
+          steps.two.outcome == 'failure'
+        run: true
+      - name: Rebuild roster data file
+        if: steps.one.outcome == 'success'
+        run: true
+"""
+
+_WF_DUPLICATE_NAMES = _WF_FOLDED.replace(
+    "      - name: Scrape one\n", "      - name: Rebuild roster data file\n")
+
+# Nothing forgiven: the run's own conclusion already means what it says.
+_WF_NO_FORGIVENESS = """
+jobs:
+  refresh:
+    steps:
+      - name: Scrape
+        id: scrape
+        run: true
+      - name: Rebuild roster data file
+        run: true
+"""
+
+# update-mchenry-county-board-roster run 8, 2026-08-28: the scrape genuinely
+# failed and the jobs API reports it `success` because it is forgiven, while the
+# step gated on it reads `skipped`. Measured against the live API 2026-09-27.
+_JOBS_RUN_8 = {"jobs": [{"steps": [
+    {"name": "Scrape McHenry County Board member roster", "conclusion": "success"},
+    {"name": "Report blocked source on the standing issue", "conclusion": "success"},
+    {"name": "Rebuild roster data file", "conclusion": "skipped"},
+]}]}
+# run 11, 2026-09-17: the same workflow, the scrape reached the county.
+_JOBS_RUN_11 = {"jobs": [{"steps": [
+    {"name": "Scrape McHenry County Board member roster", "conclusion": "success"},
+    {"name": "Report blocked source on the standing issue", "conclusion": "skipped"},
+    {"name": "Rebuild roster data file", "conclusion": "success"},
+]}]}
+# A reporter written `!= 'success'` rather than `== 'failure'`. Neither spelling
+# is a witness, and only the polarity rule catches this one — the failure regex
+# matches `== 'failure'` and `!= '0'` and not this. No workflow here writes it;
+# it is the idiom a future one is most likely to reach for.
+_WF_NOT_SUCCESS_REPORTER = """
+jobs:
+  refresh:
+    steps:
+      - name: Scrape
+        id: scrape
+        continue-on-error: true
+        run: true
+      - name: Report blocked source on the standing issue
+        if: steps.scrape.outcome != 'success'
+        run: true
+      - name: Rebuild roster data file
+        if: steps.scrape.outcome == 'success'
+        run: true
+"""
+
+# The WITNESS carries the folded condition here. In _WF_FOLDED the reporter does,
+# and dropping the continuation makes the reporter merely look conditionless —
+# which excludes it for a second reason and hides the defect. Losing the
+# continuation here loses the witness instead, which is what needs to fail.
+_WF_FOLDED_WITNESS = """
+jobs:
+  refresh:
+    steps:
+      - name: Scrape
+        id: scrape
+        continue-on-error: true
+        run: true
+      - name: Rebuild roster data file
+        if: |
+          steps.scrape.outcome == 'success' &&
+          github.ref == 'refs/heads/main'
+        run: true
+"""
 
 def selftest():
     fails = []
@@ -211,6 +509,41 @@ def selftest():
           [_HEALTHY["id"], _DISPATCH_ON_BRANCH["id"]])
     check("an empty list stays empty", evidence([]), [])
 
+    check("the forgive-then-skip shape yields its rebuild",
+          verify_step(_WF_FORGIVE_THEN_SKIP), "Rebuild roster data file")
+    check("a watcher yields nothing rather than its issue step",
+          verify_step(_WF_WATCHER), None)
+    check("a mixed success-and-failure condition is not the witness",
+          verify_step(_WF_MIXED_FIRST), "Rebuild roster data file")
+    check("a folded if: block is read whole",
+          verify_step(_WF_FOLDED), "Rebuild roster data file")
+    check("two steps sharing the witness name is refused, not guessed",
+          verify_step(_WF_DUPLICATE_NAMES), None)
+    check("a workflow that forgives nothing needs no witness",
+          verify_step(_WF_NO_FORGIVENESS), None)
+    check("no steps at all", verify_step(""), None)
+    check("a reporter written != 'success' is not the witness either",
+          verify_step(_WF_NOT_SUCCESS_REPORTER), "Rebuild roster data file")
+    check("a folded condition on the witness itself is read whole",
+          verify_step(_WF_FOLDED_WITNESS), "Rebuild roster data file")
+    # The trap: the reporter comes FIRST in the real file, so a derivation that
+    # took any step referencing the scrape would read every forgiven run as
+    # having done the work.
+    check("the reporter is never picked even though it comes first",
+          verify_step(_WF_FORGIVE_THEN_SKIP) != "Report blocked source on the standing issue",
+          True)
+
+    check("run 8 skipped its rebuild",
+          run_did_work(_JOBS_RUN_8, "Rebuild roster data file"), False)
+    check("run 11 ran its rebuild",
+          run_did_work(_JOBS_RUN_11, "Rebuild roster data file"), True)
+    # The masked step: asking the forgiven step itself answers success on the run
+    # whose scrape failed, which is why it can never be the signal.
+    check("the forgiven step reads success on the run that failed",
+          run_did_work(_JOBS_RUN_8, "Scrape McHenry County Board member roster"), True)
+    check("a witness the run does not carry reads False",
+          run_did_work(_JOBS_RUN_11, "Rebuild the Court of Appeals roster"), False)
+    check("an empty payload reads False", run_did_work({}, "Rebuild roster data file"), False)
     counted = []
     evidence(newest_first, job_count=lambda r: counted.append(r["id"]) or 0)
     check("only a suspected run costs a request", counted, [_PHANTOM_OTHER_BRANCH["id"]])
@@ -219,8 +552,9 @@ def selftest():
         for line in fails:
             print("workflow-run-evidence FAIL — " + line, file=sys.stderr)
         return 1
-    print("workflow-run-evidence --selftest: OK — %d assertions over the four run "
-          "shapes measured 2026-09-23" % len(ran))
+    print("workflow-run-evidence --selftest: OK — %d assertions: the four run "
+          "shapes measured 2026-09-23 and the witness derivation measured "
+          "2026-09-27" % len(ran))
     return 0
 
 

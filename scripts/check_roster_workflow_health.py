@@ -33,6 +33,8 @@ reported as:
     UNPROVEN — it failed, but the code it runs has been EDITED since that run,
                so the red predates the fix and the next run is the first test
     STALE    — no successful run within roughly two of its own intervals
+    UNMEASURED— it forgives a fetch, and no run inside the history read actually
+               rebuilt anything, so how long since it refreshed is a floor
     SILENT   — old enough to have run, and never has
     DISABLED — switched off, so it is not refreshing anything
     NEW      — added too recently for its cron to have fired (not a problem)
@@ -64,6 +66,33 @@ reported as NEW and never as a problem. It also carries `state`, which is worth
 watching for its own reason: GitHub disables scheduled workflows after 60 days
 of repository inactivity, and a disabled workflow is not failing, not stale, and
 not running.
+
+A GREEN RUN IS NOT EVIDENCE THE JOB DID ITS WORK, and until 2026-09-27 this file
+read one anyway. Six of the watched workflows wrap their scrape in
+`continue-on-error`, so a run whose fetch died concludes SUCCESS having rebuilt
+nothing, and the staleness clock here read run conclusions. Measured that day
+against this repository's own history: 14 of 56 successful runs across those six
+had not rebuilt anything, and replaying this function over McHenry's and
+Kendall's full histories flips the verdict on FOUR dates and FIVE respectively —
+nine in all, every one of them OK where the honest answer is STALE or
+UNMEASURED, and in both cases during a stretch when NEITHER county had ever been
+reached at all. So the clock now reads the newest run in which the workflow's own
+rebuild step RAN.
+
+THOSE FIGURES ARE THE REPLAY'S, NOT ARITHMETIC. A first pass counted five and six
+by comparing ages by hand, which double-counted dates whose latest run had FAILED
+and therefore read FAILING under both readings — no flip. The replay runs
+`classify` itself over each prefix of the real history, which is the only reading
+that cannot disagree with the code.
+`workflow_run_evidence.verify_step` derives that step from the workflow file and
+records why the obvious derivation is wrong on six of seven; `run_did_work` reads
+it out of the jobs API, where a forgiven step's own failure is MASKED as
+`success` and only the step gated on it shows `skipped`.
+
+No verdict on this tree is wrong today — DeKalb's clock reads 8 days against a
+conclusion-based 1, and both are inside its limit — so this change removes a
+blind spot rather than correcting a live row. It costs one request per successful
+run examined, for those six workflows only, and stops at the first verified one.
 
 A WORKFLOW WITH NO SCHEDULE CANNOT BE STALE, and verify-google-api-access.yml is
 why this verdict exists. It is a MANUAL diagnostic — `on: workflow_dispatch` and
@@ -150,8 +179,23 @@ def cadence_days(cron):
     return 1
 
 
+# How many successful runs to ask about before reporting the age as a floor. One
+# request each, so this bounds the cost; six workflows have a witness and the
+# newest verified run has been the 1st or 2nd of them every time it was measured.
+WITNESS_RUN_LIMIT = 8
+
+# Worst first. A verdict missing here raises on sort rather than ordering
+# silently, which the selftest holds against everything classify can return.
+VERDICT_ORDER = {"FAILING": 0, "DISABLED": 1, "STALE": 2, "SILENT": 3,
+                 "UNMEASURED": 4, "UNPROVEN": 5, "NEW": 6, "ON-DEMAND": 7, "OK": 8}
+
 def discover():
-    """Refresh workflows on disk: (filename, display name, cadence, scripts)."""
+    """Refresh workflows on disk: (filename, name, cadence, scripts, witness).
+
+    `witness` is the step whose running proves the workflow did its work, or None
+    where its conclusion already means what it says. Derived from the file, so it
+    follows a workflow that is edited with nothing here to update.
+    """
     out = []
     for fn in sorted(os.listdir(WORKFLOW_DIR)):
         if not fn.endswith((".yml", ".yaml")) or fn in NOT_A_REFRESH:
@@ -163,7 +207,8 @@ def discover():
         crons = CRON_RE.findall(src)
         out.append((fn, name.group(1).strip() if name else fn,
                     cadence_days(crons[0] if crons else None),
-                    sorted(set(RUNS_RE.findall(src)))))
+                    sorted(set(RUNS_RE.findall(src))),
+                    workflow_run_evidence.verify_step(src)))
     return out
 
 
@@ -177,11 +222,10 @@ def own_scripts(watched):
     exists to catch. Only scripts unique to a single workflow count.
     """
     uses = {}
-    for _fn, _name, _cad, scripts in watched:
-        for sc in scripts:
+    for row in watched:
+        for sc in row[3]:
             uses[sc] = uses.get(sc, 0) + 1
-    return {fn: [sc for sc in scripts if uses.get(sc) == 1]
-            for fn, _name, _cad, scripts in watched}
+    return {row[0]: [sc for sc in row[3] if uses.get(sc) == 1] for row in watched}
 
 
 def code_changed_at(workflow_file, scripts):
@@ -227,8 +271,24 @@ def parse_ts(s):
     return datetime.datetime.fromisoformat(s).astimezone(datetime.timezone.utc)
 
 
-def classify(runs, cadence, now, created=None, state=None, code_at=None):
-    """(verdict, detail) for one workflow's recent runs, newest first."""
+def classify(runs, cadence, now, created=None, state=None, code_at=None,
+             witness=None, verified_at=None, floor_age=None):
+    """(verdict, detail) for one workflow's recent runs, newest first.
+
+    `witness` names the step whose running proves this workflow did its work, and
+    `verified_at` is the newest successful run in which that step RAN. Where a
+    witness exists the staleness clock reads THAT rather than the run conclusion,
+    because a forgiven run concludes success having refreshed nothing —
+    `workflow_run_evidence.verify_step` derives the step and says why.
+
+    Where no verified run was found, `floor_age` is how long ago the OLDEST
+    successful run examined started — so the true age is at least that. A floor
+    is not automatically an absence of measurement: eight weekly runs that
+    rebuilt nothing prove about eight weeks of not refreshing, which is STALE on
+    the evidence. Only a floor still INSIDE the cadence limit leaves the question
+    open, and that is the one reported UNMEASURED, which keeps this file's
+    standing posture that an unjudgeable workflow is not called a failure.
+    """
     if state and state != "active":
         return ("DISABLED", "workflow state is %r — it is not running at all" % state)
 
@@ -245,7 +305,14 @@ def classify(runs, cadence, now, created=None, state=None, code_at=None):
     latest = completed[0]
     succeeded = [r for r in completed if r.get("conclusion") == "success"]
     last_ok = parse_ts(succeeded[0]["created_at"]) if succeeded else None
+    # A run that was forgiven its fetch concludes success and refreshed nothing,
+    # so where the witness can be read it is the clock. Measured 2026-09-27:
+    # McHenry read OK on five dates and Kendall on six while neither county had
+    # ever been reached, every one of those a verdict this reading flips.
+    if witness is not None:
+        last_ok = verified_at
     age = (now - last_ok).days if last_ok else None
+    did = "" if witness is None else " (a run whose `%s` step ran)" % witness
 
     # Cancelled and skipped runs are neither a failure nor a refresh; they only
     # matter through the staleness clock, which they do not stop.
@@ -255,8 +322,8 @@ def classify(runs, cadence, now, created=None, state=None, code_at=None):
 
     if failing:
         when = parse_ts(latest["created_at"])
-        detail = "latest run %s on %s; last success %s" % (
-            latest.get("conclusion"), when.date().isoformat(),
+        detail = "latest run %s on %s; last success%s %s" % (
+            latest.get("conclusion"), when.date().isoformat(), did,
             "never" if age is None else "%d days ago" % age)
         # The red predates its own fix: the code has been edited since it ran,
         # so nothing has yet tested whether the failure survives.
@@ -268,16 +335,115 @@ def classify(runs, cadence, now, created=None, state=None, code_at=None):
     # No cron at all: there is no cadence to be late against, so the staleness
     # clock above (which defaults a cron-less file to 7 days) says nothing.
     if cadence is None:
-        return ("ON-DEMAND", "no schedule — run by hand; last success %s"
-                % ("never" if age is None else "%d days ago" % age))
+        return ("ON-DEMAND", "no schedule — run by hand; last success%s %s"
+                % (did, "never" if age is None else "%d days ago" % age))
     if stale and young:
         return ("NEW", "added %d day(s) ago; not enough history to judge"
                 % (now - created).days)
     if stale:
-        return ("STALE", "last success %s (expected within ~%d days)"
-                % ("never" if age is None else "%d days ago" % age, limit))
-    return ("OK", "last success %d days ago" % age)
+        if witness is not None and verified_at is None:
+            went_green = ("has never succeeded" if not succeeded else
+                          "last went green %d days ago"
+                          % (now - parse_ts(succeeded[0]["created_at"])).days)
+            if floor_age is not None and floor_age > limit:
+                return ("STALE", "it %s, and none of the %d successful run(s) "
+                        "examined ran its `%s` step, so it has refreshed nothing "
+                        "for at least %d days (expected within ~%d)"
+                        % (went_green, len(succeeded), witness, floor_age, limit))
+            return ("UNMEASURED", "it %s, but no run examined ran its `%s` step "
+                    "and the history read does not reach back far enough to say "
+                    "how long — read the runs" % (went_green, witness))
+        return ("STALE", "last success%s %s (expected within ~%d days)"
+                % (did, "never" if age is None else "%d days ago" % age, limit))
+    return ("OK", "last success%s %d days ago" % (did, age))
 
+
+
+def selftest():
+    """`classify`'s verdicts, offline, against fixtures taken from real runs.
+
+    This file is a workflow's own script and CI has never run it, so until
+    2026-09-27 its verdict logic shipped with nothing testing it — which is the
+    same shape as the defect this gate exists to catch, one level up. The witness
+    cases are McHenry's and Kendall's own histories, replayed: both ran for weeks
+    concluding success while rebuilding nothing.
+    """
+    fails, ran = [], []
+
+    def check(what, got, want):
+        ran.append(what)
+        if got != want:
+            fails.append("%s: got %r, wanted %r" % (what, got, want))
+
+    now = datetime.datetime(2026, 9, 27, 4, 0, tzinfo=datetime.timezone.utc)
+
+    def run(days_ago, conclusion="success"):
+        when = now - datetime.timedelta(days=days_ago)
+        return {"status": "completed", "conclusion": conclusion,
+                "created_at": when.strftime("%Y-%m-%dT%H:%M:%SZ"), "html_url": "u"}
+
+    def ago(days):
+        return now - datetime.timedelta(days=days)
+
+    weekly = [run(2), run(9), run(16), run(23), run(30), run(37), run(44), run(58)]
+
+    # Without a witness nothing about this file's existing behaviour moves.
+    check("no witness, fresh", classify(weekly, 7, now)[0], "OK")
+    check("no witness, stale", classify([run(40)], 7, now)[0], "STALE")
+    check("no witness, failing", classify([run(1, "failure")] + weekly, 7, now)[0], "FAILING")
+    check("no witness, cancelled is not a failure",
+          classify([run(1, "cancelled")] + weekly, 7, now)[0], "OK")
+
+    # With one, the clock is the verified run rather than the green one.
+    check("a verified run inside the cadence is OK",
+          classify(weekly, 7, now, witness="Rebuild", verified_at=ago(2))[0], "OK")
+    check("the verified run's age is what the detail states",
+          "2 days ago" in classify(weekly, 7, now, witness="Rebuild",
+                                   verified_at=ago(2))[1], True)
+    check("a verified run outside the cadence is STALE",
+          classify(weekly, 7, now, witness="Rebuild", verified_at=ago(40))[0], "STALE")
+    # The McHenry/Kendall shape: green every week, rebuilt nothing for weeks.
+    check("green weekly, nothing rebuilt for 58 days, is STALE on the floor",
+          classify(weekly, 7, now, witness="Rebuild", verified_at=None,
+                   floor_age=58)[0], "STALE")
+    check("that STALE says it refreshed nothing rather than that it went red",
+          "refreshed nothing for at least 58 days" in classify(
+              weekly, 7, now, witness="Rebuild", verified_at=None, floor_age=58)[1], True)
+    # A floor still inside the cadence settles nothing, and is not called stale.
+    check("a floor inside the cadence is UNMEASURED, not STALE",
+          classify(weekly[:2], 7, now, witness="Rebuild", verified_at=None,
+                   floor_age=9)[0], "UNMEASURED")
+    check("UNMEASURED says the history does not reach back far enough",
+          "does not reach back far enough" in classify(
+              weekly[:2], 7, now, witness="Rebuild", verified_at=None,
+              floor_age=9)[1], True)
+    # No successful run at all read no differently for having a witness.
+    check("a workflow that has never succeeded is not UNMEASURED",
+          classify([run(40, "failure")], 7, now, witness="Rebuild")[0], "FAILING")
+    # The verdicts this file already refuses to call a problem are unchanged.
+    check("disabled outranks everything",
+          classify(weekly, 7, now, state="disabled_manually")[0], "DISABLED")
+    check("a cron-less workflow is never stale",
+          classify([run(90)], None, now, witness="Rebuild", verified_at=ago(90))[0],
+          "ON-DEMAND")
+    check("every verdict classify can return is orderable",
+          sorted({"FAILING", "DISABLED", "STALE", "SILENT", "UNMEASURED",
+                  "UNPROVEN", "NEW", "ON-DEMAND", "OK"} - set(VERDICT_ORDER)), [])
+
+    # The witness derivation is workflow_run_evidence's and tested there; what
+    # this asserts is that THIS file's watched set still finds the six, because a
+    # discover() that stopped returning them would empty the whole change.
+    witnessed = [row[0] for row in discover() if row[4] is not None]
+    check("the watched set still yields the workflows that forgive a fetch",
+          len(witnessed) >= 6, True)
+
+    if fails:
+        for line in fails:
+            print("check-roster-health FAIL — " + line, file=sys.stderr)
+        return 1
+    print("check-roster-health --selftest: OK — %d assertions, %d watched workflow(s) "
+          "carrying a witness step" % (len(ran), len(witnessed)))
+    return 0
 
 def main():
     ap = argparse.ArgumentParser()
@@ -291,8 +457,10 @@ def main():
 
     watched = discover()
     if args.list:
-        for fn, name, cad, scripts in watched:
-            print("%-46s every ~%s days   %s" % (fn, cad, name))
+        for fn, name, cad, scripts, witness in watched:
+            print("%-46s every ~%s days   %s%s" % (
+                fn, cad, name,
+                "" if witness is None else "   [witness: %s]" % witness))
         print("\n%d refresh workflow(s) watched" % len(watched))
         return
 
@@ -319,7 +487,7 @@ def main():
 
     own = own_scripts(watched)
     rows, unreadable = [], []
-    for fn, name, cad, scripts in watched:
+    for fn, name, cad, scripts, witness in watched:
         wf = meta.get(fn) or {}
         created = parse_ts(wf["created_at"]) if wf.get("created_at") else None
         state = wf.get("state")
@@ -340,14 +508,39 @@ def main():
         except Exception as exc:                                  # noqa: BLE001
             unreadable.append((fn, name, str(exc)))
             continue
+        # A forgiven run concludes success having refreshed nothing, so where a
+        # witness step exists the newest run in which it RAN is the clock. One
+        # request per successful run examined, and only until the first verified
+        # one: measured 2026-09-27 that is 1 request for five of the six
+        # workflows with a witness and 2 for the sixth. Manager traffic and the
+        # roster workflows share one account budget, which is why this is stated.
+        verified_at, floor_age, checked = None, None, 0
+        if witness is not None:
+            for run in runs:
+                if run.get("conclusion") != "success":
+                    continue
+                if checked >= WITNESS_RUN_LIMIT:
+                    break
+                checked += 1
+                try:
+                    jobs = api_get("/repos/%s/actions/runs/%s/jobs"
+                                   % (args.repo, run.get("id")), token)
+                except Exception:                                 # noqa: BLE001
+                    # Unreadable is unknown, never a no: stop here and let the
+                    # floor stand at whatever was actually read.
+                    break
+                if workflow_run_evidence.run_did_work(jobs, witness):
+                    verified_at = parse_ts(run["created_at"])
+                    break
+                # It ran and rebuilt nothing, so the true age is at least this old.
+                floor_age = (now - parse_ts(run["created_at"])).days
         verdict, detail = classify(runs, cad, now, created, state,
-                                   code_changed_at(fn, own.get(fn, [])))
+                                   code_changed_at(fn, own.get(fn, [])),
+                                   witness, verified_at, floor_age)
         url = runs[0]["html_url"] if runs else None
         rows.append((verdict, fn, name, detail, url))
 
-    order = {"FAILING": 0, "DISABLED": 1, "STALE": 2, "SILENT": 3,
-             "UNPROVEN": 4, "NEW": 5, "ON-DEMAND": 6, "OK": 7}
-    rows.sort(key=lambda r: (order[r[0]], r[1]))
+    rows.sort(key=lambda r: (VERDICT_ORDER[r[0]], r[1]))
     # NEW is reported for context but never counts as something to act on — a
     # county that shipped this week has done nothing wrong.
     # ON-DEMAND joins NEW as reported-for-context: a hand-run diagnostic that has
@@ -362,11 +555,18 @@ def main():
     tally = lambda v: sum(1 for r in rows if r[0] == v)                # noqa: E731
     lines.append("Watched %d refresh workflow(s): %d OK, %d failing, %d disabled, "
                  "%d stale, %d never run, %d awaiting a first run after a fix, "
-                 "%d too new to judge, %d run by hand.%s" % (
+                 "%d too new to judge, %d run by hand, %d unmeasured.%s" % (
                      len(rows), tally("OK"), tally("FAILING"), tally("DISABLED"),
                      tally("STALE"), tally("SILENT"), tally("UNPROVEN"), tally("NEW"),
-                     tally("ON-DEMAND"),
+                     tally("ON-DEMAND"), tally("UNMEASURED"),
                      " %d unreadable." % len(unreadable) if unreadable else ""))
+    witnessed = sum(1 for row in watched if row[4] is not None)
+    if witnessed:
+        lines.append("")
+        lines.append("%d of them forgive a fetch that fails, so their runs conclude "
+                     "success whether or not anything was refreshed. For those the "
+                     "age above is the last run whose own rebuild step RAN, not the "
+                     "last run that went green." % witnessed)
     lines.append("")
     if bad:
         lines += ["| state | workflow | detail | latest run |",
@@ -410,4 +610,6 @@ def main():
 
 
 if __name__ == "__main__":
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(selftest())
     main()

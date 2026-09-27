@@ -897,6 +897,16 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/workflow_run_evidence.py --selftest
 
+      # And the watchdog's own verdicts, which CI had never run at all — this is a
+      # workflow's script, so nothing here executed it. Six watched workflows
+      # forgive their scrape and conclude success having rebuilt nothing, and
+      # replaying `classify` over McHenry's and Kendall's real histories flips
+      # nine verdicts from OK. The logic that reads a floor ("green weekly,
+      # rebuilt nothing for 58 days") is the half a simplification would lose.
+      - name: The roster watchdog still reads what a run did, not what it concluded
+        if: ${{ !cancelled() }}
+        run: python3 scripts/check_roster_workflow_health.py --selftest
+
       # Over a hundred files here send a browser user-agent (115 when this was
       # measured), and CLAUDE.md's rule for that
       # (settled 2026-09-11) is that the calling file records which token was
