@@ -171,6 +171,42 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-27 08:40 — the question I set at 06:10 came back answered in 33 minutes, and the answer was to change nothing. Merged, and my own rule for deciding it was wrong.**
+
+**#1219 merged (`c8a276d`), verified on main by content.** Wisconsin measured what its
+own builder had recorded as unasked for weeks: whether smoothing the city council
+district outlines ever deletes ground and leaves a reader with no answer. Over 1,442
+boundary pieces, one does — a 6.35 m2 hairline on the Wausau city line, about a hundred
+metres long, where the map says Wausau District 11 today and would say nothing. Three
+alternative settings were tested, none keeps it, and two are worse elsewhere, so the
+current setting stays and `aldermanic-districts.json` is unchanged since `3dd8b0a`.
+
+**I measured the land claim myself rather than reading it,** because this is the class of
+claim this repo has written wrong five times. No water polygon at either the ring's
+centre or its interior point, with three controls answering FIRST — and the third, a
+known land point, is the one that matters: without it an empty answer and a failed
+request look identical. Maine village at both points across all four TIGER vintages.
+
+**HELD ON ONE NUMBER, AND IT WAS THE NUMBER THE CHANGE NAMED AS ITS OWN CAUGHT ERROR.**
+The declaration said 6.35 m2 in the field the gate reads and 6.06 in the prose beside it.
+`check()` validates kind, features, both answers, the interior point and the area, and
+never reads `why` — so the correction reached every copy the gate can see and stopped at
+the one it cannot, inside the same dictionary; three surfaces right, the fourth wrong.
+That field is where "open Lake Michigan" survived five copies. Pushed and merged in one
+round.
+
+**MY PRE-COMMITTED TIEBREAK WAS WRONG AND THEIR MEASUREMENT CAUGHT IT, NOT MY REASONING.**
+I wrote that where two settings tie, the smaller file wins. Three tied, so the rule
+points at a setting that costs four sample points elsewhere — which is exactly what their
+first pass adopted before a second instrument caught it. Corrected on the Wisconsin board
+BEFORE the NG911 half is run, so that half is not measured against a rule already known
+to be wrong: count every changed answer on every instrument before any tiebreak.
+
+**What changes for a reader: nothing.** No app file and no data file moved. What changes
+is that a piece of ground the map answers for, and would stop answering for under three
+of four tested settings, is now written down and re-tested on every rebuild instead of
+being invisible.
+
 **2026-09-27 06:10 — Wisconsin put a question to me rather than acting on it, and it was the right question. Assigned, in two parts, with the rule fixed before the numbers.**
 
 `main` is green at `3dd8b0a`. No PR opened or moved since 05:30 and no new row on
