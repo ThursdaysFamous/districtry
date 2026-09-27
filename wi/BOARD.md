@@ -42,6 +42,48 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (03:35). #1213 MERGED as `0b9ca9a`, verified on main by content, and #57(c) IS OPEN AS
+[#1216](https://github.com/ThursdaysFamous/districtry/pull/1216). Task #57 is complete.**
+
+**VERIFIED ON MAIN BY CONTENT, not from the merge event**: the MPS selftest is a CI step and its 11
+cases pass, the one carried docstring sentence is present, `validate_workflow_deps` answers OK over
+136 workflows and 912 entry points (the +1 now main's own), the pair reads 89/118, and
+`probe_user_agents --check` is OK. It squash-merged, so `84fb33f` is not an ancestor of main — the
+ancestor test exits 1 and that is expected rather than a problem.
+
+**#1216 IS #57(c) AND IT WAS NOT THE WORDING FIX IT WAS QUEUED AS.** The Court of Appeals staleness
+guard asked the API for the workflow's last SUCCESSFUL run, and the forgiven run the guard executes
+inside concludes success too — so each forgiven run reset the clock the next one reads, weekly
+forgiveness pinned the measured age at about seven days, and the 60-day ceiling was unreachable.
+#1040 introduced the guard and the same change removed the condition it measures. The full
+measurement chain, the fix, the gated coupling and the re-stated risk figure (3 of 8 runs reached
+the court, 1 of 5 scheduled → 2.3% and 16.8%, the ceiling STAYING at 60) are in that PR's body and
+in the entry below.
+
+**THE CHERRY-PICK CONFLICTED ON ONE LINE AND BOTH SIDES WERE WANTED**: main's new MPS selftest line
+from #1213 against this change's updated COA rationale, in the steward skill's command list.
+Resolved by keeping both rather than choosing. The mirror gate compares as multisets with order
+deliberately uncompared, so the order is free; 118 for 118 either way.
+
+**TWO GIT MECHANICS WORTH KNOWING, both of which cost a rejected push.** `--force-with-lease`
+failed with `stale info` and the cause was not a race: GitHub had DELETED the branch on merge, so
+the lease was comparing against a ref that no longer exists. `git remote prune origin` then a plain
+`push -u` is the right move, and nothing needed forcing. Read a `stale info` rejection as "my idea of
+the remote is wrong" rather than "somebody else pushed".
+
+**Verified before pushing**: 13 selftest cases, every new guard negative-tested against a passing
+control in a faithful tree, 108 of 108 no-browser gates with the list re-derived on the
+cherry-picked tree, Wisconsin's Chromium smoke test, and the pair RE-DERIVED at 89/118 rather than
+incremented.
+
+**Task #68 is measured rather than merely proposed** (done while #1213 waited):
+`check_roster_workflow_health.py:246` classifies by `conclusion == "success"` and seven workflows
+have the forgive-then-skip shape. The derivation I first wrote into that task is WRONG — "first step
+whose `if:` reads a step's outputs/outcome" picks a FAILURE-gated step on 5 of 7 and would invert the
+verdict. Polarity fixes it on 6 of 7; the 7th is a watcher that never rebuilds, so UNKNOWN is honest
+there; and `update-municipal-officials.yml`'s 39 continue-on-error steps make the question per-county
+rather than per-run. Measuring my own proposal is what killed it.
+
 **2026-09-27 (02:55). #1213's conflict was the manager's finding and I had already acted on
 it; what was left was a measurement, and main's own text answered most of it. Head `84fb33f`.**
 
