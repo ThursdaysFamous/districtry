@@ -937,7 +937,8 @@ direction from the edge, which put many of them on it; that read as a
 - **The service worker cannot cache a range response in the Cache API.** Tiles
   need their own cache keyed by tile.
 - **Tile archives are binary files in git**, 1.6-5 times the gzipped GeoJSON,
-  and every rebuild adds a full copy to history.
+  and every rebuild adds a full copy to history. (Measured on the whole fleet
+  in phase 3: 5.3 times, 3.5-10 times by app. See below.)
 - **Live sources cannot become tiles without being mirrored.** In Illinois,
   29 of the 40 layers fetch their shapes live (`layer-sources.json`). The ones that change
   about once a year (TIGERweb) can be mirrored into shipped tiles by a scheduled
@@ -1121,3 +1122,106 @@ libraries are routed on the CONTEXT: once the worker controls the page, a
 request it lets through leaves from the worker, where a page-level route does
 not see it, and the first draft of the check failed in this sandbox for that
 reason alone.
+
+
+### Phase 3 shipped: the tile pipeline, built and gated, nothing committed (2026-09-27)
+
+`scripts/build_vector_tiles.py` builds a PMTiles archive for every polygon
+layer drawn from this site's own files, in all six apps, and holds each one to
+the file it came from. **No app change, and no archive is committed**: the
+operator ruled that each layer's archive lands in the pull request that
+switches that layer to tiles (Wisconsin's unified school districts, phase 4),
+because an archive nothing reads is binary weight in git history and in the
+deploy. So the script builds into a temporary directory and throws it away,
+and `.github/workflows/vector-tiles.yml` runs it on any pull request that
+changes a boundary file, the builder, its pins or `layer-sources.json`,
+building only the layers that draw a changed file.
+
+**Which files a layer draws is measured.** `layer-sources.json` now carries
+`files` per layer and, for a county-dispatched layer, `counties.files` per
+county, written by `scripts/probe_layer_sources.mjs`. The first version took
+every `data/app` request made once the layer was on, minus the requests the
+page makes with no layer on, and it was wrong in both directions: a file the
+app fetches at boot vanished with the boot requests, so the Chicago school
+board, the Cook County Board of Review and San Francisco's supervisors read as
+drawing only their rosters, and a coverage test's outline fetched beside a
+layer read as something the layer draws. The probe now asks the app for a
+short key per loaded feature (`layerSources().fingerprints`, and the same from
+`loadCountyEntry`) and keeps a file only if one of its features matches. A
+layer that is not county-dispatched is tiled only when all its shapes are
+shipped; one mostly fetched live (Illinois `county` draws two shipped outlines
+beside a Census set) waits for phase 6. A county-dispatched layer is one
+archive, its shipped counties together, with the county key on each feature.
+
+**Measured on the whole fleet:** 71 archives, 19,128 features, 19.3 MB of
+gzipped source and 102.0 MB of archives, built and gated in 3 minutes 25
+seconds with four at a time (11 minutes one at a time).
+
+| App | Archives | Source, gzipped | Archives | Ratio |
+|---|---|---|---|---|
+| ca | 6 | 0.1 MB | 0.2 MB | 3.8x |
+| ia | 13 | 2.5 MB | 24.6 MB | 10.0x |
+| il | 12 | 3.6 MB | 12.7 MB | 3.5x |
+| mi | 7 | 1.9 MB | 16.9 MB | 8.7x |
+| ny | 13 | 1.5 MB | 13.8 MB | 9.3x |
+| wi | 20 | 9.7 MB | 33.8 MB | 3.5x |
+
+**That is 5.3 times the source, not the 1.6-5 times the trial above
+predicted.** The trial's four layers were dense files; a layer of a few large
+districts (Iowa's four congressional districts: 31 KB to 431 KB) pays for
+thousands of zoom-13 tiles over mostly empty interiors. It does not change
+what a reader downloads, which is a screen at a time, but it is what the
+repository carries once phase 5 commits every archive, and again on every
+rebuild.
+
+**The gate** reads each archive back. Every feature must be in the zoom-13
+tile under a point inside it, with its properties reading back exactly — the
+tile format has no arrays, objects or null, so an array is written as JSON text
+and parsed back, and a source string that already reads as JSON fails the
+build rather than being decoded wrongly. And about 2,000 points per archive,
+placed within 20 m of an edge, are answered by the app's own even-odd rule from
+the tile and from the file: across the fleet **0 of 120,658 points a metre or
+more from every edge disagree**, and 2,334 of 21,342 under a metre do, the
+zoom-13 grid step.
+
+**Two faults the first full run found, both tippecanoe reading geometry
+differently from the app,** and ten archives failed until they were fixed:
+
+- **Hole winding.** The app ignores winding and counts crossings; tippecanoe,
+  as the tile format requires, decides a hole by its winding. A Stephenson
+  County fire district carries fourteen holes wound like its outer ring, and
+  several Michigan precincts are MultiPolygons with a part lying inside
+  another; the tiles filled what the card calls empty, up to 18 m inside. Each
+  feature is now tiled as the symmetric difference of its rings, which is the
+  even-odd area whatever the winding, wound the way the format reads it.
+- **Long edges.** The app tests against edges straight in longitude and
+  latitude; a tile stores edges straight in Web Mercator, and the two part
+  over a long edge: New York's county and judicial lines along Lake Erie, tens
+  of kilometres per edge, disagreed at points 1-6 m inside. Every edge longer
+  than 0.01 degrees is split before tiling, which brings them within about
+  3 cm.
+
+Both were caught by the gate and neither by inspection. **A third was in the
+gate itself** and was caught reading the app's point-in-polygon code for
+phase 4: the app counts a point inside a MultiPolygon when ANY part holds it,
+while the builder took the even-odd of every ring across all parts, which
+calls a part lying inside another part a hole. The gate asked the file with
+the same wrong rule, so it agreed with the tiles and passed. Measured on the
+fleet, 70 features are shaped that way (68 Michigan precincts, one Wisconsin
+law-service area, one 911 area), and a point inside each nested part is now
+tested and answers as the app does; the file's answer comes from the app's
+rule, and each part's even-odd area is unioned rather than XOR'd. Broken on purpose the
+same day, it failed a build capped at zoom 10 (17 disagreements beyond a metre
+in one layer) and one with the name property dropped.
+
+**Readings moved that phase 3 did not touch.** Re-running the source probe a
+day after the last run changed the `at_point` cell of four layers, in both
+directions, with no change to any of them. Illinois `ward-precinct` lost its
+because its point request went unanswered from here this time (it is now
+listed under `unanswered`). The other three — Illinois elementary school
+districts gained one, New York's high and middle school zones lost theirs —
+recorded no failure: a layer asks its server about the point only while its
+full set is still downloading, so whether that request is seen is a race.
+`probe_point_transmission.mjs` pins loaders uncached for exactly this reason;
+this probe does not. Recorded here rather than fixed. The run also measured
+New York's `nys-central-hs-district` for the first time.

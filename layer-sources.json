@@ -1,5 +1,5 @@
 {
- "measured": "2026-09-26",
+ "measured": "2026-09-27",
  "apps": {
   "ca": {
    "points": [
@@ -11,6 +11,9 @@
    "app_level": [],
    "layers": {
     "congress": {
+     "files": [
+      "/ca/data/app/congress-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -21,6 +24,9 @@
      "source": "shipped"
     },
     "ca-senate": {
+     "files": [
+      "/ca/data/app/ca-senate-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -31,6 +37,9 @@
      "source": "shipped"
     },
     "ca-assembly": {
+     "files": [
+      "/ca/data/app/ca-assembly-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -41,6 +50,7 @@
      "source": "shipped"
     },
     "bart-director": {
+     "files": [],
      "whole_set": [
       "services.arcgis.com"
      ],
@@ -53,6 +63,7 @@
      "source": "fetched"
     },
     "election-precinct": {
+     "files": [],
      "whole_set": [
       "data.sfgov.org"
      ],
@@ -66,6 +77,9 @@
      "source": "fetched"
     },
     "supervisor-district": {
+     "files": [
+      "/ca/data/app/supervisor-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -77,6 +91,9 @@
      "source": "shipped"
     },
     "police-district": {
+     "files": [
+      "/ca/data/app/police-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -88,6 +105,7 @@
      "source": "shipped"
     },
     "zip-code": {
+     "files": [],
      "whole_set": [],
      "at_point": [
       "tigerweb.geo.census.gov"
@@ -101,6 +119,9 @@
      "source": "fetched"
     },
     "neighborhood": {
+     "files": [
+      "/ca/data/app/sf-neighborhoods.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -112,6 +133,7 @@
      "source": "shipped"
     },
     "elementary-attendance-area": {
+     "files": [],
      "whole_set": [
       "data.sfgov.org"
      ],
@@ -124,6 +146,7 @@
      "source": "fetched"
     },
     "police-station": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -136,6 +159,7 @@
      "source": "points"
     },
     "fire-station": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -148,6 +172,7 @@
      "source": "points"
     },
     "school-site": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -160,6 +185,7 @@
      "source": "points"
     },
     "post-office": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -172,6 +198,7 @@
      "source": "points"
     },
     "library": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -182,6 +209,9 @@
      "source": "points"
     },
     "early-voting": {
+     "files": [
+      "/ca/data/app/early-voting-sites.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -203,6 +233,9 @@
    "app_level": [],
    "layers": {
     "us-house": {
+     "files": [
+      "/ia/data/app/congress-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -213,6 +246,9 @@
      "source": "shipped"
     },
     "ia-judicial-district": {
+     "files": [
+      "/ia/data/app/ia-judicial-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -223,6 +259,9 @@
      "source": "shipped"
     },
     "iowa-aea": {
+     "files": [
+      "/ia/data/app/ia-aeas.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -234,6 +273,9 @@
      "source": "shipped"
     },
     "ia-senate": {
+     "files": [
+      "/ia/data/app/ia-senate-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -244,6 +286,9 @@
      "source": "shipped"
     },
     "county": {
+     "files": [
+      "/ia/data/app/state-counties.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -254,6 +299,9 @@
      "source": "shipped"
     },
     "ia-house": {
+     "files": [
+      "/ia/data/app/ia-house-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -264,6 +312,9 @@
      "source": "shipped"
     },
     "county-supervisor": {
+     "files": [
+      "/ia/data/app/ia-supervisor-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -274,6 +325,9 @@
      "source": "shipped"
     },
     "school-district-unified": {
+     "files": [
+      "/ia/data/app/ia-school-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -285,6 +339,9 @@
      "source": "shipped"
     },
     "school-director-district": {
+     "files": [
+      "/ia/data/app/ia-school-director-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -297,6 +354,9 @@
      "source": "shipped"
     },
     "community-college": {
+     "files": [
+      "/ia/data/app/ia-community-colleges.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -308,6 +368,9 @@
      "source": "shipped"
     },
     "cc-director-district": {
+     "files": [
+      "/ia/data/app/ia-cc-director-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -320,6 +383,7 @@
      "source": "shipped"
     },
     "county-subdivision": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -336,6 +400,7 @@
      "source": "fetched"
     },
     "municipality": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -351,6 +416,11 @@
      "source": "fetched"
     },
     "city-ward": {
+     "files": [
+      "/ia/data/app/cedar-rapids-wards.json",
+      "/ia/data/app/dsm-wards.json",
+      "/ia/data/app/waterloo-wards.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -366,11 +436,23 @@
        "waterloo",
        "cedar-rapids"
       ],
-      "failed": []
+      "failed": [],
+      "files": {
+       "des-moines": [
+        "/ia/data/app/dsm-wards.json"
+       ],
+       "waterloo": [
+        "/ia/data/app/waterloo-wards.json"
+       ],
+       "cedar-rapids": [
+        "/ia/data/app/cedar-rapids-wards.json"
+       ]
+      }
      },
      "source": "shipped"
     },
     "zip-code": {
+     "files": [],
      "whole_set": [],
      "at_point": [
       "tigerweb.geo.census.gov"
@@ -384,6 +466,9 @@
      "source": "fetched"
     },
     "precinct": {
+     "files": [
+      "/ia/data/app/ia-precincts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -395,6 +480,7 @@
      "source": "shipped"
     },
     "police-station": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -407,6 +493,7 @@
      "source": "points"
     },
     "fire-station": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -419,6 +506,9 @@
      "source": "points"
     },
     "school-site": {
+     "files": [
+      "/ia/data/app/ia-school-sites.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -429,6 +519,7 @@
      "source": "points"
     },
     "post-office": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -459,6 +550,9 @@
    ],
    "layers": {
     "il-supreme-court": {
+     "files": [
+      "/il/data/app/il-supreme-court-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -469,6 +563,9 @@
      "source": "shipped"
     },
     "congress": {
+     "files": [
+      "/il/data/app/congress-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -479,6 +576,9 @@
      "source": "shipped"
     },
     "il-senate": {
+     "files": [
+      "/il/data/app/il-senate-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -489,6 +589,9 @@
      "source": "shipped"
     },
     "il-house": {
+     "files": [
+      "/il/data/app/il-house-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -499,6 +602,10 @@
      "source": "shipped"
     },
     "county": {
+     "files": [
+      "/il/data/app/lake-county-outline.json",
+      "/il/data/app/mchenry-county-outline.json"
+     ],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -513,6 +620,7 @@
      "source": "fetched"
     },
     "mwrd": {
+     "files": [],
      "whole_set": [
       "gis.cookcountyil.gov"
      ],
@@ -525,6 +633,7 @@
      "source": "fetched"
     },
     "school-district-secondary": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -538,6 +647,7 @@
      "source": "fetched"
     },
     "school-district-unified": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -553,10 +663,13 @@
      "source": "fetched"
     },
     "school-district-elementary": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
-     "at_point": [],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
      "points_from": [],
      "unanswered": [],
      "loaded_geometry": [
@@ -566,6 +679,7 @@
      "source": "fetched"
     },
     "township": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -582,6 +696,7 @@
      "source": "fetched"
     },
     "municipality": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -597,6 +712,13 @@
      "source": "fetched"
     },
     "judicial-subcircuit": {
+     "files": [
+      "/il/data/app/kane-judicial-subcircuits.json",
+      "/il/data/app/madison-judicial-subcircuits.json",
+      "/il/data/app/mchenry-judicial-subcircuits.json",
+      "/il/data/app/sangamon-judicial-subcircuits.json",
+      "/il/data/app/winnebago-judicial-subcircuits.json"
+     ],
      "whole_set": [
       "gis.cookcountyil.gov",
       "services.arcgis.com",
@@ -642,11 +764,67 @@
        "madison",
        "sangamon"
       ],
-      "failed": []
+      "failed": [],
+      "files": {
+       "kane": [
+        "/il/data/app/kane-judicial-subcircuits.json"
+       ],
+       "mchenry": [
+        "/il/data/app/mchenry-judicial-subcircuits.json"
+       ],
+       "winnebago": [
+        "/il/data/app/winnebago-judicial-subcircuits.json"
+       ],
+       "madison": [
+        "/il/data/app/madison-judicial-subcircuits.json"
+       ],
+       "sangamon": [
+        "/il/data/app/sangamon-judicial-subcircuits.json"
+       ]
+      }
      },
      "source": "fetched"
     },
     "county-board": {
+     "files": [
+      "/il/data/app/carroll-county-board-districts.json",
+      "/il/data/app/cass-county-board-districts.json",
+      "/il/data/app/christian-county-board-districts.json",
+      "/il/data/app/clark-county-board-districts.json",
+      "/il/data/app/clay-county-board-districts.json",
+      "/il/data/app/clinton-county-board-districts.json",
+      "/il/data/app/crawford-county-board-districts.json",
+      "/il/data/app/dewitt-county-board-districts.json",
+      "/il/data/app/douglas-county-board-districts.json",
+      "/il/data/app/edgar-county-board-districts.json",
+      "/il/data/app/franklin-county-board-districts.json",
+      "/il/data/app/grundy-county-board-districts.json",
+      "/il/data/app/hancock-county-board-districts.json",
+      "/il/data/app/henry-county-board-districts.json",
+      "/il/data/app/jackson-county-board-districts.json",
+      "/il/data/app/jefferson-county-board-districts.json",
+      "/il/data/app/jo-daviess-county-board-districts.json",
+      "/il/data/app/knox-county-board-districts.json",
+      "/il/data/app/lasalle-county-board-districts.json",
+      "/il/data/app/livingston-county-board-districts.json",
+      "/il/data/app/marshall-county-board-districts.json",
+      "/il/data/app/mason-county-board-districts.json",
+      "/il/data/app/mcdonough-board-districts.json",
+      "/il/data/app/menard-commissioner-districts.json",
+      "/il/data/app/mercer-county-board-districts.json",
+      "/il/data/app/montgomery-county-board-districts.json",
+      "/il/data/app/ogle-county-board-districts.json",
+      "/il/data/app/richland-county-board-districts.json",
+      "/il/data/app/shelby-county-board-districts.json",
+      "/il/data/app/stark-county-board-districts.json",
+      "/il/data/app/stephenson-county-board-districts.json",
+      "/il/data/app/vermilion-county-board-districts.json",
+      "/il/data/app/warren-county-board-districts.json",
+      "/il/data/app/washington-county-board-districts.json",
+      "/il/data/app/wayne-county-board-districts.json",
+      "/il/data/app/white-county-board-districts.json",
+      "/il/data/app/woodford-county-board-districts.json"
+     ],
      "whole_set": [
       "arcgispublicmap.co.st-clair.il.us",
       "gis.cookcountyil.gov",
@@ -877,11 +1055,127 @@
        "mason",
        "christian"
       ],
-      "failed": []
+      "failed": [],
+      "files": {
+       "lasalle": [
+        "/il/data/app/lasalle-county-board-districts.json"
+       ],
+       "livingston": [
+        "/il/data/app/livingston-county-board-districts.json"
+       ],
+       "woodford": [
+        "/il/data/app/woodford-county-board-districts.json"
+       ],
+       "ogle": [
+        "/il/data/app/ogle-county-board-districts.json"
+       ],
+       "stephenson": [
+        "/il/data/app/stephenson-county-board-districts.json"
+       ],
+       "carroll": [
+        "/il/data/app/carroll-county-board-districts.json"
+       ],
+       "grundy": [
+        "/il/data/app/grundy-county-board-districts.json"
+       ],
+       "henry": [
+        "/il/data/app/henry-county-board-districts.json"
+       ],
+       "jefferson": [
+        "/il/data/app/jefferson-county-board-districts.json"
+       ],
+       "menard": [
+        "/il/data/app/menard-commissioner-districts.json"
+       ],
+       "montgomery": [
+        "/il/data/app/montgomery-county-board-districts.json"
+       ],
+       "shelby": [
+        "/il/data/app/shelby-county-board-districts.json"
+       ],
+       "white": [
+        "/il/data/app/white-county-board-districts.json"
+       ],
+       "jo-daviess": [
+        "/il/data/app/jo-daviess-county-board-districts.json"
+       ],
+       "knox": [
+        "/il/data/app/knox-county-board-districts.json"
+       ],
+       "clark": [
+        "/il/data/app/clark-county-board-districts.json"
+       ],
+       "crawford": [
+        "/il/data/app/crawford-county-board-districts.json"
+       ],
+       "richland": [
+        "/il/data/app/richland-county-board-districts.json"
+       ],
+       "wayne": [
+        "/il/data/app/wayne-county-board-districts.json"
+       ],
+       "clay": [
+        "/il/data/app/clay-county-board-districts.json"
+       ],
+       "jackson": [
+        "/il/data/app/jackson-county-board-districts.json"
+       ],
+       "douglas": [
+        "/il/data/app/douglas-county-board-districts.json"
+       ],
+       "vermilion": [
+        "/il/data/app/vermilion-county-board-districts.json"
+       ],
+       "mercer": [
+        "/il/data/app/mercer-county-board-districts.json"
+       ],
+       "edgar": [
+        "/il/data/app/edgar-county-board-districts.json"
+       ],
+       "franklin": [
+        "/il/data/app/franklin-county-board-districts.json"
+       ],
+       "clinton": [
+        "/il/data/app/clinton-county-board-districts.json"
+       ],
+       "hancock": [
+        "/il/data/app/hancock-county-board-districts.json"
+       ],
+       "warren": [
+        "/il/data/app/warren-county-board-districts.json"
+       ],
+       "mcdonough": [
+        "/il/data/app/mcdonough-board-districts.json"
+       ],
+       "stark": [
+        "/il/data/app/stark-county-board-districts.json"
+       ],
+       "dewitt": [
+        "/il/data/app/dewitt-county-board-districts.json"
+       ],
+       "washington": [
+        "/il/data/app/washington-county-board-districts.json"
+       ],
+       "cass": [
+        "/il/data/app/cass-county-board-districts.json"
+       ],
+       "marshall": [
+        "/il/data/app/marshall-county-board-districts.json"
+       ],
+       "mason": [
+        "/il/data/app/mason-county-board-districts.json"
+       ],
+       "christian": [
+        "/il/data/app/christian-county-board-districts.json"
+       ]
+      }
      },
      "source": "fetched"
     },
     "ccbr": {
+     "files": [
+      "/il/data/app/ccbr-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -892,6 +1186,17 @@
      "source": "shipped"
     },
     "fire-district": {
+     "files": [
+      "/il/data/app/boone-fire-districts.json",
+      "/il/data/app/cook-fire-districts.json",
+      "/il/data/app/grundy-fire-districts.json",
+      "/il/data/app/kendall-fire-districts.json",
+      "/il/data/app/macon-fire-districts.json",
+      "/il/data/app/rock-island-fire-districts.json",
+      "/il/data/app/stark-fire-districts.json",
+      "/il/data/app/stephenson-fire-districts.json",
+      "/il/data/app/woodford-fire-districts.json"
+     ],
      "whole_set": [
       "arcgispublicmap.co.st-clair.il.us",
       "gis.leecountyil.gov",
@@ -1026,11 +1331,41 @@
        "woodford",
        "grundy"
       ],
-      "failed": []
+      "failed": [],
+      "files": {
+       "cook": [
+        "/il/data/app/cook-fire-districts.json"
+       ],
+       "kendall": [
+        "/il/data/app/kendall-fire-districts.json"
+       ],
+       "rock-island": [
+        "/il/data/app/rock-island-fire-districts.json"
+       ],
+       "stephenson": [
+        "/il/data/app/stephenson-fire-districts.json"
+       ],
+       "boone": [
+        "/il/data/app/boone-fire-districts.json"
+       ],
+       "stark": [
+        "/il/data/app/stark-fire-districts.json"
+       ],
+       "macon": [
+        "/il/data/app/macon-fire-districts.json"
+       ],
+       "woodford": [
+        "/il/data/app/woodford-fire-districts.json"
+       ],
+       "grundy": [
+        "/il/data/app/grundy-fire-districts.json"
+       ]
+      }
      },
      "source": "fetched"
     },
     "dupage-county-special-police": {
+     "files": [],
      "whole_set": [
       "services.arcgis.com"
      ],
@@ -1043,6 +1378,16 @@
      "source": "fetched"
     },
     "park-district": {
+     "files": [
+      "/il/data/app/boone-park-districts.json",
+      "/il/data/app/grundy-park-districts.json",
+      "/il/data/app/kendall-park-districts.json",
+      "/il/data/app/logan-park-districts.json",
+      "/il/data/app/macon-park-districts.json",
+      "/il/data/app/rock-island-park-districts.json",
+      "/il/data/app/stark-park-districts.json",
+      "/il/data/app/woodford-park-districts.json"
+     ],
      "whole_set": [
       "gis.cookcountyil.gov",
       "k3gis.net",
@@ -1131,11 +1476,118 @@
        "grundy",
        "woodford"
       ],
-      "failed": []
+      "failed": [],
+      "files": {
+       "kendall": [
+        "/il/data/app/kendall-park-districts.json"
+       ],
+       "rock-island": [
+        "/il/data/app/rock-island-park-districts.json"
+       ],
+       "boone": [
+        "/il/data/app/boone-park-districts.json"
+       ],
+       "stark": [
+        "/il/data/app/stark-park-districts.json"
+       ],
+       "logan": [
+        "/il/data/app/logan-park-districts.json"
+       ],
+       "macon": [
+        "/il/data/app/macon-park-districts.json"
+       ],
+       "grundy": [
+        "/il/data/app/grundy-park-districts.json"
+       ],
+       "woodford": [
+        "/il/data/app/woodford-park-districts.json"
+       ]
+      }
      },
      "source": "fetched"
     },
     "library-district": {
+     "files": [
+      "/il/data/app/alexander-library-districts.json",
+      "/il/data/app/bond-library-districts.json",
+      "/il/data/app/boone-library-districts.json",
+      "/il/data/app/brown-library-districts.json",
+      "/il/data/app/calhoun-library-districts.json",
+      "/il/data/app/carroll-library-districts.json",
+      "/il/data/app/cass-library-districts.json",
+      "/il/data/app/clark-library-districts.json",
+      "/il/data/app/clay-library-districts.json",
+      "/il/data/app/clinton-library-districts.json",
+      "/il/data/app/coles-library-districts.json",
+      "/il/data/app/crawford-library-districts.json",
+      "/il/data/app/cumberland-library-districts.json",
+      "/il/data/app/dewitt-library-districts.json",
+      "/il/data/app/douglas-library-districts.json",
+      "/il/data/app/edgar-library-districts.json",
+      "/il/data/app/edwards-library-districts.json",
+      "/il/data/app/franklin-library-districts.json",
+      "/il/data/app/fulton-library-districts.json",
+      "/il/data/app/gallatin-library-districts.json",
+      "/il/data/app/greene-library-districts.json",
+      "/il/data/app/grundy-library-districts.json",
+      "/il/data/app/hamilton-library-districts.json",
+      "/il/data/app/hancock-library-districts.json",
+      "/il/data/app/hardin-library-districts.json",
+      "/il/data/app/henry-library-districts.json",
+      "/il/data/app/iroquois-library-districts.json",
+      "/il/data/app/jackson-library-districts.json",
+      "/il/data/app/jefferson-library-districts.json",
+      "/il/data/app/jersey-library-districts.json",
+      "/il/data/app/jo-daviess-library-districts.json",
+      "/il/data/app/johnson-library-districts.json",
+      "/il/data/app/kendall-library-districts.json",
+      "/il/data/app/knox-library-districts.json",
+      "/il/data/app/lasalle-library-districts.json",
+      "/il/data/app/lee-library-districts.json",
+      "/il/data/app/livingston-library-districts.json",
+      "/il/data/app/logan-library-districts.json",
+      "/il/data/app/macon-library-districts.json",
+      "/il/data/app/macoupin-library-districts.json",
+      "/il/data/app/marshall-library-districts.json",
+      "/il/data/app/mason-library-districts.json",
+      "/il/data/app/massac-library-districts.json",
+      "/il/data/app/mcdonough-library-districts.json",
+      "/il/data/app/mclean-library-districts.json",
+      "/il/data/app/menard-library-districts.json",
+      "/il/data/app/mercer-library-districts.json",
+      "/il/data/app/monroe-library-districts.json",
+      "/il/data/app/montgomery-library-districts.json",
+      "/il/data/app/morgan-library-districts.json",
+      "/il/data/app/moultrie-library-districts.json",
+      "/il/data/app/ogle-library-districts.json",
+      "/il/data/app/perry-library-districts.json",
+      "/il/data/app/pike-library-districts.json",
+      "/il/data/app/pulaski-library-districts.json",
+      "/il/data/app/putnam-library-districts.json",
+      "/il/data/app/randolph-library-districts.json",
+      "/il/data/app/richland-library-districts.json",
+      "/il/data/app/rock-island-library-districts.json",
+      "/il/data/app/saline-library-districts.json",
+      "/il/data/app/sangamon-library-districts.json",
+      "/il/data/app/schuyler-library-districts.json",
+      "/il/data/app/scott-library-districts.json",
+      "/il/data/app/shelby-library-districts.json",
+      "/il/data/app/st-clair-library-districts.json",
+      "/il/data/app/stark-library-districts.json",
+      "/il/data/app/stephenson-library-districts.json",
+      "/il/data/app/tazewell-library-districts.json",
+      "/il/data/app/union-library-districts.json",
+      "/il/data/app/vermilion-library-districts.json",
+      "/il/data/app/wabash-library-districts.json",
+      "/il/data/app/warren-library-districts.json",
+      "/il/data/app/washington-library-districts.json",
+      "/il/data/app/wayne-library-districts.json",
+      "/il/data/app/white-library-districts.json",
+      "/il/data/app/whiteside-library-districts.json",
+      "/il/data/app/williamson-library-districts.json",
+      "/il/data/app/winnebago-library-districts.json",
+      "/il/data/app/woodford-library-districts.json"
+     ],
      "whole_set": [
       "gis.cookcountyil.gov",
       "k3gis.net",
@@ -1307,11 +1759,253 @@
        "williamson",
        "winnebago"
       ],
-      "failed": []
+      "failed": [],
+      "files": {
+       "kendall": [
+        "/il/data/app/kendall-library-districts.json"
+       ],
+       "carroll": [
+        "/il/data/app/carroll-library-districts.json"
+       ],
+       "macoupin": [
+        "/il/data/app/macoupin-library-districts.json"
+       ],
+       "lee": [
+        "/il/data/app/lee-library-districts.json"
+       ],
+       "randolph": [
+        "/il/data/app/randolph-library-districts.json"
+       ],
+       "sangamon": [
+        "/il/data/app/sangamon-library-districts.json"
+       ],
+       "st-clair": [
+        "/il/data/app/st-clair-library-districts.json"
+       ],
+       "stephenson": [
+        "/il/data/app/stephenson-library-districts.json"
+       ],
+       "woodford": [
+        "/il/data/app/woodford-library-districts.json"
+       ],
+       "grundy": [
+        "/il/data/app/grundy-library-districts.json"
+       ],
+       "rock-island": [
+        "/il/data/app/rock-island-library-districts.json"
+       ],
+       "boone": [
+        "/il/data/app/boone-library-districts.json"
+       ],
+       "stark": [
+        "/il/data/app/stark-library-districts.json"
+       ],
+       "macon": [
+        "/il/data/app/macon-library-districts.json"
+       ],
+       "alexander": [
+        "/il/data/app/alexander-library-districts.json"
+       ],
+       "bond": [
+        "/il/data/app/bond-library-districts.json"
+       ],
+       "brown": [
+        "/il/data/app/brown-library-districts.json"
+       ],
+       "calhoun": [
+        "/il/data/app/calhoun-library-districts.json"
+       ],
+       "cass": [
+        "/il/data/app/cass-library-districts.json"
+       ],
+       "clark": [
+        "/il/data/app/clark-library-districts.json"
+       ],
+       "clay": [
+        "/il/data/app/clay-library-districts.json"
+       ],
+       "clinton": [
+        "/il/data/app/clinton-library-districts.json"
+       ],
+       "coles": [
+        "/il/data/app/coles-library-districts.json"
+       ],
+       "crawford": [
+        "/il/data/app/crawford-library-districts.json"
+       ],
+       "cumberland": [
+        "/il/data/app/cumberland-library-districts.json"
+       ],
+       "dewitt": [
+        "/il/data/app/dewitt-library-districts.json"
+       ],
+       "douglas": [
+        "/il/data/app/douglas-library-districts.json"
+       ],
+       "edgar": [
+        "/il/data/app/edgar-library-districts.json"
+       ],
+       "edwards": [
+        "/il/data/app/edwards-library-districts.json"
+       ],
+       "franklin": [
+        "/il/data/app/franklin-library-districts.json"
+       ],
+       "fulton": [
+        "/il/data/app/fulton-library-districts.json"
+       ],
+       "gallatin": [
+        "/il/data/app/gallatin-library-districts.json"
+       ],
+       "greene": [
+        "/il/data/app/greene-library-districts.json"
+       ],
+       "hamilton": [
+        "/il/data/app/hamilton-library-districts.json"
+       ],
+       "hancock": [
+        "/il/data/app/hancock-library-districts.json"
+       ],
+       "hardin": [
+        "/il/data/app/hardin-library-districts.json"
+       ],
+       "henry": [
+        "/il/data/app/henry-library-districts.json"
+       ],
+       "iroquois": [
+        "/il/data/app/iroquois-library-districts.json"
+       ],
+       "jackson": [
+        "/il/data/app/jackson-library-districts.json"
+       ],
+       "jefferson": [
+        "/il/data/app/jefferson-library-districts.json"
+       ],
+       "jersey": [
+        "/il/data/app/jersey-library-districts.json"
+       ],
+       "jo-daviess": [
+        "/il/data/app/jo-daviess-library-districts.json"
+       ],
+       "johnson": [
+        "/il/data/app/johnson-library-districts.json"
+       ],
+       "knox": [
+        "/il/data/app/knox-library-districts.json"
+       ],
+       "lasalle": [
+        "/il/data/app/lasalle-library-districts.json"
+       ],
+       "livingston": [
+        "/il/data/app/livingston-library-districts.json"
+       ],
+       "logan": [
+        "/il/data/app/logan-library-districts.json"
+       ],
+       "marshall": [
+        "/il/data/app/marshall-library-districts.json"
+       ],
+       "mason": [
+        "/il/data/app/mason-library-districts.json"
+       ],
+       "massac": [
+        "/il/data/app/massac-library-districts.json"
+       ],
+       "mcdonough": [
+        "/il/data/app/mcdonough-library-districts.json"
+       ],
+       "mclean": [
+        "/il/data/app/mclean-library-districts.json"
+       ],
+       "menard": [
+        "/il/data/app/menard-library-districts.json"
+       ],
+       "mercer": [
+        "/il/data/app/mercer-library-districts.json"
+       ],
+       "monroe": [
+        "/il/data/app/monroe-library-districts.json"
+       ],
+       "montgomery": [
+        "/il/data/app/montgomery-library-districts.json"
+       ],
+       "morgan": [
+        "/il/data/app/morgan-library-districts.json"
+       ],
+       "moultrie": [
+        "/il/data/app/moultrie-library-districts.json"
+       ],
+       "ogle": [
+        "/il/data/app/ogle-library-districts.json"
+       ],
+       "perry": [
+        "/il/data/app/perry-library-districts.json"
+       ],
+       "pike": [
+        "/il/data/app/pike-library-districts.json"
+       ],
+       "pulaski": [
+        "/il/data/app/pulaski-library-districts.json"
+       ],
+       "putnam": [
+        "/il/data/app/putnam-library-districts.json"
+       ],
+       "richland": [
+        "/il/data/app/richland-library-districts.json"
+       ],
+       "saline": [
+        "/il/data/app/saline-library-districts.json"
+       ],
+       "schuyler": [
+        "/il/data/app/schuyler-library-districts.json"
+       ],
+       "scott": [
+        "/il/data/app/scott-library-districts.json"
+       ],
+       "shelby": [
+        "/il/data/app/shelby-library-districts.json"
+       ],
+       "tazewell": [
+        "/il/data/app/tazewell-library-districts.json"
+       ],
+       "union": [
+        "/il/data/app/union-library-districts.json"
+       ],
+       "vermilion": [
+        "/il/data/app/vermilion-library-districts.json"
+       ],
+       "wabash": [
+        "/il/data/app/wabash-library-districts.json"
+       ],
+       "warren": [
+        "/il/data/app/warren-library-districts.json"
+       ],
+       "washington": [
+        "/il/data/app/washington-library-districts.json"
+       ],
+       "wayne": [
+        "/il/data/app/wayne-library-districts.json"
+       ],
+       "white": [
+        "/il/data/app/white-library-districts.json"
+       ],
+       "whiteside": [
+        "/il/data/app/whiteside-library-districts.json"
+       ],
+       "williamson": [
+        "/il/data/app/williamson-library-districts.json"
+       ],
+       "winnebago": [
+        "/il/data/app/winnebago-library-districts.json"
+       ]
+      }
      },
      "source": "fetched"
     },
     "school-board": {
+     "files": [
+      "/il/data/app/school-board-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -1322,6 +2016,7 @@
      "source": "shipped"
     },
     "cps-hs-network": {
+     "files": [],
      "whole_set": [
       "data.cityofchicago.org"
      ],
@@ -1336,6 +2031,7 @@
      "source": "fetched"
     },
     "cps-network": {
+     "files": [],
      "whole_set": [
       "data.cityofchicago.org"
      ],
@@ -1350,6 +2046,7 @@
      "source": "fetched"
     },
     "ward": {
+     "files": [],
      "whole_set": [
       "arcgispublicmap.co.st-clair.il.us",
       "data.cityofchicago.org",
@@ -1558,19 +2255,21 @@
        }
       ],
       "shipped": [],
-      "failed": []
+      "failed": [],
+      "files": {}
      },
      "source": "fetched"
     },
     "ward-precinct": {
+     "files": [],
      "whole_set": [
       "data.cityofchicago.org"
      ],
-     "at_point": [
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [
       "data.cityofchicago.org"
      ],
-     "points_from": [],
-     "unanswered": [],
      "loaded_geometry": [
       "MultiPolygon"
      ],
@@ -1578,6 +2277,7 @@
      "source": "fetched"
     },
     "police-district": {
+     "files": [],
      "whole_set": [
       "services2.arcgis.com"
      ],
@@ -1594,6 +2294,7 @@
      "source": "fetched"
     },
     "police-beat": {
+     "files": [],
      "whole_set": [
       "services2.arcgis.com"
      ],
@@ -1609,6 +2310,7 @@
      "source": "fetched"
     },
     "ccpsa-district-council": {
+     "files": [],
      "whole_set": [
       "services2.arcgis.com"
      ],
@@ -1621,6 +2323,7 @@
      "source": "fetched"
     },
     "community-area": {
+     "files": [],
      "whole_set": [
       "data.cityofchicago.org"
      ],
@@ -1633,6 +2336,7 @@
      "source": "fetched"
     },
     "zip-code": {
+     "files": [],
      "whole_set": [],
      "at_point": [
       "tigerweb.geo.census.gov"
@@ -1646,6 +2350,7 @@
      "source": "fetched"
     },
     "cps-high": {
+     "files": [],
      "whole_set": [
       "data.cityofchicago.org"
      ],
@@ -1660,6 +2365,7 @@
      "source": "fetched"
     },
     "cps-middle": {
+     "files": [],
      "whole_set": [
       "data.cityofchicago.org"
      ],
@@ -1672,6 +2378,54 @@
      "source": "fetched"
     },
     "county-precinct": {
+     "files": [
+      "/il/data/app/calhoun-precincts.json",
+      "/il/data/app/cass-precincts.json",
+      "/il/data/app/clark-precincts.json",
+      "/il/data/app/clay-precincts.json",
+      "/il/data/app/crawford-precincts.json",
+      "/il/data/app/cumberland-precincts.json",
+      "/il/data/app/douglas-precincts.json",
+      "/il/data/app/edgar-precincts.json",
+      "/il/data/app/edwards-precincts.json",
+      "/il/data/app/franklin-precincts.json",
+      "/il/data/app/gallatin-precincts.json",
+      "/il/data/app/greene-precincts.json",
+      "/il/data/app/hancock-precincts.json",
+      "/il/data/app/hardin-precincts.json",
+      "/il/data/app/henderson-precincts.json",
+      "/il/data/app/henry-precincts.json",
+      "/il/data/app/jackson-precincts.json",
+      "/il/data/app/jefferson-precincts.json",
+      "/il/data/app/jo-daviess-precincts.json",
+      "/il/data/app/johnson-precincts.json",
+      "/il/data/app/livingston-precincts.json",
+      "/il/data/app/marshall-precincts.json",
+      "/il/data/app/mason-precincts.json",
+      "/il/data/app/massac-precincts.json",
+      "/il/data/app/mcdonough-precincts.json",
+      "/il/data/app/menard-precincts.json",
+      "/il/data/app/mercer-precincts.json",
+      "/il/data/app/montgomery-precincts.json",
+      "/il/data/app/moultrie-precincts.json",
+      "/il/data/app/ogle-precincts.json",
+      "/il/data/app/perry-precincts.json",
+      "/il/data/app/pike-precincts.json",
+      "/il/data/app/pulaski-precincts.json",
+      "/il/data/app/putnam-precincts.json",
+      "/il/data/app/richland-precincts.json",
+      "/il/data/app/saline-precincts.json",
+      "/il/data/app/schuyler-precincts.json",
+      "/il/data/app/scott-precincts.json",
+      "/il/data/app/shelby-precincts.json",
+      "/il/data/app/stark-precincts.json",
+      "/il/data/app/stephenson-precincts.json",
+      "/il/data/app/union-precincts.json",
+      "/il/data/app/wabash-precincts.json",
+      "/il/data/app/warren-precincts.json",
+      "/il/data/app/wayne-precincts.json",
+      "/il/data/app/white-precincts.json"
+     ],
      "whole_set": [
       "arcgispublicmap.co.st-clair.il.us",
       "data.macoupincountyil.gov",
@@ -1985,12 +2739,153 @@
        "union",
        "wabash"
       ],
-      "failed": []
+      "failed": [],
+      "files": {
+       "mcdonough": [
+        "/il/data/app/mcdonough-precincts.json"
+       ],
+       "jefferson": [
+        "/il/data/app/jefferson-precincts.json"
+       ],
+       "henry": [
+        "/il/data/app/henry-precincts.json"
+       ],
+       "montgomery": [
+        "/il/data/app/montgomery-precincts.json"
+       ],
+       "ogle": [
+        "/il/data/app/ogle-precincts.json"
+       ],
+       "stephenson": [
+        "/il/data/app/stephenson-precincts.json"
+       ],
+       "stark": [
+        "/il/data/app/stark-precincts.json"
+       ],
+       "white": [
+        "/il/data/app/white-precincts.json"
+       ],
+       "clark": [
+        "/il/data/app/clark-precincts.json"
+       ],
+       "crawford": [
+        "/il/data/app/crawford-precincts.json"
+       ],
+       "richland": [
+        "/il/data/app/richland-precincts.json"
+       ],
+       "wayne": [
+        "/il/data/app/wayne-precincts.json"
+       ],
+       "jackson": [
+        "/il/data/app/jackson-precincts.json"
+       ],
+       "shelby": [
+        "/il/data/app/shelby-precincts.json"
+       ],
+       "warren": [
+        "/il/data/app/warren-precincts.json"
+       ],
+       "hancock": [
+        "/il/data/app/hancock-precincts.json"
+       ],
+       "douglas": [
+        "/il/data/app/douglas-precincts.json"
+       ],
+       "mercer": [
+        "/il/data/app/mercer-precincts.json"
+       ],
+       "edgar": [
+        "/il/data/app/edgar-precincts.json"
+       ],
+       "franklin": [
+        "/il/data/app/franklin-precincts.json"
+       ],
+       "calhoun": [
+        "/il/data/app/calhoun-precincts.json"
+       ],
+       "jo-daviess": [
+        "/il/data/app/jo-daviess-precincts.json"
+       ],
+       "gallatin": [
+        "/il/data/app/gallatin-precincts.json"
+       ],
+       "putnam": [
+        "/il/data/app/putnam-precincts.json"
+       ],
+       "marshall": [
+        "/il/data/app/marshall-precincts.json"
+       ],
+       "livingston": [
+        "/il/data/app/livingston-precincts.json"
+       ],
+       "cumberland": [
+        "/il/data/app/cumberland-precincts.json"
+       ],
+       "johnson": [
+        "/il/data/app/johnson-precincts.json"
+       ],
+       "perry": [
+        "/il/data/app/perry-precincts.json"
+       ],
+       "pulaski": [
+        "/il/data/app/pulaski-precincts.json"
+       ],
+       "hardin": [
+        "/il/data/app/hardin-precincts.json"
+       ],
+       "cass": [
+        "/il/data/app/cass-precincts.json"
+       ],
+       "greene": [
+        "/il/data/app/greene-precincts.json"
+       ],
+       "scott": [
+        "/il/data/app/scott-precincts.json"
+       ],
+       "moultrie": [
+        "/il/data/app/moultrie-precincts.json"
+       ],
+       "menard": [
+        "/il/data/app/menard-precincts.json"
+       ],
+       "schuyler": [
+        "/il/data/app/schuyler-precincts.json"
+       ],
+       "clay": [
+        "/il/data/app/clay-precincts.json"
+       ],
+       "edwards": [
+        "/il/data/app/edwards-precincts.json"
+       ],
+       "henderson": [
+        "/il/data/app/henderson-precincts.json"
+       ],
+       "mason": [
+        "/il/data/app/mason-precincts.json"
+       ],
+       "massac": [
+        "/il/data/app/massac-precincts.json"
+       ],
+       "pike": [
+        "/il/data/app/pike-precincts.json"
+       ],
+       "saline": [
+        "/il/data/app/saline-precincts.json"
+       ],
+       "union": [
+        "/il/data/app/union-precincts.json"
+       ],
+       "wabash": [
+        "/il/data/app/wabash-precincts.json"
+       ]
+      }
      },
      "sub_of": "township",
      "source": "fetched"
     },
     "ssa": {
+     "files": [],
      "whole_set": [
       "data.cityofchicago.org"
      ],
@@ -2003,6 +2898,7 @@
      "source": "fetched"
     },
     "tif-district": {
+     "files": [],
      "whole_set": [
       "gis.cookcountyil.gov"
      ],
@@ -2016,6 +2912,7 @@
      "source": "fetched"
     },
     "cps-elementary": {
+     "files": [],
      "whole_set": [
       "data.cityofchicago.org"
      ],
@@ -2030,6 +2927,7 @@
      "source": "fetched"
     },
     "school-site": {
+     "files": [],
      "whole_set": [
       "services2.arcgis.com"
      ],
@@ -2043,6 +2941,7 @@
      "source": "fetched"
     },
     "police-station": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2055,6 +2954,7 @@
      "source": "points"
     },
     "fire-station": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2067,6 +2967,7 @@
      "source": "points"
     },
     "post-office": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2079,6 +2980,7 @@
      "source": "points"
     },
     "library": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2091,6 +2993,9 @@
      "source": "points"
     },
     "early-voting": {
+     "files": [
+      "/il/data/app/early-voting-sites.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2112,6 +3017,9 @@
    "app_level": [],
    "layers": {
     "us-house": {
+     "files": [
+      "/mi/data/app/congress-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2122,6 +3030,9 @@
      "source": "shipped"
     },
     "mi-senate": {
+     "files": [
+      "/mi/data/app/mi-senate-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2132,6 +3043,9 @@
      "source": "shipped"
     },
     "county": {
+     "files": [
+      "/mi/data/app/state-counties.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2142,6 +3056,9 @@
      "source": "shipped"
     },
     "mi-house": {
+     "files": [
+      "/mi/data/app/mi-house-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2152,6 +3069,7 @@
      "source": "shipped"
     },
     "school-district-unified": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -2167,6 +3085,7 @@
      "source": "fetched"
     },
     "school-district-elementary": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -2182,6 +3101,9 @@
      "source": "fetched"
     },
     "county-commissioner": {
+     "files": [
+      "/mi/data/app/mi-commissioner-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2193,6 +3115,7 @@
      "source": "shipped"
     },
     "county-subdivision": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -2209,6 +3132,7 @@
      "source": "fetched"
     },
     "zip-code": {
+     "files": [],
      "whole_set": [],
      "at_point": [
       "tigerweb.geo.census.gov"
@@ -2222,6 +3146,14 @@
      "source": "fetched"
     },
     "city-ward": {
+     "files": [
+      "/mi/data/app/mi-battle-creek-wards.json",
+      "/mi/data/app/mi-detroit-council-districts.json",
+      "/mi/data/app/mi-flint-wards.json",
+      "/mi/data/app/mi-grand-rapids-wards.json",
+      "/mi/data/app/mi-rochester-hills-wards.json",
+      "/mi/data/app/mi-warren-wards.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2240,11 +3172,34 @@
        "rochester-hills",
        "battle-creek"
       ],
-      "failed": []
+      "failed": [],
+      "files": {
+       "detroit": [
+        "/mi/data/app/mi-detroit-council-districts.json"
+       ],
+       "warren": [
+        "/mi/data/app/mi-warren-wards.json"
+       ],
+       "grand-rapids": [
+        "/mi/data/app/mi-grand-rapids-wards.json"
+       ],
+       "flint": [
+        "/mi/data/app/mi-flint-wards.json"
+       ],
+       "rochester-hills": [
+        "/mi/data/app/mi-rochester-hills-wards.json"
+       ],
+       "battle-creek": [
+        "/mi/data/app/mi-battle-creek-wards.json"
+       ]
+      }
      },
      "source": "shipped"
     },
     "precinct": {
+     "files": [
+      "/mi/data/app/mi-precincts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2256,6 +3211,7 @@
      "source": "shipped"
     },
     "municipality": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -2271,6 +3227,7 @@
      "source": "fetched"
     },
     "police-station": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2283,6 +3240,7 @@
      "source": "points"
     },
     "fire-station": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2295,6 +3253,7 @@
      "source": "points"
     },
     "post-office": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2322,6 +3281,9 @@
    "app_level": [],
    "layers": {
     "judicial-district": {
+     "files": [
+      "/ny/data/app/judicial-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2333,6 +3295,9 @@
      "source": "shipped"
     },
     "county": {
+     "files": [
+      "/ny/data/app/ny-counties.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2343,7 +3308,23 @@
      ],
      "source": "shipped"
     },
+    "nys-central-hs-district": {
+     "files": [
+      "/ny/data/app/ny-central-hs-districts.json"
+     ],
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
     "nys-school-district": {
+     "files": [
+      "/ny/data/app/ny-school-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2355,6 +3336,9 @@
      "source": "shipped"
     },
     "municipality": {
+     "files": [
+      "/ny/data/app/ny-cities-towns.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2366,6 +3350,9 @@
      "source": "shipped"
     },
     "village": {
+     "files": [
+      "/ny/data/app/ny-villages.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2378,6 +3365,9 @@
      "source": "shipped"
     },
     "borough": {
+     "files": [
+      "/ny/data/app/borough-boundaries.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2390,6 +3380,9 @@
      "source": "shipped"
     },
     "borough-president": {
+     "files": [
+      "/ny/data/app/borough-boundaries.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2400,6 +3393,9 @@
      "source": "shipped"
     },
     "district-attorney": {
+     "files": [
+      "/ny/data/app/borough-boundaries.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2410,6 +3406,9 @@
      "source": "shipped"
     },
     "congress": {
+     "files": [
+      "/ny/data/app/congress-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2423,6 +3422,9 @@
      "source": "shipped"
     },
     "municipal-court": {
+     "files": [
+      "/ny/data/app/municipal-court-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2434,6 +3436,9 @@
      "source": "shipped"
     },
     "state-senate": {
+     "files": [
+      "/ny/data/app/state-senate-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2447,6 +3452,7 @@
      "source": "shipped"
     },
     "school-district": {
+     "files": [],
      "whole_set": [
       "data.cityofnewyork.us"
      ],
@@ -2459,6 +3465,7 @@
      "source": "fetched"
     },
     "cec": {
+     "files": [],
      "whole_set": [
       "data.cityofnewyork.us"
      ],
@@ -2471,6 +3478,7 @@
      "source": "fetched"
     },
     "fire-battalion": {
+     "files": [],
      "whole_set": [
       "services5.arcgis.com"
      ],
@@ -2484,6 +3492,7 @@
      "source": "fetched"
     },
     "council": {
+     "files": [],
      "whole_set": [
       "data.cityofnewyork.us"
      ],
@@ -2498,6 +3507,7 @@
      "source": "fetched"
     },
     "community-district": {
+     "files": [],
      "whole_set": [
       "data.cityofnewyork.us"
      ],
@@ -2513,6 +3523,7 @@
      "source": "fetched"
     },
     "election-district": {
+     "files": [],
      "whole_set": [
       "services5.arcgis.com"
      ],
@@ -2527,6 +3538,9 @@
      "source": "fetched"
     },
     "state-assembly": {
+     "files": [
+      "/ny/data/app/state-assembly-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2540,6 +3554,7 @@
      "source": "shipped"
     },
     "police-sector": {
+     "files": [],
      "whole_set": [
       "data.cityofnewyork.us"
      ],
@@ -2553,6 +3568,7 @@
      "source": "fetched"
     },
     "police-precinct": {
+     "files": [],
      "whole_set": [
       "data.cityofnewyork.us"
      ],
@@ -2567,6 +3583,7 @@
      "source": "fetched"
     },
     "nys-zip-code": {
+     "files": [],
      "whole_set": [],
      "at_point": [
       "tigerweb.geo.census.gov"
@@ -2580,6 +3597,7 @@
      "source": "fetched"
     },
     "zip-code": {
+     "files": [],
      "whole_set": [
       "data.cityofnewyork.us"
      ],
@@ -2594,6 +3612,7 @@
      "source": "fetched"
     },
     "neighborhood": {
+     "files": [],
      "whole_set": [
       "data.cityofnewyork.us"
      ],
@@ -2606,12 +3625,11 @@
      "source": "fetched"
     },
     "hs-zone": {
+     "files": [],
      "whole_set": [
       "data.cityofnewyork.us"
      ],
-     "at_point": [
-      "data.cityofnewyork.us"
-     ],
+     "at_point": [],
      "points_from": [],
      "unanswered": [],
      "loaded_geometry": [
@@ -2620,12 +3638,11 @@
      "source": "fetched"
     },
     "ms-zone": {
+     "files": [],
      "whole_set": [
       "data.cityofnewyork.us"
      ],
-     "at_point": [
-      "data.cityofnewyork.us"
-     ],
+     "at_point": [],
      "points_from": [],
      "unanswered": [],
      "loaded_geometry": [
@@ -2634,6 +3651,7 @@
      "source": "fetched"
     },
     "es-zone": {
+     "files": [],
      "whole_set": [
       "data.cityofnewyork.us"
      ],
@@ -2648,6 +3666,7 @@
      "source": "fetched"
     },
     "school-site": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2660,6 +3679,7 @@
      "source": "points"
     },
     "police-station": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2670,6 +3690,7 @@
      "source": "points"
     },
     "fire-station": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2682,6 +3703,7 @@
      "source": "points"
     },
     "post-office": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2694,6 +3716,7 @@
      "source": "points"
     },
     "library": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2707,6 +3730,7 @@
      "source": "points"
     },
     "early-voting": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2719,6 +3743,7 @@
      "source": "points"
     },
     "polling-place": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -2742,6 +3767,9 @@
    "app_level": [],
    "layers": {
     "wi-court-of-appeals": {
+     "files": [
+      "/wi/data/app/wi-court-of-appeals-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2752,6 +3780,9 @@
      "source": "shipped"
     },
     "us-house": {
+     "files": [
+      "/wi/data/app/congress-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2762,6 +3793,9 @@
      "source": "shipped"
     },
     "wtcs-district": {
+     "files": [
+      "/wi/data/app/wtcs-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2773,6 +3807,9 @@
      "source": "shipped"
     },
     "wi-senate": {
+     "files": [
+      "/wi/data/app/wi-senate-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2784,6 +3821,9 @@
      "source": "shipped"
     },
     "wi-assembly": {
+     "files": [
+      "/wi/data/app/wi-assembly-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2795,6 +3835,9 @@
      "source": "shipped"
     },
     "wi-circuit-court": {
+     "files": [
+      "/wi/data/app/wi-circuit-courts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2805,6 +3848,9 @@
      "source": "shipped"
     },
     "county": {
+     "files": [
+      "/wi/data/app/state-counties.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2815,6 +3861,9 @@
      "source": "shipped"
     },
     "psap-area": {
+     "files": [
+      "/wi/data/app/psap-areas.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2826,6 +3875,7 @@
      "source": "shipped"
     },
     "school-district-secondary": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -2841,6 +3891,9 @@
      "source": "fetched"
     },
     "school-district-unified": {
+     "files": [
+      "/wi/data/app/school-districts-unified.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2852,6 +3905,7 @@
      "source": "shipped"
     },
     "school-district-elementary": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -2867,6 +3921,9 @@
      "source": "fetched"
     },
     "ems-service": {
+     "files": [
+      "/wi/data/app/ems-service-areas.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2878,6 +3935,9 @@
      "source": "shipped"
     },
     "law-service": {
+     "files": [
+      "/wi/data/app/law-service-areas.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2889,6 +3949,9 @@
      "source": "shipped"
     },
     "fire-service": {
+     "files": [
+      "/wi/data/app/fire-service-areas.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2900,6 +3963,9 @@
      "source": "shipped"
     },
     "county-board": {
+     "files": [
+      "/wi/data/app/county-supervisory-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2911,6 +3977,7 @@
      "source": "shipped"
     },
     "county-subdivision": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -2927,6 +3994,7 @@
      "source": "fetched"
     },
     "municipality": {
+     "files": [],
      "whole_set": [
       "tigerweb.geo.census.gov"
      ],
@@ -2942,6 +4010,7 @@
      "source": "fetched"
     },
     "zip-code": {
+     "files": [],
      "whole_set": [],
      "at_point": [
       "tigerweb.geo.census.gov"
@@ -2955,6 +4024,9 @@
      "source": "fetched"
     },
     "mpd-district": {
+     "files": [
+      "/wi/data/app/mpd-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2966,6 +4038,10 @@
      "source": "shipped"
     },
     "mps-school-board": {
+     "files": [
+      "/wi/data/app/mps-school-board-districts.json",
+      "/wi/data/app/rusd-school-board-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2977,6 +4053,9 @@
      "source": "shipped"
     },
     "mpd-squad-area": {
+     "files": [
+      "/wi/data/app/mpd-squad-areas.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -2989,6 +4068,9 @@
      "source": "shipped"
     },
     "aldermanic-district": {
+     "files": [
+      "/wi/data/app/aldermanic-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -3000,6 +4082,7 @@
      "source": "shipped"
     },
     "ward": {
+     "files": [],
      "whole_set": [
       "services1.arcgis.com"
      ],
@@ -3013,6 +4096,9 @@
      "source": "fetched"
     },
     "milwaukee-neighborhoods": {
+     "files": [
+      "/wi/data/app/milwaukee-neighborhoods.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -3024,6 +4110,9 @@
      "source": "shipped"
     },
     "madison-neighborhood-assoc": {
+     "files": [
+      "/wi/data/app/madison-neighborhood-assocs.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -3034,6 +4123,10 @@
      "source": "shipped"
     },
     "tid-district": {
+     "files": [
+      "/wi/data/app/madison-tid-districts.json",
+      "/wi/data/app/tid-districts.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -3045,6 +4138,7 @@
      "source": "shipped"
     },
     "police-station": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -3057,6 +4151,7 @@
      "source": "points"
     },
     "fire-station": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
@@ -3069,6 +4164,9 @@
      "source": "points"
     },
     "school-site": {
+     "files": [
+      "/wi/data/app/school-sites.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -3079,6 +4177,9 @@
      "source": "points"
     },
     "library": {
+     "files": [
+      "/wi/data/app/library-sites.json"
+     ],
      "whole_set": [],
      "at_point": [],
      "points_from": [],
@@ -3089,6 +4190,7 @@
      "source": "points"
     },
     "post-office": {
+     "files": [],
      "whole_set": [],
      "at_point": [],
      "points_from": [
