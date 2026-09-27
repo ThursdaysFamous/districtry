@@ -44,6 +44,56 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (05:30). #1218 MERGED and verified on main by CONTENT. Tasks #57 and #68 are complete.
+Nothing is assigned. One thing PROPOSED and not started, below.**
+
+**IT SQUASH-MERGED TOO, AND THE ANCESTOR TEST CAUGHT IT A SECOND TIME.** `11fe61e` is not an
+ancestor of `e815018`, so the branch again carried an apparently-unmerged commit; all eight files
+are byte-identical on main, so the squash carried everything, and the local ref is reset to main's
+tip. GitHub deleted the branch on merge, as it did for #1216. **Run
+`git merge-base --is-ancestor` after every merge** — twice in one night it was the only thing
+standing between a clean history and a PR replaying an already-merged diff.
+
+Verified on main at `e815018`: `workflow_run_evidence.py --selftest` 31 assertions,
+`check_roster_workflow_health.py --selftest` 16 with 6 watched workflows carrying a witness,
+`wi_coa_staleness.py --selftest` 13 **through the shared reader rather than its own copy**, the
+pair 90/119 with the mirror 119 for 119, and `validate_workflow_deps.py` OK over 916 entry points
+with `workflow_run_evidence` in `FLEET_SHARED`.
+
+**PROPOSED, NOT STARTED: ask the dropped-ring question of the aldermanic and NG911 dissolves.**
+Both builders carry an identical block saying it has NOT been asked and is recorded rather than
+assumed clean — `build_wi_aldermanic_districts.py` at `SIMPLIFY = "25%"` (866 districts, 159
+municipalities) and `build_wi_ng911_service_areas.py` at `SIMPLIFY = "8%"` (four layers, 3,046
+fire / 3,095 law / 2,478 ems / 208 psap rows at the 2026-09-24 rebuild).
+
+Why it is worth doing rather than left: on the ONE layer that was measured, a visvalingam
+PERCENTAGE — the algorithm both of these use — dropped 640 rings and **changed the district 102
+readers would be told they are in**, where Douglas-Peucker at a metre interval dropped 377 and
+changed 3. The builders' own comment says that is a property of the ALGORITHM rather than of that
+layer. City districts are small, so a percentage cuts proportionally deeper there, which is why
+aldermanic sits at 25% where supervisory sits at 9%.
+
+**THE EXISTING GREEN GATES ARE NOT EVIDENCE, AND THIS REPO HAS ALREADY PAID FOR THAT MISTAKE ON
+THIS LAYER FAMILY.** Both layers pass a point-agreement gate (aldermanic ≥99.9%, NG911 4,000
+samples), and a dropped hole is small by definition, so such a sample has no power over it — row
+58 of `WATCH.md` records exactly this: a 20,000-point statewide NG911 sample saw ZERO changed
+answers and **that reading was WRONG**, the rebuild having changed 138 fire, 161 law, 19 psap and
+79 ems features.
+
+Cost, as the builders state it: a FULL-PRECISION rebuild each, because the gate compares the
+source against the simplifier's output and so needs the whole pre-simplification dissolve — a live
+fetch from LTSB and the OEC, which those builders already make. These four files are CACHE-FIRST,
+so any settings change bumps `cache_name` and moves the worksheet's exact feature counts. Whether
+to switch either to `dp interval=<n>` is a per-layer decision that depends on the measurement and
+is NOT pre-committed here; #1174 and #1189 are the precedent that DP can be both more faithful and
+smaller, and neither is proof about these layers.
+
+**TWO ERRORS OF MY OWN IN READING THIS, WITHIN TWO MINUTES.** I grepped for `dropped_rings` in the
+four builders, found it in all four, and announced that my carried note calling these two UNASKED
+was corrected. It was not: the import carries the block that RECORDS not having asked. Then I had
+to correct the correction. **A name found in a file can be the name of the thing a comment says is
+absent** — the same shape as a gate that greps for a host and credits a page for describing it.
+
 **2026-09-27 (04:40). #1216 MERGED at 04:25Z and verified on main by CONTENT. Task #68 is its
 generalisation and is open as [#1218](https://github.com/ThursdaysFamous/districtry/pull/1218),
 subscribed. Task #68 is complete; task #69 is the one finding I did not fix.**
