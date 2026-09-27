@@ -1255,6 +1255,10 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped
 
+      - name: Every dropped-ring declaration's prose agrees with its own fields
+        if: ${{ !cancelled() }}
+        run: python3 wi/scripts/dropped_rings.py --check
+
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
       # The stamp is right and stays; what the nine builders now print beside it

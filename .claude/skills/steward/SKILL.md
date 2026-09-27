@@ -141,6 +141,7 @@ python3 ia/scripts/build_legislative_boundaries.py --check      # the same relat
 python3 wi/scripts/build_legislative_boundaries.py --check      # the same relation in Wisconsin (art. IV s. 5, three Assembly per Senate), plus each declared dropped ring's after-answer re-derived from the shipped bytes
 python3 wi/scripts/dropped_rings.py --selftest   # the dropped-ring mechanism, fixtures only
 python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped   # every declared dropped ring's AFTER answer, offline
+python3 wi/scripts/dropped_rings.py --check       # each declaration's `why` prose against its own m2 and verts, across every declaring builder
 python3 scripts/scraper_common.py --selftest                # the nine AFR builders' what-moved line, both ways: silent on a stamp-only week, names the record on a real one
 python3 scripts/validate_officeholder_names.py              # absolute: a shipped name that is a phone number, a party label or a page-footer fragment
 python3 scripts/check_roster_retention.py --base origin/main

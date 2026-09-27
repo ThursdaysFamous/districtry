@@ -78,6 +78,7 @@ target-driven.
 """
 
 import math
+import re
 
 # A SOURCE RING COUNTS AS DROPPED when none of its own vertices survived, and
 # this is the threshold for "survived", in metres. Simplification KEEPS a subset
@@ -598,7 +599,16 @@ def classify(layers):
             b, a = prs[0]
             sb, sa = sorted(sets.get(name, {((), ())}))[0]
             answers[name] = {"before": [b] if b else [], "after": [a] if a else [],
-                             "before_all": list(sb), "after_all": list(sa)}
+                             "before_all": list(sb), "after_all": list(sa),
+                             # EVERY distinct pair measured inside the ring, not
+                             # only the first. A ring inside a place where the
+                             # SOURCE overlaps itself answers several ways, and
+                             # until 2026-09-27 that list was computed here and
+                             # thrown away, leaving `check` with nothing to hold a
+                             # declaration of such a ring to.
+                             "pairs": [{"before": [x] if x else [],
+                                        "after": [y] if y else []}
+                                       for x, y in prs]}
         records.append({"m2": m2, "verts": ring_verts(ring),
                         "centre": ring_centre(ring), "ring": ring,
                         "signatures": sorted(set(g["signatures"])),
@@ -611,6 +621,129 @@ def classify(layers):
                         "oversized": False})
     records.sort(key=lambda r: -r["m2"])
     return records, stats
+
+
+# Figures a declaration's own PROSE states, in the two units its own fields carry.
+# Anchored so a number is read only where the unit follows it: `6.35 m2`,
+# `18 vertices`, `4-vertex`. A bare number in prose ("dp at 1, 5 and 15 m all drop
+# it") is not a claim about this ring and is not read as one.
+_WHY_AREA = re.compile(r"(?<![\d.])(\d+(?:\.\d+)?)\s*m2\b")
+_WHY_VERTS = re.compile(r"(?<![\d.])(\d+)[\s-]*(?:vertices|vertex)\b")
+
+
+def _why_disagreements(dec):
+    """Numbers a declaration's `why` states that the declaration's own fields
+    contradict, as a list of sentences.
+
+    `check()` reads every other field of a declaration against the measurement
+    and never read `why` — the one field a person actually reads. On 2026-09-27
+    the aldermanic table shipped a `why` saying 6.06 m2 beside an `m2` of 6.35,
+    a superseded figure left in the prose when the field was corrected; it was
+    caught on review, by a person, and nothing here could have caught it.
+    `_match`'s area tolerance is RING_MATCH_AREA, 10%, so that gate had no
+    chance of it either — 0.29 m2 on a 6.35 m2 ring is well inside 10%.
+
+    So this holds the declaration INTERNALLY consistent: the prose against the
+    fields, where `_match` already holds the fields against the ring. The
+    comparand is the DECLARED value rather than the measured one deliberately —
+    two numbers a reader of the table sees at once are what went wrong, and
+    holding the prose to the measurement instead would let a table read
+    inconsistently while passing.
+
+    An area must be a valid rounding of `m2` AT THE PRECISION THE PROSE WRITES
+    IT TO, so `31.7 m2` for 31.70 passes and `6 m2` for 6.35 passes, while a
+    prose figure MORE precise than the field fails — writing 36.749 beside a
+    field of 36.75 is the same inconsistency pointing the other way. A vertex
+    count is exact. A `why` stating neither is not checked: this reads
+    arithmetic somebody wrote twice, never prose.
+    """
+    why = dec.get("why") or ""
+    out = []
+    for text in _WHY_AREA.findall(why):
+        dp = len(text.split(".")[1]) if "." in text else 0
+        if abs(float(text) - float(dec.get("m2", 0))) > 0.5 * (10 ** -dp):
+            out.append("its `why` states %s m2 where its `m2` is %s"
+                       % (text, dec.get("m2")))
+    for text in _WHY_VERTS.findall(why):
+        if int(text) != dec.get("verts"):
+            out.append("its `why` states %s vertices where its `verts` is %s"
+                       % (text, dec.get("verts")))
+    return out
+
+
+def check_prose(declarations):
+    """Every declaration's `why` agrees with its own fields. Offline, no geometry.
+
+    `check()` runs this too, but only on a BUILD path — which needs the network
+    and mapshaper, so the prose of a table somebody edits by hand would be read
+    by nobody until the next rebuild. That is the shape this repository keeps
+    paying for: a measurement filed where the next pass does not look. This is
+    the same reading with no inputs but the table itself, so it runs in CI.
+    """
+    problems = []
+    for d in declarations:
+        for said in _why_disagreements(d):
+            problems.append("declaration at %.6f,%.6f contradicts itself: %s"
+                            % (d["lat"], d["lng"], said))
+    if problems:
+        return False, "; ".join(problems)
+    return True, "%d declaration(s): each `why` agrees with its own m2 and verts" % len(declarations)
+
+
+def _declaring_modules(scripts_dir):
+    """Builders that carry a declaration table, DISCOVERED from the tree.
+
+    A hand-kept list here would go stale the first time a builder gains or loses
+    its table, and a gate agreeing with its own list is the failure mode
+    `validate_instance_registration.py` was written for. So this reads the
+    directory: any `build_*.py` whose source names ACCEPTED_DROPPED_RINGS.
+    """
+    import os as _os
+    found = []
+    for name in sorted(_os.listdir(scripts_dir)):
+        if not (name.startswith("build_") and name.endswith(".py")):
+            continue
+        with open(_os.path.join(scripts_dir, name)) as f:
+            if "ACCEPTED_DROPPED_RINGS" in f.read():
+                found.append(name[:-3])
+    return found
+
+
+def _check_all_declarations():
+    """`--check`: every declaring builder's table, prose against its own fields.
+
+    NEGATIVE-TESTING THIS NEEDS `python3 -B` OR A CLEARED `__pycache__`, and
+    finding that out cost a wrong reading. It reads the tables by IMPORTING each
+    builder, so it goes through Python's bytecode cache, which validates on the
+    source's mtime TRUNCATED TO WHOLE SECONDS and its size. Breaking a `why` on
+    purpose and restoring it within the same second — `6.35` for `6.06`, equal
+    length — leaves both unchanged, so the interpreter reuses the broken
+    bytecode and the gate goes on failing a file that is correct on disk.
+    """
+    import importlib
+    import os as _os
+    import sys as _sys
+    here = _os.path.dirname(_os.path.abspath(__file__))
+    _sys.path.insert(0, here)
+    mods = _declaring_modules(here)
+    if not mods:
+        print("FAIL: no builder in %s declares ACCEPTED_DROPPED_RINGS — this gate "
+              "cannot pass having found nothing to read" % here)
+        return 1
+    status = 0
+    total = 0
+    for name in mods:
+        decs = getattr(importlib.import_module(name), "ACCEPTED_DROPPED_RINGS")
+        if isinstance(decs, dict):        # a multi-layer builder keys by layer
+            decs = [d for layer in sorted(decs) for d in decs[layer]]
+        total += len(decs)
+        ok, msg = check_prose(decs)
+        print("  %s %s: %s" % ("ok  " if ok else "FAIL", name, msg))
+        if not ok:
+            status = 1
+    print("dropped-ring declarations: %d across %d builder(s)%s"
+          % (total, len(mods), "" if not status else " — FAILED"))
+    return status
 
 
 def _match(rec, dec):
@@ -650,14 +783,39 @@ def check(records, stats, declarations, gap_closed):
             "ring's answer is unknown rather than unchanged"
             % (r["m2"], r["centre"][1], r["centre"][0], DEGENERATE_MAX_M2))
 
+    # A MIXED RING IS ONE THE SOURCE OR THE OUTPUT ANSWERS SEVERAL WAYS INSIDE,
+    # and until 2026-09-27 it was an unconditional failure here with no remedy —
+    # which made this gate unusable by any layer whose publisher files OVERLAPPING
+    # polygons. Wisconsin's NG911 law layer is exactly that layer, and deliberately
+    # so: its builder uses plain `-dissolve` rather than `-dissolve2` in order to
+    # keep the real concurrent jurisdiction a sheriff and a municipal PD file over
+    # the same ground. Measured that day, its four mixed rings at dp interval=1 are
+    # one hairline under 1 m2 inside a THREE-way overlap of three Brown County
+    # agencies' own filings, where the source itself answers differently point to
+    # point; no interval resolves it, because the simplifier did not author it.
+    #
+    # So a mixed ring may now be declared — by declaring EVERY pair, in
+    # `answer_pairs`, held to the measured set exactly. That is more written down
+    # rather than less: the refusal stands for a mixed ring nobody has described,
+    # and for one described with a single before/after pair, which is the claim
+    # that cannot be true of it.
+    mixed_ok = set()
     for r in records:
-        if r.get("mixed"):
-            problems.append(
-                "ring of %.2f m2 at %.6f,%.6f answers differently at different "
-                "points inside itself (%s) — one declaration cannot describe it"
-                % (r["m2"], r["centre"][1], r["centre"][0],
-                   "; ".join("%s: %d distinct" % (k, len(v))
-                             for k, v in sorted(r["answers"].items()))))
+        if not r.get("mixed"):
+            continue
+        hit = [i for i, d in enumerate(declarations)
+               if _match(r, d) and d.get("answer_pairs")]
+        if r["harm"] and len(hit) == 1:
+            mixed_ok.add(id(r))
+            continue
+        problems.append(
+            "ring of %.2f m2 at %.6f,%.6f answers differently at different "
+            "points inside itself (%s) — declare every pair in `answer_pairs`%s"
+            % (r["m2"], r["centre"][1], r["centre"][0],
+               "; ".join("%s: %d distinct" % (k, len(v["pairs"]))
+                         for k, v in sorted(r["answers"].items())),
+               "" if r["harm"] else ", and this one changes no answer at all, "
+               "which this module cannot summarise either"))
 
     harms = [r for r in records if r["harm"]]
     used = set()
@@ -685,12 +843,36 @@ def check(records, stats, declarations, gap_closed):
             problems.append("declaration at %.6f,%.6f names features %s; measured %s"
                             % (d["lat"], d["lng"], sorted(d.get("features", [])),
                                r["features"]))
-        for which, field in (("before", "answer_before"), ("after", "answer_after")):
-            want = {k: sorted(v) for k, v in (d.get(field) or {}).items()}
-            got = {k: sorted(v[which]) for k, v in r["answers"].items()}
+        if r.get("mixed"):
+            # ONE FORM PER CASE. A mixed ring has no single before/after pair, so
+            # the single-pair fields are refused on it rather than checked against
+            # the arbitrary first one; a ring that answers one way is held to the
+            # single pair and must NOT carry a set.
+            if d.get("answer_before") or d.get("answer_after"):
+                problems.append("declaration at %.6f,%.6f carries answer_before/"
+                                "answer_after for a ring that answers several ways; "
+                                "use answer_pairs alone" % (d["lat"], d["lng"]))
+            want = {k: sorted((tuple(sorted(pr.get("before") or [])),
+                               tuple(sorted(pr.get("after") or [])))
+                              for pr in v)
+                    for k, v in (d.get("answer_pairs") or {}).items()}
+            got = {k: sorted((tuple(sorted(pr["before"])), tuple(sorted(pr["after"])))
+                             for pr in v["pairs"])
+                   for k, v in r["answers"].items()}
             if want != got:
-                problems.append("declaration at %.6f,%.6f claims %s %s; measured %s"
-                                % (d["lat"], d["lng"], field, want, got))
+                problems.append("declaration at %.6f,%.6f claims answer_pairs %s; "
+                                "measured %s" % (d["lat"], d["lng"], want, got))
+        else:
+            if d.get("answer_pairs"):
+                problems.append("declaration at %.6f,%.6f carries answer_pairs for a "
+                                "ring that answers ONE way; use answer_before and "
+                                "answer_after" % (d["lat"], d["lng"]))
+            for which, field in (("before", "answer_before"), ("after", "answer_after")):
+                want = {k: sorted(v) for k, v in (d.get(field) or {}).items()}
+                got = {k: sorted(v[which]) for k, v in r["answers"].items()}
+                if want != got:
+                    problems.append("declaration at %.6f,%.6f claims %s %s; measured %s"
+                                    % (d["lat"], d["lng"], field, want, got))
         ip = d.get("interior")
         if not ip:
             problems.append("declaration at %.6f,%.6f carries no interior point"
@@ -699,6 +881,9 @@ def check(records, stats, declarations, gap_closed):
             problems.append("declaration at %.6f,%.6f gives an interior point "
                             "(%.6f,%.6f) that is NOT inside its ring"
                             % (d["lat"], d["lng"], ip["lat"], ip["lng"]))
+        for said in _why_disagreements(d):
+            problems.append("declaration at %.6f,%.6f contradicts itself: %s"
+                            % (d["lat"], d["lng"], said))
 
     for i, d in enumerate(declarations):
         if i not in used:
@@ -846,6 +1031,43 @@ def _selftest():
     ok, msg = check(recs, st, [], st[KIND_GAP_CLOSED])
     ck("a mixed ring FAILS", not ok and "differently at different" in msg, msg)
 
+    # 7a. ... and PASSES once every pair it shows is declared. This fixture's hole
+    #      answers E before and D after on its left half, where E covers, and
+    #      NOTHING before and D after on its right half, where nobody does — two
+    #      pairs, one ring. Until 2026-09-27 no declaration could describe it, which
+    #      made this gate unusable by any layer whose source overlaps itself.
+    mr = [r for r in recs if r.get("mixed")][0]
+    mixed_dec = {"lat": mr["centre"][1], "lng": mr["centre"][0], "m2": mr["m2"],
+                 "verts": mr["verts"], "interior": mr["interior"],
+                 "features": mr["features"], "kind": mr["kind"],
+                 "answer_pairs": {"L": mr["answers"]["L"]["pairs"]},
+                 "why": "fixture", "date": "2026-09-27"}
+    ok, msg = check(recs, st, [mixed_dec], st[KIND_GAP_CLOSED])
+    ck("a mixed ring declaring every pair passes", ok, msg)
+    ck("the fixture really does show more than one pair",
+       len(mr["answers"]["L"]["pairs"]) > 1,
+       "pairs=%s" % mr["answers"]["L"]["pairs"])
+
+    short = dict(mixed_dec)
+    short["answer_pairs"] = {"L": mr["answers"]["L"]["pairs"][:1]}
+    ok, msg = check(recs, st, [short], st[KIND_GAP_CLOSED])
+    ck("a mixed ring declaring only SOME of its pairs FAILS",
+       not ok and "claims answer_pairs" in msg, msg)
+
+    single = dict(mixed_dec)
+    del single["answer_pairs"]
+    single["answer_before"] = {"L": mr["answers"]["L"]["before"]}
+    single["answer_after"] = {"L": mr["answers"]["L"]["after"]}
+    ok, msg = check(recs, st, [single], st[KIND_GAP_CLOSED])
+    ck("a mixed ring declared with ONE pair still FAILS",
+       not ok and "declare every pair" in msg, msg)
+
+    both = dict(mixed_dec)
+    both["answer_before"] = {"L": mr["answers"]["L"]["before"]}
+    ok, msg = check(recs, st, [both], st[KIND_GAP_CLOSED])
+    ck("a mixed ring carrying both forms FAILS",
+       not ok and "use answer_pairs alone" in msg, msg)
+
     # 8. the declaration contract: undeclared harm fails; a good declaration passes
     src = [_feat("A", _poly(OUT, HOLE)), _feat("B", _poly(HOLE))]
     drw = [_feat("A", _poly(OUT)), _feat("B", _poly(HOLE))]
@@ -875,6 +1097,43 @@ def _selftest():
         mutate(bad)
         ok, msg = check(recs, st, [bad], st[KIND_GAP_CLOSED])
         ck("a wrong %s FAILS" % field, not ok and want in msg, msg)
+
+    # 9b. ... and the pair SET is refused on a ring that answers one way, so there
+    #      is exactly one form per case rather than two ways to say one thing.
+    ok, msg = check(recs, st,
+                    [dict(good, answer_pairs={"L": [{"before": ["B"], "after": ["A"]}]})],
+                    st[KIND_GAP_CLOSED])
+    ck("a single-answer ring declaring answer_pairs FAILS",
+       not ok and "answers ONE way" in msg, msg)
+
+    # 9a. the `why` PROSE is load-bearing too, which it was not until 2026-09-27.
+    #     The failing fixture is the real defect: #1219 shipped a `why` saying
+    #     6.06 m2 beside an `m2` of 6.35, and every gate here passed it.
+    ok, msg = check(recs, st, [dict(good, why="%.2f m2 of dry land" % good["m2"])],
+                    st[KIND_GAP_CLOSED])
+    ck("a `why` agreeing with its own m2 passes", ok, msg)
+    ok, msg = check(recs, st, [dict(good, why="6.06 m2 of dry land")],
+                    st[KIND_GAP_CLOSED])
+    ck("a `why` stating an m2 its own field contradicts FAILS",
+       not ok and "contradicts itself" in msg and "6.06 m2" in msg, msg)
+    ok, msg = check(recs, st, [dict(good, why="%d m2 of dry land" % round(good["m2"]))],
+                    st[KIND_GAP_CLOSED])
+    ck("a `why` rounding its own m2 to a whole number passes", ok, msg)
+    # A BARE NUMBER IN PROSE IS NOT A CLAIM ABOUT THIS RING. Every real `why` in
+    # the fleet names the settings it tested ("dp at 1, 5 and 15 m all drop it"),
+    # and reading those as areas would fail every declaration there is.
+    settings_why = ("visvalingam 25% and dp at 1, 5 and 15 m all drop it; "
+                    + "%.2f m2 of dry land" % good["m2"])
+    ok, msg = check(recs, st, [dict(good, why=settings_why)], st[KIND_GAP_CLOSED])
+    ck("a `why` naming the settings it tested is not read as areas", ok, msg)
+    ok, msg = check(recs, st,
+                    [dict(good, why="a %d-vertex sliver" % (good["verts"] + 1))],
+                    st[KIND_GAP_CLOSED])
+    ck("a `why` stating a vertex count its own field contradicts FAILS",
+       not ok and "vertices where its `verts`" in msg, msg)
+    ok, msg = check(recs, st, [dict(good, why="a %d-vertex sliver" % good["verts"])],
+                    st[KIND_GAP_CLOSED])
+    ck("a `why` agreeing on its vertex count passes", ok, msg)
 
     # 10. an orphan declaration fails, and the gap-closed count is held
     orphan = dict(good)
@@ -931,4 +1190,6 @@ if __name__ == "__main__":
     import sys as _sys
     if "--selftest" in _sys.argv[1:]:
         _sys.exit(_selftest())
+    if "--check" in _sys.argv[1:]:
+        _sys.exit(_check_all_declarations())
     print(__doc__)
