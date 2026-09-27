@@ -50,6 +50,33 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-27. #1227 MERGED as `e4e59da`, #1226 CLOSED UNMERGED a minute later,
+AND THE GATE PAIR HELD ACROSS THE MERGE.** Verified on the merged tree rather
+than on the envelope: the roster carries `Jaclyn G. Trujillo` under Walnut's 2026
+filing, `il/library-district.html` carries that spelling twice and the corrupted
+form zero times, and eight gates pass — `comptroller_afr.py --selftest` (the one
+that ran nowhere until today), `validate_index.py`, `build_officeholder_tables.py
+--check` at 3,773 officeholders in the served bytes, `validate_structured_data.py`,
+`build_concept_pages.py --check`, `build_sitemap.py --check`, and both readers of
+the battery: `validate_gate_counts.py` at **92 / 121 after the merge** and
+`validate_steward_mirror.py` at 121 for 121. That last pair is the check CLAUDE.md
+asks for after any merge rather than after an edit, and this is the merge it was
+written about — my branch and main each moved today.
+
+**IT WAS SQUASHED, so `494addf` is not an ancestor of main and that is correct
+rather than a problem** — the content is all in `e4e59da`, which is what I checked.
+Worth knowing because `git merge-base --is-ancestor` on a squash-merged branch
+answers NO, and that reads like a failed merge if you take it for one.
+
+**TOMORROW'S RUN IS NOW A LIVE WITNESS AND HERE IS WHAT IT SHOULD SAY.**
+`update-il-library-district-officials.yml` fires Sunday 12:00 UTC (in practice
+15:00-17:00) and re-scrapes through the fixed parser. It should print exactly one
+line — Walnut's, naming both spellings — and open NO pull request, because the
+shipped file already carries all three 2026 filings and the corrected name, so
+nothing can have moved. A pull request from it, or a second warning, or no warning
+at all, each means something different and all three are worth reading.
+
+
 **2026-09-27, LATER. #1227 IS UP WITH THE REFRESHED ROSTER, AND #1226 CAN BE
 CLOSED — YOUR CALL, AND I HAVE NOT PUSHED TO THE BOT BRANCH.** The live 378-unit
 re-scrape read through the fixed parser fired the normalisation **exactly once
