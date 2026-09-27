@@ -1,0 +1,61 @@
+name: Vector tiles
+
+# Builds a vector-tile archive for every shipped polygon layer a change touches
+# and holds each one to the file it came from (scripts/build_vector_tiles.py;
+# docs/OPTIMIZATION_PLAYBOOK.md §10, phase 3). Nothing is committed or
+# deployed: until a layer's renderer ships the archives are built and thrown
+# away, and this run is what says they would be correct.
+#
+# ITS OWN WORKFLOW, NOT A STEP IN smoke-test.yml, because of what it costs.
+# Building and gating the whole fleet took 3 min 25 s four at a time and 11
+# minutes one at a time (2026-09-27, one sandbox), plus the apt install, and
+# the smoke job runs on every pull request, most of which touch no boundary
+# file. So this runs only when a boundary file, the probe's
+# record of which files each layer draws, or the builder itself changes, beside
+# the smoke job rather than inside it, and --changed-since builds only the
+# layers drawing a changed file (all of them when the builder, its pins or
+# layer-sources.json change).
+
+on:
+  pull_request:
+    paths:
+      - "*/data/app/*.json"
+      - "layer-sources.json"
+      - "scripts/build_vector_tiles.py"
+      - "scripts/requirements.txt"
+      - ".github/workflows/vector-tiles.yml"
+  workflow_dispatch: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tiles:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # tippecanoe builds the archives; apt's is 2.49, the version the gate
+      # was measured with
+      - name: Install tippecanoe and the tile readers
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q tippecanoe
+          tippecanoe --version
+          pip install -c scripts/requirements.txt shapely numpy mapbox-vector-tile pmtiles
+
+      - name: Every changed layer's archive answers as its file does
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            python3 scripts/build_vector_tiles.py --changed-since "origin/${{ github.base_ref }}"
+          else
+            python3 scripts/build_vector_tiles.py
+          fi
