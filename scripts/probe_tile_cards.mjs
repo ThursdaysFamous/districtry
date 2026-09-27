@@ -40,7 +40,11 @@
 // the canvas names a district from the tile's own properties, with nothing a
 // loader adds after its fetch. EVERY county with a file of its own is also
 // asked at up to three points inside its districts, and fails if no county
-// answers any of them.
+// answers any of them. And every county the ARCHIVE holds is checked whole,
+// with no points at all: its own files, run through its loader's `decorate`,
+// must give exactly the features its loader returns (countyStampCheck). A
+// loader that adds a property, filters or merges outside withStamp fails here
+// the day its county enters the archive, wherever the points happen to land.
 
 import { chromium } from "playwright";
 import { existsSync, readFileSync } from "node:fs";
@@ -208,11 +212,12 @@ try {
             contentType: f.endsWith(".css") ? "text/css" : "application/javascript" });
         return route.continue();
       });
-      let res;
+      let res, stamps = null;
       try {
         await page.goto(`${BASE}${tag}/`, { waitUntil: "domcontentloaded" });
         await page.waitForFunction(`!!(${FIND})`, null, { timeout: 60000 });
         res = await page.evaluate(`(${FIND}).tileCardCheck(${JSON.stringify(id)}, ${JSON.stringify(pts)})`);
+        if (countyFiles) stamps = await page.evaluate(`(${FIND}).countyStampCheck(${JSON.stringify(id)}, ${JSON.stringify(countyFiles)})`);
       } catch (e) {
         console.log(`  FAIL  ${tag}:${id} — ${String(e).slice(0, 200)}`);
         problems++;
@@ -247,7 +252,10 @@ try {
         const by = [...new Set(idx.map((i) => res[i] && res[i].county).filter(Boolean))];
         if (by.length) elsewhere.push(`${key} (answered by ${by.join(", ")})`); else unasked.push(key);
       }
-      const ok = !bad.length && !errs.length && !notTiled.length && !hoverBad.length && !unasked.length;
+      // every archived county, whole: its files through its loader's decorate
+      // must be what its loader returns (engine `exports`, countyStampCheck)
+      const stampBad = (stamps || []).filter((r) => r.problem);
+      const ok = !bad.length && !errs.length && !notTiled.length && !hoverBad.length && !unasked.length && !stampBad.length;
       console.log(`  ${ok ? "ok  " : "FAIL"}  ${tag}:${id} — ${res.length} points (${pts.dropped} dropped within ${EDGE_TOLERANCE_M} m of an edge), ${res.filter((r) => r.file).length} with a district, ` +
         `${bad.length} differ, ${errs.length} errored` +
         (county ? `, ${hoverBad.length} hover names differ` : `, ${notTiled.length} not answered from tiles`));
@@ -265,6 +273,9 @@ try {
           `; ${Object.keys(byCounty).length - archived.length} live counties answered from their own source` +
           (liveErrs.length ? `; ${liveErrs.length} point(s) errored the same way from both, a live source this run could not reach` : ""));
       }
+      if (stamps) console.log(`          ${stamps.length} archived counties checked whole: ${stamps.length - stampBad.length} load exactly what their files give through decorate` +
+        (stampBad.length ? `; ${stampBad.length} do not` : ""));
+      for (const r of stampBad.slice(0, 5)) console.log(`          ${r.key}: ${r.problem}`);
       if (unasked.length) console.log(`          a point inside a district of these counties was answered by no county: ${unasked.join(", ")}`);
       if (elsewhere.length) console.log(`          every point placed in these counties' files fell in a neighbour's ground: ${elsewhere.join("; ")}`);
       for (const r of [...bad, ...errs].slice(0, 3)) {

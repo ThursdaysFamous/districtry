@@ -218,6 +218,67 @@
     // The colour a layer's outline is painted in right now, whichever way it
     // is drawn: the tile canvas's paint, or a Leaflet path's stroke. What the
     // smoke tests read to see the dark theme repaint a live overlay.
+    /* Every county a layer's archive holds, checked whole rather than at
+     * points: the county's own files, run through its loader's `decorate` (a
+     * tile carries the file's properties and nothing the app adds after the
+     * fetch), must give exactly the features the loader itself returns. A
+     * loader that stamps, filters or merges outside `withStamp` fails here the
+     * day its county enters the archive, where a point probe finds it only if
+     * a point lands there — which is how Boone's library officials were missed.
+     * `filesByKey` is layer-sources.json's `counties.files`, the list the
+     * archive was built from. */
+    countyStampCheck: function (id, filesByKey) {
+      var mod = getLayerById(id);
+      if (!mod || !mod.countyEntries || !mod.tiles) return Promise.reject(new Error(id + " is not a tiled county layer"));
+      var byKey = {};
+      mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
+      function canon(v) {
+        if (v === null || typeof v !== "object") return JSON.stringify(v);
+        if (Array.isArray(v)) return "[" + v.map(canon).join(",") + "]";
+        return "{" + Object.keys(v).sort().map(function (k) { return JSON.stringify(k) + ":" + canon(v[k]); }).join(",") + "}";
+      }
+      function signatures(geojson) {
+        return ((geojson && geojson.features) || []).map(function (f) {
+          return canon(f.properties || {}) + "|" + geometryFingerprint(f);
+        }).sort();
+      }
+      return countyTileKeys(mod).then(function (keys) {
+        return Object.keys(keys).sort().reduce(function (chain, key) {
+          return chain.then(function (out) {
+            var entry = byKey[key], files = (filesByKey && filesByKey[key]) || [];
+            var rec = { key: key };
+            out.push(rec);
+            if (!entry || !entry.loadGeometry) { rec.problem = "the archive holds a county the layer has no entry for"; return out; }
+            if (!files.length) { rec.problem = "layer-sources.json names no file for this county"; return out; }
+            var load = entry.loadGeometry;
+            return Promise.all([
+              Promise.resolve().then(function () { return load(); }),
+              Promise.all(files.map(function (u) {
+                return fetch(u, { cache: "no-store" }).then(function (r) {
+                  if (!r.ok) throw new Error(u + " answered " + r.status);
+                  return r.json();
+                });
+              })).then(function (docs) {
+                var raw = { type: "FeatureCollection", features: [] };
+                docs.forEach(function (d) { raw.features = raw.features.concat((d && d.features) || []); });
+                return load.decorate ? load.decorate(raw) : raw;
+              })
+            ]).then(function (both) {
+              var a = signatures(both[0]), b = signatures(both[1]);
+              rec.features = a.length;
+              rec.decorate = !!load.decorate;
+              var i = 0;
+              while (i < a.length && i < b.length && a[i] === b[i]) i++;
+              if (a.length !== b.length || i < a.length) {
+                rec.problem = "the loader returns " + a.length + " feature(s) and its files through decorate give " + b.length +
+                  (i < Math.max(a.length, b.length) ? "; first difference: loader " + String(a[i]).slice(0, 200) + " | files " + String(b[i]).slice(0, 200) : "");
+              }
+              return out;
+            }, function (e) { rec.problem = "error: " + String(e && e.message || e); return out; });
+          });
+        }, Promise.resolve([]));
+      });
+    },
     overlayColor: function (id) {
       var mod = getLayerById(id), rt = layerRuntime[id];
       if (!mod || !rt || !rt.overlayLayer) return null;
