@@ -66,8 +66,10 @@ inside it reads district 1 in the source and the water pseudo-district in the
 shipped file. The first reading of that ring said no reader's answer moved,
 because it tested the ring's centroid rounded to four decimals -- outside a ring
 7.5 m across. So the honest claim for interval=7 is that it loses one 31.7 m2
-patch of open Lake Michigan that no measured setting keeps, not that it loses
-nothing.
+ring that no measured setting keeps, not that it loses nothing. CORRECTED
+2026-09-27: this said "one 31.7 m2 patch of OPEN LAKE MICHIGAN", and it is DRY
+LAND -- see the declaration below for the measurement and for why inferring water
+from a coordinate was the mistake.
 
 WHAT IT COSTS, PUBLISHED RATHER THAN SMOOTHED, AND MEASURED WITH ITS METHOD --
 `gzip -c` over the bytes git holds, against `git show origin/main:<path>` rather
@@ -304,12 +306,24 @@ RING_MATCH_AREA = 0.10
 # than features.
 ACCEPTED_DROPPED_RINGS = [
     {
-        # A 31.7 m2 outer ring -- a separate PART of district 1, not a hole -- in
-        # open Lake Michigan off Door County, on the Wisconsin/Michigan water
-        # line: 7.5 m by 6.6 m, six vertices. Dropped at EVERY interval from 4 to
-        # 15, and its own vertices sit 17.4-19.9 m from the drawn line whatever
-        # the setting, so no dp interval retains it and an all-vertex ceiling
-        # would have to be 20 m to pass at all.
+        # A 31.7 m2 outer ring -- a separate PART of district 1, not a hole -- on
+        # WASHINGTON ISLAND, Door County, near the Wisconsin/Michigan water line:
+        # 7.5 m by 6.6 m, six vertices. Dropped at EVERY interval from 4 to 15,
+        # and its own vertices sit 17.4-19.9 m from the drawn line whatever the
+        # setting, so no dp interval retains it and an all-vertex ceiling would
+        # have to be 20 m to pass at all.
+        #
+        # IT IS ON DRY LAND, AND THIS ENTRY SAID "OPEN LAKE MICHIGAN" UNTIL
+        # 2026-09-27. Measured against TIGER's own AREAL HYDROGRAPHY layer at both
+        # the centre and the declared interior point: no water polygon at either,
+        # where a control in open Lake Michigan returns "Lk Michigan" and one in
+        # Lake Winnebago returns "Lk Winnebago". TIGER's county-subdivision layer
+        # puts both points in WASHINGTON TOWN, which is Washington Island and is
+        # inhabited. The claim came from reading the coordinate and knowing Door is
+        # a peninsula -- an INFERENCE shipped as a measurement, and the same error
+        # `build_wi_supervisory_districts.py` made about its own Door residual on
+        # the same day. A subdivision is not the test either, because a town's
+        # polygon can include its own shoreline water; hydrography is.
         #
         # ITS LOSS DOES MOVE A READER'S ANSWER, which is the opposite of what this
         # project first recorded about it and the reason the declaration is worth
@@ -320,8 +334,11 @@ ACCEPTED_DROPPED_RINGS = [
         # surrounding water and concluded nothing moved.
         #
         # It is declared rather than tolerated silently because no measured
-        # setting avoids it, and it is 31.7 m2 of open water rather than the
-        # 590 m2 of Cudahy lakefront that interval=8 and coarser also lose.
+        # setting avoids it. The size comparison it was first written with stands
+        # -- 31.7 m2 against the 590 m2 of Cudahy lakefront that interval=8 and
+        # coarser also lose -- but the WATER half of that sentence does not, and
+        # the dry-land reading makes this declaration matter MORE rather than
+        # less: it is ground a person can stand on.
         "lat": 45.41074, "lng": -86.85963, "verts": 6, "m2": 31.7,
         # A point PROVABLY INSIDE the ring, measured at build time and re-used by
         # `--check`, which has no source to scan. Six decimals: the sixth is about

@@ -764,7 +764,8 @@ bump.
 change about once a decade. The background refresh is a real safety net and
 `check_cache_version.py` is now the other one, so the trade is worth
 re-examining — but it was not changed here, because nothing has measured what
-the geometry set actually costs a returning visitor.
+the geometry set actually costs a returning visitor. (Measured and changed
+2026-09-26: §10, "Revalidation removed".)
 
 ---
 
@@ -1079,10 +1080,44 @@ sets before launching the browser; without it the worker's requests are
 invisible and a check would pass for that reason, so the check also requires
 that the worker took control and was seen fetching.
 
-**Still open, and now next in line:** `cacheFirst` fetches the file again in
+**Was open, now closed below:** `cacheFirst` fetched the file again in
 the background every time a cached boundary file is used, so a returning
 visitor downloads each layer they open on every visit. `check_cache_version.py`
 now fails a change that edits a cache-first file without a `CACHE_NAME` bump,
 which is the safety net that revalidation was standing in for. Serving
 boundary files from the cache without revalidating would save those bytes; it
-is the fonts' `cacheOnlyElseNetwork` policy, and it was not changed here.
+is the fonts' `cacheOnlyElseNetwork` policy, and phase 2 did not change it.
+
+### Revalidation removed (2026-09-26)
+
+Boundary files now take the fonts' policy: `cacheOnlyElseNetwork` serves a
+cached file and sends nothing, and a file not yet cached is fetched and
+stored. `cacheFirst` is gone.
+
+**Measured on `/il/` at the Loop with six layers on** (school board, Board of
+Review, Supreme Court, Congress, State Senate, State House): the worker fetched
+all six files again on the second visit before the change and none after it,
+with all six cards answering and every overlay drawn from the cache.
+
+**A miss asks with `cache: "no-cache"`.** Without the background refresh
+nothing replaces a bad copy once it is stored, and one path could store one:
+GitHub Pages serves `max-age=600`, so a file the browser's HTTP cache picked up
+in the ten minutes before a deploy could be handed to the NEW worker and kept
+under the new cache name until the next bump. Revalidating the HTTP cache costs
+a 304 when the file is unchanged and nothing when there is no copy. Fonts and
+the population files share the function and get the same protection.
+
+**What it rests on:** `check_cache_version.py` is now the only thing that gets
+a changed boundary file to a returning visitor, by failing a change that edits
+one without a `CACHE_NAME` bump. It diffs a pull request against its base, so
+a file pushed straight to `main` without a bump would stay stale for returning
+visitors until the next bump; that was true of fonts already.
+
+`scripts/smoke_test.mjs` check 2l loads three Illinois layers three times with
+the worker allowed — once uncontrolled, once to cache, once to count — and
+fails if the worker fetched any `…districts.json` on the third. Run against the
+worker before this change it fails naming all three files. Its vendored
+libraries are routed on the CONTEXT: once the worker controls the page, a
+request it lets through leaves from the worker, where a page-level route does
+not see it, and the first draft of the check failed in this sandbox for that
+reason alone.

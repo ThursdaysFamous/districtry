@@ -171,6 +171,18 @@ UNFILED = {
 EXPECT_PROVISIONING = 72   # 71 counties + the City of Milwaukee; Langlade absent
 NO_PROVISIONING = "langlade"
 
+# THE DROPPED-RING QUESTION HAS NOT BEEN ASKED OF THIS LAYER, AND THAT IS
+# RECORDED RATHER THAN ASSUMED CLEAN. `wi/scripts/dropped_rings.py` measures what
+# a simplification setting costs a reader: on the county-supervisory layer, a
+# visvalingam PERCENTAGE of this shape dropped 640 distinct rings of which 102
+# changed the district a reader is told they are in, where Douglas-Peucker at a
+# metre interval dropped 377 and changed 3. That is a property of the algorithm
+# rather than of that one layer, so the same is likely here and is NOT measured.
+#
+# Asking costs a full-precision rebuild — the gate compares the source against the
+# simplifier's output, so it needs the whole pre-simplification dissolve — which is
+# why it was not folded into the change that built the mechanism. Whoever next
+# touches this setting should run it.
 SIMPLIFY = "8%"
 PRECISION = "0.000001"     # 6 decimals ~= 0.11 m
 COVERAGE_SAMPLES = 40      # per provisioning polygon, seeded
