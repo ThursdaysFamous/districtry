@@ -192,6 +192,20 @@ exact quoted message. An AST sweep finds nothing unresolved after the 400 deleti
 which matters because a dangling name on the BUILD path is a NameError only at
 operator-build time, where no gate runs.
 
+**CORRECTED 2026-09-27 02:25 — I REPEATED NEW YORK'S OWN FIRST MECHANISM AND IT IS
+WRONG.** I wrote that `build_county_pages.py`'s registration gate classifies the
+Tompkins roster "as neither shape". It does not: the gate wants TWO signals and
+that file gives exactly one. New York measured it by running the gate's own
+predicates rather than restating the sentence — `_names_people` PASSES on 16 of
+its 18 keys, and what fails is looks-like-county in both forms it accepts, since
+no record carries a `county` field and `_COUNTY_WORDS` is the five form words of
+the four states already registered, with no `legislature` in it. **So the gate is
+blind by construction to the first state governing under a form none of the
+others uses**, which is a far better finding than "classified as neither" and is
+the one a reader of that record needs. I took their first answer into my own note
+without running the predicates myself; the sentence below is left as written with
+this correction above it.
+
 **#1209 (New York, Tompkins County) is ACCEPTED ON CONTENT AND HELD ON ONE LINE.**
 A reader clicking anywhere in Tompkins will get their county legislator by name,
 party, e-mail and committees, where the map answered nothing above the town. Sixteen
