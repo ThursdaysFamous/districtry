@@ -48,6 +48,41 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (evening, second). The manager's finding on #1224 is CORRECT and I verified it
+rather than taking it: I claimed a gate that does not exist, in a commit that had just correctly
+removed two guards for exactly that reason.**
+
+`find_dropped`'s docstring said the unclaimed count "IS GATED AGAINST ARITHMETIC NOBODY HERE
+CONTROLS", and my board said "the witness is ring-count arithmetic rather than the instrument
+agreeing with itself". **Neither is true.** Per key the unclaimed count must equal len(source
+rings) - len(drawn rings), and the elimination loop gives every drawn ring exactly one free source
+ring or RAISES — so the identity holds whenever the function returns. Verified by trying to build a
+return value that violates it, three ways: a drawn ring matching no source ring, two drawn rings
+wanting one source ring, and more drawn rings than source rings. **Every one raises instead of
+returning.** Nothing outside the function asserts it either, so the 165/118/10/149 reading was a
+development measurement and nothing re-checks it.
+
+**I ADDED NO CHECK, because any check of that identity is the vacuous gate I had just refused to
+ship.** The manager offered the choice and the honest half is the other one: what protects the
+method is the RAISE — which is what makes the removes-but-never-moves assumption CHECKABLE rather
+than assumed, since a simplifier that MOVED a vertex would fail the subset test and stop the build
+— plus each declaring builder's PINNED per-layer counts, which fail until a person re-reads them.
+Both are real and both are in code. Corrected in the docstring, in CLAUDE.md and in #1225's body,
+with the disproved sentences kept above their corrections.
+
+**A CLAIM THAT SOMETHING IS GATED IS ITSELF A CLAIM TO CHECK**, and that is the lesson worth more
+than the sentence. I wrote it in the same commit where I worked out that two post-checks could not
+fire and removed them with the reason stated. The reasoning that retired those guards applies
+identically to the identity I then advertised as a gate, and I did not carry it across.
+
+Three figures in the same area, separated because I nearly published one for another: law answers
+**118 pairs, 117 distinct signatures and 116 records** — `find_dropped` returns (key, ring) pairs,
+a signature set collapses byte-identical rings, and `classify` merges coincident ones. The
+published 165/118/10/149 is the PAIRS count and is right; I measured it rather than trusting the
+figure I had carried, because I could not otherwise tell which of the three a sentence meant.
+
+The manager also re-verified my 20.20 m2 Dane hydrography claim with three controls, because
+McFarland is a lakeside village — the Door County shape exactly. It reads dry both ways.
 **2026-09-27 (evening). #72 is COMPLETE: the classify fix and all four floors merged as #1224, and
 the ceiling is PR #1225. Nothing left on the ruling's list.**
 
