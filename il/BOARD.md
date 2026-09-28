@@ -50,6 +50,70 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-28. #1242 MERGED (`c54d910`), AND THE WAIT ON IT TURNED UP THE SAME
+DEFECT IN MY OWN PROSE — #1243 up.** Checking my open question on the precinct
+tripwire, I found `WATCH.md` answering how much of the fleet a publisher-side
+replacement would reach with "the three results vendors, which carry 34, 13 and
+17 counties". **Two of those three were already stale when I wrote that sentence
+on 2026-09-25**: the guidebook's platforms table had said 23 for platinum and
+"14 carrying content" for GBS since 2026-09-01, three weeks earlier. Same class
+as the Peoria docstring I had just fixed, in my own hand, and understating the
+route — the direction that changes a decision, since the paragraph exists to
+answer whether the smaller tripwire is worth building.
+
+**SO THE VENDORS' TOTALS ARE REPLACED BY THE INTERSECTION THAT DECIDES IT.** Of
+the 46 counties shipping a `*-precincts.json` layer, 26 have a publisher this
+repository can name — platinum 10, GBS-carrying 7, the pollresults pair 9 with
+Hardin shared, Hancock's own database 1 — and **Clarity carries ZERO**, so the
+publisher my sentence omitted is the one with nothing to contribute and the three
+it named were the right three. **Twenty counties would still have no detector of
+any kind and are now named**, two of them measured shut (Henderson against all
+five publishers, Menard against the vendor pair and GBS) and eighteen untested.
+The 26 is stated as a FLOOR, because the pollresults membership is enumerated
+nowhere here.
+
+**AND IT CANNOT BE RAISED BY GREP, WHICH I TRIED FIRST AND WHICH OVER-COUNTS BY
+40%.** The tree names 20 county slugs on that vendor pair and 8 record a probe
+that FAILED — a county whose route was measured shut gets the URL written into
+the record as the thing tested, so the literal IS the negative. Washington is the
+one that also defeats a status check: `il-washington.pollresults.net` answers 200
+with a page that is not Washington's, which is why the control is a fabricated
+county name and a body hash.
+
+**THREE THINGS I CHECKED ON MYSELF RATHER THAN SHIPPING.** I verified all three
+publisher lists as exact transcriptions of the guidebook's table instead of
+trusting my typing (23/23, 14/14, 12/12, no difference either way). I cut a
+clause claiming Clarity's twelve are "the large ones" — measured, ten are in the
+state's twenty most populous while Vermilion is 21st and Macoupin 32nd, so size
+is a loose correlate and not the explanation, and the cause is not established.
+And I restored the old paragraph's "it is not built", which my replacement had
+left implied: dropping a true statement while correcting a false one is still a
+regression.
+
+**NO SCRIPT SHIPS, deliberately.** I argued myself into a generator twice and out
+of it twice: the figures are a dated measurement whose inputs the paragraph
+names, and a generator would add a second hand-kept carriage table nothing
+re-audits — the shape this change removes.
+
+Gates: battery 0 of 113, enumerated through `validate_steward_mirror.invocations`
+rather than a pattern of my own, with the seven gates that read this file re-run
+after the last edit. **The pair moved under me while I worked and CLAUDE.md had
+kept up**: another session took it to 94/123 and `validate_gate_counts.py` agrees,
+so my change adds no gate and moves nothing.
+
+**TWO MECHANICS RECONFIRMED, both already on this board.** The merge deleted the
+remote branch, so `--force-with-lease` answered "stale info" with nothing to lease
+against — established by `git ls-remote` rather than assumed, then a plain push
+created it fresh. And main moved twice while I pushed, so mergeability was tested
+against its new tip before opening the PR, a conflicted PR being the one that gets
+no CI run.
+
+**The manager verified #1242 and merged it, and their address scan was WIDER than
+mine**: 3 of 2,299 address fields against my 3 of 1,038. Mine is scoped to the
+AFR-derived files and says so, so both hold; theirs is the stronger witness for
+the same conclusion.
+
+
 **2026-09-28. THE PEORIA DOCSTRING IS CORRECTED, AND THE LIST IS DERIVED RATHER
 THAN RE-TYPED — #1242 up.** The #1237 review routed me a false passage in
 `scripts/build_peoria_district_officials.py`: it named THREE of eighteen districts
