@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-25T19:32:38Z",
+  "generated": "2026-09-28T18:13:29Z",
   "libraries": {
     "Albion Public Library": {
       "board": [
@@ -37,7 +37,7 @@
       ],
       "boardUrl": "https://www.albion.lib.il.us/board-of-trustees",
       "heading": "Meet the Board",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Alpha Park Public Library District": {
       "board": [
@@ -65,7 +65,7 @@
       ],
       "boardUrl": "http://www.alphapark.org/governance",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Anne West Lindsey District Library": {
       "board": [
@@ -88,7 +88,7 @@
       ],
       "boardUrl": "https://awlindsey.com/about-us/board-of-trustees/",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Auburn Public Library District": {
       "board": [
@@ -114,7 +114,40 @@
       ],
       "boardUrl": "https://auburnpubliclibraryil.org/library-board",
       "heading": "Library Board",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
+    },
+    "Belleville Public Library": {
+      "board": [
+        {
+          "name": "Cassandra Thompson",
+          "role": "President"
+        },
+        {
+          "name": "Helen Thompson",
+          "role": "Vice-President"
+        },
+        {
+          "name": "Rob Eckman"
+        },
+        {
+          "name": "Madeline Graham"
+        },
+        {
+          "name": "Mary Karban"
+        },
+        {
+          "name": "Patti Kievlan Keeley"
+        },
+        {
+          "name": "Jamie Maitret"
+        },
+        {
+          "name": "Mark St. Eve"
+        }
+      ],
+      "boardUrl": "https://www.belleville.net/304/Library-Board",
+      "heading": "Members",
+      "readOn": "2026-09-28"
     },
     "Breese Public Library": {
       "board": [
@@ -157,7 +190,7 @@
       ],
       "boardUrl": "https://breeselibrary.org/about/",
       "heading": "Library Board Members",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "C.E. Brehm Memorial Public Library District": {
       "board": [
@@ -189,7 +222,50 @@
       ],
       "boardUrl": "https://mtvbrehm.org/about-us/board-of-trustees/",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
+    },
+    "Carbondale Public Library": {
+      "board": [
+        {
+          "name": "Chastity Mays",
+          "role": "President"
+        },
+        {
+          "name": "Frances A. Anterola",
+          "role": "Vice President"
+        },
+        {
+          "name": "Susan Tulis",
+          "role": "Secretary"
+        },
+        {
+          "name": "Julian Pei",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Philip Brown",
+          "role": "Member"
+        },
+        {
+          "name": "Hend Jadalla",
+          "role": "Member"
+        },
+        {
+          "name": "Roland C. Person",
+          "role": "Member"
+        },
+        {
+          "name": "Don Prosser",
+          "role": "Member"
+        },
+        {
+          "name": "Aimee Trojnar",
+          "role": "Member"
+        }
+      ],
+      "boardUrl": "https://carbondalepubliclibrary.org/aboutus/board-of-trustees/",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-28"
     },
     "Casey Township Library": {
       "board": [
@@ -211,7 +287,7 @@
       ],
       "boardUrl": "https://sites.google.com/view/casey-township-library/about-us/library-board",
       "heading": "Library Board",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Centralia Regional Library District": {
       "board": [
@@ -242,7 +318,105 @@
       ],
       "boardUrl": "https://www.centralialibrary.org/about-us/board-of-trustees/",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
+    },
+    "Charles B. Phillips Public Library District": {
+      "board": [
+        {
+          "name": "Larry Stanford"
+        },
+        {
+          "name": "Karen Breunig"
+        },
+        {
+          "name": "Barb Sucich"
+        },
+        {
+          "name": "Ashley Hartman"
+        },
+        {
+          "name": "Lauren Hartman"
+        },
+        {
+          "name": "Tricia Marvin"
+        }
+      ],
+      "boardUrl": "https://www.cbplib.us/board/",
+      "heading": "Library Board Information",
+      "readOn": "2026-09-28"
+    },
+    "Charleston Carnegie Public Library": {
+      "board": [
+        {
+          "name": "Brooke Ferguson",
+          "role": "President"
+        },
+        {
+          "name": "Brandalyn Curry",
+          "role": "Vice President"
+        },
+        {
+          "name": "Judy Looby",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Andreea Chiritescu",
+          "role": "Secretary"
+        },
+        {
+          "name": "Debbie Cuddy"
+        },
+        {
+          "name": "David Viertel"
+        },
+        {
+          "name": "Lola Burnham"
+        },
+        {
+          "name": "Joshua Craig"
+        }
+      ],
+      "boardUrl": "http://www.charlestonlibrary.org/library-board",
+      "heading": "Library Board",
+      "readOn": "2026-09-28"
+    },
+    "Chester Public Library": {
+      "board": [
+        {
+          "name": "Mrs. Melissa Gross",
+          "role": "President"
+        },
+        {
+          "name": "Dr. Stephen Miller",
+          "role": "Vice President"
+        },
+        {
+          "name": "Mrs. Carolyn Schwent",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Mrs. Dainelle Powell",
+          "role": "Secretary"
+        },
+        {
+          "name": "Mrs. Marla Rockwell"
+        },
+        {
+          "name": "Mrs. Tammy Liefer"
+        },
+        {
+          "name": "Mrs. Donna Clendenin"
+        },
+        {
+          "name": "Mr. Bob Owen"
+        },
+        {
+          "name": "Mrs. Joanie Heffernan"
+        }
+      ],
+      "boardUrl": "https://www.chesterpubliclibrary.com/board/",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-28"
     },
     "Clover Public Library District": {
       "board": [
@@ -277,7 +451,7 @@
       ],
       "boardUrl": "https://cloverlibrarywoodhull.com/library-board/",
       "heading": "Library Board Members",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Columbia Public Library": {
       "board": [
@@ -313,7 +487,7 @@
       ],
       "boardUrl": "https://www.columbialibrary.org/board-of-trustees/",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Divernon Township Library": {
       "board": [
@@ -336,7 +510,7 @@
       ],
       "boardUrl": "https://divernontownshiplibrary.org/library-board/",
       "heading": "Board Members",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Dixon Public Library": {
       "board": [
@@ -374,7 +548,7 @@
       ],
       "boardUrl": "https://dixonpubliclibrary.org/library-board-and-governance/",
       "heading": "Library Board and Governance",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Dominy Memorial Library": {
       "board": [
@@ -412,7 +586,7 @@
       ],
       "boardUrl": "http://www.dominymemoriallibrary.org/about-us/staff-and-trustees",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "DuQuoin Public Library": {
       "board": [
@@ -455,7 +629,7 @@
       ],
       "boardUrl": "https://duquoinlibrary.org/du-quoin-library-board-of-trustees/",
       "heading": "The Du Quoin Library Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Earlville Public Library District": {
       "board": [
@@ -471,7 +645,7 @@
       ],
       "boardUrl": "https://www.earlvillelibrary.org/bod/",
       "heading": "Board Of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "El Paso District Library": {
       "board": [
@@ -498,7 +672,7 @@
       ],
       "boardUrl": "https://www.elpasodistrictlibrary.org/library-board.html",
       "heading": "Library Board",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Fairfield Public Library": {
       "board": [
@@ -532,7 +706,7 @@
       ],
       "boardUrl": "https://fairfieldlibrary.org/board-members/",
       "heading": "Board Members",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Fairview Heights Public Library": {
       "board": [
@@ -570,7 +744,7 @@
       ],
       "boardUrl": "https://fairviewheightslibrary.org/board-of-trustees/",
       "heading": "Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Flora Public Library": {
       "board": [
@@ -608,7 +782,7 @@
       ],
       "boardUrl": "https://florapubliclibrary.org/about-us/board/",
       "heading": "Flora Public Library Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Forman Valley Public Library District": {
       "board": [
@@ -636,7 +810,7 @@
       ],
       "boardUrl": "http://www.formanvalleylibrary.com/about-us/#board-of-trustees",
       "heading": "Board Members",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Frank Bertetti Benld Public Library": {
       "board": [
@@ -679,7 +853,7 @@
       ],
       "boardUrl": "http://www.benldlibrary.org/board-members",
       "heading": "Board Members",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Gilman-Danforth District Library": {
       "board": [
@@ -714,7 +888,7 @@
       ],
       "boardUrl": "http://gilmandanforthlib.org/library-board",
       "heading": "Library Board",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Greenup Township Public Library": {
       "board": [
@@ -746,7 +920,7 @@
       ],
       "boardUrl": "https://www.greenup.lib.il.us/board-of-trustees",
       "heading": "Meet the Greenup Township Library Board",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Greenville Public Library": {
       "board": [
@@ -784,7 +958,7 @@
       ],
       "boardUrl": "https://www.greenvillepubliclibrary.org/board-of-trustees",
       "heading": "Meet the Board",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Greig Memorial Library": {
       "board": [
@@ -827,7 +1001,7 @@
       ],
       "boardUrl": "https://www.greigmemlibrary.com/board-of-trustees",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Gridley Public Library District": {
       "board": [
@@ -856,7 +1030,7 @@
       ],
       "boardUrl": "https://gridleylibrary.org/trustees/",
       "heading": "Contact the Library Board",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Groff Memorial Library": {
       "board": [
@@ -899,7 +1073,38 @@
       ],
       "boardUrl": "https://www.grofflibrary.org/board-members",
       "heading": "Board Members",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
+    },
+    "Hayner Public Library District": {
+      "board": [
+        {
+          "name": "Kevin Botterbush",
+          "role": "PRESIDENT"
+        },
+        {
+          "name": "Peter Tassinari",
+          "role": "SECRETARY"
+        },
+        {
+          "name": "Amber Sims",
+          "role": "TREASURER"
+        },
+        {
+          "name": "Kerry Miller"
+        },
+        {
+          "name": "Ed Morrissey"
+        },
+        {
+          "name": "Christy Schaper"
+        },
+        {
+          "name": "Jeff Weber"
+        }
+      ],
+      "boardUrl": "https://www.haynerlibrary.org/about-us/trustees-board-meetings/",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-28"
     },
     "Herrin City Library": {
       "board": [
@@ -915,7 +1120,7 @@
       ],
       "boardUrl": "https://herrincitylibrary.org/about-us/board-of-trustees/",
       "heading": "Library Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Jacksonville Public Library": {
       "board": [
@@ -958,7 +1163,7 @@
       ],
       "boardUrl": "https://jaxpl.org/library-board-of-trustees/",
       "heading": "Library Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Kansas Community Memorial Library": {
       "board": [
@@ -974,7 +1179,7 @@
       ],
       "boardUrl": "http://www.kansaslibrary.jigsy.com/library-trustees",
       "heading": "Trustees:",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "LaSalle Public Library": {
       "board": [
@@ -1002,7 +1207,7 @@
       ],
       "boardUrl": "http://www.lasallepubliclibrary.org/board-of-trustees",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Marion Carnegie Library": {
       "board": [
@@ -1036,7 +1241,7 @@
       ],
       "boardUrl": "https://www.marioncarnegielibrary.org/library-board/",
       "heading": "Marion Carnegie Library Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Marissa Area Public Library District": {
       "board": [
@@ -1071,7 +1276,7 @@
       ],
       "boardUrl": "http://www.marissalibrary.org/board-members",
       "heading": "Board Members",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Marquette Heights Public Library": {
       "board": [
@@ -1106,7 +1311,7 @@
       ],
       "boardUrl": "http://www.mhlibrary.com/library-staff-and-trustees",
       "heading": "Library Board Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Marshall Public Library": {
       "board": [
@@ -1144,7 +1349,42 @@
       ],
       "boardUrl": "http://www.marshallillibrary.com/mpl-board-of-trustees",
       "heading": "Marshall Public Library Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
+    },
+    "Martin Township Public Library": {
+      "board": [
+        {
+          "name": "Mary Kerber",
+          "role": "President"
+        },
+        {
+          "name": "Susie Norton",
+          "role": "Vice-president"
+        },
+        {
+          "name": "Judy Dodds",
+          "role": "Secretary"
+        },
+        {
+          "name": "Lauren Langhoff",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Brenda Mueller",
+          "role": "Trustee"
+        },
+        {
+          "name": "Lauren McCarty",
+          "role": "Trustee"
+        },
+        {
+          "name": "Kay Griepentrog",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "http://martintpl.com/board-of-trustees.html",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-28"
     },
     "Mascoutah Public Library": {
       "board": [
@@ -1187,7 +1427,7 @@
       ],
       "boardUrl": "http://www.mascoutahlibrary.com/board-of-trustees",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Mattoon Public Library": {
       "board": [
@@ -1230,7 +1470,7 @@
       ],
       "boardUrl": "https://mattoonlibrary.org/board-of-trustees/",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Morris Area Public Library District": {
       "board": [
@@ -1258,7 +1498,7 @@
       ],
       "boardUrl": "https://morrislibrary.com/board-of-trustees",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Morrison-Talbott Library": {
       "board": [
@@ -1292,7 +1532,7 @@
       ],
       "boardUrl": "https://waterloolibrary.org/library-board/",
       "heading": "Library Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Mount Olive Public Library": {
       "board": [
@@ -1315,7 +1555,7 @@
       ],
       "boardUrl": "https://mtolivepubliclibrary.org/library-board-staff/",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Neoga Public Library District": {
       "board": [
@@ -1347,7 +1587,7 @@
       ],
       "boardUrl": "https://www.neoga.lib.il.us/board-of-trustees",
       "heading": "Meet the Board",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "O`Fallon Public Library": {
       "board": [
@@ -1370,7 +1610,7 @@
       ],
       "boardUrl": "http://www.ofpl.info/board",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Odell Public Library": {
       "board": [
@@ -1408,7 +1648,7 @@
       ],
       "boardUrl": "https://odellpubliclibrary.com/wp/history",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Odell Public Library District": {
       "board": [
@@ -1440,7 +1680,7 @@
       ],
       "boardUrl": "https://odelllibrary.com/trustees-staff",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Pankhurst Memorial Library": {
       "board": [
@@ -1471,7 +1711,7 @@
       ],
       "boardUrl": "https://amboy.lib.il.us/about-us/library-board/",
       "heading": "Library Board",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Pekin Public Library": {
       "board": [
@@ -1491,7 +1731,7 @@
       ],
       "boardUrl": "https://pekinpubliclibrary.org/library-board/",
       "heading": "Members",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Pontiac Public Library": {
       "board": [
@@ -1529,7 +1769,7 @@
       ],
       "boardUrl": "https://www.pontiac.org/506/Library-Administration-Board-of-Trustees",
       "heading": "Board Members and Officers",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Rosiclare Memorial Public Library": {
       "board": [
@@ -1572,7 +1812,7 @@
       ],
       "boardUrl": "http://www.rosiclarelibrary.net/board-of-trustees",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Sallie Logan Public Library": {
       "board": [
@@ -1614,7 +1854,7 @@
       ],
       "boardUrl": "https://sallieloganlibrary.org/about-us/board-of-directors/",
       "heading": "Board of Directors",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Shawneetown Public Library": {
       "board": [
@@ -1657,7 +1897,7 @@
       ],
       "boardUrl": "https://shawneetownlibrary.org/board-members",
       "heading": "Board Members",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Silvis Public Library": {
       "board": [
@@ -1694,7 +1934,7 @@
       ],
       "boardUrl": "http://www.silvislibrary.org/about.php#board",
       "heading": "Silvis Library Board",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     },
     "Sparta Public Library": {
       "board": [
@@ -1724,7 +1964,24 @@
       ],
       "boardUrl": "https://www.spartapubliclibrary.com/about-us/board-of-trustees/",
       "heading": "Board of Trustees",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
+    },
+    "Stockton Township Public Library": {
+      "board": [
+        {
+          "name": "Jacquie Meli",
+          "role": "Secretary"
+        },
+        {
+          "name": "Peggy Drane"
+        },
+        {
+          "name": "Lillian Townsend"
+        }
+      ],
+      "boardUrl": "http://stocktonlibrary.org/trustees%2C-agendas%2C-foia",
+      "heading": "Library Board Of Trustees & Director",
+      "readOn": "2026-09-28"
     },
     "Virginia Memorial Public Library": {
       "board": [
@@ -1767,7 +2024,7 @@
       ],
       "boardUrl": "https://virginiamemorialpubliclibrary.com/board-of-trustees-and-library-staff/",
       "heading": "Library Board",
-      "readOn": "2026-09-25"
+      "readOn": "2026-09-28"
     }
   },
   "source": "Each library's own website"
