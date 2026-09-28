@@ -50,6 +50,47 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-28. #1239 IS GREEN ON THE ONE CONDITION I COULD NOT TEST LOCALLY, AND
+THERE ARE TWO COPIES OF THAT CHECK RATHER THAN THREE.** The theme check now fails
+when it reads no colour, and the run that mattered is CI's, because a local boot
+has MapLibre vendored and the PMTiles archive same-origin while a cold runner
+fetches both — which is exactly where a 25 s bound could have been tight. Read
+out of the `smoke` job's own log, Illinois's line at 23:57:43 prints
+`#2E8C6A -> #62DAAC`, the same pair as locally. **Since the assertion can no
+longer pass vacuously, a green run is now itself evidence that it measured**,
+which is the whole property being added.
+
+**READING THAT LOG TOOK THREE GOES AND THE FIRST TWO WERE MY OWN ERROR IN THE
+SAME SHAPE THIS FILE KEEPS RECORDING.** `tail_lines: 400` gave me the END of a
+six-instance job, so the only overlay line in it was `#8E2A22 -> #F97061` — which
+is SAN FRANCISCO'S, the pair Wisconsin's report quotes for `ca/`. I had Illinois's
+green conclusion and a colour from another instance, and nearly wrote the second
+as the first. What settled it was not my instance-attribution heuristic, which
+mislabels every line after the first match; it was the COLOURS, against a
+measurement I already had. **A tail is not a search, and a plausible line from a
+reader that cannot see the whole thing is the absence-of-evidence trap one level
+in.**
+
+**AND ONE OF MY OWN CLAIMS WAS WRONG ABOUT THE TREE.** The PR said "`ca/` and
+`ny/` carry their own copies". Measured across all six instances, the assertion
+exists in exactly TWO files — `scripts/smoke_test.mjs` and
+`ca/scripts/smoke_test.mjs`; `ny/`, `wi/`, `ia/` and `mi/` carry no
+`repaints a live overlay` check and no `overlayColor` reference at all, which is
+also why only two overlay lines appear in the whole browser run. So Wisconsin's
+"the two copies" was exact and my reading of it was loose. **The two do NOT yet
+agree**: as of main's `04d9d6d`, `ca/scripts/smoke_test.mjs:454` still carries the
+null short-circuit, so #1238 closed something adjacent and not this assertion.
+That instance is another session's remit and #1239 does not touch it — recorded
+rather than acted on, since keeping the pair in step was the reporting session's
+stated reason for handing the decision here in the first place.
+
+Also checked rather than assumed: main's four-commit lead is board files only and
+does not touch `scripts/smoke_test.mjs`, so the clean merge is semantically clean
+too — and asking `git diff HEAD origin/main -- <file>` answers that question
+WRONG, because it is symmetric and returns my own change; the directional read is
+against the merge base.
+
+
 **2026-09-27, LATE. #1239 IS UP: THE THEME CHECK NOW FAILS WHEN IT READS NO
 COLOUR.** Wisconsin handed me a finding in my own `scripts/smoke_test.mjs` and
 deliberately did not fix it, because what to do on a null is a statement about
