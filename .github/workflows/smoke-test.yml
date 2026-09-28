@@ -1297,6 +1297,24 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/scraper_common.py --selftest
 
+      # The fleet's one answer to "what is an ArcGIS error", and since 2026-09-28
+      # to "is this one a rate limit" — which decides whether a weekly refresh
+      # waits a minute or abandons a county. That day an ArcGIS "Too many
+      # requests" envelope ended a 486-unit Illinois refresh twelve seconds in,
+      # because the caller had forked this module's read and had no retry; the
+      # reading is here now, widened to the two wordings this project has actually
+      # met (neither of which recorded a code), with a bounded 5/15/45 ladder. Six
+      # importing callers, so a regression reaches six weekly rosters — and the
+      # ladder only ever runs in the rare condition it exists for, so a defect in
+      # it would surface weeks later in a job nobody watches. --selftest asserts
+      # both directions: both wordings and a 429 retryable, a shape error and a
+      # stray mention of "requests" not, the whole default ladder taken and then
+      # raised, and no wait at all on a shape error or a 404. Stdlib only, no
+      # network, every case a literal.
+      - name: A rate limit is still told apart from a service that errors
+        if: ${{ !cancelled() }}
+        run: python3 scripts/arcgis_error.py --selftest
+
       # The AFR parser's own proof, which EXISTED AND RAN NOWHERE until
       # 2026-09-27. It drives contact_block over fixture markup and covers the
       # only two places this module overrides a filing: LOCALITY_CORRECTIONS in

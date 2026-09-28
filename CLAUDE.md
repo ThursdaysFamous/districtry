@@ -86,8 +86,8 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
 them used. MEASURED 2026-09-28 on this branch, AFTER its last edit: a static gate is
-one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **94**;
-counted instead as script invocations the whole battery is **123 — 113 that need no browser and
+one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **95**;
+counted instead as script invocations the whole battery is **124 — 114 that need no browser and
 10 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`,
 2 root-page tests, and the two fleet-wide probes for point transmission and contrast pairs), the
 per-instance `validate_index.py` runs included, and excluding the two `npx playwright install`
@@ -115,6 +115,14 @@ merged the NAMED-STEP line SILENTLY at 65, because both sides wrote 65 and the m
 was caught at all. So run `validate_gate_counts.py` after every merge or rebase into a branch
 that touches the battery, not only after an edit that adds a gate — the pair moves when two
 correct changes meet, with nothing in either diff to look at.
+
+The 94/123 this paragraph carried earlier on 2026-09-28 was one step and one invocation behind the
+95/124 that replaced it: `scripts/arcgis_error.py` gained a `--selftest`, and CI gained a step to
+run it. That module has been the fleet's one answer to what an ArcGIS error IS since 2026-09-08 and
+had no test of its own; the day a rate-limit envelope ended a 486-unit Illinois refresh it also
+gained the reading that tells a limit from a shape change, and a ladder that only ever runs in the
+rare condition it exists for — untested, a defect in it would have surfaced weeks later in a
+weekly job nobody watches.
 
 The 92/121 this paragraph carried earlier on 2026-09-27 was one step and one invocation behind the
 93/122 that replaced it: `validate_qr_code.py` holds the engine's new QR block to an independent
@@ -202,8 +210,8 @@ each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-28, **123
-invocations for 123**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-28, **124
+invocations for 124**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on

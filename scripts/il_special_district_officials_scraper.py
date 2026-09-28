@@ -87,11 +87,13 @@ import re
 import sys
 import time
 import urllib.parse
+import urllib.request
 
 from comptroller_afr import (  # noqa: E402  (shared machinery — do not fork)
     PACE, SEARCH_FORM, WAREHOUSE, contact_block, enumerate_county, new_session)
-from scraper_common import (  # noqa: E402  (shared — do not fork)
-    UA_ROSTER_COMPACT, ArcGISError, arcgis_query_json)
+from arcgis_error import (  # noqa: E402  (shared — do not fork)
+    ArcGISServiceError, raise_for_arcgis_error, retry_rate_limited)
+from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared — do not fork)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DATA = os.path.join(REPO_ROOT, "il", "data", "app")
@@ -321,16 +323,33 @@ def service_names(spec, label):
     is not a service that errors; it is a service asking to be asked later, and
     treating the two alike cost the whole 486-unit sweep on 2026-09-28 — run 5 of
     update-il-special-district-officials, twelve seconds in, on Hamilton's fire
-    districts. scraper_common.arcgis_query_json carries that reading and the
-    bounded ladder for the fleet, beside fetch()'s own 429 rule; everything else
-    an envelope can say still fails here on the first answer.
+    districts. The fleet's `arcgis_error` module carries that reading and the
+    bounded ladder; everything else an envelope can say still fails here on the
+    first answer.
+
+    THIS FUNCTION READ THE ENVELOPE ITSELF UNTIL THEN, and it is neither of the
+    two cases that module's own survey describes. `arcgis_error` landed 2026-09-08
+    and lists the 6 callers then reading the member themselves and the 31 blaming a
+    county for it; this file was created 2026-09-11 (#857) and grew its own
+    envelope read the same day (#858), three days AFTER the module existed. So it
+    is a caller written past the shared answer that re-invented it — the thing
+    `validate_workflow_deps.FLEET_SHARED` exists to prevent, and which nothing
+    gates.
     """
     url = (spec["service"] + "/query?where=" + urllib.parse.quote(spec["where"])
            + "&outFields=" + spec["field"] + "&returnGeometry=false&f=json")
+
+    def ask():
+        with urllib.request.urlopen(
+                urllib.request.Request(url, headers={"User-Agent": UA_ROSTER_COMPACT}),
+                timeout=60) as r:
+            return raise_for_arcgis_error(
+                json.loads(r.read().decode("utf-8", "replace")), label)
+
     try:
-        payload = arcgis_query_json(url, {"User-Agent": UA_ROSTER_COMPACT}, label)
-    except ArcGISError as exc:
-        fail("%s: the service returned an error envelope — %s" % (label, exc))
+        payload = retry_rate_limited(ask, label)
+    except ArcGISServiceError as exc:
+        fail(str(exc))                             # its message already names `label`
     except Exception as exc:                       # noqa: BLE001 (reported, not swallowed)
         fail("%s: %s" % (label, exc))
     rows = payload.get("features") or []
