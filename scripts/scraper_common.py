@@ -77,6 +77,7 @@ imported inside fetch(), the one function that needs it.
 """
 import json
 import os
+import re
 import sys
 import time
 
@@ -261,6 +262,120 @@ def fetch(url, headers, timeout=60, attempts=5, retry_after_cap=30.0, verify=Non
                        % (url, attempts, last))
 
 
+# ArcGIS answers a rate limit with HTTP 200 and an error envelope, so fetch()'s
+# 429 rule above cannot see one: the body is what says slow down. A caller that
+# reads payload["error"] without asking WHICH error treats a transient as a
+# shape change and refuses to write.
+#
+# MEASURED 2026-09-28: update-il-special-district-officials run 5 aborted a
+# 486-unit weekly refresh twelve seconds in, on
+#     {"error": {"message": "Unable to perform query. Too many requests."}}
+# from services.arcgis.com, reading Hamilton County's fire districts. One
+# request to that same query 1h50m later answered HTTP 200 in 0.66s with all
+# three of the county's districts, so the condition was transient and the
+# refusal was right about the read and wrong about the cause. Whether this
+# project's own pacing provoked it is NOT established: that scraper puts 8 of
+# its 18 service queries on that one vendor host, a second apart, and the
+# limiter that answered is the host's.
+#
+# THE ENVELOPE'S OWN `code` WAS NOT OBSERVED, because the caller printed the
+# message alone — fixed in the same change. So both signals are accepted: a code
+# of 429, and a message naming too many requests. A message match is a vendor's
+# English wording and can move; the code cannot be relied on alone until one has
+# been seen, so neither is asked to carry this by itself.
+_ARCGIS_RATE_LIMIT = re.compile(r"too many requests", re.I)
+
+# Waits before re-asking a service that answered "too many requests". Bounded on
+# purpose: a persistent limit must FAIL a run rather than stall it. Four attempts
+# and 65s of waiting at worst.
+ARCGIS_RATE_LIMIT_BACKOFF = (5.0, 15.0, 45.0)
+
+
+def arcgis_error(payload):
+    """(code, message, rate_limited) for an ArcGIS error envelope, else None.
+
+    `code` is whatever the envelope carried, which may be None — an envelope
+    without one is still an error and is still reported.
+    """
+    err = payload.get("error") if isinstance(payload, dict) else None
+    if not isinstance(err, dict):
+        return None
+    message = str(err.get("message") or "")
+    code = err.get("code")
+    limited = code == 429 or bool(_ARCGIS_RATE_LIMIT.search(message))
+    return code, message, limited
+
+
+class ArcGISError(RuntimeError):
+    """An error envelope the caller must report in its own failure voice.
+
+    `str()` names the code and the message, and says so when the ladder was
+    exhausted — which is keyed on THIS answer being a rate limit, not on the
+    attempts having run out: a shape error that first appears on the last
+    attempt must not be reported as a limit.
+    """
+
+    def __init__(self, code, message, limited, attempts):
+        self.code, self.message = code, message
+        self.limited, self.attempts = limited, attempts
+        RuntimeError.__init__(self, str(self))
+
+    def __str__(self):
+        return ("code %r: %s%s"
+                % (self.code, self.message or "no message",
+                   " (still rate-limited after %d attempts)" % self.attempts
+                   if self.limited and self.attempts > 1 else ""))
+
+
+def arcgis_query_json(url, headers, label, timeout=60,
+                      backoff=ARCGIS_RATE_LIMIT_BACKOFF, opener=None):
+    """An ArcGIS query's parsed payload, re-asking only a rate limit.
+
+    STDLIB, not fetch(): these services are read on the urllib rung and
+    user-agent-measurements.json records the verdicts per rung, so switching the
+    stack is a measurement rather than a refactor.
+
+    A rate limit is re-asked with the waits in `backoff`, each one reported to
+    stderr so a run that only just got through says so. EVERY OTHER ENVELOPE
+    RAISES ArcGISError ON THE FIRST ANSWER — a name list a caller cannot read is
+    not a district that stopped filing, and smoothing the two together is how a
+    thinner payload ships. Every other failure (a non-429 HTTP error, a decode
+    error) propagates untouched.
+
+    A 5xx IS DELIBERATELY NOT RETRIED, though fetch() above retries one. It has
+    not been the observed condition here, and widening this to every transient
+    would re-open the distinction the paragraph above draws. `opener` is for the
+    selftest.
+    """
+    import urllib.error
+    import urllib.request
+
+    get = opener or (lambda u: urllib.request.urlopen(
+        urllib.request.Request(u, headers=headers), timeout=timeout))
+    attempts = len(backoff) + 1
+    for wait in tuple(backoff) + (None,):
+        try:
+            with get(url) as r:
+                payload = json.loads(r.read().decode("utf-8", "replace"))
+        except urllib.error.HTTPError as exc:
+            if exc.code != 429 or wait is None:
+                raise
+            print("  RATE LIMITED: %s — HTTP 429, re-asking in %.0fs"
+                  % (label, wait), file=sys.stderr)
+            time.sleep(wait)
+            continue
+        err = arcgis_error(payload)
+        if err is None:
+            return payload
+        code, message, limited = err
+        if limited and wait is not None:
+            print("  RATE LIMITED: %s — %s, re-asking in %.0fs"
+                  % (label, message or "no message", wait), file=sys.stderr)
+            time.sleep(wait)
+            continue
+        raise ArcGISError(code, message, limited, attempts)
+
+
 # --- Did anything move besides the timestamp? -------------------------------
 #
 # Nine Illinois data files carry a TOP-LEVEL `generated` stamp that is rewritten
@@ -416,7 +531,8 @@ def emit_changes_output(summary):
 # --- self-test ---------------------------------------------------------------
 
 def _selftest():
-    """Prove the what-moved line BOTH ways on doctored input.
+    """Prove the what-moved line BOTH ways on doctored input, and the ArcGIS
+    rate-limit reading in both directions.
 
     The failure this guards is silent in the worst way: a helper that always
     said "nothing moved" would read as a clean week forever, and a reviewer
@@ -502,6 +618,116 @@ def _selftest():
     except ValueError:
         pass
 
+    # 9. THE ARCGIS RATE-LIMIT READING, both directions. The failure this
+    #    guards is a transient aborting a weekly refresh (the 2026-09-28 run
+    #    above) and its mirror: a shape change waved through as "try again",
+    #    which would retry four times and then refuse anyway, having hidden the
+    #    real message behind a delay. So a non-rate-limit envelope must read
+    #    False, and a message that merely mentions requests must not match.
+    ok("no error key", arcgis_error({"features": []}), None)
+    ok("error is not a dict", arcgis_error({"error": "nope"}), None)
+    ok("not a dict at all", arcgis_error([]), None)
+    ok("shape error is not a rate limit",
+       arcgis_error({"error": {"code": 400,
+                               "message": "Unable to complete operation."}}),
+       (400, "Unable to complete operation.", False))
+    ok("the message measured on run 5, with no code",
+       arcgis_error({"error": {"message": "Unable to perform query. "
+                                          "Too many requests."}}),
+       (None, "Unable to perform query. Too many requests.", True))
+    ok("a 429 code carries it without the wording",
+       arcgis_error({"error": {"code": 429, "message": "Rate limit exceeded."}}),
+       (429, "Rate limit exceeded.", True))
+    ok("the wording is matched whatever its case",
+       arcgis_error({"error": {"code": 500,
+                               "message": "TOO MANY REQUESTS"}})[2], True)
+    ok("a message merely naming requests is not a rate limit",
+       arcgis_error({"error": {"code": 400,
+                               "message": "Invalid or missing input "
+                                          "requests."}})[2], False)
+    ok("an envelope with no message at all still reports",
+       arcgis_error({"error": {"code": 500}}), (500, "", False))
+
+    # 10. THE LADDER ITSELF, on stubbed answers. The classifier being right says
+    #     nothing about the call site — the distinction the note above
+    #     flatten_records already draws — and this ladder only ever runs in the
+    #     rare condition it exists for, so a defect in it would surface weeks
+    #     later in a job nobody is watching. `backoff` is zeros so the waits
+    #     cost nothing; what is asserted is how many re-asks happened, which the
+    #     stderr lines count.
+    import io
+    import urllib.error
+
+    class _Body(io.BytesIO):
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+
+    good = {"features": [{"attributes": {"NAME": "DAHLGREN FIRE DISTRICT"}}]}
+    limit = {"error": {"message": "Unable to perform query. Too many requests."}}
+    shape = {"error": {"code": 400, "message": "Unable to complete operation."}}
+
+    def drive(script):
+        """(payload or the ArcGISError/HTTPError raised, re-asks reported).
+
+        A script deliberately carries MORE answers than correct code consumes:
+        code that wrongly re-asked a shape error would otherwise run the
+        iterator out and crash, which reads as a broken selftest rather than as
+        the wrong behaviour it is.
+        """
+        it = iter(script)
+
+        def opener(url):
+            nxt = next(it)
+            if isinstance(nxt, int):
+                raise urllib.error.HTTPError(url, nxt, "boom", {}, None)
+            return _Body(json.dumps(nxt).encode())
+
+        err, real = io.StringIO(), sys.stderr
+        sys.stderr = err
+        try:
+            got = arcgis_query_json("https://example.invalid/0/query", {},
+                                    "hamilton fire", backoff=(0.0, 0.0, 0.0),
+                                    opener=opener)
+        except (ArcGISError, urllib.error.HTTPError) as exc:
+            got = exc
+        finally:
+            sys.stderr = real
+        reasks = [l for l in err.getvalue().splitlines() if "RATE LIMITED" in l]
+        return got, len(reasks)
+
+    got, reasks = drive([limit, good])
+    ok("one limit then success: payload", got, good)
+    ok("one limit then success: one re-ask", reasks, 1)
+
+    got, reasks = drive([429, good])
+    ok("HTTP 429 then success: payload", got, good)
+    ok("HTTP 429 then success: one re-ask", reasks, 1)
+
+    got, reasks = drive([limit, limit, limit, limit])
+    ok("persistent limit raises", isinstance(got, ArcGISError), True)
+    ok("persistent limit: three re-asks", reasks, 3)
+    ok("persistent limit says so",
+       str(got), "code None: Unable to perform query. Too many requests. "
+                 "(still rate-limited after 4 attempts)")
+
+    # THE GUARD THAT NOTHING WAS SOFTENED: a shape error must raise on the FIRST
+    # answer, with no waiting at all.
+    got, reasks = drive([shape] * 4)
+    ok("shape error raises at once", str(got), "code 400: Unable to complete operation.")
+    ok("shape error: no re-ask", reasks, 0)
+
+    got, reasks = drive([404] * 4)
+    ok("a 404 propagates untouched", isinstance(got, urllib.error.HTTPError), True)
+    ok("a 404: no re-ask", reasks, 0)
+
+    # A shape error that first appears on the LAST attempt is a shape error, not
+    # a limit that outlasted the ladder — the first draft keyed that suffix on
+    # the attempts running out and would have mislabelled this.
+    got, reasks = drive([limit, limit, limit, shape])
+    ok("shape error on the last attempt is not reported as a limit",
+       str(got), "code 400: Unable to complete operation.")
+    ok("shape error on the last attempt: three re-asks", reasks, 3)
+
     if fails:
         print("scraper-common selftest: FAIL", file=sys.stderr)
         for f in fails:
@@ -509,7 +735,10 @@ def _selftest():
         return 1
     print("scraper-common selftest: OK — the what-moved line is proven both "
           "ways (quiet week, changed record, add/remove, payload field, depth 3) "
-          "too deep refuses, too shallow stays correct but vaguer")
+          "too deep refuses, too shallow stays correct but vaguer; the ArcGIS "
+          "rate-limit reading says yes to the envelope measured on 2026-09-28 "
+          "and no to a shape error, and the ladder re-asks a limit, raises on "
+          "one that outlasts it, and never waits on a shape error or a 404")
     return 0
 
 
