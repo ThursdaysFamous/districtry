@@ -214,7 +214,19 @@ belongs on that instance's board instead.
 
 **AND I PUT TWO OF THOSE RUNS ON THE VENDOR THAT HAD JUST RATE-LIMITED US, WHICH IS THE ONE THING THIS EVENING'S WORK WAS ABOUT NOT DOING.** I made exactly one `run_workflow` call and it returned a single 204, and two runs appeared 26 seconds apart — run 6 at 22:34:23 and run 7 at 22:34:49, same head, both `workflow_dispatch`. Whether my one call fired twice or the tool retried under me is **not established and I am not guessing at it**; what is established is that for about two minutes two concurrent sweeps were pacing one request a second at the same eight hosts, fifteen of those eighteen requests at one vendor, three hours after that vendor refused us. Two further harms were in it: both runs force-push the same fixed `bot/il-special-district-officials-update` branch and both then try to open a pull request, so they race on the branch and one of them meets the `gh pr create` path that run 1 died on in September. I cancelled run 7 on sight and let run 6 carry the refresh. **The lesson is mine and it is about the shape of the action, not the tool:** a dispatch is an outbound request to somebody else's server, so it gets the same care as a fetch — read back what actually started before assuming one call made one run, and never dispatch a paced sweep twice while the question on the table is whether our own pacing provoked a limit.
 
-**State at close: no open pull requests, main green, two merged on this check-in.**
+**State at close: no open pull requests, main green, three merged this evening.**
+
+**2026-09-28 23:25 — The dispatched run recovered the week, and a fire district that named nobody now names two people.**
+
+**#1250 merged (`206f3949`), and this is the reader-facing half of the rate-limit fix.** The refresh that aborted at 19:31 ran to completion on the dispatch and opened its pull request; I reviewed and merged it rather than leaving it for Monday. **Macon County's Mt. Zion fire protection district card now names Ron Johnson and Paul Higar with a telephone, where it named nobody** — it had never matched the Comptroller's filings and now does. Ten more districts were re-read from newer filings, across Adams, Cook, Iroquois, McHenry, Monroe, Rock Island and St. Clair. The roster went 486 to 488 of 563 cards and 581 to 588 board officers.
+
+**Every changed name sits under an advanced filing year, which is the check that matters here.** A name that moves without the year moving is what a broken parser looks like; a name that moves with it is a district filing a newer Annual Financial Report. All eleven moved with it. One needed a closer look — a whole board slate shifting, with two names swapping slots and a third's capitalisation changing — and it holds: the year advanced, and that pattern is what a different person filling in the district's form produces.
+
+**I read the new names back out of the pages a reader downloads, independently of the gate that also checks it.** All six arrivals appear on the right page, twice each, once in the table and once in the machine-readable markup; all four departed spellings are gone from both pages.
+
+**One limit on what the run proved, stated because a green run invites the wrong reading.** No rate limit occurred during the sweep, so the retry ladder never fired. The run shows the change did not break the normal path and it recovered the week; the ladder itself is proven only by its selftest, which I broke three ways and watched fail correctly. Those are different claims and only the second is about the ladder.
+
+**State at close: no open pull requests, main green.**
 
 **2026-09-28 21:20 — Nineteen hours idle: the hourly check-ins queued and did not run. Adam merged five PRs himself; nothing was waiting on review and main never went red.**
 
