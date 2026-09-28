@@ -8,11 +8,15 @@ name: Update fire and park district officials
 # Which counties. The app draws fire protection districts in 26 counties and
 # park districts in 18. Peoria, Logan, Woodford, Grundy and Kankakee already
 # name their officers through their own AFR jobs, and Boone's park districts
-# come from the county's directory. This job covers 29 county/layer pairs: ten
-# whose boundaries ship as GeoJSON in this repo, and nineteen it reads from
-# the county's own ArcGIS service at scrape time, because that is where
+# come from the county's directory. This job covers 29 county/layer pairs:
+# ELEVEN whose boundaries ship as GeoJSON in this repo, and EIGHTEEN it reads
+# from the county's own ArcGIS service at scrape time, because that is where
 # il/index.html reads them at render time. A name in one and not the other
 # fails the run.
+#
+# That split read "ten ... and nineteen" until 2026-09-28, and the total being
+# right is what let it sit: counted off BOUNDARIES that day it is 11 and 18, one
+# out in each direction. The line below said seventeen for the same 18.
 #
 # Lake County's two entries render through a shared card helper rather than the
 # usual polygon entry, because its GIS carries each district's own office
@@ -27,7 +31,7 @@ name: Update fire and park district officials
 # Saturday 22:00. All pace themselves at one request a second. This is now the
 # longest of the seven, so it keeps the quiet Monday band.
 #
-# Roughly 800 paced requests: seventeen county services for the card names,
+# Roughly 800 paced requests: eighteen county services for the card names,
 # then a search per Warehouse county to verify every unit code in the table
 # still names the district it claims, then two pages per unit — the landing
 # page for the fiscal year it last filed for, then the contact block for that

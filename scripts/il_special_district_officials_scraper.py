@@ -91,6 +91,8 @@ import urllib.request
 
 from comptroller_afr import (  # noqa: E402  (shared machinery — do not fork)
     PACE, SEARCH_FORM, WAREHOUSE, contact_block, enumerate_county, new_session)
+from arcgis_error import (  # noqa: E402  (shared — do not fork)
+    ArcGISServiceError, raise_for_arcgis_error, retry_rate_limited)
 from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared — do not fork)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -98,8 +100,19 @@ APP_DATA = os.path.join(REPO_ROOT, "il", "data", "app")
 APP_HTML = os.path.join(REPO_ROOT, "il", "index.html")
 
 # One request a second to a county's own GIS, the same courtesy PACE gives the
-# Comptroller. These are nineteen different hosts, so the pacing is per host in
-# practice and the whole sweep costs under half a minute.
+# Comptroller, and the whole sweep costs under half a minute.
+#
+# IT USED TO SAY "nineteen different hosts, so the pacing is per host in
+# practice", AND THAT IS NOT WHAT BOUNDARIES HOLDS. Measured off the table below
+# on 2026-09-28: 18 service-backed pairs across EIGHT hosts — 8 of the 18 on
+# ArcGIS Online's services.arcgis.com, 7 on its siblings services1/3/6/7 (the
+# same vendor under other hostnames: 3, 2, 1, 1) and 3 on hosts the counties run
+# themselves (Cook, Lee, St. Clair). So the sweep does not spread one request per
+# host; it puts eight on one vendor hostname and fifteen on that vendor, a second
+# apart, and it is that vendor's limiter that answered the refusal recorded in
+# `service_names`. Per-host pacing would not help: the loop is sequential, so
+# consecutive requests are already a second apart whatever host they go to, and
+# keying the sleep per host could only make the shared host's share faster.
 SERVICE_PACE = 1.0
 
 # (county slug, layer) -> the shipped boundary file and the property the app
@@ -305,19 +318,40 @@ def service_names(spec, label):
     megabyte it would throw away. A service that errors FAILS the run — a name
     list this cannot read is not the same thing as a district that stopped
     filing, and the difference must not be smoothed into a thinner payload.
+
+    ONE ERROR IS EXEMPT, AND IT IS THE ONE THAT ABORTED A REFRESH. A rate limit
+    is not a service that errors; it is a service asking to be asked later, and
+    treating the two alike cost the whole 486-unit sweep on 2026-09-28 — run 5 of
+    update-il-special-district-officials, twelve seconds in, on Hamilton's fire
+    districts. The fleet's `arcgis_error` module carries that reading and the
+    bounded ladder; everything else an envelope can say still fails here on the
+    first answer.
+
+    THIS FUNCTION READ THE ENVELOPE ITSELF UNTIL THEN, and it is neither of the
+    two cases that module's own survey describes. `arcgis_error` landed 2026-09-08
+    and lists the 6 callers then reading the member themselves and the 31 blaming a
+    county for it; this file was created 2026-09-11 (#857) and grew its own
+    envelope read the same day (#858), three days AFTER the module existed. So it
+    is a caller written past the shared answer that re-invented it — the thing
+    `validate_workflow_deps.FLEET_SHARED` exists to prevent, and which nothing
+    gates.
     """
     url = (spec["service"] + "/query?where=" + urllib.parse.quote(spec["where"])
            + "&outFields=" + spec["field"] + "&returnGeometry=false&f=json")
-    try:
+
+    def ask():
         with urllib.request.urlopen(
                 urllib.request.Request(url, headers={"User-Agent": UA_ROSTER_COMPACT}),
                 timeout=60) as r:
-            payload = json.loads(r.read().decode("utf-8", "replace"))
+            return raise_for_arcgis_error(
+                json.loads(r.read().decode("utf-8", "replace")), label)
+
+    try:
+        payload = retry_rate_limited(ask, label)
+    except ArcGISServiceError as exc:
+        fail(str(exc))                             # its message already names `label`
     except Exception as exc:                       # noqa: BLE001 (reported, not swallowed)
         fail("%s: %s" % (label, exc))
-    if "error" in payload:
-        fail("%s: the service returned an error envelope — %s"
-             % (label, (payload["error"] or {}).get("message")))
     rows = payload.get("features") or []
     if not rows:
         fail("%s: the service returned no features" % label)

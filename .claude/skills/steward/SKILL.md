@@ -145,6 +145,7 @@ python3 wi/scripts/dropped_rings.py --selftest   # the dropped-ring mechanism, f
 python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped   # every declared dropped ring's AFTER answer, offline
 python3 wi/scripts/dropped_rings.py --check       # each declaration's `why` prose against its own m2 and verts, and each builder's FIDELITY_MAX_M against its GAP_CLOSED, across every declaring builder
 python3 scripts/scraper_common.py --selftest                # the nine AFR builders' what-moved line, both ways: silent on a stamp-only week, names the record on a real one
+python3 scripts/arcgis_error.py --selftest                   # a rate limit told apart from a shape error, both measured wordings and a 429; the 5/15/45 ladder taken then raised, never waited on a 404
 python3 scripts/comptroller_afr.py --selftest                # the AFR parser eight scrapers import: LOCALITY_CORRECTIONS all three ways, and the middle initial's comma corrected, printed, suffix left alone
 python3 scripts/validate_officeholder_names.py              # absolute: a shipped name that is a phone number, a party label or a page-footer fragment
 python3 scripts/check_roster_retention.py --base origin/main
