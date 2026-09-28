@@ -1571,7 +1571,11 @@ differ from 6a's in three ways, and each is in the code:
 - **They are at full detail** (the operator's choice). The apps' whole-set
   loader asks the server for a ~55 m simplification, because the raw set is
   about 40 MB a state. The archive is built from the raw set, so a card read
-  from the tile answers from the ZCTA as the Census drew it. The server cannot
+  from the tile answers from the ZCTA as the Census drew it. **That moves some
+  answers inside the state**, all of them toward the Census's own edges:
+  measured 2026-09-27 around Chicago, 0.49% of 3,514 km² over 218 ZCTAs and
+  0.71% of 1,426 km² over 140, the share depending on the box and largest for
+  the smallest ZCTAs. The server cannot
   answer a state's box whole at full detail: Illinois's 2,184 ZCTAs returned
   HTTP 500. So the mirror pages 250 at a time and refuses a set that does not
   add up to the server's own count.
@@ -1582,7 +1586,12 @@ differ from 6a's in three ways, and each is in the code:
   2,007 ZCTAs from New Jersey, Connecticut, Pennsylvania, Massachusetts and
   Vermont that had been counted by prefix before the build. The cost: a
   reader who clicks outside the state gets no ZIP card where the live layer
-  answered one. Inside the state every answer is unchanged.
+  answered one, and each app's `emptyNote` says the map holds its own state's
+  ZIP codes only rather than calling the place empty. The filter changes no
+  answer inside the state (every dropped ZCTA touching it holds 0.00 m² of it);
+  the full-detail switch above is what does, and an earlier version of this
+  paragraph said inside-state answers were unchanged, which was true of the
+  filter and false of the change.
 
 | App | Kept | Dropped | Archive | Full box would be |
 |---|---|---|---|---|

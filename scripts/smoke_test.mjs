@@ -780,6 +780,62 @@ try {
     await context.close();
   }
 
+  // 1i. A SELECTION GOES TO THE APP THAT ANSWERS THERE. Decided by state
+  //     outlines (ENGINE metro-portal + fleet-outlines.json), never by
+  //     rectangles: Illinois's box reaches into Iowa, sibling boxes overlap
+  //     over the Upper Peninsula, and the boxes claim states nobody serves.
+  //     One place for each of those, plus Gary, Indiana, which no instance
+  //     answers for and which must be selected HERE (the app says so) rather
+  //     than sent to an app with nothing to show. The sibling apps are stubbed:
+  //     a wrong route would otherwise leave for the real site.
+  {
+    const cases = [
+      { name: "Davenport, Iowa", lat: 41.52, lng: -90.58, want: "https://districtry.com/ia/" },
+      { name: "Marquette, Michigan", lat: 46.54, lng: -87.40, want: "https://districtry.com/mi/" },
+      { name: "Kenosha, Wisconsin", lat: 42.58, lng: -87.82, want: "https://districtry.com/wi/" },
+      { name: "Gary, Indiana", lat: 41.60, lng: -87.34, want: null },
+      { name: "the Loop", lat: 41.8825, lng: -87.6285, want: null },
+    ];
+    for (const c of cases) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, BASE, async (p) => {
+        await p.route("https://districtry.com/**", (route) =>
+          route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
+      });
+      await page.evaluate(({ lat, lng }) => {
+        const X = window.ChiExplorer;
+        X.map.fire("click", { latlng: window.L.latLng(lat, lng) });
+      }, c);
+      if (c.want) {
+        const went = await page.waitForURL((u) => u.href.startsWith(c.want + "#point="), { timeout: QUERY_TIMEOUT })
+          .then(() => page.url(), () => null);
+        const pt = went && /#point=([-\d.]+),([-\d.]+)/.exec(went);
+        check(`a click on ${c.name} from Illinois opens ${c.want} with the point`,
+          !!pt && Math.abs(+pt[1] - c.lat) < 1e-4 && Math.abs(+pt[2] - c.lng) < 1e-4, went || page.url());
+      } else {
+        const sel = await page.waitForFunction(() => !!window.ChiExplorer.state.selectedPoint, null, { timeout: QUERY_TIMEOUT })
+          .then(() => page.evaluate(() => window.ChiExplorer.state.selectedPoint), () => null);
+        check(`a click on ${c.name} is selected in Illinois, not handed off`,
+          !!sel && Math.abs(sel.lat - c.lat) < 1e-4 && page.url().startsWith(BASE), page.url());
+      }
+      await context.close();
+    }
+  }
+
+  // 1i2. THE ZIP CARD OUTSIDE THE STATE SAYS WHY IT IS EMPTY. The ZIP archive
+  //      holds Illinois's ZCTAs only (scripts/mirror_tiger_tiles.py), so Gary,
+  //      Indiana gets no ZIP code — and the card must say that is the map's
+  //      limit, never the generic "isn't inside any district", which would be
+  //      false of a point inside Indiana's 46402.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=41.60000,-87.34000&layers=zip-code`);
+    const zip = await cardText(page, "zip-code");
+    check("the ZIP card in Gary, Indiana says the map holds Illinois's ZIP codes only",
+      /Illinois's ZIP codes only/.test(zip.text) && !/isn't inside any district/.test(zip.text), zip.text);
+    await context.close();
+  }
+
   // 1h. THE REPORT FORM OPENS FROM A LINK. `#feedback=<text>` beside a point
   //     opens the form with that text filled in, counted once as opened by a
   //     link; "Copy a link to this form" hands back a link carrying the view

@@ -70,6 +70,7 @@ python3 scripts/build_county_board_offices.py --check  # ISBE addresses still ag
 python3 scripts/build_dark_map_palette.py --check
 python3 scripts/build_landing_page.py --check
 python3 scripts/build_coverage_map.py --check            # every instance's outline path resolves
+python3 scripts/build_fleet_outlines.py --check          # the hand-off's outlines match each instance's own
 python3 scripts/build_privacy_page.py --check
 python3 scripts/build_about_page.py --check              # /about.html vs the tree it describes; every number on it is read at build time
 python3 scripts/build_feedback_page.py --check           # /feedback.html, the report form every footer links, vs its generator

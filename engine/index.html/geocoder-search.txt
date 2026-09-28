@@ -74,17 +74,27 @@
     inFlightController = new AbortController();
     var signal = inFlightController.signal;
     // one UNBOUNDED whole-coverage query, classified into metros locally
-    // (siblingMetroAt) — exactly one extra request per home-metro miss no
-    // matter how many sibling metros exist; hits outside every sibling metro
+    // (fleetSiblingAt) — exactly one extra request per home-metro miss no
+    // matter how many sibling metros exist (plus fleet-outlines.json, once
+    // per page load); hits outside every sibling metro
     // are dropped. geocodeUnbounded is the fork's provider (the home search
     // box may be scoped to the city, so this lookup needs its own wider call).
+    // Each hit is classified by the same fleet outlines a click is
+    // (ENGINE metro-portal), so a searched address and a clicked one go to
+    // the same app; only if that file cannot be read do the boxes decide.
     return geocodeUnbounded(query, signal)
       .then(function (results) {
+        return loadFleetOutlines().then(function () { return { results: results, outlines: true }; },
+          function () { return { results: results, outlines: false }; });
+      })
+      .then(function (got) {
         if (signal.aborted) return;
+        var results = got.results;
         var perMetro = {}; // id -> rows rendered
         var labels = [];
         results.forEach(function (r) {
-          var metro = siblingMetroAt(parseFloat(r.lat), parseFloat(r.lon));
+          var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
+          var metro = got.outlines ? fleetSiblingAt(lat, lng) : siblingMetroAt(lat, lng);
           if (!metro) return; // not inside any sibling metro
           perMetro[metro.id] = (perMetro[metro.id] || 0) + 1;
           if (perMetro[metro.id] > SIBLING_ROWS_PER_METRO) return;
