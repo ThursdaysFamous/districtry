@@ -194,6 +194,79 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-28 01:10 — The night's last merge: an app now hands a reader to the right sibling by state outlines, and a ZIP card outside the state says why it is empty. Nine merged today. A Census outage is holding one bot roster.**
+
+**#1236 merged (`469f0fd`), and the two blockers I named on it were both cleared by the author rather than by me.**
+Their merge of main took the duplicate `ca/scripts/smoke_test.mjs` change out of the diff — main
+already carried #1238's and my #1234's — and restated the gate pair. I verified on a tree with
+today's main merged in, not on their head, which mattered: main gained five commits after they
+merged, one of them touching `scripts/smoke_test.mjs`, which their commit 1 also touches. Git
+merged those two silently at +56 from them and +62 from main, so I ran that test rather than
+trusting the clean merge — **all Illinois smoke checks pass on the merged result**. 113 of 113
+no-browser invocations green; `validate_gate_counts.py` reads 94 named steps and 123 invocations
+(113 no browser, 10 Chromium), both readings agreeing.
+
+**What a reader gets.** Before this, which app a selected point belongs to was decided by
+rectangles, and 79 selections out of 35 real places went to the wrong app: clicking Davenport or
+Dubuque from Illinois did nothing because Illinois's box reaches -91.55, Chicago and Milwaukee
+never handed off from Michigan because its box crosses Lake Michigan, and Gary, St. Louis,
+Hartford and Newark were sent to apps that answer nothing there. Every selection is now settled
+against each instance's own published outline, and a point nobody covers is told so rather than
+routed on a guess. The ZIP card outside the state used to say "this point isn't inside any
+district in this layer", which is false of a point inside an Indiana ZIP; each of the six now says
+the map holds that state's ZIP codes only.
+
+**I verified their one new geographic claim rather than reading it.** `mi/WATCH.md` now says
+Michigan's hand-off outline reaches the same -90.42 west edge as the bbox and still contains none
+of the four sibling city centres. From the shipped `fleet-outlines.json` alone: west edge
+**-90.4184**, Chicago, Milwaukee, Green Bay and Madison all outside, and both controls — Marquette
+and Detroit — inside. Every part reproduces. A claim that names its controls is a claim a reviewer
+can check, which is the whole reason to write one that way.
+
+**One stale figure noted and not held.** The PR body still says 93/122 and "112 offline checks",
+from before their own merge commit restated them. The tree says 94/123 and passes its own gate,
+which is what governs; I said so on the PR so the body's number is not later read as a measurement
+of this change.
+
+**#1242 (Illinois) verified and waiting on its smoke run — their answer to the Peoria docstring I
+routed tonight, and they did the harder thing with it.**
+The docstring named three districts as filing no board officer; two do. Rather than correct the
+list they DERIVED it: `counts_line()` is computed once from the reading both paths already use and
+printed on the write path and on `--check`, and the docstring points at that line and quotes no
+figure. It keeps the history of its own two errors — #818 found it naming two of three, #1237
+found it naming three where there are two, wrong in opposite directions — which is the right
+treatment, the same way this project keeps a disproved sentence under its correction. The printed
+line reproduces exactly from the shipped file: `18 district(s), 30 board officer(s), 7 appointed,
+16 with an office; 2 with no board officer: ALPHA PARK LBRY DIST, PLEASURE DRIVEWY PKD`. 113 of
+113 green on their tree with main merged in.
+
+**Their lowercase-address measurement holds, and I checked it with a wider net than theirs.**
+They claim `511 n Main Street` is the filer's own text rather than a casing function, on 3 of
+1,038 AFR-derived addresses. Scanning every address field in all of Illinois's app and source
+JSON — 2,299 fields — I find the same three (a fourth match is my own regex catching the `s` in
+`St. John's`), two of them a different unit in a different file exactly as they say. The control
+settles it: `3527 S Airport Rd`, `302 S First St` and `9424 S. Mapleton Rd` all keep their capital
+in the same file. A casing function would have taken those too. So the address stays as filed,
+which is the honesty rule applied to a character.
+
+**#1241 (bot, Logan park district officials) is red on `tiles` and it is not this PR's failure.**
+23 layers failed the card probe with `could not fetch the mirrored set to place points` and an
+HTML body where JSON was expected. Every failing layer is Census-fabric — county subdivision,
+municipality, the school districts, ZIP. The discriminator is not a base-branch run, because
+`vector-tiles.yml` only ever runs on pull requests and has no main run to compare: it is that run
+35 on #1236's head passed at 00:23 and run 36 on this head failed at 00:30, seven minutes later,
+and this PR's whole diff is one roster JSON file that cannot reach a Census fetch. I re-ran the
+failed job once — my one permitted re-run — rather than merging a red PR or calling a Census
+outage a flake. **If it fails again the PR waits**: the roster change is a week's worth of Logan
+park officials and costs nothing to hold overnight, where merging past a red probe would put a
+tile archive's card answers on trust.
+
+**Housekeeping done rather than left.** 23 review worktrees removed and every background server
+killed: scratch is 6.9 G down to 1.2 G, and ports 8011, 8012, 8021, 8022 and 8036 are closed. The
+sandbox has a fixed disk allowance and a review worktree is 300 MB, so this is the difference
+between tomorrow's first review running and failing on "no space left on device".
+
+
 **2026-09-27 19:55 — Two merges, and a 36-file change went in without the review. Readers in Wisconsin Dells get a ward they were told did not cover them.**
 
 **#1228 merged (`a265c71`), and I measured the reader's ANSWER rather than the vertex stray.**
