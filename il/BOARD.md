@@ -51,6 +51,57 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-28, LATE. #1248 MERGED (`0483e6b`) AND THE DISPATCHED RUN IS THE WITNESS
+IT WAS OPENED FOR.** Main's own smoke run on the merge is green (36493131266,
+22:33:53 to 22:47:43), read from the run rather than inferred, because merging
+auto-unsubscribed this session. `update-il-special-district-officials` run 6,
+dispatched at 22:34, then did what run 5 could not: its scrape step ran **22m53s
+against run 5's twelve seconds**, and every later step RAN where run 5 skipped
+them — rebuild, validate, check for changes, open pull request. **That posture is
+the point rather than the conclusion**: this workflow forgives a step, so a green
+run is not evidence it did its work, and the step timings are.
+
+**THE ABORT HAD A MEASURABLE COST, WHICH THE RUN NOW NAMES.** #1250 carries one
+added record and ten changed, in Macon, Adams, Cook (three park districts),
+Iroquois, McHenry, Monroe, Rock Island and St. Clair (two) — eleven bodies whose
+officers, office or contact details moved and would have sat a week stale. It is
+an ordinary roster PR and waits on review like any other.
+
+**WHETHER THE LADDER ITSELF FIRED IN THAT RUN IS NOT ESTABLISHED.** The log tail I
+could read starts after the scrape, so I cannot say whether any
+`RATE LIMITED: … re-asking in Ns` line appeared, and I am not implying either way.
+What the run proves is that the sweep completes end to end with the new path in
+place; the ladder's behaviour is proven by its selftest and by the stubbed and live
+runs recorded on the PR.
+
+**THE CHANGE I FIRST WROTE WAS A FORK, AND THAT IS THE FINDING WORTH KEEPING.** My
+first commit put the rate-limit reading in `scraper_common`. `scripts/arcgis_error.py`
+has owned "what is an ArcGIS error" since 2026-09-08; it is one of the five modules
+`validate_workflow_deps.FLEET_SHARED` names, and the comment there states the test
+my own commit failed — "What an ArcGIS error IS must not be answered differently
+per instance". Mine was a second answer in the same tree, and it disagreed with the
+first about what a rate limit is. **`is_rate_limit` had asked the code alone**, and
+that cannot be relied on for either rate limit this project has met: neither caller
+recorded a code, Logan's 2026-09-08 wording carries no "too many requests" and
+Hamilton's carries no "quota". Both signals are read now, each wording quoted from
+the run that produced it, and the module has a `--selftest` in CI for the first
+time — the pair moved 94/123 to 95/124, re-measured, superseded pair recorded.
+
+**AND NOTHING GATES THE FORK.** FLEET_SHARED is prose; no check fails when a new
+caller reads `payload["error"]` itself. The scraper was created three days AFTER
+the module and grew its own read the same day, so that module's survey was complete
+when it was made and the fork arrived past it. A candidate list of other files in
+the same shape is recorded in `arcgis_error.py` — explicitly a list to read one by
+one, never a count, because the sweep that finds them also matches error members
+with nothing to do with ArcGIS.
+
+**ONE TOOL READING IS WORTH RECORDING BEFORE IT COSTS SOMEBODY AN HOUR.** The same
+filtered `actions_list` query answered `total_count: 346` with rows from 2026-09-06
+once, between two calls that answered `1768` with current rows — same parameters
+each time, so it is neither `minimal_output` nor `perPage`. A single reading of that
+endpoint can be stale and the small total is the only tell. Reading a run by its own
+id sidesteps it.
+
 **2026-09-28, LATER. #1243 MERGED (`38661f2`) AND MAIN IS GREEN ON IT** — read
 from the run (36428918433, success 13:28:56 to 13:41:04 UTC) rather than inferred
 from the merge, because merging auto-unsubscribed this session and a red main
