@@ -37,6 +37,9 @@ reported as:
                rebuilt anything, so how long since it refreshed is a floor
     SILENT   — old enough to have run, and never has
     DISABLED — switched off, so it is not refreshing anything
+    ROBOTS-REFUSED
+             — it is red because its scraper read the host's robots.txt and
+               declined, which is the correct outcome; reported, never chased
     NEW      — added too recently for its cron to have fired (not a problem)
     ON-DEMAND— it declares no schedule at all, so it has no cadence to be late
                against; watched for a red run and never for staleness
@@ -109,19 +112,29 @@ schedule to be late for. The test is the workflow's own trigger set rather than 
 name on a list, so the next manual diagnostic is classified right on the day it
 ships.
 
-NO EXPECTED-FAILURE LIST, AND THAT IS A MEASUREMENT NOT AN OVERSIGHT. The two
-counties known to block every automated client — Kendall and McHenry — do NOT
-red their runs: their scrape step carries continue-on-error and feeds a standing
-issue, so those workflows are green by design and this watchdog is silent about
-them. Nothing else is currently expected to fail. If something ever is, it earns
-an entry here the way validate_sources.py's `blocked` flag and
-validate_card_links.py's EXPECTED_UNREACHABLE did — by being measured first, and
-with the same inversion, so that RECOVERING becomes the reportable event.
+THERE IS ONE EXPECTED-FAILURE CLASS NOW, AND IT IS A REFUSAL RATHER THAN A BLOCK.
+This paragraph used to say there was none and to predict what one would have to
+look like — "measured first, and with the same inversion, so that RECOVERING
+becomes the reportable event". That came due on 2026-09-25: ISBE publishes
+`User-agent: * / Disallow: /`, il_county_clerk_scraper.py asks before its first
+fetch and stops, and `update-county-clerk-roster` has been red ever since for the
+one reason that is not a defect. ROBOTS_DECLINED below carries it, on those terms.
+
+THE TWO COUNTIES THAT BLOCK EVERY AUTOMATED CLIENT ARE A DIFFERENT CASE and are
+still not in any list here: Kendall and McHenry do NOT red their runs — their
+scrape step carries continue-on-error and feeds a standing issue, so those
+workflows are green by design and it is the WITNESS reading above, not an
+expected-failure entry, that keeps this file honest about them. An outage and a
+refusal do not want the same treatment, which is the distinction
+validate_sources.py draws between its `blocked` flag and its `robots_declined`
+one: `blocked` fetches first and inverts the report afterwards, which is right
+for an outage and wrong where the request is itself the thing being asked for.
 
 Usage:
     python3 scripts/check_roster_workflow_health.py                  # needs GH_TOKEN
     python3 scripts/check_roster_workflow_health.py --report r.md --status-file s.txt
     python3 scripts/check_roster_workflow_health.py --list           # offline: what it watches
+    python3 scripts/check_roster_workflow_health.py --selftest       # offline: the verdicts
 """
 
 import argparse
@@ -138,9 +151,62 @@ import urllib.request
 # asks the same module the same question.
 import workflow_run_evidence
 
+# WHICH HOSTS REFUSE THIS PROJECT IS NOT RE-MEASURED HERE, and that is deliberate.
+# validate_card_links.py already owns that question: its ROBOTS_DECLINED entries
+# are measured refusals, its monthly run re-reads each host's robots.txt through
+# `robots_policy` as the client this fleet crawls as, and its inversion is already
+# the right way round — the refusal is expected, the LIFTING is the WARN. A second
+# robots reader here would be two readers of one question, which is where this
+# repository's recurring defect starts. So the table below names workflows and
+# defers to that record for whether the host still refuses.
+from validate_card_links import ROBOTS_DECLINED as MEASURED_REFUSALS
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WORKFLOW_DIR = os.path.join(REPO_ROOT, ".github", "workflows")
 API = "https://api.github.com"
+
+# A WORKFLOW WHOSE SCRAPER DECLINES A HOST THAT REFUSES US IS NOT A BROKEN
+# REFRESH, and reporting it as FAILING makes the one correct outcome look like
+# the bug. `update-county-clerk-roster` is the case: ISBE publishes
+# `User-agent: * / Disallow: /`, il_county_clerk_scraper.py asks before its first
+# fetch and stops, the step exits non-zero, and the run is red — every part of
+# that is this project obeying a refusal it measured. The roster is NOT emptied
+# (Adam's ruling of 2026-09-19: a refusal stops the FETCH and never unpublishes),
+# so the shipped file keeps its 101 clerks and the only thing that has stopped is
+# the weekly re-read.
+#
+# NOTHING IS FORGIVEN TO GET THIS. The step still fails, `continue-on-error` is
+# not widened, and the verdict does not read a run conclusion — it reads WHICH
+# STEP failed, which is the same question #68 taught this file to ask. An entry
+# names the workflow AND the step AND the host, so it cannot cover a different
+# failure in the same workflow: a red pip install, a broken builder or a failing
+# gate is a different step and still reads FAILING.
+#
+# WHY THE STEP'S OWN FAILURE IS ENOUGH TO ATTRIBUTE IT. `require_robots_allowed`
+# RAISES rather than returning false, and the audit below holds that the named
+# script still calls it and still names the host, while MEASURED_REFUSALS holds
+# that the host still refuses. Given those, that step cannot succeed — so its
+# failure is explained. What this does NOT establish is that the step has no
+# SECOND problem waiting behind the refusal; the day the refusal lifts, the entry
+# fails as stale and someone reads the run, which is the right time to find out.
+#
+# EVERY ENTRY IS RE-AUDITED EVERY RUN and FAILS when it stops describing the
+# tree — the property ACCEPTED_DROPS, EXPECTED_UNREACHABLE and
+# ACCEPTED_SHORTFALLS already have. The row is PRINTED either way, so a reader
+# sees the refusal rather than a workflow quietly missing from the report.
+ROBOTS_DECLINED = {
+    "update-county-clerk-roster.yml": {
+        "host": "www.elections.il.gov",
+        "script": "scripts/il_county_clerk_scraper.py",
+        "step": "Scrape the ISBE election-authority directory",
+        "since": "2026-09-25",
+        "why": "ISBE's robots.txt is 29 bytes of `User-agent: * / Disallow: /` under "
+               "a Last-Modified of 12 June 2025, so it has refused this project for "
+               "over a year; a byte-order mark hid it from the fleet's own reader "
+               "until 2026-09-25. Run 11 (2026-09-19) was the last green one and run "
+               "12 (2026-09-26) is the first to decline",
+    },
+}
 
 # Workflows that are not data refreshes. Everything else in the directory is
 # watched, which is what keeps a new county from being forgotten.
@@ -187,7 +253,8 @@ WITNESS_RUN_LIMIT = 8
 # Worst first. A verdict missing here raises on sort rather than ordering
 # silently, which the selftest holds against everything classify can return.
 VERDICT_ORDER = {"FAILING": 0, "DISABLED": 1, "STALE": 2, "SILENT": 3,
-                 "UNMEASURED": 4, "UNPROVEN": 5, "NEW": 6, "ON-DEMAND": 7, "OK": 8}
+                 "UNMEASURED": 4, "UNPROVEN": 5, "ROBOTS-REFUSED": 6, "NEW": 7,
+                 "ON-DEMAND": 8, "OK": 9}
 
 def discover():
     """Refresh workflows on disk: (filename, name, cadence, scripts, witness).
@@ -271,8 +338,75 @@ def parse_ts(s):
     return datetime.datetime.fromisoformat(s).astimezone(datetime.timezone.utc)
 
 
+def audit_robots_declined(watched):
+    """Re-check every ROBOTS_DECLINED entry against the tree. Returns problems.
+
+    Offline and complete: each entry must still name a workflow this file watches,
+    that workflow must still RUN the named script and still declare the named
+    step, the script must still exist, still name the host and still call the
+    shared robots gate, and the host must still be in the fleet's own record of
+    measured refusals. Any of those failing means the entry has outlived its
+    cause, which is exactly the three orphan conditions this class was ruled to
+    carry — the workflow gone, the host no longer declined, or the scraper no
+    longer reading that host — plus the two that make the attribution readable.
+
+    A PROBLEM FAILS THE CHECK rather than warning, because an entry nobody has
+    re-read is an entry that can excuse a real breakage. The host LIFTING its
+    refusal is a WARN in validate_card_links.py, where the probe lives; here it
+    arrives as this failure, the moment somebody acts on that warning and takes
+    the host out of MEASURED_REFUSALS.
+    """
+    by_file = {row[0]: row for row in watched}
+    problems = []
+    for fn, dec in sorted(ROBOTS_DECLINED.items()):
+        where = "ROBOTS_DECLINED[%r]" % fn
+        row = by_file.get(fn)
+        if row is None:
+            problems.append("%s names a workflow this file does not watch — it has "
+                            "left .github/workflows/ or joined NOT_A_REFRESH; retire "
+                            "the entry" % where)
+            continue
+        path = os.path.join(WORKFLOW_DIR, fn)
+        with open(path, encoding="utf-8") as f:
+            wf_src = f.read()
+        if not re.search(r"python3\s+" + re.escape(dec["script"]), wf_src):
+            problems.append("%s says the workflow runs %s and it no longer does — "
+                            "re-read the workflow before trusting the entry"
+                            % (where, dec["script"]))
+        names = {s["name"] for s in workflow_run_evidence.workflow_steps(wf_src)}
+        if dec["step"] not in names:
+            problems.append("%s names the step %r, which the workflow no longer "
+                            "declares — a renamed step would make every failure in "
+                            "this workflow read FAILING again, so fix the entry"
+                            % (where, dec["step"]))
+        script_path = os.path.join(REPO_ROOT, dec["script"])
+        if not os.path.exists(script_path):
+            problems.append("%s names %s, which is not in the tree"
+                            % (where, dec["script"]))
+        else:
+            with open(script_path, encoding="utf-8") as f:
+                sc_src = f.read()
+            if dec["host"] not in sc_src:
+                problems.append("%s says %s reads %s and that host is not named in it "
+                                "any more — the scraper has been re-sourced; retire "
+                                "the entry" % (where, dec["script"], dec["host"]))
+            if "require_robots_allowed" not in sc_src:
+                problems.append("%s says %s declines, and it no longer calls "
+                                "require_robots_allowed — whatever is failing there "
+                                "now is not a refusal"
+                                % (where, dec["script"]))
+        if dec["host"] not in MEASURED_REFUSALS:
+            problems.append("%s names %s, which validate_card_links.ROBOTS_DECLINED "
+                            "no longer records as refusing us. Either the host "
+                            "answers again — in which case this workflow's red run "
+                            "is a real failure — or the two records have drifted"
+                            % (where, dec["host"]))
+    return problems
+
+
 def classify(runs, cadence, now, created=None, state=None, code_at=None,
-             witness=None, verified_at=None, floor_age=None):
+             witness=None, verified_at=None, floor_age=None,
+             declined=None, failed_step=None):
     """(verdict, detail) for one workflow's recent runs, newest first.
 
     `witness` names the step whose running proves this workflow did its work, and
@@ -325,6 +459,19 @@ def classify(runs, cadence, now, created=None, state=None, code_at=None,
         detail = "latest run %s on %s; last success%s %s" % (
             latest.get("conclusion"), when.date().isoformat(), did,
             "never" if age is None else "%d days ago" % age)
+        # A CORRECT REFUSAL IS NOT A BROKEN REFRESH. The verdict rests on WHICH
+        # STEP failed, never on the run's conclusion, and only the step the entry
+        # names clears it: anything else failing in this workflow still reads
+        # FAILING. An unreadable jobs payload arrives here as `failed_step=None`,
+        # so unknown reads as "not explained" rather than as expected.
+        if declined is not None and failed_step and failed_step == declined["step"]:
+            return ("ROBOTS-REFUSED",
+                    "`%s` declines %s, which refuses this project, and the run "
+                    "stopped at that step (`%s`) on %s. The shipped file keeps what "
+                    "it last read — a refusal stops the fetch and never unpublishes. "
+                    "Recorded since %s: %s"
+                    % (declined["script"], declined["host"], declined["step"],
+                       when.date().isoformat(), declined["since"], declined["why"]))
         # The red predates its own fix: the code has been edited since it ran,
         # so nothing has yet tested whether the failure survives.
         if code_at is not None and code_at > when:
@@ -428,7 +575,72 @@ def selftest():
           "ON-DEMAND")
     check("every verdict classify can return is orderable",
           sorted({"FAILING", "DISABLED", "STALE", "SILENT", "UNMEASURED",
-                  "UNPROVEN", "NEW", "ON-DEMAND", "OK"} - set(VERDICT_ORDER)), [])
+                  "UNPROVEN", "ROBOTS-REFUSED", "NEW", "ON-DEMAND", "OK"}
+                 - set(VERDICT_ORDER)), [])
+
+    # THE ROBOTS-REFUSED CLASS. The entry is the real one; what varies is which
+    # step the run failed at, which is the whole of the attribution.
+    dec = ROBOTS_DECLINED["update-county-clerk-roster.yml"]
+    red = [run(1, "failure")] + weekly
+    check("the named step failing reads ROBOTS-REFUSED",
+          classify(red, 7, now, declined=dec, failed_step=dec["step"])[0],
+          "ROBOTS-REFUSED")
+    check("that verdict names the host and says the file keeps its last read",
+          dec["host"] in classify(red, 7, now, declined=dec,
+                                  failed_step=dec["step"])[1]
+          and "never unpublishes" in classify(red, 7, now, declined=dec,
+                                              failed_step=dec["step"])[1], True)
+    # THE HALF THAT KEEPS THE ENTRY HONEST: one entry must not cover a different
+    # failure in the same workflow.
+    check("a DIFFERENT step failing still reads FAILING",
+          classify(red, 7, now, declined=dec,
+                   failed_step="Validate app + data files")[0], "FAILING")
+    check("an unreadable jobs payload reads FAILING, not expected",
+          classify(red, 7, now, declined=dec, failed_step=None)[0], "FAILING")
+    check("a workflow with no entry is unaffected by a step name",
+          classify(red, 7, now, declined=None, failed_step=dec["step"])[0],
+          "FAILING")
+    # A red run is what the entry explains; a green one needs no explaining.
+    check("a green run carrying an entry is still OK",
+          classify(weekly, 7, now, declined=dec, failed_step=None)[0], "OK")
+    # An UNPROVEN downgrade must not outrank it: the code moving does not make the
+    # next run any likelier to succeed while the host still refuses.
+    check("ROBOTS-REFUSED outranks the UNPROVEN downgrade",
+          classify(red, 7, now, code_at=now, declined=dec,
+                   failed_step=dec["step"])[0], "ROBOTS-REFUSED")
+
+    # THE AUDIT, on this tree and then broken on purpose six ways. A check that
+    # has never failed has not been tested, and every one of these is a state the
+    # entry could really reach.
+    watched_now = discover()
+    check("every ROBOTS_DECLINED entry still describes the tree",
+          audit_robots_declined(watched_now), [])
+
+    def audit_with(entry, key="update-county-clerk-roster.yml"):
+        global ROBOTS_DECLINED
+        keep = ROBOTS_DECLINED
+        ROBOTS_DECLINED = {key: entry}
+        try:
+            return " | ".join(audit_robots_declined(watched_now))
+        finally:
+            ROBOTS_DECLINED = keep
+
+    check("an entry naming an unwatched workflow fails",
+          "does not watch" in audit_with(dec, key="no-such-workflow.yml"), True)
+    # NOT build_sitemap.py: this workflow really does run that one, in its PR
+    # step, so the first draft of this assertion passed for the wrong reason.
+    check("an entry whose workflow no longer runs the script fails",
+          "no longer does" in audit_with(
+              dict(dec, script="scripts/validate_contrast.py")), True)
+    check("an entry naming a step the workflow no longer declares fails",
+          "no longer declares" in audit_with(dict(dec, step="Scrape it")), True)
+    check("an entry naming a script that is not in the tree fails",
+          "not in the tree" in audit_with(dict(dec, script="scripts/gone.py")), True)
+    check("an entry whose host the scraper no longer names fails",
+          "not named in it" in audit_with(dict(dec, host="example.invalid")), True)
+    check("an entry whose host is no longer a measured refusal fails",
+          "no longer records as refusing us" in audit_with(
+              dict(dec, host="example.invalid")), True)
 
     # The witness derivation is workflow_run_evidence's and tested there; what
     # this asserts is that THIS file's watched set still finds the six, because a
@@ -442,13 +654,21 @@ def selftest():
             print("check-roster-health FAIL — " + line, file=sys.stderr)
         return 1
     print("check-roster-health --selftest: OK — %d assertions, %d watched workflow(s) "
-          "carrying a witness step" % (len(ran), len(witnessed)))
+          "carrying a witness step, %d declining a host that refuses us"
+          % (len(ran), len(witnessed), len(ROBOTS_DECLINED)))
     return 0
 
 def main():
     ap = argparse.ArgumentParser()
+    # THE FALLBACK IS THE REPOSITORY'S CURRENT SLUG, and it was the pre-rename one
+    # until 2026-09-28. Inside Actions GITHUB_REPOSITORY is always set, so the
+    # weekly job was never affected — which is exactly why it went unnoticed: the
+    # default is reached only by a hand-run, where it answered HTTP 403 on all 132
+    # workflows and reported "0 watched" under a WARN. A stale default is worse
+    # than none, because the failure reads as the API refusing rather than as the
+    # wrong address being asked.
     ap.add_argument("--repo", default=os.environ.get("GITHUB_REPOSITORY",
-                                                     "ThursdaysFamous/DistrictExplorer-CHI"))
+                                                     "ThursdaysFamous/districtry"))
     ap.add_argument("--report")
     ap.add_argument("--status-file")
     ap.add_argument("--list", action="store_true",
@@ -534,9 +754,30 @@ def main():
                     break
                 # It ran and rebuilt nothing, so the true age is at least this old.
                 floor_age = (now - parse_ts(run["created_at"])).days
+        # WHICH STEP failed, for a workflow whose scraper declines a host that
+        # refuses us. One request, and only when an entry exists AND the newest
+        # completed run is red — so the ordinary case costs nothing. The newest
+        # COMPLETED run is the same one classify reads; taking runs[0] would ask
+        # about a run still in flight.
+        declined = ROBOTS_DECLINED.get(fn)
+        failed_at = None
+        done = [r for r in runs if r.get("status") == "completed"]
+        if (declined is not None and done
+                and done[0].get("conclusion") not in ("success", "cancelled",
+                                                      "skipped")):
+            try:
+                jobs = api_get("/repos/%s/actions/runs/%s/jobs"
+                               % (args.repo, done[0].get("id")), token)
+            except Exception:                                     # noqa: BLE001
+                # Unreadable is unknown, and unknown is not expected: with no
+                # step name the verdict falls through to FAILING.
+                jobs = None
+            if jobs is not None:
+                failed_at = workflow_run_evidence.failed_step(jobs)
         verdict, detail = classify(runs, cad, now, created, state,
                                    code_changed_at(fn, own.get(fn, [])),
-                                   witness, verified_at, floor_age)
+                                   witness, verified_at, floor_age,
+                                   declined, failed_at)
         url = runs[0]["html_url"] if runs else None
         rows.append((verdict, fn, name, detail, url))
 
@@ -545,10 +786,21 @@ def main():
     # county that shipped this week has done nothing wrong.
     # ON-DEMAND joins NEW as reported-for-context: a hand-run diagnostic that has
     # not been hand-run is not a frozen roster and must not hold the issue open.
-    bad = [r for r in rows if r[0] not in ("OK", "NEW", "ON-DEMAND")]
+    # ROBOTS-REFUSED joins them, for a different reason: the workflow IS red and
+    # that is the correct outcome, so it must not hold the tracking issue open.
+    # It is still PRINTED below — a refusal a reader cannot see in the report is
+    # a refusal the next reader re-diagnoses.
+    bad = [r for r in rows if r[0] not in ("OK", "NEW", "ON-DEMAND",
+                                           "ROBOTS-REFUSED")]
+    expected = [r for r in rows if r[0] == "ROBOTS-REFUSED"]
+    # Every ROBOTS_DECLINED entry re-read against the tree. Offline, so the
+    # selftest asserts the same thing in CI, which is where it has teeth: this
+    # networked path runs weekly and CI runs the selftest on every push.
+    stale_entries = audit_robots_declined(watched)
     # UNPROVEN is shown but never fails the check: the fix is already in the
     # tree and the next scheduled run is what settles it.
-    status = "fail" if any(r[0] in ("FAILING", "DISABLED") for r in rows) else (
+    status = "fail" if stale_entries or any(
+        r[0] in ("FAILING", "DISABLED") for r in rows) else (
         "warn" if bad or unreadable else "ok")
 
     lines = ["## Roster refresh health", ""]
@@ -560,6 +812,12 @@ def main():
                      tally("STALE"), tally("SILENT"), tally("UNPROVEN"), tally("NEW"),
                      tally("ON-DEMAND"), tally("UNMEASURED"),
                      " %d unreadable." % len(unreadable) if unreadable else ""))
+    if expected:
+        lines.append("")
+        lines.append("%d of them fail because their scraper read a host's robots.txt "
+                     "and declined. That is the correct outcome, not a breakage, so "
+                     "it is listed below and does not hold this issue open."
+                     % len(expected))
     witnessed = sum(1 for row in watched if row[4] is not None)
     if witnessed:
         lines.append("")
@@ -568,10 +826,11 @@ def main():
                      "age above is the last run whose own rebuild step RAN, not the "
                      "last run that went green." % witnessed)
     lines.append("")
-    if bad:
+    shown = sorted(bad + expected, key=lambda r: (VERDICT_ORDER[r[0]], r[1]))
+    if shown:
         lines += ["| state | workflow | detail | latest run |",
                   "|---|---|---|---|"]
-        for verdict, fn, name, detail, url in bad:
+        for verdict, fn, name, detail, url in shown:
             lines.append("| **%s** | `%s` | %s | %s |" % (
                 verdict, fn, detail, "[run](%s)" % url if url else "—"))
         lines.append("")
@@ -584,6 +843,20 @@ def main():
                          "and the like) are deliberately not counted as \"its code\", "
                          "or one commit would mark all 53 unproven at once.")
             lines.append("")
+        if expected:
+            lines.append("A **ROBOTS-REFUSED** workflow is red because the host it "
+                         "reads refuses this project in its own robots.txt, and the "
+                         "scraper asks before its first fetch and stops. Nothing is "
+                         "forgiven to reach that verdict: the step still fails, and "
+                         "only the step the entry names clears it — anything else "
+                         "failing in the same workflow still reads FAILING. The "
+                         "shipped `data/app/` file keeps what it last read, because a "
+                         "refusal stops the FETCH and never unpublishes. What is "
+                         "reportable here is the refusal LIFTING: "
+                         "`validate_card_links.py` probes those hosts monthly and "
+                         "warns when one answers again, and this check then fails on "
+                         "the entry until someone re-reads the run.")
+            lines.append("")
         lines.append("A **FAILING** roster workflow opens no pull request, so the "
                      "shipped `data/app/` file keeps naming whoever it named on "
                      "its last successful run. Read the linked run: a builder "
@@ -592,6 +865,13 @@ def main():
                      "county's own directory before lowering any floor.")
     else:
         lines.append("Every refresh workflow has succeeded within its own cadence.")
+    if stale_entries:
+        lines += ["", "### `ROBOTS_DECLINED` entries that no longer describe the tree",
+                  "",
+                  "Each of these excused a red workflow and has stopped being true, "
+                  "so it is failing this check rather than going on excusing it."]
+        for problem in stale_entries:
+            lines.append("- " + problem)
     if unreadable:
         lines += ["", "Could not read run history for: " + ", ".join(
             "`%s` (%s)" % (fn, why) for fn, _n, why in unreadable)]
@@ -605,8 +885,10 @@ def main():
     if args.status_file:
         with open(args.status_file, "w", encoding="utf-8") as f:
             f.write(status)
-    print("check-roster-health: %s — %d watched, %d needing a look"
-          % (status.upper(), len(rows), len(bad)), file=sys.stderr)
+    print("check-roster-health: %s — %d watched, %d needing a look, %d declining a "
+          "host that refuses us, %d stale ROBOTS_DECLINED entry/entries"
+          % (status.upper(), len(rows), len(bad), len(expected),
+             len(stale_entries)), file=sys.stderr)
 
 
 if __name__ == "__main__":

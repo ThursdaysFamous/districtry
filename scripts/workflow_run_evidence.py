@@ -281,6 +281,33 @@ def run_did_work(jobs_payload, step):
                 return entry.get("conclusion") == "success"
     return False
 
+
+def failed_step(jobs_payload):
+    """The name of the step whose FAILURE stopped this run, or None.
+
+    The first step concluding `failure`, in the order the API returns the job's
+    steps. Its one caller asks a narrow question -- is this red run the one a
+    declining scraper explains, or is it something else -- so `cancelled` and
+    `timed_out` are deliberately NOT read as a failure here: a scrape step the
+    runner killed is a different event from a scrape step that declined, and
+    reading them alike would let one entry cover the other.
+
+    A FORGIVEN STEP'S FAILURE IS MASKED AS `success` BY THIS API, which
+    `run_did_work` above measures and records. So this can only ever name a step
+    whose failure actually stopped the job -- which is the same thing as saying it
+    cannot name a step some workflow chose to forgive, and is why the caller's
+    verdict does not depend on a run conclusion.
+
+    None where nothing failed, where the payload could not be read, or where the
+    job list carries no steps. Unreadable is unknown, and the caller treats
+    unknown as "not explained" rather than as "expected".
+    """
+    for job in jobs_payload.get("jobs") or []:
+        for entry in job.get("steps") or []:
+            if entry.get("conclusion") == "failure":
+                return entry.get("name")
+    return None
+
 # Measured 2026-09-23 against the live API; see the module docstring.
 _PHANTOM_OTHER_BRANCH = {
     "id": 35782165269, "name": ".github/workflows/update-mps-school-board-roster.yml",
@@ -548,13 +575,50 @@ def selftest():
     evidence(newest_first, job_count=lambda r: counted.append(r["id"]) or 0)
     check("only a suspected run costs a request", counted, [_PHANTOM_OTHER_BRANCH["id"]])
 
+    # WHICH STEP'S FAILURE STOPPED THE RUN, from the real jobs payload of
+    # update-county-clerk-roster run 12 (36256724325, 2026-09-26): the ISBE
+    # scrape declined, every later step skipped. Trimmed to name, conclusion and
+    # number, which is all `failed_step` reads.
+    clerk_jobs = {"jobs": [{"name": "update-roster", "conclusion": "failure", "steps": [
+        {"name": "Set up job", "conclusion": "success", "number": 1},
+        {"name": "Run actions/checkout@v4", "conclusion": "success", "number": 2},
+        {"name": "Run actions/setup-python@v5", "conclusion": "success", "number": 3},
+        {"name": "Install scraper dependencies", "conclusion": "success", "number": 4},
+        {"name": "Install Chromium for the browser rung", "conclusion": "success",
+         "number": 5},
+        {"name": "Scrape the ISBE election-authority directory",
+         "conclusion": "failure", "number": 6},
+        {"name": "Rebuild roster data file", "conclusion": "skipped", "number": 7},
+        {"name": "Validate app + data files", "conclusion": "skipped", "number": 9},
+        {"name": "Complete job", "conclusion": "success", "number": 23},
+    ]}]}
+    check("the failing step is named, not the job",
+          failed_step(clerk_jobs), "Scrape the ISBE election-authority directory")
+    check("a run with nothing failed names no step",
+          failed_step({"jobs": [{"steps": [
+              {"name": "Scrape", "conclusion": "success"},
+              {"name": "Rebuild", "conclusion": "success"}]}]}), None)
+    # A CANCELLED OR TIMED-OUT STEP IS NOT A FAILURE HERE, deliberately: the
+    # caller uses this to decide whether a declining scraper explains a red run,
+    # and a step the runner killed is a different event.
+    check("a cancelled step is not read as the failure",
+          failed_step({"jobs": [{"steps": [
+              {"name": "Scrape", "conclusion": "cancelled"}]}]}), None)
+    check("a timed-out step is not read as the failure",
+          failed_step({"jobs": [{"steps": [
+              {"name": "Scrape", "conclusion": "timed_out"}]}]}), None)
+    check("an unreadable payload names no step", failed_step({}), None)
+    check("a job with no step list names no step",
+          failed_step({"jobs": [{"name": "update-roster"}]}), None)
+
     if fails:
         for line in fails:
             print("workflow-run-evidence FAIL — " + line, file=sys.stderr)
         return 1
     print("workflow-run-evidence --selftest: OK — %d assertions: the four run "
-          "shapes measured 2026-09-23 and the witness derivation measured "
-          "2026-09-27" % len(ran))
+          "shapes measured 2026-09-23, the witness derivation measured "
+          "2026-09-27 and the failing-step reader against run 36256724325's own "
+          "payload" % len(ran))
     return 0
 
 
