@@ -127,11 +127,61 @@ snapshot, and until 2026-09-25 the tripwire for a county re-precincting was
 authorities. **ISBE's robots.txt refuses this project** — 29 bytes of
 `User-agent: * / Disallow: /`, read as a permission for over a year because of a
 byte-order mark — so that route is closed and nothing replaces it at full
-coverage. What remains is the three results vendors, which carry 34, 13 and 17
-counties and can be swept for a precinct-name change; that is a smaller
-tripwire, not an equal one, and it is not built. **So this row is a calendar
-entry standing in for a detector**, which is the weakest plan in this file and
-is recorded as such rather than dressed up.
+coverage. **So this row is a calendar entry standing in for a detector**, which
+is the weakest plan in this file and is recorded as such rather than dressed up.
+
+**A PUBLISHER-SIDE REPLACEMENT IS STILL NOT BUILT, AND HOW MUCH OF THE FLEET IT
+WOULD REACH IS MEASURED 2026-09-28 rather than estimated.** This paragraph used
+to answer that with
+"the three results vendors, which carry 34, 13 and 17 counties", and TWO OF
+THOSE THREE were already stale when the sentence was written on 2026-09-25: the
+guidebook's own platforms table had said **23** for platinum and "**14**
+carrying content" for GBS since 2026-09-01, three weeks earlier. The 34 was
+right as that vendor's own list figure, and is the one to distrust anyway,
+for the reason below. A figure typed beside a table that owns it is the drift
+this repo keeps paying for, so what follows is the intersection that actually
+decides the question rather than any vendor's total.
+
+Of the 46 counties that ship a `*-precincts.json` layer, **26 have a publisher
+this repository can name**: platinum 10, GBS-carrying 7, the
+pollresults/accessliberty pair 9 (Hardin shared with platinum), and Hancock's
+own county-run database 1. **Clarity carries ZERO of them**: not one of its
+twelve counties ships a `*-precincts.json` layer, so the publisher the old
+sentence omitted turns out to be the one with nothing to contribute here, and
+the three it named were the right three. Ten of those twelve are among the
+state's twenty most populous while Vermilion is 21st and Macoupin 32nd, so size
+is a loose correlate rather than the explanation, and why any one county ships
+no precinct layer is not established here.
+
+**TWENTY COUNTIES WOULD STILL HAVE NO DETECTOR OF ANY KIND**, which is the
+number this row exists to make visible: Clay, Douglas, Edwards, Henderson,
+Jackson, Jo Daviess, Mason, Massac, McDonough, Menard, Montgomery, Ogle,
+Richland, Saline, Schuyler, Shelby, Stark, Stephenson, Wabash and White. Two of
+those are measured shut rather than untested — Henderson against all five
+publishers and Menard against the vendor pair and GBS, both with the
+fabricated-county md5 as the control — and the other eighteen are simply
+untested from here.
+
+**THE 26 IS A FLOOR, NOT THE COVERAGE.** The pollresults/accessliberty
+membership is enumerated NOWHERE in this repository: the guidebook records the
+vendor's own list as 34 counties and then records Hardin as carried beyond it,
+found by content, so the list is known to be incomplete and no count taken from
+it can be trusted. The 9 above are the counties whose carriage this repo has
+itself proven AND which ship a precinct layer; it has proven 12 in all.
+
+**AND IT CANNOT BE RAISED BY GREP, WHICH WAS TRIED FIRST AND OVER-COUNTS BY
+40%.** The tree names 20 county slugs on that vendor pair, and reading each
+occurrence's own context, **8 of them record a probe that FAILED** — Adams,
+Fayette, Henderson, Jersey, Lawrence, Menard, Pope and Washington — because a
+county whose route was measured shut gets the URL written into the record as the
+thing that was tested. The literal IS the negative. Washington is the case that
+would defeat a status check as well: `il-washington.pollresults.net` answers
+HTTP 200 and the page is **not Washington's**, which is why the repo's control
+is a fabricated county name and a body hash rather than a response code. So
+carriage is established by content, one county at a time, and 12 proven
+counties are what that has reached so far. Re-derive the figures above from the
+publisher lists in the guidebook's platforms table against
+`il/data/app/*-precincts.json`; nothing generates them.
 
 ---
 
