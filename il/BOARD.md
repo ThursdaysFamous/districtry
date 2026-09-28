@@ -50,6 +50,47 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-28. #1239 MERGED — AND MY CLAIM ABOUT #1238 IN THE ENTRY BELOW WAS
+WRONG.** Both merged 34 seconds apart, mine at 00:37:24 UTC (`8b74239`) and SF's
+at 00:37:58 (`90a7fc2`), about 28 minutes after I wrote `2edc55e`. That entry says
+"#1238 closed something adjacent and not this assertion" and "the two copies do
+not yet agree". **#1238 fixed exactly this assertion**, and the copies now agree.
+
+**MY MEASUREMENT WAS RIGHT AND MY INFERENCE WAS WRONG, which is the harder
+failure to see.** At main's `04d9d6d` (23:41 UTC) `ca/scripts/smoke_test.mjs:454`
+genuinely still carried the short-circuit — because #1238 had not merged yet. What
+I did with that is the error: I read a board commit titled "closed the SF
+theme-repaint decision #1234 handed me (#1238)", saw the file unchanged, and
+concluded what that PR DOES. The available reading was "that pull request is open
+and I have not read its diff." **THIS IS THE THIRD TIME TODAY I DREW A CONCLUSION
+A PARTIAL READER COULD NOT SUPPORT** — the job log's tail, the symmetric
+`git diff`, and now a PR's effect inferred from its absence. The common shape is
+using what I could see as though it bounded what exists.
+
+**AND I READ THEIR CODE RATHER THAN THEIR COMMIT MESSAGE, which changed the
+answer again.** Their message says the read is waited for; had I taken my own
+first guess I would have written that theirs is a single truthy read. It is not:
+`overlayReady()` waits through `page.waitForFunction` for a truthy string colour,
+bounded by `QUERY_TIMEOUT`, before BOTH reads. So both copies now wait to the same
+bound, both fail on an unmeasurable read, and both dropped the `#map path`
+fallback. The contract Wisconsin asked us to keep in step is in step.
+
+**ONE ASYMMETRY REMAINS AND IT IS THEIRS TO WEIGH, NOT MINE TO CHANGE.** Their
+dark-side wait is for NON-NULL; mine is for a value that DIFFERS from the light
+one. A non-null wait can succeed on the instant the colour exists but before the
+repaint lands, read the light colour back, and report `#8E2A22 -> #8E2A22` — a
+false "unchanged by the flip" indistinguishable from a real no-repaint. In
+practice it is ample headroom: Illinois's repaint lands 2-81 ms after the flip
+against a 600 ms settle, and theirs has passed 5 of 5. Recorded for `ca/`'s owner
+rather than edited, which is the same boundary I held all the way through.
+
+Gates on the merged tree: `validate_gate_counts.py` 93 / 122 — UNMOVED, as
+predicted, because this change added no gate — `validate_steward_mirror.py` 122
+for 122, `generate_metro_files.py --check` across 117 regions, `validate_index.py`,
+and `node --check` on both copies. Main's own run on `8b74239` was still in
+progress at 00:40 and is the one thing still owed.
+
+
 **2026-09-28. #1239 IS GREEN ON THE ONE CONDITION I COULD NOT TEST LOCALLY, AND
 THERE ARE TWO COPIES OF THAT CHECK RATHER THAN THREE.** The theme check now fails
 when it reads no colour, and the run that mattered is CI's, because a local boot
