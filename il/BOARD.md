@@ -50,6 +50,66 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-28, LATER. #1243 MERGED (`38661f2`) AND MAIN IS GREEN ON IT** — read
+from the run (36428918433, success 13:28:56 to 13:41:04 UTC) rather than inferred
+from the merge, because merging auto-unsubscribed this session and a red main
+would surface to nobody. The check-ins are stopped.
+
+**THEN CHECKING A PASSIVE WITNESS FOUND A FAILURE THAT WAS ON NO LIST — #1248
+up.** The witness I was looking for is not one: `update-il-special-district-
+officials` is one of seven jobs carrying #1227's comma guard, and the Sunday
+statewide-library run fired 2026-09-27 16:46 UTC while #1227 merged at 18:26, so
+it PREDATES the fix by 1h40m and Walnut's warning is next Sunday's run, not last
+week's. What the look turned up instead is that
+`update-il-special-district-officials` run 5 FAILED today at 19:31 UTC, twelve
+seconds in, on an ArcGIS rate limit — `Unable to perform query. Too many
+requests.` from services.arcgis.com, reading Hamilton's fire districts — and
+`service_names` had no retry of any kind, so a 486-unit weekly refresh ended on
+one host asking to be asked later. Nothing had refused us and nothing had changed
+shape; the shipped file simply keeps last week's read.
+
+**IT WAS TRANSIENT AND THAT IS MEASURED, NOT ASSUMED**: one request to the same
+query 1h50m later answered HTTP 200 in 0.66s with all three of the county's
+districts. Whether our own pacing provoked it is NOT established and is not
+guessed at.
+
+**THE FIX IS THE DISTINCTION THE REPO ALREADY DRAWS IN WORDS.**
+`check_roster_retention.py` says a source that stops publishing is a real event
+and one that failed to fetch once is not; this scraper's own docstring is right
+that an erroring service must fail the run, and a rate limit is not an erroring
+service. So `scraper_common` gains the reading and a bounded ladder beside
+`fetch()`'s own 429 rule — 5s, 15s, 45s, each re-ask reported so a run that only
+just got through says so — with EVERY OTHER ENVELOPE still failing on the first
+answer and an outlasting limit failing too. A 5xx is deliberately not retried
+although `fetch()` retries one, because it has not been the observed condition
+here. **No gate was added and the pair is unmoved at 94/123**: the ladder went
+where `scraper_common.py --selftest` already runs in CI, because a classifier
+being right says nothing about its call site and this ladder only ever runs in the
+rare condition it exists for — a defect in it would surface weeks later in a job
+nobody watches. 22 assertions, red on each of five deliberate breaks.
+
+**TWO HAND-TYPED FIGURES BESIDE THE TABLE THAT OWNS THEM WERE FALSE, AND THEY ARE
+WHY THE PACING WAS BELIEVED SAFE.** `SERVICE_PACE` said "nineteen different hosts,
+so the pacing is per host in practice"; counted off `BOUNDARIES` it is 18
+service-backed pairs across EIGHT hosts, 8 of them on one. The workflow header
+said "ten and nineteen" of its 29 pairs where it is 11 and 18 — one out in each
+direction, which is exactly why the right total let it sit — and seventeen
+services for the same 18. **AND I TYPED TWO WRONG FIGURES WHILE CORRECTING WRONG
+FIGURES**: "five more" for the sibling hosts where the table holds seven, and
+nineteen assertions where the diff holds twenty-two. Both caught by counting. The
+class is not somebody else's habit; it is any figure typed instead of counted,
+including in the sentence fixing one.
+
+**THE MANAGER'S REPORT WAS RIGHT ABOUT WHAT IT READ.** Their 21:16 entry records
+#387 closed with none of 128 roster workflows failing; `roster-health`'s most
+recent run was 01:17 UTC, eighteen hours before this failure, so nothing they
+could have read would have shown it. Tonight's run will, and correctly — the run
+did fail.
+
+**What I owe on this:** the live witness is a dispatched run of that workflow once
+#1248 is on main, which both proves the ladder against the real services and
+performs the week's refresh that the abort skipped.
+
 **2026-09-28. #1242 MERGED (`c54d910`), AND THE WAIT ON IT TURNED UP THE SAME
 DEFECT IN MY OWN PROSE — #1243 up.** Checking my open question on the precinct
 tripwire, I found `WATCH.md` answering how much of the fleet a publisher-side
