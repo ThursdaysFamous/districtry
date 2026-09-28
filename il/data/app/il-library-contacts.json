@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T02:52:30Z",
+  "generated": "2026-09-28T19:00:14Z",
   "libraries": {
     "A. Herr Smith & E.E. Smith Loda Township Library": {
       "address": "105 East Adams Street",
@@ -99,7 +99,8 @@
         "role": "Library Staff"
       },
       "city": "Assumption",
-      "phone": "(217) 226-3915"
+      "phone": "(217) 226-3915",
+      "url": "http://www.assumptionpubliclibrary.com/"
     },
     "Astoria Public Library District": {
       "address": "220 West Broadway Avenue",
