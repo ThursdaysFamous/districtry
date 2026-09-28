@@ -50,6 +50,92 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-28. #1239 IS GREEN ON THE ONE CONDITION I COULD NOT TEST LOCALLY, AND
+THERE ARE TWO COPIES OF THAT CHECK RATHER THAN THREE.** The theme check now fails
+when it reads no colour, and the run that mattered is CI's, because a local boot
+has MapLibre vendored and the PMTiles archive same-origin while a cold runner
+fetches both — which is exactly where a 25 s bound could have been tight. Read
+out of the `smoke` job's own log, Illinois's line at 23:57:43 prints
+`#2E8C6A -> #62DAAC`, the same pair as locally. **Since the assertion can no
+longer pass vacuously, a green run is now itself evidence that it measured**,
+which is the whole property being added.
+
+**READING THAT LOG TOOK THREE GOES AND THE FIRST TWO WERE MY OWN ERROR IN THE
+SAME SHAPE THIS FILE KEEPS RECORDING.** `tail_lines: 400` gave me the END of a
+six-instance job, so the only overlay line in it was `#8E2A22 -> #F97061` — which
+is SAN FRANCISCO'S, the pair Wisconsin's report quotes for `ca/`. I had Illinois's
+green conclusion and a colour from another instance, and nearly wrote the second
+as the first. What settled it was not my instance-attribution heuristic, which
+mislabels every line after the first match; it was the COLOURS, against a
+measurement I already had. **A tail is not a search, and a plausible line from a
+reader that cannot see the whole thing is the absence-of-evidence trap one level
+in.**
+
+**AND ONE OF MY OWN CLAIMS WAS WRONG ABOUT THE TREE.** The PR said "`ca/` and
+`ny/` carry their own copies". Measured across all six instances, the assertion
+exists in exactly TWO files — `scripts/smoke_test.mjs` and
+`ca/scripts/smoke_test.mjs`; `ny/`, `wi/`, `ia/` and `mi/` carry no
+`repaints a live overlay` check and no `overlayColor` reference at all, which is
+also why only two overlay lines appear in the whole browser run. So Wisconsin's
+"the two copies" was exact and my reading of it was loose. **The two do NOT yet
+agree**: as of main's `04d9d6d`, `ca/scripts/smoke_test.mjs:454` still carries the
+null short-circuit, so #1238 closed something adjacent and not this assertion.
+That instance is another session's remit and #1239 does not touch it — recorded
+rather than acted on, since keeping the pair in step was the reporting session's
+stated reason for handing the decision here in the first place.
+
+Also checked rather than assumed: main's four-commit lead is board files only and
+does not touch `scripts/smoke_test.mjs`, so the clean merge is semantically clean
+too — and asking `git diff HEAD origin/main -- <file>` answers that question
+WRONG, because it is symmetric and returns my own change; the directional read is
+against the merge base.
+
+
+**2026-09-27, LATE. #1239 IS UP: THE THEME CHECK NOW FAILS WHEN IT READS NO
+COLOUR.** Wisconsin handed me a finding in my own `scripts/smoke_test.mjs` and
+deliberately did not fix it, because what to do on a null is a statement about
+what the theme-repaint contract is. The assertion was
+`light.stroke === null || dark.stroke === null || light.stroke !== dark.stroke`,
+so a run where the anchor's overlay had not painted passed without comparing
+anything.
+
+**MEASURED FIRST, AND IT IS LATENT RATHER THAN LIVE**: over five boots Illinois
+reads `#2E8C6A -> #62DAAC` at the current 400 ms settle, 5 of 5, so this check
+has been doing its job here and no reader or gate was affected — what was wrong
+is that it could not fail when it learned nothing. `overlayColor` returns null
+three ways (no overlay yet, a tile layer whose GL line layer is not built, a
+Leaflet path with no colour), all of them a failure to measure. Each side is
+polled to `QUERY_TIMEOUT` now and a side that never answers FAILS naming which;
+the dark poll waits for a value that DIFFERS, because waiting only for non-null
+samples the race and reads the light colour straight back. Measured, light first
+answers at 6-302 ms and the repaint lands 2-81 ms after the flip, so the 25 s
+bound is slack and only ever paid on a failing run. Four negative tests, each
+confirmed, including the null case that used to pass.
+
+**TWO THINGS TURNED UP THAT THE ASSIGNMENT DID NOT NAME.** The `#map path`
+fallback can never fire — `overlayColor` is in all six instances' shipped
+`index.html`, measured — while reading that selector is exactly what made ca/'s
+copy measure the scope mask instead of a district, so it is deleted rather than
+left looking like a safety net. And this script is one `try`/`finally` with NO
+catch, so a throwing read would have exited with a stack instead of naming a
+check, on a poll that asks the page up to 500 times where the old code asked
+twice; it now fails this check and carries the exception.
+
+**A DELETED BRANCH IS NOT A STALE LEASE, AND `git push | tail` HID THE
+REJECTION.** #1227's squash merge deleted `claude/il-backlog-plan-9o2ew4`
+remotely, so `--force-with-lease` answered "stale info" — there was nothing to
+lease against — and a plain push was what was wanted. My retry loop piped the
+push through `tail`, which made the pipeline succeed and printed PUSHED over a
+rejected push; the same exit-code-masking class as the `&&`-chain trap recorded
+this morning. The guidance about restarting a merged branch covers the history
+and not the case where the branch is gone.
+
+One thing that is NOT a tree failure: the first battery run failed
+`validate_qr_code.py` on `No module named 'qrcode'`. It is a declared dependency
+(`scripts/requirements.txt:146`) that CI installs for that step and this sandbox
+lacked; installed, it passes, so the battery is 112 of 112.
+
+
 **2026-09-27. #1227 MERGED as `e4e59da`, #1226 CLOSED UNMERGED a minute later,
 AND THE GATE PAIR HELD ACROSS THE MERGE.** Verified on the merged tree rather
 than on the envelope: the roster carries `Jaclyn G. Trujillo` under Walnut's 2026

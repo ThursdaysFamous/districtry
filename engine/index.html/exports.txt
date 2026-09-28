@@ -329,5 +329,19 @@
     matchBoundaryStreets: matchBoundaryStreets, // exposed so the smoke test can hold the boundary-street matcher to a fixture, with no CARTO fetch
     boundaryStreets: function () { return { on: boundaryStreetsOn, available: !!baseLabels, names: boundaryStreetNames }; }, // which street names the boundary-street layer is showing, and their colours
     boundaryStreetLabels: function () { return measureBoundaryStreetLabels(); }, // per boundary street: its coloured labels on screen, and any ordinary copy of its name printed inside the stretch
-    basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; } // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
+    basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; }, // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
+    // The QR encoder and the URL it is given, so a test can hold the drawn code
+    // to the payload it should carry rather than only counting that something
+    // was drawn. Two URLs that differ by `utm_medium=link` against `qr` produce
+    // different matrices, which is what makes that assertion sharp.
+    qrDarkModules: function (text) {
+      var code = qrEncode(text, { level: "M" });
+      if (!code) return null;
+      var n = 0;
+      for (var r = 0; r < code.size; r++) {
+        for (var c = 0; c < code.size; c++) if (code.modules[r][c]) n++;
+      }
+      return { dark: n, size: code.size, version: code.version };
+    },
+    shareUrls: function () { return { link: shareLinkUrl(), qr: shareQrUrl() }; }
   };

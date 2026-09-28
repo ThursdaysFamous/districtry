@@ -419,10 +419,18 @@ try {
         tiles: (document.querySelector(".leaflet-tile-pane img")?.src || "").match(/(light|dark)_all/)?.[1]
           || (base ? (base.kind === "dark_all" ? "dark" : "light") : null),
         // the anchor layer's own outline colour, read from the app: it is
-        // drawn on the tile canvas since phase 5, so it has no SVG path and
-        // the first "#map path" is the scope mask's, stroke "none" in both
-        // themes — which failed this check whenever the wash painted first.
-        // Illinois's copy of this check made the same move in phase 5.
+        // drawn on the tile canvas since phase 5, so there is no SVG path.
+        // Ported from scripts/smoke_test.mjs, where Illinois made exactly this
+        // change when its layers moved to tiles; SF's copy was left reading
+        // `#map path`, which returns whichever path is first in DOM order —
+        // the selected-point marker (no `stroke` attribute, so null, and the
+        // assertion short-circuits to a pass that measures nothing) or, once
+        // the scope wash has painted, the mask (`stroke="none"` in both
+        // themes, so a FAIL although its FILL is what the theme repaints).
+        // Measured 2026-09-27: at this block's 400 ms settle the mask is
+        // usually absent and the check passes vacuously; at 1500 ms it is
+        // present on 8 of 8 loads and the check fails. It could only pass by
+        // not measuring.
         stroke: window[n] && window[n].overlayColor ? window[n].overlayColor(OFFLINE0) : (path ? path.getAttribute("stroke") : null),
       };
     }, { n: EXPORTS_NAME, id: OFFLINE[0] });

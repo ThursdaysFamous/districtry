@@ -200,6 +200,17 @@
   }
   .share-popover-embed { display: block; resize: none; box-sizing: border-box; }
   .share-popover-coords { flex: 1 1 auto; font-family: var(--font-mono); font-size: 12px; color: var(--ink); }
+  /* The QR sits on its own white card, in BOTH themes and on purpose: an
+     inverted QR (light modules on dark) fails on many scanners, and the quiet
+     zone has to stay light for the same reason. So this is the one thing in the
+     app that does not follow the theme, and the white ground is drawn by the
+     SVG itself rather than by this rule — the padding here only keeps it off
+     the panel edge. Sized in a viewBox of whole modules, so it stays crisp at
+     any width and a denser view simply draws a bigger code rather than
+     shrinking its modules until nothing scans. */
+  .share-popover-qr { display: flex; justify-content: center; margin: 2px 0 4px; }
+  .share-popover-qr svg { width: 168px; height: 168px; max-width: 100%; border-radius: 4px; }
+  @media (max-width: 767px) { .share-popover-qr svg { width: 208px; height: 208px; } }
   .share-copy-btn {
     flex: 0 0 auto;
     background: transparent;
