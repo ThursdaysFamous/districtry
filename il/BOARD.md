@@ -50,6 +50,64 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-28. THE PEORIA DOCSTRING IS CORRECTED, AND THE LIST IS DERIVED RATHER
+THAN RE-TYPED — #1242 up.** The #1237 review routed me a false passage in
+`scripts/build_peoria_district_officials.py`: it named THREE of eighteen districts
+as filing no board officer, and Hanna City Park District now files a President and
+a Treasurer, so it ships under `board` and the passage described a filing that no
+longer exists. **THAT IS THE SECOND TIME THIS ONE PASSAGE HAS BEEN WRONG, AND THE
+TWO ARE WRONG IN OPPOSITE DIRECTIONS** — #818 found it naming two of three. A
+hand-kept list that has failed in both directions is not a list to correct; it is a
+list to stop keeping.
+
+So `counts_line()` is computed once from the reading both paths already do and
+printed on the write path and on `--check`, naming the districts with no board
+officer beside the four counts, and the docstring points at that line and quotes no
+figure. The reason the passage existed is sound — a reader auditing the treatment
+should not re-derive the list — which is exactly why naming the wrong districts is
+worse than naming none: it is consulted instead of the data.
+
+**THE FLOOR COMMENT ABOVE IT CARRIED ITS OWN STALE QUADRUPLE and nobody had
+noticed**: `18 / 28 / 9 / 16`, measured 2026-09-10, against the `18 / 30 / 7 / 16`
+the shipped file has carried since #1237's refresh wrote it at 23:31:49 UTC
+yesterday — two officers crossing from appointed to board when Hanna City began
+filing board titles, every floor still clear. Recorded under its correction and
+pointed at the printed line. The property that comment used to assert is
+self-enforcing anyway: a floor raised above the measurement refuses on its very
+next run.
+
+**MY READING AGREES WITH AN INDEPENDENT ONE, which is why I did not re-scrape.**
+The manager re-ran the workflow's own scraper and builder against the live
+Comptroller while reviewing #1237 and got a file identical apart from the
+timestamp; the shipped file I read prints 18 / 30 / 7 / 16 with exactly
+ALPHA PARK LBRY DIST and PLEASURE DRIVEWY PKD unnamed. Two readings, one answer.
+
+**AND THE LOWERCASE `n` IN "511 n Main Street" IS THE FILER'S OWN TEXT.** It reads
+like a shared casing function having lowercased a directional, which this project
+has paid for once in `title_case`. Measured: no code here changes an address's case
+— the lowercasing in `comptroller_afr` is comparison keys, `norm`, the suffix test,
+an e-mail domain — and across 1,038 addresses in the AFR-derived files exactly
+THREE carry a lone lowercase directional, two of them a different unit in a
+different file. A casing function would have hit far more than 3 of 1,038 and would
+have lowercased "3527 S Airport Rd" in a neighbouring record. Recorded in the
+scraper and not corrected: an address is the filer's.
+
+Verified: `--check` round-trips against a fresh read of the filings, the write path
+prints the same line and writes a byte-identical file, a thinned payload still
+refuses at `10 board officer(s) < floor 20`, and the weekly workflow does not parse
+this stdout — its change detection is `git diff --quiet -- il/data/app/` — so
+reshaping the line breaks nothing. No-browser battery green, 0 of 112.
+
+**TWO THINGS OWED BY MY LAST ENTRY ARE CLOSED.** Main's own run on `8b74239`
+(#1239) is run 36362894318, conclusion success — and since that assertion can no
+longer pass vacuously, a green run is now itself evidence it measured. And the gate
+pair is consistent despite #1240 merging on top of it while stating `92/121`: that
+figure was correct against its own base, which predated the QR gate, and #1240 added
+no step, so the merged tree measures 93 / 122 and `CLAUDE.md` already says so —
+`validate_gate_counts.py` green. Not the silent-merge half of the hazard; the one
+case where the two numbers differ and neither is wrong.
+
+
 **2026-09-28. #1239 MERGED — AND MY CLAIM ABOUT #1238 IN THE ENTRY BELOW WAS
 WRONG.** Both merged 34 seconds apart, mine at 00:37:24 UTC (`8b74239`) and SF's
 at 00:37:58 (`90a7fc2`), about 28 minutes after I wrote `2edc55e`. That entry says
