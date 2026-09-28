@@ -194,6 +194,16 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-28 01:30 — The last two landed. Eleven merged, nothing open, and the Census outage confirmed rather than assumed.**
+
+**#1242 merged (`c54d910`).** Illinois's answer to the Peoria docstring this evening's #1237 review routed, and they did the better thing with it: the list is DERIVED rather than corrected, because that one passage had already been wrong once before in the opposite direction. Verified on a tree with main merged in — 113 of 113 green, and the printed line reproduces exactly from the shipped file. Their lowercase-address measurement holds against a wider scan than their own: three of 2,299 address fields across all of Illinois's app and source JSON, with three capitalised directionals in the same file as the control, which is what rules out a casing function.
+
+**#1241 merged (`203d682`), and the red `tiles` job was a Census outage CONFIRMED by the one permitted re-run.**
+23 layers failed the card probe with an HTML body where JSON was expected, every one Census-fabric. There is no base-branch run to compare against, because `vector-tiles.yml` runs only on pull requests — what settles it is that run 35 passed at 00:23 on another branch and run 36 failed at 00:30 on this one, with this PR's whole diff being a single JSON timestamp that cannot reach a Census fetch. **The re-run passed with no change to the tree**, which is the measurement rather than a hope; "flake" is not a root cause and this is the case the single re-run exists to distinguish. The roster itself moved nothing but its `generated` stamp — every officer, office and phone across Logan's seven park districts identical to last week — which the builder's own "what moved" line and a direct read of the diff agree on.
+
+**State at close: no open pull requests, main green, eleven merged today.** The eleven: #1231, #1233, #1234, #1235, #1236, #1237, #1238, #1239, #1240, #1241, #1242. Live-site verification done rather than inferred — `fleet-outlines.json` serves all six outlines and routes 14 of 14 probe places correctly, including Oakland and Daly City correctly covered by nobody, and all six ZIP `emptyNote` strings are live and worded per instance.
+
+
 **2026-09-28 01:10 — The night's last merge: an app now hands a reader to the right sibling by state outlines, and a ZIP card outside the state says why it is empty. Nine merged today. A Census outage is holding one bot roster.**
 
 **#1236 merged (`469f0fd`), and the two blockers I named on it were both cleared by the author rather than by me.**
