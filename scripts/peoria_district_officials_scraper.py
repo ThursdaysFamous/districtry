@@ -191,6 +191,20 @@ def main():
                 continue
             entry = {"kind": kind, "comptrollerCode": code,
                      "filedFor": block["filedFor"], "office": {}}
+            # AN ADDRESS SHIPS AS FILED, CASING AND ALL. Hanna City Park
+            # District files "511 n Main Street" with a lowercase n, which reads
+            # like a shared casing function having lowercased a directional --
+            # this project has paid once for a `title_case` that lowercased the
+            # second half of hyphenated names. MEASURED 2026-09-28 and it is the
+            # filer's own text: no code here changes an address's case (the
+            # lowercasing in comptroller_afr is comparison keys -- `norm`, the
+            # suffix test, an e-mail domain), and across 1,038 addresses in the
+            # AFR-derived files exactly THREE carry a lone lowercase directional,
+            # two of them a different unit in a different file
+            # ("13650 s Claire Blvd", twice, a cross-county unit filing once per
+            # county). A casing function would have hit far more than 3 of 1,038
+            # and would have lowercased "3527 S Airport Rd" in a neighbouring
+            # record. So it is not corrected: an address is the filer's.
             for field, value in (("address", block["street"]), ("city", block["city"]),
                                  ("phone", block["phone"]), ("email", block["email"])):
                 if value:

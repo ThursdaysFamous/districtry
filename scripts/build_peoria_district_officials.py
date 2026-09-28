@@ -26,16 +26,22 @@ one year and the Comptroller's own page says a different year may name a
 different person, so a record without one cannot be rendered honestly and the
 build refuses rather than shipping a name with no date attached.
 
-A DISTRICT WITH NO BOARD OFFICER STILL SHIPS, and THREE of the eighteen are in
-that state: Alpha Park Library files a Director and a Manager, Pleasure
-Driveway Park a Director and a Superintendent, and Hanna City Park District a
-C.E.O. and a Treas./Admin. That is each district's own answer about who it
-publishes, not a parse failure. The card names them under Administration and
-says nothing about a board, which is what the filing supports.
+A DISTRICT WITH NO BOARD OFFICER STILL SHIPS. That is the district's own answer
+about who it publishes, not a parse failure: the card names whoever it filed
+under Administration and says nothing about a board, which is what the filing
+supports.
 
-The count is stated here because the treatment is a deliberate choice, and a
-reader auditing which districts got it should not have to re-derive the list.
-The #818 review found this passage naming two of the three.
+WHICH DISTRICTS THOSE ARE IS PRINTED BY THE BUILD, NOT LISTED HERE, because
+listing them by hand has now been wrong TWICE IN OPPOSITE DIRECTIONS. The #818
+review found this passage naming two of three; the #1237 review found it naming
+three where there were two, Hanna City Park District having begun to file a
+President and a Treasurer, so it ships under `board` and the passage described a
+filing that no longer existed. A reader auditing the treatment should not have
+to re-derive the list, which is the reason the passage existed -- and a list that
+names the wrong districts is worse than none, because it is consulted instead of
+the data. So both paths print the districts with no board officer and the four
+counts beside them; that line is the authority and this docstring deliberately
+quotes no figure.
 """
 
 import argparse
@@ -53,8 +59,13 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
                         "peoria-district-officials.json")
 
-# Measured 2026-09-10: 18 districts / 28 board / 9 appointed / 16 with an
-# office. Each floor sits under its measured value; see the module docstring.
+# Each floor sits under the measured value, which the build PRINTS on both its
+# write and its --check path rather than this comment restating it -- the
+# 2026-09-10 quadruple recorded here (18 / 28 / 9 / 16) had gone stale to
+# 18 / 30 / 7 / 16 by 2026-09-27, two officers crossing from appointed to board
+# when one district began filing board titles, with every floor still clear. The
+# property this comment used to assert is self-enforcing anyway: a floor raised
+# above the measurement refuses on its very next run.
 #
 # THE OFFICE FIGURE FELL FROM 18 ON 2026-09-10 for the reason recorded in
 # comptroller_afr.py: slot A's address and telephone are the FILER's, not the
@@ -88,7 +99,18 @@ def main():
         fail("the scraper's output has no districts object")
 
     board = sum(len(d.get("board") or []) for d in districts.values())
+    appointed = sum(len(d.get("heads") or []) for d in districts.values())
     with_office = sum(1 for d in districts.values() if (d.get("office") or {}))
+    # The list the module docstring points at instead of naming districts. It is
+    # derived here so both paths print the same one from the same reading.
+    no_board = sorted(name for name, d in districts.items()
+                      if not (d.get("board") or []))
+
+    def counts_line():
+        return ("%d district(s), %d board officer(s), %d appointed, %d with an office; "
+                "%d with no board officer%s"
+                % (len(districts), board, appointed, with_office, len(no_board),
+                   (": " + ", ".join(no_board)) if no_board else ""))
     kinds = {d.get("kind") for d in districts.values()}
     undated = sorted(k for k, d in districts.items() if not d.get("filedFor"))
 
@@ -139,8 +161,8 @@ def main():
         b = {k: v for k, v in out.items() if k != "generated"}
         if a != b:
             fail("%s does not match a fresh read of the filings" % OUT_PATH)
-        print("build-peoria-district-officials: OK — shipped file matches "
-              "(%d district(s), %d board officer(s))" % (len(districts), board))
+        print("build-peoria-district-officials: OK — shipped file matches — %s"
+              % counts_line())
         return
 
     # WHAT MOVED BESIDES THE STAMP. `generated` is rewritten every run, so
@@ -161,11 +183,8 @@ def main():
 
     with open(OUT_PATH, "w", encoding="utf-8") as fh:
         fh.write(text)
-    print("build-peoria-district-officials: wrote %s — %d district(s), %d board "
-          "officer(s), %d appointed, %d with an office"
-          % (OUT_PATH, len(districts), board,
-             sum(len(d.get("heads") or []) for d in districts.values()), with_office),
-          file=sys.stderr)
+    print("build-peoria-district-officials: wrote %s — %s"
+          % (OUT_PATH, counts_line()), file=sys.stderr)
 
 
 if __name__ == "__main__":
