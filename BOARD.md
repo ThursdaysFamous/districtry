@@ -194,6 +194,17 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-28 21:20 — Nineteen hours idle: the hourly check-ins queued and did not run. Adam merged five PRs himself; nothing was waiting on review and main never went red.**
+
+**WHAT THE IDLE COST IS THE THING TO STATE FIRST, AND IT WAS NOT A READER.** The manager trigger fired at 02:21 and every hour to 20:21 — nineteen firings, all queued rather than run, so nothing was watched between 01:30 and 21:15. Read on catching up: main green on its newest completed run, **no open pull requests**, and #387 closed since 2026-09-26 with 125 of 128 roster workflows OK and none failing. Its one STALE row is `verify-google-api-access.yml`, a credential check rather than a roster, 17 days against a ~16-day cadence. So the hours cost no reader anything; what they cost is that had a bot roster gone wrong, nobody would have looked.
+
+**#1244 closed the front-door gap I reported open last night, and it is live.** Last night's report said the apps hand a selection off by state outline while the FRONT PAGE still did a first pass by bounding box, which is why Michigan was never offered the four western-UP places. Adam merged the fix (`37370ff`). Verified against the published site rather than the diff: `districtry.com/` reads `fleet-outlines.json`, and all four — **Ironwood, Houghton, Iron Mountain and Menominee** — now land inside Michigan's own outline. The `mi/WATCH.md` question that had been open since 2026-09-04 is answered by geometry rather than by a better rectangle.
+
+**#1245 named 57 more Illinois library trustees, and they reach a crawler.** Measured before and after on the shipped roster: 53 libraries and 388 named trustees became **61 and 445**. The page grew 840 lines with them, and four of the new names spot-checked on the live `il/library-district.html` appear twice each — once in the reader's table and once in the schema.org graph, which is the shape that page is supposed to have.
+
+**The other two merges moved no name, which I checked rather than assumed.** #1246 added one library website to the statewide contacts and #1247 two `house.gov` links where the field had been null. No name added, none removed, none changed — so nothing there touches the honesty rule.
+
+
 **2026-09-28 01:30 — The last two landed. Eleven merged, nothing open, and the Census outage confirmed rather than assumed.**
 
 **#1242 merged (`c54d910`).** Illinois's answer to the Peoria docstring this evening's #1237 review routed, and they did the better thing with it: the list is DERIVED rather than corrected, because that one passage had already been wrong once before in the opposite direction. Verified on a tree with main merged in — 113 of 113 green, and the printed line reproduces exactly from the shipped file. Their lowercase-address measurement holds against a wider scan than their own: three of 2,299 address fields across all of Illinois's app and source JSON, with three capitalised directionals in the same file as the control, which is what rules out a casing function.
