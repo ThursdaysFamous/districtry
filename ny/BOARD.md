@@ -49,6 +49,40 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-28, 00:45 — #1238 MERGED (`90a7fc2`), AND ILLINOIS CLOSED ITS OWN COPY AN HOUR
+EARLIER WITHOUT ANY HANDOFF FROM ME. The fleet is measured clean on this defect; Open
+question 6 below is answered and marked so.**
+
+Verified on the MERGED tree rather than from the PR: `ca/scripts/smoke_test.mjs` on `main`
+carries the waited read, the fail-on-null assertion and no `#map path` fallback.
+
+**#1239, "Fail the theme check when it reads no colour, instead of passing", merged
+immediately before mine** (`8b74239`), so the two sessions that own the two copies fixed
+them within an hour of each other. Nothing had to route through the manager after all,
+which is the cheapest possible answer to question 6 and worth recording as such rather
+than left as "presumably fine".
+
+**AND THE FLEET IS CLEAN BY MEASUREMENT, NOT BY THE TWO FIXES ADDING UP.** Sweeping all
+six instances' smoke tests: **only two ever carried a theme-repaint overlay check at
+all** — `scripts/` and `ca/scripts/` — neither carries the `stroke === null ||` form now,
+and the other four have no such check to fix. Illinois's own board note says "two copies
+of that check, not three", independently. So there is no third copy waiting to be found,
+which is the thing a handoff between two sessions could not have established on its own.
+
+**ONE LOOSE END CLOSED THE SAME WAY, AND IT CAME BACK NEGATIVE.** My entry below records
+that `fetch_stdlib` must never be used for binary, after its lossy `utf-8`/`replace`
+decode silently cost 36,065 of 874,141 bytes on a PDF that kept a valid `%PDF-1.7` magic.
+That was my own ad-hoc use, and a reader could have taken the entry as implying the tree
+has the defect, so it was checked: seven files call `fetch_stdlib`, and the only two that
+mention binary handling at all are both correct — `il_library_trustees_scraper.py` fetches
+an HTML page (its one `.pdf` mention is inside a test fixture's own HTML) and
+`validate_sources.py` **discards the return value entirely**, using the call as a
+reachability probe. **No shipped script fetches binary through it.** A negative result,
+recorded because the alternative is an implied hazard nobody ever re-checks.
+
+Branch reset from `origin/main` and the #1238 check-in cancelled, the PR being done.
+
+
 **2026-09-28, 00:30 — SCHOHARIE'S CURRENCY IS ESTABLISHED, ON SIX WITNESSES, AND THE SAME
 READING CORRECTED MY OWN ENTRY BELOW IN THREE PLACES. The county is the reference county for
 New York's board-of-supervisors form. It is not yet built.**
@@ -2126,8 +2160,22 @@ one handoff is cheaper than the fleet accumulating informal ownership nobody
 wrote down. What I would NOT do is leave a check passing vacuously while the
 routing is settled.
 
-**6. Illinois carries the identical vacuous assertion, and nobody has confirmed
-it landed.** Not blocking, and deliberately not mine to fix.
+**6. ANSWERED, 2026-09-28 — Illinois landed it on its own, and the fleet is now
+clean. No action needed; kept because the handoff worked and that is worth recording.**
+
+**#1239, "Fail the theme check when it reads no colour, instead of passing", merged
+immediately before my #1238** — so the two copies were fixed within an hour of each
+other by the two sessions that own them, with no manager hop needed. And the
+fleet is MEASURED clean rather than assumed: sweeping all six instances,
+**only two ever carried a theme-repaint overlay check at all** (`scripts/` and
+`ca/scripts/`), neither carries the `stroke === null ||` form now, and the other
+four have no such check to fix. Illinois's own board note says "two copies of
+that check, not three", which agrees.
+
+The original question and its reasoning follow, unedited.
+
+**6 (as first written). Illinois carries the identical vacuous assertion, and
+nobody has confirmed it landed.** Not blocking, and deliberately not mine to fix.
 
 `scripts/smoke_test.mjs` (Illinois) asserts the same theme-repaint check with
 the same `light.stroke === null || dark.stroke === null || ...` short-circuit, so
