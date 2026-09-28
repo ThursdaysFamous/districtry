@@ -49,6 +49,101 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-28 (eleventh). THE NG911 MEASUREMENT IS DONE ON ALL FOUR LAYERS. THE ANSWER IS THE
+ALDERMANIC ANSWER AND PSAP IS THE ONE THAT DIFFERS. NOTHING IS CHANGED — REPORTING FIRST, AS
+INSTRUCTED.**
+
+**The question, asked exactly as the aldermanic layer was asked it**: under the retired
+`visvalingam 8%`, take each retained vertex that strays past the layer's own ceiling at a point
+where the answer changes, take its own harm point, and ask what the shipped `dp` output answers
+there against the full-precision source. One capture per layer, both simplifications off ONE
+fetch so a difference cannot be the source moving. `check_fidelity`'s own loop, its own disc, its
+own `reader_answer`; the declared-ring predicate left out to stay like-for-like with `t75/scale.py`.
+
+**IT IS A SAMPLE AND THAT IS THE FIRST FINDING.** Over-ceiling vertices at the retired setting:
+fire 301,776, law 425,358, ems 279,481, psap 86,263 — against the aldermanic layer's FORTY-NINE.
+At the measured 1.19 vertices/s a 288-point disc around each is about 70 hours per layer, so the
+census does not exist here and the aldermanic form of the question does not transfer. Each layer
+gets a seeded random sample of 1,000 over-ceiling vertices instead.
+
+| layer | harm of 1,000 | shipped agrees | still differs | depth median / p90 / max | inside the 0.111 m cell | bound / ceiling |
+|---|---|---|---|---|---|---|
+| fire | 838 | 566 | **272** (32.5%) | 0.063 / 0.190 / **0.354 m** | 203/272 | 1.271 / 3.77 |
+| law | 890 | 592 | **298** (33.5%) | 0.063 / 0.168 / **0.365 m** | 228/298 | 3.316 / 3.51 |
+| ems | 817 | 512 | **305** (37.3%) | 0.057 / 0.170 / **0.355 m** | 230/305 | 1.719 / 3.17 |
+| psap | 594 | 262 | **332** (55.9%) | 0.064 / 0.245 / **0.673 m** | 227/332 | 2.386 / 2.70 |
+| aldermanic (census, for comparison) | 49 | 41 | 8 (16.3%) | — | — | 1.015 / 9.56 |
+
+**EVERY SURVIVING DIFFERENCE IS AT THE LINE, ON ALL FOUR LAYERS**: none deeper than 0.68 m, none
+over 1 m, and on three of the four none over 0.36 m. So the aldermanic conclusion holds — these are
+the boundary and not lost ground — now on 1,207 measured cases rather than eight. Every one of those
+depths sits under its own layer's printed bound, which is the #75 claim about two instruments
+agreeing, confirmed on four more layers.
+
+**AND I HAD THE DEPTH METRIC WRONG, FOUND BY PROBING MY OWN DEEPEST CASE BEFORE REPORTING IT.**
+The first pass measured the distance from the harm point to the SOURCE-NAMED feature's line, and
+read 1.526 m on fire. Probed, the movement is nowhere near it: the point is inside McMillan's source
+ring AND inside McMillan's shipped ring — that boundary did not move at all — while it sits 0.071 m
+outside MARSHFIELD's source ring and 0.132 m inside Marshfield's shipped one, and Marshfield
+precedes McMillan in file order, so `reader_answer` flips on a 0.07 m movement of the OTHER
+feature's line. **A DISTANCE TO THE WRONG EDGE IS NOT THE SIZE OF ANYTHING** — your #1228
+correction, one level further in, in the pass written to avoid exactly that. The depth above is the
+nearest of the FOUR lines that could separate the two features (each one's source line and each
+one's shipped line), recomputed from rows the sweep had already written. The superseded metric read
+maxima of 0.66 / 1.06 / 1.87 / 1.32 m, overstating by up to five times. **The defect bites only
+where an answer moves from one feature to ANOTHER**, so it does not reach the aldermanic eight,
+which are all false silence — and I have not re-measured those, so their figures stand as they are
+rather than being restated from a different metric.
+
+**PSAP DIFFERS IN TWO WAYS THAT SURVIVE THE CORRECTION.** Its still-differing share is 55.9%
+against 32-37%, and its differences are dominated by FALSE SILENCE where the others are wrong-name:
+
+| layer | still differs | -> NO AGENCY | wrong name | silence share |
+|---|---|---|---|---|
+| fire | 272 | 41 | 231 | 15.1% |
+| law | 298 | 46 | 252 | 15.4% |
+| ems | 305 | 52 | 253 | 17.0% |
+| **psap** | 332 | **233** | 99 | **70.2%** |
+
+That matters more on psap than it would elsewhere, because psap tiles the whole state — every point
+has an answering PSAP — so a false silence is a hole in a complete tiling rather than a gap between
+two filings. (A third apparent difference does NOT survive: psap's fixed-group control reads 0.108 m
+against the differing group's 0.074 where the other three read 0.246-0.262, but both figures come
+from the superseded metric, so I am not resting anything on it.)
+
+**PSAP IS ALSO THE ONE LAYER WHOSE SETTING WAS DECIDED BY SIZE, AND THE SIZE COLUMN WAS THE JSON.**
+The builder records it plainly: interval 1 and 2 changed no answer on the dropped-ring instrument,
+so the two tied on every instrument then in use and the smaller file won. The retained-boundary
+question was not one of those instruments. Measured now, at the same 594 harm points:
+
+  * still differs: **332 -> 258** at interval=1 (74 fewer)
+  * false silences: **233 -> 175** (58 fewer)
+  * gzipped JSON: **+22.8%** (506,011 -> 621,587 bytes)
+  * **PMTiles archive: +3.27%** (+30,909 bytes), built with the builder's own tippecanoe arguments
+
+The archive is the column a reader downloads, which this project has already recorded twice — on
+these very four layers (JSON +97.3% against archives +15.9%) and on the aldermanic layer (+7.97%
+against +0.67%). **So the tie-break that chose interval=2 was taken on a quantity nobody
+downloads, and on the archive the cost is 3.27% rather than 22.8%.** One limit on that figure,
+stated rather than left for you to find: `build_vector_tiles.py` has no `prepare_features` to
+import, so neither archive carries the builder's even-odd/edge-split preparation — my
+interval=2 build is 944,829 bytes against the committed 914,464, so the ABSOLUTE numbers are not
+the builder's. Both sides are built the same way, so the 3.27% comparison is sound and the
+absolute sizes are not.
+
+**I AM NOT CHANGING PSAP'S SETTING.** Your instruction was that a differing layer may want a
+declaration rather than a setting change and that this is a decision, not a fix. My reading, for
+what it is worth: a declaration is the wrong instrument here — there is nothing deep to declare,
+since every difference on every layer is sub-metre and at the boundary — and the interval=1 case is
+about the false-silence kind and a mis-taken tie-break rather than about harm a ceiling would catch.
+But 74 of 332 is not a fix either; it is a reduction, and psap would still differ at 258.
+
+**#69 IS BUILT AND OPEN AS #1240, GREEN AND CLEAN**, waiting on review; I have not merged it. It
+gives the health script a `ROBOTS_DECLINED` class so `update-county-clerk-roster` reads
+ROBOTS-REFUSED rather than FAILING — nothing forgiven, the verdict reading WHICH STEP failed, the
+host deferred to the link gate's own record, six negative tests, witnessed live against the
+repository. That live run also found the script's `--repo` default was the pre-rename slug.
+
 **2026-09-27 (evening, tenth). #1235 MERGED AS `0910f48`. BOTH DOCS NAME THE BUILDER NOW, AND THE
 ROOT BOARD STILL RECORDS THE CLAIM THIS CORRECTED — WHICH IS THE MANAGER'S SECTION, NOT MINE.**
 
