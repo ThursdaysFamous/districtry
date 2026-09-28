@@ -26,16 +26,18 @@
           "board": [
             {
               "name": "Mark Lahmann",
-              "role": "Acting President"
-            },
-            {
-              "name": "Mandy Lewis",
-              "role": "Secretary"
+              "role": "President"
             }
           ],
           "comptrollerCode": "075/015/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Pike",
+          "heads": [
+            {
+              "name": "Mandy Lewis",
+              "role": "Fire Chief"
+            }
+          ],
           "office": {
             "address": "385 W Railroad ST",
             "city": "Baylis IL 62314",
@@ -1501,14 +1503,14 @@
         },
         "DES PLAINES PARK DISTRICT": {
           "comptrollerCode": "016/190/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Don Miletic",
               "role": "Executive"
             },
             {
-              "name": "Annette Curtis",
+              "name": "Nahid Khumawala",
               "role": "Director"
             }
           ],
@@ -1790,11 +1792,15 @@
         },
         "HODGKINS PARK DISTRICT": {
           "comptrollerCode": "016/335/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Kelly Young",
-              "role": "Director"
+              "role": "C.E.O."
+            },
+            {
+              "name": "Kelly Young",
+              "role": "C.F.O."
             }
           ],
           "office": {
@@ -1953,21 +1959,23 @@
           }
         },
         "LIGHTHOUSE PARK DISTRICT OF EVANSTON": {
-          "comptrollerCode": "016/220/12",
-          "filedFor": "2024",
-          "heads": [
+          "board": [
             {
               "name": "Joseph J. Behles",
-              "role": "C.E.O."
-            },
+              "role": "Chairperson"
+            }
+          ],
+          "comptrollerCode": "016/220/12",
+          "filedFor": "2025",
+          "heads": [
             {
-              "name": "Thomas A Tench",
-              "role": "C.F.O."
+              "name": "Donald J Terras",
+              "role": "Director"
             }
           ],
           "office": {
             "address": "2601 Sheridan Road",
-            "city": "Evanston IL 60201-1752",
+            "city": "Evanston IL 60201",
             "phone": "(847) 328-6961"
           }
         },
@@ -5004,14 +5012,16 @@
             }
           ],
           "comptrollerCode": "038/080/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "David Kosik",
               "role": "C.F.O."
             }
           ],
-          "office": {}
+          "office": {
+            "email": "crescentiroquoisfpd@outlook.com"
+          }
         },
         "Cullom": {
           "board": [
@@ -6939,6 +6949,25 @@
             "phone": "(217) 792-5222"
           }
         },
+        "Mt. Zion": {
+          "board": [
+            {
+              "name": "Ron Johnson",
+              "role": "President"
+            },
+            {
+              "name": "Paul Higar",
+              "role": "Sec./Treas."
+            }
+          ],
+          "comptrollerCode": "055/070/06",
+          "filedFor": "2024",
+          "office": {
+            "address": "110 W Main St.",
+            "city": "Mt. Zion IL 62549",
+            "phone": "(217) 864-2081"
+          }
+        },
         "Niantic": {
           "board": [
             {
@@ -7362,7 +7391,7 @@
             }
           ],
           "comptrollerCode": "063/070/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "11118 Main Street",
             "city": "Huntley IL 60142",
@@ -7681,18 +7710,16 @@
         "Waterloo Community Fire Protection District": {
           "board": [
             {
+              "name": "MATTHEW LINDHORST",
+              "role": "President"
+            },
+            {
               "name": "GABE HOPKINS",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "067/050/06",
-          "filedFor": "2025",
-          "heads": [
-            {
-              "name": "MATTHEW LINDHORST",
-              "role": "C.E.O."
-            }
-          ],
+          "filedFor": "2026",
           "office": {
             "email": "DISTRICT_TREASURER@WATERLOOFIRERESCUE.COM"
           }
@@ -7739,20 +7766,20 @@
         "BOWLESBURG FPD": {
           "board": [
             {
-              "name": "LAURA SULLIVAN",
-              "role": "President"
+              "name": "Carol Near",
+              "role": "Sec./Treas."
             },
             {
-              "name": "GREGORY HART",
+              "name": "Gregory Hart",
               "role": "Trustee"
             },
             {
-              "name": "Carol Near",
-              "role": "Sec./Treas."
+              "name": "Laura Stohl",
+              "role": "President"
             }
           ],
           "comptrollerCode": "081/040/06",
-          "filedFor": "2024",
+          "filedFor": "2025",
           "office": {}
         },
         "BUFFALO PRAIRIE FPD": {
@@ -8704,7 +8731,7 @@
             }
           ],
           "comptrollerCode": "088/140/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "Midway Fire Dept.": {
@@ -8934,19 +8961,17 @@
         "Waterloo Fire Dept.": {
           "board": [
             {
+              "name": "MATTHEW LINDHORST",
+              "role": "President"
+            },
+            {
               "name": "GABE HOPKINS",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "067/050/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Monroe",
-          "heads": [
-            {
-              "name": "MATTHEW LINDHORST",
-              "role": "C.E.O."
-            }
-          ],
           "office": {
             "email": "DISTRICT_TREASURER@WATERLOOFIRERESCUE.COM"
           }
@@ -9356,7 +9381,7 @@
       }
     }
   },
-  "generated": "2026-09-21T18:29:55Z",
+  "generated": "2026-09-28T22:57:39Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
