@@ -292,17 +292,12 @@ try {
   // rule misrouted 7. Routing now settles a contested point against each
   // instance's OWN published coverage ring, and misroutes 4.
   //
-  // THE FOUR THAT REMAIN ARE HERE ON PURPOSE, as Ironwood. They are not a
-  // tie-break failure: Michigan's fleet bbox was clipped to lng >= -87.60 at
-  // go-live so it would stop containing Chicago's and Wisconsin's own centres,
-  // and the bbox is still the cheap FIRST pass — so a point west of that line
-  // is never offered to Michigan at all and no ring is ever consulted.
-  // Reaching them means restoring Michigan's honest full bbox, which needs
-  // validate_index's "must not contain a sibling's centre" rule relaxed AND
-  // the in-app metro-portal moved off nearest-centre too: a larger change than
-  // this one, recorded in mi/WATCH.md. Asserting the measured truth keeps this
-  // file honest about what the fleet does today; when that change lands,
-  // Ironwood flips to "mi" and the flip is the point.
+  // IRONWOOD FLIPPED TO "mi" ON 2026-09-28, as this comment said it would.
+  // It sits west of Michigan's clipped bbox, so the rectangle pass never
+  // offered it to Michigan; the page now asks fleet-outlines.json first — the
+  // file the apps' own hand-off reads — and Michigan's outline contains it.
+  // The rectangle pass survives only for when that file cannot be read, which
+  // 1c-ter below holds.
   const OVERLAP_PROBES = [
     { name: "Marquette, Michigan", lat: 46.5436, lng: -87.3954, tag: "mi",
       why: "inside wi's bbox AND mi's; only Michigan's ring contains it" },
@@ -312,8 +307,8 @@ try {
       why: "claimed by THREE boxes — il, wi and ia — and served by one" },
     { name: "Rock Island, Illinois", lat: 41.5095, lng: -90.5787, tag: "il",
       why: "claimed by il and ia; the case a smallest-bbox-AREA rule gets wrong" },
-    { name: "Ironwood, Michigan", lat: 46.4547, lng: -90.1710, tag: "wi",
-      why: "MEASURED SHORTFALL: west of mi's clipped bbox, so no ring is consulted" },
+    { name: "Ironwood, Michigan", lat: 46.4547, lng: -90.1710, tag: "mi",
+      why: "west of mi's clipped bbox; only Michigan's outline contains it" },
   ];
   for (const probe of OVERLAP_PROBES) {
     const ctx = await browser.newContext({ serviceWorkers: "block" });
@@ -330,6 +325,48 @@ try {
     const u = new URL(page.url());
     check(`${probe.name} opens /${probe.tag}/ (${probe.why})`,
       u.pathname === `/${probe.tag}/`, page.url());
+    await ctx.close();
+  }
+
+  // --- 1c-ter. with the outline file unreachable, the rectangles answer -----
+  //
+  // fleet-outlines.json is refused here, so the page must fall back to the
+  // bbox pass rather than route nothing. Rock Island is claimed by il and ia
+  // and settled by the rings, so it exercises the whole fallback, not only
+  // its one-claimant shortcut.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await page.route("**/fleet-outlines.json", (r) => r.abort());
+    await page.route("**/photon.komoot.io/**", photonStub([photonFeature(41.5095, -90.5787)]));
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "Rock Island, Illinois");
+    await page.click("#search-button");
+    await page.waitForTimeout(700);
+    check("with fleet-outlines.json unreachable, Rock Island still opens /il/ by the rectangle pass",
+      new URL(page.url()).pathname === "/il/", page.url());
+    await ctx.close();
+  }
+
+  // --- 1c-quater. an address a rectangle claims and nobody serves ----------
+  //
+  // Gary, Indiana sits inside Illinois's bbox, so the rectangle pass sent it
+  // to an app with nothing to show there. It is about 15 km from Illinois's
+  // outline, well past the tolerance the page allows a simplified edge.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await page.route("**/photon.komoot.io/**", photonStub([photonFeature(41.6020, -87.3372)]));
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "Gary, Indiana");
+    await page.click("#search-button");
+    await page.waitForTimeout(700);
+    check("Gary, Indiana stays on the landing page though Illinois's bbox claims it",
+      new URL(page.url()).pathname === "/", page.url());
+    const msg = await textOrNull(page, "#search-status");
+    check("Gary, Indiana is told it is outside every covered place", /outside/i.test(msg || ""), JSON.stringify(msg));
     await ctx.close();
   }
 
