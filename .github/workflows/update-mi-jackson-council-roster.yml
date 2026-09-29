@@ -1,0 +1,94 @@
+name: Update Jackson council roster
+
+# Weekly refresh of Jackson's City Council
+# (mi/data/app/mi-jackson-council-members.json, read by the Jackson entry of
+# mi/index.html's `city-ward` card).
+#
+# The council page lists the Mayor and one councilmember per ward, and each
+# ward has a page of its own with that member's contact block. The scraper
+# reads both and refuses to write unless every ward page names the person the
+# council page puts in that ward, so a page left behind after an election
+# fails this run instead of shipping a former member.
+#
+# The Ward 3 page carries an empty e-mail link addressed to a former member
+# beside the member's own; only a link a reader can see is read.
+
+on:
+  schedule:
+    - cron: "30 21 * * 5" # Friday 21:30 UTC (Battle Creek 20:30, Wayne 21:00 before it)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit — see update-wi-circuit-court-roster.yml.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # Stdlib only — mi/scripts carries no third-party HTTP dependency.
+      - name: Scrape the council page and the six ward pages
+        run: python3 mi/scripts/mi_jackson_council_scraper.py
+
+      - name: Rebuild the Jackson council roster
+        run: python3 mi/scripts/build_mi_jackson_council.py
+
+      - name: Validate app + data files
+        run: python3 mi/scripts/validate_index.py mi/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- mi/data/app/mi-jackson-council-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR.
+          branch="bot/jackson-council-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's CURRENT tip — see update-mi-legislature-roster.yml.
+          # Not depth-limited, so the sitemap keeps its real dates.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          # Regenerated AFTER the cut: mi/city-council.html counts this roster
+          # and carries its table, so it must be rebuilt in the same run or the
+          # smoke gate fails on this job's own pull request.
+          python3 scripts/build_concept_pages.py
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add mi/data/app/mi-jackson-council-members.json mi/city-council.html about.html sitemap.xml
+          git commit -m "Update Jackson council roster"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Jackson council roster" \
+              --body "Automated weekly refresh of the Jackson entry of the \`city-ward\` card: the Mayor and six ward councilmembers, read from the city's council page and each ward's own page. The scraper refuses to write unless both pages name the same person in every ward. No per-member street address ships. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi
