@@ -1,0 +1,112 @@
+name: Validate layer sources (IN)
+
+# Monthly freshness check for the data sources in/index.html depends on.
+# Unlike the roster workflow (which re-fetches the same file), this catches the
+# other failure mode: a publisher silently superseding or emptying a dataset.
+# For this instance the sharpest case is the congressional layer's VERSIONED
+# district field — TIGERweb rolled it to CD120 and REMOVED CD119, so a query
+# naming the retired field is rejected with HTTP 400 rather than returning
+# nothing — and the seven live layers, which have no builder and no committed
+# file between them, so a service moved or emptied for Indiana reaches a reader
+# before it reaches anybody here.
+#
+# in/scripts/validate_sources.py never edits the app (swapping a source is a
+# schema-sensitive judgement call). When it finds drift it exits with a
+# WARN/FAIL status; this workflow then opens — or updates in place — a single
+# tracking issue so a human reviews it. The job itself stays green: the issue
+# is the signal, matching the roster pattern of "officeholder/source changes
+# get a human look before they ship."
+#
+# THE `in-` PREFIX IS LOAD-BEARING. GitHub Actions reads workflows only from the
+# repository ROOT's .github/workflows, so this file has to live here to run at
+# all — and at the root it shares a namespace with the other five instances
+# (the root validate-sources.yml is Illinois's). Every path below is
+# instance-scoped for the same reason.
+#
+# THERE IS NO ROBOTS STEP HERE, AND THAT IS A MEASUREMENT RATHER THAN A GAP.
+# Wisconsin's sibling workflow runs wi/scripts/validate_robots.py because that
+# instance fetches 72 counties' own hosts on a schedule. Indiana fetches FOUR
+# hosts in total, and all four were read through scripts/robots_policy.py on
+# 2026-09-29 as the client that crawls them: unitedstates.github.io serves no
+# robots.txt (HTTP 404), tigerweb.geo.census.gov and iga.in.gov serve HTML at
+# that path rather than a policy, and carto.nationalmap.gov refuses robots.txt
+# itself with HTTP 403 — an API serving its data to everyone, which RFC 9309
+# files with 404. None states a Crawl-delay and none carries a Content-Signal.
+# A robots gate over four permitted hosts would be thin but not vacuous, so it
+# becomes worth adding the moment this instance reads a COUNTY or MUNICIPAL
+# publisher — which is the change that also brings the first county body, and
+# where every host is somebody's own website rather than a national API.
+#
+# Cron: 1st of the month 17:00 UTC — NY runs 12:00, WI 13:00, IL and IA 14:00,
+# CA 15:00, MI 16:00; a free slot keeps the monthly issues from racing each
+# other on the shared runner pool.
+
+on:
+  schedule:
+    - cron: "0 17 1 * *" # 1st of the month, 17:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  validate-sources:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        # Only requests is needed (this instance reads no HTML page, so there
+        # is no BeautifulSoup and no Playwright); pinned via
+        # in/scripts/requirements.txt, the same instance-scoped shape the
+        # sibling states use.
+        run: pip install -c in/scripts/requirements.txt requests
+
+      - name: Validate layer sources
+        id: validate
+        # continue-on-error: a FAIL exit (1) must not red the job — per the
+        # project's "surface for a human, don't block" convention, the tracking
+        # issue below is the signal. status.txt carries ok|warn|fail.
+        continue-on-error: true
+        run: |
+          python3 in/scripts/validate_sources.py \
+            --report source-report.md \
+            --status-file status.txt
+          echo "status=$(cat status.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Open or update tracking issue
+        if: steps.validate.outputs.status != 'ok'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="IN layer source drift — review needed"
+          # Prepend a short header so the issue explains itself, then the report.
+          {
+            echo "_Automated by \`.github/workflows/in-validate-sources.yml\` on $(date -u +%Y-%m-%d). Nothing was changed in the app — review each item, then update \`in/index.html\` (source URLs) or re-run the relevant \`in/scripts/build_*.py\` as needed. Close this issue once addressed; it will reopen/refresh on the next run if drift remains._"
+            echo
+            cat source-report.md
+          } > issue-body.md
+
+          # Search NARROWS; the exact title comparison DECIDES. `gh issue list
+          # --search` ANDs the terms and can return a near-miss, and this repo
+          # carries six instances' source-drift issues — taking the first hit
+          # would let one instance's monthly run overwrite another's body.
+          # TITLE is exported, not a command prefix: the prefix form would set
+          # it for `gh` only, and the reader on the other side of the pipe is a
+          # separate process.
+          export TITLE="$title"
+          existing="$(gh issue list --state open --search "in:title $title" --json number,title \
+            | python3 -c 'import json,os,sys; t=os.environ["TITLE"]; print(next((str(i["number"]) for i in json.load(sys.stdin) if i["title"] == t), ""))')"
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file issue-body.md
+            gh issue comment "$existing" --body "Refreshed by the monthly source-validation run — see the updated issue body for the current status."
+            echo "Updated existing issue #$existing."
+          else
+            gh issue create --title "$title" --body-file issue-body.md
+            echo "Opened a new tracking issue."
+          fi

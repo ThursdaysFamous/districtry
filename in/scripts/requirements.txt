@@ -1,0 +1,25 @@
+# Pinned dependencies for this instance's pipeline (playbook R10 — heuristic
+# HTML parsers are exactly the code that breaks on silent dependency drift).
+# Used by this instance's two scheduled workflows:
+#   .github/workflows/update-in-congress-roster.yml  (stdlib only)
+#   .github/workflows/in-validate-sources.yml        (+ requests)
+#
+# in/scripts/build_state_counties.py and build_legislative_boundaries.py use
+# only curl (via subprocess) and npx mapshaper — no Python HTTP library.
+# build_metro_outline.py imports requests inside its one fetching function.
+#
+# THE ONE ROSTER BUILDER NEEDS NO THIRD-PARTY DEPENDENCY. congress-legislators
+# ships JSON, so in/scripts/build_congress_roster.py fetches it with stdlib
+# urllib and parses it with stdlib json — which is why that weekly workflow
+# installs nothing at all.
+#
+# THERE IS NO HTML PARSER HERE, AND THAT IS A MEASUREMENT RATHER THAN AN
+# OVERSIGHT: this instance reads no county, municipal or legislature page yet.
+# Ten of its eleven layers name nobody (docs the gaps in in/WATCH.md), so the
+# first scraper that reads somebody's website is what adds beautifulsoup4 here.
+requests==2.33.1
+
+# Conversion 2 (docs/MECHANIZATION_PLAYBOOK.md): worksheet validation in
+# scripts/generate_metro_files.py. The generator is otherwise stdlib-only;
+# validate_index.py deliberately stays stdlib and does NOT import this.
+jsonschema==4.26.0

@@ -61,7 +61,7 @@
 // buildManifest() for what that check can and cannot prove.
 
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -69,19 +69,50 @@ const REPO_ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const MANIFEST = join(REPO_ROOT, "districtry", "og-images.json");
 
 // Every surface that carries an og:image, and the label its card prints.
-// DERIVED FROM metros.json, so a new instance is covered by adding it there
-// and re-rendering — there is no list here to forget. The root is the one
-// entry this file states, because it is not in that manifest and never will
-// be: it is the fleet, not a place in it.
+// DERIVED, NEVER LISTED, so a new instance is covered by registering it and
+// re-rendering — there is no list here to forget. The root is the one entry
+// this file states, because it is not in metros.json and never will be: it is
+// the fleet, not a place in it.
+//
+// IT READS DARK INSTANCES TOO, AND THAT IS THE MICHIGAN DEFECT CLOSED RATHER
+// THAN A WIDENING. metros.json is the PUBLISHED fleet, and a state arrives
+// dark — its folder, its app and its three og:image tags all land in the repo
+// one or more pull requests before it is published. Deriving only from
+// metros.json meant those tags named a file that did not exist for the whole
+// dark period, which is exactly what mi/ shipped and what
+// validate_instance_assets.py was written after. So an instance folder with
+// its own metro-worksheet.json carrying brand.instance_tag is a surface too.
+// The LABEL is still derived and never typed: published or dark, it is the
+// instance tag, which metros.json and the worksheet agree on by construction
+// (generate_metro_files.py's --sync-fleet writes one from the other).
 function surfaces() {
   const fleet = JSON.parse(
     readFileSync(join(REPO_ROOT, "metros.json"), "utf8")).metros;
   const out = [{ tag: "root", dir: ".", label: null }];
+  const seen = new Set();
   for (const m of fleet) {
     if (!m.tag) {
       throw new Error(`metros.json entry ${JSON.stringify(m)} has no tag`);
     }
     out.push({ tag: m.tag, dir: m.tag, label: m.tag });
+    seen.add(m.tag);
+  }
+  // Dark instances, discovered from the tree the way validate_card_links.py
+  // and validate_instance_registration.py discover instances — an argument
+  // nobody has to remember to pass.
+  for (const name of readdirSync(REPO_ROOT, { withFileTypes: true })) {
+    if (!name.isDirectory() || seen.has(name.name)) continue;
+    const wpath = join(REPO_ROOT, name.name, "metro-worksheet.json");
+    const app = join(REPO_ROOT, name.name, "index.html");
+    if (!existsSync(wpath) || !existsSync(app)) continue;
+    const tag = ((JSON.parse(readFileSync(wpath, "utf8")).brand) || {}).instance_tag;
+    if (!tag) continue;
+    if (tag !== name.name) {
+      throw new Error(`${name.name}/metro-worksheet.json sets brand.instance_tag `
+        + `"${tag}", which is not its folder name — the tag IS the path, so a card `
+        + `labelled one and served from the other names two different things.`);
+    }
+    out.push({ tag, dir: tag, label: tag });
   }
   return out;
 }
@@ -181,17 +212,28 @@ body{margin:0}
 // The check proves provenance, not correctness, and says so rather than
 // implying more.
 function buildManifest() {
+  // `rendered` is the date the SHIPPED BYTES were produced, so an entry whose
+  // hash has not moved keeps its old date. The renderer is byte-deterministic,
+  // so --all re-renders every card identically; stamping today on all of them
+  // would put a date in the record for cards nobody changed, and the record
+  // would then be wrong about seven instances to be right about one.
+  const prior = existsSync(MANIFEST)
+    ? JSON.parse(readFileSync(MANIFEST, "utf8")) : {};
+  const today = new Date().toISOString().slice(0, 10);
   const entries = {};
   for (const s of surfaces()) {
     const buf = readFileSync(pngPath(s));
     const size = pngSize(buf);
+    const hash = sha256(buf);
+    const was = prior[s.tag];
     entries[s.tag] = {
       path: (s.dir === "." ? "" : s.dir + "/") + "og-image.png",
       label: s.label,
-      sha256: sha256(buf),
+      sha256: hash,
       width: size.w,
       height: size.h,
-      rendered: new Date().toISOString().slice(0, 10),
+      rendered: (was && was.sha256 === hash && was.label === s.label
+                 && was.rendered) || today,
     };
   }
   writeFileSync(MANIFEST, JSON.stringify(entries, null, 2) + "\n");
@@ -218,7 +260,7 @@ function check() {
     }
     if ((e.label ?? null) !== s.label) {
       problems.push(`${s.tag}: its card was rendered with the label `
-        + `${JSON.stringify(e.label)} and metros.json's tag is now `
+        + `${JSON.stringify(e.label)} and its tag is now `
         + `${JSON.stringify(s.label)} — re-render it.`);
     }
     const file = pngPath(s);
@@ -242,8 +284,9 @@ function check() {
   const extra = Object.keys(manifest).filter(
     (t) => !want.some((s) => s.tag === t));
   for (const t of extra) {
-    problems.push(`the manifest carries ${t}, which metros.json does not — `
-      + `drop the entry and its PNG, or restore the instance.`);
+    problems.push(`the manifest carries ${t}, which is neither in metros.json `
+      + `nor an instance folder with a worksheet — drop the entry and its PNG, `
+      + `or restore the instance.`);
   }
   if (problems.length) {
     console.error("build-og-image --check: FAIL — %d problem(s):", problems.length);
@@ -251,7 +294,7 @@ function check() {
     process.exit(1);
   }
   console.log(`build-og-image --check: OK — ${want.length} social card(s), each `
-    + `1200x630, hash-matching the manifest, and labelled as metros.json says. `
+    + `1200x630, hash-matching the manifest, and labelled with its own tag. `
     + `(Provenance only: nothing here reads the pixels.)`);
 }
 

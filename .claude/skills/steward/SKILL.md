@@ -47,6 +47,7 @@ python3 scripts/build_coverage_gaps.py --check
 python3 scripts/build_coverage_gaps.py --check --metro wisconsin --out wi/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro iowa      --out ia/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro michigan  --out mi/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro indiana   --out in/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
 python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
@@ -158,6 +159,7 @@ python3 ny/scripts/validate_index.py ny/index.html
 python3 wi/scripts/validate_index.py wi/index.html
 python3 ia/scripts/validate_index.py ia/index.html
 python3 mi/scripts/validate_index.py mi/index.html
+python3 in/scripts/validate_index.py in/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
 python3 -m http.server 8000 &
@@ -167,6 +169,7 @@ BASE_URL=http://localhost:8000/ny/ node ny/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/wi/ node wi/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ia/ node ia/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/mi/ node mi/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/in/ node in/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check

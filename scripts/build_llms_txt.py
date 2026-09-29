@@ -59,6 +59,11 @@ import sys
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+# The dark-instance definition lives in one place: that gate reads
+# deploy-pages.yml's own EXCLUDES, which is what actually decides whether a
+# folder is published. Never a second list here.
+import validate_instance_registration
+
 from robots_policy import RobotsPolicy  # noqa: E402
 
 OUT = os.path.join(REPO_ROOT, "llms.txt")
@@ -116,19 +121,37 @@ def instances():
     """The fleet, from metros.json, checked against the tree.
 
     metros.json is the fleet's single source and the tree is what actually
-    ships, so a mismatch either way is a failure rather than a silent skip:
-    an entry with no folder would publish a link to nothing, and a folder with
-    no entry is exactly the unregistered-instance case
-    validate_instance_registration.py exists for."""
+    ships, so a mismatch is a failure rather than a silent skip: an entry with
+    no folder would publish a link to nothing, and a folder with no entry is
+    the unregistered-instance case validate_instance_registration.py exists
+    for.
+
+    EXCEPT WHEN THAT FOLDER IS DARK, which this function used to get wrong.
+    A new state is built over several PRs with one blanket `<tag>/**` line in
+    deploy-pages.yml's EXCLUDES, and metros.json is the SWITCH that publishes
+    it — so between arrival and go-live a folder with no entry is correct, and
+    this gate failed the whole fleet's llms.txt for it. Indiana was the first
+    dark instance since this file was written and hit it on arrival.
+
+    The definition is not re-derived here: `dark_instances()` in
+    validate_instance_registration.py reads the deploy exclude, which is the
+    thing that actually decides, and two readers of one question is where this
+    fleet's recurring defect starts. A dark instance is PRINTED rather than
+    dropped silently, and it is deliberately not described in llms.txt — a
+    crawler pointed at an excluded folder is pointed at a 404."""
     listed = json.loads(read(os.path.join(REPO_ROOT, "metros.json")))["metros"]
     on_disk = {d for d in os.listdir(REPO_ROOT)
                if os.path.isdir(os.path.join(REPO_ROOT, d, "data", "app"))
                and os.path.exists(os.path.join(REPO_ROOT, d, "index.html"))}
+    dark = validate_instance_registration.dark_instances() & on_disk
+    if dark:
+        print("build-llms-txt: %s dark (excluded from the deploy, so absent "
+              "from metros.json and from llms.txt)" % ", ".join(sorted(dark)))
     tags = {m["tag"] for m in listed}
-    if tags != on_disk:
-        fail("metros.json lists %s and the tree carries %s — "
+    if tags != (on_disk - dark):
+        fail("metros.json lists %s and the tree carries %s (dark: %s) — "
              "scripts/validate_instance_registration.py names what to edit"
-             % (sorted(tags), sorted(on_disk)))
+             % (sorted(tags), sorted(on_disk), sorted(dark) or "none"))
     return listed
 
 

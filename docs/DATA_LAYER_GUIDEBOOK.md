@@ -56,7 +56,8 @@ in the researched-but-unbuilt backlog.
   "sf": ["congress", "ca-senate", "ca-assembly", "bart-director", "election-precinct", "supervisor-district", "police-district", "zip-code", "neighborhood", "elementary-attendance-area", "police-station", "fire-station", "school-site", "post-office", "library", "early-voting"],
   "wisconsin": ["madison-neighborhood-assoc", "wtcs-district", "us-house", "wi-senate", "wi-assembly", "wi-circuit-court", "wi-court-of-appeals", "county", "school-district-secondary", "school-district-unified", "school-district-elementary", "county-board", "mps-school-board", "aldermanic-district", "county-subdivision", "ward", "municipality", "mpd-district", "mpd-squad-area", "milwaukee-neighborhoods", "tid-district", "fire-service", "law-service", "ems-service", "psap-area", "zip-code", "school-site", "library", "police-station", "fire-station", "post-office"],
   "iowa": ["iowa-aea", "city-ward", "us-house", "ia-senate", "county", "ia-house", "county-supervisor", "school-district-unified", "school-director-district", "cc-director-district", "county-subdivision", "municipality", "zip-code", "post-office", "police-station", "fire-station", "school-site", "precinct", "ia-judicial-district", "community-college"],
-  "michigan": ["us-house", "mi-senate", "county", "mi-house", "school-district-unified", "school-district-elementary", "county-commissioner", "county-subdivision", "zip-code", "city-ward", "precinct", "municipality", "police-station", "fire-station", "post-office"]
+  "michigan": ["us-house", "mi-senate", "county", "mi-house", "school-district-unified", "school-district-elementary", "county-commissioner", "county-subdivision", "zip-code", "city-ward", "precinct", "municipality", "police-station", "fire-station", "post-office"],
+  "indiana": ["us-house", "in-senate", "county", "in-house", "school-district-unified", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -2577,6 +2578,68 @@ detail into `blocker`.
       "wanted": "The page where the county lists its commissioners by district.",
       "blocker": "Successor to mi-county-board-no-website, RETIRED 2026-09-24 when Shiawassee shipped. WHAT THE RETIRED RECORD GOT WRONG IS THE PART WORTH KEEPING: it said this app could not confirm which website belongs to Montmorency or Shiawassee, because \"several plausible addresses answer, and none of them names the county anywhere on the page\". Both counties have an ordinary website and always did. The sweep behind that record could not produce either address: its candidate generator has no four-letter-stem form (montcounty.org) and no bare-stem .net (shiawassee.net), so `no-confirmed-host` was a fact about the candidate list and not about the county — exactly what mi/scripts/probe_mi_county_boards.py\u0027s own docstring warns `no-host` can be. Both addresses came from the county\u0027s own English Wikipedia infobox, which is not a county host, and were confirmed against each county\u0027s front page before any board page was read. SHIAWASSEE SHIPPED: https://shiawassee.net/board-of-commissioners/ keys all seven districts with a name, a telephone and an e-mail, and now ships from mi-commissioner-members.json. MONTMORENCY DID NOT. GET https://www.montcounty.org/board-of-commissioners.html as the districtry roster token, 2026-09-24 -> 200, 79,243 bytes, of which every one of its 202 visible lines is a navigation item; it names Montmorency County nine times and not one commissioner. Its only \"District #4\" is a multi-county health department in the County Links menu, not a board district. Its own menu names /commissioners.html and /elected-officials.html, EITHER OF WHICH IS THE OBVIOUS NEXT SINGLE REQUEST and neither has been read: the budget for the 2026-09-24 re-examination was one request per county and it was spent on the page the county\u0027s front page linked. NOT AN ASK YET: the next step is a fetch this project may make itself, not a question for the county. NOT YET ASKED."
     }
+  ],
+  "indiana": [
+      {
+          "id": "in-county-government",
+          "concept": "County council and commissioners",
+          "area": "Indiana — all 92 counties",
+          "counties": [],
+          "kind": "no-source",
+          "layer": "county",
+          "summary": "The County card names your county and nobody who governs it.",
+          "why": "An Indiana county is run by two elected bodies, a county council and a board of commissioners, and this app does not draw either yet, so it names neither rather than guessing which seat covers you.",
+          "wanted": "The council district and commissioner district covering the point, with the member holding each.",
+          "blocker": "NOT A MISSING SOURCE — UNBUILT WORK, and the sources are measured. The Indiana Geographic Information Office's Data Harvest publishes county council districts for 56 of the 92 counties on Administrative_Boundaries_of_Indiana_Current layer 4 (measured 2026-09-29), and the Indiana Election Division's certified results at enr.indianavoters.in.gov carry every county council and commissioner seat in the 2022 and 2024 generals, which is how the roster reaches all 92 whether or not a boundary does. Commissioner districts are RESIDENCY districts elected countywide in 90 counties (Lake and St. Joseph elect by district), so a commissioner card follows Iowa's shipped plan-2 pattern: draw the district, state the election, name nobody on the district itself. The 36 counties with no published council boundary are the catalogue-sweep route — Vigo County publishes both district layers on its own ArcGIS Online org, which is the shape to test county by county. Nothing here is asked of anybody; it is this instance's own next change."
+      },
+      {
+          "id": "in-general-assembly-roster",
+          "concept": "State legislator",
+          "area": "Indiana — statewide",
+          "counties": [],
+          "kind": "no-source",
+          "layer": "in-senate",
+          "summary": "Both General Assembly cards name your district and link the chamber's directory instead of naming your senator or representative.",
+          "why": "This app has not yet fetched a roster for either chamber, so it sends you to the General Assembly's own member list rather than printing a name it cannot check.",
+          "wanted": "The senator and representative holding each of the 50 Senate and 100 House districts.",
+          "blocker": "UNBUILT WORK WITH A MEASURED SOURCE, not an absence. The Open States current-people export carries Indiana (in.csv) exactly as it carries every state this fleet already reads, and Michigan's and Iowa's builders are the pattern. It is held out of this instance's first change so the national tier lands with its boundaries gated before a weekly workflow is added; the roster and its workflow are the next change. iga.in.gov's own API answers 403 x-api-key not found and is NOT the route — the chamber directories are read as pages or the export is read instead."
+      },
+      {
+          "id": "in-school-board-members",
+          "concept": "School board member",
+          "area": "Indiana — all 291 school districts",
+          "counties": [],
+          "kind": "no-source",
+          "layer": "school-district-unified",
+          "summary": "The School District card names the district and none of the board members who run it.",
+          "why": "Indiana elects most school board members, but this app has no roster of them and no map of the seats that are elected by district, so it names the district only.",
+          "wanted": "The board members of each district, and the sub-district boundaries where a seat is elected by one.",
+          "blocker": "MEASURED 2026-09-29 AND TWO DIFFERENT PROBLEMS. The people exist and are reachable: the Indiana Election Division's certified 2024 General carries a School Board Member office category, whose own description says most members are elected and some appointed, and its returns name 742 of them across 353 districted races. The GEOMETRY does not: no statewide publisher carries school board sub-district boundaries, so a districted seat cannot be placed on a map even once its holder is known. So the roster is buildable and the districted half is not, and the card will say which is which rather than implying the whole board is unplaceable."
+      },
+      {
+          "id": "in-township-officers",
+          "concept": "Township trustee and board",
+          "area": "Indiana — all 1,004 civil townships",
+          "counties": [],
+          "kind": "no-source",
+          "layer": "county-subdivision",
+          "summary": "The Township card names your township and none of the four or six people you elect to run it.",
+          "why": "An Indiana township elects a trustee and a township board, and some also elect an assessor. This app draws the township and has not yet fetched who holds those offices.",
+          "wanted": "The trustee, the board members and, where one is elected, the assessor of each township.",
+          "blocker": "UNBUILT WORK WITH A MEASURED SOURCE. Township Trustee, Township Board Member and Township Assessor are three separate certified office categories in the Indiana Election Division's own returns (measured across the 2022 General and the 2026 Primary), so every holder is named in a certified document. Marion County's township boards have five members rather than three, which a builder has to carry rather than assume. The boundary here is TIGER's county-subdivision layer, 1,004 of whose 1,012 Indiana records are civil townships; the other eight are Census bookkeeping and get no roster claim."
+      },
+      {
+          "id": "in-municipal-officeholders",
+          "concept": "Mayor, council and clerk",
+          "area": "Indiana — all 566 cities and towns",
+          "counties": [],
+          "kind": "no-source",
+          "layer": "municipality",
+          "summary": "The City or Town card names the place and nobody who governs it.",
+          "why": "This app has not yet fetched Indiana's municipal officeholders, so it names the city or town and says plainly that it does not know who runs it.",
+          "wanted": "The mayor or town council president, the council members and the clerk of each city and town.",
+          "blocker": "UNBUILT WORK WITH A MEASURED SOURCE. Indiana's municipal officers are elected in the odd-year municipal general and certified by the Election Division: its 2023 municipal returns name 1,327 officeholders, including 428 districted city council seats. The COUNCIL DISTRICTS THEMSELVES have no statewide geometry, so a districted council seat cannot be placed until a city or its county publishes wards — and under Adam's ruling of 2026-09-21, the state precinct fabric may CHECK a city-published ward boundary and never stand in for one. The roster half is buildable now; the ward half is per-city work."
+      }
   ]
 }
 ```
