@@ -215,6 +215,92 @@ def pages(html):
     return out
 
 
+LAYER_PREFIX = "layer/"
+
+
+def layer_instances(s, total, start, end, mx, tags, fleet_rows):
+    """Each instance's own layer ranking, one filtered request per tag.
+
+    The layer event has carried the instance tag since 2026-09-29 (engine
+    overlay-cards): `layer/<tag>/<id>`. Before that it was `layer/<id>` for
+    every app, so two instances registering the same layer id reported into one
+    row and nothing could say which state a toggle came from.
+
+    ONE REQUEST PER INSTANCE is what gets past the dashboard's TEN-ROW CAP, and
+    that is the whole reason this is worth doing. 102 distinct layer ids across
+    the fleet already compete for those ten slots — which is why the fleet-wide
+    `layer/` list comes back as exactly ten rows rather than a full one — and
+    splitting each shared id per instance makes it 157 (id, instance) pairs
+    competing for the same ten. Asked per instance, Illinois's 40 rank inside
+    their own ten. Without this the split would be a straight regression.
+
+    THE BROKEN-FILTER CASE IS CHECKED RATHER THAN HOPED FOR. On the first runs
+    after the engine change a per-instance request legitimately returns
+    NOTHING, because no toggle has been recorded under the new path yet — which
+    is indistinguishable from a nested `filter=` that does not work, and the
+    filter is a dashboard query string rather than a documented API. So the
+    fleet-wide rows are the control: if THEY carry a new-shape path for a tag
+    whose own request came back empty, the filter is broken and this fails
+    rather than publishing an instance as having no toggles.
+
+    Returns {(tag, id): count}.
+    """
+    out = {}
+    empty = []
+    for tag in tags:
+        rows = pages(widget(s, 0, total, start, end, max=mx,
+                            filter=LAYER_PREFIX + tag + "/"))
+        found = 0
+        for r in rows:
+            parts = r["path"].split("/")
+            if len(parts) == 3 and parts[0] == "layer" and parts[1] == tag:
+                out[(tag, parts[2])] = r["count"]
+                found += 1
+        if not found:
+            empty.append(tag)
+    # The control. A fleet-wide row of the new shape proves the tag is being
+    # recorded, so an empty per-instance request for it cannot be day-one.
+    seen_in_fleet = {r["path"].split("/")[1] for r in fleet_rows
+                     if len(r["path"].split("/")) == 3}
+    broken = sorted(set(empty) & seen_in_fleet)
+    if broken:
+        sys.exit("the per-instance layer filter returned nothing for %s while "
+                 "the fleet-wide list carries layer/<tag>/<id> rows for it, so "
+                 "filter=%r is not doing what this assumed. Look at the widget "
+                 "with --explore before trusting these rows."
+                 % (", ".join(broken), LAYER_PREFIX + broken[0] + "/"))
+    return out
+
+
+def sum_layer_shapes(fleet_rows, per_instance):
+    """One row per layer id, summing the OLD pooled shape and the new ones.
+
+    BOTH SHAPES ARE SUMMED, so a bar keeps its whole count across the seam.
+    The window is a rolling 62 days, so for 62 days after the engine change the
+    old `layer/<id>` rows decay out while `layer/<tag>/<id>` fills in, and
+    neither is the whole count on its own. Summing keeps the total honest and
+    leaves the ATTRIBUTION partial, which the page states with its own date
+    rather than implying the split is complete.
+    """
+    totals = {}
+    for r in fleet_rows:
+        parts = r["path"].split("/")
+        if len(parts) == 2 and parts[0] == "layer":
+            totals[parts[1]] = totals.get(parts[1], 0) + r["count"]
+        elif len(parts) == 3 and parts[0] == "layer":
+            totals[parts[2]] = totals.get(parts[2], 0) + r["count"]
+    for (tag, lid), n in per_instance.items():
+        # A fleet-wide row already counted is not counted twice: the fleet list
+        # and the per-instance list overlap wherever a new-shape row is in both
+        # top tens.
+        key = "layer/%s/%s" % (tag, lid)
+        if any(r["path"] == key for r in fleet_rows):
+            continue
+        totals[lid] = totals.get(lid, 0) + n
+    return [{"path": "layer/" + lid, "title": "layer/" + lid, "count": n}
+            for lid, n in totals.items()]
+
+
 def top(rows, n=10):
     return [{k: v for k, v in r.items() if k != "daily"}
             for r in sorted(rows, key=lambda r: -r["count"])[:n]]
@@ -285,7 +371,11 @@ def collect(s, total, start, end):
     event_rows += [r for r in pages(widget(s, 0, total, start, end, max=mx,
                                            filter="geolocate"))
                    if r["path"] not in {e["path"] for e in event_rows}]
-    layer_rows = pages(widget(s, 0, total, start, end, max=mx, filter="layer/"))
+    fleet_layer_rows = pages(widget(s, 0, total, start, end, max=mx,
+                                    filter=LAYER_PREFIX))
+    per_instance = layer_instances(s, total, start, end, mx, fleet_tags(),
+                                   fleet_layer_rows)
+    layer_rows = sum_layer_shapes(fleet_layer_rows, per_instance)
 
     out = {
         "total": total,
@@ -295,6 +385,14 @@ def collect(s, total, start, end):
         "pages": top(page_rows, 20),
         "top_events": top(event_rows, 20),
         "layers": top(layer_rows, 20),
+        # The ATTRIBUTED part: one row per (instance, layer) the new event
+        # shape has recorded. Empty on the first runs after the engine change
+        # and fills in over the window; the page subtracts it from each id's
+        # total to say how much is still pooled.
+        "layer_instances": sorted(
+            ({"tag": tag, "id": lid, "count": n}
+             for (tag, lid), n in per_instance.items()),
+            key=lambda r: (-r["count"], r["tag"], r["id"])),
         "instances": split_by_instance(page_rows),
         "pages_truncated": bool(pages_truncated),
     }

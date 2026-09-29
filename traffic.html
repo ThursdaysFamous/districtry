@@ -1222,7 +1222,7 @@ code {
       <li id="note-1"><strong>The two totals.</strong> The <span data-stat="total">4,154</span> figure is GoatCounter&rsquo;s own total for the window, and <span data-stat="barSumNote">the browser and system bars sum to it exactly, while the location bars (39 short) come from a capped list</span>; the daily columns sum to <span data-stat="dailySum">4,174</span>, <span data-stat="dailyGap">20</span> apart. Both count the same period, and the difference has run in both directions and is not a fixed offset, so it is not that one of them is short. This page does not know what the difference is, so it prints both rather than deriving one from the other. Counts are GoatCounter &ldquo;visits&rdquo;: cookieless, identity-free.</li>
       <li id="note-2"><strong>The window<span data-day="Aug 24">, and the root path</span>.</strong> This is a rolling two months, <span data-stat="range">July 29 – September 28, 2026</span>, <span data-stat="days">62</span> days ending on the last full day. It used to run from launch on 10&nbsp;July and grow without bound; tracking began that day, so nothing before it exists, and everything before this window does and is simply not drawn here. <span data-day="Aug 24">Until <strong>August 24</strong> the Illinois app was served from <code>/</code> at chidistricts.com; that day it moved under <code>/il/</code> and <code>/</code> became the fleet landing page. The series spans both, so <code>/</code> counts as Illinois on every day before the cutover and as the landing page on the cutover day and after, a whole day at a time, which is the granularity the dashboard publishes per path.</span> <span data-day="Aug 25"><strong>August 25 is not a slump.</strong> Google Safe Browsing flagged the day-old districtry.com domain that morning, and Chrome shows its warning <em>before</em> the page loads, so blocked visits never reached the counter at all. The flag was a false positive and has since been cleared; the day is under-counted by an unknown amount and cannot be reconstructed.</span> The two Illinois SEO pages the narrative tracks are at <span data-stat="seoPolice">26</span> visits (<code>/il/police-district.html</code>) and <span data-stat="seoSchool">170</span> (<code>/il/school-board.html</code>, the third most-visited path on the site).</li>
       <li id="note-3"><strong>The instance split.</strong> <span data-stat="barCount">Seven</span> bars: <span data-stat="appCount">six</span> apps and the fleet landing page. <span data-day="Aug 24">Read the ranking as age, not quality: until August 24 the non-Illinois tags pointed at GoatCounter sites that did not exist and every one of their visits was dropped, unrecoverable. Illinois has the whole window of history; the rest begin at the cutover.</span> <span data-day="Aug 28">Iowa joined the fleet manifest at 01:24&nbsp;UTC on 28&nbsp;August, so it is listed on the landing page now; until then it was live and in the sitemap but unlisted, which is how it drew a visit from a page that did not offer it.</span> These <span data-stat="barCountLower">seven</span> sum to <span data-stat="instSum">1,543</span> of <span data-stat="pageviews">1,718</span> page visits. The split reads the dashboard&rsquo;s own pages list, which caps at ten rows, so <span data-stat="instResidual">175</span> visits on the long tail are in the total and in no bar.<span data-stat="zeroInstNote"> Bars reading zero (San Francisco and Michigan) mean those paths are not among those ten rows, not that the counter recorded none: their visits sit in that long tail, and this page cannot tell how many, zero included.</span> The root path is divided by date rather than guessed at: each day&rsquo;s root visits go to whichever page was actually there.</li>
-      <li id="note-4"><strong>Layer ids share one namespace across the fleet,</strong> so a layer more than one app registers reports into ONE row and its count sums across them. <span data-stat="layerScopeNote">Six of the ten drawn here are registered by more than one app, so those counts sum across them: Congress (Illinois, New York and San Francisco), County (Illinois, New York, Wisconsin, Iowa and Michigan), County board (Illinois and Wisconsin), Police district (Illinois and San Francisco), School district (unified) (Illinois, Wisconsin, Iowa and Michigan) and Ward (Illinois and Wisconsin). The other four are registered by one app and are unambiguous: IL House, IL Senate, School board and Ward precinct.</span> How much blending there could be is measurable even though the blending itself is not: the other <span data-stat="otherCount">five</span> instances have <span data-stat="otherInst">196</span> page visits between them against Illinois&rsquo;s <span data-stat="topInst">1,048</span>, so a shared id could carry at most that share and the single-app ids carry none of it. That ceiling grows as the other instances do, and this note is where it will be visible when it stops being small. The layer list is the top 10 of those recorded.</li>
+      <li id="note-4"><strong>Layer ids share one namespace across the fleet,</strong> so a layer more than one app registers reports into ONE row and its count sums across them. <span data-stat="layerScopeNote">Six of the ten drawn here are registered by more than one app, so those counts sum across them: Congress (Illinois, New York and San Francisco), County (Illinois, New York, Wisconsin, Iowa and Michigan), County board (Illinois and Wisconsin), Police district (Illinois and San Francisco), School district (unified) (Illinois, Wisconsin, Iowa and Michigan) and Ward (Illinois and Wisconsin). Nothing in this window is split by app yet: the tagged event shape starts on September 29. The other four are registered by one app and are unambiguous: IL House, IL Senate, School board and Ward precinct.</span> How much blending there could be is measurable even though the blending itself is not: the other <span data-stat="otherCount">five</span> instances have <span data-stat="otherInst">196</span> page visits between them against Illinois&rsquo;s <span data-stat="topInst">1,048</span>, so a shared id could carry at most that share and the single-app ids carry none of it. That ceiling grows as the other instances do, and this note is where it will be visible when it stops being small. The layer list is the top 10 of those recorded.</li>
       <li id="note-5"><strong>The referrer list is a top six.</strong> GoatCounter&rsquo;s dashboard shows a &ldquo;Show more&rdquo; beyond it that this page cannot query into. The six sum to <span data-stat="refSum">2,361</span> of <span data-stat="total">4,154</span> visits, so a named search engine&rsquo;s true total could run higher than what is shown here. <code>utm_source</code> tags count in the referrer list; the campaigns list counts only visits from links tagged with <code>?utm_campaign=&hellip;</code>.</li>
       <li id="note-6"><strong>Search counts combine <span data-stat="searchProps">2</span> Search Console properties,</strong> because the site renamed mid-window and the old domain still appears in results and redirects across; those are two different results for one search, not one counted twice. Google withholds rare queries before anyone sees them, so these will not reconcile exactly with Search Console&rsquo;s own reports. This is also the one thing the visit counter cannot see: Google strips the query from the referrer, so every one of these searches arrives in the referrer list as an anonymous &ldquo;Google&rdquo;. On Bing the figures combine <span data-stat="bingProps">2</span> verified properties: <span data-stat="bingNewHost">districtry.com</span> first appeared in these results on <span data-stat="bingNewFirst">September 13</span>, with <span data-stat="bingNewImpressions">2,148</span> impressions against chidistricts.com&rsquo;s <span data-stat="bingOldImpressions">1,601</span>. <span data-stat="bingSplitNote">districtry.com carries most of the figure now; chidistricts.com’s share is the early days of this window, which the rolling window is dropping.</span></li>
     </ol>
@@ -1434,6 +1434,13 @@ code {
        is in no worksheet and this page will not guess whose it is. See
        layer_scope() for what a hand-kept version of this cost. */
     layerScope: {"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan"],"County board":["Illinois","Wisconsin"],"IL House":["Illinois"],"IL Senate":["Illinois"],"Police district":["Illinois","San Francisco"],"School board":["Illinois"],"School district (unified)":["Illinois","Wisconsin","Iowa","Michigan"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"]},
+    /* The MEASURED attribution: toggles the tagged event shape has recorded,
+       per layer and instance, and how much of each layer's total predates it
+       and stays pooled. Both are needed during the seam — layerScope says
+       which ids CAN pool, these say how much actually is. */
+    layerSplit: {},
+    layerPooled: {"Congress":96,"County":60,"County board":88,"IL House":95,"IL Senate":76,"Police district":39,"School board":163,"School district (unified)":35,"Ward":154,"Ward precinct":44},
+    layerSplitFrom: "September 29",
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
     seo: { police: 26, school: 170 },
@@ -1589,30 +1596,62 @@ code {
        after its last toggle. */
     layerScopeNote: (function () {
       var scope = barData.layerScope || {};
+      var split = barData.layerSplit || {};
+      var pooled = barData.layerPooled || {};
+      var from = barData.layerSplitFrom || "";
       var names = Object.keys(scope);
       if (!names.length) return "";
       var join = function (parts) {
         return parts.length < 2 ? (parts[0] || "")
           : parts.slice(0, -1).join(", ") + " and " + parts[parts.length - 1];
       };
-      var shared = [], single = [], unknown = [];
+      var shared = [], single = [], unknown = [], anySplit = false;
       names.forEach(function (n) {
         var who = scope[n];
-        if (!who) unknown.push(n);
-        else if (who.length > 1) shared.push(n + " (" + join(who) + ")");
-        else single.push(n);
+        if (!who) { unknown.push(n); return; }
+        if (who.length < 2) { single.push(n); return; }
+        /* A shared layer reads as its measured per-app split wherever the
+           tagged shape has recorded one, and as the bare capability where it
+           has not.
+
+           THE REMAINDER IS CALLED UNATTRIBUTED AND NOT "FROM BEFORE THE
+           SPLIT", which a draft of this said and which would be false. It is
+           the layer's total minus what could be attributed, and that has TWO
+           causes: toggles recorded before the tag existed, and toggles whose
+           per-app row fell below the ten rows each instance's own list holds.
+           The second is the same cap that makes an instance bar read zero
+           without the counter having recorded none, and this page cannot tell
+           the two apart — so it names neither. */
+        var got = split[n], parts = [];
+        Object.keys(got || {}).forEach(function (inst) {
+          parts.push(inst + " " + fmt(got[inst]));
+          anySplit = true;
+        });
+        var left = pooled[n] || 0;
+        if (!parts.length) parts = who.slice();
+        else if (left) parts.push(fmt(left) + " unattributed");
+        shared.push(n + " (" + join(parts) + ")");
       });
       var out = [];
       if (shared.length) {
         var many = shared.length > 1;
-        out.push((shared.length === names.length && names.length > 1
-                   ? "All " + words(names.length) + " drawn here are"
-                   : words(shared.length, true) + " of the " +
-                     words(names.length) + " drawn here " +
-                     (many ? "are" : "is")) +
-                 " registered by more than one app, so " +
-                 (many ? "those counts sum" : "that count sums") +
-                 " across them: " + join(shared) + ".");
+        var head = (shared.length === names.length && names.length > 1
+                     ? "All " + words(names.length) + " drawn here are"
+                     : words(shared.length, true) + " of the " +
+                       words(names.length) + " drawn here " +
+                       (many ? "are" : "is")) +
+                   " registered by more than one app";
+        out.push(head + (anySplit
+          ? ", and a toggle has carried its own app's tag since " + from +
+            "; an unattributed figure is toggles from before that date, or" +
+            " ones whose per-app row fell below the ten each app's list" +
+            " holds: "
+          : ", so " + (many ? "those counts sum" : "that count sums") +
+            " across them: ") + join(shared) + ".");
+        if (!anySplit) {
+          out.push("Nothing in this window is split by app yet: the tagged" +
+                   " event shape starts on " + from + ".");
+        }
       }
       if (single.length) {
         var one = single.length === 1;

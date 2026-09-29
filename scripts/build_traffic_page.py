@@ -55,6 +55,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # only while the peak IS that day, so the literal here must agree with the
 # REBRAND constant traffic.html's own script carries.
 REBRAND = "2026-08-24"
+# The day the layer event started carrying the instance tag (engine
+# overlay-cards). Before it, `layer/<id>` pooled every app registering that id;
+# after it, `layer/<tag>/<id>`. A historical fact that never moves, like
+# REBRAND above, and the page needs it to date its own partial attribution.
+LAYER_SPLIT = "2026-09-29"
 PAGE = os.path.join(ROOT, "traffic.html")
 BEGIN = "  /* ==== TRAFFIC-DATA:BEGIN ==== */"
 END = "  /* ==== TRAFFIC-DATA:END ==== */"
@@ -297,6 +302,30 @@ def build():
     pg = {r["path"]: r["count"] for r in gc["pages"]}
     layers = [(LAYER_NAMES.get(r["path"][6:], r["path"][6:]), r["count"])
               for r in gc["layers"][:10]]
+    # THE MEASURED ATTRIBUTION, beside the capability layer_scope() reads off
+    # the worksheets. `layer_instances` is absent from a file fetched before
+    # 2026-09-29 and empty on the first runs after it, so both cases degrade to
+    # "nothing attributed yet" rather than to a missing key.
+    attributed = {}
+    for r in gc.get("layer_instances", []):
+        attributed.setdefault(r["id"], {})[r["tag"]] = r["count"]
+    drawn_totals = {r["path"][6:]: r["count"] for r in gc["layers"][:10]}
+    split, pooled = {}, {}
+    for lid, total_row in drawn_totals.items():
+        name = LAYER_NAMES.get(lid, lid)
+        by_tag = attributed.get(lid, {})
+        got = sum(by_tag.values())
+        if got > total_row:
+            # The sum is wrong somewhere: a per-instance row cannot exceed the
+            # id's own total, which the fetcher built by adding both shapes.
+            fail("layer %s: %d attributed across %d instance(s) against a "
+                 "total of %d. The fetcher sums the pooled and per-instance "
+                 "shapes; these cannot disagree."
+                 % (lid, got, len(by_tag), total_row))
+        if by_tag:
+            split[name] = {INSTANCE_NAMES.get(t, t): n
+                           for t, n in sorted(by_tag.items())}
+        pooled[name] = total_row - got
     daily_sum = gc["pageviews"] + gc["events"]
 
     block = '''%s
@@ -361,6 +390,13 @@ def build():
        is in no worksheet and this page will not guess whose it is. See
        layer_scope() for what a hand-kept version of this cost. */
     layerScope: %s,
+    /* The MEASURED attribution: toggles the tagged event shape has recorded,
+       per layer and instance, and how much of each layer's total predates it
+       and stays pooled. Both are needed during the seam — layerScope says
+       which ids CAN pool, these say how much actually is. */
+    layerSplit: %s,
+    layerPooled: %s,
+    layerSplitFrom: "%s",
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
     seo: { police: %d, school: %d },
@@ -400,6 +436,9 @@ def build():
          else str(ev["geolocate-success"])),
         json.dumps(layer_scope([r["path"][6:] for r in gc["layers"][:10]]),
                    separators=(",", ":"), sort_keys=True),
+        json.dumps(split, separators=(",", ":"), sort_keys=True),
+        json.dumps(pooled, separators=(",", ":"), sort_keys=True),
+        long_label(LAYER_SPLIT),
         pg.get("/il/police-district.html", 0), pg.get("/il/school-board.html", 0),
         residual,
         "{:,}".format(gc["total"]), "{:,}".format(daily_sum),

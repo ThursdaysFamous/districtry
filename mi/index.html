@@ -9995,7 +9995,30 @@ function initMichiganExplorer() {
       if (typeof baseIndex === "number") {
         block.style.order = String(cardOrder(baseIndex, checkbox.checked));
       }
-      if (checkbox.checked) trackEvent("layer/" + mod.id);
+      /* THE INSTANCE TAG IS IN THE EVENT PATH, and it has to be: GoatCounter
+         groups events by PATH alone — trackEvent sends {path, title, event}
+         and the title is display-only — so two apps registering the same layer
+         id reported into ONE row and nothing could say which state a toggle
+         came from. Measured 2026-09-29, SIX of the ten layers the traffic
+         report draws were shared that way, `ward` among them (Illinois and
+         Wisconsin, since 2026-09-08), on the day the school-board layer passed
+         ward in those bars. There is no originating-page dimension to filter
+         on and no retroactive fix: what was pooled stays pooled.
+
+         THE TAG GOES SECOND, AFTER THE LITERAL, for two reasons.
+         build_privacy_page.py publishes the event PREFIX and treats a
+         trackEvent call whose name it cannot read as an ERROR, so a leading
+         literal keeps the published vocabulary exactly `layer/` and identical
+         across all six apps, which that page gates. And the fetcher can then
+         pull one instance's whole layer ranking with filter="layer/<tag>/" in
+         a single request, which is what gets past the dashboard's ten-row cap
+         — `layer/<id>/<tag>` would need one request per layer id.
+
+         It reveals nothing new about a reader: the instance is already in the
+         pageview path (/il/, /wi/) that the counter records anyway. */
+      if (checkbox.checked) {
+        trackEvent("layer/" + METRO_BRAND.instanceTag + "/" + mod.id);
+      }
       onLayerToggled(mod);
       syncPanelStats();
       syncUrlHash();
