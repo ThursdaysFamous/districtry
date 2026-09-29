@@ -54,6 +54,86 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-29. ROCKFORD'S FOURTEEN ALDERPERSONS NOW COME FROM THE CITY — AND THE
+NAME A READER SAW WAS NEVER COMING FROM THE LIVE LAYER, WHICH IS WHY THE FIX IS
+BIGGER THAN THE CARD.** #1260. The manager's ruling was the Coles pattern:
+geometry from WinGIS, people from the city's own directory, joined by ward, the
+join printed, no name silently corrected, and the layer's `alderman` field out
+of the card entirely rather than left as a fallback. Done, and one finding
+changes the shape of it.
+
+**THE WARD CARD READS THE ROSTER FIRST.** `municipalSeatHolders()` is consulted
+before `dxOfficial`, and only an empty result reaches the GIS attribute — so for
+Rockford those two columns rendered for a reader ONLY if the roster fetch itself
+failed. The stale names a reader actually saw came from
+`municipal-officials.json`, which `winnebago_municipal_officials_scraper.py`
+builds FROM THE SAME LAYER. Taking the columns out of the card is right and
+changes nothing a reader sees; the fix that changes what a reader sees is
+upstream, in the weekly scrape. Had only the card moved, the Municipality card
+one click away would still name Janessa Wilkins.
+
+**THE JOIN, 14 OF 14 ON WARD, TWO SEATS WRONG ON BOTH FIELDS.** Ward 3 layer
+Chad Tuneburg / `Chad.Tuneburg@`, city Chad Tuneberg / `Chad.Tuneberg@`; ward 7
+layer Janessa Wilkins / `Janessa.Wilkins@`, city Janessa Neal / `Janessa.Neal@`.
+The layer's addresses are spelled from the layer's own names, so both cards sent
+a reader to an address the city does not publish — a contact failure, not a
+display one. Three more differ in FORM only (Franklin C. Beach / Frank Beach,
+Kevin J. Frost / Kevin Frost, Jaime J. Salgado / Jaime Salgado) and the city's
+wording ships there too, for the same reason and with the same indifference to
+which reads better. Nothing is corrected: these ship because the CITY publishes
+them.
+
+**AND THE CITY PUBLISHES A TELEPHONE PER SEAT, WHICH THE LAYER DOES NOT CARRY AT
+ALL.** Every person page prints the city's main line 779-348-7300 and a second
+number immediately after the ward string; all fourteen of those differ from each
+other and from the main line, and the scraper refuses outright if the main line
+ever stands where a seat's own number sits. So fourteen ward cards gain a
+contact the layer could never have given them — the Freeport call, that a
+telephone a city prints on a seat's own page is the channel it tells
+constituents to use.
+
+**THE ESCAPE HATCH DOES NOT APPLY, AND HERE IS THE MEASUREMENT.** The directory
+is machine-readable weekly: the index lists exactly fourteen person pages
+(discovered every run — the page ids are arbitrary), each states
+`Alderman - Ward N`, a `mailto:` and that number. All four user-agent rungs
+return the same 95,680-byte page, so it sends the districtry token and no
+browser string is warranted; robots.txt is 816 bytes with one binding `*` group
+and no rule matching the council paths. The host DOES reset connections
+intermittently — 3 of 14 pages needed a re-ask, and robots.txt answered 10/10
+but twice only after internal retries — so every fetch goes through a short
+ladder, and Winnebago is already in PRESERVABLE, so a directory that cannot be
+read carries the county forward rather than shipping a short council.
+
+**ONE GATE CAUGHT ME PUTTING A CITATION WHERE IT WOULD READ AS A FETCH.**
+`probe_user_agents.py` reads URL literals per file, and my first draft restated
+`https://rockfordil.gov/576/Wards` in the Winnebago scraper as per-person
+provenance — a file that sends a browser string and does not fetch that host —
+so the gate correctly failed on an unmeasured host reached by a browser-string
+caller. The URL is imported from the Rockford scraper now, which is one fact in
+one place as well as a correct classification. The host is measured in
+`user-agent-measurements.json` as token-ok and the three gated prose figures
+moved 295→296 hosts, 225→226 token-ok.
+
+**Battery: 124 invocations enumerated through `validate_steward_mirror`, 123
+pass.** `page_consistency_test.mjs` fails with 59 findings, every one
+`ERR_CERT_AUTHORITY_INVALID`, spread across all six instances including the five
+this change does not touch — this sandbox's proxy cert interception, not a
+regression.
+
+**NEXT: the library gap record, and I have to build the instrument first.** The
+manager ruled option (i) — one record for the library cards naming no trustee,
+population derived from the dispatch table, `counties` carried, the Kendall
+nuance in the blocker. The dispatch table gives nineteen county entries (cook,
+will, dupage, lake, kane, mchenry, kendall, woodford, grundy, adams, kankakee,
+madison, dekalb, rock-island, boone, peoria, stark, macon, effingham), twelve of
+which load live and ship no file at all. A first pass matching the seven shipped
+files' names against the two officials rosters answered "37 of 49 name no
+board", and that figure is NOT usable: those counties write abbreviated
+upper-case names (`OSWEGO LIBRARY DIST`, `MILAN-BLACKHAWK LIBRARY`) and my
+matcher is weaker than the app's own join. **The app's join is the authority**,
+so the population has to be read THROUGH the app the way `district-search` reads
+its districts, not re-derived beside it. That is the next thing built.
+
 **2026-09-29. ROCKFORD'S WARD LINES ARE CURRENT; IT IS THE DESCRIPTION THAT IS
 STALE — and the layer we do NOT use is the old plan.** The manager's row asked
 whether `ElectedOfficials/MapServer/20`, which describes itself as "City of
