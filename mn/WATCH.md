@@ -1,0 +1,63 @@
+# WATCH.md — redistricting watch calendar
+
+The one place the dates live: *when to look* for boundary and roster changes in this
+instance's sources. The repo's `docs/REDISTRICTING_RUNBOOK.md` is *what to do* when a
+boundary changes. Update the "Last done" column each time you complete a row — a
+checkpoint with a stale date is a checkpoint that didn't happen.
+
+This instance arrived DARK (PR 1, 2026-09-29): `mn/**` is blanket-excluded from the
+Pages deploy and `metros.json` carries no `mn` entry, so nothing here is reachable by a
+reader yet. Rows marked **GO-LIVE** are what has to happen in the change that publishes it.
+
+---
+
+## Standing (automated — verify, don't perform)
+
+| Cadence | What | Where | You do |
+|---|---|---|---|
+| Weekly (Mon 13:40 UTC) | U.S. House (MN) roster refresh | `.github/workflows/update-mn-congress-roster.yml` → PR on change | Review + merge the PR; a week with a surprise diff is worth a look at the source |
+
+Only one roster refreshes here, because only one roster ships. The two chamber cards and
+the county card name nobody — gaps `mn-legislature-roster`, `mn-county-commissioner-roster`
+and `mn-county-officers` in `docs/DATA_LAYER_GUIDEBOOK.md`.
+
+---
+
+## GO-LIVE — what the publishing change has to carry
+
+| What | Why it cannot wait | Last done |
+|---|---|---|
+| **Iowa's own negative point starts handing off the day this instance is published.** `ia/metro-worksheet.json` pins 43.65, -93.37, which is inside Minnesota; once `mn` is in `fleet-outlines.json` the Iowa app's `placeOwner` will hand that selection to `/mn/` and Iowa's smoke test will find its page navigated away. That is exactly how this instance's own first negative point failed — 43.45, -93.37 in Worth County, Iowa, which passed every static test and made the browser leave. **A negative point must be outside every LIVE instance, not only outside its own.** Iowa's needs to move in the go-live change, not after it | Iowa's smoke test would fail on the publishing PR, and the symptom (a timeout waiting for a masthead button) does not name the cause | — |
+| Rebuild `fleet-outlines.json` (`scripts/build_fleet_outlines.py`) with Minnesota's outline as a `SOURCES` entry, and add an `mn` row to `metros.json` | The front door and every sibling app route by that file; without it no address in Minnesota reaches this app, and the landing page does not list it | — |
+| **The fleet hand-off bbox must be CLIPPED, and this is the Michigan case again.** Minnesota's county fabric runs east to -89.4834 (Cook County's tip on Lake Superior), which contains Wisconsin's own centre (44.9, -89.565) — so an unclipped box fails `validate_index.py`'s "a bbox must not contain a sibling metro's centre" rule on `wi`. Only Cook County reaches east of -89.60; the next county east edge is Lake at -90.7952, so clipping the fleet box costs one county's lakeshore tip in a fallback the apps no longer use for routing | Measured 2026-09-29 on the shipped `mn/data/app/state-counties.json`. `metro_explorers`' own self-entry is exempt from that rule and carries the full extent; the FLEET box in `metros.json` is the one to clip | — |
+| Add an `mn` entry to the other six instances' `metro_explorers`, and check each one's new entry does not contain that instance's own centre | A sibling that does not list Minnesota sends a Minnesota address nowhere; one that lists it before the deploy publishes `/mn/` sends a reader to a 404 | — |
+| Narrow the `'mn/**'` line in `deploy-pages.yml` to `mn/data/state mn/data/source mn/scripts`, matching `ia` and `mi` | `validate_instance_registration.py` holds the deploy exclude and `metros.json` together in both directions, so this and the `metros.json` row are one change | — |
+
+---
+
+## Per-election — the seats above the boundaries
+
+| When | What | Last done |
+|---|---|---|
+| After each U.S. general (November, even years) | The delegation turns over; the weekly congress-legislators refresh picks it up | 2026-09-29 (initial build: 8/8, each with a district office) |
+| After each Minnesota general (November, even years) and each January seating | The two chamber rosters turn over — and this instance names nobody in either, so there is nothing to refresh until `mn-legislature-roster` is built. Until then the cards enter the engine chamber factory's roster-miss path and link each chamber's own directory | — (gap `mn-legislature-roster`) |
+| After each Minnesota general | The 447 county commissioners turn over, and no publisher pairs them with their districts (gap `mn-county-commissioner-roster`) | — |
+
+---
+
+## Per-decade — the census redistricting cycle
+
+| When | What | Last done |
+|---|---|---|
+| After each decennial census (next: 2031–2032) | Congressional + legislative districts redraw: re-run `mn/scripts/build_legislative_boundaries.py` (**NO arguments** — it rebuilds all three chambers in one mapshaper run and rejects a per-chamber argument, because rebuilding one alone is what broke Illinois's and Iowa's House/Senate nesting), confirm the counts against the apportioned delegation and the 67/134 chambers, re-verify the smoke anchors, and bump `sw.cache_name` — this geometry is cache-first. A redistricting also re-opens `FIDELITY_MAX_M`: it is 34.0 m because Minnesota's own median staircase step measures 31.2 m (mn-house) and 37.6 m (mn-senate), so **re-measure that step on the new lines rather than carrying the number forward** | 2026-09-29 (initial build as one topology: 100.00% agreement on all three, 67/67 nesting pairings exact, worst stray 17.7 m against the 34.0 m ceiling) |
+| After each decennial census | `mn/scripts/build_state_counties.py` and `mn/scripts/build_metro_outline.py` — county boundaries move rarely, but the outline's 87 INSIDE anchors are interior points and a boundary change can put one outside its own county. `build_metro_outline.py --check` is what says so | 2026-09-29 (initial build: 87 counties, 1 ring, 5,287 vertices, all 87 anchors correct) |
+
+---
+
+## Minnesota specifically — no fixed cadence
+
+| What | Why it is here | Last done |
+|---|---|---|
+| **The Secretary of State's precinct layer is this instance's whole growth path and it is ONE service.** `enterprise.gisdata.mn.gov` → `us_mn_state_sos/bdry_votingdistricts/FeatureServer/0`, 4,105 precincts, `maxRecordCount` 2000 so it pages. Seven layers dissolve out of its own attributes: `ctycomdist` (447 county commissioner districts, all 87 counties), `pctcode` (precincts), `juddist` (10 judicial), `swcdist_n` (117 soil & water), `hospdist_n` (16 hospital), `parkdist_n` (3 park) and `ward` (274 wards in 76 cities). **A single upstream service is a single point of failure for seven layers**, so watch its `Service Modified` stamp (2026-09-17 when measured) and re-check the seven field names, not just the endpoint | Measured 2026-09-29. `gis.data.mn.gov`'s robots.txt allows this client with **Crawl-delay: 60** binding on `*` — honoured, and it makes a full page-through slow rather than impossible. The separate `www.mngeo.state.mn.us` serves a Radware Bot Manager captcha to this project's token: obeyed, never worked around, and it costs nothing because the data is on the enterprise host. **Do not let a later pass read "MnGeo is blocked" as "Minnesota publishes nothing"** — that is the Knox shape | 2026-09-29 |
+| **The commissioner ROSTER route is unproven, not closed, and the difference is one measurement.** The SoS's companion results service `bdry_electionresults_2022_2030` carries federal and state contests only — no commissioner column — so composing a roster out of certified returns is shut there. Its `LocalRacesInCounty` pages were read for ONE county at ONE election id with no commissioner contest found, which is one reading and not a finding. If those pages carry commissioner contests, all 447 seats come from one publisher; if they do not, this is the Michigan shape — 87 counties in tranches off their own board pages | This is the next research question for this instance, and it decides whether the flagship layer ships with names or without | 2026-09-29 (one county, one election id) |
+| **A negative point must be outside every live instance.** See the GO-LIVE row above. The two points tried before Cass County, North Dakota are recorded in full in `mn/metro-worksheet.json`'s `negative_point.note`, including why Lake Superior does not work: Minnesota's TIGER county fabric is water-inclusive to the international boundary, so a point in open lake at 47.6, -90.0 is named `Lk Superior` by TIGERweb's hydrography **and is still inside Cook County** | Both failures looked obvious and both were caught by measurement rather than reasoning | 2026-09-29 |

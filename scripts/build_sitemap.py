@@ -99,12 +99,26 @@ NOINDEX = re.compile(r"<meta[^>]+name=[\"']robots[\"'][^>]+noindex", re.I)
 def instances():
     """A top-level directory with its own index.html and data/app IS an
     instance — the same rule validate_card_links.py and
-    validate_instance_registration.py discover by. Never a hand-kept list."""
+    validate_instance_registration.py discover by. Never a hand-kept list.
+
+    A DARK INSTANCE IS NOT LISTED, BECAUSE A SITEMAP ENTRY IS AN INVITATION TO
+    CRAWL. A new state is built over several PRs and its folder carries one
+    blanket `<tag>/**` line in deploy-pages.yml's EXCLUDES until go-live, so
+    nothing half-built reaches the site — and a sitemap naming a path the
+    deploy does not publish points every crawler that reads it at a 404. The
+    darkness signal is imported from validate_instance_registration rather than
+    re-derived here: that module owns the question, its own check reads the
+    same answer in both directions, and two readers of one question is where
+    this fleet's recurring defect starts.
+    """
+    from validate_instance_registration import dark_instances
+    dark = dark_instances()
     out = []
     for name in sorted(os.listdir(REPO)):
         d = os.path.join(REPO, name)
         if (os.path.isdir(d) and os.path.isfile(os.path.join(d, "index.html"))
-                and os.path.isdir(os.path.join(d, "data", "app"))):
+                and os.path.isdir(os.path.join(d, "data", "app"))
+                and name not in dark):
             out.append(name)
     return out
 

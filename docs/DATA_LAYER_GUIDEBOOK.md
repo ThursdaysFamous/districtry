@@ -2589,6 +2589,44 @@ detail into `blocker`.
       "wanted": "The page where the county lists its commissioners by district.",
       "blocker": "Successor to mi-county-board-no-website, RETIRED 2026-09-24 when Shiawassee shipped. WHAT THE RETIRED RECORD GOT WRONG IS THE PART WORTH KEEPING: it said this app could not confirm which website belongs to Montmorency or Shiawassee, because \"several plausible addresses answer, and none of them names the county anywhere on the page\". Both counties have an ordinary website and always did. The sweep behind that record could not produce either address: its candidate generator has no four-letter-stem form (montcounty.org) and no bare-stem .net (shiawassee.net), so `no-confirmed-host` was a fact about the candidate list and not about the county — exactly what mi/scripts/probe_mi_county_boards.py\u0027s own docstring warns `no-host` can be. Both addresses came from the county\u0027s own English Wikipedia infobox, which is not a county host, and were confirmed against each county\u0027s front page before any board page was read. SHIAWASSEE SHIPPED: https://shiawassee.net/board-of-commissioners/ keys all seven districts with a name, a telephone and an e-mail, and now ships from mi-commissioner-members.json. MONTMORENCY DID NOT. GET https://www.montcounty.org/board-of-commissioners.html as the districtry roster token, 2026-09-24 -> 200, 79,243 bytes, of which every one of its 202 visible lines is a navigation item; it names Montmorency County nine times and not one commissioner. Its only \"District #4\" is a multi-county health department in the County Links menu, not a board district. Its own menu names /commissioners.html and /elected-officials.html, EITHER OF WHICH IS THE OBVIOUS NEXT SINGLE REQUEST and neither has been read: the budget for the 2026-09-24 re-examination was one request per county and it was spent on the page the county\u0027s front page linked. NOT AN ASK YET: the next step is a fetch this project may make itself, not a question for the county. NOT YET ASKED."
     }
+  ],
+  "minnesota": [
+    {
+      "id": "mn-county-commissioner-roster",
+      "concept": "County commissioners",
+      "area": "Minnesota — all 87 counties",
+      "counties": [],
+      "kind": "no-source",
+      "layer": null,
+      "summary": "No card names your county commissioner. The districts are not on the map yet either, and when they arrive they will name nobody.",
+      "why": "The Secretary of State publishes every county's commissioner districts as map data, and no publisher — the state included — pairs those districts with the people who hold them.",
+      "blocker": "MEASURED 2026-09-29, before this instance shipped. THE GEOMETRY IS SETTLED AND THE PEOPLE ARE NOT. The Secretary of State's statewide precinct layer (enterprise.gisdata.mn.gov, us_mn_state_sos/bdry_votingdistricts/FeatureServer/0, 4,105 precincts, service modified 2026-09-17) carries a ctycomdist attribute on every precinct, so all 447 commissioner districts in all 87 counties dissolve out of one source — 81 counties elect five commissioners and six elect seven (Anoka, Dakota, Hennepin, Olmsted, Ramsey, St. Louis). The ranking that preceded this instance recorded 'five commissioners each', which the measurement corrects. THE ROSTER ROUTE IS WHAT IS SHUT. The SoS's companion results service bdry_electionresults_2022_2030 carries federal and state contests ONLY — no commissioner column anywhere in it — so the Clark route (compose a roster out of certified returns) is closed on that service. Its LocalRacesInCounty pages are UNPROVEN rather than closed: one county at one election id was read and no commissioner contest was found, which is one reading and not a finding. If those pages carry commissioner contests, all 447 seats come from one publisher; if they do not, this is the Michigan shape — 87 counties in tranches off their own board pages. Two hosts were measured and neither changes the answer: www.mngeo.state.mn.us serves a Radware Bot Manager captcha to this project's token, which is obeyed and costs nothing because the data is on the separate enterprise host; gis.data.mn.gov's robots.txt allows this client with a Crawl-delay of 60 seconds, binding on *, which is honoured. The operator ruled on 2026-09-29 that Minnesota launches without commissioner names rather than waiting: the districts ship with this gap recorded and each card linking the county board it cannot name.",
+      "wanted": "A statewide list pairing each of the 447 commissioner districts with the person holding it, or a certified-returns feed that names commissioner contests by district."
+    },
+    {
+      "id": "mn-legislature-roster",
+      "concept": "State legislators",
+      "area": "Minnesota — statewide",
+      "counties": [],
+      "kind": "no-source",
+      "layer": "mn-senate",
+      "summary": "Your Minnesota Senate and House cards name the district you are in and nobody who holds it.",
+      "why": "The Legislature publishes both rosters and this app has not built them yet. The cards link each chamber's own member directory instead of naming a member it has not verified.",
+      "blocker": "NOT A REFUSAL AND NOT AN ABSENCE — UNBUILT, recorded so the silence on those two cards is legible rather than read as 'nobody publishes this'. Minnesota's Senate (senate.mn.gov/members) and House (house.mn.gov/members) each publish a current member directory, and Open States carries an mn.csv export of the same shape this fleet already reads for Iowa. What is missing is this instance's scraper/builder pair and its weekly workflow, which is the next roster PR rather than a research question. Until it lands, both chamber cards enter the engine chamber factory's roster-miss path deliberately: district identity plus the chamber's official directory, never an invented name.",
+      "wanted": "Nothing from a reader — this one is ours to build."
+    },
+    {
+      "id": "mn-county-officers",
+      "concept": "County officers",
+      "area": "Minnesota — all 87 counties",
+      "counties": [],
+      "kind": "no-source",
+      "layer": "county",
+      "summary": "Your County card names the county and nobody who runs it — no board, no auditor, no sheriff, no attorney.",
+      "why": "Minnesota has no statewide list of county officers. Each county publishes its own, and this app has read none of them yet.",
+      "blocker": "MEASURED 2026-09-29. Minnesota's counties elect an auditor-treasurer, a sheriff, a county attorney and a recorder alongside the board, and no single publisher lists them: the Association of Minnesota Counties (mncounties.org/counties) publishes a county DIRECTORY — a link per county, which is what the card's footer uses — rather than a roster of officers. So the County card ships as identity only, and this record is why, rather than the card simply being quiet. This is the posture Iowa's county card shipped with and later filled county by county; it is bounded work, not a closed route.",
+      "wanted": "A statewide list of Minnesota's elected county officers, or a per-county page set this app can read on a weekly schedule."
+    }
   ]
 }
 ```

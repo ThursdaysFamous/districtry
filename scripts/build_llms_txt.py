@@ -119,11 +119,22 @@ def instances():
     ships, so a mismatch either way is a failure rather than a silent skip:
     an entry with no folder would publish a link to nothing, and a folder with
     no entry is exactly the unregistered-instance case
-    validate_instance_registration.py exists for."""
+    validate_instance_registration.py exists for.
+
+    A DARK INSTANCE IS NEITHER. A new state is built over several PRs and its
+    folder carries one blanket `<tag>/**` line in deploy-pages.yml's EXCLUDES
+    until go-live, so it is deliberately absent from metros.json — the two are
+    held together in both directions by validate_instance_registration.py, and
+    the darkness is imported from that module rather than re-derived here.
+    Nothing this file writes is true of a dark instance: it has no published
+    URL to name and no page for a client to read."""
     listed = json.loads(read(os.path.join(REPO_ROOT, "metros.json")))["metros"]
+    from validate_instance_registration import dark_instances
+    dark = dark_instances()
     on_disk = {d for d in os.listdir(REPO_ROOT)
                if os.path.isdir(os.path.join(REPO_ROOT, d, "data", "app"))
-               and os.path.exists(os.path.join(REPO_ROOT, d, "index.html"))}
+               and os.path.exists(os.path.join(REPO_ROOT, d, "index.html"))
+               and d not in dark}
     tags = {m["tag"] for m in listed}
     if tags != on_disk:
         fail("metros.json lists %s and the tree carries %s — "
