@@ -91,9 +91,27 @@ const MOVE_POINT = { lat: 0, lng: 0, district: "0" };
 const STRAGGLER_FILE = "data/app/state-counties.json";
 const STRAGGLER_POINT = "0,0";
 // Layers expected to HIDE (not merely report no district) at NEGATIVE_POINT.
-// The starter layers declare no coverage() test, so none hide — they all take
-// the honest "no district here" branch instead.
-const NEGATIVE_HIDDEN = [];
+// The four offline anchors declare no coverage() test, so none of them hide —
+// they all take the honest "no district here" branch instead.
+//
+// ZIP CODE IS THE ONE THAT HIDES, AND IT IS CHECKED HERE RATHER THAN LEFT TO
+// validate_sources.py BECAUSE THE TEST IS OFFLINE. A ZCTA has no state field,
+// so the layer's query carries no STATE='18' filter and at the negative point
+// TIGERweb answers 40202 — a Kentucky ZIP code, measured 2026-09-29 against
+// in-state controls in the same command (Gary 46402, the Indianapolis anchor
+// 46204), on ground every other card in this instance correctly declines.
+// What keeps that from shipping is the layer's coverage() test, which reads
+// the shipped state outline (same-origin, cache-first) and needs no third
+// party at all, so the browser can prove it in both directions: hidden at the
+// negative point and NOT hidden at the anchor. The other six live layers are
+// STATE-filtered or are proximity layers that state they are, and are
+// exercised by in/scripts/validate_sources.py instead, which is the fleet's
+// rule — a browser gate that needs a government server up fails on somebody
+// else's schedule.
+const NEGATIVE_HIDDEN = ["zip-code"];
+// The ids checked at the negative point: the offline anchors plus the one
+// coverage-declaring layer above.
+const NEGATIVE_IDS = OFFLINE.concat(NEGATIVE_HIDDEN);
 const BOOT_TIMEOUT = 45000; // Leaflet CDN + first paint on a cold CI runner
 const QUERY_TIMEOUT = 25000;
 
@@ -506,6 +524,29 @@ try {
     await context.close();
   }
 
+  // 2a. The OTHER HALF of the coverage check below. A hide test alone passes
+  //     for a layer that is hidden everywhere, which would be a ZIP card that
+  //     never answers at all — so the anchor must show the same layer VISIBLE.
+  //     Both halves read only the shipped state outline, with the census host
+  //     refused, so neither depends on a government server being up.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=${NEGATIVE_HIDDEN.join(",")}`, async (p) => {
+      await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
+    });
+    for (const id of NEGATIVE_HIDDEN) {
+      const visible = await page
+        .waitForFunction((cid) => {
+          const box = document.getElementById("toggle-" + cid);
+          const block = box && box.closest(".layer-block");
+          return !!block && block.hidden === false;
+        }, id, { timeout: QUERY_TIMEOUT })
+        .then(() => true, () => false);
+      check(`${id} is in coverage at the anchor (not hidden)`, visible, `visible=${visible}`);
+    }
+    await context.close();
+  }
+
   // 2b. The negative ground-truth point (from the worksheet: a point outside
   //     every anchor layer). Anchors that declare a location-relevance test
   //     (mod.coverage — see NEGATIVE_HIDDEN above) HIDE there: the toggle
@@ -522,10 +563,15 @@ try {
     // fallback's own catch ("stand on the first tiling's verdict") runs
     // deterministically fast in every environment; the verdict here is
     // identical either way — the negative point is outside both tilings.
-    const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=${OFFLINE.join(",")}`, async (p) => {
+    const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=${NEGATIVE_IDS.join(",")}`, async (p) => {
       await p.route(`**${PORTAL_HOST}**`, (r) => r.abort());
+      // No third party is needed to decide a hide, and refusing the census
+      // host proves it: coverage() reads the shipped state outline, so the
+      // verdict is the same on a runner that can reach TIGERweb and in a
+      // sandbox that cannot.
+      await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
     });
-    for (const id of OFFLINE) {
+    for (const id of NEGATIVE_IDS) {
       if (NEGATIVE_HIDDEN.includes(id)) {
         const hidden = await page
           .waitForFunction((cid) => {

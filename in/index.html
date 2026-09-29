@@ -12649,10 +12649,22 @@ function initIndianaExplorer() {
    * NEIGHBOURING STATES' ZIPS ARE IN THE OVERLAY, AND NO RECTANGLE CAN FIX
    * THAT. Indiana is bordered on three sides by states whose ZCTAs cross the
    * line, so an envelope round the state necessarily catches Chicago's,
-   * Louisville's and Cincinnati's. The card is unaffected: it answers from a
-   * point query, so a reader always gets the ZCTA they are actually standing
-   * in. This is the same interlocking-states fact metros.json records about
-   * the fleet hand-off box, and the same behaviour ia/, wi/ and mi/ ship.
+   * Louisville's and Cincinnati's. This is the same interlocking-states fact
+   * metros.json records about the fleet hand-off box, and the same behaviour
+   * ia/, wi/ and mi/ ship.
+   *
+   * THE SENTENCE THAT STOOD HERE SAID "The card is unaffected: it answers
+   * from a point query, so a reader always gets the ZCTA they are actually
+   * standing in", AND IT WAS A DEFECT DESCRIBED AS A REASSURANCE. It is true
+   * of every point INSIDE Indiana and it is exactly the problem outside one:
+   * with no state filter to carry, the point query cheerfully names a real
+   * ZIP in the neighbouring state. Measured 2026-09-29 against in-state
+   * controls in the same command — Chicago's Loop answers 60602, downtown
+   * Louisville 40202 and downtown Detroit 48226, with Gary answering 46402
+   * and the Indianapolis anchor 46204, so the query is working and the
+   * geography is the fault. The lesson came from Minnesota's own ZIP layer,
+   * whose negative point returned 58059, a North Dakota ZIP. The fix is the
+   * coverage test below, not a rectangle.
    *
    * A ZCTA IS NOT A ZIP CODE, which the label cannot say and the concept
    * requires: ZIP Code Tabulation Areas are the Census Bureau's areal
@@ -12682,16 +12694,45 @@ function initIndianaExplorer() {
       TIGERWEB_SERVICES + "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11", point, "ZCTA5");
   };
 
+  /* THIS LAYER ALONE DECLARES A COVERAGE TEST, and the reason is the missing
+   * state field. Every other TIGERweb layer here is fetched with STATE='18',
+   * so it is silent outside Indiana by construction; a ZCTA query carries no
+   * state filter, so at a point in Illinois, Kentucky or Ohio it returns that
+   * state's ZIP code — an answer about a place this instance does not serve,
+   * on ground every other card here correctly declines. Declaring coverage
+   * hides the toggle, the card and the overlay outside the state instead,
+   * which is the engine's own mechanism for "where a layer's data applies",
+   * and makes the whole instance consistent at one point rather than only
+   * most of it. Tested against the shipped state outline, which is
+   * same-origin and cache-first, so the test costs no request and answers
+   * identically on a runner that can reach TIGERweb and in a sandbox that
+   * cannot. */
+  function insideIndiana(point) {
+    return loadMetroOutline().then(function (geo) {
+      var feats = (geo && geo.features) ? geo.features : [];
+      for (var i = 0; i < feats.length; i++) {
+        if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) return true;
+      }
+      return false;
+    });
+  }
+
   registerPolygonLayer({
     id: "zip-code",
     group: "geography",
     label: "ZIP Code",
+    coverage: insideIndiana,
     loader: loadZipCodes,
-    // The archive keeps only the ZCTAs inside this app's own state (scripts/
-    // mirror_tiger_tiles.py, STATE_OVERLAP_MIN), so an empty card here is a fact
-    // about the archive, not about the place: the generic "isn't inside any
-    // district" would be false for a point in, say, a neighbouring state's ZIP.
-    emptyNote: "No ZIP code here. This map holds Indiana's ZIP codes only, so a point outside Indiana gets none.",
+    // NO emptyNote, AND THE ONE THAT SHIPPED HERE WAS FALSE TWICE OVER. It
+    // read "No ZIP code here. This map holds Indiana's ZIP codes only, so a
+    // point outside Indiana gets none", citing scripts/mirror_tiger_tiles.py's
+    // STATE_OVERLAP_MIN — an ARCHIVE THIS INSTANCE DOES NOT SHIP, ZIP being
+    // one of its seven live layers with no committed data/app file. It also
+    // asserted a state filter the code does not apply, and it could never
+    // render, because the card always answers. It was copied from a sibling
+    // that does mirror the layer. With coverage declared above, outside
+    // Indiana the layer HIDES rather than printing a note, and inside Indiana
+    // the engine's generic empty card is correct.
     // dotted outline (a distinct pattern from Township or City's long dash) + its own hue
     style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
     fields: [
