@@ -415,6 +415,21 @@ PROVENANCE = [
             "service states no terms and the build refuses if it ever does."
         ),
     },
+    {
+        "layer": "city-ward",
+        "app_file": "mi-jackson-council-members.json",
+        "source_url": "https://www.cityofjackson.org/289/Mayor-City-Council-City-Manager",
+        "note": (
+            "Jackson's Mayor and six ward councilmembers. Built by "
+            "mi/scripts/mi_jackson_council_scraper.py into build_mi_jackson_council.py, "
+            "weekly. The council page lists who holds each seat and each ward has its own "
+            "page (/498, /499, /500, /504, /511, /512 -- not sequential) with that member's "
+            "contact block; the scraper refuses to write unless the two name the same "
+            "person. The Ward 3 block carries an EMPTY mailto to a former member beside the "
+            "member's own, so only a visible link is read. The host reset connections "
+            "twice in eight requests from the sandbox on 2026-09-29, so fetches retry."
+        ),
+    },
 ]
 
 ENDPOINTS = [

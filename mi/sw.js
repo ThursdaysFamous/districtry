@@ -106,6 +106,7 @@ const ROSTER_URLS = [
   "./data/app/mi-detroit-council-members.json",
   "./data/app/mi-grand-rapids-council-members.json",
   "./data/app/mi-battle-creek-commission-members.json",
+  "./data/app/mi-jackson-council-members.json",
   "./data/app/mi-commissioner-returns.json",
   "./data/app/mi-commissioner-members.json",
 ];

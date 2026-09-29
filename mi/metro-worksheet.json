@@ -752,6 +752,11 @@
         "note": "Battle Creek's City Commission — all nine seats: one commissioner per ward for five wards, three at-large commissioners and the Mayor, the split the city states in its own prose on the page the roster is read from. Built by mi/scripts/build_mi_battle_creek_commission.py from mi_battle_creek_commission_scraper.py's cache. Six top-level keys: wards, citywide, office (City Hall's address, the city switchboard and the shared contact form, all hoisted to the body), seats, seatsPerWard, sourceUrl."
       },
       {
+        "file": "mi-jackson-council-members.json",
+        "min_keys": 5,
+        "note": "Jackson's City Council — the Mayor and one councilmember from each of six wards, as the city's council page lists them. Built by mi/scripts/build_mi_jackson_council.py from mi_jackson_council_scraper.py's cache, which reads the council page and each ward's own page and refuses to write unless the two name the same person in every ward. Six top-level keys: wards, citywide (the Mayor), office (City Hall's address and switchboard, hoisted to the body), seats, seatsPerWard, sourceUrl. No per-member street address ships: two ward pages print one and nothing says whether it is an office or a home."
+      },
+      {
         "file": "mi-commissioner-returns.json",
         "min_keys": 29,
         "note": "Commissioner NAMES for the 31 counties mi-commissioner-members.json does NOT reach, from the state district layer's own certified-returns column, built by mi/scripts/build_mi_returns_roster.py. THIS IS A DIFFERENT KIND OF ROSTER FROM THE FILE ABOVE AND EVERY RECORD SAYS SO: these are the winners the State of Michigan certified in the general election of 5 November 2024, not a list any county keeps current, so each record carries its own `lede` naming that election and the builder REFUSES TO WRITE a record without one. mi-commissioner-districts.json stays name-free and its BANNED_FIELDS guard is untouched — the 2026-09-03 decision to strip those columns off the BOUNDARY file stands. How stale the column is, measured 2026-09-22 on the 366 seats where the scraped roster gives a comparand: 234 identical, 104 the same surname in a different form (Dave/David, middle initials, diacritics, suffixes) and 28 a different surname, which a hand reading splits 18 naming a different person (4.9% of the 366), 9 misspelling the same person and 1 a missing space. Five of the 31 — Washtenaw, Bay, Manistee, Newaygo, Van Buren — do publish their own roster and only the parsing is hard, so each carries a `betterSource` note saying a scraper remains the better answer. min_keys is a floor that tolerates two counties leaving the cohort as they ship a real roster; it FALLS as counties move to the scraped file, which is the one direction it may move without a source change. MOVED 35 -> 31 on 2026-09-24 and this floor 33 -> 29 with it, when Gratiot, Keweenaw, Ogemaw and Shiawassee left this cohort for their own counties' board pages. That is the fall this note already described and it had not happened before."
@@ -810,6 +815,11 @@
       "file": "update-mi-battle-creek-commission-roster.yml",
       "purpose": "Battle Creek City Commission roster (the city's own commission page)",
       "schedule": "Fri 20:30 UTC"
+    },
+    {
+      "file": "update-mi-jackson-council-roster.yml",
+      "purpose": "Jackson City Council roster (the city's council page and six ward pages)",
+      "schedule": "Fri 21:30 UTC"
     },
     {
       "file": "update-mi-commissioner-roster.yml",

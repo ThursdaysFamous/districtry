@@ -702,7 +702,7 @@ def city_council_page(tag, spec, worksheet):
     exactly the sentence that survives a seventh city unread.
 
     THE CITIES DRAWN WITHOUT A ROSTER ARE NAMED RATHER THAN OMITTED. Michigan
-    draws Flint, Warren, Rochester Hills and Jackson and names nobody in them; a page
+    draws Flint, Warren and Rochester Hills and names nobody in them; a page
     that listed three cities and said nothing about the other three would read
     as though the map covered three.
     """
@@ -1151,10 +1151,13 @@ PAGES = [
                   ("Grand Rapids", "mi/data/app/mi-grand-rapids-council-members.json",
                    "city_council"),
                   ("Battle Creek", "mi/data/app/mi-battle-creek-commission-members.json",
+                   "city_council"),
+                  ("Jackson", "mi/data/app/mi-jackson-council-members.json",
                    "city_council")],
          counts=["mi/data/app/mi-detroit-council-members.json",
                  "mi/data/app/mi-grand-rapids-council-members.json",
                  "mi/data/app/mi-battle-creek-commission-members.json",
+                 "mi/data/app/mi-jackson-council-members.json",
                  "mi/data/app/mi-battle-creek-wards.json",
                  "mi/data/app/mi-detroit-council-districts.json",
                  "mi/data/app/mi-flint-wards.json",

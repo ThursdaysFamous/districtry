@@ -13636,6 +13636,9 @@ function initMichiganExplorer() {
   var loadJacksonWards = makeCached(function () {
     return fetchJSONWithRetry("data/app/mi-jackson-wards.json", {}, 2);
   });
+  var loadJacksonRoster = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-jackson-council-members.json", {}, 2);
+  });
 
   function detroitCoverage(point) {
     // The districts tile the city exactly (the builder asserts the population
@@ -13950,10 +13953,11 @@ function initMichiganExplorer() {
   }
 
   // The city publishes one page per ward naming that ward's council member,
-  // so the card links THAT page rather than the council as a whole. The page
-  // ids are the city's own and not sequential, read from its navigation.
-  // This app does not read those pages yet, so the card names the ward and
-  // not the member rather than a name nobody here has verified.
+  // and the roster file carries that page as each member's `profileUrl`. The
+  // table below is the fallback link when the roster cannot be read, so a
+  // reader is still sent to their own ward's page rather than the council's.
+  // The page ids are the city's own and not sequential, read from its
+  // navigation; the scraper fails if the council page stops linking them.
   var JACKSON_WARD_PAGES = {
     "1": "https://www.cityofjackson.org/498/Ward-1",
     "2": "https://www.cityofjackson.org/499/Ward-2",
@@ -13962,6 +13966,10 @@ function initMichiganExplorer() {
     "5": "https://www.cityofjackson.org/511/Ward-5",
     "6": "https://www.cityofjackson.org/512/Ward-6"
   };
+  // NAMES FROM THE CITY'S PAGES, LINES FROM THE COUNTY'S MAP. The members come
+  // from mi-jackson-council-members.json, which the weekly scraper builds only
+  // when each ward's own page and the council page name the same person. The
+  // ward geometry carries the ward number and nothing else.
   var jacksonEntry = {
     key: "jackson",
     label: "Jackson",
@@ -13972,11 +13980,23 @@ function initMichiganExplorer() {
       return (v == null || v === "") ? null : "Ward " + String(v);
     },
     query: function (point, seq) {
-      return queryFeatureAt(loadJacksonWards, point).then(function (feature) {
+      return Promise.all([
+        queryFeatureAt(loadJacksonWards, point),
+        loadJacksonRoster().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
         if (!feature) return null;
+        var ward = findPropCI(feature.properties || {}, ["ward"]);
+        var roster = parts[1];
         return {
           seq: seq,
-          ward: findPropCI(feature.properties || {}, ["ward"])
+          ward: ward,
+          members: (roster && roster.wards && ward != null)
+            ? (roster.wards[String(ward)] || []) : [],
+          citywide: (roster && roster.citywide) || null,
+          office: (roster && roster.office) || null,
+          seatsPerWard: roster ? roster.seatsPerWard : null,
+          rosterUrl: roster ? roster.sourceUrl : null
         };
       });
     },
@@ -13985,13 +14005,67 @@ function initMichiganExplorer() {
     },
     render: function (result) {
       var wrap = cardEl("div", "card-flush");
-      wrap.appendChild(renderLinkRow({
-        title: result.ward ? "Ward " + String(result.ward) : "Jackson City Council",
-        note: "Jackson elects one council member from each of six wards. The city "
-            + "names each ward's member on a page of its own, linked below. The "
-            + "ward lines come from Jackson County's precinct map, since the city "
-            + "publishes none of its own."
-      }));
+      var named = (result.members && result.members.length) || 0;
+      if (named) {
+        wrap.appendChild(renderPersonRows(result.members.map(function (rec) {
+          return {
+            name: rec.name,
+            badge: "Councilmember",
+            phone: rec.phone || null,
+            // The member's own page is the ward page, which the card's footer
+            // already links, so the row does not repeat it.
+            email: rec.email || null
+          };
+        })));
+      } else if (result.seatsPerWard) {
+        // A ward naming nobody is a seat the city's pages do not fill, not a
+        // ward with no representative. Say which it is.
+        wrap.appendChild(renderLinkRow({
+          title: "This ward's seat",
+          note: "Jackson elects one councilmember from each of its six wards, and "
+              + "the city's pages name nobody for this one, so this app names "
+              + "nobody either.",
+          links: safeHttpUrl(result.rosterUrl)
+            ? [{ label: "City Council", url: result.rosterUrl }] : null
+        }));
+      } else {
+        // The roster could not be read. The ward is still right, so name it
+        // and send the reader to the city's own page for the member.
+        wrap.appendChild(renderLinkRow({
+          title: result.ward ? "Ward " + String(result.ward) : "Jackson City Council",
+          note: "Jackson elects one councilmember from each of six wards. The "
+              + "city names each ward's member on a page of its own, linked below."
+        }));
+      }
+      if (result.citywide && result.citywide.length) {
+        wrap.appendChild(renderSectionLabel("ELECTED BY THE WHOLE CITY"));
+        wrap.appendChild(renderPersonRows(result.citywide.map(function (rec) {
+          return {
+            name: rec.name,
+            badge: rec.seat || "Citywide",
+            phone: rec.phone || null,
+            email: rec.email || null,
+            links: safeHttpUrl(rec.profileUrl)
+              ? [{ label: "Mayor's page", url: rec.profileUrl }] : null
+          };
+        }), { tinted: true }));
+      }
+      if (result.office && (result.office.phone || (result.office.lines || []).length)) {
+        wrap.appendChild(renderOfficeGroup({
+          label: result.office.label || "City Hall",
+          offices: [{
+            label: "Jackson City Council",
+            lines: result.office.lines || [],
+            phone: result.office.phone
+          }]
+        }));
+      }
+      var rows = [{ label: "Ward", value: result.ward ? String(result.ward) : "Unknown",
+                    primary: true }];
+      rows.push({ label: "Where the ward lines come from",
+                  value: "Jackson County's precinct map, since the city publishes no "
+                       + "ward map of its own." });
+      wrap.appendChild(renderFieldStack(rows));
       return wrap;
     },
     primaryLink: function (result) {
