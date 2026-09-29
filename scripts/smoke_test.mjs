@@ -44,7 +44,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "41.88250,-87.62850"; // downtown Loop — inside Cook County
 const OFFLINE = ["school-board", "il-supreme-court", "ccbr"];
 const EXPECT_DISTRICT = { "school-board": "District 6b", "il-supreme-court": "1", "ccbr": "3" };
-const NEGATIVE_POINT = "41.70000,-87.10000"; // Lake Michigan, Indiana waters — outside all three anchor layers
+const NEGATIVE_POINT = "41.70000,-87.10000"; // Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Three of those are live instances, Indiana is published dark, and Kentucky and Missouri are both on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays and the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; check 1i is where Illinois asserts fleet routing, on its own points.
 const APP_NAME = "districtry Illinois";
 const EXPECT_LAYERS = 40; // 17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) = 40 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07
 // ==== GENERATED:END smoke-config ====
@@ -243,7 +243,24 @@ try {
   //     so this needs no network.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, BASE);
+    // THE FLEET FILE IS REFUSED FOR THE WHOLE OF THIS CHECK, because its
+    // coverage-band half selects NEGATIVE_POINT and setSelectedPoint PANS
+    // there, which puts the map's CENTRE outside Illinois and arms the pan
+    // hand-off (ENGINE metro-portal's moveend -> placeOwner -> offerMetroPortal,
+    // which sets window.location.href). Illinois's negative point is in
+    // Indiana's waters of Lake Michigan and every other point it could be is
+    // in a sibling's state too -- see the measured note on NEGATIVE_POINT at
+    // the top of this file -- so the day in/ enters fleet-outlines.json this
+    // check would navigate to /in/ mid-assertion. MEASURED 2026-09-29 against
+    // a synthetic fleet file carrying Indiana's TIGER outline and an Indiana
+    // METRO_EXPLORERS row: setSelectedPoint at the negative point left for
+    // https://districtry.com/in/#zoom=15 and the check never ran.
+    // Refused, placeOwner's own error leg answers "nobody", which is the
+    // state this check is about.
+    // Illinois asserts fleet routing in check 1i, which is unaffected.
+    const page = await booted(context, BASE, async (p) => {
+      await p.route("**/fleet-outlines.json", (r) => r.abort());
+    });
     const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/coverage-gaps.json"), "utf8"));
     const expected = Object.keys(shipped).length;
 
@@ -829,7 +846,15 @@ try {
   //      false of a point inside Indiana's 46402.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, `${BASE}#point=41.60000,-87.34000&layers=zip-code`);
+    // The fleet file is refused for the reason given on the gaps-panel check
+    // above, and here the point is Gary itself: this permalink pans the map's
+    // centre into Indiana, so once in/ is in fleet-outlines.json the pan
+    // hand-off navigates away while this check is reading the card. What the
+    // ZIP card says about ground the archive does not hold is not a claim
+    // about fleet routing, and check 1i is where that is asserted.
+    const page = await booted(context, `${BASE}#point=41.60000,-87.34000&layers=zip-code`, async (p) => {
+      await p.route("**/fleet-outlines.json", (r) => r.abort());
+    });
     const zip = await cardText(page, "zip-code");
     check("the ZIP card in Gary, Indiana says the map holds Illinois's ZIP codes only",
       /Illinois's ZIP codes only/.test(zip.text) && !/isn't inside any district/.test(zip.text), zip.text);
@@ -1247,6 +1272,19 @@ try {
     // identical either way — the negative point is outside both tilings.
     const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=${OFFLINE.join(",")}`, async (p) => {
       await p.route(`**${PORTAL_HOST}**`, (r) => r.abort());
+      // And the fleet file, for the reason given on the gaps-panel check
+      // above: this permalink pans the map's centre into Indiana's waters, so
+      // once a sibling covers them the pan hand-off navigates away
+      // mid-assertion. THIS ONE IS A RACE RATHER THAN A CERTAINTY AND THAT IS
+      // WHY IT IS REFUSED TOO. Measured 2026-09-29 with Indiana live: the
+      // permalink restore alone did NOT leave, because Illinois paints its
+      // wash at whenIdle behind two CDN fetches and the restore pan happens
+      // first, so servedHereNow still answered null at that moveend. ONE
+      // FURTHER MOVE IS ENOUGH -- a 1px panBy after the wash painted left for
+      // https://districtry.com/in/#zoom=15 -- and which of the two lands first
+      // is a property of the runner's network, not of this check. A check that
+      // passes because a fetch was slow is not a check.
+      await p.route("**/fleet-outlines.json", (r) => r.abort());
     });
     for (const id of OFFLINE) {
       if (NEGATIVE_HIDDEN.includes(id)) {
