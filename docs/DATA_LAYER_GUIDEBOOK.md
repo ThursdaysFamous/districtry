@@ -3673,6 +3673,90 @@ scrapers run in GitHub Actions; the artifact records which vantage produced it a
 reports the runner when it runs there. One host (`badgersheriffs.com`) is recorded
 `proxy-denied` for exactly that reason rather than as a refusal.
 
+## Illinois DOES have federally recognized tribal land, and the guess said otherwise (measured 2026-09-29)
+
+Adam's fleet-wide mandate of 2026-09-29 puts tribal governments in scope in every state.
+The note relaying it to the Illinois thread added that "Illinois has no federally
+recognized tribal land that I know of, so check that briefly and record the answer."
+**It has one, and this is the answer.**
+
+Measured against the Census Bureau's own TIGERweb AIANNHA service (the BAS 2026 group,
+layers 1-4 and 8-10), POSTing each layer the state polygon TIGERweb's own State_County
+layer returns for Illinois:
+
+| Layer | Illinois | Wisconsin (control) |
+|---|---|---|
+| Federal American Indian Reservations | 0 | 11 |
+| **Off-Reservation Trust Lands** | **1** | 10 |
+| Tribal Subdivisions | 0 | 2 |
+| State American Indian Reservations | 0 | 0 |
+| State / Tribal Designated Statistical Areas | 0 | 0 |
+| American Indian Joint-Use Areas | 0 | 0 |
+
+The one feature is **Prairie Band of Potawatomi Nation Off-Reservation Trust Land**
+(`GEOID 2980T`, `MTFCC G2102`, `FSRFLG F` — federally recognized), two parts,
+**521,301 m² (0.52 km²)** of land and no water, interior point
+**+41.7576817, -088.8513531**. That point lands in **DeKalb County (17037)** on
+TIGERweb's own county layer, near Shabbona — so it is interior Illinois ground and not
+a sliver of a neighbouring state caught on the state boundary.
+
+**Population: zero.** Summing `il/data/app/population/17037.json` — the Census 2020
+populated blocks this instance already ships — with the engine's own even-odd test puts
+**0 of DeKalb's 2,376 populated blocks** inside it.
+
+**THE CONTROLS ARE WHY THIS IS A MEASUREMENT.** Three ran before any number above was
+written down, because an ArcGIS error object read through `.get("features", [])` is a
+confident, uniform, plausible zero — the failure this guidebook already records once:
+
+1. A `where` query on State_County must name Illinois GEOID 17. It did.
+2. **Wisconsin, run through the identical code path**, must return reservations. It
+   returned 11 and 10. A zero from a query that cannot answer anything is not a zero.
+3. The trust land's own interior point must test inside its own rings and the Loop
+   anchor must test outside. Both held.
+
+**WHAT DOES NOT FOLLOW FROM IT.** No layer, yet, and the reasons are separate from the
+mandate rather than an exception to it. The parcel carries nobody, so no reader is
+standing on it; the Prairie Band Potawatomi Nation's seat of government is in Mayetta,
+Kansas, not Illinois; and **whether that Nation elects from geographic districts is NOT
+MEASURED HERE** — `pbpindiantribe.com` answers HTTP 403 on `/robots.txt`, which on a
+government WEBSITE is the strict reading (`refused_is_refusal=True`) and means nothing
+on that host was fetched. The BIA's own directory allows us and is the government route
+to try the day this is worth answering.
+
+### The one university publisher Illinois reads, and what it is doing
+
+The mandate makes a university source secondary only. Swept across `il/`, `scripts/`
+and `docs/`, Illinois references exactly four `.edu` hosts and **one of them serves
+data**: `gis.wiu.edu`, the WIU GIS Center. (`will.illinois.edu` is a press contact in
+`docs/press-list.json`, `www.cps.edu` is the Chicago Public Schools district, a
+government body whose domain merely ends `.edu`, and `cugir.library.cornell.edu`
+appears only in `docs/NY_EXPANSION_PLAN.md` and ships nowhere.)
+
+Both counties reading `gis.wiu.edu` are already government-primary on the facts, and
+neither is an exception to be argued for:
+
+- **McDonough.** The district COMPOSITION is the county's own, printed under each
+  district heading on `mcg.mcdonough.il.us/members.html`, and
+  `build_mcdonough_board_districts.py` already refuses to take WIU's own
+  `County Board Districts` layer as the source — its attribute table gives two districts
+  an identical population AND an identical acreage to eight decimals, summing to 40,090
+  in a county of about 27,000. WIU supplies the PRECINCT polygons the composition
+  dissolves, and its district layer is used as a cross-check (IoU 0.9996-0.9998).
+- **Henderson.** Its precincts are the Census 2020 voting districts — a federal
+  government source. WIU's `Henderson_basemap_online` townships layer is the THIRD
+  WITNESS on those names and shapes (mean IoU 0.9977), never the source.
+
+**The open question is authorship, and it is not established.** The WIU
+`precinct_map` service states no `serviceDescription`, no `description` and no
+`copyrightText`; its only self-description is `documentInfo.Keywords`
+= `McDonough,voting,poll locations`. So whether McDonough's precinct polygons are the
+county's own data hosted by a regional provider — the ordinary shape of a county
+contracting out its GIS — or a university product standing in for a county that
+publishes none cannot be read off the service. Under the mandate that distinction
+decides whether McDonough's precinct geometry needs a government route beside it;
+the cheap test is to ask McDonough whether the layer is theirs, which is an outbound
+ask and therefore Adam's to send.
+
 ## How to read the tables
 
 Status key: **SHIPPED** `id` · **NO HONEST ANALOG** (recorded drop — the body doesn't
