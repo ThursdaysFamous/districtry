@@ -87,11 +87,20 @@ This list undercounts what actually runs, and **the figure is stated WITH ITS ME
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
 them used. MEASURED 2026-09-29 on this branch, AFTER its last edit: a static gate is
 one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **95**;
-counted instead as script invocations the whole battery is **127 — 116 that need no browser and
-11 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`/`in`,
+counted instead as script invocations the whole battery is **130 — 118 that need no browser and
+12 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`,
 2 root-page tests, and the two fleet-wide probes for point transmission and contrast pairs), the
 per-instance `validate_index.py` runs included, and excluding the two `npx playwright install`
-setup lines and the `http.server` that serves the pages to the eleven.
+setup lines and the `http.server` that serves the pages to the twelve.
+
+The 127/95 this paragraph carried earlier on 2026-09-29 is the two-branches case above, a fourth
+time, and the most instructive instance of it yet: Minnesota's #1265 and Indiana's #1269 each added
+one instance to the battery and each measured 95/127 correctly against a base that predated the
+other. Both sides wrote **127**, so git merged the invocation line SILENTLY at a figure neither
+tree will have — the merged truth is **130**, because each state contributes three invocations
+(its `build_coverage_gaps.py --check`, its `validate_index.py` and its browser smoke test) and
+each went into an existing named step, so the step count did not move at all. Neither diff
+contains anything to look at. The gate is what caught it, on the run after the merge.
 
 **THE PAIR IS NO LONGER KEPT BY HAND.** `scripts/validate_gate_counts.py` measures both figures
 off `smoke-test.yml` by exactly the rule above and FAILS naming the current values, so a change
@@ -105,6 +114,13 @@ and a reworded anchor FAILS rather than quietly stopping being checked. And it a
 invocation total against `validate_steward_mirror.py`'s, because that module already reads the
 same commands for a different question, and two readers of one question is where this fleet's
 recurring defect starts.
+
+The 124/124 pair this paragraph carried on 2026-09-28 was three invocations behind the
+127 that replaced it, with the NAMED-STEP figure unmoved at 95: Minnesota arrived as the
+seventh instance and its three gates — a coverage-gaps check, a `validate_index.py` and a
+Playwright smoke test — went into three EXISTING steps that already run one line per instance,
+so the battery grew and the step count did not. The two figures move independently, and adding
+a state moves only one of them.
 
 **TWO BRANCHES CAN EACH BE RIGHT AGAINST THEIR OWN BASE AND BOTH WRONG ONCE MERGED, and the
 half that CONFLICTS is the lucky half** (2026-09-19). #1037 took the tree to 65/91 and #1040 to
@@ -210,8 +226,8 @@ each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-29, **127
-invocations for 127**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-29, **130
+invocations for 130**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on

@@ -86,11 +86,24 @@ def instances():
     The TREE is canonical. Reading a table here would let this agree with
     itself about an instance nobody registered, which is the failure
     validate_instance_registration.py exists to catch one level up.
+
+    A DARK INSTANCE IS SKIPPED, AND IS NOT THE UNREGISTERED CASE. A new state
+    is built over several PRs behind one blanket `<tag>/**` line in
+    deploy-pages.yml's EXCLUDES, and is deliberately absent from metros.json
+    for exactly as long — validate_instance_registration.py holds those two
+    together in both directions, so its answer is imported here rather than
+    re-derived. The form this file writes names the instance's PLACE, read off
+    metros.json, so a dark instance has no name to print; it also has no
+    question page to carry a form, which is why skipping it costs nothing.
     """
+    from validate_instance_registration import dark_instances
+    dark = dark_instances()
     out = []
     for name in sorted(os.listdir(REPO_ROOT)):
         d = os.path.join(REPO_ROOT, name)
         if not os.path.isdir(d) or name.startswith("."):
+            continue
+        if name in dark:
             continue
         if os.path.isfile(os.path.join(d, "index.html")) and \
            os.path.isdir(os.path.join(d, "data", "app")):

@@ -88,12 +88,6 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITEMAP = os.path.join(REPO, "sitemap.xml")
 BASE = "https://districtry.com/"
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-# One reader for "is this folder published": that gate reads deploy-pages.yml's
-# own EXCLUDES.
-import validate_instance_registration  # noqa: E402
-
 # The flagship instance keeps priority 1.0: it is the app, and the page that
 # actually answers the queries this site ranks for.
 FLAGSHIP = "il"
@@ -107,31 +101,26 @@ def instances():
     instance — the same rule validate_card_links.py and
     validate_instance_registration.py discover by. Never a hand-kept list.
 
-    A DARK INSTANCE IS EXCLUDED, and it has to be: a new state is built over
-    several PRs behind one blanket `<tag>/**` line in deploy-pages.yml's
-    EXCLUDES, so its folder is not published and every URL under it 404s.
-    Listing those in sitemap.xml would hand a crawler three dead links and
-    invite it to report them — the same 404 the landing card would be, which is
-    why metros.json waits for go-live too. Indiana hit this on arrival in
-    2026-09 as the first dark instance since this generator was written.
-
-    The definition is `dark_instances()` in validate_instance_registration.py,
-    which reads that deploy exclude — the thing that actually decides. Never a
-    second list here, and never metros.json, which is a different claim.
-    Printed rather than dropped silently, and the go-live change picks the
-    pages up by regenerating this file with everything else."""
+    A DARK INSTANCE IS NOT LISTED, BECAUSE A SITEMAP ENTRY IS AN INVITATION TO
+    CRAWL. A new state is built over several PRs and its folder carries one
+    blanket `<tag>/**` line in deploy-pages.yml's EXCLUDES until go-live, so
+    nothing half-built reaches the site — and a sitemap naming a path the
+    deploy does not publish points every crawler that reads it at a 404. The
+    darkness signal is imported from validate_instance_registration rather than
+    re-derived here: that module owns the question, its own check reads the
+    same answer in both directions, and two readers of one question is where
+    this fleet's recurring defect starts.
+    """
+    from validate_instance_registration import dark_instances
+    dark = dark_instances()
     out = []
     for name in sorted(os.listdir(REPO)):
         d = os.path.join(REPO, name)
         if (os.path.isdir(d) and os.path.isfile(os.path.join(d, "index.html"))
-                and os.path.isdir(os.path.join(d, "data", "app"))):
+                and os.path.isdir(os.path.join(d, "data", "app"))
+                and name not in dark):
             out.append(name)
-    dark = validate_instance_registration.dark_instances() & set(out)
-    if dark:
-        print("build-sitemap: %s dark (excluded from the deploy, so its pages "
-              "are not listed; the go-live change adds them)"
-              % ", ".join(sorted(dark)))
-    return [t for t in out if t not in dark]
+    return out
 
 
 def page_type(rel):
