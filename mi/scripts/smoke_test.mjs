@@ -871,6 +871,52 @@ try {
       await page.close();
     }
 
+    // JACKSON, the seventh entry and now the tail of the OR — the first city
+    // whose ward lines come from its COUNTY's precinct map (Adam's ruling,
+    // 2026-09-29), with its members from the city's own pages. Two points, so
+    // a ward that resolves to its neighbour's number fails, and each card must
+    // name ITS ward's member and not the other's. The names are read from the
+    // shipped roster rather than typed here, so the weekly refresh does not
+    // break this check when a seat changes hands.
+    {
+      const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app",
+        "mi-jackson-council-members.json"), "utf8"));
+      const memberOf = (w) => ((roster.wards[w] || [])[0] || {}).name || null;
+      const mayor = (roster.citywide || [])[0] || {};
+      for (const jx of [
+        { ward: "1", other: "6", point: "42.23291,-84.40371", page: "/498/Ward-1" },
+        { ward: "6", other: "1", point: "42.22580,-84.42096", page: "/512/Ward-6" }
+      ]) {
+        const page = await booted(context, `${BASE}#point=${jx.point}&layers=city-ward`);
+        const card = await cardText(page, "city-ward");
+        const got = await page.evaluate(() => {
+          const el = document.getElementById("card-city-ward");
+          const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+          return {
+            pill: p ? p.textContent.trim() : null,
+            names: el ? [...el.querySelectorAll(".card-person-name")].map((n) => n.textContent.trim()) : [],
+            // The link is the card FOOTER, a sibling of the card body.
+            links: el && el.parentElement
+              ? [...el.parentElement.querySelectorAll(".card-footer a")].map((a) => a.href) : [],
+          };
+        });
+        const text = card.text || "";
+        check(`city-ward resolves a Jackson point to ward ${jx.ward}`,
+          got.pill === `Ward ${jx.ward}`, `pill=${JSON.stringify(got.pill)}`);
+        check(`Jackson ward ${jx.ward} names its own councilmember and the Mayor`,
+          !!memberOf(jx.ward) && got.names.includes(memberOf(jx.ward)) &&
+          !!mayor.name && got.names.includes(mayor.name), JSON.stringify(got.names));
+        check(`Jackson ward ${jx.ward} does not name ward ${jx.other}'s`,
+          !got.names.includes(memberOf(jx.other)), JSON.stringify(got.names));
+        check(`Jackson ward ${jx.ward} says where its lines come from`,
+          /Jackson County's precinct map/.test(text), text.slice(0, 200));
+        check(`Jackson ward ${jx.ward} links its own ward page`,
+          got.links.some((h) => h.includes("cityofjackson.org" + jx.page)),
+          JSON.stringify(got.links));
+        await page.close();
+      }
+    }
+
     // THE SCENARIO THAT ACTUALLY CATCHES THE ORIGINAL BUG, and the two checks
     // above do not. The ward-agnostic literal only misfired on a ward the city
     // named SHORT, and Wards 2 and 3 are named in full — so under the broken

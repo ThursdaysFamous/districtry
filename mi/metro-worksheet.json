@@ -249,7 +249,7 @@
       "area_rank": 10,
       "rank_note": "Detroit's seven districts over 139 sq mi and Grand Rapids's three wards over 45 — both smaller than a typical Michigan ZCTA and far larger than a precinct; ranked on the larger city's districts",
       "source": {
-        "answers": "Which city council or commission district you live in, in the two Michigan cities that publish their own boundaries — Detroit's seven council districts and Grand Rapids's three commission wards — and who represents you in it.",
+        "answers": "Which city council or commission district you live in, in the Michigan cities whose council boundaries this app can draw — Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson — and who represents you in it where the city publishes that.",
         "boundary": [
           {
             "label": "City of Detroit — \"Detroit City Council Districts 2026\", from the city's own ArcGIS org, pre-built and shipped with the app. THE CITY PUBLISHES FOUR COUNCIL-DISTRICT BOUNDARY SERVICES and their names do not settle which is in force: one titled \"Current\" dating from 2016, one named for 2026, one named for 2013 that was CREATED in December 2025, and NewDistrictBoundariesOption6, which reads like a rejected draft and is the same plan redigitised (99.575% point agreement, measured) — it is the one whose own description names the adoption. The plan was approved by the Council on 2024-02-06 and took effect on 2026-01-01, both stated in this service's own description. The builder decides it by measurement — \"Current\" carries geometry identical to the 2026 service and different from the 2013 one, and against Census 2020 blocks the shipped plan runs 87,393-94,820 against a 91,302 ideal (worst 4.28%) where the archived plan runs 78,966-100,623 (13.51%), which is what a plan drawn on the 2010 census looks like now. Both comparisons are gates in both directions. The seven districts sum to 639,111 — Detroit's Census 2020 population exactly — so they tile the city with no block double-counted or missed. The item carries no licenceInfo and is shared public by the city.",
@@ -258,10 +258,30 @@
           {
             "label": "City of Grand Rapids — \"Boundaries - City of Grand Rapids Wards\" (CGR_Wards), from the city's own ArcGIS org, pre-built and shipped with the app. THE CITY PUBLISHES EIGHT WARD SERVICES AND NONE IS A NEWER PLAN, measured 2026-09-05 by sweeping all 681 of the org's feature services rather than the first 100 (which is how an earlier version of this note said two). Three are 100.000% identical to what ships, one differs only at the perimeter, and three are SINGLE wards rather than rival plans — each agreeing with its own shipped ward. The build gates on the one sibling that has tracked this service byte for byte. THE CURRENCY QUESTION WAS REAL AND IS ANSWERED BY MEASUREMENT: the geometry was last edited 2018-01-24, before the census it is checked against, while the item description claims it is \"maintained to reflect the most current adopted ward configuration\". Michigan's own 2026 voting-precinct layer assigns each of the city's 59 precincts to a ward (20/20/19), and dissolved by that column it agrees with these polygons on 99.575% of 4,000 points — two independent publishers drawing the same three lines, so 2018 means unchanged rather than stale. That comparison is a gate. Against Census 2020 the three wards run 64,400-68,716 on a 66,328 ideal (worst 3.60%). Unlike Detroit the population identity is NOT exact and is not claimed to be: 21 of 2,883 blocks fall on one side of the ward outline and the other side of the Census place outline, a +66 difference against 198,917, which is two digitisations of one city edge. The item's licence is a use agreement conditioning use on carrying the city's disclaimer; the card quotes the sentences of that agreement that describe the DATA, in the city's own words and order rather than paraphrasing them, with the one cut (its two acceptance sentences, addressed to whoever accesses the data rather than to a reader) marked by an ellipsis. The builder ASSERTS every segment of that quotation against the live licenceInfo on each run, so a reworded agreement fails the build rather than leaving the card quoting words the city has stopped saying.",
             "url": "https://services2.arcgis.com/L81TiOwAPO1ZvU9b/arcgis/rest/services/CGR_Wards/FeatureServer/0"
+          },
+          {
+            "label": "City of Warren — \"Council Wards 2023\", from the city's own ArcGIS account, pre-built and shipped with the app. The ward layer sits at service index 32, and the builder reads the service root rather than assuming /0. Currency is checked against the state's own 2026 precincts.",
+            "url": "https://services8.arcgis.com/oGUlQVwqEiX7aF12/arcgis/rest/services/Warren_Council_Wards_2023/FeatureServer"
+          },
+          {
+            "label": "City of Flint — \"Wards22\", the plan effective 2 August 2022, from the city's own ArcGIS org, pre-built and shipped with the app. Two other layers in the same org carry the older 2012 plan under newer-sounding names, so the builder decides by measurement against the state's own 2026 precincts rather than by name.",
+            "url": "https://services2.arcgis.com/5ckbIY7K9TUKoseK/arcgis/rest/services/Wards22/FeatureServer"
+          },
+          {
+            "label": "City of Rochester Hills — the city's own ArcGIS Server (Election_Dataset), pre-built and shipped with the app. The city publishes the four council districts; its council roster is on a website whose robots.txt asks automated visitors not to read it, so the card names the district only.",
+            "url": "https://gis.rochesterhills.org/server/rest/services/ElectoralDistricts/Election_Dataset/MapServer"
+          },
+          {
+            "label": "City of Battle Creek — \"Wards_BC\", from the city's own ArcGIS org, pre-built and shipped with the app.",
+            "url": "https://services6.arcgis.com/cuKwt0IKP5B84jop/arcgis/rest/services/Wards_BC/FeatureServer/0"
+          },
+          {
+            "label": "Jackson County — the county's own voting-precinct layer, from which the City of Jackson's six wards are COMPOSED by dissolving its ten precincts on the county's WARD column. The city publishes no ward map of its own. The state's 2026 precincts are an independent check: both publishers assign the precincts to wards identically, and the six wards add up to the city's Census 2020 population exactly.",
+            "url": "https://gis.mijackson.org/countygis/rest/services/Voting/VotingPrecincts/MapServer/0"
           }
         ],
         "people": "The nine members of Detroit's City Council, from the council's own page at detroitmi.gov — seven by district and two at large, per the 2012 charter Art. 4 §4-101. THE LIVE PAGE REFUSES THIS CLIENT: detroitmi.gov sits behind a Cloudflare managed challenge on both the plain and the client-hints rungs, and this project does not defeat a challenge, so the roster is read from the Internet Archive's copy of that same page — the fleet's terminal fetch rung, in weekly use for Kendall and McHenry since 2026-07 — and the card states which day's copy it read. A snapshot older than 45 days is refused rather than served. NO PER-MEMBER phone or e-mail ships: neither the listing nor a member's own profile page carries a single mailto: or tel: link, measured on both, and that absence is the gap detroit-council-contact. The BODY's own office does ship — City Council Office, 2 Woodward Ave. Suite 1340, (313) 224-3443, published once for the whole Council — rendered for the body under the switchboard rule rather than attached to any member. mvic.sos.state.mi.us is challenged the same way; data.detroitmi.gov is NOT (it answers 200 with a readable robots.txt, and an earlier version of this note said otherwise on the strength of one substring match). Detroit's Legistar is abandoned since 2017 and never carried a district in OfficeRecordTitle even while maintained, where Milwaukee's carries \"3rd District\" in that same field — test a vendor by content per city, never by its name; its Persons table also flags all 45 records active, five of them system accounts. GRAND RAPIDS: the city's own City Commission pages, which are readable — www.grandrapidsmi.gov answers 200 and its robots.txt permits /government/ — so there is no archive hop here. The city states its own arithmetic (\"This legislative body consists of the Mayor and six Commissioners... The residents of each Ward directly elect two commissioners\"), and publishes SIX of those seven seats: one Ward 1 commissioner where Wards 2 and 3 each have two. THAT SEAT IS VACANT AND THE CITY SAYS SO OFF THE COMMISSION PAGE — its news post of 2026-04-17 states the vacancy \"was created following the resignation of former Commissioner Drew Robbins\"; an earlier version of this note said the city stated nothing, having measured only the commission page. No city source found states how the vacancy was resolved, so the card names the vacancy and its cause and stops there. The roster carries `seats` and `seatsPerWard` beside its members and a `vacancies` map KEYED BY WARD, so the card accounts for the seventh seat rather than concealing it or inventing a name — the Alexander County machinery, used here for the first time on a districted body. The cause is data, not prose: it was a ward-agnostic string literal in the card at first, on a row that fires for any ward short of its seats, so a later Ward 2 or 3 vacancy would have rendered Ward 1's predecessor by name on the wrong card. A ward that is short with no verified cause gets the neutral sentence instead, which stays true whatever caused it. Each member's own page supplies their ward, e-mail and direct phone; THE E-MAIL DOMAIN IS grcity.us AND NOT THE WEBSITE'S, so a scraper keyed to the site's own hostname finds none. 616.456.3000 is on every member's page and is the city switchboard, DETECTED as the number common to all of them and hoisted to the body rather than hardcoded.",
-        "applies": "Detroit and Grand Rapids only — the two Michigan cities that publish their own council boundaries. Outside both the layer hides itself."
+        "applies": "Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson only. Outside those cities the layer hides itself."
       }
     },
     {
@@ -470,6 +490,12 @@
         "min_features": 4,
         "max_features": 4,
         "note": "Rochester Hills's four city council districts, from the city's OWN ArcGIS Server (gis.rochesterhills.org), built by mi/scripts/build_mi_rochester_hills_wards.py. The AGO item is shared public with an empty licenseInfo (the Detroit/Warren/Flint/Battle Creek case). THE RECORD SAID NO SERVICE EXISTED: the 23-city sweep reported none, and the city runs both its own AGOL org and its own server — a catalogue that does not list it is not a publisher that lacks it. Currency measured against the state's own 2026 precinct WARD column (21 precincts, 6/5/5/5) at 99.725%; balance -2.72% to +3.36% on Census 2020, 76,138 against the Census place's 76,300. THAT -162 IS ONE BLOCK 26 m INSIDE THE CITY LINE, which is why the builder's population ceiling is 0.22% here against the fleet's 0.2% — raised for this city alone on a measurement, with a new and strictly tightening 100 m edge test added beside it so the raise cannot hide a hole. NO OFFICEHOLDER SHIPS: the city's council page is maintained and its robots.txt disallows general crawlers, so the card names the district and links the city."
+      },
+      {
+        "file": "mi-jackson-wards.json",
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Jackson's six council wards, COMPOSED from Jackson County's own precinct layer (gis.mijackson.org, Voting/VotingPrecincts) by dissolving the City of Jackson's ten precincts on their WARD column; built by mi/scripts/build_mi_jackson_wards.py. The first Michigan city whose wards come from a COUNTY rather than the city, on the operator's ruling of 2026-09-29 that a county's published map may be the source for a city — the state's own 2026 precinct fabric stays an independent second witness, which is what the 2026-09-21 ruling against using the STATE fabric as a source protects. Both publishers assign the ten precincts 1/2/2/2/1/2 and the build refuses if either moves; the dissolve and the state's precincts agree on 99.375% of 4,000 sampled points; the six wards sum to 31,309 on Census 2020, the Census place's population exactly, and run -2.07% to +1.34%. Shipped UNSIMPLIFIED at 6-decimal precision, so the lines are the county's own. The county's service states no terms and the builder refuses to rebuild if it ever does."
       },
       {
         "file": "alger-county-outline.json",
@@ -726,6 +752,11 @@
         "note": "Battle Creek's City Commission — all nine seats: one commissioner per ward for five wards, three at-large commissioners and the Mayor, the split the city states in its own prose on the page the roster is read from. Built by mi/scripts/build_mi_battle_creek_commission.py from mi_battle_creek_commission_scraper.py's cache. Six top-level keys: wards, citywide, office (City Hall's address, the city switchboard and the shared contact form, all hoisted to the body), seats, seatsPerWard, sourceUrl."
       },
       {
+        "file": "mi-jackson-council-members.json",
+        "min_keys": 5,
+        "note": "Jackson's City Council — the Mayor and one councilmember from each of six wards, as the city's council page lists them. Built by mi/scripts/build_mi_jackson_council.py from mi_jackson_council_scraper.py's cache, which reads the council page and each ward's own page and refuses to write unless the two name the same person in every ward. Six top-level keys: wards, citywide (the Mayor), office (City Hall's address and switchboard, hoisted to the body), seats, seatsPerWard, sourceUrl. No per-member street address ships: two ward pages print one and nothing says whether it is an office or a home."
+      },
+      {
         "file": "mi-commissioner-returns.json",
         "min_keys": 29,
         "note": "Commissioner NAMES for the 31 counties mi-commissioner-members.json does NOT reach, from the state district layer's own certified-returns column, built by mi/scripts/build_mi_returns_roster.py. THIS IS A DIFFERENT KIND OF ROSTER FROM THE FILE ABOVE AND EVERY RECORD SAYS SO: these are the winners the State of Michigan certified in the general election of 5 November 2024, not a list any county keeps current, so each record carries its own `lede` naming that election and the builder REFUSES TO WRITE a record without one. mi-commissioner-districts.json stays name-free and its BANNED_FIELDS guard is untouched — the 2026-09-03 decision to strip those columns off the BOUNDARY file stands. How stale the column is, measured 2026-09-22 on the 366 seats where the scraped roster gives a comparand: 234 identical, 104 the same surname in a different form (Dave/David, middle initials, diacritics, suffixes) and 28 a different surname, which a hand reading splits 18 naming a different person (4.9% of the 366), 9 misspelling the same person and 1 a missing space. Five of the 31 — Washtenaw, Bay, Manistee, Newaygo, Van Buren — do publish their own roster and only the parsing is hard, so each carries a `betterSource` note saying a scraper remains the better answer. min_keys is a floor that tolerates two counties leaving the cohort as they ship a real roster; it FALLS as counties move to the scraped file, which is the one direction it may move without a source change. MOVED 35 -> 31 on 2026-09-24 and this floor 33 -> 29 with it, when Gratiot, Keweenaw, Ogemaw and Shiawassee left this cohort for their own counties' board pages. That is the fall this note already described and it had not happened before."
@@ -738,7 +769,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mi-shell-v15",
+    "cache_name": "districtry-mi-shell-v16",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
@@ -784,6 +815,11 @@
       "file": "update-mi-battle-creek-commission-roster.yml",
       "purpose": "Battle Creek City Commission roster (the city's own commission page)",
       "schedule": "Fri 20:30 UTC"
+    },
+    {
+      "file": "update-mi-jackson-council-roster.yml",
+      "purpose": "Jackson City Council roster (the city's council page and six ward pages)",
+      "schedule": "Fri 21:30 UTC"
     },
     {
       "file": "update-mi-commissioner-roster.yml",
