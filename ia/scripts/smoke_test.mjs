@@ -51,7 +51,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "42.04940,-92.90710"; // downtown Marshalltown, Marshall County
 const OFFLINE = ["county", "us-house", "ia-senate", "ia-house", "county-supervisor", "school-district-unified"];
 const EXPECT_DISTRICT = { "county": "Marshall County", "us-house": "4", "ia-senate": "26", "ia-house": "52", "county-supervisor": "At-large", "school-district-unified": "Marshalltown Community School District" };
-const NEGATIVE_POINT = "43.65000,-93.37000"; // inside Minnesota (near Albert Lea), north of the Iowa land border (~43.50) and inside permalink_gate's maxLat (43.70) so the point is still selectable
+const NEGATIVE_POINT = "43.65000,-93.37000"; // inside Minnesota (near Albert Lea), north of the Iowa land border (~43.50) and inside permalink_gate's maxLat (43.70) so the point is still selectable. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: sampling permalink_gate every 0.25 degrees and naming each point's state off TIGERweb, the ground it reaches outside Iowa's own ring is Minnesota, Wisconsin, Illinois, Missouri, Nebraska and South Dakota and nothing else — one live instance, one published dark, four states that could each take one later. Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays and the two checks that select it refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; Iowa asserts nothing about fleet routing.
 const APP_NAME = "districtry Iowa";
 const EXPECT_LAYERS = 20;
 // ==== GENERATED:END smoke-config ====
@@ -223,7 +223,20 @@ try {
   //     so this needs no network.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, BASE);
+    // THE FLEET FILE IS REFUSED FOR THE WHOLE OF THIS CHECK, because its
+    // coverage-band half selects NEGATIVE_POINT and setSelectedPoint PANS
+    // there, which puts the map's CENTRE outside Iowa and arms the pan
+    // hand-off (ENGINE metro-portal's moveend → placeOwner → offerMetroPortal,
+    // which sets window.location.href). Iowa's negative point is in Minnesota
+    // and every other point it could be is in a sibling too — see the measured
+    // note on NEGATIVE_POINT at the top of this file — so the day mn/ enters
+    // fleet-outlines.json this check would navigate to /mn/ mid-assertion.
+    // Refused, placeOwner's own error leg answers "nobody", which is the
+    // state this check is about.
+    // Iowa asserts nothing about fleet routing, so nothing else here needs it.
+    const page = await booted(context, BASE, async (p) => {
+      await p.route("**/fleet-outlines.json", (r) => r.abort());
+    });
     const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/coverage-gaps.json"), "utf8"));
     const expected = Object.keys(shipped).length;
 
@@ -460,6 +473,10 @@ try {
     // identical either way — the negative point is outside both tilings.
     const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=${OFFLINE.join(",")}`, async (p) => {
       await p.route(`**${PORTAL_HOST}**`, (r) => r.abort());
+      // And the fleet file, for the reason given on the coverage-band check
+      // above: this permalink pans the map's centre into Minnesota, so once a
+      // sibling covers it the pan hand-off navigates away mid-assertion.
+      await p.route("**/fleet-outlines.json", (r) => r.abort());
     });
     for (const id of OFFLINE) {
       if (NEGATIVE_HIDDEN.includes(id)) {
