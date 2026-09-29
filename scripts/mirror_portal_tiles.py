@@ -495,7 +495,21 @@ def refresh(only, force, n_points, seed):
             arch = archive_path(tag, layer)
             if not force and old.get("data_sha256") == digest and os.path.isfile(arch) \
                     and sha256_file(arch) == old.get("archive_sha256"):
-                print("  same  %-36s %d features, data unchanged" % (k, n), flush=True)
+                # THE ROUTE CAN MOVE WHILE THE DATA STANDS STILL. A portal that
+                # changes host serves the same bytes from a new URL, and --check
+                # holds the recorded url to the routes the engine builds today,
+                # so leaving the record alone here would keep the gate red until
+                # somebody rebuilt an archive that did not need rebuilding —
+                # binary churn in history for a text change. Record the url and
+                # the route and leave the archive as it is.
+                if old.get("query") != url or old.get("route") != route:
+                    rec[k] = dict(old, query=url, route=route,
+                                  fetched=datetime.date.today().isoformat())
+                    changed.append(k)
+                    print("  route %-36s %d features, data unchanged; recorded route %d at "
+                          "the new url" % (k, n, route), flush=True)
+                else:
+                    print("  same  %-36s %d features, data unchanged" % (k, n), flush=True)
                 continue
             feats, _, skipped = bvt.collect(tag, layer, [(None, path)])
             if skipped:

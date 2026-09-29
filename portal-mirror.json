@@ -3,7 +3,7 @@
   "layers": {
     "ca:election-precinct": {
       "dataset": "jg6x-23ig",
-      "query": "https://data.sfgov.org/api/v3/views/jg6x-23ig/query.geojson",
+      "query": "https://data.sf.gov/api/v3/views/jg6x-23ig/query.geojson",
       "route": 1,
       "fetched": "2026-09-29",
       "features": 514,
@@ -12,7 +12,7 @@
     },
     "ca:elementary-attendance-area": {
       "dataset": "e6tr-sxwg",
-      "query": "https://data.sfgov.org/resource/e6tr-sxwg.geojson?$limit=50000",
+      "query": "https://data.sf.gov/resource/e6tr-sxwg.geojson?$limit=50000",
       "route": 0,
       "fetched": "2026-09-29",
       "features": 58,
