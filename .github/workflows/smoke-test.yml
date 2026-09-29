@@ -104,6 +104,7 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro wisconsin --out wi/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro iowa --out ia/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro michigan --out mi/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro minnesota --out mn/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro northcarolina --out nc/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
@@ -1478,6 +1479,7 @@ jobs:
           python3 wi/scripts/validate_index.py wi/index.html
           python3 ia/scripts/validate_index.py ia/index.html
           python3 mi/scripts/validate_index.py mi/index.html
+          python3 mn/scripts/validate_index.py mn/index.html
           python3 nc/scripts/validate_index.py nc/index.html
 
       # ONE server, EVERY instance. Until R3 this ran il alone, which is what
@@ -1514,6 +1516,7 @@ jobs:
           BASE_URL=http://localhost:8000/wi/  node wi/scripts/smoke_test.mjs  || status=1
           BASE_URL=http://localhost:8000/ia/  node ia/scripts/smoke_test.mjs  || status=1
           BASE_URL=http://localhost:8000/mi/  node mi/scripts/smoke_test.mjs  || status=1
+          BASE_URL=http://localhost:8000/mn/  node mn/scripts/smoke_test.mjs  || status=1
           BASE_URL=http://localhost:8000/nc/  node nc/scripts/smoke_test.mjs  || status=1
           # The root landing page and — the part that matters — its forwarding
           # guard, which is what keeps every already-distributed share link and

@@ -215,6 +215,10 @@ jobs:
             wi/data/state wi/data/source wi/scripts 'wi/data/*.geojson'
             ia/data/state ia/data/source ia/scripts
             mi/data/state mi/data/source mi/scripts
+            # Minnesota arrives dark: the whole folder is excluded until go-live,
+            # and metros.json deliberately carries no mn entry until then
+            # (validate_instance_registration.py holds the two together).
+            'mn/**'
             # North Carolina arrives dark: the whole folder is excluded until
             # go-live, and metros.json deliberately carries no nc entry until
             # then (validate_instance_registration.py holds the two together).

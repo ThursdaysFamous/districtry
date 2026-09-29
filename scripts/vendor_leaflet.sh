@@ -47,6 +47,7 @@ INSTANCES=(
   "wi:wi/index.html:wi/scripts/vendor/leaflet"
   "ia:ia/index.html:ia/scripts/vendor/leaflet"
   "mi:mi/index.html:mi/scripts/vendor/leaflet"
+  "mn:mn/index.html:mn/scripts/vendor/leaflet"
   "nc:nc/index.html:nc/scripts/vendor/leaflet"
 )
 

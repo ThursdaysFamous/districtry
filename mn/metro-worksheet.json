@@ -1,0 +1,364 @@
+{
+  "this_metro": "minnesota",
+  "metro_name": "Minnesota",
+  "metro_bbox": {
+    "minLng": -97.3,
+    "minLat": 43.44,
+    "maxLng": -89.43,
+    "maxLat": 49.44
+  },
+  "metro_center": [
+    46.44,
+    -93.36
+  ],
+  "permalink_gate": {
+    "minLat": 43.4,
+    "maxLat": 49.48,
+    "minLng": -97.4,
+    "maxLng": -89.35
+  },
+  "poi_geocode_bbox": {
+    "minLat": 43.4,
+    "maxLat": 49.48,
+    "minLng": -97.4,
+    "maxLng": -89.35
+  },
+  "brand": {
+    "app_name": "districtry Minnesota",
+    "product_name": "districtry",
+    "instance_tag": "mn",
+    "jsonld": {
+      "site_description": "Find every civic district that covers a point or address in Minnesota, and who represents you there.",
+      "app_description": "Click any point in Minnesota, or search an address, to see every civic district that contains it, and who represents you.",
+      "keywords": "Minnesota district map, what district am I in, Minnesota Senate district, Minnesota House district, county commissioner district, civic districts, who represents me Minnesota",
+      "area_served": {
+        "state": "Minnesota"
+      }
+    },
+    "tagline": "Every civic district that covers your point in Minnesota, and who represents you there.",
+    "theme_color": "#6d3fd1",
+    "favicon_data_uri": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3EMN%3C/text%3E%3C/svg%3E",
+    "apple_touch_icon": "icons/apple-touch-icon.png",
+    "head": {
+      "title": "Minnesota district lookup — districtry Minnesota",
+      "description": "Tap the map or search a Minnesota address: county, Minnesota Senate, Minnesota House and U.S. House districts — and who represents you. Free, no login.",
+      "og_title": "Minnesota district lookup — districtry Minnesota",
+      "og_description": "Every civic district that covers a point in Minnesota, and who holds it.",
+      "og_image_alt": "districtry Minnesota — every district that covers a point, and who represents it.",
+      "twitter_title": "Minnesota district lookup — districtry Minnesota",
+      "twitter_description": "Click or search a Minnesota address to see every district that covers it."
+    },
+    "analytics": {
+      "goatcounter_url": "https://districtry.goatcounter.com/count"
+    }
+  },
+  "socrata_host": "https://data.invalid",
+  "socrata_app_token": "",
+  "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
+  "feedback_subject": "districtry Minnesota feedback",
+  "hover_number_keys": [
+    [
+      "district",
+      "basename",
+      "cd",
+      "sldust",
+      "sldlst"
+    ],
+    [
+      "geoid",
+      "number"
+    ]
+  ],
+  "hover_name_keys": [
+    [
+      "name",
+      "namelsad"
+    ]
+  ],
+  "layers": [
+    {
+      "id": "us-house",
+      "label": "U.S. House",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "Congressional districts — the largest districts a state carries below the state itself",
+      "source": {
+        "answers": "The U.S. House district covering the point, and the representative holding it.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 0 (congressional districts), pre-built for the state and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
+          }
+        ],
+        "people": "congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
+        "applies": "Minnesota — statewide."
+      }
+    },
+    {
+      "id": "mn-senate",
+      "label": "Minnesota Senate District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "67 Senate districts, each divided into two whole House districts",
+      "source": {
+        "answers": "The Minnesota Senate district covering the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
+          }
+        ],
+        "people": "Not yet shipped. The card names the district and links the Minnesota Senate's own member directory; nobody is named rather than guessed. Recorded as the coverage gap mn-legislature-roster.",
+        "applies": "Minnesota — statewide."
+      }
+    },
+    {
+      "id": "county",
+      "label": "County",
+      "group": "geography",
+      "area_rank": 3,
+      "rank_note": "87 counties, pre-built from TIGERweb; this instance's offline anchor layer",
+      "source": {
+        "answers": "Which county contains the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+          }
+        ],
+        "people": "Not yet shipped. Minnesota's 87 county boards are elected by district (447 districts), and the districts and their members arrive together in a later change; the card names no officeholder rather than guessing one. Recorded as the coverage gap mn-county-commissioner.",
+        "applies": "Minnesota — statewide."
+      }
+    },
+    {
+      "id": "mn-house",
+      "label": "Minnesota House District",
+      "group": "political",
+      "area_rank": 4,
+      "rank_note": "134 House districts; two nest exactly inside each Senate district, lettered A and B",
+      "source": {
+        "answers": "The Minnesota House district covering the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
+          }
+        ],
+        "people": "Not yet shipped — same as the Senate above; the card links the Minnesota House's own member directory. Recorded as the coverage gap mn-legislature-roster.",
+        "applies": "Minnesota — statewide."
+      }
+    }
+  ],
+  "min_register_layer": 4,
+  "anchor_point": {
+    "lat": 44.9744,
+    "lng": -93.2655,
+    "note": "downtown Minneapolis, Hennepin County"
+  },
+  "anchors": [
+    {
+      "layer": "county",
+      "expected": "Hennepin County"
+    },
+    {
+      "layer": "us-house",
+      "expected": "5"
+    },
+    {
+      "layer": "mn-senate",
+      "expected": "61"
+    },
+    {
+      "layer": "mn-house",
+      "expected": "61A"
+    }
+  ],
+  "negative_point": {
+    "lat": 46.8772,
+    "lng": -97.05,
+    "note": "inside Cass County, NORTH DAKOTA, about 20 km west of Fargo — outside Minnesota and outside every other instance in the fleet, and inside permalink_gate (minLng -97.40) so the app answers the click and every shipped layer correctly returns nothing. Measured: 0 hits in all five shipped geometry files, TIGERweb's county layer names Cass County STATE 38 (control: the anchor returns Hennepin County STATE 27), and no outline in fleet-outlines.json contains it. TWO POINTS WERE TRIED FIRST AND BOTH FAILED FOR REASONS WORTH RECORDING, because each looked obvious. LAKE SUPERIOR: Minnesota's TIGER county fabric is WATER-INCLUSIVE out to the international boundary, so a point in open Lake Superior at 47.6, -90.0 is named Lk Superior by TIGERweb's hydrography and is still INSIDE Cook County, and a point offshore of Duluth is inside the city of Duluth. Water is not outside the state here. WORTH COUNTY, IOWA (43.45, -93.37): correct on every static test — 0 hits in all five files, TIGERweb naming Worth County STATE 19 — and it MADE THE BROWSER LEAVE. fleet-outlines.json puts it inside Iowa, so placeOwner hands the selection off to districtry.com/ia/ and the page navigates away; the smoke test's coverage-band probe then timed out looking for a button on a blank document. A NEGATIVE POINT MUST BE OUTSIDE EVERY LIVE INSTANCE, not only outside this one. Iowa's own negative point (43.65, -93.37) sits inside Minnesota and will start handing off the day this instance goes live — recorded in mn/WATCH.md as a go-live item on ia/, not a defect in this change."
+  },
+  "coverage_key": {
+    "outside": "Outside Minnesota"
+  },
+  "data_files": {
+    "geometry": [
+      {
+        "file": "metro-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "The whole-Minnesota-state outline for the coverage wash (loadMetroOutline), dissolved from all 87 counties' TIGERweb State_County layer-1 geometry by mn/scripts/build_metro_outline.py (METRO_COUNTY_FIPS = every county; DISPATCH_COUNTY_FIPS empty — no layer is county-keyed yet). Minnesota is 2-band coverage: its county tier and its statewide tier coincide, so there is no second, wider region file and coverage_key declares no region."
+      },
+      {
+        "file": "state-counties.json",
+        "min_features": 87,
+        "max_features": 87,
+        "note": "Every county, pre-built from TIGERweb State_County layer 1."
+      },
+      {
+        "file": "congress-districts.json",
+        "min_features": 8,
+        "max_features": 8,
+        "note": "U.S. House districts, pre-built from TIGERweb Legislative layer 0."
+      },
+      {
+        "file": "mn-senate-districts.json",
+        "min_features": 67,
+        "max_features": 67,
+        "note": "Minnesota Senate districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate, plus the 67-of-67 nesting gate against the House layer)."
+      },
+      {
+        "file": "mn-house-districts.json",
+        "min_features": 134,
+        "max_features": 134,
+        "note": "Minnesota House districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate; the A/B pair of each Senate district shares its every boundary vertex)."
+      }
+    ],
+    "rosters": [
+      {
+        "file": "congress-roster.json",
+        "min_keys": 8,
+        "note": "U.S. House roster, refreshed weekly by update-mn-congress-roster.yml."
+      },
+      {
+        "file": "coverage-gaps.json",
+        "min_keys": 0,
+        "note": "The Data gaps panel's content, emitted from docs/DATA_LAYER_GUIDEBOOK.md's gaps block: the county commissioner roster, the two legislature rosters, and the county officers."
+      }
+    ]
+  },
+  "sw": {
+    "cache_name": "districtry-mn-shell-v1",
+    "shell_urls": [
+      "./",
+      "./manifest.webmanifest",
+      "./icons/icon-192.png",
+      "./icons/icon-512.png",
+      "./icons/apple-touch-icon.png",
+      "./icons/icon-maskable-512.png",
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
+      "./vendor/leaflet-maplibre-gl.js"
+    ]
+  },
+  "data_sources": {
+    "registry": "mn/scripts/validate_sources.py"
+  },
+  "workflows": [
+    {
+      "file": "update-mn-congress-roster.yml",
+      "purpose": "U.S. House (MN) roster (unitedstates/congress-legislators)",
+      "schedule": "Mon 13:40 UTC"
+    }
+  ],
+  "geocoder": {
+    "address": "Photon (Minnesota-bounded type-ahead)",
+    "unbounded": "Photon (whole-coverage, sibling-metro lookup)",
+    "poi": "Nominatim (office-address pin lookup, Minnesota-bounded, serial >=1s queue)"
+  },
+  "palette": {
+    "accent": "#6d3fd1",
+    "accent_deep": "#5730ab",
+    "accent_warm": "#b0316e",
+    "accent_warm_deep": "#8f2659",
+    "label": "districtry palette — brand violet is CHROME ONLY, never map data; shared with the fleet, not state-themed by convention"
+  },
+  "domains": {
+    "canonical": "https://districtry.com/mn/"
+  },
+  "exports_name": "MinnesotaExplorer",
+  "verified_date": "September 29, 2026",
+  "metro_explorers": [
+    {
+      "id": "chicago",
+      "label": "Illinois",
+      "url": "https://districtry.com/il/",
+      "emoji": "🌭",
+      "explorer_name": "districtry Illinois",
+      "bbox": {
+        "minLng": -91.52,
+        "minLat": 36.96,
+        "maxLng": -87.01,
+        "maxLat": 42.51
+      }
+    },
+    {
+      "id": "nyc",
+      "label": "New York",
+      "url": "https://districtry.com/ny/",
+      "emoji": "🗽",
+      "explorer_name": "districtry New York",
+      "bbox": {
+        "minLng": -79.82,
+        "minLat": 40.43,
+        "maxLng": -71.62,
+        "maxLat": 45.07
+      }
+    },
+    {
+      "id": "sf",
+      "label": "San Francisco",
+      "url": "https://districtry.com/ca/",
+      "emoji": "🌉",
+      "explorer_name": "districtry San Francisco",
+      "bbox": {
+        "minLng": -122.6,
+        "minLat": 37.6,
+        "maxLng": -122.3,
+        "maxLat": 37.95
+      }
+    },
+    {
+      "id": "wisconsin",
+      "label": "Wisconsin",
+      "url": "https://districtry.com/wi/",
+      "emoji": "🧀",
+      "explorer_name": "districtry Wisconsin",
+      "bbox": {
+        "minLng": -92.89,
+        "minLat": 42.49,
+        "maxLng": -86.25,
+        "maxLat": 47.31
+      }
+    },
+    {
+      "id": "iowa",
+      "label": "Iowa",
+      "url": "https://districtry.com/ia/",
+      "emoji": "🌽",
+      "explorer_name": "districtry Iowa",
+      "bbox": {
+        "minLng": -96.64,
+        "minLat": 40.37,
+        "maxLng": -90.14,
+        "maxLat": 43.5
+      }
+    },
+    {
+      "id": "michigan",
+      "label": "Michigan",
+      "url": "https://districtry.com/mi/",
+      "emoji": "🚗",
+      "explorer_name": "districtry Michigan",
+      "bbox": {
+        "minLng": -87.6,
+        "minLat": 41.7,
+        "maxLng": -82.11,
+        "maxLat": 48.01
+      }
+    },
+    {
+      "id": "minnesota",
+      "label": "Minnesota",
+      "url": "https://districtry.com/mn/",
+      "emoji": "🛶",
+      "explorer_name": "districtry Minnesota",
+      "bbox": {
+        "minLng": -97.24,
+        "minLat": 43.49,
+        "maxLng": -89.48,
+        "maxLat": 49.39
+      }
+    }
+  ]
+}

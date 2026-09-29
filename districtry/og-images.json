@@ -39,6 +39,14 @@
     "height": 630,
     "rendered": "2026-09-13"
   },
+  "mn": {
+    "path": "mn/og-image.png",
+    "label": "mn",
+    "sha256": "2a3eecac7f9032850f34964f306ad221e31d60f4b1a4708f70797c45b52b43fb",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-29"
+  },
   "nc": {
     "path": "nc/og-image.png",
     "label": "nc",
