@@ -876,6 +876,14 @@ try {
   //     stubbed portal: the layer loads all 1,291, and a response that exactly
   //     fills the page fails validation so the walk falls through to the
   //     export route, which hands over the whole dataset.
+  //
+  //     THE ARCHIVE IS REFUSED SO THE PORTAL PATH RUNS AT ALL. Since phase 6c
+  //     this layer draws and answers from a committed tile archive and never
+  //     asks the portal, so a stub of the portal would sit unused and this
+  //     check would pass without exercising anything. Refusing the archive
+  //     puts the layer back on its whole-file loader (tile-overlay block,
+  //     redrawFromFile) — the same fallback smoke check 2d holds — which is
+  //     where the route walk lives and where the defect was.
   {
     const TOTAL = 1291;
     const [plat, plng] = POINT.split(",").map(Number);
@@ -889,6 +897,9 @@ try {
     const context = await browser.newContext({ serviceWorkers: "block" });
     let exportRoute = 0;
     const page = await booted(context, `${BASE}#point=${POINT}&layers=ward-precinct`, async (p) => {
+      // the archive is refused, so the layer reads its whole file as it did
+      // before phase 6c — which is the path the route walk is on
+      await p.route("**/data/app/tiles/ward-precinct.pmtiles", (r) => r.fulfill({ status: 404, body: "" }));
       // the primary route: it hands back exactly as many features as it was
       // asked for, which is what a truncated page looks like from the browser
       await p.route("**/data.cityofchicago.org/resource/i8fv-xe4b.geojson*", (route) => {
