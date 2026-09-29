@@ -78,29 +78,29 @@
       ]
     },
     "il": {
-      "layers_sending_point": 12,
+      "layers_sending_point": 5,
       "layers": [
         "ccpsa-district-council",
-        "community-area",
         "county-board",
+        "police-beat",
+        "police-district",
+        "ward"
+      ],
+      "layers_holding_hook_but_silent": [
+        "community-area",
+        "county",
         "cps-elementary",
         "cps-high",
         "cps-hs-network",
         "cps-middle",
         "cps-network",
-        "police-beat",
-        "police-district",
-        "ward",
-        "ward-precinct"
-      ],
-      "layers_holding_hook_but_silent": [
-        "county",
         "library",
         "municipality",
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
         "township",
+        "ward-precinct",
         "zip-code"
       ],
       "layers_unexercised": [],
@@ -192,26 +192,25 @@
       ]
     },
     "ny": {
-      "layers_sending_point": 4,
-      "layers": [
-        "es-zone",
-        "hs-zone",
-        "ms-zone",
-        "zip-code"
-      ],
+      "layers_sending_point": 0,
+      "layers": [],
       "layers_holding_hook_but_silent": [
         "community-district",
         "council",
+        "es-zone",
+        "hs-zone",
+        "ms-zone",
         "nys-zip-code",
         "police-precinct",
-        "police-sector"
+        "police-sector",
+        "zip-code"
       ],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "loadNysZipCodes"
       ],
-      "atpoint_hooks_fired": 1,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
         "borough",
         "borough-president",

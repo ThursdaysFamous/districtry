@@ -18,6 +18,10 @@
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       // hover popup: same identity the card headline shows — the zoned school's
       // name, or the honest "None" where requireId treats the feature as unzoned.
       hoverName: function (feature) {

@@ -11695,6 +11695,7 @@ function initSFExplorer() {
 
   registerLayer({
     id: "election-precinct",
+    tiles: "data/app/tiles/election-precinct.pmtiles", // vector tiles mirrored from DataSF (scripts/mirror_portal_tiles.py)
     group: "political",
     subOf: "supervisor-district",
     label: "Election Precinct",
@@ -12319,6 +12320,10 @@ function initSFExplorer() {
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       // hover popup: same identity the card headline shows — the zoned school's
       // name, or the honest "None" where requireId treats the feature as unzoned.
       hoverName: function (feature) {
@@ -12404,6 +12409,10 @@ function initSFExplorer() {
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       overlay: { load: loadNetworks, style: opts.style },
       // point-first by default (queryFeatureAt) — same pattern as the other factories
       query: function (point, seq) {
@@ -12478,6 +12487,7 @@ function initSFExplorer() {
 
   registerLayer({
     id: "elementary-attendance-area",
+    tiles: "data/app/tiles/elementary-attendance-area.pmtiles", // vector tiles mirrored from DataSF (scripts/mirror_portal_tiles.py)
     group: "schools",
     label: "Elementary Attendance Area",
     // hover popup: the zoned school name — same identity the card headline shows.

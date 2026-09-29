@@ -12097,6 +12097,7 @@ function initNycExplorer() {
    * honest citywide ZIP layer. `label` lists the raw ZIPs a MODZCTA represents. */
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
     group: "geography",
     label: "ZIP Code (MODZCTA)",
     coverage: nycCoverage,
@@ -13101,6 +13102,7 @@ function initNycExplorer() {
   }
   registerLayer({
     id: "police-precinct",
+    tiles: "data/app/tiles/police-precinct.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
     group: "safety",
     label: "NYPD Precinct",
     coverage: nycCoverage,
@@ -13223,6 +13225,7 @@ function initNycExplorer() {
   };
   registerLayer({
     id: "police-sector",
+    tiles: "data/app/tiles/police-sector.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
     group: "safety",
     subOf: "police-precinct",
     label: "NYPD Sector",
@@ -13767,18 +13770,21 @@ function initNycExplorer() {
 
   registerNycZone({
     id: "es-zone", label: "Elementary School Zone", datasetId: "cmjf-yawu",
+    tiles: "data/app/tiles/es-zone.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
     style: { color: "#2E7D5B", weight: 1.5, fillColor: "#7CC49B", fillOpacity: 0.12 },
     emptyNote: "No zoned elementary school found for this point.",
     moreLink: MYSCHOOLS_MORE
   });
   registerNycZone({
     id: "ms-zone", label: "Middle School Zone", datasetId: "t26j-jbq7",
+    tiles: "data/app/tiles/ms-zone.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
     style: { color: "#1F6F5C", weight: 1.5, fillColor: "#5FB49C", fillOpacity: 0.12, dashArray: "5 3" },
     emptyNote: "No zoned middle school here — much of NYC middle-school admission is choice-based.",
     moreLink: MYSCHOOLS_MORE
   });
   registerNycZone({
     id: "hs-zone", label: "High School Zone", datasetId: "ruu9-egea",
+    tiles: "data/app/tiles/hs-zone.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
     style: { color: "#155C4B", weight: 1.5, fillColor: "#4CA98F", fillOpacity: 0.12, dashArray: "2 4" },
     emptyNote: "Most NYC high schools admit by application citywide, not by zone.",
     moreLink: MYSCHOOLS_MORE
@@ -14180,6 +14186,7 @@ function initNycExplorer() {
   var loadCouncilMembers = makeCached(function () { return fetchJSONWithRetry("data/app/council-members.json", {}, 2); });
   registerLayer({
     id: "council", group: "political", label: "City Council District",
+    tiles: "data/app/tiles/council.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
     coverage: nycCoverage,
     // hover popup: same `coundist` property the card's query reads.
     hoverName: function (feature) {
@@ -14277,6 +14284,7 @@ function initNycExplorer() {
   }
   registerLayer({
     id: "community-district", group: "political", label: "Community District / Board",
+    tiles: "data/app/tiles/community-district.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
     coverage: nycCoverage,
     // hover popup: same decoded "Borough CD n" identity the card headline shows.
     hoverName: function (feature) {
@@ -14671,6 +14679,10 @@ function initNycExplorer() {
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       // hover popup: same identity the card headline shows — the zoned school's
       // name, or the honest "None" where requireId treats the feature as unzoned.
       hoverName: function (feature) {
@@ -14760,6 +14772,10 @@ function initNycExplorer() {
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       overlay: { load: loadNetworks, style: opts.style },
       // point-first by default (queryFeatureAt) — same pattern as the other factories
       query: function (point, seq) {

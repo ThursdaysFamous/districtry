@@ -1627,3 +1627,109 @@ Francisco's place no restriction on redistribution; Chicago's allow use on
 condition that the app displays the City's disclaimer, now on
 `il/sources.html` (#1232). BART's director districts state no licence and a
 contractor's copyright, so they stay live.
+
+### Phase 6c: seventeen city open-data portal layers mirrored into tile archives (2026-09-29)
+
+The three city portals were what phases 6a and 6b left live. Seventeen polygon
+layers across Chicago, New York City and San Francisco downloaded a whole
+boundary set from a Socrata portal on first toggle — **41.2 MB across the
+three apps** — and most of them asked that portal about the reader's point on
+every first click. `scripts/mirror_portal_tiles.py` mirrors them the way
+`mirror_tiger_tiles.py` mirrors the census: fetch each set exactly as the app
+does, build through `build_vector_tiles.py`'s own build and gate, commit the
+archive, record what was fetched.
+
+| App | Layers | Features | Live set | Committed archives |
+| --- | --- | --- | --- | --- |
+| Chicago | 7 | 1,812 | 15.8 MB | 1.29 MB |
+| New York | 8 | 1,810 | 23.6 MB | 2.88 MB |
+| San Francisco | 2 | 572 | 1.8 MB | 0.63 MB |
+| **All three** | **17** | **4,194** | **41.2 MB** | **4.80 MB** |
+
+Point transmission on a first click (`point-transmission.json`): **New York
+4 → 0** and **Illinois 12 → 5**. Four of the six apps now send no reader's
+point to any server at all; what is left in Illinois is the two CPD layers,
+Cook's commissioner districts, the CCPSA councils and the dispatched ward
+layer, and in Wisconsin its ward layer.
+
+**THE ROUTE LIST IS READ OUT OF THE ENGINE, NOT RESTATED.** The engine walks
+three Socrata routes in order and takes the first response that passes its own
+test. `engine_routes()` parses that list out of
+`engine/index.html/socrata-loader.txt` — the same block the app runs — and
+FAILS rather than guessing when the list stops parsing, so the page size, the
+order and the shapes have one writer. `SOCRATA_HOST` and `SOCRATA_APP_TOKEN`
+come from the app's own `index.html`. That is what makes San Francisco's
+election precincts (`jg6x-23ig`) mirror correctly with no special case: route
+0 answers 200 with every geometry stripped to null, and the walk falls through
+to route 1 exactly as it does in the browser.
+
+**THE MIRROR IS HELD TO A STRICTER TEST THAN THE APP.** The app accepts a set
+in which *some* feature has geometry; the mirror requires *every* feature to,
+and refuses the row otherwise. A committed archive that quietly holds fewer
+districts than the portal publishes is the ward-precinct defect in another
+costume.
+
+**SAN FRANCISCO'S PORTAL HAS MOVED AND THE REDIRECT IS FOLLOWED ONE HOP AT A
+TIME.** `data.sfgov.org` answers 301 to `data.sf.gov`; curl does not follow a
+redirect unless told to and a browser always does, so the first run read a
+490-byte redirect stub as the dataset. `resolve()` now walks the chain reading
+only each 301's own target and asks EVERY host in it for its robots.txt
+before anything is fetched from it — both hosts allow this client and both
+state `Crawl-delay: 1`, which is honoured per host across every route and row.
+
+**FOUR LAYERS ARE DELIBERATELY NOT MIRRORED, for one property of the tile path
+rather than four separate problems.** A tile carries the file's own properties
+and nothing the app adds after its fetch, and the card, the hover name and the
+drawn canvas all read them. So a layer whose loader derives or stamps a
+property would print the underlying value in all three places: `il ssa` stamps
+each area's provider, address, phone and url from a roster; `ny neighborhood`
+derives a readable NTA type label from `ntatype`; and `ny school-district` and
+`ny cec` share a loader that normalizes `schooldist` from `"15.0"` to `"15"`.
+(`il ward` is out for a different reason — it is a county-dispatched layer
+whose Chicago entry is one of four sources, each normalizing its own field
+names, so it belongs to phase 5b's county-archive shape.) Giving the general
+tile path a `decorate` hook is its own change and would still leave the hover
+name and the canvas reading the raw value, so those four keep fetching their
+portal exactly as before.
+
+**TWO FRAGMENTS ARE TOO SMALL TO DRAW AT ZOOM 12 AND ARE DECLARED RATHER THAN
+FORGIVEN.** A polygon whose whole extent is under about two tile units at the
+deepest zoom the fleet ships cannot survive quantisation to the tile grid,
+`--no-tiny-polygon-reduction` and all: every vertex rounds into one cell.
+`ny es-zone` and `ny ms-zone` each hold one, and they are the same
+digitisation artefact in two DOE layers drawn from one base fabric — a
+**1.7 m² fragment of zone 30Q111 and a 1.1 m² fragment of zone 30Q204, about a
+metre apart at 40.7564, -73.9473** in Queens. Each is the only feature its own
+file answers at its own interior point, so a reader who clicked inside one
+would be told no zoned school where the file names one, over ground the size
+of a doormat. That is the whole cost and it is stated rather than smoothed:
+five other parts of 30Q111 and six of 30Q204 draw normally.
+`ACCEPTED_TILE_DROPS` carries each with its measured area, its point, the
+answer it costs and a date; every entry is re-verified on every run and FAILS
+when the feature is gone, when it is no longer that small, or when the gate
+stops reporting it — a redrawn zone retires the entry rather than leaving a
+licence behind. The forgiven problem string is RECONSTRUCTED from the gate's
+own wording rather than pattern-matched, so rewording the gate turns the build
+red and gets the gate re-read. The shared gate in `build_vector_tiles.py` is
+not loosened for anybody.
+
+**READING ONE MIRROR'S RECORD WAS RIGHT UNTIL THERE WERE TWO.**
+`build_vector_tiles.py --committed` and `probe_tile_cards.mjs` both asked
+"which archives have no shipped file to be held to?" by opening
+`tiger-mirror.json`, which silently reports every portal archive as
+unaccounted for the day a second mirror lands. Both read
+`tile_mirror_common.RECORDS` now, and the six helpers the two mirrors share —
+the hashes, the archive path, the `tiles:` reader, the worksheet path and the
+one `bump_cache` — moved into that module in the same change. A replaced
+archive reaches a returning visitor only through a new `CACHE_NAME`, and two
+mirrors each moving that name their own way is the two-writers shape this
+repository keeps paying for.
+
+`update-portal-tiles.yml` refetches weekly (Sunday 11:17 UTC), rebuilds only a
+layer whose canonical data hash moved, gates it and opens a pull request.
+These sets move more often than the census ones — a school year's attendance
+zones are republished annually and a city's precincts are redrawn after a ward
+remap — so a diff there is more often real than in the TIGER job.
+
+Still live after 6c: `il ssa`, `ny neighborhood`, `ny school-district`,
+`ny cec`, `il ward`'s four sources and the county servers.

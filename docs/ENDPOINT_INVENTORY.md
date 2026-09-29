@@ -119,8 +119,8 @@ prose.
 
 | instance | layers that send the point | registered layers |
 |---|---|---|
-| il | 12 | 40 |
-| ny | 4 | 35 |
+| il | 5 | 40 |
+| ny | 0 | 35 |
 | ca | 0 | 16 |
 | wi | 1 | 31 |
 | ia | 0 | 20 |
