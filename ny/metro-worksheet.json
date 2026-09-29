@@ -905,6 +905,7 @@
     { "file": "ny-update-legislature-roster.yml", "purpose": "NY Senate + Assembly rosters (Open Legislation API; offices via Open States)", "schedule": "Mon 13:00 UTC",
       "secrets": ["NYSENATE_API_KEY", "OPENSTATES_API_KEY"] },
     { "file": "ny-update-congress-roster.yml", "purpose": "U.S. House roster (unitedstates/congress-legislators)", "schedule": "Mon 13:30 UTC" },
+    { "file": "ny-update-borough-clerks.yml", "purpose": "Borough County Clerks (the city's own Green Book; fills a name the operator file leaves null, never overwrites one)", "schedule": "Tue 12:00 UTC" },
     { "file": "ny-update-nypd-roster.yml", "purpose": "NYPD precinct info (commanding officers; honest nulls ~74/78)", "schedule": "Tue 13:00 UTC" },
     { "file": "ny-update-cec-roster.yml", "purpose": "Community Education Council rosters", "schedule": "Wed 13:00 UTC" },
     { "file": "ny-update-council-roster.yml", "purpose": "City Council member roster", "schedule": "Thu 13:00 UTC" },
