@@ -94,3 +94,14 @@ does not repeat the probe or read a stale verdict as a finding.
 None of this is in a shipped file yet. Tribal geometry rides a later PR and the
 per-nation rosters are their own change; a nation that cannot be read becomes a
 recorded gap naming its own government.
+
+**MINNESOTA'S TRIBAL GAP RECORD IS NOT THIS INSTANCE'S TO WRITE.** The fleet-wide
+tribal-government thread owns it and carries it in PR #1273, so nothing here
+opens a second record for the same absence — two records of one gap is how they
+come to disagree. That thread also settled the one boundary question this
+instance had raised: the **Lake Traverse** reservation's intersection with
+Minnesota is a **zero-area line**, because the reservation's eastern edge IS the
+state line and no Minnesota ground is enclosed. The 0.139 km² this thread had
+measured was a SIMPLIFIED state outline measured against a full-precision
+reservation, which is an artefact of two different detail levels rather than
+ground. Minnesota's tribal subdivisions are 17.

@@ -8362,7 +8362,16 @@ function initMinnesotaExplorer() {
     "us-house",          // Congressional districts — the largest districts a state carries below the state itself
     "mn-senate",         // 67 Senate districts, each divided into two whole House districts
     "county",            // 87 counties, pre-built from TIGERweb; this instance's offline anchor layer
-    "mn-house"           // 134 House districts; two nest exactly inside each Senate district, lettered A and B
+    "mn-house",          // 134 House districts; two nest exactly inside each Senate district, lettered A and B
+    "school-district-unified", // 322 districts covering almost all of Minnesota, live from TIGERweb (no data/app file) — 693 km2 mean feature area, the largest of the three school tilings
+    "zip-code",          // 1,385 ZIP Code Tabulation Areas intersecting Minnesota's envelope, live from TIGERweb (no data/app file) — 250 km2 mean feature area, between a school district and a township
+    "school-district-elementary", // 8 districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points
+    "county-subdivision", // 2,762 records tiling the state, live from TIGERweb (no data/app file) — 1,797 townships, 901 city placeholder records for 851 distinct cities (50 of which cross a county line), 59 unorganized territories, 2 unorganized survey townships, and 3 'not defined' records that are Lake Superior water
+    "municipality",      // 856 incorporated places, live from TIGERweb (no data/app file) — every one a city, with no village among them, at a 14.7 km2 mean feature area
+    "school-district-secondary", // 1 district, live from TIGERweb (no data/app file) — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota
+    "police-station",    // 694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
+    "fire-station",      // 1,484 fire and EMS station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
+    "post-office"        // 1,199 post-office points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers rather than by feature area
   ];
   /* ==== GENERATED:END layer-area-rank ==== */
   /* ==== ENGINE:BEGIN layer-registry ==== */
@@ -12322,6 +12331,601 @@ function initMinnesotaExplorer() {
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
   });
 
+  /* ---------- 5-9. live TIGERweb fabrics, point-first ----------
+   * Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
+   * answers "which feature holds this point" in one small spatial query, so
+   * a first click never waits on a multi-MB statewide download. The full set
+   * still downloads for the map overlay, on toggle.
+   *
+   * THIS IS THE CHANGE THAT MAKES THE HOOK REAL HERE, AND THAT MATTERS TO A
+   * GENERATED PAGE. scripts/build_privacy_page.py measures which layers send
+   * a reader's selected point to a third-party server by counting the
+   * loadArcGISPointGeoJSON call sites a browser probe sees FIRE, so this
+   * instance's published privacy row moves from "None." to the five layers
+   * below the day this merges. Re-run scripts/probe_point_transmission.mjs
+   * and scripts/build_privacy_page.py with any change to this block. Michigan
+   * shipped the wrapper UNUSED and its privacy page claimed a transmission
+   * that never happened; the lesson is that dead code is not free when a
+   * generator measures the code.
+   * ---------- */
+  function tigerStatewideLoader(servicePath, layerIndex, outFields, label) {
+    var load = makeCached(function () {
+      return loadTigerLayer(servicePath, layerIndex, outFields, label);
+    });
+    load.atPoint = function (point) {
+      return loadArcGISPointGeoJSON(servicePath + "/" + layerIndex, point, outFields,
+        "STATE='" + STATE_FIPS + "'");
+    };
+    return load;
+  }
+
+  /* ---------- 5-7. the three school tilings ----------
+   * TIGER publishes three mutually exclusive school tilings and Minnesota is
+   * the only instance in the fleet that runs all three. Measured 2026-09-29
+   * against TIGERweb School/MapServer for STATE='27': layer 0 (unified) 322
+   * districts, layer 2 (elementary) 8, layer 1 (secondary) 1.
+   *
+   * EXCLUSIVITY IS MEASURED, NOT ASSUMED. At 25 randomly sampled unified
+   * districts' interior points the elementary and secondary layers both return
+   * nothing, 25 of 25; at all 8 elementary districts' interior points the
+   * unified layer returns nothing, 8 of 8. So the eight are gap-fills rather
+   * than overlays, and shipping the unified layer alone would answer "no school
+   * district" to everyone living in one of them — a wrong answer rather than a
+   * missing one. The probe uses INTPTLAT/INTPTLON, the interior point TIGER
+   * guarantees is inside the polygon, never CENTLAT/CENTLON, whose
+   * mathematical centroid can fall outside a non-convex shape.
+   *
+   * WHAT THESE CARDS DELIBERATELY DO NOT SAY. The obvious sentence for an
+   * elementary district is that it runs no high school, and TIGER's own fields
+   * contradict it: SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the
+   * same span as a unified district, and only Pine Point has a secondary
+   * district over it (Park Rapids for grades 9–12, the single feature in layer
+   * 1). So the Census places these eight in its elementary tiling while
+   * recording them as serving every grade, and nothing published here resolves
+   * the two. The cards print the grade range TIGER gives and say which tiling
+   * the district sits in; they claim nothing about which grades it operates or
+   * where its older pupils go. Recorded as gap mn-elementary-district-grades,
+   * with mn/WATCH.md carrying the measurement.
+   *
+   * NO OFFICEHOLDER ON ANY OF THE THREE. Minnesota school boards are elected
+   * and no statewide roster of their members was found, so each card names the
+   * district and links the state's own education department. Recorded as gap
+   * mn-school-board-members.
+   * ---------- */
+  var loadSchoolDistrictsUnified = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "School/MapServer", 0,
+    "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE", "unified school districts");
+  var loadSchoolDistrictsElementary = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "School/MapServer", 2,
+    "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE", "elementary school districts");
+  var loadSchoolDistrictsSecondary = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "School/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE", "secondary school districts");
+
+  var MN_SCHOOL_DIRECTORY = "https://public.education.mn.gov/MDEAnalytics/DataAnalytics.jsp";
+
+  function mnSchoolCard(result, tierNote) {
+    var wrap = cardEl("div", "card-flush");
+    wrap.appendChild(renderBodyIntro({
+      title: result.name != null ? String(result.name) : "Unknown school district",
+      note: result.geoid != null ? "GEOID " + String(result.geoid) : null
+    }));
+    var rows = [];
+    // the grade span is TIGER's own LOGRADE–HIGRADE, printed as published and
+    // never interpreted: see the block comment on the eight elementary
+    // districts that record PK–12
+    if (result.grades) rows.push({ label: "Grades, as the Census records them", value: result.grades });
+    rows.push({ label: "Census tiling", value: tierNote });
+    rows.push({
+      label: "Your school board",
+      value: "Not named here. Minnesota school boards are elected, and no " +
+        "statewide roster of their members was found — so this app names " +
+        "nobody rather than guessing. The district's own website is the " +
+        "current source."
+    });
+    wrap.appendChild(renderFieldStack(rows));
+    wrap.appendChild(renderLinkRow({
+      links: [{ label: "Minnesota Department of Education", url: MN_SCHOOL_DIRECTORY }]
+    }));
+    return wrap;
+  }
+
+  function mnSchoolQuery(load) {
+    return function (point, seq) {
+      // point-first (queryFeatureAt): one district polygon instead of the
+      // statewide download gating the first click
+      return queryFeatureAt(load, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var lo = findPropCI(props, ["lograde"]);
+        var hi = findPropCI(props, ["higrade"]);
+        return {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          geoid: findPropCI(props, ["geoid"]),
+          // the grade span TIGER itself carries, so the card can never
+          // disagree with the tier printed under it
+          grades: (lo != null && hi != null) ? String(lo) + "–" + String(hi) : null
+        };
+      });
+    };
+  }
+
+  registerLayer({
+    id: "school-district-unified",
+    group: "schools",
+    label: "School District (Unified)",
+    overlay: {
+      load: loadSchoolDistrictsUnified,
+      style: { color: "#2F6B4F", weight: 1.5, fillColor: "#4E9B75", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null ? String(name) : null;
+    },
+    query: mnSchoolQuery(loadSchoolDistrictsUnified),
+    render: function (result) {
+      return mnSchoolCard(result,
+        "Unified district — it runs every grade, so it is the only school " +
+        "district over this point. 322 of them cover almost all of Minnesota.");
+    }
+  });
+
+  registerLayer({
+    id: "school-district-elementary",
+    group: "schools",
+    label: "School District (Elementary)",
+    // the honest words for the 99% of the state this layer does not cover
+    emptyNote: "This point is not in one of the eight districts the Census " +
+      "puts in its elementary tiling. A unified district covers almost all of " +
+      "Minnesota, so an empty card here means the School District (Unified) " +
+      "card is the one that answers.",
+    overlay: {
+      load: loadSchoolDistrictsElementary,
+      style: { color: "#1F7A6B", weight: 2, fillColor: "#3FA898", fillOpacity: 0.07, dashArray: "6 3" }
+    },
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null ? String(name) : null;
+    },
+    query: mnSchoolQuery(loadSchoolDistrictsElementary),
+    render: function (result) {
+      return mnSchoolCard(result,
+        "Elementary district — it runs no high school of its own. Minnesota " +
+        "has eight, and TIGER publishes a secondary district over only one of " +
+        "them, so for the other seven this app cannot say which high school " +
+        "district serves the point (gap mn-secondary-school-coverage).");
+    }
+  });
+
+  registerLayer({
+    id: "school-district-secondary",
+    group: "schools",
+    label: "School District (Secondary)",
+    emptyNote: "This point is not in a secondary-only school district. " +
+      "TIGER publishes exactly one for Minnesota — Park Rapids for grades " +
+      "9–12 over the Pine Point elementary district — so almost " +
+      "everywhere this card is correctly empty and the unified or elementary " +
+      "card answers.",
+    overlay: {
+      load: loadSchoolDistrictsSecondary,
+      style: { color: "#155E52", weight: 2, fillColor: "#2E8C7C", fillOpacity: 0.07, dashArray: "2 3" }
+    },
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null ? String(name) : null;
+    },
+    query: mnSchoolQuery(loadSchoolDistrictsSecondary),
+    render: function (result) {
+      return mnSchoolCard(result,
+        "Secondary district — it runs the high-school grades over an " +
+        "elementary district that runs none. This is the only one TIGER " +
+        "publishes for Minnesota, so the Elementary card names the district " +
+        "that runs the lower grades at this point.");
+    }
+  });
+
+  /* ---------- 6. ZIP Code ----------
+   * ZIP Code Tabulation Areas carry NO STATE FIELD, because a ZCTA can cross
+   * a state line, so this is the one TIGERweb layer here fetched by a
+   * bounding ENVELOPE rather than STATE='27'. 1,385 ZCTAs intersect
+   * Minnesota's envelope, measured 2026-09-29.
+   *
+   * A ZCTA IS NOT A POSTAL BOUNDARY and the card says so: it is the Census
+   * Bureau's areal approximation of the delivery routes sharing a ZIP code,
+   * built from census blocks, and the USPS publishes no polygon of its own.
+   * ---------- */
+  var loadZctas = makeCached(function () {
+    var url = TIGERWEB_SERVICES + "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query" +
+      "?where=" + encodeURIComponent("1=1") +
+      "&geometry=" + encodeURIComponent(JSON.stringify({
+        xmin: METRO_BBOX.minLng, ymin: METRO_BBOX.minLat,
+        xmax: METRO_BBOX.maxLng, ymax: METRO_BBOX.maxLat
+      })) +
+      "&geometryType=esriGeometryEnvelope&inSR=4326" +
+      "&spatialRel=esriSpatialRelIntersects" +
+      "&outFields=GEOID,NAME,BASENAME&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      .then(function (geojson) {
+        if (!hasUsableGeometry(geojson)) {
+          throw new Error("TIGERweb ZCTAs returned no usable geometry");
+        }
+        return geojson;
+      });
+  });
+  loadZctas.atPoint = function (point) {
+    // no STATE filter: a ZCTA has no state field, so the point query carries
+    // none either
+    return loadArcGISPointGeoJSON(
+      TIGERWEB_SERVICES + "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11", point,
+      "GEOID,NAME,BASENAME", null);
+  };
+
+  /* THIS LAYER ALONE DECLARES A COVERAGE TEST, and the reason is the missing
+   * state field. Every other layer here is fetched with STATE='27', so it is
+   * silent outside Minnesota by construction; a ZCTA query carries no state
+   * filter, so at a point in North Dakota it would cheerfully return a North
+   * Dakota ZIP code — an answer about a place this instance does not serve,
+   * drawn over ground its other cards all decline. Declaring coverage hides
+   * the toggle, the card and the overlay outside the state instead, which is
+   * the engine's own mechanism for "where a layer's data applies", and keeps
+   * the whole instance consistent at one point rather than only most of it.
+   * Tested against the shipped state outline, which is same-origin and
+   * cache-first, so the test costs no request. */
+  function insideMinnesota(point) {
+    return loadMetroOutline().then(function (geo) {
+      var feats = (geo && geo.features) ? geo.features : [];
+      for (var i = 0; i < feats.length; i++) {
+        if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) return true;
+      }
+      return false;
+    });
+  }
+
+  registerLayer({
+    id: "zip-code",
+    group: "geography",
+    label: "ZIP Code",
+    coverage: insideMinnesota,
+    overlay: {
+      load: loadZctas,
+      style: { color: "#6B5B95", weight: 1, fillColor: "#8D7BB5", fillOpacity: 0.04, dashArray: "3 4" }
+    },
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["basename", "name"]);
+      return name != null ? String(name) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadZctas, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          zip: findPropCI(props, ["basename"]),
+          geoid: findPropCI(props, ["geoid"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.zip != null ? "ZIP " + String(result.zip) : "Unknown ZIP code",
+        note: null
+      }));
+      wrap.appendChild(renderFieldStack([{
+        label: "What this is",
+        value: "A ZIP Code Tabulation Area — the Census Bureau's areal " +
+          "approximation of the delivery routes that share this ZIP code, " +
+          "built out of census blocks. The Postal Service publishes no " +
+          "boundary of its own, so this is close to the mail's footprint " +
+          "rather than identical to it, and it elects nobody."
+      }]));
+      return wrap;
+    }
+  });
+
+  /* ---------- 7. Township or City — live TIGERweb county subdivisions ----------
+   * MINNESOTA IS THE IOWA SHAPE AND NOT THE MICHIGAN ONE, and it is measured
+   * rather than taken from either. Across all 2,762 subdivision records for
+   * STATE='27', read 2026-09-29: 1,797 townships (LSADC 44), 901 city
+   * placeholder records for 851 distinct cities (50 of which cross a county
+   * line), 59 unorganized territories, 2 unorganized survey townships named
+   * by their survey coordinates ("Township 157-30"), and 3 "County
+   * subdivisions not defined" records in Cook, Lake and St. Louis counties,
+   * which are Lake Superior water.
+   *
+   * A MINNESOTA CITY IS NOT INSIDE A TOWNSHIP, which is why this card carries
+   * no "two governments over you" note where Michigan's does. Probed both
+   * ways: at 30 randomly sampled cities' interior points the subdivision
+   * layer returns a city placeholder record and never a township, 30 of 30;
+   * at 20 randomly sampled townships' interior points the incorporated-places
+   * layer returns nothing, 20 of 20.
+   *
+   * A town elects three supervisors to three-year terms, plus a clerk and a
+   * treasurer in alternate years (Minn. Stat. § 367.03, read at
+   * revisor.mn.gov on 2026-09-29 — the state's own publisher, which robots.txt
+   * allows). No statewide roster of those officers was found, so the card
+   * names nobody. Recorded as gap mn-township-officers.
+   * ---------- */
+  var loadCountySubdivisions = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC", "county subdivisions");
+
+  registerLayer({
+    id: "county-subdivision",
+    group: "geography",
+    label: "Township or City",
+    // Every subdivision belongs to exactly one county BY CONSTRUCTION rather
+    // than by assumption: TIGER's GEOID is state + county + subdivision, so
+    // the containment is in the key. Both layers sit in `geography`, so the
+    // cross-group nesting ban (docs/EXPANSION_GUIDE.md Part 4) does not bite.
+    // The cost is stated rather than discovered: subOf hides a child whenever
+    // an ancestor is off, so turning County off takes this card with it.
+    subOf: "county",
+    overlay: {
+      load: loadCountySubdivisions,
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05, dashArray: "7 3" }
+    },
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null ? String(name) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadCountySubdivisions, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var name = findPropCI(props, ["name"]);
+        var base = findPropCI(props, ["basename"]);
+        return {
+          seq: seq,
+          name: name,
+          // the civil-division type taken from what TIGER's own NAME carries
+          // beyond its BASENAME, so the card can never disagree with the name
+          // printed above it
+          kind: (name != null && base != null &&
+                 String(name).indexOf(String(base)) === 0)
+            ? String(name).slice(String(base).length).trim().toLowerCase()
+            : null,
+          geoid: findPropCI(props, ["geoid"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? String(result.name) : "Unknown subdivision",
+        note: result.geoid != null ? "GEOID " + String(result.geoid) : null
+      }));
+      var KIND_NOTE = {
+        "township": "Township — an organized town, and an active local " +
+          "government. It elects three supervisors to three-year terms, plus " +
+          "a clerk and a treasurer in alternate years (Minn. Stat. § 367.03).",
+        "city": "This is the Census Bureau's placeholder subdivision record " +
+          "for a city. A Minnesota city is not part of a township, so there " +
+          "is no township government under this point — the city on the " +
+          "City card is the local government here.",
+        "ut": "Unorganized territory — land with no town government of its " +
+          "own, so the county board is the local government over this point."
+      };
+      // no row rather than a guessed one: the three "County subdivisions not
+      // defined" records are Lake Superior water and are none of the above
+      if (result.kind && KIND_NOTE[result.kind]) {
+        wrap.appendChild(renderFieldStack([
+          { label: "Type", value: KIND_NOTE[result.kind] }
+        ]));
+      }
+      // only a township has an officer this card would name: a city's people
+      // belong on the city's own card, unorganized territory's on the
+      // county's, and the water records have no government at all
+      if (result.kind === "township") {
+        wrap.appendChild(renderFieldStack([{
+          label: "Your town board",
+          value: "Not named here. No statewide roster of Minnesota's town " +
+            "supervisors, clerks and treasurers was found, and this app does " +
+            "not guess one — the township's own website is the current source."
+        }]));
+      }
+      return wrap;
+    }
+  });
+
+  /* ---------- 8. City — live TIGERweb incorporated places ----------
+   * 856 incorporated places for STATE='27', measured 2026-09-29, and EVERY
+   * ONE carries the Census's "city" descriptor (LSADC 25). There is no
+   * village among them, which is why this card has no type row where
+   * Michigan's (cities and villages, governed differently) needs one.
+   *
+   * The empty state is a fact about the place rather than a failed lookup:
+   * most of Minnesota's land is township or unorganized territory, which IS
+   * an answer, and the Township or City card is the one that names it.
+   *
+   * A statutory city elects a mayor and council members, with a clerk and
+   * treasurer or a combined clerk-treasurer depending on its plan (Minn.
+   * Stat. § 412.02, read at revisor.mn.gov on 2026-09-29); a home rule
+   * charter city's own charter governs instead. No statewide roster of
+   * Minnesota's mayors and council members was found, so the card names
+   * nobody. Recorded as gap mn-municipal-officeholders. The 274 city WARDS
+   * the Secretary of State publishes are a later change, not a roster.
+   * ---------- */
+  var loadPlaces = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
+    "GEOID,NAME,BASENAME,STATE,LSADC", "incorporated places");
+
+  registerLayer({
+    id: "municipality",
+    group: "geography",
+    label: "City",
+    emptyNote: "This point is not in a city. Most of Minnesota's land is " +
+      "township or unorganized territory, so a point there sits in no city " +
+      "at all — the Township or City card names what it is in.",
+    overlay: {
+      load: loadPlaces,
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+    },
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null ? String(name) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadPlaces, point).then(function (feature) {
+        if (!feature) return null; // not in a city — the engine renders emptyNote
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          geoid: findPropCI(props, ["geoid"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? String(result.name) : "Unknown city",
+        note: result.geoid != null ? "FIPS " + String(result.geoid) : null
+      }));
+      wrap.appendChild(renderFieldStack([{
+        label: "Your mayor or council",
+        value: "Not named here. No statewide source names Minnesota's mayors " +
+          "and council members, and this app does not guess — the city's " +
+          "own website is the current source."
+      }]));
+      return wrap;
+    }
+  });
+
+  /* ---------- 9-11. USGS National Map structures, nearest-3 ----------
+   * Public-domain point data, fetched by a bounding ENVELOPE because these are
+   * national layers with no state field, and PAGED because the service caps a
+   * response and answers HTTP 200 with exceededTransferLimit rather than an
+   * error — a truncated answer that looks exactly like a complete one.
+   *
+   * Measured in Minnesota's envelope 2026-09-29, with name, address, city,
+   * state and ZIP populated on every single point:
+   *   layer 38  post offices     1,199   (MN 793, WI 292, SD 63, ND 34, IA 10, MI 7)
+   *   layer 51  fire/EMS         1,484   (MN 961, WI 376, SD 77, ND 50, IA 10, MI 10)
+   *   layer 53  police stations    694   (MN 448, WI 200, SD 24, ND 15, MI 4, IA 3)
+   * The out-of-state points are deliberate: nearest is a proximity fact, and
+   * a reader in Moorhead is better served by a Fargo post office than by one
+   * eighty miles into Minnesota.
+   *
+   * THIS SERVICE LOWERCASES THE ATTRIBUTE KEYS IT RETURNS while naming them
+   * in capitals in its own field list, so a response carries `name` and
+   * `zipcode` where the request asked for NAME and ZIPCODE. Everything here
+   * reads them through findPropCI, which is case-insensitive; a probe written
+   * against the documented capitals measured all 3,377 points as carrying no
+   * attributes at all, which is what that helper exists to prevent.
+   *
+   * These name BUILDINGS and never a jurisdiction. Which fire department or
+   * police agency answers at a point is a service-area question — Minnesota
+   * fire protection runs on municipal departments and joint-powers contracts,
+   * and law enforcement on a city department, a county sheriff or the State
+   * Patrol — and neither is published as a boundary this app can read. Both
+   * cards say so rather than leaving a reader to infer it.
+   * ---------- */
+  var USGS_STRUCTURES =
+    "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/";
+  var USGS_POST_OFFICE_LAYER = USGS_STRUCTURES + "38";
+  var USGS_FIRE_LAYER = USGS_STRUCTURES + "51";
+  var USGS_POLICE_LAYER = USGS_STRUCTURES + "53";
+
+  function usgsStructuresLoader(layerUrl, label) {
+    var PAGE = 2000;
+    var ENVELOPE = [METRO_BBOX.minLng, METRO_BBOX.minLat,
+                    METRO_BBOX.maxLng, METRO_BBOX.maxLat].join(",");
+    return makeCached(function () {
+      function page(offset, acc) {
+        var url = layerUrl + "/query?geometry=" + ENVELOPE +
+          "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects" +
+          "&where=1%3D1&outFields=NAME,ADDRESS,CITY,STATE,ZIPCODE&outSR=4326&f=json" +
+          "&geometryPrecision=6&resultRecordCount=" + PAGE + "&resultOffset=" + offset;
+        return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+          .then(function (gj) {
+            var feats = (gj && gj.features) || [];
+            acc = acc.concat(feats);
+            var more = gj && (gj.exceededTransferLimit ||
+                              (gj.properties && gj.properties.exceededTransferLimit));
+            if (more && feats.length > 0) return page(offset + feats.length, acc);
+            var out = { type: "FeatureCollection", features: acc };
+            // the same "200 but useless" guard the polygon loaders apply: an
+            // Esri error envelope 200s carrying no geometry, and makeCached
+            // would otherwise pin that empty response for the whole session
+            if (!hasUsableGeometry(out)) throw new Error("no usable geometry from " + label);
+            return out;
+          });
+      }
+      return page(0, []);
+    });
+  }
+
+  // The card line and the hover identity read the SAME properties, so the two
+  // surfaces cannot disagree; the segment before the first em dash is the name.
+  function usgsStructureLine(fallbackName) {
+    return function (props) {
+      var name = findPropCI(props, ["name"]);
+      var address = findPropCI(props, ["address"]);
+      var city = findPropCI(props, ["city"]);
+      // STATE is not decoration. The envelope reaches five other states ON
+      // PURPOSE — 406 of the 1,199 post offices are outside Minnesota — and
+      // border towns share names across the line, so "Moorhead" cannot be told
+      // from Moorhead, Iowa without it.
+      var state = findPropCI(props, ["state"]);
+      var zip = findPropCI(props, ["zipcode", "zip"]);
+      // Built as parts so a missing city cannot leave a leading comma on the
+      // state, which is the shape a source with partial coverage produces.
+      var place = [];
+      if (city) place.push(String(city));
+      if (state) place.push(String(state));
+      return (name ? String(name) : fallbackName) +
+        (address ? " — " + String(address) : "") +
+        (place.length ? ", " + place.join(", ") : "") +
+        (zip ? " " + String(zip) : "");
+    };
+  }
+
+  var loadPostOffices = usgsStructuresLoader(USGS_POST_OFFICE_LAYER, "USGS post offices");
+  registerNearestPointLayer({
+    id: "post-office",
+    group: "geography",
+    color: "#4B2E83",
+    fill: "#B39DDB",
+    label: "Post Office",
+    loader: loadPostOffices,
+    intro: "Nearest post offices (USGS National Map structures data), straight-line distance:",
+    line: usgsStructureLine("Post office")
+  });
+
+  var loadFireStations = usgsStructuresLoader(USGS_FIRE_LAYER, "USGS fire and EMS stations");
+  registerNearestPointLayer({
+    id: "fire-station",
+    group: "safety",
+    color: "#B23A1E",
+    fill: "#F3A183",
+    label: "Fire & EMS Station",
+    loader: loadFireStations,
+    intro: "Nearest fire and EMS station buildings (USGS National Map structures " +
+      "data), straight-line distance. This is not the department that would " +
+      "answer a call here — Minnesota fire protection runs on municipal " +
+      "departments and joint-powers contracts, and which one covers a point is " +
+      "not published as a boundary this app can read:",
+    line: usgsStructureLine("Fire or EMS station")
+  });
+
+  var loadPoliceStations = usgsStructuresLoader(USGS_POLICE_LAYER, "USGS police stations");
+  registerNearestPointLayer({
+    id: "police-station",
+    group: "safety",
+    color: "#1F4E79",
+    fill: "#9CC3E5",
+    label: "Police Station",
+    loader: loadPoliceStations,
+    intro: "Nearest police station buildings (USGS National Map structures " +
+      "data), straight-line distance. Which agency has jurisdiction at a point " +
+      "is a different question — a city police department, a county sheriff " +
+      "or the State Patrol — and is not published as a boundary this app " +
+      "can read:",
+    line: usgsStructureLine("Police station")
+  });
+
   /* =========================================================================
    * GROWING THIS INSTANCE — docs/EXPANSION_GUIDE.md Part 3 (deepening a
    * state) and Part 4 (a new concept). Next: county-commissioner, dissolved
@@ -13817,7 +14421,15 @@ function initMinnesotaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "mn-senate", "mn-house", "county"];
+  var LAYER_SIDEBAR_RANK = ["us-house", "mn-senate", "mn-house",
+    // Schools next, largest tiling first. The elementary and secondary slots
+    // answer in eight places and one place respectively, so for almost every
+    // reader they render as empty cards rather than as absent ones.
+    "school-district-unified", "school-district-elementary", "school-district-secondary",
+    // Then geography, broadest first, and the three proximity layers last
+    // because they name buildings rather than districts.
+    "county", "county-subdivision", "municipality", "zip-code",
+    "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
     for (var i = 0; i < LAYER_SIDEBAR_RANK.length; i++) pos[LAYER_SIDEBAR_RANK[i]] = i;
@@ -14279,8 +14891,12 @@ function initMinnesotaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#6B7280": "#B1BBCE", "#8C2E4A": "#F47294"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#155E52": "#5AB3A1", "#1F4E79": "#62A0DD",
+    "#1F7A6B": "#5ACBB6", "#2E8C7C": "#61D9C3", "#2F6B4F": "#6FBD96", "#3FA898": "#67F0DA",
+    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
+    "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
+    "#8C2E4A": "#F47294", "#8D7BB5": "#D1BFFE", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
+    "#B23A1E": "#FD9177", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

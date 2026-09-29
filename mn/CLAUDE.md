@@ -15,19 +15,63 @@ reader. `validate_instance_registration.py` holds those two together in BOTH dir
 entry in the manifest while the folder is excluded would render a live landing card linking to
 a 404. `mn/WATCH.md`'s GO-LIVE section is what the publishing change has to carry.
 
-It ships four layers, the national tier every U.S. state can serve from national publishers:
+It ships thirteen layers, the whole national tier — everything a U.S. state can serve from
+national publishers, with no state-specific source between them.
+
+**The four pre-built ones** are the offline anchors:
 **County** (87, from Census TIGERweb, identity-only), **U.S. House** (8 districts, TIGERweb
 geometry joined to the public-domain unitedstates/congress-legislators roster, refreshed
 weekly), and **Minnesota Senate** / **Minnesota House** (67 and 134 districts, TIGERweb
 geometry, naming nobody yet).
 
-**THREE OF THE FOUR CARDS NAME NOBODY, AND EACH SILENCE IS RECORDED RATHER THAN IMPLIED.**
+**The nine LIVE ones** carry no builder and no committed `data/app` file between them, so a
+TIGER vintage roll reaches all of them on its own: three school tilings (**Unified** 322,
+**Elementary** 8, **Secondary** 1), **ZIP Code** (1,385 ZCTAs intersecting the state's
+envelope), **Township or City** (`county-subdivision`, 2,762) and **City** (`municipality`,
+856), plus three nearest-3 point layers off the USGS National Map — **Police Station** (694),
+**Fire & EMS Station** (1,484) and **Post Office** (1,199).
+
+**MINNESOTA IS THE IOWA SHAPE AND NEITHER MICHIGAN'S NOR ILLINOIS'S, AND THE CARDS SAY SO.**
+There is no village among the 856 incorporated places — every one carries the Census's city
+descriptor — and a Minnesota city is NOT inside a township, so neither the city card nor the
+township card names the other the way Michigan's village card must. The subdivision layer is
+1,797 organized towns, 901 city placeholder records standing for 851 distinct cities (50 of
+which cross a county line) and 59 unorganized territories.
+
+**THE SECONDARY SCHOOL TILING HAS EXACTLY ONE FEATURE AND SHIPS ANYWAY** — Park Rapids for
+grades 9-12 over the Pine Point district, 13.3 km². Iowa and Michigan both record a measured
+ZERO there and correctly ship nothing; one feature is not zero, and a reader standing inside it
+would otherwise be told no such district exists.
+
+**THE ELEMENTARY CARD REFUSES THE SENTENCE EVERY SIBLING PRINTS.** Each sibling's elementary
+card says the district runs no high school of its own, and TIGER's own fields contradict that
+here: **seven of the eight** record LOGRADE PK and HIGRADE 12, the same span as a unified
+district. So the cards print the grade range TIGER gives, say which tiling the district sits
+in, and claim nothing about which grades it operates — gap `mn-elementary-district-grades`.
+Exclusivity against the unified tiling is measured in both directions and is clean, so the
+tiling itself is trustworthy; what the Census means by placing a PK-12 district in the
+elementary tiling is not established and is not guessed at.
+
+**ZIP CODE IS THE ONE LAYER DECLARING A `coverage` TEST, AND THE NEGATIVE POINT IS WHY.** A
+ZCTA query has no state field, so it is fetched by envelope, and at the North Dakota anchor
+TIGERweb answers **58059** — a genuine ZIP code, genuinely not Minnesota's. The test is the
+shipped state outline, which is offline, so the browser gate proves it both ways: hidden at the
+negative point with the permalink intact, present at the anchor. A layer that merely returned
+nothing there would have been indistinguishable from one that was broken.
+
+**THREE OF THE FOUR ANCHOR CARDS NAME NOBODY, AND EACH SILENCE IS RECORDED RATHER THAN IMPLIED.**
 Both chamber cards enter the engine chamber factory's roster-miss path deliberately — district
 identity plus the chamber's own directory, never an invented name — under gap
 `mn-legislature-roster`, which says plainly that the Legislature publishes both rosters and
 this instance has not built them. The County card is identity only under `mn-county-officers`.
 A reader meeting three quiet cards should be able to find out why, which is what those records
-are for.
+are for. The nine live layers add four more of the same kind: `mn-school-board-members` (331
+districts, each publishing its own board), `mn-township-officers` (1,797 towns electing three
+supervisors plus a clerk and a treasurer under Minn. Stat. 367.03 — the largest per-unit roster
+task any instance in this fleet has recorded), `mn-municipal-officeholders` (856 cities) and
+`mn-elementary-district-grades`. Every one of them names the FORM from the state's own revisor
+rather than assuming it, and none of them is an ask: they are bounded work this project may do
+itself.
 
 **THE FLAGSHIP LAYER THIS INSTANCE IS BUILT TOWARD IS `county-commissioner`**, and the
 measurement that makes it cheap was taken before any code was written (2026-09-29). The
@@ -73,7 +117,7 @@ does not ask.
 - Metro: Minnesota (`minnesota`) — https://districtry.com/mn/
 - Geocoders: address Photon (Minnesota-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Minnesota-bounded, serial >=1s queue)
 - Ground truth: 44.97440,-93.26550 (downtown Minneapolis, Hennepin County) → county Hennepin County; us-house 5; mn-senate 61; mn-house 61A. Negative point 46.87720,-97.05000 (inside Cass County, NORTH DAKOTA, about 20 km west of Fargo — outside Minnesota and outside every other instance in the fleet, and inside permalink_gate (minLng -97.40) so the app answers the click and every shipped layer correctly returns nothing. Measured: 0 hits in all five shipped geometry files, TIGERweb's county layer names Cass County STATE 38 (control: the anchor returns Hennepin County STATE 27), and no outline in fleet-outlines.json contains it. TWO POINTS WERE TRIED FIRST AND BOTH FAILED FOR REASONS WORTH RECORDING, because each looked obvious. LAKE SUPERIOR: Minnesota's TIGER county fabric is WATER-INCLUSIVE out to the international boundary, so a point in open Lake Superior at 47.6, -90.0 is named Lk Superior by TIGERweb's hydrography and is still INSIDE Cook County, and a point offshore of Duluth is inside the city of Duluth. Water is not outside the state here. WORTH COUNTY, IOWA (43.45, -93.37): correct on every static test — 0 hits in all five files, TIGERweb naming Worth County STATE 19 — and it MADE THE BROWSER LEAVE. fleet-outlines.json puts it inside Iowa, so placeOwner hands the selection off to districtry.com/ia/ and the page navigates away; the smoke test's coverage-band probe then timed out looking for a button on a blank document. A NEGATIVE POINT MUST BE OUTSIDE EVERY LIVE INSTANCE, not only outside this one. Iowa's own negative point (43.65, -93.37) sits inside Minnesota and will start handing off the day this instance goes live — recorded in mn/WATCH.md as a go-live item on ia/, not a defect in this change.).
-- Layers: 4 registered (political 3, geography 1); `registerLayer(` floor 4. Debug namespace `window.MinnesotaExplorer`.
+- Layers: 13 registered (political 3, safety 2, schools 3, geography 5); `registerLayer(` floor 13. Debug namespace `window.MinnesotaExplorer`.
 - Scheduled workflows: `update-mn-congress-roster.yml` (Mon 13:40 UTC).
 - Source registry: `mn/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
