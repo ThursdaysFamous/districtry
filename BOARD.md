@@ -74,6 +74,9 @@ belongs on that instance's board instead.
 
 | task | owner | state | opened |
 |---|---|---|---|
+| **FLEET REVIEW 2026-09-29 — seven sessions woken, and FIVE OF MY OWN "OPEN" ROWS WERE ALREADY DONE** | manager | **reviewed 2026-09-29** | 2026-09-29 | Adam asked the state sessions to resume, so I audited every board before briefing anyone — the board's own rule, earned the day I briefed three sessions from my tables and two were stale. Closed as already done, each verified on the tree rather than assumed: **`mirror_tiger_tiles.py` reads robots.txt** through `require_robots_allowed` with a districtry token; **#1197's residue is cleared in all three places** (the guidebook's county-file paragraph and its interval rationale, and `ca/docs/OPTIMIZATION_PLAYBOOK.md` 75 and 79), each keeping the disproved reading under its correction; **#1236 merged** as `469f0fd`; **Wisconsin's #1228 eight are answered by Wisconsin's own later work** and answered better than my row asked — `dropped_rings.py` records them as sub-metre boundary slivers, 0.434-0.869 m inside the source line, with the third blind spot and the costing that refuses to close it by sweeping; and **Boone's and Winnebago's GIS hosts are UP**, below. Five rows, one pass. A Tasks table that lists finished work as open costs a session a day, and I have now been on both sides of that. |
+| **BOONE AND WINNEBAGO ARE NOT DOWN — measured, and a 200 settles what a failure could not** | manager -> il | **closed 2026-09-29; one finding routed** | 2026-09-27 | My 2026-09-27 row said both GIS hosts answered no probe twice, that if they were genuinely down then ward, county-board and precinct cards fail for readers in two Illinois counties, and that I could judge neither because both failed through my own egress. Probed today: **`maps.boonecountyil.org/arcgis/rest/services` returns 200** with its full folder list (`Clerk_and_Recorder`, `Fire`, and the rest), and **`maps.wingis.org/public/rest/services/` returns 200** with `ElectedOfficials` present and layer 20 serving 5,150 bytes of real feature metadata. **A 200 is positive evidence where a failure was ambiguous**, which is why this closes and the earlier reading could not. Two method notes: I first probed `gis.wingis.org`, which does not answer, and the app calls `maps.wingis.org` — the Knox lesson, a county is not blocked because one of its hosts is; and the REST root is at `/public/rest/services/`, not `/arcgis/`, so a probe of the conventional path 404s on a host that is serving. **ROUTED TO ILLINOIS**: layer 20 describes itself as **"City of Rockford 2013 Wards"**. That is a currency question, not an outage, and the Vermilion rule applies — currency is a measurement, never a reading of a name. |
+| **The stamping-county gate does not exist — verified, and it is the one root-board row that is genuinely open** | map/basemap | **re-verified open 2026-09-29** | 2026-09-27 | I grepped `scripts/build_vector_tiles.py` for any stamp check and there is none, so the finding stands exactly as routed: a county whose loader stamps properties after the fetch is safe only while it sits OUTSIDE its layer's archive. Four loaders stamp outside `withStamp` and the tree is correct today only because all four counties answer live. |
 | **`bcdf157` cites the wrong commit for Wisconsin's ward layer, and dates it at least six days late** | traffic/report | **routed 2026-09-29** | 2026-09-29 | The fix is right and I verified the six-of-ten split independently off the worksheets; this is the record, not the code. `1d668f8` is "Update U.S. House (CA) roster from congress-legislators (#798)" and touches nothing under `wi/`. Wisconsin's worksheet already carries `{"id": "ward", "label": "Municipal Ward"}` at `0b1fd80` (2026-09-02, #663), which is this clone's SHALLOW BOUNDARY with its parent absent — so the addition cannot be dated from a shallow clone at all, only bounded at 2026-09-02 or earlier, and "for three weeks the note called ward's figure an Illinois count" understates how long a public page carried a false caveat. `git fetch --unshallow` first if you want the real date. |
 | **~~#1226~~ CLOSED, superseded by ~~#1227~~ MERGED (`e4e59da`) — the filing contradicts itself and the MAJORITY spelling is the wrong one** | Illinois | **merged 2026-09-27** | 2026-09-27 |
 | **~~#1225~~ MERGED (`477e53e`) — the third instrument on Wisconsin's maps; it CORRECTED my ruling and improved on it** | Wisconsin | **merged 2026-09-27** | 2026-09-27 |
@@ -194,6 +197,18 @@ belongs on that instance's board instead.
 | `llms.txt` counts the per-county pages and 61 of 63 refresh workflows do not regenerate it | manager | open, **RE-MEASURED 2026-09-24** | 2026-09-19 | Found by Iowa when its own weekly run went red on a file it never touched. `llms.txt` states the page count, a county dropping out moves it, and only Michigan's and Iowa's workflows rebuild it. Iowa fixed its own and boarded the general case rather than editing four instances' workflows unasked, which was right. The recurrence-proof fix is a GATE — `build_county_pages.py --check` already fails a workflow that does not regenerate its own pages, and nothing does the same for `llms.txt`. Counted here as 60 of 62 rather than Iowa's 61 of 63: their denominator included `smoke-test.yml`, which runs `--check` and regenerates nothing. **RE-MEASURED 2026-09-24 and the pair has moved, which is the reason to state a method rather than a number: 63 scheduled workflows now regenerate the per-county pages and only TWO of those also regenerate `llms.txt` — Iowa's `update-ia-supervisor-roster.yml` and Michigan's `update-mi-commissioner-roster.yml` — so it is 61 of 63. The denominator is the workflows that can MOVE the count (those staging `build_county_pages.py` output), not every `update-*.yml`, of which there are 112; `deploy-pages.yml` regenerates it too and is not a refresh. #1102 fixed exactly this shape for `docs/EAM_STATUS.md` by giving its generator the `check_workflows()` gate its three siblings carry, so the fix here is the same one applied to `build_llms_txt.py`, and until it exists the number keeps moving.** |
 
 ## Status — manager writes here
+
+**2026-09-29 17:30 — Adam asked the state sessions to resume. I audited every board first, and five of my own open rows were already done.**
+
+**Seven sessions woken with verified briefs: Illinois, Wisconsin, Iowa, Michigan, New York, map/basemap and traffic.** I read all seven boards before writing a word of any brief, because the one thing this job has cost the fleet twice is a session spending a pass on work that had already shipped. Five rows closed on measurement: the TIGER mirror's robots read, #1197's documentation residue in all three places, #1236's merge, Wisconsin's eight remaining vertex differences, and the two Illinois GIS hosts. Wisconsin's and Iowa's nesting-fix assignments are closed too — both builders use `combine-files` and both chambers gates are green on main — so neither session needed to be told to do work it had finished.
+
+**The one genuinely new finding is Illinois's and it is a currency question rather than an outage.** Winnebago's GIS host is up and serving, and the layer the app calls for Rockford wards describes itself as "City of Rockford 2013 Wards". That may be perfectly accurate — a plan adopted in 2013 can still be the plan in force — but this project's own rule from Vermilion is that currency is a measurement and never a reading of a name, so Illinois is measuring it against Census 2020 blocks before anything is concluded. If Rockford redrew after 2020 and we are drawing the old lines, every Rockford ward card is naming the wrong alderperson, and that outranks everything else on Illinois's table. If it is still the plan in force, the finding is that the description was honest and nothing moves.
+
+**Three rulings, so three sessions are unblocked rather than waiting.** Illinois takes option (i) on its library gap — write the one record for the 19 cards that name no trustee, which is what that session had already reasoned and which the honesty rule requires, since an absence nobody records is one a reader cannot see. Wisconsin's state-line/middle-band decoupling is NOT to be built: the harm that motivated it was the false caption, #1187 fixed that, and the decoupling is now engine surgery for a configuration nobody wants — it stays a recorded option whose trigger is the arrival of an instance that wants a state line with no band. And San Francisco stays with me until Adam assigns it a session, rather than widening New York's scope; New York's own #1238 decision was right and I said so.
+
+**Two things go to Adam and are in Open questions.** Michigan's committed battery runner, which I am endorsing with evidence Michigan did not have, and the permanent owner of San Francisco.
+
+**State at close: no open pull requests, main green, deploy current.**
 
 **2026-09-29 16:39 — Two landed while I was between check-ins, one of them a pull request nobody reviewed. Both verified; one commit message cites the wrong commit.**
 
@@ -1888,6 +1903,40 @@ gate now refusing the merge is the one that objects to two counties vanishing �
 question 4 exactly, and is the gate working rather than an obstacle to clear.
 
 ## Open questions for Adam
+
+**A. Should a committed battery runner ship, so every session stops writing its
+own?** Michigan's question, and I am endorsing it with evidence Michigan did not
+have. `CLAUDE.md` tells a session to enumerate the gate battery through the
+steward skill and never through a pattern it writes itself — but it says how to
+ENUMERATE and not how to RUN, so each session writes its own runner. Michigan
+measured three wrong runners in one day and none was a repo gate; all 103 static
+gates were fine. **I made the fourth today.** Mine swept in the skill's
+`python3 -m http.server 8000 &` line and ran it inside a command substitution,
+which holds the pipe open, so it printed "running" and then hung — and that is
+worse than the other three, which at least printed a wrong answer. Michigan
+proposes `scripts/run_battery.sh`: regenerates its list each run, prints
+per-gate progress, and fails when the list is empty or shorter than
+`validate_gate_counts`'s own figure. An afternoon's work. Michigan measured the
+problem and specified the fix, so it is Michigan's to build. **I recommend yes.**
+It touches how every session verifies work, which is why I am asking rather than
+taking it.
+
+**B. Who owns San Francisco?** New York's question and it is a scope question,
+so it is yours. `BOARD.md` says SF has no session "because no work is being
+done on it" and `ca/BOARD.md` says I keep that board until one is assigned. Both
+were true when written. Twice now a session scoped to another state has had to
+decide something in SF's files in passing — most recently the #1234 session,
+which changed `ca/scripts/smoke_test.mjs`, left one decision explicitly unmade
+and addressed it to New York as the file's owner. New York took it, correctly.
+Three options, in New York's own framing: (a) record that New York holds SF's
+test and engine-adjacent files while no SF session exists — cheapest, matches
+what has happened twice, and quietly widens a scope you narrowed deliberately on
+2026-09-19; (b) ownership stays with me and peers route SF decisions here — one
+more hop, and I then own judgements about files I have no reason to have read;
+(c) assign SF a session when work appears, which is the status quo that produced
+the question. **I have ruled (b) as the interim** so nothing is blocked, and I
+am not treating that as settling it.
+
 
 **1. Is "5 boroughs" still the right scope line for New York?** Not blocking.
 Raised by the New York session on its own board and carried here unchanged,
