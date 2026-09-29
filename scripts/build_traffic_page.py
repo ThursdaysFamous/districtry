@@ -148,6 +148,47 @@ def fleet_tags():
         return [m["tag"] for m in json.load(f)["metros"] if m.get("tag")]
 
 
+def layer_scope(drawn):
+    """Which of the DRAWN layer ids belong to one app and which SUM across.
+
+    The layer event is `trackEvent("layer/" + mod.id)` (engine overlay-cards),
+    so two instances registering the same layer id report into ONE row and this
+    page cannot separate them. Note 4 used to LIST the unambiguous ids by hand
+    -- `ward` = Illinois, `council` = New York, `supervisor-district` = San
+    Francisco -- and `ward` STOPPED BEING ONE on 2026-09-08, when Wisconsin
+    shipped a layer with that id. Three weeks later the school-board layer
+    passed ward in the bars and the note was still calling that 154 an Illinois
+    figure while it pooled two states. A hand-kept list of which ids are
+    single-instance is exactly the claim nothing was comparing against the
+    worksheets that decide it.
+
+    So the ownership is READ from every instance's own `layers[]`, the same list
+    that drives EXPECT_LAYER_IDS, discovered through fleet_tags() so a new
+    state is covered by being registered. Measured 2026-09-29, SIX of the ten
+    drawn ids are shared and four are not, which is why the prose names them
+    rather than characterising them.
+
+    A drawn id in NO worksheet is reported as unattributed rather than assumed
+    unambiguous: a retired layer's events stay in a two-month window long after
+    its last toggle, and calling that Illinois-only would be a guess.
+    """
+    owners = {}
+    for tag in fleet_tags():
+        path = os.path.join(ROOT, tag, "metro-worksheet.json")
+        if not os.path.exists(path):
+            # Illinois's worksheet is the repo-root one; it has no il/ copy.
+            path = os.path.join(ROOT, "metro-worksheet.json")
+        with open(path, encoding="utf-8") as f:
+            for layer in json.load(f).get("layers", []):
+                owners.setdefault(layer["id"], []).append(tag)
+    scope = {}
+    for lid in drawn:
+        tags = owners.get(lid)
+        scope[LAYER_NAMES.get(lid, lid)] = (
+            [INSTANCE_NAMES.get(t, t) for t in tags] if tags else None)
+    return scope
+
+
 def newest_property(doc):
     """The reporting property whose first day is latest, named and measured."""
     live = [(name, p) for name, p in doc["properties"].items()
@@ -315,6 +356,11 @@ def build():
        The fetch now asks for it by name, and this stays null-able because a
        row can go missing for a reason that fix does not cover. */
     geoSuccess: %s,
+    /* Which apps register each DRAWN layer id, read from their own layers[].
+       A list of two or more means that bar SUMS across them; null means the id
+       is in no worksheet and this page will not guess whose it is. See
+       layer_scope() for what a hand-kept version of this cost. */
+    layerScope: %s,
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
     seo: { police: %d, school: %d },
@@ -352,6 +398,8 @@ def build():
         rows([(r["label"] or r["key"], r["count"]) for r in gc["campaigns"]], 2),
         ("null" if ev.get("geolocate-success") is None
          else str(ev["geolocate-success"])),
+        json.dumps(layer_scope([r["path"][6:] for r in gc["layers"][:10]]),
+                   separators=(",", ":"), sort_keys=True),
         pg.get("/il/police-district.html", 0), pg.get("/il/school-board.html", 0),
         residual,
         "{:,}".format(gc["total"]), "{:,}".format(daily_sum),
