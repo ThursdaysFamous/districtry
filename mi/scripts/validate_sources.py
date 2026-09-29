@@ -396,6 +396,25 @@ PROVENANCE = [
             "Detroit case, not Lansing's CC BY-NC."
         ),
     },
+    {
+        "layer": "city-ward",
+        "app_file": "mi-jackson-wards.json",
+        "source_url": ("https://gis.mijackson.org/countygis/rest/services/"
+                       "Voting/VotingPrecincts/MapServer/0"),
+        "note": (
+            "Jackson's six council wards, COMPOSED by mi/scripts/build_mi_jackson_wards.py "
+            "from JACKSON COUNTY's precinct layer -- the city publishes no ward geometry -- "
+            "by dissolving the City of Jackson's ten precincts on the county's WARD column. "
+            "The operator ruled on 2026-09-29 that a county's published map may be the "
+            "source for a city; the state's 2026 precincts stay the independent check. The "
+            "REST instance is `countygis`, NOT `arcgis`, so guessed paths 404; and this is "
+            "a 10.6 MapServer that answers HTTP 400 to f=geojson, so the build reads Esri "
+            "JSON. Gates: both publishers assign the precincts 1/2/2/2/1/2, the dissolve "
+            "agrees with the state's precincts on at least 99% of sampled points (99.375% "
+            "when built), and the wards sum to the Census place's 31,309 exactly. The "
+            "service states no terms and the build refuses if it ever does."
+        ),
+    },
 ]
 
 ENDPOINTS = [

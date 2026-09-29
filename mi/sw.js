@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-mi-shell-v15";
+const CACHE_NAME = "districtry-mi-shell-v16";
 
 const SHELL_URLS = [
   "./",
@@ -61,6 +61,7 @@ const GEOMETRY_URLS = [
   "./data/app/mi-flint-wards.json",
   "./data/app/mi-battle-creek-wards.json",
   "./data/app/mi-rochester-hills-wards.json",
+  "./data/app/mi-jackson-wards.json",
   "./data/app/alger-county-outline.json",
   "./data/app/allegan-county-outline.json",
   "./data/app/antrim-county-outline.json",

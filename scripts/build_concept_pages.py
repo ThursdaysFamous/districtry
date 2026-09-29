@@ -702,7 +702,7 @@ def city_council_page(tag, spec, worksheet):
     exactly the sentence that survives a seventh city unread.
 
     THE CITIES DRAWN WITHOUT A ROSTER ARE NAMED RATHER THAN OMITTED. Michigan
-    draws Flint, Warren and Rochester Hills and names nobody in them; a page
+    draws Flint, Warren, Rochester Hills and Jackson and names nobody in them; a page
     that listed three cities and said nothing about the other three would read
     as though the map covered three.
     """
@@ -733,9 +733,9 @@ def city_council_page(tag, spec, worksheet):
     place = spec["place"]
 
     missing = ("" if not unrostered else
-               " The map also draws %s, where no roster this project can read "
-               "names the members, so those wards answer with the ward number "
-               "and nothing else." % _join(unrostered))
+               " The map also draws %s, where this app does not name the "
+               "members yet, so those cards give the ward and a link to the "
+               "city rather than a name." % _join(unrostered))
     elsewhere = ("" if not at_large_named else
                  " %d more sit on the councils of %d smaller %s cities that "
                  "elect at large and have no wards to draw; their own county "
@@ -1144,6 +1144,7 @@ PAGES = [
                 ("Detroit", "mi/data/app/mi-detroit-council-districts.json"),
                 ("Flint", "mi/data/app/mi-flint-wards.json"),
                 ("Grand Rapids", "mi/data/app/mi-grand-rapids-wards.json"),
+                ("Jackson", "mi/data/app/mi-jackson-wards.json"),
                 ("Rochester Hills", "mi/data/app/mi-rochester-hills-wards.json"),
                 ("Warren", "mi/data/app/mi-warren-wards.json")],
          rosters=[("Detroit", "mi/data/app/mi-detroit-council-members.json", "city_council"),
@@ -1158,6 +1159,7 @@ PAGES = [
                  "mi/data/app/mi-detroit-council-districts.json",
                  "mi/data/app/mi-flint-wards.json",
                  "mi/data/app/mi-grand-rapids-wards.json",
+                 "mi/data/app/mi-jackson-wards.json",
                  "mi/data/app/mi-rochester-hills-wards.json",
                  "mi/data/app/mi-warren-wards.json"],
          sibling=dict(page="county-commissioner.html",

@@ -13633,6 +13633,9 @@ function initMichiganExplorer() {
   var loadRochesterHillsWards = makeCached(function () {
     return fetchJSONWithRetry("data/app/mi-rochester-hills-wards.json", {}, 2);
   });
+  var loadJacksonWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-jackson-wards.json", {}, 2);
+  });
 
   function detroitCoverage(point) {
     // The districts tile the city exactly (the builder asserts the population
@@ -13936,6 +13939,69 @@ function initMichiganExplorer() {
     }
   };
 
+  function jacksonCoverage(point) {
+    // Jackson's six wards are COMPOSED from Jackson County's precinct layer,
+    // and the builder measures them against the Census place: the same
+    // 31,309 people, so the wards tile the city. A load failure rejects to
+    // the engine's fail-open.
+    return loadJacksonWards().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+
+  // The city publishes one page per ward naming that ward's council member,
+  // so the card links THAT page rather than the council as a whole. The page
+  // ids are the city's own and not sequential, read from its navigation.
+  // This app does not read those pages yet, so the card names the ward and
+  // not the member rather than a name nobody here has verified.
+  var JACKSON_WARD_PAGES = {
+    "1": "https://www.cityofjackson.org/498/Ward-1",
+    "2": "https://www.cityofjackson.org/499/Ward-2",
+    "3": "https://www.cityofjackson.org/500/Ward-3",
+    "4": "https://www.cityofjackson.org/504/Ward-4",
+    "5": "https://www.cityofjackson.org/511/Ward-5",
+    "6": "https://www.cityofjackson.org/512/Ward-6"
+  };
+  var jacksonEntry = {
+    key: "jackson",
+    label: "Jackson",
+    coverage: jacksonCoverage,
+    loadGeometry: loadJacksonWards,
+    hoverName: function (feature) {
+      var v = findPropCI(feature.properties || {}, ["ward"]);
+      return (v == null || v === "") ? null : "Ward " + String(v);
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadJacksonWards, point).then(function (feature) {
+        if (!feature) return null;
+        return {
+          seq: seq,
+          ward: findPropCI(feature.properties || {}, ["ward"])
+        };
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.ward ? "Ward " + String(result.ward) : "Unknown ward";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderLinkRow({
+        title: result.ward ? "Ward " + String(result.ward) : "Jackson City Council",
+        note: "Jackson elects one council member from each of six wards. The city "
+            + "names each ward's member on a page of its own, linked below. The "
+            + "ward lines come from Jackson County's precinct map, since the city "
+            + "publishes none of its own."
+      }));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var url = result && result.ward ? JACKSON_WARD_PAGES[String(result.ward)] : null;
+      if (url) return { label: "Ward " + String(result.ward) + " on the city's site", url: url };
+      return { label: "Jackson City Council",
+               url: "https://www.cityofjackson.org/289/Mayor-City-Council-City-Manager" };
+    }
+  };
+
   function flintCoverage(point) {
     // Nine wards drawn to within a few people of each other; the builder
     // measures them against the Census place and bounds the difference at ten
@@ -14202,9 +14268,10 @@ function initMichiganExplorer() {
     // ORDERED BY POPULATION: §3.1 says to order the table so the cheapest
     // already-cached coverage test short-circuits the OR, and the city most
     // selections land in should be tried first. Detroit, then Warren, then
-    // Grand Rapids, then Flint, then Rochester Hills, then Battle Creek.
+    // Grand Rapids, then Flint, then Rochester Hills, then Battle Creek,
+    // then Jackson.
     entries: [detroitEntry, warrenEntry, grandRapidsEntry, flintEntry,
-              rochesterHillsEntry, battleCreekEntry]
+              rochesterHillsEntry, battleCreekEntry, jacksonEntry]
   });
 
 

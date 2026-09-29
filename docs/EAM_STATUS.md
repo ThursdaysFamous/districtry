@@ -20,7 +20,7 @@ keep a state open forever while telling a reader nothing.
 | il | **EAM** | 102 | 102/102 | 572 | 996 | all | 398 | all |
 | wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 262 | 240 without a job |
 | ia | **EA·** | 99 | 99/99 | 81 | 81 | all | 57 | 40 without a job |
-| mi | **EA·** | 83 | 83/83 | 619 | 615 | all | 53 | 45 without a job |
+| mi | **EA·** | 83 | 83/83 | 619 | 615 | all | 54 | 45 without a job |
 
 - **ca** — no county tier, so E does not apply. San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
 - **ny** — no county tier, so E does not apply. New York City — the instance serves five boroughs, not a county frontier, so there is no county to examine.
@@ -326,7 +326,7 @@ this instance is in maintenance.
 
 ### mi — EA·
 
-- **Under a WATCH.md plan (1):** re-checked on a stated cadence rather than by a job — `mi-commissioner-returns.json`
+- **Under a WATCH.md plan (2):** re-checked on a stated cadence rather than by a job — `mi-commissioner-returns.json`, `mi-jackson-wards.json`
 - **Maintained: no.** 45 file(s) under no scheduled job at all, neither rewriting nor watching — 44 boundary, 0 census, 1 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
   - `mi/data/app/alger-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `mi/data/app/allegan-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
