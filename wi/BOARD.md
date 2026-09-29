@@ -49,6 +49,93 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-29 (twelfth). THREE OF YOUR FOUR ROWS WERE ALREADY CLOSED; THE FOURTH WAS CLOSED
+AS RECORDED AND HAD BEEN SUPERSEDED BY A NEWER STALENESS. AND THE ROW YOUR LIST OMITTED IS
+DONE. PR #1257 IS OPEN.**
+
+**Your list, checked against the tree rather than against my memory of it.**
+
+1. **The alderperson gap — OPEN, and I agree it is the biggest remaining hole.** Measured
+   today: 866 features across 159 COUSUBFP, 31 municipalities rostered (292 named seats),
+   **128 naming nobody.** No pool artifact exists. Next after this.
+2. **The #1224 docstring correction — CLOSED.** `find_dropped`'s docstring keeps the false
+   sentence under its correction, in this fleet's own style: the identity is true by
+   construction, nothing outside the function asserts it, and what protects the method is
+   the raise plus the pinned per-layer counts.
+3. **The #1187 residue — CLOSED.** `docs/DATA_LAYER_GUIDEBOOK.md` and `wi/scripts/smoke_test.mjs`
+   both carry **CORRECTED 2026-09-26 (#1187)**, and the root `CLAUDE.md` carries its own.
+4. **The NG911 geometry one edit stale — CLOSED AS RECORDED, AND SUPERSEDED.** The sidecar
+   reads `builtOn 2026-09-27` with `dataLastEdit 2026-09-14` on all four, so the edit you
+   found was rebuilt. But the watcher WARNed again today with **count movement**, which is a
+   different and stronger signal, and that is what #1257 is.
+
+**And the row your table left out is done**: `wi-alderpersons.json` carries the multi-member
+schema — keyed by COUSUBFP with `{"districts": N, "members": {"01": [ {...}, {...} ]}}` — and
+Algoma district 01 seats two. That was the **ADAM APPROVED, DO FIRST** row.
+
+---
+
+**#1257: the NG911 rebuild, and the finding is a county, not a setting.**
+
+Both staleness signals fired — rows fire 3,046→3,042, law 3,095→3,101, psap 208→218, ems
+2,478→2,476. Three layers held their agency counts exactly. **Law went 639 to 680, and all 41
+are one county.** La Crosse refiled its whole law tiling: the seven department names it had
+filed are gone, replaced by 44 of the form `<department> <token>` — `CITY OF LA CROSSE POLICE
+1A`, `LA CROSSE COUNTY SHERIFF NR`, `HOLMEN POLICE 2` — one row each under lacrossecounty.org.
+
+**I shipped it as filed, and I want you to check that judgement rather than take it.** The
+reason is that it is not new to the layer: **58 of the 639 names it already shipped carry a
+subdivision token their own county labelled.** Brown County files its ENTIRE tiling that way
+(`Brown County Sheriff Law Zone 5A`, `City of Green Bay Police Department Law Zone GBA1`) and
+Outagamie files `District 1..4` and `Zone 1..3`. Stripping the token to recover "City of La
+Crosse Police Department" would be this project editing a publisher's own name for tidiness,
+which it refuses everywhere else — Boone's fire districts ship as bare numbers for exactly
+that reason. The cost is real and stated: a card in La Crosse now reads `CITY OF LA CROSSE
+POLICE 3A` where it read `CITY OF LA CROSSE POLICE DEPARTMENT`.
+
+**What it costs a reader is measured, not reasoned.** 4,000 seeded points inside La Crosse
+County, before against after: 3,992 same department with a token added, 5 identical (agencies
+reaching in from counties that did not refile), **2 a DIFFERENT department** because the
+county moved a line as well as a name, **1 lost its answer entirely**, 0 gained one.
+
+**That one lost point is the part worth your eye.** I chased it to the source rather than
+leaving it as a number: at 43.725442,-91.237396, on the Vernon county line, **the
+full-precision source has no law row either** — 1 m to an answer on two bearings, 44 m at
+worst — so it is the county's own filing seam and not a hole the simplification opened. I
+think that question has to be asked every time, because a sub-ceiling stray at a seam between
+two agencies sits inside `check_fidelity`'s third blind spot (3.316 m on this layer), where
+neither the dropped-ring gate nor the stray gate would see it. Nothing in the battery would
+have told me.
+
+**Nothing else moved that a gate could not see.** Every `ACCEPTED_DROPPED_RINGS` declaration
+still matched its own ring, no undeclared harm on any of the four, the harm total held at 22,
+all four ceilings held with measured steps 3.38/3.15/2.45/2.83 m (1.10-1.12x), 4000/4000
+name-set and 25/25 point-query agreement each, and the UNFILED map still matched all 72
+authorities with Langlade absent. `GAP_CLOSED` moved on all four (fire 82→108, law 59→58,
+psap 6→8, ems 77→102), which is the one thing an ordinary refresh moves on its own.
+
+**One thing I re-checked because the change invited it**: law's mean district shrank, and the
+worksheet's `area_rank` is a hand-set integer nothing measures. Measured spherically off the
+shipped files, the order still holds (psap 1,549.8 / ems 251.2 / law 215.4 / fire 139.3 /
+county-board 90.9 km2 mean). It held this time; it is still an assertion with no gate.
+
+**And a correction I found while in the same paragraph**: `wi/CLAUDE.md` said **17** declared
+answer changes where the table holds **22**. Superseded on 2026-09-27 by that same day's exact
+retained test; the root `CLAUDE.md` and `wi/WATCH.md` both recorded the correction within the
+hour while this file kept the old figure. A count restated in three places moves in three
+places or it is wrong in the ones nobody edited. It also quoted a 0.002-0.61 m width range
+belonging to no ring in the table today, and only 15 of the 22 state a width at all, so no
+range is quoted now.
+
+**The psap interval question from my eleventh report is still open and still yours** — I have
+changed nothing about it. This rebuild used the same `interval=2`.
+
+**A process note on this report itself, because it cost me the first copy.** I wrote this
+entry, then ran `git checkout <branch> -- wi/BOARD.md` while trying to move it to main, which
+restored the file from the branch's COMMITTED tree and silently destroyed the uncommitted
+edit. `git checkout <ref> -- <path>` is not a branch switch and takes no notice of unstaged
+work in the path it overwrites. Write a board entry on main, or commit it before moving it.
+
 **2026-09-28 (eleventh). THE NG911 MEASUREMENT IS DONE ON ALL FOUR LAYERS. THE ANSWER IS THE
 ALDERMANIC ANSWER AND PSAP IS THE ONE THAT DIFFERS. NOTHING IS CHANGED — REPORTING FIRST, AS
 INSTRUCTED.**
