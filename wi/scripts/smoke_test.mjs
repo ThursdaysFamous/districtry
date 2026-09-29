@@ -51,7 +51,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "44.89804,-89.75782"; // inside Marathon County
 const OFFLINE = ["county", "wi-circuit-court", "wi-court-of-appeals", "us-house", "school-district-unified", "wi-senate", "wi-assembly", "county-board", "wtcs-district"];
 const EXPECT_DISTRICT = { "county": "Marathon County", "wi-circuit-court": "Marathon County Circuit Court", "wi-court-of-appeals": "Court of Appeals District III", "us-house": "7", "school-district-unified": "Marathon City School District", "wi-senate": "29", "wi-assembly": "86", "county-board": "35", "wtcs-district": "Northcentral Technical College District" };
-const NEGATIVE_POINT = "47.39000,-92.97000"; // off the northwest corner of Wisconsin — outside the state and every starter layer
+const NEGATIVE_POINT = "47.39000,-92.97000"; // off the northwest corner of Wisconsin — outside the state and every starter layer. IT IS INSIDE MINNESOTA, AND IT CANNOT BE MOVED SOMEWHERE THAT IS NOBODY'S: sampling permalink_gate every 0.25 degrees and naming each point's state off TIGERweb, all 609 points land in a state and the 300 outside Wisconsin are Michigan (163), Minnesota (76), Iowa (47) and Illinois (14) — three of those are live instances today, so moving the point into one would break this test now rather than at Minnesota's go-live, and the Great Lakes are no refuge either (a control in open Lake Michigan returns Michigan). So the point stays and the checks that select it refuse ../fleet-outlines.json, which is the only thing the hand-off reads; Wisconsin asserts nothing about fleet routing.
 const APP_NAME = "districtry Wisconsin";
 const EXPECT_LAYERS = 31;
 // ==== GENERATED:END smoke-config ====
@@ -223,7 +223,22 @@ try {
   //     so this needs no network.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, BASE);
+    // THE FLEET FILE IS REFUSED FOR THE WHOLE OF THIS CHECK, because its
+    // coverage-band half selects NEGATIVE_POINT and setSelectedPoint PANS
+    // there, which puts the map's CENTRE outside Wisconsin and arms the pan
+    // hand-off (ENGINE metro-portal's moveend -> placeOwner -> offerMetroPortal,
+    // which sets window.location.href). Wisconsin's negative point is in
+    // Minnesota and no point inside permalink_gate is nobody's — see the
+    // measured note on NEGATIVE_POINT at the top of this file — so the day mn/
+    // enters metros.json and fleet-outlines.json this check navigates to /mn/
+    // mid-assertion. MEASURED, not predicted: with Minnesota registered and in
+    // the fleet file, this check left the page for /mn/, and refusing the file
+    // kept it. Refused, placeOwner's own error leg answers "nobody", which is
+    // the state this check is about.
+    // Wisconsin asserts nothing about fleet routing, so nothing else needs it.
+    const page = await booted(context, BASE, async (p) => {
+      await p.route("**/fleet-outlines.json", (r) => r.abort());
+    });
     const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/coverage-gaps.json"), "utf8"));
     const expected = Object.keys(shipped).length;
 
@@ -477,6 +492,18 @@ try {
     // identical either way — the negative point is outside both tilings.
     const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=${OFFLINE.join(",")}`, async (p) => {
       await p.route(`**${PORTAL_HOST}**`, (r) => r.abort());
+      // And the fleet file, for the reason given on the coverage-band check
+      // above: this permalink puts the map's centre in Minnesota, so once a
+      // sibling covers it the pan hand-off can navigate away mid-assertion.
+      // UNLIKE that check, this one did NOT reproduce with Minnesota
+      // registered, and the difference is a load order rather than a
+      // guarantee: the permalink's pan happens at boot, before the coverage
+      // wash has loaded, and the hand-off arms only once the wash says the
+      // centre has left the state — so no later moveend fires and nothing
+      // hands off. A faster wash, a warm cache or any later pan removes that
+      // accident, so this check is defended the same way rather than left to
+      // rely on it.
+      await p.route("**/fleet-outlines.json", (r) => r.abort());
     });
     for (const id of OFFLINE) {
       if (NEGATIVE_HIDDEN.includes(id)) {
