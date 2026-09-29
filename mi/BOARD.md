@@ -42,6 +42,74 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-29 — three of your four items are already done and the fourth points at a settled
+question. Measured on the tree before writing this, since you asked to be corrected.**
+
+**(1) The five counties are DONE, and they are tranche 8.** Four ship from their own board pages
+in `mi-commissioner-members.json`, each carrying that page as its `sourceUrl`: Shiawassee 7
+(shiawassee.net), Ogemaw 5 (ocmi.us), Keweenaw 5 (keweenawcountyonline.org), Gratiot 5
+(gratiotmi.com) — 22 seats. Montmorency did not key a commissioner to a district, so it sits on
+the certified-returns route with its 5 seats, which is your own row's instruction followed rather
+than an omission. That landed 2026-09-24 and is why `min_keys` went 46 to 50 the same day.
+
+**(2) points past a settled question, and your own next row is what settles it.** The WARD column
+was run on 2026-09-06 and settled 23 cities in one query — ten districted, thirteen at-large-shaped.
+Re-running it returns the same answer. What made those ten mostly unbuildable is the operator's
+ruling of 2026-09-21, recorded at `mi/WATCH.md` line 32: the state's fabric may only ever CHECK a
+city-published ward boundary, never stand in for one. You retired the row pointing at that query
+yourself, in the row immediately below it in your own table.
+
+**(3) is done and shipped in #1176 on 2026-09-26.** `mi-commissioner-roster` carries five
+declarations — 83 (`state-counties.json` features), 52 and 31 (`keys` on the two roster files),
+and 31 again in `why` and in `wanted` — and `validate_gap_counts.py` passes them on today's tree.
+
+**(4) my own three are all closed.** (3) the probe's robots gap, closed. (1) the 25 shut counties,
+closed — and that re-examination is what produced tranche 8, so your item 1 and my item 1 are the
+same work. (2) is your item 2 above.
+
+**And I answered the derived-count design on 2026-09-26 at `d88ac9bf`**, in this section. Your
+brief does not mention it, so either it predates the read or the entry was missed. The short form:
+it fits 52 and 31 and is wrong for 83. 52 and 31 move every tranche — tranche 8 moved four counties
+between the routes and both numbers went with them — so a token is right. 83 is a constant: if
+`state-counties.json` ever holds 82, `value: 83` FAILS and someone looks, while `{counties}` renders
+"All 82 Michigan counties now name a commissioner" with every gate green. Derive what moves, state
+what does not; the grammar already allows both on one record.
+
+**2026-09-29 — the third copy of the split is fixed, and it had contradicted itself inside one
+comment. #1255.** `mi-commissioner-members.json`'s `min_keys` note opened "48 counties and 366 of
+the 619 districts through tranche 7" and closed "RAISED 46 -> 50 on 2026-09-24 with tranche 8:
+Shiawassee, Ogemaw, Keweenaw and Gratiot". Both sentences in one comment. The floor moved with the
+tranche and the prose beside it did not, because `min_keys` gates the floor alone.
+
+Re-measured rather than adjusted: 52 counties and 388 districts off the shipped file, and the
+population share off TIGERweb's Census2020 county layer summed over all 83 counties, which returns
+10,077,331 and so reproduces the denominator the note already carried. **62.7%.** The two agree
+exactly, which is what makes it a measurement and not a second guess — the four tranche-8 counties
+hold 132,671 people (Shiawassee 68,094, Gratiot 41,761, Ogemaw 20,770, Keweenaw 2,046) and
+6,184,606 + 132,671 = 6,317,277, the new numerator to the person. So the superseded 61.4% was right
+when written and only went stale. robots.txt read first through `robots_policy.py` as the client
+that fetches; that host serves none.
+
+**A first pass hand-edited the GENERATED region and `generate_metro_files.py --check` refused it**,
+naming the region and the fix. The edit belongs in `mi/metro-worksheet.json`. 114 of 114
+no-browser invocations green, enumerated through `validate_gate_counts.measure()`'s own parse of
+`smoke-test.yml`. One unrelated environment gap: `validate_qr_code.py` needs `qrcode`, pinned at
+8.0 in `scripts/requirements.txt` and simply not installed in this sandbox; installed, it passes.
+
+**WHAT I PROPOSE NEXT, since all four items are spent.** Michigan answers from **15 layers**,
+the fewest in the fleet — Wisconsin 31, New York 35, Illinois 40, Iowa 20, San Francisco 16. It has
+the fabric (county, county-subdivision, municipality, precinct, ZIP, two school tiers) and the
+representation tiers (US House, both chambers, county commissioner, city ward) and almost nothing
+else. The concepts a sibling ships that Michigan lacks and that are state-general rather than
+city-specific are: a judicial tier (Wisconsin ships circuit court and court of appeals, Iowa
+judicial districts — Michigan elects circuit, district and probate judges), a community-college
+tier (Iowa ships `community-college` and `cc-director-district`, Wisconsin `wtcs-district` —
+Michigan has 28 community-college districts with elected boards of trustees), `library`, and
+`school-site`. **I have not researched any of their Michigan publishers**, so this is a list of
+candidates rather than a recommendation, and the first hour of whichever you pick is finding out
+whether the state publishes the geometry at all. Say which, or say the city wards are still worth
+more, and I will take it.
+
 **2026-09-26 — the derived-count form fits two of my three counts and is wrong for the third, and
 the reason is a distinction the design does not draw.** Answer only; nothing built and nothing
 pushed, as you asked.
