@@ -41,6 +41,29 @@ filing authority, same name on each, which draws the county line inside
 its area exactly as the source draws it — the card answer at any point is
 identical either way.
 
+A NAME IS THE COUNTY'S OWN AND A SUB-ZONE IS NOT THIS BUILDER'S TO TIDY AWAY.
+Measured 2026-09-29, La Crosse County refiled its whole law tiling: the seven
+department names it had filed — CITY OF LA CROSSE POLICE DEPARTMENT, LA CROSSE
+COUNTY SHERIFFS DEPARTMENT, BANGOR, CAMPBELL, HOLMEN, ONALASKA and WEST SALEM —
+are gone, replaced by 44 names of the form "<department> <token>" (CITY OF LA
+CROSSE POLICE 1A, LA CROSSE COUNTY SHERIFF NR, HOLMEN POLICE 2), all under the
+same lacrossecounty.org authority and one row each. That alone moved the law
+layer 639 agencies to 680, on a row count that moved only 3,095 to 3,101.
+
+IT SHIPS AS FILED, and the reason is that this is not new to the layer: 58 of
+the 639 names it already shipped carry a subdivision token the county ITSELF
+labels — Brown County files its entire tiling that way (Brown County Sheriff Law
+Zone 5A, City of Green Bay Police Department Law Zone GBA1, De Pere Police
+Department Law Zone DE1E) and Outagamie files Outagamie County Sheriff -
+District 1..4 and Grand Chute Police - Zone 1..3. Stripping the token to
+recover "City of La Crosse Police Department" would be this project editing a
+publisher's own name for tidiness, which it refuses everywhere else — Boone
+County's fire districts ship as the bare numbers their county publishes for
+exactly this reason. The cost to a reader is stated rather than smoothed: a card
+in La Crosse now reads CITY OF LA CROSSE POLICE 3A where it read CITY OF LA
+CROSSE POLICE DEPARTMENT, which still names the department and names it less
+plainly.
+
 EXPIRED ROWS ARE DROPPED BY DATE, NEVER BY COUNT. NENA carries an Expire
 column; every expired fire/law row at first build (37 + 18) was
 superseded history, and a FUTURE Expire date is a still-effective row
@@ -295,7 +318,17 @@ FIDELITY_MAX_M = {"fire": 3.77, "law": 3.51, "psap": 2.70, "ems": 3.17}
 # answered yes after vanishing whole. So every count this table has ever held
 # was a FLOOR, and the same blindness put five real answer changes in the harm
 # table below (four on law, one on psap, whose count did not move at all).
-GAP_CLOSED = {"fire": 82, "law": 59, "psap": 6, "ems": 77}
+#
+# AND THEY MOVE WITH THE SOURCE, WHICH IS WHAT MOVED ALL FOUR ON 2026-09-29:
+# fire 82 -> 108, law 59 -> 58, psap 6 -> 8 and ems 77 -> 102, on the first
+# rebuild since 2026-09-27 against an aggregate the OEC had refreshed under it
+# (rows fire 3,046 -> 3,042, law 3,095 -> 3,101, psap 208 -> 218, ems
+# 2,478 -> 2,476). Nothing about the SETTINGS changed and nothing about the harm
+# table did either: every declaration below still matched its own ring, no
+# undeclared harm appeared on any of the four, and each layer's fidelity ceiling
+# still held. So this count is the one thing an ordinary source refresh moves on
+# its own, which is the case the gate was written to make somebody read.
+GAP_CLOSED = {"fire": 108, "law": 58, "psap": 8, "ems": 102}
 
 # Every dropped ring that changes the agency a reader is told answers at their
 # point, declared one by one, per layer. `drings.check` FAILS the build on an
