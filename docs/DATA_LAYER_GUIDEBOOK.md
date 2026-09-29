@@ -434,6 +434,37 @@ detail into `blocker`.
       "wanted": "A street address for the Clinton and Franklin county boards — the building where members meet or hold office hours."
     },
     {
+      "id": "county-source-library-officials",
+      "concept": "Library district officers",
+      "area": "Eleven Illinois counties whose library districts come from the county rather than the statewide layer",
+      "counties": [
+        "adams",
+        "dekalb",
+        "dupage",
+        "effingham",
+        "kendall",
+        "lake",
+        "macon",
+        "madison",
+        "mchenry",
+        "rock-island",
+        "stark"
+      ],
+      "kind": "no-source",
+      "layer": "library-district",
+      "summary": "In eleven counties the library card gives the district's name and nothing else — no trustee, no director, and on all but one of them no address or telephone either.",
+      "why": "These counties draw their libraries from their own maps rather than from the statewide layer, and the two routes that name people — a district's yearly report to the state, and the library's own site — reach only the statewide route.",
+      "wanted": "Trustees, or at least a director and an address, for the library districts these 11 counties draw.",
+      "counts": [
+        {
+          "value": 11,
+          "in": "wanted",
+          "self": "counties"
+        }
+      ],
+      "blocker": "Opened 2026-09-29. Nothing blocked it: no source refused anything and no record said these cards were bare. `statewide-library-officials` was corrected on 2026-09-26 to say it covers the statewide route alone, and that correctness is what exposed this — the counties that dispatch their own library entry are outside every library gap record there was, so a reader in Yorkville or Blue Mound was told nothing about an absence the app has.\n\nTHE POPULATION IS DERIVED FROM THE DISPATCH TABLE, never written down. il/index.html's library-district layer carries 19 county entries beside the 72 it dispatches through statewideLibraryEntry. Eight of the 19 name a person: Cook (the Cicero library fund's trustees), Will (five trustee columns on the county's own polygons), Kane (each district's board president), Kankakee, Peoria, Woodford, Grundy and Boone (each from its county's own district-officials file). The other ELEVEN name nobody at all — Adams, DeKalb, DuPage, Effingham, Kendall, Lake, Macon, Madison, McHenry, Rock Island and Stark — and that list is this record's `counties`.\n\nWHAT A READER GETS IN THE ELEVEN. Nine of them render a name and a county and stop. Lake is the one exception worth stating: its card carries the library's address, telephone, e-mail and website from the county's own layer, so it is short of a person rather than short of everything. Adams additionally publishes its own unserved areas, which its card says in words.\n\nHOW MANY CARDS, AND WHY THE ANSWER IS PARTIAL. Four of the eleven ship a boundary file, so their cards can be counted offline: Kendall 9, Rock Island 9, Macon 10, Stark 6 — 34 cards, none naming anybody. The other seven (Adams, DeKalb, DuPage, Effingham, Lake, Madison, McHenry) load live from their counties' own services and ship no file, so nothing on disk can count what the layer draws there; Effingham's entry records that it draws one feature, the St Elmo district reaching in from Fayette. No total is stated here for the same reason `statewide-library-officials` states none: a figure phrased as \"the layer's N libraries\" cannot be true offline.\n\nONE MORE CARD SITS OUTSIDE THIS RECORD AND IS NAMED SO IT IS NOT LOST. Woodford has a people route and five of its six library cards use it; MINONK CITY LIBRARY does not, because it is a city library rather than a district and files no Annual Financial Report of its own. That is the municipal-library shape `statewide-library-officials` already records for 140 cards on the other route, and it belongs to that question rather than to this one.\n\nTHE PEOPLE ROUTE IS ATTACHED TO THE COUNTY ENTRY RATHER THAN TO THE LIBRARY, which is the finding that outlasts the count. THREE RIVERS LIBRARY draws a card in both Grundy and Kendall. On Grundy's card it names Dan Hoppe, its president, from Grundy's own district-officials file; on Kendall's it names nobody. One library, one board, two cards, and the difference is which county drew the polygon. Four of Kendall's nine districts are seated outside the county — Aurora in Kane, and Joliet, Plainfield and Three Rivers in Will — so this is not a rare edge: a district that crosses a county line is named on whichever side has a route. Any fix should key the people to the library and not to the entry.\n\nWHY NOT WIDEN THE STATEWIDE RECORD INSTEAD. Its numerator is two statewide rosters; these eleven counties' people would come from three further files, and one record whose denominator mixes four sources is how its own 382 happened. Two records with one source-set each is the smaller mistake.\n\nWHAT IS GATED. A `counts` declaration holds the 11 in `wanted` to the length of `counties` through `self`, so the list and the prose cannot part. It names `wanted` rather than `area` because validate_gap_counts.py takes its subject from build_coverage_gaps.READER_FIELDS — summary, why, wanted — and an `area` is a label rather than something a reader is told; a first draft declared `area`, CI refused it, and the number is written in digits there because the gate matches the digits. The 34 is NOT gated and cannot be under that grammar — it sums features across four files, where measured_metric.py reads one file's top level — and it moves whenever one of those four counties reships a boundary. Re-measure it from the dispatch table rather than trusting it.\n\nAND A STALE LIST WAS FOUND WHILE MEASURING THIS. il_library_trustees_scraper.py's library_pool docstring enumerates the non-statewide counties by name and lists SIXTEEN; the dispatch table has nineteen, Adams, Boone and Effingham having joined since it was written. The code is correct — it derives the set through statewide_library_counties() — and only the prose beside it drifted, which is the defect this project keeps finding: a list typed next to the table that owns it. Corrected in the same change."
+    },
+    {
       "id": "crete-municipal-clerk",
       "concept": "Municipal officials",
       "area": "Village of Crete (Will County)",
@@ -3537,7 +3568,7 @@ five Illinois sources with or without browser headers, because urllib3's TLS Cli
 differs from the ssl module's and these edges fingerprint it. A probe that varied only the
 name would credit a browser string with a fix the stack made.
 
-**WHAT IT FOUND, across 295 hosts** (2026-09-12; 66 measured or re-measured since — see below).
+**WHAT IT FOUND, across 296 hosts** (2026-09-12; 67 measured or re-measured since — see below).
 It was 291 until #944's second commit: `drive.google.com` was recorded
 `robots-disallows-this-path`, the Wisconsin board scrape stopped fetching the Drive
 document it named, and `--check` then failed the entry as orphaned. A host leaving the
@@ -3549,7 +3580,7 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 | verdict | hosts | what it means |
 |---|---|---|
-| `token-ok` | 225 | the districtry token gets a full page on the plain `requests` stack |
+| `token-ok` | 226 | the districtry token gets a full page on the plain `requests` stack |
 | `token-refused-and-stack` | 15 | refuses the token on both stacks, serves stdlib + Chrome |
 | `stack-not-token` | 7 | refuses `requests`, serves the SAME token on stdlib |
 | `token-refused` | 3 | refuses the token on `requests`, serves Chrome on `requests` |
@@ -3562,11 +3593,11 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 **THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
 
-**18 HOSTS REFUSE THE TOKEN AND 225 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
+**18 HOSTS REFUSE THE TOKEN AND 226 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
 --inventory` prints it on this tree: 102 files send a browser string; 17 reach at least one
 host that genuinely refuses the token, **63 reach only hosts that serve the token a full
 page, and 22 more reach no host that refuses it** (one or more answered nothing or refused
-the `requests` stack); 266 of the 295 measured hosts are still reached by such a caller.
+the `requests` stack); 266 of the 296 measured hosts are still reached by such a caller.
 **THREE OF THOSE FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THE SWEEP** and the per-file
 figures move with them — the Iowa minutes-chair scraper (#916) and the Iowa county-officers
 scraper (both measured `token-ok`), and `jodaviess_county_board_scraper.py` (#945, whose own
@@ -11158,7 +11189,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
   | `park-district` | none | **SHIPPED** — 6, identity-only | none published |
   | `library-district` | none | **SHIPPED** — 18, identity-only | none published |
   | `judicial-subcircuit` | 17th — **already shipped** (pass 1) | 3rd — **already shipped**; the county republishes the same 4, unused | **structurally n/a** — 20th Circuit is not among PA 102-0693's nine |
-  | `ward` | **SHIPPED** — Rockford's 14 wards w/ alderperson + e-mail, the first ward source outside the metro; Loves Park's 5 and Machesney Park's 6 ride the municipal roster instead | 31 wards, `official`/contact declared and **0/31 populated** | Belleville + O'Fallon, identity-only |
+  | `ward` | **SHIPPED** — Rockford's 14 wards, the first ward source outside the metro: WinGIS draws them, and since 2026-09-29 the CITY's own council directory names them (the layer's `Alderman`/`Email` columns were a snapshot — two of fourteen seats wrong on both, ward 3 Tuneburg/Tuneberg and ward 7 Wilkins/Neal — and are now read nowhere); the city also publishes a telephone per seat, which the layer does not; Loves Park's 5 and Machesney Park's 6 ride the municipal roster instead | 31 wards, `official`/contact declared and **0/31 populated** | Belleville + O'Fallon, identity-only |
   | municipal officials | **SHIPPED** — 11 municipalities, 84 officials, the fleet's FOURTH full-governing-body county and the only one publishing bodies AS GIS LAYERS | — | — |
 
   **All three board rosters were cross-checked against the counties' own pages before

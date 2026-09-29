@@ -23679,84 +23679,98 @@
         "district": "Ward 1",
         "email": "Tim.Durkee@rockfordil.gov",
         "name": "Timothy J. Durkee",
+        "phone": "815-519-6406",
         "role": "Alderperson"
       },
       {
         "district": "Ward 2",
         "email": "Jonathan.Logemann@rockfordil.gov",
         "name": "Jonathan Logemann",
+        "phone": "815-312-8747",
         "role": "Alderperson"
       },
       {
         "district": "Ward 3",
-        "email": "Chad.Tuneburg@rockfordil.gov",
-        "name": "Chad Tuneburg",
+        "email": "Chad.Tuneberg@rockfordil.gov",
+        "name": "Chad Tuneberg",
+        "phone": "815-977-5016",
         "role": "Alderperson"
       },
       {
         "district": "Ward 4",
         "email": "Kevin.Frost@rockfordil.gov",
-        "name": "Kevin J. Frost",
+        "name": "Kevin Frost",
+        "phone": "815-243-1300",
         "role": "Alderperson"
       },
       {
         "district": "Ward 5",
         "email": "Gabrielle.Torina@rockfordil.gov",
         "name": "Gabrielle Torina",
+        "phone": "815-893-9801",
         "role": "Alderperson"
       },
       {
         "district": "Ward 6",
         "email": "Aprel.Prunty@rockfordil.gov",
         "name": "Aprel Prunty",
+        "phone": "779-207-0799",
         "role": "Alderperson"
       },
       {
         "district": "Ward 7",
-        "email": "Janessa.Wilkins@rockfordil.gov",
-        "name": "Janessa Wilkins",
+        "email": "Janessa.Neal@rockfordil.gov",
+        "name": "Janessa Neal",
+        "phone": "815-814-1765",
         "role": "Alderperson"
       },
       {
         "district": "Ward 8",
         "email": "Karen.Hoffman@rockfordil.gov",
         "name": "Karen Hoffman",
+        "phone": "815-399-5026",
         "role": "Alderperson"
       },
       {
         "district": "Ward 9",
-        "email": "Dawn.Granath@rockfordil.gov",
+        "email": "Dawn.granath@rockfordil.gov",
         "name": "Dawn Granath",
+        "phone": "779-895-4917",
         "role": "Alderperson"
       },
       {
         "district": "Ward 10",
         "email": "Franklin.Beach@rockfordil.gov",
-        "name": "Franklin C. Beach",
+        "name": "Frank Beach",
+        "phone": "815-978-8736",
         "role": "Alderperson"
       },
       {
         "district": "Ward 11",
         "email": "Jaime.Salgado@rockfordil.gov",
-        "name": "Jaime J. Salgado",
+        "name": "Jaime Salgado",
+        "phone": "779-351-9807",
         "role": "Alderperson"
       },
       {
         "district": "Ward 12",
-        "email": "Gina.Meeks@rockfordil.gov",
+        "email": "gina.meeks@rockfordil.gov",
         "name": "Gina Meeks",
+        "phone": "815-317-6572",
         "role": "Alderperson"
       },
       {
         "district": "Ward 13",
         "email": "Tamir.Bell@rockfordil.gov",
         "name": "Tamir Bell",
+        "phone": "779-895-4349",
         "role": "Alderperson"
       },
       {
         "district": "Ward 14",
         "email": "Mark.Bonne@rockfordil.gov",
         "name": "Mark Bonne",
+        "phone": "815-289-4752",
         "role": "Alderperson"
       }
     ],

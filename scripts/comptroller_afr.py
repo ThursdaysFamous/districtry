@@ -646,6 +646,29 @@ def contact_block(session, code, unit_label, warnings):
         exactly like "this unit files nothing" and is really "not that year" --
         28 of the 37 later read were on FY2025 and only 8 on FY2026. Ask
         latest_fiscal_year() per unit; never hardcode the year.
+
+        ONE FILING REACHES SEVERAL COUNTY ROSTERS, ON SEVERAL WEEKS' RUNS, and
+        that is a rule about REVIEW rather than about this function. A
+        cross-county district files once under its home county and is stamped
+        onto every county whose polygons draw it, each by that county's own
+        weekly job: Reddick Community FPD (053/085/06) is in both
+        grundy-district-officials.json and kankakee-district-officials.json,
+        and Fossil Ridge Public Library District likewise. #1023 took Grundy's
+        copy to the FY2026 filing on 2026-09-19 and #1053 took Kankakee's four
+        days later, so a reading merged with a caveat on one PR was already
+        shipped on a second before the caveat was answered (it was answered on
+        2026-09-21 by the Reddick paragraph above, and it held). SO A PR
+        TOUCHING ONE COUNTY'S COPY UNDERSTATES ITS REACH: read the unit, not
+        the county, and expect the same diff in a sibling county's PR next
+        week.
+
+        check_roster_retention.py cannot see this and is not at fault for it.
+        One district losing an office is one record of twenty, which is under
+        MIN_ABSOLUTE_DROP and under RECORD_COLLAPSE_RATIO by design -- that
+        gate's own docstring says a member leaving moves these by ones and
+        twos. The guard here is the two-witness rule plus a reader who knows
+        the unit spans counties; there is no threshold that catches it without
+        firing on every ordinary turnover.
         """
         for filer in filers:
             value = _flat(filer[field])

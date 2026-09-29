@@ -727,12 +727,16 @@ def library_pool(app_dir=APP_DIR):
     one whose website disappears from the directory leaves it the same way.
 
     THE DENOMINATOR IS THE 72 COUNTIES `statewideLibraryEntry` DISPATCHES, not
-    every county that draws a library. Sixteen others — Cook, Will, DuPage,
-    Lake, Kane, McHenry, Kendall, Kankakee, Madison, DeKalb, Rock Island,
-    Peoria, Macon, Stark, Woodford, Grundy — have their own dispatch entries
-    reading their own roster files, and `withLibraryOfficials` is what stamps
+    every county that draws a library. NINETEEN others have their own dispatch
+    entries reading their own sources, and `withLibraryOfficials` is what stamps
     this one, so a library only those counties draw could be read here and
-    would render nowhere. A first draft globbed every `*-library-districts.json`
+    would render nowhere. That count is deliberately not a list any more: this
+    docstring named sixteen of them until 2026-09-29, Adams, Boone and
+    Effingham having joined since it was written, which is the defect this
+    project keeps finding — a list typed beside the table that owns it. The set
+    is `statewide_library_counties()`'s complement and is read from the dispatch
+    table on every run; the eleven of the nineteen whose library cards name
+    nobody are the gap record `county-source-library-officials`. A first draft globbed every `*-library-districts.json`
     and would have shipped such a record for the builder's orphan check to
     fail on. This reads the dispatch table through the same function
     build_il_library_trustees.py checks against, so the two cannot disagree
