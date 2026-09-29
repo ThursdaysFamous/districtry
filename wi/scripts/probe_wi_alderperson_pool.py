@@ -141,6 +141,21 @@ DISTRICT_KEY = re.compile(
 # members page. Deliberately crude: this probe decides whether to LOOK.
 NAME_SHAPE = re.compile(r"\b[A-Z][a-z]{1,20}\s+[A-Z][a-z']{1,20}\b")
 
+# THIS VANTAGE FAILING TO REACH A HOST IS NOT THE HOST REFUSING US, and the
+# first full sweep recorded two municipalities the wrong way round: Medford and
+# Stoughton both read `robots-refused` on
+# "ProxyError ... Tunnel connection failed: 502 Bad Gateway", which is this
+# sandbox's egress and not one word from either city.
+#
+# `robots_policy` is RIGHT to answer disallow on an unreadable robots.txt -- RFC
+# 9309 files a 5xx that way and it cannot tell a proxy failure from a host
+# failure, so the FETCH correctly does not happen either way. What was wrong is
+# what the artifact CLAIMED: a refusal attributed to a publisher who never made
+# one. So the fetch is unchanged and the verdict is not.
+PROXY_FAILURE = re.compile(
+    r"(ProxyError|Tunnel connection failed|connect_rejected|"
+    r"Unable to connect to proxy|ProxySchemeUnknown)", re.I)
+
 CHALLENGE_SERVER = re.compile(r"(cloudflare|sucuri|incapsula|awselb)", re.I)
 CHALLENGE_BODY = re.compile(
     r"(enable javascript and cookies|checking your browser|"
@@ -353,6 +368,11 @@ def verdict_for(ev):
     publisher stated, and an HTTP 202 in front of robots.txt is an access control
     with no policy behind it. Antigo is the second and was reported as the first.
     """
+    # FIRST, because a vantage failure can look like any of the others: a
+    # tunnel that never opened is recorded as neither a refusal nor an absence.
+    for k in ("root_robots_refused", "root_error", "root_challenge"):
+        if ev.get(k) and PROXY_FAILURE.search(str(ev[k])):
+            return "proxy-blocked"
     if ev.get("root_challenge"):
         return "challenge"
     if ev.get("root_robots_refused"):
@@ -512,7 +532,7 @@ def sweep(pool, workers=6):
 
 ORDER = ["candidate", "people-no-district", "roster-not-in-html",
          "no-council-page", "challenge", "robots-refused", "unreachable",
-         "no-url"]
+         "proxy-blocked", "no-url"]
 
 
 def report(rows):
@@ -527,6 +547,12 @@ def report(rows):
         if by[v]:
             print("  %-20s %3d municipalities, %4d districts"
                   % (v, by[v], seats[v]))
+    if by["proxy-blocked"]:
+        print("\n  %d municipality/-ies could not be reached from THIS vantage "
+              "(the proxy, not the site) and are unmeasured, not refused:\n    %s"
+              % (by["proxy-blocked"],
+                 ", ".join(sorted(r["name"] for r in rows
+                                  if r["verdict"] == "proxy-blocked"))))
     print("\nCandidates, largest first:")
     for r in rows:
         if r["verdict"] != "candidate":
@@ -555,6 +581,14 @@ def check(rows):
                             % (r["name"], r["cousubfp"]))
         if r["verdict"] not in ORDER:
             problems.append("%s: unknown verdict %r" % (r["name"], r["verdict"]))
+    blocked = [r["name"] for r in rows if r["verdict"] == "proxy-blocked"]
+    if blocked:
+        # NOT a failure: a note, printed every run, because these rows say
+        # nothing about the municipality and must be re-measured from a vantage
+        # that can reach them (a CI runner) before any tranche reads them.
+        print("  NOTE %d row(s) are proxy-blocked and say nothing about the "
+              "municipality — re-measure from CI: %s"
+              % (len(blocked), ", ".join(sorted(blocked))))
     missing = live - roster.keys() - {r["cousubfp"] for r in rows}
     for k in sorted(missing):
         problems.append("COUSUBFP %s has districts, no roster and no row" % k)
@@ -593,6 +627,22 @@ def _selftest():
        == "robots-refused")
     ck("no pages at all is no-council-page",
        verdict_for({"pages": []}) == "no-council-page")
+    # Medford and Stoughton, measured on the first full sweep: both read
+    # `robots-refused` on a proxy tunnel that never opened, which attributes a
+    # refusal to a publisher who never made one.
+    ck("a proxy tunnel that never opened is not the city refusing us",
+       verdict_for({"root_robots_refused": "robots.txt unreachable: ProxyError: "
+                    "Tunnel connection failed: 502 Bad Gateway", "pages": []})
+       == "proxy-blocked")
+    ck("nor is it the city being unreachable",
+       verdict_for({"root_error": "ProxyError('Unable to connect to proxy')",
+                    "pages": []}) == "proxy-blocked")
+    ck("a REAL robots refusal is still a refusal",
+       verdict_for({"root_robots_refused":
+                    "robots.txt served (210 bytes): Disallow: / is the longest "
+                    "match for /", "pages": []}) == "robots-refused")
+    ck("a real HTTP 403 from the site is still unreachable",
+       verdict_for({"root_error": "HTTP 403", "pages": []}) == "unreachable")
     # Watertown, measured: /page/alderpersons-and-judge answered 200 and its
     # 234 name shapes are the SAME 234 its front page shows -- the site menu.
     ck("a council page carrying only its own site menu is roster-not-in-html",
