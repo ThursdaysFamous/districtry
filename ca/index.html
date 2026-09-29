@@ -11712,7 +11712,7 @@ function initSFExplorer() {
       style: { color: "#6E1F19", weight: 1, fillColor: "#C0362C", fillOpacity: 0.12, dashArray: null }
     },
     query: function (point, seq) {
-      return loadElectionPrecincts().then(function (geojson) {
+      return featureSetAt(loadElectionPrecincts, point).then(function (geojson) {
         var feature = findFeatureContaining(geojson, point);
         if (!feature) return null;
         var props = feature.properties || {};
@@ -12499,7 +12499,7 @@ function initSFExplorer() {
       style: { color: "#6A3FA0", weight: 1.5, fillColor: "#6A3FA0", fillOpacity: 0.06, dashArray: "4 3" }
     },
     query: function (point, seq) {
-      return loadElementaryZones().then(function (geojson) {
+      return featureSetAt(loadElementaryZones, point).then(function (geojson) {
         var feature = findFeatureContaining(geojson, point);
         if (!feature) return null;
         return { seq: seq, name: findPropCI(feature.properties || {}, ["sch_lng_na", "aaname", "e_aa_name"]) };

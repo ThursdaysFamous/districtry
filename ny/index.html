@@ -13129,7 +13129,7 @@ function initNycExplorer() {
     },
     query: function (point, seq) {
       return Promise.all([
-        loadPolicePrecincts(),
+        featureSetAt(loadPolicePrecincts, point),
         loadPrecinctInfo().catch(function () { return {}; }),
         loadPoliceStationPoints().catch(function () { return null; })
       ]).then(function (r) {
@@ -13236,7 +13236,7 @@ function initNycExplorer() {
       style: { color: "#7A0A1C", weight: 1, fillColor: "#E4572E", fillOpacity: 0.14, dashArray: null }
     },
     query: function (point, seq) {
-      return loadPoliceSectors().then(function (gj) {
+      return featureSetAt(loadPoliceSectors, point).then(function (gj) {
         var f = findFeatureContaining(gj, point);
         if (!f) return null;
         var p = f.properties || {};
@@ -14205,7 +14205,7 @@ function initNycExplorer() {
     },
     overlay: { load: loadCouncilDistricts, style: { color: "#5B2A86", weight: 2, fillColor: "#7048E8", fillOpacity: 0.06 } },
     query: function (point, seq) {
-      return Promise.all([loadCouncilDistricts(), loadCouncilMembers().catch(function () { return {}; })]).then(function (r) {
+      return Promise.all([featureSetAt(loadCouncilDistricts, point), loadCouncilMembers().catch(function () { return {}; })]).then(function (r) {
         var gj = r[0], roster = r[1] || {};
         var f = findFeatureContaining(gj, point);
         if (!f) return null;
@@ -14305,7 +14305,7 @@ function initNycExplorer() {
     },
     overlay: { load: loadCommunityDistricts, style: { color: "#B5179E", weight: 2, fillColor: "#F72585", fillOpacity: 0.05, dashArray: "5 3" } },
     query: function (point, seq) {
-      return Promise.all([loadCommunityDistricts(), loadCommunityBoardInfo().catch(function () { return []; })]).then(function (r) {
+      return Promise.all([featureSetAt(loadCommunityDistricts, point), loadCommunityBoardInfo().catch(function () { return []; })]).then(function (r) {
         var gj = r[0], rows = r[1] || [];
         var f = findFeatureContaining(gj, point);
         if (!f) return null;
