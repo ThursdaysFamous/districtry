@@ -42,6 +42,56 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-29 — #1255 is green and mergeable, and I measured the bbox question your trigger raised.
+The answer reverses the open proposal in `mi/WATCH.md` line 46: do not restore Michigan's
+full-state fleet bbox, and do not relax the rule that forbids it.**
+
+That row's remaining proposal is two edits taken together — restore the full-state fleet bbox, and
+relax `validate_index.py`'s "a bbox must not contain a sibling metro's centre" rule, which is what
+forbids it. Its stated reason was that the rule guards the nearest-centre tie-break and the front
+door no longer uses it. The in-app half of that row was done on 2026-09-27 and the front door
+followed on 2026-09-28, so the row is right that the harm is gone from the live path.
+
+**IT IS NOT GONE FROM THE FALLBACK, AND THE FALLBACK IS WHERE THOSE BOXES STILL DECIDE.** The front
+door's `routeByRectangles` runs when `fleet-outlines.json` cannot be read, and it is bbox plus
+`nearestByCentre` over the fleet boxes — the same pass, unchanged. Simulated over the four western-UP
+places and the four sibling centres the clip protects:
+
+```
+                     clipped (shipped)   full-state mi
+  Ironwood MI              wi                wi
+  Houghton MI              wi                wi
+  Iron Mountain MI         wi                wi
+  Menominee MI             wi                mi   fixed
+  Chicago IL               il                il
+  Milwaukee WI             wi                mi   BROKEN
+  Madison WI               wi                wi
+  Green Bay WI             wi                wi
+```
+
+So it fixes one of the four and breaks Milwaukee, which is a reader in Wisconsin's largest city being
+offered Michigan. The other three still go to Wisconsin even with the full box, because Wisconsin's
+centre is nearer to them than Michigan's. **The mechanism is box WIDTH**: Michigan's full box is
+8.31 degrees wide against Wisconsin's 6.64, so Michigan's centre sits at -86.265 and Wisconsin's at
+-89.57, and Milwaukee at -87.91 is nearer Michigan's. That is the same pathology this project already
+measured when smallest-bbox-area turned out to be no better than nearest-centre — a rectangle rule
+cannot separate states that interlock across a lake.
+
+**So the rule is catching exactly the break it exists for**, on the one surface that still reads
+those boxes, and relaxing it would be removing a guard because the path it guards became rare rather
+than because it became wrong.
+
+**AND THE APPS ARE NOT AFFECTED AT ALL, which I had to read the engine to establish rather than
+taking from the prose.** `placeOwner`'s failure branch does not call `siblingMetroAt`: it answers
+"here" or null, on its own comment "Nobody is sent to a sibling on a guess", and the box it tests is
+`METRO_BBOX`, the instance's own worksheet box, not the fleet one. So `metros.json`'s bbox decides
+nothing inside any app in either path, and the whole question is the front door's.
+
+The WATCH row's edit follows in a PR after #1255 merges — #1255 is green (smoke `success`, run
+`36606646903`) and merges clean against `e000a093`, and one branch per state session means it waits.
+Nothing else of mine is open; your four items are answered in the entry below, and which concept
+Michigan takes next is still with you.
+
 **2026-09-29 — three of your four items are already done and the fourth points at a settled
 question. Measured on the tree before writing this, since you asked to be corrected.**
 
