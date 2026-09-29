@@ -112,7 +112,7 @@
 <link rel="preconnect" href="https://basemaps.cartocdn.com" crossorigin>
 <link rel="preconnect" href="https://tiles.basemaps.cartocdn.com" crossorigin>
 <link rel="preconnect" href="https://tiles-a.basemaps.cartocdn.com" crossorigin>
-<link rel="dns-prefetch" href="https://data.sfgov.org">
+<link rel="dns-prefetch" href="https://data.sf.gov">
 <link rel="dns-prefetch" href="https://tigerweb.geo.census.gov">
 <link rel="dns-prefetch" href="https://nominatim.openstreetmap.org">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
@@ -4096,7 +4096,7 @@ function initSFExplorer() {
   var METRO_CENTER = [37.7749, -122.4194];
   // Permalink sanity gate: the *greater* metro area (wider than METRO_BBOX).
   var PERMALINK_GATE = { minLat: 37.6, maxLat: 37.95, minLng: -122.6, maxLng: -122.3 };
-  var SOCRATA_HOST = "https://data.sfgov.org";
+  var SOCRATA_HOST = "https://data.sf.gov";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
   // intended use (do NOT put an API Key *secret* here). Blank = sent as-is.
@@ -11695,6 +11695,7 @@ function initSFExplorer() {
 
   registerLayer({
     id: "election-precinct",
+    tiles: "data/app/tiles/election-precinct.pmtiles", // vector tiles mirrored from DataSF (scripts/mirror_portal_tiles.py)
     group: "political",
     subOf: "supervisor-district",
     label: "Election Precinct",
@@ -11711,7 +11712,7 @@ function initSFExplorer() {
       style: { color: "#6E1F19", weight: 1, fillColor: "#C0362C", fillOpacity: 0.12, dashArray: null }
     },
     query: function (point, seq) {
-      return loadElectionPrecincts().then(function (geojson) {
+      return featureSetAt(loadElectionPrecincts, point).then(function (geojson) {
         var feature = findFeatureContaining(geojson, point);
         if (!feature) return null;
         var props = feature.properties || {};
@@ -12319,6 +12320,10 @@ function initSFExplorer() {
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       // hover popup: same identity the card headline shows — the zoned school's
       // name, or the honest "None" where requireId treats the feature as unzoned.
       hoverName: function (feature) {
@@ -12404,6 +12409,10 @@ function initSFExplorer() {
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       overlay: { load: loadNetworks, style: opts.style },
       // point-first by default (queryFeatureAt) — same pattern as the other factories
       query: function (point, seq) {
@@ -12478,6 +12487,7 @@ function initSFExplorer() {
 
   registerLayer({
     id: "elementary-attendance-area",
+    tiles: "data/app/tiles/elementary-attendance-area.pmtiles", // vector tiles mirrored from DataSF (scripts/mirror_portal_tiles.py)
     group: "schools",
     label: "Elementary Attendance Area",
     // hover popup: the zoned school name — same identity the card headline shows.
@@ -12489,7 +12499,7 @@ function initSFExplorer() {
       style: { color: "#6A3FA0", weight: 1.5, fillColor: "#6A3FA0", fillOpacity: 0.06, dashArray: "4 3" }
     },
     query: function (point, seq) {
-      return loadElementaryZones().then(function (geojson) {
+      return featureSetAt(loadElementaryZones, point).then(function (geojson) {
         var feature = findFeatureContaining(geojson, point);
         if (!feature) return null;
         return { seq: seq, name: findPropCI(feature.properties || {}, ["sch_lng_na", "aaname", "e_aa_name"]) };

@@ -103,7 +103,7 @@ RUNTIME_KINDS = [k for k in KIND_ORDER if k != "link or citation"]
 # appears as a literal. Measured from the tree by --check (see
 # check_socrata_hosts), which fails on a portal this list does not name.
 SOCRATA_HOSTS = re.compile(
-    r"^data\.(cityofchicago|sfgov|cityofnewyork|milwaukee|macoupincountyil|nysed)\.")
+    r"^data\.(cityofchicago|sfgov|sf|cityofnewyork|milwaukee|macoupincountyil|nysed)\.")
 
 # Terms this repository does NOT record, re-audited every run. `probe` is a
 # regex; if the tree starts matching it, the entry is stale and the gate fails.
