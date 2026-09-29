@@ -22,6 +22,18 @@ where `\\b\\d{1,4}\\b` reads it as two. The figures differed because the RULE wa
 never stated — so a gate that enumerated numbers would be measuring its own
 regex. This one is told which number it is looking at, and where.
 
+A NUMBER THAT MOVES IS DERIVED RATHER THAN STATED, since 2026-09-29. A
+declaration may carry a `name` in place of its `value`, the reader field writes
+`{name}` where the number goes, and `build_coverage_gaps.py` ships the resolved
+text — so a weekly figure is never typed and cannot go stale between refreshes.
+The form, its bounded format spec, what it still cannot say, and WHY a constant
+stays on `value` are all in `scripts/gap_counts.py`, which measures both forms
+for both gates; they are not restated here, because two copies of one
+explanation is the defect this module was written about. What lives here is the
+RULES a declaration must satisfy — including the two that are this gate's own:
+a `name` refuses `value` and `in` beside it, and a declaration no token
+references FAILS exactly as a `value` whose number has left the prose does.
+
 THE DECLARATION lives on the record beside `blocker`, and ships to nobody:
 `build_coverage_gaps.render()` copies an explicit FIELD_ORDER allowlist, so a
 `counts` key reaches no reader and no data file. That is verified rather than
@@ -101,6 +113,10 @@ import tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from build_coverage_gaps import READER_FIELDS, load_gaps            # noqa: E402
+from gap_counts import (Stop, combined, entry_number, measured,     # noqa: E402
+                        standalone, tokens_in)
+# The selftest's claim/label cases call the evaluator directly, which is
+# the split they exist to assert in both directions.
 from measured_metric import measure_metric                          # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -119,219 +135,116 @@ SHIPPED = (("chicago", "il/data/app/coverage-gaps.json"),
 failures = []
 
 
-class Stop(Exception):
-    """Raised instead of exiting, so one bad declaration does not end the run.
-
-    scripts/measured_metric.py's evaluator calls `fail` and then CARRIES ON,
-    because build_history_page.py's own `fail` exits the process. This module
-    accumulates instead, so a fail that returned would let the evaluator walk
-    past its own refusal and crash — which it did, with a traceback rather
-    than a verdict, the first time a declaration named a metric outside the
-    grammar. Every caller of the evaluator catches this, which is what lets a
-    run report all of its failures at once.
-    """
-
-
 def fail(msg):
     failures.append(msg)
 
 
-def fail_stop(msg):
-    fail(msg)
-    raise Stop(msg)
+# THE MEASUREMENT MOVED OUT ON 2026-09-29 and this module imports it. It had to:
+# `build_coverage_gaps.py` now resolves a `{name}` token into the shipped bytes,
+# so it needs the same declaration measured — and it is imported BY this file
+# rather than the other way round, so the code could not stay here without a
+# cycle. `scripts/gap_counts.py` is the one reader; two readers of one question
+# is where this fleet's recurring defect starts. What is still here is the
+# RULES a declaration must satisfy, which is this gate's own subject.
 
+def tokens_used(record, where):
+    """Every token name the record's reader fields write.
 
-def standalone(value, text):
-    """Is `value` written in `text` as a whole number rather than inside one?
-
-    Bounded by non-digits on both sides, so a record stating 15 is not
-    satisfied by the 15 inside 2015 or 150. This is a membership test for ONE
-    number and never an enumeration, which is what keeps the tokenizer
-    argument above out of the gate.
+    A field whose tokens are malformed reports through `fail` and contributes
+    nothing, so a record with a broken token still gets its other declarations
+    checked rather than the whole record going silent.
     """
-    return re.search(r"(?<!\d)%d(?!\d)" % value, text) is not None
-
-
-def measured(record, entry, where):
-    """What the declaration says the number must equal, or None if it cannot say.
-
-    THREE FORMS, AND NAMING TWO IS AN ERROR RATHER THAN A PRECEDENCE: `self`
-    counts one of the record's own keys, `file` + `metric` measures one file,
-    and `files` + `combine` measures several. An entry carrying two of them
-    would be read by whichever branch this function tests first, which is a
-    rule nobody could see from the entry.
-    """
-    forms = [k for k in ("self", "file", "files") if k in entry]
-    if len(forms) > 1:
-        fail("%s: declares %s together — an entry names exactly one of `self`, "
-             "`file` or `files`" % (where, " and ".join(repr(f) for f in forms)))
-        return None
-    if "files" in entry:
-        return combined(entry, where)
-    stray = [k for k in ("combine", "field", "under", "overlap") if k in entry]
-    if stray:
-        # A combine-only key on a `file` or `self` entry does NOTHING, and an
-        # `overlap` that does nothing reads exactly like a guard that is held.
-        # That is the same silent-no-op class the absent-field refusal exists
-        # for, one level out.
-        fail("%s: declares %s without `files`, where %s no effect at all"
-             % (where, " and ".join(repr(k) for k in stray),
-                "they have" if len(stray) > 1 else "it has"))
-        return None
-    if "self" in entry:
-        key = entry["self"]
-        if key not in record:
-            fail("%s: declares self=%r and the record has no such key" % (where, key))
-            return None
-        held = record[key]
-        if not isinstance(held, (list, dict)):
-            fail("%s: declares self=%r, which is a %s rather than something with a length"
-                 % (where, key, type(held).__name__))
-            return None
-        return len(held)
-    path = entry.get("file")
-    if not path:
-        fail("%s: declares neither `file` + `metric` nor `self`" % where)
-        return None
-    full = os.path.join(REPO_ROOT, path)
-    if not os.path.exists(full):
-        fail("%s: names %s, which is not in the tree" % (where, path))
-        return None
-    if "metric" not in entry:
-        fail("%s: names %s and no `metric` to measure it by" % (where, path))
-        return None
-    # measure_metric joins root/inst/file, so the repo-relative path is split
-    # to keep its own failure messages readable.
-    # `claim` IS EMPTY ON PURPOSE. measure_metric tests a caller's own words
-    # for PERSON_WORDS and, finding one on a `keys` metric, demands a `naming`
-    # key saying the keys name people. A stat tile's label is such a claim; a
-    # gap record's `counts` entry is not — it asserts only that a number in the
-    # prose equals a measurement, and the only words it could offer are the
-    # record's ID, which NAMES AN ABSENCE. Passing `where` here made
-    # `ia-municipal-officeholders` demand that 939 CITY contact rows declare
-    # they name people, and 18 record ids across four instances trip the same
-    # way, while `ia-board-chair`'s 38 keys ARE 38 named chairs and pass
-    # unchecked. A record that wants the comparison gives `naming` and gets it.
-    spec = {"file": os.path.basename(path), "metric": entry["metric"],
-            "label": where, "claim": ""}
-    if "naming" in entry:
-        spec["naming"] = entry["naming"]
-    return measure_metric(REPO_ROOT, os.path.dirname(path), spec, fail_stop)
-
-
-def _records(root, path, under, where):
-    """The {key: record} mapping a combine counts over, or None having failed."""
-    full = os.path.join(root, path)
-    if not os.path.exists(full):
-        fail("%s: names %s, which is not in the tree" % (where, path))
-        return None
-    with open(full, encoding="utf-8") as fh:
-        doc = json.load(fh)
-    if under is not None:
-        if not isinstance(doc, dict) or under not in doc:
-            fail("%s: names `under`=%r and %s has no such key — a combine may "
-                 "not count a file whose records it cannot find"
-                 % (where, under, path))
-            return None
-        doc = doc[under]
-    if not isinstance(doc, dict):
-        fail("%s: %s holds a %s where a combine needs an object keyed by source"
-             % (where, path, type(doc).__name__))
-        return None
-    return doc
-
-
-def _keys_with_field(root, path, field, under, where):
-    """Keys in `path` whose record carries a non-empty `field`.
-
-    FAILS ON ZERO RATHER THAN CONTRIBUTING NOTHING, which is the whole reason
-    this function exists rather than a comprehension at the call site. Illinois
-    publishes its 79 per-county library files under FIVE different name keys —
-    72 use `library`, and Boone and Grundy use `district`, Kendall `library`,
-    Macon `Library`, Rock Island `library_di`, Stark `name`, Woodford `code`
-    — so a reader keyed on one spelling returns ZERO for the files it misses
-    and reports a clean total that is silently short. Measured 2026-09-26, that
-    one defect produced three different answers (599, 416, 373) to what looked
-    like one question. A union that let an absent field contribute nothing
-    would institutionalise exactly that.
-    """
-    doc = _records(root, path, under, where)
-    if doc is None:
-        return None
-    got = {k for k, v in doc.items() if isinstance(v, dict) and v.get(field)}
-    if not got:
-        fail("%s: no record in %s carries a non-empty %r, so it would "
-             "contribute nothing to the union in silence — name the field the "
-             "file actually uses, or drop the file from `files`"
-             % (where, path, field))
-        return None
-    return got
-
-
-def combined(entry, where, root=None):
-    """A `files` + `combine` declaration's measurement, or None having failed.
-
-    THE GRAMMAR IS DELIBERATELY ONE COMBINE. `union` is what two records in two
-    days needed — Iowa's 4 + 102 named cities and Illinois's 173 + 53 libraries
-    naming a board.
-
-    WHAT THE OVERLAP GUARD ACTUALLY BUYS, stated precisely because the obvious
-    rationale is wrong about this code: the measurement below is a TRUE union
-    of key sets, so it never double-counts and an undeclared overlap could not
-    make it. The author's arithmetic is what overlaps break. Both records got
-    their number by adding two counts in their head, and that addition is only
-    right while the sides are disjoint. Two things follow. A value that stops
-    matching is caught by the value check anyway, but with a message about the
-    prose rather than about the cause. And an overlap can APPEAR WITHOUT MOVING
-    THE UNION — one file gaining a key the other already had, while another key
-    arrives elsewhere — which no value check can see, because the number is
-    still right and the sources have quietly stopped meaning what they meant.
-    So the overlap is declared, and a change to it is a failure a reader can
-    act on.
-    """
-    root = REPO_ROOT if root is None else root
-    files = entry["files"]
-    if not isinstance(files, list) or len(files) < 2:
-        fail("%s: `files` must list at least two paths — one file is what "
-             "`file` + `metric` already says" % where)
-        return None
-    if entry.get("combine") != "union":
-        fail("%s: `combine` must be stated as \"union\", not %r — the vocabulary "
-             "is deliberately tiny and a new combine is a decision, not a default"
-             % (where, entry.get("combine")))
-        return None
-    field = entry.get("field")
-    if not field:
-        fail("%s: a combine needs `field`, the key a record must carry to be "
-             "counted" % where)
-        return None
-    under = entry.get("under")
-
-    sets = {}
-    for path in files:
-        got = _keys_with_field(root, path, field, under, where)
+    used = set()
+    for key in READER_FIELDS:
+        text = record.get(key)
+        if not isinstance(text, str) or "{" not in text:
+            continue
+        got = tokens_in(text, where, key, fail)
         if got is None:
-            return None
-        sets[path] = got
+            continue
+        used |= {t[0] for t in got}
+    return used
 
-    paths = list(sets)
-    overlap = set()
-    for i in range(len(paths)):
-        for j in range(i + 1, len(paths)):
-            overlap |= sets[paths[i]] & sets[paths[j]]
-    declared = entry.get("overlap", 0)
-    if len(overlap) != declared:
-        fail("%s: the named files share %d key(s) carrying %r and the entry "
-             "declares %d — the union itself is measured and stays right, but "
-             "the prose number was reached by adding the sides together, which "
-             "only holds while they are disjoint. State the overlap."
-             % (where, len(overlap), field, declared))
-        return None
 
-    union = set()
-    for got in sets.values():
-        union |= got
-    return len(union)
+def check_named(record, entry, where, used, seen, report):
+    """A `name` declaration: measured, referenced, and stating no number itself.
+
+    THE MIGRATION REFUSAL IS THE SECOND OF THE RULING'S THREE, and it is the
+    vacuous-pass class turned on itself. A named declaration nothing references
+    measures a file on every run and guards no text — it reads exactly like a
+    held guard while guarding nothing, which is the state this gate exists to
+    make impossible. Its `value`-form twin is the `standalone` test below: a
+    declaration whose number has left the prose fails there for the same
+    reason.
+    """
+    name = entry.get("name")
+    if not isinstance(name, str) or not name.isidentifier():
+        fail("%s: `name` must be an identifier, not %r" % (where, name))
+        return
+    if name in seen:
+        fail("%s: declares the name %r a second time on this record — a token "
+             "could resolve through either" % (where, name))
+        return
+    seen.add(name)
+    # `value` and `in` are what a token REPLACES. Either one beside a name is a
+    # second statement of something the token already says, and a second
+    # statement that can disagree is the whole subject of this gate.
+    for key, why in (("value", "the number the token resolves to"),
+                     ("in", "which field states it, which the token's own "
+                            "position says — and says for every field at once")):
+        if key in entry:
+            fail("%s: declares `name` and `%s` together, where `%s` is %s"
+                 % (where, key, key, why))
+            return
+    if name not in used:
+        fail("%s: declares the name %r and no reader field writes {%s} — a "
+             "declaration nothing references measures a file on every run and "
+             "guards no text, which reads exactly like a guard that is held"
+             % (where, name, name))
+        return
+    got = entry_number(record, entry, where, fail)
+    if got is None:
+        return
+    if report:
+        print("  ok   %s: {%s} resolves to %d%s"
+              % (where, name, got,
+                 " (%d - %d)" % (entry["of"], entry["of"] - got)
+                 if "of" in entry else ""))
+
+
+def check_valued(record, entry, where, report):
+    """A `value` declaration: the number as the prose writes it, checked against
+    the file. Unchanged since #1137 but for the shared measurement."""
+    if not isinstance(entry.get("value"), int):
+        fail("%s: `value` must be an integer" % where)
+        return
+    field = entry.get("in")
+    if field not in READER_FIELDS:
+        fail("%s: `in` must name one of %s, not %r"
+             % (where, ", ".join(READER_FIELDS), field))
+        return
+    if not standalone(entry["value"], record.get(field) or ""):
+        fail("%s: declares %d and the record's %s does not state it — "
+             "the declaration has drifted from the prose it guards"
+             % (where, entry["value"], field))
+        return
+    try:
+        got = measured(record, entry, where, fail)
+    except Stop:
+        return
+    if got is None:
+        return
+    want = entry["of"] - got if "of" in entry else got
+    if entry["value"] != want:
+        fail("%s: the %s states %d, the source holds %d%s — "
+             "update the record (and every other surface that "
+             "repeats it) or fix the source"
+             % (where, field, entry["value"], want,
+                " (%d - %d)" % (entry["of"], got) if "of" in entry else ""))
+    elif report:
+        print("  ok   %s: %s states %d%s"
+              % (where, field, entry["value"],
+                 " (%d - %d)" % (entry["of"], got) if "of" in entry else ""))
 
 
 def check_shipped():
@@ -474,12 +387,15 @@ def _selftest():
         write("empty.json", {"e%d" % i: {"heads": ["x"]} for i in range(4)})
 
         def run(entry):
-            """combined() against the fixture; returns (value, [messages])."""
-            global failures
-            keep, failures = failures, []
-            val = combined(entry, "selftest", root=tmp)
-            said, failures = failures, keep
-            return val, said
+            """combined() against the fixture; returns (value, [messages]).
+
+            A LOCAL RECORDER, not the module global. Until 2026-09-29 this
+            swapped `failures` out and back around the call, because the
+            measurement read that global; it takes `fail` as an argument now,
+            so the hack went with it.
+            """
+            said = []
+            return combined(entry, "selftest", said.append, root=tmp), said
 
         base = {"combine": "union", "field": "members"}
 
@@ -516,13 +432,11 @@ def _selftest():
         # through measured(), because that is where the branch lives.
         def run_measured(entry):
             """measured() with a recording fail; returns its messages."""
-            global failures
-            keep, failures = failures, []
+            said = []
             try:
-                measured({}, entry, "selftest")
+                measured({}, entry, "selftest", said.append, root=tmp)
             except Stop:
                 pass
-            said, failures = failures, keep
             return said
 
         said = run_measured({"file": "%s/a.json" % inst, "metric": "keys",
@@ -530,6 +444,131 @@ def _selftest():
         check(any("without `files`" in m for m in said),
               "a combine-only key on a non-combine entry is refused rather "
               "than silently doing nothing")
+
+    # ---- the token form, all hermetic and all on `self` ------------------
+    # NEGATIVE-TESTED 2026-09-29 by deleting each refusal in turn: the
+    # reference check, the format bound, the unmatched-brace refusal, the
+    # duplicate-name refusal, and the resolution itself. All five turn this
+    # selftest red. THREE report a named failure and TWO raise a KeyError
+    # instead — deleting the guard that proves a name is declared, or that a
+    # spec is one of two, leaves the lookup it guarded undefined. Both are red
+    # and only one is a message a reader can act on, which is recorded rather
+    # than engineered around: the guards make those states unreachable, and
+    # defending a second time against a state the line above forbids is how a
+    # guard comes to look held while guarding nothing.
+    #
+    # AND THE FIRST INSTRUMENT USED TO MEASURE THOSE BREAKS COUNTED `FAIL`
+    # LINES, so it reported 0 for the two that crash — a break that fully fails
+    # the gate reading exactly like a break nothing catches. The honest
+    # instrument is the EXIT CODE. That is the same defect, on the same
+    # afternoon, as the loose comma pattern this form's docstring records.
+    # EVERY CASE COUNTS THE RECORD'S OWN KEY, so the whole token block needs no
+    # file and no temp directory: `self` is the one measurement form that reads
+    # nothing off the tree, which makes these assertions about the GRAMMAR and
+    # never about today's data. The counts 3 and 1234 are arbitrary and local;
+    # nothing can make them pass by reaching a real file.
+    from build_coverage_gaps import READER_MAX, reader_problems, resolve_all
+
+    def rec(summary, counts, n=3, **extra):
+        r = {"id": "fixture", "counties": ["c%d" % i for i in range(n)],
+             "summary": summary, "counts": counts}
+        r.update(extra)
+        return r
+
+    def resolved(record):
+        """(shipped text or None, [messages]) for a record's summary."""
+        out, said = resolve_all([record])
+        return out[0].get("summary") if not said else None, said
+
+    SELF = {"self": "counties"}
+
+    got, said = resolved(rec("in {n} counties", [dict(SELF, name="n")]))
+    check(got == "in 3 counties" and not said,
+          "a token resolves to its declaration's own measurement")
+
+    got, said = resolved(rec("in {n:,} counties", [dict(SELF, name="n")], n=1234))
+    check(got == "in 1,234 counties" and not said,
+          "the comma form writes 1,234 — the only number shape a `value` "
+          "declaration cannot express at all")
+
+    got, said = resolved(rec("in {n} of {total}", [dict(SELF, name="n")]))
+    check(got is None and any("names no declaration" in m for m in said),
+          "a token referencing no declaration is REFUSED rather than rendered "
+          "unresolved or silently dropped")
+
+    got, said = resolved(rec("in {n} counties",
+                             [dict(SELF, name="n"), dict(SELF, name="n")]))
+    check(got is None and any("a second time" in m for m in said),
+          "the same name declared twice on one record is refused rather than "
+          "the later one winning")
+
+    got, said = resolved(rec("in {n} counties", [dict(SELF, name="bad name")]))
+    check(got is None and any("must be an identifier" in m for m in said),
+          "a `name` that is not an identifier is refused")
+
+    got, said = resolved(rec("in {n counties", [dict(SELF, name="n")]))
+    check(got is None and any("unmatched brace" in m for m in said),
+          "an unmatched brace is refused — no reader field in this fleet uses "
+          "one for anything else")
+
+    got, said = resolved(rec("in {n:>10} counties", [dict(SELF, name="n")]))
+    check(got is None and any("not an allowed format" in m for m in said),
+          "a format spec outside {name} and {name:,} is refused, because a spec "
+          "passed to format() is an unbounded mini-language in a prose file")
+
+    # READER_MAX IS MEASURED ON WHAT A READER IS SERVED, both directions. The
+    # second is the load-bearing one and it is Michigan's own record's shape:
+    # measured 2026-09-29 its summary is 254 characters authored and 230
+    # resolved, so holding the ceiling to the authored text would refuse the
+    # first record this form exists for.
+    LONG = "x" * (READER_MAX - 10)
+    over = rec(LONG + " {n} " + "y" * 20, [dict(SELF, name="n")])
+    out, said = resolve_all([over])
+    check(not said, "the over-length fixture resolves before it is measured")
+    problems = reader_problems("fixture", out[0])
+    check(any("is %d characters" % len(out[0]["summary"]) in m for m in problems),
+          "READER_MAX fails with the RESOLVED length, not the authored one")
+
+    # Authored 247, resolved 235: over the ceiling in the source file and under
+    # it on the card, which must PASS.
+    under = rec("z" * 232 + " {averylongcount}", [dict(SELF, name="averylongcount")])
+    check(len(under["summary"]) > READER_MAX,
+          "the fixture is over the ceiling as authored (%d characters)"
+          % len(under["summary"]))
+    out, said = resolve_all([under])
+    check(not said and len(out[0]["summary"]) <= READER_MAX,
+          "and under it once resolved (%d characters)" % len(out[0]["summary"]))
+    check(not reader_problems("fixture", out[0]),
+          "so it passes — a ceiling on the authored text would refuse the first "
+          "record the form exists for")
+
+    # ---- the two refusals that are the gate's own, not the builder's --------
+    def rules(record):
+        """check_named over a record's declarations; returns its messages."""
+        global failures
+        keep, failures = failures, []
+        used = tokens_used(record, "fixture")
+        seen = set()
+        for i, entry in enumerate(record.get("counts") or []):
+            if "name" in entry:
+                check_named(record, entry, "fixture counts[%d]" % i, used, seen, False)
+        said, failures = failures, keep
+        return said
+
+    said = rules(rec("no token here", [dict(SELF, name="n")]))
+    check(any("no reader field writes {n}" in m for m in said),
+          "a named declaration nothing references is REFUSED — it measures a "
+          "file every run and guards no text, which reads like a held guard")
+
+    said = rules(rec("in {n} counties", [dict(SELF, name="n", value=3)]))
+    check(any("`name` and `value` together" in m for m in said),
+          "`value` beside a `name` is refused — two statements of one number is "
+          "the whole subject of this gate")
+
+    said = rules(rec("in {n} counties", [dict(SELF, name="n", **{"in": "summary"})]))
+    check(any("`name` and `in` together" in m for m in said),
+          "`in` beside a `name` is refused — the token's own position says "
+          "where, and says it for every field at once")
 
     print("selftest: %d failure(s)" % len(failures), file=sys.stderr)
     return 1 if failures else 0
@@ -548,39 +587,19 @@ def main():
     checked = 0
     for metro, gaps in sorted(load_gaps().items()):
         for record in gaps:
-            for i, entry in enumerate(record.get("counts") or []):
-                where = "%s/%s counts[%d]" % (metro, record["id"], i)
+            entries = record.get("counts") or []
+            if not entries:
+                continue
+            rec_where = "%s/%s" % (metro, record["id"])
+            used = tokens_used(record, rec_where)
+            seen = set()
+            for i, entry in enumerate(entries):
+                where = "%s counts[%d]" % (rec_where, i)
                 checked += 1
-                if not isinstance(entry.get("value"), int):
-                    fail("%s: `value` must be an integer" % where)
-                    continue
-                field = entry.get("in")
-                if field not in READER_FIELDS:
-                    fail("%s: `in` must name one of %s, not %r"
-                         % (where, ", ".join(READER_FIELDS), field))
-                    continue
-                if not standalone(entry["value"], record.get(field) or ""):
-                    fail("%s: declares %d and the record's %s does not state it — "
-                         "the declaration has drifted from the prose it guards"
-                         % (where, entry["value"], field))
-                    continue
-                try:
-                    got = measured(record, entry, where)
-                except Stop:
-                    continue
-                if got is None:
-                    continue
-                want = entry["of"] - got if "of" in entry else got
-                if entry["value"] != want:
-                    fail("%s: the %s states %d, the source holds %d%s — "
-                         "update the record (and every other surface that "
-                         "repeats it) or fix the source"
-                         % (where, field, entry["value"], want,
-                            " (%d - %d)" % (entry["of"], got) if "of" in entry else ""))
-                elif args.report:
-                    print("  ok   %s: %s states %d%s"
-                          % (where, field, entry["value"],
-                             " (%d - %d)" % (entry["of"], got) if "of" in entry else ""))
+                if "name" in entry:
+                    check_named(record, entry, where, used, seen, args.report)
+                else:
+                    check_valued(record, entry, where, args.report)
 
     if not checked:
         fail("no gap record declares a `counts` entry, so this gate measured "
