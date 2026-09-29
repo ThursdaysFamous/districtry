@@ -5,8 +5,8 @@ that watches this repository's main branch, its weekly roster refreshes and
 the open pull requests, and reports to Adam. The hourly routine that wakes the
 session reads this file first. It carries rules only. It never carries session
 ids, PR numbers, run outcomes, fleet status or a prediction about what a file
-will say tonight. Those go stale within the day and belong in the boards, which
-are the state that survives a container.
+will say tonight. Those go stale within the day and belong in the project that
+tracks this work; see below.
 
 `docs/REVIEW_CASEBOOK.md` holds the incidents these rules were learned from.
 This file names the check; the casebook holds the story.
@@ -48,30 +48,23 @@ Measured 2026-09-15, in the session itself.
 
 ## Where the state lives
 
-**CORRECTED 2026-09-23.** This file said durable state belonged on "the
-tracking issue, whose latest comment is the only state that survives a
-container", and named no board anywhere in 310 lines. That was true when it was
-written on 2026-09-15 and stopped being true four days later, when Adam
-instituted the boards; a commit touched this file seven hours after they landed
-and did not revisit the sentence. A session that followed it would have written
-its state where nobody now reads it.
+**CORRECTED 2026-09-29.** The boards are retired. This section said durable
+state lived in `BOARD.md` at the root and one per instance; those seven files
+were deleted on 2026-09-29 and the root one is now a signpost. Before that it
+said state lived on the tracking issue. Both were true when written.
 
-- **The boards are the durable state.** `BOARD.md` at the root for work
-  belonging to no single state, and one per instance beside it. `BOARD.md`
-  holds the rules for them — who owns which section, what a board update may
-  contain, and why they commit straight to main — and this file does not
-  restate them, on the same principle that sends the incidents to the casebook.
-- **Two owners, and the manager owns one section.** The manager writes *Tasks*
-  and *Status*; a state session owns its own *Status* and *Open questions*.
-  Never edit a section you do not own. A session's correction to its own board
-  is almost always right.
-- **A board update is its own commit, straight to main**, rebased onto
-  `origin/main` first, never inside a feature PR. A board that waits on a PR is
-  stale for as long as that PR is open.
+- **The project is the durable state.** Work is tracked in the "Team manager
+  for Claude sessions" project on claude.ai: its Overview holds the fleet's
+  state and each state has a thread. A session writes its status there, not
+  into a file in this repository.
+- **The hourly manager check-in is paused** as of 2026-09-29, and the merge
+  authority it carried is not exercised by a routine any more. The rules below
+  about reading checks, diagnosing a roster workflow and testing a merge still
+  hold for whoever does that work.
 - **The standing issues are still read, and are not where state goes.** The
   roster-health issue, the fleet-status issue and the reverse-channel log are
-  inputs to a check-in and records for their own generators. Do not post an
-  hourly report to any of them.
+  inputs to a check-in and records for their own generators. Do not post a
+  status report to any of them.
 
 ## How to write the reply
 
