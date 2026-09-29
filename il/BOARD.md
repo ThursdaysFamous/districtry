@@ -54,6 +54,57 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-29. ROCKFORD'S WARD LINES ARE CURRENT; IT IS THE DESCRIPTION THAT IS
+STALE — and the layer we do NOT use is the old plan.** The manager's row asked
+whether `ElectedOfficials/MapServer/20`, which describes itself as "City of
+Rockford 2013 Wards", is serving lines Rockford has since replaced. It is not.
+Three independent measurements agree, and none of them reads the name.
+
+**THE BALANCE, which is the Vermilion method and the reason the name is not
+evidence.** WinGIS publishes a SECOND Rockford ward layer the app has never
+called — `WardsAndDistricts/MapServer/3`, richer in fields (address, phones,
+committees, a bio link) and carrying no "2013" anywhere. Measured against the
+6,497 Census 2020 blocks this repo ships for Winnebago County, both layers hold
+the same 149,045 people inside the city and divide them very differently: the
+SHIPPED layer runs a worst deviation of **-4.18%** across its fourteen wards, a
+spread of 814 people, while the unused one runs **+18.49%** and a spread of
+3,654. A plan drawn to a census balances on that census, so the shipped one is
+the plan drawn to 2020 and the better-furnished one is its predecessor. That is
+the Vermilion trap exactly: the layer with the fuller attributes is the obsolete
+one.
+
+**THE CITY SAYS IT REDISTRICTED, AND WHEN.** `rockfordil.gov/531/Ward-Redistricting`:
+the 2020 census "revealed population shifts between the wards", state law
+required the boundaries be adjusted, and "the new map will be effective during
+the next aldermanic election, which will occur in 2025." That election has been
+and gone, so the new map is in force — and the page still offers both PDFs,
+which is how a reader could have been misled in either direction.
+
+**AND THE ROSTERS SETTLE WHICH LAYER IS WHICH.** The shipped layer's fourteen
+alderpersons match the city's own current directory fourteen for fourteen. The
+unused layer names Bill Rose in 9, Isidro Barrios in 11 and Jeffrey Bailey in
+13 — none of whom the city lists. A layer carrying the members seated at the
+2025 election is the layer drawn for that election.
+
+**I DID NOT MEASURE 2010 BALANCE and do not need to**: three witnesses already
+point one way, and this repo ships no 2010 block file, so that fourth reading
+would cost a fetch to answer a question already answered.
+
+**ONE REAL DEFECT CAME OUT OF IT, small and reader-facing.** The shipped layer
+names ward 7 "Janessa Wilkins"; the city's own page for that seat says
+**Janessa Neal**, and the city's 2022-era redistricting page spells it
+"Wilkens" — three spellings across three surfaces, of which the directory is
+the current one. So the ward-7 card shows a surname the city no longer uses. A
+name is never silently corrected here, so this is recorded rather than patched:
+the fix is to read the city's own directory, which is a pipeline that does not
+exist yet, and the alternative — adopting `WardsAndDistricts/3` for its richer
+fields — is exactly the wrong move, because that layer is the old plan and the
+old roster.
+
+**NOTHING IS BUILT AND NOTHING NEEDS TO BE** for the geometry. The manager's
+half of the row (both GIS hosts are up) and mine (the lines are current) close
+it in the good direction twice over.
+
 **2026-09-28, LATE. #1248 MERGED (`0483e6b`) AND THE DISPATCHED RUN IS THE WITNESS
 IT WAS OPENED FOR.** Main's own smoke run on the merge is green (36493131266,
 22:33:53 to 22:47:43), read from the run rather than inferred, because merging
