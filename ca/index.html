@@ -112,7 +112,7 @@
 <link rel="preconnect" href="https://basemaps.cartocdn.com" crossorigin>
 <link rel="preconnect" href="https://tiles.basemaps.cartocdn.com" crossorigin>
 <link rel="preconnect" href="https://tiles-a.basemaps.cartocdn.com" crossorigin>
-<link rel="dns-prefetch" href="https://data.sfgov.org">
+<link rel="dns-prefetch" href="https://data.sf.gov">
 <link rel="dns-prefetch" href="https://tigerweb.geo.census.gov">
 <link rel="dns-prefetch" href="https://nominatim.openstreetmap.org">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
@@ -4096,7 +4096,7 @@ function initSFExplorer() {
   var METRO_CENTER = [37.7749, -122.4194];
   // Permalink sanity gate: the *greater* metro area (wider than METRO_BBOX).
   var PERMALINK_GATE = { minLat: 37.6, maxLat: 37.95, minLng: -122.6, maxLng: -122.3 };
-  var SOCRATA_HOST = "https://data.sfgov.org";
+  var SOCRATA_HOST = "https://data.sf.gov";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
   // intended use (do NOT put an API Key *secret* here). Blank = sent as-is.
