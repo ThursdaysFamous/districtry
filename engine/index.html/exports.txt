@@ -24,6 +24,13 @@
     pointInGeometry: pointInGeometry,
     fetchJSONWithRetry: fetchJSONWithRetry,
     probeGeometryColumn: probeGeometryColumn,
+    // The Socrata route walk, so a test can ask the two questions no
+    // fixture can: which urls a dataset is fetched from, and whether a
+    // response that exactly fills the primary route's page is refused as
+    // possibly truncated (smoke check 1k).
+    socrataRouteUrls: socrataRouteUrls,
+    socrataPageMax: function () { return SOCRATA_PAGE_MAX; },
+    hasWholeUsableGeometry: hasWholeUsableGeometry,
     // Every district of a county-dispatched layer, fetched through that
     // layer's OWN per-county loaders and named by its own hover identity —
     // what scripts/build_district_search.py reads to index "Lake County Board
