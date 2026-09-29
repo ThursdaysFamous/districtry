@@ -20,7 +20,7 @@ keep a state open forever while telling a reader nothing.
 | il | **EAM** | 102 | 102/102 | 572 | 996 | all | 398 | all |
 | wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 262 | 240 without a job |
 | ia | **EA·** | 99 | 99/99 | 81 | 81 | all | 57 | 40 without a job |
-| mi | **EA·** | 83 | 83/83 | 619 | 615 | all | 54 | 45 without a job |
+| mi | **EA·** | 83 | 83/83 | 619 | 615 | all | 55 | 45 without a job |
 
 - **ca** — no county tier, so E does not apply. San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
 - **ny** — no county tier, so E does not apply. New York City — the instance serves five boroughs, not a county frontier, so there is no county to examine.

@@ -173,6 +173,17 @@ jobs:
       # the fleet that publishes municipal governing bodies AS GIS LAYERS — one
       # per municipality on WinGIS's ElectedOfficials service. Preservable for
       # the same reason as LaSalle: nothing already shipped degrades without it.
+      #
+      # This step also reads the CITY OF ROCKFORD's own council directory, in
+      # the same process: WinGIS layer 20 draws Rockford's fourteen wards and
+      # its Alderman column was a snapshot (two seats wrong on 2026-09-29), so
+      # the wards come from the layer and the people from the city, joined by
+      # ward and printed in this step's log. A ward-set disagreement, or a
+      # directory that cannot be read, fails the step — and Winnebago is
+      # preservable, so the county carries forward rather than shipping a
+      # council that is short. rockfordil.gov resets connections
+      # intermittently; the scraper re-asks, which is why this step can take a
+      # couple of minutes.
       - name: Read the WinGIS municipal officeholder layers
         id: scrape_winnebago
         continue-on-error: true
