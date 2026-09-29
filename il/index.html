@@ -11542,6 +11542,25 @@ function initChiExplorer() {
     return false;
   }
 
+  /* ---------- the primary route's page size, and why a set that fills it is
+   * REFUSED rather than drawn.
+   *
+   * /resource/{id}.geojson returns one page and says nothing about how many
+   * rows it left behind, so a set that comes back exactly full is
+   * indistinguishable from a complete one. It was 1000 until 2026-09-29, and
+   * Chicago's ward-precinct dataset (i8fv-xe4b) has 1,291 rows: the app drew
+   * 1,000 of them and, because the portal orders by ward, the 291 it dropped
+   * were every precinct of wards 39 to 50 — the whole north side, where a
+   * reader who clicked got no precinct once the set had cached.
+   *
+   * Two changes, and the second is the one that keeps this fixed: the page is
+   * now Socrata's own documented maximum, and a response holding exactly that
+   * many features fails validation, so the route walk falls through to the
+   * export routes, which page the whole dataset themselves. A dataset that
+   * outgrows the maximum therefore loads from another route or fails loudly;
+   * it never silently loses its tail again. ---------- */
+  var SOCRATA_PAGE_MAX = 50000;
+
   /* ---------- fetch a Socrata dataset as GeoJSON, trying each known route in turn
    * until one returns real geometry. Some datasets 200 with every geometry
    * stripped to null on one route (confirmed on Police Districts /
@@ -11550,10 +11569,20 @@ function initChiExplorer() {
    * plain .catch() never sees it. ---------- */
   function socrataRouteUrls(datasetId) {
     return [
-      SOCRATA_HOST + "/resource/" + datasetId + ".geojson?$limit=1000",
+      SOCRATA_HOST + "/resource/" + datasetId + ".geojson?$limit=" + SOCRATA_PAGE_MAX,
       SOCRATA_HOST + "/api/v3/views/" + datasetId + "/query.geojson",
       SOCRATA_HOST + "/api/geospatial/" + datasetId + "?method=export&format=GeoJSON"
     ].map(withAppToken);
+  }
+
+  /* ---------- usable AND whole: real geometry, and not a full page. Only the
+   * first route is paged, so only it can be truncated; the later routes export
+   * the whole dataset and a set that happens to hold exactly SOCRATA_PAGE_MAX
+   * features would be refused there too, which costs a retry on the next route
+   * and never costs a reader an answer. ---------- */
+  function hasWholeUsableGeometry(geojson) {
+    if (!hasUsableGeometry(geojson)) return false;
+    return geojson.features.length < SOCRATA_PAGE_MAX;
   }
 
   /* ---------- walk a list of fallback routes, returning the first response that
@@ -11576,7 +11605,7 @@ function initChiExplorer() {
   }
 
   function loadSocrataGeoJSON(datasetId) {
-    return tryRoutes(socrataRouteUrls(datasetId), hasUsableGeometry, datasetId + " geometry");
+    return tryRoutes(socrataRouteUrls(datasetId), hasWholeUsableGeometry, datasetId + " geometry");
   }
 
   /* ---------- point-first Socrata fetch: only the feature(s) containing one
@@ -35217,6 +35246,13 @@ function initChiExplorer() {
     pointInGeometry: pointInGeometry,
     fetchJSONWithRetry: fetchJSONWithRetry,
     probeGeometryColumn: probeGeometryColumn,
+    // The Socrata route walk, so a test can ask the two questions no
+    // fixture can: which urls a dataset is fetched from, and whether a
+    // response that exactly fills the primary route's page is refused as
+    // possibly truncated (smoke check 1k).
+    socrataRouteUrls: socrataRouteUrls,
+    socrataPageMax: function () { return SOCRATA_PAGE_MAX; },
+    hasWholeUsableGeometry: hasWholeUsableGeometry,
     // Every district of a county-dispatched layer, fetched through that
     // layer's OWN per-county loaders and named by its own hover identity —
     // what scripts/build_district_search.py reads to index "Lake County Board
