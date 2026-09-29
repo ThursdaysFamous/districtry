@@ -53,6 +53,59 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-29 — THREE OF THE FOUR ASSIGNED ROWS ARE ALREADY CLOSED, AND THE ONE THING THAT LOOKED
+LIKE OPEN WORK IS A GUARD DOING ITS JOB. #1253 records the re-measurement; nothing else is
+unblocked.** Verified on the tree rather than taken from my own board, which can be stale too.
+
+**1. MITCHELL NEEDED NO FIX AND SHIPS.** `ia-supervisor-members.json` keys Mitchell (131) to all
+five supervisors, districts 1-5, `readOn` **2026-09-26** with **no `asOf`** — genuinely re-read
+rather than carried forward. The suspension ended on its own; `--allow-drop` was never passed.
+
+**2. THE SUSPENDED-HOST EXCUSE PATH IS BUILT, and the freeze it keeps is deliberate.**
+`ROBOTS_REFUSED_PRESERVED` is in the builder with the re-audit: an entry that keys again is STALE
+and fails, one naming a non-plan-3 county is ORPHANED and fails. A RECORDED refusal is excused and
+the county is preserved; an UNRECORDED one still stops the build, because a brand-new refusal is
+indistinguishable from a bug in the robots read. That is the principled alternative to
+`--allow-drop` I asked for, and I would not change it.
+
+**3. THE OFFICER PHONES ARE CLEAN, RE-MEASURED.** 392 numbers across 99 counties, **392 distinct,
+0 repeated**. The manager's row says ~305 and my own earlier entry says 391; the file has gained
+numbers since. The #1000 defect — one switchboard rendered as several people's direct line — does
+not exist here.
+
+**AND THE HEADLINE FIGURE IS FOUR COUNTIES BETTER THAN THE BRIEF SAYS: the supervisor roster keys
+districts in 21 of 99 counties, not 17.** Nothing shipped states 17, so no reader was told anything
+stale — `ia-board-chair`'s panel says 43 of 99 and the chairs file holds exactly 43 keys, and
+llms.txt's 91 county pages match 91 files on disk.
+
+**THE ONE ITEM THAT LOOKED UNBLOCKED WAS KOSSUTH AND WORTH, AND CHASING IT IS THE FINDING.** Of the
+fourteen counties in `ia-supervisor-district-seats`, twelve publish the join nowhere and are Ask 30,
+drafted and unsent. The other two PUBLISH it and are refused by gate 3 — which the record calls "a
+question about their PAGE rather than their records", and that phrase reads as an invitation to fix
+the reader. **It is not one.** Both shapes are pinned as assertions in the scraper's `--selftest`,
+and shipping either would retire a stated refusal on a roster. Kossuth is the worse: read name-first
+it yields a clean permutation shifted one position round the cycle, which no 1..N test can see.
+
+**I RE-READ BOTH LIVE PAGES ANYWAY, WHICH IS THE MITCHELL LESSON, AND THE REFUSALS HOLD.** Through
+the scraper itself rather than a harness of mine, robots first as the client it sends: Kossuth
+serves 142 bytes with no matching rule and a **10 s crawl-delay, honoured**, and keys
+`[1, 2, 3, 3, 5]`; Worth answers 404 allow-all and keys `[1, 1, 2]`. **One thing did move and it is
+the fixture's description rather than the verdict** — the selftest comment describes Kossuth as
+rotated 4, 5, 1, 2, 3 and today's page collides on 3, a different failure reaching the same
+refusal. Recorded, not edited: that fixture is the scraper's.
+
+**TWO WRONG TURNS OF MINE, BOTH CAUGHT BY THE RESULT LOOKING TOO CLEAN.** I measured "plan-3
+counties with no join" and got **0 with both difference sets empty** — the tell that I had compared
+slugs against proper names. Normalised, it is 19. Then I read those 19 against this record's 14 and
+concluded it omitted five counties; checking whether they appear in ANY Iowa record showed all five
+named in `ia-supervisor-count-impossible` or `ia-supervisor-count-disagrees`, so the nine records
+**partition cleanly at 14 + 4 + 1** and each county sits in the record stating its own cause. The
+finding dissolved on the check, which is why it was worth running rather than reporting.
+
+**SO IOWA HAS NO UNBLOCKED READER-FACING WORK ON ITS HEADLINE GAP.** It is waiting on Ask 30 going
+out, and sessions do not send. Ledger unchanged: `NOT YET ASKED — DRAFTED 2026-09-25` in both
+places, `ASKED <date>` only on the day it goes.
+
 **2026-09-26 — THE CEILING METHOD IS RULED (root board `ee9d9ce`), IOWA'S SHIPPED 45 m COMPLIES
 MEASURED, AND MY OWN BOARD'S "OPEN FLEET DECISION" IS NOW STALE.** The rule: the ceiling is the
 state's own median step, rounded to a round number, never more than about 1.1x it. Checked against
