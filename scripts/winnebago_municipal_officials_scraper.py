@@ -23,14 +23,30 @@ THREE LAYER SHAPES, because the county did not normalise them:
   PER-WARD  one feature per ward. Loves Park elects TWO aldermen per ward
             (Alderman1/Alderman2, each with its own phone); Machesney Park
             elects one trustee per district, with a phone.
-  ROCKFORD  split across two layers — the mayor on one, the 14 alderpersons on
-            another, each with a published city e-mail.
+  ROCKFORD  split across two layers — the mayor on one, the 14 WARDS on
+            another. Only the mayor's NAME comes from WinGIS: since 2026-09-29
+            the fourteen alderpersons come from the city's own directory
+            (rockford_alderperson_scraper.py), joined to the ward layer by
+            ward. See ROCKFORD'S PEOPLE below.
 
 Two municipalities (Loves Park, Machesney Park) have NO head-of-government layer
 — WinGIS publishes their council seats only. Their mayors ship anyway, carried
 from the County Clerk's elections office, which named both in writing when
 asked (EMAIL_CARRIED_HEADS below) — still never inferred, and re-read never
 pretended: every run prints how old that e-mail is.
+
+ROCKFORD'S PEOPLE ARE NOT WINGIS'S. Layer 20 carries an `Alderman` and an
+`Email` column on every ward polygon, and this scraper read them until
+2026-09-29. Joined ward-for-ward against the city's own directory that day the
+two sources agreed on all fourteen WARDS and disagreed on two SEATS — ward 3
+Tuneburg/Tuneberg and ward 7 Wilkins/Neal — with each layer address spelled
+from the layer's own spelling, so both cards sent a reader to an address the
+city does not publish. The layer's people column is a snapshot; the city's
+directory is maintained. So the ward NUMBERS still come from the layer (it is
+the geometry the ward card draws) and the PEOPLE come from the city, joined by
+ward, with the join printed every run and a ward-set mismatch fatal. The
+geometry is untouched and was separately measured current. This is the Coles
+pattern, and the same call made for Freeport one county over.
 
 Nothing is inferred from column ORDER: a seat is emitted only when its column
 holds a name, so a village that leaves Trustee6 empty ships five trustees
@@ -59,6 +75,17 @@ import sys
 import urllib.parse
 import urllib.request
 from scraper_common import UA_CHROME_X11_120  # noqa: E402  (shared machinery — do not fork)
+# One reader of Rockford's council directory, shared rather than re-scraped: the
+# ward card and this roster must not be free to disagree about who holds a seat.
+# Its INDEX_URL is imported rather than restated: a second copy of the address
+# would be a second thing to keep true, and it would also put a rockfordil.gov
+# literal in this file, which sends a browser string and does not fetch that
+# host — probe_user_agents.py reads URL literals per file and would read the
+# citation as a fetch.
+from rockford_alderperson_scraper import (  # noqa: E402  (one reader, not a fork)
+    INDEX_URL as ROCKFORD_DIRECTORY_URL,
+    scrape as scrape_rockford_directory,
+)
 
 BASE = "https://maps.wingis.org/public/rest/services/ElectedOfficials/MapServer"
 DIRECTORY_URL = "https://wingis.org/maps/electedofficials"
@@ -72,6 +99,9 @@ USER_AGENT = UA_CHROME_X11_120
 # derived from a field that would need re-casing anyway.
 WIDE = "wide"
 PER_WARD = "per-ward"
+# A per-ward layer whose `people` is this supplies ward numbers only; its
+# officeholders come from the municipality's own directory.
+CITY_DIRECTORY = "city-directory"
 
 LAYERS = [
     {"id": 13, "name": "Cherry Valley", "shape": WIDE, "head": "President", "seat": "Trustee"},
@@ -93,8 +123,10 @@ LAYERS = [
     # is built from the same table as the others rather than a special case.
     {"id": 19, "name": "Rockford", "shape": WIDE, "head": "Mayor", "seat": None,
      "head_email": "Email"},
+    # Layer 20 supplies Rockford's fourteen WARD NUMBERS and nothing else. Its
+    # own Alderman/Email columns are read NOWHERE (see ROCKFORD'S PEOPLE above).
     {"id": 20, "name": "Rockford", "shape": PER_WARD, "district": "Ward",
-     "seats": [("Alderman", None)], "email": "Email", "office": "Alderperson"},
+     "seats": [], "office": "Alderperson", "people": CITY_DIRECTORY},
 ]
 
 # Aggregate floors, deliberately under the 2026-07 live values (11
@@ -221,6 +253,7 @@ def main():
 
     officials = []
     municipalities = []
+    directory_layers = []   # (spec, ward numbers) for the city-directory shape
     # EVERY LAYER MUST ANSWER, or this run produces nothing. WinGIS is
     # intermittently flaky (a run during development lost layer 19 and shipped a
     # Rockford with no mayor, under an aggregate floor that could not tell the
@@ -238,6 +271,21 @@ def main():
                   "forward from the shipped file."
                   % (spec["id"], spec["name"], exc), file=sys.stderr)
             sys.exit(1)
+        if spec.get("people") == CITY_DIRECTORY:
+            # Ward numbers only. The people arrive after the loop, from the
+            # city, so that a directory failure cannot leave a half-built
+            # municipality behind in `officials`.
+            wards = sorted({clean(a.get(spec["district"])) for a in data} - {None},
+                           key=lambda w: (len(w), w))
+            if not wards:
+                print("winnebago-municipal: FATAL — layer %d (%s) returned rows but "
+                      "no ward numbers; the %s column changed."
+                      % (spec["id"], spec["name"], spec["district"]), file=sys.stderr)
+                sys.exit(1)
+            directory_layers.append((spec, wards))
+            if spec["name"] not in municipalities:
+                municipalities.append(spec["name"])
+            continue
         found = []
         for attrs in data:
             found.extend(read_wide(spec, attrs) if spec["shape"] == WIDE
@@ -251,6 +299,65 @@ def main():
             municipalities.append(spec["name"])
         for person in found:
             person["jurisdiction"] = spec["name"]
+            officials.append(person)
+
+    # THE CITY-DIRECTORY JOIN, PRINTED EVERY RUN. The ward layer says which
+    # wards exist and the city says who holds them; nothing here reconciles a
+    # disagreement, because there is no honest way to. A ward the city does not
+    # name, or a ward the city names that the layer does not draw, is a
+    # question for a person — so this refuses and the whole county carries
+    # forward from the shipped roster rather than shipping a council that is
+    # short, or one seated in a ward the map cannot draw.
+    for spec, wards in directory_layers:
+        try:
+            by_ward = scrape_rockford_directory()
+        except Exception as exc:  # noqa: BLE001 — reported, not swallowed
+            print("winnebago-municipal: FATAL — %s's own council directory could not "
+                  "be read: %s. Refusing to emit a %s with no council; the roster "
+                  "build will carry Winnebago forward from the shipped file."
+                  % (spec["name"], exc, spec["name"]), file=sys.stderr)
+            sys.exit(1)
+        layer_wards = sorted(int(w) for w in wards if str(w).strip().isdigit())
+        if len(layer_wards) != len(wards):
+            print("winnebago-municipal: FATAL — layer %d (%s) publishes a ward that "
+                  "is not a number: %s" % (spec["id"], spec["name"], wards),
+                  file=sys.stderr)
+            sys.exit(1)
+        city_wards = sorted(by_ward)
+        print("  %s: ward layer %d wards, city directory %d seats"
+              % (spec["name"], len(layer_wards), len(city_wards)))
+        for ward in sorted(set(layer_wards) | set(city_wards)):
+            seat = by_ward.get(ward)
+            print("    ward %-3s %-6s %-22s %s"
+                  % (ward,
+                     "map+city" if (ward in by_ward and ward in layer_wards)
+                     else ("map only" if ward in layer_wards else "city only"),
+                     (seat or {}).get("name") or "-",
+                     (seat or {}).get("email") or "-"))
+        if set(layer_wards) != set(city_wards):
+            print("winnebago-municipal: FATAL — %s's ward layer and the city's own "
+                  "directory no longer name the same wards (map %s, city %s). That "
+                  "is a question for a person, not a partial roster."
+                  % (spec["name"], layer_wards, city_wards), file=sys.stderr)
+            sys.exit(1)
+        for ward in city_wards:
+            seat = by_ward[ward]
+            person = {
+                "office": spec["office"],
+                "name": seat["name"],
+                "district": "%s %d" % (spec["district"], ward),
+                "jurisdiction": spec["name"],
+            }
+            if seat.get("email"):
+                person["person_email"] = seat["email"]
+            if seat.get("phone"):
+                person["person_phone"] = seat["phone"]
+            # Provenance is per person here, because this municipality's entry
+            # has two publishers: the mayor is WinGIS's row and these fourteen
+            # are the city's own pages. The payload's county-level
+            # `directory_url` still describes the payload; it must not be
+            # stamped on people it did not supply.
+            person["source_url"] = seat.get("url") or ROCKFORD_DIRECTORY_URL
             officials.append(person)
 
     # The two e-mail-carried heads join here, and never silently: each run
@@ -293,7 +400,10 @@ def main():
     for person in officials:
         if person.get("source_note"):
             continue  # e-mail-carried: its provenance is its own, not the directory's
-        person["source_url"] = DIRECTORY_URL
+        # A person who already carries a source keeps it: the city-directory
+        # join sets its own, and overwriting it here would cite WinGIS for
+        # fourteen people WinGIS does not publish.
+        person.setdefault("source_url", DIRECTORY_URL)
         person["scraped_at"] = scraped_at
     payload = {
         "county": COUNTY,

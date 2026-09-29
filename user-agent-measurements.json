@@ -17,7 +17,7 @@
   "robots-unreadable": 4,
   "stack-not-token": 7,
   "tls-chain": 1,
-  "token-ok": 225,
+  "token-ok": 226,
   "token-refused": 3,
   "token-refused-and-stack": 15
  },
@@ -2831,6 +2831,25 @@
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both"
    }
+  },
+  "rockfordil.gov": {
+   "host": "rockfordil.gov",
+   "url": "https://rockfordil.gov",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 116519 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 116519 bytes",
+   "callers": {
+    "scripts/rockford_alderperson_scraper.py": "self"
+   },
+   "measured": "2026-09-29"
   },
   "rockislandcountyil.gov": {
    "host": "rockislandcountyil.gov",
