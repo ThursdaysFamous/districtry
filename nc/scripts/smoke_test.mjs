@@ -824,6 +824,82 @@ try {
       await context.close();
     }
   }
+
+  // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
+  //    A ZCTA carries no STATE field, so this is the one layer here whose
+  //    point query cannot be filtered server-side — and outside North
+  //    Carolina it does not answer with nothing, it answers with a real
+  //    neighbouring ZIP. Measured against the live service 2026-09-29:
+  //    Norfolk VA -> 23504, Columbia SC -> 29201, Nashville TN -> 37203,
+  //    against Raleigh's correct 27601. So without a coverage test this card
+  //    would present another state's ZIP code as this app's answer.
+  //
+  //    THE OUT-OF-STATE HALF IS THE ONE THAT DISCRIMINATES, and the stub is
+  //    what makes it honest: it answers with 23504 — the ZIP the live service
+  //    really does return out there — so a regression that drops `coverage`
+  //    renders that card and fails here. Stubbing an EMPTY answer would pass
+  //    for the wrong reason, which is the shape this file's section 7 already
+  //    exists to avoid. The in-state half is equally load-bearing: coverage
+  //    fails OPEN, so a test that only asserted hiding would also pass on a
+  //    layer that had stopped working altogether.
+  //
+  //    The negative point is the worksheet's own, the open Atlantic east of
+  //    Hatteras — outside the county fabric's dissolve, which is what the
+  //    coverage test reads. It cannot be a sound: the fabric is
+  //    water-inclusive, so Pamlico is in Hyde County and inside coverage.
+  {
+    const ZCTA = "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11";
+    function zctaBody(zip) {
+      return JSON.stringify({
+        geometryType: "esriGeometryPolygon",
+        spatialReference: { wkid: 4326 },
+        fields: [{ name: "ZCTA5", type: "esriFieldTypeString", alias: "ZCTA5" }],
+        features: [{
+          attributes: { ZCTA5: zip },
+          // a ring around BOTH probe points, so geometry never decides this
+          geometry: { rings: [[[-80, 34], [-74, 34], [-74, 37], [-80, 37], [-80, 34]]] }
+        }]
+      });
+    }
+
+    // in state: the layer answers, and answers from the stub
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=zip-code`, async (p) => {
+        await p.route(`**/${ZCTA}/query**`, (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("27601") }));
+      });
+      const info = await cardText(page, "zip-code");
+      check("zip-code answers inside North Carolina (coverage fails open, so this half matters)",
+        !info.error && /27601/.test(info.text || ""),
+        (info.text || "").slice(0, 90));
+      await context.close();
+    }
+
+    // out of state: the layer HIDES, and the neighbouring ZIP never renders
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=zip-code`, async (p) => {
+        await p.route(`**/${ZCTA}/query**`, (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("23504") }));
+      });
+      const hidden = await page
+        .waitForFunction(() => {
+          const box = document.getElementById("toggle-zip-code");
+          const block = box && box.closest(".layer-block");
+          return block && block.hidden === true;
+        }, null, { timeout: QUERY_TIMEOUT })
+        .then(() => true, () => false);
+      const info = await cardText(page, "zip-code");
+      const leaked = /23504/.test(info.text || "");
+      const stillOn = await page.evaluate(
+        (n) => window[n].state.layersOn["zip-code"] === true, EXPORTS_NAME);
+      check("zip-code hides outside North Carolina rather than naming a Virginia ZIP",
+        hidden && !leaked && stillOn,
+        `hidden=${hidden} leaked=${leaked} layersOn=${stillOn} text=${(info.text || "").slice(0, 90)}`);
+      await context.close();
+    }
+  }
 } finally {
   await browser.close();
 }

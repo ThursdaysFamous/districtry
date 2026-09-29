@@ -12755,16 +12755,62 @@ function initNorthCarolinaExplorer() {
       TIGERWEB_SERVICES + "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11", point, "ZCTA5");
   };
 
+  /* IN-STATE ONLY, AND THE REASON IS MEASURED RATHER THAN INHERITED.
+   * Every other layer here filters server-side on STATE='37', so outside
+   * North Carolina each one answers with nothing and says so. A ZCTA carries
+   * no STATE field, so neither the envelope load nor the point query can be
+   * filtered that way — and outside the state the point query does not answer
+   * with nothing, it answers with a REAL neighbouring ZIP. Measured
+   * 2026-09-29 against the live service: Norfolk VA -> 23504, Columbia SC ->
+   * 29201, Nashville TN -> 37203, against Raleigh's correct 27601. So this
+   * one card would present another state's ZIP code as this app's answer.
+   *
+   * FILTERING THE POINT QUERY IS NOT ENOUGH, which is why the fix is a
+   * coverage test and not a guard on the loader: queryFeatureAtSource falls
+   * back to the FULL set whenever atPoint returns no feature, and the full
+   * set is an ENVELOPE that necessarily reaches into South Carolina, Georgia,
+   * Tennessee and Virginia — so a filtered atPoint would be answered by
+   * fromFull with the same wrong ZIP. `coverage` suppresses the query
+   * outright, which is the engine's own mechanism for "this layer does not
+   * apply here" and costs no fetch at all outside the state.
+   *
+   * THIS IS NOT WHAT THE TILED SIBLINGS DO AND THE DIFFERENCE IS THE DATA,
+   * not a decision taken twice: il/ia/wi/mi draw this concept from a
+   * PMTiles archive that mirror_tiger_tiles.py has already filtered by state
+   * overlap, so their layer can stay visible and let an empty card carry the
+   * fact. This instance's ZIP layer is live, so nothing has filtered it, and
+   * the honest silence is the layer's own. A previous draft of this block
+   * cited that archive's STATE_OVERLAP_MIN in a comment here — this layer has
+   * no archive and no `tiles` key, so the citation described machinery it
+   * does not use while the card went on making the claim anyway.
+   *
+   * The outline is the same file the coverage wash already fetches, so the
+   * test adds no request; a failed fetch fails OPEN per the engine's coverage
+   * contract, which is the right direction — a reader in North Carolina keeps
+   * a working layer, and the only cost is the out-of-state answer this fixes
+   * coming back on a connection that could not read a local file. ---------- */
+  function inNorthCarolina(point) {
+    return loadMetroOutline().then(function (fc) {
+      var feats = (fc && fc.features) || [];
+      for (var i = 0; i < feats.length; i++) {
+        if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) return true;
+      }
+      return false;
+    });
+  }
+
   registerPolygonLayer({
     id: "zip-code",
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,
-    // The archive keeps only the ZCTAs inside this app's own state (scripts/
-    // mirror_tiger_tiles.py, STATE_OVERLAP_MIN), so an empty card here is a fact
-    // about the archive, not about the place: the generic "isn't inside any
-    // district" would be false for a point in, say, a neighbouring state's ZIP.
-    emptyNote: "No ZIP code here. This map holds North Carolina's ZIP codes only, so a point outside North Carolina gets none.",
+    coverage: inNorthCarolina,
+    // Reached only for a point INSIDE the state outline that no ZCTA covers —
+    // the outline is the county fabric's dissolve and that fabric is
+    // water-inclusive, so the sounds behind the Outer Banks are in coverage
+    // and need not be in a ZCTA. It deliberately does not say "outside North
+    // Carolina": out there the layer is hidden and this card is never drawn.
+    emptyNote: "No ZIP code here. The Census draws these areas around postal delivery routes, so open water inside the state can sit outside them all.",
     // dotted outline (a distinct pattern from Township or City's long dash) + its own hue
     style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
     fields: [
