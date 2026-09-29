@@ -63,3 +63,34 @@ and `mn-county-officers` in `docs/DATA_LAYER_GUIDEBOOK.md`.
 | **The Secretary of State's precinct layer is this instance's whole growth path and it is ONE service.** `enterprise.gisdata.mn.gov` → `us_mn_state_sos/bdry_votingdistricts/FeatureServer/0`, 4,105 precincts, `maxRecordCount` 2000 so it pages. Seven layers dissolve out of its own attributes: `ctycomdist` (447 county commissioner districts, all 87 counties), `pctcode` (precincts), `juddist` (10 judicial), `swcdist_n` (117 soil & water), `hospdist_n` (16 hospital), `parkdist_n` (3 park) and `ward` (274 wards in 76 cities). **A single upstream service is a single point of failure for seven layers**, so watch its `Service Modified` stamp (2026-09-17 when measured) and re-check the seven field names, not just the endpoint | Measured 2026-09-29. `gis.data.mn.gov`'s robots.txt allows this client with **Crawl-delay: 60** binding on `*` — honoured, and it makes a full page-through slow rather than impossible. The separate `www.mngeo.state.mn.us` serves a Radware Bot Manager captcha to this project's token: obeyed, never worked around, and it costs nothing because the data is on the enterprise host. **Do not let a later pass read "MnGeo is blocked" as "Minnesota publishes nothing"** — that is the Knox shape | 2026-09-29 |
 | **The commissioner ROSTER route is unproven, not closed, and the difference is one measurement.** The SoS's companion results service `bdry_electionresults_2022_2030` carries federal and state contests only — no commissioner column — so composing a roster out of certified returns is shut there. Its `LocalRacesInCounty` pages were read for ONE county at ONE election id with no commissioner contest found, which is one reading and not a finding. If those pages carry commissioner contests, all 447 seats come from one publisher; if they do not, this is the Michigan shape — 87 counties in tranches off their own board pages | This is the next research question for this instance, and it decides whether the flagship layer ships with names or without | 2026-09-29 (one county, one election id) |
 | **A negative point must be outside every live instance.** See the GO-LIVE row above. The two points tried before Cass County, North Dakota are recorded in full in `mn/metro-worksheet.json`'s `negative_point.note`, including why Lake Superior does not work: Minnesota's TIGER county fabric is water-inclusive to the international boundary, so a point in open lake at 47.6, -90.0 is named `Lk Superior` by TIGERweb's hydrography **and is still inside Cook County** | Both failures looked obvious and both were caught by measurement rather than reasoning | 2026-09-29 |
+
+## Tribal-nation roster hosts, measured 2026-09-29 under RFC 9309
+
+Not a gate. A record of what one client got from which address, so the next pass
+does not repeat the probe or read a stale verdict as a finding.
+
+- `www.redlakenation.org` — the nation's site, and a **managed challenge fronts
+  robots.txt itself** (11,990 bytes of markup, not a document), so `RobotsGate`
+  declines the host and nothing further is asked of it. Bare
+  `redlakenation.org` is a default IIS7 welcome page and `redlakenation.com` is
+  a for-sale parking page; neither is the nation and neither is a refusal.
+  A verdict recorded against either would have been about nothing.
+- `mn.gov/indian-affairs` — the state's own compilation, and the one publisher
+  that would list every nation's council in one place. robots.txt allows.
+  On the first request of the day it served the **districtry token** HTTP 200
+  and a real 40,518-byte page. The probe then tried the Chrome string, which
+  Radware redirected to its interstitial, and **every request from this address
+  since — the token's included — is 302'd there**. So a host that had been
+  serving us now blocks us, and our own probe is the likeliest cause: the same
+  posture this repository already takes on a 429.
+  **A crawler here sends the token and does not try the browser rung.** Trying
+  it is what closed the door, and a browser string is not a superset of the
+  token — Kendall and McHenry are the reverse case, 200 only to the stdlib
+  client carrying Chrome's hints. Ask both rungs only where one has failed.
+- Readable to the token: `whiteearth.com` (Crawl-delay 30, honoured),
+  `millelacsband.com`, `llojibwe.org` (Leech Lake; the earlier `llojibwe.net`
+  reading was at the wrong domain).
+
+None of this is in a shipped file yet. Tribal geometry rides a later PR and the
+per-nation rosters are their own change; a nation that cannot be read becomes a
+recorded gap naming its own government.
