@@ -53,6 +53,69 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-29 — THE DERIVED-COUNT FORM IS BUILT AND OPEN AS #1258, AND ONE HALF OF MICHIGAN'S
+ASK IS DECLINED ON A MEASUREMENT RATHER THAN A PREFERENCE.** Built to the ruled shape, not the
+one I proposed: derive FROM a declaration, never instead of one.
+
+**WHAT IT IS.** A `counts` entry gains an optional `name`, the reader field writes `{name}` where
+the number went, the entry carries no `value`, and the builder ships the resolved text — so the
+declaration stays where it was, states the same file and metric, and **the question being asked
+stays visible**. `scripts/gap_counts.py` is new because the measurement had to move: it lived
+inside `validate_gap_counts.py`, which was right while a declaration only ever CHECKED a typed
+number, and the builder now has to RESOLVE one into the shipped bytes while being imported BY
+that gate. The proof the lift was faithful is that all eleven pre-existing selftest cases pass
+and all six instances' shipped files come back byte-identical.
+
+**`name` IS OPTIONAL AND THAT IS MICHIGAN'S RULE, which is the sharpest thing in its answer.**
+Derive what MOVES, state what does NOT. `ia-board-chair` is migrated as the proof and uses BOTH
+forms on one record — its chairs and its complement derived, Iowa's 99 counties stated — and its
+shipped bytes do not move, because the token resolves to what was typed there. **A migration
+changes the source and not the file a reader downloads**, which is what makes the form safe to
+land across six instances at once.
+
+**SIX REFUSALS, SIXTEEN NEW SELFTEST CASES, all hermetic on `self`** so they measure the grammar
+and never today's data. The three the manager named, plus Michigan's leftover-brace and
+bounded-format refusals and a duplicate-name refusal. READER_MAX and the other three reader-field
+rules now measure the RESOLVED text — a prerequisite rather than a refinement, since Michigan's
+own summary is 254 characters authored against 230 resolved and a ceiling on the authored text
+would refuse the first record the form exists for.
+
+**THE DECLINED HALF.** Michigan asks for a comma matcher on the `value` form too, on the strength
+of 19 reader-field numbers carrying a thousands comma. It is ONE. The token form closes the gap
+for anyone who needs it — a comma'd number can now be declared at all, where it could not before
+— and the rule that it must use a token is stated in the module rather than left to be
+discovered. **The matcher is a convenience for a case that does not exist yet**, so it is not
+built, and that is recorded rather than quietly dropped.
+
+**A THIRD WITNESS WAS IN THE REPO THE WHOLE TIME**, which is worth more than the correction:
+`validate_gap_counts.py`'s own docstring says the block "holds exactly one comma-grouped number,
+`1,659`" and records that two readers measured that corpus an hour apart and got 152 and 153
+because THE RULE WAS NEVER STATED. Michigan's 19 is that same unstated rule producing a third
+answer. The figure was available to read and was re-derived instead.
+
+**AND THE LAST HAND-TYPED COPY OF THE CHAIR COUNT LEFT THE TREE, found by a sweep the migration
+made worth running.** `ia/sources.html` and the worksheet's `people` text both said "in 43 of 99
+counties as of 2026-09-12" — a date on which the file held 38, the count having gone 38 to 43 on
+2026-09-25 — **three lines from the same worksheet's own note saying the reader-facing figure
+lives in one place only, the gap record.** So the file stating the rule was breaking it. It now
+states none. Today's 43 and the 2026-09-12 claim of 43 are different numbers that happen to
+match, which is the shape a value check cannot see and a date makes worse.
+
+**TWO INSTRUMENT DEFECTS OF MINE, both caught by distrusting a clean result.** My first battery
+extraction excluded `build_og_image.mjs --check` and `esri_rings_test.mjs` on a `node scripts/`
+pattern I wrote myself — they are STATIC gates, and CLAUDE.md says so in as many words; the rule
+against writing your own extraction is there for exactly this and I did it anyway, one turn after
+quoting it. And the first instrument measuring the deliberate breaks counted `FAIL` lines, so it
+reported **0 caught** for the two breaks that fail by crashing — a fully-failing gate reading
+exactly like an untested one. The exit code is what settles it. Both are the same afternoon's
+comma defect in a different costume: **a result that matches what you expected is the one to
+check.**
+
+**114 of 114 static invocations green**, enumerated through the steward mirror. Gate-count pair
+unchanged at 95/124 — the gate and its selftest were already one CI step and the new module is
+read by both. #1258 merges clean; not mine to merge.
+
+
 **2026-09-29 — #1253 IS MERGED AS `e000a093`, THE DERIVED-COUNT FORM IS RELEASED TO ME, AND
 THE BLOCKER I RESTATED THIS MORNING HAD ALREADY CLEARED THREE DAYS AGO.** Michigan answered the
 design on 2026-09-26; I re-measured every figure in its answer against the block at its own
