@@ -1,0 +1,123 @@
+{
+  "1": {
+    "name": "Brad Finstad",
+    "party": "Republican",
+    "url": "https://finstad.house.gov",
+    "capitolOffice": [
+      "2418 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2472"
+    ],
+    "districtOffice": [
+      "2746 Superior Drive NW, Suite 100",
+      "Rochester, MN 55901",
+      "Phone: 507-577-6140"
+    ]
+  },
+  "2": {
+    "name": "Angie Craig",
+    "party": "Democrat",
+    "url": "https://craig.house.gov",
+    "capitolOffice": [
+      "2052 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2271"
+    ],
+    "districtOffice": [
+      "1915 Plaza Dr., Suite 202",
+      "Eagan, MN 55122",
+      "Phone: 651-846-2120"
+    ]
+  },
+  "3": {
+    "name": "Kelly Morrison",
+    "party": "Democrat",
+    "url": "https://morrison.house.gov",
+    "capitolOffice": [
+      "1205 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2871"
+    ],
+    "districtOffice": [
+      "3033 Campus Dr., W105",
+      "Plymouth, MN 55441",
+      "Phone: 952-656-5176"
+    ]
+  },
+  "4": {
+    "name": "Betty McCollum",
+    "party": "Democrat",
+    "url": "https://mccollum.house.gov",
+    "capitolOffice": [
+      "2426 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6631"
+    ],
+    "districtOffice": [
+      "661 LaSalle Street, Suite 110",
+      "St. Paul, MN 55114",
+      "Phone: 651-224-9191"
+    ]
+  },
+  "5": {
+    "name": "Ilhan Omar",
+    "party": "Democrat",
+    "url": "https://omar.house.gov",
+    "capitolOffice": [
+      "1730 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4755"
+    ],
+    "districtOffice": [
+      "310 E 38th St, Suite 222",
+      "Minneapolis, MN 55409",
+      "Phone: 612-333-1272"
+    ]
+  },
+  "6": {
+    "name": "Tom Emmer",
+    "party": "Republican",
+    "url": "https://emmer.house.gov",
+    "capitolOffice": [
+      "326 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2331"
+    ],
+    "districtOffice": [
+      "9201 Quaday Ave. NE, Suite 206",
+      "Otsego, MN 55330",
+      "Phone: 763-241-6848"
+    ]
+  },
+  "7": {
+    "name": "Michelle Fischbach",
+    "party": "Republican",
+    "url": "https://fischbach.house.gov",
+    "capitolOffice": [
+      "2229 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2165"
+    ],
+    "districtOffice": [
+      "2211 1st Street S, Suite 190",
+      "Willmar, MN 56201",
+      "Phone: 320-403-6100"
+    ]
+  },
+  "8": {
+    "name": "Pete Stauber",
+    "party": "Republican",
+    "url": "https://stauber.house.gov",
+    "capitolOffice": [
+      "145 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6211"
+    ],
+    "districtOffice": [
+      "501 Laurel St",
+      "Brainerd City Hall",
+      "Brainerd, MN 56401-3595",
+      "Phone: 218-355-0862"
+    ]
+  }
+}
