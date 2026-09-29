@@ -1,0 +1,536 @@
+{
+  "this_metro": "northcarolina",
+  "metro_name": "North Carolina",
+  "metro_bbox": {
+    "minLng": -84.33,
+    "minLat": 33.74,
+    "maxLng": -75.39,
+    "maxLat": 36.6
+  },
+  "metro_center": [
+    35.17,
+    -79.86
+  ],
+  "permalink_gate": {
+    "minLat": 33.6,
+    "maxLat": 36.75,
+    "minLng": -84.5,
+    "maxLng": -75.1
+  },
+  "poi_geocode_bbox": {
+    "minLat": 33.6,
+    "maxLat": 36.75,
+    "minLng": -84.5,
+    "maxLng": -75.1
+  },
+  "brand": {
+    "app_name": "districtry North Carolina",
+    "product_name": "districtry",
+    "instance_tag": "nc",
+    "jsonld": {
+      "site_description": "Find every civic district that covers a point or address in North Carolina, and who represents you there.",
+      "app_description": "Click any point in North Carolina, or search an address, to see every civic district that contains it, and who represents you there — county, NC Senate, NC House and U.S. House districts, townships, municipalities, school districts and ZIP codes.",
+      "keywords": "North Carolina district map, what district am I in, NC Senate district, NC House district, county commissioner district, North Carolina township, NC school district lookup",
+      "area_served": {
+        "state": "North Carolina"
+      }
+    },
+    "tagline": "Every civic district that covers your point in North Carolina, and who represents you there.",
+    "theme_color": "#6d3fd1",
+    "favicon_data_uri": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3EMI%3C/text%3E%3C/svg%3E",
+    "apple_touch_icon": "icons/apple-touch-icon.png",
+    "head": {
+      "title": "North Carolina district lookup — districtry North Carolina",
+      "description": "Tap the map or search a North Carolina address: county, NC Senate, NC House and U.S. House districts — and who represents you.",
+      "og_title": "North Carolina district lookup — districtry North Carolina",
+      "og_description": "Every civic district that covers a point in North Carolina, and who holds it.",
+      "og_image_alt": "districtry North Carolina — every district that covers a point, and who represents it.",
+      "twitter_title": "North Carolina district lookup — districtry North Carolina",
+      "twitter_description": "Click or search a North Carolina address to see every district that covers it."
+    },
+    "analytics": {
+      "goatcounter_url": "https://districtry.goatcounter.com/count"
+    }
+  },
+  "socrata_host": "https://data.invalid",
+  "socrata_app_token": "",
+  "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
+  "feedback_subject": "districtry North Carolina feedback",
+  "metro_explorers": [
+    {
+      "id": "chicago",
+      "label": "Illinois",
+      "url": "https://districtry.com/il/",
+      "emoji": "🌭",
+      "explorer_name": "districtry Illinois",
+      "bbox": {
+        "minLng": -91.52,
+        "minLat": 36.96,
+        "maxLng": -87.01,
+        "maxLat": 42.51
+      }
+    },
+    {
+      "id": "nyc",
+      "label": "New York",
+      "url": "https://districtry.com/ny/",
+      "emoji": "🗽",
+      "explorer_name": "districtry New York",
+      "bbox": {
+        "minLng": -79.82,
+        "minLat": 40.43,
+        "maxLng": -71.62,
+        "maxLat": 45.07
+      }
+    },
+    {
+      "id": "sf",
+      "label": "San Francisco",
+      "url": "https://districtry.com/ca/",
+      "emoji": "🌉",
+      "explorer_name": "districtry San Francisco",
+      "bbox": {
+        "minLng": -122.6,
+        "minLat": 37.6,
+        "maxLng": -122.3,
+        "maxLat": 37.95
+      }
+    },
+    {
+      "id": "wisconsin",
+      "label": "Wisconsin",
+      "url": "https://districtry.com/wi/",
+      "emoji": "🧀",
+      "explorer_name": "districtry Wisconsin",
+      "bbox": {
+        "minLng": -92.89,
+        "minLat": 42.49,
+        "maxLng": -86.25,
+        "maxLat": 47.31
+      }
+    },
+    {
+      "id": "iowa",
+      "label": "Iowa",
+      "url": "https://districtry.com/ia/",
+      "emoji": "🌽",
+      "explorer_name": "districtry Iowa",
+      "bbox": {
+        "minLng": -96.64,
+        "minLat": 40.37,
+        "maxLng": -90.14,
+        "maxLat": 43.5
+      }
+    },
+    {
+      "id": "michigan",
+      "label": "Michigan",
+      "url": "https://districtry.com/mi/",
+      "emoji": "🚗",
+      "explorer_name": "districtry Michigan",
+      "bbox": {
+        "minLng": -87.6,
+        "minLat": 41.7,
+        "maxLng": -82.11,
+        "maxLat": 48.01
+      }
+    },
+    {
+      "id": "northcarolina",
+      "label": "North Carolina",
+      "url": "https://districtry.com/nc/",
+      "emoji": "🌳",
+      "explorer_name": "districtry North Carolina",
+      "bbox": {
+        "minLng": -84.33,
+        "minLat": 33.74,
+        "maxLng": -75.39,
+        "maxLat": 36.6
+      }
+    }
+  ],
+  "hover_number_keys": [
+    [
+      "district",
+      "basename",
+      "cd120",
+      "sldu",
+      "sldl"
+    ],
+    [
+      "geoid",
+      "number"
+    ]
+  ],
+  "hover_name_keys": [
+    [
+      "name",
+      "namelsad"
+    ]
+  ],
+  "layers": [
+    {
+      "id": "us-house",
+      "label": "U.S. House",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "14 congressional districts — the largest districts North Carolina carries below the state itself",
+      "source": {
+        "answers": "The U.S. House district covering the point, and the representative holding it.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app; 14 features for North Carolina, measured 2026-09-29. The layer's own district field is CD120.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
+          }
+        ],
+        "people": "congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
+        "applies": "North Carolina — statewide, all 14 districts."
+      }
+    },
+    {
+      "id": "nc-senate",
+      "label": "NC Senate District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "50 Senate districts — larger on average than a county, smaller than a congressional district",
+      "source": {
+        "answers": "The North Carolina Senate district covering the point, and the senator holding it.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app; 50 features, measured 2026-09-29. Simplified in ONE mapshaper run with both other chambers, because a shared edge only survives identically off one topology.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
+          }
+        ],
+        "people": "nc-senate-members.json, rebuilt weekly by CI from the Open States current-people export for North Carolina (name, party, e-mail, links). What the General Assembly publishes beyond that is recorded in nc/WATCH.md rather than assumed.",
+        "applies": "North Carolina — statewide, all 50 districts."
+      }
+    },
+    {
+      "id": "county",
+      "label": "County",
+      "group": "geography",
+      "area_rank": 3,
+      "rank_note": "100 counties, pre-built from TIGERweb; the instance's offline anchor layer",
+      "source": {
+        "answers": "Which county contains the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 100 features, measured 2026-09-29.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+          }
+        ],
+        "people": "None yet — identity only. MEASURED 2026-09-29: no state agency publishes any county's commissioner district lines — NC OneMap's one political-boundary service carries voting precincts alone, its 619-item catalogue has no commissioner item, the State Board's shapefile tree has none, and the General Assembly publishes congressional and legislative plans only. G.S. 153A-20 puts each districted county's delineation in its own clerk's office, and a written description satisfies the statute. The board's FORM is a separate and answerable question (see nc/WATCH.md); this card names the county and claims nothing about who runs it.",
+        "applies": "North Carolina — statewide, all 100 counties."
+      }
+    },
+    {
+      "id": "nc-house",
+      "label": "NC House District",
+      "group": "political",
+      "area_rank": 4,
+      "rank_note": "120 House districts — the smallest of the three chamber tilings",
+      "source": {
+        "answers": "The North Carolina House district covering the point, and the representative holding it.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app; 120 features, measured 2026-09-29.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
+          }
+        ],
+        "people": "nc-house-members.json, rebuilt weekly by CI from the Open States current-people export for North Carolina.",
+        "applies": "North Carolina — statewide, all 120 districts."
+      }
+    },
+    {
+      "id": "school-district-unified",
+      "label": "School District",
+      "group": "schools",
+      "area_rank": 5,
+      "rank_note": "118 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)",
+      "source": {
+        "answers": "The public school district covering the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 118 features for North Carolina, measured 2026-09-29.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. North Carolina's boards of education are elected, and no statewide roster of their members was found in this pass — recorded as a gap rather than left unstated.",
+        "applies": "North Carolina — statewide. The label carries no qualifier because there is nothing to distinguish it from: the elementary-only and secondary-only tilings TIGERweb serves for other states are EMPTY in North Carolina (0 features each, measured 2026-09-29), so one tiling ships where Illinois ships three."
+      }
+    },
+    {
+      "id": "county-subdivision",
+      "label": "Township",
+      "group": "geography",
+      "area_rank": 6,
+      "rank_note": "1,041 county subdivisions — North Carolina townships, the census fabric below the county",
+      "source": {
+        "answers": "The township containing the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), queried live at runtime; 1,041 features for North Carolina, measured 2026-09-29.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. A North Carolina township is a census and historical unit with no governing board of its own, unlike Illinois's, so the card is identity-only and says so. MEASURED CAVEAT: at least two counties (Gaston, Hyde) name their COMMISSIONER districts after townships in their certified returns, so a township can carry an electoral function even where it has no government — recorded in nc/WATCH.md rather than generalised from two counties.",
+        "applies": "North Carolina — statewide."
+      }
+    },
+    {
+      "id": "zip-code",
+      "label": "ZIP Code",
+      "group": "geography",
+      "area_rank": 7,
+      "rank_note": "1,500 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope and kept where they overlap North Carolina",
+      "source": {
+        "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='37', and the envelope must be Esri's own {xmin,ymin,xmax,ymax} shape. 1,500 features in North Carolina's box, measured 2026-09-29 — and that round number was checked rather than trusted: the layer's maxRecordCount is 100,000 and splitting the box at longitude -80 returns 911 + 618, which is 1,500 plus the 29 ZCTAs the seam counts twice.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.",
+        "applies": "North Carolina. A ZCTA is kept where it overlaps the state, so a click in Virginia, Tennessee, Georgia or South Carolina gets the layer's own empty note rather than a false silence or a neighbouring state's ZIP code."
+      }
+    },
+    {
+      "id": "municipality",
+      "label": "City or Town",
+      "group": "geography",
+      "area_rank": 8,
+      "rank_note": "552 incorporated places, live from TIGERweb",
+      "source": {
+        "answers": "The city or town containing the point, if any.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 552 features for North Carolina, measured 2026-09-29.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. North Carolina's cities and towns elect councils, and no statewide roster was read in this pass; the card names the place and links nothing it has not verified.",
+        "applies": "North Carolina — statewide. A point outside every incorporated place is unincorporated, which the card states."
+      }
+    },
+    {
+      "id": "police-station",
+      "label": "Police Station",
+      "group": "safety",
+      "area_rank": 9,
+      "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
+      "source": {
+        "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 53 (Police Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-09-29: 818 points in North Carolina's envelope, under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check.",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a police station is a facility, not an elected district. Nobody is elected from one.",
+        "applies": "North Carolina — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in Virginia or South Carolina, and the card's intro says these are straight-line distances."
+      }
+    },
+    {
+      "id": "fire-station",
+      "label": "Fire & EMS Station",
+      "group": "safety",
+      "area_rank": 10,
+      "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
+      "source": {
+        "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 51 (Fire Stations/EMS Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-09-29: THIS LAYER IS OVER THE CAP: 3316 points against the service's 2,000-record limit, which is not an error — one request returns HTTP 200 with exactly 2,000 rows and exceededTransferLimit set, silently dropping the rest. Paged, it is two requests and 3316.",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a fire and EMS station is a facility, not an elected district. Nobody is elected from one.",
+        "applies": "North Carolina — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in Virginia or South Carolina, and the card's intro says these are straight-line distances."
+      }
+    },
+    {
+      "id": "post-office",
+      "label": "Post Office",
+      "group": "geography",
+      "area_rank": 11,
+      "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
+      "source": {
+        "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 38 (Post Offices), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-09-29: 1367 points in North Carolina's envelope, under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check.",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a facility, not an elected district. Nobody is elected from one.",
+        "applies": "North Carolina — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in Virginia or South Carolina, and the card's intro says these are straight-line distances."
+      }
+    }
+  ],
+  "min_register_layer": 8,
+  "anchor_point": {
+    "lat": 35.7804,
+    "lng": -78.6391,
+    "note": "the State Capitol block, downtown Raleigh, Wake County"
+  },
+  "anchors": [
+    {
+      "layer": "county",
+      "expected": "Wake County"
+    },
+    {
+      "layer": "us-house",
+      "expected": "2"
+    },
+    {
+      "layer": "nc-senate",
+      "expected": "14"
+    },
+    {
+      "layer": "nc-house",
+      "expected": "38"
+    }
+  ],
+  "negative_point": {
+    "lat": 35.6,
+    "lng": -75.3,
+    "note": "the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable."
+  },
+  "coverage_key": {
+    "outside": "Outside North Carolina"
+  },
+  "data_files": {
+    "geometry": [
+      {
+        "file": "metro-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "The whole-North-Carolina outline for the coverage wash (loadMetroOutline), dissolved from the 100-county fabric."
+      },
+      {
+        "file": "state-counties.json",
+        "min_features": 100,
+        "max_features": 100,
+        "note": "The 100 counties — the instance's offline anchor layer and the ground the coverage tests use."
+      },
+      {
+        "file": "congress-districts.json",
+        "min_features": 14,
+        "max_features": 14,
+        "note": "The 14 U.S. House districts, TIGERweb layer 0 (CD120)."
+      },
+      {
+        "file": "nc-senate-districts.json",
+        "min_features": 50,
+        "max_features": 50,
+        "note": "The 50 NC Senate districts. Simplified in the same mapshaper run as the other two chamber files."
+      },
+      {
+        "file": "nc-house-districts.json",
+        "min_features": 120,
+        "max_features": 120,
+        "note": "The 120 NC House districts. Simplified in the same mapshaper run as the other two chamber files."
+      }
+    ],
+    "rosters": [
+      {
+        "file": "congress-roster.json",
+        "min_keys": 14,
+        "note": "U.S. House (NC) roster, refreshed weekly by update-nc-congress-roster.yml."
+      },
+      {
+        "file": "nc-senate-members.json",
+        "min_keys": 45,
+        "note": "NC Senate roster from Open States, refreshed weekly. The floor is below 50 because a vacant seat is a real event."
+      },
+      {
+        "file": "nc-house-members.json",
+        "min_keys": 110,
+        "note": "NC House roster from Open States, refreshed weekly. The floor is below 120 for the same reason."
+      },
+      {
+        "file": "coverage-gaps.json",
+        "min_keys": 0,
+        "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
+      }
+    ]
+  },
+  "sw": {
+    "cache_name": "districtry-nc-shell-v1",
+    "shell_urls": [
+      "./",
+      "./manifest.webmanifest",
+      "./icons/icon-192.png",
+      "./icons/icon-512.png",
+      "./icons/apple-touch-icon.png",
+      "./icons/icon-maskable-512.png",
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
+      "./vendor/leaflet-maplibre-gl.js"
+    ]
+  },
+  "data_sources": {
+    "registry": "nc/scripts/validate_sources.py"
+  },
+  "workflows": [
+    {
+      "file": "update-nc-congress-roster.yml",
+      "purpose": "U.S. House (NC) roster (unitedstates/congress-legislators)",
+      "schedule": "Mon 15:30 UTC"
+    },
+    {
+      "file": "update-nc-legislature-roster.yml",
+      "purpose": "NC Senate and NC House rosters (Open States)",
+      "schedule": "Tue 15:30 UTC"
+    },
+    {
+      "file": "nc-validate-sources.yml",
+      "purpose": "North Carolina's own source-freshness registry",
+      "schedule": "1st of month 16:00 UTC"
+    }
+  ],
+  "geocoder": {
+    "address": "Photon (North Carolina-bounded type-ahead)",
+    "unbounded": "Photon (whole-coverage, sibling-instance lookup)",
+    "poi": "Nominatim (office-address pin lookup, North Carolina-bounded, serial >=1s queue)",
+    "search_placeholder": "Search a North Carolina address"
+  },
+  "palette": {
+    "accent": "#6d3fd1",
+    "accent_deep": "#5730ab",
+    "accent_warm": "#b0316e",
+    "accent_warm_deep": "#8f2659",
+    "label": "districtry palette — brand violet is CHROME ONLY, never map data; shared with the fleet, not state-themed by convention"
+  },
+  "domains": {
+    "canonical": "https://districtry.com/nc/"
+  },
+  "exports_name": "NCExplorer",
+  "verified_date": "September 29, 2026",
+  "sources_page": {
+    "file": "nc/sources.html",
+    "credits": [
+      {
+        "label": "U.S. Census Bureau TIGERweb",
+        "url": "https://tigerweb.geo.census.gov/",
+        "note": "County, township, place, school-district and legislative-district boundaries."
+      },
+      {
+        "label": "unitedstates/congress-legislators",
+        "url": "https://github.com/unitedstates/congress-legislators",
+        "note": "U.S. House roster (CC0)."
+      },
+      {
+        "label": "Open States",
+        "url": "https://openstates.org/",
+        "note": "NC Senate and NC House roster."
+      },
+      {
+        "label": "USGS The National Map",
+        "url": "https://apps.nationalmap.gov/services/",
+        "note": "Police, fire and EMS stations and post offices (public domain)."
+      }
+    ]
+  }
+}

@@ -191,6 +191,36 @@
         "zip-code"
       ]
     },
+    "nc": {
+      "layers_sending_point": 4,
+      "layers": [
+        "county-subdivision",
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_holding_hook_but_silent": [],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 2,
+      "layer_ids": [
+        "county",
+        "county-subdivision",
+        "fire-station",
+        "municipality",
+        "nc-house",
+        "nc-senate",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
     "ny": {
       "layers_sending_point": 4,
       "layers": [
