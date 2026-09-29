@@ -130,16 +130,16 @@
           "role": "President"
         },
         {
-          "name": "TRACI KRAEMER",
-          "role": "Treasurer"
-        },
-        {
           "name": "GORDON ROBERTSON",
           "role": "Secretary"
+        },
+        {
+          "name": "TRACI KRAEMER",
+          "role": "Treasurer"
         }
       ],
       "comptrollerCode": "090/070/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Tazewell",
       "kind": "fire",
       "office": {}
@@ -232,7 +232,7 @@
         }
       ],
       "comptrollerCode": "102/040/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "kind": "fire",
       "office": {
         "address": "211 N Main St PO Box 2",
@@ -500,7 +500,7 @@
       "office": {}
     }
   },
-  "generated": "2026-09-22T00:22:17Z",
+  "generated": "2026-09-29T01:21:42Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
