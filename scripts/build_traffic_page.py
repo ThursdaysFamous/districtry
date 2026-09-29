@@ -160,12 +160,25 @@ def layer_scope(drawn):
     so two instances registering the same layer id report into ONE row and this
     page cannot separate them. Note 4 used to LIST the unambiguous ids by hand
     -- `ward` = Illinois, `council` = New York, `supervisor-district` = San
-    Francisco -- and `ward` STOPPED BEING ONE on 2026-09-08, when Wisconsin
-    shipped a layer with that id. Three weeks later the school-board layer
-    passed ward in the bars and the note was still calling that 154 an Illinois
-    figure while it pooled two states. A hand-kept list of which ids are
-    single-instance is exactly the claim nothing was comparing against the
-    worksheets that decide it.
+    Francisco -- and `ward` was NEVER one of them. Wisconsin registered a layer
+    with that id on 2026-08-25 (ee880505, #526, "Wisconsin's wards get their
+    card"), the same day Wisconsin went live, and the caveat naming ward as
+    Illinois-only was written on 2026-09-09 (5ebecb67, #825) -- fifteen days
+    AFTER. It was false on the day it was written rather than a claim that went
+    stale, and it stood for twenty days until 2026-09-29. A hand-kept list of
+    which ids are single-instance is exactly the claim nothing was comparing
+    against the worksheets that decide it.
+
+    THE CORRECTION ABOVE REPLACES "STOPPED BEING ONE on 2026-09-08", which this
+    docstring and two commit messages said first, and that wrong date came out
+    of a SHALLOW CLONE. `git log -S'"id": "ward"' -- wi/metro-worksheet.json`
+    answered 1d668f8 (2026-09-08) because 1d668f8 was THIS clone's shallow
+    boundary, and at a boundary the first commit appears to create every file
+    -- it showed 2,702 insertions into a worksheet it does not touch at all on
+    full history. The manager session caught it from a clone whose boundary was
+    a different commit six days earlier, and read ITS boundary as the earliest
+    possible date in turn; the two readings disagreeing is what proved neither
+    was reading history. `git fetch --unshallow` first, then date anything.
 
     So the ownership is READ from every instance's own `layers[]`, the same list
     that drives EXPECT_LAYER_IDS, discovered through fleet_tags() so a new
