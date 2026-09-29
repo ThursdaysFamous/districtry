@@ -185,9 +185,25 @@ when a record written by following this section exactly went red in CI on that g
 alone.
 
 **A record that STATES a count declares it** — `counts`, checked by
-`validate_gap_counts.py` and never shipped. Write the declaration in the same
+`scripts/validate_gap_counts.py` and never shipped. Write the declaration in the same
 edit as the number: `ia-board-chair` said 43 of 99 for eleven days while its file held 38,
 and the prose, the complement and `ia/WATCH.md` were all wrong together.
+
+**DERIVE WHAT MOVES, STATE WHAT DOES NOT.** A declaration may carry a `name`
+instead of a `value`, and the reader field writes `{name}` where the number
+goes — `scripts/gap_counts.py` measures it and `scripts/build_coverage_gaps.py`
+ships the resolved text, so a number that changes weekly is never typed and
+cannot go stale. Use it for a number that MOVES. Leave a CONSTANT on `value`:
+if the file it counts ever disagrees, `value` FAILS and somebody looks, where
+a token would quietly render the new number into a true sentence about a
+broken file. Both forms sit on one record — `ia-board-chair` derives its
+chairs and its complement and states Iowa's 99 counties. A token is `{name}`
+or `{name:,}` and nothing else; `name` refuses `value` and `in` beside it,
+since the token's own position says which fields state it, and a declaration
+no token references FAILS the same way a `value` that has left the prose does.
+Write a long field expecting the LIMIT TO BE MEASURED ON THE RESOLVED TEXT:
+the authored line may run over 240 characters while the card does not, and the
+builder prints both lengths on every run.
 
 Those are the lines `.github/workflows/smoke-test.yml` runs; a key CI does
 not check (`nyc`, `sf`) still needs its `--metro <key> --out <tag>/data/app/coverage-gaps.json`
