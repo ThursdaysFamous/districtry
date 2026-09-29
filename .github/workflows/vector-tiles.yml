@@ -23,7 +23,10 @@ on:
       - "*/data/app/tiles/**"
       - "layer-sources.json"
       - "tiger-mirror.json"
+      - "portal-mirror.json"
       - "scripts/mirror_tiger_tiles.py"
+      - "scripts/mirror_portal_tiles.py"
+      - "scripts/tile_mirror_common.py"
       - "engine/index.html/vector-tiles.txt"
       - "scripts/build_vector_tiles.py"
       - "scripts/validate_vector_tiles.py"
@@ -88,7 +91,9 @@ jobs:
       # and to the app's own loader call, so the archive cannot come to hold
       # a different layer or fields from the ones the card reads. Offline.
       - name: Every mirrored archive is the one recorded, for the loader the app calls
-        run: python3 scripts/mirror_tiger_tiles.py --check
+        run: |
+          python3 scripts/mirror_tiger_tiles.py --check
+          python3 scripts/mirror_portal_tiles.py --check
 
       # The app's own tile reader, run as shipped, against the Python decoders
       - name: The app's tile reader decodes the shipped archives as Python does

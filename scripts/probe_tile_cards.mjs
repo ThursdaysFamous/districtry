@@ -57,8 +57,25 @@ const PAIRS = +(process.env.POINTS || 20);
 const TAGS = process.env.TAGS ? process.env.TAGS.split(",") : instances();
 const ONLY = process.env.LAYERS ? new Set(process.env.LAYERS.split(",")) : null;
 const SOURCES = JSON.parse(readFileSync(join(ROOT, "layer-sources.json"), "utf8"));
-const MIRROR = existsSync(join(ROOT, "tiger-mirror.json"))
-  ? JSON.parse(readFileSync(join(ROOT, "tiger-mirror.json"), "utf8")).layers : {};
+// EVERY mirror's record, not one of them: an archive mirrored by any of them
+// ships no file, and reading tiger-mirror.json alone reported each portal
+// archive as a layer with nowhere to place points (tile_mirror_common.RECORDS).
+const MIRROR = Object.assign({}, ...["tiger-mirror.json", "portal-mirror.json"].map((f) =>
+  existsSync(join(ROOT, f)) ? JSON.parse(readFileSync(join(ROOT, f), "utf8")).layers : {}));
+
+// A portal record's query is the route the app itself calls, with the app
+// token left off (scripts/mirror_portal_tiles.py); NYC's portal refuses an
+// untokened request, so the token comes from that app's own index.html, which
+// is where it lives.
+const APP_TOKEN = {};
+function appToken(tag) {
+  if (!(tag in APP_TOKEN)) {
+    const m = readFileSync(join(ROOT, tag, "index.html"), "utf8")
+      .match(/var\s+SOCRATA_APP_TOKEN\s*=\s*"([^"]*)"\s*;/);
+    APP_TOKEN[tag] = m ? m[1] : "";
+  }
+  return APP_TOKEN[tag];
+}
 
 const EDGE_TOLERANCE_M = 2; // scripts/build_vector_tiles.py's gate
 let seed = 13;
@@ -197,7 +214,24 @@ try {
       // answered below from this set instead; the mirror's own gate already
       // holds the archive to it.
       let referenceSet = null;
-      if (!feats.length && MIRROR[`${tag}:${id}`]) {
+      if (!feats.length && MIRROR[`${tag}:${id}`] && MIRROR[`${tag}:${id}`].dataset) {
+        // a layer mirrored from a city open-data portal: the record's route is
+        // already GeoJSON, and the app's own whole-set loader calls the SAME
+        // route at the same detail, so there is no reference set to override —
+        // only points to place.
+        const rec = MIRROR[`${tag}:${id}`];
+        const tok = appToken(tag);
+        const url = rec.query + (tok ? (rec.query.includes("?") ? "&" : "?") + "$$app_token=" + tok : "");
+        try {
+          const fc = JSON.parse(execFileSync("curl", ["-sS", "--fail", "-L", "--max-redirs", "5",
+            "--retry", "3", "--retry-all-errors", "--retry-delay", "5", "--max-time", "600",
+            "-A", "districtry portal-tile mirror (+https://districtry.com/)", url], { maxBuffer: 1 << 30 }));
+          for (const f of fc.features || []) if (f.geometry) feats.push(f);
+        } catch (e) {
+          console.log(`  FAIL  ${tag}:${id} — could not fetch the mirrored set to place points: ${String(e).slice(0, 200)}`);
+          problems++; continue;
+        }
+      } else if (!feats.length && MIRROR[`${tag}:${id}`]) {
         try {
           // A box-fetched layer (the ZIP layers) is recorded with the page size
           // its mirror fetched at, because the server cannot answer it whole.

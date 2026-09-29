@@ -1,0 +1,184 @@
+{
+  "_comment": "Written by scripts/mirror_portal_tiles.py --refresh; held to the tree by its --check. One entry per city open-data portal layer mirrored into a tile archive. `query` is the route that answered, with the app token left off.",
+  "layers": {
+    "ca:election-precinct": {
+      "dataset": "jg6x-23ig",
+      "query": "https://data.sf.gov/api/v3/views/jg6x-23ig/query.geojson",
+      "route": 1,
+      "fetched": "2026-09-29",
+      "features": 514,
+      "data_sha256": "3d7a17946b83a15816b783f35383630382c1267b71c4f3299ac7767e43224bc3",
+      "archive_sha256": "5cce01edf50016af6522d0cf7cb996af0d7bdb5085d7a920850d10e2416b92e2"
+    },
+    "ca:elementary-attendance-area": {
+      "dataset": "e6tr-sxwg",
+      "query": "https://data.sf.gov/resource/e6tr-sxwg.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 58,
+      "data_sha256": "8ee920ed7a5aa953e9fe9a4fae31da4a006804282242d0b28e34da5cecf37355",
+      "archive_sha256": "0a5b9ffaac9ebc11358ca2dace91afacda6c9a90f0525f079653e18081b64982"
+    },
+    "il:community-area": {
+      "dataset": "igwz-8jzy",
+      "query": "https://data.cityofchicago.org/resource/igwz-8jzy.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 77,
+      "data_sha256": "e68eef03ab644e3fc2027ec6ad06522e4226ce311970a54e8b852ce944c4b25f",
+      "archive_sha256": "bf9c7bab86bbe0b2ba77f40a39ac29d5986f921064a228df3bf7e80c5ce654eb"
+    },
+    "il:cps-elementary": {
+      "dataset": "x72b-38qv",
+      "query": "https://data.cityofchicago.org/resource/x72b-38qv.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 356,
+      "data_sha256": "d5eff9477018304f6d070156579c7074bb1bdc6f0ebfa1f8951174e627f3b3bf",
+      "archive_sha256": "dc276eecb3c5c530d8b487e957a07eac7b133c27758a28eade3035ced0c1001c"
+    },
+    "il:cps-high": {
+      "dataset": "xg7c-d8rm",
+      "query": "https://data.cityofchicago.org/resource/xg7c-d8rm.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 49,
+      "data_sha256": "bd894025f86e4bf253489398e8517c560e59a4af6b3f4a6c69cc67a6befa8dc4",
+      "archive_sha256": "865df19b189db025a02e97ad749b743bb99aae7e54d15b5ce215bac42b15af72"
+    },
+    "il:cps-hs-network": {
+      "dataset": "aupu-jt2g",
+      "query": "https://data.cityofchicago.org/resource/aupu-jt2g.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 4,
+      "data_sha256": "02a0355dd300b35ee138826314835dc707281ef2935da79098609df4961f5e80",
+      "archive_sha256": "25272ae1a19cf73b6263aeafe228675b8ab80045d665cf57174e0075dd43fa72"
+    },
+    "il:cps-middle": {
+      "dataset": "fyff-53xy",
+      "query": "https://data.cityofchicago.org/resource/fyff-53xy.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 22,
+      "data_sha256": "63ebc23144fcf68d6ac16e84b09df243d9533d430ec270692cd557e1a1046801",
+      "archive_sha256": "e21858c38100e3e752bef2e887aefc8d58390106462402ab39f272a53ef8f71a"
+    },
+    "il:cps-network": {
+      "dataset": "pnta-kuqa",
+      "query": "https://data.cityofchicago.org/resource/pnta-kuqa.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 13,
+      "data_sha256": "41dffadc89adc93a1e6568d3fac1999581d7d8768f05b48cbabb2e9df6eb1322",
+      "archive_sha256": "da491693a3d773cd58fa0bc242c07a5a387bc2b5f70dad18578fd5312f17d01d"
+    },
+    "il:ward-precinct": {
+      "dataset": "i8fv-xe4b",
+      "query": "https://data.cityofchicago.org/resource/i8fv-xe4b.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 1291,
+      "data_sha256": "064562afcc90fb327ba5033a1c82409a3f65e24b07a269f48648a75994bc8a87",
+      "archive_sha256": "a29ef393748ddd148c361b51b55ef75284c7fa8bb79ff8ba3be6f3b57c3898fd"
+    },
+    "ny:community-district": {
+      "dataset": "5crt-au7u",
+      "query": "https://data.cityofnewyork.us/resource/5crt-au7u.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 71,
+      "data_sha256": "209f1b591def6e2df769f668e33d187df549a0dd000ee7dc72bd44df6f106831",
+      "archive_sha256": "89ed527caa8b5e566a6d79fbf593f6790b81d3d54bb43d991892c931d44fb4ab"
+    },
+    "ny:council": {
+      "dataset": "872g-cjhh",
+      "query": "https://data.cityofnewyork.us/resource/872g-cjhh.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 51,
+      "data_sha256": "3e49f5221fd1e3f0495c37ea2176aedb75eec9260c2862d9e6c88e291cb20bb4",
+      "archive_sha256": "13fb7a9c05c53937c60a299cf420ec3d76d4671e1977abfad508e1c91066cad1"
+    },
+    "ny:es-zone": {
+      "dataset": "cmjf-yawu",
+      "query": "https://data.cityofnewyork.us/resource/cmjf-yawu.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 770,
+      "data_sha256": "c51c7f2e187e0c9597a87af712ada018a4b7be118c62f686e7c56cdecc53d48c",
+      "archive_sha256": "86173df190a9ae6e4bfd31b2887df473e2f7ca6847de5df15a8ee64330478d67",
+      "undrawable": [
+        {
+          "dbn": "30Q111",
+          "m2": 1.7,
+          "at": [
+            40.756365,
+            -73.947341
+          ],
+          "answer": "30Q111",
+          "why": "a 1.7 m2 fragment of zone 30Q111 about a metre from ms-zone's own, at a shared node in the DOE fabric; 5 other parts of the same zone draw normally",
+          "declared": "2026-09-29"
+        }
+      ]
+    },
+    "ny:hs-zone": {
+      "dataset": "ruu9-egea",
+      "query": "https://data.cityofnewyork.us/resource/ruu9-egea.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 80,
+      "data_sha256": "4c9cbf1997c1a49e31ebcc36b9e5438a36926cb44885fd7476c5dabd1e7e7eb6",
+      "archive_sha256": "3826856f8f150b1dee1e8fdb2138ca48860abda654e5fc4761d99693c9f1e113"
+    },
+    "ny:ms-zone": {
+      "dataset": "t26j-jbq7",
+      "query": "https://data.cityofnewyork.us/resource/t26j-jbq7.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 279,
+      "data_sha256": "c249290bf58fdeeb386c643bb612290214f3566767cdb9f67fecde27515c1bde",
+      "archive_sha256": "74875012b2b640349ef3657e333a2005dcd3a223c3755a22114a83274c4e21b5",
+      "undrawable": [
+        {
+          "dbn": "30Q204",
+          "m2": 1.12,
+          "at": [
+            40.756369,
+            -73.947348
+          ],
+          "answer": "30Q204",
+          "why": "the same artefact one layer over: a 1.1 m2 fragment of zone 30Q204; 6 other parts of the same zone draw normally",
+          "declared": "2026-09-29"
+        }
+      ]
+    },
+    "ny:police-precinct": {
+      "dataset": "y76i-bdw7",
+      "query": "https://data.cityofnewyork.us/resource/y76i-bdw7.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 78,
+      "data_sha256": "3c814ea76dcf544b2d8cca9c24eef7af6e260d2fd0e3970ee800873d4ce61c8f",
+      "archive_sha256": "52460c68504654ed1b867715eab411723f24343d32a32b26d851a01600483481"
+    },
+    "ny:police-sector": {
+      "dataset": "5rqd-h5ci",
+      "query": "https://data.cityofnewyork.us/resource/5rqd-h5ci.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 303,
+      "data_sha256": "b94e989cf1c2c69d8f4baec41a9be136bc71e6413c0317fa3638ea91e980a1ee",
+      "archive_sha256": "594fe37eef7f389067f848bce2f52296ae1aa525d3e07baaa4ee471c817e3a27"
+    },
+    "ny:zip-code": {
+      "dataset": "pri4-ifjk",
+      "query": "https://data.cityofnewyork.us/resource/pri4-ifjk.geojson?$limit=50000",
+      "route": 0,
+      "fetched": "2026-09-29",
+      "features": 178,
+      "data_sha256": "c7f2cb31bece457b7f51bba0ead5c61d9030b1193017c6419d39308ea293cc69",
+      "archive_sha256": "3ded5114c9a69afc42030f8fdc5089b405b2b7fb92076c38f2f41eacda115277"
+    }
+  }
+}
