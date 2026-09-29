@@ -18926,6 +18926,7 @@ function initChiExplorer() {
 
   registerPolygonLayer({
     id: "community-area",
+    tiles: "data/app/tiles/community-area.pmtiles", // vector tiles mirrored from the Chicago Data Portal (scripts/mirror_portal_tiles.py)
     group: "geography",
     label: "Community Area",
     coverage: chicagoCoverage,
@@ -19927,6 +19928,10 @@ function initChiExplorer() {
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       // hover popup: same identity the card headline shows — the zoned school's
       // name, or the honest "None" where requireId treats the feature as unzoned.
       hoverName: function (feature) {
@@ -20018,6 +20023,7 @@ function initChiExplorer() {
 
   registerCpsZone({
     id: "cps-elementary",
+    tiles: "data/app/tiles/cps-elementary.pmtiles", // vector tiles mirrored from the Chicago Data Portal (scripts/mirror_portal_tiles.py)
     label: "CPS Elementary School Zone",
     // confirmed via live sample: per-school attendance boundary (school_id, short_name, grade_cat: "ES")
     datasetId: "x72b-38qv",
@@ -20027,6 +20033,7 @@ function initChiExplorer() {
 
   registerCpsZone({
     id: "cps-high",
+    tiles: "data/app/tiles/cps-high.pmtiles", // vector tiles mirrored from the Chicago Data Portal (scripts/mirror_portal_tiles.py)
     label: "CPS High School Zone",
     // confirmed via live sample: per-school attendance boundary (school_id, school_nam, grade_cat: "HS")
     datasetId: "xg7c-d8rm",
@@ -20036,6 +20043,7 @@ function initChiExplorer() {
 
   registerCpsZone({
     id: "cps-middle",
+    tiles: "data/app/tiles/cps-middle.pmtiles", // vector tiles mirrored from the Chicago Data Portal (scripts/mirror_portal_tiles.py)
     label: "CPS Middle School Zone",
     // confirmed via live sample: same current attendance-boundary schema as
     // elementary/high (school_id, school_nam, grade_cat: "MS", boundarygr),
@@ -20059,6 +20067,10 @@ function initChiExplorer() {
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       overlay: { load: loadNetworks, style: opts.style },
       // point-first by default (queryFeatureAt) — same pattern as the other factories
       query: function (point, seq) {
@@ -20110,6 +20122,7 @@ function initChiExplorer() {
 
   registerCpsNetwork({
     id: "cps-network",
+    tiles: "data/app/tiles/cps-network.pmtiles", // vector tiles mirrored from the Chicago Data Portal (scripts/mirror_portal_tiles.py)
     label: "CPS Network (K-8, admin office)",
     coverage: chicagoCoverage,
     datasetId: "pnta-kuqa",
@@ -20119,6 +20132,7 @@ function initChiExplorer() {
 
   registerCpsNetwork({
     id: "cps-hs-network",
+    tiles: "data/app/tiles/cps-hs-network.pmtiles", // vector tiles mirrored from the Chicago Data Portal (scripts/mirror_portal_tiles.py)
     label: "CPS Network (High School, admin office)",
     coverage: chicagoCoverage,
     datasetId: "aupu-jt2g",
@@ -21593,6 +21607,7 @@ function initChiExplorer() {
 
   registerLayer({
     id: "ward-precinct",
+    tiles: "data/app/tiles/ward-precinct.pmtiles", // vector tiles mirrored from the Chicago Data Portal (scripts/mirror_portal_tiles.py)
     group: "political",
     subOf: "ward",
     label: "Ward Precinct",

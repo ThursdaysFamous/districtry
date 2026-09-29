@@ -17,7 +17,7 @@
     "minLng": -122.6,
     "maxLng": -122.3
   },
-  "socrata_host": "https://data.sfgov.org",
+  "socrata_host": "https://data.sf.gov",
   "socrata_app_token": "",
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
   "feedback_subject": "districtry San Francisco feedback",
