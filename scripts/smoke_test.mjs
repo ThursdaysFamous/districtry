@@ -865,6 +865,64 @@ try {
     await context.close();
   }
 
+  // 1k. THE WHOLE PRECINCT SET LOADS, AND A FULL PAGE IS REFUSED RATHER THAN
+  //     DRAWN. The primary Socrata route returns one page and says nothing
+  //     about what it left behind, so a set that comes back exactly full
+  //     cannot be told from a complete one. The page was capped at 1,000 until
+  //     2026-09-29 and Chicago publishes 1,291 ward precincts: the app drew
+  //     1,000, and because the portal orders by ward the 291 it dropped were
+  //     every precinct of wards 39 to 50 — the whole north side answered
+  //     nothing once the set had cached. Both halves are asserted here with a
+  //     stubbed portal: the layer loads all 1,291, and a response that exactly
+  //     fills the page fails validation so the walk falls through to the
+  //     export route, which hands over the whole dataset.
+  {
+    const TOTAL = 1291;
+    const [plat, plng] = POINT.split(",").map(Number);
+    const cell = (i) => {
+      const x = plng + (i % 40) * 0.001, y = plat + Math.floor(i / 40) * 0.001;
+      return { type: "Feature", properties: { ward: String(1 + (i % 50)), precinct: String(i) },
+        geometry: { type: "Polygon", coordinates: [[[x, y], [x + 0.001, y], [x + 0.001, y + 0.001], [x, y + 0.001], [x, y]]] } };
+    };
+    const page_of = (n) => JSON.stringify({ type: "FeatureCollection",
+      features: Array.from({ length: n }, (unused, i) => cell(i)) });
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    let exportRoute = 0;
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=ward-precinct`, async (p) => {
+      // the primary route: it hands back exactly as many features as it was
+      // asked for, which is what a truncated page looks like from the browser
+      await p.route("**/data.cityofchicago.org/resource/i8fv-xe4b.geojson*", (route) => {
+        const url = route.request().url();
+        if (/where/.test(url)) return route.fulfill({ status: 200, contentType: "application/json", body: page_of(1) });
+        const want = Number((url.match(/limit=(\d+)/) || [])[1] || 1000);
+        route.fulfill({ status: 200, contentType: "application/json", body: page_of(Math.min(want, TOTAL)) });
+      });
+      // the export route: the whole dataset, as the portal really answers it
+      await p.route("**/api/v3/views/i8fv-xe4b/query.geojson*", (route) => {
+        exportRoute += 1;
+        route.fulfill({ status: 200, contentType: "application/json", body: page_of(TOTAL) });
+      });
+    });
+    await page
+      .waitForFunction((ns) => {
+        const s = window[ns].layerLoadState("ward-precinct");
+        return s && s.features > 0;
+      }, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+      .catch(() => {});
+    const m = await page.evaluate((ns) => {
+      const E = window[ns], max = E.socrataPageMax();
+      const one = { geometry: { type: "Polygon", coordinates: [] }, properties: {} };
+      const set = (n) => ({ type: "FeatureCollection", features: new Array(n).fill(one) });
+      return { loaded: E.layerLoadState("ward-precinct").features, max,
+        primaryAsksForMax: E.socrataRouteUrls("i8fv-xe4b")[0].indexOf("$limit=" + max) !== -1,
+        full: E.hasWholeUsableGeometry(set(max)), justUnder: E.hasWholeUsableGeometry(set(max - 1)) };
+    }, EXPORTS_NAME);
+    check("every published precinct loads, and a page-filling response is refused as truncated",
+      m.loaded === TOTAL && m.primaryAsksForMax && m.full === false && m.justUnder === true,
+      JSON.stringify({ ...m, exportRoute }));
+    await context.close();
+  }
+
   // 1h. THE REPORT FORM OPENS FROM A LINK. `#feedback=<text>` beside a point
   //     opens the form with that text filled in, counted once as opened by a
   //     link; "Copy a link to this form" hands back a link carrying the view
