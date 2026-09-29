@@ -341,6 +341,95 @@ PROVENANCE = [
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
         "note": "All 83 counties pre-built from TIGERweb by mi/scripts/build_state_counties.py. The fabric is WATER-INCLUSIVE -- each Great Lakes county reaches the state water boundary -- which is why the coverage outline dissolves to one ring and a mid-lake point reads inside coverage.",
     },
+    {
+        "layer": "county",
+        "app_file": "metro-outline.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
+        "note": (
+            "The whole-state outline for the coverage wash, pre-built by "
+            "mi/scripts/build_metro_outline.py -- dissolved from all 83 counties on the "
+            "SAME layer state-counties.json comes from, not fetched as a separate state "
+            "polygon, so narrowing coverage later needs only a smaller "
+            "METRO_COUNTY_FIPS (the Wisconsin precedent). Because the county fabric is "
+            "water-inclusive the dissolve is ONE ring; read the ring count from "
+            "`build_metro_outline.py --check`, never from a map. That check runs offline "
+            "against the shipped file on every PR, which is a different question from "
+            "this row's: it asks whether the anchors still fall inside what SHIPPED, and "
+            "cannot see the source moving underneath it."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "mi-flint-wards.json",
+        "source_url": ("https://services2.arcgis.com/5ckbIY7K9TUKoseK/arcgis/rest/"
+                       "services/Wards22/FeatureServer"),
+        "note": (
+            "Flint's nine council wards, pre-built by mi/scripts/build_mi_flint_wards.py. "
+            "NOTHING HERE IS DECIDED BY A NAME, which is why this row names the service "
+            "index as well as the URL. Three layers in this org carry nine features each "
+            "called Ward 1..Ward 9: `Wards22` is the plan in force (effective 2 August "
+            "2022, 99.784% against the state's current precinct fabric) and reads as the "
+            "OLDER name, while `Wards2022` and `Wards_Outline` are the 2012 plan at "
+            "76.886% and 76.955%. The AGO item behind the one that ships is titled "
+            "Wards23. Currency is gated against Michigan's own 2026 voting-precinct "
+            "layer, whose WARD column assigns the city's 29 precincts 3/4/3/2/3/3/3/3/5; "
+            "the build refuses if that agreement or those counts move. The item's "
+            "licenseInfo is empty and it is shared public, re-read before every build."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "mi-warren-wards.json",
+        "source_url": ("https://services8.arcgis.com/oGUlQVwqEiX7aF12/arcgis/rest/"
+                       "services/Warren_Council_Wards_2023/FeatureServer"),
+        "note": (
+            "Warren's five council wards, from the city's own ArcGIS account "
+            "(smcdade_City_of_Warren), pre-built by mi/scripts/build_mi_warren_wards.py. "
+            "THE WARD LAYER IS AT INDEX 32, NOT 0 -- a request to /0 answers HTTP 200 "
+            "with no `features` key and dies like an outage, so the builder reads this "
+            "root and takes the layer it lists, which is why the source_url stops at the "
+            "FeatureServer. Currency is a measurement: dissolved by the state's 2026 "
+            "precinct WARD column (53 precincts, 10/10/11/11/11), the city's five "
+            "polygons agree on 2663 of 2666 sampled points (99.887%), and both that "
+            "agreement and the per-ward counts are gates. Item snippet 'Approved "
+            "1/10/2023 Updated Labels 4-30-24'; licenseInfo empty, shared public -- the "
+            "Detroit case, not Lansing's CC BY-NC."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "mi-jackson-wards.json",
+        "source_url": ("https://gis.mijackson.org/countygis/rest/services/"
+                       "Voting/VotingPrecincts/MapServer/0"),
+        "note": (
+            "Jackson's six council wards, COMPOSED by mi/scripts/build_mi_jackson_wards.py "
+            "from JACKSON COUNTY's precinct layer -- the city publishes no ward geometry -- "
+            "by dissolving the City of Jackson's ten precincts on the county's WARD column. "
+            "The operator ruled on 2026-09-29 that a county's published map may be the "
+            "source for a city; the state's 2026 precincts stay the independent check. The "
+            "REST instance is `countygis`, NOT `arcgis`, so guessed paths 404; and this is "
+            "a 10.6 MapServer that answers HTTP 400 to f=geojson, so the build reads Esri "
+            "JSON. Gates: both publishers assign the precincts 1/2/2/2/1/2, the dissolve "
+            "agrees with the state's precincts on at least 99% of sampled points (99.375% "
+            "when built), and the wards sum to the Census place's 31,309 exactly. The "
+            "service states no terms and the build refuses if it ever does."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "mi-jackson-council-members.json",
+        "source_url": "https://www.cityofjackson.org/289/Mayor-City-Council-City-Manager",
+        "note": (
+            "Jackson's Mayor and six ward councilmembers. Built by "
+            "mi/scripts/mi_jackson_council_scraper.py into build_mi_jackson_council.py, "
+            "weekly. The council page lists who holds each seat and each ward has its own "
+            "page (/498, /499, /500, /504, /511, /512 -- not sequential) with that member's "
+            "contact block; the scraper refuses to write unless the two name the same "
+            "person. The Ward 3 block carries an EMPTY mailto to a former member beside the "
+            "member's own, so only a visible link is read. The host reset connections "
+            "twice in eight requests from the sandbox on 2026-09-29, so fetches retry."
+        ),
+    },
 ]
 
 ENDPOINTS = [
