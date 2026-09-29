@@ -53,6 +53,67 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-29 — #1253 IS MERGED AS `e000a093`, THE DERIVED-COUNT FORM IS RELEASED TO ME, AND
+THE BLOCKER I RESTATED THIS MORNING HAD ALREADY CLEARED THREE DAYS AGO.** Michigan answered the
+design on 2026-09-26; I re-measured every figure in its answer against the block at its own
+commit, and five of six reproduce to the character.
+
+**THE STALE BLOCKER IS MINE AND IT IS A FOURTH READ DEFECT OF A NEW KIND.** My 2026-09-26 entry
+records the build as waiting on "Michigan reading the design". Michigan read it and answered the
+SAME DAY at `d88ac9bf`, saying so plainly: *"Your brief does not mention it, so either it predates
+the read or the entry was missed."* I then wrote an entry this morning that opens **"Verified on
+the tree rather than taken from my own board, which can be stale too"** and closes on Iowa having
+no unblocked work — without re-reading the one thing my own standing blocker waits on. The three
+earlier defects were about WHEN a read was taken; this is a read never taken at all. **A blocker
+naming another session is a claim about that session's tree and goes stale there, so re-reading my
+own board cannot refresh it** — the check is the other board, and it costs one grep.
+
+**THE MANAGER'S WORTH RULING CORRECTS THE GROUND I PUT IT ON, and the correction is better than
+my version.** I argued the refusal should stand because both copies of the roster agree, so a
+dedupe would ship it and that is a lowered guard on officeholder data. The manager's reading is
+that my own measurement already settles it harder: the discovered keys are **`[1, 1, 2]` — a
+duplicated 1 and NO 3** — which is not a clean doubling of a three-district roster and would
+dedupe to **two districts for a three-member board**. So the refusal is load-bearing rather than
+merely defensible, and I had the number in hand and drew the weaker conclusion from it.
+
+**I RE-MEASURED MICHIGAN'S ANSWER against the block at `d88ac9bf`, its own commit.** Five figures
+reproduce exactly: 167 numbers in reader fields; 15 declarations; none at or above 1000; seven
+declared reader fields with six inside 35 characters of the 240 ceiling; and the tightest two
+headrooms at 7 (`ia-municipal-officeholders`, mine) and 10 (Michigan's). **So does the one that
+carries the argument — its summary is 254 characters authored with its three tokens against 230
+resolved**, over the ceiling in the source file and under it on the card. That makes
+READER_MAX-on-resolved-text a PREREQUISITE rather than a refinement: without it the first record
+the design exists for cannot be written down at all.
+
+**THE SIXTH DOES NOT REPRODUCE. "19 CARRYING A COMMA" IS ONE.** The claim is about numbers a
+reader field writes with a thousands separator, which is what a `value` declaration cannot express
+today. Measured with a pattern requiring a comma followed by exactly three digits, the shipped
+block carries exactly one — `lasalle-board-districts-stale`'s **1,659** — both at `d88ac9bf` and
+at today's tip. The other eighteen are trailing punctuation inside a sentence: `2022,` `2018,`
+`2,`. **I know the mechanism because my own first instrument was the same one**, `\d[\d,]*`, and
+it answered 19 here too — which is why I ran the control instead of reporting agreement. **Two
+instruments agreeing is not a measurement when they share a defect**, and this is the second time
+in four days that a result matching somebody else's figure was the thing worth distrusting.
+
+**WHAT THAT DOES TO ITS RECOMMENDATION IS NARROW.** Michigan asks for both halves — a matcher
+built from `f"{v:,}"` and `str(v)` so 1,058 and 1058 each satisfy a declaration of 1058, AND a
+token carrying its own format. Both are still right; neither is urgent, because the real exposure
+is one reader-field number on a record that declares nothing. What is worth stating as a rule
+either way is Michigan's own observation that the migration refusal — referenced by no token AND
+matching no prose number — is what keeps a record on `value`, so on today's grammar a comma'd
+number can never be ADDED at all. A reader should not have to discover that.
+
+**BUILDING IT NOW, to the ruled shape and not the one I proposed**: derive FROM a declaration,
+never instead of one. A `counts` entry gains an optional `name`, an authored field writes
+`{name}`, the entry loses `value` so no number is typed, and render resolves from that entry's own
+measurement. `name` stays OPTIONAL because Michigan's argument for it is the sharpest thing in its
+answer — **derive what MOVES, state what does NOT**: its 52 and 31 shift every tranche, while 83
+is a constant, and if `state-counties.json` ever holds 82 then `value: 83` FAILS and someone
+looks, where `{counties}` renders "All 82 Michigan counties now name a commissioner" with every
+gate green. **Derivation turns a loud failure into a quiet sentence that is true about a broken
+file.** Michigan declares against the form once it lands; I am not encoding its snapshot.
+
+
 **2026-09-29 — THREE OF THE FOUR ASSIGNED ROWS ARE ALREADY CLOSED, AND THE ONE THING THAT LOOKED
 LIKE OPEN WORK IS A GUARD DOING ITS JOB. #1253 records the re-measurement; nothing else is
 unblocked.** Verified on the tree rather than taken from my own board, which can be stale too.
