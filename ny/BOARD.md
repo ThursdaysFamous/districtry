@@ -7,12 +7,27 @@ commit, dated.
 
 ## What a reader gets today
 
-Click any point in New York City and the app answers from **33 layers** — the
+Click any point in New York City and the app answers from **35 layers** — the
 most in the fleet after Illinois. All 51 Council Members are named, and since
 2026-09-15 they appear in the served bytes of `ny/council-district.html` as a
 dated table rather than only inside a JavaScript-rendered card.
 
-**4 recorded gaps**, all data-quality. The cleanest gap list in the fleet.
+**5 recorded gaps: four data-quality and one missing source** — the missing
+source is `nyc-community-education-councils`, where the Department of Education
+decentralised the listings across 32 council sites, so the members are published
+and not reachable by one scraper.
+
+*Every figure in this section was MEASURED 2026-09-29 against the files that own
+it — `ny/metro-worksheet.json`, `ny/data/app/council-members.json` and
+`ny/data/app/coverage-gaps.json` — and is dated because nothing gates it (see
+Open question 7). Two of them were wrong until that date, and both had been
+wrong since I made the change that moved them: the layer count read 33 for an
+app that ships 35, and the gap line read "4 recorded gaps, all data-quality.
+The cleanest gap list in the fleet", where the file carries five, one of them is
+`no-source`, and San Francisco's two is the cleanest. **I recorded the CEC gap
+myself and never re-read the sentence that counts it**, which is the whole
+defect: the count and the thing counted were changed in one session by one
+person, minutes apart.*
 
 ## Tasks — manager owns this section
 
@@ -2124,6 +2139,83 @@ Paused here at Adam's direction. Next, when picked up: PR 3, or the two small
 live defects above as a shorter change first.
 
 ## Open questions for Adam
+
+**7. Three of six boards state a gap count their own shipped file contradicts,
+and nothing gates any figure on a board.** Not blocking. Raised because the
+manager found ONE of these on my board and I measured the rest; the other two
+are not mine to edit.
+
+**MEASURED 2026-09-29, each board's `**N recorded gaps**` against that
+instance's own `data/app/coverage-gaps.json`:**
+
+| board | claims | ships | agrees |
+|---|---|---|---|
+| `ca/BOARD.md` | 3 | **2** | no |
+| `ia/BOARD.md` | 6 | **9** | no |
+| `il/BOARD.md` | 104 | 104 | yes |
+| `mi/BOARD.md` | 26 | 26 | yes |
+| `ny/BOARD.md` | 4 | **5** | no — **fixed above** |
+| `wi/BOARD.md` | 10 | 10 | yes |
+
+**Iowa's is the one to look at first**, and not because it is the largest
+arithmetic error: it understates by three, which is the direction that matters.
+A gap list is a statement about what the app does NOT know, so a board claiming
+six where nine are recorded tells its reader the instance is cleaner than it is.
+Mine did the same thing in miniature — "all data-quality" where one is
+`no-source`. San Francisco's claims three and ships two, which is the harmless
+direction and still wrong.
+
+**THE LAYER COUNTS ARE MOSTLY FINE AND MINE WAS THE EXCEPTION**: ca 16, ia 20,
+il 40, mi 15 and wi 31 all match their worksheets; New York's read 33 against a
+shipped 35. So this is not a general rot — it is specifically that a figure on a
+board is checked by nobody, and the two people most likely to move it are the
+session that ships the change and the manager who reads the board afterwards.
+
+**WHY NO GATE CATCHES IT.** `validate_doc_counts.py` exists for exactly this
+claim class and walks `README.md`, `CLAUDE.md`, `WATCH.md` and everything under
+`docs/` — **`BOARD.md` is not in its surface**, at the root or per instance. It
+even mentions `ny/BOARD.md` in an `OWNER_HELD_COUNTS` reason, so the file is
+known to it and simply not read.
+
+**THREE OPTIONS, WITH WHAT EACH COSTS.**
+
+(a) **Add `BOARD.md` to `validate_doc_counts.py`'s surface.** Catches the layer
+counts fleet-wide for one line of code. The cost is real and I would not pay it
+blind: board updates commit STRAIGHT TO MAIN by rule, and a layer count goes
+stale when a LAYER ships rather than when a board is edited — so shipping a
+layer would turn main red on a sentence in a board the shipping session may not
+own, and the fix would have to land in the same change.
+
+(b) **A narrow gap-count gate**, reading each `<inst>/BOARD.md`'s
+`**N recorded gaps**` against that instance's own `coverage-gaps.json`. Much
+better scoped than (a): it is per-instance, self-contained, and the session that
+ships a gap already regenerates that instance's files, so the red lands on the
+person who caused it. It catches all three of the errors above and none of the
+layer counts.
+
+(c) **Date the figures instead of gating them**, which is what I did to my own
+section today — the pattern CLAUDE.md already uses for every figure a gate
+cannot hold ("MEASURED 2026-09-27, AFTER its last edit"). A dated measurement
+does not rot, because it is a claim about a date rather than about now. Costs
+nothing and catches nothing; it makes staleness legible instead of preventing
+it.
+
+**I would do (c) everywhere and (b) as well, and explicitly not (a).** (c) is
+free and honest and can land today; (b) is the cheap gate whose failures land on
+the right person; (a) buys the layer counts at the price of cross-owner CI
+failures, and five of six were correct anyway, so it is paying the most for the
+smallest problem.
+
+**ONE THING I CANNOT SETTLE AND IT DECIDES (b).** The two-owner rule names
+*Tasks* (manager) and *Status* and *Open questions* (the state session).
+**"What a reader gets today" is named by neither**, and it is where all six of
+these figures live. On `ca/BOARD.md` the manager keeps the whole file, so that
+one is clear; for the other five it is not. Whoever owns that section owns
+fixing its numbers, and a gate is only fair once that is written down.
+
+I have not touched `ca/BOARD.md` or `ia/BOARD.md`. San Francisco is the
+manager's under the 2026-09-29 ruling; Iowa is its own session's.
+
 
 **5. Who owns San Francisco's test files? The fleet board and a peer session
 disagree, and I acted on the peer's reading.** Not blocking — the work is done
