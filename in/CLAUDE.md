@@ -22,6 +22,18 @@ so a TIGERweb or USGS vintage roll reaches all seven on its own: **Township or C
 state) and the three USGS point layers, **Police Station**, **Fire Station** and **Post
 Office**.
 
+**ZIP CODE IS THE ONE LAYER HERE THAT DECLARES A COVERAGE TEST, AND IT HAS TO.** A ZCTA
+carries no state field, so that layer alone cannot be fetched with `STATE='18'` and its point
+query carries no state filter either — measured 2026-09-29 against in-state controls in the
+same command, it answers 60602 in Chicago, 40202 in Louisville and 48226 in Detroit while
+answering 46402 in Gary and 46204 at the Indianapolis anchor. Every other card here correctly
+declines outside Indiana, so a real out-of-state ZIP was the one answer breaking that. It now
+declares `insideIndiana`, tested against the shipped `metro-outline.json` (same-origin,
+cache-first, no request), so outside the state the toggle, card and overlay hide. The smoke test
+proves BOTH directions — hidden at the negative point, visible at the anchor — with the census
+host refused, because a hide test alone would pass for a layer hidden everywhere. The lesson is
+Minnesota's (PR #1274), whose negative point returned a North Dakota ZIP.
+
 **INDIANA SHIPS ONE SCHOOL LAYER WHERE MICHIGAN SHIPS TWO, AND THAT IS A MEASUREMENT.**
 TIGERweb's elementary (layer 1) and secondary (layer 2) school tilings both return **zero**
 features for `STATE='18'` (measured 2026-09-29), so the state runs unified districts alone.
