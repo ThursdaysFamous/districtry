@@ -62,6 +62,7 @@ import os
 import re
 import sys
 from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from gap_counts import resolve_record  # noqa: E402  (one reader for both gates)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GUIDEBOOK = os.path.join(REPO_ROOT, "docs", "DATA_LAYER_GUIDEBOOK.md")
@@ -177,6 +178,57 @@ def reader_problems(where, e):
             out.append("%s: %s shouts in capitals — that is record voice, not "
                        "reader voice" % (where, key))
     return out
+
+
+def resolve_all(entries, root=None):
+    """Every record with its reader fields resolved, and what went wrong.
+
+    THE RESOLVED TEXT IS THE SUBJECT OF EVERY CHECK BELOW, which is the third
+    refusal in the manager's 2026-09-26 ruling and Michigan's widening of it.
+    A record is checked and rendered through the same resolution, so the length
+    READER_MAX measures, the hostname and ISO-date and shouting tests, and the
+    counted-prose comparison all read what a reader is actually served. Holding
+    READER_MAX to the AUTHORED text would refuse the first record the form
+    exists for: measured 2026-09-29, `mi-commissioner-roster`'s summary is 254
+    characters written with its three tokens and 230 resolved — over the
+    ceiling in the source file and under it on the card.
+
+    A RECORD WHOSE RESOLUTION FAILS IS RETURNED AS AUTHORED rather than
+    dropped, so its other problems are reported in the same run. The build
+    still fails, because the failure is in `problems`.
+
+    A record with no token comes back unchanged, which is why introducing this
+    left all six instances' shipped files byte-identical.
+    """
+    problems, out = [], []
+    for i, e in enumerate(entries):
+        where = e.get("id") or "entry %d" % i
+        got = resolve_record(e, READER_FIELDS, where, problems.append, root=root)
+        out.append(e if got is None else dict(e, **got))
+    return out, problems
+
+
+def token_budgets(authored, resolved):
+    """One line per token-bearing field: what it resolves to, against the ceiling.
+
+    Michigan's ask, and it costs nothing: once a field's length is decided by a
+    measurement rather than by its own characters, an author can no longer
+    budget it by eye. Measured 2026-09-29, six of the eight declared reader
+    fields in the fleet sit within 35 characters of the 240 ceiling and the
+    tightest has 7, so this is a live budget rather than a theoretical one.
+    """
+    lines = []
+    for source, shown in zip(authored, resolved):
+        for key in READER_FIELDS:
+            text = source.get(key)
+            if not isinstance(text, str) or "{" not in text:
+                continue
+            got = shown.get(key)
+            if not isinstance(got, str):
+                continue
+            lines.append("  %s %s: %d of %d characters resolved (%d authored)"
+                         % (source.get("id"), key, len(got), READER_MAX, len(text)))
+    return lines
 
 
 def validate(entries, layer_ids, outlines):
@@ -350,7 +402,12 @@ def main():
         layer_ids, outlines = known_layer_ids(w), shipped_outline_slugs()
     else:
         layer_ids, outlines = sibling_surfaces(out_path)
-    problems = validate(entries, layer_ids, outlines)
+    # A token resolves BEFORE anything is checked or written, so that every
+    # rule below and the shipped bytes read the same text. `authored` is kept
+    # only to report each token-bearing field's budget at the end.
+    authored = entries
+    entries, problems = resolve_all(authored)
+    problems.extend(validate(entries, layer_ids, outlines))
 
     # LOCATION AWARENESS IS THE PANEL'S WHOLE POINT, so an instance that ships
     # county outlines and tags no gap with one has a dead "Where you clicked"
@@ -384,6 +441,8 @@ def main():
             fail("data/app/coverage-gaps.json differs from the guidebook's gaps block "
                  "(%d vs %d bytes). Edit the guidebook, then regenerate."
                  % (len(shipped), len(payload)))
+        for line in token_budgets(authored, entries):
+            print(line)
         print("build-coverage-gaps: OK — shipped file matches the guidebook "
               "(%s: %d gaps, %s; %d mapped to counties)"
               % (metro, len(entries), summary, mappable))
@@ -391,6 +450,8 @@ def main():
 
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(payload)
+    for line in token_budgets(authored, entries):
+        print(line)
     print("build-coverage-gaps: wrote %s — %s: %d gaps (%s), %d mapped to "
           "counties, %d bytes"
           % (os.path.relpath(out_path, REPO_ROOT), metro, len(entries), summary,
