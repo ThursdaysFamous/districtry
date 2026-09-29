@@ -1,0 +1,4029 @@
+{
+ "_comment": "Which Wisconsin municipalities with aldermanic districts publish a district-keyed roster. Written by wi/scripts/probe_wi_alderperson_pool.py; every address comes from wi-municipal-clerks.json's own url field, nothing is discovered, and each row's robots records carry the date THEY were read.",
+ "measured": "2026-09-29",
+ "municipalities": [
+  {
+   "county": "Dodge County",
+   "cousubfp": "05900",
+   "ctv": "C",
+   "districts": 14,
+   "final_url": "https://www.ci.beaverdam.wi.gov/",
+   "geoid": "5505900",
+   "name": "Beaver Dam",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.ci.beaverdam.wi.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.ci.beaverdam.wi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "La Crosse County",
+   "cousubfp": "40775",
+   "ctv": "C",
+   "districts": 13,
+   "final_url": "https://www.cityoflacrosse.org/Home",
+   "geoid": "5540775",
+   "name": "La Crosse",
+   "notes": [
+    "root_error at https://www.cityoflacrosse.org/I-Want-To/Contact/City-Council: HTTP 403"
+   ],
+   "pageError": "HTTP 403",
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 133,
+     "own_names": 25,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council",
+     "visible_chars": 8676
+    },
+    {
+     "district_keys": 0,
+     "name_shapes": 113,
+     "own_names": 5,
+     "rank": 8,
+     "reads_as_council": true,
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials",
+     "visible_chars": 7337
+    },
+    {
+     "district_keys": 0,
+     "name_shapes": 164,
+     "own_names": 56,
+     "rank": 4,
+     "reads_as_council": true,
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/Mayor",
+     "visible_chars": 11026
+    },
+    {
+     "district_keys": 0,
+     "name_shapes": 132,
+     "own_names": 24,
+     "rank": 4,
+     "reads_as_council": true,
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/Mayor/Serving-on-a-Committee",
+     "visible_chars": 9293
+    },
+    {
+     "district_keys": 0,
+     "name_shapes": 126,
+     "own_names": 18,
+     "rank": 2,
+     "reads_as_council": true,
+     "url": "https://www.cityoflacrosse.org/Your-Government",
+     "visible_chars": 8972
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityoflacrosse.org/",
+     "why": "robots.txt served (7147 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityoflacrosse.org/I-Want-To/Contact/City-Council",
+     "why": "robots.txt served (7147 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/City-Council",
+     "why": "robots.txt served (7147 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials",
+     "why": "robots.txt served (7147 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/Mayor",
+     "why": "robots.txt served (7147 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityoflacrosse.org/Your-Government/Elected-Officials/Mayor/Serving-on-a-Committee",
+     "why": "robots.txt served (7147 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityoflacrosse.org/Your-Government",
+     "why": "robots.txt served (7147 bytes)"
+    }
+   ],
+   "url": "https://www.cityoflacrosse.org/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Milwaukee County",
+   "cousubfp": "84675",
+   "ctv": "C",
+   "districts": 12,
+   "error": "HTTP 403",
+   "geoid": "5584675",
+   "name": "Wauwatosa",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "refused",
+     "url": "https://www.wauwatosa.net/",
+     "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy"
+    }
+   ],
+   "url": "https://www.wauwatosa.net/",
+   "verdict": "unreachable"
+  },
+  {
+   "county": "Marathon County",
+   "cousubfp": "84475",
+   "ctv": "C",
+   "districts": 11,
+   "error": "HTTP 403",
+   "geoid": "5584475",
+   "name": "Wausau",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "refused",
+     "url": "https://www.wausauwi.gov/",
+     "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy"
+    }
+   ],
+   "url": "https://www.wausauwi.gov/",
+   "verdict": "unreachable"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "49675",
+   "ctv": "C",
+   "districts": 10,
+   "geoid": "5549675",
+   "name": "Marshfield",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofmarshfieldwi.gov/",
+     "why": "robots.txt served (210 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (210 bytes): Disallow: / (line 18) is the longest match for /",
+   "url": "https://cityofmarshfieldwi.gov/",
+   "verdict": "robots-refused"
+  },
+  {
+   "challenge": "robots.txt answered HTTP 202 (an access control, not a document)",
+   "county": "Langlade County",
+   "cousubfp": "02250",
+   "ctv": "C",
+   "districts": 9,
+   "geoid": "5502250",
+   "name": "Antigo",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "challenge",
+     "url": "https://www.antigo-city.org/",
+     "why": "robots.txt answered HTTP 202 (an access control, not a document)"
+    }
+   ],
+   "url": "https://www.antigo-city.org/",
+   "verdict": "challenge"
+  },
+  {
+   "county": "Sauk County",
+   "cousubfp": "04625",
+   "ctv": "C",
+   "districts": 9,
+   "geoid": "5504625",
+   "name": "Baraboo",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://baraboowi.gov/",
+     "why": "robots.txt served (570 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (570 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "https://baraboowi.gov/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "83975",
+   "ctv": "C",
+   "districts": 9,
+   "final_url": "https://www.watertownwi.gov/",
+   "geoid": "5583975",
+   "name": "Watertown",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 234,
+     "own_names": 1,
+     "rank": 12,
+     "reads_as_council": true,
+     "url": "https://www.watertownwi.gov/page/alderpersons-and-judge",
+     "visible_chars": 9230
+    },
+    {
+     "district_keys": 0,
+     "name_shapes": 234,
+     "own_names": 1,
+     "rank": 8,
+     "reads_as_council": true,
+     "url": "https://www.watertownwi.gov/page/elected-officials",
+     "visible_chars": 9225
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.watertownwi.gov/",
+     "why": "robots.txt served (39 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.watertownwi.gov/page/alderpersons-and-judge",
+     "why": "robots.txt served (39 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.watertownwi.gov/page/elected-officials",
+     "why": "robots.txt served (39 bytes)"
+    }
+   ],
+   "url": "https://www.watertownwi.gov/",
+   "verdict": "roster-not-in-html"
+  },
+  {
+   "county": "Marinette County",
+   "cousubfp": "49300",
+   "ctv": "C",
+   "districts": 8,
+   "final_url": "https://www.marinette.wi.us/",
+   "geoid": "5549300",
+   "name": "Marinette",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.marinette.wi.us/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.marinette.wi.us/",
+   "verdict": "no-council-page"
+  },
+  {
+   "challenge": "Cloudflare managed challenge (cf-mitigated)",
+   "county": "Ozaukee County",
+   "cousubfp": "51150",
+   "ctv": "C",
+   "districts": 8,
+   "geoid": "5551150",
+   "name": "Mequon",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofmequonwi.gov/",
+     "why": "robots.txt served (2005 bytes)"
+    }
+   ],
+   "url": "https://www.cityofmequonwi.gov/",
+   "verdict": "challenge"
+  },
+  {
+   "county": "Lincoln County",
+   "cousubfp": "51250",
+   "ctv": "C",
+   "districts": 8,
+   "geoid": "5551250",
+   "name": "Merrill",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.ci.merrill.wi.us/",
+     "why": "robots.txt served (577 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (577 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "https://www.ci.merrill.wi.us/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Dane County",
+   "cousubfp": "51575",
+   "ctv": "C",
+   "districts": 8,
+   "final_url": "https://www.cityofmiddleton.us/",
+   "geoid": "5551575",
+   "name": "Middleton",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofmiddleton.us/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.cityofmiddleton.us/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Oneida County",
+   "cousubfp": "67200",
+   "ctv": "C",
+   "districts": 8,
+   "final_url": "https://www.rhinelanderwi.us/",
+   "geoid": "5567200",
+   "name": "Rhinelander",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 6,
+     "name_shapes": 293,
+     "own_names": 53,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.rhinelanderwi.us/government/mayor_and_city_council.php",
+     "visible_chars": 19350
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "http://www.rhinelandercityhall.org/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.rhinelanderwi.us/government/mayor_and_city_council.php",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   ],
+   "url": "http://www.rhinelandercityhall.org/",
+   "verdict": "candidate"
+  },
+  {
+   "challenge": "Cloudflare managed challenge (cf-mitigated)",
+   "county": "Monroe County",
+   "cousubfp": "75325",
+   "ctv": "C",
+   "districts": 8,
+   "geoid": "5575325",
+   "name": "Sparta",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.spartawisconsin.org/",
+     "why": "robots.txt served (2005 bytes)"
+    }
+   ],
+   "url": "https://www.spartawisconsin.org/",
+   "verdict": "challenge"
+  },
+  {
+   "county": "Washington County",
+   "cousubfp": "85350",
+   "ctv": "C",
+   "districts": 8,
+   "final_url": "https://www.westbendwi.gov/",
+   "geoid": "5585350",
+   "name": "West Bend",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 16,
+     "name_shapes": 171,
+     "own_names": 29,
+     "rank": 5,
+     "reads_as_council": true,
+     "url": "https://www.westbendwi.gov/government/elected_officials/west_bend_common_council/index.php",
+     "visible_chars": 33566
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.westbendwi.gov/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.westbendwi.gov/government/elected_officials/west_bend_common_council/index.php",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   ],
+   "url": "https://www.westbendwi.gov/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Wood County",
+   "cousubfp": "88200",
+   "ctv": "C",
+   "districts": 8,
+   "final_url": "https://www.wirapids.gov/",
+   "geoid": "5588200",
+   "name": "Wisconsin Rapids",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 1,
+     "name_shapes": 77,
+     "own_names": 77,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://www.wirapids.gov/",
+     "visible_chars": 15559
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.wirapids.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.wirapids.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "03225",
+   "ctv": "C",
+   "districts": 7,
+   "final_url": "http://www.coawi.org/",
+   "geoid": "5503225",
+   "name": "Ashland",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 7,
+     "name_shapes": 107,
+     "own_names": 69,
+     "rank": 2,
+     "reads_as_council": true,
+     "url": "http://www.coawi.org/27/Your-Government",
+     "visible_chars": 11486
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.coawi.org/",
+     "why": "robots.txt served (816 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.coawi.org/27/Your-Government",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "http://www.coawi.org/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Waukesha County",
+   "cousubfp": "10025",
+   "ctv": "C",
+   "districts": 7,
+   "final_url": "https://www.ci.brookfield.wi.us/",
+   "geoid": "5510025",
+   "name": "Brookfield",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.ci.brookfield.wi.us/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.ci.brookfield.wi.us/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Ozaukee County",
+   "cousubfp": "13375",
+   "ctv": "C",
+   "districts": 7,
+   "final_url": "https://www.cityofcedarburg.wi.gov/",
+   "geoid": "5513375",
+   "name": "Cedarburg",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 104,
+     "own_names": 104,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://www.cityofcedarburg.wi.gov/",
+     "visible_chars": 16662
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofcedarburg.wi.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.cityofcedarburg.wi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Chippewa County",
+   "cousubfp": "14575",
+   "ctv": "C",
+   "districts": 7,
+   "final_url": "https://www.chippewafalls-wi.gov/",
+   "geoid": "5514575",
+   "name": "Chippewa Falls",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 65,
+     "own_names": 29,
+     "rank": 2,
+     "reads_as_council": true,
+     "url": "https://www.chippewafalls-wi.gov/27/Your-Government",
+     "visible_chars": 8109
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.chippewafalls-wi.gov/",
+     "why": "robots.txt served (816 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.chippewafalls-wi.gov/27/Your-Government",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "http://www.chippewafalls-wi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Waukesha County",
+   "cousubfp": "19400",
+   "ctv": "C",
+   "districts": 7,
+   "final_url": "https://www.cityofdelafieldwi.gov/",
+   "geoid": "5519400",
+   "name": "Delafield",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 60,
+     "own_names": 60,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://www.cityofdelafieldwi.gov/",
+     "visible_chars": 13011
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofdelafieldwi.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.cityofdelafieldwi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Juneau County",
+   "cousubfp": "50025",
+   "ctv": "C",
+   "districts": 7,
+   "final_url": "https://www.mauston.com/",
+   "geoid": "5550025",
+   "name": "Mauston",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.mauston.com/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.mauston.com/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Waukesha County",
+   "cousubfp": "55275",
+   "ctv": "C",
+   "districts": 7,
+   "final_url": "https://www.muskego.wi.gov/",
+   "geoid": "5555275",
+   "name": "Muskego",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 7,
+     "name_shapes": 278,
+     "own_names": 33,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.muskego.wi.gov/government/boards_commissions/common_council.php",
+     "visible_chars": 13582
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.muskego.wi.gov/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.muskego.wi.gov/government/boards_commissions/common_council.php",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   ],
+   "url": "https://www.muskego.wi.gov/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Oconto County",
+   "cousubfp": "59350",
+   "ctv": "C",
+   "districts": 7,
+   "final_url": "https://cityofoconto.com/",
+   "geoid": "5559350",
+   "name": "Oconto",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 99,
+     "own_names": 46,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://cityofoconto.com/city-council/",
+     "visible_chars": 4076
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofoconto.com/",
+     "why": "robots.txt served (24 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofoconto.com/city-council/",
+     "why": "robots.txt served (24 bytes)"
+    }
+   ],
+   "url": "https://cityofoconto.com/",
+   "verdict": "people-no-district"
+  },
+  {
+   "county": "Brown County",
+   "cousubfp": "03425",
+   "ctv": "V",
+   "districts": 6,
+   "final_url": "https://ashwaubenon.gov/",
+   "geoid": "5503425",
+   "name": "Ashwaubenon",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 6,
+     "name_shapes": 265,
+     "own_names": 45,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://ashwaubenon.gov/government/departments/administration/boards-commissions-committees/village-board/",
+     "visible_chars": 36758
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://ashwaubenon.gov/",
+     "why": "robots.txt served (121 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://ashwaubenon.gov/government/departments/administration/boards-commissions-committees/village-board/",
+     "why": "robots.txt served (121 bytes)"
+    }
+   ],
+   "url": "https://ashwaubenon.gov/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "06925",
+   "ctv": "C",
+   "districts": 6,
+   "final_url": "https://cityofberlin.net/",
+   "geoid": "5506925",
+   "name": "Berlin",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 6,
+     "name_shapes": 129,
+     "own_names": 34,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://cityofberlin.net/city-council/",
+     "visible_chars": 11461
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofberlin.net/",
+     "why": "robots.txt served (1908 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofberlin.net/city-council/",
+     "why": "robots.txt served (1908 bytes)"
+    }
+   ],
+   "url": "https://cityofberlin.net/",
+   "verdict": "candidate"
+  },
+  {
+   "challenge": "Cloudflare managed challenge (cf-mitigated)",
+   "county": "Walworth County",
+   "cousubfp": "23300",
+   "ctv": "C",
+   "districts": 6,
+   "geoid": "5523300",
+   "name": "Elkhorn",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofelkhorn.gov",
+     "why": "robots.txt served (2005 bytes)"
+    }
+   ],
+   "url": "https://www.cityofelkhorn.gov",
+   "verdict": "challenge"
+  },
+  {
+   "county": "Milwaukee County",
+   "cousubfp": "27300",
+   "ctv": "C",
+   "districts": 6,
+   "final_url": "https://www.franklinwi.gov/",
+   "geoid": "5527300",
+   "name": "Franklin",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 6,
+     "name_shapes": 198,
+     "own_names": 71,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.franklinwi.gov/Departments/Elected-Officials/Common-Council.htm",
+     "visible_chars": 13931
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.franklinwi.gov",
+     "why": "robots.txt served (47 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.franklinwi.gov/Departments/Elected-Officials/Common-Council.htm",
+     "why": "robots.txt served (47 bytes)"
+    }
+   ],
+   "url": "http://www.franklinwi.gov",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Milwaukee County",
+   "cousubfp": "29400",
+   "ctv": "C",
+   "districts": 6,
+   "final_url": "https://www.glendalewi.gov/",
+   "geoid": "5529400",
+   "name": "Glendale",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.glendale-wi.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "http://www.glendale-wi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "St. Croix County",
+   "cousubfp": "36250",
+   "ctv": "C",
+   "districts": 6,
+   "final_url": "https://www.hudsonwi.gov/",
+   "geoid": "5536250",
+   "name": "Hudson",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.hudsonwi.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.hudsonwi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "39525",
+   "ctv": "C",
+   "districts": 6,
+   "final_url": "https://www.kielwi.gov/",
+   "geoid": "5539525",
+   "name": "Kiel",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 95,
+     "own_names": 41,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.kielwi.gov/city-council-meetings",
+     "visible_chars": 18944
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.kielwi.gov/",
+     "why": "robots.txt served (44 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.kielwi.gov/city-council-meetings",
+     "why": "robots.txt served (44 bytes)"
+    }
+   ],
+   "url": "https://www.kielwi.gov/",
+   "verdict": "people-no-district"
+  },
+  {
+   "county": "Dodge County",
+   "cousubfp": "50200",
+   "ctv": "C",
+   "districts": 6,
+   "final_url": "https://www.mayvillecity.com/",
+   "geoid": "5550200",
+   "name": "Mayville",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 108,
+     "own_names": 108,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://www.mayvillecity.com/",
+     "visible_chars": 14805
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.mayvillecity.com/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.mayvillecity.com/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Marathon County",
+   "cousubfp": "54500",
+   "ctv": "C",
+   "districts": 6,
+   "final_url": "https://www.mosinee.wi.us/",
+   "geoid": "5554500",
+   "name": "Mosinee",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 6,
+     "name_shapes": 3,
+     "own_names": 2,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.mosinee.wi.us/citycouncil",
+     "visible_chars": 3196
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.mosinee.wi.us/",
+     "why": "robots.txt served (491 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.mosinee.wi.us/citycouncil",
+     "why": "robots.txt served (491 bytes)"
+    }
+   ],
+   "url": "http://www.mosinee.wi.us/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "St. Croix County",
+   "cousubfp": "57100",
+   "ctv": "C",
+   "districts": 6,
+   "final_url": "https://www.newrichmondwi.gov/",
+   "geoid": "5557100",
+   "name": "New Richmond",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 12,
+     "name_shapes": 213,
+     "own_names": 30,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.newrichmondwi.gov/government/mayor_and_city_council.php",
+     "visible_chars": 11875
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.newrichmondwi.gov/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.newrichmondwi.gov/government/mayor_and_city_council.php",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   ],
+   "url": "https://www.newrichmondwi.gov/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Milwaukee County",
+   "cousubfp": "58800",
+   "ctv": "C",
+   "districts": 6,
+   "final_url": "https://www.oakcreekwi.gov/",
+   "geoid": "5558800",
+   "name": "Oak Creek",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 72,
+     "own_names": 72,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://www.oakcreekwi.gov/",
+     "visible_chars": 12463
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.oakcreekwi.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.oakcreekwi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Crawford County",
+   "cousubfp": "65050",
+   "ctv": "C",
+   "districts": 6,
+   "geoid": "5565050",
+   "name": "Prairie Du Chien",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofpdc.com/",
+     "why": "robots.txt served (570 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (570 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "https://cityofpdc.com/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Shawano County",
+   "cousubfp": "72925",
+   "ctv": "C",
+   "districts": 6,
+   "final_url": "https://www.cityofshawano.com/",
+   "geoid": "5572925",
+   "name": "Shawano",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 44,
+     "own_names": 8,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.cityofshawano.com/163/Mayor-and-City-Council",
+     "visible_chars": 6746
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.cityofshawano.com/",
+     "why": "robots.txt served (816 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofshawano.com/163/Mayor-and-City-Council",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "http://www.cityofshawano.com/",
+   "verdict": "people-no-district"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "84425",
+   "ctv": "C",
+   "districts": 6,
+   "final_url": "https://www.cityofwaupunwi.gov/",
+   "geoid": "5584425",
+   "name": "Waupun",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.cityofwaupun.org",
+     "why": "robots.txt served (816 bytes) (on attempt 3 of 3)"
+    }
+   ],
+   "url": "http://www.cityofwaupun.org",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "00100",
+   "ctv": "C",
+   "districts": 5,
+   "final_url": "https://www.cityofabbotsfordwi.gov/",
+   "geoid": "5500100",
+   "name": "Abbotsford",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 55,
+     "own_names": 3,
+     "rank": 8,
+     "reads_as_council": true,
+     "url": "https://www.cityofabbotsfordwi.gov/electedofficials",
+     "visible_chars": 3743
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.cityofabbotsfordwi.gov/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.cityofabbotsfordwi.gov/electedofficials",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   ],
+   "url": "https://www.cityofabbotsfordwi.gov/",
+   "verdict": "people-no-district"
+  },
+  {
+   "challenge": "Cloudflare managed challenge (cf-mitigated)",
+   "county": "Waupaca County",
+   "cousubfp": "15725",
+   "ctv": "C",
+   "districts": 5,
+   "geoid": "5515725",
+   "name": "Clintonville",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.clintonvillewi.gov/",
+     "why": "robots.txt served (2005 bytes)"
+    }
+   ],
+   "url": "https://www.clintonvillewi.gov/",
+   "verdict": "challenge"
+  },
+  {
+   "county": "Milwaukee County",
+   "cousubfp": "17975",
+   "ctv": "C",
+   "districts": 5,
+   "geoid": "5517975",
+   "name": "Cudahy",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cudahy-wi.gov/",
+     "why": "robots.txt served (210 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (210 bytes): Disallow: / (line 18) is the longest match for /",
+   "url": "https://www.cudahy-wi.gov/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Juneau County",
+   "cousubfp": "23800",
+   "ctv": "C",
+   "districts": 5,
+   "geoid": "5523800",
+   "name": "Elroy",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.elroywi.com",
+     "why": "robots.txt served (571 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (571 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "http://www.elroywi.com",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Milwaukee County",
+   "cousubfp": "31175",
+   "ctv": "C",
+   "districts": 5,
+   "final_url": "https://www.ci.greenfield.wi.us/",
+   "geoid": "5531175",
+   "name": "Greenfield",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 18,
+     "name_shapes": 100,
+     "own_names": 69,
+     "rank": 8,
+     "reads_as_council": true,
+     "url": "https://www.ci.greenfield.wi.us/699/My-Elected-Officials",
+     "visible_chars": 10055
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.ci.greenfield.wi.us/",
+     "why": "robots.txt served (816 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.ci.greenfield.wi.us/699/My-Elected-Officials",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "http://www.ci.greenfield.wi.us/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Clark County",
+   "cousubfp": "55800",
+   "ctv": "C",
+   "districts": 5,
+   "final_url": "https://neillsville-wi.com/",
+   "geoid": "5555800",
+   "name": "Neillsville",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 5,
+     "name_shapes": 119,
+     "own_names": 22,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://neillsville-wi.com/common-council/",
+     "visible_chars": 7174
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.neillsville-wi.com/",
+     "why": "robots.txt served (119 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://neillsville-wi.com/common-council/",
+     "why": "robots.txt served (119 bytes)"
+    }
+   ],
+   "url": "https://www.neillsville-wi.com/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Pierce County",
+   "cousubfp": "65375",
+   "ctv": "C",
+   "districts": 5,
+   "final_url": "https://www.prescottwi.gov/",
+   "geoid": "5565375",
+   "name": "Prescott",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 132,
+     "own_names": 104,
+     "rank": 2,
+     "reads_as_council": true,
+     "url": "https://www.prescottwi.gov/27/Your-Government",
+     "visible_chars": 11409
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.prescottwi.org/",
+     "why": "robots.txt served (816 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.prescottwi.gov/27/Your-Government",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "http://www.prescottwi.org/",
+   "verdict": "no-council-page"
+  },
+  {
+   "challenge": "robots.txt answered with a managed challenge (12038 bytes of markup, not a document) \u2014 an access control",
+   "county": "Jefferson County",
+   "cousubfp": "83925",
+   "ctv": "C",
+   "districts": 5,
+   "geoid": "5583925",
+   "name": "Waterloo",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "challenge",
+     "url": "http://www.waterloowi.us/",
+     "why": "robots.txt answered with a managed challenge (12038 bytes of markup, not a document) \u2014 an access control"
+    }
+   ],
+   "url": "http://www.waterloowi.us/",
+   "verdict": "challenge"
+  },
+  {
+   "county": "Waupaca County",
+   "cousubfp": "84375",
+   "ctv": "C",
+   "districts": 5,
+   "final_url": "https://cityofwaupaca.org/",
+   "geoid": "5584375",
+   "name": "Waupaca",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 10,
+     "name_shapes": 195,
+     "own_names": 24,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://cityofwaupaca.org/government/mayor-city-council/",
+     "visible_chars": 16372
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofwaupaca.org/",
+     "why": "robots.txt served (165 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofwaupaca.org/government/mayor-city-council/",
+     "why": "robots.txt served (165 bytes)"
+    }
+   ],
+   "url": "https://www.cityofwaupaca.org/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Milwaukee County",
+   "cousubfp": "85300",
+   "ctv": "C",
+   "districts": 5,
+   "final_url": "https://www.westalliswi.gov/",
+   "geoid": "5585300",
+   "name": "West Allis",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 73,
+     "own_names": 0,
+     "rank": 12,
+     "reads_as_council": true,
+     "url": "https://www.westalliswi.gov/page/contact-your-alderperson",
+     "visible_chars": 3174
+    },
+    {
+     "district_keys": 0,
+     "name_shapes": 73,
+     "own_names": 0,
+     "rank": 12,
+     "reads_as_council": true,
+     "url": "https://www.westalliswi.gov/o/cwa/page/contact-your-alderperson",
+     "visible_chars": 3174
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.westalliswi.gov/",
+     "why": "robots.txt served (39 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.westalliswi.gov/page/contact-your-alderperson",
+     "why": "robots.txt served (39 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.westalliswi.gov/o/cwa/page/contact-your-alderperson",
+     "why": "robots.txt served (39 bytes)"
+    }
+   ],
+   "url": "https://www.westalliswi.gov/",
+   "verdict": "roster-not-in-html"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "86925",
+   "ctv": "C",
+   "districts": 5,
+   "final_url": "https://www.whitewater-wi.gov/",
+   "geoid": "5586925",
+   "name": "Whitewater",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://whitewater-wi.gov/",
+     "why": "robots.txt served (39 bytes)"
+    }
+   ],
+   "url": "https://whitewater-wi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Barron County",
+   "cousubfp": "04875",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "http://cityofbarron.com/",
+   "geoid": "5504875",
+   "name": "Barron",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 4,
+     "name_shapes": 86,
+     "own_names": 54,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "http://cityofbarron.com/159/City-Council",
+     "visible_chars": 9500
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://cityofbarron.com/",
+     "why": "robots.txt served (816 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://cityofbarron.com/159/City-Council",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "http://cityofbarron.com/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Chippewa County",
+   "cousubfp": "08225",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://www.ci.bloomer.wi.us/",
+   "geoid": "5508225",
+   "name": "Bloomer",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.ci.bloomer.wi.us/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.ci.bloomer.wi.us/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Grant County",
+   "cousubfp": "08850",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://boscobelwisconsin.com/",
+   "geoid": "5508850",
+   "name": "Boscobel",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 4,
+     "name_shapes": 199,
+     "own_names": 128,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://boscobelwisconsin.com/city-government/common-council/",
+     "visible_chars": 6447
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://boscobelwisconsin.com/",
+     "why": "robots.txt served (201 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://boscobelwisconsin.com/city-government/common-council/",
+     "why": "robots.txt served (201 bytes)"
+    }
+   ],
+   "url": "https://boscobelwisconsin.com/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "11200",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://www.burlington-wi.gov/",
+   "geoid": "5511200",
+   "name": "Burlington",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 102,
+     "own_names": 52,
+     "rank": 2,
+     "reads_as_council": true,
+     "url": "https://www.burlington-wi.gov/27/Your-Government",
+     "visible_chars": 9068
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.burlington-wi.gov",
+     "why": "robots.txt served (816 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.burlington-wi.gov/27/Your-Government",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.burlington-wi.gov",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Barron County",
+   "cousubfp": "14325",
+   "ctv": "C",
+   "districts": 4,
+   "error": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+   "geoid": "5514325",
+   "name": "Chetek",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.cityofchetek-wi.gov/",
+     "why": "robots.txt served (167 bytes)"
+    }
+   ],
+   "url": "http://www.cityofchetek-wi.gov/",
+   "verdict": "unreachable"
+  },
+  {
+   "county": "Calumet County",
+   "cousubfp": "14475",
+   "ctv": "C",
+   "districts": 4,
+   "geoid": "5514475",
+   "name": "Chilton",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://chiltonwi.gov/",
+     "why": "robots.txt served (570 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (570 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "https://chiltonwi.gov/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Forest County",
+   "cousubfp": "17425",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://cityofcrandon.info/",
+   "geoid": "5517425",
+   "name": "Crandon",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 33,
+     "own_names": 33,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://cityofcrandon.info/",
+     "visible_chars": 1680
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.cityofcrandon.info/",
+     "why": "robots.txt served (185 bytes)"
+    }
+   ],
+   "url": "http://www.cityofcrandon.info/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Barron County",
+   "cousubfp": "18025",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://cityofcumberland.net/",
+   "geoid": "5518025",
+   "name": "Cumberland",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 4,
+     "name_shapes": 39,
+     "own_names": 4,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://cityofcumberland.net/city-council/",
+     "visible_chars": 4315
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofcumberland.net/",
+     "why": "robots.txt served (23 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofcumberland.net/city-council",
+     "why": "robots.txt served (23 bytes)"
+    }
+   ],
+   "url": "https://cityofcumberland.net/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Brown County",
+   "cousubfp": "19775",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://www.deperewi.gov/",
+   "geoid": "5519775",
+   "name": "De Pere",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 686,
+     "own_names": 686,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://www.deperewi.gov/",
+     "visible_chars": 33618
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.deperewi.gov/",
+     "why": "robots.txt served (1750 bytes)"
+    }
+   ],
+   "url": "https://www.deperewi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Grant County",
+   "cousubfp": "25600",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://fennimore.com/",
+   "geoid": "5525600",
+   "name": "Fennimore",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 4,
+     "name_shapes": 163,
+     "own_names": 30,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://fennimore.com/city-government/city-council/",
+     "visible_chars": 7261
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.fennimore.com/",
+     "why": "robots.txt served (193 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://fennimore.com/city-government/city-council/",
+     "why": "robots.txt served (193 bytes)"
+    }
+   ],
+   "url": "https://www.fennimore.com/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Dane County",
+   "cousubfp": "25950",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "http://www.fitchburgwi.gov/",
+   "geoid": "5525950",
+   "name": "Fitchburg",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.fitchburgwi.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "http://www.fitchburgwi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Vernon County",
+   "cousubfp": "34825",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://www.hillsborowi.com/",
+   "geoid": "5534825",
+   "name": "Hillsboro",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 4,
+     "name_shapes": 96,
+     "own_names": 24,
+     "rank": 8,
+     "reads_as_council": true,
+     "url": "https://www.hillsborowi.com/mayor-and-council/",
+     "visible_chars": 6769
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.hillsborowi.com/",
+     "why": "robots.txt served (23 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.hillsborowi.com/mayor-and-council",
+     "why": "robots.txt served (23 bytes)"
+    }
+   ],
+   "url": "https://www.hillsborowi.com/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Iron County",
+   "cousubfp": "36525",
+   "ctv": "C",
+   "districts": 4,
+   "geoid": "5536525",
+   "name": "Hurley",
+   "notes": [
+    "the clerk directory publishes no website"
+   ],
+   "pages": [],
+   "robots": [],
+   "url": null,
+   "verdict": "no-url"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "38800",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://kaukauna.gov/",
+   "geoid": "5538800",
+   "name": "Kaukauna",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 4,
+     "name_shapes": 152,
+     "own_names": 45,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://kaukauna.gov/common-council/",
+     "visible_chars": 16978
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://kaukauna.gov/",
+     "why": "robots.txt served (170 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://kaukauna.gov/common-council/",
+     "why": "robots.txt served (170 bytes)"
+    }
+   ],
+   "url": "https://kaukauna.gov/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Kewaunee County",
+   "cousubfp": "39350",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://cityofkewauneewi.gov/",
+   "geoid": "5539350",
+   "name": "Kewaunee",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 4,
+     "name_shapes": 86,
+     "own_names": 30,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://cityofkewauneewi.gov/common-council/",
+     "visible_chars": 7276
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofkewauneewi.gov/",
+     "why": "robots.txt served (121 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofkewauneewi.gov/common-council/",
+     "why": "robots.txt served (121 bytes)"
+    }
+   ],
+   "url": "https://cityofkewauneewi.gov/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Walworth County",
+   "cousubfp": "41450",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://www.cityoflakegeneva.gov/",
+   "geoid": "5541450",
+   "name": "Lake Geneva",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityoflakegeneva.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.cityoflakegeneva.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Grant County",
+   "cousubfp": "42250",
+   "ctv": "C",
+   "districts": 4,
+   "geoid": "5542250",
+   "name": "Lancaster",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://lancasterwisconsin.com/",
+     "why": "robots.txt served (579 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (579 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "https://lancasterwisconsin.com/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "49400",
+   "ctv": "C",
+   "districts": 4,
+   "geoid": "5549400",
+   "name": "Marion",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://cityofmarionwi.gov/",
+     "why": "robots.txt served (574 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (574 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "http://cityofmarionwi.gov/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Taylor County",
+   "cousubfp": "50425",
+   "ctv": "C",
+   "districts": 4,
+   "geoid": "5550425",
+   "name": "Medford",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "unreachable",
+     "url": "https://citymedfordwi.com/",
+     "why": "robots.txt unreachable: ProxyError: HTTPSConnectionPool(host='citymedfordwi.com', port=443): Max retries exceeded with url: /robots.txt (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 502 Bad Gateway'))) (unchanged after 3 attempts)"
+    }
+   ],
+   "robotsRefused": "robots.txt unreachable: ProxyError: HTTPSConnectionPool(host='citymedfordwi.com', port=443): Max retries exceeded with url: /robots.txt (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 502 Bad Gateway'))) (unchanged after 3 attempts)",
+   "url": "https://citymedfordwi.com/",
+   "verdict": "proxy-blocked"
+  },
+  {
+   "county": "Iowa County",
+   "cousubfp": "53100",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://cityofmineralpoint.com/",
+   "geoid": "5553100",
+   "name": "Mineral Point",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 70,
+     "own_names": 38,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://cityofmineralpoint.com/city-council/",
+     "visible_chars": 5499
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofmineralpoint.com/",
+     "why": "robots.txt served (23 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofmineralpoint.com/city-council",
+     "why": "robots.txt served (23 bytes)"
+    }
+   ],
+   "url": "https://cityofmineralpoint.com/",
+   "verdict": "people-no-district"
+  },
+  {
+   "county": "Marquette County",
+   "cousubfp": "53875",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://www.cityofmontello.com/",
+   "geoid": "5553875",
+   "name": "Montello",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 3,
+     "name_shapes": 41,
+     "own_names": 16,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.cityofmontello.com/city-council/",
+     "visible_chars": 3295
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofmontello.com/",
+     "why": "robots.txt served (180 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofmontello.com/city-council/",
+     "why": "robots.txt served (180 bytes)"
+    }
+   ],
+   "url": "https://www.cityofmontello.com/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Wood County",
+   "cousubfp": "55875",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://cityofnekoosa.org/",
+   "geoid": "5555875",
+   "name": "Nekoosa",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 4,
+     "name_shapes": 48,
+     "own_names": 19,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://cityofnekoosa.org/city-council/",
+     "visible_chars": 5629
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofnekoosa.org/",
+     "why": "robots.txt served (23 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofnekoosa.org/city-council",
+     "why": "robots.txt served (23 bytes)"
+    }
+   ],
+   "url": "https://cityofnekoosa.org/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Calumet County",
+   "cousubfp": "56800",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://cityofnewholstein.org/",
+   "geoid": "5556800",
+   "name": "New Holstein",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 60,
+     "own_names": 3,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://cityofnewholstein.org/common-council/",
+     "visible_chars": 5632
+    },
+    {
+     "district_keys": 10,
+     "name_shapes": 82,
+     "own_names": 25,
+     "rank": 8,
+     "reads_as_council": true,
+     "url": "https://cityofnewholstein.org/elected-officials/",
+     "visible_chars": 7544
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofnewholstein.org/",
+     "why": "robots.txt served (122 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofnewholstein.org/common-council/",
+     "why": "robots.txt served (122 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofnewholstein.org/elected-officials/",
+     "why": "robots.txt served (122 bytes)"
+    }
+   ],
+   "url": "https://www.cityofnewholstein.org/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Grant County",
+   "cousubfp": "63250",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://www.platteville.org/",
+   "geoid": "5563250",
+   "name": "Platteville",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 148,
+     "own_names": 17,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.platteville.org/council/page/common-council-fire-facility-community-ribbon-cutting-ceremony-0",
+     "visible_chars": 8377
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.platteville.org/",
+     "why": "robots.txt served (5869 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.platteville.org/council/page/common-council-fire-facility-community-ribbon-cutting-ceremony-0",
+     "why": "robots.txt served (5869 bytes)"
+    }
+   ],
+   "url": "https://www.platteville.org/",
+   "verdict": "people-no-district"
+  },
+  {
+   "county": "Sheboygan County",
+   "cousubfp": "63700",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://www.plymouthwi.gov/",
+   "geoid": "5563700",
+   "name": "Plymouth",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 53,
+     "own_names": 53,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://www.plymouthwi.gov/",
+     "visible_chars": 7734
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://plymouthgov.com/",
+     "why": "robots.txt served (816 bytes) (on attempt 2 of 3)"
+    }
+   ],
+   "url": "https://plymouthgov.com/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Sauk County",
+   "cousubfp": "66800",
+   "ctv": "C",
+   "districts": 4,
+   "geoid": "5566800",
+   "name": "Reedsburg",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.reedsburgwi.gov/",
+     "why": "robots.txt served (576 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (576 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "https://www.reedsburgwi.gov/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Barron County",
+   "cousubfp": "67350",
+   "ctv": "C",
+   "districts": 4,
+   "geoid": "5567350",
+   "name": "Rice Lake",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.ci.rice-lake.wi.us/",
+     "why": "robots.txt served (579 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (579 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "https://www.ci.rice-lake.wi.us/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Richland County",
+   "cousubfp": "67625",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://www.richlandcenterwi.gov/",
+   "geoid": "5567625",
+   "name": "Richland Center",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 80,
+     "own_names": 11,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.richlandcenterwi.gov/mayor-cc/page/common-council-45",
+     "visible_chars": 5610
+    },
+    {
+     "district_keys": 0,
+     "name_shapes": 83,
+     "own_names": 14,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.richlandcenterwi.gov/mayor-cc/page/common-council-special-session-10",
+     "visible_chars": 5780
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.richlandcenterwi.gov/",
+     "why": "robots.txt served (5869 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.richlandcenterwi.gov/mayor-cc/page/common-council-45",
+     "why": "robots.txt served (5869 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.richlandcenterwi.gov/mayor-cc/page/common-council-special-session-10",
+     "why": "robots.txt served (5869 bytes)"
+    }
+   ],
+   "url": "https://www.richlandcenterwi.gov/",
+   "verdict": "people-no-district"
+  },
+  {
+   "county": "Fond Du Lac County",
+   "cousubfp": "68175",
+   "ctv": "C",
+   "districts": 4,
+   "geoid": "5568175",
+   "name": "Ripon",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofripon.com/",
+     "why": "robots.txt served (576 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (576 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "https://www.cityofripon.com/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "68275",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://www.rfcity.org/",
+   "geoid": "5568275",
+   "name": "River Falls",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.rfcity.org/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.rfcity.org/",
+   "verdict": "no-council-page"
+  },
+  {
+   "challenge": "Cloudflare managed challenge (cf-mitigated)",
+   "county": "Marathon County",
+   "cousubfp": "72150",
+   "ctv": "C",
+   "districts": 4,
+   "geoid": "5572150",
+   "name": "Schofield",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.schofieldwi.gov/",
+     "why": "robots.txt served (2005 bytes)"
+    }
+   ],
+   "url": "https://www.schofieldwi.gov/",
+   "verdict": "challenge"
+  },
+  {
+   "county": "Milwaukee County",
+   "cousubfp": "75125",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://www.southmilwaukee.gov/",
+   "geoid": "5575125",
+   "name": "South Milwaukee",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.southmilwaukee.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.southmilwaukee.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "76625",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://www.ci.stanley.wi.gov/",
+   "geoid": "5576625",
+   "name": "Stanley",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 50,
+     "own_names": 50,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://www.ci.stanley.wi.gov/",
+     "visible_chars": 4130
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://ci.stanley.wi.gov/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   ],
+   "url": "https://ci.stanley.wi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Dane County",
+   "cousubfp": "77675",
+   "ctv": "C",
+   "districts": 4,
+   "geoid": "5577675",
+   "name": "Stoughton",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "unreachable",
+     "url": "https://www.ci.stoughton.wi.us/",
+     "why": "robots.txt unreachable: ProxyError: HTTPSConnectionPool(host='www.ci.stoughton.wi.us', port=443): Max retries exceeded with url: /robots.txt (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 502 Bad Gateway'))) (unchanged after 3 attempts)"
+    }
+   ],
+   "robotsRefused": "robots.txt unreachable: ProxyError: HTTPSConnectionPool(host='www.ci.stoughton.wi.us', port=443): Max retries exceeded with url: /robots.txt (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 502 Bad Gateway'))) (unchanged after 3 attempts)",
+   "url": "https://www.ci.stoughton.wi.us/",
+   "verdict": "proxy-blocked"
+  },
+  {
+   "county": "Dane County",
+   "cousubfp": "78600",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://cityofsunprairie.com/",
+   "geoid": "5578600",
+   "name": "Sun Prairie",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 51,
+     "own_names": 12,
+     "rank": 2,
+     "reads_as_council": true,
+     "url": "https://cityofsunprairie.com/27/Your-Government",
+     "visible_chars": 6355
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofsunprairie.com/",
+     "why": "robots.txt served (816 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofsunprairie.com/27/Your-Government",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://cityofsunprairie.com/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Clark County",
+   "cousubfp": "79625",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "https://cityofthorp.com/",
+   "geoid": "5579625",
+   "name": "Thorp",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 4,
+     "name_shapes": 94,
+     "own_names": 17,
+     "rank": 8,
+     "reads_as_council": true,
+     "url": "https://cityofthorp.com/government/elected-officials",
+     "visible_chars": 3654
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "http://cityofthorp.com/",
+     "why": "robots.txt served empty (allow all)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://cityofthorp.com/government/elected-officials",
+     "why": "robots.txt served empty (allow all)"
+    }
+   ],
+   "url": "http://cityofthorp.com/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Dane County",
+   "cousubfp": "82600",
+   "ctv": "C",
+   "districts": 4,
+   "final_url": "http://www.veronawi.gov/",
+   "geoid": "5582600",
+   "name": "Verona",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.ci.verona.wi.us/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "http://www.ci.verona.wi.us/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Adams County",
+   "cousubfp": "00275",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://cityofadamswi.org/",
+   "geoid": "5500275",
+   "name": "Adams",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 3,
+     "name_shapes": 56,
+     "own_names": 15,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://cityofadamswi.org/city-council/",
+     "visible_chars": 3644
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofadamswi.org/",
+     "why": "robots.txt served (342 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofadamswi.org/city-council/",
+     "why": "robots.txt served (342 bytes)"
+    }
+   ],
+   "url": "https://cityofadamswi.org/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "16150",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://ci.colby.wi.us/",
+   "geoid": "5516150",
+   "name": "Colby",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 51,
+     "own_names": 10,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://ci.colby.wi.us/city-council/",
+     "visible_chars": 4209
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://ci.colby.wi.us/",
+     "why": "robots.txt served (23 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://ci.colby.wi.us/city-council",
+     "why": "robots.txt served (23 bytes)"
+    }
+   ],
+   "url": "https://ci.colby.wi.us/",
+   "verdict": "people-no-district"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "16450",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://www.cityofcolumbuswi.com/",
+   "geoid": "5516450",
+   "name": "Columbus",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 83,
+     "own_names": 83,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://www.cityofcolumbuswi.com/",
+     "visible_chars": 14521
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofcolumbuswi.com/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.cityofcolumbuswi.com/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Walworth County",
+   "cousubfp": "19450",
+   "ctv": "C",
+   "districts": 3,
+   "geoid": "5519450",
+   "name": "Delavan",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://ci.delavan.wi.us/",
+     "why": "robots.txt served (210 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (210 bytes): Disallow: / (line 18) is the longest match for /",
+   "url": "https://ci.delavan.wi.us/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "22575",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://www.edgerton.wi.gov/",
+   "geoid": "5522575",
+   "name": "Edgerton",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 53,
+     "own_names": 2,
+     "rank": 8,
+     "reads_as_council": true,
+     "url": "https://www.edgerton.wi.gov/electedofficials",
+     "visible_chars": 3813
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.cityofedgerton.com/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.edgerton.wi.gov/electedofficials",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   ],
+   "url": "https://www.cityofedgerton.com/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Dodge County",
+   "cousubfp": "27000",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://www.cityoffoxlake.org/",
+   "geoid": "5527000",
+   "name": "Fox Lake",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityoffoxlake.org/",
+     "why": "robots.txt served (816 bytes) (on attempt 2 of 3)"
+    }
+   ],
+   "url": "https://www.cityoffoxlake.org/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Oconto County",
+   "cousubfp": "29050",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://cityofgillett.com/",
+   "geoid": "5529050",
+   "name": "Gillett",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 4,
+     "name_shapes": 77,
+     "own_names": 12,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://cityofgillett.com/government/city-council/",
+     "visible_chars": 3669
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofgillett.com/",
+     "why": "robots.txt served (175 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofgillett.com/government/city-council/",
+     "why": "robots.txt served (175 bytes)"
+    }
+   ],
+   "url": "https://cityofgillett.com/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Green Lake County",
+   "cousubfp": "31300",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://cityofgreenlake.com/",
+   "geoid": "5531300",
+   "name": "Green Lake",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofgreenlake.com/",
+     "why": "robots.txt served (1877 bytes)"
+    }
+   ],
+   "url": "https://cityofgreenlake.com/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "33000",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://ci.hartford.wi.us/",
+   "geoid": "5533000",
+   "name": "Hartford",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://ci.hartford.wi.us/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://ci.hartford.wi.us/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Dodge County",
+   "cousubfp": "38675",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://cityofjuneau.net/",
+   "geoid": "5538675",
+   "name": "Juneau",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://cityofjuneau.net/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "http://cityofjuneau.net/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Waupaca County",
+   "cousubfp": "48350",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://cityofmanawa.org/",
+   "geoid": "5548350",
+   "name": "Manawa",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 106,
+     "own_names": 106,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://cityofmanawa.org/",
+     "visible_chars": 10116
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://cityofmanawa.org",
+     "why": "robots.txt served (632 bytes)"
+    }
+   ],
+   "url": "http://cityofmanawa.org",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Green Lake County",
+   "cousubfp": "49450",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://www.markesanwi.gov/",
+   "geoid": "5549450",
+   "name": "Markesan",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 3,
+     "name_shapes": 88,
+     "own_names": 22,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.markesanwi.gov/common-council",
+     "visible_chars": 9047
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.markesanwi.gov/",
+     "why": "robots.txt served (162 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.markesanwi.gov/common-council",
+     "why": "robots.txt served (162 bytes)"
+    }
+   ],
+   "url": "http://www.markesanwi.gov/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Buffalo County",
+   "cousubfp": "53600",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://www.mondoviwi.gov/",
+   "geoid": "5553600",
+   "name": "Mondovi",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 3,
+     "name_shapes": 64,
+     "own_names": 16,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.mondoviwi.gov/city-council/",
+     "visible_chars": 5380
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.mondoviwi.gov",
+     "why": "robots.txt served (23 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.mondoviwi.gov/city-council",
+     "why": "robots.txt served (23 bytes)"
+    }
+   ],
+   "url": "https://www.mondoviwi.gov",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Oconto County",
+   "cousubfp": "59400",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://cityofocontofalls.com/",
+   "geoid": "5559400",
+   "name": "Oconto Falls",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 170,
+     "own_names": 121,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://cityofocontofalls.com/government/city-council/",
+     "visible_chars": 5758
+    },
+    {
+     "district_keys": 0,
+     "name_shapes": 55,
+     "own_names": 8,
+     "rank": 6,
+     "reads_as_council": true,
+     "url": "https://cityofocontofalls.com/government/city-council/council-minutes/",
+     "visible_chars": 8322
+    },
+    {
+     "district_keys": 0,
+     "name_shapes": 55,
+     "own_names": 8,
+     "rank": 6,
+     "reads_as_council": true,
+     "url": "https://cityofocontofalls.com/government/city-council/council-minutes/",
+     "visible_chars": 8322
+    },
+    {
+     "district_keys": 0,
+     "name_shapes": 56,
+     "own_names": 7,
+     "rank": 5,
+     "reads_as_council": true,
+     "url": "https://cityofocontofalls.com/government/city-council/current-meeting-agendas/",
+     "visible_chars": 3752
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofocontofalls.com/",
+     "why": "robots.txt served (179 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofocontofalls.com/government/city-council/",
+     "why": "robots.txt served (179 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofocontofalls.com/government/city-council/council-minutes",
+     "why": "robots.txt served (179 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofocontofalls.com/government/city-council/council-minutes/",
+     "why": "robots.txt served (179 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofocontofalls.com/government/city-council/current-meeting-agendas/",
+     "why": "robots.txt served (179 bytes)"
+    }
+   ],
+   "url": "https://cityofocontofalls.com/",
+   "verdict": "people-no-district"
+  },
+  {
+   "county": "La Crosse County",
+   "cousubfp": "59925",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://www.onalaskawi.gov/",
+   "geoid": "5559925",
+   "name": "Onalaska",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 164,
+     "own_names": 164,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://www.onalaskawi.gov/",
+     "visible_chars": 12991
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://cityofonalaska.com/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   ],
+   "url": "https://cityofonalaska.com/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Clark County",
+   "cousubfp": "60825",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://www.cityofowen.com/",
+   "geoid": "5560825",
+   "name": "Owen",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofowen.com/",
+     "why": "robots.txt served (72 bytes)"
+    }
+   ],
+   "url": "https://www.cityofowen.com/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Marinette County",
+   "cousubfp": "62175",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://ci.peshtigo.wi.gov/",
+   "geoid": "5562175",
+   "name": "Peshtigo",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 195,
+     "own_names": 195,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://ci.peshtigo.wi.gov/",
+     "visible_chars": 32510
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://ci.peshtigo.wi.us/",
+     "why": "robots.txt served (23 bytes)"
+    }
+   ],
+   "url": "https://ci.peshtigo.wi.us/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Waukesha County",
+   "cousubfp": "62240",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://www.cityofpewaukee.us/",
+   "geoid": "5562240",
+   "name": "Pewaukee",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofpewaukee.us/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.cityofpewaukee.us/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Portage County",
+   "cousubfp": "63525",
+   "ctv": "V",
+   "districts": 3,
+   "final_url": "https://www.ploverwi.gov/",
+   "geoid": "5563525",
+   "name": "Plover",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.ploverwi.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.ploverwi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Green Lake County",
+   "cousubfp": "65600",
+   "ctv": "C",
+   "districts": 3,
+   "geoid": "5565600",
+   "name": "Princeton",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofprincetonwi.com/",
+     "why": "robots.txt served (582 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (582 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "https://www.cityofprincetonwi.com/",
+   "verdict": "robots-refused"
+  },
+  {
+   "challenge": "robots.txt answered HTTP 202 (an access control, not a document)",
+   "county": "Sheboygan County",
+   "cousubfp": "73025",
+   "ctv": "C",
+   "districts": 3,
+   "geoid": "5573025",
+   "name": "Sheboygan Falls",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "challenge",
+     "url": "https://www.cityofsheboyganfalls.com/",
+     "why": "robots.txt answered HTTP 202 (an access control, not a document)"
+    }
+   ],
+   "url": "https://www.cityofsheboyganfalls.com/",
+   "verdict": "challenge"
+  },
+  {
+   "county": "Milwaukee County",
+   "cousubfp": "70650",
+   "ctv": "C",
+   "districts": 3,
+   "geoid": "5570650",
+   "name": "St. Francis",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://stfranciswi.org/",
+     "why": "robots.txt served (572 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (572 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "https://stfranciswi.org/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Lincoln County",
+   "cousubfp": "80125",
+   "ctv": "C",
+   "districts": 3,
+   "geoid": "5580125",
+   "name": "Tomahawk",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityoftomahawkwi.com/",
+     "why": "robots.txt served (581 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (581 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "https://www.cityoftomahawkwi.com/",
+   "verdict": "robots-refused"
+  },
+  {
+   "challenge": "Cloudflare managed challenge (cf-mitigated)",
+   "county": "Bayfield County",
+   "cousubfp": "83525",
+   "ctv": "C",
+   "districts": 3,
+   "geoid": "5583525",
+   "name": "Washburn",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofwashburnwi.gov/",
+     "why": "robots.txt served (2005 bytes)"
+    }
+   ],
+   "url": "https://www.cityofwashburnwi.gov/",
+   "verdict": "challenge"
+  },
+  {
+   "county": "Vernon County",
+   "cousubfp": "85475",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://www.cityofwestby.org/",
+   "geoid": "5585475",
+   "name": "Westby",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 3,
+     "name_shapes": 110,
+     "own_names": 17,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.cityofwestby.org/westby-city-council",
+     "visible_chars": 4948
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofwestby.org/",
+     "why": "robots.txt served (2189 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofwestby.org/westby-city-council",
+     "why": "robots.txt served (2189 bytes)"
+    }
+   ],
+   "url": "https://www.cityofwestby.org/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Marquette County",
+   "cousubfp": "85575",
+   "ctv": "V",
+   "districts": 3,
+   "geoid": "5585575",
+   "name": "Westfield",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://villageofwestfieldwi.com",
+     "why": "robots.txt served (580 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (580 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "http://villageofwestfieldwi.com",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Waupaca County",
+   "cousubfp": "86400",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://www.cityofweyauwega-wi.gov/",
+   "geoid": "5586400",
+   "name": "Weyauwega",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.cityofweyauwega-wi.gov",
+     "why": "robots.txt served (500 bytes)"
+    }
+   ],
+   "url": "http://www.cityofweyauwega-wi.gov",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Multiple Counties",
+   "cousubfp": "88150",
+   "ctv": "C",
+   "districts": 3,
+   "final_url": "https://www.citywd.org/",
+   "geoid": "5588150",
+   "name": "Wisconsin Dells",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 103,
+     "own_names": 103,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://www.citywd.org/",
+     "visible_chars": 17837
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.citywd.org/",
+     "why": "robots.txt served (23 bytes)"
+    }
+   ],
+   "url": "https://www.citywd.org/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Buffalo County",
+   "cousubfp": "01225",
+   "ctv": "C",
+   "districts": 2,
+   "final_url": "https://almawisconsin.org/",
+   "geoid": "5501225",
+   "name": "Alma",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://almawisconsin.org/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   ],
+   "url": "https://almawisconsin.org/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Polk County",
+   "cousubfp": "01725",
+   "ctv": "C",
+   "districts": 2,
+   "final_url": "https://www.amerywi.gov/",
+   "geoid": "5501725",
+   "name": "Amery",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.amerywi.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   ],
+   "url": "https://www.amerywi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Clark County",
+   "cousubfp": "31575",
+   "ctv": "C",
+   "districts": 2,
+   "final_url": "https://cityofgreenwood.wi.gov/",
+   "geoid": "5531575",
+   "name": "Greenwood",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 2,
+     "name_shapes": 71,
+     "own_names": 11,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://cityofgreenwood.wi.gov/city-council/",
+     "visible_chars": 5443
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofgreenwood.wi.gov/",
+     "why": "robots.txt served (23 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://cityofgreenwood.wi.gov/city-council",
+     "why": "robots.txt served (23 bytes)"
+    }
+   ],
+   "url": "https://cityofgreenwood.wi.gov/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Jefferson County",
+   "cousubfp": "41675",
+   "ctv": "C",
+   "districts": 2,
+   "final_url": "https://www.cityoflakemillswi.gov/",
+   "geoid": "5541675",
+   "name": "Lake Mills",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 76,
+     "own_names": 76,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://www.cityoflakemillswi.gov/",
+     "visible_chars": 5029
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.ci.lake-mills.wi.us/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   ],
+   "url": "https://www.ci.lake-mills.wi.us/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Clark County",
+   "cousubfp": "46075",
+   "ctv": "C",
+   "districts": 2,
+   "final_url": "http://www.loyalwi.com/",
+   "geoid": "5546075",
+   "name": "Loyal",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.loyalwi.com",
+     "why": "robots.txt served (73 bytes)"
+    }
+   ],
+   "url": "http://www.loyalwi.com",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Iron County",
+   "cousubfp": "54075",
+   "ctv": "C",
+   "districts": 2,
+   "final_url": "https://montrealwis.com/",
+   "geoid": "5554075",
+   "name": "Montreal",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 2,
+     "name_shapes": 41,
+     "own_names": 11,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://montrealwis.com/departments/city-council/",
+     "visible_chars": 8593
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://montrealwis.com/",
+     "why": "robots.txt served (173 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://montrealwis.com/departments/city-council/",
+     "why": "robots.txt served (173 bytes)"
+    }
+   ],
+   "url": "https://montrealwis.com/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Washburn County",
+   "cousubfp": "73200",
+   "ctv": "C",
+   "districts": 2,
+   "final_url": "http://www.shelllake.org/",
+   "geoid": "5573200",
+   "name": "Shell Lake",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 2,
+     "name_shapes": 72,
+     "own_names": 17,
+     "rank": 8,
+     "reads_as_council": true,
+     "url": "http://www.shelllake.org/local-government/administration/elected-officials/",
+     "visible_chars": 4027
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.shelllake.org/",
+     "why": "robots.txt served (471 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "http://www.shelllake.org/local-government/administration/elected-officials/",
+     "why": "robots.txt served (471 bytes)"
+    }
+   ],
+   "url": "http://www.shelllake.org/",
+   "verdict": "candidate"
+  },
+  {
+   "county": "Washburn County",
+   "cousubfp": "75625",
+   "ctv": "C",
+   "districts": 2,
+   "error": "HTTP 403",
+   "geoid": "5575625",
+   "name": "Spooner",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "refused",
+     "url": "https://cityofspoonerwi.gov/",
+     "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy"
+    }
+   ],
+   "url": "https://cityofspoonerwi.gov/",
+   "verdict": "unreachable"
+  },
+  {
+   "county": "Polk County",
+   "cousubfp": "70550",
+   "ctv": "C",
+   "districts": 2,
+   "geoid": "5570550",
+   "name": "St. Croix Falls",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": false,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.cityofstcroixfalls.com/",
+     "why": "robots.txt served (583 bytes)"
+    }
+   ],
+   "robotsRefused": "robots.txt served (583 bytes): Disallow: / (line 31) is the longest match for /",
+   "url": "https://www.cityofstcroixfalls.com/",
+   "verdict": "robots-refused"
+  },
+  {
+   "county": "Buffalo County",
+   "cousubfp": "11062",
+   "ctv": "C",
+   "districts": 1,
+   "final_url": "https://www.buffalocitywi.gov/",
+   "geoid": "5511062",
+   "name": "Buffalo City",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 59,
+     "own_names": 18,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://www.buffalocitywi.gov/city-council/",
+     "visible_chars": 3530
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "absent",
+     "url": "https://www.buffalocitywisconsin.com/",
+     "why": "no robots.txt: the host served 1089146 bytes of HTML at that path (allow all)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://www.buffalocitywi.gov/city-council/",
+     "why": "robots.txt served (140 bytes)"
+    }
+   ],
+   "url": "https://www.buffalocitywisconsin.com/",
+   "verdict": "people-no-district"
+  },
+  {
+   "county": "Marquette County",
+   "cousubfp": "24075",
+   "ctv": "V",
+   "districts": 1,
+   "final_url": "https://villageofendeavor.gov/",
+   "geoid": "5524075",
+   "name": "Endeavor",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 141,
+     "own_names": 141,
+     "rank": 0,
+     "reads_as_council": true,
+     "url": "https://villageofendeavor.gov/",
+     "visible_chars": 15655
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://villageofendeavor.gov/",
+     "why": "robots.txt served (29 bytes)"
+    }
+   ],
+   "url": "https://villageofendeavor.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Marquette County",
+   "cousubfp": "56125",
+   "ctv": "V",
+   "districts": 1,
+   "final_url": "https://neshkorowi.gov/",
+   "geoid": "5556125",
+   "name": "Neshkoro",
+   "notes": [],
+   "pages": [],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://neshkorowi.gov/",
+     "why": "robots.txt served (23 bytes)"
+    }
+   ],
+   "url": "https://neshkorowi.gov/",
+   "verdict": "no-council-page"
+  },
+  {
+   "county": "Marquette County",
+   "cousubfp": "60875",
+   "ctv": "V",
+   "districts": 1,
+   "final_url": "https://villageofoxfordwi.com/",
+   "geoid": "5560875",
+   "name": "Oxford",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 40,
+     "own_names": 13,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://villageofoxfordwi.com/village-board/",
+     "visible_chars": 2982
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://villageofoxfordwi.com/",
+     "why": "robots.txt served (23 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://villageofoxfordwi.com/village-board",
+     "why": "robots.txt served (23 bytes)"
+    }
+   ],
+   "url": "https://villageofoxfordwi.com/",
+   "verdict": "people-no-district"
+  },
+  {
+   "county": "Wood County",
+   "cousubfp": "63100",
+   "ctv": "C",
+   "districts": 1,
+   "final_url": "https://pittsvillewi.gov/",
+   "geoid": "5563100",
+   "name": "Pittsville",
+   "notes": [],
+   "pages": [
+    {
+     "district_keys": 0,
+     "name_shapes": 74,
+     "own_names": 17,
+     "rank": 10,
+     "reads_as_council": true,
+     "url": "https://pittsvillewi.gov/city-council/",
+     "visible_chars": 5409
+    }
+   ],
+   "robots": [
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://pittsvillewi.gov/",
+     "why": "robots.txt served (23 bytes)"
+    },
+    {
+     "allowed": true,
+     "read": "2026-09-29",
+     "status": "served",
+     "url": "https://pittsvillewi.gov/city-council",
+     "why": "robots.txt served (23 bytes)"
+    }
+   ],
+   "url": "https://pittsvillewi.gov/",
+   "verdict": "people-no-district"
+  }
+ ],
+ "userAgent": "districtry.com roster bot (civic data; contact via site)"
+}
