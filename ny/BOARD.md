@@ -2140,6 +2140,72 @@ live defects above as a shorter change first.
 
 ## Open questions for Adam
 
+**8. Should the Greenbook become the borough card's County Clerk source? It
+would fill three absences from a first-party city source, and it is the one
+source that disagrees with the court page about the Bronx.** Not blocking. This
+is the decision `nyc-county-clerk-names` has been waiting on; it is a pipeline
+question rather than a question for a clerk, and I did not take it myself
+because `ny/scripts/borough_officials_source.json` is a hand-verified operator
+file by design.
+
+**WHAT IS MEASURED** (2026-09-29, both routes, three days after the gap
+record's own reading; nothing moved, details in PR #1254):
+
+- The court system's pages are the only source that has ever named these
+  clerks for this project, and the host serves a Cloudflare managed challenge
+  to it — an access control, never worked around. That route is shut and
+  re-testing it is cheap but has now failed twice.
+- The **Greenbook**, the City of New York's own staff directory, publishes one
+  principal per county for all five, robots served and the path allowed, with
+  its stated crawl-delay honoured. It publishes vacancies explicitly, which is
+  evidence it is maintained. **Kings agrees with the shipped card** — the only
+  control available on this source, and it passes.
+
+| county | Greenbook | card today |
+|---|---|---|
+| New York | Milton Tingling | names nobody |
+| Queens | Audrey Pheffer | names nobody |
+| Richmond | Stephen Fiala | names nobody |
+| Kings | Nancy Sunshine | Nancy Sunshine — agrees |
+| Bronx | Luis Diaz | Hon. Ischia Bravo — **disagrees** |
+
+**THE DECISION SPLITS IN TWO AND THEY ARE NOT THE SAME KIND OF ACT.** Filling
+an ABSENCE from a first-party government source is not the same as OVERWRITING
+a live name that another first-party source gives differently. Three boroughs
+are absences; the Bronx is a conflict. The gap record already draws that line —
+it scopes its `counties` to the three and says the Bronx "is a live question
+about a named person on a shipped card rather than an absence".
+
+**WHAT I WOULD DO: adopt the Greenbook for the three ABSENCES only, and leave
+the Bronx exactly as it is.** It names three officeholders a reader currently
+does not get, from a government publisher, with a passing control on a fourth;
+and it changes no name anybody is being shown today. I would also say so on the
+card's own source line, so a reader can see that two publishers feed one row.
+
+**WHAT I WOULD NOT DO, AND WHY IT IS THE HARDER HALF.** I would not touch the
+Bronx on this evidence, and I would not let "we now use the Greenbook" become
+the argument for touching it later. Which of the two is current is
+**unestablished in direction** — the record corrected itself on exactly this
+point on 2026-09-26, after a first draft implied the Greenbook was newer on the
+strength of a Socrata `rowsUpdatedAt`, which is a DATASET stamp and says nothing
+about when one row moved. A stale directory row beside a correct card fits the
+evidence exactly as well as the reverse. **CLAUDE.md carries an instruction that
+the Bronx conflict is not acted on without a ruling from Adam, and adopting the
+source wholesale would act on it by the back door.**
+
+**THE COST OF THE SPLIT, STATED.** Reading a source where it adds and ignoring
+it where it conflicts is selective on its face, and a reader would be right to
+ask. The answer is that the two cases differ in what a wrong answer costs: an
+absence filled wrongly names the wrong person where none was named, and a
+conflict resolved wrongly replaces a name somebody may have verified. Both are
+bad; only the second destroys information already on the card.
+
+**IF THE ANSWER IS NO**, the gap stays as written and costs nothing — it
+already tells a reader what is missing and why, and it is accurate. This is
+worth a decision rather than a default, because three named officeholders on a
+card is what this project exists to produce.
+
+
 **7. Three of six boards state a gap count their own shipped file contradicts,
 and nothing gates any figure on a board.** Not blocking. Raised because the
 manager found ONE of these on my board and I measured the rest; the other two
