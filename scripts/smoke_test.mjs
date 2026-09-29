@@ -836,6 +836,35 @@ try {
     await context.close();
   }
 
+  // 1j. A LONG HOVER VALUE WRAPS INSIDE THE CARD. The hover row's value pill
+  //     did not wrap, so a long one ("NORTH RIVER — Elementary (PK, K, 1, …)")
+  //     took the line, squeezed the label to a column one or two words wide and
+  //     ran off the card (reported 2026-09-29). Built with the app's own CSS,
+  //     in the popup's own 324px content box, from the reported row's text.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, BASE);
+    const m = await page.evaluate(() => {
+      const box = document.createElement("div");
+      box.className = "hover-popup";
+      box.innerHTML = '<div class="leaflet-popup-content"><div class="hover-snapshot"><div class="hover-row">' +
+        '<span class="hover-dot"></span><div class="hover-row-head">' +
+        '<div class="hover-row-label">School Location (all, incl. private, nearest 3)</div>' +
+        '<span class="hover-pill">NORTH RIVER — Elementary (PK, K, 1, 2, 3, 4, 5, 6, 7, 8)</span>' +
+        '</div></div></div></div>';
+      document.body.appendChild(box);
+      const label = box.querySelector(".hover-row-label").getBoundingClientRect();
+      const pill = box.querySelector(".hover-pill").getBoundingClientRect();
+      const content = box.querySelector(".leaflet-popup-content").getBoundingClientRect();
+      const line = parseFloat(getComputedStyle(box.querySelector(".hover-row-label")).fontSize) * 1.3;
+      box.remove();
+      return { labelH: label.height, line, pillRight: pill.right, contentRight: content.right };
+    });
+    check("a long hover value leaves its label on one line and stays inside the card",
+      m.labelH < m.line * 1.5 && m.pillRight <= m.contentRight + 0.5, JSON.stringify(m));
+    await context.close();
+  }
+
   // 1h. THE REPORT FORM OPENS FROM A LINK. `#feedback=<text>` beside a point
   //     opens the form with that text filled in, counted once as opened by a
   //     link; "Copy a link to this form" hands back a link carrying the view
