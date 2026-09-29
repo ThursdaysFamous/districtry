@@ -20608,18 +20608,42 @@ function initChiExplorer() {
   /* Rockford's 14 aldermanic wards — Illinois's third-largest city, and the
    * first ward source outside the metro. It rides WinGIS's ElectedOfficials
    * service, the same regional-consortium GIS the Winnebago county-board entry
-   * uses, and carries the alderperson and their published city e-mail on the
-   * ward polygon itself (14/14 on both) — the Evanston shape. */
+   * uses.
+   *
+   * THE LAYER'S OWN Alderman AND Email COLUMNS ARE READ NOWHERE — the Rock
+   * Island City and Freeport posture, and taken here on 2026-09-29 after the
+   * two sources were joined ward-for-ward. The wards agreed 14 of 14; two
+   * SEATS did not, and each layer address is spelled from the layer's own
+   * spelling, so both were wrong together:
+   *
+   *     ward 3   layer  Chad Tuneburg    Chad.Tuneburg@rockfordil.gov
+   *              city   Chad Tuneberg    Chad.Tuneberg@rockfordil.gov
+   *     ward 7   layer  Janessa Wilkins  Janessa.Wilkins@rockfordil.gov
+   *              city   Janessa Neal     Janessa.Neal@rockfordil.gov
+   *
+   * The city's own council directory names all fourteen and is where the
+   * roster now reads them (rockford_alderperson_scraper.py, joined by ward in
+   * winnebago_municipal_officials_scraper.py, which refuses if the two ever
+   * stop naming the same wards). It also publishes a telephone per seat, which
+   * this layer does not carry at all.
+   *
+   * NOT LEFT AS A FALLBACK, deliberately. The roster branch already won for
+   * Rockford — municipalSeatHolders() is consulted first and only an empty
+   * result reaches dxOfficial — so these two columns rendered for a reader
+   * only if the roster fetch itself failed, and what they would have rendered
+   * is a name this project has measured wrong. A fallback to a source known to
+   * be stale is worse than a card that names nobody, because a reader cannot
+   * tell which one they were given.
+   *
+   * The LINES are untouched and were separately measured current: the polygons
+   * balance on Census 2020 (2026-09-29). Only the people column moved. */
   var ROCKFORD_WARD_SERVICE =
     "https://maps.wingis.org/public/rest/services/ElectedOfficials/MapServer/20";
   var loadRockfordWards = makeCached(function () {
     return loadArcGISGeoJSON(ROCKFORD_WARD_SERVICE).then(function (geojson) {
       return { type: "FeatureCollection", features: (geojson.features || []).map(function (f) {
         var p = f.properties || {};
-        return wardFeature(f, "Rockford", "Ward", findPropCI(p, ["ward"]), {
-          dxOfficial: findPropCI(p, ["alderman"]),
-          dxEmail: findPropCI(p, ["email"])
-        });
+        return wardFeature(f, "Rockford", "Ward", findPropCI(p, ["ward"]));
       }) };
     });
   });

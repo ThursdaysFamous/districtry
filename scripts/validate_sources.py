@@ -678,7 +678,27 @@ PROVENANCE = [
              "A layer disappearing is the drift to watch for here, not a URL "
              "change. WinGIS publishes no mayor/president layer for Loves Park "
              "or Machesney Park, which is why the builder's Winnebago head "
-             "floor sits below its municipality floor."},
+             "floor sits below its municipality floor. ROCKFORD'S 14 COUNCIL "
+             "SEATS NO LONGER COME FROM HERE: layer 20 supplies the ward "
+             "numbers and the city's own directory supplies the people "
+             "(rockford_alderperson_scraper.py), after the layer's Alderman "
+             "column was found a snapshot on 2026-09-29 — see the entry "
+             "below."},
+    {"layer": "City of Rockford council directory (roster)",
+     "app_file": "municipal-officials.json",
+     "source_url": "https://rockfordil.gov/576/Wards",
+     "note": "The city's own ward index, which links one page per "
+             "alderperson; each page states the seat's ward, e-mail and "
+             "telephone (rockford_alderperson_scraper.py). It replaced "
+             "WinGIS layer 20's Alderman/Email columns on 2026-09-29, which "
+             "named the wrong person in wards 3 and 7 with the address "
+             "spelled from each wrong name. The drift to watch for is the "
+             "INDEX losing its per-alderperson links, or a person page "
+             "dropping the \'Alderman - Ward N\' string the ward join reads; "
+             "the page ids are arbitrary and are discovered every run, never "
+             "pinned. The host resets connections intermittently (3 of 14 "
+             "pages needed a re-ask on 2026-09-29), so a single unreachable "
+             "reading is not drift."},
     {"layer": "Ogle County municipal governing bodies (roster)",
      "app_file": "municipal-officials.json",
      "source_url": "https://www.oglecountyil.gov/departments/county_clerk/index.php",

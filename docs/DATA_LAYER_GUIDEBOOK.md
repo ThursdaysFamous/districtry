@@ -3537,7 +3537,7 @@ five Illinois sources with or without browser headers, because urllib3's TLS Cli
 differs from the ssl module's and these edges fingerprint it. A probe that varied only the
 name would credit a browser string with a fix the stack made.
 
-**WHAT IT FOUND, across 295 hosts** (2026-09-12; 66 measured or re-measured since — see below).
+**WHAT IT FOUND, across 296 hosts** (2026-09-12; 67 measured or re-measured since — see below).
 It was 291 until #944's second commit: `drive.google.com` was recorded
 `robots-disallows-this-path`, the Wisconsin board scrape stopped fetching the Drive
 document it named, and `--check` then failed the entry as orphaned. A host leaving the
@@ -3549,7 +3549,7 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 | verdict | hosts | what it means |
 |---|---|---|
-| `token-ok` | 225 | the districtry token gets a full page on the plain `requests` stack |
+| `token-ok` | 226 | the districtry token gets a full page on the plain `requests` stack |
 | `token-refused-and-stack` | 15 | refuses the token on both stacks, serves stdlib + Chrome |
 | `stack-not-token` | 7 | refuses `requests`, serves the SAME token on stdlib |
 | `token-refused` | 3 | refuses the token on `requests`, serves Chrome on `requests` |
@@ -3562,11 +3562,11 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 **THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
 
-**18 HOSTS REFUSE THE TOKEN AND 225 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
+**18 HOSTS REFUSE THE TOKEN AND 226 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
 --inventory` prints it on this tree: 102 files send a browser string; 17 reach at least one
 host that genuinely refuses the token, **63 reach only hosts that serve the token a full
 page, and 22 more reach no host that refuses it** (one or more answered nothing or refused
-the `requests` stack); 266 of the 295 measured hosts are still reached by such a caller.
+the `requests` stack); 266 of the 296 measured hosts are still reached by such a caller.
 **THREE OF THOSE FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THE SWEEP** and the per-file
 figures move with them — the Iowa minutes-chair scraper (#916) and the Iowa county-officers
 scraper (both measured `token-ok`), and `jodaviess_county_board_scraper.py` (#945, whose own
@@ -11158,7 +11158,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
   | `park-district` | none | **SHIPPED** — 6, identity-only | none published |
   | `library-district` | none | **SHIPPED** — 18, identity-only | none published |
   | `judicial-subcircuit` | 17th — **already shipped** (pass 1) | 3rd — **already shipped**; the county republishes the same 4, unused | **structurally n/a** — 20th Circuit is not among PA 102-0693's nine |
-  | `ward` | **SHIPPED** — Rockford's 14 wards w/ alderperson + e-mail, the first ward source outside the metro; Loves Park's 5 and Machesney Park's 6 ride the municipal roster instead | 31 wards, `official`/contact declared and **0/31 populated** | Belleville + O'Fallon, identity-only |
+  | `ward` | **SHIPPED** — Rockford's 14 wards, the first ward source outside the metro: WinGIS draws them, and since 2026-09-29 the CITY's own council directory names them (the layer's `Alderman`/`Email` columns were a snapshot — two of fourteen seats wrong on both, ward 3 Tuneburg/Tuneberg and ward 7 Wilkins/Neal — and are now read nowhere); the city also publishes a telephone per seat, which the layer does not; Loves Park's 5 and Machesney Park's 6 ride the municipal roster instead | 31 wards, `official`/contact declared and **0/31 populated** | Belleville + O'Fallon, identity-only |
   | municipal officials | **SHIPPED** — 11 municipalities, 84 officials, the fleet's FOURTH full-governing-body county and the only one publishing bodies AS GIS LAYERS | — | — |
 
   **All three board rosters were cross-checked against the counties' own pages before
