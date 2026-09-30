@@ -113,7 +113,7 @@ import sys
 _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
-from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+from scraper_common import UA_ROSTER_BOT, require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 try:
     import requests
@@ -138,10 +138,22 @@ MIN_RECORDERS = 95
 MIN_SHERIFFS = 95
 MIN_ATTORNEYS = 95
 
-HEADERS = {
-    "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                   "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"),
-}
+# THE TOKEN, NOT A BROWSER STRING, AND THAT IS A MEASUREMENT.
+# This file sent a Chrome/120 string with no client hints, which no measurement
+# ever licensed: user-agent-measurements.json records all three of its hosts
+# `token-ok` AT THE EXACT URL EACH IS FETCHED FROM, with a full document each
+# (iowalandrecords.org 649,498 bytes, www.issda.org 951,591, iowa-icaa.com
+# 469,414) — measured at the page the scraper reads, never at a directory above
+# it. Sending a browser string to a host that serves the token is unlicensed on
+# its own, and here it also broke the fleet's consistency rule: robots.txt must
+# be read with the EXACT client that will crawl, and the runner measurement in
+# robots-verdicts.json reads these hosts as the token. One client for both, so
+# the policy that is read is the policy that governs the fetch.
+# Re-measured with the token on 2026-09-30, each at its own URL: recorder
+# directory HTTP 200 / 649,506 bytes and the scraper's own parse 99 of 99
+# counties, sheriff directory HTTP 200 / 951,591 bytes of PDF, county-attorney
+# roster HTTP 200 / 464,278 bytes of PDF.
+HEADERS = {"User-Agent": UA_ROSTER_BOT}
 REQUEST_TIMEOUT = 90
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?\.[A-Za-z]{2,}")

@@ -41,7 +41,9 @@
     "ny/scripts/validate_sources.py": "self",
     "wi/scripts/validate_sources.py": "both",
     "ia/scripts/validate_sources.py": "self",
-    "mi/scripts/validate_sources.py": "self"
+    "mi/scripts/validate_sources.py": "self",
+    "in/scripts/validate_sources.py": "self",
+    "nc/scripts/validate_sources.py": "self"
    }
   },
   "arcgispublicmap.co.st-clair.il.us": {
@@ -303,7 +305,9 @@
     "ca/scripts/validate_sources.py": "self",
     "wi/scripts/validate_sources.py": "both",
     "ia/scripts/validate_sources.py": "self",
-    "mi/scripts/validate_sources.py": "self"
+    "mi/scripts/validate_sources.py": "self",
+    "in/scripts/validate_sources.py": "self",
+    "nc/scripts/validate_sources.py": "self"
    }
   },
   "ccpsa.chicago.gov": {
@@ -1189,7 +1193,9 @@
     "ia/scripts/ia_legislature_scraper.py": "browser",
     "ia/scripts/validate_sources.py": "self",
     "mi/scripts/build_mi_legislature_roster.py": "unknown",
-    "mi/scripts/validate_sources.py": "self"
+    "mi/scripts/validate_sources.py": "self",
+    "nc/scripts/build_nc_legislature_roster.py": "unknown",
+    "nc/scripts/validate_sources.py": "self"
    }
   },
   "dekalbcounty.org": {
@@ -1469,7 +1475,8 @@
     "note": "HTTP 200, 66069 bytes"
    },
    "callers": {
-    "scripts/isbe_county_officers_scraper.py": "browser"
+    "scripts/isbe_county_officers_scraper.py": "browser",
+    "scripts/validate_robots_adoption.py": "unknown"
    }
   },
   "elections.wi.gov": {
@@ -1914,7 +1921,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 469414 bytes",
    "callers": {
-    "ia/scripts/ia_county_officer_sources_scraper.py": "browser",
+    "ia/scripts/ia_county_officer_sources_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
   },
@@ -1970,7 +1977,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 649498 bytes",
    "callers": {
-    "ia/scripts/ia_county_officer_sources_scraper.py": "browser",
+    "ia/scripts/ia_county_officer_sources_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
   },
@@ -2847,7 +2854,8 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 116519 bytes",
    "callers": {
-    "scripts/rockford_alderperson_scraper.py": "self"
+    "scripts/rockford_alderperson_scraper.py": "self",
+    "scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-29"
   },
@@ -3111,6 +3119,7 @@
     "mi/scripts/build_mi_battle_creek_wards.py": "unknown",
     "mi/scripts/build_mi_flint_wards.py": "unknown",
     "mi/scripts/build_mi_grand_rapids_wards.py": "unknown",
+    "mi/scripts/build_mi_jackson_wards.py": "self",
     "mi/scripts/build_mi_lansing_wards.py": "unknown",
     "mi/scripts/build_mi_precincts.py": "unknown",
     "mi/scripts/build_mi_rochester_hills_wards.py": "unknown",
@@ -3184,7 +3193,8 @@
     "wi/scripts/build_wi_school_sites.py": "unknown",
     "wi/scripts/build_wi_wtcs_districts.py": "self",
     "wi/scripts/validate_sources.py": "both",
-    "mi/scripts/build_mi_warren_wards.py": "unknown"
+    "mi/scripts/build_mi_warren_wards.py": "unknown",
+    "mi/scripts/validate_sources.py": "self"
    }
   },
   "services9.arcgis.com": {
@@ -3368,6 +3378,7 @@
     "scripts/il_library_contacts_scraper.py": "self",
     "scripts/isbe_precinct_fabric.py": "browser",
     "scripts/mirror_tiger_tiles.py": "self",
+    "scripts/tribal_areas.py": "unknown",
     "scripts/validate_sources.py": "self",
     "scripts/vtd_board_districts.py": "self",
     "ny/scripts/build_legislative_boundaries.py": "unknown",
@@ -3394,10 +3405,19 @@
     "mi/scripts/build_mi_detroit_council.py": "unknown",
     "mi/scripts/build_mi_flint_wards.py": "unknown",
     "mi/scripts/build_mi_grand_rapids_wards.py": "unknown",
+    "mi/scripts/build_mi_jackson_wards.py": "self",
     "mi/scripts/build_mi_rochester_hills_wards.py": "unknown",
     "mi/scripts/build_mi_warren_wards.py": "unknown",
     "mi/scripts/build_state_counties.py": "unknown",
-    "mi/scripts/validate_sources.py": "self"
+    "mi/scripts/validate_sources.py": "self",
+    "in/scripts/build_legislative_boundaries.py": "unknown",
+    "in/scripts/build_metro_outline.py": "self",
+    "in/scripts/build_state_counties.py": "unknown",
+    "in/scripts/validate_sources.py": "self",
+    "nc/scripts/build_legislative_boundaries.py": "unknown",
+    "nc/scripts/build_metro_outline.py": "self",
+    "nc/scripts/build_state_counties.py": "unknown",
+    "nc/scripts/validate_sources.py": "self"
    }
   },
   "unitedstates.github.io": {
@@ -3423,7 +3443,11 @@
     "ia/scripts/build_congress_roster.py": "unknown",
     "ia/scripts/validate_sources.py": "self",
     "mi/scripts/build_congress_roster.py": "unknown",
-    "mi/scripts/validate_sources.py": "self"
+    "mi/scripts/validate_sources.py": "self",
+    "in/scripts/build_congress_roster.py": "unknown",
+    "in/scripts/validate_sources.py": "self",
+    "nc/scripts/build_congress_roster.py": "unknown",
+    "nc/scripts/validate_sources.py": "self"
    }
   },
   "villageofcrete.org": {
@@ -5155,7 +5179,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 951591 bytes",
    "callers": {
-    "ia/scripts/ia_county_officer_sources_scraper.py": "browser",
+    "ia/scripts/ia_county_officer_sources_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
   },
@@ -6693,5 +6717,5 @@
    }
   }
  },
- "callers_refreshed": "2026-09-27"
+ "callers_refreshed": "2026-09-30"
 }
