@@ -81,7 +81,7 @@
       "@type": "ItemList",
       "name": "districtry instances",
       "itemListOrder": "https://schema.org/ItemListUnordered",
-      "numberOfItems": 6,
+      "numberOfItems": 7,
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -118,6 +118,12 @@
           "position": 6,
           "name": "Michigan",
           "url": "https://districtry.com/mi/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Minnesota",
+          "url": "https://districtry.com/mn/"
         }
       ]
     }
@@ -778,7 +784,7 @@ footer .support b { color: var(--ink); }
                placeholder="Street address or ZIP" autocomplete="off" />
         <button type="submit" id="search-button" class="search-button">Show districts</button>
       </form>
-      <p class="search-help">districtry opens the map that covers the point. Illinois, New York, San Francisco, Wisconsin, Iowa and Michigan answer
+      <p class="search-help">districtry opens the map that covers the point. Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan and Minnesota answer
          today — an address anywhere else says so instead of guessing.</p>
       <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
     </div>
@@ -797,6 +803,7 @@ footer .support b { color: var(--ink); }
         <li><a class="place" href="https://districtry.com/wi/" title="County boards, circuit courts, wards and aldermanic districts across all 72 counties — clerk to Court of Appeals — plus school districts, cities, villages and towns, and the Assembly, Senate and U.S. House seats, and who holds those." aria-label="Wisconsin, all 72 counties, 31 layers"><span class="place-tag">wi</span><span class="place-id"><span class="place-name">Wisconsin</span><span class="place-scope">all 72 counties</span></span><span class="place-n">31</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
         <li><a class="place" href="https://districtry.com/ia/" title="All 99 counties: supervisor districts with each county&#x27;s own election plan, townships and cities, school districts, ZIP codes and post offices — and the Iowa Senate, House and U.S. House seats, and who holds those." aria-label="Iowa, all 99 counties, 20 layers"><span class="place-tag">ia</span><span class="place-id"><span class="place-name">Iowa</span><span class="place-scope">all 99 counties</span></span><span class="place-n">20</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
         <li><a class="place" href="https://districtry.com/mi/" title="All 83 counties: commissioner districts, compiled by the state from the plan each county&#x27;s apportionment commission files — plus townships and charter townships, cities and villages, school districts, and the Michigan Senate, House and U.S. House seats, and who holds those." aria-label="Michigan, all 83 counties, 15 layers"><span class="place-tag">mi</span><span class="place-id"><span class="place-name">Michigan</span><span class="place-scope">all 83 counties</span></span><span class="place-n">15</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
+        <li><a class="place" href="https://districtry.com/mn/" title="All 87 counties: townships and cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Minnesota Senate, House and U.S. House districts, and who holds the U.S. House seats." aria-label="Minnesota, all 87 counties, 13 layers"><span class="place-tag">mn</span><span class="place-id"><span class="place-name">Minnesota</span><span class="place-scope">all 87 counties</span></span><span class="place-n">13</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
       </ul>
     </div>
     <p class="coverage-caption">Two tiers, because coverage is not one thing: the pale dashed area
@@ -804,7 +811,7 @@ footer .support b { color: var(--ink); }
        ZIP — and the solid fill is where the county-level layers reach as well. The map's own
        legend states how much of each place that is; click an area to open its map.</p>
     <details class="not-yet">
-      <summary>Not yet: 45 states and DC — what nobody covers yet is listed here
+      <summary>Not yet: 44 states and DC — what nobody covers yet is listed here
         rather than quietly missing.</summary>
       <div class="not-yet-list">
         <div>Alabama</div>
@@ -827,7 +834,6 @@ footer .support b { color: var(--ink); }
         <div>Maine</div>
         <div>Maryland</div>
         <div>Massachusetts</div>
-        <div>Minnesota</div>
         <div>Mississippi</div>
         <div>Missouri</div>
         <div>Montana</div>
@@ -869,6 +875,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/wi/congress.html">Wisconsin<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/ia/congress.html">Iowa<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/mi/congress.html">Michigan<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/mn/congress.html">Minnesota<span class="chip-topic"> &#183; U.S. House</span></a></li>
         </ul>
       </div>
       <div class="ask">
@@ -1063,7 +1070,10 @@ footer .support b { color: var(--ink); }
       bbox: { minLat: 40.37, maxLat: 43.5, minLng: -96.64, maxLng: -90.14 } },
     { id: "michigan", tag: "mi", name: "Michigan", url: "https://districtry.com/mi/",
       outline: "mi/data/app/metro-outline.json",
-      bbox: { minLat: 41.7, maxLat: 48.01, minLng: -87.6, maxLng: -82.11 } }
+      bbox: { minLat: 41.7, maxLat: 48.01, minLng: -87.6, maxLng: -82.11 } },
+    { id: "minnesota", tag: "mn", name: "Minnesota", url: "https://districtry.com/mn/",
+      outline: "mn/data/app/metro-outline.json",
+      bbox: { minLat: 43.44, maxLat: 49.44, minLng: -97.3, maxLng: -89.58 } }
   ];
 
   function metrosClaiming(lat, lng) {

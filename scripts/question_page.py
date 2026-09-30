@@ -93,21 +93,42 @@ def preserved_from_disk(path):
     return out
 
 
+# The sub-pages this block may be read out of, in order. faq.html first, because
+# every instance that has one has it and it is the page this was written against.
+# sources.html is the fallback added 2026-09-30 for Minnesota, which ships
+# sources.html and no faq.html: the blocks are ENGINE-composed, so they are
+# byte-identical in both pages of any instance that has both (verified against
+# in/faq.html the day this landed), and requiring faq.html specifically made a
+# generator's choice of donor page into a hard dependency it never meant to
+# assert. An instance with neither page is a real failure and still fails.
+HEAD_DONORS = ("faq.html", "sources.html")
+
+
 def shared_head_block(tag, pattern, what):
-    """A block of the shared sub-page head, read from this instance's own
-    faq.html rather than restated here.
+    """A block of the shared sub-page head, read from one of this instance's own
+    sub-pages rather than restated here.
 
     Reading a sibling means a new page cannot ship with a stale copy.
     """
-    path = os.path.join(REPO_ROOT, tag, "faq.html")
-    with open(path, encoding="utf-8") as f:
-        text = f.read()
-    found = re.search(pattern, text, re.S)
-    if not found:
-        raise PageError("cannot find the %s in %s/faq.html — the shared sub-page "
-                        "head has changed shape and this generator must be "
-                        "updated" % (what, tag))
-    return found.group(1)
+    tried = []
+    for name in HEAD_DONORS:
+        path = os.path.join(REPO_ROOT, tag, name)
+        tried.append(name)
+        try:
+            with open(path, encoding="utf-8") as f:
+                text = f.read()
+        except OSError:
+            continue
+        found = re.search(pattern, text, re.S)
+        if not found:
+            raise PageError("cannot find the %s in %s/%s — the shared sub-page "
+                            "head has changed shape and this generator must be "
+                            "updated" % (what, tag, name))
+        return found.group(1)
+    raise PageError("cannot read the %s: %s carries none of %s, and the shared "
+                    "sub-page head is read out of an existing sub-page rather "
+                    "than restated in the generator"
+                    % (what, tag, ", ".join(tried)))
 
 
 FONTFACE_RE = r"(/\* Self-hosted subset.*?\n\})\n\n?/\* ==== ENGINE:BEGIN tokens-brand"
@@ -192,8 +213,31 @@ def head(tag, brand, app_name, page_file, title, description, og_desc):
            fontface=shared_head_block(tag, FONTFACE_RE, "@font-face block"))
 
 
+# The sub-page links every generated page carries in its footer, in order. Each
+# is emitted ONLY where that instance actually ships the page: until 2026-09-30
+# both were unconditional, which was true of every instance that had generated
+# pages at all and stopped being true the day Minnesota published `sources.html`
+# and no `faq.html`. validate_instance_assets.py is what said so, and it is the
+# only thing that would have — an absolute URL to our own unpublished path looks
+# exactly like somebody else's outage, and nothing else in the battery reads a
+# relative href against the tree.
+FOOTER_SUBPAGES = (
+    ("faq.html", "Common questions"),
+    ("sources.html", "Sources &amp; data layers"),
+)
+
+
+def subpage_links(tag):
+    """The footer's sub-page links, filtered to the pages this instance has."""
+    out = []
+    for name, label in FOOTER_SUBPAGES:
+        if os.path.exists(os.path.join(REPO_ROOT, tag, name)):
+            out.append('      <a href="%s">%s</a>\n' % (name, label))
+    return "".join(out)
+
+
 def shell(app_name, title, subtitle, lede, sections, related,
-          preserved, themeboot, mark):
+          preserved, themeboot, mark, tag):
     esc = html.escape
     parts = []
     # EVERY MARKER ON ITS OWN LINE. compose_app.py anchors its fence pattern to
@@ -264,9 +308,7 @@ def shell(app_name, title, subtitle, lede, sections, related,
       officeholder.</p>
     <div class="footer-links">
       <a href="./">← Back to the map</a>
-      <a href="faq.html">Common questions</a>
-      <a href="sources.html">Sources &amp; data layers</a>
-      <a href="../privacy.html">Privacy</a>
+%(subpage_links)s      <a href="../privacy.html">Privacy</a>
       <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
       <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">View source on GitHub</a>
       %(byline_begin)s
@@ -279,7 +321,8 @@ def shell(app_name, title, subtitle, lede, sections, related,
 </body>
 </html>
 """ % dict(
-        mark=mark, title=esc(title), subtitle=esc(subtitle), lede=lede["html"],
+        mark=mark, subpage_links=subpage_links(tag),
+        title=esc(title), subtitle=esc(subtitle), lede=lede["html"],
         cta=lede["cta"], sections=sections, related=related, app=esc(app_name),
         lookup_begin=marker("GENERATED", "question-lookup", False, "html"),
         lookup_body=preserved["question-lookup"],

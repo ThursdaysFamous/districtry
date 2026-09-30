@@ -1122,10 +1122,43 @@ def render_explorers_json(entries):
     return "\n".join(L)
 
 
-def sync_fleet(ws_path, src):
+def _this_metro_of(root, instance):
+    """That instance's own `this_metro`, read from its worksheet."""
+    with open(os.path.join(root, INSTANCES[instance]["worksheet"]),
+              encoding="utf-8") as f:
+        return json.load(f)["this_metro"]
+
+
+def _explorers_slice(text, ws_path):
+    """The worksheet's existing metro_explorers array, as JSON text."""
+    key = '"metro_explorers": ['
+    i = text.index(key)
+    depth = 0
+    for j in range(i + len(key) - 1, len(text)):
+        if text[j] == "[":
+            depth += 1
+        elif text[j] == "]":
+            depth -= 1
+            if depth == 0:
+                return text[i + len(key) - 1:j + 1]
+    fail("could not find the end of metro_explorers in %s" % ws_path)
+
+
+def sync_fleet(ws_path, src, this_metro=None):
     """Rewrite ONLY the worksheet's "metro_explorers" value from the fleet
     manifest (metros.json), projecting away fleet-only fields like `repo`.
-    Returns True if the worksheet changed."""
+    Returns True if the worksheet changed.
+
+    A DARK INSTANCE KEEPS ITS OWN HAND-SEEDED SELF-ENTRY, and that is what
+    `this_metro` is for. `metros.json` deliberately names no dark instance —
+    an entry there renders a live landing card pointing at a folder the deploy
+    excludes — so a plain projection of the manifest into a dark instance's
+    worksheet DELETES the self-entry that instance hand-seeds at bring-up, and
+    its own `validate_index.py` then fails with `METRO_EXPLORERS has no entry
+    for THIS_METRO`. Found 2026-09-30 on Minnesota's go-live, which is the first
+    time `--sync-fleet` had run with any dark instance in the tree: it broke
+    `in`, `nc` and `ky` at once, three instances the change was not about.
+    """
     if src.startswith("http://") or src.startswith("https://"):
         import urllib.request
         req = urllib.request.Request(src, headers={"User-Agent": "districtry-fleet-sync"})
@@ -1141,6 +1174,21 @@ def sync_fleet(ws_path, src):
             e["explorer_name"] = m["explorer_name"]
         entries.append(e)
     text = open(ws_path, encoding="utf-8", newline="").read()
+    if this_metro and not any(e["id"] == this_metro for e in entries):
+        # Dark: carry this instance's existing self-entry through untouched.
+        # Read from the worksheet rather than synthesised, because the entry is
+        # what that instance's own bring-up measured (its bbox above all), and
+        # this function has no business inventing one.
+        existing = json.loads(_explorers_slice(text, ws_path))
+        mine = [e for e in existing if e.get("id") == this_metro]
+        if not mine:
+            fail("%s is not in %s and its worksheet carries no self-entry in "
+                 "metro_explorers either — a dark instance hand-seeds one at "
+                 "bring-up and its own validate_index.py requires it"
+                 % (this_metro, src))
+        entries = entries + mine
+        print("generate-metro-files: %s — dark: keeping its own %s self-entry, "
+              "which %s does not carry" % (ws_path, this_metro, src))
     key = '"metro_explorers": ['
     i = text.index(key)
     depth = 0
@@ -1315,7 +1363,8 @@ def main():
         # metro portal in one app out of step with the others.
         for instance in ids:
             try:
-                sync_fleet(os.path.join(args.root, INSTANCES[instance]["worksheet"]), src)
+                sync_fleet(os.path.join(args.root, INSTANCES[instance]["worksheet"]),
+                           src, this_metro=_this_metro_of(args.root, instance))
             except (OSError, ValueError, KeyError) as e:
                 fail("fleet sync of %s from %s failed: %s" % (instance, src, e))
 
