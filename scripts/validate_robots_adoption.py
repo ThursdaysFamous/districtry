@@ -219,7 +219,6 @@ UNWIRED_AT_SWEEP = frozenset("""
     ny/scripts/indexnow_submit.py
     ny/scripts/validate_sources.py
     scripts/aia_bundle.py
-    scripts/bing_fetch.py
     scripts/boone_district_officials_scraper.py
     scripts/build_county_clerk_roster.py
     scripts/build_lasalle_board_districts.py
@@ -234,7 +233,6 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/fleet_status.py
     scripts/franklin_county_board_scraper.py
     scripts/generate_metro_files.py
-    scripts/gsc_fetch.py
     scripts/il_county_commissioners_scraper.py
     scripts/il_library_contacts_scraper.py
     scripts/indexnow_submit.py
@@ -257,9 +255,15 @@ UNWIRED_AT_SWEEP = frozenset("""
 """.split())
 
 # path -> (reason, date). EMPTY on introduction, deliberately; see the docstring.
-# ONE ENTRY SINCE, and it is the class the docstring said it was reserving the
+# THREE ENTRIES SINCE, all of one class the docstring said it was reserving the
 # table for: a fetch that genuinely must not be gated, rather than one that has
 # not been gated yet.
+#
+# A PATH IN BOTH TABLES IS EXCUSED TWICE AND COUNTED TWICE, which is what
+# happened to the two entries below when they were declared exempt and left in
+# the backlog they had been swept into. A file excused by both is also a file
+# whose exemption can be deleted with nothing turning red, because the backlog
+# goes on covering it silently. check() refuses an overlap for that reason.
 DECLARED_EXEMPT = {
     "scripts/goatcounter_fetch.py": (
         "AUTHENTICATED READ OF THIS PROJECT'S OWN ACCOUNT, not a crawl of "
@@ -327,6 +331,14 @@ def main(argv):
 
     on_disk = set(files)
     wired_now = set(fetchers) - set(unwired)
+    for p in sorted(set(UNWIRED_AT_SWEEP) & set(DECLARED_EXEMPT)):
+        problems.append("%s is in UNWIRED_AT_SWEEP and in DECLARED_EXEMPT. The "
+                        "two tables say different things — not gated YET, and "
+                        "must not be gated — so a path cannot honestly be in "
+                        "both, it is excused twice, it is counted twice in the "
+                        "OK line, and deleting its exemption turns nothing red "
+                        "because the backlog keeps covering it. Take it out of "
+                        "the backlog." % p)
     for p in sorted(UNWIRED_AT_SWEEP):
         if p not in on_disk:
             problems.append("%s is in UNWIRED_AT_SWEEP and is not in the tree — "
