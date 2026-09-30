@@ -160,6 +160,16 @@ def client_for(verdict):
     return "token", sc.UA_ROSTER_BOT, {"User-Agent": sc.UA_ROSTER_BOT}
 
 
+# Hosts this tree crawls that `probe_user_agents.SKIP_HOST_RE` leaves out — see
+# subject() for why the two readers differ here. Each one is fetched by a
+# scraper, so each one's robots.txt is a question about our own crawling.
+ALWAYS_ASKED = {
+    "web.archive.org": "archived county pages, read as a fallback rung by "
+                       "lake/mchenry/kendall/shelby and mi_detroit",
+    "archive.org": "the wayback availability API those rungs ask first",
+}
+
+
 def subject(inventory):
     """Every host the tree fetches, which is what the robots question is about.
 
@@ -184,9 +194,22 @@ def subject(inventory):
     measure it from a runner -- and this probe IS that runner, so leaving it out
     kept the one host the deferral was waiting on out of the measurement it was
     waiting for. It is in the inventory or it is not, and either way it is asked.
+
+    AND SO ARE THE INTERNET ARCHIVE'S TWO HOSTS, WHICH THE INVENTORY SKIPS ON
+    PURPOSE AND THIS QUESTION MUST NOT. `probe_user_agents.SKIP_HOST_RE` excludes
+    them along with GitHub, the package indexes, the CDNs and the certificate
+    authorities: infrastructure a user-agent measurement has nothing to say
+    about. But five scrapers CRAWL the Archive for a page a county's own site
+    would not serve, and robots.txt binds a crawl of it exactly as it binds a
+    crawl of a county. Until 2026-09-30 they were in this subject only because
+    web.archive.org happened to be DEFERRED, so retiring that deferral for the
+    right reason took the host out of the measurement -- a subject that depended
+    on a backlog entry rather than on what the tree fetches. Named here instead,
+    with that reason, so the record keeps describing the crawl.
     """
     hosts = set(inventory)
     hosts.update(sc.ROBOTS_DEFERRED_HOSTS)
+    hosts.update(ALWAYS_ASKED)
     return sorted(hosts)
 
 
