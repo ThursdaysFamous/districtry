@@ -1,0 +1,107 @@
+name: Update U.S. House (IN) roster
+
+# Weekly refresh of the Indiana congress card's roster
+# (in/data/app/congress-roster.json, fetched by in/index.html). Rebuilds IN's 9
+# U.S. House reps from unitedstates/congress-legislators and, if anything
+# changed, opens a PR rather than committing directly to main — officeholder
+# data should get a human look before it ships.
+#
+# THIS IS THE INSTANCE'S ONLY ROSTER. Its other ten layers name nobody, so this
+# is the one workflow that can ship a wrong person's name here.
+
+on:
+  schedule:
+    - cron: "45 15 * * 1" # Monday 15:45 UTC (staggered after the IL/NY/WI/IA/MI congress refreshes)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent, so
+      # the workflow still runs — it just goes back to opening unchecked PRs.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # Full history, so the branch can be re-cut from main's current tip
+          # below without re-shallowing the clone. Indiana ships no generated
+          # page whose lastmod is read from git (it has no legislator pages and
+          # is in no sitemap yet, being dark), so unlike the sibling roster
+          # workflows this depth is for the re-cut alone.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # No third-party deps: the builder downloads the canonical
+      # legislators-current.json with stdlib urllib and filters it to IN (the
+      # state code comes from in/data/state/state.json, which is why that
+      # directory ships in the repo while being excluded from the Pages deploy).
+      - name: Rebuild congress roster data file
+        run: python3 in/scripts/build_congress_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, and every data/app file must be present
+      # and well formed.
+      - name: Validate app + data files
+        run: python3 in/scripts/validate_index.py in/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- in/data/app/congress-roster.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR
+          # every week.
+          branch="bot/in-congress-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with, so the branch differs from main in its data file
+          # alone and a push cannot read as a workflow change. `git fetch
+          # --depth=1` would RE-SHALLOW the complete clone above, so this fetch
+          # is deliberately unshallowed too.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          # NOTHING ELSE IS REGENERATED HERE, and that is a measurement rather
+          # than an omission: Indiana is not in build_legislator_pages.INSTANCES
+          # or build_officeholder_tables', so no generated page carries these
+          # nine names, and it is in no sitemap while it is dark. THE DAY
+          # INDIANA GAINS A congress.html, this step must regenerate it and
+          # sitemap.xml with it — build_officeholder_tables.py --check FAILS a
+          # roster workflow that rewrites a roster its pages read without
+          # regenerating them, which is exactly the failure that would land on
+          # this bot's own PR.
+          python3 in/scripts/build_congress_roster.py
+          git add in/data/app/congress-roster.json
+          git commit -m "Update U.S. House (IN) roster from congress-legislators"
+          git push -u origin "$branch" --force
+          # Only open a PR if one isn't already open for this branch; if it is,
+          # the force-push above already updated it.
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update U.S. House (IN) roster from congress-legislators" \
+              --body "Automated weekly refresh of the Indiana congress district card's roster, generated by \`in/scripts/build_congress_roster.py\` from unitedstates/congress-legislators. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

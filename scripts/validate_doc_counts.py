@@ -154,6 +154,7 @@ INSTANCE_NAMES = {
     "Wisconsin": "wi",
     "Michigan": "mi",
     "Iowa": "ia",
+    "Indiana": "in",
     "NYC": "ny",
     "SF": "ca",
 }
@@ -280,7 +281,8 @@ WORKSHEET_PATH_RE = re.compile(r"\b([a-z]{2})/metro-worksheet\.json\b")
 # Display label only — attribution is by TAG. Kept explicit because "New York
 # City" and "New York" both map to `ny` and the output should not wobble.
 CANONICAL_NAME = {"il": "Chicago", "ny": "New York", "ca": "San Francisco",
-                  "wi": "Wisconsin", "ia": "Iowa", "mi": "Michigan"}
+                  "wi": "Wisconsin", "ia": "Iowa", "mi": "Michigan",
+                  "in": "Indiana"}
 LAYER_WORD_RE = re.compile(r"\blayers?\b", re.IGNORECASE)
 ANY_NUMBER_RE = re.compile(r"\d+")
 

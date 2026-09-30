@@ -1,0 +1,137 @@
+{
+  "1": {
+    "name": "Frank J. Mrvan",
+    "party": "Democrat",
+    "url": "https://mrvan.house.gov",
+    "capitolOffice": [
+      "2441 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2461"
+    ],
+    "districtOffice": [
+      "8001 Broadway, Suite 201",
+      "Merrillville, IN 46410",
+      "Phone: 219-795-1844"
+    ]
+  },
+  "2": {
+    "name": "Rudy Yakym III",
+    "party": "Republican",
+    "url": "https://yakym.house.gov",
+    "capitolOffice": [
+      "349 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3915"
+    ],
+    "districtOffice": [
+      "2410 Grape Road, Suite 2A",
+      "Mishawaka, IN 46545",
+      "Phone: 574-204-2645"
+    ]
+  },
+  "3": {
+    "name": "Marlin A. Stutzman",
+    "party": "Republican",
+    "url": "https://stutzman.house.gov",
+    "capitolOffice": [
+      "404 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4436"
+    ],
+    "districtOffice": [
+      "6714 Pointe Inverness Way",
+      "Fort Wayne, IN 46804",
+      "Phone: 260-702-4750"
+    ]
+  },
+  "4": {
+    "name": "James R. Baird",
+    "party": "Republican",
+    "url": "https://baird.house.gov",
+    "capitolOffice": [
+      "2303 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5037"
+    ],
+    "districtOffice": [
+      "355 S Washington St, Suite 210",
+      "Danville, IN 46122-1779",
+      "Phone: 317-563-5567"
+    ]
+  },
+  "5": {
+    "name": "Victoria Spartz",
+    "party": "Republican",
+    "url": "https://spartz.house.gov",
+    "capitolOffice": [
+      "1609 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2276"
+    ],
+    "districtOffice": [
+      "5540 Pebble Village Lane, Suite 400",
+      "Noblesville, IN 46062",
+      "Phone: 317-848-0201"
+    ]
+  },
+  "6": {
+    "name": "Jefferson Shreve",
+    "party": "Republican",
+    "url": "https://shreve.house.gov",
+    "capitolOffice": [
+      "224 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3021"
+    ],
+    "districtOffice": [
+      "50 N Fifth St, 2nd Floor",
+      "Richmond, IN 47374",
+      "Phone: 317-399-3333"
+    ]
+  },
+  "7": {
+    "name": "André Carson",
+    "party": "Democrat",
+    "url": "https://carson.house.gov",
+    "capitolOffice": [
+      "2135 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4011"
+    ],
+    "districtOffice": [
+      "300 E. Fall Creek Pkwy N Dr., Suite 300",
+      "Indianapolis, IN 46205",
+      "Phone: 317-283-6516"
+    ]
+  },
+  "8": {
+    "name": "Mark B. Messmer",
+    "party": "Republican",
+    "url": "https://messmer.house.gov",
+    "capitolOffice": [
+      "1208 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4636"
+    ],
+    "districtOffice": [
+      "20 NW Third St, Suite 1230",
+      "Evansville, IN 47708",
+      "Phone: 812-465-6484"
+    ]
+  },
+  "9": {
+    "name": "Erin Houchin",
+    "party": "Republican",
+    "url": "https://houchin.house.gov",
+    "capitolOffice": [
+      "342 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5315"
+    ],
+    "districtOffice": [
+      "104 W Hackberry St",
+      "Salem, IN 47167",
+      "Phone: 812-288-3999"
+    ]
+  }
+}
