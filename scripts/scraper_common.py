@@ -75,6 +75,7 @@ walks module-scope import closures against each workflow's pip line, and this
 module is imported by scripts whose workflows install nothing. `requests` is
 imported inside fetch(), the one function that needs it.
 """
+import io
 import json
 import os
 import sys
@@ -108,6 +109,15 @@ UA_CHROME_X11_120 = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
 # witness; a refusal of the new token is a data event with a name, not a
 # reason to put the old one back.
 UA_ROSTER_BOT = "districtry.com roster bot (civic data; contact via site)"
+
+# What a bare `urllib.request.urlopen(url)` call sends, so a robots read can be
+# made with the SAME client that will crawl. Dozens of this fleet's builders
+# fetch that way and set no User-Agent at all, so the string is urllib's own and
+# no robots group names it -- `*` binds, which is the answer either way. Stating
+# it is the honest reading; RENAMING those callers to a districtry token is a
+# different change and needs its own per-host measurement (CLAUDE.md: a rename is
+# licensed by a measurement at the page the scraper reads).
+UA_STDLIB_DEFAULT = "Python-urllib/%d.%d" % sys.version_info[:2]
 UA_ROSTER_COMPACT = "Mozilla/5.0 (compatible; districtry-roster/1.0)"
 UA_CIVIC_BOT = ("Mozilla/5.0 (compatible; districtry.com civic data bot; "
                 "+https://districtry.com/)")
@@ -241,6 +251,52 @@ def robots_deferred(url):
     from urllib.parse import urlsplit
 
     return ROBOTS_DEFERRED_HOSTS.get(urlsplit(url).hostname or "")
+
+
+_ROBOTS_ASKED = set()
+
+
+def require_robots_once(url, user_agent, headers=None, label=None, out=None):
+    """Ask this url's host for its robots.txt the first time a run reaches it,
+    then let the fetch proceed; a later url on the same host costs nothing.
+
+    WHY THIS EXISTS RATHER THAN A HELPER PER SCRAPER. `require_robots_allowed`
+    above is the seam that reads the policy, and every caller wired to it so far
+    has wrapped it in the same eight lines: a module-level set of hosts already
+    asked, a `urlsplit` to get the host, the call, a line to stderr. Measured
+    2026-09-30 by `scripts/validate_robots_adoption.py`, 224 of this fleet's 266
+    fetching scripts are still unwired, so that wrapper was about to be written
+    another 224 times — and two copies of one question is where this fleet's
+    recurring defect starts. One copy, one reading.
+
+    THE MEMO IS KEYED ON (host, user_agent), not on the host alone. Which client
+    crawls decides which robots group binds, so one host asked with two clients
+    is two different questions; keying on the host would answer the second from
+    the first client's verdict.
+
+    It raises exactly as `require_robots_allowed` does — a refusal is not
+    something a caller may carry on past — and honours `ROBOTS_DEFERRED_HOSTS`,
+    printing the recorded reason so a deferral is visible in the log of every run
+    rather than silent. Returns the reason string either way, so a caller that
+    wants to log it itself can.
+    """
+    from urllib.parse import urlsplit
+
+    stream = out if out is not None else sys.stderr
+    host = urlsplit(url).hostname or ""
+    key = (host, user_agent)
+    deferred = robots_deferred(url)
+    if deferred:
+        if key not in _ROBOTS_ASKED:
+            print("robots.txt %s: NOT READ — %s" % (host, deferred), file=stream)
+            _ROBOTS_ASKED.add(key)
+        return deferred
+    if key in _ROBOTS_ASKED:
+        return "already asked this run"
+    why = require_robots_allowed(url, user_agent, headers=headers, label=label)
+    print("robots.txt %s: %s" % (host, why), file=stream)
+    _ROBOTS_ASKED.add(key)
+    return why
 
 
 def make_fail(label):
@@ -534,6 +590,66 @@ def _selftest():
     except ValueError:
         pass
 
+    # --- require_robots_once: asked once per (host, client), offline ---------
+    #
+    # Stubbed at the seam rather than at the network, because what is under test
+    # is the memo and the deferral, not the reading. The real reading has its own
+    # gate (robots_policy.py --selftest, 20 assertions against saved bytes).
+    global require_robots_allowed
+    real_seam, asked = require_robots_allowed, []
+
+    def _stub(url, user_agent, headers=None, label=None):
+        asked.append((url, user_agent))
+        if "refuses" in url:
+            make_fail(label or "robots")("stubbed refusal")
+        return "stubbed allow"
+
+    require_robots_allowed = _stub
+    try:
+        _ROBOTS_ASKED.clear()
+        log = io.StringIO()
+        for _ in range(3):
+            require_robots_once("https://example.test/a", "token", out=log)
+        require_robots_once("https://example.test/b", "token", out=log)
+        if len(asked) != 1:
+            fails.append("one host with one client should reach the seam once, "
+                         "reached it %d time(s)" % len(asked))
+        if len(log.getvalue().strip().splitlines()) != 1:
+            fails.append("a host asked once should print one line")
+        require_robots_once("https://example.test/a", "chrome", out=log)
+        if len(asked) != 2:
+            fails.append("a second client on the same host is a second question")
+        require_robots_once("https://other.test/a", "token", out=log)
+        if len(asked) != 3:
+            fails.append("a second host should be asked")
+
+        _ROBOTS_ASKED.clear()
+        del asked[:]
+        log = io.StringIO()
+        for _ in range(2):
+            why = require_robots_once(
+                "https://web.archive.org/wayback/available", "token", out=log)
+        if asked:
+            fails.append("a deferred host must not reach the seam")
+        if why != ROBOTS_DEFERRED_HOSTS["web.archive.org"]:
+            fails.append("a deferred host should return its recorded reason")
+        if len(log.getvalue().strip().splitlines()) != 1:
+            fails.append("a deferred host should print its reason once")
+        if "NOT READ" not in log.getvalue():
+            fails.append("a deferral must read as unread, not as a permission")
+
+        _ROBOTS_ASKED.clear()
+        try:
+            require_robots_once("https://example.test/refuses", "token",
+                                label="selftest-robots",
+                                out=io.StringIO())
+            fails.append("a refusal must stop the process, not return")
+        except SystemExit:
+            pass
+    finally:
+        require_robots_allowed = real_seam
+        _ROBOTS_ASKED.clear()
+
     if fails:
         print("scraper-common selftest: FAIL", file=sys.stderr)
         for f in fails:
@@ -541,7 +657,9 @@ def _selftest():
         return 1
     print("scraper-common selftest: OK — the what-moved line is proven both "
           "ways (quiet week, changed record, add/remove, payload field, depth 3) "
-          "too deep refuses, too shallow stays correct but vaguer")
+          "too deep refuses, too shallow stays correct but vaguer; "
+          "robots is asked once per host per client, a deferral reads as "
+          "unread, a refusal stops the process")
     return 0
 
 

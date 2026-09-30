@@ -50,6 +50,7 @@ Usage:
     python3 scripts/clark_county_board_scraper.py [-o raw.json]
 """
 
+import os
 import argparse
 import io
 import json
@@ -58,6 +59,9 @@ import sys
 
 import requests
 from scraper_common import make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
 
 PAST_ELECTIONS_URL = "https://il-clark.accessliberty.com/pastelections.aspx"
 BOARD_URL = "https://www.clarkcountyil.org/board"
@@ -80,6 +84,8 @@ fail = make_fail("clark-board-scraper")
 
 
 def get(url, **kw):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-clark-county-board-scraper")
     resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT, **kw)
     resp.raise_for_status()
     return resp

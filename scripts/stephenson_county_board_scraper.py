@@ -35,7 +35,10 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_CHROME_WIN_126,
+    require_robots_once,
+)
 
 SOURCE_URL = "https://stephensoncountyil.gov/government/county_board/index.php"
 HEADERS = {
@@ -121,6 +124,8 @@ def parse(page):
 
 def main():
     out_path = sys.argv[1] if len(sys.argv) > 1 else "stephenson_county_board_raw.json"
+    require_robots_once(SOURCE_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-stephenson-county-board-scraper")
     resp = requests.get(SOURCE_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     officers, records, vacancies = parse(resp.text)

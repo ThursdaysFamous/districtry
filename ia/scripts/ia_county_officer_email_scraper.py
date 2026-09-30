@@ -80,6 +80,11 @@ import time
 
 import requests
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # ia/
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
 CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache")
@@ -191,6 +196,8 @@ def classify(email, person, office, county):
 
 def get(url, timeout=25):
     try:
+        require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                            label="ia-ia-county-officer-email-scraper")
         r = requests.get(url, headers=HEADERS, timeout=timeout, allow_redirects=True)
         return str(r.status_code), (r.text if r.status_code == 200 else "")
     except Exception as e:

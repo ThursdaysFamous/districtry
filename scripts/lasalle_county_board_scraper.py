@@ -36,7 +36,10 @@ import time
 import sys
 
 import requests
-from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_ROSTER_COMPACT,
+    require_robots_once,
+)
 
 BASE = "https://lasallecountyil.gov"
 LIST_URL = BASE + "/m/directory/department?did=39"
@@ -70,6 +73,8 @@ def fetch(url):
     last = None
     for attempt in range(FETCH_ATTEMPTS):
         try:
+            require_robots_once(url, UA["User-Agent"], headers=UA,
+                                label="il-lasalle-county-board-scraper")
             r = requests.get(url, headers=UA, timeout=60)
             r.raise_for_status()
             return r.text

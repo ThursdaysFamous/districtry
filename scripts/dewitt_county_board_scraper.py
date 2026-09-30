@@ -32,7 +32,10 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_X11_128  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_CHROME_X11_128,
+    require_robots_once,
+)
 
 SOURCE_URL = "https://www.dewittcountyil.gov/government/county_board.php"
 UA = {"User-Agent": UA_CHROME_X11_128}
@@ -66,6 +69,8 @@ def normalize_phone(raw):
 
 
 def main():
+    require_robots_once(SOURCE_URL, UA["User-Agent"], headers=UA,
+                        label="il-dewitt-county-board-scraper")
     resp = requests.get(SOURCE_URL, headers=UA, timeout=60)
     resp.raise_for_status()
     lines = text_lines(resp.text)

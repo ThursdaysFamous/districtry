@@ -51,7 +51,10 @@ import requests  # noqa: E402
 from build_metro_outline import (  # noqa: E402  (shared machinery — do not fork)
     HEADERS, REQUEST_TIMEOUT, point_in_rings,
 )
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    make_fail,
+    require_robots_once,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "marshall-county-board-districts.json")
@@ -88,6 +91,8 @@ def norm(name):
 
 
 def fetch_townships():
+    require_robots_once(TOWNSHIP_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-marshall-board-districts")
     resp = requests.get(TOWNSHIP_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "STATE='%s' AND COUNTY='%s'" % (STATE_FIPS, COUNTY_FIPS),
         "outFields": "BASENAME,POP100", "returnGeometry": "true",

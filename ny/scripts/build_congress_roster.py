@@ -20,6 +20,14 @@ import os
 import sys
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import (  # noqa: E402  (FLEET_SHARED -- validate_workflow_deps)
+    UA_STDLIB_DEFAULT,
+    require_robots_once,
+)
+
 SRC = "https://unitedstates.github.io/congress-legislators/legislators-current.json"
 OFFICES = "https://unitedstates.github.io/congress-legislators/legislators-district-offices.json"
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -47,6 +55,11 @@ def _coverage_line(roster):
 def district_offices_by_bioguide():
     """bioguide -> [address-line, "City, NY zip"] for the member's first NY office."""
     try:
+        # The policy is read with the client that crawls: this call sets no
+        # User-Agent, so urllib's own string is what the host sees and is
+        # what the robots groups are matched against.
+        require_robots_once(OFFICES, UA_STDLIB_DEFAULT,
+                            label="ny-build-congress-roster")
         data = json.load(urllib.request.urlopen(OFFICES, timeout=90))
     except Exception:  # noqa: BLE001 — offices are an enhancement, never fatal
         return {}
@@ -85,6 +98,8 @@ def capitol_office(term):
 
 
 def main():
+    require_robots_once(SRC, UA_STDLIB_DEFAULT,
+                        label="ny-build-congress-roster")
     data = json.load(urllib.request.urlopen(SRC, timeout=90))
     offices = district_offices_by_bioguide()
     roster = {}

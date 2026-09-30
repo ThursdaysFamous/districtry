@@ -18,6 +18,44 @@ Revize CDN, which serves them from the site root rather than from the page's
 directory. Both forms are therefore tried, CDN first, and the first one that
 returns actual PDF bytes wins.
 
+THE CDN'S POLICY ALLOWS THIS DOCUMENT AND REFUSES GENERAL CRAWLING (measured
+2026-09-30, five reads). `cms9files.revize.com` serves a 312-byte robots.txt
+whose `*` group is a list of document extensions followed by a blanket refusal:
+
+    User-agent: *
+    Allow: /*.pdf$         (plus .DOC$ .DOCX$ .PPT$ .PPTX$)
+    Disallow: /
+
+The yearbook path ends `.pdf`, so `Allow: /*.pdf$` is the longest matching rule
+and RFC 9309 §2.2.2 gives it the decision. A FIRST READING OF THIS SAID THE
+OPPOSITE, because it was taken at `/carrollil/` -- the DIRECTORY, which this
+scraper never fetches, and where `Disallow: /` is the only match. Measure the
+path the scraper fetches, never a directory above it; a CMS host that serves
+documents and refuses crawling cannot be judged from one path. The same wrong
+reading was made the same day about Knox County's sibling host
+`cms2.revize.com`, whose `*` group has the identical shape.
+
+EVERY HOP IS ASKED, BECAUSE THE ROUTE CROSSES TWO HOSTS. The county's own host
+answers 302 to that CDN on both spellings -- `/2025-2026%20YEARBOOK.pdf` and the
+page-relative form -- so a redirect target's policy is what decides whether the
+document may be read (the Rochester Hills reading already in CLAUDE.md: read the
+stub's target, not the stub). `fetch_gated` asks each hop in turn rather than
+following the chain blind, which is what makes the permission a measurement of
+the host actually serving the bytes rather than of the host that pointed at it.
+
+ASK THROUGH `RobotsGate`, WHICH TAKES THE PAGE URL. While measuring this, four
+ad-hoc readings of these two hosts answered 403, 404, a 312-byte policy and a
+685 KB body, and that looked like a host answering inconsistently. It was not:
+`robots_policy.fetch_verdict` takes the ROBOTS.TXT address, and those calls
+passed document and directory URLs, so the reader fetched the documents
+themselves -- the 685 KB body is the yearbook PDF, classified as "not a policy,
+allow all". `RobotsGate.allows(page_url)` derives the address and caches one
+read per host; `require_robots_once` wraps it and is what this file calls.
+Read five times sixteen seconds apart, both hosts answer identically every
+time. A WRONG READING OF A POLICY MOSTLY FAILS TOWARD ALLOW, so a surprising
+permission is the one to re-derive, and an explanation that makes the host the
+unreliable party is the one to distrust first.
+
 WHY A LINE PARSER. The section is single-column, one officer per line in
 "<office> ....dot leaders.... <name>" form, which pypdf's line extraction
 preserves exactly. LaSalle's geometric word-position parser exists because its
@@ -50,7 +88,11 @@ import sys
 import urllib.parse
 
 import requests
-from scraper_common import UA_CHROME_WIN_126, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    UA_CHROME_WIN_126,
+    fetch as fetch_with_retry,
+    require_robots_once,
+)
 
 try:
     import pypdf
@@ -104,8 +146,35 @@ def fetch(url):
     return fetch_with_retry(url, HEADERS, timeout=REQUEST_TIMEOUT)
 
 
+def fetch_gated(url, max_hops=5):
+    """Fetch `url`, asking EVERY host in the redirect chain for its robots.txt.
+
+    The clerk's own host permits us and 302s the yearbook to its CMS vendor's
+    CDN, which does not. Following that chain with `allow_redirects=True` would
+    crawl the refusing host while every request this scraper makes by hand read
+    as permitted -- so each hop is asked in turn, and the seam raises on the one
+    that refuses.
+    """
+    for _ in range(max_hops):
+        require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-carroll-municipal-officials")
+        resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT,
+                            allow_redirects=False)
+        if resp.status_code in (301, 302, 303, 307, 308):
+            target = resp.headers.get("Location")
+            if not target:
+                return resp
+            url = urllib.parse.urljoin(url, target)
+            continue
+        return resp
+    raise RuntimeError("more than %d redirects from the clerk page's yearbook "
+                       "link -- the site's PDF routing changed" % max_hops)
+
+
 def discover_yearbook():
     """-> (pdf_bytes, url) for the edition the clerk page currently links."""
+    require_robots_once(CLERK_PAGE, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-carroll-municipal-officials")
     page = fetch(CLERK_PAGE).text
     link = YEARBOOK_LINK_RE.search(page)
     if not link:
@@ -118,7 +187,7 @@ def discover_yearbook():
     problems = []
     for url in candidates:
         try:
-            resp = fetch(url)
+            resp = fetch_gated(url)
         except Exception as exc:  # noqa: BLE001
             problems.append("%s: %s" % (url, exc))
             continue

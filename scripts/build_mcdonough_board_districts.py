@@ -47,7 +47,10 @@ import argparse
 import json
 import os
 import sys
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_CHROME_WIN_126,
+    require_robots_once,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PRECINCTS_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "mcdonough-precincts.json")
@@ -179,6 +182,8 @@ def crosscheck(derived_shapes):
     from shapely.geometry import shape
     url = (COUNTY_BOARD_LAYER + "/query?where=1%3D1&outFields=CountyDist"
            "&returnGeometry=true&outSR=4326&f=geojson")
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-mcdonough-board-districts")
     resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     payload = resp.json()

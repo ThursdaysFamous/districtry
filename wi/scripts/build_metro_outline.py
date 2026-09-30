@@ -68,6 +68,11 @@ import math
 import os
 import sys
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 # `requests` is imported INSIDE the one function that fetches, not at module
 # scope: this module's pure-geometry helpers (simplify, rings_of,
 # point_in_rings) are shared machinery other Wisconsin builders import rather
@@ -280,6 +285,8 @@ def fetch_counties():
     where = "STATE='%s' AND COUNTY IN (%s)" % (
         STATE_FIPS, ",".join("'%s'" % c for c in METRO_COUNTY_FIPS))
     import requests  # noqa: PLC0415 (see the module header)
+    require_robots_once(TIGERWEB, HEADERS["User-Agent"], headers=HEADERS,
+                        label="wi-build-metro-outline")
     resp = requests.get(TIGERWEB, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": where,
         "outFields": "NAME,GEOID",

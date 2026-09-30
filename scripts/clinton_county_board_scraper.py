@@ -35,6 +35,7 @@ Usage:
     python3 scripts/clinton_county_board_scraper.py [-o raw.json]
 """
 
+import os
 import argparse
 import html
 import json
@@ -43,6 +44,9 @@ import sys
 
 import requests
 from scraper_common import make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
 
 BOARD_URL = "https://clintonco.illinois.gov/county-offices/county-board/"
 # The Clerk's results system: county 10, race category 8 is COUNTY BOARD.
@@ -76,6 +80,8 @@ fail = make_fail("clinton-board-scraper")
 
 def get(url):
     try:
+        require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-clinton-county-board-scraper")
         resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
         resp.raise_for_status()
     except Exception as exc:  # noqa: BLE001 — any failure is a refusal to write

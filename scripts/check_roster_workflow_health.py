@@ -396,11 +396,15 @@ def audit_robots_declined(watched):
                 problems.append("%s says %s reads %s and that host is not named in it "
                                 "any more — the scraper has been re-sourced; retire "
                                 "the entry" % (where, dec["script"], dec["host"]))
-            if "require_robots_allowed" not in sc_src:
-                problems.append("%s says %s declines, and it no longer calls "
-                                "require_robots_allowed — whatever is failing there "
-                                "now is not a refusal"
-                                % (where, dec["script"]))
+            # EITHER SPELLING OF THE SEAM. `require_robots_once` wraps
+            # `require_robots_allowed` with a per-host memo and raises exactly as
+            # it does; reading only the inner name reported a wired scraper as
+            # having stopped declining, which is the opposite of true.
+            if not any(n in sc_src for n in ("require_robots_allowed",
+                                             "require_robots_once")):
+                problems.append("%s says %s declines, and it no longer calls the "
+                                "robots seam — whatever is failing there now is "
+                                "not a refusal" % (where, dec["script"]))
         if dec["host"] not in MEASURED_REFUSALS:
             problems.append("%s names %s, which validate_card_links.ROBOTS_DECLINED "
                             "no longer records as refusing us. Either the host "
