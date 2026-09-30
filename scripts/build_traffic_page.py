@@ -64,11 +64,33 @@ PAGE = os.path.join(ROOT, "traffic.html")
 BEGIN = "  /* ==== TRAFFIC-DATA:BEGIN ==== */"
 END = "  /* ==== TRAFFIC-DATA:END ==== */"
 
-# Display names. The instance tags come from metros.json so a new state appears
-# by itself; these spell each one the way the page's bars already read.
+# Display names, one per served instance plus the fleet landing page. THIS
+# TABLE IS HAND-KEPT AND ITS OWN COMMENT USED TO DENY IT — it read "the instance
+# tags come from metros.json so a new state appears by itself", which is true of
+# the layer split and false here: a tag with no entry falls into the "(not in
+# the pages list)" residual, so the state's visits would land in the long tail
+# rather than in a bar of its own, with the reconciliation still balancing and
+# every gate green. Minnesota went live on 2026-09-30 with no entry, which is
+# how this was found. check_instance_names() below now FAILS on a metros.json
+# tag this table does not spell.
 INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "San Francisco",
                   "wi": "Wisconsin", "ia": "Iowa", "mi": "Michigan",
-                  "landing": "Fleet landing"}
+                  "mn": "Minnesota", "landing": "Fleet landing"}
+# The day each instance was first LISTED on the front door, measured once with
+#   git log --reverse --format=%cs -S'"tag": "<tag>"' -- metros.json
+# and recorded here rather than re-read, so this build needs no git and cannot
+# be wrong in a shallow clone (the sitemap lesson). These are historical facts
+# that never move, like REBRAND and LAYER_SPLIT above. Used for ONE comparison:
+# whether an instance was listed at all during the window, which is what tells a
+# bar reading zero because its visits are in the capped list's long tail from one
+# reading zero because the app was not being served. Illinois, New York and San
+# Francisco were all served before they were listed — the tag key itself only
+# arrived with the path move — so these dates are a LOWER BOUND on being served,
+# which is all the comparison needs. check_instance_names() fails on a tag with
+# no entry.
+FLEET_LISTED = {"il": "2026-08-24", "ny": "2026-08-24", "ca": "2026-08-24",
+                "wi": "2026-08-25", "ia": "2026-08-27", "mi": "2026-09-03",
+                "mn": "2026-09-30"}
 # GoatCounter publishes a referrer's HOST; these are the names a reader knows.
 # A host with no entry ships exactly as GoatCounter spells it.
 REF_NAMES = {"(unknown)": "Direct / unknown", "duckduckgo.com": "DuckDuckGo",
@@ -151,6 +173,40 @@ def named(series, table):
 def fleet_tags():
     with open(os.path.join(ROOT, "metros.json"), encoding="utf-8") as f:
         return [m["tag"] for m in json.load(f)["metros"] if m.get("tag")]
+
+
+def check_instance_names():
+    """Every served instance must have a display name, or it loses its bar.
+
+    The failure is silent without this: split_by_instance() puts an unnamed tag
+    in the residual, which reconciles against the totals widget exactly as a
+    named one does, so the page simply stops drawing that state.
+    """
+    tags = fleet_tags()
+    missing = [t for t in tags if t not in INSTANCE_NAMES]
+    if missing:
+        fail("metros.json serves %s, which INSTANCE_NAMES does not spell, so "
+             "those visits would go in the long tail instead of a bar. Add a "
+             "display name for each." % ", ".join(missing))
+    undated = [t for t in tags if t not in FLEET_LISTED]
+    if undated:
+        fail("metros.json serves %s, which FLEET_LISTED does not date, so the "
+             "page cannot tell a bar reading zero because its visits are in "
+             "the long tail from one reading zero because the app was not "
+             "served yet. Measure each with git log --reverse --format=%%cs "
+             "-S'\"tag\": \"<tag>\"' -- metros.json." % ", ".join(undated))
+
+
+def not_listed_yet(window_end):
+    """Display names of instances listed on the front door only after the window.
+
+    A bar reading zero has two causes and the page must not conflate them: the
+    dashboard's pages list caps at ten rows, so a served app's visits can sit in
+    the long tail, but an app that was not being served recorded nothing at all
+    and its visits are nowhere.
+    """
+    return [INSTANCE_NAMES[t] for t in fleet_tags()
+            if FLEET_LISTED[t] > window_end]
 
 
 def layer_scope(drawn):
@@ -310,6 +366,7 @@ def build():
     daily = ",\n    ".join('["%s", %d, %d]' % (label(d["date"]), d["pageviews"],
                                                d["events"])
                            for d in gc["daily"])
+    check_instance_names()
     instances, residual = split_by_instance(gc, gc["pageviews"])
     ev = {r["path"]: r["count"] for r in gc["top_events"]}
     pg = {r["path"]: r["count"] for r in gc["pages"]}
@@ -415,7 +472,14 @@ def build():
     seo: { police: %d, school: %d },
     /* Page visits no instance bar carries: the dashboard's pages list caps at
        ten rows, so the long tail is in the pageview total and in no bar. */
-    instResidual: %d
+    instResidual: %d,
+    /* Instances not LISTED on the front door for any day of this window, by
+       display name. Their bars read zero because the app was not being served,
+       not because the dashboard's ten-row cap hid them, and the zero-bar note
+       below has to say which — a claim that their visits "sit in that long
+       tail" would be false. Minnesota went live on the day after this window
+       ended, which is how the distinction was found. */
+    notListedYet: %s
   };
 
   /* The two facts no arithmetic on this page can recover, so they are stated
@@ -454,6 +518,7 @@ def build():
         long_label(LAYER_SPLIT),
         pg.get("/il/police-district.html", 0), pg.get("/il/school-board.html", 0),
         residual,
+        json.dumps(not_listed_yet(end), separators=(",", ":")),
         "{:,}".format(gc["total"]), "{:,}".format(daily_sum),
         "{:,}".format(abs(gc["total"] - daily_sum)),
         datetime.date.fromisoformat(gc["fetched"][:10]).strftime("%B %-d, %Y"),
