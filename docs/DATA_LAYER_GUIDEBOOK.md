@@ -57,7 +57,8 @@ in the researched-but-unbuilt backlog.
   "wisconsin": ["madison-neighborhood-assoc", "wtcs-district", "us-house", "wi-senate", "wi-assembly", "wi-circuit-court", "wi-court-of-appeals", "county", "school-district-secondary", "school-district-unified", "school-district-elementary", "county-board", "mps-school-board", "aldermanic-district", "county-subdivision", "ward", "municipality", "mpd-district", "mpd-squad-area", "milwaukee-neighborhoods", "tid-district", "fire-service", "law-service", "ems-service", "psap-area", "zip-code", "school-site", "library", "police-station", "fire-station", "post-office"],
   "iowa": ["iowa-aea", "city-ward", "us-house", "ia-senate", "county", "ia-house", "county-supervisor", "school-district-unified", "school-director-district", "cc-director-district", "county-subdivision", "municipality", "zip-code", "post-office", "police-station", "fire-station", "school-site", "precinct", "ia-judicial-district", "community-college"],
   "michigan": ["us-house", "mi-senate", "county", "mi-house", "school-district-unified", "school-district-elementary", "county-commissioner", "county-subdivision", "zip-code", "city-ward", "precinct", "municipality", "police-station", "fire-station", "post-office"],
-  "indiana": ["us-house", "in-senate", "county", "in-house", "school-district-unified", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"]
+  "indiana": ["us-house", "in-senate", "county", "in-house", "school-district-unified", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
+  "northcarolina": ["us-house", "nc-senate", "nc-house", "school-district-unified", "county", "county-subdivision", "municipality", "zip-code", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -2735,6 +2736,44 @@ detail into `blocker`.
           "wanted": "The mayor or town council president, the council members and the clerk of each city and town.",
           "blocker": "UNBUILT WORK WITH A MEASURED SOURCE. Indiana's municipal officers are elected in the odd-year municipal general and certified by the Election Division: its 2023 municipal returns name 1,327 officeholders, including 428 districted city council seats. The COUNCIL DISTRICTS THEMSELVES have no statewide geometry, so a districted council seat cannot be placed until a city or its county publishes wards — and under Adam's ruling of 2026-09-21, the state precinct fabric may CHECK a city-published ward boundary and never stand in for one. The roster half is buildable now; the ward half is per-city work."
       }
+  ],
+  "northcarolina": [
+    {
+      "id": "nc-commissioner-districts",
+      "concept": "County commissioner district",
+      "area": "North Carolina",
+      "counties": [],
+      "kind": "no-source",
+      "layer": "county",
+      "summary": "Every North Carolina county is run by an elected board of commissioners, and this app does not show you which commissioner district you live in, or who holds it.",
+      "why": "No statewide map of commissioner districts is published, and state law keeps each county's district lines in the county clerk's office as a written description rather than as a map.",
+      "wanted": "Each county's current commissioner district boundary, as a downloadable file or a public map service from the county's own GIS office, together with the county's own list of who holds each seat.",
+      "blocker": "MEASURED 2026-09-29 across seven state and federal map catalogues (NC OneMap, the state's ArcGIS Online organisation, the Census's own TIGERweb, the NC Department of Transportation's open data, data.nc.gov, the NC General Assembly's redistricting portal and arcgis.com's public search): not one carries a single county's commissioner districts. THE CAUSE IS STATUTORY RATHER THAN AN OVERSIGHT. NCGS 153A-22(f) requires a board that districts itself to keep the delineation in the clerk's office, and NCGS 153A-20 files the resolution with the Secretary of State — both as WRITTEN DESCRIPTIONS. So there is no central geometry to read and never has been, and the honest route is county by county against each county's own GIS office. THE FORM OF EVERY BOARD IS ANSWERABLE TODAY WITHOUT ANY GEOMETRY, which is a separate piece of work and the cheaper half: the NC Association of County Commissioners publishes every county's election method in one statewide table — measured from it, 39 at large, 23 district-labelled but elected countywide, 22 a combination and 16 purely by district (100), 587 commissioners, 61 counties using residency districts and 5 using limited voting. That is a `structure` field on this card, the Illinois shape, statewide. It is an Excel export published as a PDF, so ask for the workbook rather than parsing the PDF. DO NOT CLASSIFY A BOARD'S FORM FROM CERTIFIED RETURNS. A first pass did and was wrong three ways: NCGS 153A-58(c)/(d) allows a district-NAMED seat to be elected countywide, a `DISTRICT \\d+` pattern misses township names, roman numerals and `EASTERN DISTRICT`, and a union of two generals double-classifies a county whose method changed by session law mid-window (Wake S.L. 2023-30, Watauga S.L. 2023-147). Only WHICH PRECINCTS VOTED in the contest separates the two forms. TWO COUNTIES NAME THEIR DISTRICTS AFTER TOWNSHIPS (Gaston and Hyde, per that same table), and this instance already ships a township layer — so their district geometry may already be on the map under another name. It is not composed from it: a township name matching a district name is not a statement that the two are the same polygon, and the county's own written description is what would settle it. Hosts that refused this client while the catalogues were searched, recorded and not worked around: Durham's www.dconc.gov (`User-agent: *` / `Disallow: /`), Buncombe's website host (a Cloudflare managed challenge — its GIS host answers fine, which is the Knox lesson: a county is not blocked because its website is), Dare's www.darenc.gov (HTTP 403) and www.robesoncounty.gov (no DNS record at all, so the address is wrong or retired rather than refusing)."
+    },
+    {
+      "id": "nc-municipal-officeholders",
+      "concept": "City or town government",
+      "area": "North Carolina",
+      "counties": [],
+      "kind": "no-source",
+      "layer": "municipality",
+      "summary": "This app can tell you which of North Carolina's 552 cities, towns and villages you are in, and not who your mayor or council members are.",
+      "why": "No statewide list of North Carolina's mayors and council members has been found. The boundary this card draws carries geography and no officeholder at all, and this app never guesses a name.",
+      "wanted": "A statewide roster of municipal mayors and council members, or each municipality's own published list, which is the route every other state in this app has taken.",
+      "blocker": "The boundary is the Census's own incorporated-places layer, which carries a name, a FIPS code and a functional status and no officeholder field of any kind — so unlike a gap where a published name is rejected for being stale, there is not even a stale name here to reject. 552 records, measured 2026-09-29: 454 `<Name> town`, 77 `<Name> city`, 21 `<Name> village`. CITY, TOWN AND VILLAGE ARE ONE KIND OF GOVERNMENT — NCGS 160A-1(2), \"'City' is interchangeable with the terms 'town' and 'village'\" — so a roster covering only the places calling themselves cities would cover 77 of 552. ONE STATUTE MATTERS FOR THE SCRAPE ITSELF and is worth carrying into that work: NCGS 160A-1(3), \"'Council' is interchangeable with the terms 'board of aldermen' and 'board of commissioners'\", so a scrape keyed on the words \"city council\" will miss every municipality whose charter calls it something else. Three of the 552 are FUNCSTAT `I`, inactive — still legally in existence with no government operating (Dellview, Eureka and Spencer Mountain) — and the card says so for those three rather than implying a working council."
+    },
+    {
+      "id": "nc-school-board-members",
+      "concept": "School board",
+      "area": "North Carolina",
+      "counties": [],
+      "kind": "no-source",
+      "layer": "school-district-unified",
+      "summary": "This app names your school district and not the people elected to run it.",
+      "why": "North Carolina's 118 school boards are elected, and no statewide list of their members has been found. The boundary this card draws carries the district's name and nothing about its board.",
+      "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
+      "blocker": "118 unified districts, measured 2026-09-29 against TIGERweb's School service for STATE='37'. NORTH CAROLINA RUNS EXACTLY ONE OF TIGER's THREE MUTUALLY EXCLUSIVE SCHOOL TILINGS: layer 1 (secondary) and layer 2 (elementary) both answer ZERO for this state, checked the same day, which is why this instance ships one school layer where Michigan ships two. Neither zero is watched by the source registry — a row whose count is zero on purpose cannot tell a drop from the status quo. The boundary carries GEOID, NAME and the grade range and no board member, so the route is the state's own Department of Public Instruction or each board's published list. Not attempted in this pass; the instance arrived on the national tier alone."
+    }
   ]
 }
 ```

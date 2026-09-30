@@ -223,6 +223,14 @@ jobs:
             # change narrows this to the granular set the siblings use and
             # adds `in` to the presence loop below.
             'in/**'
+            # North Carolina arrives dark: the whole folder is excluded until
+            # go-live, and metros.json deliberately carries no nc entry until
+            # then (validate_instance_registration.py holds the two together).
+            # THE BLANKET `<tag>/**` FORM IS LOAD-BEARING, not a style: it is
+            # what dark_instances() reads, and four generators import that to
+            # tell a dark folder from an unregistered one. An anchored `/nc`
+            # excludes the same files and is invisible to all of them.
+            'nc/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full
