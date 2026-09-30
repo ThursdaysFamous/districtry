@@ -42,6 +42,39 @@ tries a second client on a host that answered the first: that is the Minnesota
 measurement of 2026-09-29, where probing a browser string on a host already
 serving the token got this address redirected for every request afterwards.
 
+A `refuse` VERDICT OF STATUS `unreachable` IS NOT A POLICY AND MUST NOT BE WIRED
+ON. Measured on the first full run, 2026-09-30, 17 of the 59 non-allowing hosts
+answered nothing rather than a refusal, and most of those were TIMEOUTS from the
+runner on hosts that serve this sandbox a policy within a second --
+www.wicourts.gov, docs.legis.wisconsin.gov, mapservices.legis.wisconsin.gov,
+gisservices.its.ny.gov, gis.lasallecounty.org, librarylearning.org,
+www.revenue.wi.gov among them. Three attempts apart, the timeout is the runner's
+route rather than the host's answer, and this project has already paid once for
+treating an unreadable read as a decision: four hosts whose only symptom was an
+incomplete TLS chain read as refusing while their pages were being fetched
+successfully in the same week. So a wiring pass reads `served` with a matching
+Disallow as a refusal, and takes an `unreachable` as a question to re-measure --
+from both vantages, and with the client that crawls.
+
+www.colesco.illinois.gov IS THE ONE TO LOOK AT FIRST AND IS THE ONE CASE THIS
+SANDBOX CANNOT ANSWER. Its entry is `unable to get local issuer certificate`
+although PINNED_CHAINS covers it, so on the runner either the pin is not reaching
+this read or that host needs a different intermediate than the three beside it --
+and a re-read from here settles neither, because this environment's egress
+gateway terminates TLS and re-issues every certificate under its own CA (measured
+2026-09-30: the leaf served here for that host has issuer `O = Anthropic,
+CN = Egress Gateway SDS Issuing CA (production)`). So a sandbox SSLError on a
+pinned host is this proxy and says nothing about the chain the host serves, and a
+sandbox SUCCESS would say nothing either, since the proxy's own CA is what
+verified it. THE RE-MEASUREMENT HAS TO RUN ON THE RUNNER, where the pin was
+applied and the failure was recorded.
+
+SOME RECORDED HOSTS ARE NOT CRAWL SUBJECTS AT ALL and their refusals mean nothing
+here: photon.komoot.io and www.komoot.com are the geocoder a READER's browser
+calls, and districtry.goatcounter.com is this site's own analytics. They are in
+the inventory because they are url literals in app files, and a policy aimed at
+crawlers has nothing to say about a request a person's browser makes.
+
 IT FETCHES ROBOTS.TXT AND NOTHING ELSE. One request per host, no page, no
 retry beyond the shared reader's own, and a host stating a Crawl-delay is not
 paced because a delay inside a file cannot govern the fetch that reads it.
