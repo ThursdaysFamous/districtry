@@ -4,8 +4,8 @@
  "subject": "robots.txt of every host the tree fetches, read with the client user-agent-measurements.json records as serving it",
  "summary": {
   "hosts": 509,
-  "allow": 450,
-  "refuse": 59,
+  "allow": 451,
+  "refuse": 58,
   "unreadable": 17
  },
  "hosts": {
@@ -1374,10 +1374,34 @@
    "host": "iowa-icaa.com",
    "url": "https://iowa-icaa.com/Roster/%40RosterOfCA%26ACAs.pdf",
    "client": "token",
-   "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (12028 bytes of markup, not a document) \u2014 an access control",
-   "allows": false,
-   "http_status": 200
+   "status": "served",
+   "why": "robots.txt served (114 bytes): no rule in 1 binding group(s) matches /Roster/@RosterOfCA&ACAs.pdf",
+   "allows": true,
+   "http_status": 200,
+   "reads": 3,
+   "gap_seconds": 15,
+   "readings": [
+    {
+     "status": "served",
+     "why": "robots.txt served (114 bytes): no rule in 1 binding group(s) matches /Roster/@RosterOfCA&ACAs.pdf",
+     "allows": true,
+     "http_status": 200
+    },
+    {
+     "status": "served",
+     "why": "robots.txt served (114 bytes): no rule in 1 binding group(s) matches /Roster/@RosterOfCA&ACAs.pdf",
+     "allows": true,
+     "http_status": 200
+    },
+    {
+     "status": "served",
+     "why": "robots.txt served (114 bytes): no rule in 1 binding group(s) matches /Roster/@RosterOfCA&ACAs.pdf",
+     "allows": true,
+     "http_status": 200
+    }
+   ],
+   "measured": "2026-09-30",
+   "vantage": "GitHub Actions runner on runnervmtr4k5"
   },
   "iowaaea.org": {
    "host": "iowaaea.org",
