@@ -1,0 +1,99 @@
+name: Validate layer sources (NC)
+
+# Monthly freshness check for the data sources nc/index.html depends on.
+# Unlike the roster workflows (which re-scrape the same page), this catches the
+# other failure mode: a publisher silently superseding a dataset.
+#
+# nc/scripts/validate_sources.py never edits the app (swapping a source is a
+# schema-sensitive judgement call). When it finds drift it exits with a
+# WARN/FAIL status; this workflow then opens — or updates in place — a single
+# tracking issue so a human reviews it. The job itself stays green: the issue
+# is the signal, matching the roster pattern of "officeholder/source changes
+# get a human look before they ship."
+#
+# THE `nc-` PREFIX IS LOAD-BEARING. GitHub Actions reads workflows only from
+# the repository ROOT's .github/workflows, so this file has to live here to
+# run at all — and at the root it shares a namespace with the other four
+# instances (the root validate-sources.yml is Illinois's). Every path below is
+# instance-scoped for the same reason. Wisconsin's own equivalent workflow was
+# MISSING for that instance's first day (docs/WI_PHASE2_PLAN.md PR 0) —
+# recorded here so this instance's checklist did not repeat it: this file
+# ships in the same PR that creates nc/.
+#
+# Cron: 1st of the month 16:00 UTC — IL/CA run 14:00, NY runs 12:00, WI runs
+# 13:00, IA runs 15:00, MI runs 16:00; the runner pool is shared, so this sits
+# with MI rather than in a slot of its own because these two jobs are small and
+# a scheduled run here starts hours late anyway (measured across the fleet: 3
+# to 5.3 hours), which makes a fresh slot a fiction rather than an ordering.
+#
+# NORTH CAROLINA IS DARK and this job still runs, on purpose: a publisher that
+# supersedes a dataset while the instance is unserved is exactly the drift a
+# go-live would otherwise inherit silently.
+
+on:
+  schedule:
+    - cron: "0 16 1 * *" # 1st of the month, 16:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  validate-sources:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        # Only requests is needed (no BeautifulSoup/Playwright); pinned via
+        # nc/scripts/requirements.txt.
+        run: pip install -c nc/scripts/requirements.txt requests
+
+      - name: Validate layer sources
+        id: validate
+        # continue-on-error: a FAIL exit (1) must not red the job — per the
+        # project's "surface for a human, don't block" convention, the tracking
+        # issue below is the signal. status.txt carries ok|warn|fail.
+        continue-on-error: true
+        run: |
+          python3 nc/scripts/validate_sources.py \
+            --report source-report.md \
+            --status-file status.txt
+          echo "status=$(cat status.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Open or update tracking issue
+        if: steps.validate.outputs.status != 'ok'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="NC layer source drift — review needed"
+          # Prepend a short header so the issue explains itself, then the report.
+          {
+            echo "_Automated by \`.github/workflows/nc-validate-sources.yml\` on $(date -u +%Y-%m-%d). Nothing was changed in the app — review each item, then update \`nc/index.html\` (source URLs) or re-run the relevant \`nc/scripts/build_*.py\` as needed. Close this issue once addressed; it will reopen/refresh on the next run if drift remains._"
+            echo
+            cat source-report.md
+          } > issue-body.md
+
+          # Search NARROWS; the exact title comparison DECIDES. `gh issue list
+          # --search` ANDs the terms and can return a near-miss, and this repo
+          # carries five instances' source-drift issues — taking the first
+          # hit would let one instance's monthly run overwrite another's body.
+          # TITLE is exported, not a command prefix: the prefix form would set
+          # it for `gh` only, and the reader on the other side of the pipe is a
+          # separate process.
+          export TITLE="$title"
+          existing="$(gh issue list --state open --search "in:title $title" --json number,title \
+            | python3 -c 'import json,os,sys; t=os.environ["TITLE"]; print(next((str(i["number"]) for i in json.load(sys.stdin) if i["title"] == t), ""))')"
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file issue-body.md
+            gh issue comment "$existing" --body "Refreshed by the monthly source-validation run — see the updated issue body for the current status."
+            echo "Updated existing issue #$existing."
+          else
+            gh issue create --title "$title" --body-file issue-body.md
+            echo "Opened a new tracking issue."
+          fi

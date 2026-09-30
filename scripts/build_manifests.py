@@ -51,6 +51,7 @@ INSTANCES = [
     ("mi", "mi/metro-worksheet.json"),
     ("mn", "mn/metro-worksheet.json"),
     ("in", "in/metro-worksheet.json"),
+    ("nc", "nc/metro-worksheet.json"),
     ("ky", "ky/metro-worksheet.json"),
 ]
 
