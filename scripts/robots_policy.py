@@ -96,6 +96,10 @@ one reading the caller chooses:
                           CHALLENGE_FRONTED_HOSTS for why one permissive read
                           from such a host is not believed
   5xx, network failure    the file is unreachable: disallow all (§2.3.1.4)
+  a redirect that never    status `absent`, and ALLOW: §2.3.1.2 lets a crawler
+  resolves (a loop, or     assume the file is UNAVAILABLE after five
+  more than five hops)     consecutive redirects, and §2.3.1.3 files
+                           unavailable with 404. See `_REDIRECTS_UNRESOLVED`.
 Redirects are followed and the final URL is reported, because a county's
 robots.txt is sometimes its CMS vendor's (Revize serves cherokeecounty.iowa.gov's
 from cms7files.revize.com) and the reader should be able to see that.
@@ -437,6 +441,32 @@ def _html_shape(text):
     return "challenge" if any(m in low for m in _CHALLENGE_MARKERS) else "html"
 
 
+# A REDIRECT THAT NEVER RESOLVES IS AN UNAVAILABLE FILE, NOT AN UNREACHABLE HOST.
+# Both clients below follow redirects, so a 3xx can only reach `classify` when the
+# follower gave up -- a loop, or more hops than it allows. RFC 9309 2.3.1.2 says a
+# crawler SHOULD follow at least five consecutive redirects and MAY then assume the
+# file is UNAVAILABLE, and 2.3.1.3 files unavailable with 404: allow all. Reading it
+# as `unreachable` instead disallows the whole host, which is the opposite verdict.
+#
+# MEASURED ON www.browncoil.org, 2026-09-30, from a GitHub runner and from this
+# sandbox alike: /robots.txt 301s in a loop, the county's own pages serve fine, and
+# `scripts/il_county_commissioners_scraper.py` reads Brown County's commissioners
+# from it. Under the old reading, wiring that scraper would have stopped a working
+# refresh on a broken redirect at one path.
+#
+# THE TWO CLIENTS REPORTED IT DIFFERENTLY, WHICH IS WHY THE LOOP IS HANDLED IN BOTH
+# PLACES: the stdlib raises HTTPError 301 ("would lead to an infinite loop"), which
+# reaches here as a status, while requests raises TooManyRedirects, which used to
+# fall through to the generic network handler and answer `unreachable`. One host,
+# one policy, two verdicts depending on which client asked.
+# The argument is HOW the client learned the chain does not resolve, never a
+# status code of this module's own invention: requests raises rather than handing
+# back a status, and writing a plausible-looking number there would put a figure
+# in the record that no server ever sent.
+_REDIRECTS_UNRESOLVED = ("robots.txt redirects did not resolve (%s) — RFC 9309 "
+                         "2.3.1.2 allows treating that as unavailable: allow all")
+
+
 def classify(http_status, body, final_url=None, error=None):
     """Turn a robots.txt response into a Verdict. Pure, so it is testable.
 
@@ -471,6 +501,9 @@ def classify(http_status, body, final_url=None, error=None):
     if http_status in (401, 403):
         return Verdict("refused", "robots.txt refused to this client (HTTP %d) — no readable policy" % http_status,
                        final_url=final_url, http_status=http_status)
+    if 300 <= http_status < 400:
+        return Verdict("absent", _REDIRECTS_UNRESOLVED % ("HTTP %d" % http_status),
+                       policy=RobotsPolicy(""), final_url=final_url, http_status=http_status)
     if 400 <= http_status < 500:
         return Verdict("absent", "no robots.txt (HTTP %d, allow all)" % http_status,
                        policy=RobotsPolicy(""), final_url=final_url, http_status=http_status)
@@ -499,7 +532,19 @@ def _fetch_once(robots_url, user_agent, timeout=30, session=None, headers=None):
         else {"User-Agent": user_agent, "Accept": "text/plain,*/*"}
     try:
         if session is not None:
-            r = session.get(robots_url, headers=headers, timeout=timeout, allow_redirects=True)
+            try:
+                r = session.get(robots_url, headers=headers, timeout=timeout,
+                                allow_redirects=True)
+            except Exception as exc:
+                # A redirect loop is the SAME FACT whichever client meets it, and
+                # requests reports it as an exception where the stdlib reports a
+                # status. Matched on the class name so this module stays
+                # stdlib-only and needs no `requests` import to read its own
+                # policy; see `_REDIRECTS_UNRESOLVED`.
+                if type(exc).__name__ == "TooManyRedirects":
+                    return Verdict("absent", _REDIRECTS_UNRESOLVED % "the client stopped following the chain",
+                                   policy=RobotsPolicy(""), final_url=robots_url)
+                raise
             return classify(r.status_code, r.text, final_url=r.url)
         import urllib.request
         import urllib.error
@@ -980,6 +1025,25 @@ def _selftest():
           "the reason says the host is challenge-fronted, not that a rule refused")
     check(classify(202, "").status == "challenge", "202 -> challenge")
     check(classify(500, "").status == "unreachable", "500 -> unreachable")
+    # A REDIRECT THAT NEVER RESOLVES: allow, not disallow. Both clients follow
+    # redirects, so a 3xx here means the follower gave up, which RFC 9309 2.3.1.2
+    # lets a crawler read as unavailable -- and 2.3.1.3 files unavailable with 404.
+    # The direction is the point: read as `unreachable` it would refuse the whole
+    # host, which is what www.browncoil.org measured as before this rule.
+    for code in (301, 302, 303, 307, 308):
+        v = classify(code, "")
+        check(v.status == "absent", "%d -> absent (redirects did not resolve)" % code)
+        check(v.allows(ua, "https://h/anything")[0],
+              "%d -> allowed, per RFC 9309 2.3.1.2 + 2.3.1.3" % code)
+    check("RFC 9309" in classify(301, "").why and "301" in classify(301, "").why,
+          "the reason names the rule and the status a server actually sent")
+    check("310" not in _REDIRECTS_UNRESOLVED,
+          "the reason template invents no status code of its own")
+    # A 3xx must NOT read as a served policy: the body of a redirect page is not
+    # a policy, and an empty allow-all is the honest reading of no policy at all.
+    check(classify(301, "User-agent: *\nDisallow: /").allows(ua, "https://h/x")[0],
+          "a redirect's own body is never parsed as rules")
+
     check(classify(None, None, error="timeout").status == "unreachable", "network error -> unreachable")
     check(classify(200, "   ").status == "absent", "200 with an empty body -> allow all")
     v = classify(200, "User-agent: *\nDisallow: /private\n")

@@ -177,7 +177,24 @@ def fetch_stdlib(url, headers=None, timeout=30):
     return body.decode("utf-8", "replace")
 
 
-def require_robots_allowed(url, user_agent, headers=None, label=None):
+def _robots_client(verify):
+    """A requests session pinned to `verify`, or None for the stdlib reader.
+
+    None keeps the stdlib client every existing caller reads with, so this module
+    stays importable where requests is not installed. With a bundle path the read
+    goes through requests, which is the only one of the two clients that takes a
+    CA bundle per call.
+    """
+    if verify is None:
+        return None
+    import requests
+
+    session = requests.Session()
+    session.verify = verify
+    return session
+
+
+def require_robots_allowed(url, user_agent, headers=None, label=None, verify=None):
     """Stop the process unless this client may fetch `url` under the host's own
     robots.txt. Returns the reason when permitted, so a caller can log it.
 
@@ -207,11 +224,32 @@ def require_robots_allowed(url, user_agent, headers=None, label=None):
     unmeasured number of working refreshes in one commit, which is a different
     change from obeying a refusal this project has measured. Adopt this per
     caller, with the measurement recorded, the way the user-agent rungs were.
+
+    `verify` IS THE TRUST STORE THE CRAWL USES, and a caller with a pinned CA
+    bundle must pass it. Four hosts in this fleet serve only their leaf
+    certificate -- www.ilga.gov, www.colesco.illinois.gov, gallatinco.illinois.gov
+    and www.vercounty.org -- so every automated client reports a verification
+    failure while a browser notices nothing, and each of those scrapers already
+    completes the chain itself from `scripts/aia_bundle.py`'s pinned intermediate.
+    Read with the stdlib client instead, their robots.txt is UNREACHABLE, which
+    RFC 9309 2.3.1.4 disallows: measured from a GitHub runner on 2026-09-30, all
+    four read that way, so wiring them without this argument would stop four
+    working refreshes on a verdict about this reader's trust store rather than
+    about anybody's policy. That is the same consistency requirement the
+    `headers` argument exists for -- read the policy with the client that
+    crawls -- one level further down, in the TLS handshake.
+
+    IT TAKES A BUNDLE PATH AND NOT A SESSION, deliberately. A caller's own
+    session may carry cookies, auth or a cleared challenge, and reading a policy
+    with a stronger client than the crawl is defeating a control rather than
+    measuring one; a CA bundle is the narrow thing these four hosts need and
+    cannot carry anything else. Nothing here can disable verification -- the
+    path is handed to requests as `verify`, which still verifies.
     """
     from robots_policy import RobotsGate  # scripts/ sibling; stdlib-only
 
     fail = make_fail(label or "robots")
-    ok, why = RobotsGate(None, user_agent, headers=headers).allows(url)
+    ok, why = RobotsGate(_robots_client(verify), user_agent, headers=headers).allows(url)
     if not ok:
         fail("%s refuses this client: %s. Nothing is fetched from it. A refusal "
              "stops the FETCH and never unpublishes what we already have "
@@ -238,6 +276,13 @@ def require_robots_allowed(url, user_agent, headers=None, label=None):
 # ITS SIBLING archive.org IS NOT HERE AND IS GATED NORMALLY: the same run read a
 # 238-byte policy from it in which no rule matches /wayback/available. Two hosts,
 # two different answers, so only the one that could not be read is deferred.
+#
+# THE RUNNER MEASUREMENT THIS ENTRY ASKS FOR WAS TAKEN ON 2026-09-30 AND DID NOT
+# INCLUDE THIS HOST, because `probe_robots_verdicts.py` read the host list through
+# `probe_user_agents.subject_hosts` -- the browser-string subject -- which does not
+# carry it, and nothing thought to add the deferred hosts to a probe whose whole
+# purpose these entries name. That probe asks them now, so the next dispatch
+# answers this entry rather than measuring around it.
 ROBOTS_DEFERRED_HOSTS = {
     "web.archive.org": "2026-09-30: robots.txt unreachable from this sandbox "
                        "(connection reset, 3 reads + curl) — measure from a runner",
@@ -256,7 +301,8 @@ def robots_deferred(url):
 _ROBOTS_ASKED = set()
 
 
-def require_robots_once(url, user_agent, headers=None, label=None, out=None):
+def require_robots_once(url, user_agent, headers=None, label=None, out=None,
+                        verify=None):
     """Ask this url's host for its robots.txt the first time a run reaches it,
     then let the fetch proceed; a later url on the same host costs nothing.
 
@@ -273,6 +319,13 @@ def require_robots_once(url, user_agent, headers=None, label=None, out=None):
     crawls decides which robots group binds, so one host asked with two clients
     is two different questions; keying on the host would answer the second from
     the first client's verdict.
+
+    `verify` is the CA bundle the caller's own fetches use, passed straight
+    through; see `require_robots_allowed` for the four hosts that cannot be read
+    without one. THE MEMO DOES NOT KEY ON IT, because a bundle changes whether the
+    file can be READ and never which group binds, so two reads of one host with
+    and without it are the same question and the answer that arrived is the one to
+    keep.
 
     It raises exactly as `require_robots_allowed` does — a refusal is not
     something a caller may carry on past — and honours `ROBOTS_DEFERRED_HOSTS`,
@@ -293,7 +346,8 @@ def require_robots_once(url, user_agent, headers=None, label=None, out=None):
         return deferred
     if key in _ROBOTS_ASKED:
         return "already asked this run"
-    why = require_robots_allowed(url, user_agent, headers=headers, label=label)
+    why = require_robots_allowed(url, user_agent, headers=headers, label=label,
+                                 verify=verify)
     print("robots.txt %s: %s" % (host, why), file=stream)
     _ROBOTS_ASKED.add(key)
     return why
@@ -598,8 +652,8 @@ def _selftest():
     global require_robots_allowed
     real_seam, asked = require_robots_allowed, []
 
-    def _stub(url, user_agent, headers=None, label=None):
-        asked.append((url, user_agent))
+    def _stub(url, user_agent, headers=None, label=None, verify=None):
+        asked.append((url, user_agent, verify))
         if "refuses" in url:
             make_fail(label or "robots")("stubbed refusal")
         return "stubbed allow"
@@ -622,6 +676,23 @@ def _selftest():
         require_robots_once("https://other.test/a", "token", out=log)
         if len(asked) != 3:
             fails.append("a second host should be asked")
+        # THE CA BUNDLE REACHES THE SEAM. Four hosts serve only their leaf
+        # certificate and cannot be read without one, so a `verify` that is
+        # accepted and then dropped is a gate that refuses those four for a
+        # reason that has been fixed.
+        require_robots_once("https://pinned.test/a", "token", out=log,
+                            verify="/tmp/bundle.pem")
+        if asked[-1][2] != "/tmp/bundle.pem":
+            fails.append("verify must reach require_robots_allowed; the seam saw "
+                         "%r" % (asked[-1][2],))
+        # AND IT IS NOT PART OF THE MEMO'S KEY: a bundle changes whether the file
+        # can be read, never which group binds, so the same host asked again with
+        # the same client is the same question and must not be re-read.
+        before = len(asked)
+        require_robots_once("https://pinned.test/b", "token", out=log)
+        if len(asked) != before:
+            fails.append("a bundle must not split the memo: one host and one "
+                         "client is one question")
 
         _ROBOTS_ASKED.clear()
         del asked[:]

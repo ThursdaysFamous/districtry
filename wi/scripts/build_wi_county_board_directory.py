@@ -395,13 +395,24 @@ def probe():
 
     EACH HOST IS ASKED FOR ITS ROBOTS.TXT FIRST, with `probe_headers`' own
     client -- the same consistency requirement the rest of this file already
-    meets about which client asks for a page. Two of the 72 refuse us: Ashland
-    and Dunn both publish a `*` group of one `Disallow: /` under admin-only
-    rules for six named search engines (measured 2026-09-30, four spaced reads
-    each, stable 576 and 573 bytes of text/plain). The weekly scraper had
-    already stopped Ashland for exactly this reason; this probe had not, so an
-    operator running it crawled two hosts the weekly run correctly leaves
-    alone.
+    meets about which client asks for a page.
+
+    NINE OF THE 72 REFUSE US, AND THIS DOCSTRING SAID TWO for the first day it
+    existed. Eight publish a `*` group of one `Disallow: /` -- Ashland, Barron,
+    Dunn, Jackson, Pepin, Polk, Richland and Rusk, seven of them the same
+    admin-rules-then-blanket-refusal shape beneath rules for six named search
+    engines -- and Taylor answers the robots request with HTTP 202, an access
+    control rather than a document. The weekly scraper and the officer scrape
+    already leave seven of the nine alone for exactly this reason; this
+    operator-run mode was the one route still crawling them.
+
+    THE CODE WAS RIGHT AND THE SENTENCE BESIDE IT WAS NOT, which is the harder
+    half to catch: `robots_verdict` reported all nine on the run that measured
+    them, and the docstring recorded the two the author was looking for. The
+    count was corrected on 2026-09-30 from an independent reading -- the
+    runner-side measurement in `robots-verdicts.json`, which asks every host the
+    tree fetches with no notion of what this file expects. A figure written from
+    the output you went looking for is not a measurement of the output.
 
     A REFUSING HOST IS REPORTED, NEVER SILENTLY PASSED. Its URL goes unchecked,
     which is the honest outcome -- the thing this probe detects is a URL that
