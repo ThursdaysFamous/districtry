@@ -296,7 +296,7 @@
     "county": "Clark",
     "lines": [
      "Courthouse",
-     "517 Court St",
+     "517 Court St Room 405",
      "Neillsville, WI 54456-1904"
     ]
    }
@@ -305,7 +305,7 @@
    {
     "branch": "1",
     "name": "Lyndsey Brunette",
-    "phone": "(715) 743-5172"
+    "phone": "(715) 743-5113"
    },
    {
     "branch": "2",
@@ -1373,7 +1373,7 @@
    {
     "branch": "6",
     "name": "John Remington",
-    "phone": "(414) 454-4298"
+    "phone": "(414) 278-4517"
    },
    {
     "branch": "7",
@@ -1384,6 +1384,11 @@
     "branch": "8",
     "name": "William Sosnay",
     "phone": "(414) 278-4514"
+   },
+   {
+    "branch": "9",
+    "name": "Malinda Kyle Eskra",
+    "phone": "(414) 257-7098"
    },
    {
     "branch": "10",
@@ -1401,14 +1406,9 @@
     "phone": "(414) 278-4472"
    },
    {
-    "branch": "13",
-    "name": "Ana Berrios-Schroeder",
-    "phone": "(414) 278-5316"
-   },
-   {
     "branch": "14",
     "name": "Amber Raffeet August",
-    "phone": "(414) 257-7220"
+    "phone": "(414) 278-4911"
    },
    {
     "branch": "15",
@@ -1423,12 +1423,12 @@
    {
     "branch": "17",
     "name": "Carolina Maria Stark",
-    "phone": "(414) 278-4500"
+    "phone": "(414) 454-4298"
    },
    {
     "branch": "18",
     "name": "Ronnie V. Murray II",
-    "phone": "(414) 257-7098"
+    "phone": "(414) 454-4220"
    },
    {
     "branch": "19",
@@ -1443,7 +1443,7 @@
    {
     "branch": "21",
     "name": "Cynthia M. Davis",
-    "phone": "(414) 278-4474"
+    "phone": "(414) 257-7220"
    },
    {
     "branch": "22",
@@ -1463,7 +1463,7 @@
    {
     "branch": "25",
     "name": "Nidhi Kashyap",
-    "phone": "(414) 257-7753"
+    "phone": "(414) 278-4474"
    },
    {
     "branch": "26",
@@ -1498,7 +1498,7 @@
    {
     "branch": "32",
     "name": "Laura Gramling Perez",
-    "phone": "(414) 257-7121"
+    "phone": "(414) 278-4500"
    },
    {
     "branch": "33",
@@ -1572,7 +1572,7 @@
     "phone": "(414) 278-4490"
    },
    {
-    "name": "Malinda Kyle Eskra"
+    "name": "Ana Berrios-Schroeder"
    },
    {
     "name": "Kristy Yang"
@@ -1596,11 +1596,6 @@
   ],
   "judges": [
    {
-    "branch": "1",
-    "name": "Todd Ziegler",
-    "phone": "(608) 269-8700"
-   },
-   {
     "branch": "2",
     "name": "Mark L. Goodman",
     "phone": "(608) 269-8926"
@@ -1609,6 +1604,9 @@
     "branch": "3",
     "name": "Richard Radcliffe",
     "phone": "(608) 269-8875"
+   },
+   {
+    "name": "Todd Ziegler"
    }
   ],
   "sourceUrl": "http://www.co.monroe.wi.us/departments/clerk-of-courts/"
@@ -2197,8 +2195,7 @@
     "county": "Trempealeau",
     "lines": [
      "Courthouse",
-     "36245 Main St",
-     "PO Box 67",
+     "18600 Hobson St",
      "Whitehall, WI 54773-0067"
     ]
    }
@@ -2206,7 +2203,7 @@
   "judges": [
    {
     "name": "Rian W. Radtke",
-    "phone": "(715) 538-2311"
+    "phone": "(715) 538-1813"
    }
   ],
   "sourceUrl": "https://co.trempealeau.wi.us/departments/administrative_departments/clerk_of_court/index.php"
