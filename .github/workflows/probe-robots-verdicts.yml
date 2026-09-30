@@ -1,0 +1,88 @@
+name: Measure robots.txt verdicts from a runner
+
+# What every host this project fetches says about us, read from the vantage the
+# scheduled scrapers actually crawl from. Opens a PR, never commits to main.
+#
+# WHY IT IS DISPATCHED RATHER THAN SCHEDULED. It exists to answer one question
+# before a scraper is switched over to reading robots.txt: would that host's
+# policy refuse the path this scraper reads, and can the policy be read at all.
+# An unreadable robots.txt disallows under RFC 9309 2.3.1.4, so a host nobody can
+# read is a refresh that stops. There is no weekly value in re-asking it; the
+# value is in asking it before each batch of scrapers is wired, and again once a
+# host's own record is disputed.
+#
+# WHY A RUNNER. This project's record already says reachability moves with the
+# address it is measured from, and 33 hosts read as unreadable from a Claude Code
+# sandbox, several with only a TLS chain error that sandbox's egress proxy is
+# known to produce. A verdict taken there would be a verdict about that address.
+# CLAUDE.md names a runner measurement as the honest fix for the one host already
+# deferred (web.archive.org).
+#
+# IT FETCHES ROBOTS.TXT AND NOTHING ELSE — one request per host, no page.
+
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        description: "Measure only this host (leave empty for every host)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; a PR opened with the default GITHUB_TOKEN fires no workflows.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Read every host's robots.txt
+        timeout-minutes: 45
+        run: |
+          if [ -n "${{ inputs.host }}" ]; then
+            python3 scripts/probe_robots_verdicts.py --host "${{ inputs.host }}"
+          else
+            python3 scripts/probe_robots_verdicts.py
+          fi
+          python3 scripts/probe_robots_verdicts.py --check
+
+      - name: Open or update pull request
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/robots-verdicts"
+          cp robots-verdicts.json "$RUNNER_TEMP/robots-verdicts.json"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's CURRENT tip, and never carry a .github/workflows/
+          # difference: a branch that also differs there reads to GitHub as a
+          # workflow update and is refused for a token without `workflow` scope.
+          git checkout -- . || true
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          cp "$RUNNER_TEMP/robots-verdicts.json" robots-verdicts.json
+          if git diff --quiet -- robots-verdicts.json; then
+            echo "No change in what the hosts say; nothing to open."
+            exit 0
+          fi
+          git add robots-verdicts.json
+          git commit -m "Record what each host's robots.txt says, measured from a runner"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create --title "Record what each host's robots.txt says, measured from a runner" \
+              --body "Measured by \`scripts/probe_robots_verdicts.py\` on a GitHub runner, which is the vantage the scheduled scrapers crawl from. One robots.txt request per host and no page fetches. Each host is read with the client \`user-agent-measurements.json\` records as serving it, and the file records that rung beside the verdict. This is the measurement the robots-adoption backlog is wired against: a host recorded as refusing a path must not be crawled at that path, and a host whose policy cannot be read from a runner either is the case that needs an operator ruling rather than a default." \
+              --base main --head "$branch"
+          fi

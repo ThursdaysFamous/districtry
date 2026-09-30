@@ -922,6 +922,19 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/robots_policy.py --selftest
 
+      # Adoption of that reader was per caller and unmeasured, so every count of
+      # it came off a hand-written list and every one was an undercount: seven
+      # files on 2026-09-12, four more in #1271's follow-on, and 224 of 266
+      # fetching scripts when the tree was finally asked. Nothing compared the
+      # tree against the rule, so a new scraper could ship fetching a host
+      # nobody had asked about with every check green. The backlog is seeded with
+      # what the sweep found, so this lands green and can only shrink.
+      - name: Every fetching script reads robots.txt, or is recorded as not yet wired
+        if: ${{ !cancelled() }}
+        run: |
+          python3 scripts/validate_robots_adoption.py --selftest
+          python3 scripts/validate_robots_adoption.py
+
       # Two reports say whether a weekly roster refresh is still running, and both
       # used to take a workflow's newest completed run without asking whether it
       # was a run. GitHub records one for a workflow file it cannot START, with no

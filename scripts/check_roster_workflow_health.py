@@ -214,6 +214,12 @@ NOT_A_REFRESH = {
     "smoke-test.yml", "deploy-pages.yml", "validate-sources.yml",
     "engine-parity.yml", "fleet-status.yml", "release-engine.yml",
     "create-engine-tag.yml", "roster-health.yml",
+    # Dispatched by hand rather than scheduled, and it refreshes no roster: it
+    # reads every host's robots.txt so a batch of scrapers can be wired against
+    # a measured verdict. With no cron there is no cadence to be stale against,
+    # and a report that listed it would be reporting that nobody pressed the
+    # button.
+    "probe-robots-verdicts.yml",
 }
 
 CRON_RE = re.compile(r"^\s*-\s*cron:\s*[\"']([^\"']+)[\"']", re.M)
