@@ -50,6 +50,10 @@ import json
 import os
 import re
 import sys
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 try:
     import requests
@@ -307,6 +311,8 @@ def http_get(url, want_json=True, params=None):
     if requests is None:
         return False, "requests not installed"
     try:
+        require_robots_once(url, "districtry source validator (+https://districtry.com/mi/)",
+                            headers={"User-Agent": "districtry source validator (+https://districtry.com/mi/)"}, label="nc-validate-sources")
         resp = requests.get(
             url,
             params=params,

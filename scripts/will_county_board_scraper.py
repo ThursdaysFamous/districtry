@@ -47,7 +47,7 @@ import time
 # scraper_common consumer keeps it for the same reason.
 import requests  # noqa: F401
 from bs4 import BeautifulSoup, NavigableString
-from scraper_common import fetch as fetch_with_retry  # shared machinery — do not fork
+from scraper_common import require_robots_once, fetch as fetch_with_retry  # shared machinery — do not fork
 
 INDEX_URL = "https://www.willcountyboard.com/board-members.html"
 BASE = "https://www.willcountyboard.com/"
@@ -89,6 +89,8 @@ def get(url):
     clients by fingerprint, so changing the identity is a per-county change
     with that county's weekly run as the witness (see its module docstring).
     """
+    require_robots_once(url, HEADERS["User-Agent"],
+                        headers=HEADERS, label="il-will-county-board-scraper")
     return fetch_with_retry(url, HEADERS, timeout=TIMEOUT,
                             attempts=FETCH_ATTEMPTS).text
 

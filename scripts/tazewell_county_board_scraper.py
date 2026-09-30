@@ -53,7 +53,7 @@ import sys
 import requests
 
 from arcgis_error import raise_for_arcgis_error
-from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
 
 INDEX_URL = "https://tazewell-il.gov/boardreps/"
 MEMBER_RE = re.compile(r'href="(https://tazewell-il\.gov/members/[^"#?]+/)"')
@@ -155,6 +155,8 @@ def lookup_unique(key, table):
 
 def fetch_gis_districts(session):
     """{name_key: district} from the county GIS's board-member rows."""
+    require_robots_once(GIS_LAYER, UA["User-Agent"],
+                        headers=UA, label="il-tazewell-county-board-scraper")
     r = session.get(GIS_LAYER, headers=UA, timeout=60, params={
         "where": "electedoffice='County Board Member'", "f": "json",
         "returnGeometry": "false", "outFields": "districtid,repname1",
@@ -186,6 +188,8 @@ def fetch_gis_districts(session):
 
 def main():
     session = requests.Session()
+    require_robots_once(INDEX_URL, UA["User-Agent"],
+                        headers=UA, label="il-tazewell-county-board-scraper")
     index = session.get(INDEX_URL, headers=UA, timeout=60)
     index.raise_for_status()
     urls = sorted(set(MEMBER_RE.findall(index.text)))
@@ -204,6 +208,8 @@ def main():
     records = []
     for url in urls:
         try:
+            require_robots_once(url, UA["User-Agent"],
+                                headers=UA, label="il-tazewell-county-board-scraper")
             page = session.get(url, headers=UA, timeout=60)
             page.raise_for_status()
         except requests.RequestException as exc:

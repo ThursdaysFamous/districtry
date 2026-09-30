@@ -212,35 +212,20 @@ def tracked_python():
 # the tree, and on a fetching file that is not here and reads nothing.
 # ---------------------------------------------------------------------------
 UNWIRED_AT_SWEEP = frozenset("""
-    ca/scripts/build_sf_supervisor_roster.py
     ca/scripts/indexnow_submit.py
     ca/scripts/validate_sources.py
     ia/scripts/build_ia_gap_outlines.py
     ia/scripts/build_ia_judicial_district.py
-    ia/scripts/cedar_rapids_council_scraper.py
-    ia/scripts/dsm_council_scraper.py
-    ia/scripts/ia_county_directory_scraper.py
-    ia/scripts/waterloo_council_scraper.py
-    in/scripts/validate_sources.py
     mi/scripts/build_mi_gap_outlines.py
     mi/scripts/mi_detroit_council_scraper.py
-    mi/scripts/mi_senate_scraper.py
-    mi/scripts/validate_sources.py
-    nc/scripts/validate_sources.py
-    ny/scripts/build_tompkins_legislature.py
-    ny/scripts/cec_scraper.py
     ny/scripts/indexnow_submit.py
-    ny/scripts/nypd_precinct_scraper.py
     ny/scripts/validate_sources.py
     scripts/aia_bundle.py
     scripts/bing_fetch.py
     scripts/boone_district_officials_scraper.py
-    scripts/build_block_population.py
     scripts/build_county_clerk_roster.py
     scripts/build_county_outline.py
     scripts/build_district_search.py
-    scripts/build_henry_precinct_polling.py
-    scripts/build_jodaviess_board_districts.py
     scripts/build_lasalle_board_districts.py
     scripts/build_logan_precinct_polling.py
     scripts/build_stephenson_fire_districts.py
@@ -261,12 +246,9 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/marshall_county_board_scraper.py
     scripts/probe_incomplete_tls_chains.py
     scripts/selftest_scraper_common.py
-    scripts/tazewell_county_board_scraper.py
     scripts/verify_google_api_access.py
-    scripts/will_county_board_scraper.py
     scripts/will_municipal_officials_scraper.py
     wi/scripts/build_rusd_school_board_districts.py
-    wi/scripts/rusd_school_board_scraper.py
     wi/scripts/validate_sources.py
     wi/scripts/wi_alderperson_scraper.py
     wi/scripts/wi_bluebook_municipal_scraper.py
