@@ -173,9 +173,20 @@ PROVENANCE = [
 ]
 
 ENDPOINTS = [
-    # Every layer this instance ships draws from a same-origin file, so these
-    # rows are about the REBUILD rather than about a runtime fetch: the four
-    # TIGERweb layers the builders read. Each is the app's own enveloped query
+    # THIS LIST NOW COVERS TWO DIFFERENT KINDS OF DEPENDENCY, and the
+    # distinction decides what a FAIL means. The first four rows are about the
+    # REBUILD: those layers ship as same-origin files, so a broken endpoint
+    # breaks the next build and not a reader's card. The nine rows after them
+    # are about a RUNTIME FETCH: those layers query the service on every
+    # toggle, so a broken endpoint is a reader looking at an error card right
+    # now. Both are checked the same way and the report says which is which.
+    #
+    # The nine live rows also carry the whole of this instance's behaviour
+    # coverage for those layers, deliberately. The browser gate exercises the
+    # four offline anchors and not these, because a check that needs a
+    # government server up fails on somebody else's schedule -- so the count
+    # floors here are what would catch a layer that has quietly started
+    # answering nothing. Each is the app's own enveloped query
     # shape with a count floor, not a metadata probe -- Iowa's #718 is the
     # measurement behind that choice, where a reachable /11?f=json passed for
     # weeks while the query the app actually sent answered HTTP 200 with an
@@ -215,6 +226,94 @@ ENDPOINTS = [
                 "Legislative/MapServer/2/query?where=STATE%3D%2727%27"
                 "&returnCountOnly=true&f=json"),
         "min_count": 134,
+    },
+    # ---- live runtime fetches: TIGERweb fabrics, STATE-filtered ----
+    {
+        "layer": "school-district-unified",
+        "url": ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+                "School/MapServer/0/query?where=STATE%3D%2727%27"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 300,  # 322 measured 2026-09-29; districts consolidate, so the floor sits below it
+    },
+    {
+        "layer": "school-district-elementary",
+        "url": ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+                "School/MapServer/2/query?where=STATE%3D%2727%27"
+                "&returnCountOnly=true&f=json"),
+        # 8 measured 2026-09-29. The floor is 1 rather than 8 on purpose: this
+        # tiling exists to gap-fill the unified one, and a district leaving it
+        # (by consolidating into a unified district) is an ordinary event that
+        # must not turn a monthly job red. Zero is the state worth catching,
+        # because it would mean the layer had stopped answering.
+        "min_count": 1,
+    },
+    {
+        "layer": "school-district-secondary",
+        "url": ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+                "School/MapServer/1/query?where=STATE%3D%2727%27"
+                "&returnCountOnly=true&f=json"),
+        # Exactly 1 feature for the whole state, so the floor IS the count and
+        # there is no room below it: if Park Rapids-in-Pine-Point ever leaves
+        # this tiling the layer answers nowhere, and this row going red is how
+        # anyone would find out.
+        "min_count": 1,
+    },
+    {
+        "layer": "county-subdivision",
+        "url": ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+                "Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2727%27"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 2600,  # 2,762 measured 2026-09-29; towns dissolve and cities annex, so the floor sits below it
+    },
+    {
+        "layer": "municipality",
+        "url": ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+                "Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2727%27"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 800,  # 856 measured 2026-09-29
+    },
+    # ---- live runtime fetch with NO state filter ----
+    {
+        "layer": "zip-code",
+        # A ZCTA has no state field, so this is the app's own ENVELOPE query
+        # rather than a STATE filter, spelled exactly as index.html spells it.
+        # The envelope is this instance's metro_bbox.
+        "url": ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+                "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query?where=1%3D1"
+                "&geometry=%7B%22xmin%22%3A-97.3%2C%22ymin%22%3A43.44%2C"
+                "%22xmax%22%3A-89.43%2C%22ymax%22%3A49.44%7D"
+                "&geometryType=esriGeometryEnvelope&inSR=4326"
+                "&spatialRel=esriSpatialRelIntersects"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 1300,  # 1,385 in the envelope, measured 2026-09-29
+    },
+    # ---- live runtime fetches: USGS National Map structures, enveloped ----
+    # Each is the app's own enveloped query. The counts include points across
+    # each border ON PURPOSE -- nearest is a proximity fact -- so these floors
+    # are about the service answering at all, not about Minnesota's own share.
+    {
+        "layer": "post-office",
+        "url": ("https://carto.nationalmap.gov/arcgis/rest/services/structures/"
+                "MapServer/38/query?where=1%3D1&geometry=-97.3%2C43.44%2C-89.43%2C49.44"
+                "&geometryType=esriGeometryEnvelope&inSR=4326"
+                "&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
+        "min_count": 1000,  # 1,199 measured 2026-09-29 (793 in Minnesota)
+    },
+    {
+        "layer": "fire-station",
+        "url": ("https://carto.nationalmap.gov/arcgis/rest/services/structures/"
+                "MapServer/51/query?where=1%3D1&geometry=-97.3%2C43.44%2C-89.43%2C49.44"
+                "&geometryType=esriGeometryEnvelope&inSR=4326"
+                "&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
+        "min_count": 1300,  # 1,484 measured 2026-09-29 (961 in Minnesota)
+    },
+    {
+        "layer": "police-station",
+        "url": ("https://carto.nationalmap.gov/arcgis/rest/services/structures/"
+                "MapServer/53/query?where=1%3D1&geometry=-97.3%2C43.44%2C-89.43%2C49.44"
+                "&geometryType=esriGeometryEnvelope&inSR=4326"
+                "&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
+        "min_count": 600,  # 694 measured 2026-09-29 (448 in Minnesota)
     },
 ]
 
