@@ -47,13 +47,28 @@ TWO TABLES, BECAUSE THEY ARE TWO DIFFERENT CLAIMS.
 
   WHAT IS LEFT IN IT NO LONGER SHARES THAT REASON, and the shared-reason design
   is why nothing in this file says so. The wiring pass took it from 224 entries
-  to 30 in a day, and the 30 are not a remainder of the sweep: every one reaches
-  a host the runner record shows REFUSING us, answering with a MANAGED CHALLENGE
-  we do not work around, or answering NOTHING at all. Each wants either a
-  re-read from a runner or an operator ruling, neither of which is a line of
-  code, so each is a decision rather than a task. A backlog whose entries stop
-  sharing their stated reason wants splitting; that split waits on the rulings,
-  because how they are grouped is part of what is being decided.
+  to 30 in a day, and what remains is not a remainder of the sweep: each one
+  reaches a host the runner record shows REFUSING us, answering with a MANAGED
+  CHALLENGE we do not work around, or answering NOTHING at all. Each wants
+  either a re-read from a runner or an operator ruling, neither of which is a
+  line of code, so each is a decision rather than a task. A backlog whose
+  entries stop sharing their stated reason wants splitting; that split waits on
+  the rulings, because how they are grouped is part of what is being decided.
+
+  THREE OF THOSE 30 WERE NEVER IN THAT CLASS AND WERE SORTED THERE BY READING A
+  URL LITERAL, which is the same defect this gate's own AST rule exists to avoid
+  one level up. `scripts/build_stephenson_fire_districts.py`,
+  `ia/scripts/build_ia_judicial_district.py` and
+  `scripts/will_municipal_officials_scraper.py` each name a refusing host — an
+  `elections.il.gov` map url written into every feature as `mapUrl`, the Code of
+  Iowa sections and Judicial Branch pages a docstring cites, a Clarity asset
+  address in a comment — and none of the three ever requests it. A CITATION IS
+  NOT A FETCH, so the hosts they do read (TIGERweb, one ArcGIS feature service,
+  the Will County Clerk and the flipbook the Clerk publishes on) all permit
+  them, and all three were wired on 2026-09-30 with no ruling needed. Bucketing
+  a file by the addresses it contains over-counts for exactly the reason a text
+  match for the seam over-counts: the literal is evidence of a mention, never of
+  a request.
 
   `DECLARED_EXEMPT` is for a file whose fetch genuinely must not be gated, each
   with its own reason and date. It was EMPTY on introduction, which was called a
@@ -259,12 +274,10 @@ def tracked_python():
 # ---------------------------------------------------------------------------
 UNWIRED_AT_SWEEP = frozenset("""
     ca/scripts/validate_sources.py
-    ia/scripts/build_ia_judicial_district.py
     ny/scripts/validate_sources.py
     scripts/boone_district_officials_scraper.py
     scripts/build_lasalle_board_districts.py
     scripts/build_logan_precinct_polling.py
-    scripts/build_stephenson_fire_districts.py
     scripts/clay_county_board_scraper.py
     scripts/coles_county_board_scraper.py
     scripts/dekalb_county_board_scraper.py
@@ -275,7 +288,6 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/il_library_contacts_scraper.py
     scripts/marshall_county_board_scraper.py
     scripts/probe_incomplete_tls_chains.py
-    scripts/will_municipal_officials_scraper.py
     wi/scripts/build_rusd_school_board_districts.py
     wi/scripts/validate_sources.py
     wi/scripts/wi_alderperson_scraper.py
