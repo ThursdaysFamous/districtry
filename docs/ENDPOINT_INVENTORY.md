@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **224 distinct hosts** those files
-name, **42 are fetched by the browser**; the other 182 are links.
+makes from a link a reader clicks. Of **225 distinct hosts** those files
+name, **43 are fetched by the browser**; the other 182 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -67,7 +67,7 @@ a font CDN would be a recipient the privacy page does not name.
 |---|---|
 | `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi |
 
-### Socrata — 6 host(s)
+### Socrata — 7 host(s)
 
 | host | instances |
 |---|---|
@@ -76,6 +76,7 @@ a font CDN would be a recipient the privacy page does not name.
 | `data.macoupincountyil.gov` | il |
 | `data.milwaukee.gov` | wi |
 | `data.nysed.gov` | ny |
+| `data.sf.gov` | ca |
 | `data.sfgov.org` | ca |
 
 ### ArcGIS — 26 host(s)
@@ -119,8 +120,8 @@ prose.
 
 | instance | layers that send the point | registered layers |
 |---|---|---|
-| il | 12 | 40 |
-| ny | 4 | 35 |
+| il | 5 | 40 |
+| ny | 0 | 35 |
 | ca | 0 | 16 |
 | wi | 1 | 31 |
 | ia | 0 | 20 |

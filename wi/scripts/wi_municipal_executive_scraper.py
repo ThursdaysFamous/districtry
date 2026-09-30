@@ -96,6 +96,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 # instance from shadowing it, the mistake wi_county_board_scraper.py records.
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(SCRIPT_DIR)), "scripts"))
 import robots_policy as rp                                       # noqa: E402
+import scraper_common as sc                                      # noqa: E402
 CACHE_DIR = os.path.join(SCRIPT_DIR, ".cache")
 DEFAULT_OUT = os.path.join(CACHE_DIR, "wi_municipal_executives_raw.json")
 
@@ -110,6 +111,20 @@ HDRS = {
     "Accept-Encoding": "identity",
     "Connection": "close",
 }
+# THE THREE HEADERS THAT DECIDE WHETHER TWO CITIES HAVE A MAYOR. Without the
+# `sec-ch-ua*` client hints, www.milwaukee.gov and www.wauwatosa.net answer 403
+# on /robots.txt; with them both serve a policy that PERMITS us -- 74 and 6,641
+# bytes (measured 2026-09-29, leave-one-out, two reads per rung, stable). Under
+# the strict reading this file used to take, that 403 is why the largest city in
+# Wisconsin ships an office and no mayor's name.
+#
+# IMPORTED, NEVER RESTATED. The first draft of this fix typed the three values
+# out and got `sec-ch-ua` wrong -- a plausible-looking Chrome string that is not
+# the one the measurement used -- which would have left the file claiming a
+# result it no longer reproduced. scraper_common is stdlib-only at module scope,
+# so importing it adds nothing to this workflow's pip line.
+HDRS.update({k: v for k, v in sc.UA_HINTS_CHROME_126.items()
+             if k.lower().startswith("sec-ch-ua")})
 
 LAYER = ("https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/"
          "Milwaukee_County_Municipal_Executives/FeatureServer/42")
@@ -158,22 +173,28 @@ def fail(msg):
 # always truthy, and so every host read as allowing. A PROBE THAT CANNOT
 # RETURN NO HAS NOT MEASURED ANYTHING.
 #
-# TWO READINGS IN ONE FILE, AND THE SPLIT IS THE ONE CLAUDE.md STATES. A
-# 401/403 on robots.txt itself is `refused`, and what that means depends on who
-# answers it. The nineteen municipal pages are WEBSITES, where a 403 is a
-# firewall refusing this client, so they take the STRICT reading
-# (`refused_is_refusal=True`) the DuPage, Michigan and Iowa supervisor scrapers
-# already take — measured today it shuts Milwaukee and Wauwatosa, both of which
-# 403 the page as well, so nothing changes but the verdict's honesty. The LAYER
-# host is an ArcGIS Online FeatureServer, which is the API case the module's
-# default was written for — services2.arcgis.com answers 403 on robots.txt and
-# serves its data to everyone — so it takes the default. Having both in one
-# file is deliberate, not drift.
+# ONE READING NOW, AND THIS FILE IS THE CASE THAT RETIRED THE OTHER. It used to
+# split: the ArcGIS LAYER host took the module's default (a 401/403 on
+# robots.txt allows) and the nineteen municipal pages took the strict reading,
+# on the note "measured today it shuts Milwaukee and Wauwatosa, both of which
+# 403 the page as well, so nothing changes but the verdict's honesty."
+#
+# THAT PARENTHESIS WAS THE LOAD-BEARING PART AND IT WAS MEASURED WITH THIS
+# FILE'S OWN CLIENT. HDRS below is a Chrome string and four headers with no
+# `sec-ch-ua` client hints, and those three headers are the whole difference:
+# measured 2026-09-29, leave-one-out, two reads per rung, www.milwaukee.gov and
+# www.wauwatosa.net answer 403 to HDRS as it was and 200 to HDRS plus the hints,
+# serving 74 and 6,641 bytes of policy that PERMIT us. So the strict reading was
+# not costless honesty; it is why the largest city in Wisconsin ships an office
+# and no mayor's name. A 401/403 allows now, per RFC 9309 §2.3.1.3 and the
+# operator's ruling of 2026-09-29, and HDRS carries the fleet's pinned hint set.
 #
 # THE POLICY IS READ WITH THE HEADERS THE CRAWL SENDS, which is why
-# RobotsGate now forwards them: a caller that crawls with seven headers and
-# reads robots.txt with two is measuring a different client, and five county
-# hosts in this instance already answer the two differently.
+# RobotsGate forwards them — and the lesson above is what that rule is FOR: a
+# caller that crawls with one client and reads robots.txt with a thinner one is
+# measuring a different client, and five county hosts in this instance already
+# answer the two differently. Never escalate the client to get a better robots
+# verdict, and never drop to a thinner one after a challenge.
 #
 # A stated Crawl-delay is honoured per host by HostPacer. No host stated one
 # today; the pacer costs nothing when none does and the run prints which.
@@ -193,7 +214,7 @@ _PACER = rp.HostPacer(_ROBOTS_GATE)
 _ROBOTS_SAID = {}
 
 
-def robots_allows(url, refused_is_refusal):
+def robots_allows(url):
     """(allowed, why) for one URL, as the client this file actually sends.
 
     Prints one line per host the first time it is decided, so a run says what
@@ -201,7 +222,7 @@ def robots_allows(url, refused_is_refusal):
     """
     verdict = _ROBOTS_GATE.verdict(url)
     ua = HDRS["User-Agent"]
-    allowed, why = verdict.allows(ua, url, refused_is_refusal=refused_is_refusal)
+    allowed, why = verdict.allows(ua, url)
     host = urllib.parse.urlsplit(url).netloc
     if host not in _ROBOTS_SAID:
         _ROBOTS_SAID[host] = (verdict.status, bool(allowed))
@@ -312,7 +333,7 @@ def main():
 
     # The layer's own host, before the layer is asked for. The API reading:
     # see the robots block above for why this one is not strict.
-    allowed, why = robots_allows(LAYER_QUERY, refused_is_refusal=False)
+    allowed, why = robots_allows(LAYER_QUERY)
     if not allowed:
         fail("the county's own GIS host declines this client by robots.txt (%s) "
              "— nothing is fetched from it" % why)
@@ -373,7 +394,7 @@ def main():
         # with that reason, never fetched anyway, and never carried by the
         # builder — the Iowa chair rule that a site which has said no must not
         # have its data kept alive by us.
-        allowed, why = robots_allows(url, refused_is_refusal=True)
+        allowed, why = robots_allows(url)
         if not allowed:
             rec.update(witnessed=False, pageStatus="robots-refused",
                        robotsWhy=why, withheldWhy=WITHHELD_WHY["robots-refused"])

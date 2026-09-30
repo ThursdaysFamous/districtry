@@ -107,9 +107,15 @@ Verdicts: OK, FINDINGS, BLOCKED, ESCALATED.
   of a host, as the client that fetches. RFC 9309: every group naming the
   client, merged, governs; else every `*` group, merged; longest match wins.
   HTTP 202 is an access control. A 5xx or a network failure on robots.txt is
-  disallow-all. A 401 or 403 on robots.txt itself is `refused` and allowed by
-  default because API hosts answer that way; a municipal-website scraper
-  passes `refused_is_refusal=True`.
+  disallow-all. A 401 or 403 on robots.txt itself is `refused` and ALLOWS, for
+  everyone — the `refused_is_refusal` opt-in was retired by Adam on
+  2026-09-29, after fourteen of eighteen such hosts turned out to publish a
+  policy permitting us once robots.txt was read with the client that crawls.
+  So: read robots.txt with the EXACT client that will crawl, never probe a
+  second client on a host that already serves the first, and record which
+  client a host serves in `user-agent-measurements.json`. A managed challenge
+  is sticky per host (`robots_policy.CHALLENGE_FRONTED_HOSTS`), keyed on the
+  exact host, and leaves only by a deliberate re-measurement.
 - A captcha or managed challenge is an access control, never an obstacle to
   work around.
 - Never disable TLS verification. A server that omits its intermediate gets

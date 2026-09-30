@@ -65,11 +65,11 @@ every county site AND the state service the comparison reads, which is one
 more host — and a stated Crawl-delay is honoured PER HOST by HostPacer, with
 what it honoured printed at the end of every run. Midland states Crawl-delay:
 15 and is the first county here to state one; pacing per host rather than
-globally is what keeps the other fifteen at full speed. The county pages take
-the STRICT reading of a 401/403 on robots.txt (`refused_is_refusal=True`,
-the DuPage and Logan pattern): on a website that status is a firewall refusing
-this client, where on an ArcGIS service it is the RFC's allow, so the state
-service keeps the default.
+globally is what keeps the other fifteen at full speed. A 401/403 on robots.txt allows, on a county
+page exactly as on the state ArcGIS service (RFC 9309 §2.3.1.3). This file took
+the strict reading until the operator retired it on 2026-09-29; measured that
+day, such a 403 is usually the site's edge refusing the READ rather than a
+policy, and a host that refuses every client refuses the page too.
 
 No county here needs a browser user-agent: every one of the forty-eight
 serves this token a full page. A county that refuses is skipped with its reason
@@ -2235,7 +2235,7 @@ def read_page(url, session, gate, pacer):
         gate = RobotsGate(session, UA_ROSTER_BOT)
         pacer = HostPacer(gate)
         verdict = gate.verdict(url)
-    allowed, why = verdict.allows(UA_ROSTER_BOT, url, refused_is_refusal=True)
+    allowed, why = verdict.allows(UA_ROSTER_BOT, url)
     if not allowed:
         return None, "robots %s: %s" % (verdict.status, why), "robots", gate, pacer
     resp, last = None, None
