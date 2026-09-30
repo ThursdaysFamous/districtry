@@ -39,6 +39,14 @@
     "height": 630,
     "rendered": "2026-09-29"
   },
+  "ky": {
+    "path": "ky/og-image.png",
+    "label": "ky",
+    "sha256": "062de3e3be69469e6b2574d9d69cb5816b627cd779c33f1f6f7a28b6ad61ae83",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-30"
+  },
   "mi": {
     "path": "mi/og-image.png",
     "label": "mi",
