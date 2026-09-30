@@ -9,11 +9,15 @@ search an address) and it reports every civic district containing that point and
 represents you there. It is a folder of the consolidated districtry repo, following the shape
 `docs/EXPANSION_GUIDE.md` Part 2 sets out for a new state instance.
 
-**IT IS NOT PUBLISHED YET.** PR 1 arrived DARK: `mn/**` is blanket-excluded from the Pages
-deploy and `metros.json` deliberately carries no `mn` entry, so nothing here is reachable by a
-reader. `validate_instance_registration.py` holds those two together in BOTH directions — an
-entry in the manifest while the folder is excluded would render a live landing card linking to
-a 404. `mn/WATCH.md`'s GO-LIVE section is what the publishing change has to carry.
+**IT IS LIVE, since the go-live change of 2026-09-30, at districtry.com/mn/.** It arrived DARK
+in PR 1 and stayed dark through PR 2: `mn/**` was blanket-excluded from the Pages deploy and
+`metros.json` deliberately carried no `mn` entry, which
+`validate_instance_registration.py` holds together in BOTH directions — an entry in the
+manifest while the folder is excluded would render a live landing card linking to a 404, and a
+published folder the manifest does not name is a page the front door cannot reach. The
+publishing change narrowed that exclude to `mn/data/state mn/data/source mn/scripts`, matching
+`ia` and `mi`, and added the manifest row. `mn/WATCH.md`'s GO-LIVE section records what it
+carried and what it deliberately did not.
 
 It ships thirteen layers, the whole national tier — everything a U.S. state can serve from
 national publishers, with no state-specific source between them.
@@ -105,10 +109,21 @@ whole growth path sits on the host MnGeo is not.
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;
 `data/app/*.json` are runtime-fetched data files; `data/state/` carries the bootstrap state
 config (`build_congress_roster.py` reads its FIPS/USPS/seat count — it ships in the repo and
-is excluded from the Pages deploy). This instance ships NO sub-pages yet: no `sources.html`,
-no `faq.html`, no `history.html`, and the worksheet therefore carries no `sources_page` or
-`history_page` key — those generators are opt-in and generate nothing for an instance that
-does not ask.
+is excluded from the Pages deploy). **IT SHIPS ONE SUB-PAGE, `sources.html`, AND IT WAS ALMOST PUBLISHED WITHOUT ONE.** Through
+PR 1 and PR 2 this instance carried no sub-pages at all, on a reason that was correct while it
+was dark — a masthead link to a file the tree does not contain is a 404 the moment the page is
+published, which `validate_instance_assets.py` says out loud. What that reasoning did not
+answer is what happens when the page IS published: every sibling instance answers *where did
+this answer come from* on a provenance page, and Minnesota would have been the only live
+instance with no way to ask. So the go-live change shipped the page rather than the omission,
+and it cost no research — each of the thirteen `layers[]` entries already carried a full
+`source` block (`generate_metro_files.py` refuses a `sources_page` instance where one does
+not), so the layer matrix and the credit rows generate from what was already there. The shell
+was cloned from `in/sources.html` and localized; the Indiana sweep is 0 hits.
+`faq.html` and `history.html` are still absent, and deliberately: both are hand-written prose
+rather than generated, so each is its own change, and `mn/WATCH.md` carries them. The
+worksheet therefore has `sources_page` and no `history_page` — those generators are opt-in and
+generate nothing for an instance that does not ask.
 
 <!-- ==== GENERATED:BEGIN metro-facts ==== -->
 **Metro facts** (generated from `metro-worksheet.json` — edit the worksheet and run
@@ -159,8 +174,17 @@ shipped files, TIGERweb naming Worth County STATE 19 — and **made the browser 
 `fleet-outlines.json` puts it inside Iowa, so `placeOwner` handed the selection to
 `districtry.com/ia/` and the smoke test timed out looking for a button on a blank document.
 **A NEGATIVE POINT MUST BE OUTSIDE EVERY LIVE INSTANCE, not only outside its own.** Iowa's own
-negative point sits inside Minnesota and will start handing off the day this instance is
-published — a GO-LIVE row in `mn/WATCH.md`, not a defect in this change.
+negative point sits inside Minnesota, and Wisconsin's does too; both started handing off the
+day this instance was published, and both were settled BEFORE it — in #1267 and #1268, by
+having those two instances' checks REFUSE `fleet-outlines.json` rather than by moving a point
+that had been measured correctly. That is the better remedy and it generalises: the fleet was
+swept for every other coordinate Minnesota's outline would claim (48 pairs across every
+`scripts/*.mjs`, `*/scripts/*.mjs`, `*/metro-worksheet.json` and `metros.json`) and those two
+were the only ones. **This instance's own negative point does NOT yet use that pattern**, and
+that is a measured choice rather than an oversight: Cass County, North Dakota is outside every
+live instance, so `placeOwner` finds no owner and the app selects the point locally. It breaks
+the day a Dakotas instance ships, silently, as a timeout waiting for a masthead button —
+recorded in `mn/WATCH.md` as a Dakotas blocker.
 
 **Sandboxed environments (Claude Code web):** the headless browser cannot reach the Leaflet
 CDN. The repo root's `.claude/settings.json` SessionStart hook runs `scripts/vendor_leaflet.sh`,

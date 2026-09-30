@@ -1328,7 +1328,7 @@ def build(spec, metros):
                   page["sections"], related_rows(spec, landing, metros),
                   preserved_from_disk(path),
                   shared_head_block(tag, THEMEBOOT_RE, "theme boot script"),
-                  shared_head_block(tag, MARK_RE, "districtry mark"))
+                  shared_head_block(tag, MARK_RE, "districtry mark"), tag)
     return rel, path, text, page["named"]
 
 
