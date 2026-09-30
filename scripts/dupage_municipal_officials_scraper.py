@@ -416,11 +416,15 @@ def robots_allows(url, report):
     5xx on robots.txt ALLOWED the crawl (RFC 9309 §2.3.1.4 says disallow, and
     the Iowa gate always did), and urllib.robotparser kept only the first
     `User-agent: *` group of a file and the first matching rule rather than
-    the longest. The 403 posture above is unchanged and is THIS scraper's
-    choice, passed as refused_is_refusal=True: the shared module's default is
-    the RFC's (allow), because API hosts like ArcGIS Online answer 403 to
-    /robots.txt while serving everyone, and a municipal website is the case
-    where a 403 there is a WAF refusing the client.
+    the longest. THE 403 POSTURE IS RETIRED (2026-09-29, the
+    operator's ruling). This file invented it -- "a site that will not show its
+    policy has not published one this client can read" -- and it became the
+    fleet's strict opt-in. Measured fleet-wide that day it was reading an
+    artefact: fourteen of eighteen hosts that 403 their robots.txt publish a
+    policy PERMITTING us once the file is asked for with the client that
+    crawls, and Wood Dale and Carol Stream, the two hosts this scraper's
+    posture actually shut out, are both among them. A 401/403 now allows, per
+    RFC 9309 §2.3.1.3.
     """
     import urllib.parse
     from robots_policy import classify
@@ -432,7 +436,7 @@ def robots_allows(url, report):
         report.append("robots.txt unreadable (%s)" % type(exc).__name__)
         return False
     verdict = classify(resp.status_code, resp.text, final_url=resp.url)
-    allowed, why = verdict.allows(HEADERS["User-Agent"], url, refused_is_refusal=True)
+    allowed, why = verdict.allows(HEADERS["User-Agent"], url)
     if not allowed:
         report.append(why if verdict.status != "served" else "robots.txt disallows this client (%s)" % why)
     return allowed
