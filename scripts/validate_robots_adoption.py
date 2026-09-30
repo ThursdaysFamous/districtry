@@ -321,7 +321,6 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/winnebago_municipal_officials_scraper.py
     scripts/woodford_county_board_scraper.py
     wi/scripts/build_rusd_school_board_districts.py
-    wi/scripts/build_wi_county_board_directory.py
     wi/scripts/build_wi_legislature_roster.py
     wi/scripts/build_wi_libraries.py
     wi/scripts/build_wi_municipal_clerks.py

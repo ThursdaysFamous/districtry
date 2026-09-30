@@ -43,11 +43,18 @@ stub's target, not the stub). `fetch_gated` asks each hop in turn rather than
 following the chain blind, which is what makes the permission a measurement of
 the host actually serving the bytes rather than of the host that pointed at it.
 
-READ IT WITH A PAUSE. Five rapid reads of these two hosts inside one process
-answered 403, 404, a 312-byte policy and a 685 KB body; five reads sixteen
-seconds apart answered the identical 312 bytes every time. The variation is
-rate limiting under rapid-fire requests and not the host deciding differently,
-so a verdict taken from a tight loop over many hosts is not a measurement.
+ASK THROUGH `RobotsGate`, WHICH TAKES THE PAGE URL. While measuring this, four
+ad-hoc readings of these two hosts answered 403, 404, a 312-byte policy and a
+685 KB body, and that looked like a host answering inconsistently. It was not:
+`robots_policy.fetch_verdict` takes the ROBOTS.TXT address, and those calls
+passed document and directory URLs, so the reader fetched the documents
+themselves -- the 685 KB body is the yearbook PDF, classified as "not a policy,
+allow all". `RobotsGate.allows(page_url)` derives the address and caches one
+read per host; `require_robots_once` wraps it and is what this file calls.
+Read five times sixteen seconds apart, both hosts answer identically every
+time. A WRONG READING OF A POLICY MOSTLY FAILS TOWARD ALLOW, so a surprising
+permission is the one to re-derive, and an explanation that makes the host the
+unreliable party is the one to distrust first.
 
 WHY A LINE PARSER. The section is single-column, one officer per line in
 "<office> ....dot leaders.... <name>" form, which pypdf's line extraction
