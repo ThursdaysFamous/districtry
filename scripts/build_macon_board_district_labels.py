@@ -61,6 +61,7 @@ import argparse
 import json
 import os
 import sys
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 try:
     import requests
@@ -110,6 +111,8 @@ MEMBERSHIP = {
 
 
 def fetch(url, fields):
+    require_robots_once(url + "/query", HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-macon-board-district-labels")
     resp = requests.get(url + "/query", headers=HEADERS, timeout=REQUEST_TIMEOUT,
                         params={"where": "1=1", "outFields": fields,
                                 "outSR": "4326", "f": "geojson"})

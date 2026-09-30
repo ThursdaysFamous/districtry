@@ -52,6 +52,12 @@ import os
 import sys
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once, UA_STDLIB_DEFAULT  # noqa: E402  (FLEET_SHARED)
+
+
 SOURCE_URL = "https://data.openstates.org/people/current/mi.csv"
 
 # Every Capitol-complex address the Senate's directory publishes ends in one
@@ -112,6 +118,8 @@ def load_rows(path=None):
     if path:
         with open(path, encoding="utf-8") as fh:
             return list(csv.DictReader(fh))
+    require_robots_once(SOURCE_URL, UA_STDLIB_DEFAULT,
+                        label="mi-build-mi-legislature-roster")
     with urllib.request.urlopen(SOURCE_URL, timeout=90) as resp:
         text = resp.read().decode("utf-8")
     return list(csv.DictReader(io.StringIO(text)))

@@ -31,6 +31,12 @@ import os
 import sys
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once, UA_STDLIB_DEFAULT  # noqa: E402  (FLEET_SHARED)
+
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 OUT_PATH = os.path.join(REPO_ROOT, "data", "app", "library-sites.json")
@@ -46,6 +52,7 @@ BBOX = {"min_lat": 42.4, "max_lat": 47.4, "min_lng": -93.0, "max_lng": -86.2}
 
 
 def fetch_json(url):
+    require_robots_once(url, UA_STDLIB_DEFAULT, label="wi-build-wi-libraries")
     with urllib.request.urlopen(url, timeout=60) as r:
         return json.loads(r.read().decode("utf-8"))
 

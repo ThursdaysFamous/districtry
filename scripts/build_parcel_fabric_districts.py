@@ -83,7 +83,7 @@ from shapely.geometry import mapping, shape, MultiPolygon, Point, Polygon
 from shapely.validation import explain_validity
 from shapely.ops import transform, unary_union
 from shapely.strtree import STRtree
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, make_fail  # noqa: E402  (shared machinery — do not fork)
 from arcgis_nesting import assert_nesting_repaired  # noqa: E402
 from comptroller_afr import (  # noqa: E402  (shared machinery — do not fork)
     PACE as AFR_PACE, enumerate_county as afr_enumerate_county,
@@ -1447,6 +1447,8 @@ def witness_names(cfg, county_geom_by_name):
         outline = clean(unary_union([shape(f["geometry"])
                                      for f in json.load(fh)["features"]]))
 
+    require_robots_once(spec["url"], HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-parcel-fabric-districts")
     payload = requests.get(spec["url"], params={
         "where": "1=1", "outFields": spec["field"], "outSR": 4326,
         "f": "geojson", "geometryPrecision": 6, "resultRecordCount": 2000,
@@ -1577,6 +1579,8 @@ def residual_voids(final_ft):
 
 
 def build_source(cfg, forced=False):
+    require_robots_once(cfg["layer"], HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-parcel-fabric-districts")
     meta = requests.get(cfg["layer"], params={"f": "json"},
                         headers=HEADERS, timeout=90).json()
     edit_ms = (meta.get("editingInfo") or {}).get("dataLastEditDate")
@@ -1628,6 +1632,8 @@ def build_source(cfg, forced=False):
     # paragraph below says this loop exists to prevent. So the flag is read from
     # BOTH places AND the total is checked against the county's own count: a
     # dialect this script has not met yet fails loudly instead of truncating.
+    require_robots_once(cfg["layer"] + "/query", HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-parcel-fabric-districts")
     count_probe = requests.get(cfg["layer"] + "/query", params={
         "where": where, "returnCountOnly": "true", "f": "json",
     }, headers=HEADERS, timeout=120).json().get("count")
@@ -1664,6 +1670,8 @@ def build_source(cfg, forced=False):
         if pages:
             params["resultOffset"] = offset
             params["resultRecordCount"] = PAGE_SIZE
+        require_robots_once(cfg["layer"] + "/query", HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-build-parcel-fabric-districts")
         page = requests.get(cfg["layer"] + "/query", params=params,
                             headers=HEADERS, timeout=600).json()
         if page.get("error"):
@@ -1735,6 +1743,8 @@ def build_source(cfg, forced=False):
         in_list = ",".join("'%s'" % c for c in chunks)
         where = "%s IS NOT NULL AND %s NOT IN (%s)" % (
             cfg["name_prop"], cfg["name_prop"], in_list)
+        require_robots_once(cfg["layer"] + "/query", HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-build-parcel-fabric-districts")
         outside = requests.get(cfg["layer"] + "/query", params={
             "where": where, "returnCountOnly": "true", "f": "json",
         }, headers=HEADERS, timeout=120).json()
@@ -1772,6 +1782,8 @@ def build_source(cfg, forced=False):
         # they are holes by construction rather than by decision. Counted and
         # printed because an unmeasured hole is the thing this builder exists to
         # refuse; what they ARE is recorded in the gap record, not guessed at.
+        require_robots_once(cfg["layer"] + "/query", HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-build-parcel-fabric-districts")
         nulls = requests.get(cfg["layer"] + "/query", params={
             "where": cfg["name_prop"] + " IS NULL", "returnCountOnly": "true", "f": "json",
         }, headers=HEADERS, timeout=120).json().get("count")

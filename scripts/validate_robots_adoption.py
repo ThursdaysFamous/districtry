@@ -212,16 +212,12 @@ def tracked_python():
 # the tree, and on a fetching file that is not here and reads nothing.
 # ---------------------------------------------------------------------------
 UNWIRED_AT_SWEEP = frozenset("""
-    ca/scripts/build_ca_legislature_roster.py
     ca/scripts/build_sf_supervisor_roster.py
     ca/scripts/indexnow_submit.py
     ca/scripts/validate_sources.py
     ia/scripts/build_ia_community_colleges.py
     ia/scripts/build_ia_gap_outlines.py
     ia/scripts/build_ia_judicial_district.py
-    ia/scripts/build_ia_legislature_roster.py
-    ia/scripts/build_ia_precincts.py
-    ia/scripts/build_ia_school_sites.py
     ia/scripts/cedar_rapids_council_scraper.py
     ia/scripts/dsm_council_scraper.py
     ia/scripts/ia_county_directory_scraper.py
@@ -229,13 +225,10 @@ UNWIRED_AT_SWEEP = frozenset("""
     ia/scripts/waterloo_council_scraper.py
     in/scripts/validate_sources.py
     mi/scripts/build_mi_gap_outlines.py
-    mi/scripts/build_mi_legislature_roster.py
-    mi/scripts/build_mi_precincts.py
     mi/scripts/mi_detroit_council_scraper.py
     mi/scripts/mi_grand_rapids_council_scraper.py
     mi/scripts/mi_senate_scraper.py
     mi/scripts/validate_sources.py
-    nc/scripts/build_nc_legislature_roster.py
     nc/scripts/validate_sources.py
     ny/scripts/build_tompkins_legislature.py
     ny/scripts/cec_scraper.py
@@ -247,37 +240,25 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/aia_bundle.py
     scripts/bing_fetch.py
     scripts/boone_district_officials_scraper.py
-    scripts/boone_municipal_officials_scraper.py
     scripts/build_block_population.py
-    scripts/build_carroll_precinct_polling.py
     scripts/build_county_clerk_roster.py
     scripts/build_county_outline.py
     scripts/build_district_search.py
-    scripts/build_hamilton_precinct_polling.py
     scripts/build_henry_precinct_polling.py
     scripts/build_jodaviess_board_districts.py
-    scripts/build_knox_board_districts.py
     scripts/build_lasalle_board_districts.py
-    scripts/build_logan_park_districts.py
     scripts/build_logan_precinct_polling.py
-    scripts/build_macon_board_district_labels.py
     scripts/build_municipal_ward_coverage.py
-    scripts/build_parcel_fabric_districts.py
     scripts/build_statewide_library_districts.py
     scripts/build_stclair_precinct_polling.py
     scripts/build_stephenson_fire_districts.py
-    scripts/build_stephenson_precincts.py
     scripts/build_vermilion_boundaries.py
     scripts/build_winnebago_county_board_roster.py
-    scripts/cass_municipal_officials_scraper.py
-    scripts/ccbr_scraper.py
-    scripts/ccpsa_scraper.py
     scripts/check_engine_parity.py
     scripts/check_roster_workflow_health.py
     scripts/clay_county_board_scraper.py
     scripts/coles_county_board_scraper.py
     scripts/comptroller_afr.py
-    scripts/cook_municipal_officials_scraper.py
     scripts/cpd_district_scraper.py
     scripts/dekalb_county_board_scraper.py
     scripts/dekalb_municipal_officials_scraper.py
@@ -290,50 +271,30 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/generate_metro_files.py
     scripts/gsc_fetch.py
     scripts/henry_county_board_scraper.py
-    scripts/henry_municipal_officials_scraper.py
     scripts/il_county_commissioners_scraper.py
     scripts/il_library_contacts_scraper.py
     scripts/il_special_district_officials_scraper.py
     scripts/indexnow_submit.py
-    scripts/jackson_county_board_scraper.py
     scripts/jodaviess_county_board_scraper.py
-    scripts/kane_county_board_scraper.py
-    scripts/kane_municipal_officials_scraper.py
     scripts/kankakee_district_officials_scraper.py
-    scripts/kankakee_municipal_officials_scraper.py
-    scripts/lake_county_board_roles_scraper.py
-    scripts/lake_municipal_officials_scraper.py
     scripts/lasalle_municipal_officials_scraper.py
-    scripts/macoupin_municipal_officials_scraper.py
     scripts/marshall_county_board_scraper.py
     scripts/mcdonough_county_board_scraper.py
     scripts/peoria_county_board_scraper.py
-    scripts/peoria_municipal_officials_scraper.py
-    scripts/plano_council_scraper.py
     scripts/probe_incomplete_tls_chains.py
-    scripts/richland_county_board_scraper.py
-    scripts/sangamon_county_board_scraper.py
     scripts/selftest_scraper_common.py
     scripts/shelby_county_board_scraper.py
     scripts/skokie_trustee_districts_scraper.py
     scripts/stark_county_board_scraper.py
     scripts/tazewell_county_board_scraper.py
     scripts/verify_google_api_access.py
-    scripts/vermilion_county_board_scraper.py
-    scripts/vtd_board_districts.py
-    scripts/warren_county_board_scraper.py
-    scripts/wayne_county_board_scraper.py
-    scripts/whiteside_municipal_officials_scraper.py
     scripts/will_city_councils_scraper.py
     scripts/will_county_board_scraper.py
     scripts/will_municipal_officials_scraper.py
     scripts/winnebago_municipal_officials_scraper.py
     scripts/woodford_county_board_scraper.py
     wi/scripts/build_rusd_school_board_districts.py
-    wi/scripts/build_wi_legislature_roster.py
-    wi/scripts/build_wi_libraries.py
     wi/scripts/build_wi_municipal_clerks.py
-    wi/scripts/build_wi_school_sites.py
     wi/scripts/rusd_school_board_scraper.py
     wi/scripts/validate_sources.py
     wi/scripts/verify_kenosha_supervisory_map.py

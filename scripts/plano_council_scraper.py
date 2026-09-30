@@ -51,6 +51,7 @@ import re
 import sys
 
 import requests
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 SITE = "https://www.cityofplanoil.com"
 OFFICIALS_PAGE = SITE + "/153/Mayor-City-Council"
@@ -106,6 +107,8 @@ def main():
         with open(args.html, encoding="utf-8") as fh:
             body = fh.read()
     else:
+        require_robots_once(OFFICIALS_PAGE, HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-plano-council-scraper")
         resp = requests.get(OFFICIALS_PAGE, headers=HEADERS, timeout=TIMEOUT)
         resp.raise_for_status()
         body = resp.text
