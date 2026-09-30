@@ -192,6 +192,19 @@ INSTANCES = {
             layer="us-house", roster="congress-roster.json",
             state="Minnesota"),
     ),
+    # CONGRESS ONLY, the same shape and the same reason as Minnesota above:
+    # Kentucky's two chambers name nobody, so it is in NO_LEGISLATURE_PAGE and
+    # carries no `legislature` key. Its U.S. House roster is real — 6 members,
+    # each with a district office, refreshed weekly — so that page ships as the
+    # siblings' do.
+    "ky": dict(
+        worksheet="ky/metro-worksheet.json",
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Kentucky"),
+    ),
 }
 
 
@@ -234,6 +247,19 @@ NO_LEGISLATURE_PAGE = {
         rosters=["mn-senate-members.json", "mn-house-members.json"],
         gap="mn-legislature-roster",
         why="Minnesota names nobody in either chamber, so every claim this page "
+            "makes about a member would be false. The page lands with the roster.",
+        date="2026-09-30",
+    ),
+    # Kentucky is the SECOND instance of the same case, which is what makes the
+    # reasoning above a rule rather than one state's exception: it registers both
+    # chambers, ships neither roster, and the page's every sentence is about the
+    # member. The roster-less chamber mode that would let both pages exist is
+    # still the right eventual fix and is still not a go-live change's subject.
+    "ky": dict(
+        chambers=["ky-senate", "ky-house"],
+        rosters=["ky-senate-members.json", "ky-house-members.json"],
+        gap="ky-legislature-roster",
+        why="Kentucky names nobody in either chamber, so every claim this page "
             "makes about a member would be false. The page lands with the roster.",
         date="2026-09-30",
     ),

@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Seven instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan and Minnesota. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Eight instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota and Kentucky. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -111,13 +111,21 @@ All 87 counties: townships and cities, school districts, ZIP codes, and the near
 - [Who is my U.S. representative?](https://districtry.com/mn/congress.html)
 - [Sources & data layers](https://districtry.com/mn/sources.html)
 
+## Kentucky
+
+All 120 counties: the county a point sits in, and the Kentucky Senate, House and U.S. House districts — with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the fiscal courts, and the Data gaps panel says why.
+
+- [Kentucky district lookup](https://districtry.com/ky/): 4 layers, all 120 counties.
+- [Who is my U.S. representative?](https://districtry.com/ky/congress.html)
+- [Sources & data layers](https://districtry.com/ky/sources.html)
+
 ## Where the answers come from
 
 Each instance's sources page carries one row per layer: what it answers, the publisher its boundary comes from, where the names on its card come from, and the ground it answers on. That page is generated from the same list that registers the layers, so a layer cannot ship without a row.
 
 Officeholder names are never guessed. Where no verifiable roster exists, a card links the official body instead of inventing a name, and what the project does not know is recorded rather than left blank — each instance ships a machine-readable list of its own gaps at `<instance>/data/app/coverage-gaps.json`.
 
-Sources last reverified between September 11, 2026 and September 29, 2026, per instance.
+Sources last reverified between September 11, 2026 and September 30, 2026, per instance.
 
 This is a civic reference tool and it disclaims legal precision. Confirm a district assignment with the government office that draws it before relying on it for anything official.
 
