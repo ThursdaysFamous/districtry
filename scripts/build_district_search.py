@@ -87,6 +87,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_county_status import ALL_COUNTIES, slug_of  # noqa: E402  (the county page slugs are the app's dispatch keys)
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INSTANCE = os.path.join(ROOT, "il")
@@ -399,7 +400,10 @@ def group_districts(features, key):
 
 # ---------- build (network + shapely) ----------
 def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
+    headers = {"User-Agent": UA, "Accept": "application/json"}
+    require_robots_once(url, UA, headers=headers,
+                        label="il-build-district-search")
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=120) as resp:
         return json.loads(resp.read().decode("utf-8"))
 

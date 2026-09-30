@@ -34,6 +34,24 @@ plus the local offset Bing meant. The milliseconds are absolute; the offset
 only says which local midnight, so the day is read off the offset local time.
 
 NOTHING PER-PERSON IS COLLECTED. Rows are aggregate query, page and day counts.
+
+WHY THIS FETCH IS NOT GATED ON robots.txt. Same argument as the Google half,
+scripts/gsc_fetch.py, and it is written out in both files rather than
+cross-referenced once, so neither can be read as an exemption somebody extended
+by analogy.
+
+robots.txt is a protocol for crawlers reading a site's public pages. This
+presents a Bing Webmaster Tools API key the operator was issued for districtry's
+own verified properties, and asks Bing for districtry's own search statistics
+through the API Microsoft documents for it. No page is read, no link followed, no
+url discovered -- GetUserSites returns the properties and the stats methods
+return the rows.
+
+THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never which host: every
+unauthenticated read of somebody else's public pages in this repository is gated,
+this reads our own account with our own key, and a blanket Disallow on an API
+host is about keeping crawlers out of other people's dashboards rather than about
+an account holder reading their own figures.
 """
 
 import datetime

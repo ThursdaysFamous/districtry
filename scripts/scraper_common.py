@@ -119,6 +119,21 @@ UA_ROSTER_BOT = "districtry.com roster bot (civic data; contact via site)"
 # licensed by a measurement at the page the scraper reads).
 UA_STDLIB_DEFAULT = "Python-urllib/%d.%d" % sys.version_info[:2]
 UA_ROSTER_COMPACT = "Mozilla/5.0 (compatible; districtry-roster/1.0)"
+
+
+# The same honest reading one stack over: what a bare `requests.get(url)` call
+# sends when the caller sets no headers. A dozen builders in this fleet fetch that
+# way, and a robots read has to be made with the SAME client that will crawl, so
+# the string is the library's own rather than a districtry token. It is a FUNCTION
+# and not a constant because `requests` is imported inside fetch() on purpose --
+# see the module docstring -- and a module-level constant would drag the
+# dependency into every stdlib-only caller of this file. No robots group names
+# this string either, so `*` binds, which is the answer either way; stating it
+# keeps the reading honest rather than changing the verdict.
+def ua_requests_default():
+    import requests  # function-local: see the module docstring
+    return "python-requests/%s" % requests.__version__
+
 UA_CIVIC_BOT = ("Mozilla/5.0 (compatible; districtry.com civic data bot; "
                 "+https://districtry.com/)")
 
@@ -283,10 +298,21 @@ def require_robots_allowed(url, user_agent, headers=None, label=None, verify=Non
 # carry it, and nothing thought to add the deferred hosts to a probe whose whole
 # purpose these entries name. That probe asks them now, so the next dispatch
 # answers this entry rather than measuring around it.
-ROBOTS_DEFERRED_HOSTS = {
-    "web.archive.org": "2026-09-30: robots.txt unreachable from this sandbox "
-                       "(connection reset, 3 reads + curl) — measure from a runner",
-}
+# EMPTY, AND THAT IS A MEASUREMENT RATHER THAN AN OMISSION. web.archive.org was
+# the one entry: its robots.txt reset the connection on every read from this
+# sandbox (3 reads through the shared reader plus a plain curl), and an
+# unreachable robots.txt disallows under RFC 9309 2.3.1.4, so wiring that reading
+# would have stopped four working weekly refreshes on a verdict about this
+# sandbox's route rather than about the Archive's policy. The entry named a
+# runner measurement as the fix it was waiting for, and that measurement was
+# taken on 2026-09-30: HTTP 404 — no policy, allow all — from the runner AND,
+# re-read the same day, from this sandbox too. Two vantages, one answer, so the
+# deferral is retired rather than re-dated, and every caller now asks.
+#
+# AN ENTRY HERE IS NOT A PERMISSION. It records that a host is fetched without a
+# robots read and why, and `require_robots_once` prints "NOT READ" for it, so the
+# next pass can tell a host nobody here can read from one nobody asked.
+ROBOTS_DEFERRED_HOSTS = {}
 
 
 def robots_deferred(url):
@@ -309,11 +335,12 @@ def require_robots_once(url, user_agent, headers=None, label=None, out=None,
     WHY THIS EXISTS RATHER THAN A HELPER PER SCRAPER. `require_robots_allowed`
     above is the seam that reads the policy, and every caller wired to it so far
     has wrapped it in the same eight lines: a module-level set of hosts already
-    asked, a `urlsplit` to get the host, the call, a line to stderr. Measured
-    2026-09-30 by `scripts/validate_robots_adoption.py`, 224 of this fleet's 266
-    fetching scripts are still unwired, so that wrapper was about to be written
-    another 224 times — and two copies of one question is where this fleet's
-    recurring defect starts. One copy, one reading.
+    asked, a `urlsplit` to get the host, the call, a line to stderr. When this was
+    written, `scripts/validate_robots_adoption.py` measured 224 of this fleet's
+    266 fetching scripts unwired, so that wrapper was about to be written another
+    224 times — and two copies of one question is where this fleet's recurring
+    defect starts. One copy, one reading. THE FIGURE MOVES WITH EVERY BATCH, so
+    read today's off that gate's own OK line rather than out of this paragraph.
 
     THE MEMO IS KEYED ON (host, user_agent), not on the host alone. Which client
     crawls decides which robots group binds, so one host asked with two clients
@@ -694,15 +721,23 @@ def _selftest():
             fails.append("a bundle must not split the memo: one host and one "
                          "client is one question")
 
+        # A STUBBED ENTRY, NEVER A LIVE ONE. This case used to name
+        # web.archive.org out of the table above, so retiring that entry for the
+        # right reason turned the selftest red -- a test that dies when the thing
+        # it tests is correctly fixed. The behaviour under test is the table's,
+        # not any one host's.
         _ROBOTS_ASKED.clear()
         del asked[:]
         log = io.StringIO()
+        reason = "selftest: stubbed deferral"
+        ROBOTS_DEFERRED_HOSTS["deferred.test"] = reason
         for _ in range(2):
             why = require_robots_once(
-                "https://web.archive.org/wayback/available", "token", out=log)
+                "https://deferred.test/a", "token", out=log)
+        del ROBOTS_DEFERRED_HOSTS["deferred.test"]
         if asked:
             fails.append("a deferred host must not reach the seam")
-        if why != ROBOTS_DEFERRED_HOSTS["web.archive.org"]:
+        if why != reason:
             fails.append("a deferred host should return its recorded reason")
         if len(log.getvalue().strip().splitlines()) != 1:
             fails.append("a deferred host should print its reason once")

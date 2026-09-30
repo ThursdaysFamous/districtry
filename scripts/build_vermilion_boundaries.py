@@ -82,7 +82,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import vtd_board_districts as V  # noqa: E402
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, make_fail  # noqa: E402  (shared machinery — do not fork)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DISTRICTS = os.path.join(REPO_ROOT, "il", "data", "app",
@@ -128,6 +128,8 @@ fail = make_fail("vermilion-boundaries")
 def fetch_service(url, shape_fn, key_fn):
     """The county's own districts, keyed by district number."""
     import requests
+    require_robots_once(url, V.HEADERS["User-Agent"], headers=V.HEADERS,
+                        label="il-build-vermilion-boundaries")
     resp = requests.get(url, headers=V.HEADERS, timeout=V.REQUEST_TIMEOUT,
                         params={"where": "1=1", "outFields": "*",
                                 "returnGeometry": "true", "outSR": "4326",
@@ -155,6 +157,8 @@ def fetch_blocks():
     import requests
     blocks, offset = [], 0
     while True:
+        require_robots_once(BLOCK_URL, V.HEADERS["User-Agent"], headers=V.HEADERS,
+                            label="il-build-vermilion-boundaries")
         resp = requests.get(BLOCK_URL, headers=V.HEADERS,
                             timeout=V.REQUEST_TIMEOUT, params={
                                 "where": "STATE='17' AND COUNTY='%s'" % COUNTY_FIPS,

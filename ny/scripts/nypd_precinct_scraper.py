@@ -39,6 +39,10 @@ import sys
 import time
 import urllib.error
 import urllib.request
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 SOCRATA = "https://data.cityofnewyork.us/resource/y76i-bdw7.json?$select=precinct&$limit=1000"
 PAGE = "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/{slug}-precinct.page"
@@ -77,6 +81,8 @@ def _get(url, timeout=45):
     token = os.environ.get("SOCRATA_APP_TOKEN")
     if token and "data.cityofnewyork.us" in url:
         headers["X-App-Token"] = token
+    require_robots_once(url, UA,
+                        headers=headers, label="ny-nypd-precinct-scraper")
     req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.read().decode("utf-8", "replace")

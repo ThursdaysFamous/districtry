@@ -56,6 +56,19 @@ the GH_TOKEN env var when present.
 Usage:
     python3 scripts/fleet_status.py [--manifest metros.json]
         [--report fleet-status.md] [--status-file status.txt]
+
+NOT GATED ON robots.txt: AUTHENTICATED READ OF THIS PROJECT'S OWN REPOSITORY.
+Every request goes to api.github.com carrying this project's own token, asking
+GitHub about districtry's own workflow runs and pull requests through the API
+GitHub documents for exactly that. No page is read and no link is followed.
+api.github.com's robots.txt disallows everything, which is a rule for crawlers
+wandering the web interface and is not GitHub telling an account holder not to
+read their own repository through the API they issued the token for.
+
+THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never which host: an
+unauthenticated read of a page on github.com would be gated in full. The
+argument is made here rather than by pointing at a sibling so that it cannot
+be applied to a different fetch by analogy.
 """
 
 import argparse

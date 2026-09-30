@@ -35,7 +35,7 @@ import re
 import sys
 
 import requests
-from scraper_common import make_fail, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, make_fail, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pypdf
@@ -124,6 +124,8 @@ def parse_notice(pdf_bytes):
 
 def main():
     check = "--check" in sys.argv
+    require_robots_once(NOTICE_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-carroll-precinct-polling")
     resp = requests.get(NOTICE_URL, headers=HEADERS, timeout=120)
     resp.raise_for_status()
     if not resp.content.startswith(b"%PDF"):

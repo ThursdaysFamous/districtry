@@ -68,7 +68,7 @@ import requests
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import aia_bundle  # noqa: E402 (shared machinery — do not fork)
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://www.vercounty.org"
 SOURCE_URL = BASE + "/county-board/county-board-members/"
@@ -112,6 +112,8 @@ def fetch(url, verify):
     last = None
     for attempt in range(1, MAX_RETRIES + 1):
         try:
+            require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                                label="il-vermilion-county-board-scraper")
             resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT,
                                 verify=verify)
         except requests.RequestException as exc:

@@ -87,7 +87,7 @@ import sys
 from datetime import datetime, timezone
 
 import requests
-from scraper_common import UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://www.cookcountyclerkil.gov/api"
 JURISDICTIONS_URL = BASE + "/Jurisdiction/GetByJurisdictionType?id=MUNIS&language=en"
@@ -182,6 +182,8 @@ MIN_TOWNSHIP_RECORDS = 250
 
 
 def fetch_json_requests(url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-cook-municipal-officials-scraper")
     resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     return resp.json()
@@ -194,6 +196,10 @@ def fetch_json_playwright(url):
     same-origin to the directory page, so a browser fetch() inherits the
     clearance cookie the page load earns.
     """
+    require_robots_once(DIRECTORY_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-cook-municipal-officials-scraper")
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-cook-municipal-officials-scraper")
     from playwright.sync_api import sync_playwright
 
     with sync_playwright() as p:

@@ -110,7 +110,7 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pdfplumber
@@ -184,6 +184,8 @@ MIN_WARD_SEATS = 18
 def discover_pdf_url(session, warnings):
     """Read the handbook link off the clerk page; fall back to the known id."""
     try:
+        require_robots_once(CLERK_PAGE, HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-henry-municipal-officials-scraper")
         resp = session.get(CLERK_PAGE, headers=HEADERS, timeout=REQUEST_TIMEOUT)
         resp.raise_for_status()
     except Exception as exc:  # noqa: BLE001 — discovery is best-effort
@@ -200,6 +202,8 @@ def discover_pdf_url(session, warnings):
 
 
 def fetch_pdf(session, url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-henry-municipal-officials-scraper")
     resp = session.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     if not resp.content.startswith(b"%PDF"):

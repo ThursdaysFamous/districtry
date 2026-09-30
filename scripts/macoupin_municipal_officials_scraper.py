@@ -83,7 +83,7 @@ import sys
 import time
 
 import requests
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
 
 REST = "https://www.macoupinvotes.gov/ce/mobile/seam/resource/rest/voter/"
 # The callback the page itself uses, sent verbatim so the request this makes is
@@ -245,6 +245,8 @@ def strip_jsonp(text, url):
 
 def get_json(session, url):
     try:
+        require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-macoupin-municipal-officials-scraper")
         resp = session.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
         resp.raise_for_status()
     except Exception as exc:  # noqa: BLE001 — any failure is a refusal to write

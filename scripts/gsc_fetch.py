@@ -26,6 +26,29 @@ already withholds rare queries that could identify an individual searcher —
 which is also why the clicks and impressions here will not reconcile exactly
 with the totals shown in the Search Console UI, and why the report says so
 rather than quietly presenting a subset as the whole.
+
+WHY THIS FETCH IS NOT GATED ON robots.txt, argued here rather than in the gate
+so it cannot be applied by analogy. This project reads robots.txt before the
+first fetch of a host, and `scripts/validate_robots_adoption.py` enforces that
+every fetching script does -- with this file named in its DECLARED_EXEMPT table,
+pointing at these paragraphs.
+
+The rule is a protocol for CRAWLERS reading a site's public pages. This fetch is
+not that. It presents a Google service-account credential that the operator
+granted to districtry's own Search Console properties, and asks that service for
+districtry's own traffic statistics, through the API Google documents for exactly
+that purpose. Nothing here reads a page, follows a link or discovers a url: the
+properties come from sites.list and the rows come from searchanalytics.query.
+
+THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never which host. Every other fetch
+in this repository is an unauthenticated read of somebody else's public pages,
+and the rule binds those in full -- including a page on a Google host, if one
+were ever read that way. A blanket Disallow on an API host keeps search engines
+out of other people's dashboards; it is not a service telling an account holder
+not to read their own numbers with the key that service issued them.
+
+The sibling half of this pair, scripts/bing_fetch.py, is exempt for the same
+reason and carries the same argument.
 """
 
 import datetime

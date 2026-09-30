@@ -30,6 +30,10 @@ import time
 import urllib.parse
 
 import requests
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # ia/
 CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache")
@@ -44,6 +48,8 @@ EXPECT_COUNTIES = 99
 
 
 def fetch(url):
+    require_robots_once(url, HEADERS["User-Agent"],
+                        headers=HEADERS, label="ia-ia-county-directory-scraper")
     r = requests.get(url, headers=HEADERS, timeout=30)
     r.raise_for_status()
     return r.text

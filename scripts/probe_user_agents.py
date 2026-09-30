@@ -180,6 +180,15 @@ SKIP_HOST_RE = re.compile(r"""(?x)
   | ^(www\.)?(districtry\.com|chidistricts\.com)$
   | ^(www\.)?(schema\.org|w3\.org|creativecommons\.org|opensource\.org)$
   | ^(localhost|example\.com|example\.org|example\.gov)$
+    # A LOOPBACK ADDRESS IS NEVER SOMEBODY'S SITE. Two files in this tree start
+    # an HTTP server of their own and fetch it -- build_district_search.py serves
+    # the app to a headless browser, selftest_scraper_common.py serves its own
+    # fixture -- so a user-agent verdict about 127.0.0.1 would be a verdict about
+    # this repository's own test harness. It is skipped for the same reason as
+    # `localhost`, which was already here: the two are one address written two
+    # ways, and listing only the name left the number reading as an unmeasured
+    # third-party host in every bucketing that consults this pattern.
+  | ^(127\.0\.0\.1|\[::1\]|::1)$
     # RFC 2606 / RFC 6761 RESERVE THESE FOUR TLDs SO THEY CAN NEVER RESOLVE, and
     # this repo uses them on purpose: a worksheet with no Socrata portal sets a
     # `.invalid` host, and a scraper's offline selftest drives its own fetch

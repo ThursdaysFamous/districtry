@@ -60,6 +60,7 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DIR = os.path.join(ROOT, "il", "data", "app", "population")
@@ -80,6 +81,8 @@ def fetch(url, params):
     q = url + "/query?" + urllib.parse.urlencode(params)
     for attempt in range(4):
         try:
+            require_robots_once(q, UA,
+                                headers={"User-Agent": UA}, label="il-build-block-population")
             req = urllib.request.Request(q, headers={"User-Agent": UA, "Accept": "application/json"})
             with urllib.request.urlopen(req, timeout=180) as resp:
                 data = json.loads(resp.read().decode("utf-8"))

@@ -178,12 +178,18 @@ PARTITION_SEED = 2026
 # starts). It imports nothing at module scope that needs the network.
 sys.path.insert(0, HERE)
 import build_ny_civil_boundaries as CIVIL  # noqa: E402
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 VK = CIVIL.VALIDATION_KEY
 
 
 def fetch_json(url, params, timeout=180):
     q = url + ("&" if "?" in url else "?") + urllib.parse.urlencode(params)
+    require_robots_once(q, UA,
+                        headers={"User-Agent": UA}, label="ny-build-tompkins-legislature")
     req = urllib.request.Request(q, headers={"User-Agent": UA, "Accept": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return json.loads(resp.read().decode("utf-8"))

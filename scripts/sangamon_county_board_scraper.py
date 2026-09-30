@@ -68,7 +68,7 @@ import sys
 import time
 
 import requests
-from scraper_common import UA_CHROME_X11_120  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CHROME_X11_120  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://sangamonil.gov/departments/a-c/county-board/districts/members/district-%d"
 SOURCE_URL = "https://sangamonil.gov/departments/a-c/county-board/districts"
@@ -236,6 +236,8 @@ def main():
     # One extra fetch, read only to tell an empty seat from a broken parse.
     vacant = None
     try:
+        require_robots_once(MEMBERS_URL, HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-sangamon-county-board-scraper")
         resp = session.get(MEMBERS_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT)
         resp.raise_for_status()
         vacant = vacancies_from_index(resp.text)
@@ -254,6 +256,8 @@ def main():
     for district in DISTRICTS:
         url = BASE % district
         try:
+            require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                                label="il-sangamon-county-board-scraper")
             resp = session.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
             resp.raise_for_status()
         except requests.RequestException as exc:

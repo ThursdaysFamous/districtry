@@ -79,6 +79,7 @@ import urllib.request
 
 from comptroller_afr import (  # noqa: E402  (shared machinery — do not fork)
     PACE, SEARCH_FORM, WAREHOUSE, contact_block, enumerate_county, new_session)
+from scraper_common import require_robots_once, UA_STDLIB_DEFAULT  # noqa: E402  (FLEET_SHARED)
 
 # The same service il/index.html reads, and the same layer indices. A layer
 # that moves breaks the app's own cards too, so this failing is the right
@@ -198,6 +199,7 @@ def service_district_names():
                                         "returnGeometry": "false", "f": "json"})
         url = (K3_QUERY % index) + "?" + query
         try:
+            require_robots_once(url, UA_STDLIB_DEFAULT, label="il-kankakee-district-officials-scraper")
             with urllib.request.urlopen(url, timeout=90) as fh:
                 payload = json.load(fh)
         except Exception as exc:  # noqa: BLE001

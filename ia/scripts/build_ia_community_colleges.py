@@ -92,6 +92,10 @@ import argparse
 import json
 import os
 import sys
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once, ua_requests_default  # noqa: E402  (FLEET_SHARED)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # ia/
 OUT_FILE = os.path.join(REPO_ROOT, "data", "app", "ia-community-colleges.json")
@@ -112,6 +116,7 @@ REQUEST_TIMEOUT = 60
 
 def fetch_json(url, params):
     import requests  # noqa: PLC0415 -- only this module's fetchers need network
+    require_robots_once(url, ua_requests_default(), label="ia-build-ia-community-colleges")
     resp = requests.get(url, params=params, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     data = resp.json()

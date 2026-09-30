@@ -109,7 +109,7 @@ import re
 import subprocess
 import sys
 import tempfile
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, make_fail  # noqa: E402  (shared machinery — do not fork)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
@@ -275,6 +275,8 @@ def read_districts(source_dir):
 def fetch_tiger_county():
     requests = need("requests")
     from shapely.geometry import shape
+    require_robots_once(TIGERWEB, "districtry jodaviess builder (+https://districtry.com/il/)",
+                        headers={"User-Agent": "districtry jodaviess builder (+https://districtry.com/il/)"}, label="il-build-jodaviess-board-districts")
     resp = requests.get(TIGERWEB, params={
         "where": "STATE='17' AND COUNTY='%s'" % COUNTY_FIPS,
         "outFields": "NAME,GEOID", "returnGeometry": "true",

@@ -42,6 +42,44 @@ tries a second client on a host that answered the first: that is the Minnesota
 measurement of 2026-09-29, where probing a browser string on a host already
 serving the token got this address redirected for every request afterwards.
 
+A `refuse` VERDICT OF STATUS `unreachable` IS NOT A POLICY AND MUST NOT BE WIRED
+ON. Measured on the first full run, 2026-09-30, 16 of the 58 non-allowing hosts
+answered nothing rather than a refusal, and most of those were TIMEOUTS from the
+runner on hosts that serve this sandbox a policy within a second --
+www.wicourts.gov, docs.legis.wisconsin.gov, mapservices.legis.wisconsin.gov,
+gisservices.its.ny.gov, gis.lasallecounty.org, librarylearning.org,
+www.revenue.wi.gov among them. A seventeenth was 127.0.0.1, which was never a
+crawl subject at all -- a loopback server this repository starts itself, read at a
+literal `%d` port template with nothing listening -- and it is out of the record
+now, with the reason in the record's own summary. It is the same defect as the
+timeouts in miniature and the easiest to see: the row said a host refuses us when
+what happened was that nobody answered. Three attempts apart, the timeout is the runner's
+route rather than the host's answer, and this project has already paid once for
+treating an unreadable read as a decision: four hosts whose only symptom was an
+incomplete TLS chain read as refusing while their pages were being fetched
+successfully in the same week. So a wiring pass reads `served` with a matching
+Disallow as a refusal, and takes an `unreachable` as a question to re-measure --
+from both vantages, and with the client that crawls.
+
+www.colesco.illinois.gov IS THE ONE TO LOOK AT FIRST AND IS THE ONE CASE THIS
+SANDBOX CANNOT ANSWER. Its entry is `unable to get local issuer certificate`
+although PINNED_CHAINS covers it, so on the runner either the pin is not reaching
+this read or that host needs a different intermediate than the three beside it --
+and a re-read from here settles neither, because this environment's egress
+gateway terminates TLS and re-issues every certificate under its own CA (measured
+2026-09-30: the leaf served here for that host has issuer `O = Anthropic,
+CN = Egress Gateway SDS Issuing CA (production)`). So a sandbox SSLError on a
+pinned host is this proxy and says nothing about the chain the host serves, and a
+sandbox SUCCESS would say nothing either, since the proxy's own CA is what
+verified it. THE RE-MEASUREMENT HAS TO RUN ON THE RUNNER, where the pin was
+applied and the failure was recorded.
+
+SOME RECORDED HOSTS ARE NOT CRAWL SUBJECTS AT ALL and their refusals mean nothing
+here: photon.komoot.io and www.komoot.com are the geocoder a READER's browser
+calls, and districtry.goatcounter.com is this site's own analytics. They are in
+the inventory because they are url literals in app files, and a policy aimed at
+crawlers has nothing to say about a request a person's browser makes.
+
 IT FETCHES ROBOTS.TXT AND NOTHING ELSE. One request per host, no page, no
 retry beyond the shared reader's own, and a host stating a Crawl-delay is not
 paced because a delay inside a file cannot govern the fetch that reads it.
@@ -161,6 +199,16 @@ def client_for(verdict):
     return "token", sc.UA_ROSTER_BOT, {"User-Agent": sc.UA_ROSTER_BOT}
 
 
+# Hosts this tree crawls that `probe_user_agents.SKIP_HOST_RE` leaves out — see
+# subject() for why the two readers differ here. Each one is fetched by a
+# scraper, so each one's robots.txt is a question about our own crawling.
+ALWAYS_ASKED = {
+    "web.archive.org": "archived county pages, read as a fallback rung by "
+                       "lake/mchenry/kendall/shelby and mi_detroit",
+    "archive.org": "the wayback availability API those rungs ask first",
+}
+
+
 def subject(inventory):
     """Every host the tree fetches, which is what the robots question is about.
 
@@ -185,9 +233,22 @@ def subject(inventory):
     measure it from a runner -- and this probe IS that runner, so leaving it out
     kept the one host the deferral was waiting on out of the measurement it was
     waiting for. It is in the inventory or it is not, and either way it is asked.
+
+    AND SO ARE THE INTERNET ARCHIVE'S TWO HOSTS, WHICH THE INVENTORY SKIPS ON
+    PURPOSE AND THIS QUESTION MUST NOT. `probe_user_agents.SKIP_HOST_RE` excludes
+    them along with GitHub, the package indexes, the CDNs and the certificate
+    authorities: infrastructure a user-agent measurement has nothing to say
+    about. But five scrapers CRAWL the Archive for a page a county's own site
+    would not serve, and robots.txt binds a crawl of it exactly as it binds a
+    crawl of a county. Until 2026-09-30 they were in this subject only because
+    web.archive.org happened to be DEFERRED, so retiring that deferral for the
+    right reason took the host out of the measurement -- a subject that depended
+    on a backlog entry rather than on what the tree fetches. Named here instead,
+    with that reason, so the record keeps describing the crawl.
     """
     hosts = set(inventory)
     hosts.update(sc.ROBOTS_DEFERRED_HOSTS)
+    hosts.update(ALWAYS_ASKED)
     return sorted(hosts)
 
 

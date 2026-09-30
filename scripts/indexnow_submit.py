@@ -21,6 +21,17 @@ Usage (run only AFTER a deploy where the key file is already live):
 Good times to run it: the first time the key file goes live (initial indexing),
 and after any deploy that changes page content (e.g. a weekly roster refresh).
 Exits non-zero if IndexNow rejects the submission.
+
+NOT GATED ON robots.txt, BECAUSE NOTHING IS BEING READ. This SUBMITS
+districtry's own addresses to an ingestion endpoint that exists to receive
+them, authenticated by a key published on districtry's own domain -- the
+direction is outbound, and the thing being handed over is a list of our own
+urls. robots.txt tells a crawler which of a site's pages it may READ; there is
+no page here to read and no content of api.indexnow.org's that this wants.
+
+THE TEST IS WHOSE CONTENT AND WHICH DIRECTION, never which host. An
+unauthenticated read of a page on that host would be gated in full, and so
+would following any url this endpoint returned.
 """
 import json
 import sys

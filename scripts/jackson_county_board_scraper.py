@@ -45,7 +45,7 @@ import sys
 import time
 
 import requests
-from scraper_common import make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 BOARD_URL = "https://jacksoncounty-il.gov/158/County-Board"
 BASE = "https://jacksoncounty-il.gov"
@@ -73,6 +73,8 @@ fail = make_fail("jackson-board-scraper")
 
 
 def get(url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-jackson-county-board-scraper")
     resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
     resp.raise_for_status()
     return resp.text
