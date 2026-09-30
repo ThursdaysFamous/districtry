@@ -12306,8 +12306,19 @@ function initNycExplorer() {
       var clerk = result.clerk;
       var phoneOnPerson = false;
       if (clerk && clerk.name) {
-        // appointed, not elected — the badge note keeps the card honest
-        var person = { name: String(clerk.name), badge: "County Clerk", note: "appointed" };
+        // appointed, not elected — the badge note keeps the card honest.
+        //
+        // TWO PUBLISHERS FEED THIS ONE ROW and the note says which named this
+        // person. The courts' own directory named two boroughs of five and has
+        // been behind a managed challenge since 2026-09-26; the other three
+        // names come from the City of New York's own staff directory, the
+        // Green Book (Adam's ruling of 2026-09-29: fill an absence, never
+        // overwrite a name). A reader who can see the primary link says "NY
+        // Courts" would otherwise read all five as the courts' answer.
+        var note = clerk.nameSource === "greenbook"
+          ? "appointed · named in the NYC Green Book"
+          : "appointed";
+        var person = { name: String(clerk.name), badge: "County Clerk", note: note };
         if (clerk.phone) { person.phone = String(clerk.phone); phoneOnPerson = true; }
         wrap.appendChild(renderPersonRows([person]));
       }
