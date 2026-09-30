@@ -105,6 +105,9 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro iowa --out ia/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro michigan --out mi/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro minnesota --out mn/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro indiana --out in/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro northcarolina --out nc/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro kentucky --out ky/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -198,6 +201,26 @@ jobs:
       - name: IA gap outlines match the counties its gap records name
         if: ${{ !cancelled() }}
         run: python3 ia/scripts/build_ia_gap_outlines.py --check
+
+      # THE TRIBAL LAND-TO-GOVERNMENT JOIN. No publisher provides this join: the
+      # Census draws the land and names no government, the Bureau of Indian
+      # Affairs names the governments and draws no land, and matching by name
+      # leaves 40 of 312 reservations unmatched. So the table is written by hand
+      # and both of its failure directions are checked — a piece of land with no
+      # entry (needs the Census, so it runs on --measure, not here) and an entry
+      # naming a government the Bureau does not carry (offline, here). The
+      # reader's own selftest covers the two readings this project has already
+      # got wrong: a shared boundary read as an overlap, and an ArcGIS error
+      # envelope read as "no features". pyproj and shapely are for the area
+      # measurements only; the two --check gates are stdlib.
+      - name: Tribal areas reader and its land-to-government table
+        if: ${{ !cancelled() }}
+        run: |
+          pip install -c scripts/requirements.txt shapely pyproj
+          python3 scripts/tribal_areas.py --selftest
+          python3 scripts/bia_tribal_governments.py --check
+          python3 scripts/validate_tribal_join.py --selftest
+          python3 scripts/validate_tribal_join.py --check
 
       # districtry/tokens/districtry.tokens.css is the ONE source of the brand
       # surface, and this is what makes that true rather than aspirational. The
@@ -1482,6 +1505,9 @@ jobs:
           python3 ia/scripts/validate_index.py ia/index.html
           python3 mi/scripts/validate_index.py mi/index.html
           python3 mn/scripts/validate_index.py mn/index.html
+          python3 in/scripts/validate_index.py in/index.html
+          python3 nc/scripts/validate_index.py nc/index.html
+          python3 ky/scripts/validate_index.py ky/index.html
 
       # ONE server, EVERY instance. Until R3 this ran il alone, which is what
       # the repo had — ca and ny were separate repos with their own CI. They
@@ -1518,6 +1544,9 @@ jobs:
           BASE_URL=http://localhost:8000/ia/  node ia/scripts/smoke_test.mjs  || status=1
           BASE_URL=http://localhost:8000/mi/  node mi/scripts/smoke_test.mjs  || status=1
           BASE_URL=http://localhost:8000/mn/  node mn/scripts/smoke_test.mjs  || status=1
+          BASE_URL=http://localhost:8000/in/  node in/scripts/smoke_test.mjs  || status=1
+          BASE_URL=http://localhost:8000/nc/  node nc/scripts/smoke_test.mjs  || status=1
+          BASE_URL=http://localhost:8000/ky/  node ky/scripts/smoke_test.mjs  || status=1
           # The root landing page and — the part that matters — its forwarding
           # guard, which is what keeps every already-distributed share link and
           # embed snippet built from the OLD root URL reaching the app. A regex

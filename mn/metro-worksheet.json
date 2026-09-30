@@ -147,9 +147,171 @@
         "people": "Not yet shipped — same as the Senate above; the card links the Minnesota House's own member directory. Recorded as the coverage gap mn-legislature-roster.",
         "applies": "Minnesota — statewide."
       }
+    },
+    {
+      "id": "school-district-unified",
+      "label": "School District (Unified)",
+      "group": "schools",
+      "area_rank": 5,
+      "rank_note": "322 districts covering almost all of Minnesota, live from TIGERweb (no data/app file) — 693 km2 mean feature area, the largest of the three school tilings",
+      "source": {
+        "answers": "The unified (every-grade) school district covering the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 322 features for Minnesota, measured 2026-09-29",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. Minnesota school boards are elected and no statewide roster of their members was found, so the card names the district and links the Minnesota Department of Education. Recorded as the coverage gap mn-school-board-members.",
+        "applies": "Minnesota — statewide."
+      }
+    },
+    {
+      "id": "zip-code",
+      "label": "ZIP Code",
+      "group": "geography",
+      "area_rank": 6,
+      "rank_note": "1,385 ZIP Code Tabulation Areas intersecting Minnesota's envelope, live from TIGERweb (no data/app file) — 250 km2 mean feature area, between a school district and a township",
+      "source": {
+        "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the delivery routes sharing a ZIP code, not a postal boundary.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). A ZCTA has NO STATE FIELD because it can cross a state line, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='27'; 1,385 features in Minnesota's envelope, measured 2026-09-29",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND THE CARD SAYS SO IN AS MANY WORDS: a ZIP code elects nobody. It is a postal delivery grouping the Census approximates as an area, and the card states that rather than leaving a reader to wonder why no name appears.",
+        "applies": "Minnesota — statewide."
+      }
+    },
+    {
+      "id": "school-district-elementary",
+      "label": "School District (Elementary)",
+      "group": "schools",
+      "area_rank": 7,
+      "rank_note": "8 districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points",
+      "source": {
+        "answers": "The elementary-tiling school district covering the point, in the eight places Minnesota has one.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 8 features for Minnesota, measured 2026-09-29. SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the same span as a unified district, so the card prints the recorded grades and the tiling and claims nothing about which grades the district operates — recorded as the coverage gap mn-elementary-district-grades",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, for the reason the unified layer's row gives. Recorded as the coverage gap mn-school-board-members.",
+        "applies": "Minnesota — the eight districts the Census places in this tiling; the card is correctly empty everywhere else."
+      }
+    },
+    {
+      "id": "county-subdivision",
+      "label": "Township or City",
+      "group": "geography",
+      "area_rank": 8,
+      "rank_note": "2,762 records tiling the state, live from TIGERweb (no data/app file) — 1,797 townships, 901 city placeholder records for 851 distinct cities (50 of which cross a county line), 59 unorganized territories, 2 unorganized survey townships, and 3 'not defined' records that are Lake Superior water",
+      "source": {
+        "answers": "The organized town covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 2,762 features for Minnesota, measured 2026-09-29",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. A Minnesota town elects three supervisors to three-year terms plus a clerk and a treasurer in alternate years (Minn. Stat. 367.03, read at revisor.mn.gov on 2026-09-29), and no statewide roster of those officers was found, so the card names nobody. Recorded as the coverage gap mn-township-officers. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.",
+        "applies": "Minnesota — statewide."
+      }
+    },
+    {
+      "id": "municipality",
+      "label": "City",
+      "group": "geography",
+      "area_rank": 9,
+      "rank_note": "856 incorporated places, live from TIGERweb (no data/app file) — every one a city, with no village among them, at a 14.7 km2 mean feature area",
+      "source": {
+        "answers": "The city covering the point, if any. Most of Minnesota's land is township or unorganized territory, where the card is correctly empty.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 856 features for Minnesota, measured 2026-09-29, ALL of them carrying the Census's city descriptor — there is no village among them, which is why this card has no type row where Michigan's needs one",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. A statutory city elects a mayor and council members, with a clerk and treasurer or a combined clerk-treasurer depending on its plan (Minn. Stat. 412.02, read at revisor.mn.gov on 2026-09-29); a home rule charter city's own charter governs instead. No statewide roster of Minnesota's mayors and council members was found, so the card names nobody. Recorded as the coverage gap mn-municipal-officeholders.",
+        "applies": "Minnesota — statewide, answering only inside an incorporated city."
+      }
+    },
+    {
+      "id": "school-district-secondary",
+      "label": "School District (Secondary)",
+      "group": "schools",
+      "area_rank": 10,
+      "rank_note": "1 district, live from TIGERweb (no data/app file) — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota",
+      "source": {
+        "answers": "The secondary school district covering the point, in the one place Minnesota has one.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime (no builder script, no committed data/app file); exactly 1 feature for Minnesota, measured 2026-09-29 — 'Park Rapids Public School District in Pine Point (9-12)'. It ships rather than being dropped because it IS the answer where it applies: without it a reader in Pine Point would be shown an elementary district and no high-school district at all",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, for the reason the unified layer's row gives. Recorded as the coverage gap mn-school-board-members.",
+        "applies": "Minnesota — the single district the Census publishes in this tiling; the card is correctly empty everywhere else."
+      }
+    },
+    {
+      "id": "police-station",
+      "label": "Police Station",
+      "group": "safety",
+      "area_rank": 11,
+      "rank_note": "694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
+      "source": {
+        "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 53 (Police Stations), queried live at runtime by a bounding envelope through a paged loader (no builder script, no committed data/app file). Public domain. 694 points in Minnesota's envelope, measured 2026-09-29 — 448 in Minnesota and the rest in Wisconsin (200), South Dakota (24), North Dakota (15), Michigan (4) and Iowa (3), which is deliberate because nearest is a proximity fact. Name, address, city, state and ZIP are populated on every one",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
+          }
+        ],
+        "people": "NOT AN OFFICEHOLDER LAYER, AND NOT A JURISDICTION EITHER. The card names buildings and says outright that which agency has jurisdiction at a point — a city police department, a county sheriff or the State Patrol — is a different question that is not published as a boundary this app can read.",
+        "applies": "Minnesota — statewide, plus points across each border, because nearest is a proximity fact."
+      }
+    },
+    {
+      "id": "fire-station",
+      "label": "Fire & EMS Station",
+      "group": "safety",
+      "area_rank": 12,
+      "rank_note": "1,484 fire and EMS station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
+      "source": {
+        "answers": "The three nearest fire and EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 51 (Fire Stations/EMS Stations), queried live at runtime by a bounding envelope through the same paged loader. Public domain. 1,484 points in Minnesota's envelope, measured 2026-09-29 — 961 in Minnesota, 376 in Wisconsin, 77 in South Dakota, 50 in North Dakota and 10 each in Iowa and Michigan. THE PAGING IS WHY THIS IS TRUSTWORTHY: the service caps a response and answers HTTP 200 with exceededTransferLimit rather than an error, so a truncated set looks exactly like a complete one",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
+          }
+        ],
+        "people": "NOT AN OFFICEHOLDER LAYER, AND NOT A JURISDICTION EITHER. Minnesota fire protection runs on municipal departments and joint-powers contracts, so the nearest station building is not the department that would answer a call, and the card says so.",
+        "applies": "Minnesota — statewide, plus points across each border, because nearest is a proximity fact."
+      }
+    },
+    {
+      "id": "post-office",
+      "label": "Post Office",
+      "group": "geography",
+      "area_rank": 13,
+      "rank_note": "1,199 post-office points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers rather than by feature area",
+      "source": {
+        "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 38 (Post Offices), queried live at runtime by a bounding envelope through the same paged loader. Public domain. 1,199 points in Minnesota's envelope, measured 2026-09-29 — 793 in Minnesota, 292 in Wisconsin, 63 in South Dakota, 34 in North Dakota, 10 in Iowa and 7 in Michigan. THE SERVICE LOWERCASES THE ATTRIBUTE KEYS IT RETURNS while naming them in capitals in its own field list, which is why every read goes through the app's case-insensitive findPropCI",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
+          }
+        ],
+        "people": "NOT AN OFFICEHOLDER LAYER. A post office elects nobody; the card names buildings and their addresses.",
+        "applies": "Minnesota — statewide, plus points across each border, because nearest is a proximity fact."
+      }
     }
   ],
-  "min_register_layer": 4,
+  "min_register_layer": 13,
   "anchor_point": {
     "lat": 44.9744,
     "lng": -93.2655,

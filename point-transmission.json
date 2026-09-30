@@ -156,6 +156,52 @@
         "zip-code"
       ]
     },
+    "in": {
+      "layers_sending_point": 4,
+      "layers": [
+        "county-subdivision",
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_holding_hook_but_silent": [],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 2,
+      "layer_ids": [
+        "county",
+        "county-subdivision",
+        "fire-station",
+        "in-house",
+        "in-senate",
+        "municipality",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
+    "ky": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "ky-house",
+        "ky-senate",
+        "us-house"
+      ]
+    },
     "mi": {
       "layers_sending_point": 0,
       "layers": [],
@@ -192,19 +238,67 @@
       ]
     },
     "mn": {
-      "layers_sending_point": 0,
-      "layers": [],
+      "layers_sending_point": 6,
+      "layers": [
+        "county-subdivision",
+        "municipality",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "zip-code"
+      ],
       "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
-        "load"
+        "load",
+        "load",
+        "loadZctas"
       ],
-      "atpoint_hooks_fired": 0,
+      "atpoint_hooks_fired": 2,
       "layer_ids": [
         "county",
+        "county-subdivision",
+        "fire-station",
         "mn-house",
         "mn-senate",
-        "us-house"
+        "municipality",
+        "police-station",
+        "post-office",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
+    "nc": {
+      "layers_sending_point": 4,
+      "layers": [
+        "county-subdivision",
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_holding_hook_but_silent": [],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 2,
+      "layer_ids": [
+        "county",
+        "county-subdivision",
+        "fire-station",
+        "municipality",
+        "nc-house",
+        "nc-senate",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
       ]
     },
     "ny": {

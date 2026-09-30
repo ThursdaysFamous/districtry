@@ -1,0 +1,502 @@
+{
+  "1": {
+    "name": "Jerry Tillett",
+    "party": "Republican",
+    "email": "jerry.tillett@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/1003",
+    "capitolOffice": [
+      "Legislative Building, Rm. 629",
+      "Phone: (919) 715-8293"
+    ]
+  },
+  "2": {
+    "name": "Norman Sanderson",
+    "party": "Republican",
+    "email": "norman.sanderson@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/375",
+    "capitolOffice": [
+      "Legislative Building, Rm. 309",
+      "Phone: (919) 733-5706"
+    ]
+  },
+  "3": {
+    "name": "Bob Brinson",
+    "party": "Republican",
+    "email": "bob.brinson@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/448",
+    "capitolOffice": [
+      "Legislative Building, Rm. 2115",
+      "Phone: (919) 733-5621"
+    ]
+  },
+  "4": {
+    "name": "Buck Newton",
+    "party": "Republican",
+    "email": "buck.newton@ncleg.gov",
+    "url": "https://www.ncga.state.nc.us/gascripts/members/viewMember.pl?sChamber=Senate&nUserID=362",
+    "capitolOffice": [
+      "Legislative Building, Rm. 308",
+      "Phone: (919) 733-5878"
+    ]
+  },
+  "5": {
+    "name": "Kandie Smith",
+    "party": "Democratic",
+    "email": "kandie.smith@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/447",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1113",
+      "Phone: (919) 715-8363"
+    ]
+  },
+  "6": {
+    "name": "Michael Lazzara",
+    "party": "Republican",
+    "email": "michael.lazzara@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/426",
+    "capitolOffice": [
+      "Legislative Building, Rm. 300-C",
+      "Phone: (919) 715-3034"
+    ]
+  },
+  "7": {
+    "name": "Michael Lee",
+    "party": "Republican",
+    "email": "michael.lee@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/387",
+    "capitolOffice": [
+      "Legislative Building, Rm. 300-B",
+      "Phone: (919) 715-2525"
+    ]
+  },
+  "8": {
+    "name": "Bill Rabon",
+    "party": "Republican",
+    "email": "bill.rabon@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/303",
+    "capitolOffice": [
+      "Legislative Building, Rm. 2010",
+      "Phone: (919) 733-5963"
+    ]
+  },
+  "9": {
+    "name": "Brent Jackson",
+    "party": "Republican",
+    "email": "brent.jackson@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/281",
+    "capitolOffice": [
+      "Legislative Building, Rm. 2022",
+      "Phone: (919) 733-5705"
+    ]
+  },
+  "10": {
+    "name": "Benton Sawrey",
+    "party": "Republican",
+    "email": "benton.sawrey@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/445",
+    "capitolOffice": [
+      "Legislative Building, Rm. 521",
+      "Phone: (919) 715-3040"
+    ]
+  },
+  "11": {
+    "name": "Lisa Barnes",
+    "party": "Republican",
+    "email": "lisa.barnes@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/427",
+    "capitolOffice": [
+      "Legislative Building, Rm. 628",
+      "Phone: (919) 715-3030"
+    ]
+  },
+  "12": {
+    "name": "Jim Burgin",
+    "party": "Republican",
+    "email": "jim.burgin@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/412",
+    "capitolOffice": [
+      "Legislative Building, Rm. 620",
+      "Phone: (919) 733-5748"
+    ]
+  },
+  "13": {
+    "name": "Lisa Grafstein",
+    "party": "Democratic",
+    "email": "lisa.grafstein@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/439",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1119",
+      "Phone: (919) 733-9349"
+    ]
+  },
+  "14": {
+    "name": "Dan Blue",
+    "party": "Democratic",
+    "email": "dan.blue@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/268",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1129",
+      "Phone: (919) 733-5752"
+    ]
+  },
+  "15": {
+    "name": "Jay Chaudhuri",
+    "party": "Democratic",
+    "email": "jay.chaudhuri@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/395",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1117",
+      "Phone: (919) 715-6400"
+    ]
+  },
+  "16": {
+    "name": "Gale Adcock",
+    "party": "Democratic",
+    "email": "gale.adcock@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/436",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1104",
+      "Phone: (919) 715-3036"
+    ]
+  },
+  "17": {
+    "name": "Sydney Batch",
+    "party": "Democratic",
+    "email": "sydney.batch@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/434",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1026",
+      "Phone: (919) 733-5653"
+    ]
+  },
+  "18": {
+    "name": "Haseeb Fatmi",
+    "party": "Democratic",
+    "email": "haseeb.fatmi@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/1002",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1419",
+      "Phone: (919) 733-5850"
+    ]
+  },
+  "19": {
+    "name": "Val Applewhite",
+    "party": "Democratic",
+    "email": "val.applewhite@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/440",
+    "capitolOffice": [
+      "Legislative Building, Rm. 516",
+      "Phone: (919) 733-5776"
+    ]
+  },
+  "20": {
+    "name": "Natalie Murdock",
+    "party": "Democratic",
+    "email": "natalie.murdock@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/422",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1118",
+      "Phone: (919) 733-4599"
+    ]
+  },
+  "21": {
+    "name": "Tom McInnis",
+    "party": "Republican",
+    "email": "tom.mcinnis@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/389",
+    "capitolOffice": [
+      "Legislative Building, Rm. 314",
+      "Phone: (919) 733-5953"
+    ]
+  },
+  "22": {
+    "name": "Sophia Chitlik",
+    "party": "Democratic",
+    "email": "sophia.chitlik@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/449",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1111",
+      "Phone: (919) 733-4809"
+    ]
+  },
+  "23": {
+    "name": "Jonah Garson",
+    "party": "Democratic",
+    "email": "jonah.garson@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/1001",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1121",
+      "Phone: (919) 733-5804"
+    ]
+  },
+  "24": {
+    "name": "Danny Britt",
+    "party": "Republican",
+    "email": "danny.britt@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/399",
+    "capitolOffice": [
+      "Legislative Building, Rm. 523",
+      "Phone: (919) 733-5651"
+    ]
+  },
+  "25": {
+    "name": "Amy Galey",
+    "party": "Republican",
+    "email": "amy.galey@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/429",
+    "capitolOffice": [
+      "Legislative Building, Rm. 311",
+      "Phone: (919) 301-1446"
+    ]
+  },
+  "26": {
+    "name": "Phil Berger",
+    "party": "Republican",
+    "email": "phil.berger@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/64",
+    "capitolOffice": [
+      "Legislative Building, Rm. 2007",
+      "Phone: (919) 733-5708"
+    ]
+  },
+  "27": {
+    "name": "Michael Garrett",
+    "party": "Democratic",
+    "email": "michael.garrett@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/414",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1109",
+      "Phone: (919) 733-5856"
+    ]
+  },
+  "28": {
+    "name": "Gladys Robinson",
+    "party": "Democratic",
+    "email": "gladys.robinson@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/364",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1028",
+      "Phone: (919) 715-3042"
+    ]
+  },
+  "29": {
+    "name": "Dave Craven",
+    "party": "Republican",
+    "email": "david.craven@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/423",
+    "capitolOffice": [
+      "Legislative Building, Rm. 2108",
+      "Phone: (919) 733-5870"
+    ]
+  },
+  "30": {
+    "name": "Steve Jarvis",
+    "party": "Republican",
+    "email": "steve.jarvis@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/430",
+    "capitolOffice": [
+      "Legislative Building, Rm. 525",
+      "Phone: (919) 733-5743"
+    ]
+  },
+  "31": {
+    "name": "Dana Jones",
+    "party": "Republican",
+    "email": "dana.jones@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/449",
+    "capitolOffice": [
+      "Legislative Building, Rm. 2113",
+      "Phone: (919) 733-7850"
+    ]
+  },
+  "32": {
+    "name": "Paul Lowe",
+    "party": "Democratic",
+    "email": "paul.lowe@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/394",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1127",
+      "Phone: (919) 733-5620"
+    ]
+  },
+  "33": {
+    "name": "Carl Ford",
+    "party": "Republican",
+    "email": "carl.ford@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/410",
+    "capitolOffice": [
+      "Legislative Building, Rm. 625",
+      "Phone: (919) 733-5665"
+    ]
+  },
+  "34": {
+    "name": "Chris Measmer",
+    "party": "Republican",
+    "email": "chris.measmer@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/455",
+    "capitolOffice": [
+      "Legislative Building, Rm. 2106",
+      "Phone: (919) 733-7223"
+    ]
+  },
+  "35": {
+    "name": "Todd Johnson",
+    "party": "Republican",
+    "email": "todd.johnson@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/406",
+    "capitolOffice": [
+      "Legislative Building, Rm. 310",
+      "Phone: (919) 733-7659"
+    ]
+  },
+  "36": {
+    "name": "Eddie Settle",
+    "party": "Republican",
+    "email": "eddie.settle@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/446",
+    "capitolOffice": [
+      "Legislative Building, Rm. 2117",
+      "Phone: (919) 733-5742"
+    ]
+  },
+  "37": {
+    "name": "Vickie Sawyer",
+    "party": "Republican",
+    "email": "vickie.sawyer@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/405",
+    "capitolOffice": [
+      "Legislative Building, Rm. 312",
+      "Phone: (919) 715-3038"
+    ]
+  },
+  "38": {
+    "name": "Mujtaba Mohammed",
+    "party": "Democratic",
+    "email": "mujtaba.mohammed@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/417",
+    "capitolOffice": [
+      "Legislative Building, Rm. 517",
+      "Phone: (919) 733-5955"
+    ]
+  },
+  "39": {
+    "name": "DeAndrea Salvador",
+    "party": "Democratic",
+    "email": "deandrea.salvador@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/431",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1120",
+      "Phone: (919) 733-5655"
+    ]
+  },
+  "40": {
+    "name": "Joyce Waddell",
+    "party": "Democratic",
+    "email": "joyce.waddell@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/393",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1106",
+      "Phone: (919) 733-5650"
+    ]
+  },
+  "41": {
+    "name": "Caleb Theodros",
+    "party": "Democratic",
+    "email": "caleb.theodros@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/451",
+    "capitolOffice": [
+      "Legislative Building, Rm. 515",
+      "Phone: (919) 715-3050"
+    ]
+  },
+  "42": {
+    "name": "Woodson Bradley",
+    "party": "Democratic",
+    "email": "woodson.bradley@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/454",
+    "capitolOffice": [
+      "Legislative Building, Rm. 518",
+      "Phone: (919) 715-8331"
+    ]
+  },
+  "43": {
+    "name": "Brad Overcash",
+    "party": "Republican",
+    "email": "brad.overcash@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/444",
+    "capitolOffice": [
+      "Legislative Building, Rm. 526",
+      "Phone: (919) 733-5734"
+    ]
+  },
+  "44": {
+    "name": "Ted Alexander",
+    "party": "Republican",
+    "email": "ted.alexander@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/416",
+    "capitolOffice": [
+      "Legislative Building, Rm. 621",
+      "Phone: (919) 715-0690"
+    ]
+  },
+  "45": {
+    "name": "Mark Hollo",
+    "party": "Republican",
+    "email": "mark.hollo@ncleg.gov",
+    "url": "https://www.ncga.state.nc.us/gascripts/members/viewMember.pl?sChamber=House&nUserID=619",
+    "capitolOffice": [
+      "Legislative Building, Rm. 2119",
+      "Phone: (919) 733-5876"
+    ]
+  },
+  "46": {
+    "name": "Warren Daniel",
+    "party": "Republican",
+    "email": "warren.daniel@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/295",
+    "capitolOffice": [
+      "Legislative Building, Rm. 627",
+      "Phone: (919) 715-7823"
+    ]
+  },
+  "47": {
+    "name": "Ralph Hise",
+    "party": "Republican",
+    "email": "ralph.hise@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/298",
+    "capitolOffice": [
+      "Legislative Building, Rm. 300-A",
+      "Phone: (919) 733-3460"
+    ]
+  },
+  "48": {
+    "name": "Tim Moffitt",
+    "party": "Republican",
+    "email": "tim.moffitt@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/H/623",
+    "capitolOffice": [
+      "Legislative Building, Rm. 520",
+      "Phone: (919) 733-5745"
+    ]
+  },
+  "49": {
+    "name": "Julie Mayfield",
+    "party": "Democratic",
+    "email": "julie.mayfield@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/432",
+    "capitolOffice": [
+      "Legislative Building, Rm. 1025",
+      "Phone: (919) 715-3001"
+    ]
+  },
+  "50": {
+    "name": "Kevin Corbin",
+    "party": "Republican",
+    "email": "kevin.corbin@ncleg.gov",
+    "url": "https://www.ncleg.gov/Members/Biography/S/433",
+    "capitolOffice": [
+      "Legislative Building, Rm. 623",
+      "Phone: (919) 733-5875"
+    ]
+  }
+}

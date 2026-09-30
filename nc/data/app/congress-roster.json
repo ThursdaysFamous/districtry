@@ -1,0 +1,212 @@
+{
+  "1": {
+    "name": "Donald G. Davis",
+    "party": "Democrat",
+    "url": "https://dondavis.house.gov",
+    "capitolOffice": [
+      "1123 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3101"
+    ],
+    "districtOffice": [
+      "306 E. Colonial Ave",
+      "Elizabeth City, NC 27809",
+      "Phone: 252-999-7600"
+    ]
+  },
+  "2": {
+    "name": "Deborah K. Ross",
+    "party": "Democrat",
+    "url": "https://ross.house.gov",
+    "capitolOffice": [
+      "1221 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3032"
+    ],
+    "districtOffice": [
+      "300 Fayetteville Street, P.O. Box 1548",
+      "Raleigh, NC 27602",
+      "Phone: 919-334-0840"
+    ]
+  },
+  "3": {
+    "name": "Gregory F. Murphy",
+    "party": "Republican",
+    "url": "https://murphy.house.gov",
+    "capitolOffice": [
+      "407 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3415"
+    ],
+    "districtOffice": [
+      "1105 Corporate Drive, Suite C",
+      "Greenville, NC 27858",
+      "Phone: 252-931-1003"
+    ]
+  },
+  "4": {
+    "name": "Valerie P. Foushee",
+    "party": "Democrat",
+    "url": "https://foushee.house.gov",
+    "capitolOffice": [
+      "2452 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-1784"
+    ],
+    "districtOffice": [
+      "2605 Meridian Parkway, Suite 110",
+      "Durham, NC 27713",
+      "Phone: 919-967-7924"
+    ]
+  },
+  "5": {
+    "name": "Virginia Foxx",
+    "party": "Republican",
+    "url": "https://foxx.house.gov",
+    "capitolOffice": [
+      "2462 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2071"
+    ],
+    "districtOffice": [
+      "400 Shadowline Dr., Suite 205",
+      "Boone, NC 28607",
+      "Phone: 828-265-0240"
+    ]
+  },
+  "6": {
+    "name": "Addison P. McDowell",
+    "party": "Republican",
+    "url": "https://mcdowell.house.gov",
+    "capitolOffice": [
+      "1032 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3065"
+    ],
+    "districtOffice": [
+      "30 E. 1st Ave",
+      "Lexington, NC 27292",
+      "Phone: 336-333-5005"
+    ]
+  },
+  "7": {
+    "name": "David Rouzer",
+    "party": "Republican",
+    "url": "https://rouzer.house.gov",
+    "capitolOffice": [
+      "2333 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2731"
+    ],
+    "districtOffice": [
+      "310 Government Center Dr., Unit 1",
+      "Bolivia, NC 28422",
+      "Phone: 910-253-6111"
+    ]
+  },
+  "8": {
+    "name": "Mark Harris",
+    "party": "Republican",
+    "url": "https://markharris.house.gov",
+    "capitolOffice": [
+      "126 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-1976"
+    ],
+    "districtOffice": [
+      "300 North Main St",
+      "Monroe, NC 28112",
+      "Phone: 704-218-5300"
+    ]
+  },
+  "9": {
+    "name": "Richard Hudson",
+    "party": "Republican",
+    "url": "https://hudson.house.gov",
+    "capitolOffice": [
+      "2112 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3715"
+    ],
+    "districtOffice": [
+      "225 Green Street, Suite 202",
+      "Fayetteville, NC 28301",
+      "Phone: 910-997-2070"
+    ]
+  },
+  "10": {
+    "name": "Pat Harrigan",
+    "party": "Republican",
+    "url": "https://harrigan.house.gov",
+    "capitolOffice": [
+      "1233 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2576"
+    ],
+    "districtOffice": [
+      "800 17th St NW, Suite G467",
+      "Hickory, NC 28601",
+      "Phone: 828-327-6100"
+    ]
+  },
+  "11": {
+    "name": "Chuck Edwards",
+    "party": "Republican",
+    "url": "https://edwards.house.gov",
+    "capitolOffice": [
+      "1505 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6401"
+    ],
+    "districtOffice": [
+      "200 North Grove Street, Suite 121",
+      "Hendersonville, NC 28792",
+      "Phone: 828-435-7310"
+    ]
+  },
+  "12": {
+    "name": "Alma S. Adams",
+    "party": "Democrat",
+    "url": "https://adams.house.gov",
+    "capitolOffice": [
+      "2436 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-1510"
+    ],
+    "districtOffice": [
+      "10815 David Taylor Dr., Suite 100",
+      "Charlotte, NC 28262",
+      "Phone: 704-344-9950"
+    ]
+  },
+  "13": {
+    "name": "Brad Knott",
+    "party": "Republican",
+    "url": "https://knott.house.gov",
+    "capitolOffice": [
+      "1239 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4531"
+    ],
+    "districtOffice": [
+      "12450 Cleveland Road, 203",
+      "Garner, NC 27529",
+      "Phone: 984-275-6150"
+    ]
+  },
+  "14": {
+    "name": "Tim Moore",
+    "party": "Republican",
+    "url": "https://timmoore.house.gov",
+    "capitolOffice": [
+      "1424 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5634"
+    ],
+    "districtOffice": [
+      "128 West Main Ave",
+      "Gastonia, NC 28052",
+      "Phone: 980-460-8110"
+    ]
+  }
+}

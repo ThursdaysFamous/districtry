@@ -9,6 +9,8 @@
 "url": "https://manhattanda.org/"
 },
 "clerk": {
+"name": "Milton Tingling",
+"nameSource": "greenbook",
 "url": "https://www.nycourts.gov/courts/1st-judicial-district/new-york-county-clerks-office",
 "address": "60 Centre Street, Room 161, New York, NY 10007"
 }
@@ -53,6 +55,8 @@
 "url": "https://queensda.org/"
 },
 "clerk": {
+"name": "Audrey Pheffer",
+"nameSource": "greenbook",
 "url": "https://www.nycourts.gov/courts/11th-judicial-district/queens-county-clerks-office",
 "address": "88-11 Sutphin Blvd #106, Jamaica, NY 11435",
 "phone": "(718) 298-0601"
@@ -68,6 +72,8 @@
 "url": "https://www.statenislandda.org/"
 },
 "clerk": {
+"name": "Stephen Fiala",
+"nameSource": "greenbook",
 "url": "https://www.nycourts.gov/courts/13th-judicial-district/richmond-county-clerks-office"
 }
 }

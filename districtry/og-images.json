@@ -31,6 +31,22 @@
     "height": 630,
     "rendered": "2026-09-13"
   },
+  "in": {
+    "path": "in/og-image.png",
+    "label": "in",
+    "sha256": "64ce9637338828b70c2d0a0870a54371944480a176cc60cb457d577f503c29f3",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-29"
+  },
+  "ky": {
+    "path": "ky/og-image.png",
+    "label": "ky",
+    "sha256": "062de3e3be69469e6b2574d9d69cb5816b627cd779c33f1f6f7a28b6ad61ae83",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-30"
+  },
   "mi": {
     "path": "mi/og-image.png",
     "label": "mi",
@@ -43,6 +59,14 @@
     "path": "mn/og-image.png",
     "label": "mn",
     "sha256": "2a3eecac7f9032850f34964f306ad221e31d60f4b1a4708f70797c45b52b43fb",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-29"
+  },
+  "nc": {
+    "path": "nc/og-image.png",
+    "label": "nc",
+    "sha256": "15c0c0029b9127154e9078ac6baeae5866cf17d41b123bc66e3770f236e23f4d",
     "width": 1200,
     "height": 630,
     "rendered": "2026-09-29"

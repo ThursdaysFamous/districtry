@@ -53,6 +53,12 @@ import re
 import sys
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# The dark-instance definition lives in ONE place: that gate reads
+# deploy-pages.yml's own EXCLUDES, which is what actually decides whether a
+# folder is published.
+import validate_instance_registration
 METROS = os.path.join(REPO_ROOT, "metros.json")
 
 REGION = "question-lookup"
@@ -250,7 +256,32 @@ def main():
     pages = 0
     drifted = []
     missing = []
+    dark = validate_instance_registration.dark_instances() & set(instances())
     for tag in instances():
+        if tag in dark:
+            # A DARK INSTANCE HAS NO metros.json ENTRY YET, and that is correct
+            # rather than drift: a new state is built over several PRs behind a
+            # blanket `<tag>/**` exclude in deploy-pages.yml, and metros.json is
+            # the switch that publishes it. This gate used to fail on that,
+            # which Indiana hit on arrival in 2026-09 as the first dark instance
+            # since this file was written — it took the whole fleet's question
+            # forms red for a folder nobody is served.
+            #
+            # THE PLACE NAME IS NOT SUBSTITUTED FROM THE WORKSHEET INSTEAD, and
+            # that was the tempting fix: `metro_name` and `landing_name` are
+            # different keys that legitimately differ (Illinois is "Chicago" and
+            # "Illinois"), so a form built from one and later regenerated from
+            # the other drifts AT GO-LIVE, which is the worst moment for it. So
+            # the pages are skipped and COUNTED, loudly, and the go-live change
+            # regenerates them with every other generated surface.
+            #
+            # The definition comes from validate_instance_registration's own
+            # reader of deploy-pages.yml — never a second list here.
+            skipped = len(question_pages(tag))
+            print("build-question-forms: %s dark (excluded from the deploy, so "
+                  "absent from metros.json) — %d question page(s) skipped; the "
+                  "go-live change must regenerate them" % (tag, skipped))
+            continue
         if tag not in names:
             fail("instance %r is not in metros.json — the two must agree "
                  "before a question page there can name its place" % tag)
