@@ -64,6 +64,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 from build_metro_outline import (  # noqa: E402  (shared machinery — do not fork)
     HEADERS, METRO_COUNTY_FIPS, REQUEST_TIMEOUT, SIMPLIFY_TOLERANCE_M,
     STATE_FIPS, TIGERWEB, group_rings, point_in_rings, rings_of, simplify,
@@ -170,6 +171,8 @@ def fetch(fips_list):
     import requests  # noqa: PLC0415 (network only on the build path)
     where = "STATE='%s' AND COUNTY IN (%s)" % (
         STATE_FIPS, ",".join("'%s'" % f for f in fips_list))
+    require_robots_once(TIGERWEB, HEADERS["User-Agent"], headers=HEADERS,
+                        label="mi-build-mi-gap-outlines")
     resp = requests.get(TIGERWEB, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": where,
         "outFields": "NAME,GEOID,COUNTY,INTPTLAT,INTPTLON",

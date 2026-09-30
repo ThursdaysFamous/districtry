@@ -214,9 +214,7 @@ def tracked_python():
 UNWIRED_AT_SWEEP = frozenset("""
     ca/scripts/indexnow_submit.py
     ca/scripts/validate_sources.py
-    ia/scripts/build_ia_gap_outlines.py
     ia/scripts/build_ia_judicial_district.py
-    mi/scripts/build_mi_gap_outlines.py
     mi/scripts/mi_detroit_council_scraper.py
     ny/scripts/indexnow_submit.py
     ny/scripts/validate_sources.py
@@ -224,7 +222,6 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/bing_fetch.py
     scripts/boone_district_officials_scraper.py
     scripts/build_county_clerk_roster.py
-    scripts/build_county_outline.py
     scripts/build_district_search.py
     scripts/build_lasalle_board_districts.py
     scripts/build_logan_precinct_polling.py
