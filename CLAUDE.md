@@ -85,9 +85,9 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
-them used. MEASURED 2026-09-29 on this branch, AFTER its last edit: a static gate is
-one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **95**;
-counted instead as script invocations the whole battery is **127 — 116 that need no browser and
+them used. MEASURED 2026-09-30 on this branch, AFTER its last edit: a static gate is
+one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **96**;
+counted instead as script invocations the whole battery is **131 — 120 that need no browser and
 11 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`,
 2 root-page tests, and the two fleet-wide probes for point transmission and contrast pairs), the
 per-instance `validate_index.py` runs included, and excluding the two `npx playwright install`
@@ -112,6 +112,13 @@ seventh instance and its three gates — a coverage-gaps check, a `validate_inde
 Playwright smoke test — went into three EXISTING steps that already run one line per instance,
 so the battery grew and the step count did not. The two figures move independently, and adding
 a state moves only one of them.
+
+The 95/127 pair this paragraph carried on 2026-09-29 was one step and four invocations behind the
+96/131 that replaced it: the tribal-government layer's shared reader landed with its own selftest,
+the Bureau's government list with a drift gate, and the land-to-government join with both a
+selftest and an offline check, all four in ONE named step whose `run:` also installs shapely and
+pyproj — so the step count moved by one where the invocation count moved by four, which is the
+`validate_python_hygiene.py` shape again and is why neither figure can be derived from the other.
 
 **TWO BRANCHES CAN EACH BE RIGHT AGAINST THEIR OWN BASE AND BOTH WRONG ONCE MERGED, and the
 half that CONFLICTS is the lucky half** (2026-09-19). #1037 took the tree to 65/91 and #1040 to
@@ -217,8 +224,8 @@ each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-29, **127
-invocations for 127**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-30, **131
+invocations for 131**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on
