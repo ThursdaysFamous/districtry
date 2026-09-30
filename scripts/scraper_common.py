@@ -211,6 +211,38 @@ def require_robots_allowed(url, user_agent, headers=None, label=None):
     return why
 
 
+# Hosts a caller may fetch WITHOUT reading robots.txt, each with the measurement
+# that put it here and the reason the reading is deferred rather than taken. This
+# is a recorded gap, never a permission: an entry says nobody here has managed to
+# read the policy, not that the policy permits.
+#
+# THE ONE ENTRY IS web.archive.org, the host four Illinois scrapers read a
+# snapshot's own bytes from on their terminal fetch rung. Measured 2026-09-30
+# through robots_policy's reader, it resets the connection on every attempt from
+# this project's sandbox — three reads through the shared reader and a plain curl
+# alike. An unreachable robots.txt is RFC 9309 2.3.1.4, which disallows, so
+# wiring that reading would stop four working weekly refreshes on a verdict about
+# this sandbox's route rather than about the Archive's policy. The honest fix is
+# to measure it from a GitHub runner, which can reach the host, and then wire it.
+#
+# ITS SIBLING archive.org IS NOT HERE AND IS GATED NORMALLY: the same run read a
+# 238-byte policy from it in which no rule matches /wayback/available. Two hosts,
+# two different answers, so only the one that could not be read is deferred.
+ROBOTS_DEFERRED_HOSTS = {
+    "web.archive.org": "2026-09-30: robots.txt unreachable from this sandbox "
+                       "(connection reset, 3 reads + curl) — measure from a runner",
+}
+
+
+def robots_deferred(url):
+    """The recorded reason this url's host is fetched without a robots read, or
+    None when the host must be asked. Callers print the reason, so a deferral is
+    visible in the log of every run rather than silent."""
+    from urllib.parse import urlsplit
+
+    return ROBOTS_DEFERRED_HOSTS.get(urlsplit(url).hostname or "")
+
+
 def make_fail(label):
     """The fleet's one failure voice: '<label>: FAIL — <msg>' to stderr, exit 1.
 
