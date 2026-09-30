@@ -681,13 +681,13 @@ def check_committed(n_points, seed, n_jobs=1):
         return
     jobs = {(t, l): pairs for t, l, pairs in plan([])}
     # An archive mirrored from a live source (scripts/mirror_tiger_tiles.py,
-    # phase 6) has no shipped file to hold it to; that script's --check holds
-    # it to the record of what was fetched and built instead.
-    mirrored = set()
-    record = os.path.join(REPO_ROOT, "tiger-mirror.json")
-    if os.path.isfile(record):
-        with open(record, encoding="utf-8") as fh:
-            mirrored = {tuple(k.split(":", 1)) for k in json.load(fh).get("layers", {})}
+    # scripts/mirror_portal_tiles.py, phase 6) has no shipped file to hold it
+    # to; those scripts' own --checks hold each one to the record of what was
+    # fetched and built instead. EVERY mirror's record is read, not one of
+    # them: reading tiger-mirror.json alone was right while it was the only
+    # mirror and would fail every portal archive as unaccounted for.
+    from tile_mirror_common import RECORDS as MIRROR_RECORDS, mirrored_layers
+    mirrored = set(mirrored_layers())
     for key in list(shipped):
         if key in mirrored:
             if key in jobs:
@@ -695,10 +695,10 @@ def check_committed(n_points, seed, n_jobs=1):
             del shipped[key]
         elif key not in jobs:
             fail("%s:%s ships an archive but layer-sources.json names no shipped file for it, "
-                 "and tiger-mirror.json does not record it" % key)
+                 "and no mirror record (%s) names it" % (key + (", ".join(MIRROR_RECORDS),)))
     if mirrored:
-        print("build-vector-tiles: %d mirrored archive(s) are held to tiger-mirror.json by "
-              "scripts/mirror_tiger_tiles.py --check" % len(mirrored))
+        print("build-vector-tiles: %d mirrored archive(s) are held to their own records (%s) by "
+              "the mirrors' --check" % (len(mirrored), ", ".join(MIRROR_RECORDS)))
     from concurrent.futures import ProcessPoolExecutor
     failed = 0
     with ProcessPoolExecutor(max_workers=max(1, n_jobs)) as pool:

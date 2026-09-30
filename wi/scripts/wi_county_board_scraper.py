@@ -1224,47 +1224,20 @@ ROBOTS_TIMEOUT = 30
 # only lower the odds of a wrong publication, never close them.
 JSON_ATTEMPTS = 8
 
-# A 403 ON ROBOTS.TXT MEANS DIFFERENT THINGS ON DIFFERENT KINDS OF HOST, and
-# CLAUDE.md draws the line: an ArcGIS FeatureServer answers 401/403 to
-# /robots.txt while serving its data to everyone, so the permissive reading is
-# right there, and a municipal WEBSITE answering 403 is a firewall refusing
-# this client, so the strict reading is right there. This file asks strictly by
-# default and lists the hosts that opt out.
-ROBOTS_PERMISSIVE_HOSTS = (
-    "services1.arcgis.com",
-    "services2.arcgis.com",
-    "webapi.legistar.com",
-    "web.archive.org",
-    "archive.org",
-)
-
-# THE FIVE MUNICIPAL SITES THAT REFUSE ROBOTS.TXT TO THIS CLIENT, carried at
-# today's behaviour because whether a refusal counts as a refusal by DEFAULT is
-# an open decision about scripts/robots_policy.py for the whole fleet, not a
-# Wisconsin one. Three of them are COUNTIES rows read every week (Monroe, Rock,
-# Sheboygan) and reading a 403 strictly would stop those three counties
-# refreshing; that is a coverage change and it is not made here. Each entry is
-# dated and re-audited on every run, so a host that starts serving its policy
-# leaves this list instead of sitting in it.
-# Hosts that refuse to serve robots.txt TO THE CLIENT THIS FILE CRAWLS WITH, and
-# are carried at today's behaviour (RFC 9309 files a 401/403 with a 404: allow)
-# until the fleet settles whether a refusal should read as a refusal by default.
+# THE TWO HOST LISTS THAT USED TO LIVE HERE ARE RETIRED (2026-09-29, the
+# operator's ruling). ROBOTS_PERMISSIVE_HOSTS named the API hosts that opted out
+# of the strict reading of a 401/403 on robots.txt, and ROBOTS_REFUSED_PENDING
+# carried the websites that took it while the fleet was undecided. There is no
+# strict reading any more: scripts/robots_policy.py reads a 401/403 as ALLOW for
+# everyone, per RFC 9309 §2.3.1.3, so neither list selects anything.
 #
-# EMPTY, AND THAT IS A MEASUREMENT RATHER THAN AN OMISSION. #944 listed five —
-# Monroe, Rock, Sheboygan, Fond du Lac and Marathon — and every one was an
-# artefact of reading the policy with a weaker client than the crawl: the gate
-# sent User-Agent + Accept where the scrape sends seven headers. Measured
-# 2026-09-13, all five answer 403 to the first and 200 to the second (6,641 /
-# 6,641 / 6,706 / 71 / 6,641 bytes), and wi/scripts/validate_robots.py, which
-# has always used headers_for, read all five as served the whole time. With the
-# read corrected all five serve a policy that PERMITS every path this file
-# fetches on them, so nothing is carried and no county's reading changes.
-#
-# An entry here is audited like ACCEPTED_DROPS: it FAILS when the host serves
-# its policy after all (the exception has outlived its reason) and when no
-# table in this file names the host any more (it is orphaned). Both run in
-# --selftest, so an entry cannot rot quietly the way a once-per-run print can.
-ROBOTS_REFUSED_PENDING = {}
+# THIS FILE IS WHERE THE EVIDENCE FOR THAT CAME FROM. ROBOTS_REFUSED_PENDING was
+# emptied on 2026-09-13 after its five hosts -- Monroe, Rock, Sheboygan, Fond du
+# Lac and Marathon -- turned out to answer 403 to a two-header read and 200 to
+# the seven headers this file crawls with. Re-measured fleet-wide on 2026-09-29
+# that holds for fourteen of eighteen such hosts, which is what retired the
+# opt-in. What survives is the condition, not the list: read robots.txt with the
+# client that will crawl, which headers_for() and _robots_verdict() already do.
 
 _ROBOTS_CACHE = {}          # (user-agent, robots url) -> Verdict
 _ROBOTS_CACHE_LOCK = threading.Lock()
@@ -1368,8 +1341,7 @@ def robots_says(url):
     host = urllib.parse.urlsplit(url).hostname or url
     ua = headers_for(url)["User-Agent"]
     verdict = _robots_verdict(url)
-    strict = host not in ROBOTS_PERMISSIVE_HOSTS and host not in ROBOTS_REFUSED_PENDING
-    allowed, why = verdict.allows(ua, url, refused_is_refusal=strict)
+    allowed, why = verdict.allows(ua, url)
     with _ROBOTS_SAID_LOCK:
         first = host not in _ROBOTS_SAID
         _ROBOTS_SAID[host] = (verdict.status, bool(allowed), why)
@@ -1379,10 +1351,6 @@ def robots_says(url):
               % (host, verdict.status, "allows" if allowed else "REFUSES",
                  "" if not delay else " (crawl-delay %g s)" % delay),
               file=sys.stderr)
-        if host in ROBOTS_REFUSED_PENDING and verdict.status != "refused":
-            print("  robots  %-28s NO LONGER REFUSES its policy — drop it from "
-                  "ROBOTS_REFUSED_PENDING and read it strictly" % host,
-                  file=sys.stderr)
     return bool(allowed), why
 
 
@@ -2946,47 +2914,23 @@ def _robots_selftest():
           robots_says(seed("allowed.example.test", 200, ADMIN_ONLY,
                            path="/admin/x"))[0] is False)
 
-    # 3. A 403 on a county WEBSITE is a firewall refusing this client, so it is
-    #    read strictly. This is the reading CLAUDE.md gives municipal sites.
-    check("403 on a website refuses",
-          robots_says(seed("refuses-policy.example.test", 403, ""))[0] is False)
+    # 3. A 403 on robots.txt ALLOWS, on a county website exactly as on an API
+    #    host. RFC 9309 §2.3.1.3 files a 4xx with a 404, and measured
+    #    2026-09-29 the 403 is usually the site's edge refusing the READ rather
+    #    than a policy: fourteen of eighteen such hosts publish a policy that
+    #    permits us once asked with the client that crawls. This case asserted
+    #    the opposite until that day.
+    check("403 on a website allows",
+          robots_says(seed("refuses-policy.example.test", 403, ""))[0] is True)
 
-    # 4. A 403 on an API host is that API answering everyone while declining to
-    #    publish a policy — every ArcGIS FeatureServer does it — so those hosts
-    #    opt out of the strict reading by name.
-    api = list(ROBOTS_PERMISSIVE_HOSTS)[0]
+    # 4. The same for an API host, which is where the lenient default came
+    #    from: every ArcGIS FeatureServer 403s its robots.txt while serving its
+    #    layers to everyone. Cases 4, 5 and 5a used to prove that the two host
+    #    lists selected the strict and lenient readings; the lists are retired
+    #    and so are they.
     check("403 on an API host allows",
-          robots_says(seed(api, 403, "", path="/arcgis/rest/services/x"))[0] is True)
-
-    # 5. A host carried in ROBOTS_REFUSED_PENDING is read permissively while the
-    #    fleet-wide default is undecided. The table is EMPTY today (see its
-    #    header), so the MECHANISM is tested with a host put there for the
-    #    duration rather than by indexing whatever happens to be in it — which
-    #    is what this case used to do, and what would make it vanish silently
-    #    the moment the list emptied.
-    pending = "carried.example.test"
-    ROBOTS_REFUSED_PENDING[pending] = "selftest only"
-    try:
-        check("403 on a pending host allows for now",
-              robots_says(seed(pending, 403, "", path="/government/x"))[0] is True)
-    finally:
-        ROBOTS_REFUSED_PENDING.pop(pending, None)
-
-    # 5a. The table audits itself the way ACCEPTED_DROPS does: an entry whose
-    #     host now serves its policy has outlived its reason, and one no table
-    #     in this file names any more is orphaned. Both FAIL rather than print.
-    for host, why in sorted(ROBOTS_REFUSED_PENDING.items()):
-        v = _robots_verdict("https://%s/" % host)
-        check("pending %s still refuses its policy (recorded: %s)" % (host, why),
-              v.status == "refused")
-        # THE ENTRY ITSELF NAMES THE HOST, so searching the whole file always
-        # found it and this half could not fail -- vacuous the hour it was
-        # written. The pending block is excised before the search, so the test
-        # asks what it means to ask: does any OTHER table name this host?
-        elsewhere = re.sub(r"(?s)ROBOTS_REFUSED_PENDING = \{.*?\n\}", "",
-                           _SOURCE_TEXT, count=1)
-        check("pending %s is still named by a table in this file" % host,
-              host in elsewhere)
+          robots_says(seed("api.example.test", 403, "",
+                           path="/arcgis/rest/services/x"))[0] is True)
 
     # 6. No robots.txt allows everything; RFC 9309 files a 404 that way.
     check("404 allows", robots_says(seed("nofile.example.test", 404, ""))[0] is True)
@@ -3037,10 +2981,13 @@ def _robots_selftest():
     finally:
         globals()["fetch_archived"] = _saved_archived
 
-    # 10. The two host lists are answers to different questions and must not
-    #     overlap: a host cannot be both permanently permissive and pending.
-    check("no host is in both lists",
-          not (set(ROBOTS_PERMISSIVE_HOSTS) & set(ROBOTS_REFUSED_PENDING)))
+    # 10. A managed challenge is STICKY per host: a permissive read from a host
+    #     recorded in robots_policy.CHALLENGE_FRONTED_HOSTS is not believed,
+    #     because such a host answers non-deterministically and getting in on
+    #     the reads where the control is off is working around it.
+    challenged = sorted(rp.CHALLENGE_FRONTED_HOSTS)[0]
+    check("a challenge-fronted host is refused even on a permissive read",
+          robots_says(seed(challenged, 200, ADMIN_ONLY))[0] is False)
 
     # 11. THE ATTEMPTS ARE SPENT ONCE, AND NOTHING MEASURED THAT UNTIL NOW.
     #     #1156 put the `unreachable` retry in scripts/robots_policy.py because
@@ -3527,8 +3474,8 @@ assert board_seated_on(datetime.date(2025, 1, 1)) == datetime.date(2024, 4, 16)
 def _archive_json(url, tries=5):
     """The Archive answers 503 while it is down; back off rather than give up.
 
-    Gated like every other fetch even though web.archive.org is on
-    ROBOTS_PERMISSIVE_HOSTS and answers 404 to /robots.txt: a call site that
+    Gated like every other fetch even though web.archive.org answers 404 to
+    /robots.txt (allow all): a call site that
     skips the gate because its host happens to be fine today is how the rule
     stops holding when the host changes.
     """
@@ -4345,8 +4292,8 @@ def _spn_save(url):
     /save, and /save/status/<job>. A policy allowing the first and disallowing
     the third would have passed that gate and then polled thirty times. The
     pacer reached none of them either, only the GET below. Measured 2026-09-13,
-    web.archive.org serves no robots.txt at all (404, allow all) and is in
-    ROBOTS_PERMISSIVE_HOSTS besides, so nothing was actually fetched against a
+    web.archive.org serves no robots.txt at all (404, allow all), so nothing
+    was actually fetched against a
     refusal -- the reasoning was unsound rather than the behaviour.
     """
     key = os.environ.get("ARCHIVE_SPN_ACCESS_KEY")

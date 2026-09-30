@@ -40,7 +40,7 @@
 | Crawford | 17033 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Cumberland | 17035 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 2 — `cumberland-county-board` (no-source); `statewide-library-officials` (no-source) |
 | De Witt | 17039 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `dewitt-township-officials` (data-quality); `statewide-library-officials` (no-source) |
-| DeKalb | 17037 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 2 — `blocked-crawlers` (blocked); `county-source-library-officials` (no-source) |
+| DeKalb | 17037 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `blocked-crawlers` (blocked); `county-source-library-officials` (no-source); `il-tribal-government` (no-source) |
 | Douglas | 17041 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | DuPage | 17043 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 5 — `aurora-council-contact` (blocked); `county-source-library-officials` (no-source); `dupage-municipal-phones` (data-quality); `dupage-ward-cities` (no-source); `fire-park-district-officers` (no-source) |
 | Edgar | 17045 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
@@ -159,4 +159,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 105 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 106 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.

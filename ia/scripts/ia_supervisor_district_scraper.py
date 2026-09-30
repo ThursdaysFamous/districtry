@@ -219,17 +219,15 @@ ROBOTS_TIMEOUT = 25
 # So six hosts refuse and 30 allow. Nothing here tries to answer a challenge.
 #
 # ONE HOST CLASSIFIED ITSELF TWO WAYS IN THE SAME HOUR, and it is the reason a
-# 403 is read strictly here. osceolacountyia.gov answered HTTP 403 on the first
-# run and `sg-captcha: challenge` 202s on the second and on six consecutive
-# direct reads between them, so its 403 was a captcha front answering one way
-# rather than a site stating a policy. The shared module's DEFAULT is to ALLOW
-# a 403 on robots.txt (RFC 9309 §2.3.1.3), because the hosts that answer that
-# way are usually APIs serving their data to everyone. These are county
-# WEBSITES, where a 403 is a firewall refusing this client, so robots_says
-# passes refused_is_refusal=True -- the reading CLAUDE.md states for a
-# municipal-website scraper, and the one scripts/dupage_municipal_officials_scraper.py
-# already takes. It changes no county today: Osceola keys nothing under either
-# reading, and refuses under both on the second run. The two sibling Iowa
+# A 403 on robots.txt ALLOWS, the shared module's reading for everybody since
+# the operator retired the strict opt-in on 2026-09-29 (RFC 9309 §2.3.1.3).
+# This file used to pass refused_is_refusal=True and recorded that it changed
+# no county; it still changes none. osceolacountyia.gov is why the strict
+# reading looked right and was not: it answered HTTP 403 on the first run and
+# `sg-captcha: challenge` 202s on the second and on six consecutive direct
+# reads between them, so its 403 was a captcha front answering one way rather
+# than a site stating a policy -- and a 202 challenge is refused on its own
+# terms, by classify(), with no help from a reading of the 403. The two sibling Iowa
 # county scrapers (ia_county_minutes_chair_scraper.py,
 # ia_county_city_officials_scraper.py) still take the default through
 # RobotsGate.allows; that is a standing difference, named here rather than
@@ -327,7 +325,7 @@ def robots_says(url):
     host = urllib.parse.urlsplit(url).hostname or url
     ua = HEADERS["User-Agent"]
     verdict = _robots_verdict(url)
-    allowed, why = verdict.allows(ua, url, refused_is_refusal=True)
+    allowed, why = verdict.allows(ua, url)
     if host not in _ROBOTS_SAID:
         _ROBOTS_SAID[host] = (verdict.status, bool(allowed))
         delay = verdict.crawl_delay(ua)
@@ -622,16 +620,22 @@ def _selftest():
               and len(calls) == n + 1,
               "no robots.txt (404) -> fetched")
 
+        # A 403 on robots.txt ALLOWS, on every host, since 2026-09-29 (RFC 9309
+        # §2.3.1.3, Adam's ruling — see this file's own note above and the root
+        # CLAUDE.md). This assertion used to sit in the refusal loop below,
+        # because this file passed `refused_is_refusal=True`; it is kept here,
+        # inverted, rather than deleted, because the reading changed and a test
+        # that merely stopped existing would leave no record that it had.
+        n = len(calls)
+        check(fetch(u("forbidden.example")) is not None
+              and len(calls) == n + 1,
+              "robots.txt 403 -> fetched (RFC 9309: unavailable, not "
+              "unreachable), on a county website like anywhere else")
+
         for host, why in (("deny.example", "`*` Disallow: / -> refused"),
                           ("gone.example", "robots.txt 5xx -> refused (RFC 9309)"),
                           ("challenge.example",
-                           "robots.txt 202 challenge -> refused, never solved"),
-                          # The one reading this file does NOT take from the
-                          # shared module's default. It is a choice, so it is
-                          # tested rather than left to a comment.
-                          ("forbidden.example",
-                           "robots.txt 403 -> refused (a county website, not "
-                           "an API)")):
+                           "robots.txt 202 challenge -> refused, never solved")):
             n = len(calls)
             try:
                 fetch(u(host))
