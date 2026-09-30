@@ -51,6 +51,10 @@ def fail(msg):
     `build-privacy-page: FAIL` and sends whoever reads it to the wrong file."""
     print("build-about-page: FAIL — %s" % msg, file=sys.stderr)
     sys.exit(1)
+def note(msg):
+    print("build-about-page: %s" % msg)
+
+
 PAGE = os.path.join(REPO_ROOT, "about.html")
 CANONICAL = SITE + "about.html"
 
@@ -163,10 +167,39 @@ def table_names():
     return total, tables
 
 
-def recorded_gaps():
-    n = 0
+def gap_files(fleet):
+    """Every SERVED instance's gap file, and the dark ones named rather than counted.
+
+    THE TREE IS NOT THE SERVED SURFACE, and for this page that distinction is
+    the whole claim: the sentence says these gaps are "written down in the app",
+    which a reader can only check for an instance the site actually serves. An
+    instance under a dark bring-up has a folder, a gap file and no `metros.json`
+    entry, and is excluded from the Pages deploy — so globbing the tree would
+    have this page tell a reader about absences recorded in an app they cannot
+    open. It counted 159 for a served 156 the day North Carolina's folder
+    landed, with every other gate green.
+
+    Excluded instances are PRINTED on every run rather than dropped silently:
+    the number moving the day one goes live is then a change somebody can see
+    coming, and a folder that is dark by accident does not read as dark by
+    design.
+    """
+    served = {e["tag"] for e in fleet}
+    out, dark = [], []
     for path in sorted(glob.glob(os.path.join(REPO_ROOT, "*", "data", "app",
                                               "coverage-gaps.json"))):
+        tag = os.path.relpath(path, REPO_ROOT).split(os.sep)[0]
+        (out if tag in served else dark).append(path)
+    for path in dark:
+        tag = os.path.relpath(path, REPO_ROOT).split(os.sep)[0]
+        note("%s is not in metros.json, so its gap records are not counted "
+             "here — nothing serves them yet" % tag)
+    return out
+
+
+def recorded_gaps(fleet):
+    n = 0
+    for path in gap_files(fleet):
         with open(path, encoding="utf-8") as f:
             data = json.load(f)
         # One object per gap, KEYED BY ITS SLUG — not a list under a "gaps" key.
@@ -177,7 +210,7 @@ def recorded_gaps():
             fail("%s is not a non-empty object of gap records" % path)
         n += len(data)
     if not n:
-        fail("no coverage-gaps.json in the tree carried a record")
+        fail("no served instance's coverage-gaps.json carried a record")
     return n
 
 
@@ -354,7 +387,7 @@ def build():
     fleet = instances()
     pages, seats = county_pages()
     tabled, tables = table_names()
-    gaps = recorded_gaps()
+    gaps = recorded_gaps(fleet)
     jobs = weekly_jobs()
     signal = content_signal()
     if not signal:
@@ -407,8 +440,7 @@ def feeding_files():
     for entry in TABLES:
         for section in entry["sections"]:
             feeds.add(roster_path(entry["tag"], section["roster"]))
-    for path in glob.glob(os.path.join(REPO_ROOT, "*", "data", "app",
-                                       "coverage-gaps.json")):
+    for path in gap_files(instances()):
         feeds.add(os.path.relpath(path, REPO_ROOT))
     if len(feeds) < 2:
         fail("feeding_files() found %d input(s), which cannot be right — the "

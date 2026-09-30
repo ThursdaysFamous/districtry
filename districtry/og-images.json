@@ -31,6 +31,14 @@
     "height": 630,
     "rendered": "2026-09-13"
   },
+  "in": {
+    "path": "in/og-image.png",
+    "label": "in",
+    "sha256": "64ce9637338828b70c2d0a0870a54371944480a176cc60cb457d577f503c29f3",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-29"
+  },
   "mi": {
     "path": "mi/og-image.png",
     "label": "mi",
