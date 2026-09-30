@@ -737,7 +737,7 @@
   "negative_point": {
     "lat": 47.39,
     "lng": -92.97,
-    "note": "off the northwest corner of Wisconsin — outside the state and every starter layer"
+    "note": "off the northwest corner of Wisconsin — outside the state and every starter layer. IT IS INSIDE MINNESOTA, AND IT CANNOT BE MOVED SOMEWHERE THAT IS NOBODY'S: sampling permalink_gate every 0.25 degrees and naming each point's state off TIGERweb, all 609 points land in a state and the 300 outside Wisconsin are Michigan (163), Minnesota (76), Iowa (47) and Illinois (14) — three of those are live instances today, so moving the point into one would break this test now rather than at Minnesota's go-live, and the Great Lakes are no refuge either (a control in open Lake Michigan returns Michigan). So the point stays and the checks that select it refuse ../fleet-outlines.json, which is the only thing the hand-off reads; Wisconsin asserts nothing about fleet routing."
   },
   "coverage_key": {
     "outside": "Outside Wisconsin",
