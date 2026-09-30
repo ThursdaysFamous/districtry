@@ -62,6 +62,10 @@ python3 wi/scripts/build_wi_county_board_directory.py --check
 python3 wi/scripts/build_wi_county_outlines.py --check
 python3 mi/scripts/build_mi_gap_outlines.py --check       # a county tag with no outline makes the gaps panel claim a clean spot
 python3 ia/scripts/build_ia_gap_outlines.py --check       # same, derived from the gap records themselves
+python3 scripts/tribal_areas.py --selftest                 # a shared boundary is not an overlap; an error envelope is not "no features"
+python3 scripts/bia_tribal_governments.py --check          # the Bureau's government list, names only, no personal columns
+python3 scripts/validate_tribal_join.py --selftest         # the join gate catches each thing it exists to catch
+python3 scripts/validate_tribal_join.py --check            # no entry may name a government the Bureau does not carry
 python3 scripts/build_brand_tokens.py --check
 python3 scripts/validate_contrast.py                     # text vs ground, both tiers
 python3 scripts/compose_app.py --check                   # engine/ vs every instance's fences
