@@ -12168,18 +12168,46 @@ function initNycExplorer() {
   loadNysZipCodes.atPoint = function (point) {
     return loadArcGISPointGeoJSON(NY_ZCTA_LAYER, point, "ZCTA5");
   };
+  /* THE STATEWIDE ZIP LAYER NEEDS BOTH HALVES: inside New York State, and
+   * outside the city, where the MODZCTA layer above speaks. outsideNycCoverage
+   * alone said only "not in the five boroughs", so a point in Connecticut, New
+   * Jersey or Pennsylvania passed it and the layer answered — the loader
+   * comment above measures 2,007 of the 3,833 ZCTAs the envelope returns as out
+   * of state, and the point-first hook carries no state filter either, so a
+   * click in Hartford got Hartford's ZIP code from a New York app. The archive
+   * holds New York's ZCTAs only, so the archive path was already silent; the
+   * defect was on the live fallback, which runs when the archive cannot be read
+   * and on a browser that cannot read one at all.
+   *
+   * Both grounds are files this instance already ships and already caches —
+   * ny-state-outline.json for the wash's middle band, and the borough fabric
+   * for the borough card — so the test costs no request and answers identically
+   * with or without the census host reachable. A throwing test fails open,
+   * which is the engine's rule. */
+  function nysZipCoverage(point) {
+    return Promise.all([loadStateOutline(), loadBoroughBoundaries()])
+      .then(function (both) {
+        return !!findFeatureContaining(both[0], point) &&
+               !findFeatureContaining(both[1], point);
+      });
+  }
+
   registerPolygonLayer({
     id: "nys-zip-code",
     tiles: "data/app/tiles/nys-zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
-    coverage: outsideNycCoverage,
+    coverage: nysZipCoverage,
     loader: loadNysZipCodes,
-    // The archive keeps only the ZCTAs inside this app's own state (scripts/
-    // mirror_tiger_tiles.py, STATE_OVERLAP_MIN), so an empty card here is a fact
-    // about the archive, not about the place: the generic "isn't inside any
-    // district" would be false for a point in, say, a neighbouring state's ZIP.
-    emptyNote: "No ZIP code here. This map holds New York State's ZIP codes only, so a point outside the state gets none.",
+    // WITH THE STATE HALF OF COVERAGE DECLARED ABOVE, AN OUT-OF-STATE POINT
+    // HIDES THIS LAYER RATHER THAN ANSWERING IT, so the note that used to stand
+    // here — "This map holds New York State's ZIP codes only, so a point
+    // outside the state gets none", citing the archive's STATE_OVERLAP_MIN
+    // filter — describes a case that can no longer render, and a note that
+    // cannot render is a claim nothing keeps true. What is left is a point
+    // inside the state and outside the city that no ZCTA covers, so the note
+    // now says only what the query answered.
+    emptyNote: "No ZIP Code Tabulation Area covers this point.",
     style: { color: "#4E6E9C", weight: 1.5, fillColor: "#4E6E9C", fillOpacity: 0.05, dashArray: "1 4" },
     pill: true,
     fields: [

@@ -91,13 +91,27 @@ const MOVE_POINT = { lat: 41.99, lng: -87.66, district: "2b" }; // school-board 
 const STRAGGLER_FILE = "data/app/stephenson-county-board-districts.json";
 const APP_DIR = "il/";
 const STRAGGLER_POINT = "42.29660,-89.62120"; // Freeport, Stephenson County — inside board District B of the delayed file
-// Anchor layers that declare a location-relevance test (mod.coverage) HIDE at
-// an out-of-coverage point instead of reporting an empty card — this list
-// mirrors the fork's coverage declarations in index.html (school-board is
+// Layers that declare a location-relevance test (mod.coverage) HIDE at an
+// out-of-coverage point instead of reporting an empty card — this list mirrors
+// the fork's coverage declarations in index.html (school-board is
 // Chicago-scoped via chicagoCoverage; ccbr is Cook-scoped via
 // cookCountyCoverage). il-supreme-court declares none and keeps the honest
 // "no district here" empty state at the negative point.
-const NEGATIVE_HIDDEN = ["school-board", "ccbr"];
+//
+// ZIP CODE IS THE ONE THAT IS NOT AN ANCHOR, and it is checked here rather
+// than left to validate_sources.py BECAUSE THE TEST IS OFFLINE. A ZCTA has no
+// state field, so the layer's query carries no STATE='17' filter and outside
+// Illinois the live fallback answers a neighbouring state's ZIP code — on
+// ground every other statewide card here correctly declines. What keeps that
+// from reaching a reader is the layer's coverage() test, which reads the
+// shipped state outline (same-origin, cache-first) and needs no third party at
+// all, so the browser can prove it in both directions: hidden at the negative
+// point (2b) and NOT hidden at the anchor (1i2). Both halves are needed — a
+// hide test alone passes for a layer that is hidden everywhere.
+const NEGATIVE_HIDDEN = ["school-board", "ccbr", "zip-code"];
+// The ids checked at the negative point: the offline anchors plus every
+// coverage-declaring layer above, deduped because most of them are anchors.
+const NEGATIVE_IDS = OFFLINE.concat(NEGATIVE_HIDDEN.filter((id) => !OFFLINE.includes(id)));
 // ==== TEMPLATE:END smoke-fork-constants ====
 
 // Disk reads are anchored to THIS SCRIPT, never to the process CWD. APP_DIR
@@ -839,25 +853,30 @@ try {
     }
   }
 
-  // 1i2. THE ZIP CARD OUTSIDE THE STATE SAYS WHY IT IS EMPTY. The ZIP archive
-  //      holds Illinois's ZCTAs only (scripts/mirror_tiger_tiles.py), so Gary,
-  //      Indiana gets no ZIP code — and the card must say that is the map's
-  //      limit, never the generic "isn't inside any district", which would be
-  //      false of a point inside Indiana's 46402.
+  // 1i2. THE OTHER HALF OF THE ZIP COVERAGE CHECK IN 2b. A hide test alone
+  //      passes for a layer that is hidden everywhere, which would be a ZIP
+  //      toggle no reader ever sees — so the anchor must show the same layer
+  //      VISIBLE. THIS CHECK REPLACED ONE THAT ASSERTED THE CARD'S EMPTY NOTE
+  //      AT GARY, INDIANA ("this map holds Illinois's ZIP codes only"): with
+  //      coverage declared the layer hides there instead of rendering a note,
+  //      so that wording could no longer appear and the note itself was retired
+  //      rather than left as a claim nothing keeps true.
+  //
+  //      Both halves read only the shipped state outline, with the census host
+  //      refused, so neither depends on a government server being up.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    // The fleet file is refused for the reason given on the gaps-panel check
-    // above, and here the point is Gary itself: this permalink pans the map's
-    // centre into Indiana, so once in/ is in fleet-outlines.json the pan
-    // hand-off navigates away while this check is reading the card. What the
-    // ZIP card says about ground the archive does not hold is not a claim
-    // about fleet routing, and check 1i is where that is asserted.
-    const page = await booted(context, `${BASE}#point=41.60000,-87.34000&layers=zip-code`, async (p) => {
-      await p.route("**/fleet-outlines.json", (r) => r.abort());
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=zip-code`, async (p) => {
+      await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
     });
-    const zip = await cardText(page, "zip-code");
-    check("the ZIP card in Gary, Indiana says the map holds Illinois's ZIP codes only",
-      /Illinois's ZIP codes only/.test(zip.text) && !/isn't inside any district/.test(zip.text), zip.text);
+    const visible = await page
+      .waitForFunction(() => {
+        const box = document.getElementById("toggle-zip-code");
+        const block = box && box.closest(".layer-block");
+        return !!block && block.hidden === false;
+      }, null, { timeout: QUERY_TIMEOUT })
+      .then(() => true, () => false);
+    check("zip-code is in coverage at the Loop anchor (not hidden)", visible, `visible=${visible}`);
     await context.close();
   }
 
@@ -1281,8 +1300,13 @@ try {
     // fallback's own catch ("stand on the first tiling's verdict") runs
     // deterministically fast in every environment; the verdict here is
     // identical either way — the negative point is outside both tilings.
-    const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=${OFFLINE.join(",")}`, async (p) => {
+    const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=${NEGATIVE_IDS.join(",")}`, async (p) => {
       await p.route(`**${PORTAL_HOST}**`, (r) => r.abort());
+      // And the census host, for the ZIP layer in NEGATIVE_IDS. Its coverage
+      // test reads the shipped state outline and never the census, so the hide
+      // verdict is identical either way — aborting it is what keeps this
+      // check's verdict independent of whether a runner can reach TIGERweb.
+      await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
       // And the fleet file, for the reason given on the gaps-panel check
       // above: this permalink pans the map's centre into Indiana's waters, so
       // once a sibling covers them the pan hand-off navigates away
@@ -1297,7 +1321,7 @@ try {
       // passes because a fetch was slow is not a check.
       await p.route("**/fleet-outlines.json", (r) => r.abort());
     });
-    for (const id of OFFLINE) {
+    for (const id of NEGATIVE_IDS) {
       if (NEGATIVE_HIDDEN.includes(id)) {
         const hidden = await page
           .waitForFunction((cid) => {

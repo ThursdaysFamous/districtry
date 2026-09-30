@@ -591,6 +591,54 @@ try {
     await context.close();
   }
 
+  // 3c. THE STATEWIDE ZIP LAYER HIDES OUTSIDE NEW YORK STATE, AND IS VISIBLE
+  //     INSIDE IT. Both halves, because a hide test alone passes for a layer
+  //     that is hidden everywhere. A ZCTA carries no state field, so this
+  //     layer's envelope fetch and its point-first hook both answer for
+  //     neighbouring states — measured in index.html's own loader comment,
+  //     2,007 of the 3,833 the envelope returns are out of state — and its
+  //     coverage test used to say only "not in the five boroughs", so a click
+  //     in Hartford got Hartford's ZIP code from a New York app. The test now
+  //     reads the shipped state outline and the borough fabric, both
+  //     same-origin and already cached for other cards, so the census host is
+  //     refused here and the verdict is the same either way.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const hiddenPage = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=nys-zip-code`, async (p) => {
+      await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
+    });
+    const hidden = await hiddenPage
+      .waitForFunction(() => {
+        const box = document.getElementById("toggle-nys-zip-code");
+        const block = box && box.closest(".layer-block");
+        return !!block && block.hidden === true;
+      }, null, { timeout: QUERY_TIMEOUT })
+      .then(() => true, () => false);
+    // The invariant directly, not just its hash reflection: hiding must never
+    // mutate state.layersOn, which is what keeps a layers= permalink intact and
+    // makes the layer reappear when the point comes back into the state.
+    const stillOn = await hiddenPage.evaluate(
+      () => window.NycExplorer.state.layersOn["nys-zip-code"] === true);
+    check("nys-zip-code hides outside New York State (permalink intact)",
+      hidden && stillOn, `hidden=${hidden} layersOn=${stillOn}`);
+    await context.close();
+  }
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=nys-zip-code`, async (p) => {
+      await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
+    });
+    const visible = await page
+      .waitForFunction(() => {
+        const box = document.getElementById("toggle-nys-zip-code");
+        const block = box && box.closest(".layer-block");
+        return !!block && block.hidden === false;
+      }, null, { timeout: QUERY_TIMEOUT })
+      .then(() => true, () => false);
+    check("nys-zip-code is in coverage at the Albany anchor (not hidden)", visible, `visible=${visible}`);
+    await context.close();
+  }
+
   // 4. A failing data source degrades to that layer's error card + Retry, in
   //    isolation — the app's per-layer failure-isolation rule. Fail the borough
   //    anchor fetch; judicial-district (a different anchor file) still classifies.

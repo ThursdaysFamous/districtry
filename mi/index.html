@@ -13011,17 +13011,47 @@ function initMichiganExplorer() {
       TIGERWEB_SERVICES + "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11", point, "ZCTA5");
   };
 
+  /* THIS LAYER ALONE AMONG THE STATEWIDE ONES DECLARES A COVERAGE TEST, and the
+   * reason is the missing state field. Every other statewide layer here is
+   * fetched with STATE='26', so it is silent outside Michigan by construction;
+   * a ZCTA query carries no state filter, so at a point in a neighbouring state
+   * the live fallback returns THAT state's ZIP code — an answer about a place
+   * this instance does not serve, on ground every other card here correctly
+   * declines. The committed tile archive holds Michigan's ZCTAs only, so the
+   * archive path was already silent; the defect was on the FALLBACK, which runs
+   * when the archive cannot be read and on a browser that cannot read one at
+   * all. Declaring coverage hides the toggle, the card and the overlay outside
+   * the state instead, which is the engine's own mechanism for "where a layer's
+   * data applies", and makes the instance consistent at one more point rather
+   * than only most of it.
+   *
+   * The ground is the same metro-outline.json the coverage wash and the app's
+   * own hand-off already read, so ZIP agrees with the rest of the app about where Michigan is
+   * rather than keeping a notion of its own, and the test is same-origin and
+   * cache-first — it costs no request and answers identically on a runner that
+   * can reach TIGERweb and in a sandbox that cannot. A throwing test fails
+   * open, which is the engine's rule. */
+  function insideMichigan(point) {
+    return loadMetroOutline().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+
   registerPolygonLayer({
     id: "zip-code",
     tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
+    coverage: insideMichigan,
     loader: loadZipCodes,
-    // The archive keeps only the ZCTAs inside this app's own state (scripts/
-    // mirror_tiger_tiles.py, STATE_OVERLAP_MIN), so an empty card here is a fact
-    // about the archive, not about the place: the generic "isn't inside any
-    // district" would be false for a point in, say, a neighbouring state's ZIP.
-    emptyNote: "No ZIP code here. This map holds Michigan's ZIP codes only, so a point outside Michigan gets none.",
+    // WITH COVERAGE DECLARED ABOVE, AN OUT-OF-STATE POINT HIDES THIS LAYER
+    // RATHER THAN ANSWERING IT, so the note that used to stand here — "This map
+    // holds Michigan's ZIP codes only, so a point outside Michigan gets none",
+    // citing the archive's STATE_OVERLAP_MIN filter — describes a case that can
+    // no longer render, and a note that cannot render is a claim nothing keeps
+    // true. What is left is a point inside Michigan that no ZCTA covers, so the
+    // note now says only what the query answered.
+    emptyNote: "No ZIP Code Tabulation Area covers this point.",
     // dotted outline (a distinct pattern from Township or City's long dash) + its own hue
     style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
     fields: [
