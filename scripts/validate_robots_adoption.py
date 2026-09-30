@@ -212,34 +212,25 @@ def tracked_python():
 # the tree, and on a fetching file that is not here and reads nothing.
 # ---------------------------------------------------------------------------
 UNWIRED_AT_SWEEP = frozenset("""
-    ca/scripts/indexnow_submit.py
     ca/scripts/validate_sources.py
     ia/scripts/build_ia_judicial_district.py
     mi/scripts/mi_detroit_council_scraper.py
-    ny/scripts/indexnow_submit.py
     ny/scripts/validate_sources.py
-    scripts/aia_bundle.py
     scripts/boone_district_officials_scraper.py
     scripts/build_county_clerk_roster.py
     scripts/build_lasalle_board_districts.py
     scripts/build_logan_precinct_polling.py
     scripts/build_stephenson_fire_districts.py
-    scripts/check_roster_workflow_health.py
     scripts/clay_county_board_scraper.py
     scripts/coles_county_board_scraper.py
     scripts/dekalb_county_board_scraper.py
     scripts/dekalb_municipal_officials_scraper.py
     scripts/edgar_county_board_scraper.py
-    scripts/fleet_status.py
     scripts/franklin_county_board_scraper.py
-    scripts/generate_metro_files.py
     scripts/il_county_commissioners_scraper.py
     scripts/il_library_contacts_scraper.py
-    scripts/indexnow_submit.py
     scripts/marshall_county_board_scraper.py
     scripts/probe_incomplete_tls_chains.py
-    scripts/selftest_scraper_common.py
-    scripts/verify_google_api_access.py
     scripts/will_municipal_officials_scraper.py
     wi/scripts/build_rusd_school_board_districts.py
     wi/scripts/validate_sources.py
@@ -247,7 +238,6 @@ UNWIRED_AT_SWEEP = frozenset("""
     wi/scripts/wi_bluebook_municipal_scraper.py
     wi/scripts/wi_circuit_judges_scraper.py
     wi/scripts/wi_coa_scraper.py
-    wi/scripts/wi_coa_staleness.py
     wi/scripts/wi_county_clerk_scraper.py
     wi/scripts/wi_county_officer_contact_scraper.py
     wi/scripts/wi_wec_probe.py
@@ -255,9 +245,14 @@ UNWIRED_AT_SWEEP = frozenset("""
 """.split())
 
 # path -> (reason, date). EMPTY on introduction, deliberately; see the docstring.
-# THREE ENTRIES SINCE, all of one class the docstring said it was reserving the
-# table for: a fetch that genuinely must not be gated, rather than one that has
-# not been gated yet.
+# TWELVE ENTRIES SINCE, every one of the class the docstring said it was
+# reserving the table for: a fetch that genuinely must not be gated, rather
+# than one that has not been gated yet. They fall in four groups — a read of
+# this project's own data with this project's own credential, an outbound
+# submission of our own addresses, a step in completing a TLS handshake, and a
+# file that talks only to a server it started itself — and EVERY ONE carries
+# its whole argument in its own file rather than a pointer at a sibling, so no
+# exemption can be borrowed by analogy from a row in this table.
 #
 # A PATH IN BOTH TABLES IS EXCUSED TWICE AND COUNTED TWICE, which is what
 # happened to the two entries below when they were declared exempt and left in
@@ -265,6 +260,71 @@ UNWIRED_AT_SWEEP = frozenset("""
 # whose exemption can be deleted with nothing turning red, because the backlog
 # goes on covering it silently. check() refuses an overlap for that reason.
 DECLARED_EXEMPT = {
+    "scripts/aia_bundle.py": (
+        "NOT A CRAWL BUT A STEP IN A TLS HANDSHAKE: it fetches an "
+        "intermediate CA certificate from the AIA url printed inside a leaf "
+        "certificate a host has just served, which is what an AIA url is "
+        "for, and each one is pinned by hash. Gating it would also be "
+        "circular — the four hosts it completes chains for serve an "
+        "incomplete chain, so their robots.txt cannot be read until the "
+        "intermediate is in hand. THE TEST IS WHETHER SOMEBODY'S PAGES ARE "
+        "BEING READ, never which host answers; the argument is made at "
+        "length in the file itself so it cannot be applied by analogy from "
+        "here",
+        "2026-09-30"),
+    "scripts/indexnow_submit.py": (
+        "OUTBOUND SUBMISSION, NOT A READ: it hands districtry's own "
+        "addresses to an ingestion endpoint that exists to receive them, "
+        "keyed by a file on districtry's own domain. robots.txt says which "
+        "of a site's pages a crawler may READ, and there is no page here to "
+        "read. THE TEST IS WHOSE CONTENT AND WHICH DIRECTION, never which "
+        "host; argued at length in the file",
+        "2026-09-30"),
+    "ca/scripts/indexnow_submit.py": (
+        "The same script and the same argument as "
+        "scripts/indexnow_submit.py, carried in full in its own file rather "
+        "than by pointer so none of the three copies reads as an exemption "
+        "extended by analogy. (It still names chidistricts.com, a pre- "
+        "rebrand leftover recorded for that instance's owner rather than "
+        "changed here — it does not affect the exemption either way)",
+        "2026-09-30"),
+    "ny/scripts/indexnow_submit.py": (
+        "The third copy of that script, argument carried in full in its own "
+        "file for the same reason. (Also still names chidistricts.com; same "
+        "note)",
+        "2026-09-30"),
+    "scripts/fleet_status.py": (
+        "AUTHENTICATED READ OF THIS PROJECT'S OWN REPOSITORY: "
+        "api.github.com with this project's own token, asking GitHub about "
+        "districtry's own runs and pull requests through the API the token "
+        "is issued for. That host's blanket robots rule addresses crawlers "
+        "of the web interface, not an account holder reading their own "
+        "repository. THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never "
+        "which host; argued at length in the file",
+        "2026-09-30"),
+    "scripts/check_roster_workflow_health.py": (
+        "The same class, argued in full in its own file rather than pointed "
+        "at fleet_status.py: our token, our repository, the documented API, "
+        "no page read",
+        "2026-09-30"),
+    "wi/scripts/wi_coa_staleness.py": (
+        "The same class again, argued in full in its own file: our token "
+        "asking whether Wisconsin's own weekly verification actually ran",
+        "2026-09-30"),
+    "scripts/selftest_scraper_common.py": (
+        "IT TALKS ONLY TO ITS OWN SERVER. The one host is 127.0.0.1, an "
+        "HTTP server the file starts a few lines earlier to serve its own "
+        "fixtures, so a robots read would be the file asking itself for "
+        "permission — the same reason probe_user_agents.py skips loopback. "
+        "THE TEST IS WHOSE SITE, never which client",
+        "2026-09-30"),
+    "scripts/verify_google_api_access.py": (
+        "AUTHENTICATED CHECK OF THIS PROJECT'S OWN CREDENTIALS: it presents "
+        "the operator's service-account key to Search Console and GA4 and "
+        "asks which of districtry's own properties that key can read. No "
+        "page read, no link followed. THE TEST IS WHOSE DATA AND WHOSE "
+        "CREDENTIAL, never which host; argued at length in the file",
+        "2026-09-30"),
     "scripts/goatcounter_fetch.py": (
         "AUTHENTICATED READ OF THIS PROJECT'S OWN ACCOUNT, not a crawl of "
         "somebody else's pages. districtry.goatcounter.com serves `User-agent: * "

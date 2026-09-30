@@ -27,6 +27,24 @@ here and because the caller's requests still verify the whole chain against
 the trusted roots plus this one extra anchor. If a county fixes its chain this
 keeps working (a spare trust anchor is harmless). If a county moves to a
 different CA the pin fails LOUDLY, which is the state a human can act on.
+
+NOT GATED ON robots.txt, AND THE REASON IS THE HANDSHAKE RATHER THAN THE HOST.
+What this fetches is a CERTIFICATE -- an intermediate CA certificate from the
+AIA url printed inside a leaf certificate a host just served us, at
+certificates.godaddy.com, crt.sectigo.com and crt.usertrust.com. It is a step
+in completing a TLS chain, over plain http because a certificate is signed and
+carries its own integrity, and each one is pinned by hash here. No page is
+read, no link is followed, no url is discovered; the address comes out of the
+certificate the host itself handed over in order to be verified.
+
+THE TEST IS WHETHER SOMEBODY'S PAGES ARE BEING READ, never which host answers.
+robots.txt governs a crawler reading a site's public content, and a CA's
+certificate repository is infrastructure a TLS client is expected to fetch --
+the whole point of an AIA url is that clients follow it. Gating it would also
+be circular in the case this module exists for: the four hosts it completes
+chains for serve an incomplete chain, so THEIR robots.txt cannot be read until
+the intermediate is in hand. An unauthenticated read of an ordinary page on
+any of these three hosts would be gated in full.
 """
 
 import base64
