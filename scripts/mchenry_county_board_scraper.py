@@ -89,7 +89,12 @@ from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
-from scraper_common import UA_CHROME_WIN_126_FULL, fetch_stdlib  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    UA_CHROME_WIN_126_FULL,
+    UA_HINTS_CHROME_126,
+    fetch_stdlib,
+    require_robots_allowed,
+)
 
 BASE = "https://www.mchenrycountyil.gov"
 LISTING_PATH = "/departments/county-board/meet-your-county-board-members"
@@ -124,6 +129,12 @@ class RequestsFetcher:
     """Plain HTTP fetch — works if the runner's egress isn't challenged."""
 
     engine = "requests"
+    # The client this rung crawls with, so its robots.txt read is made by
+    # the same client (require_robots_for below). HEADERS carries a
+    # User-Agent and no Sec-CH-UA hints, which is exactly the rung this
+    # county's bot manager refuses — the file has to be asked for as this
+    # client all the same, never as a heavier one.
+    robots_client = ("requests", HEADERS)
 
     def __init__(self):
         self.session = requests.Session()
@@ -164,6 +175,10 @@ class StdlibFetcher:
     """
 
     engine = "stdlib"
+    # fetch_stdlib below is called with no headers, so it sends
+    # UA_HINTS_CHROME_126 — a different client from the rung above, and the
+    # one this county serves. It asks for robots.txt as itself.
+    robots_client = ("stdlib", UA_HINTS_CHROME_126)
 
     def fetch(self, url, retries=3, timeout=30):
         last_err = None
@@ -187,6 +202,10 @@ class PlaywrightFetcher:
     pattern: a genuine browser, no evasion)."""
 
     engine = "playwright"
+    # A real Chromium sends the Sec-CH-UA hints itself, under the context's
+    # own User-Agent (HEADERS's), so that is the pair its robots read uses.
+    robots_client = ("playwright",
+                     dict(UA_HINTS_CHROME_126, **{"User-Agent": HEADERS["User-Agent"]}))
 
     def __init__(self, timeout=45000, challenge_wait_s=15):
         from playwright.sync_api import sync_playwright
@@ -261,6 +280,18 @@ class WaybackFetcher:
     page, with the copy's timestamp surfaced for provenance."""
 
     engine = "wayback"
+    # None means this rung never fetches the COUNTY's host, so the county's
+    # robots.txt is not its question: the Archive's own crawler fetches the
+    # page and we read the Archive. The Archive's policy is therefore what
+    # would gate this rung, and it is deliberately NOT wired yet, on a
+    # measurement: archive.org serves a 238-byte policy permitting
+    # /wayback/available, while web.archive.org could not be read at all from
+    # this project's sandbox on 2026-09-30 — three reads through the shared
+    # reader and a plain curl all reset the connection. That is a fact about
+    # the sandbox and says nothing about the Internet Archive, so wiring a
+    # reading nobody has taken would risk stopping a working weekly refresh
+    # on an unreachable-robots verdict. Measure it from a runner first.
+    robots_client = None
 
     def __init__(self):
         self.session = requests.Session()
@@ -368,6 +399,56 @@ class WaybackFetcher:
 
     def close(self):
         self.session.close()
+
+
+def require_robots_for(fetcher, label):
+    """Read this county's robots.txt before this rung's first fetch of it, with
+    the client the rung will crawl with.
+
+    WHY PER RUNG AND NOT ONCE. The ladder below is three different clients, and
+    this county answers two of them differently. Measured 2026-09-30, four reads
+    per client: the requests rung, whose HEADERS carry a User-Agent and no
+    Sec-CH-UA hints, is refused its own robots.txt with HTTP 403 four times of
+    four, while the stdlib rung (UA_HINTS_CHROME_126, which carries them) is
+    served a 6,641-byte policy four times of four — no rule in its one binding
+    group matches the pages this scraper reads, and it states no Crawl-delay and
+    no Content-Signal. THE HINTS ARE THE WHOLE DIFFERENCE, which is the same
+    discriminator #1271 measured on these two hosts' pages. An earlier reading
+    of this called the host flaky, on a probe that silently varied the header set
+    as well as the client; repeated with one variable it is stable both ways.
+
+    Both readings permit — a 403 on robots.txt is RFC 9309 2.3.1.3
+    "unavailable", which allows, per Adam's ruling of 2026-09-29 (#1271) — so
+    asking per rung costs nothing here and keeps the fleet's consistency rule:
+    read the file as the client that crawls, never escalate to a heavier client
+    to obtain it, and never probe a second client on a host that already serves
+    the first. Each read here accompanies a crawl by that same client, which is
+    a different thing from probing.
+
+    THE POLICY IS THE CMS VENDOR'S AND NOT THIS COUNTY'S. The same 6,641 bytes,
+    byte-identical by md5, come back from www.kendallcountyil.gov,
+    www.mchenrycountyil.gov and www.joliet.gov — three independent governments on
+    one vendor's default, 226 Disallow rules aimed at that platform's own admin
+    and asset paths. So a permission read out of it says what the vendor shipped
+    rather than what the county chose, which is worth knowing before anybody
+    cites it as a county's decision. It is still the policy published at the
+    county's own host, so it is still what binds.
+
+    IT EXITS RATHER THAN SKIPPING TO THE NEXT RUNG, and that is correct rather
+    than a lost fallback: every reading that refuses is a property of the HOST
+    and not of the client — a real `*` Disallow, a 5xx, an unreachable host, a
+    challenge-fronted file — so a refusal read by one rung is a refusal to all
+    of them. The one client-dependent answer, 403, now permits for everyone.
+
+    A rung whose robots_client is None does not fetch this county's host at all
+    (the Archive rung); see its own note.
+    """
+    if fetcher.robots_client is None:
+        return None
+    client, headers = fetcher.robots_client
+    return require_robots_allowed(
+        BASE + LISTING_PATH, headers["User-Agent"], headers=headers,
+        label="%s (%s rung)" % (label, client))
 
 
 def make_fetcher(engine):
@@ -540,6 +621,9 @@ def scrape(engine, delay=0.75):
     refetches the listing (a Save Page Now capture is not free)."""
     if engine in ("requests", "playwright", "wayback"):
         fetcher = make_fetcher(engine)
+        why = require_robots_for(fetcher, 'mchenry-county-board-scraper')
+        if why:
+            print("robots.txt: %s" % why, file=sys.stderr)
         try:
             return scrape_all(fetcher, delay=delay)
         finally:
@@ -553,6 +637,9 @@ def scrape(engine, delay=0.75):
             print("%s engine unavailable (%s); trying next" % (name, e), file=sys.stderr)
             last_err = e
             continue
+        why = require_robots_for(fetcher, 'mchenry-county-board-scraper')
+        if why:
+            print("robots.txt (%s rung): %s" % (name, why), file=sys.stderr)
         try:
             listing_html = fetcher.fetch(BASE + LISTING_PATH)
         except Exception as e:

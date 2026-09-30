@@ -12,16 +12,16 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **225 distinct hosts** those files
-name, **43 are fetched by the browser**; the other 182 are links.
+makes from a link a reader clicks. Of **229 distinct hosts** those files
+name, **43 are fetched by the browser**; the other 186 are links.
 
 ### Geocoder — 3 host(s)
 
 | host | instances |
 |---|---|
 | `geosearch.planninglabs.nyc` | ny |
-| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi |
-| `photon.komoot.io` | il, ny, ca, wi, ia, mi |
+| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn |
+| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn |
 
 The most sensitive flow on the site: it is **the text a reader
 types**. `build_privacy_page.py` owns what each receives and links
@@ -32,9 +32,9 @@ per-app measurement, so the two cannot disagree.
 
 | host | instances |
 |---|---|
-| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi |
-| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi |
-| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi |
+| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn |
+| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn |
+| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn |
 
 One service. Several host spellings appear because the tile URL is a
 `{s}.` template and some are `preconnect` hints — one recipient, not
@@ -44,7 +44,7 @@ several.
 
 | host | instances |
 |---|---|
-| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi |
+| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn |
 
 Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
@@ -52,7 +52,7 @@ Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
 | host | instances |
 |---|---|
-| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi |
+| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn |
 | `www.googletagmanager.com` | il, ny |
 
 ### Webfonts — none
@@ -65,7 +65,7 @@ a font CDN would be a recipient the privacy page does not name.
 
 | host | instances |
 |---|---|
-| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi |
+| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn |
 
 ### Socrata — 7 host(s)
 
@@ -84,7 +84,7 @@ a font CDN would be a recipient the privacy page does not name.
 | host | instances |
 |---|---|
 | `arcgispublicmap.co.st-clair.il.us` | il |
-| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi |
+| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn |
 | `gis.aurora.il.us` | il |
 | `gis.cookcountyil.gov` | il |
 | `gis.fultoncountyil.gov` | il |
@@ -126,6 +126,7 @@ prose.
 | wi | 1 | 31 |
 | ia | 0 | 20 |
 | mi | 0 | 15 |
+| mn | 6 | 13 |
 
 ### Where each layer's shapes come from
 
@@ -250,6 +251,8 @@ measured until the next run describes it.
 - Drawn from this site's own files: `us-house`, `mi-senate`, `county`, `mi-house`, `county-commissioner`, `city-ward`, `precinct`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 
+#### mn — not measured
+
 ## 2. Build-time datasets
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
@@ -260,7 +263,8 @@ measured until the next run describes it.
 | wi | 91 | 262 | 5 |
 | ia | 70 | 57 | 0 |
 | mi | 30 | 55 | 1 |
-| **total** | **376** | **806** | **12** |
+| mn | 19 | 7 | 0 |
+| **total** | **395** | **813** | **12** |
 
 **133 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
