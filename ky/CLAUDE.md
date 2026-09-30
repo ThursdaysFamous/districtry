@@ -1,0 +1,227 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## What this is
+
+districtry Kentucky: a single-file, dependency-light web app. Click a point in Kentucky (or
+search an address) and it reports every civic district containing that point and who
+represents you there. It is a folder of the consolidated districtry repo, following the shape
+`docs/EXPANSION_GUIDE.md` Part 2 sets out for a new state instance.
+
+**IT IS NOT PUBLISHED YET.** PR 1 arrived DARK: `ky/**` is blanket-excluded from the Pages
+deploy and `metros.json` deliberately carries no `ky` entry, so nothing here is reachable by a
+reader. `validate_instance_registration.py` holds those two together in BOTH directions — an
+entry in the manifest while the folder is excluded would render a live landing card linking to
+a 404. `ky/WATCH.md`'s GO-LIVE section is what the publishing change has to carry.
+
+It ships four layers, the national tier every U.S. state can serve from national publishers:
+**County** (120, from Census TIGERweb, identity-only), **U.S. House** (6 districts, TIGERweb
+geometry joined to the public-domain unitedstates/congress-legislators roster, refreshed
+weekly), and **Kentucky Senate** / **Kentucky House** (38 and 100 districts, TIGERweb
+geometry, naming nobody yet).
+
+**THREE OF THE FOUR CARDS NAME NOBODY, AND EACH SILENCE IS RECORDED RATHER THAN IMPLIED.**
+Both chamber cards enter the engine chamber factory's roster-miss path deliberately — district
+identity plus the chamber's own directory, never an invented name — under gap
+`ky-legislature-roster`, which says plainly that the General Assembly publishes both rosters
+and this instance has not built them. The County card is identity only under
+`ky-county-officers`: the state's Department for Local Government lists every county's elected
+officials and pairs none of them with a district, so the card names the county and links that
+directory. A reader meeting three quiet cards should be able to find out why, which is what
+those records are for.
+
+**THE COUNTY CARD NAMES NO GOVERNING BODY IN PARTICULAR, AND THAT IS DELIBERATE.** 118 of
+Kentucky's 120 counties are governed by a fiscal court, but the two that are not are Jefferson
+and Fayette — Louisville Metro and the Lexington-Fayette urban-county government — and the
+ground-truth anchor every gate in this instance tests sits in Jefferson. A card that read
+"fiscal court" would therefore be wrong at the one point the whole battery checks.
+
+**THE FLAGSHIP LAYER THIS INSTANCE IS BUILT TOWARD IS THE FISCAL COURT**, and its FORM was
+censused before any code was written (2026-09-30), from two certified elections per county:
+**105 counties elect magistrates from magisterial districts, 13 elect three commissioners, and
+Jefferson and Fayette have no fiscal court at all** (KRS 67.040/67.045 set the two forms; KRS
+67A and 67C set the two merged governments). The commissioner form matters for the card rather
+than the map: KRS 67.060(1) elects three commissioners "by the voters of the entire county, one
+from each district", so a commissioner district is a RESIDENCE district and not an electorate.
+Iowa already ships that shape — draw the polygon, say it is drawn for residence, name nobody on
+it — and Kentucky will follow Iowa rather than inventing a second answer.
+
+**WHAT IS MISSING IS GEOMETRY AND THE JOIN, NOT THE FORM.** 27 counties publish magisterial or
+commissioner boundaries, which is a FLOOR measured county by county rather than a total, and no
+source anywhere pairs a published official with the district they are elected from. Both are
+recorded as gap `ky-fiscal-court` and watched in `ky/WATCH.md`, which also carries the county
+whose form is genuinely unsettled (Pike, where the certified 2026 primary ran five numbered
+magisterial contests and the state directory lists three commissioners) and the two whose
+district compositions exist only as scans (Elliott, Leslie).
+
+**TWO HOSTS ARE MEASURED AND BOTH ARE OPEN.** `kydlgweb.ky.gov` (the Department for Local
+Government's county directory) and `legislature.ky.gov` (both chambers' member directories) each
+serve this project's own token a full page, and neither publishes a robots.txt rule that binds
+it. There is no captcha to obey here and nothing to work around — the obstacles on this instance
+are missing datasets, not refused hosts.
+
+**There is no build step, no framework, and no server-side code.** The app — styles, engine,
+and layer modules — lives inline in `index.html`. `sw.js` is the service worker;
+`data/app/*.json` are runtime-fetched data files; `data/state/` carries the bootstrap state
+config (`build_congress_roster.py` reads its FIPS/USPS/seat count — it ships in the repo and
+is excluded from the Pages deploy). This instance ships NO sub-pages yet: no `sources.html`,
+no `faq.html`, no `history.html`, and the worksheet therefore carries no `sources_page` or
+`history_page` key — those generators are opt-in and generate nothing for an instance that
+does not ask.
+
+<!-- ==== GENERATED:BEGIN metro-facts ==== -->
+**Metro facts** (generated from `metro-worksheet.json` — edit the worksheet and run
+`python3 scripts/generate_metro_files.py`; hand-edits here fail CI):
+
+- Metro: Kentucky (`kentucky`) — https://districtry.com/ky/
+- Geocoders: address Photon (Kentucky-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Kentucky-bounded, serial >=1s queue)
+- Ground truth: 38.25270,-85.75850 (downtown Louisville, Jefferson County) → county Jefferson County; us-house 3; ky-senate 33; ky-house 43. Negative point 36.40000,-86.50000 (inside Sumner County, TENNESSEE, about 15 km south of the Kentucky line and north-east of Nashville — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (minLat 36.35) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-09-30: TIGERweb's county layer names Sumner County STATE 47 (control: the anchor returns Jefferson County STATE 21), and no outline in fleet-outlines.json contains it (control: the Louisville anchor is likewise in none of them, so the file genuinely has no Kentucky coverage rather than the test passing vacuously). TENNESSEE RATHER THAN ONE OF THE OTHER SIX NEIGHBOURS, deliberately. Illinois is live and borders Kentucky across the Ohio, so a point over there would sit inside an instance's own outline and the browser would hand the selection off to districtry.com/il/ and navigate away — which is how Minnesota's first candidate failed, silently, as a smoke-test timeout on a blank document rather than as a wrong answer. Indiana and North Carolina are in build as dark instances and will become live outlines, so they were avoided for the same reason one step ahead. Tennessee is in no instance and in no launch plan. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.).
+- Layers: 4 registered (political 3, geography 1); `registerLayer(` floor 4. Debug namespace `window.KentuckyExplorer`.
+- Scheduled workflows: `update-ky-congress-roster.yml` (Mon 13:55 UTC).
+- Source registry: `ky/scripts/validate_sources.py` (machine-checked monthly)
+<!-- ==== GENERATED:END metro-facts ==== -->
+
+## Running & testing
+
+```bash
+# From the REPO ROOT — one server, every instance:
+python3 -m http.server 8000    # then open http://localhost:8000/ky/
+
+# Behaviour gate (real Chromium boot via Playwright) — the main test:
+npm install playwright@1.56.1 && npx playwright install --with-deps chromium
+BASE_URL=http://localhost:8000/ky/ node ky/scripts/smoke_test.mjs
+
+# Static gate (run after any data/app regeneration or app edit):
+python3 ky/scripts/validate_index.py ky/index.html
+
+# Generated-region gate: per-instance facts live ONCE in ky/metro-worksheet.json;
+# GENERATED regions are emitted from it. NEVER hand-edit a GENERATED region:
+pip install -c scripts/requirements.txt jsonschema
+python3 scripts/generate_metro_files.py            # regenerate in place (all instances)
+python3 scripts/generate_metro_files.py --check    # the CI drift gate
+
+# Engine parity: the ENGINE fences are composed from the repo-root engine/ —
+# edit a block THERE and recompose, never inside an instance file:
+python3 scripts/compose_app.py            # splice engine/ into every instance
+python3 scripts/compose_app.py --check    # the CI drift gate
+
+# The Data gaps panel's content, emitted from the fleet guidebook:
+python3 scripts/build_coverage_gaps.py --check --metro kentucky --out ky/data/app/coverage-gaps.json
+```
+
+**THE NEGATIVE POINT IS IN TENNESSEE, AND THE REASON IT IS NOT IN ILLINOIS IS THE POINT.**
+`ky/metro-worksheet.json`'s `negative_point.note` carries the whole measurement. Kentucky has
+seven neighbours and most of them are unusable: Illinois is live, so a point over there sits
+inside an instance's own outline, `placeOwner` hands the selection to `districtry.com/il/`, and
+the browser LEAVES — which surfaces as a smoke-test timeout on a blank document rather than as a
+wrong answer, and is exactly how Minnesota's first candidate failed. Indiana and North Carolina
+are in build as dark instances and will become live outlines, so they were avoided one step
+ahead. Tennessee is in no instance and in no launch plan. **AND THE POINT IS ON LAND**: Kentucky's
+TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky and a
+point in open water on the northern border would be inside a Kentucky county — the same trap
+Minnesota hit in Lake Superior.
+
+**THIS INSTANCE'S SMOKE TEST REFUSES `fleet-outlines.json` IN TWO CHECKS RATHER THAN MOVING ITS
+POINT.** That is the fleet remedy (Iowa #1267, Illinois #1272): a check that puts a point outside
+the state at the map centre depends on no sibling outline existing there, which is a race the day
+a neighbour launches. Aborting the fetch makes the check test what it is for. A future Tennessee
+instance therefore cannot break it.
+
+**Sandboxed environments (Claude Code web):** the headless browser cannot reach the Leaflet
+CDN. The repo root's `.claude/settings.json` SessionStart hook runs `scripts/vendor_leaflet.sh`,
+which vendors Leaflet into `ky/scripts/vendor/leaflet/` (gitignored); `ky/scripts/smoke_test.mjs`
+serves it same-origin. Production and GitHub Actions CI reach the CDN directly.
+
+## Architecture: stable core + pluggable layer modules
+
+The metro-agnostic engine inside `index.html` is fenced with
+`/* ==== ENGINE:BEGIN <name> ==== */ … ENGINE:END` markers and is **composed from the single
+copy under the repo root's `engine/`** by `scripts/compose_app.py` — there is no release
+channel and no per-instance copy to drift. **Never edit inside an ENGINE fence in this file** —
+edit the block under `engine/` (when the change is right for every instance) and recompose.
+Everything Kentucky-specific lives in the `METRO:BEGIN config` block (worksheet-generated) and
+this instance's own module code, which is the `STARTER MODULES` section.
+
+A layer module is registered via `registerLayer({ id, group, label, overlay, query, render })`;
+the three district layers use the fenced factory helper `registerIlgaChamber`. **The two
+chamber registrations pass `loadNoRoster`, a function returning an empty object**, because the
+factory calls `opts.loadRoster()` unconditionally and an empty roster is the honest input — it
+enters the factory's own roster-miss path rather than needing an engine change. When
+`ky-{senate,house}-members.json` ship, those two become real file loaders and nothing else
+about the registration moves.
+
+Two invariants pervade the code: the **stale-async guard** (`if (seq !== state.sequence)
+return;` after every await) and **per-layer failure isolation** (a layer's failure shows a
+Retry inside its own card, never breaks the others).
+
+**Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
+roster source exists, cards link to the official body instead of inventing a name, which is
+what three of this instance's four cards do today. External strings always render through
+`sanitize()`/`textContent`. Roster refreshes always land as PRs for human review — never as
+direct commits to main.
+
+## Data pipeline
+
+Pre-built layers ship as same-origin `data/app/` files, all rebuilt from a live fetch by an
+operator script: `metro-outline.json` (the whole-state outline for the coverage wash,
+`ky/scripts/build_metro_outline.py`), `state-counties.json`
+(`ky/scripts/build_state_counties.py`), and `congress-districts.json`,
+`ky-senate-districts.json` and `ky-house-districts.json`
+(`ky/scripts/build_legislative_boundaries.py`).
+
+**THE OUTLINE IS TWO RINGS, AND PREDICTING ONE WAS WRONG.** The first draft of this instance
+asserted that Kentucky's 120 counties dissolve to a single ring because every county is
+contiguous. Measured, they do not: the **Kentucky Bend** — the loop of Fulton County west of the
+Mississippi, reachable by road only through Tennessee — is a separate 69.53 km² outer ring
+beside the 104,529.68 km² mainland. **County contiguity is not land contiguity, and a dissolve
+answers the second question.** So `build_metro_outline.py` carries a second anchor dict,
+`INSIDE_DETACHED`, holding one point inside the Bend, and the registry check requires its county
+to also carry an ordinary `INSIDE` anchor and the two lists to be disjoint. A simplification that
+dropped the Bend would now fail rather than quietly shrink the state. The key uses the COMMA form
+(`"Fulton, Kentucky Bend"`) because the existing convention reads a PARENTHETICAL as the county
+name, and the first attempt sent the gate looking for a county called Kentucky Bend.
+
+**THE CHAMBER BUILDER TAKES NO PER-CHAMBER ARGUMENT AND REFUSES ONE**, because rebuilding one
+chamber alone is the defect it exists to prevent: mapshaper builds topology WITHIN one file, so
+an edge two layers share only survives identically if both came off one `combine-files` run. It
+refuses to write unless three gates pass — a 2,000-random-point agreement gate per layer, an
+EXACT cross-layer gate at zero tolerance, and a fidelity ceiling measured against the source. Its
+`--check` re-runs the cross-layer half offline in CI.
+
+**KENTUCKY'S CHAMBERS DO NOT NEST, SO THE CROSS-LAYER GATE IS THE STATE BORDER.** 100 House
+districts stand in no whole-number relation to 38 Senate districts — there is no lettering
+(Minnesota), no pairing (Iowa) and no arithmetic to check — and pairing them anyway produces a
+meaningless offset, the Michigan 767 km case. What all three layers DO draw identically under a
+shared topology is Kentucky's own border. So `check_shared_border()` DERIVES that border rather
+than assuming it: under one topology an interior edge is traced twice and a border edge once, so
+the border is the set of undirected segments appearing an ODD number of times. All three sets
+must then be equal exactly. **It cannot pass vacuously**: it fails on fewer than three layers, on
+any empty border, and on any border vertex of odd degree (a border that does not close). Measured
+2026-09-30 on the full state, the three layers share one border of **4,856 edges** exactly — and
+run as three SEPARATE simplifications the same gate fails, with 696 edges only in the House layer
+and 698 only in the Senate, first difference near 36.62020,-89.37192.
+
+**`FIDELITY_MAX_M` IS 29.9 AND IS PINNED, NEVER RECOMPUTED PER RUN.** A ceiling re-derived from
+the source on every run can never fail, because it rises whenever the source gets coarser. 29.9
+comes from Kentucky's OWN median staircase step — how far the true line runs before it turns —
+measured 2026-09-30 at 29.8 m (ky-house) and 27.2 m (ky-senate), with the instrument validated
+against Illinois's published figure (19.6 m measured against 19.7 published). The ceiling is
+taken from the finer chamber, and **Kentucky reverses the assumption that more districts means
+finer lines**: its 100 House districts measure a COARSER step than its 38 Senate districts, so
+which chamber is finer must be measured rather than inferred from the count. A redistricting
+re-opens it: re-measure the step on the new lines rather than carrying the number forward. At
+these settings the worst stray is 15.3 m on all three layers.
+
+The one roster, `congress-roster.json` (`ky/scripts/build_congress_roster.py`, from
+unitedstates/congress-legislators), is count-guarded and refreshed weekly by CI as a reviewed
+PR.
+
+## Growing this instance
+
+A new layer or county-level concept follows the repo's `docs/EXPANSION_GUIDE.md`. The working
+order it teaches: prove the source first (a live fetch you performed), ship the boundary and
+its officeholder sourcing in the same change, floor every scraped count, and record what a
+publisher does NOT publish rather than guessing. When a layer ships, its row in
+`ky/metro-worksheet.json` (`layers[]`, with a `source` block) is what puts it in every gate.
+Extend `LAYER_SIDEBAR_RANK` and `WATCH.md` in the same change.

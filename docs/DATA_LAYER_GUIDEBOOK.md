@@ -2615,6 +2615,44 @@ detail into `blocker`.
       "blocker": "MEASURED 2026-09-29. Minnesota's counties elect an auditor-treasurer, a sheriff, a county attorney and a recorder alongside the board, and no single publisher lists them: the Association of Minnesota Counties (mncounties.org/counties) publishes a county DIRECTORY — a link per county, which is what the card's footer uses — rather than a roster of officers. So the County card ships as identity only, and this record is why, rather than the card simply being quiet. This is the posture Iowa's county card shipped with and later filled county by county; it is bounded work, not a closed route.",
       "wanted": "A statewide list of Minnesota's elected county officers, or a per-county page set this app can read on a weekly schedule."
     }
+  ],
+  "kentucky": [
+    {
+      "id": "ky-fiscal-court",
+      "concept": "County governing body",
+      "area": "Kentucky — all 120 counties",
+      "counties": [],
+      "kind": "no-source",
+      "layer": null,
+      "summary": "The districts your county's magistrates or commissioners are elected from are not on the map, and no card names them.",
+      "why": "Most Kentucky counties do not publish their district boundaries as map data, and the one statewide list of county officials does not say which district each person holds.",
+      "blocker": "MEASURED 2026-09-30, before this instance shipped, and the two halves are shut for different reasons. THE FORM IS SETTLED. Every county's governing body was censused from two certified elections apiece — the Secretary of State's own general and primary recap canvasses — and the two agreed in every county with no conflicts: 105 counties elect magistrates from magisterial districts (KRS 67.045), 13 elect three commissioners, and the two remaining are Jefferson, governed by the Louisville Metro Council under KRS 67C, and Fayette, by the Lexington-Fayette Urban County Council under KRS 67A. One county is unresolved and is the single open question: Pike's certified 2026 primary runs five numbered magisterial contests while the Department for Local Government lists three commissioners, so its own clerk is the person to ask. THE GEOMETRY IS THE BLOCKER. 27 counties publish magisterial district boundaries this project can read, each confirmed geometrically against TIGERweb, and that is a FLOOR rather than a total — no census of the remaining counties' GIS has been completed. The rest would have to be composed from whole precincts county by county, which is the shape Illinois's frontier work takes and is not a research question so much as bounded work. THE ROSTER IS PUBLISHED AND CARRIES NO DISTRICT. The Department for Local Government's county directory covers all 120 counties with 1,526 officials, 563 of them board members, 98% with a telephone number and 90% with an e-mail address — and no district number anywhere in it, so the join between a person and a district has to come from certified returns or from a county layer that carries its own roster. A COMMISSIONER COUNTY WILL SHIP DRAWN AND UNNAMED when its geometry arrives: KRS 67.060(1) elects each commissioner by the voters of the entire county, one from each district, so the district is a residence requirement rather than an electorate, which is the shape Iowa already handles by drawing the district, saying it is drawn for residence, and naming nobody on it.",
+      "wanted": "A magisterial or commissioner district boundary file for a county that does not publish one, or any source pairing a Kentucky county board member with the district they hold."
+    },
+    {
+      "id": "ky-legislature-roster",
+      "concept": "State legislators",
+      "area": "Kentucky — statewide",
+      "counties": [],
+      "kind": "no-source",
+      "layer": "ky-senate",
+      "summary": "Your Kentucky Senate and House cards name the district you are in and nobody who holds it.",
+      "why": "The General Assembly publishes both rosters and this app has not built them yet. The cards link each chamber's own member directory instead of naming a member it has not verified.",
+      "blocker": "NOT A REFUSAL AND NOT AN ABSENCE — UNBUILT, recorded so the silence on those two cards is legible rather than read as nobody publishing this. The General Assembly publishes a current member directory for the Senate and one for the House, both read cleanly by this project's own client, and robots.txt on that host allows it. What is missing is this instance's scraper and builder pair and its weekly workflow, which is the next roster change rather than a research question. Until it lands, both chamber cards enter the engine chamber factory's roster-miss path deliberately: district identity plus the chamber's official directory, never an invented name.",
+      "wanted": "Nothing from a reader — this one is ours to build."
+    },
+    {
+      "id": "ky-county-officers",
+      "concept": "County officers",
+      "area": "Kentucky — all 120 counties",
+      "counties": [],
+      "kind": "no-source",
+      "layer": "county",
+      "summary": "Your County card names the county and nobody who runs it — no judge-executive, no sheriff, no clerk, no attorney.",
+      "why": "The state does publish a list of every county's elected officials, and this app has not built it into a card yet.",
+      "blocker": "MEASURED 2026-09-30. This one is UNBUILT rather than unpublished, which makes it different from the same record in several sibling instances. The Department for Local Government publishes a page per county naming the judge-executive, the county attorney, the clerk, the sheriff, the jailer, the coroner, the surveyor and the board members, for all 120 counties — 1,526 officials, most with a telephone number and an e-mail address — and robots.txt on that host allows the pages this project would read. So the County card ships as identity only and links that directory, and the work is a scraper, a builder and a weekly workflow. The one thing the directory does not carry is a district number per board member, which is why the districts are a separate record (ky-fiscal-court) rather than part of this one.",
+      "wanted": "Nothing from a reader — this one is ours to build."
+    }
   ]
 }
 ```

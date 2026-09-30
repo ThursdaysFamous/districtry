@@ -85,13 +85,13 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
-them used. MEASURED 2026-09-29 on this branch, AFTER its last edit: a static gate is
+them used. MEASURED 2026-09-30 on this branch, AFTER its last edit: a static gate is
 one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **95**;
-counted instead as script invocations the whole battery is **127 — 116 that need no browser and
-11 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`,
+counted instead as script invocations the whole battery is **130 — 118 that need no browser and
+12 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`ky`,
 2 root-page tests, and the two fleet-wide probes for point transmission and contrast pairs), the
 per-instance `validate_index.py` runs included, and excluding the two `npx playwright install`
-setup lines and the `http.server` that serves the pages to the eleven.
+setup lines and the `http.server` that serves the pages to the twelve.
 
 **THE PAIR IS NO LONGER KEPT BY HAND.** `scripts/validate_gate_counts.py` measures both figures
 off `smoke-test.yml` by exactly the rule above and FAILS naming the current values, so a change
@@ -106,11 +106,13 @@ invocation total against `validate_steward_mirror.py`'s, because that module alr
 same commands for a different question, and two readers of one question is where this fleet's
 recurring defect starts.
 
-The 124/124 pair this paragraph carried on 2026-09-28 was three invocations behind the
-127 that replaced it, with the NAMED-STEP figure unmoved at 95: Minnesota arrived as the
-seventh instance and its three gates — a coverage-gaps check, a `validate_index.py` and a
-Playwright smoke test — went into three EXISTING steps that already run one line per instance,
-so the battery grew and the step count did not. The two figures move independently, and adding
+The 127 this paragraph carried on 2026-09-29 was three invocations behind the 130 that
+replaced it, with the NAMED-STEP figure unmoved at 95 for the SECOND state running: Kentucky
+arrived as the eighth instance and its three gates — a coverage-gaps check, a
+`validate_index.py` and a Playwright smoke test — went into three EXISTING steps that already
+run one line per instance, exactly as Minnesota's had (the 124/124 pair this paragraph carried
+on 2026-09-28 was three behind the 127, for that reason). So the battery grows by three per
+state and the step count does not move at all. The two figures move independently, and adding
 a state moves only one of them.
 
 **TWO BRANCHES CAN EACH BE RIGHT AGAINST THEIR OWN BASE AND BOTH WRONG ONCE MERGED, and the
@@ -217,8 +219,8 @@ each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-29, **127
-invocations for 127**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-30, **130
+invocations for 130**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on

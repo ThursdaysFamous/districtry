@@ -219,6 +219,7 @@ jobs:
             # and metros.json deliberately carries no mn entry until then
             # (validate_instance_registration.py holds the two together).
             'mn/**'
+            'ky/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full
