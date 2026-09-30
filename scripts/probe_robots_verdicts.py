@@ -92,6 +92,7 @@ import json
 import os
 import socket
 import sys
+import time
 from urllib.parse import urlsplit
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -268,7 +269,23 @@ def url_for(inventory, host):
     return ua.choose_url(entry) if entry else "https://%s/" % host
 
 
-def probe_host(host, url, verdict_kind):
+def probe_host(host, url, verdict_kind, reads=1, gap=0):
+    """One host's verdict, or the honest reading of `reads` of them.
+
+    WHY REPEATED READS EXIST AT ALL. A managed challenge answers
+    non-deterministically -- CLAUDE.md records ten of twenty-four reads
+    challenged on one host, with seven of eight host-and-client pairs giving
+    BOTH answers -- so one read decides nothing and the fleet's rule for such a
+    host is a DELIBERATE re-measurement: the crawling client serving on three
+    consecutive reads at least fifteen seconds apart. Nothing here could take
+    that reading, so a host was entered in the sticky table on one challenge and
+    could only ever leave it by hand.
+
+    THE MOST RESTRICTIVE READING IS THE ANSWER, never the last or the luckiest:
+    getting in on the reads where the control happens to be off is working
+    around it. Every reading is kept beside it, so a reader can see the split
+    rather than a verdict that hides it.
+    """
     label, agent, headers = client_for(verdict_kind)
     # The scheme of the url a scraper actually reads, because a host served over
     # http publishes its policy there and asking https would measure a different
@@ -278,30 +295,63 @@ def probe_host(host, url, verdict_kind):
     session = pinned_session(host)
     if session is not None:
         label += "+pinned-chain"
-    try:
-        v = robots_policy.fetch_verdict(robots_url, agent, session=session,
-                                        headers=headers)
-    except Exception as exc:                      # a reader error is a reading
-        return {"host": host, "url": url, "client": label,
-                "status": "error", "why": "%s: %s" % (type(exc).__name__, exc),
-                "allows": None}
-    allowed, why = v.allows(agent, url)
-    row = {
-        "host": host,
-        "url": url,
-        "client": label,
-        "status": v.status,
-        "why": why,
-        "allows": bool(allowed),
-        "http_status": v.http_status,
-    }
-    delay = v.crawl_delay(agent) if v.policy else None
-    if delay:
-        row["crawl_delay"] = delay
-    signal = v.content_signal(agent) if v.policy else None
-    if signal:
-        row["content_signal"] = signal
+
+    def one_read():
+        try:
+            v = robots_policy.fetch_verdict(robots_url, agent, session=session,
+                                            headers=headers)
+        except Exception as exc:                  # a reader error is a reading
+            return {"host": host, "url": url, "client": label,
+                    "status": "error", "why": "%s: %s" % (type(exc).__name__, exc),
+                    "allows": None}
+        allowed, why = v.allows(agent, url)
+        row = {
+            "host": host,
+            "url": url,
+            "client": label,
+            "status": v.status,
+            "why": why,
+            "allows": bool(allowed),
+            "http_status": v.http_status,
+        }
+        delay = v.crawl_delay(agent) if v.policy else None
+        if delay:
+            row["crawl_delay"] = delay
+        signal = v.content_signal(agent) if v.policy else None
+        if signal:
+            row["content_signal"] = signal
+        return row
+
+    readings = []
+    for i in range(max(1, int(reads))):
+        if i and gap:
+            time.sleep(gap)
+        readings.append(one_read())
+    if len(readings) == 1:
+        return readings[0]
+    row = dict(_most_restrictive(readings))
+    row["reads"] = len(readings)
+    row["gap_seconds"] = gap
+    row["readings"] = [{k: r[k] for k in ("status", "why", "allows", "http_status")
+                        if k in r} for r in readings]
     return row
+
+
+# Worst first: a challenge outranks everything, then a read nobody could take,
+# then a policy that refuses, and a plain allow is the answer only when every
+# reading gave one.
+_READING_RANK = ("challenge", "error", "unreachable")
+
+
+def _most_restrictive(readings):
+    for status in _READING_RANK:
+        for r in readings:
+            if r["status"] == status:
+                return r
+    for r in readings:
+        if not r["allows"]:
+            return r
+    return readings[0]
 
 
 def vantage():
@@ -317,24 +367,47 @@ def run(args):
     inventory = ua.build_inventory()
     measured = read_verdicts().get("hosts", {})
     hosts = subject(inventory)
-    if args.host:
+    targeted = bool(args.host)
+    if targeted:
         hosts = [h for h in hosts if h in set(args.host)]
-    rows = {}
+    # A TARGETED RUN MERGES; IT USED TO REPLACE. `--host` wrote a record holding
+    # only the hosts it asked about, so re-measuring one host deleted the other
+    # 508 -- and `--check` passed, because it fails on a host in the record that
+    # nothing fetches and only COUNTS the ones missing from it. So the one flag
+    # meant for settling a single host's disputed reading threw away every other
+    # host's, silently, on the honest path.
+    previous = {}
+    if targeted:
+        if not os.path.exists(args.out):
+            print("probe-robots-verdicts: --host re-measures one host inside an "
+                  "existing record and %s has not been written yet; run the full "
+                  "sweep first" % os.path.basename(args.out), file=sys.stderr)
+            return 1
+        previous = json.load(open(args.out, encoding="utf-8"))
+    rows = dict(previous.get("hosts", {}))
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures = {
             pool.submit(probe_host, h, url_for(inventory, h),
-                        (measured.get(h) or {}).get("verdict", "")): h
+                        (measured.get(h) or {}).get("verdict", ""),
+                        args.reads, args.gap): h
             for h in hosts
         }
         for fut in concurrent.futures.as_completed(futures):
             row = fut.result()
+            if targeted:
+                # The file's own `measured`/`vantage` describe the sweep that
+                # wrote most of it, so a row taken on its own day carries its
+                # own stamp rather than restating the file's.
+                row["measured"] = datetime.date.today().isoformat()
+                row["vantage"] = vantage()
             rows[row["host"]] = row
             print("  %-42s %-7s %s" % (row["host"],
                                        "allow" if row["allows"] else "REFUSE",
                                        row["why"][:90]))
     payload = {
-        "measured": datetime.date.today().isoformat(),
-        "vantage": vantage(),
+        "measured": previous.get("measured") if targeted
+                    else datetime.date.today().isoformat(),
+        "vantage": previous.get("vantage") if targeted else vantage(),
         "subject": "robots.txt of every host the tree fetches, read with the "
                    "client user-agent-measurements.json records as serving it",
         "summary": {
@@ -400,7 +473,15 @@ def main(argv=None):
     ap.add_argument("--out", default=OUT)
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--host", action="append",
-                    help="measure only this host (repeatable)")
+                    help="re-measure only this host inside the existing record "
+                         "(repeatable); every other host's row is kept")
+    ap.add_argument("--reads", type=int, default=1,
+                    help="read this host's robots.txt this many times and report "
+                         "the most restrictive reading, keeping them all — the "
+                         "deliberate re-measurement a challenge-fronted host needs")
+    ap.add_argument("--gap", type=float, default=15,
+                    help="seconds between repeated reads (default 15, the fleet's "
+                         "own bar for a deliberate re-measurement)")
     args = ap.parse_args(argv)
     return check(args) if args.check else run(args)
 

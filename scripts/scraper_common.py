@@ -41,10 +41,10 @@ stack made. (The first sweep read 203: 37 hosts had been probed at the first
 half of a URL split across two string literals, and 23 more at a directory a
 page sat under; not one re-probe moved a host INTO a refusal.) Per file
 (`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
-and the artifact rather than remembered): 102 files send a browser string; 63
+and the artifact rather than remembered): 101 files send a browser string; 62
 of them reach only hosts that serve the token a full page, 22 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 17 reach at least one host that refuses it -- and 266 of
+`requests` stack), and 17 reach at least one host that refuses it -- and 263 of
 the 296 measured hosts are still reached by such a caller. `fetch_stdlib` came
 OFF the browser-marker list on 2026-09-25, which is what moved these four: it is
 the CLIENT for two of the four rungs and sends whatever headers its caller
