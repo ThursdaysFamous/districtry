@@ -87,12 +87,12 @@ This list undercounts what actually runs, and **the figure is stated WITH ITS ME
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
 them used. MEASURED 2026-09-30 on this branch, AFTER its last edit: a static gate is
 one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **96**;
-counted instead as script invocations the whole battery is **137 — 124 that need no browser and
-13 that boot Chromium** (a Playwright smoke test per instance
-`il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`/`nc`, 2 root-page tests, and the two fleet-wide probes for
-point transmission and contrast pairs), the per-instance `validate_index.py` runs included, and
+counted instead as script invocations the whole battery is **140 — 126 that need no browser and
+14 that boot Chromium** (a Playwright smoke test per instance
+`il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`/`nc`/`ky`, 2 root-page tests, and the two fleet-wide probes
+for point transmission and contrast pairs), the per-instance `validate_index.py` runs included, and
 excluding the two `npx playwright install` setup lines and the `http.server` that serves the
-pages to the thirteen.
+pages to the fourteen.
 
 The 127/95 this paragraph carried earlier on 2026-09-29 is the two-branches case above, a fourth
 time, and the most instructive instance of it yet: Minnesota's #1265 and Indiana's #1269 each added
@@ -114,15 +114,28 @@ these three states: **N branches each adding a per-instance line will each measu
 all be wrong once merged, and the error is invisible in every one of the N diffs.** Only
 `validate_gate_counts.py` settles it, and it settled this one on the first run after the merge.
 
-The 95/133 pair this paragraph carried on 2026-09-29 was one step and four invocations behind the
-96/137 that replaced it, and the two figures moved by DIFFERENT amounts in one change: the tribal
-areas reader landed with its own selftest, the Bureau's government list with a drift gate, and the
-land-to-government join with both a selftest and an offline check, all four inside ONE named step
-whose `run:` also installs shapely and pyproj. So the step count moved by one where the invocation
-count moved by four, which is why neither figure can be derived from the other — and this branch's
-own earlier 96/131 was measured correctly against a base that predated Indiana's and North
-Carolina's merges, the N-branches case the paragraphs above describe, caught here by running the
-gate after the merge rather than by reading either diff.
+**AND THEN A FOURTH BRANCH, WHICH MAKES THE POINT ABOVE GENERAL RATHER THAN A STORY ABOUT THREE
+STATES.** Kentucky's #1279 was open across all three of those merges and measured 95/133 the same
+correct way — and so did North Carolina's, from its own stale base, so BOTH SIDES WROTE 133 AND GIT
+MERGED THE INVOCATION LINE SILENTLY for the second time in one day. Measured after the merge the
+battery is **95 / 136 — 122 no browser, 14 Chromium**, the step count unmoved for the FOURTH state
+running. The 133 above is left standing as the record of what the previous merge measured, in the
+posture this section takes toward every superseded figure. What this adds to the N-branches reading
+is the failure MODE: when two branches each add a per-instance line they write the SAME number, so
+the textual conflict that saved the 2026-09-19 case does not occur at all, and there is nothing in
+either diff to look at. Re-run `validate_gate_counts.py` after every merge into a branch that
+touches the battery — not after every edit to it, after every merge.
+
+**AND A FIFTH BRANCH, WHOSE STEP AND INVOCATION COUNTS MOVE BY DIFFERENT AMOUNTS, WHICH IS THE
+HALF THE FOUR STATE BRANCHES COULD NOT SHOW.** The tribal-areas change adds ONE named step
+carrying FOUR invocations — a reader selftest, the Bureau government list's drift gate, and the
+land-to-government join's selftest and offline check, in one `run:` that also installs shapely and
+pyproj. So it takes the battery to **96 / 140 — 126 no browser, 14 Chromium**, the step count
+moving for the first time in five merges while the invocation count moves by four. It also measured
+96/131 and then 96/137 correctly against two bases that each went stale under it within the hour,
+which is the N-branches reading with N set by how many states are landing that day rather than by
+anything in this diff. Neither figure can be derived from the other, and neither can be derived
+from the previous merge's.
 
 **THE PAIR IS NO LONGER KEPT BY HAND.** `scripts/validate_gate_counts.py` measures both figures
 off `smoke-test.yml` by exactly the rule above and FAILS naming the current values, so a change
@@ -267,8 +280,8 @@ each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-30, **137
-invocations for 137**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-30, **140
+invocations for 140**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on
