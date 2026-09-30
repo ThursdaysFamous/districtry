@@ -40,6 +40,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import requests  # noqa: E402
 from build_metro_outline import HEADERS, REQUEST_TIMEOUT, STATE_FIPS  # noqa: E402
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 VTD_URL = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
            "tigerWMS_Census2020/MapServer/58/query")
@@ -90,6 +91,8 @@ def title_case(name):
 
 
 def get_json(url, params, fail):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-vtd-board-districts")
     resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT, params=params)
     resp.raise_for_status()
     data = resp.json()

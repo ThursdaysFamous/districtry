@@ -47,6 +47,12 @@ import os
 import sys
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once, UA_STDLIB_DEFAULT  # noqa: E402  (FLEET_SHARED)
+
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 OUT_PATH = os.path.join(REPO_ROOT, "data", "app", "ia-school-sites.json")
@@ -64,6 +70,7 @@ BBOX = {"min_lat": 40.2, "max_lat": 43.6, "min_lng": -96.8, "max_lng": -90.0}
 
 
 def fetch_json(url):
+    require_robots_once(url, UA_STDLIB_DEFAULT, label="ia-build-ia-school-sites")
     with urllib.request.urlopen(url, timeout=60) as r:
         return json.loads(r.read().decode("utf-8"))
 

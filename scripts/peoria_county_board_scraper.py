@@ -39,7 +39,7 @@ import sys
 import requests
 
 from arcgis_error import raise_for_arcgis_error
-from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
 
 ROSTER_LAYER = ("https://services.arcgis.com/iPiPjILCMYxPZWTc/arcgis/rest/"
                 "services/ElectoralDistricts/FeatureServer/3/query")
@@ -91,6 +91,8 @@ def same_person(a, b):
 
 
 def fetch_roster_layer(session):
+    require_robots_once(ROSTER_LAYER, UA["User-Agent"], headers=UA,
+                        label="il-peoria-county-board-scraper")
     r = session.get(ROSTER_LAYER, headers=UA, timeout=60, params={
         "where": "1=1", "returnGeometry": "false", "f": "json",
         "outFields": "DISTRICTID,REPNAME1,PARTY1,DISTRICTURL1",
@@ -206,6 +208,8 @@ def fetch_index_roles(session):
     side of a `<br>`, so the whole heading is flattened before matching —
     strip_tags + clean turn `James C. Dillon,&nbsp;</a><br><a …>Chairperson<br>
     District 5` into `James C. Dillon, Chairperson District 5`."""
+    require_robots_once(INDEX_URL, UA["User-Agent"], headers=UA,
+                        label="il-peoria-county-board-scraper")
     r = session.get(INDEX_URL, headers=UA, timeout=60)
     r.raise_for_status()
     roles, listed = {}, set()
@@ -226,6 +230,8 @@ def fetch_index_roles(session):
 
 def fetch_member_contact(session, url):
     try:
+        require_robots_once(url, UA["User-Agent"], headers=UA,
+                            label="il-peoria-county-board-scraper")
         r = session.get(url, headers=UA, timeout=60)
         r.raise_for_status()
     except requests.RequestException:

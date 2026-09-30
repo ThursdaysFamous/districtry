@@ -61,6 +61,7 @@ import sys
 
 import pdfplumber
 import requests
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 DIRECTORY_URL = ("https://lasallecountyil.gov/DocumentCenter/View/1425/"
                  "Municipality-Officials-PDF")
@@ -297,6 +298,8 @@ def looks_like_person(name):
 
 
 def fetch_pdf(url):
+    require_robots_once(url, BROWSER_UA, headers={"User-Agent": BROWSER_UA},
+                        label="il-lasalle-municipal-officials-scraper")
     resp = requests.get(url, headers={"User-Agent": BROWSER_UA},
                         timeout=REQUEST_TIMEOUT, allow_redirects=True)
     resp.raise_for_status()

@@ -76,7 +76,7 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://www.kats-mpo.org"
 # Any KATS page carries the year links in its nav; the committee page is the
@@ -117,6 +117,8 @@ def fail(msg):
 
 def get(url, what):
     try:
+        require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-kankakee-municipal-officials-scraper")
         r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
         r.raise_for_status()
         return r

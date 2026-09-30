@@ -35,7 +35,7 @@ import sys
 import time
 
 import requests
-from scraper_common import UA_ROSTER_COMPACT, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_COMPACT, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
 
 DISTRICT_LISTS = {
     1: "https://www.henrycty.com/Directory.aspx?DID=39",
@@ -54,6 +54,8 @@ def fetch(url):
     modeled on (the 2026-08-02 back-to-back-429 story), now called from its
     one shared home. 429 and 5xx are retried; a 404 is not — that would be
     the directory moving, which no amount of waiting fixes."""
+    require_robots_once(url, UA["User-Agent"], headers=UA,
+                        label="il-henry-county-board-scraper")
     return fetch_with_retry(url, UA, timeout=REQUEST_TIMEOUT,
                             attempts=FETCH_ATTEMPTS).text
 

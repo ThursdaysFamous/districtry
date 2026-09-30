@@ -31,6 +31,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import requests  # noqa: E402
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 from build_metro_outline import (  # noqa: E402  (shared machinery — do not fork)
     DISPATCH_COUNTY_FIPS, HEADERS, REQUEST_TIMEOUT, SIMPLIFY_TOLERANCE_M,
     STATE_FIPS, TIGERWEB, point_in_rings, rings_of, simplify,
@@ -1766,6 +1767,8 @@ assert not _CONFLICTS, "county FIPS disagree — " + "; ".join(_CONFLICTS)
 
 
 def fetch_county(fips):
+    require_robots_once(TIGERWEB, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-county-outline")
     resp = requests.get(TIGERWEB, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "STATE='%s' AND COUNTY='%s'" % (STATE_FIPS, fips),
         "outFields": "NAME,GEOID",

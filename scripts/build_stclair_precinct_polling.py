@@ -54,6 +54,7 @@ import re
 import sys
 
 import requests
+from scraper_common import require_robots_once, ua_requests_default  # noqa: E402  (FLEET_SHARED)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW_CSV = os.path.join(REPO_ROOT, "il", "data", "source", "raw",
@@ -117,6 +118,7 @@ def clerk_rows():
 
 
 def layer_names():
+    require_robots_once(LAYER_URL, ua_requests_default(), label="il-build-stclair-precinct-polling")
     resp = requests.get(LAYER_URL, timeout=60)
     resp.raise_for_status()
     payload = resp.json()

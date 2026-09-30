@@ -28,6 +28,17 @@ WHAT IT ANSWERS, beyond yes/no:
     districtry.com starts at the rename. Whether the search card can span the
     report's whole window, or has to start partway through and say so, is
     exactly this number.
+
+NOT GATED ON robots.txt: AUTHENTICATED CHECK OF THIS PROJECT'S OWN
+CREDENTIALS. It presents the operator's service-account key to Search Console
+and GA4 and asks those services which of districtry's own properties the key
+can read -- the documented API for that question, with our credential, about
+our own data. No page is read, no link followed, no url discovered.
+
+THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never which host: an
+unauthenticated read of a page on a Google host would be gated in full. The
+argument is made here in full so it cannot be applied to another Google fetch
+by analogy.
 """
 
 import json

@@ -93,7 +93,7 @@ from comptroller_afr import (  # noqa: E402  (shared machinery — do not fork)
     PACE, SEARCH_FORM, WAREHOUSE, contact_block, enumerate_county, new_session)
 from arcgis_error import (  # noqa: E402  (shared — do not fork)
     ArcGISServiceError, raise_for_arcgis_error, retry_rate_limited)
-from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_COMPACT  # noqa: E402  (shared — do not fork)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DATA = os.path.join(REPO_ROOT, "il", "data", "app")
@@ -340,6 +340,8 @@ def service_names(spec, label):
            + "&outFields=" + spec["field"] + "&returnGeometry=false&f=json")
 
     def ask():
+        require_robots_once(url, UA_ROSTER_COMPACT, headers={"User-Agent": UA_ROSTER_COMPACT},
+                            label="il-il-special-district-officials-scraper")
         with urllib.request.urlopen(
                 urllib.request.Request(url, headers={"User-Agent": UA_ROSTER_COMPACT}),
                 timeout=60) as r:

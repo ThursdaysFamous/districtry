@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Two defects that ship green: a name bound nowhere, and a dict key set twice.
+"""Three defects that ship green: a name bound nowhere, a dict key set twice,
+and a shared module shadowing an instance's own copy of the same name.
 
 WHY THIS EXISTS. On 2026-09-17 the municipal-officials refresh declined Logan
 County's yearbook under robots.txt, exactly as it should, and then filed the
@@ -23,6 +24,18 @@ literal with a key twice keeps the last value silently, and both instances found
 on introduction were a considered edit being overwritten by the row it replaced —
 scripts/build_county_outline.py had two "knox" anchor blocks, and
 wi/scripts/build_wi_county_board_directory.py two "55039" rows whose urls differ.
+
+THE THIRD IS THE ONLY ONE OF THE THREE THAT DOES NOT RAISE AT ALL. On
+2026-09-30 two gap-outline builders were given the root scripts/ on their path
+so they could read the shared robots seam, by inserting it at position 0. That
+directory holds its own build_metro_outline.py — Illinois's — and so does each
+instance's, with that state's own STATE_FIPS and county list, so the insert put
+Illinois's copy first. Michigan's builder then ran to completion against
+Illinois's counties and reported the state fabric as missing five county codes:
+not an ImportError a reader could not miss, but a wrong answer with a plausible
+message. The check fires only where a name is genuinely available from both
+directories, so it says nothing about the thirty-odd files that add the shared
+path and import nothing that can collide.
 
 WHAT IT DELIBERATELY DOES NOT DO IS LINT. pyflakes finds both of these and 71
 other things on this tree — unused imports, unused locals — and none of those
@@ -56,6 +69,7 @@ import ast
 import builtins
 import contextlib
 import io
+import os
 import pathlib
 import sys
 
@@ -201,7 +215,69 @@ def python_files(root):
                   if not SKIP_DIRS & set(p.parts))
 
 
-def check_file(path):
+def shadowing_path_inserts(tree, own_modules, shared_modules):
+    """[(lineno, module)] where a file puts the SHARED scripts/ dir ahead of its
+    own on sys.path while importing a module name both directories hold.
+
+    THE THIRD DEFECT THAT SHIPS GREEN, and the one that does not fail on the
+    import. On 2026-09-30 two gap-outline builders needed the root scripts/ on
+    the path for scraper_common, and got it with `sys.path.insert(0, ...)`. Each
+    also imports build_metro_outline, which EXISTS IN BOTH DIRECTORIES — its own
+    instance's, with that state's STATE_FIPS and county list, and the root's,
+    which is Illinois's. Inserting at 0 put Illinois's copy first, so Michigan's
+    builder ran to completion comparing Michigan's roster against Illinois's
+    counties and reported the state fabric as missing five county codes. An
+    ImportError would have been obvious; this was a wrong answer.
+
+    So a file in that position must APPEND the shared directory, never insert
+    it: an instance's own copy of a module has to win. The check is narrow on
+    purpose — it fires only where a name is genuinely available from both
+    places, so a file that merely inserts a path is not flagged, and neither is
+    one whose imports cannot collide.
+    """
+    shared_inserts = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        fn = node.func
+        if not (isinstance(fn, ast.Attribute) and fn.attr == "insert"
+                and isinstance(fn.value, ast.Attribute) and fn.value.attr == "path"
+                and isinstance(fn.value.value, ast.Name)
+                and fn.value.value.id == "sys"):
+            continue
+        # `sys.path.insert(0, <something naming "scripts">)` is how this tree
+        # spells "put the shared directory on the path". Any other index is not
+        # ahead of the file's own directory, so it cannot shadow.
+        if not (node.args and isinstance(node.args[0], ast.Constant)
+                and node.args[0].value == 0):
+            continue
+        names_scripts = any(
+            isinstance(x, ast.Constant) and x.value == "scripts"
+            for x in ast.walk(node.args[1])) if len(node.args) > 1 else False
+        if names_scripts:
+            shared_inserts.append(node.lineno)
+    if not shared_inserts:
+        return []
+    collidable = sorted(own_modules & shared_modules)
+    imported = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
+            imported.add(node.module.split(".")[0])
+        elif isinstance(node, ast.Import):
+            for alias in node.names:
+                imported.add(alias.name.split(".")[0])
+    hits = [m for m in collidable if m in imported]
+    return [(lineno, m) for lineno in shared_inserts for m in hits]
+
+
+def _modules_in(directory):
+    try:
+        return {f[:-3] for f in os.listdir(directory) if f.endswith(".py")}
+    except OSError:
+        return set()
+
+
+def check_file(path, shared_modules=None):
     """(problems, skipped_reason) for one file."""
     source = path.read_text(encoding="utf-8")
     try:
@@ -218,6 +294,17 @@ def check_file(path):
             problems.append(
                 "%s:%d: name %r is used and bound NOWHERE in this file — it will "
                 "raise NameError the moment this line runs" % (path, lineno, name))
+    if shared_modules is not None:
+        own = _modules_in(path.parent)
+        if str(path.parent.resolve()) != str((ROOT / "scripts").resolve()):
+            for lineno, module in shadowing_path_inserts(tree, own, shared_modules):
+                problems.append(
+                    "%s:%d: this puts the shared scripts/ directory AHEAD of "
+                    "this file's own on sys.path, and %r exists in both — so "
+                    "the shared copy wins and this file silently runs another "
+                    "instance's module. It does not fail on the import; it "
+                    "returns a wrong answer. Append the shared directory "
+                    "instead of inserting it at 0." % (path, lineno, module))
     for lineno, key, first_line in repeated_dict_keys(tree):
         problems.append(
             "%s:%d: dict key %r is set again here with a different value (first "
@@ -234,9 +321,10 @@ def run(root=ROOT):
               % (len(files), root), file=sys.stderr)
         return 1
 
+    shared_modules = _modules_in(pathlib.Path(root) / "scripts")
     problems, skipped = [], []
     for path in files:
-        found, dynamic = check_file(path)
+        found, dynamic = check_file(path, shared_modules)
         problems += found
         if dynamic:
             skipped.append((path.relative_to(root), dynamic))
@@ -256,8 +344,10 @@ def run(root=ROOT):
         return 1
 
     print("OK - %d Python files: every loaded name is bound somewhere in its own "
-          "file, and no dict literal sets a key twice with different values."
-          % len(files))
+          "file, no dict literal sets a key twice with different values, and no "
+          "file shadows its own copy of a module with the shared scripts/ one "
+          "(which holds %d module name(s))."
+          % (len(files), len(shared_modules)))
     return 0
 
 
@@ -316,6 +406,62 @@ def _selftest():
                 for line in problems:
                     print("         %s" % line)
 
+    # The shadowing check needs two directories rather than one source string,
+    # so it is driven against a real tree: an instance's own dir holding its own
+    # copy of a shared module name, and a root scripts/ holding another.
+    SHADOW_CASES = [
+        ("insert(0, .../scripts) while importing a name both dirs hold", """\
+import os, sys
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)), "scripts"))
+from scraper_common import require_robots_once
+from build_metro_outline import STATE_FIPS
+""", 1),
+        ("the same file appending instead", """\
+import os, sys
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(HERE)), "scripts"))
+from scraper_common import require_robots_once
+from build_metro_outline import STATE_FIPS
+""", 0),
+        ("insert(0) but importing nothing that can collide", """\
+import os, sys
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)), "scripts"))
+from scraper_common import require_robots_once
+""", 0),
+        ("a non-zero index cannot get ahead of the file's own directory", """\
+import os, sys
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+sys.path.insert(1, os.path.join(os.path.dirname(os.path.dirname(HERE)), "scripts"))
+from build_metro_outline import STATE_FIPS
+""", 0),
+    ]
+    with tempfile.TemporaryDirectory() as tmp:
+        root = pathlib.Path(tmp)
+        (root / "scripts").mkdir()
+        (root / "scripts" / "scraper_common.py").write_text("", encoding="utf-8")
+        (root / "scripts" / "build_metro_outline.py").write_text(
+            "STATE_FIPS = '17'\n", encoding="utf-8")
+        inst = root / "xx" / "scripts"
+        inst.mkdir(parents=True)
+        (inst / "build_metro_outline.py").write_text(
+            "STATE_FIPS = '26'\n", encoding="utf-8")
+        shared = _modules_in(root / "scripts")
+        for i, (label, source, want) in enumerate(SHADOW_CASES):
+            path = inst / ("shadow%d.py" % i)
+            path.write_text(source, encoding="utf-8")
+            problems, _ = check_file(path, shared)
+            got = [x for x in problems if "AHEAD of" in x]
+            ok = len(got) == want
+            failures += not ok
+            print("  %-4s %s" % ("ok" if ok else "FAIL", label))
+            if not ok:
+                print("       wanted %d, got %d: %s" % (want, len(got), got))
+
     # The walk itself: a directory with too few files must FAIL rather than
     # report a clean sweep of nothing.
     with tempfile.TemporaryDirectory() as tmp:
@@ -331,7 +477,7 @@ def _selftest():
     if failures:
         print("\n%d self-test(s) failed." % failures, file=sys.stderr)
         return 1
-    print("\nOK - both checks behave on source that carries each defect and on "
+    print("\nOK - all three checks behave on source that carries each defect and on "
           "source that carries its near-miss.")
     return 0
 

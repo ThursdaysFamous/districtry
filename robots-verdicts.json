@@ -3,21 +3,15 @@
  "vantage": "GitHub Actions runner on runnervmtr4k5",
  "subject": "robots.txt of every host the tree fetches, read with the client user-agent-measurements.json records as serving it",
  "summary": {
-  "hosts": 509,
+  "hosts": 508,
   "allow": 451,
-  "refuse": 58,
-  "unreadable": 17
+  "refuse": 57,
+  "unreadable": 16,
+  "removed_not_a_subject": {
+   "127.0.0.1": "A loopback server this repository starts itself: build_district_search.py serves the app to a headless browser and selftest_scraper_common.py serves its own fixture. The recorded row was a connection refused against the literal template 'http://127.0.0.1:%d/il/' with nothing listening, so it was a measurement of nothing carrying allows: false -- a loopback address reading as a host that refuses us. Removed 2026-09-30, in the change that added the address to probe_user_agents.SKIP_HOST_RE beside 'localhost', which was already there; the two are one address written two ways."
+  }
  },
  "hosts": {
-  "127.0.0.1": {
-   "host": "127.0.0.1",
-   "url": "http://127.0.0.1:%d/il/",
-   "client": "token",
-   "status": "unreachable",
-   "why": "robots.txt unreachable: URLError: <urlopen error [Errno 111] Connection refused> (unchanged after 3 attempts)",
-   "allows": false,
-   "http_status": null
-  },
   "adamscounty.iowa.gov": {
    "host": "adamscounty.iowa.gov",
    "url": "https://adamscounty.iowa.gov/about/elected_officials/city/",

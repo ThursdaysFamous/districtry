@@ -49,7 +49,7 @@ import sys
 from datetime import datetime, timezone
 
 import requests
-from scraper_common import UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
 
 GUIDE_URL = "https://clerk.kanecountyil.gov/Elections/Documents/GovernmentGuide.pdf"
 ELECTIONS_URL = "https://clerk.kanecountyil.gov/elections"
@@ -92,6 +92,8 @@ MIN_HEADS = 26
 
 
 def fetch_pdf(url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-kane-municipal-officials-scraper")
     resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     body = resp.content

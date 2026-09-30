@@ -52,7 +52,7 @@ import time
 from datetime import datetime, timezone
 
 import requests
-from scraper_common import UA_CHROME_WIN_126_FULL  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CHROME_WIN_126_FULL  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://www2.kanecountyil.gov"
 LISTING_PAGE = BASE + "/pages/countyboard/boardMembers.aspx"
@@ -77,6 +77,8 @@ def fetch_items(retries=3, timeout=30):
     last_err = None
     for attempt in range(retries):
         try:
+            require_robots_once(API_URL, HEADERS["User-Agent"], headers=HEADERS,
+                                label="il-kane-county-board-scraper")
             resp = requests.get(API_URL, headers=HEADERS, timeout=timeout)
             if resp.status_code == 200:
                 items = resp.json().get("value", [])
