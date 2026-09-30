@@ -3,21 +3,15 @@
  "vantage": "GitHub Actions runner on runnervmtr4k5",
  "subject": "robots.txt of every host the tree fetches, read with the client user-agent-measurements.json records as serving it",
  "summary": {
-  "hosts": 509,
+  "hosts": 508,
   "allow": 450,
-  "refuse": 59,
-  "unreadable": 17
+  "refuse": 58,
+  "unreadable": 16,
+  "removed_not_a_subject": {
+   "127.0.0.1": "A loopback server this repository starts itself: build_district_search.py serves the app to a headless browser and selftest_scraper_common.py serves its own fixture. The recorded row was a connection refused against the literal template 'http://127.0.0.1:%d/il/' with nothing listening, so it was a measurement of nothing carrying allows: false -- a loopback address reading as a host that refuses us. Removed 2026-09-30, in the change that added the address to probe_user_agents.SKIP_HOST_RE beside 'localhost', which was already there; the two are one address written two ways."
+  }
  },
  "hosts": {
-  "127.0.0.1": {
-   "host": "127.0.0.1",
-   "url": "http://127.0.0.1:%d/il/",
-   "client": "token",
-   "status": "unreachable",
-   "why": "robots.txt unreachable: URLError: <urlopen error [Errno 111] Connection refused> (unchanged after 3 attempts)",
-   "allows": false,
-   "http_status": null
-  },
   "adamscounty.iowa.gov": {
    "host": "adamscounty.iowa.gov",
    "url": "https://adamscounty.iowa.gov/about/elected_officials/city/",
@@ -257,7 +251,7 @@
    "url": "https://carbondalepubliclibrary.org/aboutus/board-of-trustees/",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (12432 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (12432 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -275,7 +269,7 @@
    "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -446,7 +440,7 @@
    "url": "https://claycounty.illinois.gov/county-board/",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (11970 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (11970 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -759,7 +753,7 @@
    "url": "https://data.openstates.org/people/current/ca.csv",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -797,7 +791,7 @@
    "url": "https://dekalbcountyclerkil.gov/wp-content/uploads/2025/11/2025-2026_Yearbook_Web.pdf",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (12077 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (12077 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -815,7 +809,7 @@
    "url": "https://detroitmi.gov/government/city-council",
    "client": "chrome+hints",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -942,7 +936,7 @@
    "url": "https://edgarcountyillinois.com/county-board/",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (11929 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (11929 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -1033,7 +1027,7 @@
    "url": "https://franklincountyil.gov/elections/",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (12192 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (12192 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -1240,7 +1234,7 @@
    "url": "https://idapubliclibrary.org/contact/",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (12053 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (12053 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -1375,7 +1369,7 @@
    "url": "https://iowa-icaa.com/Roster/%40RosterOfCA%26ACAs.pdf",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (12028 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (12028 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -1438,7 +1432,7 @@
    "url": "https://irp.cdn-website.com/4e51b38b/files/uploaded/White%20County%2C%20IL%20voting%20districts%20%26%20precincts%20map.pdf",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -1583,7 +1577,7 @@
    "url": "https://lakecountymi.gov/board-of-commissioners/",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (12388 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (12388 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -1746,7 +1740,7 @@
    "url": "https://marshallcountyillinois.gov/wp-content/uploads/2026/01/2026-New-County-Board-Roster-.pdf",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (12020 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (12020 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -1791,7 +1785,7 @@
    "url": "https://midlandcountymi.gov/boc-people",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (11814 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (11814 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -1911,7 +1905,7 @@
    "url": "https://oceana.mi.us/government/board-of-commissioners/",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (12030 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (12030 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -2181,7 +2175,7 @@
    "url": "https://salinecounty.illinois.gov/county-board/",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (7154 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (7154 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -2262,7 +2256,7 @@
    "url": "https://services.arcgis.com/i14SLLmXo7Hn9vNc/ArcGIS/rest/services",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -2271,7 +2265,7 @@
    "url": "https://services1.arcgis.com/FDsAtKBk8Hy4cAH0/arcgis/rest/services",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -2280,7 +2274,7 @@
    "url": "https://services2.arcgis.com/5ckbIY7K9TUKoseK/arcgis/rest/services",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -2289,7 +2283,7 @@
    "url": "https://services3.arcgis.com/HXjsHxkFFcZquC8P/arcgis/rest/services",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -2298,7 +2292,7 @@
    "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_Fire_Battalions/FeatureServer/0",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -2307,7 +2301,7 @@
    "url": "https://services6.arcgis.com/am689ZyfXfdo9vCK/arcgis/rest/services",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -2316,7 +2310,7 @@
    "url": "https://services7.arcgis.com/Sngx5exQaxXjq6qG/arcgis/rest/services/Voting_Districts/FeatureServer/0",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -2325,7 +2319,7 @@
    "url": "https://services8.arcgis.com/o4NJgD3NfeHnWy06/arcgis/rest/services",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -2334,7 +2328,7 @@
    "url": "https://services9.arcgis.com/6FnscPPlUa9DXXOk/arcgis/rest/services/SilvisWards/FeatureServer/0/query",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -2591,7 +2585,7 @@
    "url": "https://www.adamscountyil.gov/county-board",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -2726,7 +2720,7 @@
    "url": "https://www.browncoil.org/county-board/",
    "client": "token",
    "status": "absent",
-   "why": "robots.txt redirects did not resolve (HTTP 301) \u2014 RFC 9309 2.3.1.2 allows treating that as unavailable: allow all",
+   "why": "robots.txt redirects did not resolve (HTTP 301) — RFC 9309 2.3.1.2 allows treating that as unavailable: allow all",
    "allows": true,
    "http_status": 301
   },
@@ -2754,7 +2748,7 @@
    "url": "https://www.calhouncountyil.gov/government/county-board/members/",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (12095 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (12095 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -2790,7 +2784,7 @@
    "url": "https://www.centralialibrary.org/about-us/board-of-trustees/",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (11961 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (11961 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -2845,7 +2839,7 @@
    "url": "https://www.christiancountyil.gov/wp-content/uploads/Reapportionment-Plan-on-File-with-County-Clerk-2021.pdf",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -3859,7 +3853,7 @@
    "url": "https://www.mackinaccounty.net/departments/commissioners/",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (12459 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (12459 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -4185,7 +4179,7 @@
    "url": "https://www.polkcountyiowa.gov/board-of-supervisors/",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -4203,7 +4197,7 @@
    "url": "https://www.portagewi.gov/mayor-and-council",
    "client": "token",
    "status": "challenge",
-   "why": "robots.txt answered with a managed challenge (11996 bytes of markup, not a document) \u2014 an access control",
+   "why": "robots.txt answered with a managed challenge (11996 bytes of markup, not a document) — an access control",
    "allows": false,
    "http_status": 200
   },
@@ -4461,7 +4455,7 @@
    "url": "https://www.washburnsheriff.org/",
    "client": "chrome+hints",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   },
@@ -4646,7 +4640,7 @@
    "url": "https://y.org/city-council",
    "client": "token",
    "status": "refused",
-   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "why": "robots.txt refused to this client (HTTP 403) — no readable policy",
    "allows": true,
    "http_status": 403
   }

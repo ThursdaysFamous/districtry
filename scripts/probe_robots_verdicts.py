@@ -43,12 +43,17 @@ measurement of 2026-09-29, where probing a browser string on a host already
 serving the token got this address redirected for every request afterwards.
 
 A `refuse` VERDICT OF STATUS `unreachable` IS NOT A POLICY AND MUST NOT BE WIRED
-ON. Measured on the first full run, 2026-09-30, 17 of the 59 non-allowing hosts
+ON. Measured on the first full run, 2026-09-30, 16 of the 58 non-allowing hosts
 answered nothing rather than a refusal, and most of those were TIMEOUTS from the
 runner on hosts that serve this sandbox a policy within a second --
 www.wicourts.gov, docs.legis.wisconsin.gov, mapservices.legis.wisconsin.gov,
 gisservices.its.ny.gov, gis.lasallecounty.org, librarylearning.org,
-www.revenue.wi.gov among them. Three attempts apart, the timeout is the runner's
+www.revenue.wi.gov among them. A seventeenth was 127.0.0.1, which was never a
+crawl subject at all -- a loopback server this repository starts itself, read at a
+literal `%d` port template with nothing listening -- and it is out of the record
+now, with the reason in the record's own summary. It is the same defect as the
+timeouts in miniature and the easiest to see: the row said a host refuses us when
+what happened was that nobody answered. Three attempts apart, the timeout is the runner's
 route rather than the host's answer, and this project has already paid once for
 treating an unreadable read as a decision: four hosts whose only symptom was an
 incomplete TLS chain read as refusing while their pages were being fetched
