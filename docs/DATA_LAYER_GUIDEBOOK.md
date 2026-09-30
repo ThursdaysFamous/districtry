@@ -8363,6 +8363,49 @@ NOT YET DRAFTED, and each needs a verified address first: Racine Unified
 (gap `rusd-school-board`), the City of Madison (TID 55's geometry), and the
 five county 911 authorities whose NG911 filings are absent.
 
+
+#### 2026-09-30: Ask 32 — the City of Milwaukee's map host, and the one ask a substitute cannot replace
+
+`milwaukeemaps.milwaukee.gov` publishes `User-agent: * / Disallow: /` with
+Google's crawlers excepted (measured 2026-09-05, re-measured 2026-09-30 with
+the exact client the builders send). Six shipped layers were built from it,
+all of them the city's own publication: the aldermanic roster attribute, MPS
+school board districts, police districts, police squad areas, the
+190-neighbourhood planning fabric, and tax incremental districts. Every one
+still ships under the preserve ruling of 2026-09-19; what stopped is
+re-verification.
+
+**THE SUBSTITUTE SEARCH CAME FIRST AND IT IS WHY THIS ASK IS WORTH SENDING.**
+`wi/WATCH.md` carries the whole measurement: the city's own open-data portal
+allows the shapefiles these builders already download as their area witness,
+and the city's own hosted feature services permit us and answer in WGS84 —
+between them covering four of the six. **Three have no substitute at all**:
+police districts, police squad areas and the neighbourhood fabric. So this is
+not an ask sent in place of work that could be done anyway. For three layers
+it is the difference between a boundary that stays current and one that ages
+quietly while the rest do not — which is the shape this project treats as a
+gap rather than a nuisance.
+
+**THE RECIPIENT IS AN OFFICE MAILBOX PUBLISHED ON THE PAGE THAT DOCUMENTS THE
+SERVICE.** `gis@milwaukee.gov`, from `city.milwaukee.gov/mapmilwaukee/services`
+— the same page that publishes `https://milwaukeemaps.milwaukee.gov/arcgis/rest/`
+as a service "to be used in desktop software or web mapping applications". Two
+of the portal's datasets carry a named maintainer instead, and neither was
+used: the question is about the server's policy rather than any one dataset,
+and a policy question does not belong on one person's desk. **The city's own
+two surfaces say different things about the same host** — a REST root offered
+for use, and a blanket disallow on that host — which is very likely a web
+server default rather than a decision, and is exactly what one short reply
+settles.
+
+**NOT YET ASKED — DRAFTED 2026-09-30** (`docs/ASK_DRAFTS.md` Ask 32). The
+operator sends; the send date goes in that draft, this entry and
+`wi/WATCH.md` the day it goes and never before. **Nothing is fetched
+meanwhile**: the monthly provenance probe already declines the host, the three
+builders that read it are operator-run and unscheduled, and an outstanding ask
+is not a permission. A take-down is offered in the draft as a real outcome,
+because a permission ask that hides its worst answer is not an honest one.
+
 ### NYC and SF gap panels cannot lead with local gaps (recorded 2026-08-27, CLOSED the same day)
 
 Found while fixing Wisconsin's, and recorded rather than quietly left: `nyc`

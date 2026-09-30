@@ -2582,3 +2582,132 @@ worth their knowing about.
 
 **Worth is the only county in the sweep with this shape**, so this ask does not generalise to a
 tranche. If a later sweep finds more, they can go together.
+
+---
+
+
+## Ask 32 — City of Milwaukee GIS: permission to read the Map Milwaukee services automatically
+
+> **NOT YET ASKED — DRAFTED 2026-09-30.** A first approach to this office. It asks for
+> permission, not for data: the city already publishes every one of these layers, and every
+> one of them already ships on the map. Nothing is blocked, nothing is being worked around,
+> and nothing is currently being fetched from the host — the monthly provenance probe
+> declines it and the three builders that read it are run by hand and are on hold.
+
+**What changed.** `milwaukeemaps.milwaukee.gov` publishes, in the group that binds every one
+of this project's clients:
+
+    User-agent: *
+    Disallow: /
+
+with an exception for Google's crawlers. Measured 2026-09-05 and re-measured 2026-09-30
+through `scripts/robots_policy.py` with the exact client the builders send
+(`districtry/1.0 (+https://districtry.com/wi/)`). Six shipped layers were built from that
+host, all six of them the city's own:
+
+| layer | service read |
+|---|---|
+| Aldermanic districts (the roster attribute) | `election/alderman/MapServer/0` |
+| MPS school board districts | `AGO/MPS_School_Districts/MapServer/1` |
+| Police districts | `MPD/MPD_geography/MapServer/2` |
+| Police squad areas | `MPD/MPD_geography/MapServer/1` |
+| Neighbourhoods (the 190-area planning fabric) | `planning/special_districts/MapServer/4` |
+| Tax incremental districts | `planning/special_districts/MapServer/8` |
+
+**What ships now.** All six, exactly as they were last read, carried forward rather than
+re-fetched, because `robots.txt` governs retrieval and not what already-public information may
+be shown (the operator's ruling of 2026-09-19: *"Preserve data we have already fetched."*).
+What is lost is re-verification: a redrawn district or a new alderperson will sit on the card
+until the layer can be read again or the data arrives another way.
+
+**Why this ask is worth sending rather than simply substituting.** The permitted substitutes
+are measured and recorded in `wi/WATCH.md`, and they cover four of the six: the city's own
+open-data portal allows every shapefile these builders already download as their area
+witness, and the city's own hosted feature services on `services1.arcgis.com/5ly0cVV70qsN8Soc`
+permit us and answer in WGS84. **Three layers have no substitute at all** — police districts,
+police squad areas and the 190-neighbourhood fabric — and for those the only permitted route
+is the portal's static shapefiles, which are filed in a 1927 state-plane projection that would
+need a datum shift this project has never performed. So the ask is not a shortcut around work
+that could be done anyway; for three layers it is the difference between a layer that stays
+current and one that quietly ages.
+
+**One thing worth naming, and not as a complaint.** The city's own GIS Web Services page at
+`city.milwaukee.gov/mapmilwaukee/services` publishes `https://milwaukeemaps.milwaukee.gov/arcgis/rest/`
+as a service "to be used in desktop software or web mapping applications", while the same
+host's `robots.txt` asks automated clients not to read anything. Both are the city's, and the
+likeliest explanation is a blanket default on a web server rather than a decision about map
+services. That is exactly the kind of thing one short reply settles.
+
+**The ask, in one sentence.** Would the GIS office be willing either to say that an automated
+read of those six services is acceptable, or to point at the route it would rather we used?
+
+**Recipient.** `gis@milwaukee.gov` — the office mailbox the city's own GIS Web Services page
+publishes, on the page that documents this very service. Not a named individual: two of the
+datasets carry a named maintainer on the open-data portal, but the question is about the
+mapping server's policy rather than any one dataset, and writing to an office avoids putting a
+policy question on one person's desk.
+
+Draft:
+
+> Subject: districtry.com — permission to read the Map Milwaukee services automatically
+>
+> Dear City of Milwaukee GIS office,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which civic
+> districts cover a given address and who represents them there. Wisconsin's instance is at
+> districtry.com/wi/. For the City of Milwaukee it shows your aldermanic districts with each
+> alderperson named, Milwaukee Public Schools' board districts, police districts and squad
+> areas, the neighbourhood planning areas, and the tax incremental districts — all six of
+> them read from your Map Milwaukee ArcGIS services, and each one credited to its publisher on
+> the map's sources page — the City for five of them, Milwaukee Public Schools for the sixth.
+>
+> I have stopped reading those services. Your robots.txt at milwaukeemaps.milwaukee.gov asks
+> automated clients not to read anything on that host, so I am following the request. The
+> services themselves work perfectly well — this is not a problem with your website, and I am
+> not asking you to change a policy you meant.
+>
+> The reason I am writing rather than simply stopping is that four of those six layers I can
+> get elsewhere from the City — your open-data portal allows the shapefiles, and your hosted
+> feature services on ArcGIS Online allow automated reads — but police districts, squad areas
+> and the neighbourhood areas I cannot. For those three, the Map Milwaukee services are the
+> only current source I am permitted to read, so without them those boundaries will slowly
+> age on the map while the rest stay current.
+>
+> Three ways forward, whichever suits you best, and a plain "no" is a genuinely useful answer:
+>
+> 1. If an automated read of those services — a handful of requests, no more often than once
+>    a month — is acceptable to you, a short note saying so is all I need.
+> 2. If the blanket rule is deliberate but some paths are fine, naming them would be just as
+>    good.
+> 3. If you would rather I used a different route altogether, telling me which one closes the
+>    question for good, and I will use it.
+>
+> One small thing you may want to know either way: the copy of the tax incremental districts
+> published on your ArcGIS Online account was last updated in October 2025 and returns 73
+> active districts, where the shapefile on data.milwaukee.gov returns 79. The shapefile looks
+> like the current one.
+>
+> Whatever you decide, the boundaries already published stay on the map, marked as last read
+> on the date they were read, so nobody is told a boundary is current when it has not been
+> re-checked. If you would prefer they came down instead, say so and they will.
+>
+> Thank you for publishing this at all — a city that puts its police districts, its
+> neighbourhood areas and its TIDs out as open data is not the norm.
+>
+> <YOUR NAME>
+> districtry.com
+> <YOUR E-MAIL>
+
+**What each answer means.**
+
+| answer | what it settles |
+|---|---|
+| "yes, that is fine" | The six layers go back on a schedule with the permission recorded beside each provenance row and cited in `wi/WATCH.md`. Nothing else changes. |
+| "these paths are fine" | The same, narrowed to the named paths; anything outside them moves to the substitutes already measured. |
+| "use the portal / ArcGIS Online instead" | The question closes for good. The four substitutable layers move; the three that cannot are recorded as a re-verification gap with the city's own answer as its reason, which is a far better record than silence. |
+| "please take them down" | A real outcome and the ask should not pretend otherwise: the six files leave `wi/data/app/`, their dispatch entries and worksheet rows go, and the gap record reopens citing the withdrawal. |
+| no reply after the follow-up cadence | `UNRESPONSIVE` in the ledger — a claim about the ask, never about the policy. The disallow still binds, the shipped data still stands, and the substitutes are built instead. |
+
+**Two things deliberately left out.** No named individual, for the reason above. And no request
+for anything the city does not already publish: every layer named in the note is already public
+on at least one City surface, so the question is purely about how it may be read.
