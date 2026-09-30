@@ -70,6 +70,7 @@ IDS = {
     "Q1384": "New York",
     "Q62": "San Francisco",
     "Q1527": "Minnesota",
+    "Q1603": "Kentucky",
 }
 
 # metros.json tag -> the jurisdiction item that instance answers for. STATED,
@@ -101,9 +102,20 @@ IDS = {
 # P131 = Q30 (United States). Q1537 came back in the same six and matched this
 # table's existing wi entry, which is the control that the route reads what it
 # claims to. Its English label is the bare string "Minnesota".
+#
+# ky was added at the 2026-09-30 go-live by the same route and NOT searched for:
+# Q1603 is one of the six ids in Q1204's own P47 (shares border with), so it was
+# derived from an id already in this table. Identified by its own properties
+# rather than its label: P31 = Q35657 ("U.S. state", the class every other entry
+# here but ca instantiates), P300 = "US-KY", P131 = Q30 (United States). Q1537,
+# Q1546 and Q1166 came back in the same six and match this table's existing wi,
+# ia and mi entries, which is the control that the route reads what it claims
+# to. Its English label is the bare string "Kentucky"; writing "Commonwealth of
+# Kentucky" — the state's own constitutional name, and the tempting one — would
+# fail --verify character for character.
 JURISDICTION = {
     "il": "Q1204", "wi": "Q1537", "ia": "Q1546", "mi": "Q1166",
-    "ny": "Q1384", "ca": "Q62", "mn": "Q1527",
+    "ny": "Q1384", "ca": "Q62", "mn": "Q1527", "ky": "Q1603",
 }
 
 

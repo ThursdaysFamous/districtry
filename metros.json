@@ -126,6 +126,24 @@
       "landing_name": "Minnesota",
       "blurb": "All 87 counties: townships and cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Minnesota Senate, House and U.S. House districts, and who holds the U.S. House seats.",
       "scope": "all 87 counties"
+    },
+    {
+      "id": "kentucky",
+      "explorer_name": "districtry Kentucky",
+      "label": "Kentucky",
+      "url": "https://districtry.com/ky/",
+      "emoji": "🐎",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -89.62,
+        "minLat": 36.45,
+        "maxLng": -81.91,
+        "maxLat": 39.2
+      },
+      "tag": "ky",
+      "landing_name": "Kentucky",
+      "blurb": "All 120 counties: the county a point sits in, and the Kentucky Senate, House and U.S. House districts \u2014 with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the fiscal courts, and the Data gaps panel says why.",
+      "scope": "all 120 counties"
     }
   ]
 }
