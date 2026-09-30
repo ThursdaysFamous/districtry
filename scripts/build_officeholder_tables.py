@@ -857,15 +857,21 @@ def legislator_tables():
     """The twelve legislator pages, read from the script that generates them."""
     out = []
     for tag, inst in sorted(LEGISLATOR_INSTANCES.items()):
-        spec = inst["legislature"]
-        out.append(dict(
-            tag=tag, page=spec["file"], worksheet=inst["worksheet"],
-            sections=[dict(roster="data/app/" + ch["roster"],
-                           seat="District", holder=ch["holder"],
-                           office_label="District office",
-                           body="the " + ch["name"], org=ch["name"],
-                           heading="Who represents each %s district" % ch["name"])
-                      for ch in spec["chambers"]]))
+        # An instance with no `legislature` key ships no state-legislature page,
+        # which build_legislator_pages.NO_LEGISLATURE_PAGE records with its
+        # reason and re-audits every run. There is no page here to put a table
+        # on, and a section keyed on a roster file that does not exist would
+        # fail on a page nobody serves.
+        spec = inst.get("legislature")
+        if spec:
+            out.append(dict(
+                tag=tag, page=spec["file"], worksheet=inst["worksheet"],
+                sections=[dict(roster="data/app/" + ch["roster"],
+                               seat="District", holder=ch["holder"],
+                               office_label="District office",
+                               body="the " + ch["name"], org=ch["name"],
+                               heading="Who represents each %s district" % ch["name"])
+                          for ch in spec["chambers"]]))
         cong = inst["congress"]
         out.append(dict(
             tag=tag, page=cong["file"], worksheet=inst["worksheet"],

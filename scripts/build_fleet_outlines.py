@@ -62,6 +62,11 @@ SOURCES = {
     "wi": "wi/data/app/wi-state-outline.json",
     "ia": "ia/data/app/metro-outline.json",
     "mi": "mi/data/app/metro-outline.json",
+    # Minnesota's coverage ring IS its state outline — the instance ships one
+    # tier and its thirteen layers all answer statewide — so the dissolve of
+    # its 87 counties is the widest ground it answers on, the same shape as ia
+    # and mi.
+    "mn": "mn/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

@@ -215,10 +215,7 @@ jobs:
             wi/data/state wi/data/source wi/scripts 'wi/data/*.geojson'
             ia/data/state ia/data/source ia/scripts
             mi/data/state mi/data/source mi/scripts
-            # Minnesota arrives dark: the whole folder is excluded until go-live,
-            # and metros.json deliberately carries no mn entry until then
-            # (validate_instance_registration.py holds the two together).
-            'mn/**'
+            mn/data/state mn/data/source mn/scripts
             # Indiana is DARK: the whole folder is excluded until its go-live
             # change narrows this to the granular set the siblings use and
             # adds `in` to the presence loop below.
@@ -306,14 +303,14 @@ jobs:
           for unpublished in engine; do
             test ! -e "_site/$unpublished" || { echo "::error::$unpublished leaked into the published tree"; exit 1; }
           done
-          # R5: ny/, ca/, wi/, ia/ and (as of Michigan's go-live PR) mi/ are
-          # LIVE now — chidistricts.com's subdomains forward to /ny and /ca, so
+          # R5: ny/, ca/, wi/, ia/, mi/ and (as of Minnesota's go-live PR) mn/
+          # are LIVE now — chidistricts.com's subdomains forward to /ny and /ca, so
           # an assemble that drops any of them serves a 404 to every redirected
           # visitor or every reader of districtry.com/<tag>/. The old guard
           # asserted their ABSENCE; publishing them means asserting their
           # PRESENCE, or the same silent failure the il/index.html check
           # exists to prevent happens to the siblings.
-          for published in ny ca wi ia mi; do
+          for published in ny ca wi ia mi mn; do
             test -f "_site/$published/index.html" || { echo "::error::assemble produced no $published/index.html"; exit 1; }
           done
           echo "Published tree:" && find _site -type f | sort
