@@ -35,6 +35,23 @@ import sys
 import requests
 
 SITE = "https://districtry.goatcounter.com"
+# ROBOTS.TXT IS NOT READ HERE, DELIBERATELY, AND THIS IS THE ONE PLACE IN THE
+# FLEET THAT ARGUMENT IS MADE. The host serves `User-agent: * / Disallow: /`
+# (26 bytes, measured 2026-09-30), which under this project's own rule would
+# stop the traffic report. It does not apply: robots.txt is a protocol for
+# CRAWLERS reading a site's public pages, and this is an AUTHENTICATED request
+# to districtry's OWN account with districtry's own share token, reading
+# districtry's own visit counts. GoatCounter's blanket rule keeps search
+# engines out of customer dashboards; it is not a site telling its own account
+# holder not to read their own statistics, and the token is the service's
+# documented way of doing exactly that.
+#
+# THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, not which host. Nothing else in
+# this repository reaches a host on those terms -- every other fetch is an
+# unauthenticated read of somebody else's public pages, where the rule binds in
+# full and is obeyed without exception. If a second authenticated
+# own-account fetch ever appears, it belongs under this reasoning and not under
+# a widening of the crawl rule.
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                    "data", "goatcounter-traffic.json")
 

@@ -56,6 +56,16 @@ TWO TABLES, BECAUSE THEY ARE TWO DIFFERENT CLAIMS.
   measurement; a per-FILE exemption would hide the same fact where nobody
   measures it.
 
+  IT HAS ONE ENTRY SINCE 2026-09-30, `goatcounter_fetch.py`, and it is the class
+  the paragraph above was holding the table open for rather than a loosening of
+  it: an authenticated read of this project's OWN analytics account with its own
+  token, where the host's blanket rule is aimed at search engines reading
+  customer dashboards. The three candidates rejected on introduction are all
+  still in the backlog, because each is an ordinary automatic client fetching
+  somebody else's host. The distinction is whose data and whose credential,
+  never which host, and it is argued in the exempt file rather than here so it
+  cannot be picked up by analogy from a one-line reason.
+
 WHAT IT CANNOT SEE, stated rather than implied. It asks whether a file reaches
 the seam, never whether it reaches it BEFORE its first fetch or for EVERY host
 it touches. A scraper that gates one rung of a three-client ladder and fetches
@@ -278,7 +288,6 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/franklin_county_board_scraper.py
     scripts/fulton_county_board_scraper.py
     scripts/generate_metro_files.py
-    scripts/goatcounter_fetch.py
     scripts/gsc_fetch.py
     scripts/henry_county_board_scraper.py
     scripts/henry_municipal_officials_scraper.py
@@ -340,7 +349,26 @@ UNWIRED_AT_SWEEP = frozenset("""
 """.split())
 
 # path -> (reason, date). EMPTY on introduction, deliberately; see the docstring.
-DECLARED_EXEMPT = {}
+# ONE ENTRY SINCE, and it is the class the docstring said it was reserving the
+# table for: a fetch that genuinely must not be gated, rather than one that has
+# not been gated yet.
+DECLARED_EXEMPT = {
+    "scripts/goatcounter_fetch.py": (
+        "AUTHENTICATED READ OF THIS PROJECT'S OWN ACCOUNT, not a crawl of "
+        "somebody else's pages. districtry.goatcounter.com serves `User-agent: * "
+        "/ Disallow: /` (26 bytes, measured 2026-09-30), which taken literally "
+        "would stop the traffic report; robots.txt is a protocol for crawlers "
+        "reading a site's public pages, and this fetch presents districtry's own "
+        "share token to read districtry's own visit counts, which is the "
+        "service's documented way to do that. The blanket rule keeps search "
+        "engines out of customer dashboards and is not a service telling an "
+        "account holder not to read their own statistics. THE TEST IS WHOSE DATA "
+        "AND WHOSE CREDENTIAL, never which host: every other fetch in this "
+        "repository is an unauthenticated read of somebody else's public pages, "
+        "where the rule binds in full. The argument is made at length in the "
+        "file itself so it cannot be applied by analogy from here",
+        "2026-09-30"),
+}
 
 
 def main(argv):
