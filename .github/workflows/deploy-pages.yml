@@ -219,6 +219,10 @@ jobs:
             # and metros.json deliberately carries no mn entry until then
             # (validate_instance_registration.py holds the two together).
             'mn/**'
+            # Indiana is DARK: the whole folder is excluded until its go-live
+            # change narrows this to the granular set the siblings use and
+            # adds `in` to the presence loop below.
+            'in/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full
