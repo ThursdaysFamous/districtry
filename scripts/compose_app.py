@@ -64,6 +64,8 @@ INSTANCES = {
     "ia": ["ia/index.html", "ia/sw.js"],
     "mi": ["mi/index.html", "mi/sw.js"],
     "mn": ["mn/index.html", "mn/sw.js"],
+    "in": ["in/index.html", "in/sw.js"],
+    "nc": ["nc/index.html", "nc/sw.js"],
 }
 
 # The sub-pages — every published page that is not the app. They compose the

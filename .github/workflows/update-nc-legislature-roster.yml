@@ -1,0 +1,99 @@
+name: Update NC legislature roster
+
+# Weekly refresh of the N.C. Senate + House rosters
+# (nc/data/app/nc-senate-members.json and nc-house-members.json, fetched by
+# nc/index.html's chamber cards). Rebuilds both chambers from the Open States
+# current-people export (nc.csv) for the people and their e-mail, enriched from
+# the General Assembly's own member lists for each member's Legislative
+# Building room and Capitol telephone, and — if anything changed — opens a PR
+# rather than committing directly to main.
+#
+# NORTH CAROLINA IS DARK, so this job does not regenerate
+# nc/state-legislature.html: build_legislator_pages.py refuses an instance
+# metros.json does not carry, so that page is not built yet. Go-live adds the
+# step in the same change that adds nc to metros.json — nc/WATCH.md has the list.
+
+on:
+  schedule:
+    - cron: "30 15 * * 2" # Tuesday 15:30 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install scraper deps
+        run: pip install -c scripts/requirements.txt requests
+
+      # --require-enrichment IS WHAT MAKES THIS JOB HONEST, and it is here
+      # rather than in the builder's default because the two callers want
+      # opposite behaviour. An operator rebuilding on a flaky connection wants
+      # the Open States base rather than nothing; a weekly job that ships to
+      # readers must not. Without it a total ncleg.gov outage writes 170 seats
+      # with no office block and no telephone and passes every count guard —
+      # 170 rows in, 170 rows out, contact gone, the shape
+      # check_roster_retention.py exists to catch after the fact. Failing here
+      # means the bot never opens that PR, and the log names the publisher that
+      # was down. The builder calls the scraper itself, so there is no separate
+      # scrape step; robots.txt is read and ncleg.gov's Crawl-delay: 2 honoured
+      # by nc/scripts/robots_gate.py before the first fetch.
+      - name: Rebuild NC Senate + House rosters
+        run: python3 nc/scripts/build_nc_legislature_roster.py --require-enrichment
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, and every data/app file must be present
+      # and well formed.
+      - name: Validate app + data files
+        run: python3 nc/scripts/validate_index.py nc/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- nc/data/app/nc-senate-members.json nc/data/app/nc-house-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/nc-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 nc/scripts/build_nc_legislature_roster.py --require-enrichment
+          git add nc/data/app/nc-senate-members.json nc/data/app/nc-house-members.json
+          git commit -m "Update N.C. Senate + House rosters from Open States and ncleg.gov"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update N.C. Senate + House rosters" \
+              --body "Automated weekly refresh of the N.C. Senate and N.C. House chamber cards' rosters. People and e-mail come from the Open States current-people export (\`nc.csv\`); each member's Legislative Building room and Capitol telephone come from the General Assembly's own member lists, joined by district and only where both publishers agree on the surname. Please review the diff before merging — this changes data about real officeholders, and the run log lists every publisher disagreement." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

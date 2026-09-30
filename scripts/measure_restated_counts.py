@@ -65,6 +65,7 @@ INSTANCE_WORKSHEETS = {
     "il": "metro-worksheet.json",
     "mi": "mi/metro-worksheet.json",
     "ny": "ny/metro-worksheet.json",
+    "in": "in/metro-worksheet.json",
     "wi": "wi/metro-worksheet.json",
 }
 

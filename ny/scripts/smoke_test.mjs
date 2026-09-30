@@ -255,10 +255,15 @@ try {
     // property of the panel, and it moved 3 -> 4 on 2026-09-26 when
     // `nyc-county-clerk-names` shipped naming Manhattan, Queens and Staten
     // Island — the three boroughs whose card names no County Clerk. City Hall
-    // is in Manhattan, so it correctly matches, and it correctly does NOT
-    // match in the Bronx or Brooklyn, whose cards do name one. Update the
-    // number when a record's `counties` changes; never widen the regex to
-    // stop it mattering, which is the only way this check could go quiet.
+    // is in Manhattan, so it correctly matched.
+    //
+    // IT MOVED BACK TO 3 ON 2026-09-29, when those three cards started naming
+    // a clerk from the city's own Green Book and that record was retired. Its
+    // successor `nyc-bronx-county-clerk` names the Bronx alone — what is left
+    // there is two publishers disagreeing about a named person, not an absence
+    // — so City Hall correctly stops matching it. Update the number when a
+    // record's `counties` changes; never widen the regex to stop it mattering,
+    // which is the only way this check could go quiet.
     // NYC_POINT, not POINT: all three location-keyed gap records name the five
     // boroughs, so at the Albany anchor none is matched and the "Where you
     // clicked" section this asserts would not exist at all.
@@ -268,7 +273,7 @@ try {
     const clicked = warm.sections.filter((t) => /^Where you clicked/.test(t));
     check("selecting a point regroups the gaps without dropping one",
       warm.items === expected && clicked.length === 1 &&
-      warm.sections.length > 1 && /Where you clicked4$/.test(clicked[0]),
+      warm.sections.length > 1 && /Where you clicked3$/.test(clicked[0]),
       `${warm.items}/${expected} items, sections=${JSON.stringify(warm.sections)}`);
 
     // THE THREE BANDS OF THE WASH, IN THE PANEL'S OWN WORDS — and this instance
