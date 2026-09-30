@@ -1,0 +1,2448 @@
+{
+ "measured": "2026-09-30",
+ "vantage": "GitHub Actions runner on runnervm8df0l",
+ "subject": "robots.txt of every host the tree fetches, read with the client user-agent-measurements.json records as serving it",
+ "summary": {
+  "hosts": 266,
+  "allow": 243,
+  "refuse": 23,
+  "unreadable": 7
+ },
+ "hosts": {
+  "api.us.socrata.com": {
+   "host": "api.us.socrata.com",
+   "url": "https://api.us.socrata.com/api/catalog/v1",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "ashlandcountywi.gov": {
+   "host": "ashlandcountywi.gov",
+   "url": "https://ashlandcountywi.gov/bos",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (576 bytes): Disallow: / (line 31) is the longest match for /bos",
+   "allows": false,
+   "http_status": 200
+  },
+  "assets01.aws.connect.clarityelections.com": {
+   "host": "assets01.aws.connect.clarityelections.com",
+   "url": "https://assets01.aws.connect.clarityelections.com/Assets/Connect/RootPublish/",
+   "client": "chrome+hints",
+   "status": "challenge",
+   "why": "robots.txt answered HTTP 202 (an access control, not a document)",
+   "allows": false,
+   "http_status": 202
+  },
+  "badgersheriffs.com": {
+   "host": "badgersheriffs.com",
+   "url": "https://badgersheriffs.com/",
+   "client": "chrome+hints",
+   "status": "unreachable",
+   "why": "robots.txt unreachable: URLError: <urlopen error [Errno -2] Name or service not known> (unchanged after 3 attempts)",
+   "allows": false,
+   "http_status": null
+  },
+  "bayfieldcounty.wi.gov": {
+   "host": "bayfieldcounty.wi.gov",
+   "url": "https://bayfieldcounty.wi.gov/295/Board-of-Supervisors",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /295/Board-of-Supervisors",
+   "allows": true,
+   "http_status": 200
+  },
+  "blackriverfallswi.gov": {
+   "host": "blackriverfallswi.gov",
+   "url": "https://blackriverfallswi.gov/common-council-committee-of-the-whole",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (23 bytes): no rule in 1 binding group(s) matches /common-council-committee-of-the-whole",
+   "allows": true,
+   "http_status": 200
+  },
+  "bloomingtonelectionsil.gov": {
+   "host": "bloomingtonelectionsil.gov",
+   "url": "https://bloomingtonelectionsil.gov/information/bloomingtoncitycouncil/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (781 bytes): no rule in 1 binding group(s) matches /information/bloomingtoncitycouncil/",
+   "allows": true,
+   "http_status": 200
+  },
+  "board.co.columbia.wi.us": {
+   "host": "board.co.columbia.wi.us",
+   "url": "https://board.co.columbia.wi.us/",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "board.danecounty.gov": {
+   "host": "board.danecounty.gov",
+   "url": "https://board.danecounty.gov/Supervisors",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (34 bytes): no rule in 1 binding group(s) matches /Supervisors",
+   "allows": true,
+   "http_status": 200
+  },
+  "burnettcountywi.gov": {
+   "host": "burnettcountywi.gov",
+   "url": "https://burnettcountywi.gov/directory.aspx",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /directory.aspx",
+   "allows": true,
+   "http_status": 200
+  },
+  "calumetcounty.org": {
+   "host": "calumetcounty.org",
+   "url": "https://calumetcounty.org/Directory",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /Directory",
+   "allows": true,
+   "http_status": 200
+  },
+  "carto.nationalmap.gov": {
+   "host": "carto.nationalmap.gov",
+   "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38",
+   "client": "token",
+   "status": "refused",
+   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "allows": true,
+   "http_status": 403
+  },
+  "ccpsa.chicago.gov": {
+   "host": "ccpsa.chicago.gov",
+   "url": "https://ccpsa.chicago.gov",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (175 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "chippewacountywi.gov": {
+   "host": "chippewacountywi.gov",
+   "url": "https://chippewacountywi.gov/Directory",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /Directory",
+   "allows": true,
+   "http_status": 200
+  },
+  "city.milwaukee.gov": {
+   "host": "city.milwaukee.gov",
+   "url": "https://city.milwaukee.gov/police",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (83 bytes): Allow: / (line 2) is the longest match for /police",
+   "allows": true,
+   "http_status": 200
+  },
+  "cityofcumberland.net": {
+   "host": "cityofcumberland.net",
+   "url": "https://cityofcumberland.net/city-council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (23 bytes): no rule in 1 binding group(s) matches /city-council",
+   "allows": true,
+   "http_status": 200
+  },
+  "cityoffreeport.org": {
+   "host": "cityoffreeport.org",
+   "url": "https://cityoffreeport.org/wp-json/wp/v2/lsvr_person_cat?slug=elected-officials",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (119 bytes) (on attempt 3 of 3): no rule in 1 binding group(s) matches /wp-json/wp/v2/lsvr_person_cat?slug=elected-officials",
+   "allows": true,
+   "http_status": 200
+  },
+  "cityofgreenwood.wi.gov": {
+   "host": "cityofgreenwood.wi.gov",
+   "url": "https://cityofgreenwood.wi.gov/city-council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (23 bytes): no rule in 1 binding group(s) matches /city-council",
+   "allows": true,
+   "http_status": 200
+  },
+  "cityofnekoosa.org": {
+   "host": "cityofnekoosa.org",
+   "url": "https://cityofnekoosa.org/city-council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (23 bytes): no rule in 1 binding group(s) matches /city-council",
+   "allows": true,
+   "http_status": 200
+  },
+  "cityofnewholstein.org": {
+   "host": "cityofnewholstein.org",
+   "url": "https://cityofnewholstein.org/elected-officials/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (122 bytes): no rule in 1 binding group(s) matches /elected-officials/",
+   "allows": true,
+   "http_status": 200
+  },
+  "cityofnewlisbon.com": {
+   "host": "cityofnewlisbon.com",
+   "url": "https://cityofnewlisbon.com/common-council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (23 bytes): no rule in 1 binding group(s) matches /common-council",
+   "allows": true,
+   "http_status": 200
+  },
+  "cityofracinewi.gov": {
+   "host": "cityofracinewi.gov",
+   "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (259 bytes): no rule in 2 binding group(s) matches /government/city-leadership/common-council/cityalderman/",
+   "allows": true,
+   "http_status": 200
+  },
+  "cityofwaupaca.org": {
+   "host": "cityofwaupaca.org",
+   "url": "https://cityofwaupaca.org/government/mayor-city-council/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (165 bytes): no rule in 1 binding group(s) matches /government/mayor-city-council/",
+   "allows": true,
+   "http_status": 200
+  },
+  "clerk.kanecountyil.gov": {
+   "host": "clerk.kanecountyil.gov",
+   "url": "https://clerk.kanecountyil.gov/elections",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (56 bytes): no rule in 1 binding group(s) matches /elections",
+   "allows": true,
+   "http_status": 200
+  },
+  "cms.hamiltoncountyil.gov": {
+   "host": "cms.hamiltoncountyil.gov",
+   "url": "https://cms.hamiltoncountyil.gov/app/uploads/2026/02/03-17-2026-GPE-Polling-Places-Addresses.pdf",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "cms2.revize.com": {
+   "host": "cms2.revize.com",
+   "url": "https://cms2.revize.com/revize/knoxcounty/Documents/Department/County%20Clerk/Elections%20Information/General%20Information%20about%20Elections/Political%20Districts/County-District-Map-2022.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (414 bytes) (on attempt 2 of 3): Allow: /*.pdf (line 17) is the longest match for /revize/knoxcounty/Documents/Department/County%20Clerk/Elections%20Information/General%20Information%20about%20Elections/Political%20Districts/County-District-Map-2022.pdf",
+   "allows": true,
+   "http_status": 200
+  },
+  "cms5.revize.com": {
+   "host": "cms5.revize.com",
+   "url": "https://cms5.revize.com/revize/piercewi/Agendas%20and%20Minutes/Government/Board%20of%20Supervisor/%d%20Directory_Pierce%20County.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (312 bytes): Allow: /*.pdf$ (line 17) is the longest match for /revize/piercewi/Agendas%20and%20Minutes/Government/Board%20of%20Supervisor/%d%20Directory_Pierce%20County.pdf",
+   "allows": true,
+   "http_status": 200
+  },
+  "cms9files.revize.com": {
+   "host": "cms9files.revize.com",
+   "url": "https://cms9files.revize.com/carrollil/NOTICE%20OF%20POLLING%20PLACES%20FOR%20THE.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (312 bytes): Allow: /*.pdf$ (line 17) is the longest match for /carrollil/NOTICE%20OF%20POLLING%20PLACES%20FOR%20THE.pdf",
+   "allows": true,
+   "http_status": 200
+  },
+  "co.cass.il.us": {
+   "host": "co.cass.il.us",
+   "url": "https://co.cass.il.us/download_file/view/446/202",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (532 bytes): no rule in 1 binding group(s) matches /download_file/view/446/202",
+   "allows": true,
+   "http_status": 200
+  },
+  "co.dodge.wi.gov": {
+   "host": "co.dodge.wi.gov",
+   "url": "http://co.dodge.wi.gov",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (20258 bytes): no rule in 2 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 5.0
+  },
+  "co.door.wi.gov": {
+   "host": "co.door.wi.gov",
+   "url": "https://co.door.wi.gov/234/County-Board-of-Supervisors",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /234/County-Board-of-Supervisors",
+   "allows": true,
+   "http_status": 200
+  },
+  "co.forest.wi.gov": {
+   "host": "co.forest.wi.gov",
+   "url": "https://co.forest.wi.gov/county-board-supervisors",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (74 bytes): no rule in 1 binding group(s) matches /county-board-supervisors",
+   "allows": true,
+   "http_status": 200
+  },
+  "co.grant.wi.gov": {
+   "host": "co.grant.wi.gov",
+   "url": "https://co.grant.wi.gov/",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "co.monroe.wi.us": {
+   "host": "co.monroe.wi.us",
+   "url": "https://co.monroe.wi.us/",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6641 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "co.price.wi.us": {
+   "host": "co.price.wi.us",
+   "url": "https://co.price.wi.us/Directory",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /Directory",
+   "allows": true,
+   "http_status": 200
+  },
+  "co.rock.wi.us": {
+   "host": "co.rock.wi.us",
+   "url": "https://co.rock.wi.us/",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6641 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "co.taylor.wi.us": {
+   "host": "co.taylor.wi.us",
+   "url": "https://co.taylor.wi.us/directory/county-board/",
+   "client": "chrome+hints",
+   "status": "challenge",
+   "why": "robots.txt answered HTTP 202 (an access control, not a document)",
+   "allows": false,
+   "http_status": 202
+  },
+  "co.trempealeau.wi.us": {
+   "host": "co.trempealeau.wi.us",
+   "url": "https://co.trempealeau.wi.us/departments/court___legal_departments/county_coroner.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "co.walworth.wi.us": {
+   "host": "co.walworth.wi.us",
+   "url": "https://co.walworth.wi.us/directory.aspx",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /directory.aspx",
+   "allows": true,
+   "http_status": 200
+  },
+  "co.washburn.wi.us": {
+   "host": "co.washburn.wi.us",
+   "url": "https://co.washburn.wi.us/county-board-supervisors/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (175 bytes): no rule in 1 binding group(s) matches /county-board-supervisors/",
+   "allows": true,
+   "http_status": 200
+  },
+  "county.milwaukee.gov": {
+   "host": "county.milwaukee.gov",
+   "url": "https://county.milwaukee.gov/EN",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (74 bytes): no rule in 1 binding group(s) matches /EN",
+   "allows": true,
+   "http_status": 200
+  },
+  "da.danecounty.gov": {
+   "host": "da.danecounty.gov",
+   "url": "https://da.danecounty.gov/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (34 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "danesheriff.com": {
+   "host": "danesheriff.com",
+   "url": "https://danesheriff.com/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (34 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "data-lakecountyil.opendata.arcgis.com": {
+   "host": "data-lakecountyil.opendata.arcgis.com",
+   "url": "https://data-lakecountyil.opendata.arcgis.com/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (214 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 60.0
+  },
+  "data.milwaukee.gov": {
+   "host": "data.milwaukee.gov",
+   "url": "https://data.milwaukee.gov/dataset/voting-wards",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (3073 bytes): no rule in 2 binding group(s) matches /dataset/voting-wards",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 10.0
+  },
+  "data.openstates.org": {
+   "host": "data.openstates.org",
+   "url": "https://data.openstates.org/people/current/ca.csv",
+   "client": "token",
+   "status": "refused",
+   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "allows": true,
+   "http_status": 403
+  },
+  "dekalbcounty.org": {
+   "host": "dekalbcounty.org",
+   "url": "https://dekalbcounty.org/about/reference-yearbook/",
+   "client": "chrome+hints",
+   "status": "challenge",
+   "why": "robots.txt answered HTTP 202 (an access control, not a document)",
+   "allows": false,
+   "http_status": 202
+  },
+  "dekalbcountyclerkil.gov": {
+   "host": "dekalbcountyclerkil.gov",
+   "url": "https://dekalbcountyclerkil.gov/wp-content/uploads/2025/11/2025-2026_Yearbook_Web.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (181 bytes): no rule in 1 binding group(s) matches /wp-content/uploads/2025/11/2025-2026_Yearbook_Web.pdf",
+   "allows": true,
+   "http_status": 200
+  },
+  "detroitmi.gov": {
+   "host": "detroitmi.gov",
+   "url": "https://detroitmi.gov/government/city-council",
+   "client": "chrome+hints",
+   "status": "refused",
+   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "allows": true,
+   "http_status": 403
+  },
+  "dmmc-cog.org": {
+   "host": "dmmc-cog.org",
+   "url": "https://dmmc-cog.org/membership-list/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (350 bytes): no rule in 1 binding group(s) matches /membership-list/",
+   "allows": true,
+   "http_status": 200
+  },
+  "docs.legis.wisconsin.gov": {
+   "host": "docs.legis.wisconsin.gov",
+   "url": "https://docs.legis.wisconsin.gov/2025/legislators/senate",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (526 bytes): no rule in 1 binding group(s) matches /2025/legislators/senate",
+   "allows": true,
+   "http_status": 200
+  },
+  "douglascountywi.gov": {
+   "host": "douglascountywi.gov",
+   "url": "https://douglascountywi.gov/Directory",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /Directory",
+   "allows": true,
+   "http_status": 200
+  },
+  "dunncountywi.gov": {
+   "host": "dunncountywi.gov",
+   "url": "https://dunncountywi.gov/treasurer",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (573 bytes): Disallow: / (line 31) is the longest match for /treasurer",
+   "allows": false,
+   "http_status": 200
+  },
+  "eagleriverwi.gov": {
+   "host": "eagleriverwi.gov",
+   "url": "https://eagleriverwi.gov/city-government/elected-officials/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (372 bytes): no rule in 1 binding group(s) matches /city-government/elected-officials/",
+   "allows": true,
+   "http_status": 200
+  },
+  "eauclairecounty.gov": {
+   "host": "eauclairecounty.gov",
+   "url": "https://eauclairecounty.gov/departments/sheriff/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all) (on attempt 3 of 3)",
+   "allows": true,
+   "http_status": 404
+  },
+  "elections.il.gov": {
+   "host": "elections.il.gov",
+   "url": "https://elections.il.gov/x",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (27 bytes): Disallow: / (line 2) is the longest match for /x",
+   "allows": false,
+   "http_status": 200
+  },
+  "elections.wi.gov": {
+   "host": "elections.wi.gov",
+   "url": "https://elections.wi.gov/elections",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (2005 bytes): no rule in 1 binding group(s) matches /elections",
+   "allows": true,
+   "http_status": 200
+  },
+  "exec.danecounty.gov": {
+   "host": "exec.danecounty.gov",
+   "url": "https://exec.danecounty.gov/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (34 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "fdlco.wi.gov": {
+   "host": "fdlco.wi.gov",
+   "url": "http://fdlco.wi.gov/`",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "fliphtml5.com": {
+   "host": "fliphtml5.com",
+   "url": "https://fliphtml5.com",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (9778 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "gallatinco.illinois.gov": {
+   "host": "gallatinco.illinois.gov",
+   "url": "https://gallatinco.illinois.gov/wp-content/uploads/2022/05/Precient-map.pdf",
+   "client": "token",
+   "status": "unreachable",
+   "why": "robots.txt unreachable: URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1082)> (unchanged after 3 attempts)",
+   "allows": false,
+   "http_status": null
+  },
+  "gis-city.kenosha.org": {
+   "host": "gis-city.kenosha.org",
+   "url": "https://gis-city.kenosha.org/server/rest/services/Organizational_Layers/Districts_ElectedRepresentation/FeatureServer/150",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "gis.cookcountyil.gov": {
+   "host": "gis.cookcountyil.gov",
+   "url": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "gis.knoxcountyil.gov": {
+   "host": "gis.knoxcountyil.gov",
+   "url": "https://gis.knoxcountyil.gov/server/rest/services/Public/Knox_V4/MapServer/60",
+   "client": "chrome+hints",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "gis.wiu.edu": {
+   "host": "gis.wiu.edu",
+   "url": "https://gis.wiu.edu/arcgis/rest/services/precinct_map/MapServer",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "greencountywi.org": {
+   "host": "greencountywi.org",
+   "url": "https://greencountywi.org/directory.aspx",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /directory.aspx",
+   "allows": true,
+   "http_status": 200
+  },
+  "greenecountyil.org": {
+   "host": "greenecountyil.org",
+   "url": "https://greenecountyil.org/county-board/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (176 bytes): no rule in 1 binding group(s) matches /county-board/",
+   "allows": true,
+   "http_status": 200
+  },
+  "hancockcounty-il.gov": {
+   "host": "hancockcounty-il.gov",
+   "url": "https://hancockcounty-il.gov/county-board-members/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (23 bytes): no rule in 1 binding group(s) matches /county-board-members/",
+   "allows": true,
+   "http_status": 200
+  },
+  "harrisoncounty.iowa.gov": {
+   "host": "harrisoncounty.iowa.gov",
+   "url": "https://harrisoncounty.iowa.gov/auditor/",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "iowa-icaa.com": {
+   "host": "iowa-icaa.com",
+   "url": "https://iowa-icaa.com/Roster/%40RosterOfCA%26ACAs.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (114 bytes): no rule in 1 binding group(s) matches /Roster/@RosterOfCA&ACAs.pdf",
+   "allows": true,
+   "http_status": 200
+  },
+  "iowaaea.org": {
+   "host": "iowaaea.org",
+   "url": "https://iowaaea.org/find-my-aea/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (243 bytes): no rule in 2 binding group(s) matches /find-my-aea/",
+   "allows": true,
+   "http_status": 200
+  },
+  "iowaauditors.org": {
+   "host": "iowaauditors.org",
+   "url": "https://iowaauditors.org/find/directory/",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "iowalandrecords.org": {
+   "host": "iowalandrecords.org",
+   "url": "https://iowalandrecords.org/recorder-directory/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (177 bytes): no rule in 1 binding group(s) matches /recorder-directory/",
+   "allows": true,
+   "http_status": 200
+  },
+  "iowaleague.org": {
+   "host": "iowaleague.org",
+   "url": "https://iowaleague.org/cities/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (389 bytes): no rule in 3 binding group(s) matches /cities/",
+   "allows": true,
+   "http_status": 200
+  },
+  "iroquoiscountyil.gov": {
+   "host": "iroquoiscountyil.gov",
+   "url": "https://iroquoiscountyil.gov/offices/county-board",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "jeffersoncounty.illinois.gov": {
+   "host": "jeffersoncounty.illinois.gov",
+   "url": "https://jeffersoncounty.illinois.gov/county_board/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "jeffersoncountywi.gov": {
+   "host": "jeffersoncountywi.gov",
+   "url": "https://jeffersoncountywi.gov/county_government/county_board/county_board_information/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "lacrossecounty.org": {
+   "host": "lacrossecounty.org",
+   "url": "https://lacrossecounty.org/countyboard/members",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (82 bytes): no rule in 1 binding group(s) matches /countyboard/members",
+   "allows": true,
+   "http_status": 200
+  },
+  "lafayettecountywi.org": {
+   "host": "lafayettecountywi.org",
+   "url": "https://lafayettecountywi.org/",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (2005 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "lasallecountyil.gov": {
+   "host": "lasallecountyil.gov",
+   "url": "https://lasallecountyil.gov/294/Officials",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /294/Officials",
+   "allows": true,
+   "http_status": 200
+  },
+  "lexingtonil.gov": {
+   "host": "lexingtonil.gov",
+   "url": "https://lexingtonil.gov/mayor",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (1510 bytes): no rule in 1 binding group(s) matches /mayor",
+   "allows": true,
+   "http_status": 200
+  },
+  "maconcounty.illinois.gov": {
+   "host": "maconcounty.illinois.gov",
+   "url": "https://maconcounty.illinois.gov/departments/county-board/macon-county-board-members/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (225 bytes): no group binds this client",
+   "allows": true,
+   "http_status": 200
+  },
+  "manitowoccountywi.gov": {
+   "host": "manitowoccountywi.gov",
+   "url": "https://manitowoccountywi.gov/departments/coroner/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (192 bytes): no rule in 1 binding group(s) matches /departments/coroner/",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 10.0
+  },
+  "maps.boonecountyil.org": {
+   "host": "maps.boonecountyil.org",
+   "url": "https://maps.boonecountyil.org/arcgis/rest/services/Boone_Sales_Locator/Devnet_Parcels/MapServer/0",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "maps.cityofmadison.com": {
+   "host": "maps.cityofmadison.com",
+   "url": "https://maps.cityofmadison.com/arcgis/rest/services/Public",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "maps.co.lincoln.wi.us": {
+   "host": "maps.co.lincoln.wi.us",
+   "url": "https://maps.co.lincoln.wi.us/arcgis/rest/services/WebMerc_Admin/MapServer/5",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "maps.wingis.org": {
+   "host": "maps.wingis.org",
+   "url": "https://maps.wingis.org/public/rest/services/ElectedOfficials/MapServer",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "mapservices.legis.wisconsin.gov": {
+   "host": "mapservices.legis.wisconsin.gov",
+   "url": "https://mapservices.legis.wisconsin.gov/arcgis/rest/services/BAS_Collection/BAS_Live_Collection_Wards/FeatureServer/0/query",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "marathoncounty.gov": {
+   "host": "marathoncounty.gov",
+   "url": "https://marathoncounty.gov/",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6641 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "marshallcountyillinois.gov": {
+   "host": "marshallcountyillinois.gov",
+   "url": "https://marshallcountyillinois.gov/wp-content/uploads/2026/01/2026-New-County-Board-Roster-.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (185 bytes): no rule in 1 binding group(s) matches /wp-content/uploads/2026/01/2026-New-County-Board-Roster-.pdf",
+   "allows": true,
+   "http_status": 200
+  },
+  "masoncountyil.gov": {
+   "host": "masoncountyil.gov",
+   "url": "https://masoncountyil.gov/wp-content/uploads/2026/05/Board-Members-.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (24 bytes): no rule in 1 binding group(s) matches /wp-content/uploads/2026/05/Board-Members-.pdf",
+   "allows": true,
+   "http_status": 200
+  },
+  "mcg.mcdonough.il.us": {
+   "host": "mcg.mcdonough.il.us",
+   "url": "http://mcg.mcdonough.il.us/members.html",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "milwaukeemaps.milwaukee.gov": {
+   "host": "milwaukeemaps.milwaukee.gov",
+   "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/MPD/MPD_geography/MapServer/1",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (135 bytes): Disallow: / (line 10) is the longest match for /arcgis/rest/services/MPD/MPD_geography/MapServer/1",
+   "allows": false,
+   "http_status": 200
+  },
+  "monroecountyil.gov": {
+   "host": "monroecountyil.gov",
+   "url": "https://monroecountyil.gov/departments/board-of-commissioners/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (134 bytes): no rule in 1 binding group(s) matches /departments/board-of-commissioners/",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 10.0
+  },
+  "montgomerycountyil.gov": {
+   "host": "montgomerycountyil.gov",
+   "url": "https://montgomerycountyil.gov/wp-content/uploads/PRECINCTPOLLINGPLACELISTING1124.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (185 bytes): no rule in 1 binding group(s) matches /wp-content/uploads/PRECINCTPOLLINGPLACELISTING1124.pdf",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 10.0
+  },
+  "montrealwis.com": {
+   "host": "montrealwis.com",
+   "url": "https://montrealwis.com/departments/city-council/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (173 bytes): no rule in 1 binding group(s) matches /departments/city-council/",
+   "allows": true,
+   "http_status": 200
+  },
+  "morgancounty-il.com": {
+   "host": "morgancounty-il.com",
+   "url": "https://morgancounty-il.com/wp/departments/county-commissioners/",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "myvote.wi.gov": {
+   "host": "myvote.wi.gov",
+   "url": "https://myvote.wi.gov/en-us/",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (741 bytes): no rule in 1 binding group(s) matches /en-us/",
+   "allows": true,
+   "http_status": 200
+  },
+  "oconomowoc-wi.gov": {
+   "host": "oconomowoc-wi.gov",
+   "url": "https://oconomowoc-wi.gov/225/Common-Council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /225/Common-Council",
+   "allows": true,
+   "http_status": 200
+  },
+  "ozaukeecounty.gov": {
+   "host": "ozaukeecounty.gov",
+   "url": "https://ozaukeecounty.gov/Directory",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /Directory",
+   "allows": true,
+   "http_status": 200
+  },
+  "platinumelectionresults.com": {
+   "host": "platinumelectionresults.com",
+   "url": "https://platinumelectionresults.com/history",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt: the host served 395411 bytes of HTML at that path (allow all)",
+   "allows": true,
+   "http_status": 200
+  },
+  "public4.co.waupaca.wi.us": {
+   "host": "public4.co.waupaca.wi.us",
+   "url": "https://public4.co.waupaca.wi.us/CountyDirectory",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "pulaskicountyil.net": {
+   "host": "pulaskicountyil.net",
+   "url": "https://pulaskicountyil.net/pulaski-county-board.html",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (93 bytes): no group binds this client",
+   "allows": true,
+   "http_status": 200
+  },
+  "putnamil.gov": {
+   "host": "putnamil.gov",
+   "url": "https://putnamil.gov/government/county_board/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "racinecounty.gov": {
+   "host": "racinecounty.gov",
+   "url": "https://racinecounty.gov/",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6641 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "randolphcountyil.gov": {
+   "host": "randolphcountyil.gov",
+   "url": "https://randolphcountyil.gov/board-of-commissioners/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (121 bytes): no rule in 1 binding group(s) matches /board-of-commissioners/",
+   "allows": true,
+   "http_status": 200
+  },
+  "richlandcountywi.gov": {
+   "host": "richlandcountywi.gov",
+   "url": "https://richlandcountywi.gov/index.asp?SEC=DB387A4E-E124-4584-B32C-2C95880C63F0",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (577 bytes): Disallow: / (line 31) is the longest match for /index.asp?SEC=DB387A4E-E124-4584-B32C-2C95880C63F0",
+   "allows": false,
+   "http_status": 200
+  },
+  "rockislandcountyil.gov": {
+   "host": "rockislandcountyil.gov",
+   "url": "https://rockislandcountyil.gov/236/County-Clerk",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /236/County-Clerk",
+   "allows": true,
+   "http_status": 200
+  },
+  "rod.danecounty.gov": {
+   "host": "rod.danecounty.gov",
+   "url": "https://rod.danecounty.gov/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (34 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "ruskcounty.org": {
+   "host": "ruskcounty.org",
+   "url": "https://ruskcounty.org/supervisors",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (571 bytes): Disallow: / (line 31) is the longest match for /supervisors",
+   "allows": false,
+   "http_status": 200
+  },
+  "salinecounty.illinois.gov": {
+   "host": "salinecounty.illinois.gov",
+   "url": "https://salinecounty.illinois.gov/county-board/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (126 bytes): no rule in 1 binding group(s) matches /county-board/",
+   "allows": true,
+   "http_status": 200
+  },
+  "sangamonil.gov": {
+   "host": "sangamonil.gov",
+   "url": "https://sangamonil.gov/departments/a-c/county-board/districts",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (4556 bytes): no rule in 1 binding group(s) matches /departments/a-c/county-board/districts",
+   "allows": true,
+   "http_status": 200
+  },
+  "saukdomino.co.sauk.wi.us": {
+   "host": "saukdomino.co.sauk.wi.us",
+   "url": "https://saukdomino.co.sauk.wi.us/Internet/Applications/main.nsf/publicDistrictList.xsp",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "sccwi.gov": {
+   "host": "sccwi.gov",
+   "url": "https://sccwi.gov/Directory",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /Directory",
+   "allows": true,
+   "http_status": 200
+  },
+  "services.arcgis.com": {
+   "host": "services.arcgis.com",
+   "url": "https://services.arcgis.com/i14SLLmXo7Hn9vNc/ArcGIS/rest/services",
+   "client": "token",
+   "status": "refused",
+   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "allows": true,
+   "http_status": 403
+  },
+  "services1.arcgis.com": {
+   "host": "services1.arcgis.com",
+   "url": "https://services1.arcgis.com/FDsAtKBk8Hy4cAH0/arcgis/rest/services",
+   "client": "token",
+   "status": "refused",
+   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "allows": true,
+   "http_status": 403
+  },
+  "services2.arcgis.com": {
+   "host": "services2.arcgis.com",
+   "url": "https://services2.arcgis.com/5ckbIY7K9TUKoseK/arcgis/rest/services",
+   "client": "token",
+   "status": "refused",
+   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "allows": true,
+   "http_status": 403
+  },
+  "services3.arcgis.com": {
+   "host": "services3.arcgis.com",
+   "url": "https://services3.arcgis.com/HXjsHxkFFcZquC8P/arcgis/rest/services",
+   "client": "token",
+   "status": "refused",
+   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "allows": true,
+   "http_status": 403
+  },
+  "services8.arcgis.com": {
+   "host": "services8.arcgis.com",
+   "url": "https://services8.arcgis.com/o4NJgD3NfeHnWy06/arcgis/rest/services",
+   "client": "token",
+   "status": "refused",
+   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "allows": true,
+   "http_status": 403
+  },
+  "services9.arcgis.com": {
+   "host": "services9.arcgis.com",
+   "url": "https://services9.arcgis.com/6FnscPPlUa9DXXOk/arcgis/rest/services/SilvisWards/FeatureServer/0/query",
+   "client": "token",
+   "status": "refused",
+   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "allows": true,
+   "http_status": 403
+  },
+  "sheboygancounty.com": {
+   "host": "sheboygancounty.com",
+   "url": "https://sheboygancounty.com/",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6706 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "sos.iowa.gov": {
+   "host": "sos.iowa.gov",
+   "url": "https://sos.iowa.gov/auditors/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (2141 bytes): no rule in 1 binding group(s) matches /auditors/",
+   "allows": true,
+   "http_status": 200
+  },
+  "stephensoncountyil.gov": {
+   "host": "stephensoncountyil.gov",
+   "url": "https://stephensoncountyil.gov/government/county_board/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "stevenspoint.com": {
+   "host": "stevenspoint.com",
+   "url": "https://stevenspoint.com/Directory.aspx?DID=23",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /Directory.aspx?DID=23",
+   "allows": true,
+   "http_status": 200
+  },
+  "tazewell-il.gov": {
+   "host": "tazewell-il.gov",
+   "url": "https://tazewell-il.gov/wp-content/uploads/2026/05/FULL-YEARBOOK-1.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (173 bytes): no rule in 1 binding group(s) matches /wp-content/uploads/2026/05/FULL-YEARBOOK-1.pdf",
+   "allows": true,
+   "http_status": 200
+  },
+  "tigerweb.geo.census.gov": {
+   "host": "tigerweb.geo.census.gov",
+   "url": "https://tigerweb.geo.census.gov/arcgis/rest/services",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt: the host served 189 bytes of HTML at that path (allow all)",
+   "allows": true,
+   "http_status": 200
+  },
+  "unitedstates.github.io": {
+   "host": "unitedstates.github.io",
+   "url": "https://unitedstates.github.io/congress-legislators/legislators-current.json",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "villageofcrete.org": {
+   "host": "villageofcrete.org",
+   "url": "http://villageofcrete.org",
+   "client": "chrome+hints",
+   "status": "challenge",
+   "why": "robots.txt answered HTTP 202 (an access control, not a document)",
+   "allows": false,
+   "http_status": 202
+  },
+  "viroqua-wisconsin.com": {
+   "host": "viroqua-wisconsin.com",
+   "url": "https://viroqua-wisconsin.com/government/city_council_and_committees.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "washingtonco.illinois.gov": {
+   "host": "washingtonco.illinois.gov",
+   "url": "https://washingtonco.illinois.gov/county-board/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (126 bytes): no rule in 1 binding group(s) matches /county-board/",
+   "allows": true,
+   "http_status": 200
+  },
+  "webapi.legistar.com": {
+   "host": "webapi.legistar.com",
+   "url": "https://webapi.legistar.com/v1/milwaukee/officerecords?$filter=OfficeRecordBodyId%20eq%201&$top=1000",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "wincoil.gov": {
+   "host": "wincoil.gov",
+   "url": "https://wincoil.gov/government/county-board",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (967 bytes): no rule in 2 binding group(s) matches /government/county-board",
+   "allows": true,
+   "http_status": 200
+  },
+  "wingis.org": {
+   "host": "wingis.org",
+   "url": "https://wingis.org/maps/electedofficials",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "wisconsincountyclerks.org": {
+   "host": "wisconsincountyclerks.org",
+   "url": "https://wisconsincountyclerks.org/wisconsin-counties/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (199 bytes): no rule in 1 binding group(s) matches /wisconsin-counties/",
+   "allows": true,
+   "http_status": 200
+  },
+  "woodcountywi.gov": {
+   "host": "woodcountywi.gov",
+   "url": "https://woodcountywi.gov/CountyBoard/",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.algomacity.org": {
+   "host": "www.algomacity.org",
+   "url": "https://www.algomacity.org/government/city_council.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.altoonawi.gov": {
+   "host": "www.altoonawi.gov",
+   "url": "https://www.altoonawi.gov/government/elected_officials.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.appletonwi.gov": {
+   "host": "www.appletonwi.gov",
+   "url": "https://www.appletonwi.gov/government/common_council.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.arcgis.com": {
+   "host": "www.arcgis.com",
+   "url": "https://www.arcgis.com/sharing/rest/content/items/ac140f8d81b94edc804e34470308c865",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (61 bytes): no rule in 1 binding group(s) matches /sharing/rest/content/items/ac140f8d81b94edc804e34470308c865",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.barroncountywi.gov": {
+   "host": "www.barroncountywi.gov",
+   "url": "https://www.barroncountywi.gov/index.asp?SEC=%7bB7F5AB49-3697-4A2E-8327-26847A43F33E%7d&Type=B_BASIC",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (579 bytes): Disallow: / (line 31) is the longest match for /index.asp?SEC=%7BB7F5AB49-3697-4A2E-8327-26847A43F33E%7D&Type=B_BASIC",
+   "allows": false,
+   "http_status": 200
+  },
+  "www.bloomingtonil.gov": {
+   "host": "www.bloomingtonil.gov",
+   "url": "https://www.bloomingtonil.gov",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6685 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.boonecountyil.gov": {
+   "host": "www.boonecountyil.gov",
+   "url": "https://www.boonecountyil.gov/government/county_board_members.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.browncoil.org": {
+   "host": "www.browncoil.org",
+   "url": "https://www.browncoil.org/county-board/",
+   "client": "token",
+   "status": "unreachable",
+   "why": "robots.txt unreachable (HTTP 301, disallow all) (unchanged after 3 attempts)",
+   "allows": false,
+   "http_status": 301
+  },
+  "www.browncountywi.gov": {
+   "host": "www.browncountywi.gov",
+   "url": "https://www.browncountywi.gov/government/sheriffs-office/",
+   "client": "token",
+   "status": "absent",
+   "why": "robots.txt served empty (allow all)",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.buffalocountywi.gov": {
+   "host": "www.buffalocountywi.gov",
+   "url": "https://www.buffalocountywi.gov/departments/coroner/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (142 bytes): no rule in 1 binding group(s) matches /departments/coroner/",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 10.0
+  },
+  "www.calhouncountyil.gov": {
+   "host": "www.calhouncountyil.gov",
+   "url": "https://www.calhouncountyil.gov/government/county-board/members/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (127 bytes): no rule in 1 binding group(s) matches /government/county-board/members/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.carrollcountyil.gov": {
+   "host": "www.carrollcountyil.gov",
+   "url": "https://www.carrollcountyil.gov/county_board/board_members.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.chicago.gov": {
+   "host": "www.chicago.gov",
+   "url": "https://www.chicago.gov/city/en/depts/dcd/supp_info/special_service_areassaprogram.html",
+   "client": "chrome+hints",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.chicagopolice.org": {
+   "host": "www.chicagopolice.org",
+   "url": "https://www.chicagopolice.org",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (122 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.ci.galesburg.il.us": {
+   "host": "www.ci.galesburg.il.us",
+   "url": "https://www.ci.galesburg.il.us",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.ci.neenah.wi.us": {
+   "host": "www.ci.neenah.wi.us",
+   "url": "https://www.ci.neenah.wi.us/common-council/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (213 bytes): no rule in 1 binding group(s) matches /common-council/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.cityofcresthill.com": {
+   "host": "www.cityofcresthill.com",
+   "url": "https://www.cityofcresthill.com/directory.aspx",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /directory.aspx",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.cityofdodgeville.com": {
+   "host": "www.cityofdodgeville.com",
+   "url": "https://www.cityofdodgeville.com/council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (5869 bytes): no rule in 1 binding group(s) matches /council",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 15.0,
+   "content_signal": {
+    "search": "yes",
+    "ai-input": "no",
+    "ai-train": "no"
+   }
+  },
+  "www.cityoflockport.net": {
+   "host": "www.cityoflockport.net",
+   "url": "https://www.cityoflockport.net/153/Meet-the-Elected-Officials",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /153/Meet-the-Elected-Officials",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.cityofmadison.com": {
+   "host": "www.cityofmadison.com",
+   "url": "https://www.cityofmadison.com/clerk/elections-voting",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (2279 bytes): no rule in 3 binding group(s) matches /clerk/elections-voting",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.cityofwautoma.com": {
+   "host": "www.cityofwautoma.com",
+   "url": "http://www.cityofwautoma.com/common-council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (23 bytes): no rule in 1 binding group(s) matches /common-council",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.cityofwestby.org": {
+   "host": "www.cityofwestby.org",
+   "url": "https://www.cityofwestby.org/westby-city-council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (2189 bytes): no rule in 1 binding group(s) matches /westby-city-council",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 10.0
+  },
+  "www.citywd.org": {
+   "host": "www.citywd.org",
+   "url": "https://www.citywd.org/departments/city-government",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (23 bytes): no rule in 1 binding group(s) matches /departments/city-government",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.clarkcountywi.gov": {
+   "host": "www.clarkcountywi.gov",
+   "url": "https://www.clarkcountywi.gov/da",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (495 bytes): Allow: / (line 2) is the longest match for /da",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.co.adams.wi.us": {
+   "host": "www.co.adams.wi.us",
+   "url": "https://www.co.adams.wi.us/government/county-board",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.co.barron.wi.us": {
+   "host": "www.co.barron.wi.us",
+   "url": "https://www.co.barron.wi.us/board.cfm",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.co.columbia.wi.us": {
+   "host": "www.co.columbia.wi.us",
+   "url": "https://www.co.columbia.wi.us/ColumbiaCounty/registerofdeeds/VitalRecords/tabid/375/Default.aspx",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (218 bytes): no group binds this client",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.co.dodge.wi.gov": {
+   "host": "www.co.dodge.wi.gov",
+   "url": "https://www.co.dodge.wi.gov/courts-clerk",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (20258 bytes): no rule in 2 binding group(s) matches /courts-clerk",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 5.0
+  },
+  "www.co.grant.wi.gov": {
+   "host": "www.co.grant.wi.gov",
+   "url": "https://www.co.grant.wi.gov/clerk-of-court/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (134 bytes): no rule in 1 binding group(s) matches /clerk-of-court/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.co.iron.wi.gov": {
+   "host": "www.co.iron.wi.gov",
+   "url": "https://www.co.iron.wi.gov/Directory",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /Directory",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.co.jackson.wi.us": {
+   "host": "www.co.jackson.wi.us",
+   "url": "https://www.co.jackson.wi.us/vertical/sites/%7B4C09F8F2-A8A2-4929-9E2A-A836851B00CC%7D/uploads/2026_-_2027_County_Board_Members.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (577 bytes): Disallow: / (line 31) is the longest match for /vertical/sites/%7B4C09F8F2-A8A2-4929-9E2A-A836851B00CC%7D/uploads/2026_-_2027_County_Board_Members.pdf",
+   "allows": false,
+   "http_status": 200
+  },
+  "www.co.juneau.wi.gov": {
+   "host": "www.co.juneau.wi.gov",
+   "url": "https://www.co.juneau.wi.gov/departments/clerk_of_court/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.co.langlade.wi.us": {
+   "host": "www.co.langlade.wi.us",
+   "url": "https://www.co.langlade.wi.us/departments/coroner/",
+   "client": "token",
+   "status": "absent",
+   "why": "robots.txt served empty (allow all)",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.co.lincoln.wi.us": {
+   "host": "www.co.lincoln.wi.us",
+   "url": "https://www.co.lincoln.wi.us/bc-county-board",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (2005 bytes): no rule in 1 binding group(s) matches /bc-county-board",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.co.menominee.wi.us": {
+   "host": "www.co.menominee.wi.us",
+   "url": "https://www.co.menominee.wi.us/county-board/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (98 bytes): no group binds this client",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.co.monroe.wi.us": {
+   "host": "www.co.monroe.wi.us",
+   "url": "https://www.co.monroe.wi.us/government/county-board-of-supervisors/districts-supervisors",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6641 bytes): no rule in 1 binding group(s) matches /government/county-board-of-supervisors/districts-supervisors",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.co.pepin.wi.us": {
+   "host": "www.co.pepin.wi.us",
+   "url": "https://www.co.pepin.wi.us/bos",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (575 bytes): Disallow: / (line 31) is the longest match for /bos",
+   "allows": false,
+   "http_status": 200
+  },
+  "www.co.pierce.wi.us": {
+   "host": "www.co.pierce.wi.us",
+   "url": "https://www.co.pierce.wi.us/",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.co.portage.wi.gov": {
+   "host": "www.co.portage.wi.gov",
+   "url": "https://www.co.portage.wi.gov/Directory",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /Directory",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.co.rock.wi.us": {
+   "host": "www.co.rock.wi.us",
+   "url": "https://www.co.rock.wi.us/government/county-board-of-supervisors",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6641 bytes): no rule in 1 binding group(s) matches /government/county-board-of-supervisors",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.co.sauk.wi.us": {
+   "host": "www.co.sauk.wi.us",
+   "url": "https://www.co.sauk.wi.us/coroner",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (5869 bytes): no rule in 1 binding group(s) matches /coroner",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 15.0,
+   "content_signal": {
+    "search": "yes",
+    "ai-input": "no",
+    "ai-train": "no"
+   }
+  },
+  "www.co.shawano.wi.us": {
+   "host": "www.co.shawano.wi.us",
+   "url": "https://www.co.shawano.wi.us/county_board/",
+   "client": "token",
+   "status": "absent",
+   "why": "robots.txt served empty (allow all)",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.colesco.illinois.gov": {
+   "host": "www.colesco.illinois.gov",
+   "url": "https://www.colesco.illinois.gov/board/committees",
+   "client": "token",
+   "status": "unreachable",
+   "why": "robots.txt unreachable: URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1082)> (unchanged after 3 attempts)",
+   "allows": false,
+   "http_status": null
+  },
+  "www.cookcountyboardofreview.com": {
+   "host": "www.cookcountyboardofreview.com",
+   "url": "https://www.cookcountyboardofreview.com",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (2449 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.cookcountyclerkil.gov": {
+   "host": "www.cookcountyclerkil.gov",
+   "url": "https://www.cookcountyclerkil.gov/api",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (1704 bytes): no rule in 1 binding group(s) matches /api",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.crawfordcountywi.gov": {
+   "host": "www.crawfordcountywi.gov",
+   "url": "https://www.crawfordcountywi.gov/boardsupervisors",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (156 bytes): Allow: / (line 2) is the longest match for /boardsupervisors",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.dewittcountyil.gov": {
+   "host": "www.dewittcountyil.gov",
+   "url": "https://www.dewittcountyil.gov/government/county_board.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all) (on attempt 3 of 3)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.eauclairewi.gov": {
+   "host": "www.eauclairewi.gov",
+   "url": "https://www.eauclairewi.gov/310/City-Council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /310/City-Council",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.elections.il.gov": {
+   "host": "www.elections.il.gov",
+   "url": "https://www.elections.il.gov/robots.txt",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (27 bytes): Disallow: / (line 2) is the longest match for /robots.txt",
+   "allows": false,
+   "http_status": 200
+  },
+  "www.ewgateway.org": {
+   "host": "www.ewgateway.org",
+   "url": "https://www.ewgateway.org/wp-content/uploads/2026/05/2026-POD.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (2242 bytes): no rule in 1 binding group(s) matches /wp-content/uploads/2026/05/2026-POD.pdf",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.fdlco.wi.gov": {
+   "host": "www.fdlco.wi.gov",
+   "url": "https://www.fdlco.wi.gov/`",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (71 bytes): no rule in 1 binding group(s) matches /%60",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.florencecountywi.com": {
+   "host": "www.florencecountywi.com",
+   "url": "https://www.florencecountywi.com/departments/coroner/",
+   "client": "token",
+   "status": "absent",
+   "why": "robots.txt served empty (allow all)",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.germantownwi.gov": {
+   "host": "www.germantownwi.gov",
+   "url": "https://www.germantownwi.gov/299/Village-Board",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /299/Village-Board",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.grandrapidsmi.gov": {
+   "host": "www.grandrapidsmi.gov",
+   "url": "https://www.grandrapidsmi.gov/Government/City-Commission",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (190 bytes): no rule in 1 binding group(s) matches /Government/City-Commission",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.greenbaywi.gov": {
+   "host": "www.greenbaywi.gov",
+   "url": "https://www.greenbaywi.gov/m/directory",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /m/directory",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.greenlakecountywi.gov": {
+   "host": "www.greenlakecountywi.gov",
+   "url": "https://www.greenlakecountywi.gov/officials_type/elected-officials/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (471 bytes): no rule in 1 binding group(s) matches /officials_type/elected-officials/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.grundycountyil.gov": {
+   "host": "www.grundycountyil.gov",
+   "url": "https://www.grundycountyil.gov/government/county_board.php",
+   "client": "token",
+   "status": "unreachable",
+   "why": "robots.txt unreachable: TimeoutError: The read operation timed out (unchanged after 3 attempts)",
+   "allows": false,
+   "http_status": null
+  },
+  "www.hamiltoncountyil.gov": {
+   "host": "www.hamiltoncountyil.gov",
+   "url": "https://www.hamiltoncountyil.gov/departments/county-board/",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (135 bytes): Allow: / (line 2) is the longest match for /departments/county-board/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.henrycty.com": {
+   "host": "www.henrycty.com",
+   "url": "https://www.henrycty.com/211/Elections",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /211/Elections",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.hillsborowi.com": {
+   "host": "www.hillsborowi.com",
+   "url": "https://www.hillsborowi.com/mayor-and-council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (23 bytes): no rule in 1 binding group(s) matches /mayor-and-council",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.horiconwi.gov": {
+   "host": "www.horiconwi.gov",
+   "url": "https://www.horiconwi.gov/185/Elected-Officials",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /185/Elected-Officials",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.ilga.gov": {
+   "host": "www.ilga.gov",
+   "url": "https://www.ilga.gov",
+   "client": "token",
+   "status": "unreachable",
+   "why": "robots.txt unreachable: URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1082)> (unchanged after 3 attempts)",
+   "allows": false,
+   "http_status": null
+  },
+  "www.iowacountywi.gov": {
+   "host": "www.iowacountywi.gov",
+   "url": "https://www.iowacountywi.gov/departments/countyboard/county-board-members",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (1507 bytes): no rule in 2 binding group(s) matches /departments/countyboard/county-board-members",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 5.0
+  },
+  "www.iowatreasurers.org": {
+   "host": "www.iowatreasurers.org",
+   "url": "https://www.iowatreasurers.org/index.php?module=treashome&idCounty=1",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.issda.org": {
+   "host": "www.issda.org",
+   "url": "https://www.issda.org/assets/Gold-Star/2025%20Sheriff%20Directory.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (775 bytes): no rule in 1 binding group(s) matches /assets/Gold-Star/2025%20Sheriff%20Directory.pdf",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 10.0
+  },
+  "www.jeffersoncountywi.gov": {
+   "host": "www.jeffersoncountywi.gov",
+   "url": "https://www.jeffersoncountywi.gov/administration/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.joliet.gov": {
+   "host": "www.joliet.gov",
+   "url": "https://www.joliet.gov/government/city-council-3189",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6641 bytes): no rule in 1 binding group(s) matches /government/city-council-3189",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.kendallcountyil.gov": {
+   "host": "www.kendallcountyil.gov",
+   "url": "https://www.kendallcountyil.gov/county-board/board-members",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6641 bytes): no rule in 1 binding group(s) matches /county-board/board-members",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.kenoshacountywi.gov": {
+   "host": "www.kenoshacountywi.gov",
+   "url": "https://www.kenoshacountywi.gov/Directory",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /Directory",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.kewauneeco.org": {
+   "host": "www.kewauneeco.org",
+   "url": "https://www.kewauneeco.org/government/boards_and_committees/",
+   "client": "token",
+   "status": "absent",
+   "why": "robots.txt served empty (allow all)",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.knoxcountyil.gov": {
+   "host": "www.knoxcountyil.gov",
+   "url": "https://www.knoxcountyil.gov/county_board/county_board_members.php",
+   "client": "chrome+hints",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.lafayettecountywi.org": {
+   "host": "www.lafayettecountywi.org",
+   "url": "https://www.lafayettecountywi.org/bos",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (2005 bytes): no rule in 1 binding group(s) matches /bos",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.lakecountyil.gov": {
+   "host": "www.lakecountyil.gov",
+   "url": "https://www.lakecountyil.gov/2336/Board-Members",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /2336/Board-Members",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.leecountyil.com": {
+   "host": "www.leecountyil.com",
+   "url": "https://www.leecountyil.com/291/County-Board",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /291/County-Board",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.legis.iowa.gov": {
+   "host": "www.legis.iowa.gov",
+   "url": "https://www.legis.iowa.gov/legislators/house",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (656 bytes): no rule in 1 binding group(s) matches /legislators/house",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.leroy.org": {
+   "host": "www.leroy.org",
+   "url": "https://www.leroy.org/government/city-hall/city-council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (1015 bytes): no rule in 1 binding group(s) matches /government/city-hall/city-council",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 10.0,
+   "content_signal": {
+    "search": "yes",
+    "ai-train": "no"
+   }
+  },
+  "www.livingstoncountyil.gov": {
+   "host": "www.livingstoncountyil.gov",
+   "url": "https://www.livingstoncountyil.gov/government/board.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.logancountyil.gov": {
+   "host": "www.logancountyil.gov",
+   "url": "https://www.logancountyil.gov/images/Reference_and_Yearbook_2025-2026_updated.pdf",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (1370 bytes): Disallow: /images/ (line 19) is the longest match for /images/Reference_and_Yearbook_2025-2026_updated.pdf",
+   "allows": false,
+   "http_status": 200
+  },
+  "www.macoupinvotes.gov": {
+   "host": "www.macoupinvotes.gov",
+   "url": "https://www.macoupinvotes.gov/ce/mobile/seam/resource/rest/voter/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (124 bytes): no rule in 1 binding group(s) matches /ce/mobile/seam/resource/rest/voter/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.manitowoc.org": {
+   "host": "www.manitowoc.org",
+   "url": "https://www.manitowoc.org/78/Meet-Your-Alderperson",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /78/Meet-Your-Alderperson",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.marathoncounty.gov": {
+   "host": "www.marathoncounty.gov",
+   "url": "https://www.marathoncounty.gov/about-us/government/county-board/members",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6641 bytes): no rule in 1 binding group(s) matches /about-us/government/county-board/members",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.marinettecountywi.gov": {
+   "host": "www.marinettecountywi.gov",
+   "url": "https://www.marinettecountywi.gov/county_board/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (249 bytes): no rule in 1 binding group(s) matches /county_board/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.marquettecountywi.gov": {
+   "host": "www.marquettecountywi.gov",
+   "url": "https://www.marquettecountywi.gov/sheriff/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (190 bytes): no rule in 1 binding group(s) matches /sheriff/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.massaccountyil.gov": {
+   "host": "www.massaccountyil.gov",
+   "url": "https://www.massaccountyil.gov/county-commissioner/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (175 bytes): no rule in 1 binding group(s) matches /county-commissioner/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.mchenrycountyil.gov": {
+   "host": "www.mchenrycountyil.gov",
+   "url": "https://www.mchenrycountyil.gov/county-government/county-yearbook/cities-villages",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6641 bytes): no rule in 1 binding group(s) matches /county-government/county-yearbook/cities-villages",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.mcleancountyil.gov": {
+   "host": "www.mcleancountyil.gov",
+   "url": "https://www.mcleancountyil.gov/155/County-Board",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (948 bytes): no rule in 1 binding group(s) matches /155/County-Board",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.menardcountyil.gov": {
+   "host": "www.menardcountyil.gov",
+   "url": "https://www.menardcountyil.gov/elected-officials/board-commissioners/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (497 bytes): no rule in 1 binding group(s) matches /elected-officials/board-commissioners/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.menashawi.gov": {
+   "host": "www.menashawi.gov",
+   "url": "https://www.menashawi.gov/residents/government/common_council/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.menomonie-wi.gov": {
+   "host": "www.menomonie-wi.gov",
+   "url": "https://www.menomonie-wi.gov/248/City-Council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /248/City-Council",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.milwaukeepublicschools.org": {
+   "host": "www.milwaukeepublicschools.org",
+   "url": "https://www.milwaukeepublicschools.org/about/board",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (38474 bytes): no rule in 2 binding group(s) matches /about/board",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 5.0
+  },
+  "www.moultriecountyil.gov": {
+   "host": "www.moultriecountyil.gov",
+   "url": "https://www.moultriecountyil.gov/moultrie_county_board/board_members.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.newberlinwi.gov": {
+   "host": "www.newberlinwi.gov",
+   "url": "https://www.newberlinwi.gov/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.ocontocountywi.gov": {
+   "host": "www.ocontocountywi.gov",
+   "url": "https://www.ocontocountywi.gov/Directory",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /Directory",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.oglecountyil.gov": {
+   "host": "www.oglecountyil.gov",
+   "url": "https://www.oglecountyil.gov/departments/county_clerk/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.oneidacountywi.gov": {
+   "host": "www.oneidacountywi.gov",
+   "url": "https://www.oneidacountywi.gov/government/cb/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (123 bytes): no rule in 1 binding group(s) matches /government/cb/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.outagamie.gov": {
+   "host": "www.outagamie.gov",
+   "url": "https://www.outagamie.gov/Outagamie-County-Board/County-Board-of-Supervisors",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (15893 bytes): no rule in 1 binding group(s) matches /Outagamie-County-Board/County-Board-of-Supervisors",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.peoriacounty.gov": {
+   "host": "www.peoriacounty.gov",
+   "url": "https://www.peoriacounty.gov/615/James-C-Dillon",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /615/James-C-Dillon",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.pikecountyil.org": {
+   "host": "www.pikecountyil.org",
+   "url": "https://www.pikecountyil.org/county-boards/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (160 bytes): no rule in 1 binding group(s) matches /county-boards/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.polkcountywi.gov": {
+   "host": "www.polkcountywi.gov",
+   "url": "https://www.polkcountywi.gov/government/elected_officials/sheriff/index.php",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (243 bytes): Disallow: / (line 17) is the longest match for /government/elected_officials/sheriff/index.php",
+   "allows": false,
+   "http_status": 200
+  },
+  "www.portagewi.gov": {
+   "host": "www.portagewi.gov",
+   "url": "https://www.portagewi.gov/mayor-and-council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (29 bytes): no rule in 1 binding group(s) matches /mayor-and-council",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 5.0
+  },
+  "www.revenue.wi.gov": {
+   "host": "www.revenue.wi.gov",
+   "url": "https://www.revenue.wi.gov/Pages/Report/tid-active.aspx",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (133 bytes): no rule in 1 binding group(s) matches /Pages/Report/tid-active.aspx",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.rockislandcountyil.gov": {
+   "host": "www.rockislandcountyil.gov",
+   "url": "https://www.rockislandcountyil.gov/263/County-Board",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /263/County-Board",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.sawyercounty.gov": {
+   "host": "www.sawyercounty.gov",
+   "url": "https://www.sawyercounty.gov/Directory",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /Directory",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.schuylercounty.org": {
+   "host": "www.schuylercounty.org",
+   "url": "https://www.schuylercounty.org/elections/voting-locations/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (124 bytes): no rule in 1 binding group(s) matches /elections/voting-locations/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.sheboygancounty.com": {
+   "host": "www.sheboygancounty.com",
+   "url": "https://www.sheboygancounty.com/government/elected-officials",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (6706 bytes): no rule in 1 binding group(s) matches /government/elected-officials",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.sheboyganwi.gov": {
+   "host": "www.sheboyganwi.gov",
+   "url": "https://www.sheboyganwi.gov/395/Common-Council",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /395/Common-Council",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.shelbycounty-il.gov": {
+   "host": "www.shelbycounty-il.gov",
+   "url": "https://www.shelbycounty-il.gov/coboard.aspx",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (109 bytes): Allow: / (line 2) is the longest match for /coboard.aspx",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.skokie.org": {
+   "host": "www.skokie.org",
+   "url": "https://www.skokie.org/486/Board-of-Trustees",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /486/Board-of-Trustees",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.sturgeonbaywi.org": {
+   "host": "www.sturgeonbaywi.org",
+   "url": "https://www.sturgeonbaywi.org/government/city_council/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.superiorwi.gov": {
+   "host": "www.superiorwi.gov",
+   "url": "https://www.superiorwi.gov/697/City-Councilor-Information",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /697/City-Councilor-Information",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.tomahwi.gov": {
+   "host": "www.tomahwi.gov",
+   "url": "https://www.tomahwi.gov/citycouncil",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (5869 bytes): no rule in 1 binding group(s) matches /citycouncil",
+   "allows": true,
+   "http_status": 200,
+   "crawl_delay": 15.0,
+   "content_signal": {
+    "search": "yes",
+    "ai-input": "no",
+    "ai-train": "no"
+   }
+  },
+  "www.vercounty.org": {
+   "host": "www.vercounty.org",
+   "url": "https://www.vercounty.org/county-clerk/election-results/",
+   "client": "token",
+   "status": "unreachable",
+   "why": "robots.txt unreachable: URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1082)> (unchanged after 3 attempts)",
+   "allows": false,
+   "http_status": null
+  },
+  "www.vernoncountywi.gov": {
+   "host": "www.vernoncountywi.gov",
+   "url": "https://www.vernoncountywi.gov/departments/county_coroner/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.vilascountywi.gov": {
+   "host": "www.vilascountywi.gov",
+   "url": "http://www.vilascountywi.gov/departments/administration___officials/county_board_members/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.villageofhoward.com": {
+   "host": "www.villageofhoward.com",
+   "url": "https://www.villageofhoward.com/208/Village-President-Board-of-Trustees",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /208/Village-President-Board-of-Trustees",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.wapellocounty.org": {
+   "host": "www.wapellocounty.org",
+   "url": "https://www.wapellocounty.org/auditor/",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.washburnsheriff.org": {
+   "host": "www.washburnsheriff.org",
+   "url": "https://www.washburnsheriff.org/",
+   "client": "chrome+hints",
+   "status": "refused",
+   "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy",
+   "allows": true,
+   "http_status": 403
+  },
+  "www.washcowisco.gov": {
+   "host": "www.washcowisco.gov",
+   "url": "https://www.washcowisco.gov/departments/county_board",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (339 bytes): no rule in 1 binding group(s) matches /departments/county_board",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.waukesha-wi.gov": {
+   "host": "www.waukesha-wi.gov",
+   "url": "https://www.waukesha-wi.gov/about_the_common_council/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.waukeshacounty.gov": {
+   "host": "www.waukeshacounty.gov",
+   "url": "https://www.waukeshacounty.gov/sheriff/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (188 bytes): no rule in 1 binding group(s) matches /sheriff/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.waupacacounty-wi.gov": {
+   "host": "www.waupacacounty-wi.gov",
+   "url": "https://www.waupacacounty-wi.gov/departments/register_of_deeds/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.wausharacountywi.gov": {
+   "host": "www.wausharacountywi.gov",
+   "url": "https://www.wausharacountywi.gov/12730/treasurer",
+   "client": "chrome+hints",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.wcgl.org": {
+   "host": "www.wcgl.org",
+   "url": "https://www.wcgl.org/municipal-members.html",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (217 bytes): no rule in 1 binding group(s) matches /municipal-members.html",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.webstercountyia.gov": {
+   "host": "www.webstercountyia.gov",
+   "url": "https://www.webstercountyia.gov/departments/auditor_commissioner_of_elections/index.php",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.whitecounty-il.gov": {
+   "host": "www.whitecounty-il.gov",
+   "url": "https://www.whitecounty-il.gov/county-board",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (166 bytes): no rule in 1 binding group(s) matches /county-board",
+   "allows": true,
+   "http_status": 200,
+   "content_signal": {
+    "search": "yes",
+    "ai-input": "yes",
+    "ai-train": "yes"
+   }
+  },
+  "www.whitesidecountyil.gov": {
+   "host": "www.whitesidecountyil.gov",
+   "url": "https://www.whitesidecountyil.gov/186/County-Board",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /186/County-Board",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.wicourts.gov": {
+   "host": "www.wicourts.gov",
+   "url": "https://www.wicourts.gov/courts/appeals/index.htm",
+   "client": "token",
+   "status": "absent",
+   "why": "no robots.txt (HTTP 404, allow all)",
+   "allows": true,
+   "http_status": 404
+  },
+  "www.willcountyclerk.gov": {
+   "host": "www.willcountyclerk.gov",
+   "url": "https://www.willcountyclerk.gov/local-election-officials/",
+   "client": "chrome+hints",
+   "status": "served",
+   "why": "robots.txt served (124 bytes): no rule in 1 binding group(s) matches /local-election-officials/",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.wilmington-il.com": {
+   "host": "www.wilmington-il.com",
+   "url": "https://www.wilmington-il.com/city-officials",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (1508 bytes): no rule in 1 binding group(s) matches /city-officials",
+   "allows": true,
+   "http_status": 200
+  },
+  "www.winnebagocountywi.gov": {
+   "host": "www.winnebagocountywi.gov",
+   "url": "https://www.winnebagocountywi.gov/703",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (816 bytes): no rule in 1 binding group(s) matches /703",
+   "allows": true,
+   "http_status": 200
+  },
+  "www2.kanecountyil.gov": {
+   "host": "www2.kanecountyil.gov",
+   "url": "https://www2.kanecountyil.gov/pages/countyboard/boardMembers.aspx",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (25 bytes): no rule in 1 binding group(s) matches /pages/countyboard/boardMembers.aspx",
+   "allows": true,
+   "http_status": 200
+  }
+ }
+}
