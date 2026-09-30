@@ -50,6 +50,7 @@ INSTANCES = [
     ("ia", "ia/metro-worksheet.json"),
     ("mi", "mi/metro-worksheet.json"),
     ("mn", "mn/metro-worksheet.json"),
+    ("in", "in/metro-worksheet.json"),
     ("nc", "nc/metro-worksheet.json"),
 ]
 

@@ -213,7 +213,7 @@ def robots_verdict(url):
         verdict = classify(None, None, error="%s: %s" % (type(exc).__name__, exc))
     else:
         verdict = classify(resp.status_code, resp.text, final_url=resp.url)
-    return verdict.allows(HEADERS["User-Agent"], url, refused_is_refusal=True)
+    return verdict.allows(HEADERS["User-Agent"], url)
 
 
 def discover_pdf_url(warnings):
