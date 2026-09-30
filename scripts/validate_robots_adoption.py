@@ -99,6 +99,11 @@ TWO TABLES, BECAUSE THEY ARE TWO DIFFERENT CLAIMS.
       served.
     * a file that talks only to a server IT STARTED ITSELF —
       `scripts/selftest_scraper_common.py`, whose one host is loopback.
+    * a NAME LOOKUP rather than a read — `scripts/build_county_clerk_roster.py`,
+      whose one fetch asks a DNS-over-HTTPS resolver whether each shipped
+      address's domain has a mail route. A resolver is the layer BELOW the one
+      robots.txt governs: every gated fetch here resolves a name first,
+      including the fetch of robots.txt itself.
 
   The test is never which host answers. It is whose data and whose credential,
   or whose content and which direction, or whether any page is read at all — and
@@ -255,10 +260,8 @@ def tracked_python():
 UNWIRED_AT_SWEEP = frozenset("""
     ca/scripts/validate_sources.py
     ia/scripts/build_ia_judicial_district.py
-    mi/scripts/mi_detroit_council_scraper.py
     ny/scripts/validate_sources.py
     scripts/boone_district_officials_scraper.py
-    scripts/build_county_clerk_roster.py
     scripts/build_lasalle_board_districts.py
     scripts/build_logan_precinct_polling.py
     scripts/build_stephenson_fire_districts.py
@@ -301,6 +304,16 @@ UNWIRED_AT_SWEEP = frozenset("""
 # whose exemption can be deleted with nothing turning red, because the backlog
 # goes on covering it silently. check() refuses an overlap for that reason.
 DECLARED_EXEMPT = {
+    "scripts/build_county_clerk_roster.py": (
+        "ITS ONE FETCH IS A NAME LOOKUP: it asks a DNS-over-HTTPS resolver "
+        "whether each shipped clerk address's domain has a mail route, and what "
+        "comes back is a DNS answer rather than a page. A resolver sits BELOW "
+        "the layer robots.txt governs — every gated fetch in this repository "
+        "resolves a name first, the fetch of robots.txt included, so gating "
+        "this one would need a name lookup to perform it. THE TEST IS WHETHER "
+        "SOMEBODY'S PAGES ARE BEING READ, never which host answers; argued at "
+        "length in the file",
+        "2026-09-30"),
     "scripts/aia_bundle.py": (
         "NOT A CRAWL BUT A STEP IN A TLS HANDSHAKE: it fetches an "
         "intermediate CA certificate from the AIA url printed inside a leaf "
