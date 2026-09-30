@@ -222,11 +222,9 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/bing_fetch.py
     scripts/boone_district_officials_scraper.py
     scripts/build_county_clerk_roster.py
-    scripts/build_district_search.py
     scripts/build_lasalle_board_districts.py
     scripts/build_logan_precinct_polling.py
     scripts/build_stephenson_fire_districts.py
-    scripts/check_engine_parity.py
     scripts/check_roster_workflow_health.py
     scripts/clay_county_board_scraper.py
     scripts/coles_county_board_scraper.py
