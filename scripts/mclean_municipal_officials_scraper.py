@@ -48,7 +48,10 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    UA_CHROME_WIN_126,
+    require_robots_allowed,
+)
 
 BLOOMINGTON_URL = "https://bloomingtonelectionsil.gov/information/bloomingtoncitycouncil/"
 LEROY_URL = "https://www.leroy.org/government/city-hall/city-council"
@@ -68,7 +71,31 @@ NAME_RE = re.compile(r"^[A-Z\"“][A-Za-z.'’\"“”()-]+(?:\s+[A-Z\"“][A-Za
 MIN_WARD_SEATS = {"Bloomington": 8, "Le Roy": 7, "Lexington": 5}
 
 
+# --- robots.txt, read once per host with the client this file crawls with ------
+# CLAUDE.md's rule is that robots.txt is read before the first fetch of a host,
+# and measured 2026-09-12 almost no scraper here enacted it. This file does now.
+# Three municipalities on three hosts, one client, so the reading is per host and
+# cached: measured 2026-09-30 through robots_policy's reader, all three serve a
+# policy (781, 1,015 and 1,510 bytes) in which no rule matches the council pages
+# below. Lexington's two pages share one host and therefore one reading, which is
+# what keeps this at one extra request per site per run.
+_ROBOTS_ASKED = set()
+
+
+def require_robots(url):
+    from urllib.parse import urlsplit
+
+    host = urlsplit(url).hostname or ""
+    if host in _ROBOTS_ASKED:
+        return
+    why = require_robots_allowed(url, HEADERS["User-Agent"], headers=HEADERS,
+                                label="mclean-municipal-officials-scraper")
+    print("robots.txt %s: %s" % (host, why), file=sys.stderr)
+    _ROBOTS_ASKED.add(host)
+
+
 def fetch_lines(url):
+    require_robots(url)
     resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     text = re.sub(r"<script.*?</script>|<style.*?</style>", " ", resp.text,

@@ -52,7 +52,11 @@ import sys
 from datetime import datetime, timezone
 
 import requests
-from scraper_common import UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    UA_CHROME_WIN_124,
+    require_robots_allowed,
+    robots_deferred,
+)
 
 PDF_URL = "https://www.kendallcountyil.gov/home/showdocument?id=184"
 DIRECTORY_URL = ("https://www.kendallcountyil.gov/offices/county-clerk-recorder/"
@@ -141,6 +145,10 @@ def fetch_playwright(url):
 def fetch_wayback(url):
     from datetime import datetime as dt
 
+    # The Archive is two hosts and they answer differently, so each is
+    # asked on its own (require_robots below; scraper_common carries the
+    # measurement for the one that is deferred).
+    require_robots(WAYBACK_API % url)
     resp = requests.get(WAYBACK_API % url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     snapshot = ((resp.json() or {}).get("archived_snapshots") or {}).get("closest")
@@ -152,6 +160,7 @@ def fetch_wayback(url):
     if age_days > WAYBACK_MAX_AGE_DAYS:
         raise RuntimeError("newest snapshot is %d days old (max %d) — refusing to serve "
                            "stale data as current" % (age_days, WAYBACK_MAX_AGE_DAYS))
+    require_robots(snapshot["url"])
     page = requests.get(snapshot["url"], headers=HEADERS, timeout=REQUEST_TIMEOUT)
     page.raise_for_status()
     if not page.content.startswith(b"%PDF"):
@@ -159,10 +168,51 @@ def fetch_wayback(url):
     return page.content
 
 
+# --- robots.txt, read once per host with the client this file crawls with ------
+# CLAUDE.md's rule is that robots.txt is read before the first fetch of a host,
+# and measured 2026-09-12 almost no scraper here enacted it. This file does now.
+# Every rung below sends HEADERS' User-Agent, so one reading answers for all of
+# them and there is no client to escalate to. Cached per host so a run that
+# fetches several pages from one site asks once, which is also what keeps the
+# extra request count at one per host per run.
+#
+# Measured 2026-09-30, four reads per client: www.kendallcountyil.gov serves a
+# 6,641-byte policy to this client, whose HEADERS carry the Sec-CH-UA hints its
+# edge wants; a client without them is refused its own robots.txt with 403 four
+# times of four, which under RFC 9309 2.3.1.3 permits anyway. No rule in its one
+# binding group matches the pages read here, and it states no Crawl-delay and no
+# Content-Signal. THAT POLICY IS THE CMS VENDOR'S DEFAULT, byte-identical by md5
+# to the one www.mchenrycountyil.gov and www.joliet.gov serve, so a permission
+# read out of it records what the platform ships rather than what this county
+# chose. It is published at the county's own host, so it still binds.
+_ROBOTS_ASKED = {}
+
+
+def require_robots(url):
+    from urllib.parse import urlsplit
+
+    host = urlsplit(url).hostname or ""
+    if host in _ROBOTS_ASKED:
+        return
+    deferred = robots_deferred(url)
+    if deferred:
+        # A recorded gap, never a permission: scraper_common carries the
+        # measurement and the reason, and printing it puts the deferral in the
+        # log of every run rather than leaving it silent.
+        print("robots.txt NOT read for %s — %s" % (host, deferred), file=sys.stderr)
+        _ROBOTS_ASKED[host] = None
+        return
+    why = require_robots_allowed(url, HEADERS["User-Agent"], headers=HEADERS,
+                                 label='kendall-municipal-officials-scraper')
+    print("robots.txt %s: %s" % (host, why), file=sys.stderr)
+    _ROBOTS_ASKED[host] = why
+
+
 def fetch(url, engine):
     rungs = {"requests": [fetch_requests], "playwright": [fetch_playwright],
              "wayback": [fetch_wayback]}.get(
                  engine, [fetch_requests, fetch_playwright, fetch_wayback])
+    require_robots(url)
     last = None
     for rung in rungs:
         try:
