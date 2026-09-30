@@ -24,9 +24,13 @@ on:
   workflow_dispatch:
     inputs:
       host:
-        description: "Measure only this host (leave empty for every host)"
+        description: "Re-measure only this host (leave empty for every host)"
         required: false
         default: ""
+      reads:
+        description: "Reads per host, 15s apart — 3 settles a challenge-fronted host"
+        required: false
+        default: "1"
 
 permissions:
   contents: write
@@ -53,7 +57,10 @@ jobs:
         timeout-minutes: 45
         run: |
           if [ -n "${{ inputs.host }}" ]; then
-            python3 scripts/probe_robots_verdicts.py --host "${{ inputs.host }}"
+            # A targeted run MERGES into the record rather than replacing it,
+            # so every other host's reading survives a one-host re-measurement.
+            python3 scripts/probe_robots_verdicts.py \
+              --host "${{ inputs.host }}" --reads "${{ inputs.reads }}"
           else
             python3 scripts/probe_robots_verdicts.py
           fi
