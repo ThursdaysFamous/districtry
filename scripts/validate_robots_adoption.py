@@ -45,26 +45,66 @@ TWO TABLES, BECAUSE THEY ARE TWO DIFFERENT CLAIMS.
   progress, and adding one is not available to a new scraper — a file that
   fetches, reads nothing and is not already listed FAILS.
 
+  WHAT IS LEFT IN IT NO LONGER SHARES THAT REASON, and the shared-reason design
+  is why nothing in this file says so. The wiring pass took it from 224 entries
+  to 30 in a day, and the 30 are not a remainder of the sweep: every one reaches
+  a host the runner record shows REFUSING us, answering with a MANAGED CHALLENGE
+  we do not work around, or answering NOTHING at all. Each wants either a
+  re-read from a runner or an operator ruling, neither of which is a line of
+  code, so each is a decision rather than a task. A backlog whose entries stop
+  sharing their stated reason wants splitting; that split waits on the rulings,
+  because how they are grouped is part of what is being decided.
+
   `DECLARED_EXEMPT` is for a file whose fetch genuinely must not be gated, each
-  with its own reason and date. It is EMPTY on introduction, which is a
-  measurement rather than an omission: the three candidates considered were the
+  with its own reason and date. It was EMPTY on introduction, which was called a
+  measurement rather than an omission: "the three candidates considered were the
   two `indexnow_submit.py` submitters and `scripts/mirror_*_tiles.py`, and all
   three are ordinary automatic clients fetching somebody else's host, so all
-  three belong in the backlog and none is exempt. The one real class of
+  three belong in the backlog and none is exempt."
+
+  THAT READING WAS WRONG ABOUT THE TWO SUBMITTERS, and it is kept above rather
+  than deleted because the way it was wrong is the thing to learn. It asked
+  WHICH HOST is contacted and WHETHER A PROGRAM does the contacting — both true
+  of an IndexNow submission — and never asked WHICH DIRECTION the content moves.
+  robots.txt says which of a site's pages a crawler may READ. A submitter hands
+  over a list of our own addresses and reads nothing, so there is no page for a
+  policy to permit or refuse, and the rule has nothing to say about it. The
+  three copies of that script are exempt (2026-09-30), each arguing its own case
+  in its own file. `mirror_*_tiles.py` is unaffected: it really does read
+  somebody else's data, and it was wired rather than excused. The one real class of
   unreadable policy already has a home in
   `scraper_common.ROBOTS_DEFERRED_HOSTS`, which is per HOST and records the
   measurement; a per-FILE exemption would hide the same fact where nobody
   measures it.
 
-  IT HAS ONE ENTRY SINCE 2026-09-30, `goatcounter_fetch.py`, and it is the class
-  the paragraph above was holding the table open for rather than a loosening of
-  it: an authenticated read of this project's OWN analytics account with its own
-  token, where the host's blanket rule is aimed at search engines reading
-  customer dashboards. The three candidates rejected on introduction are all
-  still in the backlog, because each is an ordinary automatic client fetching
-  somebody else's host. The distinction is whose data and whose credential,
-  never which host, and it is argued in the exempt file rather than here so it
-  cannot be picked up by analogy from a one-line reason.
+  EVERY ENTRY IS the class the paragraph above was holding the table open for
+  rather than a loosening of it, and they fall in four groups, the group being
+  the argument in each case. check() requires every path in the table to be
+  named in this list, so the list cannot quietly stop describing the table; no
+  count is stated in either place, because the run's own OK line prints it:
+
+    * a read of this project's OWN data with its OWN credential —
+      `scripts/goatcounter_fetch.py`, `scripts/gsc_fetch.py`,
+      `scripts/bing_fetch.py`, `scripts/verify_google_api_access.py`,
+      `scripts/fleet_status.py`, `scripts/check_roster_workflow_health.py`,
+      `wi/scripts/wi_coa_staleness.py`. The blanket rule on each of those hosts
+      is aimed at search engines reading customer dashboards and web interfaces,
+      not at an account holder reading their own account through the API the
+      credential was issued for.
+    * an OUTBOUND submission of our own addresses, reading nothing — the three
+      copies of that script: `scripts/indexnow_submit.py`,
+      `ca/scripts/indexnow_submit.py`, `ny/scripts/indexnow_submit.py`.
+    * a step in completing a TLS HANDSHAKE — `scripts/aia_bundle.py`, which
+      fetches the intermediate certificate named inside a leaf a host has just
+      served.
+    * a file that talks only to a server IT STARTED ITSELF —
+      `scripts/selftest_scraper_common.py`, whose one host is loopback.
+
+  The test is never which host answers. It is whose data and whose credential,
+  or whose content and which direction, or whether any page is read at all — and
+  EVERY entry argues its own case at length in its own file rather than in the
+  one-line reason here, so no exemption can be picked up by analogy from this
+  table.
 
 WHAT IT CANNOT SEE, stated rather than implied. It asks whether a file reaches
 the seam, never whether it reaches it BEFORE its first fetch or for EVERY host
@@ -75,6 +115,7 @@ attempt, and it is why the seam raises rather than returning False.
 
 import ast
 import os
+import re
 import subprocess
 import sys
 
@@ -245,14 +286,14 @@ UNWIRED_AT_SWEEP = frozenset("""
 """.split())
 
 # path -> (reason, date). EMPTY on introduction, deliberately; see the docstring.
-# TWELVE ENTRIES SINCE, every one of the class the docstring said it was
-# reserving the table for: a fetch that genuinely must not be gated, rather
-# than one that has not been gated yet. They fall in four groups — a read of
-# this project's own data with this project's own credential, an outbound
-# submission of our own addresses, a step in completing a TLS handshake, and a
-# file that talks only to a server it started itself — and EVERY ONE carries
-# its whole argument in its own file rather than a pointer at a sibling, so no
-# exemption can be borrowed by analogy from a row in this table.
+# Every entry is the class the docstring said it was reserving the table for: a
+# fetch that genuinely must not be gated, rather than one that has not been
+# gated yet. The docstring groups them and says why each group is not a crawl,
+# and check() requires every path here to be NAMED there — two places stating a
+# COUNT is how the two come to disagree, so neither states one and the run's own
+# OK line prints it. EVERY ONE carries its whole argument in its own file rather
+# than a pointer at a sibling, so no exemption can be borrowed by analogy from a
+# row in this table.
 #
 # A PATH IN BOTH TABLES IS EXCUSED TWICE AND COUNTED TWICE, which is what
 # happened to the two entries below when they were declared exempt and left in
@@ -391,6 +432,20 @@ def main(argv):
 
     on_disk = set(files)
     wired_now = set(fetchers) - set(unwired)
+    # Tokenised rather than a substring test: "scripts/indexnow_submit.py" is a
+    # substring of "ca/scripts/indexnow_submit.py", so a plain `in` would let one
+    # instance's copy satisfy the root copy's requirement and pass three paths on
+    # one mention.
+    named = set(re.findall(r"[A-Za-z0-9_./-]+\.py", __doc__ or ""))
+    for p in sorted(DECLARED_EXEMPT):
+        if p not in named:
+            problems.append("%s is in DECLARED_EXEMPT and is not named in this "
+                            "module's docstring, where the exemptions are "
+                            "grouped and each group's reason is given. A table "
+                            "row carries a one-line reason; the docstring is "
+                            "where a reader learns which KIND of fetch is "
+                            "excused, and a row missing from it is an exemption "
+                            "in a class nobody stated." % p)
     for p in sorted(set(UNWIRED_AT_SWEEP) & set(DECLARED_EXEMPT)):
         problems.append("%s is in UNWIRED_AT_SWEEP and in DECLARED_EXEMPT. The "
                         "two tables say different things — not gated YET, and "
