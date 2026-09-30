@@ -47,13 +47,28 @@ TWO TABLES, BECAUSE THEY ARE TWO DIFFERENT CLAIMS.
 
   WHAT IS LEFT IN IT NO LONGER SHARES THAT REASON, and the shared-reason design
   is why nothing in this file says so. The wiring pass took it from 224 entries
-  to 30 in a day, and the 30 are not a remainder of the sweep: every one reaches
-  a host the runner record shows REFUSING us, answering with a MANAGED CHALLENGE
-  we do not work around, or answering NOTHING at all. Each wants either a
-  re-read from a runner or an operator ruling, neither of which is a line of
-  code, so each is a decision rather than a task. A backlog whose entries stop
-  sharing their stated reason wants splitting; that split waits on the rulings,
-  because how they are grouped is part of what is being decided.
+  to 30 in a day, and what remains is not a remainder of the sweep: each one
+  reaches a host the runner record shows REFUSING us, answering with a MANAGED
+  CHALLENGE we do not work around, or answering NOTHING at all. Each wants
+  either a re-read from a runner or an operator ruling, neither of which is a
+  line of code, so each is a decision rather than a task. A backlog whose
+  entries stop sharing their stated reason wants splitting; that split waits on
+  the rulings, because how they are grouped is part of what is being decided.
+
+  THREE OF THOSE 30 WERE NEVER IN THAT CLASS AND WERE SORTED THERE BY READING A
+  URL LITERAL, which is the same defect this gate's own AST rule exists to avoid
+  one level up. `scripts/build_stephenson_fire_districts.py`,
+  `ia/scripts/build_ia_judicial_district.py` and
+  `scripts/will_municipal_officials_scraper.py` each name a refusing host — an
+  `elections.il.gov` map url written into every feature as `mapUrl`, the Code of
+  Iowa sections and Judicial Branch pages a docstring cites, a Clarity asset
+  address in a comment — and none of the three ever requests it. A CITATION IS
+  NOT A FETCH, so the hosts they do read (TIGERweb, one ArcGIS feature service,
+  the Will County Clerk and the flipbook the Clerk publishes on) all permit
+  them, and all three were wired on 2026-09-30 with no ruling needed. Bucketing
+  a file by the addresses it contains over-counts for exactly the reason a text
+  match for the seam over-counts: the literal is evidence of a mention, never of
+  a request.
 
   `DECLARED_EXEMPT` is for a file whose fetch genuinely must not be gated, each
   with its own reason and date. It was EMPTY on introduction, which was called a
@@ -99,6 +114,11 @@ TWO TABLES, BECAUSE THEY ARE TWO DIFFERENT CLAIMS.
       served.
     * a file that talks only to a server IT STARTED ITSELF —
       `scripts/selftest_scraper_common.py`, whose one host is loopback.
+    * a NAME LOOKUP rather than a read — `scripts/build_county_clerk_roster.py`,
+      whose one fetch asks a DNS-over-HTTPS resolver whether each shipped
+      address's domain has a mail route. A resolver is the layer BELOW the one
+      robots.txt governs: every gated fetch here resolves a name first,
+      including the fetch of robots.txt itself.
 
   The test is never which host answers. It is whose data and whose credential,
   or whose content and which direction, or whether any page is read at all — and
@@ -254,14 +274,10 @@ def tracked_python():
 # ---------------------------------------------------------------------------
 UNWIRED_AT_SWEEP = frozenset("""
     ca/scripts/validate_sources.py
-    ia/scripts/build_ia_judicial_district.py
-    mi/scripts/mi_detroit_council_scraper.py
     ny/scripts/validate_sources.py
     scripts/boone_district_officials_scraper.py
-    scripts/build_county_clerk_roster.py
     scripts/build_lasalle_board_districts.py
     scripts/build_logan_precinct_polling.py
-    scripts/build_stephenson_fire_districts.py
     scripts/clay_county_board_scraper.py
     scripts/coles_county_board_scraper.py
     scripts/dekalb_county_board_scraper.py
@@ -272,7 +288,6 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/il_library_contacts_scraper.py
     scripts/marshall_county_board_scraper.py
     scripts/probe_incomplete_tls_chains.py
-    scripts/will_municipal_officials_scraper.py
     wi/scripts/build_rusd_school_board_districts.py
     wi/scripts/validate_sources.py
     wi/scripts/wi_alderperson_scraper.py
@@ -301,6 +316,16 @@ UNWIRED_AT_SWEEP = frozenset("""
 # whose exemption can be deleted with nothing turning red, because the backlog
 # goes on covering it silently. check() refuses an overlap for that reason.
 DECLARED_EXEMPT = {
+    "scripts/build_county_clerk_roster.py": (
+        "ITS ONE FETCH IS A NAME LOOKUP: it asks a DNS-over-HTTPS resolver "
+        "whether each shipped clerk address's domain has a mail route, and what "
+        "comes back is a DNS answer rather than a page. A resolver sits BELOW "
+        "the layer robots.txt governs — every gated fetch in this repository "
+        "resolves a name first, the fetch of robots.txt included, so gating "
+        "this one would need a name lookup to perform it. THE TEST IS WHETHER "
+        "SOMEBODY'S PAGES ARE BEING READ, never which host answers; argued at "
+        "length in the file",
+        "2026-09-30"),
     "scripts/aia_bundle.py": (
         "NOT A CRAWL BUT A STEP IN A TLS HANDSHAKE: it fetches an "
         "intermediate CA certificate from the AIA url printed inside a leaf "

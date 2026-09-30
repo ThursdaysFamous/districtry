@@ -19,6 +19,22 @@ Usage:
     python3 build_county_clerk_roster.py il_county_clerks.json [output_dir]
 
 output_dir defaults to the repo's data/app/ directory.
+
+NOT GATED ON robots.txt: ITS ONE FETCH IS A NAME LOOKUP, NOT A READ OF ANYBODY'S
+PAGES. `mx_report` asks dns.google/resolve whether each shipped clerk address's
+domain has a mail route, over DNS-over-HTTPS because plain DNS and SMTP are
+commonly blocked on CI runners. What comes back is a DNS answer, in the protocol
+that endpoint documents for exactly this; there is no page, no link to follow and
+no url discovered, and the thing being asked about is a domain rather than a
+site's content.
+
+THE TEST IS WHETHER SOMEBODY'S PAGES ARE BEING READ, never which host answers. A
+resolver is the layer BELOW the one robots.txt governs -- every gated fetch in
+this repository resolves a name first, including the fetch of robots.txt itself,
+so reading a policy before a name lookup would have to resolve a name to do it.
+An unauthenticated read of an ordinary page on a Google host would be gated in
+full. The argument is made here at length so it cannot be applied by analogy from
+the exemption table.
 """
 
 import argparse
