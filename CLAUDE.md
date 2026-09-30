@@ -87,11 +87,20 @@ This list undercounts what actually runs, and **the figure is stated WITH ITS ME
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
 them used. MEASURED 2026-09-30 on this branch, AFTER its last edit: a static gate is
 one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **95**;
-counted instead as script invocations the whole battery is **130 — 118 that need no browser and
-12 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`ky`,
+counted instead as script invocations the whole battery is **133 — 120 that need no browser and
+13 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`/`ky`,
 2 root-page tests, and the two fleet-wide probes for point transmission and contrast pairs), the
 per-instance `validate_index.py` runs included, and excluding the two `npx playwright install`
-setup lines and the `http.server` that serves the pages to the twelve.
+setup lines and the `http.server` that serves the pages to the thirteen.
+
+The 127/95 this paragraph carried earlier on 2026-09-29 is the two-branches case above, a fourth
+time, and the most instructive instance of it yet: Minnesota's #1265 and Indiana's #1269 each added
+one instance to the battery and each measured 95/127 correctly against a base that predated the
+other. Both sides wrote **127**, so git merged the invocation line SILENTLY at a figure neither
+tree will have — the merged truth is **130**, because each state contributes three invocations
+(its `build_coverage_gaps.py --check`, its `validate_index.py` and its browser smoke test) and
+each went into an existing named step, so the step count did not move at all. Neither diff
+contains anything to look at. The gate is what caught it, on the run after the merge.
 
 **THE PAIR IS NO LONGER KEPT BY HAND.** `scripts/validate_gate_counts.py` measures both figures
 off `smoke-test.yml` by exactly the rule above and FAILS naming the current values, so a change
@@ -106,14 +115,14 @@ invocation total against `validate_steward_mirror.py`'s, because that module alr
 same commands for a different question, and two readers of one question is where this fleet's
 recurring defect starts.
 
-The 127 this paragraph carried on 2026-09-29 was three invocations behind the 130 that
-replaced it, with the NAMED-STEP figure unmoved at 95 for the SECOND state running: Kentucky
-arrived as the eighth instance and its three gates — a coverage-gaps check, a
+The 130 this paragraph carried on 2026-09-30 was three invocations behind the 133 that
+replaced it, with the NAMED-STEP figure unmoved at 95 for the THIRD state running: Kentucky
+arrived as the ninth instance and its three gates — a coverage-gaps check, a
 `validate_index.py` and a Playwright smoke test — went into three EXISTING steps that already
-run one line per instance, exactly as Minnesota's had (the 124/124 pair this paragraph carried
-on 2026-09-28 was three behind the 127, for that reason). So the battery grows by three per
-state and the step count does not move at all. The two figures move independently, and adding
-a state moves only one of them.
+run one line per instance, exactly as Minnesota's and Indiana's had (the 124/124 pair this
+paragraph carried on 2026-09-28 was three behind the 127, for that reason). So the battery
+grows by three per state and the step count does not move at all. The two figures move
+independently, and adding a state moves only one of them.
 
 **TWO BRANCHES CAN EACH BE RIGHT AGAINST THEIR OWN BASE AND BOTH WRONG ONCE MERGED, and the
 half that CONFLICTS is the lucky half** (2026-09-19). #1037 took the tree to 65/91 and #1040 to
@@ -219,8 +228,8 @@ each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-30, **130
-invocations for 130**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-30, **133
+invocations for 133**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on
@@ -317,7 +326,7 @@ python3 scripts/check_roster_retention.py --base origin/main
 
 **The population it sums is `il/data/app/population/`**, one file per county of every populated Census 2020 block as `[lng, lat, people]` at its internal point, with an `index.json` giving each county's extent and total — 278,166 blocks, 12,812,508 people, 6.6 MB raw and 2.0 MB gzipped across 102 files, of which a comparison loads only the counties it touches (`scripts/build_block_population.py`). **NOTHING IN IT IS IN A `sw.js` LIST**, deliberately: `GEOMETRY_URLS` was installed on every visitor's first load until 2026-09-26 (it is now cached on first use, like everything else a layer reads), and 6.6 MB for a feature most readers never open was the wrong trade either way, so the folder sits below `data/app` where `validate_index.py`'s one-list rule (top-level files only) does not reach, and the app that reads it serves it by prefix, cached on first use. The build refuses to write unless every county's block sum equals the same census's TRACT sum for that county and the state equals its published count. **`--check` IS THE STRONGEST TEST OF THE MEASURE BLOCK THE REPO HAS**: it runs the engine's own `measurePointWeight` over every shipped congressional, State Senate and State House district and requires each map to partition the state EXACTLY — measured 2026-09-23, all three hold 12,812,508 to the person, and every congressional district lands within 14 people of its 753,677 ideal on the SIMPLIFIED outlines the app ships. It fails if any map loses or double-counts a block, and it cannot pass by agreeing with itself, because the plan each map was drawn to is the independent witness.
 
-`validate_instance_registration.py` is the **fleet-registration** gate, and it exists because adding a state is not one edit. The instance is a folder, and nine other places have to learn its tag; five of them DISCOVER the fleet from the tree (`check_roster_retention.py`, `validate_card_links.py`, `build_dark_map_palette.py`, `validate_workflow_deps.py`, `fleet_status.py`) and need nothing, while four hand-kept tables (`build_history_page`, `build_landing_page`, `build_manifests`, `compose_app`), `metros.json` and THREE literal five-line lists inside `smoke-test.yml` are claims nobody measured. Twice the miss shipped: `validate_card_links.py` named four instances out of five in the very commit whose comment said a new county is covered with nothing to update (303 URLs, 52 authored, unwatched), and the retention gate pointed at `il/data/app` alone while a bot PR stripped `party`, `capitolOffice` and `districtOffice` from all 213 New York legislators and reported "222 roster files, no field lost its records". Both were found by hand, weeks apart. **The TREE is canonical, never a table** — a top-level directory with an `index.html` and a `data/app/` IS an instance, the same rule `validate_card_links.py` discovers by — because taking `generate_metro_files.INSTANCES` as truth would let the gate agree with itself about a sixth instance nobody registered. It names the file and the symbol to edit, and refuses to pass having found fewer than two instances.
+`validate_instance_registration.py` is the **fleet-registration** gate, and it exists because adding a state is not one edit. The instance is a folder, and nine other places have to learn its tag; five of them DISCOVER the fleet from the tree (`check_roster_retention.py`, `validate_card_links.py`, `build_dark_map_palette.py`, `validate_workflow_deps.py`, `fleet_status.py`) and need nothing, while four hand-kept tables (`build_history_page`, `build_landing_page`, `build_manifests`, `compose_app`), `metros.json` and THREE literal five-line lists inside `smoke-test.yml` are claims nobody measured. Twice the miss shipped: `validate_card_links.py` named four instances out of five in the very commit whose comment said a new county is covered with nothing to update (303 URLs, 52 authored, unwatched), and the retention gate pointed at `il/data/app` alone while a bot PR stripped `party`, `capitolOffice` and `districtOffice` from all 213 New York legislators and reported "222 roster files, no field lost its records". Both were found by hand, weeks apart. **The TREE is canonical, never a table** — a top-level directory with an `index.html` and a `data/app/` IS an instance, the same rule `validate_card_links.py` discovers by — because taking `generate_metro_files.INSTANCES` as truth would let the gate agree with itself about a sixth instance nobody registered. It names the file and the symbol to edit, and refuses to pass having found fewer than two instances. **IT ALSO OWNS THE DEFINITION OF DARK, AND THREE OTHER GATES HAD WRITTEN THEIR OWN — measured 2026-09-29, when Indiana arrived as the first dark instance since any of them was written.** `dark_instances()` here reads the one thing that actually decides whether a folder is published: the blanket `<tag>/**` line in `deploy-pages.yml`'s `EXCLUDES`. `build_llms_txt.py` instead asserted `metros.json` and the tree are EQUAL, citing this gate in the very docstring that contradicted it, and took the whole fleet's `llms.txt` red for a folder nobody is served; `build_question_forms.py` failed the fleet's 37 question forms on an instance "not in metros.json"; and `build_sitemap.py` wanted to LIST a dark instance's three pages, which would have handed a crawler three 404s — the same 404 a premature landing card would be, which is the whole reason `metros.json` waits for go-live. All three now read `dark_instances()`, and the sitemap's own comment says the go-live change picks the pages up. **THIS SENTENCE SAID THEY PRINT THE TAG RATHER THAN SKIPPING SILENTLY, AND THEY SKIP** (corrected 2026-09-29, hours after it was written): it was true of the copies the Indiana branch wrote and not of the copies that merged. Three branches fixed these four readers independently — Minnesota's #1265, Indiana's #1269 and North Carolina's #1270 — and converging on ONE copy meant taking main's, where the three skip and only `build_about_page.py`'s `note()` prints. **A CLAIM ABOUT CODE YOU WROTE GOES STALE WHEN YOU TAKE SOMEBODY ELSE'S COPY OF IT**, which is the cost of convergence and is worth paying; what is not worth paying is a sentence that goes on describing the copy you abandoned. Whether the three SHOULD print is open and is not decided here: a skip is silent, and an absence a reader cannot see is the shape this file records going wrong over and over. **A gate that cites another gate for a definition and then restates it is the two-readers defect wearing a citation**, which is harder to see than a plain duplicate.
 
 **The coverage ring's own gate was in no workflow, and it validates a hand-kept list.** `build_metro_outline.py --check` compares the SHIPPED outline against each instance's `INSIDE`/`OUTSIDE` anchors; it never rebuilds from `METRO_COUNTY_FIPS` (that needs TIGERweb), so a county added to that tuple without an anchor was green by construction — the ring simply never got asked about it. That is how Wisconsin greyed out seven counties for two days with every gate passing. `check_anchor_registry()` now runs on both the check and build paths in all three statewide instances and holds the anchor list to the county list offline: one INSIDE anchor per served county, no county doubled, none both inside and outside. **The key shapes differ by instance and both are correct** — Illinois keys anchors `Place (County)` because its ring is a subset of its state, Wisconsin and Iowa by bare county name because their ring IS the state — so a check demanding either shape would fail two correct instances. The three `--check` runs are now in CI. A gate that can only be vacuous is the same failure one level up: `check_county_coverage_list` walks `registerCountyLayer` entries, which Wisconsin and Iowa have none of, so it printed "0 dispatched counties all inside the coverage ring" as though that were a result, under an unedited copy of Illinois's docstring naming Illinois counties. Wisconsin had already closed it with `check_coverage_ring_tracks_roster`; Iowa now has `check_coverage_ring_tracks_counties`, held to `ia-county-officers.json` and deliberately NOT to `ia-supervisor-members.json` — the wash claims where the STATEWIDE layers answer, all 99 counties, while the supervisor roster covers 17, a known roster gap rather than a coverage lie, so that comparand would fail a correct instance.
 
