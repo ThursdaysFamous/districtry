@@ -635,8 +635,11 @@ jobs:
       # lastmod from that file's own last commit, and in a depth-1 clone there is
       # one commit, so all 243 entries take the run date. A bot run on
       # 2026-09-17 shipped 241 wrong dates that way. build_sitemap.py --check is
-      # structurally blind to it: it fails on a date that is BEHIND, and this
-      # moves every date forward to today. Stdlib only, no network.
+      # used to be structurally blind to it: it failed on a date that is BEHIND,
+      # and this moves every date forward to today. Since 2026-09-30 that check
+      # also fails on a date too NEW and refuses a shallow clone outright, so
+      # this gate is the second reader: it asks whether the job was given the
+      # history, which a tree cannot answer. Stdlib only, no network.
       - name: Sitemap-committing workflows check out full history
         if: ${{ !cancelled() }}
         run: python3 scripts/validate_workflow_checkout.py
