@@ -935,6 +935,19 @@ jobs:
           python3 scripts/validate_robots_adoption.py --selftest
           python3 scripts/validate_robots_adoption.py
 
+      # The runner-side robots measurement's own offline audit. It was kept OUT of
+      # the battery when it was written, on the stated ground that a gate which can
+      # only SKIP is a vacuous gate: with no measurement in the tree it had nothing
+      # to check. It has something now whether or not the measurement is there --
+      # PINNED_CHAINS, the four hosts that serve only their leaf certificate and the
+      # intermediate each scraper completes the chain with. That is a claim about the
+      # tree, so it is wrong on the day a scraper drops its pinning rather than on
+      # the day somebody next dispatches the probe, and it caught a key this table
+      # had guessed on its first run.
+      - name: The runner robots measurement still describes the tree
+        if: ${{ !cancelled() }}
+        run: python3 scripts/probe_robots_verdicts.py --check
+
       # Two reports say whether a weekly roster refresh is still running, and both
       # used to take a workflow's newest completed run without asking whether it
       # was a run. GitHub records one for a workflow file it cannot START, with no

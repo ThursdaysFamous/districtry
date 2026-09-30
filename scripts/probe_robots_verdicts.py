@@ -75,6 +75,82 @@ BROWSER_VERDICTS = {"stack-not-token", "token-refused", "token-refused-and-stack
                     "browser-only", "all-refused", "challenged", "proxy-denied"}
 
 
+# HOSTS THAT SERVE ONLY THEIR LEAF CERTIFICATE, and the pinned intermediate each
+# scraper already completes the chain with. Read with the default trust store
+# these four answer CERTIFICATE_VERIFY_FAILED, which RFC 9309 2.3.1.4 files as
+# unreachable and therefore disallows -- measured from a GitHub runner on
+# 2026-09-30, all four, while `update-ilga-roster.yml` was reading www.ilga.gov's
+# pages on that same runner and succeeding. So the refusal was this probe's trust
+# store rather than any host's policy, which is CLAUDE.md's consistency rule --
+# read the policy with the client that crawls -- reaching down into the handshake.
+#
+# THE KEY IS NOT GUESSED: each entry names the file that already reads that host
+# with that intermediate, and `audit_pinned_chains` re-reads it every run, failing
+# on an entry whose file has gone or has stopped naming the host or the key. An
+# entry can therefore only describe the tree, and a scraper that drops its pinning
+# turns this red rather than leaving a stale permission behind.
+PINNED_CHAINS = {
+    "www.ilga.gov": ("sectigo-ov-r40", "scripts/ilga_scraper.py"),
+    "gallatinco.illinois.gov": ("sectigo-ov-r40",
+                                "scripts/il_county_commissioners_scraper.py"),
+    "www.colesco.illinois.gov": ("godaddy-g2",
+                                 "scripts/coles_county_board_scraper.py"),
+    "www.vercounty.org": ("gogetssl-rsa-dv",
+                          "scripts/vermilion_county_board_scraper.py"),
+}
+
+
+def audit_pinned_chains(repo=REPO):
+    """Reasons each PINNED_CHAINS entry no longer describes the tree, or []."""
+    problems = []
+    for host, (key, path) in sorted(PINNED_CHAINS.items()):
+        full = os.path.join(repo, path)
+        if not os.path.exists(full):
+            problems.append("%s: %s is not in the tree" % (host, path))
+            continue
+        with open(full, encoding="utf-8") as fh:
+            text = fh.read()
+        if host not in text:
+            problems.append("%s: %s no longer names that host" % (host, path))
+        if key in text:
+            continue
+        # A CALL WITH NO KEY TAKES `aia_bundle`'s DEFAULT, and Coles's does, so the
+        # key does not appear in that file at all. The first draft of this table
+        # recorded the key by reading the fleet's other three callers and assuming
+        # the fourth spelled it too; this audit caught that on its first run, which
+        # is what it is for. Accepting a defaulted call therefore means checking the
+        # DEFAULT, so a change to it fails here rather than silently re-pointing
+        # this host at another authority's intermediate.
+        import inspect
+
+        import aia_bundle
+        default = inspect.signature(aia_bundle.ca_bundle).parameters["key"].default
+        if "aia_bundle.ca_bundle(" in text and default == key:
+            continue
+        problems.append("%s: %s no longer pins %s (nor calls ca_bundle for the "
+                        "default, which is now %s)" % (host, path, key, default))
+    return problems
+
+
+def pinned_session(host):
+    """A requests session trusting `host`'s omitted intermediate, or None.
+
+    The bundle is a temp file `aia_bundle` writes per call; the probe is one
+    process that exits, so it is not deleted here -- deleting it would need the
+    session's lifetime threaded through `probe_host`'s return, for a few KB in
+    the runner's own temp directory.
+    """
+    entry = PINNED_CHAINS.get(host)
+    if entry is None:
+        return None
+    import aia_bundle
+    import requests
+
+    session = requests.Session()
+    session.verify = aia_bundle.ca_bundle("robots-verdicts", entry[0])
+    return session
+
+
 def client_for(verdict):
     """(label, user_agent, headers) — the client this host is crawled with."""
     if verdict in BROWSER_VERDICTS:
@@ -84,9 +160,51 @@ def client_for(verdict):
     return "token", sc.UA_ROSTER_BOT, {"User-Agent": sc.UA_ROSTER_BOT}
 
 
+def subject(inventory):
+    """Every host the tree fetches, which is what the robots question is about.
+
+    NOT `probe_user_agents.subject_hosts`, WHICH THIS USED AND WHICH ANSWERS A
+    DIFFERENT QUESTION. That one returns the hosts a browser-string caller
+    reaches, because the user-agent question is only ever about those: a host
+    nothing sends a browser string to has nothing to measure there. The robots
+    question is about every host anything fetches, and measured 2026-09-30 the
+    two differ by more than half -- 266 against 508 -- so the first record this
+    probe wrote carried the sentence "robots.txt of every host the tree fetches"
+    over a reading of 52% of them. THE SUBJECT LINE WAS THE CLAIM AND THE CODE
+    DID NOT MEET IT, which is this fleet's recurring defect rather than a
+    miscount: a figure taken from the wrong reader reads exactly like a figure.
+
+    The 242 it adds are hosts only token-sending callers reach, and a token
+    sender is bound by robots.txt exactly as a browser-string sender is.
+
+    THE DEFERRED HOSTS ARE ASKED TOO, and they are the reason this function does
+    not simply return the inventory's keys. `scraper_common.ROBOTS_DEFERRED_HOSTS`
+    records a host whose policy nobody here has managed to read, with
+    web.archive.org's entry saying in as many words that the honest fix is to
+    measure it from a runner -- and this probe IS that runner, so leaving it out
+    kept the one host the deferral was waiting on out of the measurement it was
+    waiting for. It is in the inventory or it is not, and either way it is asked.
+    """
+    hosts = set(inventory)
+    hosts.update(sc.ROBOTS_DEFERRED_HOSTS)
+    return sorted(hosts)
+
+
 def read_verdicts(path=MEASUREMENTS):
     with open(path, encoding="utf-8") as fh:
         return json.load(fh)
+
+
+def url_for(inventory, host):
+    """The address this host is asked about — a url a scraper actually reads.
+
+    A deferred host may not be in the inventory at all (its callers can reach it
+    by a composed url rather than a literal), and there is still a policy to read,
+    so the host root stands in. The row records the url asked about either way,
+    so a reader can tell which of the two it was.
+    """
+    entry = inventory.get(host)
+    return ua.choose_url(entry) if entry else "https://%s/" % host
 
 
 def probe_host(host, url, verdict_kind):
@@ -96,8 +214,12 @@ def probe_host(host, url, verdict_kind):
     # server or none at all.
     scheme = urlsplit(url).scheme or "https"
     robots_url = "%s://%s/robots.txt" % (scheme, host)
+    session = pinned_session(host)
+    if session is not None:
+        label += "+pinned-chain"
     try:
-        v = robots_policy.fetch_verdict(robots_url, agent, headers=headers)
+        v = robots_policy.fetch_verdict(robots_url, agent, session=session,
+                                        headers=headers)
     except Exception as exc:                      # a reader error is a reading
         return {"host": host, "url": url, "client": label,
                 "status": "error", "why": "%s: %s" % (type(exc).__name__, exc),
@@ -133,13 +255,13 @@ def vantage():
 def run(args):
     inventory = ua.build_inventory()
     measured = read_verdicts().get("hosts", {})
-    hosts = sorted(ua.subject_hosts(inventory))
+    hosts = subject(inventory)
     if args.host:
         hosts = [h for h in hosts if h in set(args.host)]
     rows = {}
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures = {
-            pool.submit(probe_host, h, ua.choose_url(inventory[h]),
+            pool.submit(probe_host, h, url_for(inventory, h),
                         (measured.get(h) or {}).get("verdict", "")): h
             for h in hosts
         }
@@ -176,14 +298,24 @@ def run(args):
 
 def check(args):
     """Offline audit: the record still describes the tree it was taken over."""
+    # THE PINNED-CHAIN AUDIT RUNS WHETHER OR NOT THE RECORD EXISTS, because it is
+    # a claim about the tree rather than about the measurement: an entry that has
+    # stopped describing a scraper is wrong on the day that scraper changes, not
+    # on the day somebody next dispatches the probe.
+    stale = audit_pinned_chains()
+    if stale:
+        print("probe-robots-verdicts: FAIL — PINNED_CHAINS no longer describes "
+              "the tree\n    %s" % "\n    ".join(stale), file=sys.stderr)
+        return 1
     if not os.path.exists(args.out):
         print("probe-robots-verdicts: SKIP — %s has not been measured yet; "
               "dispatch .github/workflows/probe-robots-verdicts.yml to take it "
-              "from a runner" % os.path.basename(args.out))
+              "from a runner (%d pinned chain(s) verified)"
+              % (os.path.basename(args.out), len(PINNED_CHAINS)))
         return 0
     payload = json.load(open(args.out, encoding="utf-8"))
     rows = payload.get("hosts", {})
-    hosts = set(ua.subject_hosts(ua.build_inventory()))
+    hosts = set(subject(ua.build_inventory()))
     problems = []
     for host in sorted(set(rows) - hosts):
         problems.append("%s is in the record and nothing in the tree fetches it "
@@ -194,9 +326,9 @@ def check(args):
               file=sys.stderr)
         return 1
     print("probe-robots-verdicts: OK — %d host(s) recorded %s from %s; %d in "
-          "the tree not yet measured"
+          "the tree not yet measured; %d pinned chain(s) verified"
           % (len(rows), payload.get("measured"), payload.get("vantage"),
-             len(missing)))
+             len(missing), len(PINNED_CHAINS)))
     return 0
 
 
