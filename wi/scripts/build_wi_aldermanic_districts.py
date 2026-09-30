@@ -107,6 +107,19 @@ EXPECT_TOTAL_KEYS = 888        # 867 filed + 21 the state does not file:
 # Durand and Edgerton vote at a SINGLE place, Bellevue and Kaukauna at two,
 # New London and Port Washington at three — so no ward-to-place grouping can
 # name a district there, whatever their own pages say.
+#
+# PORT WASHINGTON WAS RE-CHECKED FOR AN ACCESS PROBLEM ON 2026-09-30 AND DOES
+# NOT HAVE ONE. It was named to this project as a host shut out only by a 403
+# on robots.txt, the class #1271 reopened; read with the client that crawls,
+# www.portwashingtonwi.gov SERVES robots.txt (6,641 bytes) with no rule
+# matching any path we would ask for, and its front page answers 200 at 89,973
+# bytes. So the city is readable and always may have been. THAT CHANGES
+# NOTHING HERE, which is the point of recording it: its exclusion is a FILING
+# question, not an access one — Ozaukee County files ward 9 with no district
+# code and the city votes at three places, so no page of the city's own could
+# supply the assignment either. The ask to the county clerk stands
+# (docs/ASK_DRAFTS.md). Recorded so the next pass does not re-probe a host
+# that answers, or expect a reopened door to close this gap.
 EXCLUDED = {
     "06350": ("Bellevue", 11, 0.999),
     "09725": ("Brillion", 2, 0.094),
