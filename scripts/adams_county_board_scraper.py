@@ -62,7 +62,7 @@ import sys
 
 import pymupdf
 import requests
-from scraper_common import UA_CHROME_WIN_126_FULL, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CHROME_WIN_126_FULL, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
 
 # platinumelectionresults.com's county id for Adams. Verified by reading the
 # county name out of page 1 of every report fetched — never trusted from the id.
@@ -119,6 +119,8 @@ def fetch(url):
     # scraper_common.fetch retries 429/5xx (numeric Retry-After honoured,
     # capped) and refuses to retry 401/403/404 — the Henry rule. Parsing and
     # every page check stay in this file.
+    require_robots_once(url, UA, headers={"User-Agent": UA},
+                        label="il-adams-county-board-scraper")
     return fetch_with_retry(url, {"User-Agent": UA}, timeout=TIMEOUT)
 
 

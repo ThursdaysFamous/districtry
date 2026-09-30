@@ -55,7 +55,7 @@ import re
 import sys
 
 import requests
-from scraper_common import make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 WP = "https://douglas.wp.webfoot.io/wp-json/wp/v2/media"
 SITE = "https://douglascountyil.gov"
@@ -85,6 +85,8 @@ def media(pattern):
     """[(date, url)] for every media item whose URL matches, newest first."""
     session = requests.Session()
     session.headers.update(HEADERS)
+    require_robots_once(WP, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-douglas-county-board-scraper")
     probe = session.get(WP, params={"per_page": 1}, timeout=TIMEOUT)
     total = int(probe.headers.get("X-WP-Total") or 0)
     hits, page = [], 1
@@ -105,6 +107,8 @@ def media(pattern):
 
 def pdf_text(url):
     import pymupdf
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-douglas-county-board-scraper")
     resp = requests.get(url, headers={"User-Agent": HEADERS["User-Agent"]}, timeout=TIMEOUT)
     resp.raise_for_status()
     if not resp.content.startswith(b"%PDF"):

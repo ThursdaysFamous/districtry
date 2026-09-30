@@ -60,7 +60,7 @@ from datetime import datetime, timezone
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from scraper_common import UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://www.chicagopolice.org"
 FINDER_PATH = "/police-districts/find-your-district/"
@@ -106,6 +106,8 @@ class RequestsFetcher:
         last_err = None
         for attempt in range(retries):
             try:
+                require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                                    label="il-cpd-district-scraper")
                 resp = self.session.get(url, headers=HEADERS, timeout=timeout)
                 if resp.status_code == 200 and not _looks_like_challenge(resp.text):
                     return resp.text
@@ -184,6 +186,8 @@ class PlaywrightFetcher:
         for attempt in range(retries + 1):
             page = self.context.new_page()
             try:
+                require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                                    label="il-cpd-district-scraper")
                 page.goto(url, wait_until="domcontentloaded", timeout=self.timeout)
                 # The managed challenge runs its JS then redirects to the real
                 # page; give it a bounded window to clear before reading.

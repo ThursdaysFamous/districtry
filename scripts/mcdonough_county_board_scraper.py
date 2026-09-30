@@ -48,7 +48,7 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_WIN_126, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CHROME_WIN_126, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
 
 SOURCE_URL = "http://mcg.mcdonough.il.us/members.html"
 COUNTY_PAGE = "http://mcg.mcdonough.il.us/"
@@ -92,6 +92,8 @@ def fetch(url):
     # scraper_common.fetch retries 429/5xx (numeric Retry-After honoured,
     # capped) and refuses to retry 401/403/404 — the Henry rule. Parsing and
     # every page check stay in this file.
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-mcdonough-county-board-scraper")
     return fetch_with_retry(url, HEADERS, timeout=REQUEST_TIMEOUT).text
 
 

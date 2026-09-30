@@ -215,28 +215,23 @@ UNWIRED_AT_SWEEP = frozenset("""
     ca/scripts/build_sf_supervisor_roster.py
     ca/scripts/indexnow_submit.py
     ca/scripts/validate_sources.py
-    ia/scripts/build_ia_community_colleges.py
     ia/scripts/build_ia_gap_outlines.py
     ia/scripts/build_ia_judicial_district.py
     ia/scripts/cedar_rapids_council_scraper.py
     ia/scripts/dsm_council_scraper.py
     ia/scripts/ia_county_directory_scraper.py
-    ia/scripts/ia_legislature_scraper.py
     ia/scripts/waterloo_council_scraper.py
     in/scripts/validate_sources.py
     mi/scripts/build_mi_gap_outlines.py
     mi/scripts/mi_detroit_council_scraper.py
-    mi/scripts/mi_grand_rapids_council_scraper.py
     mi/scripts/mi_senate_scraper.py
     mi/scripts/validate_sources.py
     nc/scripts/validate_sources.py
     ny/scripts/build_tompkins_legislature.py
     ny/scripts/cec_scraper.py
     ny/scripts/indexnow_submit.py
-    ny/scripts/ny_legislature_scraper.py
     ny/scripts/nypd_precinct_scraper.py
     ny/scripts/validate_sources.py
-    scripts/adams_county_board_scraper.py
     scripts/aia_bundle.py
     scripts/bing_fetch.py
     scripts/boone_district_officials_scraper.py
@@ -248,56 +243,31 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/build_jodaviess_board_districts.py
     scripts/build_lasalle_board_districts.py
     scripts/build_logan_precinct_polling.py
-    scripts/build_municipal_ward_coverage.py
-    scripts/build_statewide_library_districts.py
-    scripts/build_stclair_precinct_polling.py
     scripts/build_stephenson_fire_districts.py
-    scripts/build_vermilion_boundaries.py
-    scripts/build_winnebago_county_board_roster.py
     scripts/check_engine_parity.py
     scripts/check_roster_workflow_health.py
     scripts/clay_county_board_scraper.py
     scripts/coles_county_board_scraper.py
-    scripts/comptroller_afr.py
-    scripts/cpd_district_scraper.py
     scripts/dekalb_county_board_scraper.py
     scripts/dekalb_municipal_officials_scraper.py
-    scripts/douglas_county_board_scraper.py
-    scripts/dupage_county_board_scraper.py
     scripts/edgar_county_board_scraper.py
     scripts/fleet_status.py
     scripts/franklin_county_board_scraper.py
-    scripts/fulton_county_board_scraper.py
     scripts/generate_metro_files.py
     scripts/gsc_fetch.py
-    scripts/henry_county_board_scraper.py
     scripts/il_county_commissioners_scraper.py
     scripts/il_library_contacts_scraper.py
-    scripts/il_special_district_officials_scraper.py
     scripts/indexnow_submit.py
-    scripts/jodaviess_county_board_scraper.py
-    scripts/kankakee_district_officials_scraper.py
-    scripts/lasalle_municipal_officials_scraper.py
     scripts/marshall_county_board_scraper.py
-    scripts/mcdonough_county_board_scraper.py
-    scripts/peoria_county_board_scraper.py
     scripts/probe_incomplete_tls_chains.py
     scripts/selftest_scraper_common.py
-    scripts/shelby_county_board_scraper.py
-    scripts/skokie_trustee_districts_scraper.py
-    scripts/stark_county_board_scraper.py
     scripts/tazewell_county_board_scraper.py
     scripts/verify_google_api_access.py
-    scripts/will_city_councils_scraper.py
     scripts/will_county_board_scraper.py
     scripts/will_municipal_officials_scraper.py
-    scripts/winnebago_municipal_officials_scraper.py
-    scripts/woodford_county_board_scraper.py
     wi/scripts/build_rusd_school_board_districts.py
-    wi/scripts/build_wi_municipal_clerks.py
     wi/scripts/rusd_school_board_scraper.py
     wi/scripts/validate_sources.py
-    wi/scripts/verify_kenosha_supervisory_map.py
     wi/scripts/wi_alderperson_scraper.py
     wi/scripts/wi_bluebook_municipal_scraper.py
     wi/scripts/wi_circuit_judges_scraper.py
@@ -328,6 +298,25 @@ DECLARED_EXEMPT = {
         "repository is an unauthenticated read of somebody else's public pages, "
         "where the rule binds in full. The argument is made at length in the "
         "file itself so it cannot be applied by analogy from here",
+        "2026-09-30"),
+    "scripts/gsc_fetch.py": (
+        "THE SAME CLASS AS goatcounter_fetch.py ABOVE, and swept in the day the "
+        "wiring pass reached it: a Google service-account credential the operator "
+        "granted to districtry's own Search Console properties, asking that "
+        "service for districtry's own traffic statistics through the API Google "
+        "documents for it. No page is read, no link followed, no url discovered. "
+        "THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never which host: an "
+        "unauthenticated read of a page on a Google host would be gated in full. "
+        "The argument is made at length in the file itself so it cannot be "
+        "applied by analogy from here",
+        "2026-09-30"),
+    "scripts/bing_fetch.py": (
+        "The sibling half of the pair above, exempt for the same reason and on "
+        "the same test: a Bing Webmaster Tools key issued to the operator for "
+        "districtry's own verified properties, reading districtry's own search "
+        "statistics. Its own file carries the whole argument rather than a "
+        "pointer at gsc_fetch.py, so neither reads as an exemption extended by "
+        "analogy",
         "2026-09-30"),
 }
 

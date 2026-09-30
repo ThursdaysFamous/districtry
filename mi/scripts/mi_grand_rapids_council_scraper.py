@@ -92,6 +92,10 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE = os.path.join(HERE, ".cache", "mi_grand_rapids_council.json")
@@ -159,6 +163,8 @@ def fail(msg):
 
 
 def get(url, timeout=60):
+    require_robots_once(url, UA["User-Agent"], headers=dict(UA),
+                        label="mi-mi-grand-rapids-council-scraper")
     req = urllib.request.Request(url, headers=dict(UA))
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         body = resp.read().decode("utf-8", "replace")

@@ -119,6 +119,21 @@ UA_ROSTER_BOT = "districtry.com roster bot (civic data; contact via site)"
 # licensed by a measurement at the page the scraper reads).
 UA_STDLIB_DEFAULT = "Python-urllib/%d.%d" % sys.version_info[:2]
 UA_ROSTER_COMPACT = "Mozilla/5.0 (compatible; districtry-roster/1.0)"
+
+
+# The same honest reading one stack over: what a bare `requests.get(url)` call
+# sends when the caller sets no headers. A dozen builders in this fleet fetch that
+# way, and a robots read has to be made with the SAME client that will crawl, so
+# the string is the library's own rather than a districtry token. It is a FUNCTION
+# and not a constant because `requests` is imported inside fetch() on purpose --
+# see the module docstring -- and a module-level constant would drag the
+# dependency into every stdlib-only caller of this file. No robots group names
+# this string either, so `*` binds, which is the answer either way; stating it
+# keeps the reading honest rather than changing the verdict.
+def ua_requests_default():
+    import requests  # function-local: see the module docstring
+    return "python-requests/%s" % requests.__version__
+
 UA_CIVIC_BOT = ("Mozilla/5.0 (compatible; districtry.com civic data bot; "
                 "+https://districtry.com/)")
 

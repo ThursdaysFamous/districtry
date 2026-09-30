@@ -49,6 +49,10 @@ import ssl
 import sys
 import time
 import urllib.request
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_OUT = os.path.join(SCRIPT_DIR, ".cache", "ia_legislature_offices.json")
@@ -69,6 +73,8 @@ ROW_RE = re.compile(
 
 def fetch(url):
     ctx = ssl.create_default_context()
+    require_robots_once(url, UA["User-Agent"], headers=UA,
+                        label="ia-ia-legislature-scraper")
     req = urllib.request.Request(url, headers=UA)
     with urllib.request.urlopen(req, timeout=60, context=ctx) as r:
         return r.read().decode("utf-8", "replace")
