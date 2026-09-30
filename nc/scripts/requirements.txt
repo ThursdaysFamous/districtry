@@ -1,0 +1,21 @@
+# Pinned dependencies for this instance's scraper pipeline (playbook R10 —
+# heuristic HTML parsers are exactly the code that breaks on silent
+# dependency drift). Used by the weekly roster workflows:
+#   .github/workflows/update-mi-congress-roster.yml     (stdlib only)
+#   .github/workflows/update-mi-legislature-roster.yml  (stdlib only)
+#   .github/workflows/mi-validate-sources.yml           (+ requests)
+#
+# mi/scripts/build_state_counties.py and build_legislative_boundaries.py use
+# only curl (via subprocess) and npx mapshaper — no Python HTTP library.
+# build_metro_outline.py imports requests inside its one fetching function.
+#
+# NEITHER ROSTER BUILDER NEEDS A THIRD-PARTY DEPENDENCY. Open States ships CSV
+# (stdlib csv) and the Senate directory ships JSON inside an HTML attribute
+# (stdlib html + json), so mi_senate_scraper.py parses with no HTML library at
+# all — see its docstring for why the obvious parse is the wrong one.
+requests==2.33.1
+
+# Conversion 2 (docs/MECHANIZATION_PLAYBOOK.md): worksheet validation in
+# scripts/generate_metro_files.py. The generator is otherwise stdlib-only;
+# validate_index.py deliberately stays stdlib and does NOT import this.
+jsonschema==4.26.0

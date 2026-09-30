@@ -1,0 +1,364 @@
+{
+  "this_metro": "kentucky",
+  "metro_name": "Kentucky",
+  "metro_bbox": {
+    "minLng": -89.62,
+    "minLat": 36.45,
+    "maxLng": -81.91,
+    "maxLat": 39.2
+  },
+  "metro_center": [
+    37.82,
+    -85.77
+  ],
+  "permalink_gate": {
+    "minLat": 36.35,
+    "maxLat": 39.3,
+    "minLng": -89.72,
+    "maxLng": -81.85
+  },
+  "poi_geocode_bbox": {
+    "minLat": 36.35,
+    "maxLat": 39.3,
+    "minLng": -89.72,
+    "maxLng": -81.85
+  },
+  "brand": {
+    "app_name": "districtry Kentucky",
+    "product_name": "districtry",
+    "instance_tag": "ky",
+    "jsonld": {
+      "site_description": "Find every civic district that covers a point or address in Kentucky, and who represents you there.",
+      "app_description": "Click any point in Kentucky, or search an address, to see every civic district that contains it, and who represents you.",
+      "keywords": "Kentucky district map, what district am I in, Kentucky Senate district, Kentucky House district, magisterial district, fiscal court, civic districts, who represents me Kentucky",
+      "area_served": {
+        "state": "Kentucky"
+      }
+    },
+    "tagline": "Every civic district that covers your point in Kentucky, and who represents you there.",
+    "theme_color": "#6d3fd1",
+    "favicon_data_uri": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3EKY%3C/text%3E%3C/svg%3E",
+    "apple_touch_icon": "icons/apple-touch-icon.png",
+    "head": {
+      "title": "Kentucky district lookup — districtry Kentucky",
+      "description": "Tap the map or search a Kentucky address: county, Kentucky Senate, Kentucky House and U.S. House districts — and who represents you. Free, no login.",
+      "og_title": "Kentucky district lookup — districtry Kentucky",
+      "og_description": "Every civic district that covers a point in Kentucky, and who holds it.",
+      "og_image_alt": "districtry Kentucky — every district that covers a point, and who represents it.",
+      "twitter_title": "Kentucky district lookup — districtry Kentucky",
+      "twitter_description": "Click or search a Kentucky address to see every district that covers it."
+    },
+    "analytics": {
+      "goatcounter_url": "https://districtry.goatcounter.com/count"
+    }
+  },
+  "socrata_host": "https://data.invalid",
+  "socrata_app_token": "",
+  "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
+  "feedback_subject": "districtry Kentucky feedback",
+  "hover_number_keys": [
+    [
+      "district",
+      "basename",
+      "cd",
+      "sldust",
+      "sldlst"
+    ],
+    [
+      "geoid",
+      "number"
+    ]
+  ],
+  "hover_name_keys": [
+    [
+      "name",
+      "namelsad"
+    ]
+  ],
+  "layers": [
+    {
+      "id": "us-house",
+      "label": "U.S. House",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "6 congressional districts — the largest districts Kentucky carries below the state itself",
+      "source": {
+        "answers": "The U.S. House district covering the point, and the representative holding it.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 0 (congressional districts), pre-built for the state and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
+          }
+        ],
+        "people": "congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
+        "applies": "Kentucky — statewide."
+      }
+    },
+    {
+      "id": "ky-senate",
+      "label": "Kentucky Senate District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "38 Senate districts; they do not nest with the House, so the two chambers are independent tilings of the state",
+      "source": {
+        "answers": "The Kentucky Senate district covering the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
+          }
+        ],
+        "people": "Not yet shipped. The card names the district and links the Kentucky Senate's own member directory; nobody is named rather than guessed. Recorded as the coverage gap ky-legislature-roster.",
+        "applies": "Kentucky — statewide."
+      }
+    },
+    {
+      "id": "ky-house",
+      "label": "Kentucky House District",
+      "group": "political",
+      "area_rank": 3,
+      "rank_note": "100 House districts, drawn independently of the 38 Senate districts",
+      "source": {
+        "answers": "The Kentucky House district covering the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
+          }
+        ],
+        "people": "Not yet shipped — same as the Senate above; the card links the Kentucky House's own member directory. Recorded as the coverage gap ky-legislature-roster.",
+        "applies": "Kentucky — statewide."
+      }
+    },
+    {
+      "id": "county",
+      "label": "County",
+      "group": "geography",
+      "area_rank": 4,
+      "rank_note": "120 counties, pre-built from TIGERweb; this instance's offline anchor layer, and smaller on average than a House district",
+      "source": {
+        "answers": "Which county contains the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+          }
+        ],
+        "people": "Not yet shipped. Kentucky's county governing body is the fiscal court, and its districts and members arrive together in a later change; the card names no officeholder rather than guessing one. Recorded as the coverage gaps ky-fiscal-court and ky-county-officers.",
+        "applies": "Kentucky — statewide."
+      }
+    }
+  ],
+  "min_register_layer": 4,
+  "anchor_point": {
+    "lat": 38.2527,
+    "lng": -85.7585,
+    "note": "downtown Louisville, Jefferson County"
+  },
+  "anchors": [
+    {
+      "layer": "county",
+      "expected": "Jefferson County"
+    },
+    {
+      "layer": "us-house",
+      "expected": "3"
+    },
+    {
+      "layer": "ky-senate",
+      "expected": "33"
+    },
+    {
+      "layer": "ky-house",
+      "expected": "43"
+    }
+  ],
+  "negative_point": {
+    "lat": 36.4,
+    "lng": -86.5,
+    "note": "inside Sumner County, TENNESSEE, about 15 km south of the Kentucky line and north-east of Nashville — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (minLat 36.35) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-09-30: TIGERweb's county layer names Sumner County STATE 47 (control: the anchor returns Jefferson County STATE 21), and no outline in fleet-outlines.json contains it (control: the Louisville anchor is likewise in none of them, so the file genuinely has no Kentucky coverage rather than the test passing vacuously). TENNESSEE RATHER THAN ONE OF THE OTHER SIX NEIGHBOURS, deliberately. Illinois is live and borders Kentucky across the Ohio, so a point over there would sit inside an instance's own outline and the browser would hand the selection off to districtry.com/il/ and navigate away — which is how Minnesota's first candidate failed, silently, as a smoke-test timeout on a blank document rather than as a wrong answer. Indiana and North Carolina are in build as dark instances and will become live outlines, so they were avoided for the same reason one step ahead. Tennessee is in no instance and in no launch plan. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County."
+  },
+  "coverage_key": {
+    "outside": "Outside Kentucky"
+  },
+  "data_files": {
+    "geometry": [
+      {
+        "file": "metro-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "The whole-Kentucky-state outline for the coverage wash (loadMetroOutline), dissolved from all 120 counties' TIGERweb State_County layer-1 geometry by ky/scripts/build_metro_outline.py (METRO_COUNTY_FIPS = every county; DISPATCH_COUNTY_FIPS empty — no layer is county-keyed yet). Kentucky is 2-band coverage: its county tier and its statewide tier coincide, so there is no second, wider region file and coverage_key declares no region."
+      },
+      {
+        "file": "state-counties.json",
+        "min_features": 120,
+        "max_features": 120,
+        "note": "Every county, pre-built from TIGERweb State_County layer 1."
+      },
+      {
+        "file": "congress-districts.json",
+        "min_features": 6,
+        "max_features": 6,
+        "note": "U.S. House districts, pre-built from TIGERweb Legislative layer 0."
+      },
+      {
+        "file": "ky-senate-districts.json",
+        "min_features": 38,
+        "max_features": 38,
+        "note": "Kentucky Senate districts, pre-built by ky/scripts/build_legislative_boundaries.py (2,000-point agreement gate, plus the shared-outline gate against the other two chambers)."
+      },
+      {
+        "file": "ky-house-districts.json",
+        "min_features": 100,
+        "max_features": 100,
+        "note": "Kentucky House districts, pre-built by ky/scripts/build_legislative_boundaries.py. They do NOT nest inside the Senate districts, so there is no nesting gate here; the cross-layer gate is the shared state outline."
+      }
+    ],
+    "rosters": [
+      {
+        "file": "congress-roster.json",
+        "min_keys": 6,
+        "note": "U.S. House roster, refreshed weekly by update-ky-congress-roster.yml."
+      },
+      {
+        "file": "coverage-gaps.json",
+        "min_keys": 0,
+        "note": "The Data gaps panel's content, emitted from docs/DATA_LAYER_GUIDEBOOK.md's gaps block: the fiscal courts, the two legislature rosters, and the county officers."
+      }
+    ]
+  },
+  "sw": {
+    "cache_name": "districtry-ky-shell-v1",
+    "shell_urls": [
+      "./",
+      "./manifest.webmanifest",
+      "./icons/icon-192.png",
+      "./icons/icon-512.png",
+      "./icons/apple-touch-icon.png",
+      "./icons/icon-maskable-512.png",
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
+      "./vendor/leaflet-maplibre-gl.js"
+    ]
+  },
+  "data_sources": {
+    "registry": "ky/scripts/validate_sources.py"
+  },
+  "workflows": [
+    {
+      "file": "update-ky-congress-roster.yml",
+      "purpose": "U.S. House (KY) roster (unitedstates/congress-legislators)",
+      "schedule": "Mon 13:55 UTC"
+    }
+  ],
+  "geocoder": {
+    "address": "Photon (Kentucky-bounded type-ahead)",
+    "unbounded": "Photon (whole-coverage, sibling-metro lookup)",
+    "poi": "Nominatim (office-address pin lookup, Kentucky-bounded, serial >=1s queue)"
+  },
+  "palette": {
+    "accent": "#6d3fd1",
+    "accent_deep": "#5730ab",
+    "accent_warm": "#b0316e",
+    "accent_warm_deep": "#8f2659",
+    "label": "districtry palette — brand violet is CHROME ONLY, never map data; shared with the fleet, not state-themed by convention"
+  },
+  "domains": {
+    "canonical": "https://districtry.com/ky/"
+  },
+  "exports_name": "KentuckyExplorer",
+  "verified_date": "September 30, 2026",
+  "metro_explorers": [
+    {
+      "id": "chicago",
+      "label": "Illinois",
+      "url": "https://districtry.com/il/",
+      "emoji": "🌭",
+      "explorer_name": "districtry Illinois",
+      "bbox": {
+        "minLng": -91.52,
+        "minLat": 36.96,
+        "maxLng": -87.01,
+        "maxLat": 42.51
+      }
+    },
+    {
+      "id": "nyc",
+      "label": "New York",
+      "url": "https://districtry.com/ny/",
+      "emoji": "🗽",
+      "explorer_name": "districtry New York",
+      "bbox": {
+        "minLng": -79.82,
+        "minLat": 40.43,
+        "maxLng": -71.62,
+        "maxLat": 45.07
+      }
+    },
+    {
+      "id": "sf",
+      "label": "San Francisco",
+      "url": "https://districtry.com/ca/",
+      "emoji": "🌉",
+      "explorer_name": "districtry San Francisco",
+      "bbox": {
+        "minLng": -122.6,
+        "minLat": 37.6,
+        "maxLng": -122.3,
+        "maxLat": 37.95
+      }
+    },
+    {
+      "id": "wisconsin",
+      "label": "Wisconsin",
+      "url": "https://districtry.com/wi/",
+      "emoji": "🧀",
+      "explorer_name": "districtry Wisconsin",
+      "bbox": {
+        "minLng": -92.89,
+        "minLat": 42.49,
+        "maxLng": -86.25,
+        "maxLat": 47.31
+      }
+    },
+    {
+      "id": "iowa",
+      "label": "Iowa",
+      "url": "https://districtry.com/ia/",
+      "emoji": "🌽",
+      "explorer_name": "districtry Iowa",
+      "bbox": {
+        "minLng": -96.64,
+        "minLat": 40.37,
+        "maxLng": -90.14,
+        "maxLat": 43.5
+      }
+    },
+    {
+      "id": "michigan",
+      "label": "Michigan",
+      "url": "https://districtry.com/mi/",
+      "emoji": "🚗",
+      "explorer_name": "districtry Michigan",
+      "bbox": {
+        "minLng": -87.6,
+        "minLat": 41.7,
+        "maxLng": -82.11,
+        "maxLat": 48.01
+      }
+    },
+    {
+      "id": "kentucky",
+      "label": "Kentucky",
+      "url": "https://districtry.com/ky/",
+      "emoji": "🐎",
+      "explorer_name": "districtry Kentucky",
+      "bbox": {
+        "minLng": -89.57,
+        "minLat": 36.5,
+        "maxLng": -81.96,
+        "maxLat": 39.15
+      }
+    }
+  ]
+}
