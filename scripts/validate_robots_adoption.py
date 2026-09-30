@@ -86,7 +86,19 @@ IMPORTABLE_NET = {
     "httpx": NET_ATTRS_CLIENT,
     "scraper_common": {"fetch", "fetch_stdlib"},
 }
-ROBOTS_NAMES = {"require_robots_allowed", "RobotsGate", "robots_deferred"}
+ROBOTS_NAMES = {"require_robots_allowed", "require_robots_once", "RobotsGate",
+                "robots_deferred"}
+# Modules whose job IS the policy, so anything imported from one and called is a
+# reading. `robots_gate` is the per-instance shim validate_workflow_deps allows.
+ROBOTS_MODULES = {"robots_policy", "robots_gate", "scraper_common"}
+# Entry points those modules expose. CORRECTED 2026-09-30, hours after the sweep:
+# the first version knew only the four names above, and SEVEN files that read the
+# policy through `robots_policy.classify` or `fetch_verdict` were therefore
+# recorded as unwired -- an overcount, so the published figure overstated the
+# problem. A detector that knows only some of a module's doors reports the rest of
+# the building as unlocked.
+ROBOTS_ENTRY = ROBOTS_NAMES | {"classify", "fetch_verdict", "RobotsPolicy",
+                               "Verdict", "HostPacer"}
 
 
 def _root_name(node):
@@ -102,6 +114,17 @@ class _Reader(ast.NodeVisitor):
         self.client_objs = set()    # names holding a requests/httpx client
         self.fetches = []
         self.robots = []
+        self.robots_names = set(ROBOTS_NAMES)  # bare names bound to a reading
+        self.robots_mods = set(ROBOTS_MODULES)  # local names of a policy module
+
+    def visit_Import(self, node):
+        # `import robots_policy as rp` — two files read the policy that way, and
+        # the first version of this reader knew only the `from ... import` shape,
+        # so both were recorded as unwired.
+        for alias in node.names:
+            if alias.name in ROBOTS_MODULES:
+                self.robots_mods.add(alias.asname or alias.name)
+        self.generic_visit(node)
 
     def visit_ImportFrom(self, node):
         mod = node.module or ""
@@ -110,8 +133,8 @@ class _Reader(ast.NodeVisitor):
             local = alias.asname or alias.name
             if alias.name in wanted:
                 self.net_names.add(local)
-            if alias.name in ROBOTS_NAMES:
-                pass  # importing is not calling; the Call visit records use
+            if mod in ROBOTS_MODULES and alias.name in ROBOTS_ENTRY:
+                self.robots_names.add(local)  # importing is not calling; see visit_Call
         self.generic_visit(node)
 
     def visit_Assign(self, node):
@@ -130,7 +153,7 @@ class _Reader(ast.NodeVisitor):
         if isinstance(f, ast.Name):
             if f.id in self.net_names:
                 self.fetches.append((f.id, node.lineno))
-            if f.id in ROBOTS_NAMES:
+            if f.id in self.robots_names:
                 self.robots.append((f.id, node.lineno))
         elif isinstance(f, ast.Attribute):
             root = _root_name(f)
@@ -142,8 +165,8 @@ class _Reader(ast.NodeVisitor):
             elif (root == "scraper_common"
                   and f.attr in IMPORTABLE_NET["scraper_common"]):
                 self.fetches.append(("%s.%s" % (root, f.attr), node.lineno))
-            elif f.attr in ROBOTS_NAMES or f.attr in {"allows"}:
-                if root in {"robots_policy", "scraper_common"} or f.attr in ROBOTS_NAMES:
+            elif f.attr in ROBOTS_ENTRY or f.attr in {"allows"}:
+                if root in self.robots_mods or f.attr in ROBOTS_NAMES:
                     self.robots.append((f.attr, node.lineno))
         self.generic_visit(node)
 
@@ -180,35 +203,21 @@ def tracked_python():
 # ---------------------------------------------------------------------------
 UNWIRED_AT_SWEEP = frozenset("""
     ca/scripts/build_ca_legislature_roster.py
-    ca/scripts/build_congress_roster.py
     ca/scripts/build_sf_supervisor_roster.py
     ca/scripts/indexnow_submit.py
     ca/scripts/validate_sources.py
-    ia/scripts/build_congress_roster.py
     ia/scripts/build_ia_community_colleges.py
     ia/scripts/build_ia_gap_outlines.py
     ia/scripts/build_ia_judicial_district.py
     ia/scripts/build_ia_legislature_roster.py
     ia/scripts/build_ia_precincts.py
     ia/scripts/build_ia_school_sites.py
-    ia/scripts/build_metro_outline.py
     ia/scripts/cedar_rapids_council_scraper.py
     ia/scripts/dsm_council_scraper.py
-    ia/scripts/ia_county_auditor_scraper.py
     ia/scripts/ia_county_directory_scraper.py
-    ia/scripts/ia_county_officer_email_scraper.py
-    ia/scripts/ia_county_officer_sources_scraper.py
-    ia/scripts/ia_county_officers_scraper.py
     ia/scripts/ia_legislature_scraper.py
-    ia/scripts/ia_supervisor_district_scraper.py
     ia/scripts/waterloo_council_scraper.py
-    in/scripts/build_congress_roster.py
-    in/scripts/build_metro_outline.py
     in/scripts/validate_sources.py
-    ky/scripts/build_congress_roster.py
-    ky/scripts/build_metro_outline.py
-    mi/scripts/build_congress_roster.py
-    mi/scripts/build_metro_outline.py
     mi/scripts/build_mi_gap_outlines.py
     mi/scripts/build_mi_legislature_roster.py
     mi/scripts/build_mi_precincts.py
@@ -216,14 +225,8 @@ UNWIRED_AT_SWEEP = frozenset("""
     mi/scripts/mi_grand_rapids_council_scraper.py
     mi/scripts/mi_senate_scraper.py
     mi/scripts/validate_sources.py
-    mn/scripts/build_congress_roster.py
-    mn/scripts/build_metro_outline.py
-    nc/scripts/build_congress_roster.py
-    nc/scripts/build_metro_outline.py
     nc/scripts/build_nc_legislature_roster.py
     nc/scripts/validate_sources.py
-    ny/scripts/build_congress_roster.py
-    ny/scripts/build_metro_outline.py
     ny/scripts/build_tompkins_legislature.py
     ny/scripts/cec_scraper.py
     ny/scripts/indexnow_submit.py
@@ -233,164 +236,98 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/adams_county_board_scraper.py
     scripts/aia_bundle.py
     scripts/bing_fetch.py
-    scripts/boone_county_board_scraper.py
     scripts/boone_district_officials_scraper.py
     scripts/boone_municipal_officials_scraper.py
     scripts/build_block_population.py
-    scripts/build_carroll_board_districts.py
     scripts/build_carroll_precinct_polling.py
-    scripts/build_cass_board_districts.py
-    scripts/build_congress_roster.py
     scripts/build_county_clerk_roster.py
     scripts/build_county_outline.py
-    scripts/build_dewitt_board_districts.py
     scripts/build_district_search.py
-    scripts/build_douglas_boundaries.py
-    scripts/build_grundy_board_districts.py
     scripts/build_hamilton_precinct_polling.py
-    scripts/build_henry_board_districts.py
     scripts/build_henry_precinct_polling.py
-    scripts/build_jackson_boundaries.py
     scripts/build_jodaviess_board_districts.py
     scripts/build_knox_board_districts.py
     scripts/build_lasalle_board_districts.py
-    scripts/build_livingston_board_districts.py
     scripts/build_logan_park_districts.py
     scripts/build_logan_precinct_polling.py
     scripts/build_macon_board_district_labels.py
-    scripts/build_marshall_board_districts.py
-    scripts/build_mason_board_districts.py
-    scripts/build_mason_board_roster.py
-    scripts/build_mcdonough_board_districts.py
-    scripts/build_mcdonough_precincts.py
-    scripts/build_metro_outline.py
     scripts/build_municipal_ward_coverage.py
-    scripts/build_ogle_board_districts.py
     scripts/build_parcel_fabric_districts.py
-    scripts/build_place_outline.py
     scripts/build_statewide_library_districts.py
     scripts/build_stclair_precinct_polling.py
-    scripts/build_stephenson_board_districts.py
     scripts/build_stephenson_fire_districts.py
     scripts/build_stephenson_precincts.py
     scripts/build_vermilion_boundaries.py
-    scripts/build_washington_board_districts.py
     scripts/build_winnebago_county_board_roster.py
-    scripts/build_woodford_board_districts.py
-    scripts/carroll_county_board_scraper.py
     scripts/carroll_municipal_officials_scraper.py
-    scripts/cass_county_board_scraper.py
     scripts/cass_municipal_officials_scraper.py
     scripts/ccbr_scraper.py
     scripts/ccpsa_scraper.py
     scripts/check_engine_parity.py
     scripts/check_roster_workflow_health.py
-    scripts/clark_county_board_scraper.py
     scripts/clay_county_board_scraper.py
-    scripts/clinton_county_board_scraper.py
     scripts/coles_county_board_scraper.py
     scripts/comptroller_afr.py
     scripts/cook_municipal_officials_scraper.py
     scripts/cpd_district_scraper.py
-    scripts/crawford_county_board_scraper.py
     scripts/dekalb_county_board_scraper.py
     scripts/dekalb_municipal_officials_scraper.py
-    scripts/dewitt_county_board_scraper.py
     scripts/douglas_county_board_scraper.py
     scripts/dupage_county_board_scraper.py
-    scripts/dupage_municipal_officials_scraper.py
     scripts/edgar_county_board_scraper.py
-    scripts/ewg_municipal_officials_scraper.py
     scripts/fleet_status.py
     scripts/franklin_county_board_scraper.py
-    scripts/freeport_council_scraper.py
     scripts/fulton_county_board_scraper.py
-    scripts/galesburg_council_scraper.py
     scripts/generate_metro_files.py
     scripts/goatcounter_fetch.py
-    scripts/grundy_county_board_scraper.py
-    scripts/grundy_municipal_officials_scraper.py
     scripts/gsc_fetch.py
-    scripts/hancock_county_board_scraper.py
     scripts/henry_county_board_scraper.py
     scripts/henry_municipal_officials_scraper.py
     scripts/il_county_commissioners_scraper.py
     scripts/il_library_contacts_scraper.py
     scripts/il_special_district_officials_scraper.py
     scripts/indexnow_submit.py
-    scripts/iroquois_county_board_scraper.py
     scripts/jackson_county_board_scraper.py
-    scripts/jefferson_county_board_scraper.py
     scripts/jodaviess_county_board_scraper.py
     scripts/kane_county_board_scraper.py
     scripts/kane_municipal_officials_scraper.py
     scripts/kankakee_district_officials_scraper.py
     scripts/kankakee_municipal_officials_scraper.py
-    scripts/knox_county_board_scraper.py
     scripts/lake_county_board_roles_scraper.py
     scripts/lake_municipal_officials_scraper.py
-    scripts/lasalle_county_board_scraper.py
     scripts/lasalle_municipal_officials_scraper.py
-    scripts/lee_county_board_scraper.py
-    scripts/livingston_county_board_scraper.py
-    scripts/livingston_municipal_officials_scraper.py
-    scripts/logan_county_board_scraper.py
-    scripts/logan_municipal_officials_scraper.py
-    scripts/macon_county_board_scraper.py
     scripts/macoupin_municipal_officials_scraper.py
     scripts/marshall_county_board_scraper.py
-    scripts/mason_municipal_officials_scraper.py
-    scripts/mason_roster_watch.py
     scripts/mcdonough_county_board_scraper.py
-    scripts/menard_commissioners_scraper.py
-    scripts/mercer_county_board_scraper.py
-    scripts/montgomery_county_board_scraper.py
-    scripts/ogle_county_board_scraper.py
-    scripts/ogle_municipal_officials_scraper.py
     scripts/peoria_county_board_scraper.py
     scripts/peoria_municipal_officials_scraper.py
     scripts/plano_council_scraper.py
     scripts/probe_incomplete_tls_chains.py
-    scripts/probe_user_agents.py
     scripts/richland_county_board_scraper.py
-    scripts/rock_island_county_board_scraper.py
-    scripts/rock_island_municipal_officials_scraper.py
     scripts/sangamon_county_board_scraper.py
-    scripts/sangamon_municipal_officials_scraper.py
     scripts/selftest_scraper_common.py
     scripts/shelby_county_board_scraper.py
     scripts/skokie_trustee_districts_scraper.py
     scripts/stark_county_board_scraper.py
-    scripts/stephenson_county_board_scraper.py
-    scripts/stephenson_municipal_officials_scraper.py
     scripts/tazewell_county_board_scraper.py
-    scripts/tazewell_municipal_officials_scraper.py
-    scripts/validate_card_links.py
     scripts/verify_google_api_access.py
     scripts/vermilion_county_board_scraper.py
     scripts/vtd_board_districts.py
     scripts/warren_county_board_scraper.py
-    scripts/washington_county_board_scraper.py
     scripts/wayne_county_board_scraper.py
-    scripts/white_county_board_scraper.py
     scripts/whiteside_municipal_officials_scraper.py
     scripts/will_city_councils_scraper.py
     scripts/will_county_board_scraper.py
     scripts/will_municipal_officials_scraper.py
-    scripts/winnebago_county_board_scraper.py
     scripts/winnebago_municipal_officials_scraper.py
     scripts/woodford_county_board_scraper.py
-    wi/scripts/build_congress_roster.py
-    wi/scripts/build_metro_outline.py
     wi/scripts/build_rusd_school_board_districts.py
     wi/scripts/build_wi_county_board_directory.py
     wi/scripts/build_wi_legislature_roster.py
     wi/scripts/build_wi_libraries.py
     wi/scripts/build_wi_municipal_clerks.py
     wi/scripts/build_wi_school_sites.py
-    wi/scripts/mpd_captains_scraper.py
     wi/scripts/rusd_school_board_scraper.py
-    wi/scripts/validate_robots.py
     wi/scripts/validate_sources.py
     wi/scripts/verify_kenosha_supervisory_map.py
     wi/scripts/wi_alderperson_scraper.py
@@ -398,7 +335,6 @@ UNWIRED_AT_SWEEP = frozenset("""
     wi/scripts/wi_circuit_judges_scraper.py
     wi/scripts/wi_coa_scraper.py
     wi/scripts/wi_coa_staleness.py
-    wi/scripts/wi_county_board_scraper.py
     wi/scripts/wi_county_clerk_scraper.py
     wi/scripts/wi_county_officer_contact_scraper.py
     wi/scripts/wi_wec_probe.py
@@ -494,6 +430,24 @@ def _selftest():
         ("import scraper_common\n"
          "scraper_common.robots_deferred(u)\nscraper_common.fetch(u, h)\n",
          True, True),
+        # A POLICY MODULE HAS MORE THAN ONE DOOR. These four shapes were all
+        # read as unwired by the first version of this reader, and the seven
+        # files that use them were published as part of the problem. Each is a
+        # real spelling taken from the tree.
+        ("import requests\nimport robots_policy as rp\n"
+         "rp.fetch_verdict(r, ua)\nrequests.get(u)\n", True, True),
+        ("import requests\nimport robots_policy as rp\n"
+         "rp.classify(200, body)\nrequests.get(u)\n", True, True),
+        ("import requests\nfrom robots_policy import classify\n"
+         "classify(200, body)\nrequests.get(u)\n", True, True),
+        ("import requests\nfrom robots_gate import RobotsGate, HostPacer\n"
+         "RobotsGate(s, ua).allows(u)\nrequests.get(u)\n", True, True),
+        ("import requests\nfrom scraper_common import require_robots_once\n"
+         "require_robots_once(u, ua)\nrequests.get(u)\n", True, True),
+        # An unrelated module's `classify` is not a policy reading: this repo has
+        # `dropped_rings.classify`, so the name alone must not count.
+        ("import requests\nfrom dropped_rings import classify\n"
+         "classify(x)\nrequests.get(u)\n", True, False),
         # neither
         ("import json\njson.load(open('x'))\n", False, False),
         # a citation is not a fetch
@@ -516,7 +470,9 @@ def _selftest():
               % "\n    ".join(bad), file=sys.stderr)
         return 1
     print("validate-robots-adoption --selftest: OK — %d detector case(s), "
-          "including a docstring that names the seam without reaching it"
+          "including a docstring that names the seam without reaching it, "
+          "five spellings of a policy module's own doors, and an unrelated "
+          "module's classify() that is not one"
           % len(cases))
     return 0
 

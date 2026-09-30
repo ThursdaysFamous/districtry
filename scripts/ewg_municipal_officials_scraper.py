@@ -46,7 +46,10 @@ import sys
 import urllib.parse
 
 import requests
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_CHROME_WIN_126,
+    require_robots_once,
+)
 
 try:
     import pdfplumber
@@ -162,6 +165,8 @@ def looks_like_name(text):
 
 def discover_pdf_url(warnings):
     try:
+        require_robots_once(LANDING_URL, HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-ewg-municipal-officials-scraper")
         resp = requests.get(LANDING_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT)
         resp.raise_for_status()
         links = POD_LINK_RE.findall(resp.text)
@@ -490,6 +495,8 @@ def main():
             source_url, pdf_bytes = POD_URL, open(args.pdf, "rb").read()
         else:
             source_url = discover_pdf_url(warnings)
+            require_robots_once(source_url, HEADERS["User-Agent"], headers=HEADERS,
+                                label="il-ewg-municipal-officials-scraper")
             resp = requests.get(source_url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
             resp.raise_for_status()
             pdf_bytes = resp.content

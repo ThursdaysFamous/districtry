@@ -35,6 +35,7 @@ Usage:
     python3 scripts/galesburg_council_scraper.py --out /tmp/galesburg_council.json
 """
 
+import os
 import argparse
 import datetime
 import json
@@ -42,6 +43,9 @@ import re
 import sys
 
 import requests
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
 
 SITE = "https://www.ci.galesburg.il.us"
 OFFICIALS_PAGE = (SITE + "/government/elected_officials___election_offices/"
@@ -125,6 +129,8 @@ def main():
     args = ap.parse_args()
 
     warnings = []
+    require_robots_once(OFFICIALS_PAGE, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-galesburg-council-scraper")
     resp = requests.get(OFFICIALS_PAGE, headers=HEADERS, timeout=TIMEOUT)
     resp.raise_for_status()
     text = visible_text(resp.text)

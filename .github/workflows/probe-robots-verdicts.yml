@@ -74,11 +74,15 @@ jobs:
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
           cp "$RUNNER_TEMP/robots-verdicts.json" robots-verdicts.json
-          if git diff --quiet -- robots-verdicts.json; then
+          # `git add` FIRST, then compare against the index: the first run's
+          # file is UNTRACKED, and `git diff` says nothing about an untracked
+          # file, so a plain diff reported no change and threw the very first
+          # measurement away with the runner.
+          git add robots-verdicts.json
+          if git diff --cached --quiet -- robots-verdicts.json; then
             echo "No change in what the hosts say; nothing to open."
             exit 0
           fi
-          git add robots-verdicts.json
           git commit -m "Record what each host's robots.txt says, measured from a runner"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

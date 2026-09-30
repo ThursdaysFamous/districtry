@@ -3,11 +3,26 @@
 
 WHY THE MINUTES. Knox's board page lists all fifteen members with district and
 contact details and this project may not read it: knoxcountyil.gov answers 403
-to every client, and the Internet Archive never captured the page. What IS
-readable is the same website's DOCUMENTS, which are served from its Revize CMS
-at cms2.revize.com/revize/knoxcounty/ with no block of any kind. Every set of
-minutes opens with a roll call that names EVERY SEAT BY DISTRICT, which is the
-roster this county was recorded as not having.
+to every client, and the Internet Archive never captured the page. What ANSWERS
+this client is the same website's DOCUMENTS, served from its Revize CMS at
+cms2.revize.com/revize/knoxcounty/. Every set of minutes opens with a roll call
+that names EVERY SEAT BY DISTRICT, which is the roster this county was recorded
+as not having.
+
+THAT HOST REFUSES US, AND THIS DOCSTRING SAID IT DID NOT. The sentence above
+read "with no block of any kind" from the day this file was written, and
+CLAUDE.md repeated it; the claim was about the PAGES answering and nobody had
+read the policy. Measured 2026-09-30 with the client below, cms2.revize.com
+serves a 414-byte robots.txt whose `*` group ends in `Disallow: /`, the longest
+match for /revize/knoxcounty/. So this scrape declines at the gate now and
+fetches nothing. The refusal is the CMS VENDOR'S and is published at the
+vendor's own host, which is what makes it bind here — the reverse of the
+Kendall/McHenry/Joliet case, where one vendor's default is published at each
+GOVERNMENT'S host, binds for that reason, and must never be cited as something
+that government chose. Knox's shipped roster keeps its last-good records: a
+refusal stops the FETCH and never unpublishes what we already have (Adam's
+ruling of 2026-09-19). The county's own host allows us and publishes no roster
+this scrape can read, so there is no second route to move to.
 
   "The Meeting was called to order by County Board Chair Jared Hawkinson and
    upon roll call the following Members reported present:
@@ -35,6 +50,7 @@ Usage:
     python3 scripts/knox_county_board_scraper.py [-o raw.json]
 """
 
+import os
 import argparse
 import datetime
 import io
@@ -45,6 +61,9 @@ import urllib.parse
 
 import pymupdf
 import requests
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
 
 CMS_ROOT = "https://cms2.revize.com/revize/knoxcounty/"
 MINUTES_TEMPLATE = "Board Minutes {month} {year}.pdf"
@@ -108,6 +127,8 @@ SEAT = re.compile(r"District\s+([1-9])\b\s*"
 
 
 def fetch(url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-knox-county-board-scraper")
     r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
     if r.status_code != 200:
         return None

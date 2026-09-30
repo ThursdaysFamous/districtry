@@ -54,6 +54,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import requests  # noqa: E402
 from build_metro_outline import HEADERS, REQUEST_TIMEOUT  # noqa: E402
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
+
 COUNTY = "Mason"
 SHEET_ID = "1pffRO68CZLhQkVmFKlmDy_J1YyaDlYDkS2TATLpeNkQ"
 SHEET_TAB = "Municipalities"
@@ -100,6 +103,8 @@ def fetch_csv(path=None):
     if path:
         with open(path, encoding="utf-8") as handle:
             return handle.read()
+    require_robots_once(SHEET_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-mason-municipal-officials-scraper")
     resp = requests.get(SHEET_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     return resp.text

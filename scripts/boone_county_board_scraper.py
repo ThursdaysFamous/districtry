@@ -26,7 +26,10 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_ROSTER_COMPACT,
+    require_robots_once,
+)
 
 LIST_URL = "https://www.boonecountyil.gov/government/county_board_members.php"
 UA = {"User-Agent": UA_ROSTER_COMPACT}
@@ -45,6 +48,8 @@ ROLE_RE = re.compile(r'>(?:\s|&nbsp;)*((?:Vice[- ])?Chair(?:man|woman|person)?)\
 
 
 def main():
+    require_robots_once(LIST_URL, UA["User-Agent"], headers=UA,
+                        label="il-boone-county-board-scraper")
     r = requests.get(LIST_URL, headers=UA, timeout=60)
     r.raise_for_status()
 

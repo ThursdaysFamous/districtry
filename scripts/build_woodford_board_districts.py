@@ -48,7 +48,10 @@ from build_metro_outline import (  # noqa: E402  (shared machinery — do not fo
     HEADERS, REQUEST_TIMEOUT, SIMPLIFY_TOLERANCE_M, STATE_FIPS,
     dissolve, group_rings, point_in_rings, simplify,
 )
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    make_fail,
+    require_robots_once,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "woodford-county-board-districts.json")
@@ -92,6 +95,8 @@ fail = make_fail("woodford-board")
 
 
 def fetch_townships():
+    require_robots_once(TIGER_COUSUB, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-woodford-board-districts")
     resp = requests.get(TIGER_COUSUB, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "STATE='%s' AND COUNTY='%s'" % (STATE_FIPS, COUNTY_FIPS),
         "outFields": "BASENAME,NAME,GEOID",

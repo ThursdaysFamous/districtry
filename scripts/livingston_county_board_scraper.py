@@ -37,7 +37,10 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_X11_120  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_CHROME_X11_120,
+    require_robots_once,
+)
 
 SOURCE_URL = "https://www.livingstoncountyil.gov/government/county_board_members.php"
 # The county site 202s a bare client; a browser UA is enough (no challenge).
@@ -111,6 +114,8 @@ def parse(page):
 
 def main():
     out_path = sys.argv[1] if len(sys.argv) > 1 else "livingston_county_board_raw.json"
+    require_robots_once(SOURCE_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-livingston-county-board-scraper")
     resp = requests.get(SOURCE_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     records = parse(resp.text)

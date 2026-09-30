@@ -66,7 +66,10 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import vtd_board_districts as V  # noqa: E402
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    make_fail,
+    require_robots_once,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PRECINCTS = os.path.join(REPO_ROOT, "il", "data", "app", "douglas-precincts.json")
@@ -111,6 +114,8 @@ fail = make_fail("douglas-boundaries")
 
 def fetch_service(url, shape_fn):
     import requests
+    require_robots_once(url, V["User-Agent"], headers=V,
+                        label="il-build-douglas-boundaries")
     resp = requests.get(url, headers=V.HEADERS, timeout=V.REQUEST_TIMEOUT,
                         params={"where": "1=1", "outFields": "*",
                                 "returnGeometry": "true", "outSR": "4326",

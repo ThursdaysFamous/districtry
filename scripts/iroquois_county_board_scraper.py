@@ -35,7 +35,10 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_X11_128  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_CHROME_X11_128,
+    require_robots_once,
+)
 
 SOURCE_URL = "https://iroquoiscountyil.gov/offices/county-board"
 UA = {"User-Agent": UA_CHROME_X11_128}
@@ -98,6 +101,8 @@ def rows_of(page):
 
 
 def main():
+    require_robots_once(SOURCE_URL, UA["User-Agent"], headers=UA,
+                        label="il-iroquois-county-board-scraper")
     resp = requests.get(SOURCE_URL, headers=UA, timeout=60)
     resp.raise_for_status()
     page = resp.text

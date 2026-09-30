@@ -67,7 +67,10 @@ from build_metro_outline import (  # noqa: E402  (shared machinery — do not fo
     HEADERS, REQUEST_TIMEOUT, SIMPLIFY_TOLERANCE_M, STATE_FIPS,
     dissolve, group_rings, point_in_rings, simplify,
 )
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    make_fail,
+    require_robots_once,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "ogle-county-board-districts.json")
@@ -152,6 +155,8 @@ def township_of(precinct):
 
 
 def fetch(url, extra_fields):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-ogle-board-districts")
     resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "STATE='%s' AND COUNTY='%s'" % (STATE_FIPS, COUNTY_FIPS),
         "outFields": extra_fields,

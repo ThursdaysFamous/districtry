@@ -206,6 +206,19 @@ ROBOTS_DECLINED = {
                "until 2026-09-25. Run 11 (2026-09-19) was the last green one and run "
                "12 (2026-09-26) is the first to decline",
     },
+    "update-knox-county-board-roster.yml": {
+        "host": "cms2.revize.com",
+        "script": "scripts/knox_county_board_scraper.py",
+        "step": "Read Knox County's board minutes",
+        "since": "2026-09-30",
+        "why": "the Revize CMS host Knox's minutes are served from publishes a 414-"
+               "byte robots.txt whose `*` group ends in `Disallow: /`. Measured "
+               "2026-09-30 with the client that scrape uses, while wiring the "
+               "robots read into it; the scraper's own docstring had claimed the "
+               "host served those documents with no block of any kind and nobody "
+               "had read the policy. The county's own host allows us and publishes "
+               "no roster this scrape can use",
+    },
 }
 
 # Workflows that are not data refreshes. Everything else in the directory is
@@ -396,11 +409,15 @@ def audit_robots_declined(watched):
                 problems.append("%s says %s reads %s and that host is not named in it "
                                 "any more — the scraper has been re-sourced; retire "
                                 "the entry" % (where, dec["script"], dec["host"]))
-            if "require_robots_allowed" not in sc_src:
-                problems.append("%s says %s declines, and it no longer calls "
-                                "require_robots_allowed — whatever is failing there "
-                                "now is not a refusal"
-                                % (where, dec["script"]))
+            # EITHER SPELLING OF THE SEAM. `require_robots_once` wraps
+            # `require_robots_allowed` with a per-host memo and raises exactly as
+            # it does; reading only the inner name reported a wired scraper as
+            # having stopped declining, which is the opposite of true.
+            if not any(n in sc_src for n in ("require_robots_allowed",
+                                             "require_robots_once")):
+                problems.append("%s says %s declines, and it no longer calls the "
+                                "robots seam — whatever is failing there now is "
+                                "not a refusal" % (where, dec["script"]))
         if dec["host"] not in MEASURED_REFUSALS:
             problems.append("%s names %s, which validate_card_links.ROBOTS_DECLINED "
                             "no longer records as refusing us. Either the host "

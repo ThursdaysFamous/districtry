@@ -56,6 +56,9 @@ from build_metro_outline import (  # noqa: E402  (shared machinery — do not fo
 )
 from build_county_outline import build_rings, validate  # noqa: E402
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
+
 # How far the simplified rings' own area may sit from the area the Census
 # publishes for the same place before the build refuses. 25 m simplification on
 # a ~35 km² city moves it well under a percent; anything larger means the rings
@@ -114,6 +117,8 @@ PLACES = {
 
 
 def fetch_place(basename):
+    require_robots_once(TIGERWEB_PLACES, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-place-outline")
     resp = requests.get(TIGERWEB_PLACES, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "STATE='%s' AND BASENAME='%s'" % (STATE_FIPS, basename),
         "outFields": "NAME,BASENAME,GEOID,AREALAND,AREAWATER",

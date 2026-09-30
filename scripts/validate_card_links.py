@@ -371,6 +371,19 @@ ROBOTS_DECLINED = {
     "elections.il.gov":
         "the bare host serves the same 29-byte `User-agent: * / Disallow: /`. "
         "Measured 2026-09-25. See the www entry",
+    "cms2.revize.com":
+        "robots.txt is 414 bytes and its `*` group ends in `Disallow: /`, which is "
+        "the longest match for /revize/knoxcounty/ — the Revize CMS host Knox "
+        "County's own documents are served from. Measured 2026-09-30 with the "
+        "client that scrape uses. The scraper's docstring had said the host served "
+        "those documents `with no block of any kind`, and CLAUDE.md repeated it; "
+        "neither had read its robots.txt. The policy is the CMS VENDOR'S, not a "
+        "county's, and it is published at the vendor's own host, so it binds there "
+        "— which is the reverse of the Kendall/McHenry/Joliet reading, where a "
+        "vendor default published at each GOVERNMENT'S host binds but must never "
+        "be cited as that government's choice. knox_county_board_scraper.py "
+        "declines at the gate now; Knox's shipped roster keeps its last-good "
+        "records (Adam's preserve ruling of 2026-09-19)",
     "www.rochesterhills.org":
         "robots.txt (served via a redirect to the city's CMS host) allows exactly five "
         "named bots — Googlebot, Bingbot, FacebookBot, LinkedInBot, Twitterbot — and "

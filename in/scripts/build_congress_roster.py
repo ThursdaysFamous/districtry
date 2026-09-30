@@ -52,6 +52,14 @@ import os
 import sys
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import (  # noqa: E402  (FLEET_SHARED -- validate_workflow_deps)
+    UA_STDLIB_DEFAULT,
+    require_robots_once,
+)
+
 SOURCE_URL = "https://unitedstates.github.io/congress-legislators/legislators-current.json"
 DISTRICT_OFFICES_URL = "https://unitedstates.github.io/congress-legislators/legislators-district-offices.json"
 
@@ -79,6 +87,10 @@ if os.path.exists(_STATE_CONFIG):
 
 
 def fetch_json(url):
+    # The policy is read with the client that crawls: this call sets no
+    # User-Agent, so urllib's own string is what the host sees and is what
+    # the robots groups are matched against.
+    require_robots_once(url, UA_STDLIB_DEFAULT, label="in-build-congress-roster")
     with urllib.request.urlopen(url, timeout=60) as resp:
         return json.load(resp)
 

@@ -30,6 +30,7 @@ Usage:
     python3 scripts/hancock_county_board_scraper.py [output.json]
 """
 
+import os
 import html as html_mod
 import json
 import re
@@ -38,6 +39,9 @@ import time
 
 import requests
 from scraper_common import make_fail, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
 
 SOURCE_URL = "https://hancockcounty-il.gov/county-board-members/"
 HEADERS = {
@@ -67,6 +71,8 @@ def fetch(url):
     last = None
     for attempt in range(MAX_RETRIES):
         try:
+            require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                                label="il-hancock-county-board-scraper")
             r = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
             if r.status_code == 200:
                 return r.text

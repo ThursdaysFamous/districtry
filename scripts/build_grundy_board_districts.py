@@ -53,7 +53,10 @@ import requests  # noqa: E402
 from build_metro_outline import (  # noqa: E402  (shared machinery — do not fork)
     HEADERS, REQUEST_TIMEOUT, point_in_rings,
 )
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    make_fail,
+    require_robots_once,
+)
 
 # WHY SHAPELY AND NOT build_metro_outline's dissolve(): same reason as the
 # LaSalle build — segment-cancellation dissolve requires exact shared vertex
@@ -106,6 +109,8 @@ fail = make_fail("grundy-board")
 
 
 def fetch_precincts():
+    require_robots_once(PRECINCT_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-grundy-board-districts")
     resp = requests.get(PRECINCT_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "1=1",
         "outFields": "NAME",

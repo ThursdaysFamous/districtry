@@ -40,7 +40,10 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_X11_128  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_CHROME_X11_128,
+    require_robots_once,
+)
 
 BOARD_PAGE = "https://masoncountyil.gov/county-board/"
 ROSTER_PDF = ("https://masoncountyil.gov/wp-content/uploads/2026/05/"
@@ -56,6 +59,8 @@ LINK_TEXT = "County Board Members"
 
 
 def get(url):
+    require_robots_once(url, UA["User-Agent"], headers=UA,
+                        label="il-mason-roster-watch")
     resp = requests.get(url, headers=UA, timeout=TIMEOUT)
     resp.raise_for_status()
     return resp

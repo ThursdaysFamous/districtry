@@ -55,7 +55,10 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_mason_board_districts import SEATS_PER_DISTRICT  # noqa: E402
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    make_fail,
+    require_robots_once,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "mason-county-board-members.json")
@@ -147,6 +150,8 @@ def fetch_sheet_members():
     import io as _io
     import requests
     from build_metro_outline import HEADERS, REQUEST_TIMEOUT
+    require_robots_once(SHEET_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-mason-board-roster")
     resp = requests.get(SHEET_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     rows = [[c.strip() for c in r] for r in _csv.reader(_io.StringIO(resp.text))]

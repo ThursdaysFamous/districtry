@@ -110,6 +110,11 @@ import os
 import re
 import sys
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 try:
     import requests
 except ImportError:
@@ -144,6 +149,8 @@ PHONE_RE = re.compile(r"\(?\d{3}\)?[\s.-]*\d{3}[\s.-]*\d{4}")
 
 
 def fetch(url, binary=False):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="ia-ia-county-officer-sources-scraper")
     resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     if resp.status_code != 200:
         raise SystemExit("%s: HTTP %d" % (url, resp.status_code))

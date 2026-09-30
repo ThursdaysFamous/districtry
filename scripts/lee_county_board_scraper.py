@@ -41,7 +41,10 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_CHROME_WIN_126,
+    require_robots_once,
+)
 
 try:
     import pdfplumber
@@ -77,6 +80,8 @@ MIN_DISTRICTS = 4
 
 
 def fetch_pdf(url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-lee-county-board-scraper")
     resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     if not resp.content.startswith(b"%PDF"):
