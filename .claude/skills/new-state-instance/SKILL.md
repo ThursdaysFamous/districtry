@@ -99,6 +99,21 @@ The list is self-correcting: before the first PR, grep `scripts/` and
 `.github/` for the newest tag in quotes (`"ia"` today) — every hit is a row
 to add. `docs/IA_EXPANSION_PLAN.md`'s PR 0 is the worked record.
 
+**AND A GATE THAT CANNOT SEE DARKNESS FAILS THE WHOLE FLEET, WHICH IS THE
+ARRIVAL'S OTHER COST.** `dark_instances()` in
+`scripts/validate_instance_registration.py` is the fleet's definition — it
+reads the blanket `<tag>/**` line in `deploy-pages.yml`'s `EXCLUDES`, the one
+thing that actually decides whether a folder is published. Indiana arrived on
+2026-09-29 as the first dark instance since three other generators were
+written, and all three had restated the rule their own way: `build_llms_txt.py`
+asserted `metros.json` and the tree are EQUAL, `build_question_forms.py` failed
+on an instance "not in metros.json", and `build_sitemap.py` wanted to LIST the
+dark folder's pages, which are 404s. All three read `dark_instances()` now. So
+on the next arrival, run the whole battery BEFORE assuming the failures are
+yours: a red gate naming `metros.json` and the tree in the same breath is
+probably a fourth generator that has never met a dark instance, and the fix is
+to give it that one reader rather than to publish early.
+
 ## 5. Compose, generate, then the national tier
 
 After §4's `compose_app.py` rows exist:
