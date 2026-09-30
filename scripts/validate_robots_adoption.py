@@ -259,7 +259,6 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/build_stephenson_precincts.py
     scripts/build_vermilion_boundaries.py
     scripts/build_winnebago_county_board_roster.py
-    scripts/carroll_municipal_officials_scraper.py
     scripts/cass_municipal_officials_scraper.py
     scripts/ccbr_scraper.py
     scripts/ccpsa_scraper.py

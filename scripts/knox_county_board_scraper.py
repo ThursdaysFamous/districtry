@@ -9,20 +9,37 @@ cms2.revize.com/revize/knoxcounty/. Every set of minutes opens with a roll call
 that names EVERY SEAT BY DISTRICT, which is the roster this county was recorded
 as not having.
 
-THAT HOST REFUSES US, AND THIS DOCSTRING SAID IT DID NOT. The sentence above
-read "with no block of any kind" from the day this file was written, and
-CLAUDE.md repeated it; the claim was about the PAGES answering and nobody had
-read the policy. Measured 2026-09-30 with the client below, cms2.revize.com
-serves a 414-byte robots.txt whose `*` group ends in `Disallow: /`, the longest
-match for /revize/knoxcounty/. So this scrape declines at the gate now and
-fetches nothing. The refusal is the CMS VENDOR'S and is published at the
-vendor's own host, which is what makes it bind here — the reverse of the
-Kendall/McHenry/Joliet case, where one vendor's default is published at each
-GOVERNMENT'S host, binds for that reason, and must never be cited as something
-that government chose. Knox's shipped roster keeps its last-good records: a
-refusal stops the FETCH and never unpublishes what we already have (Adam's
-ruling of 2026-09-19). The county's own host allows us and publishes no roster
-this scrape can read, so there is no second route to move to.
+THAT HOST'S POLICY ALLOWS THESE DOCUMENTS, AND A FIRST READING OF IT SAID
+OTHERWISE. The sentence above read "with no block of any kind" from the day this
+file was written, which was a claim about the PAGES answering and not about the
+policy — so the policy was read on 2026-09-30, and the first reading of it was
+wrong in the opposite direction. cms2.revize.com serves a 414-byte robots.txt
+whose `*` group is a list of document extensions followed by a blanket refusal:
+
+    User-agent: *
+    Allow: /*.pdf          (plus .doc .docx .ppt .pptx .xml .txt and upper case)
+    Disallow: /
+
+That reading was taken at `/revize/knoxcounty/`, the DIRECTORY, where
+`Disallow: /` is indeed the longest match — and this scrape never fetches a
+directory. It fetches `.pdf` paths only, where `Allow: /*.pdf` is the longest
+match and RFC 9309 §2.2.2 gives it the decision, so every document this file
+reads is explicitly permitted. The verdict was recorded as a refusal in this
+docstring and in two gate tables for part of one day; nothing stopped fetching,
+because the seam below asks about the PDF path and always answered allow.
+
+MEASURE THE PATH THE SCRAPER FETCHES, NEVER A DIRECTORY ABOVE IT. This project's
+own record already carries that lesson for 60 hosts measured at the wrong address
+in the first user-agent sweep; this is the same defect at rule level, where the
+cost is the opposite of the usual one — not a browser string licensed by a wrong
+reading, but a working source recorded as shut. A host that allows documents and
+refuses crawling is a common CMS default and cannot be judged from one path.
+
+THE REFUSAL IT WOULD HAVE BEEN IS STILL THE VENDOR'S, not the county's, and that
+part of the first reading was right: this policy is published at the CMS
+vendor's own host, which is the reverse of the Kendall/McHenry/Joliet case, where
+one vendor's default is published at each GOVERNMENT'S host, binds for that
+reason, and must never be cited as something that government chose.
 
   "The Meeting was called to order by County Board Chair Jared Hawkinson and
    upon roll call the following Members reported present:

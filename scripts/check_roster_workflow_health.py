@@ -206,19 +206,6 @@ ROBOTS_DECLINED = {
                "until 2026-09-25. Run 11 (2026-09-19) was the last green one and run "
                "12 (2026-09-26) is the first to decline",
     },
-    "update-knox-county-board-roster.yml": {
-        "host": "cms2.revize.com",
-        "script": "scripts/knox_county_board_scraper.py",
-        "step": "Read Knox County's board minutes",
-        "since": "2026-09-30",
-        "why": "the Revize CMS host Knox's minutes are served from publishes a 414-"
-               "byte robots.txt whose `*` group ends in `Disallow: /`. Measured "
-               "2026-09-30 with the client that scrape uses, while wiring the "
-               "robots read into it; the scraper's own docstring had claimed the "
-               "host served those documents with no block of any kind and nobody "
-               "had read the policy. The county's own host allows us and publishes "
-               "no roster this scrape can use",
-    },
 }
 
 # Workflows that are not data refreshes. Everything else in the directory is
