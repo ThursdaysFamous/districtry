@@ -654,6 +654,56 @@ try {
   }
 
 
+  // 2a6. A COUNTY THAT ANSWERED IN A LETTER, and the sentence that says so.
+  //      Osceola's auditor gave the supervisor-to-district pairing by e-mail
+  //      on 2026-10-01; the county publishes no page that names a district, so
+  //      the roster record carries no sourceUrl and there is nothing to
+  //      re-read. The card therefore dates it and says it was confirmed BY THE
+  //      COUNTY rather than read off its board page -- the wording that fits a
+  //      preserved county and is a false statement about this one.
+  //
+  //      BOTH BRANCHES. Osceola must name its District 1 supervisor AND carry
+  //      the confirmed-by-the-county wording AND NOT the read-from-its-page
+  //      wording; and Adams, keyed from its own board page like the other
+  //      nineteen, must name its supervisor with NO dated sentence of either
+  //      kind -- which is the half that keeps the first honest, since a
+  //      sentence rendered for every county says nothing.
+  //
+  //      The point is the Census's own internal point for Osceola County,
+  //      which the shipped district geometry puts in District 1. Both layers
+  //      answer from committed files, so neither needs a government server.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    for (const [lat, lng, county, want, absent, why] of [
+      [43.3784695, -95.6338858, "Osceola County", "LeRoy DeBoer",
+       "last read from its own board page",
+       "Osceola, named by the county's own letter"],
+      [43.3784695, -95.6338858, "Osceola County", "last confirmed by the county itself",
+       null, "Osceola dates a pairing it cannot re-read"],
+      [41.03000, -94.64000, "Adams County", "Supervisor",
+       "last confirmed by the county itself",
+       "Adams, keyed from a page, carries no dated sentence"]
+    ]) {
+      const page = await booted(context,
+        `${BASE}#point=${lat},${lng}&layers=county-supervisor`);
+      const info = await cardText(page, "county-supervisor");
+      if (info.error || !info.text.includes(county)) {
+        console.log(`  SKIP  supervisor district, ${why} — card did not name ${county}`);
+        await page.close();
+        continue;
+      }
+      check(`supervisor district, ${why}`,
+        info.text.includes(want), info.text.slice(0, 200));
+      if (absent) {
+        check(`supervisor district, ${why} — no wrong-source sentence`,
+          !info.text.includes(absent), info.text.slice(0, 200));
+      }
+      await page.close();
+    }
+    await context.close();
+  }
+
+
   // 2b. The negative ground-truth point (from the worksheet: a point outside
   //     every anchor layer). Anchors that declare a location-relevance test
   //     (mod.coverage — see NEGATIVE_HIDDEN above) HIDE there: the toggle

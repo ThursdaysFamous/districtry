@@ -83,7 +83,6 @@ const GEOMETRY_URLS = [
   "./data/app/kossuth-county-outline.json",
   "./data/app/lee-county-outline.json",
   "./data/app/montgomery-county-outline.json",
-  "./data/app/osceola-county-outline.json",
   "./data/app/palo-alto-county-outline.json",
   "./data/app/sioux-county-outline.json",
   "./data/app/washington-county-outline.json",

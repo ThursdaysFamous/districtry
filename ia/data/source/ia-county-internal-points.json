@@ -1,6 +1,6 @@
 {
   "measured": "2026-09-29",
-  "note": "The Census's own internal point per county — guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
+  "note": "The Census's own internal point per county \u2014 guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
   "points": {
     "adair": {
       "fips": "001",
@@ -99,13 +99,6 @@
       "lng": -95.1577896,
       "name": "Montgomery County",
       "slug": "montgomery"
-    },
-    "osceola": {
-      "fips": "143",
-      "lat": 43.3784695,
-      "lng": -95.6338858,
-      "name": "Osceola County",
-      "slug": "osceola"
     },
     "palo-alto": {
       "fips": "147",

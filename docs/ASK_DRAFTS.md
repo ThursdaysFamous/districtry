@@ -2448,15 +2448,35 @@ The Clerk's own named county address, so the name vouches for it.
 
 ## Ask 30 — twelve Iowa counties: which supervisor holds which district
 
-> **ASKED 2026-10-01 FOR SEVEN; THE OTHER FIVE ARE DRAFTED IN THE MAILBOX AND UNSENT.**
-> Twelve separate messages, one per county, each to that county's Auditor. Sent 2026-10-01 and
-> confirmed in the operator's own sent folder: **Ida, Lee, Montgomery, Osceola, Palo Alto,
-> Sioux and Washington**. Drafted in Gmail 2026-10-01 and NOT sent: **Black Hawk, Calhoun,
-> Cass, Dickinson and Guthrie**. A follow-up falls due for the seven at about three weeks
-> (2026-10-22) and the thirty-day silence mark at 2026-10-31; each of the five reads
-> `ASKED <date>` only on the day it goes. The ledger lives in the
-> `ia-supervisor-district-seats` blocker in `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md`
-> — Iowa keeps it in both, unlike Illinois.
+> **ASKED 2026-10-01 — ALL TWELVE. THREE HAVE ALREADY ANSWERED.**
+> Twelve separate messages, one per county, each to that county's Auditor, every one confirmed
+> in the operator's own sent folder: **Black Hawk, Calhoun, Cass, Dickinson, Guthrie, Ida, Lee,
+> Montgomery, Osceola, Palo Alto, Sioux and Washington**. A follow-up falls due for the nine
+> still silent at about three weeks (2026-10-22) and the thirty-day silence mark at 2026-10-31.
+>
+> * **Osceola — ANSWERED, and it ships.** Auditor Rochelle Van Tilburg, 2026-10-01, gave all
+>   five pairings in plain text. The county has left the gap record.
+> * **Dickinson — REFUSED.** Auditor Lori Pedersen, 2026-10-01, in full: `no`. That is the
+>   answer this letter asks for in as many words, so no follow-up goes out and the county stays
+>   in the gap record for a stated reason.
+> * **Cass — ANSWERED, and not yet readable here.** Auditor Kathy Somers, 2026-10-01, sent the
+>   district numbers with names as an INLINE IMAGE plus a district-map PDF; the message's plain
+>   text carries none of it, and the Gmail connector available to these sessions lists an
+>   attachment and cannot fetch its bytes. Nothing is guessed from a filename. The county is
+>   recorded as having answered, so no follow-up goes out, and the five lines need a reader
+>   that can read an image.
+>
+> **THE FIRST WRITE-UP OF THIS SAID SEVEN SENT AND FIVE DRAFTED, AND IT WENT STALE INSIDE THE
+> HOUR.** The sent folder was read at 14:42–14:46 UTC and the other five went at 14:47, so a
+> reading taken minutes earlier was written down as the state of the mailbox. It cost more than
+> a wrong sentence: five counties were written to TWICE, at 14:47 and again at 14:53–14:54,
+> because this thread drafted letters the Letters thread had already prepared and both sets went
+> out. A sent-folder read is a snapshot, and in this project another session may be sending in
+> the same minutes — re-read it immediately before writing a ledger line, and check for an
+> existing draft before creating one.
+>
+> The ledger lives in the `ia-supervisor-district-seats` blocker in
+> `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps it in both, unlike Illinois.
 
 **This ask is twelve counties and not eighteen, and the narrowing is the point.** Of the
 eighteen in this record on 2026-09-24, six publish the supervisor-to-district join on their

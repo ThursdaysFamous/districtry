@@ -322,6 +322,35 @@
   "readOn": "2026-09-26",
   "sourceUrl": "https://www.mononacountyiowa.gov/supervisors/"
  },
+ "143": {
+  "asOf": "2026-10-01",
+  "asOfWhy": "Osceola County's auditor gave this pairing by e-mail on 1 October 2026; the county publishes no page that names a district, so this app has no page to re-read.",
+  "boardPhone": "(712) 754-2241",
+  "county": "Osceola",
+  "districts": {
+   "1": {
+    "name": "LeRoy DeBoer",
+    "party": "No party"
+   },
+   "2": {
+    "name": "Jayson Vande Hoef",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Mike Schulte",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Jeff Loring",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Jerry Helmers",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-01"
+ },
  "151": {
   "boardPhone": "(712) 335-3361",
   "county": "Pocahontas",

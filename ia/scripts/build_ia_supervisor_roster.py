@@ -48,6 +48,20 @@ reader's district elected. A per-person number is a different fact and would
 have to arrive from a source that publishes one; the officer roster this reads
 from carries none, so none can leak through.
 
+A COUNTY MAY ANSWER THE QUESTION IN A LETTER RATHER THAN ON A PAGE. Four
+statewide routes are measured closed and some counties publish no page that
+names a district at all, so this project writes to the county auditor and asks.
+An answer that arrives by e-mail is a county official stating, in writing, which
+supervisor each of their own districts elects -- which is a better source than a
+board page, not a worse one. It rides CORRESPONDENCE_ROSTERS below and flows
+through EXACTLY the three re-checks above: the reply supplies only the pairing,
+the names and parties still come from the gated officer roster, and a reply that
+names somebody the roster does not, or misses a district, ships nothing. What it
+does NOT get is a sourceUrl, because a letter is not a page, and the card
+therefore dates it and says where it came from instead of claiming a page this
+app re-reads every week. Nothing here re-reads a letter: the entry is dated, it
+will go out of date, and that is on the card.
+
 A ROBOTS REFUSAL IS NOT AN OUTAGE. The scraper reads each host's robots.txt
 before its first fetch and caches {"robotsRefused": <why>} for a county whose
 own file says this client may not read it. That is the site's answer and it
@@ -83,6 +97,43 @@ TODAY = dt.date.today().isoformat()
 
 MIN_COUNTIES = 12
 MIN_DISTRICTS = 40
+
+# WHAT A COUNTY TOLD US IN WRITING.
+#
+# Each entry is one county official's own answer to this project's ask, naming
+# which supervisor each district elects. The pairing is all it supplies: every
+# name and party below is still looked up in ia-county-officers.json, and the
+# three re-checks in the loop are applied unchanged -- so an entry that names a
+# person the gated roster does not name, or that misses a district, ships
+# nothing rather than overriding anything.
+#
+# AN ENTRY IS AUDITED AGAINST THIS RUN, like every other recorded exception in
+# this repo. It FAILS when the county is not a plan 3 county in the shipped
+# geometry (orphaned), and it FAILS when the scraper has started keying the
+# county from its own page (stale -- a published page is the better source and
+# the letter should be retired in favour of it).
+CORRESPONDENCE_ROSTERS = {
+    "Osceola": {
+        "districts": {
+            "1": "LeRoy DeBoer",
+            "2": "Jayson Vande Hoef",
+            "3": "Mike Schulte",
+            "4": "Jeff Loring",
+            "5": "Jerry Helmers",
+        },
+        "readOn": "2026-10-01",
+        "why": (
+            "Osceola County Auditor Rochelle Van Tilburg, by e-mail, "
+            "2026-10-01, answering this project's ask: 'Following is the "
+            "supervisor by district' followed by all five pairings. The "
+            "county's own board page lists its five supervisors and attaches "
+            "no district to any of them, which is why it was asked."),
+        "cardNote": (
+            "Osceola County's auditor gave this pairing by e-mail on 1 "
+            "October 2026; the county publishes no page that names a "
+            "district, so this app has no page to re-read."),
+    },
+}
 
 # A ROBOTS REFUSAL IS A RECORDED DROP -- NOT AN OUTAGE, AND NOT A BLANKET
 # EXCUSE EITHER.
@@ -175,6 +226,27 @@ def main():
 
     cache = load(CACHE, "supervisor district cache -- run the scraper first")
 
+    # CORRESPONDENCE_ROSTERS joins the cache rather than bypassing it, so an
+    # answer given in a letter is gated exactly as one read off a page is.
+    plan3 = {c for c, plan in plan_by_county.items() if plan == "PLAN 3"}
+    for county in sorted(CORRESPONDENCE_ROSTERS):
+        told = CORRESPONDENCE_ROSTERS[county]
+        if county not in plan3:
+            raise RuntimeError(
+                "CORRESPONDENCE_ROSTERS names %s, which is not a plan 3 county in "
+                "the shipped geometry -- the entry is orphaned and should go"
+                % county)
+        if (cache.get(county) or {}).get("districts"):
+            raise RuntimeError(
+                "CORRESPONDENCE_ROSTERS names %s, but the scraper keyed its own "
+                "page this run -- the entry is stale. Retire it: a page the county "
+                "publishes is the better source and is re-read every week."
+                % county)
+        cache[county] = {"districts": dict(told["districts"]),
+                         "readOn": told["readOn"]}
+        print("  from a letter  %-12s %d district(s), %s"
+              % (county, len(told["districts"]), told["why"]), file=sys.stderr)
+
     # THE ROSTER THIS RUN IS ABOUT TO OVERWRITE, read in FULL rather than as
     # district counts. It is two things at once: the Grundy guard below still
     # asks whether a county that shipped last week keyed nothing this week,
@@ -249,7 +321,6 @@ def main():
         rec = {
             "county": county,
             "districts": members,
-            "sourceUrl": entry.get("sourceUrl"),
             # The date the SCRAPE read this page, never this process's clock.
             # It is present on every county, read or preserved, because a
             # field that appears only on successfully-read counties is one
@@ -258,6 +329,17 @@ def main():
             # turned a roster PR red that changed nobody.
             "readOn": entry.get("readOn") or (prev.get(county) or {}).get("readOn") or TODAY,
         }
+        # A LETTER IS NOT A PAGE. There is no url to carry and nothing to
+        # re-read, so the record is dated and says where the pairing came
+        # from, which the card renders in place of the instance-wide "Data
+        # last verified" date -- the same honesty the preserved counties get,
+        # for the same reason.
+        if entry.get("sourceUrl"):
+            rec["sourceUrl"] = entry["sourceUrl"]
+        told = CORRESPONDENCE_ROSTERS.get(county)
+        if told:
+            rec["asOf"] = told["readOn"]
+            rec["asOfWhy"] = told["cardNote"]
         # The board office's own number, county-level and labelled as such on
         # the card. One number shared by every supervisor is a switchboard.
         if board_phone_by_county.get(county):
@@ -333,7 +415,6 @@ def main():
     # every recorded exception in this repo is written to avoid. BOTH AUDITS
     # SURVIVE THE RENAME UNCHANGED: they are what make the table trustworthy,
     # and preserving rather than dropping does not weaken either.
-    plan3 = {c for c, plan in plan_by_county.items() if plan == "PLAN 3"}
     for county in sorted(ROBOTS_REFUSED_PRESERVED):
         why = ROBOTS_REFUSED_PRESERVED[county]["why"]
         if county not in plan3:
