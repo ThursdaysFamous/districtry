@@ -2306,26 +2306,26 @@ detail into `blocker`.
     {
       "id": "mi-township-officers",
       "concept": "Township board",
-      "area": "Michigan — all 1,240 townships",
+      "area": "Michigan — every township below 25,000 people, and five above it",
       "counties": [],
       "kind": "no-source",
       "layer": "county-subdivision",
-      "summary": "The Township or City card names your township but not the people who run it — no statewide roster of Michigan township supervisors, clerks, treasurers and trustees exists.",
-      "why": "Michigan townships each elect a supervisor, clerk, treasurer and trustees, but no state agency or association publishes them as one list, so this app names the office rather than guessing who holds it.",
-      "blocker": "MEASURED 2026-09-04. The boundary layer is the Census MCD fabric, which carries geography and no officeholder field of any kind — so unlike the commissioner layer there is not even a stale name here to reject. The state's own surfaces stop at the county: the Bureau of Elections publishes county clerks and the commissioner-district compilation, and no township-officer aggregate. The Michigan Townships Association is the obvious candidate and is membership-facing; its public directory lists member townships, not their officers. That leaves the route every other instance took for this tier — township by township, from each one's own site — which is real work at 1,240 units and is not attempted here. THE OFFICE IS NAMED ON THE CARD AND THE PERSON IS NOT, which is the honesty floor: MCL 41.61 for a general-law township board, MCL 42.3 for a charter township's.",
-      "wanted": "Either a statewide roster from the state or the townships association, or a township-by-township build against each township's own site, refreshed weekly and count-guarded."
+      "summary": "The Township or City card names the board of 29 of Michigan's largest townships, read weekly from their own websites. For every other township it names the township but not its board: no statewide list of township officers exists.",
+      "why": "Each township elects its own board and nobody publishes them as one list, so each board is read from its own township's site. That is done for the large townships; for the rest the card names the office rather than guessing who holds it.",
+      "blocker": "MEASURED 2026-09-04. The boundary layer is the Census MCD fabric, which carries geography and no officeholder field of any kind. The state's own surfaces stop at the county, and the Michigan Townships Association's public directory lists member townships, not their officers. PARTLY CLOSED 2026-10-01, for the done standard's 25,000-person floor: of the 34 townships above it, 29 are read weekly from their own board pages by mi/scripts/mi_municipal_officials_scraper.py into mi/data/app/mi-municipal-officials.json (robots.txt read first, with the fleet's roster token), and the card lists each board in statutory order (MCL 41.70: supervisor, clerk, treasurer, trustees) with the date the page was read. FIVE ABOVE THE FLOOR COULD NOT BE READ, each measured that day and each for a reason this project does not route around: West Bloomfield and Bedford publish a robots.txt that refuses this client; Shelby and Northville refuse it at the page; Ypsilanti charter township answers with a managed challenge. Burton and Norton Shores are cities and sit in mi-municipal-officeholders. NOT YET ASKED — DRAFTED as Ask 34 in docs/ASK_DRAFTS.md, one letter per unit for the operator to send. THE 1,206 TOWNSHIPS BELOW THE FLOOR are not attempted: the standard does not ask for them, and a township-by-township build at that scale is its own piece of work.",
+      "wanted": "For West Bloomfield, Bedford, Shelby, Northville and Ypsilanti charter township: permission to read the board page, or a copy of the board list. For the rest: a statewide roster from the state or the townships association."
     },
     {
       "id": "mi-municipal-officeholders",
       "concept": "Municipal officials",
-      "area": "Michigan — all 533 cities and villages",
+      "area": "Michigan — every city and village below 25,000 people, and six cities above it",
       "counties": [],
       "kind": "no-source",
       "layer": "municipality",
-      "summary": "The City or Village card names your municipality but not its mayor, village president, council or clerk — no statewide source names them.",
-      "why": "Michigan's cities and villages each publish their own officials, and nothing gathers them into one list, so this app links you to the municipality rather than naming a person it cannot verify.",
-      "blocker": "MEASURED 2026-09-04. The boundary layer is the Census places fabric and carries no officeholder field. The Michigan Municipal League is the obvious statewide candidate and is membership-facing — its directory is a member list, not an officials export — which is the same shape Iowa's record wrongly called membership-gated before that was re-measured, so it is worth a second look before this gap is called closed rather than open. Note the ASYMMETRY WITH IOWA that makes this harder rather than easier: Iowa's League publishes a per-city row carrying the city OFFICE's phone and website for 927 of 939 cities, which is why Iowa's card can reach the city while naming nobody. Nothing equivalent was found for Michigan, so this card currently carries neither a person nor a phone. Per-municipality rosters are the route every other instance took and are later phase work.",
-      "wanted": "A per-municipality roster built from each city's and village's own site, refreshed weekly — or, short of that, an office phone and website per municipality so the card can at least reach the government it names."
+      "summary": "The City or Village card names the council of 38 of Michigan's largest cities, read weekly from their own websites; four more are named on the council district card. Other cities and villages are named without their officials.",
+      "why": "Each city and village publishes its own officials and nothing gathers them into one list, so each council is read from its own city's site. That is done for the large cities; the rest are named without people rather than guessed.",
+      "blocker": "MEASURED 2026-09-04. The boundary layer is the Census places fabric and carries no officeholder field, and the Michigan Municipal League's directory is a member list, not an officials export. PARTLY CLOSED 2026-10-01, for the done standard's 25,000-person floor: of the 48 cities above it, 38 are read weekly from their own council pages by mi/scripts/mi_municipal_officials_scraper.py into mi/data/app/mi-municipal-officials.json, and Detroit, Grand Rapids, Jackson and Battle Creek already had weekly rosters of their own. Warren's and Flint's ward cards now name the member for the ward and the members elected citywide from the same file, which retired the warren-council-roster and flint-council-roster records. SIX ABOVE THE FLOOR ARE NOT NAMED, each measured that day: Rochester Hills and Norton Shores publish a robots.txt that refuses this client; Burton answers with a managed challenge, an access control this project never works around; Lansing's council page draws its members with JavaScript, so the page this app reads names nobody; Wyoming's site is not read under the operator's standing ruling; and DEARBORN HEIGHTS names six of seven members while the vacancy in the seventh seat is stated only in a time-limited news item (2026-09-22, appointment vote set for 2026-10-13), so its page cannot be read as a whole council until the seat is filled. NOT YET ASKED — DRAFTED as Ask 34 in docs/ASK_DRAFTS.md for Rochester Hills, Norton Shores, Burton and Lansing, with Wyoming left to the operator; Dearborn Heights needs no letter, only a re-read after the vote. Villages, and cities below the floor, are not attempted.",
+      "wanted": "For Rochester Hills, Norton Shores, Burton and Lansing: permission to read the council page, or a list this app can read. For Dearborn Heights: a re-read after the 13 October 2026 appointment. For the rest: a roster per municipality."
     },
     {
       "id": "mi-school-board-members",
@@ -2402,18 +2402,6 @@ detail into `blocker`.
       "blocker": "MEASURED 2026-09-05, AND DELIBERATELY NOT CONCLUDED. Four signals agree and none is decisive: (1) the state's own 2026 precinct fabric assigns WARD='00' to all 40 Sterling Heights precincts, where Grand Rapids reads 01-03, Lansing 01-04 and Ann Arbor 01-05; (2) an ArcGIS catalogue query for ward/district/precinct services in the city returns ZERO; (3) the city's council page (/148/City-Council, reached from the site's own nav) titles only a Mayor and carries no ward or district language; (4) no ward service exists in any org reached. AN ABSENCE IN ONE PUBLISHER'S COLUMN IS A FACT ABOUT THAT PUBLISHER - the Knox error - so at-large is the working expectation and not a recorded fact. THE TWO WITNESS ROUTES WERE TRIED AND ARE NAMED. The charter: /1094/City-Charter answers HTTP 200 AND IS A VERTEXONE WATER-BILLING PORTAL, not the charter; library.municode.com/mi/sterling_heights serves a 6 KB JavaScript shell with no content; the Municode API path Clients/name 404s; the DocumentCenter index surfaces no charter document. The canvass: Macomb County's own results hosts do not resolve (electionresults.macombgov.org, www.mcclerk.org), and Clarity/Scytl DOES carry the county slot - results.enr.clarityelections.com/MI/Macomb/ answers 200 - but its elections.json returns an EMPTY ARRAY, so the vendor publishes no elections for Macomb and that route is measured shut rather than unexamined. IF THE COUNCIL IS AT LARGE THERE IS NO GAP TO CLOSE, only a record to correct: an at-large body gets roster rows on a city card and never a polygon."
     },
     {
-      "id": "warren-council-roster",
-      "kind": "no-source",
-      "concept": "City council district",
-      "area": "Warren",
-      "layer": "city-ward",
-      "counties": [],
-      "summary": "In Warren the City Council District card names your ward but not the council member who represents it.",
-      "why": "The city publishes its ward map and its council meeting documents, but no list of which member holds which ward, so this app names the ward and links the Council rather than inventing a name.",
-      "wanted": "A list of Warren's five council members by ward on the city's own council pages, with a phone number or e-mail for each.",
-      "blocker": "MEASURED 2026-09-05. THE BOUNDARY SHIPS AND THE ROSTER DOES NOT, which is the Detroit posture applied to a smaller city. www.cityofwarren.org answers 200 and its robots.txt disallows nothing (an empty `Disallow:` under `User-agent: *`), so this is not an access problem. The council page at /city-council/ is a WordPress page whose body is meeting agendas, minutes and transcripts as wp-content PDFs; the served HTML names no council member beside a ward, and no member or council-member sub-pages are linked from it. The city's ArcGIS ward layer carries LONGNAME/SHORTNAME/DISTRICT/COLOR/RegVoters and NO officeholder field, so unlike Michigan's county-commissioner layer there is not even a stale name here to reject. Warren elects one member per ward plus a mayor and three at-large seats; naming the ward without the member is the honesty floor."
-    },
-    {
       "id": "dearborn-council-form",
       "kind": "no-source",
       "concept": "City council district",
@@ -2424,18 +2412,6 @@ detail into `blocker`.
       "why": "The state records no ward number for any Dearborn precinct, where it records them for every other Michigan city this app covers, which points to a council elected by the whole city rather than by ward.",
       "wanted": "The city charter's own words on how the council is elected, or a certified county canvass showing the council contest and how many seats each voter fills.",
       "blocker": "MEASURED 2026-09-05. THE SECOND CITY OF THIS SHAPE, after Sterling Heights, and measured the same way: the state's own 2026 precinct fabric assigns WARD='00' to all 42 Dearborn precincts, where Warren reads 01-05, Flint 01-09, Lansing 01-04, Ann Arbor 01-05 and Grand Rapids 01-03. An ArcGIS catalogue query for ward, council-district or precinct services naming Dearborn returns ZERO. AN ABSENCE IN ONE PUBLISHER'S COLUMN IS A FACT ABOUT THAT PUBLISHER (the Knox error), so at-large is the working expectation and not a recorded fact; the charter or a certified Wayne County canvass is what would settle it, and neither was read. IF THE COUNCIL IS AT LARGE THERE IS NO GAP TO CLOSE, only a record to correct — an at-large body gets roster rows on a city card and never a polygon."
-    },
-    {
-      "id": "flint-council-roster",
-      "kind": "no-source",
-      "concept": "City council district",
-      "area": "Flint",
-      "layer": "city-ward",
-      "counties": [],
-      "summary": "In Flint the City Council District card names your ward but not the council member who represents it.",
-      "why": "The city's council page does not list who holds each ward, and the one place it does pair a ward with a name is a memorial notice, so this app names the ward and links the Council rather than risking a name that is wrong.",
-      "wanted": "A current list of Flint's nine council members by ward on the city's own council pages, with a phone number or e-mail for each.",
-      "blocker": "MEASURED 2026-09-06. THE BOUNDARY SHIPS AND THE ROSTER DOES NOT, the Detroit and Warren posture. cityofflint.com answers 200 and its robots.txt permits everything with `Crawl-Delay: 20` (honoured), so this is not an access problem. The council page is 1.4 MB and flattens to ~206,000 characters, and /department/city-council/ serves the SAME document. THE ONLY WARD-TO-NAME PAIRING ANYWHERE IN IT IS AN IN MEMORIAM: \"In Memoriam: Councilman Eric Mays First Ward ... passed away February 24, 2024\". A scraper that paired a ward token with the nearest capitalised name would therefore ship a man who died two years ago as the sitting First Ward member — the sharpest version of the trap Will County's Crete entry records, where a directory's surviving text names somebody who no longer holds the seat. There are zero mailto: links on the page. The ward layer carries LONGNAME/SHORTNAME/DISTRICT/COLOR and no officeholder field, so there is not even a stale name in the geometry to reject. Naming the ward and not the member is the honesty floor."
     },
     {
       "id": "wyoming-mi-ward-boundary",

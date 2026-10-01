@@ -852,7 +852,7 @@
       },
       {
         "file": "mi-municipal-officials.json",
-        "min_keys": 55,
+        "min_keys": 62,
         "note": "The elected boards of Michigan's large cities (7-digit Census place id) and townships (10-digit county-subdivision id), read weekly from each unit's own page by mi/scripts/mi_municipal_officials_scraper.py and built by build_mi_municipal_officials.py, refreshed by update-mi-municipal-officials.yml. Covers the units over 25,000 people whose own page names every seat; a unit not carried keeps the card's 'not named here' sentence."
       }
     ]

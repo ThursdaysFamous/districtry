@@ -36,12 +36,13 @@ CACHE = os.path.join(HERE, ".cache", "mi_municipal_officials.json")
 OUT = os.path.join(INSTANCE, "data", "app", "mi-municipal-officials.json")
 LABEL = "mi-municipal-officials"
 
-# FLOORS. Measured on the first full run (2026-10-01) and set a few below it;
+# FLOORS. Measured on the first full run (2026-10-01: 67 units, 472 members)
+# and set a few below it;
 # raise them when units are added, never lower one to get past a failure. A
 # global count cannot protect a named unit, which is what the per-unit
 # carry-forward below is for; the floor catches a run where most parsers broke.
-MIN_UNITS = 55
-MIN_MEMBERS = 380
+MIN_UNITS = 62
+MIN_MEMBERS = 440
 
 PRESERVE_MAX_AGE_DAYS = 45
 
@@ -72,6 +73,12 @@ def clean(geoid, entry, unit):
     """The shipped row for one unit, re-checked against the unit table."""
     from mi_municipal_common import check_roster
     members = [{k: m[k] for k in FIELDS if m.get(k)} for m in entry.get("members") or []]
+    if unit["kind"] == "township":
+        # A township board in its statutory order (MCL 41.70): supervisor,
+        # clerk, treasurer, then trustees in the order the page lists them.
+        # Pages list them in every order there is; the card should not.
+        rank = {"Supervisor": 0, "Clerk": 1, "Treasurer": 2}
+        members.sort(key=lambda m: rank.get(m["role"], 3))
     roster = {"members": members}
     if entry.get("vacant"):
         roster["vacant"] = list(entry["vacant"])

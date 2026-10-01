@@ -12694,6 +12694,41 @@ function initMichiganExplorer() {
     return frag;
   }
 
+  // The ward card for a city whose council page states each member's seat:
+  // the member for this point's seat, then any members the page says are
+  // elected at large, under their own heading (the Iowa mixed-body shape).
+  // Returns null when the page names nobody for this seat, so the caller
+  // keeps its own wording rather than printing an empty list.
+  function renderBoardSeat(board, seatLabel) {
+    if (!board || !seatLabel) return null;
+    var mine = [], atLarge = [];
+    (board.members || []).forEach(function (m) {
+      if (m.seat === seatLabel) mine.push(m);
+      else if (m.seat === "At Large") atLarge.push(m);
+    });
+    if (!mine.length) return null;
+    function row(m) {
+      return { name: String(m.name), badge: m.role ? String(m.role) : null,
+        phone: m.phone || null, email: m.email || null };
+    }
+    var frag = document.createDocumentFragment();
+    frag.appendChild(renderPersonRows(mine.map(row)));
+    if (atLarge.length) {
+      frag.appendChild(renderSectionLabel("Elected citywide"));
+      frag.appendChild(renderPersonRows(atLarge.map(row), { tinted: true }));
+    }
+    var office = board.office || {};
+    frag.appendChild(renderLinkRow({
+      title: "Source",
+      note: board.preservedSince
+        ? "Last read " + board.readAt + " from the city's own council page; it has not been readable since " + board.preservedSince + "."
+        : "As the city publishes it on its own council page, read " + board.readAt + ".",
+      phone: office.phone || null, email: office.email || null,
+      links: [{ label: "The city's own page", url: String(board.sourceUrl) }]
+    }));
+    return frag;
+  }
+
   var loadCountySubdivisions = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
     "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC", "county subdivisions");
@@ -14147,10 +14182,14 @@ function initMichiganExplorer() {
     });
   }
 
-  // WARREN NAMES NO COUNCIL MEMBERS HERE, and that is the honesty floor rather
-  // than an oversight: the city's council page publishes meeting documents and
-  // no member roster, so the card names your ward and links the Council itself
-  // instead of inventing a name. Recorded as gap `warren-council-roster`.
+  // WARREN'S MEMBERS COME FROM THE CITY'S OWN COUNCIL MEMBERS PAGE
+  // (mi-municipal-officials.json, read weekly). The gap this replaced said the
+  // city published no roster, which was true of /city-council/ and not of
+  // /government/city-council/city-council-members/, where each member sits
+  // under a "District N" or "At Large" heading. The city's council DISTRICTS
+  // are the wards this layer draws (five of them, one member each), so ward N
+  // is matched to the page's District N. If the page stops naming a member for
+  // that district the card falls back to naming the ward and nobody.
   var warrenEntry = {
     key: "warren",
     label: "Warren",
@@ -14163,10 +14202,11 @@ function initMichiganExplorer() {
     query: function (point, seq) {
       return queryFeatureAt(loadWarrenWards, point).then(function (feature) {
         if (!feature) return null;
-        return {
-          seq: seq,
-          ward: findPropCI(feature.properties || {}, ["ward"])
-        };
+        var result = { seq: seq, ward: findPropCI(feature.properties || {}, ["ward"]) };
+        return municipalBoardFor("2684000").then(function (board) {
+          result.board = board;
+          return result;
+        });
       });
     },
     cardIdentifier: function (result) {
@@ -14174,6 +14214,11 @@ function initMichiganExplorer() {
     },
     render: function (result) {
       var wrap = cardEl("div", "card-flush");
+      var named = result.ward ? renderBoardSeat(result.board, "District " + String(result.ward)) : null;
+      if (named) {
+        wrap.appendChild(named);
+        return wrap;
+      }
       wrap.appendChild(renderLinkRow({
         title: result.ward ? "Ward " + String(result.ward) : "Warren City Council",
         note: "Warren elects one council member from each of five wards. The city "
@@ -14330,11 +14375,14 @@ function initMichiganExplorer() {
     });
   }
 
-  // FLINT NAMES NO COUNCIL MEMBER HERE. Its council page runs to 1.4 MB and the
-  // ONLY ward-to-name pairing anywhere in it is an In Memoriam for the First
-  // Ward councilman who died in 2024 — so a scraper that paired a ward with the
-  // nearest name would ship a dead man as sitting. The card names your ward and
-  // links the Council. Recorded as gap `flint-council-roster`.
+  // FLINT'S MEMBERS COME FROM THE CITY'S OWN COUNCIL PAGE
+  // (mi-municipal-officials.json, read weekly). That page runs to 1.5 MB and
+  // carries an In Memoriam for the First Ward councilman who died in 2024, so a
+  // scraper pairing a ward with the nearest name would ship a dead man as
+  // sitting. The parser reads only the page's council-members directory, where
+  // each member's own entry says "City Council – Nth Ward", and stops before
+  // the memorial. If the page stops naming a member for a ward the card falls
+  // back to naming the ward and nobody.
   var flintEntry = {
     key: "flint",
     label: "Flint",
@@ -14347,7 +14395,11 @@ function initMichiganExplorer() {
     query: function (point, seq) {
       return queryFeatureAt(loadFlintWards, point).then(function (feature) {
         if (!feature) return null;
-        return { seq: seq, ward: findPropCI(feature.properties || {}, ["ward"]) };
+        var result = { seq: seq, ward: findPropCI(feature.properties || {}, ["ward"]) };
+        return municipalBoardFor("2629000").then(function (board) {
+          result.board = board;
+          return result;
+        });
       });
     },
     cardIdentifier: function (result) {
@@ -14355,6 +14407,11 @@ function initMichiganExplorer() {
     },
     render: function (result) {
       var wrap = cardEl("div", "card-flush");
+      var named = result.ward ? renderBoardSeat(result.board, "Ward " + String(result.ward)) : null;
+      if (named) {
+        wrap.appendChild(named);
+        return wrap;
+      }
       wrap.appendChild(renderLinkRow({
         title: result.ward ? "Ward " + String(result.ward) : "Flint City Council",
         note: "Flint elects one council member from each of nine wards. The city "
