@@ -323,8 +323,24 @@ def ask_problems(where, e):
                 "%s: %s must be a non-empty list of expected-level keys, never %r"
                 % (where, COVERS, covers))
         elif len(set(covers)) != len(covers):
-            problems.append("%s: %s names the same level twice: %r"
+            problems.append("%s: %s names the same claim twice: %r"
                             % (where, COVERS, covers))
+        else:
+            # AN ENTRY MAY NAME A UNIT, AS `<level key>:<unit id>`, and for a
+            # level measured over every county or every large town it MUST —
+            # otherwise one refusal from one city would carry a whole state's
+            # local tier. Which levels are measured that way is
+            # build_eam_status.py's to say (it owns the thirteen), so only the
+            # SHAPE is held here: one colon, and neither side empty.
+            for c in covers:
+                if ":" not in c:
+                    continue
+                key, _sep, unit = c.partition(":")
+                if not key.strip() or not unit.strip() or ":" in unit:
+                    problems.append(
+                        "%s: %s entry %r is not `<level key>:<unit id>` — one "
+                        "colon, with a level key before it and a unit id after"
+                        % (where, COVERS, c))
     if ask is None:
         return problems
     if not isinstance(ask, dict):
@@ -380,6 +396,65 @@ def ask_problems(where, e):
             "the data is obtainable, so the work is to use it rather than to "
             "record the level as covered"
             % (where, ASK, COVERS, ", ".join(covers)))
+    return problems
+
+
+ASK_DRAFTS = os.path.join(REPO_ROOT, "docs", "ASK_DRAFTS.md")
+ASK_HEAD_RE = re.compile(r"^##+ Ask ([^\n\u2014]+?)\s*(?:\u2014|$)", re.M)
+# A citation is `Ask 12` or `Ask il-ford-board-map`. Prose like "Ask the county"
+# is not a citation and is deliberately not matched.
+ASK_CITE_RE = re.compile(r"\bAsk ([0-9]+|[a-z]{2}-[a-z0-9-]+)\b")
+
+
+def ask_reference_problems(entries):
+    """Every ask a gap record cites exists, and no two asks share an id.
+
+    WHY THIS EXISTS. `docs/ASK_DRAFTS.md` numbers asks in one sequence and gap
+    records cite them in prose, so two branches each drafting "the next ask"
+    both write the same number — and on 2026-10-01 three did, two of them
+    claiming Ask 33. Git merges that silently: both headings land, and whoever
+    renumbers one afterwards moves it out from under every record citing it.
+    Nothing compared the two files.
+
+    WHAT TO DO INSTEAD, for a NEW ask: take an id that names its subject,
+    `Ask <state tag>-<short slug>` — `Ask il-ford-board-map` — rather than the
+    next number. Two branches cannot collide on it, and it cannot be renumbered
+    out from under a record. The existing numbered asks KEEP their numbers:
+    several have been sent and cited in correspondence, and renumbering a letter
+    somebody has already received would be worse than the inconsistency.
+
+    WHAT THIS DOES NOT SEE, stated rather than implied: it reads citations in
+    the gaps block alone, which is the surface this file owns. An ask cited only
+    in a doc or a builder comment is not checked here. And it cannot tell a
+    citation pointing at the WRONG ask of two that both exist — only that both
+    numbers resolve. The uniqueness half is what forces a person to look.
+    """
+    problems = []
+    if not os.path.exists(ASK_DRAFTS):
+        # Not every fork carries the drafts file, and its absence is not this
+        # gate's business to rule on.
+        return problems
+    with open(ASK_DRAFTS, encoding="utf-8") as fh:
+        drafts = fh.read()
+    ids = [h.strip() for h in ASK_HEAD_RE.findall(drafts)]
+    for one in sorted({i for i in ids if ids.count(i) > 1}):
+        problems.append(
+            "docs/ASK_DRAFTS.md has %d asks numbered `Ask %s`. Two branches "
+            "took the same next number; give the newer one a subject id "
+            "(`Ask <state>-<slug>`) rather than renumbering it, so no record "
+            "citing the old number is left pointing at the wrong ask."
+            % (ids.count(one), one))
+    known = set(ids)
+    for e in entries:
+        where = "gap `%s`" % (e.get("id") or "<unnamed>")
+        text = " ".join(str(v) for v in e.values() if isinstance(v, str))
+        for cited in sorted(set(ASK_CITE_RE.findall(text))):
+            if cited not in known:
+                problems.append(
+                    "%s cites `Ask %s` and docs/ASK_DRAFTS.md has no such ask. "
+                    "Either the ask was renumbered under this record or it was "
+                    "withdrawn; say which in the record rather than leaving a "
+                    "citation that resolves to nothing." % (where, cited))
     return problems
 
 
@@ -579,6 +654,7 @@ def main():
     authored = entries
     entries, problems = resolve_all(authored)
     problems.extend(validate(entries, layer_ids, outlines))
+    problems.extend(ask_reference_problems(entries))
 
     # LOCATION AWARENESS IS THE PANEL'S WHOLE POINT, so an instance that ships
     # county outlines and tags no gap with one has a dead "Where you clicked"

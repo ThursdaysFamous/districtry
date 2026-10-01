@@ -169,12 +169,20 @@ Measured 2026-10-01, before any work against this standard.
 | app | districts drawn | members named |
 |---|---|---|
 | Wisconsin | all 72 | all 72 |
-| Iowa | all 99 | 21 counties |
+| Iowa | all 99 | 91 counties |
 | Michigan | all 83 | 52 counties |
-| Illinois | 60 of 102 | all served counties |
+| Illinois | 60 of 102 | 83 counties |
 | New York | 1 of 62 | 1 |
 | Minnesota | none | none |
 | Kentucky | none | none |
+
+Iowa's figure read **21 counties** and Illinois's **all served counties** until
+2026-10-01, when the count behind them was found to look for names only inside
+districts. A board elected **at large** has no districts and carries its members
+at the top of its record, so 70 Iowa counties and 20 Illinois counties naming
+real people were counted as naming nobody. Naming the members is the whole
+answer for an at-large body, which this standard says above; both shapes count
+now. Neither state's level closes either way.
 
 **Local governing body, units at 25,000+**
 
