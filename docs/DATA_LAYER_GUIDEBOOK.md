@@ -821,6 +821,34 @@ trusted.
       "wanted": "A current board for Greater Momence Fire, Limestone Twp Fire and the four districts that file only staff — from the district itself or from a county list."
     },
     {
+      "id": "urbana-city-council-names",
+      "concept": "Municipal officials",
+      "area": "Urbana",
+      "counties": [
+        "champaign"
+      ],
+      "kind": "no-source",
+      "layer": "municipality",
+      "summary": "Urbana's mayor and seven council members are not named here, because this project cannot reach the city's own site at all.",
+      "why": "Champaign County publishes no municipal officials, and every attempt to read the city's own site from here is cut off before a page arrives.",
+      "blocker": "MEASURED 2026-10-01 AND IT IS A MEASUREMENT OF THIS VANTAGE, NOT OF THE CITY. urbanaillinois.us resets the connection on every attempt from this project's sandbox — both HTTP clients, the bare and www names, and the robots.txt request itself, which fails with 'Connection reset by peer' unchanged after three attempts. An unreachable robots.txt disallows under RFC 9309 section 2.3.1.4, so nothing is fetched from the host and nothing here works around it. But a reset from one network is not a refusal by a publisher: the web.archive.org entry in scraper_common.ROBOTS_DEFERRED_HOSTS records exactly this shape, and the fix is the same one — re-measure from a GitHub runner, which is the vantage the weekly jobs actually crawl from, before any conclusion is drawn about what Urbana publishes. Champaign County has no municipal officials source of any kind, which is why the city's own site is the only route; the city of Champaign next door was read from its own site on the same day without trouble. NO ASK HAS BEEN SENT and none should be until the runner measurement is in, because writing to a city to ask for data it may already publish is a question this project would be asking of itself.",
+      "wanted": "A reading of the city's own site from a build machine, and then either its council page or a Champaign County municipal directory."
+    },
+    {
+      "id": "gurnee-village-board-names",
+      "concept": "Municipal officials",
+      "area": "Gurnee",
+      "counties": [
+        "lake"
+      ],
+      "kind": "no-source",
+      "layer": "municipality",
+      "summary": "Gurnee's village hall address and telephone show, but its mayor and six trustees are named nowhere this site can read.",
+      "why": "The village's own board page describes the seats and lists no one in the page a visitor is served, and Lake County names no municipal officials at all.",
+      "blocker": "MEASURED 2026-10-01, and it is an absence in the served page rather than a refusal. www.gurneeil.gov answers this project's own client with HTTP 200 and serves no robots.txt at all (404, allow all), so nothing here is blocked. Its board page, gurneeil.gov/government/village_board/index.php, is 189,943 bytes containing the word Trustee exactly ONCE, in the sentence 'The Village President, also known as the Mayor, and six Village Trustees are elected to four-year terms' — the page then says 'Current Village Board members are listed below:' and lists nobody. The names are evidently drawn in by a component this client is not served, and no fallback was found: the site publishes no sitemap.php or sitemap.xml (both 404), its government index links only an appointed-officials page and a 'how to write your officials' page, and NEITHER names a trustee. The village's own contact block publishes two shared mailboxes (villageboard@ and Mayor@village.gurnee.il.us) and no person. Lake County is at the contact-only rung for all 41 of its municipalities, so the county cannot supply them either. This is the ONE Lake County unit above 25,000 people that six siblings' own pages answered on the same day. NO ASK HAS BEEN SENT, so this record earns nothing towards the done standard's fourth test and is not tagged as if it did; the note to the Village Clerk is drafted for the operator.",
+      "wanted": "The Village of Gurnee's board page to name its mayor and six trustees in the page it serves, or any village or county source that names them."
+    },
+    {
       "id": "lake-municipal-names",
       "concept": "Municipal officials",
       "area": "Lake County",
@@ -829,9 +857,9 @@ trusted.
       ],
       "kind": "no-source",
       "layer": "municipality",
-      "summary": "Lake County's 41 towns show a village hall address, phone and website, but name no mayor, president or trustees.",
+      "summary": "Thirty-five of Lake County's 41 towns show a village hall address, phone and website, but name no mayor, president or trustees.",
       "why": "No county or regional body publishes municipal officeholder names, and the county's own site now challenges automated visits.",
-      "blocker": "No Lake County body publishes municipal officeholder names, re-checked 31 Jul 2026. The county's municipal data carries hall address, phone and website only; the Lake County Municipal League's pages repeat the same hall contact with no names, and its board page names only the League's own officers; the Council of Mayors membership list gives municipality names only. lakecountyil.gov itself now challenges automated visits, though not the kind of block that refuses outright. RE-MEASURED 2026-08-20, and the county's own site is now the obstacle rather than merely silent. www.lakecountyil.gov answers HTTP 403 with server: cloudflare and cf-mitigated: challenge — a Cloudflare MANAGED CHALLENGE ('Just a moment...'), not a flat deny, and served by the site's edge rather than by this environment's proxy, which passed the connection through. The county's GIS is unaffected: maps.lakecountyil.gov answers 200, which is precisely why this app already carries village-hall contact for all 41 and no names — the layer works and the website does not. THE REGIONAL-DIRECTORY ROUTE THE WANTED LINE PROPOSES WAS TRIED AND THERE IS NOTHING TO FETCH: neither lcmil.org nor lakecountymunicipalleague.org resolves at all, so the DuPage-mayors shape has no Lake equivalent at those addresses. A challenge-gated site is a different ask from a silent one — it may answer a real browser, which is how DuPage's own directory is already handled in CI.",
+      "blocker": "No Lake County body publishes municipal officeholder names, re-checked 31 Jul 2026. The county's municipal data carries hall address, phone and website only; the Lake County Municipal League's pages repeat the same hall contact with no names, and its board page names only the League's own officers; the Council of Mayors membership list gives municipality names only. lakecountyil.gov itself now challenges automated visits, though not the kind of block that refuses outright. RE-MEASURED 2026-08-20, and the county's own site is now the obstacle rather than merely silent. www.lakecountyil.gov answers HTTP 403 with server: cloudflare and cf-mitigated: challenge — a Cloudflare MANAGED CHALLENGE ('Just a moment...'), not a flat deny, and served by the site's edge rather than by this environment's proxy, which passed the connection through. The county's GIS is unaffected: maps.lakecountyil.gov answers 200, which is precisely why this app already carries village-hall contact for all 41 and no names — the layer works and the website does not. THE REGIONAL-DIRECTORY ROUTE THE WANTED LINE PROPOSES WAS TRIED AND THERE IS NOTHING TO FETCH: neither lcmil.org nor lakecountymunicipalleague.org resolves at all, so the DuPage-mayors shape has no Lake equivalent at those addresses. A challenge-gated site is a different ask from a silent one — it may answer a real browser, which is how DuPage's own directory is already handled in CI. NARROWED 2026-10-01, and the county source is unchanged: six of the county's largest municipalities — Highland Park, Mundelein, North Chicago, Round Lake Beach, Vernon Hills and Waukegan — are now named from their OWN sites, each of which serves this project's client a full page and permits the paths read. That is 46 people the county still does not publish, so this record is about the remaining thirty-five and about the county, not about those six. Gurnee is recorded separately because its own site names nobody either.",
       "wanted": "A Lake County or regional directory naming each municipality's head of government and board."
     },
     {
@@ -8197,6 +8225,68 @@ under both District A and District B. That is a disagreement about districts. Th
 writing that A is the village limits and B the unincorporated remainder, so one precinct sits in two
 districts and the count is eighteen on both surfaces. Reversing the decision is a separate change
 with its own argument, and the raw-canvass duplicate check described above has not been run for it.
+
+### 2026-10-01: six of Lake County's seven, and the city whose page lists nobody
+
+The done standard's fourth test left Illinois with eight local governments above
+25,000 people naming nobody, and SEVEN of the eight were in one county. That is
+not eight problems: Lake County sits in the municipal pipeline at the
+contact-only rung — its portal publishes a hall address, telephone and website
+for all 41 of its municipalities and names not one official — so every Lake unit
+above the line arrived with an address and an empty card.
+
+`scripts/il_large_city_councils_scraper.py` had written on the same day that
+"seven city sites is past any bounded exception, so Lake wants its own decision
+rather than a quiet seventh entry here", and left them out. This is that
+decision, taken after measuring the county's alternatives rather than assuming
+them: the portal feed is a boundary layer with contact attributes and cannot be
+deepened, and the Lake County Municipal League republishes exactly the same
+address and telephone. So the GALESBURG SHAPE — a county with no municipal
+officials source at all — is applied to a whole county at once, bounded the same
+way, with each place named one at a time in `PRESERVABLE`.
+
+Six of the seven read cleanly: Highland Park, Mundelein, North Chicago, Round
+Lake Beach, Vernon Hills and Waukegan, 46 people, every host serving this
+project's own token a full page and permitting the paths read. **GURNEE IS THE
+SEVENTH AND ITS OWN PAGE NAMES NOBODY** — 189,943 bytes of served HTML carrying
+the word Trustee exactly once, in the sentence about the terms, under the words
+"Current Village Board members are listed below:" and nothing below them. That
+is recorded as `gurnee-village-board-names` with no ask tagged, because no ask
+has been sent.
+
+**THE FLOORS CAUGHT FOUR UNDERCOUNTS AND NOT ONE WAS VISIBLE IN THE OUTPUT.**
+Three were the Danville defect this file already records: a record pattern that
+CONSUMES the line break after its last field eats the one the next record's
+first field needs, so every other entry is skipped — Mundelein read 3 of 7,
+Vernon Hills 4 of 7 and Round Lake Beach 4 of 6. The fourth was different and
+is worth its own line: **a non-breaking space is not a space to a regular
+expression**, and Waukegan prints "Term:&nbsp; May 2023", so `Term: ?` could not
+cross it and the city read ONE alderperson of nine. A fifth, caught the same
+way, was a required telephone group: one Mundelein trustee publishes an e-mail
+and no number, and a mandatory group dropped her silently.
+
+**ONE BUILDER RULE WAS NARROWED, AND THE CASE IT WAS WRITTEN FOR IS UNTOUCHED.**
+`merge_contact` adopts a city's whole board where the county published none, and
+deliberately never adopted the HEAD — Plano is why, where the city page's own
+"Elected in 2021" sits beside a clerk who has him last elected 2025. But that
+rule is about DISAGREEMENT, and Lake names no head to disagree with: refusing
+the city's mayor there is not preferring the clerk, it is shipping a council
+with an empty chair while the city publishes who sits in it. The head is now
+adopted on exactly the board's condition and is inert the moment a county names
+one. Measured the same day: it fires for these six and for nothing else in the
+roster.
+
+**URBANA IS NOT A REFUSAL AND IS NOT WRITTEN UP AS ONE.** Its host resets the
+connection on every attempt from this project's sandbox, the robots request
+included, which disallows under RFC 9309 and stops the fetch. But that is a
+measurement of this vantage: the `web.archive.org` entry in
+`scraper_common.ROBOTS_DEFERRED_HOSTS` is the same shape, and the remedy is the
+same — re-measure from a GitHub runner, which is where the weekly jobs actually
+crawl from, before concluding anything about what the city publishes. No ask
+goes until that reading is in, because writing to a city for data it may already
+serve is a question this project would be asking of itself.
+
+Illinois's local tier goes 81 of 89 to 87 of 89.
 
 ### 2026-10-01: five large cities name their councils, and the host that had refused us for six weeks
 

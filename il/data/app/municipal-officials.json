@@ -12420,7 +12420,43 @@
     "url": "https://www.highlandil.gov"
   },
   "1734722": {
+    "board": [
+      {
+        "district": "At Large",
+        "name": "Andrés Tapia",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Annette Lidawer",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Anthony E. Blumberg",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Barisa Meckler Bruckman",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Jon Center",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Yumi Ross",
+        "role": "Council Member"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "name": "Nancy R. Rotering",
+      "role": "Mayor"
+    },
     "name": "City of Highland Park",
     "office": {
       "address": "1707 St Johns Ave, Highland Park IL 60035",
@@ -18826,7 +18862,49 @@
     "sourceUrl": "https://www.logancountyil.gov/images/Reference_and_Yearbook_2025-2026_updated.pdf"
   },
   "1751349": {
+    "board": [
+      {
+        "district": "At Large",
+        "name": "Arnold Krinski",
+        "phone": "847-566-5426",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Daniel Juarez",
+        "phone": "847-613-5181",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Erich Schwenk",
+        "phone": "224-360-0306",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Kara Lambert",
+        "phone": "224-522-8279",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Monique Davis",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Tony Ugaste",
+        "phone": "847-707-3324",
+        "role": "Trustee"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "name": "Robin Meier",
+      "phone": "847-949-5347",
+      "role": "Mayor"
+    },
     "name": "Village of Mundelein",
     "office": {
       "address": "300 Plaza Cir, Mundelein IL 60060",
@@ -19747,7 +19825,58 @@
     "url": "https://northbrook.il.us"
   },
   "1753559": {
+    "board": [
+      {
+        "district": "Ward 1",
+        "email": "1stWardNC@gmail.com",
+        "name": "Michael R. Jackson",
+        "phone": "224-284-1672",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 2",
+        "email": "antcol@northchicago.org",
+        "name": "Anthony D. Coleman",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 3",
+        "email": "careva@northchicago.org",
+        "name": "Carl Evans",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 4",
+        "email": "boball@northchicago.org",
+        "name": "Bobby Allen",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 5",
+        "email": "tabwra@northchicago.org",
+        "name": "Tabitha Wray",
+        "phone": "847-772-5640",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 6",
+        "email": "donacmurphy@gmail.com",
+        "name": "Dona C. Murphy",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 7",
+        "email": "danbro@northchicago.org",
+        "name": "Dante Brooks",
+        "phone": "847-544-6369",
+        "role": "Alderman"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "name": "Leon Rockingham, Jr.",
+      "role": "Mayor"
+    },
     "name": "City of North Chicago",
     "office": {
       "address": "1850 S Lewis Ave, North Chicago IL 60064",
@@ -24515,7 +24644,43 @@
     "url": "https://www.eroundlake.com/"
   },
   "1766040": {
+    "board": [
+      {
+        "district": "At Large",
+        "name": "Bill Morales",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Christy Davis",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Chuck Husk",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Dana Hillesheim",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Martha Ibarra",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Paul Stout",
+        "role": "Trustee"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "name": "Scott Nickles",
+      "role": "Mayor"
+    },
     "name": "Village of Round Lake Beach",
     "office": {
       "address": "1937 N Municipal Way, Round Lake Beach IL 60073",
@@ -28367,7 +28532,52 @@
     "sourceUrl": "https://www.ewgateway.org/wp-content/uploads/2026/05/2026-POD.pdf"
   },
   "1777694": {
+    "board": [
+      {
+        "district": "At Large",
+        "email": "CraigT@vhills.org",
+        "name": "Craig Takaoka",
+        "phone": "847-274-7294",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "email": "DavidO@vhills.org",
+        "name": "David Oppenheim. MD",
+        "phone": "847-859-9501",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "email": "MikeM@vhills.org",
+        "name": "Michael Marquardt",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "email": "mikesc@vhills.org",
+        "name": "Michael Schenk",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "email": "monical@vhills.org",
+        "name": "Monica Lundeen",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "email": "nancyf@vhills.org",
+        "name": "Nancy Forster",
+        "role": "Trustee"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "email": "ThomK@vhills.org",
+      "name": "Thom Koch",
+      "role": "Village President"
+    },
     "name": "Village of Vernon Hills",
     "office": {
       "address": "290 Evergreen Dr, Vernon Hills IL 60061",
@@ -28978,7 +29188,58 @@
     "url": "https://wauconda-il.gov/"
   },
   "1779293": {
+    "board": [
+      {
+        "district": "Ward 1",
+        "name": "Dr. Sylvia Sims Bolton",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 2",
+        "name": "Jose A. Guzman",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 3",
+        "name": "Juan A. Martinez",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 4",
+        "name": "Victor M. Felix",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 5",
+        "name": "Edith L. Newsome",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 6",
+        "name": "Keith E. Turner",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 7",
+        "name": "Michael P. Donnenwirth",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 8",
+        "name": "Dr. Lynn M. Florian",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 9",
+        "name": "Thomas J. Hayes",
+        "role": "Alderperson"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "name": "Samuel D. Cunningham, Jr.",
+      "role": "Mayor"
+    },
     "name": "City of Waukegan",
     "office": {
       "address": "100 N Martin Luther King Jr., Waukegan IL 60085",

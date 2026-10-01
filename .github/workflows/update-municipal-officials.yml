@@ -419,6 +419,19 @@ jobs:
         continue-on-error: true
         run: python3 scripts/il_large_city_councils_scraper.py --out-dir /tmp
 
+      # Lake County's six readable cities above 25,000. The county IS in this
+      # job, at the contact-only rung: its portal publishes a hall address for
+      # all 41 municipalities and names nobody, so every Lake unit above the
+      # line arrives with an address and no people. Seven of Illinois's eight
+      # unanswered units were Lake's, which is why this is a whole-county
+      # decision rather than a seventh entry in the step above. Gurnee is the
+      # seventh and is not here: its board page names no trustee in any byte
+      # this job is served.
+      - name: Scrape six Lake County cities' own council pages
+        id: scrape_lake_cities
+        continue-on-error: true
+        run: python3 scripts/il_lake_cities_councils_scraper.py --out-dir /tmp
+
       # The bounded per-city exception (docs/EXPANSION_GUIDE.md §3.4): the
       # Will ward cities' own sites carry per-seat contact the Clerk's directory
       # doesn't, and supply Lockport and Wilmington, which that directory omits
@@ -461,6 +474,7 @@ jobs:
           steps.scrape_carroll.outcome == 'failure' || steps.scrape_freeport.outcome == 'failure' ||
           steps.scrape_galesburg.outcome == 'failure' ||
           steps.scrape_large_cities.outcome == 'failure' ||
+          steps.scrape_lake_cities.outcome == 'failure' ||
           steps.scrape_dekalb.outcome == 'failure' || steps.scrape_grundy.outcome == 'failure' ||
           steps.scrape_livingston.outcome == 'failure' || steps.scrape_logan.outcome == 'failure' ||
           steps.scrape_mclean.outcome == 'failure' || steps.scrape_sangamon.outcome == 'failure' ||
@@ -517,6 +531,7 @@ jobs:
           MACOUPIN_OUTCOME: ${{ steps.scrape_macoupin.outcome }}
           KANKAKEE_OUTCOME: ${{ steps.scrape_kankakee.outcome }}
           LARGE_CITIES_OUTCOME: ${{ steps.scrape_large_cities.outcome }}
+          LAKE_CITIES_OUTCOME: ${{ steps.scrape_lake_cities.outcome }}
         run: |
           raise_issue() {
             title="Municipal officials: $1 County source unavailable"
@@ -565,6 +580,7 @@ jobs:
           if [ "$CARROLL_OUTCOME" = "failure" ]; then raise_issue "Carroll"; fi
           if [ "$FREEPORT_OUTCOME" = "failure" ]; then raise_issue "Freeport council"; fi
           if [ "$LARGE_CITIES_OUTCOME" = "failure" ]; then raise_issue "Champaign, Decatur, Normal, Quincy and Danville council"; fi
+          if [ "$LAKE_CITIES_OUTCOME" = "failure" ]; then raise_issue "Highland Park, Mundelein, North Chicago, Round Lake Beach, Vernon Hills and Waukegan council"; fi
           if [ "$DEKALB_OUTCOME" = "failure" ]; then raise_issue "DeKalb"; fi
           if [ "$GRUNDY_OUTCOME" = "failure" ]; then raise_issue "Grundy"; fi
           if [ "$LIVINGSTON_OUTCOME" = "failure" ]; then raise_issue "Livingston"; fi
@@ -685,6 +701,12 @@ jobs:
           add "${{ steps.scrape_large_cities.outcome }}" normal      enrich /tmp/normal_council.json
           add "${{ steps.scrape_large_cities.outcome }}" quincy      enrich /tmp/quincy_council.json
           add "${{ steps.scrape_large_cities.outcome }}" danville    enrich /tmp/danville_council.json
+          add "${{ steps.scrape_lake_cities.outcome }}" highland-park    enrich /tmp/highland-park_council.json
+          add "${{ steps.scrape_lake_cities.outcome }}" mundelein        enrich /tmp/mundelein_council.json
+          add "${{ steps.scrape_lake_cities.outcome }}" north-chicago    enrich /tmp/north-chicago_council.json
+          add "${{ steps.scrape_lake_cities.outcome }}" round-lake-beach enrich /tmp/round-lake-beach_council.json
+          add "${{ steps.scrape_lake_cities.outcome }}" vernon-hills     enrich /tmp/vernon-hills_council.json
+          add "${{ steps.scrape_lake_cities.outcome }}" waukegan         enrich /tmp/waukegan_council.json
 
           # The shipped roster is the preserve source, so read it BEFORE the
           # builder overwrites it in place.
