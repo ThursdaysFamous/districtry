@@ -2434,7 +2434,7 @@ trusted.
       "wanted": "The council roster from a source the city allows, or the city's permission to read its council page.",
       "blocker": "MEASURED 2026-10-01 with the fleet's roster token, robots.txt read first: the city's robots.txt refuses this client the council page, so the page was not fetched and no name ships. NOT YET ASKED — DRAFTED 2026-10-01 as Ask mi-city-township-boards in docs/ASK_DRAFTS.md. On the day the operator sends it, add an `ask` entry to this record (who, by name; asked) and the dated line here; the level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days.",
       "covers": [
-        "local-government"
+        "local-government:2659140"
       ]
     },
     {
@@ -2449,7 +2449,7 @@ trusted.
       "wanted": "The council roster from a source this app can read, or a word from the city on whether the challenge is meant for a site like this one.",
       "blocker": "MEASURED 2026-10-01 with the fleet's roster token, robots.txt read first: the council page answered with a Cloudflare managed challenge. A challenge is never solved or worked around and no other client was tried, so no name ships. NOT YET ASKED — DRAFTED 2026-10-01 as Ask mi-city-township-boards in docs/ASK_DRAFTS.md. On the day the operator sends it, add an `ask` entry to this record (who, by name; asked) and the dated line here; the level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days.",
       "covers": [
-        "local-government"
+        "local-government:2612060"
       ]
     },
     {
@@ -2464,7 +2464,7 @@ trusted.
       "wanted": "A council list the city publishes in the page itself or as a file, so it can be read without running the page's scripts.",
       "blocker": "MEASURED 2026-10-01. The council page answers 200 and permits this client, but the members are drawn into the page in the browser and the served document carries no name. Running the page's scripts in a browser to read it is not done here for a weekly roster. The ward boundary is a separate question, recorded as lansing-ward-boundary. NOT YET ASKED — DRAFTED 2026-10-01 as Ask mi-city-township-boards in docs/ASK_DRAFTS.md. On the day the operator sends it, add an `ask` entry to this record (who, by name; asked) and the dated line here; the level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days.",
       "covers": [
-        "local-government"
+        "local-government:2646000"
       ]
     },
     {
@@ -2479,7 +2479,7 @@ trusted.
       "wanted": "The council roster from a source outside the city's website, or a decision by the operator to write to the city.",
       "blocker": "RULED BY THE OPERATOR: this project does not fetch wyomingmi.gov, for the reasons recorded in wyoming-mi-ward-boundary. Nothing was fetched for this record. Ask mi-city-township-boards in docs/ASK_DRAFTS.md carries a draft, and whether to send it at all is the operator's decision. NOT YET ASKED — DRAFTED 2026-10-01.",
       "covers": [
-        "local-government"
+        "local-government:2688940"
       ]
     },
     {
@@ -2494,7 +2494,7 @@ trusted.
       "wanted": "The township board list from a source the township allows, or its permission to read the board page.",
       "blocker": "MEASURED 2026-10-01 with the fleet's roster token, robots.txt read first: the file served at the township's address is its website vendor's default, which refuses every client it does not name. It is a vendor default rather than the township's own choice, and it binds all the same. The board page was not fetched. NOT YET ASKED — DRAFTED 2026-10-01 as Ask mi-city-township-boards in docs/ASK_DRAFTS.md. On the day the operator sends it, add an `ask` entry to this record (who, by name; asked) and the dated line here; the level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days.",
       "covers": [
-        "local-government"
+        "local-government:2612585480"
       ]
     },
     {
@@ -2509,7 +2509,7 @@ trusted.
       "wanted": "The township board list from a source the township allows, or its permission to read the board page.",
       "blocker": "MEASURED 2026-10-01 with the fleet's roster token, robots.txt read first: the same website vendor default as West Bloomfield's, refusing every client it does not name. The board page was not fetched. NOT YET ASKED — DRAFTED 2026-10-01 as Ask mi-city-township-boards in docs/ASK_DRAFTS.md. On the day the operator sends it, add an `ask` entry to this record (who, by name; asked) and the dated line here; the level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days.",
       "covers": [
-        "local-government"
+        "local-government:2611506740"
       ]
     },
     {
@@ -2524,7 +2524,7 @@ trusted.
       "wanted": "The township board list from a source this app can read, or a word from the township on whether the refusal is meant for a site like this one.",
       "blocker": "MEASURED 2026-10-01 with the fleet's roster token, robots.txt read first: the board page answered Access Denied. No other client was tried. NOT YET ASKED — DRAFTED 2026-10-01 as Ask mi-city-township-boards in docs/ASK_DRAFTS.md. On the day the operator sends it, add an `ask` entry to this record (who, by name; asked) and the dated line here; the level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days.",
       "covers": [
-        "local-government"
+        "local-government:2609972820"
       ]
     },
     {
@@ -2539,7 +2539,7 @@ trusted.
       "wanted": "The township board list from a source this app can read, or a word from the township on whether the refusal is meant for a site like this one.",
       "blocker": "MEASURED 2026-10-01 with the fleet's roster token, robots.txt read first: the board page answered Access Denied. No other client was tried. NOT YET ASKED — DRAFTED 2026-10-01 as Ask mi-city-township-boards in docs/ASK_DRAFTS.md. On the day the operator sends it, add an `ask` entry to this record (who, by name; asked) and the dated line here; the level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days.",
       "covers": [
-        "local-government"
+        "local-government:2616359000"
       ]
     },
     {
@@ -2554,7 +2554,7 @@ trusted.
       "wanted": "The township board list from a source this app can read, or a word from the township on whether the challenge is meant for a site like this one.",
       "blocker": "MEASURED 2026-10-01 with the fleet's roster token, robots.txt read first: the board page answered with a Cloudflare managed challenge. A challenge is never solved or worked around. NOT YET ASKED — DRAFTED 2026-10-01 as Ask mi-city-township-boards in docs/ASK_DRAFTS.md. On the day the operator sends it, add an `ask` entry to this record (who, by name; asked) and the dated line here; the level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days.",
       "covers": [
-        "local-government"
+        "local-government:2616189160"
       ]
     },
     {
@@ -2677,8 +2677,10 @@ trusted.
       "summary": "In Rochester Hills the City Council District card names your district but not your council member.",
       "why": "The city publishes a maintained council page naming all seven members with a phone and an e-mail each, and its robots.txt asks automated visitors not to read the site.",
       "wanted": "The council roster from a source the city has not asked crawlers to leave alone — an open-data endpoint, a published feed, or the city's own permission.",
-      "blocker": "MEASURED 2026-09-06. www.rochesterhills.org/robots.txt — served through a redirect to the city's CMS host, which is why a first pass mistook the redirect stub for the policy — allows exactly five named bots (Googlebot, Bingbot, FacebookBot, LinkedInBot, Twitterbot) and then states `User-agent: *` / `Disallow: /`. This project honours that, so the council page is not read and no name ships. THE GEOMETRY IS A DIFFERENT HOST AND DOES SHIP: gis.rochesterhills.org serves no robots.txt and its AGO item is shared public with no stated terms, which is the Knox precedent — a publisher is not blocked because its website is. The layer's own `repname` column is also not read: it is the Battle Creek refusal (a name field with no publication date is not a roster) and it is demonstrably behind the council page. THE OPERATOR WAS ASKED before the geometry shipped rather than after; honouring a publisher's stated wishes is their call, not a builder's. NOT AN ASK: the city has stated its preference about automated readers, and the honest route is a data endpoint or an explicit permission, not a differently-worded fetch.",
-      "covers": ["local-government"]
+      "blocker": "MEASURED 2026-09-06. www.rochesterhills.org/robots.txt — served through a redirect to the city's CMS host, which is why a first pass mistook the redirect stub for the policy — allows exactly five named bots (Googlebot, Bingbot, FacebookBot, LinkedInBot, Twitterbot) and then states `User-agent: *` / `Disallow: /`. This project honours that, so the council page is not read and no name ships. THE GEOMETRY IS A DIFFERENT HOST AND DOES SHIP: gis.rochesterhills.org serves no robots.txt and its AGO item is shared public with no stated terms, which is the Knox precedent — a publisher is not blocked because its website is. The layer's own `repname` column is also not read: it is the Battle Creek refusal (a name field with no publication date is not a roster) and it is demonstrably behind the council page. THE OPERATOR WAS ASKED before the geometry shipped rather than after; honouring a publisher's stated wishes is their call, not a builder's. NOT AN ASK: the city has stated its preference about automated readers, and the honest route is a data endpoint or an explicit permission, not a differently-worded fetch. REVISED 2026-10-01: asking for exactly that — the city's permission or a data endpoint, never a different fetch — is now drafted as Ask mi-city-township-boards in docs/ASK_DRAFTS.md, because the done standard credits this unit only once the city has been asked. NOT YET ASKED — DRAFTED 2026-10-01. On the day the operator sends it, add an `ask` entry to this record (who, by name; asked) and the dated line here.",
+      "covers": [
+        "local-government:2669035"
+      ]
     },
     {
       "id": "muskegon-ward-boundary",
