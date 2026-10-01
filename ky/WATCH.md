@@ -68,6 +68,64 @@ that declares a source registry and never runs it has filed a measurement nowher
 
 ---
 
+## Per-class re-checks — the files no job rewrites
+
+`docs/EAM_STATUS.md` measures whether every data file the app reads is under a
+stated plan. Measured 2026-10-01 through that module's own readers, **six of
+this instance's seven were under none** — the one exception being
+`congress-roster.json`, which the weekly workflow rewrites. All six are
+boundary geometry or a record, which is exactly the case a weekly job cannot
+serve: a scraper run every Tuesday against a county outline that moves once a
+decade is a guaranteed no-op, and the honest alternative is a stated cadence
+here. The sections above already carried the right clocks in prose and named
+the BUILDERS rather than the files, which is a mention and not a plan.
+
+**TWO THINGS WERE MEASURED WHILE WRITING THIS AND BOTH BOUND WHAT THESE ROWS
+CLAIM.**
+
+First, **five of the six are already watched in substance, and the instrument
+cannot see it.** `ky-validate-sources.yml` is scheduled monthly, carries
+`issues: write`, commits nothing and opens a tracking issue — the watcher shape
+exactly — and `ky/scripts/validate_sources.py` names every one of those five in
+`PROVENANCE`, fails when the built file is missing, and queries the four
+TIGERweb layers for a feature COUNT against a floor of 120, 6, 38 and 100. But
+`watcher_texts()` reads the workflow's own text, and the workflow names those
+files only in the script it runs, so none of it registers. That is a blind spot
+in the measure rather than a gap in this instance, and it is reported to
+whoever owns that module rather than closed by writing paths into a `.yml` to
+satisfy a regex.
+
+Second, **what that monthly check cannot see is the thing these rows are for.**
+A count floor fires when a count DROPS. It is silent when a count RISES — a
+seventh Kentucky congressional seat after the 2030 apportionment would pass a
+floor of 6 — and it is silent when a boundary is redrawn with the same number
+of districts, which is what a redistricting mostly looks like. Reachability and
+a floor are not a boundary-change check, so the clock below is the only guard
+against a line moving.
+
+**These exposure classes are KENTUCKY'S OWN.** `docs/REDISTRICTING_RUNBOOK.md`
+carries per-layer tables for Illinois, New York City, San Francisco, Wisconsin
+and Michigan and **has no Kentucky section at all** — zero occurrences of the
+state's name — so unlike Illinois's equivalent table these rows cannot quote it
+and do not pretend to. Writing that section is a repo-level change and is named
+here as owed rather than done.
+
+| Cadence | File | The clock, and why it is that one | Last done |
+|---|---|---|---|
+| **Annually**, when TIGERweb rolls its congressional vintage — and again on each decennial redraw (next: 2031–2032) or any court-ordered mid-decade one | `congress-districts.json` | TIGERweb rolled CD119 → CD120 on 2026-09-03, observed rather than predicted, and the retired field was REMOVED rather than deprecated — the old query then answers HTTP 200 with an Esri error envelope and no features, which the monthly check does catch. The vintage roll is the annual clock; the redraw is the decennial one, and the procedure for it is the per-decade checkpoint above, which this row names rather than restates | **_(never)_** — built 2026-09-30 |
+| **After each decennial census** (next: 2031–2032), and on any mid-decade or court-ordered redraw | `ky-senate-districts.json`, `ky-house-districts.json` | The General Assembly draws both chambers, and Kentucky Constitution §33 constrains each to county lines where population permits without relating one chamber to the other — which is why they do not nest and why the shared-border gate rather than a nesting gate is what holds them together. Both ship from one mapshaper run; the procedure is the per-decade checkpoint above | **_(never)_** — built 2026-09-30 |
+| **Annually**, when TIGERweb publishes a new county vintage | `state-counties.json`, `metro-outline.json` | Both are the same 120-county fabric — the outline is its dissolve — so they have one clock and it is not a redistricting: county lines move essentially never, and what does move is TIGER's digitisation of them. `build_metro_outline.py --check` does NOT re-fetch: it tests the shipped ring against the 120 INSIDE anchors plus the Kentucky Bend, so it catches a county added without an anchor and would not notice TIGER redrawing a county line | **_(never)_** — built 2026-09-30 |
+| **Annually** | `coverage-gaps.json` | The one file here with no upstream: its source is the guidebook's own gaps block, and `build_coverage_gaps.py --check` re-emits and compares on every pull request, so file-versus-record drift is already impossible. The cadence is for the RECORD, and this instance has a named reason — `ky-fiscal-court` states that 27 counties publish magisterial district geometry and says outright that the number is a FLOOR. A county that starts publishing moves that floor and nothing detects it, which is the direction a gap record rots in. The other two records are ours to build and turn over with each Kentucky general, which the per-election table above covers | **_(never)_** — written 2026-09-30 |
+
+**A `--check` PROVES A FILE MATCHES ITS INPUTS AND NEVER THAT THE INPUTS ARE
+CURRENT**, which is why `coverage-gaps.json` and `metro-outline.json` are in the
+table rather than excused by their own gates. Measured rather than assumed, and
+the two gates differ: `build_coverage_gaps.py --check` re-emits from the
+guidebook and compares, while `build_metro_outline.py --check` reads the anchor
+registry and never fetches. Two different guarantees, neither of them upstream.
+
+---
+
 ## Kentucky specifically — no fixed cadence
 
 | What | Why it is here | Last done |

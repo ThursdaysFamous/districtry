@@ -23,13 +23,13 @@ different thing from one it failed.
 
 | state | E.A.M. | counties | examined | districts | named | answered | files | maintained |
 |---|---|---|---|---|---|---|---|---|
-| ca | **--·** | — | — | 0 | 0 | — | 14 | 7 without a job |
+| ca | **--M** | — | — | 0 | 0 | — | 14 | all |
 | ia | **EA·** | 99 | 99/99 | 81 | 81 | all | 57 | 40 without a job |
 | il | **EAM** | 102 | 102/102 | 572 | 996 | all | 398 | all |
-| ky | **EA·** | 120 | 120/120 § | 0 | 0 | by record | 7 | 6 without a job |
-| mi | **EA·** | 83 | 83/83 | 619 | 615 | all | 55 | 45 without a job |
+| ky | **EAM** | 120 | 120/120 § | 0 | 0 | by record | 7 | all |
+| mi | **EAM** | 83 | 83/83 | 619 | 615 | all | 55 | all |
 | mn | **EA·** | 87 | 87/87 § | 0 | 0 | by record | 7 | 5 without a job |
-| ny | **--·** | — | — | 16 | 16 | — | 29 | 21 without a job |
+| ny | **--M** | — | — | 16 | 16 | — | 29 | all |
 | wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 262 | 240 without a job |
 
 § Examined in part by a record covering the whole state rather
@@ -41,19 +41,13 @@ per county, so each one is named under its state below.
 
 ## What each state still needs
 
-### ca — --·
+### ca — **E.A.M.**
 
 - **E and A do not apply.** San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
   The mark therefore rests on Maintained alone.
-- **Under a WATCH.md plan (3):** re-checked on a stated cadence rather than by a job — `bart-directors.json`, `early-voting-sites.json`, `supervisor-districts.json`
-- **Maintained: no.** 7 file(s) under no scheduled job at all, neither rewriting nor watching — 6 boundary, 0 census, 1 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
-  - `ca/data/app/ca-assembly-districts.json` — **8** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ca/data/app/ca-senate-districts.json` — **4** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ca/data/app/congress-districts.json` — **6** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ca/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `ca/data/app/police-districts.json` — **10** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ca/data/app/san-francisco-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ca/data/app/sf-neighborhoods.json` — **41** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
 
 ### ia — EA·
 
@@ -108,67 +102,19 @@ this instance is in maintenance.
 
 - **Watched, not rewritten:** `il/data/app/mason-county-board-members.json` is refreshed by no job because it cannot safely be — `.github/workflows/watch-mason-roster-source.yml` checks its source weekly and opens an issue when it moves. That is a weaker guarantee than a rewrite: it tells you the source changed and a person still has to act.
 
-### ky — EA·
+### ky — **E.A.M.**
 
 - **Examined by a statewide record:** `ky-county-officers`, `ky-fiscal-court` account for every county in the state, which is what Examined rests on here: 0 of 120 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Maintained: no.** 6 file(s) under no scheduled job at all, neither rewriting nor watching — 5 boundary, 0 census, 1 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
-  - `ky/data/app/congress-districts.json` — **6** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ky/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `ky/data/app/ky-house-districts.json` — **100** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ky/data/app/ky-senate-districts.json` — **38** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ky/data/app/metro-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ky/data/app/state-counties.json` — **120** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
 
-### mi — EA·
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
 
-- **Under a WATCH.md plan (2):** re-checked on a stated cadence rather than by a job — `mi-commissioner-returns.json`, `mi-jackson-wards.json`
-- **Maintained: no.** 45 file(s) under no scheduled job at all, neither rewriting nor watching — 44 boundary, 0 census, 1 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
-  - `mi/data/app/alger-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/allegan-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/antrim-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/baraga-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/bay-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/benzie-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/branch-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/charlevoix-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/congress-districts.json` — **13** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `mi/data/app/crawford-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/genesee-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/gladwin-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/gogebic-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/huron-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/ingham-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/iosco-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/iron-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/livingston-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/manistee-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/marquette-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/mason-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/mecosta-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/metro-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/mi-battle-creek-wards.json` — **5** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/mi-commissioner-districts.json` — **619** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/mi-detroit-council-districts.json` — **7** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/mi-flint-wards.json` — **9** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/mi-grand-rapids-wards.json` — **3** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/mi-house-districts.json` — **110** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/mi-precincts.json` — **3895** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/mi-rochester-hills-wards.json` — **4** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/mi-senate-districts.json` — **38** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/mi-warren-wards.json` — **5** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/missaukee-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/montmorency-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/newaygo-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/oakland-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/ottawa-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/st-joseph-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/state-counties.json` — **83** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/tuscola-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/van-buren-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/washtenaw-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mi/data/app/wexford-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
+### mi — **E.A.M.**
+
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
 
 ### mn — EA·
 
@@ -182,33 +128,14 @@ this instance is in maintenance.
   - `mn/data/app/mn-senate-districts.json` — **67** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `mn/data/app/state-counties.json` — **87** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
 
-### ny — --·
+### ny — **E.A.M.**
 
 - **E and A do not apply.** New York City — the instance's subject is the city, not the state's 62-county frontier. It does ship one county's legislature (Tompkins), which is reported below and not scored.
   The county roster it does ship is reported and not gated: 16 district(s), 16 people named.
   The mark therefore rests on Maintained alone.
-- **Maintained: no.** 21 file(s) under no scheduled job at all, neither rewriting nor watching — 20 boundary, 0 census, 1 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
-  - `ny/data/app/borough-boundaries.json` — **5** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/bronx-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/brooklyn-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/congress-districts.json` — **26** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `ny/data/app/judicial-districts.json` — **13** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/manhattan-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/metro-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/municipal-court-districts.json` — **28** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/ny-central-hs-districts.json` — **3** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/ny-cities-towns.json` — **995** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/ny-counties.json` — **62** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/ny-school-districts.json` — **713** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/ny-state-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/ny-villages.json` — **532** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/queens-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/state-assembly-districts.json` — **150** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/state-senate-districts.json` — **63** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/staten-island-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/tompkins-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `ny/data/app/tompkins-legislature-districts.json` — **16** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
 
 ### wi — EA·
 
