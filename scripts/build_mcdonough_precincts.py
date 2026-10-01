@@ -49,7 +49,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import requests  # noqa: E402
 from build_metro_outline import group_rings  # noqa: E402  (shared — do not fork)
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_WIN_126,
+    UA_ROSTER_BOT,
     require_robots_once,
 )
 
@@ -66,7 +66,7 @@ NATIVE_WKID = 102672          # EPSG:3436, NAD83 / Illinois West (ftUS)
 EXTENT = (2089274, 1314656, 2219153, 1447575)
 REQUEST_TIMEOUT = 120
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 
 # Identify returns attributes keyed by FIELD ALIAS, not field name.

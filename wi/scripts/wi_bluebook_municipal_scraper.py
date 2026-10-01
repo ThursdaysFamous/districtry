@@ -68,6 +68,11 @@ import sys
 import urllib.error
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 DEFAULT_OUT = os.path.join(SCRIPT_DIR, ".cache", "wi_bluebook_municipal_raw.json")
@@ -103,6 +108,15 @@ FURNITURE = re.compile(
 
 def fetch_pdf(path=PDF_CACHE, tries=3):
     """The section 190 PDF, cached. Not committed and not redistributed."""
+    # THE SITE'S RULES ARE READ BEFORE THE PDF, with the identity this fetch
+    # sends. Measured from a GitHub runner on 2026-10-01:
+    # docs.legis.wisconsin.gov serves a 526-byte policy whose binding group
+    # matches none of the paths read here. Its earlier reading as unreadable was
+    # a timeout on one runner moment, which RFC 9309 files as disallow-all and
+    # is not a policy. Nothing schedules this file, so the runner reading is the
+    # only honest vantage it has.
+    require_robots_once(SOURCE_URL, UA["User-Agent"], headers=UA,
+                        label="wi-bluebook-municipal-scraper")
     if os.path.exists(path) and os.path.getsize(path) > 100000:
         return path
     os.makedirs(os.path.dirname(path), exist_ok=True)

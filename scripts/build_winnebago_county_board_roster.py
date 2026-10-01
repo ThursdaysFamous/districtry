@@ -29,12 +29,12 @@ import os
 import re
 import sys
 import urllib.request
-from scraper_common import UA_CHROME_X11_120  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 SOURCE_URL = "https://wincoil.gov/government/county-board"
 GIS_QUERY = ("https://maps.wingis.org/public/rest/services/ElectedOfficials/"
              "MapServer/26/query?where=1%3D1&outFields=District,REP&returnGeometry=false&f=json")
-USER_AGENT = UA_CHROME_X11_120
+USER_AGENT = UA_ROSTER_BOT
 TIMEOUT = 60
 
 MIN_DISTRICTS = 18
@@ -60,6 +60,8 @@ def norm_name(value):
 
 
 def gis_names():
+    require_robots_once(GIS_QUERY, USER_AGENT, headers={"User-Agent": USER_AGENT},
+                        label="il-build-winnebago-county-board-roster")
     request = urllib.request.Request(GIS_QUERY, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(request, timeout=TIMEOUT) as resp:
         payload = json.load(resp)

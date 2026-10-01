@@ -93,6 +93,16 @@ import json
 import os
 import sys
 
+# scraper_common lives in the ROOT scripts/, which this file's own directory is
+# not. APPENDED, NEVER INSERTED AT 0: the root scripts/ carries Illinois's own
+# build_metro_outline.py and friends, so putting it ahead of this instance's
+# scripts/ shadows this state's copies with another state's constants — which
+# does not fail on the import, it returns a wrong answer.
+sys.path.append(os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+    "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # ia/
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
 COUNTIES_FILE = os.path.join(APP_DATA_DIR, "state-counties.json")
@@ -249,6 +259,22 @@ def interior_point(feature):
 
 def fetch_real_districts():
     import requests  # noqa: PLC0415 -- only this function needs network
+    from requests.utils import default_user_agent  # noqa: PLC0415
+
+    # THE ONE HOST THIS SCRIPT CONTACTS. Every other address in this file is a
+    # citation in prose — the Code of Iowa sections the districts are defined
+    # by, the Judicial Branch pages the county lists were read from, and
+    # Ballotpedia as a cross-check. A CITATION IS NOT A FETCH: robots.txt
+    # governs what we crawl, not what we link, so none of those hosts is asked.
+    #
+    # READ WITH THE CLIENT THAT CRAWLS: this function sends requests' own
+    # default User-Agent, not a districtry token, so that is the string the
+    # policy is read with. It is taken from the library rather than written out
+    # here, so an upgrade cannot leave the two disagreeing. The host answers the
+    # robots request HTTP 403 (measured from a runner 2026-09-30), which under
+    # RFC 9309 2.3.1.3 is no published policy and therefore allow.
+    ua = default_user_agent()
+    require_robots_once(LSAFISCAL_URL, ua, label="ia-judicial-district")
     resp = requests.get(LSAFISCAL_URL, timeout=60, params={
         "where": "1=1",
         "outFields": "JUD_DIST",

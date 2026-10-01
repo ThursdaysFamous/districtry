@@ -4103,7 +4103,9 @@ function initIowaExplorer() {
     { id: "michigan", label: "Michigan", url: "https://districtry.com/mi/", emoji: "🚗", explorerName: "districtry Michigan",
       bbox: { minLng: -87.6, minLat: 41.7, maxLng: -82.11, maxLat: 48.01 } },
     { id: "minnesota", label: "Minnesota", url: "https://districtry.com/mn/", emoji: "🛶", explorerName: "districtry Minnesota",
-      bbox: { minLng: -97.3, minLat: 43.44, maxLng: -89.58, maxLat: 49.44 } }
+      bbox: { minLng: -97.3, minLat: 43.44, maxLng: -89.58, maxLat: 49.44 } },
+    { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
+      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -12448,6 +12450,23 @@ function initIowaExplorer() {
               title: "Board office", phone: String(officers.boardPhone)
             }));
           }
+          // A HANDFUL OF BOARDS COME FROM A DIFFERENT PUBLISHER AND SAY SO.
+          // Almost every county's supervisors come from one statewide
+          // directory, checked against the districts this app draws. Where
+          // those two disagree the board is withheld rather than guessed --
+          // and for four counties the county's OWN board page settles it, so
+          // those names rest on a source the others do not. A reader deciding
+          // whether to trust a name is owed the page it came from.
+          if (officers.supervisorSource) {
+            wrap.appendChild(renderLinkRow({
+              title: "Named by the county",
+              note: "The statewide directory and this county's districts "
+                + "disagree about the board's size, so these names are the "
+                + "county's own.",
+              links: [{ label: "Board of supervisors page",
+                        url: String(officers.supervisorSource) }]
+            }));
+          }
         } else if (officers.supervisorsWithheld) {
           unresolved.push({
             label: "Board of supervisors",
@@ -12886,11 +12905,41 @@ function initIowaExplorer() {
    * BASENAME ("Brighton" + " township"), the same technique the WI
    * `county-subdivision` card uses, so the card can never disagree with
    * the name printed above it. Only the township kind names an elected
-   * office (trustees, clerk, assessor — Iowa Code ch. 359, ASSERTED); no
-   * statewide roster of township officers was found in the research pass,
-   * so the card states that plainly rather than guessing or staying
-   * silent — the fleet's honesty rule applied to a live-fetched layer
-   * exactly as it is to a pre-built one. ---------- */
+   * office (trustees, clerk, assessor — Iowa Code ch. 359, ASSERTED).
+   *
+   * THERE IS STILL NO STATEWIDE ROSTER OF TOWNSHIP OFFICERS, AND THAT WAS
+   * READ FOR FOURTEEN MONTHS AS THERE BEING NO ROSTER AT ALL. Twelve
+   * counties publish their own township clerks and trustees — every one of
+   * them at the same path under their own county site — which nothing in
+   * this instance had looked for, so this card's own note said no roster
+   * was found while 617 people were being published the whole time. A
+   * statewide absence is not a per-county absence; the two are measured
+   * separately (ia/scripts/ia_township_officers_scraper.py). The card now
+   * names whoever is published for the township the reader is standing in,
+   * credits the county that publishes them with the date it was read, and
+   * says plainly that the roughly fourteen hundred other townships name
+   * nobody. ---------- */
+  // TWELVE COUNTIES PUBLISH THEIR TOWNSHIP OFFICERS, one weekly file keyed by
+  // the same TIGER county-subdivision GEOID this card already reads, so a
+  // township is joined by its own identity rather than by its name.
+  var loadTownshipOfficers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ia-township-officers.json", {}, 2);
+  });
+  // COUNTED FROM THE FILE, NOT TYPED. The weekly run adds and drops counties
+  // as their pages change, so a figure written into the sentence below is
+  // wrong the first week it does its job -- the same rule the City card's own
+  // publisher count already follows.
+  function townshipPublisherCount(file) {
+    if (!file) return 0;
+    var seen = {}, n = 0;
+    for (var geoid in file) {
+      if (!Object.prototype.hasOwnProperty.call(file, geoid)) continue;
+      var c = file[geoid] && file[geoid].county;
+      if (c && !seen[c]) { seen[c] = true; n++; }
+    }
+    return n;
+  }
+
   var loadCountySubdivisions = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
     "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC", "county subdivisions");
@@ -12912,12 +12961,20 @@ function initIowaExplorer() {
     },
     query: function (point, seq) {
       // point-first (queryFeatureAt): one subdivision polygon instead of the
-      // statewide download gating the first click
-      return queryFeatureAt(loadCountySubdivisions, point).then(function (feature) {
+      // statewide download gating the first click. The officers file is a
+      // small same-origin read and its failure is NOT this layer's failure --
+      // the .catch is on that leg alone, so a township still answers
+      // identity-only exactly as it did before the file existed.
+      return Promise.all([
+        queryFeatureAt(loadCountySubdivisions, point),
+        loadTownshipOfficers().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0], officers = parts[1];
         if (!feature) return null;
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
+        var geoid = findPropCI(props, ["geoid"]);
         return {
           seq: seq,
           name: name,
@@ -12925,7 +12982,9 @@ function initIowaExplorer() {
                  String(name).indexOf(String(base)) === 0)
             ? String(name).slice(String(base).length).trim().toLowerCase()
             : null,
-          geoid: findPropCI(props, ["geoid"])
+          geoid: geoid,
+          officers: (officers && geoid != null && officers[String(geoid)]) || null,
+          officerPublishers: officers
         };
       });
     },
@@ -12937,8 +12996,7 @@ function initIowaExplorer() {
       }));
       var KIND_NOTE = {
         township: "Township — an active local government (elected trustees, " +
-          "clerk and assessor under Iowa Code ch. 359). No statewide roster " +
-          "of township officers was found in the research pass.",
+          "clerk and assessor under Iowa Code ch. 359).",
         city: "This is the Census Bureau's placeholder subdivision record for " +
           "an incorporated city with no separate township surviving under it " +
           "— not a second government distinct from the city itself.",
@@ -12951,6 +13009,68 @@ function initIowaExplorer() {
         wrap.appendChild(renderFieldStack([
           { label: "Type", value: KIND_NOTE[result.kind] }
         ]));
+      }
+      var rec = result.officers;
+      if (rec && rec.officials && rec.officials.length) {
+        wrap.appendChild(renderSectionLabel("TOWNSHIP OFFICERS"));
+        wrap.appendChild(renderPersonRows(rec.officials.map(function (o) {
+          // A SEAT THE COUNTY SAYS IS EMPTY GETS A ROW SAYING SO. The roster
+          // records a vacancy structurally -- a role and no name -- so this
+          // card states it in the one place a reader is looking for that
+          // seat's officer. Dropping the row would make a four-seat township
+          // read as a three-seat one, and carrying the county's own word
+          // through as a name would ship a trustee called Vacant, which is
+          // what this fleet already published twice in Illinois before a
+          // gate started refusing the word. Same wording as Wisconsin's
+          // supervisor card, which is the fleet's precedent for this state.
+          var row = { name: o.vacant ? "Vacant" : String(o.name) };
+          if (o.role) row.badge = String(o.role);
+          if (o.phone) row.phone = String(o.phone);
+          var notes = [];
+          // The county said the seat is empty, so the card says it in words
+          // as well as in the name slot -- "Vacant" beside a role badge
+          // could otherwise be read as a surname.
+          if (o.vacant) notes.push("The county reports this seat empty");
+          // THE SELECTION WORD IS THE COUNTY'S AND SITS ON THE TOWNSHIP, NOT
+          // ON THE PERSON. One county prints whether its township officers
+          // were elected or appointed to the seat; where it does, every row
+          // of that township carries it, because that is the scope of what
+          // the county actually said.
+          if (rec.selection) notes.push(String(rec.selection));
+          if (o.termEnds) notes.push("Term ends " + String(o.termEnds));
+          if (o.termLength) notes.push(String(o.termLength) + "-year term");
+          if (notes.length) row.note = notes.join(" \u00b7 ");
+          return row;
+        })));
+        var pubs = townshipPublisherCount(result.officerPublishers);
+        wrap.appendChild(renderFieldStack([{
+          label: "Township officers",
+          value: "Named by " + String(rec.county) + " County, which publishes " +
+            "the clerk and trustees of every township inside it" +
+            (rec.asOf ? ", read " + String(rec.asOf) : "") + ". Iowa has no " +
+            "statewide list of township officers, so " +
+            (pubs ? (pubs === 1 ? "one county names them"
+                                : pubs + " counties name them")
+                  : "only a few counties name them") +
+            " and the rest of Iowa's roughly fourteen hundred townships name " +
+            "nobody in this app."
+        }]));
+      } else if (result.kind === "township") {
+        // WHAT THIS CARD STILL CANNOT ANSWER, said with somewhere to go.
+        var pubs2 = townshipPublisherCount(result.officerPublishers);
+        wrap.appendChild(renderFieldStack([{
+          label: "Township officers",
+          value: "Not shown — Iowa publishes no statewide list of township " +
+            "clerks and trustees, and this township's own county does not " +
+            "publish one either, so this card names nobody rather than " +
+            "naming some. " +
+            (pubs2 ? (pubs2 === 1 ? "One Iowa county publishes"
+                                  : pubs2 + " Iowa counties publish")
+                   : "A few Iowa counties publish") +
+            " the officers of every township inside them, and those cards " +
+            "name them. The County card above names the county officials who " +
+            "answer for this ground either way."
+        }]));
       }
       return wrap;
     }
@@ -13046,6 +13166,34 @@ function initIowaExplorer() {
   var loadCountyCityOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/ia-county-city-officials.json", {}, 2);
   });
+  // THE FOURTEEN LARGEST CITIES THAT NAMED NOBODY, read from each city's own
+  // council page. Iowa has eighteen cities above 25,000; four were answered
+  // already (Des Moines and Waterloo by ward, Cedar Rapids and one more by
+  // their own builders) and these fourteen named nobody at all, which is 96
+  // officeholders a reader in them could not get from this app.
+  //
+  // NINE OF THE FOURTEEN ELECT AT LEAST SOME MEMBERS BY WARD, so this branch
+  // makes NO at-large claim the way the five-city branch does: the seat rides
+  // the row where the city publishes one, and the copy says a ward is NAMED
+  // and not DRAWN, because this app draws no Iowa city ward outside Des
+  // Moines and Waterloo.
+  var loadCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ia-city-councils.json", {}, 2);
+  });
+  // How many of them the shipped file names, counted at render time rather
+  // than typed: a city refused by its own robots.txt leaves the file on its
+  // own, and every figure typed into a sentence on this card has gone stale
+  // at least once.
+  function cityCouncilCount(file) {
+    if (!file) return 0;
+    var n = 0;
+    for (var geoid in file) {
+      if (!Object.prototype.hasOwnProperty.call(file, geoid)) continue;
+      var members = file[geoid] && file[geoid].members;
+      if (members && members.length) n++;
+    }
+    return n;
+  }
 
   registerLayer({
     id: "municipality",
@@ -13074,7 +13222,8 @@ function initIowaExplorer() {
         queryFeatureAt(loadPlaces, point),
         loadCityContact().catch(function () { return null; }),
         loadCityOfficials().catch(function () { return null; }),
-        loadCountyCityOfficials().catch(function () { return null; })
+        loadCountyCityOfficials().catch(function () { return null; }),
+        loadCityCouncils().catch(function () { return null; })
       ]).then(function (parts) {
         var feature = parts[0];
         if (!feature) return null; // unincorporated — the engine renders this layer's own emptyNote
@@ -13083,6 +13232,12 @@ function initIowaExplorer() {
         var contact = (parts[1] && geoid != null) ? parts[1][String(geoid)] : null;
         var officials = (parts[2] && geoid != null) ? parts[2][String(geoid)] : null;
         var byCounty = (parts[3] && geoid != null) ? parts[3][String(geoid)] : null;
+        var council = (parts[4] && geoid != null) ? parts[4][String(geoid)] : null;
+        // A CITY'S OWN COUNCIL PAGE OUTRANKS ITS COUNTY'S LIST, which is the
+        // rule this card already applied between the five-city file and the
+        // county file. None of these three files names the same city today;
+        // the order is stated so that a city appearing in two is answered
+        // from the publisher closest to it rather than by whichever loaded.
         return {
           seq: seq,
           name: findPropCI(props, ["name"]),
@@ -13090,9 +13245,11 @@ function initIowaExplorer() {
           phone: contact ? contact.phone : null,
           email: contact ? contact.email : null,
           url: contact ? contact.url : null,
-          officials: officials || null,
-          countyOfficials: officials ? null : (byCounty || null),
-          countyPublishers: parts[3] || null
+          council: council || null,
+          officials: council ? null : (officials || null),
+          countyOfficials: (council || officials) ? null : (byCounty || null),
+          countyPublishers: parts[3] || null,
+          cityCouncils: parts[4] || null
         };
       });
     },
@@ -13128,7 +13285,54 @@ function initIowaExplorer() {
       // the third. It survives here only because it is a COMMENT: no rendered
       // string carries it, and the one count a reader does see (how many
       // counties publish) is counted from the file at render time below.
-      if (result.officials && result.officials.members && result.officials.members.length) {
+      if (result.council && result.council.members && result.council.members.length) {
+        wrap.appendChild(renderSectionLabel("MAYOR AND COUNCIL"));
+        wrap.appendChild(renderPersonRows(result.council.members.map(function (rec) {
+          var row = { name: String(rec.name) };
+          // THE CITY'S OWN WORDS FOR THE OFFICE, AND ONLY THOSE. The fourteen
+          // write fourteen vocabularies — Councilmember, Councilor, Alderman,
+          // Council Member At-Large, `3rd Ward`, `Ward One Representative` —
+          // and each is printed as that city writes it.
+          //
+          // THE NORMALISED SEAT IS DELIBERATELY NOT PRINTED BESIDE IT. It is
+          // DERIVED from the role, so every row that has one already names it
+          // and a badge carrying both read `Ward One Representative · Ward 1`
+          // in Dubuque and `1st Ward · Ward 1` in Marshalltown — the same
+          // fact twice, in a reader's way. A first draft suppressed the
+          // duplicate by substring, which caught Iowa City's `Mayor,
+          // At-Large` and missed every city spelling its wards in words or
+          // ordinals, so four of the fourteen said it twice. The field stays
+          // in the data file for anything that needs to sort or match seats.
+          if (rec.role) row.badge = String(rec.role);
+          if (rec.phone) row.phone = String(rec.phone);
+          if (rec.email) row.email = String(rec.email);
+          if (rec.termEnds) row.note = "Term ends " + String(rec.termEnds);
+          return row;
+        })));
+        var councilNote = "Named from this city's own council page" +
+          (result.council.asOf ? ", read " + String(result.council.asOf) : "") + ".";
+        // NO AT-LARGE CLAIM IS MADE HERE. Nine of these fourteen cities elect
+        // at least some members by ward or district, so the copy describes
+        // what the page published rather than asserting how the council is
+        // elected — the five-city branch below can assert at-large only
+        // because all five of those cities are.
+        var anySeat = result.council.members.some(function (rec) { return !!rec.seat; });
+        if (anySeat) {
+          councilNote += " A member's ward or district is NAMED above and not " +
+            "drawn: this app draws city wards in Des Moines and Waterloo only, " +
+            "so the map does not outline the seat you are standing in.";
+        }
+        // THE MAYOR IS NOT ALWAYS ON THE PAGE, AND SAYING SO BEATS SILENCE.
+        // Two of the fourteen name their council and not their mayor, and a
+        // card that simply omitted the mayor would read as a city that has
+        // none.
+        if (result.council.namesMayor === false) {
+          councilNote += " This city's council page does not name its mayor, and no " +
+            "other page this app reads does either, so the mayor is missing here " +
+            "rather than absent in the city.";
+        }
+        wrap.appendChild(renderFieldStack([{ label: "City officials", value: councilNote }]));
+      } else if (result.officials && result.officials.members && result.officials.members.length) {
         wrap.appendChild(renderSectionLabel("ELECTED BY THE WHOLE CITY"));
         wrap.appendChild(renderPersonRows(result.officials.members.map(function (rec) {
           var row = { name: String(rec.name) };
@@ -13219,6 +13423,15 @@ function initIowaExplorer() {
           "read; and Des Moines, Waterloo and Cedar Rapids elect by ward or " +
           "district, so those cards name the member for the seat you are " +
           "standing in.";
+        // AND THE LARGEST CITIES, COUNTED FROM THE FILE for the same reason
+        // the county figure above is: a city leaves this file by itself the
+        // week its page changes shape or its robots.txt refuses us.
+        var bigs = cityCouncilCount(result.cityCouncils);
+        if (bigs) {
+          note += " The " + bigs + " largest Iowa " +
+            (bigs === 1 ? "city" : "cities") + " that publish a council page " +
+            "this app can read name their mayor and council on their own cards.";
+        }
         wrap.appendChild(renderFieldStack([{ label: "City officials", value: note }]));
       }
       return wrap;

@@ -147,6 +147,78 @@
         "people": "Not yet shipped. Kentucky's county governing body is the fiscal court, and its districts and members arrive together in a later change; the card names no officeholder rather than guessing one. Recorded as the coverage gaps ky-fiscal-court and ky-county-officers.",
         "applies": "Kentucky — statewide."
       }
+    },
+    {
+      "id": "school-district-unified",
+      "label": "School District (Unified)",
+      "group": "schools",
+      "area_rank": 5,
+      "rank_note": "170 districts covering all but 39 km2 of Kentucky, live from TIGERweb (no data/app file) — 601 km2 mean feature area, just under a county",
+      "source": {
+        "answers": "The unified (every-grade) school district covering the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 170 features for Kentucky over 102,228.8 km2 of land, measured 2026-10-01",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.",
+        "applies": "Kentucky — statewide, except the four areas the Census places in its elementary and secondary tilings."
+      }
+    },
+    {
+      "id": "municipality",
+      "label": "City",
+      "group": "geography",
+      "area_rank": 6,
+      "rank_note": "415 incorporated places, live from TIGERweb (no data/app file) — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land",
+      "source": {
+        "answers": "The city covering the point, if any. Kentucky has no township tier, so a point outside every city is governed by its county and the card is correctly empty.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 415 features for Kentucky, measured 2026-10-01, every one carrying the Census's city descriptor — Kentucky incorporates no villages or towns, so this card needs no type row",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. Kentucky cities elect a mayor and a city legislative body, and no roster of their members has been built here, so the card names nobody and links the Department for Local Government's municipal directory (kydlgweb.ky.gov/Cities/16_CityHome.cfm, read 2026-10-01, robots.txt permits it), which is a per-city search rather than a downloadable roster. Which statutory plan of government a given city runs under was not measured and is not claimed. Recorded as the coverage gap ky-municipal-officeholders.",
+        "applies": "Kentucky — statewide, answering only inside an incorporated city."
+      }
+    },
+    {
+      "id": "school-district-elementary",
+      "label": "School District (Elementary)",
+      "group": "schools",
+      "area_rank": 7,
+      "rank_note": "4 independent districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points",
+      "source": {
+        "answers": "The elementary-only school district covering the point, in the four places Kentucky has one.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 4 features for Kentucky — Anchorage, Southgate, East Bernstadt and Science Hill Independent — measured 2026-10-01",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.",
+        "applies": "Kentucky — four areas only, totalling 39.0 km2."
+      }
+    },
+    {
+      "id": "school-district-secondary",
+      "label": "School District (Secondary)",
+      "group": "schools",
+      "area_rank": 8,
+      "rank_note": "4 county districts serving grades 9-12 over the four elementary districts, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area, the same ground as the elementary tiling",
+      "source": {
+        "answers": "The school district that runs the high school for the point, in the four places Kentucky separates it from the elementary district.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime (no builder script, no committed data/app file); 4 features for Kentucky — Jefferson, Campbell, Laurel and Pulaski County districts over the four independent elementary districts — measured 2026-10-01",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.",
+        "applies": "Kentucky — the same four areas as the elementary tiling, 39.0 km2."
+      }
     }
   ],
   "min_register_layer": 4,
@@ -269,21 +341,139 @@
   "exports_name": "KentuckyExplorer",
   "verified_date": "September 30, 2026",
   "metro_explorers": [
-    { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
-      "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },
-    { "id": "nyc", "label": "New York", "url": "https://districtry.com/ny/", "emoji": "🗽", "explorer_name": "districtry New York",
-      "bbox": { "minLng": -79.82, "minLat": 40.43, "maxLng": -71.62, "maxLat": 45.07 } },
-    { "id": "sf", "label": "San Francisco", "url": "https://districtry.com/ca/", "emoji": "🌉", "explorer_name": "districtry San Francisco",
-      "bbox": { "minLng": -122.6, "minLat": 37.6, "maxLng": -122.3, "maxLat": 37.95 } },
-    { "id": "wisconsin", "label": "Wisconsin", "url": "https://districtry.com/wi/", "emoji": "🧀", "explorer_name": "districtry Wisconsin",
-      "bbox": { "minLng": -92.89, "minLat": 42.49, "maxLng": -86.25, "maxLat": 47.31 } },
-    { "id": "iowa", "label": "Iowa", "url": "https://districtry.com/ia/", "emoji": "🌽", "explorer_name": "districtry Iowa",
-      "bbox": { "minLng": -96.64, "minLat": 40.37, "maxLng": -90.14, "maxLat": 43.5 } },
-    { "id": "michigan", "label": "Michigan", "url": "https://districtry.com/mi/", "emoji": "🚗", "explorer_name": "districtry Michigan",
-      "bbox": { "minLng": -87.6, "minLat": 41.7, "maxLng": -82.11, "maxLat": 48.01 } },
-    { "id": "minnesota", "label": "Minnesota", "url": "https://districtry.com/mn/", "emoji": "🛶", "explorer_name": "districtry Minnesota",
-      "bbox": { "minLng": -97.3, "minLat": 43.44, "maxLng": -89.58, "maxLat": 49.44 } },
-    { "id": "kentucky", "label": "Kentucky", "url": "https://districtry.com/ky/", "emoji": "🐎", "explorer_name": "districtry Kentucky",
-      "bbox": { "minLng": -89.57, "minLat": 36.5, "maxLng": -81.96, "maxLat": 39.15 } }
-  ]
+    {
+      "id": "chicago",
+      "label": "Illinois",
+      "url": "https://districtry.com/il/",
+      "emoji": "🌭",
+      "explorer_name": "districtry Illinois",
+      "bbox": {
+        "minLng": -91.52,
+        "minLat": 36.96,
+        "maxLng": -87.01,
+        "maxLat": 42.51
+      }
+    },
+    {
+      "id": "nyc",
+      "label": "New York",
+      "url": "https://districtry.com/ny/",
+      "emoji": "🗽",
+      "explorer_name": "districtry New York",
+      "bbox": {
+        "minLng": -79.82,
+        "minLat": 40.43,
+        "maxLng": -71.62,
+        "maxLat": 45.07
+      }
+    },
+    {
+      "id": "sf",
+      "label": "San Francisco",
+      "url": "https://districtry.com/ca/",
+      "emoji": "🌉",
+      "explorer_name": "districtry San Francisco",
+      "bbox": {
+        "minLng": -122.6,
+        "minLat": 37.6,
+        "maxLng": -122.3,
+        "maxLat": 37.95
+      }
+    },
+    {
+      "id": "wisconsin",
+      "label": "Wisconsin",
+      "url": "https://districtry.com/wi/",
+      "emoji": "🧀",
+      "explorer_name": "districtry Wisconsin",
+      "bbox": {
+        "minLng": -92.89,
+        "minLat": 42.49,
+        "maxLng": -86.25,
+        "maxLat": 47.31
+      }
+    },
+    {
+      "id": "iowa",
+      "label": "Iowa",
+      "url": "https://districtry.com/ia/",
+      "emoji": "🌽",
+      "explorer_name": "districtry Iowa",
+      "bbox": {
+        "minLng": -96.64,
+        "minLat": 40.37,
+        "maxLng": -90.14,
+        "maxLat": 43.5
+      }
+    },
+    {
+      "id": "michigan",
+      "label": "Michigan",
+      "url": "https://districtry.com/mi/",
+      "emoji": "🚗",
+      "explorer_name": "districtry Michigan",
+      "bbox": {
+        "minLng": -87.6,
+        "minLat": 41.7,
+        "maxLng": -82.11,
+        "maxLat": 48.01
+      }
+    },
+    {
+      "id": "minnesota",
+      "label": "Minnesota",
+      "url": "https://districtry.com/mn/",
+      "emoji": "🛶",
+      "explorer_name": "districtry Minnesota",
+      "bbox": {
+        "minLng": -97.3,
+        "minLat": 43.44,
+        "maxLng": -89.58,
+        "maxLat": 49.44
+      }
+    },
+    {
+      "id": "kentucky",
+      "label": "Kentucky",
+      "url": "https://districtry.com/ky/",
+      "emoji": "🐎",
+      "explorer_name": "districtry Kentucky",
+      "bbox": {
+        "minLng": -89.62,
+        "minLat": 36.45,
+        "maxLng": -81.91,
+        "maxLat": 39.2
+      }
+    }
+  ],
+  "sources_page": {
+    "file": "ky/sources.html",
+    "credits": [
+      {
+        "label": "U.S. Census Bureau TIGERweb",
+        "url": "https://tigerweb.geo.census.gov/",
+        "note": "County, congressional-district and both state legislative-chamber boundaries."
+      },
+      {
+        "label": "unitedstates/congress-legislators",
+        "url": "https://github.com/unitedstates/congress-legislators",
+        "note": "U.S. House roster (CC0), including each member's district and Washington offices."
+      },
+      {
+        "label": "Kentucky Senate",
+        "url": "https://legislature.ky.gov/Legislators/senate",
+        "note": "The member directory the Senate card links while no roster ships."
+      },
+      {
+        "label": "Kentucky House of Representatives",
+        "url": "https://legislature.ky.gov/Legislators/house-of-representatives",
+        "note": "The member directory the House card links while no roster ships."
+      },
+      {
+        "label": "Kentucky Department for Local Government",
+        "url": "https://kydlgweb.ky.gov/Counties/16_CountyHome.cfm",
+        "note": "The county-government directory the County card links while no fiscal-court roster ships."
+      }
+    ]
+  }
 }

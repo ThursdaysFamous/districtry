@@ -51,7 +51,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "39.76860,-86.16260"; // the Indiana Statehouse, downtown Indianapolis (Marion County)
 const OFFLINE = ["county", "us-house", "in-senate", "in-house"];
 const EXPECT_DISTRICT = { "county": "Marion County", "us-house": "7", "in-senate": "46", "in-house": "97" };
-const NEGATIVE_POINT = "38.25270,-85.75850"; // downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down)
+const NEGATIVE_POINT = "38.25270,-85.75850"; // downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json, which is what the pan hand-off reads — the same fix Iowa, Illinois and Wisconsin each made rather than moving their own point. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.
 const APP_NAME = "districtry Indiana";
 const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
@@ -245,7 +245,21 @@ try {
   //     so this needs no network.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, BASE);
+    // THE FLEET FILE IS REFUSED FOR THE WHOLE OF THIS CHECK, because its
+    // coverage-band half selects NEGATIVE_POINT and setSelectedPoint PANS
+    // there, which puts the map's CENTRE outside Indiana and arms the pan
+    // hand-off (ENGINE metro-portal's moveend -> placeOwner ->
+    // offerMetroPortal, which sets window.location.href). This instance's
+    // negative point is in Louisville, and KENTUCKY WENT LIVE ON 2026-09-30,
+    // so from that day the file puts that point inside a sibling and this
+    // check would navigate to /ky/ mid-assertion. Refused, placeOwner's own
+    // error leg answers "nobody", which is the state this check is about.
+    // Iowa (#1267), Illinois (#1272) and Wisconsin (#1268) all settled on
+    // refusing the file rather than moving the point, and fleet routing is
+    // asserted on this instance's own points in check 1a2 instead.
+    const page = await booted(context, BASE, async (p) => {
+      await p.route("**/fleet-outlines.json", (r) => r.abort());
+    });
     const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/coverage-gaps.json"), "utf8"));
     const expected = Object.keys(shipped).length;
 
@@ -377,23 +391,35 @@ try {
   // 1a2. A SELECTION GOES TO THE APP THAT ANSWERS THERE, decided by state
   //     outlines and never by rectangles (ENGINE metro-portal +
   //     fleet-outlines.json). Indiana is the case that needs all three
-  //     branches, because its box overlaps two siblings AND two states nobody
+  //     branches, because its box overlaps three siblings AND ground nobody
   //     serves: Danville sits inside Indiana's own bounding box and in
   //     Illinois, Niles inside it and in Michigan, and Louisville inside it and
-  //     in Kentucky, where no instance answers. Under the rectangle rule the
-  //     first two did nothing from here and the third was handed to whichever
-  //     box centre won.
+  //     in Kentucky. Under the rectangle rule the first two did nothing from
+  //     here and the third was handed to whichever box centre won.
+  //
+  //     LOUISVILLE MOVED FROM THE THIRD BRANCH TO THE FIRST ON 2026-09-30, when
+  //     Kentucky went live. Until then it was this check's uncovered case — a
+  //     point no instance covers, which must be selected HERE rather than sent
+  //     to an app with nothing to show — and the honest reading of Kentucky
+  //     publishing is that the same click now belongs to /ky/. The uncovered
+  //     case is not dropped, because it is what keeps the routing cases honest:
+  //     it moves to Butler County, OHIO, measured the same day. TIGERweb's
+  //     county layer names it Butler County STATE 39, with Louisville (STATE 21)
+  //     and Indianapolis (STATE 18) as controls, and it is inside this
+  //     instance's permalink_gate, outside its own coverage ring and inside no
+  //     outline in fleet-outlines.json — one of 259 such points found by
+  //     sampling the whole gate on a 0.05-degree grid, so Ohio is uncovered
+  //     ground this instance can reach rather than a lucky coordinate.
   //
   //     Indiana is DARK, so it is not in fleet-outlines.json and its own half
-  //     of the decision comes from the coverage rings the wash retained — which
-  //     is why the third case is the one that matters most: a point no instance
-  //     covers must be selected HERE, where the app says so, rather than sent
-  //     to an app with nothing to show. The sibling apps are stubbed so a wrong
-  //     route cannot leave for the real site.
+  //     of the decision comes from the coverage rings the wash retained. The
+  //     sibling apps are stubbed so a wrong route cannot leave for the real
+  //     site.
   {
     const cases = [
       { name: "Danville, Illinois", lat: 40.1245, lng: -87.6300, want: "https://districtry.com/il/" },
       { name: "Niles, Michigan", lat: 41.8297, lng: -86.2541, want: "https://districtry.com/mi/" },
+      { name: "Louisville, Kentucky", lat: 38.2527, lng: -85.7585, want: "https://districtry.com/ky/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -409,12 +435,12 @@ try {
       check(`a click on ${c.name} from Indiana opens ${c.want} with the point`, !!went, went || page.url());
       await context.close();
     }
-    // The half that keeps the two above honest. Louisville is inside Indiana's
-    // own box, outside its coverage, and inside no instance's outline, so the
-    // selection must stay here. Asserted by the POINT being selected in this
-    // app rather than by the URL alone: an app that failed to navigate for any
-    // other reason also leaves the URL here, which is the green-for-the-wrong-
-    // reason shape the fleet's forwarding test already hit once.
+    // The half that keeps the three above honest: a point nobody covers must be
+    // selected HERE, where the app says so. Asserted by the POINT being
+    // selected in this app rather than by the URL alone: an app that failed to
+    // navigate for any other reason also leaves the URL here, which is the
+    // green-for-the-wrong-reason shape the fleet's forwarding test already hit
+    // once.
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, BASE, async (p) => {
@@ -422,13 +448,13 @@ try {
           route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
       });
       await page.evaluate(({ n }) => {
-        window[n].map.fire("click", { latlng: window.L.latLng(38.2527, -85.7585) });
+        window[n].map.fire("click", { latlng: window.L.latLng(39.4, -84.65) });
       }, { n: EXPORTS_NAME });
       const here = await page.waitForFunction((n) => {
         const p = window[n].state.selectedPoint;
-        return !!p && Math.abs(p.lat - 38.2527) < 0.01 && Math.abs(p.lng + 85.7585) < 0.01;
+        return !!p && Math.abs(p.lat - 39.4) < 0.01 && Math.abs(p.lng + 84.65) < 0.01;
       }, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
-      check("a click on Louisville, Kentucky is selected HERE and routed nowhere",
+      check("a click on Butler County, Ohio is selected HERE and routed nowhere",
         here && page.url().startsWith(BASE.replace(/\/$/, "")), page.url());
       await context.close();
     }
@@ -570,6 +596,11 @@ try {
       // verdict is the same on a runner that can reach TIGERweb and in a
       // sandbox that cannot.
       await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
+      // And the fleet file, for the reason given on the coverage-band check
+      // above: this permalink pans the map's centre to Louisville, which
+      // Kentucky's outline has covered since its 2026-09-30 go-live, so the
+      // pan hand-off would navigate away mid-assertion.
+      await p.route("**/fleet-outlines.json", (r) => r.abort());
     });
     for (const id of NEGATIVE_IDS) {
       if (NEGATIVE_HIDDEN.includes(id)) {

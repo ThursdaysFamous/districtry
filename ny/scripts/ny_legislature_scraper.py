@@ -22,6 +22,10 @@ import sys
 import time
 import urllib.error
 import urllib.request
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once, UA_STDLIB_DEFAULT  # noqa: E402  (FLEET_SHARED)
 
 API = "https://legislation.nysenate.gov/api/3/members/{year}?full=true&limit=1000&key={key}"
 DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "ny_legislature_raw.json")
@@ -102,6 +106,7 @@ def _openstates_get(url, key, attempts=4):
     5xx gateway errors (502/503/504) and timeouts its include=offices queries throw
     intermittently. A real client error (401/403/422) is not retried — it won't fix
     itself. Raises the last error when every attempt fails."""
+    require_robots_once(url, UA_STDLIB_DEFAULT, label="ny-ny-legislature-scraper")
     req = urllib.request.Request(url, headers={"X-API-KEY": key, "Accept": "application/json"})
     last = None
     for i in range(attempts):
@@ -200,6 +205,7 @@ def main():
     year = os.environ.get("NY_SESSION_YEAR", "2025")
 
     try:
+        require_robots_once(API.format(year=year, key=key), UA_STDLIB_DEFAULT, label="ny-ny-legislature-scraper")
         with urllib.request.urlopen(API.format(year=year, key=key), timeout=90) as r:
             data = json.load(r)
     except urllib.error.HTTPError as e:

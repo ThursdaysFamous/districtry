@@ -56,6 +56,7 @@ import os
 import re
 import sys
 import urllib.request
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENGINE_DIR = os.path.join(REPO_ROOT, "engine")
@@ -68,7 +69,13 @@ MARKER_RE = re.compile(
 def read_source(spec):
     """Read text from a local path or an http(s) URL."""
     if spec.startswith("http://") or spec.startswith("https://"):
-        req = urllib.request.Request(spec, headers={"User-Agent": "districtry-engine-parity"})
+        # The address is whatever the caller passed, so the reading goes here
+        # rather than at a constant: this is normally a same-repository file and
+        # can be any host on the command line.
+        headers = {"User-Agent": "districtry-engine-parity"}
+        require_robots_once(spec, headers["User-Agent"], headers=headers,
+                            label="il-check-engine-parity")
+        req = urllib.request.Request(spec, headers=headers)
         with urllib.request.urlopen(req, timeout=30) as resp:
             return resp.read().decode("utf-8")
     with open(spec, encoding="utf-8") as f:

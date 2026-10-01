@@ -86,6 +86,11 @@ import time
 import urllib.parse
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 OUT_PATH = os.path.join(REPO_ROOT, "data", "app", "rusd-school-board-districts.json")
@@ -124,6 +129,14 @@ UA = {"User-Agent": "districtry-wisconsin/1.0 (+https://districtry.com/wi/)"}
 def fetch(url, binary=False, tries=4, timeout=90):
     """The instance's standard ladder — a single un-retried timeout is what
     left two of these workflows never once green."""
+    # THE SITE'S RULES ARE READ BEFORE THE FIRST FETCH, with the identity this
+    # fetch sends, once per host. Measured from a GitHub runner on 2026-10-01,
+    # which is the vantage this builder runs from: mapservices.legis.wisconsin.gov
+    # answers HTTP 404 for robots.txt, so it publishes no rules and every path is
+    # permitted. Its earlier reading as unreadable was a timeout on one runner
+    # moment, which RFC 9309 files as disallow-all and is not a policy.
+    require_robots_once(url, UA["User-Agent"], headers=UA,
+                        label="wi-rusd-school-board-districts")
     last = None
     for i in range(tries):
         try:

@@ -135,6 +135,18 @@ Usage:
     python3 scripts/check_roster_workflow_health.py --report r.md --status-file s.txt
     python3 scripts/check_roster_workflow_health.py --list           # offline: what it watches
     python3 scripts/check_roster_workflow_health.py --selftest       # offline: the verdicts
+
+NOT GATED ON robots.txt: AUTHENTICATED READ OF THIS PROJECT'S OWN REPOSITORY.
+It asks api.github.com, with this project's own token, which of districtry's
+own weekly refreshes last did their work -- the API GitHub issues the token
+for. No page is read and no link is followed, and the blanket rule in that
+host's robots.txt is aimed at crawlers of the web interface rather than at an
+account holder reading their own runs.
+
+THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never which host: an
+unauthenticated read of a page on github.com would be gated in full. Stated
+here in full rather than as a pointer at fleet_status.py, so neither reads as
+an exemption extended by analogy.
 """
 
 import argparse

@@ -22,6 +22,19 @@ Usage (run only AFTER a deploy where the key file is already live):
 Good times to run it: the first time the key file goes live (initial indexing),
 and after any deploy that changes page content (e.g. a weekly roster refresh).
 Exits non-zero if IndexNow rejects the submission.
+
+NOT GATED ON robots.txt, BECAUSE NOTHING IS BEING READ. This SUBMITS this
+site's own addresses to an ingestion endpoint that exists to receive them,
+authenticated by a key published on this site's own domain -- the direction is
+outbound, and the thing handed over is a list of our own urls. robots.txt tells
+a crawler which of a site's pages it may READ; there is no page here to read
+and nothing of api.indexnow.org's that this wants.
+
+THE TEST IS WHOSE CONTENT AND WHICH DIRECTION, never which host. An
+unauthenticated read of a page on that host would be gated in full, and so
+would following any url the endpoint returned. Stated here in full rather than
+as a pointer at the sibling copies of this script, so none of the three reads
+as an exemption extended by analogy.
 """
 import json
 import sys

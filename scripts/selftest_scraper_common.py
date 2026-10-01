@@ -19,6 +19,16 @@ Run it directly (needs `requests`, talks only to 127.0.0.1):
 It is not wired into CI — the module's consumers exercise fetch() weekly, and
 this exists so a change to scraper_common.py can be proven without touching a
 county's site. Re-run it whenever fetch() changes.
+
+NOT GATED ON robots.txt: IT TALKS ONLY TO ITS OWN SERVER. The one host this
+reaches is 127.0.0.1, an HTTP server this file starts a few lines earlier to
+serve its own fixtures, so a robots read would be this file asking itself for
+permission. A loopback address is never somebody's site -- the same reason
+probe_user_agents.py skips it -- and the whole point of the fixture is to prove
+fetch() without touching a county's server.
+
+THE TEST IS WHOSE SITE, never which client. If this ever fetched a real host,
+it would be gated in full.
 """
 import os
 import sys

@@ -40,7 +40,7 @@ import re
 import sys
 
 import requests
-from scraper_common import make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 BOARD_URL = "https://richlandcounty.illinois.gov/county-board/"
 GIS_URL = "https://richlandil.wthgis.com/"
@@ -85,6 +85,8 @@ fail = make_fail("richland-board-scraper")
 
 
 def get(url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-richland-county-board-scraper")
     resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
     resp.raise_for_status()
     return resp.text

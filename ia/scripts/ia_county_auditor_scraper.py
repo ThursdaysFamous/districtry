@@ -70,7 +70,8 @@ import requests
 _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
-from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+from scraper_common import (UA_HEADERS_ROSTER_BOT,  # noqa: E402  (FLEET_SHARED)
+                            require_robots_once)
 
 CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache")
 OUT_PATH = os.path.join(CACHE_DIR, "ia_county_auditors.json")
@@ -160,11 +161,13 @@ def parse_block(block):
 
 
 SOS_URL = "https://sos.iowa.gov/auditors/"
-# sos.iowa.gov refuses this project's own short UA; a browser UA gets 200.
-SOS_HEADERS = {
-    "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                   "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"),
-}
+# THE REFUSAL THIS LINE RECORDED HAS GONE STALE (re-measured 2026-10-01). It
+# read "sos.iowa.gov refuses this project's own short UA; a browser UA gets
+# 200", and that day the host answered HTTP 200 and 238,751 bytes to BOTH the
+# short districtry token and the fleet's own roster token, byte for byte, with
+# all 99 auditor blocks present in each. A RECORDED REFUSAL IS A MEASUREMENT
+# WITH A DATE, not a standing fact, and nothing re-read this one.
+SOS_HEADERS = dict(UA_HEADERS_ROSTER_BOT)
 SOS_BLOCK_RE = re.compile(
     r'<h2[^>]*id="[^"]*CountyAuditor"[^>]*>([^<]+)</h2>(.*?)'
     r'(?=<h2[^>]*id="[^"]*CountyAuditor"|\Z)', re.S)

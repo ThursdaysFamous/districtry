@@ -197,7 +197,7 @@ import urllib.parse
 
 import requests
 from arcgis_error import raise_for_arcgis_error
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pdfplumber
@@ -217,7 +217,7 @@ BELVIDERE_WARD_SERVICE = ("https://maps.boonecountyil.org/arcgis/rest/services/"
                           "Clerk_and_Recorder/Belvidere_Wards/MapServer/0")
 
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 120
 
@@ -418,6 +418,8 @@ def format_phone(match):
 def discover_yearbook_url(warnings):
     """-> the URL of the newest edition the index page LABELS, else the pin."""
     try:
+        require_robots_once(INDEX_PAGE, HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-boone-municipal-officials-scraper")
         resp = requests.get(INDEX_PAGE, headers=HEADERS, timeout=REQUEST_TIMEOUT)
         resp.raise_for_status()
     except Exception as exc:  # noqa: BLE001
@@ -438,6 +440,8 @@ def discover_yearbook_url(warnings):
 
 
 def fetch_pdf(url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-boone-municipal-officials-scraper")
     resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT,
                         allow_redirects=True)
     resp.raise_for_status()
@@ -862,6 +866,8 @@ def cross_check_wards(municipalities, warnings):
     if not seats:
         return "skipped: no ward seats parsed"
     try:
+        require_robots_once(BELVIDERE_WARD_SERVICE + "/query", HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-boone-municipal-officials-scraper")
         resp = requests.get(BELVIDERE_WARD_SERVICE + "/query", headers=HEADERS,
                             timeout=REQUEST_TIMEOUT,
                             params={"where": "1=1", "outFields": "*",

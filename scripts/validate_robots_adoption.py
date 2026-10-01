@@ -45,26 +45,108 @@ TWO TABLES, BECAUSE THEY ARE TWO DIFFERENT CLAIMS.
   progress, and adding one is not available to a new scraper — a file that
   fetches, reads nothing and is not already listed FAILS.
 
+  WHAT IS LEFT IN IT NO LONGER SHARES THAT REASON, and the shared-reason design
+  is why nothing in this file says so. The wiring pass took it from 224 entries
+  to 30 in a day, and the next pass took the last 25 of those in one, leaving a
+  single name. What that pass found is the reason the paragraph it replaces was
+  wrong about its own remainder: those 25 were described as reaching hosts that
+  refuse us, challenge us, or answer nothing, and all three of those readings
+  came from a record measured on 2026-09-30. Re-measured from a runner a day
+  later, TWENTY-EIGHT HOSTS ANSWERED — eleven that had answered with a managed
+  challenge served a policy on all three reads of a deliberate re-measurement
+  fifteen seconds apart, and nine that had timed out either serve a policy or
+  answer HTTP 404, which is no policy at all and permits everything.
+
+  A RECORDED REFUSAL GOES STALE AND NOTHING RE-READS IT. That is the lesson, and
+  it is the same one #1340 found in two scrapers' hand-written notes about a
+  browser string. A refusal is a measurement with a date, so a backlog built on
+  one is a backlog with an expiry nobody prints. Re-measure before concluding
+  that a decision is owed.
+
+  THE ONE ENTRY LEFT IS NOT A DECISION EITHER. coles_county_board_scraper.py
+  reads www.colesco.illinois.gov, whose own leaf certificate EXPIRED around
+  2026-09-27: its weekly refresh has failed since, with "certificate has
+  expired", and the robots read fails the same way through the pinned
+  intermediate that used to complete its chain. Nothing can read that site until
+  the county renews, so there is no policy to obey and nothing to wire; the
+  shipped roster keeps its last-good records under Adam's ruling of 2026-09-19.
+  It stays here rather than being excused, because the day the certificate is
+  renewed this is an ordinary task again.
+
+  THREE OF THOSE 30 WERE NEVER IN THAT CLASS AND WERE SORTED THERE BY READING A
+  URL LITERAL, which is the same defect this gate's own AST rule exists to avoid
+  one level up. `scripts/build_stephenson_fire_districts.py`,
+  `ia/scripts/build_ia_judicial_district.py` and
+  `scripts/will_municipal_officials_scraper.py` each name a refusing host — an
+  `elections.il.gov` map url written into every feature as `mapUrl`, the Code of
+  Iowa sections and Judicial Branch pages a docstring cites, a Clarity asset
+  address in a comment — and none of the three ever requests it. A CITATION IS
+  NOT A FETCH, so the hosts they do read (TIGERweb, one ArcGIS feature service,
+  the Will County Clerk and the flipbook the Clerk publishes on) all permit
+  them, and all three were wired on 2026-09-30 with no ruling needed. Bucketing
+  a file by the addresses it contains over-counts for exactly the reason a text
+  match for the seam over-counts: the literal is evidence of a mention, never of
+  a request.
+
   `DECLARED_EXEMPT` is for a file whose fetch genuinely must not be gated, each
-  with its own reason and date. It is EMPTY on introduction, which is a
-  measurement rather than an omission: the three candidates considered were the
+  with its own reason and date. It was EMPTY on introduction, which was called a
+  measurement rather than an omission: "the three candidates considered were the
   two `indexnow_submit.py` submitters and `scripts/mirror_*_tiles.py`, and all
   three are ordinary automatic clients fetching somebody else's host, so all
-  three belong in the backlog and none is exempt. The one real class of
+  three belong in the backlog and none is exempt."
+
+  THAT READING WAS WRONG ABOUT THE TWO SUBMITTERS, and it is kept above rather
+  than deleted because the way it was wrong is the thing to learn. It asked
+  WHICH HOST is contacted and WHETHER A PROGRAM does the contacting — both true
+  of an IndexNow submission — and never asked WHICH DIRECTION the content moves.
+  robots.txt says which of a site's pages a crawler may READ. A submitter hands
+  over a list of our own addresses and reads nothing, so there is no page for a
+  policy to permit or refuse, and the rule has nothing to say about it. The
+  three copies of that script are exempt (2026-09-30), each arguing its own case
+  in its own file. `mirror_*_tiles.py` is unaffected: it really does read
+  somebody else's data, and it was wired rather than excused. The one real class of
   unreadable policy already has a home in
   `scraper_common.ROBOTS_DEFERRED_HOSTS`, which is per HOST and records the
   measurement; a per-FILE exemption would hide the same fact where nobody
   measures it.
 
-  IT HAS ONE ENTRY SINCE 2026-09-30, `goatcounter_fetch.py`, and it is the class
-  the paragraph above was holding the table open for rather than a loosening of
-  it: an authenticated read of this project's OWN analytics account with its own
-  token, where the host's blanket rule is aimed at search engines reading
-  customer dashboards. The three candidates rejected on introduction are all
-  still in the backlog, because each is an ordinary automatic client fetching
-  somebody else's host. The distinction is whose data and whose credential,
-  never which host, and it is argued in the exempt file rather than here so it
-  cannot be picked up by analogy from a one-line reason.
+  EVERY ENTRY IS the class the paragraph above was holding the table open for
+  rather than a loosening of it, and they fall in four groups, the group being
+  the argument in each case. check() requires every path in the table to be
+  named in this list, so the list cannot quietly stop describing the table; no
+  count is stated in either place, because the run's own OK line prints it:
+
+    * a read of this project's OWN data with its OWN credential —
+      `scripts/goatcounter_fetch.py`, `scripts/gsc_fetch.py`,
+      `scripts/bing_fetch.py`, `scripts/verify_google_api_access.py`,
+      `scripts/fleet_status.py`, `scripts/check_roster_workflow_health.py`,
+      `wi/scripts/wi_coa_staleness.py`. The blanket rule on each of those hosts
+      is aimed at search engines reading customer dashboards and web interfaces,
+      not at an account holder reading their own account through the API the
+      credential was issued for.
+    * an OUTBOUND submission of our own addresses, reading nothing — the three
+      copies of that script: `scripts/indexnow_submit.py`,
+      `ca/scripts/indexnow_submit.py`, `ny/scripts/indexnow_submit.py`.
+    * a step in completing a TLS HANDSHAKE, or a MEASUREMENT of one —
+      `scripts/aia_bundle.py`, which fetches the intermediate certificate named
+      inside a leaf a host has just served, and
+      `scripts/probe_incomplete_tls_chains.py`, whose subject is the set of hosts
+      whose chain no plain client can complete. Gating either is circular: those
+      hosts' robots.txt cannot be read until the intermediate is in hand, which
+      is the thing the probe is run to discover.
+    * a file that talks only to a server IT STARTED ITSELF —
+      `scripts/selftest_scraper_common.py`, whose one host is loopback.
+    * a NAME LOOKUP rather than a read — `scripts/build_county_clerk_roster.py`,
+      whose one fetch asks a DNS-over-HTTPS resolver whether each shipped
+      address's domain has a mail route. A resolver is the layer BELOW the one
+      robots.txt governs: every gated fetch here resolves a name first,
+      including the fetch of robots.txt itself.
+
+  The test is never which host answers. It is whose data and whose credential,
+  or whose content and which direction, or whether any page is read at all — and
+  EVERY entry argues its own case at length in its own file rather than in the
+  one-line reason here, so no exemption can be picked up by analogy from this
+  table.
 
 WHAT IT CANNOT SEE, stated rather than implied. It asks whether a file reaches
 the seam, never whether it reaches it BEFORE its first fetch or for EVERY host
@@ -75,6 +157,7 @@ attempt, and it is why the seam raises rather than returning False.
 
 import ast
 import os
+import re
 import subprocess
 import sys
 
@@ -212,147 +295,114 @@ def tracked_python():
 # the tree, and on a fetching file that is not here and reads nothing.
 # ---------------------------------------------------------------------------
 UNWIRED_AT_SWEEP = frozenset("""
-    ca/scripts/build_ca_legislature_roster.py
-    ca/scripts/build_sf_supervisor_roster.py
-    ca/scripts/indexnow_submit.py
-    ca/scripts/validate_sources.py
-    ia/scripts/build_ia_community_colleges.py
-    ia/scripts/build_ia_gap_outlines.py
-    ia/scripts/build_ia_judicial_district.py
-    ia/scripts/build_ia_legislature_roster.py
-    ia/scripts/build_ia_precincts.py
-    ia/scripts/build_ia_school_sites.py
-    ia/scripts/cedar_rapids_council_scraper.py
-    ia/scripts/dsm_council_scraper.py
-    ia/scripts/ia_county_directory_scraper.py
-    ia/scripts/ia_legislature_scraper.py
-    ia/scripts/waterloo_council_scraper.py
-    in/scripts/validate_sources.py
-    mi/scripts/build_mi_gap_outlines.py
-    mi/scripts/build_mi_legislature_roster.py
-    mi/scripts/build_mi_precincts.py
-    mi/scripts/mi_detroit_council_scraper.py
-    mi/scripts/mi_grand_rapids_council_scraper.py
-    mi/scripts/mi_senate_scraper.py
-    mi/scripts/validate_sources.py
-    nc/scripts/build_nc_legislature_roster.py
-    nc/scripts/validate_sources.py
-    ny/scripts/build_tompkins_legislature.py
-    ny/scripts/cec_scraper.py
-    ny/scripts/indexnow_submit.py
-    ny/scripts/ny_legislature_scraper.py
-    ny/scripts/nypd_precinct_scraper.py
-    ny/scripts/validate_sources.py
-    scripts/adams_county_board_scraper.py
-    scripts/aia_bundle.py
-    scripts/bing_fetch.py
-    scripts/boone_district_officials_scraper.py
-    scripts/boone_municipal_officials_scraper.py
-    scripts/build_block_population.py
-    scripts/build_carroll_precinct_polling.py
-    scripts/build_county_clerk_roster.py
-    scripts/build_county_outline.py
-    scripts/build_district_search.py
-    scripts/build_hamilton_precinct_polling.py
-    scripts/build_henry_precinct_polling.py
-    scripts/build_jodaviess_board_districts.py
-    scripts/build_knox_board_districts.py
-    scripts/build_lasalle_board_districts.py
-    scripts/build_logan_park_districts.py
-    scripts/build_logan_precinct_polling.py
-    scripts/build_macon_board_district_labels.py
-    scripts/build_municipal_ward_coverage.py
-    scripts/build_parcel_fabric_districts.py
-    scripts/build_statewide_library_districts.py
-    scripts/build_stclair_precinct_polling.py
-    scripts/build_stephenson_fire_districts.py
-    scripts/build_stephenson_precincts.py
-    scripts/build_vermilion_boundaries.py
-    scripts/build_winnebago_county_board_roster.py
-    scripts/cass_municipal_officials_scraper.py
-    scripts/ccbr_scraper.py
-    scripts/ccpsa_scraper.py
-    scripts/check_engine_parity.py
-    scripts/check_roster_workflow_health.py
-    scripts/clay_county_board_scraper.py
     scripts/coles_county_board_scraper.py
-    scripts/comptroller_afr.py
-    scripts/cook_municipal_officials_scraper.py
-    scripts/cpd_district_scraper.py
-    scripts/dekalb_county_board_scraper.py
-    scripts/dekalb_municipal_officials_scraper.py
-    scripts/douglas_county_board_scraper.py
-    scripts/dupage_county_board_scraper.py
-    scripts/edgar_county_board_scraper.py
-    scripts/fleet_status.py
-    scripts/franklin_county_board_scraper.py
-    scripts/fulton_county_board_scraper.py
-    scripts/generate_metro_files.py
-    scripts/gsc_fetch.py
-    scripts/henry_county_board_scraper.py
-    scripts/henry_municipal_officials_scraper.py
-    scripts/il_county_commissioners_scraper.py
-    scripts/il_library_contacts_scraper.py
-    scripts/il_special_district_officials_scraper.py
-    scripts/indexnow_submit.py
-    scripts/jackson_county_board_scraper.py
-    scripts/jodaviess_county_board_scraper.py
-    scripts/kane_county_board_scraper.py
-    scripts/kane_municipal_officials_scraper.py
-    scripts/kankakee_district_officials_scraper.py
-    scripts/kankakee_municipal_officials_scraper.py
-    scripts/lake_county_board_roles_scraper.py
-    scripts/lake_municipal_officials_scraper.py
-    scripts/lasalle_municipal_officials_scraper.py
-    scripts/macoupin_municipal_officials_scraper.py
-    scripts/marshall_county_board_scraper.py
-    scripts/mcdonough_county_board_scraper.py
-    scripts/peoria_county_board_scraper.py
-    scripts/peoria_municipal_officials_scraper.py
-    scripts/plano_council_scraper.py
-    scripts/probe_incomplete_tls_chains.py
-    scripts/richland_county_board_scraper.py
-    scripts/sangamon_county_board_scraper.py
-    scripts/selftest_scraper_common.py
-    scripts/shelby_county_board_scraper.py
-    scripts/skokie_trustee_districts_scraper.py
-    scripts/stark_county_board_scraper.py
-    scripts/tazewell_county_board_scraper.py
-    scripts/verify_google_api_access.py
-    scripts/vermilion_county_board_scraper.py
-    scripts/vtd_board_districts.py
-    scripts/warren_county_board_scraper.py
-    scripts/wayne_county_board_scraper.py
-    scripts/whiteside_municipal_officials_scraper.py
-    scripts/will_city_councils_scraper.py
-    scripts/will_county_board_scraper.py
-    scripts/will_municipal_officials_scraper.py
-    scripts/winnebago_municipal_officials_scraper.py
-    scripts/woodford_county_board_scraper.py
-    wi/scripts/build_rusd_school_board_districts.py
-    wi/scripts/build_wi_legislature_roster.py
-    wi/scripts/build_wi_libraries.py
-    wi/scripts/build_wi_municipal_clerks.py
-    wi/scripts/build_wi_school_sites.py
-    wi/scripts/rusd_school_board_scraper.py
-    wi/scripts/validate_sources.py
-    wi/scripts/verify_kenosha_supervisory_map.py
-    wi/scripts/wi_alderperson_scraper.py
-    wi/scripts/wi_bluebook_municipal_scraper.py
-    wi/scripts/wi_circuit_judges_scraper.py
-    wi/scripts/wi_coa_scraper.py
-    wi/scripts/wi_coa_staleness.py
-    wi/scripts/wi_county_clerk_scraper.py
-    wi/scripts/wi_county_officer_contact_scraper.py
-    wi/scripts/wi_wec_probe.py
-    wi/scripts/wi_wec_recon.py
 """.split())
 
 # path -> (reason, date). EMPTY on introduction, deliberately; see the docstring.
-# ONE ENTRY SINCE, and it is the class the docstring said it was reserving the
-# table for: a fetch that genuinely must not be gated, rather than one that has
-# not been gated yet.
+# Every entry is the class the docstring said it was reserving the table for: a
+# fetch that genuinely must not be gated, rather than one that has not been
+# gated yet. The docstring groups them and says why each group is not a crawl,
+# and check() requires every path here to be NAMED there — two places stating a
+# COUNT is how the two come to disagree, so neither states one and the run's own
+# OK line prints it. EVERY ONE carries its whole argument in its own file rather
+# than a pointer at a sibling, so no exemption can be borrowed by analogy from a
+# row in this table.
+#
+# A PATH IN BOTH TABLES IS EXCUSED TWICE AND COUNTED TWICE, which is what
+# happened to the two entries below when they were declared exempt and left in
+# the backlog they had been swept into. A file excused by both is also a file
+# whose exemption can be deleted with nothing turning red, because the backlog
+# goes on covering it silently. check() refuses an overlap for that reason.
 DECLARED_EXEMPT = {
+    "scripts/build_county_clerk_roster.py": (
+        "ITS ONE FETCH IS A NAME LOOKUP: it asks a DNS-over-HTTPS resolver "
+        "whether each shipped clerk address's domain has a mail route, and what "
+        "comes back is a DNS answer rather than a page. A resolver sits BELOW "
+        "the layer robots.txt governs — every gated fetch in this repository "
+        "resolves a name first, the fetch of robots.txt included, so gating "
+        "this one would need a name lookup to perform it. THE TEST IS WHETHER "
+        "SOMEBODY'S PAGES ARE BEING READ, never which host answers; argued at "
+        "length in the file",
+        "2026-09-30"),
+    "scripts/aia_bundle.py": (
+        "NOT A CRAWL BUT A STEP IN A TLS HANDSHAKE: it fetches an "
+        "intermediate CA certificate from the AIA url printed inside a leaf "
+        "certificate a host has just served, which is what an AIA url is "
+        "for, and each one is pinned by hash. Gating it would also be "
+        "circular — the four hosts it completes chains for serve an "
+        "incomplete chain, so their robots.txt cannot be read until the "
+        "intermediate is in hand. THE TEST IS WHETHER SOMEBODY'S PAGES ARE "
+        "BEING READ, never which host answers; the argument is made at "
+        "length in the file itself so it cannot be applied by analogy from "
+        "here",
+        "2026-09-30"),
+    "scripts/probe_incomplete_tls_chains.py": (
+        "THE SAME CIRCULARITY AS aia_bundle.py, and the same class: what it "
+        "MEASURES is whether a TLS chain completes. It asks each host for `/`, "
+        "throws the body away and keeps the status code and the certificate, so "
+        "there is no content it takes. Its subject is precisely the hosts whose "
+        "chain no plain client can complete, so their robots.txt cannot be read "
+        "either until the intermediate is in hand — which is the thing this probe "
+        "is run to discover — and an unreachable robots.txt disallows, so a gated "
+        "version would refuse every host it was pointed at and measure nothing. "
+        "Every scraper that goes on to READ one of these hosts is gated in full "
+        "and passes the completed bundle to the robots read. THE TEST IS WHETHER "
+        "SOMEBODY'S PAGES ARE BEING READ, never which host answers; argued at "
+        "length in the file",
+        "2026-10-01"),
+    "scripts/indexnow_submit.py": (
+        "OUTBOUND SUBMISSION, NOT A READ: it hands districtry's own "
+        "addresses to an ingestion endpoint that exists to receive them, "
+        "keyed by a file on districtry's own domain. robots.txt says which "
+        "of a site's pages a crawler may READ, and there is no page here to "
+        "read. THE TEST IS WHOSE CONTENT AND WHICH DIRECTION, never which "
+        "host; argued at length in the file",
+        "2026-09-30"),
+    "ca/scripts/indexnow_submit.py": (
+        "The same script and the same argument as "
+        "scripts/indexnow_submit.py, carried in full in its own file rather "
+        "than by pointer so none of the three copies reads as an exemption "
+        "extended by analogy. (It still names chidistricts.com, a pre- "
+        "rebrand leftover recorded for that instance's owner rather than "
+        "changed here — it does not affect the exemption either way)",
+        "2026-09-30"),
+    "ny/scripts/indexnow_submit.py": (
+        "The third copy of that script, argument carried in full in its own "
+        "file for the same reason. (Also still names chidistricts.com; same "
+        "note)",
+        "2026-09-30"),
+    "scripts/fleet_status.py": (
+        "AUTHENTICATED READ OF THIS PROJECT'S OWN REPOSITORY: "
+        "api.github.com with this project's own token, asking GitHub about "
+        "districtry's own runs and pull requests through the API the token "
+        "is issued for. That host's blanket robots rule addresses crawlers "
+        "of the web interface, not an account holder reading their own "
+        "repository. THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never "
+        "which host; argued at length in the file",
+        "2026-09-30"),
+    "scripts/check_roster_workflow_health.py": (
+        "The same class, argued in full in its own file rather than pointed "
+        "at fleet_status.py: our token, our repository, the documented API, "
+        "no page read",
+        "2026-09-30"),
+    "wi/scripts/wi_coa_staleness.py": (
+        "The same class again, argued in full in its own file: our token "
+        "asking whether Wisconsin's own weekly verification actually ran",
+        "2026-09-30"),
+    "scripts/selftest_scraper_common.py": (
+        "IT TALKS ONLY TO ITS OWN SERVER. The one host is 127.0.0.1, an "
+        "HTTP server the file starts a few lines earlier to serve its own "
+        "fixtures, so a robots read would be the file asking itself for "
+        "permission — the same reason probe_user_agents.py skips loopback. "
+        "THE TEST IS WHOSE SITE, never which client",
+        "2026-09-30"),
+    "scripts/verify_google_api_access.py": (
+        "AUTHENTICATED CHECK OF THIS PROJECT'S OWN CREDENTIALS: it presents "
+        "the operator's service-account key to Search Console and GA4 and "
+        "asks which of districtry's own properties that key can read. No "
+        "page read, no link followed. THE TEST IS WHOSE DATA AND WHOSE "
+        "CREDENTIAL, never which host; argued at length in the file",
+        "2026-09-30"),
     "scripts/goatcounter_fetch.py": (
         "AUTHENTICATED READ OF THIS PROJECT'S OWN ACCOUNT, not a crawl of "
         "somebody else's pages. districtry.goatcounter.com serves `User-agent: * "
@@ -367,6 +417,25 @@ DECLARED_EXEMPT = {
         "repository is an unauthenticated read of somebody else's public pages, "
         "where the rule binds in full. The argument is made at length in the "
         "file itself so it cannot be applied by analogy from here",
+        "2026-09-30"),
+    "scripts/gsc_fetch.py": (
+        "THE SAME CLASS AS goatcounter_fetch.py ABOVE, and swept in the day the "
+        "wiring pass reached it: a Google service-account credential the operator "
+        "granted to districtry's own Search Console properties, asking that "
+        "service for districtry's own traffic statistics through the API Google "
+        "documents for it. No page is read, no link followed, no url discovered. "
+        "THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never which host: an "
+        "unauthenticated read of a page on a Google host would be gated in full. "
+        "The argument is made at length in the file itself so it cannot be "
+        "applied by analogy from here",
+        "2026-09-30"),
+    "scripts/bing_fetch.py": (
+        "The sibling half of the pair above, exempt for the same reason and on "
+        "the same test: a Bing Webmaster Tools key issued to the operator for "
+        "districtry's own verified properties, reading districtry's own search "
+        "statistics. Its own file carries the whole argument rather than a "
+        "pointer at gsc_fetch.py, so neither reads as an exemption extended by "
+        "analogy",
         "2026-09-30"),
 }
 
@@ -400,6 +469,28 @@ def main(argv):
 
     on_disk = set(files)
     wired_now = set(fetchers) - set(unwired)
+    # Tokenised rather than a substring test: "scripts/indexnow_submit.py" is a
+    # substring of "ca/scripts/indexnow_submit.py", so a plain `in` would let one
+    # instance's copy satisfy the root copy's requirement and pass three paths on
+    # one mention.
+    named = set(re.findall(r"[A-Za-z0-9_./-]+\.py", __doc__ or ""))
+    for p in sorted(DECLARED_EXEMPT):
+        if p not in named:
+            problems.append("%s is in DECLARED_EXEMPT and is not named in this "
+                            "module's docstring, where the exemptions are "
+                            "grouped and each group's reason is given. A table "
+                            "row carries a one-line reason; the docstring is "
+                            "where a reader learns which KIND of fetch is "
+                            "excused, and a row missing from it is an exemption "
+                            "in a class nobody stated." % p)
+    for p in sorted(set(UNWIRED_AT_SWEEP) & set(DECLARED_EXEMPT)):
+        problems.append("%s is in UNWIRED_AT_SWEEP and in DECLARED_EXEMPT. The "
+                        "two tables say different things — not gated YET, and "
+                        "must not be gated — so a path cannot honestly be in "
+                        "both, it is excused twice, it is counted twice in the "
+                        "OK line, and deleting its exemption turns nothing red "
+                        "because the backlog keeps covering it. Take it out of "
+                        "the backlog." % p)
     for p in sorted(UNWIRED_AT_SWEEP):
         if p not in on_disk:
             problems.append("%s is in UNWIRED_AT_SWEEP and is not in the tree — "

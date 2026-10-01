@@ -92,6 +92,10 @@ import re
 import sys
 
 import requests
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache")
 OUT_PATH = os.path.join(CACHE_DIR, "waterloo_council.json")
@@ -123,6 +127,8 @@ EMAIL_RE = re.compile(r"[\w.+-]+@[\w.-]+\.\w{2,}")
 
 
 def fetch(url):
+    require_robots_once(url, HEADERS["User-Agent"],
+                        headers=HEADERS, label="ia-waterloo-council-scraper")
     r = requests.get(url, headers=HEADERS, timeout=45)
     r.raise_for_status()
     return r.text

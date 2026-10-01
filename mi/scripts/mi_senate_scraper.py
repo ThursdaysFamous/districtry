@@ -34,9 +34,14 @@ Usage:
 
 import html as html_module
 import json
+import os
 import re
 import sys
 import urllib.request
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 SOURCE_URL = "https://senate.michigan.gov/senators/all-senators/"
 
@@ -55,6 +60,8 @@ TIMEOUT = 60
 
 
 def fetch(url=SOURCE_URL):
+    require_robots_once(url, HEADERS["User-Agent"],
+                        headers=HEADERS, label="mi-mi-senate-scraper")
     req = urllib.request.Request(url, headers=HEADERS)
     with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
         return resp.read().decode("utf-8", errors="replace")

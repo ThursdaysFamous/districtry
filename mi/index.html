@@ -4103,7 +4103,9 @@ function initMichiganExplorer() {
     { id: "michigan", label: "Michigan", url: "https://districtry.com/mi/", emoji: "🚗", explorerName: "districtry Michigan",
       bbox: { minLng: -87.6, minLat: 41.7, maxLng: -82.11, maxLat: 48.01 } },
     { id: "minnesota", label: "Minnesota", url: "https://districtry.com/mn/", emoji: "🛶", explorerName: "districtry Minnesota",
-      bbox: { minLng: -97.3, minLat: 43.44, maxLng: -89.58, maxLat: 49.44 } }
+      bbox: { minLng: -97.3, minLat: 43.44, maxLng: -89.58, maxLat: 49.44 } },
+    { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
+      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -8372,7 +8374,7 @@ function initMichiganExplorer() {
     "county-commissioner", // 619 districts across all 83 counties — the finest tiling this instance ships, smaller than a state House district
     "county-subdivision", // 1,581 records tiling the state, live from TIGERweb (no data/app file) — 1,122 general-law townships, 118 charter townships, 301 city placeholder records for 281 distinct cities (18 of which cross a county line), and 40 'not defined' records that are pure Great Lakes water
     "zip-code",          // 1,010 ZIP Code Tabulation Areas covering Michigan, live from TIGERweb (no data/app file) — 139.7 km2 mean feature area, between a township and a precinct
-    "city-ward",         // Detroit's seven districts over 139 sq mi and Grand Rapids's three wards over 45 — both smaller than a typical Michigan ZCTA and far larger than a precinct; ranked on the larger city's districts
+    "city-ward",         // Seven cities: Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson. Their districts run from Detroit's seven over 139 sq mi (about 20 each) down to Jackson's six wards over 11 (about 2 each), measured 2026-10-01 — all smaller than a typical Michigan ZCTA; ranked on Detroit's, the largest
     "precinct",          // 3,895 voting precincts across all 83 counties, pre-built from the state's own 2026-cycle layer — 38.8 km2 mean feature area against a 6.4 km2 median, a six-fold skew because a rural township precinct and a city precinct are barely the same kind of object; the finest tiling this instance ships
     "municipality",      // 533 incorporated places, live from TIGERweb (no data/app file) — 281 cities and 252 villages, small dense pockets inside the township fabric, so the smallest layer this instance ships at a 12 km2 mean
     "police-station",    // 1,290 police-station points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
@@ -13614,6 +13616,9 @@ function initMichiganExplorer() {
 
 
   /* ---------- 15. City Council District — Detroit and Grand Rapids ----------
+   * (Written when these were the only two. The layer now draws seven cities;
+   * Warren, Flint, Rochester Hills, Battle Creek and Jackson have their
+   * entries further down this section.)
    * ONE DISPATCHED LAYER, TWO CITIES, each entry pre-built from that city's
    * own ArcGIS org and each bringing its own card, because the two bodies are
    * not alike. Grand Rapids's half is further down, after Detroit's.
@@ -15907,8 +15912,9 @@ function initMichiganExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "mi-senate", "mi-house", "county-commissioner",
     // The city tier sits after the county board: same Political family, one
-    // level finer. It hides outside the two cities that publish boundaries
-    // (Detroit and Grand Rapids), so for most readers this slot is not there.
+    // level finer. It hides outside the seven cities whose boundaries it
+    // draws (Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle
+    // Creek and Jackson), so for most readers this slot is not there.
     "city-ward",
     "school-district-unified", "school-district-elementary",
     "county", "county-subdivision", "municipality", "zip-code", "precinct", "police-station", "fire-station", "post-office"];

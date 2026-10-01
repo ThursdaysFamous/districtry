@@ -110,7 +110,7 @@ from build_stephenson_board_districts import (  # noqa: E402  (same map series)
     TOWNSHIP_POP, as_features, fit_affine_icp, hydro_check, need,
     rings_of_path,
 )
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, make_fail  # noqa: E402  (shared machinery — do not fork)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "stephenson-precincts.json")
@@ -398,6 +398,8 @@ def read_freeport(pymupdf, Polygon, Point, unary_union):
 
 
 def fetch_townships(shape):
+    require_robots_once(TIGER_COUSUB, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-stephenson-precincts")
     resp = requests.get(TIGER_COUSUB, headers=HEADERS, timeout=REQUEST_TIMEOUT,
                         params={"where": "STATE='%s' AND COUNTY='%s'"
                                          % (STATE_FIPS, COUNTY_FIPS),
@@ -420,6 +422,8 @@ def census_county_population():
     must reproduce between them."""
     url = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
            "tigerWMS_Census2020/MapServer/20/query")
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-stephenson-precincts")
     resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "STATE='%s' AND COUNTY='%s'" % (STATE_FIPS, COUNTY_FIPS),
         "outFields": "BASENAME,POP100", "returnGeometry": "false", "f": "json"})
@@ -598,6 +602,8 @@ def main():
         fail("the 36 precincts overlap each other by %.3f%% of their union — "
              "they are supposed to tile the county exactly once"
              % (100 * overlap / union.area))
+    require_robots_once(TIGERWEB, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-stephenson-precincts")
     resp = requests.get(TIGERWEB, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "STATE='%s' AND COUNTY='%s'" % (STATE_FIPS, COUNTY_FIPS),
         "outFields": "NAME", "returnGeometry": "true", "outSR": "4326",

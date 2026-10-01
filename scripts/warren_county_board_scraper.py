@@ -34,7 +34,7 @@ import re
 import sys
 
 import requests
-from scraper_common import make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 BOARD_URL = "https://warrencountyil.gov/government/county-board/"
 MAP_URL = "https://warrencountyil.gov/wp-content/uploads/2025/07/Precinct-Map.pdf"
@@ -74,6 +74,8 @@ fail = make_fail("warren-board-scraper")
 
 def get(url, binary=False):
     try:
+        require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-warren-county-board-scraper")
         resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
         resp.raise_for_status()
     except Exception as exc:  # noqa: BLE001 — any failure is a refusal to write

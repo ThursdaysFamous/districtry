@@ -45,7 +45,8 @@
 //
 //   node scripts/page_consistency_test.mjs      # BASE_URL defaults to :8000
 import { chromium } from "playwright";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -111,9 +112,48 @@ function sampleGenerated(all) {
   return all.filter((p) => !deep(p) || keep.has(p));
 }
 
+// A DARK INSTANCE'S PAGES ARE IN NO SITEMAP, AND THAT IS WHERE THE WRONG
+// STATE'S IDENTITY BLOCK SHIPS. The surface above is sitemap.xml, which is the
+// right list for a published page and names no folder the deploy excludes — so
+// an instance built dark was checked by nothing at all, and on 2026-09-30 North
+// Carolina's faq.html reached main carrying MICHIGAN's canonical, og:url and
+// ld+json graph. That is the same defect mi/sources.html had on 2026-09-13,
+// which is what the canonical check was written for; it simply could not see
+// the page. A dark instance is also the worst place to leave uncovered, because
+// its pages are cloned from a sibling by construction and the publishing change
+// is the moment nobody is looking at the head.
+//
+// THE DARK LIST COMES FROM THE ONE READER THAT OWNS IT, across the language
+// boundary rather than beside it: validate_instance_registration.dark_instances()
+// already holds the tree and deploy-pages.yml's blanket `<tag>/**` excludes
+// together, and a second copy of that rule written in JavaScript is exactly the
+// two-readers defect this repo keeps paying for. If python3 cannot answer, that
+// is a broken environment and not an empty fleet, so this raises rather than
+// quietly checking the live pages alone.
+function darkInstancePaths() {
+  const out = execFileSync("python3", ["-c", [
+    "import sys; sys.path.insert(0, 'scripts')",
+    "from validate_instance_registration import dark_instances",
+    "print(' '.join(sorted(dark_instances())))",
+  ].join("\n")], { cwd: ROOT, encoding: "utf8" }).trim();
+  const tags = out ? out.split(/\s+/) : [];
+  const pages = [];
+  for (const tag of tags) {
+    for (const f of readdirSync(join(ROOT, tag)).sort()) {
+      // The sitemap lists an app as its directory (`/il/`), and the canonical
+      // check compares against the url requested, so an instance's index is
+      // asked for the same way a published one is.
+      if (f === "index.html") pages.push(`/${tag}/`);
+      else if (f.endsWith(".html")) pages.push(`/${tag}/${f}`);
+    }
+  }
+  return pages;
+}
+
 const paths = sampleGenerated([...readFileSync(join(ROOT, "sitemap.xml"), "utf8")
   .matchAll(/<loc>([^<]+)<\/loc>/g)]
-  .map((m) => m[1].replace(/^https?:\/\/[^/]+/, "")));
+  .map((m) => m[1].replace(/^https?:\/\/[^/]+/, "")))
+  .concat(darkInstancePaths());
 
 // WCAG 2.5.8 Target Size (Minimum), swept below. An entry here is a target
 // under 24 CSS px whose 24px circle reaches a neighbour and which the

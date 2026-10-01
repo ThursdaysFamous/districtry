@@ -36,7 +36,7 @@ import sys
 import time
 
 import requests
-from scraper_common import UA_ROSTER_COMPACT, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_COMPACT, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://www.woodford-county.org"
 LIST_URL = BASE + "/m/directory/department?did=22"
@@ -60,6 +60,8 @@ def fetch(url):
     # scraper_common.fetch retries 429/5xx (numeric Retry-After honoured,
     # capped) and refuses to retry 401/403/404 — the Henry rule. Parsing and
     # every page check stay in this file.
+    require_robots_once(url, UA["User-Agent"], headers=UA,
+                        label="il-woodford-county-board-scraper")
     return fetch_with_retry(url, UA, timeout=60, attempts=FETCH_ATTEMPTS).text
 
 

@@ -507,11 +507,50 @@ class Findings(object):
         return "ok"
 
 
+# The client this gate crawls as, named once because the robots read above
+# must use it: READ THE POLICY WITH THE CLIENT THAT WILL CRAWL, and two
+# literals is how that stops being true.
+VALIDATOR_UA = "districtry source validator (+https://districtry.com/ny/)"
+
+
+def robots_refuses(url):
+    """(refused, why) for `url` under its host's own robots.txt, as THIS gate.
+
+    Read through scripts/robots_policy.py — the fleet's one reader — so a host's
+    policy gets the same answer here as in every scraper. robots.txt is the one
+    document no policy governs, since a rule stated inside a file cannot bind the
+    fetch that reads it, so a declined row still costs that one request.
+
+    A REFUSAL IS A FINDING HERE AND NEVER AN EXCEPTION, because this gate's whole
+    contract is that it never raises: one host that refuses us must not stop every
+    other row from being checked. So http_get below returns the refusal the way it
+    returns an HTTP error, and the monthly report names the host and the rule that
+    refused it.
+    """
+    try:
+        import os as _os  # noqa: PLC0415
+        import sys as _sys  # noqa: PLC0415
+        _shared = _os.path.join(_os.path.dirname(_os.path.dirname(
+            _os.path.dirname(_os.path.abspath(__file__)))), "scripts")
+        if _shared not in _sys.path:
+            _sys.path.insert(0, _shared)
+        from robots_policy import RobotsGate  # noqa: PLC0415
+        ok, why = RobotsGate(None, VALIDATOR_UA).allows(url)
+        return (not ok), why
+    except Exception as exc:  # noqa: BLE001 - an unreadable policy is not a crash
+        return False, "robots.txt could not be read (%s: %s)" % (
+            type(exc).__name__, exc)
+
+
 def http_get(url, want_json=True, params=None, socrata=False):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
-    headers = {"User-Agent": "districtry source validator (+https://districtry.com/ny/)"}
+    headers = {"User-Agent": VALIDATOR_UA}
+    refused, why = robots_refuses(url)
+    if refused:
+        return False, ("NOT FETCHED, as the host's own robots.txt asks: %s"
+                       % why)
     if socrata and os.environ.get("SOCRATA_APP_TOKEN"):
         headers["X-App-Token"] = os.environ["SOCRATA_APP_TOKEN"]
     try:

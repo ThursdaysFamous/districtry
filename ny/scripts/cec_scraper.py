@@ -24,6 +24,10 @@ import os
 import re
 import sys
 import time
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "cec_raw.json")
 # Landing page listing the 32 district councils; the scraper follows each
@@ -44,6 +48,7 @@ def scrape():
         browser = pw.chromium.launch()
         page = browser.new_context(user_agent=UA).new_page()
         try:
+            require_robots_once(INDEX_URL, UA, label="ny-cec-scraper")
             page.goto(INDEX_URL, wait_until="domcontentloaded", timeout=45000)
             # collect links that look like a per-district CEC council page
             hrefs = page.eval_on_selector_all(
@@ -60,6 +65,7 @@ def scrape():
                     continue
                 seen.add(district)
                 try:
+                    require_robots_once(href, UA, label="ny-cec-scraper")
                     page.goto(href, wait_until="domcontentloaded", timeout=45000)
                     text = page.inner_text("body")
                 except Exception:

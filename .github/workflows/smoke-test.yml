@@ -1219,6 +1219,53 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 ia/scripts/ia_city_officials_scraper.py --selftest
 
+      # FOURTEEN CITIES, FIVE PARSERS, AND ONE CONVENTION THAT READS A WARD AS A
+      # STREET. These are the cities above 25,000 that named nobody, and the five
+      # already answered share none of their shapes -- one plain Mayor line, six
+      # seats, an e-mail for everyone -- so they are a separate pipeline rather
+      # than a widened one, and the gates protecting the five stay where they are.
+      # The defect this fixture keeps reproducing: `3rd Ward` parsed as a street
+      # address, because the address pattern had no word boundary before its
+      # street-word group, so `3` read as a house number and the trailing `rd`
+      # matched the road abbreviation -- four cities shipped one member each.
+      # Three more are declared: a caps line carrying role AND name together
+      # (MAYOR ROBERT S. GALLAGHER), a name the role-splitter invented out of
+      # `COUNCIL MEMBER - AT LARGE`, and the staff titles on a council page that
+      # must be dropped WITH THEIR NAMES PRINTED rather than silently skipped.
+      # 69 cases on synthetic pages, no network.
+      - name: The fourteen Iowa city council pages still parse to their own conventions
+        if: ${{ !cancelled() }}
+        run: python3 ia/scripts/ia_city_council_scraper.py --selftest
+
+      # THREE OF THOSE CITIES PUBLISH HOME ADDRESSES, and on all three the
+      # address sits between the role and the phone, which is exactly where a
+      # parser reaches for a field -- so the refusal is in the builder as well as
+      # the scraper, per field and over the whole record. Two cities name no
+      # mayor anywhere this project has read, carried as a stated fact the card
+      # prints, and the build fails if that changes in EITHER direction: a mayor
+      # appearing where none was named is as much a finding as one going missing.
+      # --check re-applies every floor and every refusal to the SHIPPED file,
+      # offline and stdlib, because the scrape cache is gitignored and a check
+      # that can only skip is a check that gates nothing.
+      - name: The shipped Iowa city councils still refuse an address and keep their seat counts
+        if: ${{ !cancelled() }}
+        run: python3 ia/scripts/build_ia_city_councils.py --check
+      # FOUR COUNTIES WHOSE TWO OUTSIDE PUBLISHERS DISAGREE about their board's
+      # size are read from the county's OWN board page instead, and the four
+      # pages take four shapes. Three defects are declared here because each
+      # shipped a wrong board once: a role word at the END of a line made
+      # `Matt Wedemeyer District 1NW` into a name (the split now cuts at the
+      # FIRST of a role word or `District`, and the right half must itself carry
+      # a role, or a committee line called `Fifth Judicial District-Corrections`
+      # invents a sixth supervisor); a bare-name line was taken for a member
+      # because the NEXT line carried someone else's role; and one county
+      # separates `District 1` from the name with a NO-BREAK SPACE, which
+      # `strip(" -")` does not strip, so that page returned zero members.
+      # 25 cases on synthetic pages, no network.
+      - name: The four Iowa county board pages still parse to their own conventions
+        if: ${{ !cancelled() }}
+        run: python3 ia/scripts/ia_county_board_page_scraper.py --selftest
+
       # The parcel-fabric builder repairs invalid geometry before it writes, and
       # its repair had four branches nothing exercised. One of them was wrong
       # for as long as it existed: `dropped` was `len(parts) - len(polys)`,

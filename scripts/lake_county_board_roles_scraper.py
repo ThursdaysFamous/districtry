@@ -58,7 +58,8 @@ from datetime import datetime, timezone
 
 import requests
 from bs4 import BeautifulSoup
-from scraper_common import fetch_stdlib, UA_CHROME_WIN_126_FULL  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (fetch_stdlib, require_robots_once,
+                            UA_CHROME_WIN_126_FULL, UA_HINTS_CHROME_126)  # noqa: E402  (shared machinery — do not fork)
 
 DIRECTORY_URL = "https://www.lakecountyil.gov/2336/Board-Members"
 HEADERS = {
@@ -88,6 +89,8 @@ def _looks_blocked(html):
 
 
 def fetch_direct(retries=3, timeout=30):
+    require_robots_once(DIRECTORY_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-lake-county-board-roles-scraper")
     last_err = None
     for attempt in range(retries):
         try:
@@ -111,6 +114,9 @@ def fetch_stdlib_rung(retries=3, timeout=30):
     between the direct rung and the Archive so a live page beats an archived
     one, which is the whole point of an enrichment that names who chairs what.
     """
+    require_robots_once(DIRECTORY_URL, UA_HINTS_CHROME_126["User-Agent"],
+                        headers=UA_HINTS_CHROME_126,
+                        label="il-lake-county-board-roles-scraper")
     last_err = None
     for attempt in range(retries):
         try:
@@ -126,6 +132,9 @@ def fetch_stdlib_rung(retries=3, timeout=30):
 
 def fetch_wayback():
     """Newest Internet Archive snapshot of the directory, age-guarded."""
+    require_robots_once("https://archive.org/wayback/available",
+                        HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-lake-county-board-roles-scraper")
     resp = requests.get("https://archive.org/wayback/available",
                         params={"url": DIRECTORY_URL}, headers=HEADERS, timeout=60)
     snap = (resp.json().get("archived_snapshots") or {}).get("closest") or {}
@@ -137,6 +146,9 @@ def fetch_wayback():
     if age_days > WAYBACK_MAX_AGE_DAYS:
         raise RuntimeError("newest archive snapshot is %d days old (max %d) — refusing "
                            "stale leadership data" % (age_days, WAYBACK_MAX_AGE_DAYS))
+    require_robots_once("https://web.archive.org/", HEADERS["User-Agent"],
+                        headers=HEADERS,
+                        label="il-lake-county-board-roles-scraper")
     r = requests.get("https://web.archive.org/web/%sid_/%s" % (ts, DIRECTORY_URL),
                      headers=HEADERS, timeout=120)
     body = r.content

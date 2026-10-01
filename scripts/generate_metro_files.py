@@ -1161,7 +1161,16 @@ def sync_fleet(ws_path, src, this_metro=None):
     """
     if src.startswith("http://") or src.startswith("https://"):
         import urllib.request
-        req = urllib.request.Request(src, headers={"User-Agent": "districtry-fleet-sync"})
+        # The address is whatever the caller passed, so the robots read happens
+        # HERE rather than against a constant at the top of the file: in practice
+        # this is districtry's own manifest on districtry's own domain, and in
+        # practice is not a guarantee. Same client as the fetch below, because
+        # which client crawls decides which group binds.
+        from scraper_common import require_robots_once
+        ua = "districtry-fleet-sync"
+        require_robots_once(src, ua, headers={"User-Agent": ua},
+                            label="fleet-sync-manifest")
+        req = urllib.request.Request(src, headers={"User-Agent": ua})
         with urllib.request.urlopen(req, timeout=30) as resp:
             manifest = json.loads(resp.read().decode("utf-8"))
     else:

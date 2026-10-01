@@ -6,12 +6,13 @@ name: Update U.S. House (KY) roster
 # changed, opens a PR rather than committing directly to main — officeholder
 # data should get a human look before it ships.
 #
-# NO PAGE REGENERATION STEP, and that is a measurement rather than an omission:
-# the sibling congress workflows also run build_officeholder_tables.py, because
-# each of their instances ships a congress.html carrying a GENERATED table of
-# the same roster. This instance ships no sub-pages at all yet, so no page
-# reads this file and there is nothing to regenerate. The day ky/congress.html
-# lands, those three steps and the wider `git add` land with it.
+# THOSE THREE STEPS LANDED WITH THE GO-LIVE CHANGE (2026-09-30). Until then this
+# workflow correctly had none, because the instance shipped no sub-pages and no
+# page read this file. `ky/congress.html` now carries a GENERATED table of this
+# roster, and `about.html` and `sitemap.xml` count it, so all three are
+# regenerated here and staged in the same `git add` — otherwise this workflow's
+# own bot PR fails those pages' `--check` on numbers the PR is not about, which
+# is a failure that lands on the bot rather than on whoever caused it.
 
 on:
   schedule:
@@ -78,7 +79,10 @@ jobs:
           # alone and a push cannot read as updating a workflow.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add ky/data/app/congress-roster.json
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add ky/data/app/congress-roster.json ky/congress.html about.html sitemap.xml
           git commit -m "Update U.S. House (KY) roster from congress-legislators"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

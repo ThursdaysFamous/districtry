@@ -74,7 +74,7 @@ import re
 import sys
 import urllib.parse
 import urllib.request
-from scraper_common import UA_CHROME_X11_120  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CHROME_X11_120  # noqa: E402  (shared machinery — do not fork)
 # One reader of Rockford's council directory, shared rather than re-scraped: the
 # ward card and this roster must not be free to disagree about who holds a seat.
 # Its INDEX_URL is imported rather than restated: a second copy of the address
@@ -164,6 +164,8 @@ EMAIL_HEADS_VERIFIED = "2026-08-17"
 
 def get_json(url, params):
     query = urllib.parse.urlencode(params)
+    require_robots_once(url + "?" + query, USER_AGENT, headers={"User-Agent": USER_AGENT},
+                        label="il-winnebago-municipal-officials-scraper")
     req = urllib.request.Request(url + "?" + query, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
         return json.load(resp)

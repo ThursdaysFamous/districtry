@@ -106,6 +106,11 @@ import time
 import html as htmllib
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from robots_policy import RobotsGate  # noqa: E402  (FLEET_SHARED)
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 OUT = os.path.join(SCRIPT_DIR, ".cache", "wi_county_officer_contacts_raw.json")
@@ -564,7 +569,56 @@ SUFFIXES = {"jr", "sr", "ii", "iii", "iv", "dr"}
 DIRECTORY_SPAN = 400
 
 
+_ROBOTS = {}
+
+
+def robots_allows(url):
+    """(allowed, why) for `url` under its host's own robots.txt, asked once.
+
+    READ WITH THE CLIENT THAT CRAWLS — this file sends a browser string, and the
+    client decides which group binds, so reading the policy as anything else
+    would answer a different question. Memoised per (host, path-rule) because
+    this scrape reads 50 hosts and several pages on some of them.
+
+    IT RETURNS RATHER THAN EXITING, which is the one place this differs from
+    scraper_common.require_robots_once, and the reason is this file's own shape:
+    it reads 72 counties and already turns any per-county failure into a SKIP
+    that the builder answers by preserving that county's last-known contacts with
+    its own read stamp. One county refusing us must not stop the other 71, and a
+    refusal must not unpublish contacts already fetched (Adam's ruling of
+    2026-09-19). So `fetch` raises RuntimeError and the existing skip path says
+    why on the card.
+    """
+    try:
+        ok, why = RobotsGate(None, UA["User-Agent"], headers=UA).allows(url)
+    except Exception as exc:  # noqa: BLE001 — an unreadable policy disallows
+        return False, "robots.txt could not be read (%s: %s)" % (
+            type(exc).__name__, exc)
+    return ok, why
+
+
 def fetch(url, tries=3):
+    # THE COUNTY'S RULES ARE READ BEFORE ITS FIRST PAGE. Measured from a GitHub
+    # runner on 2026-10-01, the vantage the weekly job crawls from, FOUR of this
+    # file's fifty hosts refuse the paths it reads: ashlandcountywi.gov,
+    # dunncountywi.gov, www.co.pepin.wi.us and www.polkcountywi.gov each publish
+    # a `*` group ending in `Disallow: /`. The first three are BYTE-IDENTICAL
+    # apart from their Sitemap line, which makes them ONE CMS VENDOR'S DEFAULT
+    # rather than three counties' decisions — it is published at each county's
+    # own host so it binds in full, and it must never be cited as something that
+    # county chose. Those four skip and keep their last-known contacts; the other
+    # 68 are unaffected.
+    host_key = url.split("/", 3)[2] if "//" in url else url
+    cached = _ROBOTS.get((host_key, url))
+    if cached is None:
+        cached = robots_allows(url)
+        _ROBOTS[(host_key, url)] = cached
+        print("robots.txt %s: %s" % (host_key, cached[1]), file=sys.stderr)
+    if not cached[0]:
+        raise RuntimeError("%s is not fetched: its own robots.txt refuses this "
+                           "client (%s). Contacts already built from this host "
+                           "keep their last-good records and read stamp."
+                           % (url, cached[1]))
     last = None
     for attempt in range(tries):
         try:

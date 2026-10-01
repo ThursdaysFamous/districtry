@@ -52,13 +52,14 @@ import sys
 
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_WIN_126,
+    UA_ROSTER_BOT,
     require_robots_once,
+    output_path,
 )
 
 SOURCE_URL = "https://www.menardcountyil.gov/elected-officials/board-commissioners/"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 60
 
@@ -126,7 +127,7 @@ def parse(page):
 
 
 def main():
-    out_path = sys.argv[1] if len(sys.argv) > 1 else "menard_commissioners_raw.json"
+    out_path = output_path("menard_commissioners_raw.json")
     require_robots_once(SOURCE_URL, HEADERS["User-Agent"], headers=HEADERS,
                         label="il-menard-commissioners-scraper")
     resp = requests.get(SOURCE_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT)
