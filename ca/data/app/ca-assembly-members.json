@@ -17,6 +17,11 @@
       "Phone: 707-576-2526"
     ]
   },
+  "3": {
+    "vacant": true,
+    "asOf": "2026-10-01",
+    "sourceUrl": "https://www.assembly.ca.gov/assemblymembers"
+  },
   "4": {
     "name": "Cecilia Aguiar-Curry",
     "party": "Democratic",
