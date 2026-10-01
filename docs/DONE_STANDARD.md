@@ -169,12 +169,20 @@ Measured 2026-10-01, before any work against this standard.
 | app | districts drawn | members named |
 |---|---|---|
 | Wisconsin | all 72 | all 72 |
-| Iowa | all 99 | 21 counties |
+| Iowa | all 99 | 91 counties |
 | Michigan | all 83 | 52 counties |
-| Illinois | 60 of 102 | all served counties |
+| Illinois | 60 of 102 | 83 counties |
 | New York | 1 of 62 | 1 |
 | Minnesota | none | none |
 | Kentucky | none | none |
+
+Iowa's figure read **21 counties** and Illinois's **all served counties** until
+2026-10-01, when the count behind them was found to look for names only inside
+districts. A board elected **at large** has no districts and carries its members
+at the top of its record, so 70 Iowa counties and 20 Illinois counties naming
+real people were counted as naming nobody. Naming the members is the whole
+answer for an at-large body, which this standard says above; both shapes count
+now. Neither state's level closes either way.
 
 **Local governing body, units at 25,000+**
 
@@ -183,7 +191,7 @@ Measured 2026-10-01, before any work against this standard.
 | Illinois | 35 | 83 | 89 |
 | Wisconsin | 28 | 14 | 35 |
 | Iowa | 3 | 3 | 18 |
-| Michigan | 7 | 3 | 82 |
+| Michigan | 7 | 4 | 82 |
 | New York | 1 | 1 | 104 |
 | Minnesota | 0 | 0 | 43 |
 | Kentucky | 0 | 0 | 17 |
@@ -193,11 +201,14 @@ all 101 of those are new work.
 
 Illinois's six unanswered cities are Champaign, Danville, Decatur, Normal,
 Quincy and Urbana. Michigan draws seven — Detroit, Warren, Grand Rapids, Flint,
-Rochester Hills, Battle Creek and Jackson — and names members in three of them.
+Rochester Hills, Battle Creek and Jackson — and names members in four of them.
 Its own layer note names only Detroit and Grand Rapids and is stale, which is
 the Michigan thread's to correct; this table was first written from that note
 and read 3, which is why a count comes from the registrations and never from a
-comment about them. Wisconsin's twenty-one unnamed councils are Beloit,
+comment about them. The named figure read 3 until 2026-10-01, when the Michigan
+thread pointed out that Battle Creek has shipped a weekly-refreshed commission
+roster since #786 — so the reading that a count comes from the registrations
+cost nothing here only because the registration was itself incomplete. Wisconsin's twenty-one unnamed councils are Beloit,
 Brookfield, Caledonia, De Pere, Fitchburg, Fond du Lac, Franklin, Greenfield,
 Janesville, La Crosse, Menomonee Falls, Mequon, Mount Pleasant, Muskego, Oak
 Creek, Oshkosh, Sun Prairie, Wausau, Wauwatosa, West Allis and West Bend.

@@ -52,7 +52,7 @@ import re
 import sys
 
 import requests
-from scraper_common import require_robots_once, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pdfplumber
@@ -63,7 +63,7 @@ SERVICE_DIRECTORY_PAGE = "https://www.peoriacounty.gov/250/Service-Directory"
 COUNTY_SITE = "https://www.peoriacounty.gov"
 DIRECTORY_FALLBACK = "https://www.peoriacounty.gov/DocumentCenter/View/295"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 180
 

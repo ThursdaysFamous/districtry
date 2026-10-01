@@ -76,7 +76,11 @@ import urllib.parse
 import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from scraper_common import UA_HINTS_CHROME_126, make_fail, require_robots_allowed  # noqa: E402
+# THE BROWSER STRING IS RETIRED HERE (2026-10-01) AND NOTHING IS MEASURED,
+# because nothing is fetched: elections.il.gov refuses every client by a `*`
+# Disallow and require_robots_allowed below declines before the first
+# request. An identity that governs no request should be our own.
+from scraper_common import UA_HEADERS_ROSTER_BOT, make_fail, require_robots_allowed  # noqa: E402
 
 BASE = "https://www.elections.il.gov"
 TOTALS = BASE + "/ElectionOperations/ElectionVoteTotals.aspx"
@@ -146,7 +150,7 @@ fail = make_fail("isbe-precinct-fabric")
 
 
 def _get(url, timeout=180):
-    req = urllib.request.Request(url, headers=UA_HINTS_CHROME_126)
+    req = urllib.request.Request(url, headers=UA_HEADERS_ROSTER_BOT)
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return resp.read()
 
@@ -199,7 +203,7 @@ def csv_links(election_id):
         "__EVENTARGUMENT": "",
         "ctl00$ContentPlaceHolder1$ddlElections": str(election_id),
     })
-    headers = dict(UA_HINTS_CHROME_126)
+    headers = dict(UA_HEADERS_ROSTER_BOT)
     headers["Content-Type"] = "application/x-www-form-urlencoded"
     req = urllib.request.Request(TOTALS, data=urllib.parse.urlencode(data).encode(),
                                  headers=headers)
@@ -844,8 +848,8 @@ def main():
     # can run the comparison today. The gate sits AFTER --selftest deliberately:
     # that path is offline, runs in CI, and proves the parser for the day a route
     # reopens. Every other flag fetches, so every other flag stops here.
-    require_robots_allowed(TOTALS, UA_HINTS_CHROME_126["User-Agent"],
-                           headers=UA_HINTS_CHROME_126,
+    require_robots_allowed(TOTALS, UA_HEADERS_ROSTER_BOT["User-Agent"],
+                           headers=UA_HEADERS_ROSTER_BOT,
                            label="isbe-precinct-fabric")
 
     if args.jasper:
