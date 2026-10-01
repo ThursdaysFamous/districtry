@@ -3233,6 +3233,19 @@ trusted.
           "wanted": "Any source naming a Kentucky school board member against the division they were elected from, or a county's own division boundaries as map data."
       },
       {
+          "id": "ky-judges",
+          "concept": "Judges",
+          "area": "Kentucky — statewide, all four courts",
+          "counties": [],
+          "everyCounty": true,
+          "kind": "no-source",
+          "layer": "ky-supreme-court",
+          "summary": "The four court maps show which district or circuit you are in and name no judge.",
+          "why": "The Court of Justice publishes its judges, and nothing published says which district or circuit a sitting judge was elected from, so the cards name nobody.",
+          "blocker": "MEASURED 2026-10-01. THE GEOMETRY IS SETTLED AND THE PEOPLE ARE NOT. All four courts' districts come from statute — KRS 21A.010 (7 Supreme Court districts), KRS 22A.010(2) (the Court of Appeals on those same districts, two judges each), KRS 23A.020 (57 circuits) and KRS 24A.030 (59 district courts) — each a group of whole counties, so all three tilings dissolve offline from the county fabric and ship in the same change as this record. WHAT IS MISSING IS THE JOIN. kycourts.gov lists judges by court, and this project has not found a source that states, for a sitting judge, the district or circuit number they were elected from; without it a roster would have to be inferred from a judge's county of residence, which is not the same fact. KENTUCKY CAN NAME A JUDGE ONCE THAT JOIN EXISTS, unlike Illinois, where a judge is elected from a subcircuit and then serves the whole circuit so no judge belongs to the subcircuit at all. A NUMBERED DIVISION IS NOT A PLACE: a multi-judge circuit's divisions (KRS 23A.040 and after) are seats elected by the whole circuit, so none is drawn and none would be a district to join on. NOT YET ASKED — DRAFTED 2026-10-01 as Ask ky-judge-district-join, to the Administrative Office of the Courts' Data Officer in its Division of Research & Statistics, which is the desk that would hold the field rather than a document about it.",
+          "wanted": "Any published source that pairs a sitting Kentucky judge with the district or circuit number they were elected from — an election canvass, a court directory that prints the number, or a list from the Administrative Office of the Courts."
+      },
+      {
           "id": "ky-municipal-officeholders",
           "concept": "City mayors and councils",
           "area": "Kentucky — all 415 incorporated cities",
