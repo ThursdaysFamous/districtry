@@ -1794,7 +1794,43 @@ detail into `blocker`.
       "why": "Each nation publishes its own council, and its own election districts where it elects by district, on its own site. No state or federal source lists them together, so this app has no roster it could name anyone from.",
       "wanted": "Each nation's own published list of its council members, and its district map where it elects by district.",
       "blocker": "IN NEW YORK, measured 2026-09-29 against tigerWMS_Current layers 36, 38 and the state reservation class, intersected with TIGERweb's own New York polygon and scored by REAL INTERSECTION AREA rather than by a bare `esriSpatialRelIntersects` (which over-counts, because a state polygon includes water and a touch counts): 8 federal reservations, all 100% inside the state — Allegany 125.711 km2, Cattaraugus 89.184, Oil Springs 2.518, Oneida Indian Nation 1,104.714, Onondaga Nation 24.060, St. Regis Mohawk 54.339, Tonawanda 30.756, Tuscarora Nation 23.535 — plus St. Regis Mohawk off-reservation trust land 1.166 km2 and TWO STATE reservations, Shinnecock 3.498 km2 and Poospatuck 0.441 km2. Schaghticoke and the Ramapough statistical area intersect New York at EXACTLY 0.000 km2 and are excluded; they are why a sliver floor is one of the open decisions. NO NATION COUNT IS STATED ANYWHERE IN THIS RECORD, deliberately: 8 reservation features are not 8 governments (Allegany, Cattaraugus and Oil Springs are the Seneca Nation's, while Tonawanda is a separate government), and which features share a government has NOT been measured here. The feature counts are measured and the nation count would be reasoned, so only the first is written down. SHINNECOCK SETTLES A TRAP THE WHOLE FLEET WOULD HAVE HIT: it is FEDERALLY RECOGNIZED and its land sits in the Census's STATE reservation class, so a Census layer class describes where the land came from and NEVER a nation's recognition status. Corroborated from the other side — the BIA's AIAN National LAR holds no Shinnecock geometry at all, because the land is not in federal trust, while the BIA Tribal Leaders Directory carries the government. Deriving recognition from a layer name would have published a false statement about a recognized nation. A second trap sits in the same directory row: Shinnecock's `firstname` is \"Lisa\" and its `lastname` is \"Goree, Lance Gumbs, Daniel Collins\" — THREE PEOPLE — so never join `firstname`+`lastname`; 6 of 602 rows carry a comma and 4 of those are several people. WHY `counties` IS EMPTY: this instance ships outlines for the five boroughs only, and no tribal land lies in any of them, so there is no outline the panel could fetch to locate this gap. Tagging a borough would tell a reader in Queens that a gap 200 km away is where they clicked. The gap is still listed wherever a reader is, which is the honest half. MEASURED 2026-09-29 for the fleet-wide tribal-government layer plan (https://claude.ai/artifact/CbZNWt4QDr7SBS7abdC1L2). THE BLOCKER IS THE GOVERNMENT, NOT THE GROUND, and that is the whole shape of this record: the boundaries are free and the people are not. GEOMETRY: GET https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/{34,36,38}/query with the `districtry/1.0` token on the requests stack, 2026-09-29 -> 200, and nationally 484 tribal subdivisions, 312 federal American Indian reservations, 177 off-reservation trust lands; the same classes are in TIGERweb/AIANNHA/MapServer under FOUR vintages with DIFFERENT layer ids (current 2/3/1, BAS 2026 14/15/13, ACS 2025 26/27/25, Census 2020 38/39/37, and only Census 2020 carries POP100). ALWAYS NAME THE SERVICE BESIDE A LAYER ID: in AIANNHA, 36 is Alaska Native Regional Corporations, and a note reading \"layer 36 has the reservations\" is right in tigerWMS_Current and wrong here. tigerweb publishes no robots.txt, so nothing there is refused. ROSTERS: GET https://services1.arcgis.com/UxqqIfhng71wUT9x/arcgis/rest/services/TribalLeadership_Directory/FeatureServer/0/query (the BIA Tribal Leaders Directory), same client, 2026-09-29 -> 200, 602 rows, ONE leader per government and no council anywhere in the schema. GET https://www.arcgis.com/sharing/rest/search for the BIA's own geospatial organisation, same client and date -> 200, 37 public items (child-welfare regions, offices, grasslands, bison) and NOT ONE council or legislative district layer for any nation. That is correct rather than a gap: a nation's internal electoral districts are its own government's business, so the authority is each nation and there is no federal shortcut. THE LAND-TO-GOVERNMENT JOIN HAS NO KEY IN ANY PUBLISHER: Census name against that directory leaves 40 of 312 reservations and 10 of 177 trust lands unmatched, and the BIA's own AIAN National LAR (biamaps.geoplatform.gov, 335 features) against its own directory leaves 33 unmatched, the words often unrelated (L'Anse to Keweenaw Bay, Isabella to Saginaw Chippewa, Qualla Boundary to Eastern Band of Cherokee). A hand-curated gated table is unavoidable whichever publisher is chosen. ROBOTS, WITH THE CLIENT NAMED BECAUSE A FIGURE WITHOUT ONE IS NOT A MEASUREMENT: robots.txt only, 32 nation sites across Michigan, Wisconsin, New York and Iowa, read with the `districtry/1.0` token on the requests stack, 2026-09-29 -> 28 permit us, 2 answer a managed challenge (Hannahville, Keweenaw Bay), 2 publish no site (Tonawanda, Tuscarora). The four closed ones were re-read BOTH WAYS the same day: Hannahville challenges both clients; Keweenaw Bay SERVED robots.txt to the token and CHALLENGED the pinned Chrome client — the reverse of the expected direction, and different from a read minutes earlier, so a challenge verdict is not stable from one read and is never recorded as a permanent block. meskwaki.org and the Prairie Band site answer 403 to both clients, which under Adam's ruling of 2026-09-29 (\"Follow RFC 9309\") is an UNREADABLE POLICY AND NOT A REFUSAL, so both are readable; never pass `refused_is_refusal=True` for them. A managed challenge is still never worked around. NOT YET ASKED, and no ask is drafted: four decisions sit with Adam and each changes what a card would say — whether a nation seated in another state is answered where its land is, the cross-state sliver floor, whether an unpopulated trust land is drawn at all, and whether the statistical areas are territory or only a naming key. An ask sent before those land would ask the wrong question. WHY THIS RECORD EXISTS AHEAD OF THE LAYER: a gap record asserts an ABSENCE, not a geometry, so it is true under every branch of all four decisions, and until one exists a reader standing on tribal land is told nothing is missing. Authorised by Adam on 2026-09-29 (\"Proceed\", in the Oklahoma launch-plan thread, on the proposal for a gap record per instance)."
-    }
+    },
+  {
+    "id": "ny-county-governing-body",
+    "concept": "County governing body",
+    "area": "New York State outside New York City",
+    "counties": [],
+    "kind": "no-source",
+    "layer": "county-legislature",
+    "summary": "The County card names nobody. One county's legislature is drawn and its members named; in the other 56 outside the city the card tells you which county you are in and not who governs it.",
+    "why": "New York publishes no statewide list of county legislators or supervisors, so the only route is each county's own site, one at a time, and fourteen of the 57 would not answer this project at all.",
+    "wanted": "Each county's own published list of the legislators or supervisors sitting today, and its district map where it elects by district.",
+    "blocker": "MEASURED 2026-10-01, all 57 counties outside the city, from the website the STATE publishes for each one (the Department of State's own county-website table on the state open-data portal, 57 rows carrying a GNIS id and a SWIS code each). THERE IS NO STATEWIDE ROSTER AND THAT WAS MEASURED RATHER THAN ASSUMED: the state open-data catalogue was searched five ways (local government officials, county legislature, town board, elected officials, municipal officials) and returns code-enforcement officials, grant awards, lobbying filings and four WEBSITE DIRECTORIES, and no roster of anybody holding office; the Comptroller's local-government section publishes financial filings and a guide for new officials and no directory of officials. So the route is per county, which is the shape Illinois's 93 counties already took. WHAT THE 57 SITES ANSWERED: 43 served their front page to this project's reader, 39 of those offering at least one link whose own words name a governing body, and 14 did not answer. THE 14 ARE NOT 14 REFUSALS and the distinction is the finding: re-read one at a time through the shared policy reader, Seneca's robots.txt answers HTTP 202, which is a managed challenge and an access control this project never works around, while Chemung's and Chenango's certificates do not cover the hostname the state publishes, Orange's certificate has expired, St Lawrence answers 522, and Ulster, Onondaga, Sullivan and Wayne reset the connection. An unreachable robots.txt disallows under RFC 9309 2.3.1.4, so the reader is right to decline and the input was this sandbox's route rather than the county's policy. FOUR MORE answer HTTP 403 to this client (Lewis, Oswego, Rockland, Steuben) and Herkimer's published URL 404s. ALL OF THAT IS A SANDBOX MEASUREMENT and the fleet's own rule is to re-measure from the build machine before writing a county off; no ask should be drafted about any of the 14 until that is done. THE THREE FORMS ARE VISIBLE IN THE SERVED HTML OF 20 OF THE 43: ten counties' front pages say county legislature (Chautauqua, Dutchess, Genesee, Greene, Monroe, Montgomery, Orleans, Putnam, Schenectady, Tompkins), nine say board of supervisors (Delaware, Essex, Hamilton, Livingston, Madison, Ontario, Saratoga, Schoharie, Warren) and Otsego says board of representatives. That is a LEAD AND NOT A PROOF: the Tompkins order is that a county's form is settled from a certified document before anything is built, because a legislature county needs geometry and a dispatch entry while a board-of-supervisors county needs neither (the seat IS the town, so the statewide municipality layer already draws it and the members ride that card). The other 37 front pages name no form in their served HTML, which measures the PAGE and not the county: Albany's is 422 KB and carries no legislature link at all because its navigation is assembled in the browser, while the county's own sitemap lists /legislators outright. A SITEMAP IS THE SECOND ROUTE and it is per county too, answering for Albany and 404ing for Broome and Cattaraugus. WHAT WOULD CLOSE THIS is a tranche programme, county by county, in the order the expansion guide already sets: form first, then roster, then geometry where the form has any. NOT YET ASKED about any individual county, deliberately, and the one ask worth sending first is to the state rather than to 57 clerks: whether the Department of State or the Comptroller holds a directory of local elected officials that is not on the open-data portal. That draft is Ask 33 in docs/ASK_DRAFTS.md."
+  },
+  {
+    "id": "ny-local-governing-body",
+    "concept": "City, town or village governing body",
+    "area": "New York State outside New York City",
+    "counties": [],
+    "kind": "no-source",
+    "layer": "municipality",
+    "summary": "Outside New York City the City or Town card names nobody. It tells you which city, town or village you are in, and not who sits on its board or council.",
+    "why": "No statewide list of local board members is published, so the route is each government's own site. Of the hundred largest, two thirds served a page and about half of those link a board.",
+    "wanted": "Each city, town and village's own published list of the members of its board or council, and its ward or district map where it elects by district.",
+    "blocker": "MEASURED 2026-10-01 against the 103 units outside the city that the done standard counts at 25,000 people or more \u2014 36 cities and villages and 67 towns, read from the committed expected-governments measurement rather than re-derived. A NEW YORK TOWN IS COUNTED HERE BECAUSE IT GOVERNS EVERYONE OUTSIDE A VILLAGE OR CITY, which is the standard's own general-purpose test and the reason leaving towns out would let this app read answered while most of upstate was not. 101 of the 103 have a website in the state's own directory; Mount Vernon and the town of Palm Tree have none there. Of those 101, 65 served their front page to this project's reader and 52 of the 65 offered at least one link whose own words name a board, a council, a supervisor or a mayor \u2014 towns 46 read of 66 with 39 linking a board, cities and villages 19 read of 35 with 13. The 36 that did not answer break down as 22 whose robots.txt could not be read from this sandbox, 10 answering HTTP 403, three 404s and one connection failure, and the county measurement recorded under ny-county-governing-body shows why that 22 is not 22 refusals: the same classification there turned out to be mostly expired or mismatched certificates and reset connections, which an unreachable robots.txt correctly turns into a decline. RE-MEASURE FROM THE BUILD MACHINE BEFORE WRITING ANY UNIT OFF. THE SAME WORK ALSO ANSWERS TWO OTHER LEVELS, which is why it is the tranche to do first: a town board roster is what the done standard's sub-county level wants (the app already draws all 932 towns and names nobody on them), and in a board-of-supervisors county the town supervisor IS the county board member, so one county's own board page names every one of its towns' supervisors in a single fetch. WHAT WOULD CLOSE THIS is a tranche programme over the 101, largest first. NOT YET ASKED, and as with the county tier the first ask belongs to the state rather than to a hundred clerks \u2014 Ask 33 in docs/ASK_DRAFTS.md."
+  },
+  {
+    "id": "ny-special-districts",
+    "concept": "Special district",
+    "area": "New York State outside New York City",
+    "counties": [],
+    "kind": "no-source",
+    "layer": null,
+    "summary": "No card names the fire, library, water or sewer district you are in. New York creates these by statute and some of them elect their own boards.",
+    "why": "The state publishes no map of them. One county publishes its own full set and nothing has been found that covers the rest, so there is not yet a layer to switch on.",
+    "wanted": "A county's own published map of its fire, library and other statutory districts, and whoever that county names as their officers.",
+    "blocker": "MEASURED 2026-10-01. The state's own map server publishes assembly, senate and congressional districts, civil boundaries, schools, parcels and hydrography and NOT ONE statutory special district, confirmed against its whole service directory. A public catalogue search for a statewide fire-district or library-district layer returns county and vendor products and no state one. WHAT IT DID FIND IS ONE COUNTY WITH THE WHOLE SET: Sullivan County's own map server, 31 public services, among them fire districts (58 features), library districts (4), and ambulance, water, sewer, light, garbage, road, parking, drainage and agricultural districts, each described by the county as available for download by the public. Its robots.txt is absent, so every path is allowed. NOTE THE SHAPE OF THAT FIND, because it is the Knox lesson again: the COUNTY WEBSITE is one of the hosts that would not answer this project at all, and the GIS host beside it answers freely \u2014 a county is not blocked because its website is. TWO THINGS ARE MEASURED AND ONE IS NOT SETTLED. The fire layer carries a retired-by-record field and it is EMPTY on all 58 rows, so nothing in it is superseded today and a build should still read the column rather than assume that holds. Its names split 53 FIRE DISTRICTS against 5 FIRE PROTECTION DISTRICTS, which in New York law are different things \u2014 a fire district elects its own commissioners, a fire protection district is a town contract area with no board of its own \u2014 so a card must not describe the five as electing anybody; the library layer has 4 rows naming 2 districts, one of them in three parts. WHAT IS NOT SETTLED is people: nothing found so far names a fire commissioner or a library trustee anywhere in New York: Illinois stamps those officers onto its own equivalent layers from a statewide financial filing, and whether New York's Comptroller publishes the same thing is the next question rather than an answer. WHAT WOULD CLOSE THIS is one county-dispatched layer, exactly as Illinois's fire-district concept began with one county. NOT YET ASKED \u2014 nothing has been asked of Sullivan County, because the data it publishes is already open and the open question is a roster rather than a boundary."
+  }
   ],
   "sf": [
     {
@@ -3431,6 +3467,67 @@ file with no further simplification); `ny-state-outline.json` and
 `metro-outline.json` are **Census TIGERweb**, a different publisher whose
 water-inclusive geometry disagrees with the state's shoreline-clipped fabric by
 design; and `ny-school-districts.json` is drawn independently of municipal lines.
+
+## New York's county and local tiers, measured before the tranche programme (2026-10-01)
+
+The done standard's fourth test asks what an app SHIPS, and New York answers wards,
+school zones, precincts and police precincts inside the city while naming, outside it, one
+county legislature and no town or city board at all. Before writing to anybody, the whole
+route was measured. `ny-county-governing-body`, `ny-local-governing-body` and
+`ny-special-districts` carry that measurement; this section carries the four things worth
+knowing before the next tranche starts.
+
+**THERE IS NO STATEWIDE ROSTER, AND THAT IS MEASURED RATHER THAN ASSUMED.** The state's
+open-data catalogue was searched five ways and the Comptroller's local-government section
+read; between them they publish code-enforcement officials, grant awards, lobbying filings
+and financial filings, and no list of anybody holding local elective office. So New York's
+county and local tiers are a per-unit programme, the shape Illinois's 93 counties already
+took, and the single ask worth sending first is to the state rather than to 57 county
+clerks and a hundred town clerks — Ask 33 in `docs/ASK_DRAFTS.md`.
+
+**THE STATE DOES PUBLISH THE SCAFFOLDING, AND IT IS THE THING TO BUILD ON.** Four tables
+on the open-data portal give the official website of every county (57), city (62), town
+(932) and village (549) outside the city, each row carrying a GNIS id and a SWIS code. That
+is a government publisher naming every unit's own site, so no tranche has to guess a
+hostname or permute a county's name — the Cumberland correction, handed over for free. The
+two units above 25,000 people it has no site for are Mount Vernon and the town of Palm Tree.
+
+**ONE COUNTY PAGE CAN NAME EVERY ONE OF ITS TOWNS' SUPERVISORS, which makes the town tier
+the tranche to do first.** New York governs its counties three ways, and in a
+board-of-supervisors county the county board seat IS the town supervisor, so that county's
+own board roster names the chief elected officer of each of its towns in a single fetch.
+Ten of the 43 county front pages that answered say county legislature in their own HTML,
+nine say board of supervisors and Otsego says board of representatives — a lead and not a
+proof, because the Tompkins order is that a form is settled from a certified document
+first. The same town work also answers the standard's sub-county level, where the app
+already draws all 932 towns and names nobody on them, and 67 of those towns are themselves
+above the 25,000 floor.
+
+**A FRONT PAGE MEASURES THE PAGE AND NOT THE COUNTY, TWICE OVER.** 37 of the 43 county
+front pages name no governing-body form in their served HTML, and Albany's is the
+counter-example that bounds what that means: 422 KB with no legislature link anywhere,
+because the navigation is assembled in the browser, while the county's own sitemap lists
+`/legislators` outright. A sitemap is the second route and it is per county too, answering
+for Albany and 404ing for Broome and Cattaraugus. And of the 14 counties that did not
+answer at all, re-reading one at a time through the shared policy reader found exactly one
+real access control — Seneca's HTTP 202 managed challenge — against expired and mismatched
+certificates, resets and a 522. An unreachable robots.txt disallows under RFC 9309 2.3.1.4,
+so the reader declines correctly and the input was this sandbox's route rather than any
+county's policy. **RE-MEASURE FROM THE BUILD MACHINE BEFORE WRITING A COUNTY OFF**, and
+draft no ask about those 14 until that is done.
+
+**THE SPECIAL-DISTRICT FIND IS THE KNOX LESSON AGAIN.** Sullivan County's own map server
+publishes 31 public services — fire districts, library districts, and ambulance, water,
+sewer, light, garbage, road, parking, drainage and agricultural districts — each described
+by the county as available for public download, with no robots.txt at all. Its county
+WEBSITE is one of the hosts that would not answer this project. A county is not blocked
+because its website is. Its fire layer splits 53 FIRE DISTRICTS against 5 FIRE PROTECTION
+DISTRICTS, which in New York law are different things — the first elects its own
+commissioners and the second is a town contract area with no board — so a card must never
+describe the five as electing anybody. What the find does not supply is people: nothing
+located so far names a fire commissioner or a library trustee anywhere in New York, and
+whether the Comptroller's filings carry them the way Illinois's do is the next question
+rather than an answer.
 
 ## Tompkins County's legislature, proven before anything was built (measured 2026-09-26)
 
