@@ -19,7 +19,7 @@ whether the data exists** — a level no publisher offers, that we
 asked about and were refused, counts as covered — so a county
 publisher cannot fail an app on it.
 
-**7 gap-record claims name a level, 0 of which carry a
+**17 gap-record claims name a level, 0 of which carry a
 dated ask that counts.** A level this report calls open and
 that no record claims is still a floor. A claim that earns
 nothing is printed under its level with the reason, rather
@@ -44,10 +44,10 @@ different thing from one it failed.
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 13 levels |
-| ia | **EAM·** | 99 | 99/99 | 81 | 81 | all | 58 | all | 9 of 13 levels |
+| ia | **EAM·** | 99 | 99/99 | 81 | 81 | all | 58 | all | 10 of 13 levels |
 | il | **EAM·** | 102 | 102/102 | 572 | 996 | all | 399 | all | 11 of 13 levels |
 | ky | **EAM·** | 120 | 120/120 § | 0 | 0 | by record | 7 | all | 7 of 13 levels |
-| mi | **EAM·** | 83 | 83/83 | 619 | 615 | all | 55 | all | 7 of 13 levels |
+| mi | **EAM·** | 83 | 83/83 | 619 | 615 | all | 59 | all | 11 of 13 levels |
 | mn | **EAM·** | 87 | 87/87 § | 0 | 0 | by record | 8 | all | 6 of 13 levels |
 | ny | **EAM·** | 62 | 62/62 § | 16 | 16 | all | 29 | all | 8 of 13 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,574 | all | 263 | all | 10 of 13 levels |
@@ -81,9 +81,8 @@ this instance is in maintenance.
 ### ia — EAM·
 
 - **Under a WATCH.md plan (42):** re-checked on a stated cadence rather than by a job — `adair-county-outline.json`, `black-hawk-county-outline.json`, `calhoun-county-outline.json`, `cass-county-outline.json`, `cedar-rapids-wards.json`, `congress-districts.json`, `coverage-gaps.json`, `dickinson-county-outline.json`, `dsm-wards.json`, `floyd-county-outline.json`, `guthrie-county-outline.json`, `humboldt-county-outline.json`, `ia-aeas.json`, `ia-cc-director-districts.json`, `ia-community-colleges.json`, `ia-county-board-directory.json`, `ia-house-districts.json`, `ia-judicial-districts.json`, `ia-precincts.json`, `ia-school-director-districts.json`, `ia-school-districts.json`, `ia-school-sites.json`, `ia-senate-districts.json`, `ia-supervisor-districts.json`, `ida-county-outline.json`, `johnson-county-outline.json`, `jones-county-outline.json`, `kossuth-county-outline.json`, `lee-county-outline.json`, `metro-outline.json`, `montgomery-county-outline.json`, `osceola-county-outline.json`, `palo-alto-county-outline.json`, `pottawattamie-county-outline.json`, `sioux-county-outline.json`, `state-counties.json`, `tama-county-outline.json`, `warren-county-outline.json`, `washington-county-outline.json`, `waterloo-wards.json`, `worth-county-outline.json`, `wright-county-outline.json`
-- **Covered: no.** 4 of the 13 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
+- **Covered: no.** 3 of the 13 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
   - **4. The county governing body, in every county of the state** — open. 96 of 99 counties name a governing body. A record declares this level and earns nothing: `ia-supervisor-count-disagrees` — no ask recorded, so it covers nothing yet under the standard; `ia-supervisor-count-impossible` — no ask recorded, so it covers nothing yet under the standard
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 4 of 18 units at 25,000+ name a governing body; unanswered: Ames city, Ankeny city, Bettendorf city, Cedar Falls city, Council Bluffs city, Davenport city, Dubuque city, Iowa City city and 6 more
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **13. Tribal governments** — open (required only where the state has the level)
 
@@ -113,15 +112,12 @@ this instance is in maintenance.
 
 ### mi — EAM·
 
-- **Under a WATCH.md plan (47):** re-checked on a stated cadence rather than by a job — `alger-county-outline.json`, `allegan-county-outline.json`, `antrim-county-outline.json`, `baraga-county-outline.json`, `bay-county-outline.json`, `benzie-county-outline.json`, `branch-county-outline.json`, `charlevoix-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `crawford-county-outline.json`, `genesee-county-outline.json`, `gladwin-county-outline.json`, `gogebic-county-outline.json`, `huron-county-outline.json`, `ingham-county-outline.json`, `iosco-county-outline.json`, `iron-county-outline.json`, `livingston-county-outline.json`, `manistee-county-outline.json`, `marquette-county-outline.json`, `mason-county-outline.json`, `mecosta-county-outline.json`, `metro-outline.json`, `mi-battle-creek-wards.json`, `mi-commissioner-districts.json`, `mi-commissioner-returns.json`, `mi-detroit-council-districts.json`, `mi-flint-wards.json`, `mi-grand-rapids-wards.json`, `mi-house-districts.json`, `mi-jackson-wards.json`, `mi-precincts.json`, `mi-rochester-hills-wards.json`, `mi-senate-districts.json`, `mi-warren-wards.json`, `missaukee-county-outline.json`, `montmorency-county-outline.json`, `newaygo-county-outline.json`, `oakland-county-outline.json`, `ottawa-county-outline.json`, `st-joseph-county-outline.json`, `state-counties.json`, `tuscola-county-outline.json`, `van-buren-county-outline.json`, `washtenaw-county-outline.json`, `wexford-county-outline.json`
-- **Covered: no.** 6 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 4 of 82 units at 25,000+ name a governing body; unanswered: Allen Park city, Allendale charter township, Ann Arbor city, Bay City city, Bedford township, Blackman charter township, Bloomfield charter township, Brownstown charter township and 70 more
-  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
-  - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
-  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
+- **Under a WATCH.md plan (50):** re-checked on a stated cadence rather than by a job — `alger-county-outline.json`, `allegan-county-outline.json`, `antrim-county-outline.json`, `baraga-county-outline.json`, `bay-county-outline.json`, `benzie-county-outline.json`, `branch-county-outline.json`, `charlevoix-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `crawford-county-outline.json`, `genesee-county-outline.json`, `gladwin-county-outline.json`, `gogebic-county-outline.json`, `huron-county-outline.json`, `ingham-county-outline.json`, `iosco-county-outline.json`, `iron-county-outline.json`, `livingston-county-outline.json`, `manistee-county-outline.json`, `marquette-county-outline.json`, `mason-county-outline.json`, `mecosta-county-outline.json`, `metro-outline.json`, `mi-battle-creek-wards.json`, `mi-circuit-courts.json`, `mi-commissioner-districts.json`, `mi-commissioner-returns.json`, `mi-court-of-appeals-districts.json`, `mi-detroit-council-districts.json`, `mi-flint-wards.json`, `mi-grand-rapids-wards.json`, `mi-house-districts.json`, `mi-isd-districts.json`, `mi-jackson-wards.json`, `mi-precincts.json`, `mi-rochester-hills-wards.json`, `mi-senate-districts.json`, `mi-warren-wards.json`, `missaukee-county-outline.json`, `montmorency-county-outline.json`, `newaygo-county-outline.json`, `oakland-county-outline.json`, `ottawa-county-outline.json`, `st-joseph-county-outline.json`, `state-counties.json`, `tuscola-county-outline.json`, `van-buren-county-outline.json`, `washtenaw-county-outline.json`, `wexford-county-outline.json`
+- **Covered: no.** 2 of the 13 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 71 of 82 units at 25,000+ name a governing body; unanswered: Bedford township, Burton city, Dearborn Heights city, Lansing city, Northville township, Norton Shores city, Rochester Hills city, Shelby charter township and 3 more. A record declares this level and earns nothing: `norton-shores-council-roster` (2659140) — no ask recorded, so it covers nothing yet under the standard; `burton-council-roster` (2612060) — no ask recorded, so it covers nothing yet under the standard; `lansing-council-roster` (2646000) — no ask recorded, so it covers nothing yet under the standard; `wyoming-mi-council-roster` (2688940) — no ask recorded, so it covers nothing yet under the standard; `west-bloomfield-township-board` (2612585480) — no ask recorded, so it covers nothing yet under the standard; `bedford-township-board` (2611506740) — no ask recorded, so it covers nothing yet under the standard; `shelby-township-board` (2609972820) — no ask recorded, so it covers nothing yet under the standard; `northville-township-board` (2616359000) — no ask recorded, so it covers nothing yet under the standard; `ypsilanti-township-board` (2616189160) — no ask recorded, so it covers nothing yet under the standard; `rochester-hills-council-roster` (2669035) — no ask recorded, so it covers nothing yet under the standard
   - **13. Tribal governments** — open (required only where the state has the level)
+- **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
+  - **10. School boards elected by district** — Michigan elects no school board by district. Ordinary boards are elected at large under the Revised School Code; its one by-district scheme is for a first-class district, and no district is first-class; and the Detroit Public Schools Community District's board is elected districtwide under MCL 380.384(3). Every board contest on the Wayne and Macomb 2024 canvasses is districtwide.
 
 ### mn — EAM·
 

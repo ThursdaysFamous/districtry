@@ -1,7 +1,7 @@
 # districtry Michigan — the expansion plan and its running record
 
 > **SHIPPED 2026-09-03 — phases 1, 2 and go-live, in three PRs on one day.** Michigan is live at
-> districtry.com/mi/ with 15 layers. **The running status is the Status table near the foot of this
+> districtry.com/mi/ with 18 layers. **The running status is the Status table near the foot of this
 > file; what is left is under Still open.** What go-live actually cost is recorded here because it
 > was almost entirely NOT on any checklist.
 > **Four defects had survived the full 38-gate battery twice, and three were the same shape — a
@@ -444,7 +444,7 @@ are named `mi-*`, never `michigan-*`.
 
 ## Phase 5 — the next three cities, measured (2026-09-05)
 
-**Nothing shipped, and that is the finding.** Michigan stays at 15 layers and `city-ward`
+**Nothing shipped, and that is the finding.** No layer was added and `city-ward`
 keeps its two entries. Three gap records carry the measurement: `lansing-ward-boundary`,
 `annarbor-ward-boundary`, `sterling-heights-council-form`.
 
