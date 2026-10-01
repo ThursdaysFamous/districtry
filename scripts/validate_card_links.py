@@ -426,6 +426,17 @@ ROBOTS_DECLINED = {
         "operator builds still read this host and that is a separate question, put "
         "to the operator on 2026-09-30 and owned by the Wisconsin thread; what this "
         "entry stops is THIS check's monthly probing of it",
+    "www.courts.michigan.gov":
+        "robots.txt is 26 bytes, `User-agent: *` and `Disallow: /`. Measured "
+        "2026-10-01 with this checker's own token and with a browser string, the "
+        "same answer both ways; its Last-Modified header is the time of the "
+        "request, so it says nothing about how long the rule has stood. The mi "
+        "Court of Appeals and circuit court cards LINK the state court system for "
+        "a reader, and no Michigan builder reads this host, which is why those "
+        "cards name no judge (gap mi-judge-roster)",
+    "courts.michigan.gov":
+        "the bare host 301s robots.txt to www.courts.michigan.gov, whose file "
+        "refuses every client. Measured 2026-10-01. See the www entry",
 }
 
 # A HOST CAN DECLINE ONE DIRECTORY RATHER THAN ITSELF, and the table above

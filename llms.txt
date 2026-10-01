@@ -92,9 +92,9 @@ All 99 counties: supervisor districts with each county's own election plan, town
 
 ## Michigan
 
-All 83 counties: commissioner districts, compiled by the state from the plan each county's apportionment commission files — plus townships and charter townships, cities and villages, school districts, and the Michigan Senate, House and U.S. House seats, and who holds those.
+All 83 counties: commissioner districts, compiled by the state from the plan each county's apportionment commission files — plus townships and charter townships, cities and villages, school districts and intermediate school districts, circuit courts and Court of Appeals districts, and the Michigan Senate, House and U.S. House seats, and who holds those.
 
-- [Michigan district lookup](https://districtry.com/mi/): 15 layers, all 83 counties.
+- [Michigan district lookup](https://districtry.com/mi/): 18 layers, all 83 counties.
 - [Who is on my city council?](https://districtry.com/mi/city-council.html)
 - [Who is my U.S. representative?](https://districtry.com/mi/congress.html)
 - [County commissioner district lookup](https://districtry.com/mi/county-commissioner.html): links a page per county, 83 of them, each naming every member with whatever contact details that county publishes.
