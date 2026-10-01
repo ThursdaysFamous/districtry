@@ -1426,13 +1426,15 @@ ANSWERS = {
         "municipal-boundaries": answers("municipality"),
         "local-government": depth("city-ward"),
         "school-district-boundaries": answers("school-district-unified", "school-district-elementary"),
-        # The standard says Michigan ships no such layer and that whether it
-        # elects judges by district is the Michigan thread's to confirm.
-        "courts-by-district": UNSETTLED,
+        # Michigan's own thread has confirmed it elects judges by district, so
+        # the entry is owed rather than open to question.
+        "courts-by-district": OPEN,
         # A Michigan township governs everyone outside a village or city, so
         # the 34 that clear 25,000 are already owed under the city tier; the
         # rest are owed here. The app draws them and names no township board.
         "sub-county-government": OPEN,
+        # Still the Michigan thread's to confirm: its courts question is settled
+        # and whether it elects any school board by district is not.
         "school-boards-by-district": UNSETTLED,
         "precincts": answers("precinct"),
         "special-districts": OPEN,
@@ -1446,8 +1448,10 @@ ANSWERS = {
         "municipal-boundaries": answers("municipality"),
         "local-government": depth(),
         "school-district-boundaries": answers("school-district-unified", "school-district-elementary", "school-district-secondary"),
-        "courts-by-district": UNSETTLED,
+        # Minnesota's own thread has confirmed it elects judges by district.
+        "courts-by-district": OPEN,
         "sub-county-government": OPEN,
+        # Still the Minnesota thread's to confirm.
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
         "special-districts": OPEN,
@@ -1461,12 +1465,21 @@ ANSWERS = {
         "municipal-boundaries": OPEN,
         "local-government": depth(),
         "school-district-boundaries": OPEN,
-        "courts-by-district": UNSETTLED,
+        # Kentucky's own thread has confirmed that all four of its court levels
+        # elect by district — Supreme Court, Court of Appeals, 57 circuits and 59
+        # district-court districts — and that every one of those districts is a
+        # set of whole counties written into statute, so the lines are buildable
+        # from statute text and the county boundaries this app already ships.
+        "courts-by-district": OPEN,
         # Kentucky has no township tier at all, which is the standard's "the
         # state does not have the level" case — but that is covered by a RECORD
         # stating the fact, and no record states it yet.
         "sub-county-government": OPEN,
-        "school-boards-by-district": UNSETTLED,
+        # Kentucky owes these: its thread has confirmed every county school board
+        # is elected by division, five per county from whole precincts, while its
+        # independent school boards are elected at large and so are named rather
+        # than drawn.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         "tribal-government": OPEN,
@@ -1501,6 +1514,9 @@ ANSWERS = {
         # drawn by district and named, so there is no size to measure.
         "local-government": answers("supervisor-district"),
         "school-district-boundaries": na(CITY_INSTANCE),
+        # The standard places neither of these for San Francisco, and nothing
+        # here measured whether California elects its superior court judges by
+        # district or whether the city's school board is elected by district.
         "courts-by-district": UNSETTLED,
         "sub-county-government": na(CITY_INSTANCE),
         "school-boards-by-district": UNSETTLED,
@@ -2087,8 +2103,8 @@ def covered_lines(row):
                                                "state has the level)",
                       (". " + e["detail"]) if e["detail"] else ""))
         if e["verdict"] == "unsettled":
-            out.append("    The standard leaves this one to this state's own "
-                       "thread: whether the state has the level at all has not "
+            out.append("    The standard leaves this one to this app's own "
+                       "thread: whether the level exists here at all has not "
                        "been measured, so it is neither passed nor failed "
                        "quietly.")
     return out

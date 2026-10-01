@@ -63,9 +63,9 @@ per county, so each one is named under its state below.
 - **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `bart-directors.json`, `ca-assembly-districts.json`, `ca-senate-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `early-voting-sites.json`, `police-districts.json`, `san-francisco-county-outline.json`, `sf-neighborhoods.json`, `supervisor-districts.json`
 - **Covered: no.** 3 of the 13 expected levels of government are not answered. Each is a floor: no gap record is credited towards this test yet, so a level listed here may already have one behind it.
   - **8. Courts whose judges are elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this state's own thread: whether the state has the level at all has not been measured, so it is neither passed nor failed quietly.
+    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this state's own thread: whether the state has the level at all has not been measured, so it is neither passed nor failed quietly.
+    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **13. Tribal governments** — open (required only where the state has the level)
 
 ### ia — EAM·
@@ -96,11 +96,9 @@ per county, so each one is named under its state below.
   - **5. Municipal boundaries** — open
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 17 units at 25,000+ name a governing body; unanswered: Bowling Green city, Covington city, Elizabethtown city, Florence city, Frankfort city, Georgetown city, Henderson city, Hopkinsville city and 9 more
   - **7. School district boundaries** — open
-  - **8. Courts whose judges are elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this state's own thread: whether the state has the level at all has not been measured, so it is neither passed nor failed quietly.
+  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this state's own thread: whether the state has the level at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
   - **13. Tribal governments** — open (required only where the state has the level)
@@ -110,11 +108,10 @@ per county, so each one is named under its state below.
 - **Under a WATCH.md plan (47):** re-checked on a stated cadence rather than by a job — `alger-county-outline.json`, `allegan-county-outline.json`, `antrim-county-outline.json`, `baraga-county-outline.json`, `bay-county-outline.json`, `benzie-county-outline.json`, `branch-county-outline.json`, `charlevoix-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `crawford-county-outline.json`, `genesee-county-outline.json`, `gladwin-county-outline.json`, `gogebic-county-outline.json`, `huron-county-outline.json`, `ingham-county-outline.json`, `iosco-county-outline.json`, `iron-county-outline.json`, `livingston-county-outline.json`, `manistee-county-outline.json`, `marquette-county-outline.json`, `mason-county-outline.json`, `mecosta-county-outline.json`, `metro-outline.json`, `mi-battle-creek-wards.json`, `mi-commissioner-districts.json`, `mi-commissioner-returns.json`, `mi-detroit-council-districts.json`, `mi-flint-wards.json`, `mi-grand-rapids-wards.json`, `mi-house-districts.json`, `mi-jackson-wards.json`, `mi-precincts.json`, `mi-rochester-hills-wards.json`, `mi-senate-districts.json`, `mi-warren-wards.json`, `missaukee-county-outline.json`, `montmorency-county-outline.json`, `newaygo-county-outline.json`, `oakland-county-outline.json`, `ottawa-county-outline.json`, `st-joseph-county-outline.json`, `state-counties.json`, `tuscola-county-outline.json`, `van-buren-county-outline.json`, `washtenaw-county-outline.json`, `wexford-county-outline.json`
 - **Covered: no.** 6 of the 13 expected levels of government are not answered. Each is a floor: no gap record is credited towards this test yet, so a level listed here may already have one behind it.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 3 of 82 units at 25,000+ name a governing body; unanswered: Allen Park city, Allendale charter township, Ann Arbor city, Battle Creek city, Bay City city, Bedford township, Blackman charter township, Bloomfield charter township and 71 more
-  - **8. Courts whose judges are elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this state's own thread: whether the state has the level at all has not been measured, so it is neither passed nor failed quietly.
+  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this state's own thread: whether the state has the level at all has not been measured, so it is neither passed nor failed quietly.
+    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
   - **13. Tribal governments** — open (required only where the state has the level)
 
@@ -126,11 +123,10 @@ per county, so each one is named under its state below.
 - **Covered: no.** 8 of the 13 expected levels of government are not answered. Each is a floor: no gap record is credited towards this test yet, so a level listed here may already have one behind it.
   - **4. The county governing body, in every county of the state** — open. 0 of 87 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 43 units at 25,000+ name a governing body; unanswered: Andover city, Apple Valley city, Austin city, Blaine city, Bloomington city, Brooklyn Center city, Brooklyn Park city, Burnsville city and 35 more
-  - **8. Courts whose judges are elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this state's own thread: whether the state has the level at all has not been measured, so it is neither passed nor failed quietly.
+  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this state's own thread: whether the state has the level at all has not been measured, so it is neither passed nor failed quietly.
+    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
   - **13. Tribal governments** — open (required only where the state has the level)
