@@ -624,6 +624,19 @@ CHALLENGE_FRONTED_HOSTS = {
     "www.kbic-nsn.gov": "same host, www spelling; measured 2026-09-29",
     "hannahville.net": "challenged the bare token 1 of 3; measured 2026-09-29",
     "www.hannahville.net": "challenged 3 of 6 across both clients; measured 2026-09-29",
+    # Measured 2026-10-01 for Illinois's tribal layer, with the roster-bot token
+    # that would do the crawling: three reads 16 s apart, every one HTTP 403
+    # carrying Cloudflare's "Just a moment..." interstitial, and the front page
+    # the same. DETERMINISTIC WHERE THE FOUR ABOVE ARE INTERMITTENT, which is
+    # the case this table most needs to cover rather than least: a 403 reads as
+    # `refused` and therefore as ALLOW, so without an entry this host publishes
+    # a permission it has never granted and the log says "no readable policy"
+    # where the truth is that nothing here can read anything. No second client
+    # was tried: escalating past a managed challenge is working around it.
+    "pbpindiantribe.com": "403 Cloudflare challenge on robots.txt and on the "
+                          "front page, 3 of 3 reads; measured 2026-10-01",
+    "www.pbpindiantribe.com": "same host, www spelling, 403 challenge 3 of 3; "
+                              "measured 2026-10-01",
 }
 
 

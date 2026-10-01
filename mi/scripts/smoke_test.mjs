@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "mi-senate", "mi-house", "county-commissi
 const EXPECT_DISTRICT = { "county": "Ingham County", "us-house": "7", "mi-senate": "21", "mi-house": "77", "county-commissioner": "9", "mi-court-of-appeals": "Court of Appeals District 4", "mi-circuit-court": "30th Circuit Court", "mi-isd": "Ingham ISD" };
 const NEGATIVE_POINT = "41.65280,-83.53790"; // downtown Toledo, Ohio — south of the Michigan line and inside permalink_gate's minLat (41.55), so the point is still selectable; measured to miss all eight ANCHOR layers (phase 3's four live TIGERweb fabric layers are deliberately not anchors — anchors are pre-built and election-stable)
 const APP_NAME = "districtry Michigan";
-const EXPECT_LAYERS = 18;
+const EXPECT_LAYERS = 19;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -1362,6 +1362,56 @@ try {
         !/certified as elected/.test(cal.text), cal.text.slice(0, 200));
       await pageC.close();
     }
+    await context.close();
+  }
+  // ---- 1x. The Tribal Government card, on the one area in the fleet the
+  // Census names and no Bureau of Indian Affairs government is filed under.
+  // The Ontonagon Reservation is answered as the Keweenaw Bay Indian
+  // Community's from two measurements by one publisher (BIA's National LAR
+  // covering its interior point as "L'Anse Ontonagon", and exactly one BIA
+  // seat point inside the Census L'Anse Reservation), so this check is what
+  // proves a reader standing there is told a government at all. It also
+  // covers the ROSTER_BLOCKED wording, which Wisconsin's own check cannot:
+  // this nation's host answers some requests with a managed challenge, which
+  // is an access control and is never worked around, and the card has to say
+  // that rather than go quiet. The point is shapely's representative point for
+  // the shipped area, verified interior against the file's own even-odd
+  // reading (2026-10-01).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context, `${BASE}#point=46.97652,-89.10192&layers=tribal-government`);
+    const card = await cardText(page, "tribal-government");
+    const fields = await page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const by = (l) => (fields.find((f) => f.label === l) || {}).value || "";
+    const nation = card.text.indexOf("Keweenaw Bay Indian Community") !== -1;
+    // the land and the government are DIFFERENT names here, and that is the
+    // whole finding — a card printing the Census's text as the government
+    // would be naming a government that is filed nowhere
+    const land = by("Land") === "Ontonagon Reservation";
+    const seat = by("Seat of government") === "Baraga, MI";
+    const why = by("Why no names");
+    const whyOk = why.indexOf("managed challenge") !== -1 &&
+                  why.indexOf("not worked around") !== -1 &&
+                  /\d{4}-\d{2}-\d{2}/.test(why);
+    const noRoster = card.text.indexOf("Council member") === -1;
+    const ok = nation && land && seat && whyOk && noRoster;
+    check("the Ontonagon Reservation names the Keweenaw Bay Indian Community and says why no council member",
+          ok, `nation=${nation} land=${JSON.stringify(by("Land"))} ` +
+              `seat=${JSON.stringify(by("Seat of government"))} ` +
+              `why=${JSON.stringify(why.slice(0, 90))}`);
+
+    const page2 = await booted(
+      context, `${BASE}#point=${POINT}&layers=tribal-government`);
+    const off = await cardText(page2, "tribal-government");
+    const offOk = off.text.indexOf("not on tribal land") !== -1 &&
+                  off.text.indexOf("24 tribal areas") !== -1;
+    check("a point off tribal land is told so in the layer's own words",
+          offOk, JSON.stringify(off.text.slice(0, 120)));
     await context.close();
   }
 } finally {

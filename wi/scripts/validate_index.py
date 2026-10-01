@@ -100,10 +100,10 @@ EXPECT_LAYER_IDS = [
     "school-district-secondary", "school-district-unified",
     "school-district-elementary", "ems-service", "law-service",
     "fire-service", "county-board", "county-subdivision", "municipality",
-    "zip-code", "mpd-district", "mps-school-board", "mpd-squad-area",
-    "aldermanic-district", "ward", "milwaukee-neighborhoods",
-    "madison-neighborhood-assoc", "tid-district", "police-station",
-    "fire-station", "school-site", "library", "post-office",
+    "zip-code", "mpd-district", "mps-school-board", "tribal-government",
+    "mpd-squad-area", "aldermanic-district", "ward",
+    "milwaukee-neighborhoods", "madison-neighborhood-assoc", "tid-district",
+    "police-station", "fire-station", "school-site", "library", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -207,6 +207,7 @@ GEOMETRY_FILES = {
     "madison-neighborhood-assocs.json": (100, 141),  # Madison's ACTIVE city-registered association boundaries (116 at first build of the city's 141 rows — the city's own STATUS flag is the filter; the Inactive are lapsed registrations). Same builder, operator rebuild.
     "madison-outline.json": (1, 1),  # The City of Madison corporate limits — the city's own 137-ward fabric dissolved to one MultiPolygon (4 parts, enclave holes kept: Maple Bluff, Shorewood Hills, the town islands). madisonCoverage's ground; same builder.
     "tid-districts.json": (79, 79),  # Milwaukee's 79 active Tax Incremental Districts — the city's own CC-BY layer server-reprojected, dissolved TIDs dropped by date, witnessed against the CKAN shapefile's area shares scoped to the city's own STATUS flag (wi/scripts/build_milwaukee_city_layers.py). An operator rebuild; the monthly source report watches both endpoints.
+    "tribal-areas.json": (21, 21),  # Wisconsin's tribal land (scripts/build_tribal_areas.py) — 21 areas across 12 nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-01; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).

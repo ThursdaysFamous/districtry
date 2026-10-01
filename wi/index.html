@@ -8386,6 +8386,7 @@ function initWisconsinExplorer() {
     "zip-code",          // Census ZCTAs by Wisconsin envelope (the ZCTA layer has no STATE field); server-generalized
     "mpd-district",      // Milwaukee's seven police districts — a seventh of the city each, the largest of the city-scoped tier; the fleet's second city police-district layer
     "mps-school-board",  // the two school boards Wisconsin elects BY DISTRICT — Milwaukee's eight and Racine Unified's nine; every other board in the state is at large and has no geometry to draw
+    "tribal-government", // Tribal land — Wisconsin has 21 pieces across 12 nations, from the Menominee Reservation's 934.539 km² down to a 1.339 km² Oneida trust parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 8.969 km² MEDIAN, which sits just above the Milwaukee squad areas' measured 8.852 and well above the aldermanic fabric's 3.064, and below the county-board fabric's 47.147 — medians rather than means, because one reservation is a hundred times the size of a trust parcel and a mean would rank this layer by Menominee alone. The rank governs draw order only. Partial coverage: most of Wisconsin is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 2 of them in Wisconsin and both Menominee's — the 2020 population, and NOBODY: the authority for a council is each nation's own published list. Ten of the twelve publish one that answers this project and is not carried yet, and the card gives that page and the date it answered; two cannot be read at all, one behind a managed challenge and one publishing no council page, and the card says which. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "mpd-squad-area",    // The 25 MPD patrol squad areas — a twenty-fifth of the city each, nested inside the seven police districts (subOf), between the MPS board's eighths and the aldermanic fabric
     "aldermanic-district", // 866 city and village council districts — each a union of wards, smaller than a ZCTA, above the ward layer they dissolve from
     "ward",              // 7,161 municipal wards — the ballot sub-unit every district is built from; smaller than a ZCTA on average, above the amenity points
@@ -15048,6 +15049,102 @@ function initWisconsinExplorer() {
     });
   }
 
+  /* =========================================================================
+   * TRIBAL GOVERNMENT — Wisconsin's tribal land, 21 pieces across 12 nations.
+   *
+   * Eleven federal reservations and ten pieces of off-reservation trust
+   * land, from the Menominee Reservation's 934.539 km² down to a 1.339
+   * km² Oneida parcel.
+   *
+   * A nation's land is answered WHERE THE LAND IS even where its government
+   * sits in another state, with the seat named on the card (Adam's ruling,
+   * 2026-09-30). Two of Wisconsin's twelve nations are governed from
+   * outside the state's own list of Wisconsin governments: the Fond du Lac
+   * Band, whose trust land here is governed from Cloquet, Minnesota, and
+   * the Ho-Chunk Nation, which also holds trust land in Minnesota.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND. The ordinary rule
+   * is that a body elected at large gets roster rows on an identity card and
+   * never a shape of its own. These are drawn anyway, by the same ruling: a
+   * government answers for that ground, so a reader who clicks it should be
+   * told which one. A layer that drew only land with a district on it would
+   * answer "no government here" over land a nation governs — and the Census
+   * draws two tribal subdivisions, both of them Menominee's, on Wisconsin's tribal land, measured against the 484 it
+   * draws nationwide.
+   *
+   * WHY THE CARD NAMES NOBODY. The authority for who sits on a nation's
+   * council is that nation's own published list, and this app does not carry
+   * those names yet. Ten of the twelve nations publish a council page that
+   * answers this project, measured 2026-10-01, and the card gives that page
+   * and that date so a reader is sent somewhere rather than told an absence
+   * with no remedy. The other two cannot be read at all: one host answers some
+   * requests with a managed challenge, which is an access control and is
+   * never worked around, and one nation publishes no council page at all,
+   * measured through its whole navigation. The reason is carried on the feature
+   * (rosterWhy) rather than written here, so the card states a measurement
+   * rather than a sentence somebody typed, and the two tables behind it —
+   * ROSTER_BLOCKED and ROSTER_NOT_READ in scripts/build_tribal_areas.py —
+   * are re-audited on every run.
+   *
+   * PARTIAL COVERAGE, like the neighbourhood and district layers: most points
+   * in Wisconsin are on no tribal land, so the layer declares its own emptyNote
+   * rather than letting the generic "not inside any district" stand — that
+   * wording reads as a gap in the data where the truth is that the state has
+   * 21 such areas and this point is on none of them.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments — one reader per publisher, so eight
+   * instances cannot come to disagree.
+   * ======================================================================= */
+  var loadWiTribalAreas = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadWiTribalAreas,
+    style: { color: "#1F6F6B", weight: 2, fillColor: "#3E9A95", fillOpacity: 0.12, dashArray: "6 3" },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, which is NOT the
+      // Census's own text for the parcel: the Census writes names like
+      // "Oneida (WI) Off-Reservation Trust Land", a description of a piece of land
+      // rather than the name of a government.
+      // findPropCI LOWERCASES THE PROPERTY KEY AND COMPARES IT TO THE CANDIDATE AS
+      // GIVEN, so every `keys` entry below is lowercase while the shipped property
+      // is camelCase. A camelCase candidate matches NOTHING and the row simply does
+      // not render -- which is how the first build of this layer shipped four silent
+      // absences, the "Why no names" row among them, with every static gate green.
+      // The two smoke checks in each instance are what caught it and what keep it.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      // Why this card names no council member. It is the measurement the
+      // builder recorded, so the card cannot drift from it.
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      // extracted for primaryLink only — the hidden-column shape the other
+      // link-carrying layers in this app use for the same purpose
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it. It
+    // is LINKED and never fetched here: robots.txt governs what this project
+    // crawls, not what it cites.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    emptyNote: "This point is not on tribal land. Wisconsin has 21 tribal areas across 12 nations \u2014 eleven reservations and ten pieces of off-reservation trust land \u2014 and this point is on none of them."
+  });
+
   registerPolygonLayer({
     id: "zip-code",
     tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
@@ -16810,7 +16907,13 @@ function initWisconsinExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "wi-senate", "wi-assembly", "county-board", "aldermanic-district", "wi-circuit-court", "wi-court-of-appeals", "mpd-district", "mpd-squad-area", "fire-service", "law-service", "ems-service", "psap-area", "police-station", "fire-station", "mps-school-board", "school-district-secondary", "school-district-unified", "school-district-elementary", "wtcs-district", "school-site", "county", "county-subdivision", "ward", "municipality", "zip-code", "milwaukee-neighborhoods", "madison-neighborhood-assoc", "tid-district", "library", "post-office"];
+  var LAYER_SIDEBAR_RANK = ["us-house", "wi-senate", "wi-assembly", "county-board", "aldermanic-district", "wi-circuit-court", "wi-court-of-appeals", "mpd-district", "mpd-squad-area",
+    // Last in the political group, and placed rather than ranked: this
+    // instance orders Political by governance level and a nation is not a
+    // level of the state's own hierarchy. Most readers never see this slot,
+    // because most points in Wisconsin are on no tribal land.
+    "tribal-government",
+    "fire-service", "law-service", "ems-service", "psap-area", "police-station", "fire-station", "mps-school-board", "school-district-secondary", "school-district-unified", "school-district-elementary", "wtcs-district", "school-site", "county", "county-subdivision", "ward", "municipality", "zip-code", "milwaukee-neighborhoods", "madison-neighborhood-assoc", "tid-district", "library", "post-office"];
   (function applySidebarRank() {
     var pos = {};
     for (var i = 0; i < LAYER_SIDEBAR_RANK.length; i++) pos[LAYER_SIDEBAR_RANK[i]] = i;
@@ -17234,18 +17337,18 @@ function initWisconsinExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#0F766E": "#50C7BC", "#14181C": "#696F76",
-    "#14A38F": "#41EED2", "#1B5E3F": "#5FB387", "#1B7A3D": "#58CD7A", "#1F7A8C": "#58C8E1",
-    "#2E8C6A": "#62DAAC", "#2E9E6B": "#5BEAA5", "#2F5D8C": "#6EACED", "#2F6B3A": "#6FBE7B",
-    "#2F6B5E": "#6EBDAA", "#3D6B49": "#7EBC8D", "#3D95A6": "#6CDEF5", "#41B6E6": "#C6EBFE",
-    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4A7BB0": "#90C4FD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#83DC93", "#4E8F80": "#83DAC5", "#5B2A86": "#B375F2", "#5C8F6B": "#95D9A9",
-    "#5E3A8C": "#B283F5", "#6A4A93": "#BC91F6", "#6B7280": "#B1BBCE", "#7A0A1C": "#EB5B61",
-    "#7A0B1E": "#EA5C63", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#8A5A00": "#E4A241",
-    "#8C2E4A": "#F47294", "#8C6D1F": "#DEB452", "#8E6BB8": "#D3B3FE", "#9C0B24": "#FE6B6E",
-    "#A0522D": "#FE9666", "#A98B6C": "#F3CBA1", "#B02E2E": "#FE8880", "#B0316E": "#FD88B8",
-    "#B0342A": "#FF8B7C", "#B26A00": "#FFB15F", "#B45309": "#FEA16D", "#C8102E": "#FE928F",
-    "#C9A227": "#FEE195", "#D0564C": "#FEB1A7", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7",
-    "#D97706": "#FEC9A1", "#E4572E": "#FFBCA9"};
+    "#14A38F": "#41EED2", "#1B5E3F": "#5FB387", "#1B7A3D": "#58CD7A", "#1F6F6B": "#5DC0BB",
+    "#1F7A8C": "#58C8E1", "#2E8C6A": "#62DAAC", "#2E9E6B": "#5BEAA5", "#2F5D8C": "#6EACED",
+    "#2F6B3A": "#6FBE7B", "#2F6B5E": "#6EBDAA", "#3D6B49": "#7EBC8D", "#3D95A6": "#6CDEF5",
+    "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
+    "#4A7BB0": "#90C4FD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#4E8F80": "#83DAC5",
+    "#5B2A86": "#B375F2", "#5C8F6B": "#95D9A9", "#5E3A8C": "#B283F5", "#6A4A93": "#BC91F6",
+    "#6B7280": "#B1BBCE", "#7A0A1C": "#EB5B61", "#7A0B1E": "#EA5C63", "#7A5C3E": "#CFA57D",
+    "#8163AE": "#CAAAFF", "#8A5A00": "#E4A241", "#8C2E4A": "#F47294", "#8C6D1F": "#DEB452",
+    "#8E6BB8": "#D3B3FE", "#9C0B24": "#FE6B6E", "#A0522D": "#FE9666", "#A98B6C": "#F3CBA1",
+    "#B02E2E": "#FE8880", "#B0316E": "#FD88B8", "#B0342A": "#FF8B7C", "#B26A00": "#FFB15F",
+    "#B45309": "#FEA16D", "#C8102E": "#FE928F", "#C9A227": "#FEE195", "#D0564C": "#FEB1A7",
+    "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7", "#D97706": "#FEC9A1", "#E4572E": "#FFBCA9"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
