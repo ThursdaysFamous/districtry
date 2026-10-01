@@ -141,12 +141,11 @@
   {
    "court": "Court of Appeals",
    "division": 2,
-   "name": "Vacant",
-   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/3rd-Appellate-District-Division-2.aspx",
    "readFrom": "court-of-appeals-page",
    "role": "Judge",
    "tier": "appeals",
-   "unit": 3
+   "unit": 3,
+   "vacant": true
   },
   {
    "court": "Court of Appeals",
@@ -2241,12 +2240,11 @@
   {
    "court": "District Court",
    "division": 2,
-   "name": "Vacant",
-   "profileUrl": null,
    "readFrom": "Henry",
    "role": "Judge",
    "tier": "district",
-   "unit": 12
+   "unit": 12,
+   "vacant": true
   },
   {
    "court": "Circuit Court",
@@ -3721,12 +3719,11 @@
   {
    "court": "District Court",
    "division": 2,
-   "name": "Vacant",
-   "profileUrl": null,
    "readFrom": "Oldham",
    "role": "Judge",
    "tier": "district",
-   "unit": 12
+   "unit": 12,
+   "vacant": true
   },
   {
    "court": "Circuit Court",
@@ -4451,12 +4448,11 @@
   {
    "court": "District Court",
    "division": 2,
-   "name": "Vacant",
-   "profileUrl": null,
    "readFrom": "Trimble",
    "role": "Judge",
    "tier": "district",
-   "unit": 12
+   "unit": 12,
+   "vacant": true
   },
   {
    "court": "Circuit Court",

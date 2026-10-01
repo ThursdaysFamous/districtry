@@ -31,9 +31,12 @@ are the one expected absence — its county page ships no judge rows, measured a
 recorded in the scraper — and they are named in the output as asked-about rather
 than left to read as an oversight, so the card can say which it is.
 
-A VACANCY IS THE COURT'S OWN WORD. A card whose name is `Vacant` is the Court of
-Justice saying nobody holds that seat, which is what licenses a vacancy claim;
-it ships as `vacant: true` with the page and read date, never as a person.
+A VACANCY IS THE COURT'S OWN WORD, AND IT ARRIVES ALREADY CONVERTED. A card
+whose name is one of the words a publisher writes for an empty seat is the Court
+of Justice saying nobody holds it, which is what licenses a vacancy claim; the
+scraper turns it into `vacant: true` with no name at the parse, and this builder
+carries that flag through rather than reading the word a second time. One reader
+for the word, which is why nothing here compares a name against "vacant".
 
 Usage:
     python3 ky/scripts/build_ky_judges.py             # build
@@ -122,7 +125,7 @@ def units_of(path):
 
 def member(row):
     """One roster record. A vacancy is the court's word, not a person's name."""
-    vacant = row["name"].strip().lower() == "vacant"
+    vacant = bool(row.get("vacant"))
     rec = {}
     if vacant:
         rec["vacant"] = True
@@ -156,7 +159,10 @@ def assemble(scrape, geometry_units):
             fail("unknown tier %r in the scrape" % tier)
         # The same judge is printed on every county page in their circuit, so
         # the de-duplication key is the seat, not the page.
-        key = (tier, row["unit"], row.get("division"), row.get("court"), row["name"])
+        # A vacant seat carries no name, so the key reads the flag in its place:
+        # two vacancies in one court's same division would be one seat otherwise.
+        key = (tier, row["unit"], row.get("division"), row.get("court"),
+               row.get("name") or ("vacant" if row.get("vacant") else ""))
         if key in seen:
             continue
         seen.add(key)
@@ -294,9 +300,11 @@ def selftest():
     assert assemble(dup, geometry_units)["tiers"] == payload["tiers"], \
         "a judge repeated across county pages must de-duplicate to one record"
 
-    # A vacancy is never a person called Vacant.
+    # A vacancy the scraper already converted stays structural, and a record
+    # carrying the flag never carries a name beside it.
     vac = [dict(r) for r in rows]
-    vac[0] = dict(vac[0], name="Vacant")
+    vac[0] = {k: v for k, v in vac[0].items() if k != "name"}
+    vac[0]["vacant"] = True
     got = assemble(dict(scrape, rows=vac), geometry_units)["tiers"]["supreme"]
     seat = [m for unit in got.values() for m in unit["members"] if m.get("vacant")]
     assert len(seat) == 1 and "name" not in seat[0], seat

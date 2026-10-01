@@ -64,11 +64,16 @@ so a division is carried as a label on a person and never as a district to join
 on. The same word means real geography on a Kentucky school board, which is why
 it is worth saying twice.
 
-VACANCIES COME FROM THE COURT'S OWN WORD. Where a card's name is `Vacant` the
-Court of Justice is stating that nobody holds the seat, which is the one thing
-that licenses a vacancy claim (#1349): it ships as `vacant: true` with this
-page as its source and the read date beside it, never as a person called
-Vacant.
+VACANCIES COME FROM THE COURT'S OWN WORD, AND ARE CONVERTED HERE RATHER THAN
+CARRIED. Where a card's name is one of the words a publisher writes when nobody
+holds a seat, the Court of Justice is stating that the seat is empty, which is
+the one thing that licenses a vacancy claim (#1349): the row ships as
+`vacant: true` with no name at all, from this page and this read date. The word
+list has ONE reader in the fleet, `validate_officeholder_names.is_vacancy_marker`,
+and the conversion happens at the PARSE rather than in the builder, because the
+intermediate file is a roster too — it reaches a reader through
+build_county_pages.py elsewhere in the fleet, and a `Vacant` sitting in it is a
+person called Vacant waiting to be published.
 
 Usage:
     python3 ky/scripts/ky_judge_scraper.py            # fetch and write
@@ -89,6 +94,7 @@ REPO = os.path.dirname(INSTANCE)
 sys.path.insert(0, os.path.join(REPO, "scripts"))
 
 import scraper_common as sc  # noqa: E402
+from validate_officeholder_names import is_vacancy_marker  # noqa: E402  (one reader for the word)
 
 HOST = "https://www.kycourts.gov"
 COUNTY_URL = HOST + "/Courts/County-Information/Pages/{}.aspx"
@@ -196,8 +202,14 @@ def parse_cards(page, where):
             continue
         division = DIVISION_RE.search(unit_text)
         href = HREF_RE.search(raw)
-        out.append({
-            "name": name,
+        record = {}
+        if is_vacancy_marker(name):
+            # The court saying the seat is empty. It is a fact about the SEAT,
+            # so it is recorded structurally and never as somebody's name.
+            record["vacant"] = True
+        else:
+            record["name"] = name
+        record.update({
             "role": role or None,
             "court": court_name,
             "tier": tier,
@@ -207,6 +219,11 @@ def parse_cards(page, where):
             else (href.group(1) if href else None),
             "readFrom": where,
         })
+        if record.get("vacant"):
+            # A vacant seat has no profile page; a href on such a card points at
+            # the court, not at a person.
+            record.pop("profileUrl", None)
+        out.append(record)
     return out
 
 
@@ -345,7 +362,7 @@ SELFTEST_PAGE = """
 def selftest():
     rows = parse_cards(SELFTEST_PAGE, "selftest")
     assert len(rows) == 4, "the clerk's card must be skipped, got %d rows" % len(rows)
-    by_name = {r["name"]: r for r in rows}
+    by_name = {r["name"]: r for r in rows if r.get("name")}
 
     keller = by_name["Michelle M. Keller"]
     assert keller["tier"] == "supreme" and keller["unit"] == 6, keller
@@ -365,9 +382,16 @@ def selftest():
     assert schoborg["tier"] == "circuit" and schoborg["unit"] == 16, schoborg
     assert schoborg["court"] == "Family Court", schoborg
 
-    vacant = by_name["Vacant"]
+    # The court's "Vacant" card. The word is converted here, so the row carries
+    # the seat's facts and nobody's name — a name would be published as a person.
+    vacancies = [r for r in rows if r.get("vacant")]
+    assert len(vacancies) == 1, vacancies
+    vacant = vacancies[0]
+    assert "name" not in vacant, vacant
+    assert "profileUrl" not in vacant, vacant
     assert vacant["tier"] == "appeals" and vacant["unit"] == 3, vacant
     assert vacant["division"] == 2, vacant
+    assert "vacant" not in {str(v).lower() for r in rows for v in r.values()}, rows
 
     # A page with no judge region yields nothing rather than reading chrome.
     assert parse_cards('<div class="card"><h3>Nav</h3><h4>x</h4><p>1st Judicial Circuit</p></div>',
@@ -375,10 +399,11 @@ def selftest():
 
     # And a unit phrase alone is not enough: a card with no name is not a person.
     nameless = SELFTEST_PAGE.replace("<h3>Vacant</h3>", "<h3> </h3>")
-    assert "Vacant" not in {r["name"] for r in parse_cards(nameless, "selftest")}
+    assert len(parse_cards(nameless, "selftest")) == 3, "a card with no name at all"
 
     print("ky-judge-scraper: selftest OK — 4 judge rows, clerk skipped, "
-          "Family Court filed under its circuit, vacancy kept as the court's own word")
+          "Family Court filed under its circuit, the vacancy structural and "
+          "nobody named Vacant")
 
 
 def main():
