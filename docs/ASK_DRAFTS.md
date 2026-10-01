@@ -90,12 +90,13 @@ file:
 | Palo Alto, Montgomery, Lee, Ida, Washington, Sioux county auditors (IA) | which supervisor represents which district | none | — |
 | Osceola County Auditor (IA) | the same | none | **ANSWERED same day**: all five districts paired with their supervisor |
 | Dickinson County Auditor (IA) | the same | none | **ANSWERED same day**: a bare "no", which the letter itself had offered as a complete answer. It settles that the office will not supply the pairing; it says NOTHING about whether the board is elected by district, and must not be read as if it did |
-| Black Hawk, Cass, Guthrie county auditors (IA) | the same | none | — |
+| Black Hawk and Guthrie county auditors (IA) | the same | none | — |
 | Calhoun County Auditor (IA) | the same | none | — |
 | Pottawattamie, Tama, Wright county auditors (IA) | how many supervisors, and who | none | — |
 | Franklin County Clerk (IL) | which Public Square address the board meets at | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
-| nine Michigan city and township clerks | may an automated reader see your board page | none | — |
+| nine Michigan city and township clerks | may an automated reader see your board page | none | Ypsilanti Township **ANSWERED same day**: the clerk is passing the request to the township's technology staff |
+| Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day**: the district numbers with their supervisors' names, plus a district map |
 | Calumet (Brillion), Brown (Bellevue), Outagamie (New London), Pepin (Durand) county clerks (WI) | ward-to-district filing | none | Brown **ANSWERED same day**: Bellevue "appear to be at large", and pointed at the village clerk |
 | Chillicothe, West Peoria, Galva city clerks (IL) | ward boundaries | none | — |
 | Oklahoma State Election Board | precinct maps in the CSA Data Warehouse | none | — |
@@ -107,6 +108,20 @@ Dickinson and Guthrie county auditors. An apology to each is drafted. **Calhoun 
 once** and its second copy was caught as a draft before it went — the first write-up of
 this said five counties and that was an overcount, read off the draft folder rather than
 off the sent folder, which is the same error this section opens by naming.
+
+**The ten Michigan clerk letters are nine.** Burton has no published clerk address
+anywhere this project can find, so its letter is written and unsendable; the other nine
+went between 14:48 and 14:51. Three of the nine should not have gone at all — Shelby
+Township, Northville Township and Ypsilanti Township turn out to permit this project's
+reader — and a correction to each is drafted as a reply on its own thread rather than as
+a fresh letter, so the clerk reads it under the note it corrects. Ypsilanti's clerk had
+already answered by the time the correction was written, which is the cost of the
+mistake: an office did work on a request that was not needed. Michigan keeps its own
+record of these asks, and the two records are to agree.
+
+**The apologies are going out as fast as they are written**: Dickinson's and Cass's were
+sent within minutes of being drafted. Cass answered the original question in between, so
+her apology reached her after her own reply; that is harmless and is left as it was sent.
 
 **Follow-up clocks start from the dates above**: a first follow-up at about three weeks
 (2026-10-22) and a second about two weeks after that (2026-11-05), then `UNRESPONSIVE`,
@@ -126,12 +141,25 @@ which is a claim about the ask and never about the source.
 | Grundy County GIS | the county CLERK was written 2026-07-21; this is a different mailbox | first contact to this office, correct |
 | Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
 | Colona, Marion (IA) city clerks; Jones County Auditor; League of Wisconsin Municipalities; Lafayette (Cuba City) and Ozaukee (Port Washington) county clerks; Kentucky Administrative Office of the Courts; Burton (MI) clerk; City of Beloit clerk; City of Oshkosh clerk; WinGIS | none for any | first contact, correct |
-| seven apologies — Clinton, Franklin, and the four double-sent Iowa auditors | see above | drafted 2026-10-01 |
+| seven apologies — Clinton, Franklin, and the four double-sent Iowa auditors | see above | drafted 2026-10-01; Dickinson's and Cass's already sent |
+| three Michigan corrections — Shelby, Northville and Ypsilanti townships | written to earlier the same day | drafted 2026-10-01 as replies on their own threads |
 | Calhoun County Auditor | sent 2026-10-01 | **a duplicate of the sent letter**; the draft is marked do-not-send and awaits the operator's deletion |
 
 **Four Wisconsin city-clerk drafts were WITHDRAWN on 2026-10-01** — Janesville, Wausau,
 Wauwatosa and Mequon — because those sites turn out to permit this project's reader and
 no letter is owed. Withdrawn is not unanswered.
+
+### Eight Illinois counties owe no board-membership letter
+
+Illinois re-read the county websites on 2026-10-01 and found that Bond, Bureau,
+Cumberland, Jasper, Lawrence and Piatt publish their board members themselves, so no
+letter about membership is owed to any of them; Scott and Macoupin publish too and are
+being checked again, so letters to those two are held rather than cleared. **The mailbox
+was searched and holds no board-membership draft to any of the eight**, so there was
+nothing to mark do-not-send — the Bureau draft in the table above asks about the licence
+and the invoice, which is a different question and still open. This is the sent-folder
+rule pointing the other way: a letter the repository thinks is owed can be owed to
+nobody, and the county's own page is the evidence.
 
 ### Still with no letter to draft
 
