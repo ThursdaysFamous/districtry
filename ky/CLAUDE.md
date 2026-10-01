@@ -93,7 +93,7 @@ the member, and this instance names none.
 - Metro: Kentucky (`kentucky`) — https://districtry.com/ky/
 - Geocoders: address Photon (Kentucky-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Kentucky-bounded, serial >=1s queue)
 - Ground truth: 38.25270,-85.75850 (downtown Louisville, Jefferson County) → county Jefferson County; us-house 3; ky-senate 33; ky-house 43. Negative point 36.40000,-86.50000 (inside Sumner County, TENNESSEE, about 15 km south of the Kentucky line and north-east of Nashville — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (minLat 36.35) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-09-30: TIGERweb's county layer names Sumner County STATE 47 (control: the anchor returns Jefferson County STATE 21), and no outline in fleet-outlines.json contains it (control: the Louisville anchor is likewise in none of them, so the file genuinely has no Kentucky coverage rather than the test passing vacuously). TENNESSEE RATHER THAN ONE OF THE OTHER SIX NEIGHBOURS, deliberately. Illinois is live and borders Kentucky across the Ohio, so a point over there would sit inside an instance's own outline and the browser would hand the selection off to districtry.com/il/ and navigate away — which is how Minnesota's first candidate failed, silently, as a smoke-test timeout on a blank document rather than as a wrong answer. Indiana and North Carolina are in build as dark instances and will become live outlines, so they were avoided for the same reason one step ahead. Tennessee is in no instance and in no launch plan. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.).
-- Layers: 4 registered (political 3, geography 1); `registerLayer(` floor 4. Debug namespace `window.KentuckyExplorer`.
+- Layers: 8 registered (political 3, schools 3, geography 2); `registerLayer(` floor 4. Debug namespace `window.KentuckyExplorer`.
 - Scheduled workflows: `update-ky-congress-roster.yml` (Mon 13:55 UTC).
 - Source registry: `ky/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -232,6 +232,98 @@ these settings the worst stray is 15.3 m on all three layers.
 The one roster, `congress-roster.json` (`ky/scripts/build_congress_roster.py`, from
 unitedstates/congress-legislators), is count-guarded and refreshed weekly by CI as a reviewed
 PR.
+
+## Four layers added 2026-10-01 for the fourth done-standard test, and two levels closed by measurement
+
+The fleet's fourth test, **Covered** (`docs/DONE_STANDARD.md`), asks whether an app answers
+every level of government it is expected to answer, or carries a measured record of why it
+cannot. Kentucky scored **3 of 13** on the day that test landed. It now scores **7**, and the
+four new layers are all the Census's own, so none of it needed anybody's permission.
+
+**THE CITY LAYER CLOSES MUNICIPAL BOUNDARIES AND ITS EMPTY CARD IS A REAL ANSWER.** 415
+incorporated places, live from TIGERweb `Places_CouSub_ConCity_SubMCD` layer 4, measured
+2026-10-01 over 4,978.5 km2 of land — under 5% of Kentucky, at a 12.00 km2 mean — and EVERY
+one carries the Census's city descriptor (LSADC 25). Kentucky incorporates no villages and no
+towns, so this card needs no unit-type row where Michigan's does. The important part is the
+`emptyNote`: outside a city limit the COUNTY governs, because Kentucky has no township tier, so
+an empty card means "your county is the answer" rather than "a layer is missing". Minnesota's
+identical empty card means "you are in a township", which is why this note is written for
+Kentucky rather than carried across from a sibling.
+
+**THE THREE SCHOOL TILINGS CLOSE SCHOOL DISTRICT BOUNDARIES, AND KENTUCKY NEEDS ALL THREE.**
+Measured 2026-10-01 against TIGERweb `School/MapServer` for `STATE='21'`: layer 0 (unified) 170
+districts, layer 2 (elementary) 4, layer 1 (secondary) 4. The arrangement is a ONE-FOR-ONE
+PAIRING and it is measured rather than assumed. The four elementary districts are independent
+districts running PK/KG-8 — Anchorage, Southgate, East Bernstadt and Science Hill — and each of
+the four secondary districts is the county district running grades 9-12 over exactly one of
+them: Jefferson over Anchorage, Campbell over Southgate, Laurel over East Bernstadt, Pulaski
+over Science Hill. At all four elementary interior points the secondary layer returns its
+partner, 4 of 4, and the reverse, 4 of 4; the unified layer returns NOTHING at any of those
+eight points, and at 20 randomly sampled unified interior points neither of the other two
+returns anything, 0 of 20. The probe reads INTPTLAT/INTPTLON, the interior point TIGER
+guarantees is inside the polygon, never CENTLAT/CENTLON, whose centroid can fall outside a
+non-convex shape.
+
+**THE ARITHMETIC IS THE INDEPENDENT WITNESS, AND IT IS EXACT.** The Census's own AREALAND sums
+to 102,228.8 km2 over the 170 unified districts and 39.0 km2 over the four elementary ones, and
+the two together are 102,267.8 km2 — EXACTLY the 120-county total from the same service. So
+unified plus elementary partitions Kentucky's land with nothing left over and nothing counted
+twice, and the secondary tiling's own 39.0 km2 is the same ground as the elementary one. That is
+also the argument for shipping all three rather than the big one: unified alone would answer
+**"no school district"** to every reader inside those four areas, which is a wrong answer rather
+than a missing one.
+
+**NO RECONCILIATION WITH THE STATE'S OWN COUNT IS CLAIMED.** The Department of Education's
+districts page says Kentucky has 171 school districts; the Census publishes 170 unified plus 4
+elementary records. The two are counting different things, nothing measured here resolves them,
+and neither figure is presented as the other. This is the same question left open below about
+the county/independent split, and it is still open.
+
+**ALL FOUR ARE POINT-FIRST, WHICH MOVED THIS INSTANCE'S PUBLISHED PRIVACY ROW.** They go
+through a new `tigerStatewideLoader` carrying the `.atPoint` hook, because the two large ones
+need it: measured at `geometryPrecision=5`, unified school districts are 6.53 MB raw / 1.72 MB
+gzipped and the places layer 4.72 MB / 1.18 MB, so a first click would otherwise wait on a
+multi-MB statewide download. The two four-feature tilings are 0.04 MB each and inherit the hook
+for free. `scripts/probe_point_transmission.mjs` re-run on 2026-10-01 measures all four
+FIRING — which is also the proof that all four layers genuinely answer, since the smoke test
+only exercises the four anchor layers — so `privacy.html`'s Kentucky row moves from "None." to
+"4 layers". **In that run every other instance's figures came back byte-identical to the
+committed artifact**, which is what makes the Kentucky change trustworthy rather than a sandbox
+reading: this probe's answer is known to depend on what the network can reach.
+
+**NEITHER LAYER NAMES ANYBODY, AND BOTH ABSENCES ARE RECORDED** as the coverage gaps
+`ky-school-board-members` and `ky-municipal-officeholders`. The school cards link the
+Department of Education's district directory and the city card links the Department for Local
+Government's municipal directory; both hosts were read with this project's own client on
+2026-10-01 and both permit the path. The city directory is a per-city SEARCH rather than a
+downloadable list, which is why a roster there is 415 reads rather than one fetch, and that is
+in the record rather than in a plan.
+
+**TWO LEVELS ARE CLOSED BY MEASUREMENT RATHER THAN BY WORK**, which is the standard's own
+second branch for a level a state does not have.
+
+**Kentucky has no sub-county general-purpose government.** The only sub-county units the Census
+publishes for the state are 493 Census County Divisions — statistical areas drawn for
+tabulation, which govern nobody — so there is no elected sub-county body to draw. That layer is
+deliberately NOT shipped: at 19.91 MB raw / 5.03 MB gzipped it is the heaviest fabric the state
+has, and it would put a card on the map for something that is not a government.
+
+**Kentucky has no tribal land.** Measured 2026-10-01 against the Census AIANNHA service over an
+envelope covering the whole state: zero features in federal reservations, off-reservation trust
+lands, state reservations, tribal subdivisions, and both the state-designated and
+tribal-designated statistical areas — six layers, all empty. **RUN WITH CONTROLS**, because a
+zero from a query is also what an error looks like: the same two layers return the Qualla
+Boundary over western North Carolina and eleven reservations over northern Wisconsin. The
+fleet-wide tribal layer and the 2026-09-29 mandate behind it remain the tribal thread's; this
+records Kentucky's own measurement and nothing else.
+
+**WHAT IS STILL OPEN, AND WHICH IS CHEAPEST.** Six levels: the county governing body, the 17
+cities above 25,000 people, courts by district, school boards by division, election precincts
+and special districts. **The court districts are the one that needs no publisher at all** —
+every judicial district in Kentucky is a list of whole counties written into statute and this
+instance already ships a 120-feature county fabric, so all four tiers dissolve offline from
+text. `ky/data/source/statutes/` holds the sections, with the one limitation that the exact PDF
+route they were fetched from was not recorded and was not recovered afterwards.
 
 ## Two concepts measured 2026-10-01, both from primary law, neither built
 

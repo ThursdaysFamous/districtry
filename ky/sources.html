@@ -1073,9 +1073,10 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">4 layers — 3 political and legislative, 1 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">8 layers — 3 political and legislative, 3 schools, 2 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
+        <a href="#schools">Schools</a>
         <a href="#geography">Geography &amp; amenities</a>
       </nav>
 
@@ -1126,8 +1127,55 @@ table.matrix code {
         </div>
       </section>
 
+      <section class="matrix-group" id="schools">
+        <h2>Schools <span class="matrix-count">3 layers</span></h2>
+        <p class="matrix-blurb">The district, the attendance zone, and the schools nearest the point.</p>
+        <div class="matrix-wrap">
+          <table class="matrix">
+            <thead>
+              <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
+            </thead>
+            <tbody>
+              <tr id="layer-school-district-unified">
+                <th scope="row"><span class="layer-name">School District (Unified)</span><code>school-district-unified</code></th>
+                <td data-label="What it answers">The unified (every-grade) school district covering the point.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 170 features for Kentucky over 102,228.8 km2 of land, measured 2026-10-01</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.</td>
+                <td data-label="Where it applies">Kentucky — statewide, except the four areas the Census places in its elementary and secondary tilings.</td>
+              </tr>
+              <tr id="layer-school-district-elementary">
+                <th scope="row"><span class="layer-name">School District (Elementary)</span><code>school-district-elementary</code></th>
+                <td data-label="What it answers">The elementary-only school district covering the point, in the four places Kentucky has one.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 4 features for Kentucky — Anchorage, Southgate, East Bernstadt and Science Hill Independent — measured 2026-10-01</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.</td>
+                <td data-label="Where it applies">Kentucky — four areas only, totalling 39.0 km2.</td>
+              </tr>
+              <tr id="layer-school-district-secondary">
+                <th scope="row"><span class="layer-name">School District (Secondary)</span><code>school-district-secondary</code></th>
+                <td data-label="What it answers">The school district that runs the high school for the point, in the four places Kentucky separates it from the elementary district.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime (no builder script, no committed data/app file); 4 features for Kentucky — Jefferson, Campbell, Laurel and Pulaski County districts over the four independent elementary districts — measured 2026-10-01</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.</td>
+                <td data-label="Where it applies">Kentucky — the same four areas as the elementary tiling, 39.0 km2.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">1 layer</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">2 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1145,6 +1193,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">Not yet shipped. Kentucky's county governing body is the fiscal court, and its districts and members arrive together in a later change; the card names no officeholder rather than guessing one. Recorded as the coverage gaps ky-fiscal-court and ky-county-officers.</td>
                 <td data-label="Where it applies">Kentucky — statewide.</td>
+              </tr>
+              <tr id="layer-municipality">
+                <th scope="row"><span class="layer-name">City</span><code>municipality</code></th>
+                <td data-label="What it answers">The city covering the point, if any. Kentucky has no township tier, so a point outside every city is governed by its county and the card is correctly empty.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 415 features for Kentucky, measured 2026-10-01, every one carrying the Census's city descriptor — Kentucky incorporates no villages or towns, so this card needs no type row</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER. Kentucky cities elect a mayor and a city legislative body, and no roster of their members has been built here, so the card names nobody and links the Department for Local Government's municipal directory (kydlgweb.ky.gov/Cities/16_CityHome.cfm, read 2026-10-01, robots.txt permits it), which is a per-city search rather than a downloadable roster. Which statutory plan of government a given city runs under was not measured and is not claimed. Recorded as the coverage gap ky-municipal-officeholders.</td>
+                <td data-label="Where it applies">Kentucky — statewide, answering only inside an incorporated city.</td>
               </tr>
             </tbody>
           </table>
@@ -1251,6 +1310,94 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Kentucky — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ky/sources.html#dataset-school-district-unified",
+      "identifier": "school-district-unified",
+      "name": "School District (Unified)",
+      "description": "The unified (every-grade) school district covering the point. NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.",
+      "url": "https://districtry.com/ky/sources.html#layer-school-district-unified",
+      "isPartOf": {
+        "@id": "https://districtry.com/ky/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 170 features for Kentucky over 102,228.8 km2 of land, measured 2026-10-01",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Kentucky — statewide, except the four areas the Census places in its elementary and secondary tilings"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ky/sources.html#dataset-municipality",
+      "identifier": "municipality",
+      "name": "City",
+      "description": "The city covering the point, if any. Kentucky has no township tier, so a point outside every city is governed by its county and the card is correctly empty. NO OFFICEHOLDER. Kentucky cities elect a mayor and a city legislative body, and no roster of their members has been built here, so the card names nobody and links the Department for Local Government's municipal directory (kydlgweb.ky.gov/Cities/16_CityHome.cfm, read 2026-10-01, robots.txt permits it), which is a per-city search rather than a downloadable roster. Which statutory plan of government a given city runs under was not measured and is not claimed. Recorded as the coverage gap ky-municipal-officeholders.",
+      "url": "https://districtry.com/ky/sources.html#layer-municipality",
+      "isPartOf": {
+        "@id": "https://districtry.com/ky/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 415 features for Kentucky, measured 2026-10-01, every one carrying the Census's city descriptor — Kentucky incorporates no villages or towns, so this card needs no type row",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Kentucky — statewide, answering only inside an incorporated city"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ky/sources.html#dataset-school-district-elementary",
+      "identifier": "school-district-elementary",
+      "name": "School District (Elementary)",
+      "description": "The elementary-only school district covering the point, in the four places Kentucky has one. NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.",
+      "url": "https://districtry.com/ky/sources.html#layer-school-district-elementary",
+      "isPartOf": {
+        "@id": "https://districtry.com/ky/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 4 features for Kentucky — Anchorage, Southgate, East Bernstadt and Science Hill Independent — measured 2026-10-01",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Kentucky — four areas only, totalling 39.0 km2"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ky/sources.html#dataset-school-district-secondary",
+      "identifier": "school-district-secondary",
+      "name": "School District (Secondary)",
+      "description": "The school district that runs the high school for the point, in the four places Kentucky separates it from the elementary district. NO OFFICEHOLDER. Kentucky elects every county school board by division and every independent school board at large (KRS 160.210(1)), and this app has built neither roster, so the card names the district and links the Kentucky Department of Education. Recorded as the coverage gap ky-school-board-members.",
+      "url": "https://districtry.com/ky/sources.html#layer-school-district-secondary",
+      "isPartOf": {
+        "@id": "https://districtry.com/ky/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime (no builder script, no committed data/app file); 4 features for Kentucky — Jefferson, Campbell, Laurel and Pulaski County districts over the four independent elementary districts — measured 2026-10-01",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Kentucky — the same four areas as the elementary tiling, 39.0 km2"
       }
     }
   ]
