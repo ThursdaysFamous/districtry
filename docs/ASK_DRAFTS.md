@@ -2757,7 +2757,7 @@ any local government's website.
 
 ---
 
-## Ask 34 — Michigan cities and townships whose board pages this app cannot read
+## Ask mi-city-township-boards — Michigan cities and townships whose board pages this app cannot read
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** One message per unit, to its clerk. Each unit has its
 > own gap record in `docs/DATA_LAYER_GUIDEBOOK.md` (named in the table below), already carrying
@@ -2765,8 +2765,7 @@ any local government's website.
 > "<date>"}` to that unit's record and change its `NOT YET ASKED — DRAFTED` to `ASKED <date>`;
 > add `followedUp` on the follow-up, and `outcome` (`refused`, or `unresponsive` once thirty days
 > have passed from the follow-up) when it is true. A reply that sends the list is `answered`,
-> and the work is then to read it, not to record the level. The number may need to move if another draft lands
-> on main as Ask 34 first.
+> and the work is then to read it, not to record the level.
 
 **Why these letters exist.** The done standard asks that a reader in any Michigan city or
 township over 25,000 people be told who governs it. Of the 82 such units, most publish their
