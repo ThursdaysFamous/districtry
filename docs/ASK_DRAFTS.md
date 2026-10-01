@@ -495,6 +495,21 @@ route it there itself.
 
 ## Ask 8 — Iowa Secretary of State: a statewide list of city clerks
 
+> **SENT 2026-09-04 to `elections@sos.iowa.gov`**, subject "Is there a statewide list of Iowa
+> city clerks?". No reply on that thread as of 2026-10-01, so one follow-up is due and the
+> thirty-day silence mark falls on 2026-10-04.
+>
+> **THE SEND WAS RECORDED NOWHERE FOR TWENTY-SEVEN DAYS**, and it is worth saying how that
+> happened, because the failure is invisible from inside the repository. This file and the
+> `ia-municipal-officeholders` blocker both read `NOT YET ASKED — DRAFTED` until 2026-10-01,
+> when the operator's own sent folder was read and the message was sitting in it. Nothing was
+> wrong with the letter and nothing was wrong with the ledger's rules; what was missing is
+> that the rule says the send date is written on the day it goes, and the only person who can
+> write it is the one who sends. **A ledger entry that is wrong in the "still to do"
+> direction looks like pending work rather than an error**, so nobody counts the days, no
+> follow-up falls due, and the gap record goes on telling readers the office was never asked.
+> When an ask's clock matters, read the sent folder and not the ledger.
+
 **This is the ask Iowa never made, and Wisconsin's whole municipal tier rests on its
 counterpart.** Wisconsin ships a clerk for all 608 of its cities and villages because ONE
 publisher — the Wisconsin Elections Commission — holds all 1,848 municipalities in one file,
@@ -2433,11 +2448,15 @@ The Clerk's own named county address, so the name vouches for it.
 
 ## Ask 30 — twelve Iowa counties: which supervisor holds which district
 
-> **NOT YET ASKED — DRAFTED 2026-09-25.** Twelve separate messages, one per county, each to
-> that county's Auditor. On send, change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the
-> `ia-supervisor-district-seats` blocker in `docs/DATA_LAYER_GUIDEBOOK.md` AND in row 35 of
-> `ia/WATCH.md` — Iowa keeps the ledger in both, unlike Illinois. Record the date per county
-> if they go out on different days; twelve counties will not all answer at once.
+> **ASKED 2026-10-01 FOR SEVEN; THE OTHER FIVE ARE DRAFTED IN THE MAILBOX AND UNSENT.**
+> Twelve separate messages, one per county, each to that county's Auditor. Sent 2026-10-01 and
+> confirmed in the operator's own sent folder: **Ida, Lee, Montgomery, Osceola, Palo Alto,
+> Sioux and Washington**. Drafted in Gmail 2026-10-01 and NOT sent: **Black Hawk, Calhoun,
+> Cass, Dickinson and Guthrie**. A follow-up falls due for the seven at about three weeks
+> (2026-10-22) and the thirty-day silence mark at 2026-10-31; each of the five reads
+> `ASKED <date>` only on the day it goes. The ledger lives in the
+> `ia-supervisor-district-seats` blocker in `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md`
+> — Iowa keeps it in both, unlike Illinois.
 
 **This ask is twelve counties and not eighteen, and the narrowing is the point.** Of the
 eighteen in this record on 2026-09-24, six publish the supervisor-to-district join on their
@@ -2482,17 +2501,27 @@ could re-check and which only a person can.
 The recipient is each county's **Auditor**, Iowa's commissioner of elections under Iowa Code
 §47.2 and the office whose page publishes the district map — the same reasoning as Ask 14.
 
-**No auditor address exists anywhere in this repository, and the addresses that do exist are
-the wrong offices.** `ia-county-board-directory.json` carries county, plan, seats and a URL and
-no contact at all. `ia-county-officers.json` carries two to four verified addresses for every
-one of the twelve, but its keys are `countyAttorney`, `recorder`, `sheriff` and `treasurer`.
-Asking a Sheriff which supervisor holds District 3 is the wrong office.
+**CORRECTED 2026-10-01 — THE ADDRESSES ARE IN THIS REPOSITORY AND WERE WHEN THE SEVEN WENT
+OUT.** This section used to read "No auditor address exists anywhere in this repository, and
+the addresses that do exist are the wrong offices", and then set out, correctly for what it
+believed, why the twelve addresses had to be read off each county's site by a person at send.
+That was true of the two files it named — `ia-county-board-directory.json` carries county,
+plan, seats and a URL and no contact at all, and `ia-county-officers.json`'s keys are
+`countyAttorney`, `recorder`, `sheriff` and `treasurer`, so asking a Sheriff which supervisor
+holds District 3 is the wrong office. It was never true of the file that actually answers:
+**`ia/data/app/ia-county-auditors.json` carries a name, an office, a telephone and an e-mail
+for the auditor of all 99 counties**, and it is what `ia/scripts/ia_county_auditor_scraper.py`
+builds weekly.
 
-Iowa auditor mailboxes are patterned enough that one could be guessed, and **guessing is what
-this file exists to prevent**: a wrong address on an outbound ask is worse than no ask, the
-standard `docs/PRESS_LIST.md` already holds. So the addresses are read off each county's own
-site at send — twelve reads a person does in a browser in a few minutes, where this client can
-reach only six. That division is the honest one rather than a half-list of mixed provenance.
+**The seven addresses the operator sent to on 2026-10-01 match that file exactly, all seven**,
+which is what establishes it as the right source rather than an assumption about it. So the
+remaining five were drafted straight from it — Black Hawk (Karen Showalter), Calhoun (Jena
+Patzner), Cass (Kathy Somers), Dickinson (Lori Pedersen) and Guthrie (Dani Fink) — with no
+address guessed and none read off a page this client cannot reach. **The rule against guessing
+an address stands unchanged**; what was wrong here was a claim about this repository's own
+contents, which is the kind a search settles in one command and nobody ran. A sentence saying
+a fact is absent from the tree is a claim about the tree, and it goes stale the day a scraper
+ships the fact.
 
 ### Draft
 
@@ -2536,10 +2565,11 @@ reach only six. That division is the honest one rather than a half-list of mixed
 
 ## Ask 31 — Worth County Auditor: the city-officials page is published and empty
 
-> **NOT YET ASKED — DRAFTED 2026-09-25.** One message, to the Worth County Auditor. On send,
-> change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `ia-municipal-officeholders`
-> blocker in `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in
-> both, unlike Illinois.
+> **ASKED 2026-10-01**, to `auditor@worthcounty.org` under the subject "Your city officials
+> page" — confirmed in the operator's own sent folder on the day it went. One follow-up falls
+> due at about three weeks (2026-10-22) and the thirty-day silence mark at 2026-10-31. The
+> ledger lives in the `ia-municipal-officeholders` blocker in `docs/DATA_LAYER_GUIDEBOOK.md`
+> AND in `ia/WATCH.md` — Iowa keeps it in both, unlike Illinois.
 
 **This is a better-founded ask than the usual one, and the difference is worth stating.** The
 standard ask puts a question to a county that publishes nothing: would you send us a list. This
@@ -3148,7 +3178,10 @@ or a file.
 
 ## Ask ia-pottawattamie-tama-wright-boards — three Iowa counties: how many supervisors sit on the board, and who are they?
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** Three separate messages, one per county, each to
+> **NOT YET ASKED — DRAFTED 2026-10-01, and since the same day each sits in the operator's
+> mailbox as its own draft**, addressed to that county's auditor from
+> `ia/data/app/ia-county-auditors.json`: Pottawattamie (Mary Ann Hanusa), Tama (Karen Rohrs)
+> and Wright (Amanda Meyer). Three separate messages, one per county, each to
 > that county's Auditor. On send, change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the
 > `ia-supervisor-count-impossible` and `ia-supervisor-count-disagrees` blockers in
 > `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in both. Record
