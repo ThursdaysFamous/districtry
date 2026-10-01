@@ -8265,7 +8265,10 @@ counties whose boards are elected county-wide and need only a roster (Hardin,
 Johnson, Perry, Pope and Scott, Pope also needing its board's FORM confirmed),
 and eight whose districts are drawn by nobody (Bond, Cumberland, Fayette,
 Jasper, Jersey, Lawrence, Macoupin and Marion). Nothing was sent; the drafts are
-in `docs/ASK_DRAFTS.md` for the operator.
+in `docs/ASK_DRAFTS.md` for the operator, as `il-five-counties-commissioner-roster` and
+`il-eight-counties-board-districts` — named rather than numbered, which is the
+convention from 2026-10-01 onward, because three threads drafted the same next number
+on one evening and git merges two identical headings without a conflict.
 
 ### 2026-10-01: six of Lake County's seven, and the city whose page lists nobody
 

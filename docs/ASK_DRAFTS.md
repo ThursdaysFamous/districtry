@@ -2714,12 +2714,15 @@ on at least one City surface, so the question is purely about how it may be read
 
 ---
 
-## Ask 34 — Village of Gurnee: your board page names nobody
+## Ask il-gurnee-board-names — Village of Gurnee: your board page names nobody
 
-> **THE NUMBER IS PROVISIONAL.** Main ended at 33 when this was written and the Wisconsin,
-> Michigan and Iowa branches each claim 34 as well, so whoever merges second renumbers
-> rather than letting two asks share a number. Check main's last ask number immediately
-> before merging, not when the branch was cut.
+> **NAMED RATHER THAN NUMBERED, and this ask is why the convention changed.** It was
+> drafted as the next number after 33, and on the same evening the Wisconsin, Michigan and
+> Iowa branches each drafted their own next-number-after-33. Git merges two identical
+> headings without a conflict, and
+> renumbering one afterwards moves it out from under every record that cites it, so a new
+> ask takes a name from now on. The numbered asks above keep their numbers; several have
+> been sent and their numbers travel with the thread.
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the Village Clerk. On send, change
 > `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `gurnee-village-board-names` blocker in
@@ -2792,10 +2795,9 @@ a question we would be asking of ourselves. That one waits on a reading from a b
 ---
 
 
-## Ask 35 — City of Urbana: your website does not answer us from anywhere
+## Ask il-urbana-site-unreachable — City of Urbana: your website does not answer us from anywhere
 
-> **THE NUMBER IS PROVISIONAL**, for the reason Ask 34 above gives: check main's last ask
-> number immediately before merging.
+> **NAMED RATHER THAN NUMBERED**, for the reason `il-gurnee-board-names` above gives.
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the City Clerk. On send, change
 > `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `urbana-city-council-names` blocker in
@@ -2914,12 +2916,10 @@ there is nothing yet to license. No individual is named. And no county or town i
 because this is a question about whether a statewide product exists, not a complaint about
 any local government's website.
 
-## Ask 36 — five Illinois county clerks: who holds the commissioner seats?
+## Ask il-five-counties-commissioner-roster — five Illinois county clerks: who holds the commissioner seats?
 
-**Status: NOT YET ASKED — DRAFTED. THE NUMBER IS PROVISIONAL**, because main's ledger
-ended at 33 when this was written and Wisconsin, Michigan and Iowa each claim 34 on an
-open branch. Renumber against main immediately before merging, and update every record
-that points at it.
+**Status: NOT YET ASKED — DRAFTED 2026-10-01.** Named rather than numbered, for the reason
+`il-gurnee-board-names` above gives.
 
 Gaps `hardin-county-board`, `johnson-county-board`, `perry-county-website-blocked`,
 `pope-county-board`, `scott-county-commissioners`.
@@ -3154,10 +3154,10 @@ The narrowest of the five: the county has a page for this and it comes back empt
   not against the county. Nothing about the precincts, which are already on the map, is
   blocked on this.
 
-## Ask 37 — eight Illinois county clerks: your board districts, drawn by nobody
+## Ask il-eight-counties-board-districts — eight Illinois county clerks: your board districts, drawn by nobody
 
-**Status: NOT YET ASKED — DRAFTED. THE NUMBER IS PROVISIONAL** for the same reason as Ask
-36; renumber against main immediately before merging.
+**Status: NOT YET ASKED — DRAFTED 2026-10-01.** Named rather than numbered, for the reason
+`il-gurnee-board-names` above gives.
 
 Gaps `bond-county-board-districts`, `cumberland-county-board`,
 `fayette-county-board-geometry`, `jasper-county-board`, `jersey-county-board-districts`,
