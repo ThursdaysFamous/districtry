@@ -38,6 +38,16 @@ should not read as a first approach to the county. Bare keywords match
 personal mail and tell you nothing; use `to:`/`from:`. The record of what has
 been sent, drafted and answered is `docs/ASK_DRAFTS.md` § "The mailbox record".
 
+**AND THE SEARCH IS A FACT CHECK ON THE LETTER, NOT ONLY ON ITS OPENING LINE.**
+Before drafting, read what the office has already SAID and check it against what
+the letter ASSERTS. On 2026-10-01 two Illinois letters explained a missing roster
+by describing what a request to the county's published web address returns, when
+both clerks had already written that their county has no website at all — a
+measurement of a host is not a statement about a county, and where the office has
+made the statement, the measurement is the weaker source. Count the earlier
+letters and their dates too: one county recorded as never contacted had two
+threads, and one recorded as having had two letters had had three.
+
 ## 1. An ask is the residue of a probe, never a first move
 
 Read the unit's own site first; accept an address only when the officeholder's
