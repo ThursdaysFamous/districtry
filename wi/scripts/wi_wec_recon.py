@@ -73,6 +73,11 @@ from urllib.parse import urljoin, urlparse
 
 import requests
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
 HEADERS = {
@@ -186,6 +191,17 @@ class Recon:
         self.deadline = time.time() + int(
             os.environ.get("RECON_BUDGET_S", "900"))  # jump to output after
 
+    def _ask_robots(self, url):
+        """This host's rules, read once, before anything of its own is fetched.
+
+        WITH THE IDENTITY THE FETCH SENDS, which for this file is a browser
+        string — the client decides which robots group binds, so reading the
+        policy as anything else would answer a different question. Measured from
+        a GitHub runner on 2026-10-01, the vantage this recon is designed to run
+        from, all three of this file's hosts permit the paths it reads.
+        """
+        require_robots_once(url, UA, headers=HEADERS, label="wi-wec-recon")
+
     def _polite(self, url):
         host = urlparse(url).netloc
         wait = 1.0 - (time.time() - self.last_fetch.get(host, 0))
@@ -210,6 +226,7 @@ class Recon:
         """Plain first, browser fallback on refusal. Returns (record, html).
         A host that already refused the plain rung skips straight to the
         browser; a host whose challenge already cleared gets a short wait."""
+        self._ask_robots(url)
         self._polite(url)
         rec = {"url": url}
         host = urlparse(url).netloc
@@ -268,6 +285,7 @@ class Recon:
     def probe_link(self, url):
         """Status-only look at a bulk-file anchor, browser session preferred
         (its cookies carry any clearance)."""
+        self._ask_robots(url)
         self._polite(url)
         rec = {"url": url}
         try:

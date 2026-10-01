@@ -70,7 +70,9 @@ import re
 import sys
 import time
 
-from scraper_common import fetch, make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    fetch, make_fail, require_robots_once, UA_ROSTER_BOT,
+)
 
 BOARD_URL = "https://edgarcountyillinois.com/county-board/"
 RESULTS_URL = "https://il-edgar.pollresults.net/"
@@ -104,7 +106,17 @@ def clean(fragment):
 
 def get(url):
     """Through the fleet's ladder: 429/5xx retried honouring Retry-After,
-    401/403/404 raised at once. Edgar hand-rolled this until 2026-09-18."""
+    401/403/404 raised at once. Edgar hand-rolled this until 2026-09-18.
+
+    THE COUNTY'S RULES ARE READ FIRST, once per host, with the identity this
+    fetch sends. edgarcountyillinois.com had been recorded as answering every
+    client with a managed challenge; re-measured from a GitHub runner on
+    2026-10-01, the vantage the weekly job crawls from, it serves a 213-byte
+    policy whose binding group matches none of the paths read here, on all three
+    reads of a deliberate re-measurement fifteen seconds apart.
+    """
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="edgar-board-scraper")
     return fetch(url, HEADERS, timeout=TIMEOUT).text
 
 

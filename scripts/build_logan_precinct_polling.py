@@ -29,7 +29,9 @@ import re
 import sys
 
 import requests
-from scraper_common import make_fail, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    make_fail, require_robots_once, UA_CHROME_WIN_126,
+)
 
 SOURCE_URL = ("https://www.logancountyil.gov/index.php?option=com_content"
               "&view=article&id=178&Itemid=543&lang=en")
@@ -52,6 +54,19 @@ def clean(value):
 
 
 def fetch_rows():
+    # THE COUNTY'S RULES ARE READ BEFORE THE PAGE, with the identity this fetch
+    # sends. AND THE PATH IS WHY THIS FILE IS CLEAR WHERE THE HOST IS NOT.
+    # www.logancountyil.gov publishes `Disallow: /images/`, which the inventory's
+    # one url per host had recorded against the whole host — because that url is
+    # the yearbook PDF a different scraper reads, and the shortest path wins the
+    # pick. Measured from a GitHub runner on 2026-10-01 and re-read here against
+    # the same 1,370 bytes, the clerk's /index.php article this builder fetches
+    # matches no rule in the binding group and is permitted, while the PDF is
+    # refused and logan_municipal_officials_scraper.py correctly declines it.
+    # MEASURE THE PATH THE SCRAPER FETCHES, never a directory above it and never
+    # another caller's url on the same host.
+    require_robots_once(SOURCE_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="logan-precinct-polling")
     resp = requests.get(SOURCE_URL, headers=HEADERS, timeout=120)
     resp.raise_for_status()
     raw = resp.text
