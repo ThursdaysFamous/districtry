@@ -44,24 +44,32 @@ SIMPLIFY_TOLERANCE_M = 40.0
 
 def require_robots(urls, fleet_scripts, user_agent=USER_AGENT, paced=False):
     """Read each host's robots.txt with the exact client that will crawl it,
-    and refuse to go on if it says no. `paced` is the caller stating that it
-    honours a stated Crawl-delay; a caller that does not pace itself is
-    stopped by a newly stated delay rather than quietly ignoring it."""
+    and refuse to go on if it says no.
+
+    THE ALLOW QUESTION IS ANSWERED BY `scraper_common.require_robots_once` AND
+    NOT BY A SPELLING OF OUR OWN. The first draft of this function built its own
+    `RobotsGate` and read `allows()` itself, which is the eight lines that
+    wrapper exists to stop being written for the 225th time; CLAUDE.md's rule is
+    to ask through that seam and never through a spelling of your own, and a
+    second reader of one question is where this fleet's recurring defect starts.
+    It is memoised per (host, client), so asking for a url another caller in the
+    same run already asked for costs no request.
+
+    WHAT IS STILL LOCAL IS THE CRAWL DELAY, because that seam answers permission
+    and says nothing about pacing. `paced` is the caller stating that it honours
+    a stated Crawl-delay; a caller that does not pace itself is stopped by a
+    newly stated delay rather than quietly ignoring it."""
     sys.path.insert(0, fleet_scripts)
     import requests  # noqa: PLC0415
     import robots_policy  # noqa: PLC0415
+    from scraper_common import require_robots_once  # noqa: PLC0415
     session = requests.Session()
     session.headers["User-Agent"] = user_agent
     gate = robots_policy.RobotsGate(session, user_agent)
     delays = {}
     for url in urls:
         host = url.split("/")[2]
-        ok, why = gate.allows(url)
-        print("robots %s: %s — %s" % (host, "allowed" if ok else "REFUSED", why),
-              file=sys.stderr)
-        if not ok:
-            raise SystemExit("FATAL: robots.txt refuses this client for %s. Nothing "
-                             "here works around a refusal." % url)
+        require_robots_once(url, user_agent)
         delay = gate.crawl_delay(url)
         if delay:
             if not paced:

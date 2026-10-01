@@ -106,27 +106,16 @@ SIMPLIFY_TOLERANCE_M = 40.0   # see simplify(); the county file is already
 # robots, once per host, with the client that fetches
 # --------------------------------------------------------------------------
 
+# This function used to build its own `RobotsGate` and read `allows()` itself,
+# which is the eight lines `scraper_common.require_robots_once` exists to stop
+# being written once per caller — CLAUDE.md's rule is to ask through that seam
+# and never through a spelling of your own. The shared module carries the one
+# copy for this instance now, so this file asks the seam directly at each of its
+# own two fetches instead: `scripts/validate_robots_adoption.py` measures
+# adoption per FILE, by AST, and a reach through a helper one call away is a
+# guarantee about the helper rather than about the fetch.
 def require_robots(urls):
-    sys.path.insert(0, FLEET_SCRIPTS)
-    import requests  # noqa: PLC0415
-    import robots_policy  # noqa: PLC0415
-    session = requests.Session()
-    session.headers["User-Agent"] = USER_AGENT
-    gate = robots_policy.RobotsGate(session, USER_AGENT)
-    for url in urls:
-        ok, why = gate.allows(url)
-        print("robots %s: %s — %s" % (url.split("/")[2],
-                                      "allowed" if ok else "REFUSED", why),
-              file=sys.stderr)
-        if not ok:
-            raise SystemExit("FATAL: robots.txt refuses this client for %s. Nothing "
-                             "here works around a refusal." % url)
-        delay = gate.crawl_delay(url)
-        if delay:
-            raise SystemExit("FATAL: %s now states Crawl-delay %s. This builder makes "
-                             "its requests back to back and does not pace itself, so "
-                             "it must learn to before it runs again."
-                             % (url.split("/")[2], delay))
+    vtd.require_robots(urls, FLEET_SCRIPTS)
 
 
 # --------------------------------------------------------------------------
@@ -135,6 +124,7 @@ def require_robots(urls):
 
 def fetch_statute():
     import requests  # noqa: PLC0415
+    require_robots_once(STATUTE_URL, USER_AGENT)
     resp = requests.get(STATUTE_URL, headers={"User-Agent": USER_AGENT},
                         timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
@@ -232,6 +222,7 @@ def parse_chambers(text):
 
 def fetch_precinct_districts():
     import requests  # noqa: PLC0415
+    require_robots_once(PRECINCT_QUERY, USER_AGENT)
     rows, offset = [], 0
     while True:
         resp = requests.get(PRECINCT_QUERY, headers={"User-Agent": USER_AGENT},
@@ -290,6 +281,11 @@ def fetch_precinct_districts():
 # holes and zero overlaps across all ten districts), which is luck rather than
 # safety: a judicial district is a group of whole counties and a county enclave
 # touching at one vertex is rarer, not impossible.
+sys.path.insert(0, FLEET_SCRIPTS)
+
+from scraper_common import require_robots_once  # noqa: E402
+
+import mn_vtd_dissolve as vtd  # noqa: E402
 from mn_vtd_dissolve import (  # noqa: E402
     dissolve, group_rings, point_in_geom, point_in_ring, ring_area, rings_of,
     round_coords, simplify, SIMPLIFY_TOLERANCE_M,

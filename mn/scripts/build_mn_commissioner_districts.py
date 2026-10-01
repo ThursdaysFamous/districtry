@@ -126,6 +126,21 @@ sys.path.insert(0, HERE)
 
 import mn_vtd_dissolve as vtd  # noqa: E402
 
+sys.path.insert(0, FLEET_SCRIPTS)
+
+# THE ROBOTS SEAM IS IMPORTED HERE RATHER THAN REACHED THROUGH THE SHARED
+# MODULE. This file fetches three host families of its own — the statute, the
+# seven county witness layers and the certified results service — and
+# `scripts/validate_robots_adoption.py` measures adoption PER FILE, by AST, for
+# the reason its own docstring gives: a file that fetches and reaches nothing
+# can ship with every other gate green. Asking through the shared module one
+# call away satisfied the rule and not the gate, which was right to fail it —
+# the guarantee that matters is per fetch in the file that fetches, not per list
+# in a helper. `require_robots_once` is memoised per (host, client), so each of
+# these calls costs a request the first time a run reaches a host and nothing
+# after.
+from scraper_common import require_robots_once  # noqa: E402
+
 STATUTE_URL = "https://www.revisor.mn.gov/statutes/cite/375.01"
 OUT_FILE = os.path.join(INSTANCE, "data", "app", "mn-commissioner-districts.json")
 
@@ -237,6 +252,7 @@ def fetch_board_size_statute():
     The seven-member list is a statutory fact that can be amended, and a
     hand-copied list is a silent way to go stale."""
     import requests  # noqa: PLC0415
+    require_robots_once(STATUTE_URL, vtd.USER_AGENT)
     resp = requests.get(STATUTE_URL, headers={"User-Agent": vtd.USER_AGENT},
                         timeout=vtd.REQUEST_TIMEOUT)
     resp.raise_for_status()
@@ -264,6 +280,7 @@ def fetch_board_size_statute():
 
 def fetch_witness(url, field, user_agent=vtd.USER_AGENT):
     import requests  # noqa: PLC0415
+    require_robots_once(url, user_agent)
     resp = requests.get(url + "/query", headers={"User-Agent": user_agent},
                         timeout=vtd.REQUEST_TIMEOUT, params={
                             "where": "1=1", "outFields": field,
@@ -318,6 +335,7 @@ def fetch_results_key(url, label, user_agent=vtd.USER_AGENT):
     officeholder; what they carry is the same `ctycomdist` key as a dated,
     certified snapshot, which is what makes them a witness about the lines."""
     import requests  # noqa: PLC0415
+    require_robots_once(url, user_agent)
     rows, offset = [], 0
     while True:
         resp = requests.get(url + "/query", headers={"User-Agent": user_agent},
