@@ -48,7 +48,7 @@ import json
 import os
 import sys
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_WIN_126,
+    UA_ROSTER_BOT,
     require_robots_once,
 )
 
@@ -61,7 +61,7 @@ COUNTY_BOARD_LAYER = ("https://gis.wiu.edu/arcgis/rest/services/precinct_map/"
                       "MapServer/3")
 REQUEST_TIMEOUT = 120
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 
 # Transcribed verbatim from the district headings on MEMBERS_PAGE, read

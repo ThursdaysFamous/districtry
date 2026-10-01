@@ -119,20 +119,23 @@ EXPECT_ABSENT_FROM_TIGER = {
     "CENTERJUNCTION", "DELPHOS", "HEPBURN", "MILLVILLE", "MOUNTUNION", "PIONEER",
 }
 
-BROWSER_UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-              "Chrome/126.0.0.0 Safari/537.36")
+# THE TRUNCATION THIS FILE RECORDED IS GONE, AND THE BROWSER STRING WITH IT
+# (2026-10-01). The note below used to read that without a browser claim the
+# League page "arrives truncated at ~4.8 KB with zero anchors". Re-measured
+# that day on this file's own stack -- curl with the districtry token and
+# nothing else -- it answered HTTP 200, 634,438 bytes and 1,991 anchors. A
+# RECORDED REFUSAL GOES STALE AND NOTHING RE-READS IT; this one had been
+# licensing a browser claim for a page that serves us under our own name.
+# The Accept headers stay: they are what a client asking for HTML sends, and
+# they claim to be nobody.
 
 
-def _curl(url, browser=False):
+def _curl(url, full_headers=False):
     cmd = ["curl", "-sS", "--fail", "-L", "--max-time", "180"]
-    if browser:
-        # WITHOUT THESE THE BODY ARRIVES TRUNCATED at ~4.8 KB with zero anchors,
-        # which reads like a JS-rendered page and is not one.
-        cmd += ["-H", "User-Agent: " + BROWSER_UA,
-                "-H", "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    cmd += ["-H", "User-Agent: districtry/1.0 (+https://districtry.com/ia/)"]
+    if full_headers:
+        cmd += ["-H", "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                 "-H", "Accept-Language: en-US,en;q=0.9"]
-    else:
-        cmd += ["-H", "User-Agent: districtry/1.0 (+https://districtry.com/ia/)"]
     return subprocess.run(cmd + [url], check=True, capture_output=True).stdout
 
 
@@ -145,7 +148,7 @@ def norm(name):
 # ---------------------------------------------------------------- sources ---
 def fetch_league():
     """Every row of the League's own city table, as a list of six cells."""
-    page = _curl(LEAGUE, browser=True).decode("utf-8", "replace")
+    page = _curl(LEAGUE, full_headers=True).decode("utf-8", "replace")
     rows = re.findall(r"<tr[^>]*>(.*?)</tr>", page, re.S | re.I)
 
     def cells(row):

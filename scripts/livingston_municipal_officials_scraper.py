@@ -56,7 +56,7 @@ import urllib.parse
 
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_WIN_126,
+    UA_ROSTER_BOT,
     require_robots_once,
 )
 
@@ -70,7 +70,7 @@ REFERENCE_PAGE = "https://www.livingstoncountyil.gov/"
 YEARBOOK_URL = ("https://www.livingstoncountyil.gov/Documents/Government/"
                 "Yearbook%20updated%2006-2026.pdf")
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 120
 

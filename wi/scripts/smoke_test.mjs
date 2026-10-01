@@ -768,6 +768,48 @@ try {
           ok, `rows=${names.length} seats=${JSON.stringify(seatRow || null)}`);
     await context.close();
   }
+
+  // ---- 10. AN AT-LARGE GOVERNING BODY IS NAMED, AND SAYS IT HAS NO DISTRICT ----
+  // Caledonia's village board is elected by the whole village, so its members
+  // carry a SEAT number (Trustee 1 to Trustee 6) and no district. A card that
+  // printed those numbers without saying so would read as six districts the
+  // village does not have, which is the one thing this block exists to prevent —
+  // so the sentence is asserted, not just the names.
+  //
+  // READ FROM THE SHIPPED ROSTER AND NOT DOCTORED, unlike checks 8 and 9: those
+  // test a card shape no municipality currently publishes, while this tests that
+  // a shipped at-large roster reaches a reader at a real point inside the real
+  // village. The point is the Census's own interior point for place 5511950,
+  // confirmed against TIGERweb's Places layer in both directions (2026-10-01).
+  // The ASSERTION is the block's wording and the absence of a district claim, so
+  // it survives an April election changing every name.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context, `${BASE}#point=42.79994,-87.85270&layers=municipality`);
+    await cardText(page, "municipality");
+    const labels = await page.$$eval("#card-municipality .card-section-label",
+                                     (els) => els.map((e) => e.textContent.trim()));
+    const fields = await page.$$eval("#card-municipality .card-field",
+      (els) => els.map((e) => ({
+        label: (e.querySelector(".card-field-label") || {}).textContent || "",
+        value: (e.querySelector(".card-field-value") || {}).textContent || ""
+      })));
+    const badges = await page.$$eval("#card-municipality .card-badge",
+                                     (els) => els.map((e) => e.textContent.trim()));
+    const heading = labels.find((l) => /elected at large$/.test(l));
+    const how = fields.find((f) => f.label.trim() === "How they are elected");
+    const seatBadge = badges.some((b) => /^Trustee \d+$/.test(b));
+    const presBadge = badges.indexOf("Village President") !== -1;
+    const ok = !!heading && /^7 members,/.test(heading) && !!how &&
+               how.value.indexOf("seats rather than districts") !== -1 &&
+               how.value.indexOf("no district to draw") !== -1 &&
+               seatBadge && presBadge;
+    check("an at-large village board is named and the card says it has no districts",
+          ok, `heading=${JSON.stringify(heading || null)} seatBadge=${seatBadge} ` +
+              `president=${presBadge} how=${JSON.stringify((how || {}).value || null)}`);
+    await context.close();
+  }
 } finally {
   await browser.close();
 }

@@ -56,7 +56,7 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
 from scraper_common import (  # noqa: E402  (FLEET_SHARED)
-    UA_CHROME_WIN_124, require_robots_once)
+    UA_ROSTER_BOT, require_robots_once)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GEOMETRY = os.path.join(REPO_ROOT, "data", "app", "county-supervisory-districts.json")
@@ -85,8 +85,8 @@ BASELINE_INSIDE = 86
 
 def fetch(url, binary=False):
     import urllib.request
-    headers = {"User-Agent": UA_CHROME_WIN_124}
-    require_robots_once(url, UA_CHROME_WIN_124, headers=headers,
+    headers = {"User-Agent": UA_ROSTER_BOT}
+    require_robots_once(url, UA_ROSTER_BOT, headers=headers,
                         label="wi-verify-kenosha-supervisory-map")
     req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=120) as r:

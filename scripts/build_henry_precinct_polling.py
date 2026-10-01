@@ -62,13 +62,13 @@ import re
 import sys
 
 import requests
-from scraper_common import require_robots_once, UA_CHROME_WIN_126, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
 
 DIRECTORY_URL = ("https://www.henrycty.com/BusinessDirectoryii.aspx"
                  "?lngBusinessCategoryID=25&lngNewPage=%d")
 CLERK_PAGE = "https://www.henrycty.com/211/Elections"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PRECINCTS = os.path.join(REPO_ROOT, "il", "data", "app", "henry-precincts.json")

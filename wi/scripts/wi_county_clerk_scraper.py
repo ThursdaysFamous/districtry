@@ -48,6 +48,11 @@ import sys
 import time
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 try:
     import pdfplumber
 except ImportError:
@@ -85,6 +90,14 @@ def fetch(url, binary=False, tries=3, timeout=60):
     a developer machine, so what failed was a moment on somebody else's
     server, which is exactly what a ladder is for.
     """
+    # THE SITE'S RULES ARE READ BEFORE THE FIRST FETCH, with the identity this
+    # fetch sends, and once per host — this file reads two. Measured from a
+    # GitHub runner on 2026-10-01: docs.legis.wisconsin.gov serves a 526-byte
+    # policy whose binding group matches none of the paths read here. Its earlier
+    # reading as unreadable was a timeout on one runner moment, which RFC 9309
+    # files as disallow-all and is not a policy.
+    require_robots_once(url, UA["User-Agent"], headers=UA,
+                        label="wi-county-clerk-scraper")
     last = None
     for i in range(tries):
         try:

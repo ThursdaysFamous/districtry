@@ -33,6 +33,11 @@ import sys
 import urllib.error
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "wi_coa_raw.json")
 # WHY A DISTRICTRY TOKEN AND NOT A CHROME STRING (2026-09-12). This file sent
 # `Mozilla/5.0 ... Chrome/124.0` until today, with nothing recorded about a
@@ -108,6 +113,14 @@ def fetch(url, tries=3, timeout=45):
     pages over somebody else's network. What clears THIS failure is a different
     runner, so the remedy is re-running the job, never anything in here.
     """
+    # THE SITE'S RULES ARE READ BEFORE THE FIRST PAGE, with the identity this
+    # fetch sends. Measured from a GitHub runner on 2026-10-01, the vantage the
+    # weekly job crawls from: www.wicourts.gov answers HTTP 404 for robots.txt,
+    # so it publishes no rules and every path is permitted. The earlier reading
+    # of this host as unreadable was a timeout taken on one runner moment, which
+    # RFC 9309 files as disallow-all and is not anybody's policy.
+    require_robots_once(url, UA["User-Agent"], headers=UA,
+                        label="wi-coa-scraper")
     last = None
     for i in range(tries):
         try:

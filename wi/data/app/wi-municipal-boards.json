@@ -1,0 +1,53 @@
+{
+  "5511950": {
+    "asOf": "2026-10-01",
+    "atLarge": true,
+    "board": [
+      {
+        "email": "FMartin@Caledonia-WI.gov",
+        "name": "Fran Martin",
+        "phone": "(414) 852-5887",
+        "role": "Trustee 4"
+      },
+      {
+        "email": "HMcmanus@Caledonia-WI.gov",
+        "name": "Holly McManus",
+        "phone": "(414) 405-5932",
+        "role": "Trustee 5"
+      },
+      {
+        "email": "LWishau@caledonia-wi.gov",
+        "name": "Lee Wishau",
+        "phone": "(262) 639-7562",
+        "role": "Trustee 6"
+      },
+      {
+        "email": "MLambrecht@Caledonia-WI.gov",
+        "name": "Michael Lambrecht",
+        "phone": "(262) 583-1560",
+        "role": "Trustee 3"
+      },
+      {
+        "email": "NPierce@Caledonia-WI.Gov",
+        "name": "Nancy Pierce",
+        "phone": "(262) 498-3005",
+        "role": "Trustee 1"
+      },
+      {
+        "email": "ppintar@caledonia-wi.gov",
+        "name": "Paula Pintar",
+        "phone": "(414) 218-6986",
+        "role": "Trustee 2"
+      },
+      {
+        "email": "PBalch@Caledonia-WI.gov",
+        "name": "Prescott Balch",
+        "phone": "(262) 417-7291",
+        "role": "Village President"
+      }
+    ],
+    "county": "Racine",
+    "name": "Caledonia",
+    "sourceUrl": "https://www.caledonia-wi.gov/board"
+  }
+}

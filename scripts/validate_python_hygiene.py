@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Three defects that ship green: a name bound nowhere, a dict key set twice,
-and a shared module shadowing an instance's own copy of the same name.
+"""Four defects that ship green: a name bound nowhere, a dict key set twice, a
+shared module shadowing an instance's own copy of the same name, and a flag read
+as an output filename.
 
 WHY THIS EXISTS. On 2026-09-17 the municipal-officials refresh declined Logan
 County's yearbook under robots.txt, exactly as it should, and then filed the
@@ -37,11 +38,24 @@ message. The check fires only where a name is genuinely available from both
 directories, so it says nothing about the thirty-odd files that add the shared
 path and import nothing that can collide.
 
+THE FOURTH WROTE FILES INTO THE REPOSITORY. On 2026-10-01 two files named
+`--help` and `--out` were found committed at the top of this tree, byte-identical
+copies of Macon County's board payload. Seventeen scrapers read their output path
+as a bare `sys.argv[1]`, so a flag in that position WAS the filename: asking a
+scraper for its usage made it write a file called `--help`, and spelling the path
+as an option wrote one called `--out`. Neither run failed and no gate noticed —
+the files sat on main until a reader happened to look at the directory listing.
+The remedy is scraper_common.output_path, which refuses a leading `-` and
+answers --help by printing. The check requires it only where the path is OPENED
+FOR WRITING, which is what makes the defect silent; every instance's
+validate_index.py takes an input path the same way and a flag there simply fails
+to open, going red with a bad message rather than quietly doing the wrong thing.
+
 WHAT IT DELIBERATELY DOES NOT DO IS LINT. pyflakes finds both of these and 71
 other things on this tree — unused imports, unused locals — and none of those
 change what the code does. A gate whose output is mostly noise is one people
-learn to skim, which is how the signal in it goes unread. These two classes were
-chosen because each one was a live defect, in this repo, in the same week.
+learn to skim, which is how the signal in it goes unread. Every class here was
+chosen because it was a live defect, in this repo, that shipped green.
 
 WHY STDLIB RATHER THAN pyflakes. scripts/requirements.txt is the SCRAPER pin
 list, each entry carrying the parser or projection it exists for; a CI linter is
@@ -62,7 +76,7 @@ formatting.
 
 Usage:
     python3 scripts/validate_python_hygiene.py            # the gate
-    python3 scripts/validate_python_hygiene.py --selftest # proves it catches both
+    python3 scripts/validate_python_hygiene.py --selftest # proves all four, both ways
 """
 
 import ast
@@ -277,6 +291,55 @@ def _modules_in(directory):
         return set()
 
 
+def flag_as_output_path(tree):
+    """Yield (lineno, name) for a variable taken from a bare `sys.argv[1]` and
+    then OPENED FOR WRITING.
+
+    WHY THIS IS A GATE AND NOT A STYLE NOTE. On 2026-10-01 two files named
+    `--help` and `--out` were found committed at the top of this repository,
+    byte-identical copies of one county's board payload. Seventeen scrapers read
+    their output path as a bare `sys.argv[1]`, so a FLAG in that position was a
+    filename: asking a scraper for its usage made it write a file called
+    `--help`, and spelling the path as an option wrote one called `--out`.
+    Neither run failed, so nothing anywhere said a thing. The remedy is
+    `scraper_common.output_path`, which refuses a leading `-`.
+
+    THE WRITE IS WHAT MAKES IT A DEFECT, so the write is what is required. Every
+    instance's `validate_index.py` takes an input path the same way, and a flag
+    there merely fails to open — no file is created and the run goes red, which
+    is a bad message rather than a silent wrong outcome. Gating those too would
+    be churn in nine files for no harm averted.
+    """
+    argv_names = {}
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Assign) or len(node.targets) != 1:
+            continue
+        target = node.targets[0]
+        if not isinstance(target, ast.Name):
+            continue
+        for sub in ast.walk(node.value):
+            if (isinstance(sub, ast.Subscript)
+                    and isinstance(sub.value, ast.Attribute)
+                    and sub.value.attr == "argv"
+                    and isinstance(sub.value.value, ast.Name)
+                    and sub.value.value.id == "sys"):
+                argv_names.setdefault(target.id, node.lineno)
+    if not argv_names:
+        return
+    for node in ast.walk(tree):
+        if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+                and node.func.id == "open" and node.args):
+            continue
+        first = node.args[0]
+        if not (isinstance(first, ast.Name) and first.id in argv_names):
+            continue
+        mode = node.args[1] if len(node.args) > 1 else next(
+            (k.value for k in node.keywords if k.arg == "mode"), None)
+        text = mode.value if isinstance(mode, ast.Constant) else ""
+        if isinstance(text, str) and ("w" in text or "a" in text or "x" in text):
+            yield argv_names[first.id], first.id
+
+
 def check_file(path, shared_modules=None):
     """(problems, skipped_reason) for one file."""
     source = path.read_text(encoding="utf-8")
@@ -305,6 +368,13 @@ def check_file(path, shared_modules=None):
                     "instance's module. It does not fail on the import; it "
                     "returns a wrong answer. Append the shared directory "
                     "instead of inserting it at 0." % (path, lineno, module))
+    for lineno, name in flag_as_output_path(tree):
+        problems.append(
+            "%s:%d: %r comes straight from sys.argv[1] and is then opened for "
+            "writing, so a FLAG in that position becomes a filename — asking "
+            "this script for --help would write a file called '--help' and say "
+            "nothing. Take the path through scraper_common.output_path(), "
+            "which refuses a leading '-'." % (path, lineno, name))
     for lineno, key, first_line in repeated_dict_keys(tree):
         problems.append(
             "%s:%d: dict key %r is set again here with a different value (first "
@@ -346,7 +416,8 @@ def run(root=ROOT):
     print("OK - %d Python files: every loaded name is bound somewhere in its own "
           "file, no dict literal sets a key twice with different values, and no "
           "file shadows its own copy of a module with the shared scripts/ one "
-          "(which holds %d module name(s))."
+          "(which holds %d module name(s)), and no script opens a bare "
+          "sys.argv[1] for writing, where a flag would become a filename."
           % (len(files), len(shared_modules)))
     return 0
 
@@ -386,6 +457,40 @@ CASES = [
      "T = {\n    1: 'one',\n    True: 'yes',\n}\n", 1),
     ("1 and '1' do not collide",
      "T = {\n    1: 'one',\n    '1': 'yes',\n}\n", 0),
+    # --- a flag read as an output path ---------------------------------------
+    # The real shape, as seventeen scrapers had it.
+    ("sys.argv[1] opened for writing is reported",
+     "import sys\n"
+     "p = sys.argv[1] if len(sys.argv) > 1 else 'out.json'\n"
+     "open(p, 'w').write('x')\n", 1),
+    ("the same path through output_path is not",
+     "from scraper_common import output_path\n"
+     "p = output_path('out.json')\n"
+     "open(p, 'w').write('x')\n", 0),
+    # THE WRITE IS THE DEFECT, so reading is left alone: every instance's
+    # validate_index.py takes its input path exactly this way, and a flag there
+    # fails to open rather than creating a file.
+    ("sys.argv[1] opened for READING is left alone",
+     "import sys\n"
+     "p = sys.argv[1] if len(sys.argv) > 1 else 'in.json'\n"
+     "open(p).read()\n", 0),
+    ("an explicit read mode is left alone",
+     "import sys\n"
+     "p = sys.argv[1] if len(sys.argv) > 1 else 'in.json'\n"
+     "open(p, 'r', encoding='utf-8').read()\n", 0),
+    # The append and exclusive modes create a file too.
+    ("append mode is reported",
+     "import sys\n"
+     "p = sys.argv[1] if len(sys.argv) > 1 else 'out.json'\n"
+     "open(p, 'a').write('x')\n", 1),
+    ("mode passed by keyword is reported",
+     "import sys\n"
+     "p = sys.argv[1] if len(sys.argv) > 1 else 'out.json'\n"
+     "open(p, mode='w').write('x')\n", 1),
+    # A path that never came from argv is nobody's business here.
+    ("a hard-coded path opened for writing is not reported",
+     "p = 'out.json'\n"
+     "open(p, 'w').write('x')\n", 0),
 ]
 
 
@@ -477,7 +582,7 @@ from build_metro_outline import STATE_FIPS
     if failures:
         print("\n%d self-test(s) failed." % failures, file=sys.stderr)
         return 1
-    print("\nOK - all three checks behave on source that carries each defect and on "
+    print("\nOK - all four checks behave on source that carries each defect and on "
           "source that carries its near-miss.")
     return 0
 

@@ -1,0 +1,779 @@
+{
+ "1901855": {
+  "asOf": "2026-10-01",
+  "city": "Ames",
+  "members": [
+   {
+    "email": "tim.gartin@amescitycouncil.org",
+    "kind": "council",
+    "name": "Tim Gartin",
+    "phone": "515-232-2501",
+    "role": "Ward Two Representative",
+    "seat": "Ward 2",
+    "termEnds": "2027"
+   },
+   {
+    "email": "rachel.junck@amescitycouncil.org",
+    "kind": "council",
+    "name": "Rachel Junck",
+    "phone": "515-520-3376",
+    "role": "Ward Four Representative",
+    "seat": "Ward 4",
+    "termEnds": "2027"
+   },
+   {
+    "email": "anita.rollins@amescitycouncil.org",
+    "kind": "council",
+    "name": "Anita Rollins",
+    "phone": "515-451-8032",
+    "role": "At-Large Representative",
+    "seat": "At-Large",
+    "termEnds": "2027"
+   },
+   {
+    "email": "amber.corrieri@amescitycouncil.org",
+    "kind": "council",
+    "name": "Amber Corrieri",
+    "phone": "515-451-9275",
+    "role": "At-Large Representative",
+    "seat": "At-Large",
+    "termEnds": "2029"
+   },
+   {
+    "email": "gloria.betcher@amescitycouncil.org",
+    "kind": "council",
+    "name": "Gloria Betcher",
+    "phone": "515-292-5177",
+    "role": "Ward Three Representative",
+    "seat": "Ward 3",
+    "termEnds": "2029"
+   },
+   {
+    "email": "bronwyn.beattyhansen@amescitycouncil.org",
+    "kind": "council",
+    "name": "Bronwyn Beatty-Hansen",
+    "phone": "515-520-0805",
+    "role": "Ward One Representative",
+    "seat": "Ward 1",
+    "termEnds": "2029"
+   },
+   {
+    "email": "john.haila@cityofames.org",
+    "kind": "mayor",
+    "name": "John Haila",
+    "phone": "515-290-5436",
+    "role": "Mayor",
+    "termEnds": "2029"
+   }
+  ],
+  "namesMayor": true,
+  "sourceUrl": "https://www.cityofames.org/My-Government/Mayor-and-City-Council"
+ },
+ "1902305": {
+  "asOf": "2026-10-01",
+  "city": "Ankeny",
+  "members": [
+   {
+    "email": "bbentz@ankenyiowa.gov",
+    "kind": "mayor",
+    "name": "Bobbi Bentz",
+    "role": "Mayor"
+   },
+   {
+    "email": "tshafer@ankenyiowa.gov",
+    "kind": "council",
+    "name": "Todd Shafer",
+    "role": "Mayor Pro Tem"
+   },
+   {
+    "email": "mdavis@ankenyiowa.gov",
+    "kind": "council",
+    "name": "Matt Davis",
+    "role": "Council Member"
+   },
+   {
+    "email": "dgraber@ankenyiowa.gov",
+    "kind": "council",
+    "name": "Dustin Graber",
+    "role": "Council Member"
+   },
+   {
+    "email": "Jhollinrake@ankenyiowa.gov",
+    "kind": "council",
+    "name": "Justin Hollinrake",
+    "role": "Council Member"
+   },
+   {
+    "email": "jperry@ankenyiowa.gov",
+    "kind": "council",
+    "name": "Jeff Perry",
+    "role": "Council Member"
+   }
+  ],
+  "namesMayor": true,
+  "sourceUrl": "https://www.ankenyiowa.gov/456/Mayor-City-Council"
+ },
+ "1906355": {
+  "asOf": "2026-10-01",
+  "city": "Bettendorf",
+  "members": [
+   {
+    "email": "bgallagher@bettendorf.org",
+    "kind": "mayor",
+    "name": "Robert S. Gallagher",
+    "phone": "(563) 370-2389",
+    "role": "Mayor",
+    "termEnds": "12/31/27"
+   },
+   {
+    "email": "fbaden@bettendorf.org",
+    "kind": "council",
+    "name": "Frank Baden",
+    "phone": "(563) 344-2442",
+    "role": "COUNCIL MEMBER - AT LARGE",
+    "seat": "At-Large",
+    "termEnds": "12/31/27"
+   },
+   {
+    "email": "lbrown@bettendorf.org",
+    "kind": "council",
+    "name": "Lisa Brown",
+    "phone": "(563) 320-3849",
+    "role": "COUNCIL MEMBER - AT LARGE",
+    "seat": "At-Large",
+    "termEnds": "12/31/29"
+   },
+   {
+    "email": "jsechser@bettendorf.org",
+    "kind": "council",
+    "name": "Jerry Sechser",
+    "phone": "(563) 359-1534",
+    "role": "COUNCIL MEMBER - 1ST WARD",
+    "seat": "Ward 1",
+    "termEnds": "12/31/27"
+   },
+   {
+    "email": "cflaherty@bettendorf.org",
+    "kind": "council",
+    "name": "Conor Flaherty",
+    "phone": "(563) 344-2440",
+    "role": "COUNCIL MEMBER - 2ND WARD",
+    "seat": "Ward 2",
+    "termEnds": "12/31/29"
+   },
+   {
+    "email": "gjager@bettendorf.org",
+    "kind": "council",
+    "name": "Gregory Jager",
+    "phone": "(563) 844-5322",
+    "role": "COUNCIL MEMBER - 3RD WARD",
+    "seat": "Ward 3",
+    "termEnds": "12/31/27"
+   },
+   {
+    "email": "snaumann@bettendorf.org",
+    "kind": "council",
+    "name": "Scott Naumann",
+    "phone": "(563) 505-7953",
+    "role": "COUNCIL MEMBER - 4TH WARD",
+    "seat": "Ward 4",
+    "termEnds": "12/31/29"
+   },
+   {
+    "email": "npalczynski@bettendorf.org",
+    "kind": "council",
+    "name": "Nick Palczynski",
+    "phone": "(563) 344-2443",
+    "role": "COUNCIL MEMBER - 5TH WARD",
+    "seat": "Ward 5",
+    "termEnds": "12/31/27"
+   }
+  ],
+  "namesMayor": true,
+  "sourceUrl": "https://www.bettendorf.org/government/mayor___council/index.php"
+ },
+ "1911755": {
+  "asOf": "2026-10-01",
+  "city": "Cedar Falls",
+  "members": [
+   {
+    "kind": "council",
+    "name": "Gil Schultz",
+    "role": "1st Ward",
+    "seat": "Ward 1"
+   },
+   {
+    "kind": "council",
+    "name": "Chris Latta",
+    "role": "2nd Ward / Mayor Pro-Tem",
+    "seat": "Ward 2"
+   },
+   {
+    "kind": "council",
+    "name": "Tom Nagle",
+    "role": "3rd Ward",
+    "seat": "Ward 3"
+   },
+   {
+    "kind": "council",
+    "name": "Aaron Hawbaker",
+    "role": "4th Ward",
+    "seat": "Ward 4"
+   },
+   {
+    "kind": "council",
+    "name": "Craig Fairbanks",
+    "role": "5th Ward",
+    "seat": "Ward 5"
+   },
+   {
+    "kind": "council",
+    "name": "Kelly Dunn",
+    "role": "At Large",
+    "seat": "At-Large"
+   },
+   {
+    "kind": "council",
+    "name": "Hannah Crisman",
+    "role": "At Large",
+    "seat": "At-Large"
+   }
+  ],
+  "namesMayor": false,
+  "sourceUrl": "https://www.cedarfalls.com/1106/City-Council-Members"
+ },
+ "1916860": {
+  "asOf": "2026-10-01",
+  "city": "Council Bluffs",
+  "members": [
+   {
+    "kind": "council",
+    "name": "Cole Button",
+    "phone": "(712) 890-5261",
+    "role": "City Councilmember"
+   },
+   {
+    "kind": "council",
+    "name": "Roger Sandau",
+    "phone": "(712) 890-5261",
+    "role": "City Councilmember"
+   },
+   {
+    "kind": "council",
+    "name": "Steve Gorman",
+    "phone": "(712) 890-5261",
+    "role": "City Councilmember"
+   },
+   {
+    "kind": "council",
+    "name": "Joe Disalvo",
+    "phone": "(712) 890-5261",
+    "role": "City Councilmember"
+   },
+   {
+    "kind": "council",
+    "name": "Douglas Rew",
+    "phone": "(712) 890-5261",
+    "role": "City Councilmember"
+   },
+   {
+    "kind": "mayor",
+    "name": "Jill Shudak",
+    "phone": "(712) 890-5269",
+    "role": "Mayor Shudak"
+   }
+  ],
+  "namesMayor": true,
+  "sourceUrl": "https://www.councilbluffs-ia.gov/m/directory/department?did=64"
+ },
+ "1919000": {
+  "asOf": "2026-10-01",
+  "city": "Davenport",
+  "members": [
+   {
+    "kind": "council",
+    "name": "Kyle Gripp",
+    "role": "At-Large",
+    "seat": "At-Large"
+   },
+   {
+    "kind": "council",
+    "name": "Jazmin Newton",
+    "role": "At-Large",
+    "seat": "At-Large"
+   },
+   {
+    "kind": "council",
+    "name": "Rick Dunn",
+    "role": "Ward 1",
+    "seat": "Ward 1"
+   },
+   {
+    "kind": "council",
+    "name": "Tim Dunn",
+    "role": "Ward 2",
+    "seat": "Ward 2"
+   },
+   {
+    "kind": "council",
+    "name": "Paul Vasquez",
+    "role": "Ward 3",
+    "seat": "Ward 3"
+   },
+   {
+    "kind": "council",
+    "name": "Jade Burkholder",
+    "role": "Ward 4",
+    "seat": "Ward 4"
+   },
+   {
+    "kind": "council",
+    "name": "John Blunk",
+    "role": "Ward 5",
+    "seat": "Ward 5"
+   },
+   {
+    "kind": "council",
+    "name": "Ben Jobgen",
+    "role": "Ward 6",
+    "seat": "Ward 6"
+   },
+   {
+    "kind": "council",
+    "name": "Mark Holloway",
+    "role": "Ward 7",
+    "seat": "Ward 7"
+   },
+   {
+    "kind": "council",
+    "name": "Matt Lienen",
+    "role": "Ward 8",
+    "seat": "Ward 8"
+   }
+  ],
+  "namesMayor": false,
+  "sourceUrl": "https://www.davenportiowa.com/government/mayor_council/city_council"
+ },
+ "1922395": {
+  "asOf": "2026-10-01",
+  "city": "Dubuque",
+  "members": [
+   {
+    "email": "bcavanagh@cityofdubuque.org",
+    "kind": "mayor",
+    "name": "Brad M. Cavanagh",
+    "phone": "563.690.6502",
+    "role": "Mayor",
+    "termEnds": "2029"
+   },
+   {
+    "email": "dresnick@cityofdubuque.org",
+    "kind": "council",
+    "name": "David T. Resnick",
+    "phone": "563.690.6504",
+    "role": "Council Member, At-Large Representative",
+    "seat": "At-Large",
+    "termEnds": "2027"
+   },
+   {
+    "email": "cstaver@cityofdubuque.org",
+    "kind": "council",
+    "name": "Chris T. Staver",
+    "phone": "563.690.6503",
+    "role": "Council Member, At-Large Representative",
+    "seat": "At-Large",
+    "termEnds": "2029"
+   },
+   {
+    "email": "tleyendecker@cityofdubuque.org",
+    "kind": "council",
+    "name": "Tyson J. Leyendecker",
+    "phone": "563.690.6505",
+    "role": "Council Member, Ward One Representative",
+    "seat": "Ward 1",
+    "termEnds": "2029"
+   },
+   {
+    "email": "lroussell@cityofdubuque.org",
+    "kind": "council",
+    "name": "Laura J. Roussell",
+    "phone": "563.690.6506",
+    "role": "Council Member, Ward Two Representative",
+    "seat": "Ward 2",
+    "termEnds": "2027"
+   },
+   {
+    "email": "dsprank@cityofdubuque.org",
+    "kind": "council",
+    "name": "Danny C. Sprank",
+    "phone": "563.690.6507",
+    "role": "Council Member, Ward Three Representative",
+    "seat": "Ward 3",
+    "termEnds": "2029"
+   },
+   {
+    "email": "kwethal@cityofdubuque.org",
+    "kind": "council",
+    "name": "Katy A. Wethal",
+    "phone": "563.690.6508",
+    "role": "Council Member, Ward Four Representative",
+    "seat": "Ward 4",
+    "termEnds": "2027"
+   }
+  ],
+  "namesMayor": true,
+  "sourceUrl": "https://www.cityofdubuque.org/990/Mayor-City-Council"
+ },
+ "1938595": {
+  "asOf": "2026-10-01",
+  "city": "Iowa City",
+  "members": [
+   {
+    "email": "bteague@iowa-city.org",
+    "kind": "mayor",
+    "name": "Bruce Teague",
+    "phone": "(319) 536-1200",
+    "role": "Mayor, At-Large",
+    "seat": "At-Large"
+   },
+   {
+    "email": "malter@iowa-city.org",
+    "kind": "council",
+    "name": "Megan Alter",
+    "phone": "(319) 325-3787",
+    "role": "Mayor Pro Tem, At-Large",
+    "seat": "At-Large"
+   },
+   {
+    "email": "lbergus@iowa-city.org",
+    "kind": "council",
+    "name": "Laura Bergus",
+    "phone": "(319) 541-9677",
+    "role": "Councilor, District A",
+    "seat": "District A"
+   },
+   {
+    "email": "sharmsen@iowa-city.org",
+    "kind": "council",
+    "name": "Shawn Harmsen",
+    "phone": "(319) 853-8804",
+    "role": "Councilor, District B",
+    "seat": "District B"
+   },
+   {
+    "email": "jmoe@iowa-city.org",
+    "kind": "council",
+    "name": "Josh Moe",
+    "phone": "(319) 383-3099",
+    "role": "Councilor, At-Large",
+    "seat": "At-Large"
+   },
+   {
+    "email": "msalih@iowa-city.org",
+    "kind": "council",
+    "name": "Mazahir Salih",
+    "phone": "(571) 282-5188",
+    "role": "Councilor, At-Large",
+    "seat": "At-Large"
+   },
+   {
+    "email": "oweilein@iowa-city.org",
+    "kind": "council",
+    "name": "Oliver Weilein",
+    "phone": "(319) 269-5189",
+    "role": "Councilor, District C",
+    "seat": "District C"
+   }
+  ],
+  "namesMayor": true,
+  "sourceUrl": "https://www.icgov.org/government/city-council"
+ },
+ "1949485": {
+  "asOf": "2026-10-01",
+  "city": "Marion",
+  "members": [
+   {
+    "kind": "mayor",
+    "name": "Nicolas AbouAssaly",
+    "role": "Mayor"
+   },
+   {
+    "kind": "council",
+    "name": "Gage Miskimen",
+    "role": "Ward 1",
+    "seat": "Ward 1"
+   },
+   {
+    "kind": "council",
+    "name": "Grant Harper",
+    "role": "Ward 2",
+    "seat": "Ward 2"
+   },
+   {
+    "kind": "council",
+    "name": "Will Brandt",
+    "role": "Ward 3",
+    "seat": "Ward 3"
+   },
+   {
+    "kind": "council",
+    "name": "Sara Mentzer",
+    "role": "Ward 4",
+    "seat": "Ward 4"
+   },
+   {
+    "kind": "council",
+    "name": "Kelvin Unemin",
+    "role": "At-Large",
+    "seat": "At-Large"
+   },
+   {
+    "kind": "council",
+    "name": "Steve Jensen",
+    "role": "At-Large",
+    "seat": "At-Large"
+   }
+  ],
+  "namesMayor": true,
+  "sourceUrl": "https://www.cityofmarion.org/about-us/mayor-city-council/council-profiles"
+ },
+ "1949755": {
+  "asOf": "2026-10-01",
+  "city": "Marshalltown",
+  "members": [
+   {
+    "kind": "mayor",
+    "name": "Mike Ladehoff",
+    "role": "Mayor",
+    "termEnds": "12/31/29"
+   },
+   {
+    "kind": "council",
+    "name": "Marco A. Yepez-Gomez",
+    "role": "1st Ward",
+    "seat": "Ward 1",
+    "termEnds": "12/31/29"
+   },
+   {
+    "kind": "council",
+    "name": "Mark Mitchell",
+    "role": "2nd Ward",
+    "seat": "Ward 2",
+    "termEnds": "12/31/27"
+   },
+   {
+    "kind": "council",
+    "name": "Greg Nichols",
+    "role": "3rd Ward",
+    "seat": "Ward 3",
+    "termEnds": "12/31/29"
+   },
+   {
+    "kind": "council",
+    "name": "Melisa Fonseca",
+    "role": "4th Ward",
+    "seat": "Ward 4",
+    "termEnds": "12/31/27"
+   },
+   {
+    "kind": "council",
+    "name": "Sue Cahill",
+    "role": "At Large",
+    "seat": "At-Large",
+    "termEnds": "12/31/29"
+   },
+   {
+    "kind": "council",
+    "name": "Jeff Schneider",
+    "role": "At Large",
+    "seat": "At-Large",
+    "termEnds": "12/31/29"
+   },
+   {
+    "kind": "council",
+    "name": "Gary Thompson",
+    "role": "At Large",
+    "seat": "At-Large",
+    "termEnds": "12/31/27"
+   }
+  ],
+  "namesMayor": true,
+  "sourceUrl": "https://www.marshalltown-ia.gov/154/Mayor-City-Council"
+ },
+ "1960465": {
+  "asOf": "2026-10-01",
+  "city": "Ottumwa",
+  "members": [
+   {
+    "email": "mayor@ottumwa.us",
+    "kind": "mayor",
+    "name": "Benjamin Foote",
+    "phone": "(641) 680-0129",
+    "role": "Mayor"
+   },
+   {
+    "email": "hoffmanb@ottumwa.us",
+    "kind": "council",
+    "name": "Bill Hoffman, Jr.",
+    "phone": "(641) 277-9083",
+    "role": "City Council"
+   },
+   {
+    "email": "gallowayc@ottumwa.us",
+    "kind": "council",
+    "name": "Cara Galloway",
+    "phone": "(641) 277-9064",
+    "role": "City Council"
+   },
+   {
+    "email": "reidd@ottumwa.us",
+    "kind": "council",
+    "name": "Dan Reid",
+    "phone": "(641) 226-0482",
+    "role": "City Council"
+   },
+   {
+    "email": "dupreyj@ottumwa.us",
+    "kind": "council",
+    "name": "JoElla Duprey",
+    "phone": "(641) 277-7199",
+    "role": "City Council"
+   },
+   {
+    "email": "cavinessk@ottumwa.us",
+    "kind": "council",
+    "name": "Keith Caviness",
+    "phone": "(641) 244-2416",
+    "role": "City Council"
+   }
+  ],
+  "namesMayor": true,
+  "sourceUrl": "https://www.ottumwa.us/government/mayor_and_city_council_new.php"
+ },
+ "1973335": {
+  "asOf": "2026-10-01",
+  "city": "Sioux City",
+  "members": [
+   {
+    "kind": "council",
+    "name": "Craig Berenstein",
+    "role": "Councilmember"
+   },
+   {
+    "kind": "council",
+    "name": "Rick Bertrand",
+    "role": "Councilmember"
+   },
+   {
+    "kind": "council",
+    "name": "Ike Rayford",
+    "role": "Councilmember"
+   },
+   {
+    "kind": "council",
+    "name": "Julie Schoenherr",
+    "role": "Mayor Pro Tem"
+   },
+   {
+    "kind": "mayor",
+    "name": "Bob Scott",
+    "role": "Mayor"
+   }
+  ],
+  "namesMayor": true,
+  "sourceUrl": "https://www.sioux-city.org/247/City-Council"
+ },
+ "1979950": {
+  "asOf": "2026-10-01",
+  "city": "Urbandale",
+  "members": [
+   {
+    "kind": "mayor",
+    "name": "Bob Andeweg",
+    "role": "Mayor"
+   },
+   {
+    "kind": "council",
+    "name": "Amy Croll",
+    "role": "Councilmember"
+   },
+   {
+    "kind": "council",
+    "name": "Blake Rozendaal",
+    "role": "Councilmember"
+   },
+   {
+    "kind": "council",
+    "name": "Bridget Carberry Montgomery",
+    "role": "Councilmember"
+   },
+   {
+    "kind": "council",
+    "name": "Joe Cacciatore",
+    "role": "Councilmember"
+   },
+   {
+    "kind": "council",
+    "name": "Patricia Boddy",
+    "role": "Councilmember"
+   }
+  ],
+  "namesMayor": true,
+  "sourceUrl": "https://www.urbandale.org/326/Mayor-City-Council"
+ },
+ "1983910": {
+  "asOf": "2026-10-01",
+  "city": "West Des Moines",
+  "members": [
+   {
+    "email": "Fannette.Elliott@wdm.iowa.gov",
+    "kind": "council",
+    "name": "Fannette Elliott",
+    "phone": "515-222-3559",
+    "role": "Councilmember At-Large",
+    "seat": "At-Large"
+   },
+   {
+    "email": "Greg.Hudson@wdm.iowa.gov",
+    "kind": "council",
+    "name": "Greg Hudson",
+    "phone": "515-518-0529",
+    "role": "Councilmember - 2nd Ward",
+    "seat": "Ward 2"
+   },
+   {
+    "email": "Doug.Loots@wdm.iowa.gov",
+    "kind": "council",
+    "name": "Doug Loots",
+    "phone": "515-273-0691",
+    "role": "Councilmember - 3rd Ward",
+    "seat": "Ward 3"
+   },
+   {
+    "email": "Matthew.McKinney@wdm.iowa.gov",
+    "kind": "council",
+    "name": "Matthew McKinney",
+    "phone": "515-208-0033",
+    "role": "Councilmember At-Large",
+    "seat": "At-Large"
+   },
+   {
+    "email": "Kevin.Trevillyan@wdm.iowa.gov",
+    "kind": "council",
+    "name": "Kevin Trevillyan",
+    "phone": "515-240-8786",
+    "role": "Councilmember - 1st Ward",
+    "seat": "Ward 1"
+   },
+   {
+    "email": "Russ.Trimble@wdm.iowa.gov",
+    "kind": "mayor",
+    "name": "Russ Trimble",
+    "phone": "515-554-8746",
+    "role": "Mayor"
+   }
+  ],
+  "namesMayor": true,
+  "sourceUrl": "https://www.wdm.iowa.gov/government/mayor-city-council/biographies"
+ }
+}

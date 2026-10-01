@@ -221,10 +221,28 @@
       }
     },
     {
+      "id": "voting-precinct",
+      "label": "Voting Precinct",
+      "group": "geography",
+      "area_rank": 9,
+      "rank_note": "4,105 precincts tiling the state at a 55 km2 mean feature area, pre-built from the Secretary of State's own statewide service — the finest tiling on this map, and the only layer here published by the office that maintains it rather than by the Census",
+      "source": {
+        "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
+        "boundary": [
+          {
+            "label": "Office of the Minnesota Secretary of State, Elections Division — Voting Districts, Minnesota, served through MnGeo's enterprise ArcGIS host; 4,105 features, pre-built for the state by mn/scripts/build_mn_precincts.py and shipped with the app. The office states it cannot assure the lines are exact and directs anyone needing a definitive one to the city, township, or county, which the card says.",
+            "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
+        "applies": "Minnesota — statewide."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "856 incorporated places, live from TIGERweb (no data/app file) — every one a city, with no village among them, at a 14.7 km2 mean feature area",
       "source": {
         "answers": "The city covering the point, if any. Most of Minnesota's land is township or unorganized territory, where the card is correctly empty.",
@@ -242,7 +260,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "1 district, live from TIGERweb (no data/app file) — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota",
       "source": {
         "answers": "The secondary school district covering the point, in the one place Minnesota has one.",
@@ -260,7 +278,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -278,7 +296,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "1,484 fire and EMS station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest fire and EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -296,7 +314,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "1,199 post-office points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -333,6 +351,10 @@
     {
       "layer": "mn-house",
       "expected": "61A"
+    },
+    {
+      "layer": "voting-precinct",
+      "expected": "Minneapolis W-7 P-6"
     }
   ],
   "negative_point": {
@@ -374,6 +396,12 @@
         "min_features": 134,
         "max_features": 134,
         "note": "Minnesota House districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate; the A/B pair of each Senate district shares its every boundary vertex)."
+      },
+      {
+        "file": "mn-precincts.json",
+        "min_features": 4105,
+        "max_features": 4105,
+        "note": "Every Minnesota voting precinct, pre-built by mn/scripts/build_mn_precincts.py from the Secretary of State's own statewide service (paged at the service's 2,000-record cap; Douglas-Peucker at a 4 m interval; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 4,105 count floor on both the fetch and the simplified output). This instance's largest file at 1.67 MB gzipped, fetched only when a reader switches the layer on."
       }
     ],
     "rosters": [
@@ -390,7 +418,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mn-shell-v1",
+    "cache_name": "districtry-mn-shell-v2",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
