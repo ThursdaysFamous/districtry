@@ -209,14 +209,19 @@ question.
 **Everything else**
 
 - Courts by district: Illinois, Wisconsin, Iowa and New York answer them.
-  Michigan, Minnesota and Kentucky ship no such layer. Michigan and Minnesota
-  have since confirmed, each in its own notes, that they elect their trial
-  judges by district, so the entry is owed in both. Kentucky's answer is
-  pending and the entry is not scored against it until that thread confirms.
+  Michigan, Minnesota and Kentucky ship no such layer, and all three have since
+  confirmed in their own notes that they elect judges by district, so the entry
+  is owed in each. Kentucky's reaches furthest: all four court levels elect by
+  district — Supreme Court, Court of Appeals, 57 circuits and 59 district-court
+  districts — and every one of those districts is a set of whole counties
+  written into statute, so the lines are buildable from statute text and county
+  boundaries the app already ships.
 - School boards elected by district: Chicago, Milwaukee, Racine, Iowa's
   statewide director districts and New York City's community education councils.
-  Kentucky ships none, and whether its county school boards are elected by
-  division is for the Kentucky thread to confirm.
+  Kentucky ships none and owes them: its thread has confirmed that every county
+  school board is elected by division, five divisions per county, each built
+  from whole precincts. Kentucky's independent school boards are elected at
+  large, so they are named rather than drawn.
 - Precincts: Illinois (83 counties), Iowa, Michigan, New York, San Francisco and
   Wisconsin's wards. Minnesota and Kentucky ship none.
 - Tribal governments: no app answers one.
