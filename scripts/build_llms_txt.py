@@ -219,24 +219,41 @@ def sitemap_paths():
     return root, by_tag, deep
 
 
-def county_index(tag, deep_count):
-    """Which of this instance's pages is the index for its per-county pages.
+def county_indexes(tag, deep_count):
+    """This instance's index pages for its per-county pages, with the count each
+    one links.
 
     Matched by DIRECTORY rather than by name: <tag>/<concept>/ holds the pages
     and <tag>/<concept>.html is their index, which is how build_county_pages.py
     writes them. Nothing here needs to know that Illinois calls the concept
-    county-board and Iowa county-supervisor."""
+    county-board and Iowa county-supervisor.
+
+    AN INSTANCE CAN HAVE MORE THAN ONE, and the first version of this assumed
+    one and failed outright on the second. New York is the case: its counties
+    are governed in two forms, a legislature elected from districts and a board
+    of supervisors whose seat is the town, and each form has its own index
+    because neither page's wording describes the other.
+
+    THE PER-DIRECTORY COUNTS MUST STILL SUM TO THE SITEMAP'S, which is what
+    keeps this from quietly undercounting. A page in a directory with no index
+    beside it would be linked by nothing here, and that is exactly the state a
+    reader would never see."""
     if not deep_count:
-        return None
-    dirs = [d for d in sorted(os.listdir(os.path.join(REPO_ROOT, tag)))
-            if os.path.isdir(os.path.join(REPO_ROOT, tag, d))
-            and glob.glob(os.path.join(REPO_ROOT, tag, d, "*.html"))
-            and os.path.exists(os.path.join(REPO_ROOT, tag, d + ".html"))]
-    if len(dirs) != 1:
-        fail("%s has %d directory(ies) of generated pages (%s) and the sitemap "
-             "lists %d of them — this generator names one index per instance"
-             % (tag, len(dirs), ", ".join(dirs) or "none", deep_count))
-    return "%s/%s.html" % (tag, dirs[0])
+        return {}
+    root = os.path.join(REPO_ROOT, tag)
+    found = {}
+    for d in sorted(os.listdir(root)):
+        pages = glob.glob(os.path.join(root, d, "*.html"))
+        if (os.path.isdir(os.path.join(root, d)) and pages
+                and os.path.exists(os.path.join(root, d + ".html"))):
+            found["%s/%s.html" % (tag, d)] = len(pages)
+    total = sum(found.values())
+    if total != deep_count:
+        fail("%s: the index page(s) %s link %d per-county page(s) and the "
+             "sitemap lists %d — a page no index links is a page a reader "
+             "cannot reach"
+             % (tag, ", ".join(sorted(found)) or "none", total, deep_count))
+    return found
 
 
 def signal():
@@ -281,7 +298,7 @@ def render():
 
     for m in fleet:
         tag, ws = m["tag"], worksheet(m["tag"])
-        index = county_index(tag, deep.get(tag, 0))
+        indexes = county_indexes(tag, deep.get(tag, 0))
         lines.append("## %s" % m["landing_name"])
         lines.append("")
         lines.append(m["blurb"])
@@ -290,11 +307,11 @@ def render():
                      % (m["landing_name"], m["url"], len(ws["layers"]),
                         m["scope"]))
         for rel in by_tag.get(tag, []):
-            if rel == index:
+            if rel in indexes:
                 lines.append("- [%s](%s/%s): links a page per county, %d of "
                              "them, each naming every member with whatever "
                              "contact details that county publishes."
-                             % (title_of(rel), SITE, rel, deep[tag]))
+                             % (title_of(rel), SITE, rel, indexes[rel]))
             else:
                 lines.append("- [%s](%s/%s)" % (title_of(rel), SITE, rel))
         lines.append("")
