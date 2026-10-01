@@ -2913,3 +2913,568 @@ say the state does not publish it rather than that we did not find it.
 there is nothing yet to license. No individual is named. And no county or town is named,
 because this is a question about whether a statewide product exists, not a complaint about
 any local government's website.
+
+## Ask 36 — five Illinois county clerks: who holds the commissioner seats?
+
+**Status: NOT YET ASKED — DRAFTED. THE NUMBER IS PROVISIONAL**, because main's ledger
+ended at 33 when this was written and Wisconsin, Michigan and Iowa each claim 34 on an
+open branch. Renumber against main immediately before merging, and update every record
+that points at it.
+
+Gaps `hardin-county-board`, `johnson-county-board`, `perry-county-website-blocked`,
+`pope-county-board`, `scott-county-commissioners`.
+
+**One question, five counties, and the smallest ask this ledger carries.** Every one of
+these five elects its board COUNTY-WIDE, so there is no district to draw and no map to look
+for. The whole of what is missing is the list of who holds the seats. Four of the five are
+blocked for the same reason, and it is not a refusal of anything: the county's own website
+is the only source that names the sitting members, and this project cannot read it.
+
+| county | seats | what blocks the roster |
+|---|---|---|
+| Hardin | 6 precincts, commission form | the published county web address serves a parked page |
+| Johnson | 3 commissioners | the county's site refuses every automated visit at the host |
+| Perry | 3 commissioners | the county's site turns away automated visits |
+| Pope | unknown | the web address serves a template page carrying no county information, and the clerk's domain is mail-only with no website behind it |
+| Scott | 3 commissioners | the county's own page renders its member list through a widget that returns nothing |
+
+**Why certified returns are not the answer, which is worth saying because this project
+builds a great deal from them.** Every one of these five has readable certified canvasses —
+that is how their boards were proven county-wide in the first place. A canvass names who
+WON a contest, not who holds the seat today: a member can resign, die or be appointed
+between elections, and Edgar County settled the rule when its canvasses elected a District
+6 member who has since left and only the county's own page named the appointee. Geometry
+comes from whatever proves the lines; people come from whatever the county maintains as
+people.
+
+**Pope is asked a second question and it is the first one.** Nothing published anywhere
+says whether Pope's board is elected by district or county-wide — it is the one Illinois
+county whose board FORM is unknown, and the ArcGIS Online catalogue was asked on 2026-10-01
+under six terms and returns no board district or precinct layer for it. So Pope's letter
+asks the form before the names, because the answer decides whether a map is wanted at all.
+
+**What was measured first**, so none of these reads as a question somebody could have
+answered by searching: each county's own website was probed, each clerk domain in this
+project's clerk roster was probed, and the three election-results vendors that carry
+Illinois counties were swept across several election slugs — a vendor's carriage is
+per-election, which is how Pulaski and Hardin were found after being recorded as uncarried.
+What those sweeps produced is the certified returns above, which answer the form and not the
+roster.
+
+**Recipients**, each the Clerk's own office address already held in
+`il/data/app/il-county-clerks.json` and not guessed.
+
+### Hardin County Clerk — `countyclerk@hardincountyil.gov`
+
+> Subject: Hardin County Board — who is serving now?
+>
+> Dear Hardin County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Hardin County's voting precincts are on it, drawn from Census boundaries and named from
+> the county's own certified returns. The one thing the county's card cannot tell a reader
+> is who sits on the board. I cannot find a county source that names the sitting
+> commissioners: the web address I have for the county leads to a parked page, and certified
+> election results tell me who won a race rather than who holds a seat today.
+>
+> Could you send me the names of the commissioners now serving, and which of them chairs
+> the board? A list in the body of a reply is ideal — I do not need a document.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> I do not publish home addresses or personal contact details for officeholders: office
+> contact only, or nothing.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### Johnson County Clerk — `CountyClerk@johnsonco.illinois.gov`
+
+> Subject: Johnson County Board — who is serving now?
+>
+> Dear Johnson County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Johnson County's sixteen voting precincts are on it, named from the county's own
+> certified 2026 primary canvass, which is also what told me the board is elected
+> county-wide rather than by district. What I cannot get is the roster. The county's website
+> is the only source that names the sitting commissioners, and it declines automated visits,
+> so nothing I run can read it. Certified returns name who won a race rather than who holds
+> a seat today, so I would rather ask than infer.
+>
+> Could you send me the names of the commissioners now serving, and which of them chairs
+> the board? A list in the body of a reply is ideal.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> I do not publish home addresses or personal contact details for officeholders: office
+> contact only, or nothing.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### Perry County Clerk — `countyclerk@perrycountyil.gov`
+
+> Subject: Perry County Board — who is serving now?
+>
+> Dear Perry County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Perry County's twenty-seven voting precincts are on it, named from the county's own
+> certified 2026 primary canvass, which is also what told me the board is elected
+> county-wide. What the card cannot say is who holds the three seats. The county's website
+> is the only source that names them and it turns away automated visits, and certified
+> returns name who won a race rather than who is serving now.
+>
+> Could you send me the names of the commissioners now serving, and which of them chairs
+> the board? A list in the body of a reply is ideal.
+>
+> There is a second thing you may be able to settle in the same line, and it is entirely
+> optional: if the county would be willing for its website to answer automated clients, that
+> would keep the roster current here every week without anybody having to write again. If
+> turning them away is deliberate, that is a perfectly good answer and I will record it and
+> leave the site alone.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> I do not publish home addresses or personal contact details for officeholders: office
+> contact only, or nothing.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### Pope County Clerk — `countyclerk@popeco.illinois.gov`
+
+The one mail-only address in this group: the domain carries mail and no website, which is a
+documented pattern among Illinois clerks and is why no site could be read.
+
+> Subject: Pope County Board — elected by district or county-wide, and who is serving?
+>
+> Dear Pope County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Pope County is the one Illinois county where I cannot answer even the first question about
+> the county board, and I would rather ask you than publish a guess. Every other county in
+> the state is on the site with at least its board's form settled.
+>
+> Two questions, in order:
+>
+> 1. Is the Pope County Board elected by district, or county-wide?
+> 2. If by district, could you point me to the district boundaries — a map file, a map, or a
+>    list of which precincts make up each district would all work. If county-wide, could you
+>    send the names of the commissioners now serving and which of them chairs the board?
+>
+> I have found no county source that answers either. The web address I have for the county
+> serves a template page with no county information on it, and I can find no board district
+> or precinct map for Pope anywhere public.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> I do not publish home addresses or personal contact details for officeholders: office
+> contact only, or nothing.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### Scott County Clerk — `countyclerk@scottcoil.gov`
+
+The narrowest of the five: the county has a page for this and it comes back empty.
+
+> Subject: Scott County commissioners — your members page comes back empty
+>
+> Dear Scott County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Scott County's ten voting precincts are on it, named from the county's own certified 2026
+> primary canvass. The card cannot name the three commissioners, and the reason is worth
+> passing on whether or not you can help with the roster: the county's own page for the
+> board renders its member list through a widget that returns nothing, so the names are not
+> in the page a visitor downloads. A person using a screen reader, or anyone whose browser
+> blocks that widget, would see the same empty list I do.
+>
+> Could you confirm which three commissioners are serving now, and which of them chairs the
+> board? One line is plenty.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> I do not publish home addresses or personal contact details for officeholders: office
+> contact only, or nothing.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### What each answer means
+
+- **A roster** — it ships on that county's board card, sourced to the county, and the card
+  stops saying nothing where it should name three or six people. Hardin, Johnson, Perry and
+  Scott each close on one reply.
+- **Pope answering "county-wide"** — its commissioners ride the County card like nineteen
+  other Illinois counties, with no district geometry and no toggle, and the county joins the
+  tier it belongs to. Answering "by district" opens a map question instead, which is a
+  bigger piece of work but a known one.
+- **A refusal** — the gap record stays and becomes final rather than open, and under the
+  done standard a refusal counts straight away, so the county is covered by record. A clean
+  no is a good outcome here.
+- **No reply** — record UNRESPONSIVE against the ask after one follow-up and thirty days,
+  not against the county. Nothing about the precincts, which are already on the map, is
+  blocked on this.
+
+## Ask 37 — eight Illinois county clerks: your board districts, drawn by nobody
+
+**Status: NOT YET ASKED — DRAFTED. THE NUMBER IS PROVISIONAL** for the same reason as Ask
+36; renumber against main immediately before merging.
+
+Gaps `bond-county-board-districts`, `cumberland-county-board`,
+`fayette-county-board-geometry`, `jasper-county-board`, `jersey-county-board-districts`,
+`lawrence-county-board`, `macoupin-county-board-districts`,
+`marion-county-board-districts`.
+
+**Eight counties, one shape of question, and eight different reasons the usual route
+fails.** Each of these elects its board BY DISTRICT and names its members — most of them on
+the county's own site — so the people are not the problem. What nobody publishes is where
+the lines run. This project draws a county's districts from whatever proves them: the
+county's own map data where it exists, a dissolve of census voting districts where the
+districts are unions of whole precincts, or the county's certified returns where those name
+the precincts in each contest. For these eight, every one of those routes has been tried and
+measured shut, and the reason differs county by county, which is why each letter asks a
+different question.
+
+| county | districts | why nothing published draws the lines |
+|---|---|---|
+| Bond | 5 | no district map, and the returns show four precincts split between two districts |
+| Cumberland | 3 | no district boundary, and the certified returns count fourteen precincts across a county of twelve, so two are split |
+| Fayette | 7 | the county's own printed map divides one precinct between two districts and leaves one line undrawn |
+| Jasper | 3 | every line follows a township line except inside Wade township, where four precincts fan out from Newton with no published rural edges |
+| Jersey | 4 | the only map published is dated 2016, before the 2021 redraw, with no data behind it |
+| Lawrence | 7 | the county's mapping carries taxing districts only — no board districts and no precincts |
+| Macoupin | 9 | readable district maps with no data behind them, and the precinct data does not say which district each precinct is in |
+| Marion | 5 | no district map, and Centralia and Salem are each split across three districts |
+
+**What was measured first, on 2026-10-01**, so none of these reads as a question somebody
+could have answered by searching: each county was asked of the ArcGIS Online catalogue under
+six terms — board district, county board, voting precinct, precinct, supervisor district,
+commissioner district — the unauthenticated query that found another county's twenty-six
+public services with no county page read at all. **All eight return nothing.** That is the
+route that most often turns up a layer a county's own website never mentions, so its coming
+back empty is what makes these letters the remaining route rather than a shortcut past one.
+
+**Each letter asks for the smallest thing that would close its county**, not for a dataset in
+general. Three of the eight could be closed by a few lines of prose rather than any file:
+Bond needs to know how four split precincts divide, Fayette needs one line's position and two
+precincts' district numbers, Jersey needs to know whether its 2016 map is still in force.
+
+**Recipients**, each the Clerk's own office address already held in
+`il/data/app/il-county-clerks.json`.
+
+### Bond County Clerk — `brooke.weathers@bondcountyil.gov`
+
+> Subject: Bond County board districts — how do four precincts divide?
+>
+> Dear Bond County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Bond County's five board members are named on the site from the county's own pages. What I
+> cannot do is draw the five districts, so a reader clicking inside the county is not told
+> which district they are in. I can usually build a county's districts out of whole voting
+> precincts, but the county's own certified returns show four precincts each voting in two
+> different board districts, so no arrangement of whole precincts will do it.
+>
+> Either of these would close it: the county's 2021 board redistricting map or ordinance, in
+> whatever form you hold it, or — just as good — a sentence or two saying how those four
+> split precincts divide between the districts.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### Cumberland County Clerk — `bhoward@cumberlandcoil.gov`
+
+> Subject: Cumberland County's three board districts
+>
+> Dear Cumberland County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Cumberland County's twelve voting precincts are already on the site, named from the
+> county's own certified returns, and all six board members are named from the county's
+> site. The three board districts are the only thing missing, so a reader is not told whether
+> they are in Central, Eastern or Western.
+>
+> I would normally assemble the districts from whole precincts, but the county's own
+> certified primary canvass counts six, five and three precincts in the three districts —
+> fourteen across a county of twelve — so at least two precincts are divided between
+> districts, and I cannot tell where.
+>
+> Could you send the three district boundaries in whatever form you have them: a map file, a
+> map, or a description of where the lines run through the divided precincts? Nothing else
+> about this county is missing.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### Fayette County Clerk — `kdugan@fayettecountyillinois.gov`
+
+> Subject: Fayette County board districts — two questions about your district map
+>
+> Dear Fayette County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Fayette County's fourteen board members are named on the site from the county's own pages,
+> with party and term. I cannot draw the seven districts yet, and the reason is two specific
+> places on the county's own published district map rather than anything missing from it
+> generally.
+>
+> Two questions, and either an answer in words or the map file behind the printed map would
+> settle both:
+>
+> 1. The map appears to divide Avena precinct between two districts. Where does that line
+>    run?
+> 2. The line between two of the western districts is not drawn on the copy I can read.
+>    Which of the western precincts sit in District 2 and which in District 6?
+>
+> If the file behind that map exists in any form — a shapefile, a GIS export, a CAD drawing —
+> that would answer both at once and I would be glad of it.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### Jasper County Clerk — `Amy.tarr@jaspercounty.illinois.gov`
+
+> Subject: Jasper County — Wade township's four precinct boundaries
+>
+> Dear Jasper County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Jasper County is close to being on the site in full. The county publishes which townships
+> and precincts make up each of its three board districts, and every district line follows a
+> township line — except inside Wade township, where four precincts fan out from Newton and
+> the district line runs between them.
+>
+> So I have one narrow question: could you send Wade township's four precinct boundaries in
+> full, including the rural parts rather than only the city wards? A map file is ideal, a map
+> would do, and a written description of where the four meet would do as well.
+>
+> Everything else about these districts is already in hand, so this one answer would put the
+> county's board on the map.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### Jersey County Clerk — `pwarford@jerseycounty-il.gov`
+
+> Subject: Jersey County board districts — is the 2016 map still the plan in force?
+>
+> Dear Jersey County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Jersey County's twelve board members are named on the site, each with their district. I
+> have not drawn the four districts, for one reason I would rather have you settle than
+> assume: the only district map the county publishes is dated 2016, which is before the
+> redraw every Illinois county did in 2021, and there is no data file behind it.
+>
+> So, in order:
+>
+> 1. Is that 2016 map still the plan in force, or was a new one adopted after the 2020
+>    census?
+> 2. Either way, is there a map file behind the current map? A list of which precincts make
+>    up each of the four districts would work just as well.
+>
+> I will not publish a boundary I am not confident is current, which is why I am asking
+> rather than drawing what I can see.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### Lawrence County Clerk — `WGibson@lawrencecounty.illinois.gov`
+
+> Subject: Lawrence County's seven board districts
+>
+> Dear Lawrence County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Lawrence County's seven board members are named on the site from the county's own pages.
+> The seven districts are not drawn, so a reader is not told which one covers them.
+>
+> I have looked in the places that usually answer. The county's mapping carries taxing
+> districts only — no board districts and no voting precincts — and I can find no published
+> election results that describe the districts either, so I cannot assemble them from
+> precincts the way I do in most counties.
+>
+> Any one of these would close it: the seven districts as a map file, a description of which
+> townships and part-townships make up each district, or a precinct map for the county.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### Macoupin County Clerk — `pete.duncan@macoupincountyil.gov`
+
+> Subject: Macoupin County — which precinct is in which board district?
+>
+> Dear Macoupin County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Macoupin County's voting precincts are already on the site, and the board members are in
+> hand. The nine board districts are the only piece missing, so a reader clicking in the
+> county is not told which district they are in.
+>
+> The county publishes district maps a person can read, and I can see them, but there is no
+> data behind them and the county's precinct data does not say which district each precinct
+> belongs to. Either of these would close it:
+>
+> 1. The nine district boundaries as a map file, in whatever format you hold.
+> 2. A plain table pairing each voting precinct with its board district. If every district is
+>    made of whole precincts, that table is all I need — I already have the precinct
+>    boundaries.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### Marion County Clerk — `CountyClerk@MarionCo.Illinois.gov`
+
+> Subject: Marion County board districts — Centralia and Salem
+>
+> Dear Marion County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Marion County's five board districts are not on the site, so a reader clicking in the
+> county is not told which district covers them. The county's own certified returns describe
+> the five districts completely — that part is settled — and I still cannot draw them, for one
+> reason.
+>
+> The boundaries I would use to stand in for the county's precincts come from the Census, and
+> five of those carry the base names Centralia and Salem while each of those two spans three
+> different board districts. So I cannot tell which Census area belongs with which of the
+> county's current Centralia and Salem precincts, and any guess would put a reader in the
+> wrong district.
+>
+> Either of these would close it: the county's five board districts as a map file, or a note
+> saying which Census areas make up each of the current Centralia and Salem precincts. A
+> county precinct map would also do.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### What each answer means
+
+- **Map data** — that county's districts are drawn as the county drew them, with no
+  derivation and nothing traced, which is the best outcome available and is how two other
+  Illinois counties shipped.
+- **A written answer to the narrow question** — Bond, Fayette, Jasper, Jersey, Macoupin and
+  Marion each become buildable from boundaries this project already holds, with the county's
+  answer recorded as the source for the one thing it settled. This is the likeliest good
+  outcome and it costs the clerk a paragraph.
+- **A refusal** — the gap record stays and becomes final rather than open; under the done
+  standard a refusal counts straight away, so the county is covered by record.
+- **No reply** — record UNRESPONSIVE after one follow-up and thirty days, against the ask
+  rather than the county.
+
+**What is deliberately not asked.** Nothing about reuse terms, because none of these
+counties has offered anything to license yet and a licence question in the first letter is
+how a simple request becomes a legal one. No fee is offered or asked about. And no
+individual board member is named in any of the eight letters, because the question is about
+boundaries.

@@ -8226,6 +8226,47 @@ writing that A is the village limits and B the unincorporated remainder, so one 
 districts and the count is eighteen on both surfaces. Reversing the decision is a separate change
 with its own argument, and the raw-canvass duplicate check described above has not been run for it.
 
+### 2026-10-01: nine counties asked of the ArcGIS catalogue at once, and the answer was nothing
+
+Illinois's fourth-test county tier is nineteen counties short, and thirteen of
+those nineteen have never been written to. Before drafting thirteen letters it
+was worth running the cheapest check this project owns against the nine whose
+records ask for GEOMETRY — the unauthenticated `arcgis.com/sharing/rest/search`
+query that found Vermilion's twenty-six services with no county page read at
+all, which `CLAUDE.md` already records as the FIRST check because it costs one
+request and needs nothing from the county.
+
+Bond, Cumberland, Fayette, Jasper, Jersey, Lawrence, Macoupin, Marion and Pope,
+each asked under six terms (`board district`, `county board`, `voting precinct`,
+`precinct`, `supervisor district`, `commissioner district`), with a hit counted
+only where the county's own name and one of board, precinct or district appear
+together. **Eight of the nine return nothing at all.** Pope returns thirteen
+items and not one of them is a board district or a precinct: they are the
+University of Illinois's IECAM township series, twelve annual snapshots plus
+their gallery, owned by a university account. A township is not a board
+district, and the fleet's standing rule is that a university source is secondary
+at best and never the primary source for a layer, so Pope's thirteen hits are
+thirteen non-answers rather than a lead.
+
+**What this settles and what it does not.** It settles that none of the nine
+publishes a board-district or precinct layer to the ArcGIS Online catalogue,
+which is where a county's GIS desk surfaces even when the county's website does
+not mention it — the Vermilion case, where the Clerk's accurate "no" about the
+Clerk had been read as an answer about the county. It does not settle that no
+such layer exists: a service published to a county-run ArcGIS Server, or shared
+inside an organisation rather than publicly, is invisible to this query, and
+Douglas shipped from an ORG enumeration reached through the county's own web
+map, which is a route that needs the county's site. For these nine the catalogue
+is simply empty, so the org route has no starting point either.
+
+So the thirteen asks are the route, and each record's `wanted` line is already
+what to ask for. Grouped as the ledger groups its multi-recipient asks: five
+counties whose boards are elected county-wide and need only a roster (Hardin,
+Johnson, Perry, Pope and Scott, Pope also needing its board's FORM confirmed),
+and eight whose districts are drawn by nobody (Bond, Cumberland, Fayette,
+Jasper, Jersey, Lawrence, Macoupin and Marion). Nothing was sent; the drafts are
+in `docs/ASK_DRAFTS.md` for the operator.
+
 ### 2026-10-01: six of Lake County's seven, and the city whose page lists nobody
 
 The done standard's fourth test left Illinois with eight local governments above
