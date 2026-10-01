@@ -2110,6 +2110,15 @@ NOT_COUNTY_BOARDS = {
         date="2026-09-13",
         reason="municipal clerks, 1,850 of them. Municipal, not county.",
     ),
+    "wi/data/app/wi-municipal-boards.json": dict(
+        date="2026-10-01",
+        reason="the governing body of the Wisconsin municipalities that elect "
+               "their whole board at large — a village president and trustees, "
+               "a mayor and council members. Municipal, not county, and these "
+               "names already reach a reader on the City-or-Village card; a "
+               "municipal page of their own is its own piece of work, the same "
+               "answer municipal-officials.json gets above.",
+    ),
     "ia/data/app/ia-county-auditors.json": dict(
         date="2026-09-13",
         reason="the county auditor, who runs elections. One per county, not a "

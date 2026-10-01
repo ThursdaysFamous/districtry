@@ -390,10 +390,26 @@ NEENAH_INDEX = "https://www.ci.neenah.wi.us/common-council/"
 #   which relaxes OpenSSL's signature-and-key-size POLICY and leaves
 #   certificate verification fully intact — nothing here disables verification.
 #   Pinning the maximum version to TLS 1.2 does NOT fix it, and under SECLEVEL=1
-#   the connection negotiates TLSv1.3 with TLS_AES_256_GCM_SHA384, so the cause
-#   is something Debian's level 2 rejects in the CHAIN rather than anything weak
-#   about the transport. Its robots.txt (331 bytes, read with the crawling
-#   client) disallows fourteen paths — Laserfiche, WebTrac, test directories —
+#   the connection negotiates TLSv1.3 with TLS_AES_256_GCM_SHA384.
+#   THE NEXT SENTENCE USED TO DRAW A CONCLUSION FROM THAT AND IT DOES NOT
+#   FOLLOW: it read that "the cause is something Debian's level 2 rejects in the
+#   CHAIN rather than anything weak about the transport", which is a claim about
+#   what OSHKOSH SERVES, and nothing measured here can support one. This
+#   sandbox's egress gateway intercepts and re-signs every outbound TLS
+#   connection -- `wi/WATCH.md`'s 2026-09-13 row already records every host
+#   measured here carrying the gateway's own issuer, and the app thread
+#   re-confirmed it on 2026-10-01 against Google and GitHub as controls -- so the
+#   chain inspected was the GATEWAY'S and not the city's, and the app thread
+#   could not reproduce the handshake failure at all. The symptom is real from
+#   here and is UNEXPLAINED; it is not evidence about the city's certificate.
+#   THE SAME DOUBT REACHES THE ROBOTS READ BELOW, which went through the
+#   SECLEVEL=1 context, so it was a read through a client this project does not
+#   crawl with and is held as provisional rather than as the policy measurement.
+#   So nothing in the shared reader changes and no per-site security setting is
+#   considered: the next step is `scripts/probe_robots_verdicts.py` from a GitHub
+#   runner, the vantage the scheduled scrapers crawl from and the one this fleet
+#   already uses for this class of sandbox-only TLS symptom. Provisionally, its
+#   robots.txt (331 bytes) disallows fourteen paths — Laserfiche, WebTrac, test directories —
 #   and PERMITS /CityCouncil/. And its council is AT LARGE: the page states
 #   "seven elected officials in the Common Council including the mayor, the
 #   deputy mayor, and five council members", so it has no district to draw and
