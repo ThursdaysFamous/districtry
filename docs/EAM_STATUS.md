@@ -143,7 +143,7 @@ this instance is in maintenance.
 - **Covered: no.** 5 of the 13 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
   - **4. The county governing body, in every county of the state** — open. 4 of 62 counties name a governing body. A record declares this level and earns nothing: `ny-county-governing-body` — no ask recorded, so it covers nothing yet under the standard
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 1 of 104 units at 25,000+ name a governing body; unanswered: Albany city, Amherst town, Auburn city, Babylon town, Bethlehem town, Binghamton city, Brighton town, Brookhaven town and 95 more. A record declares this level and earns nothing: `ny-local-governing-body` — no ask recorded, so it covers nothing yet under the standard
-  - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
+  - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level). A record declares this level and earns nothing: `ny-local-governing-body` — no ask recorded, so it covers nothing yet under the standard
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
   - **13. Tribal governments** — open (required only where the state has the level)
 
