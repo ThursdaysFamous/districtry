@@ -95,7 +95,7 @@ neither.
 | Ask 31 — Worth County Auditor | 1 |
 | Ask 32 — City of Milwaukee GIS | 1 |
 | Ask wi-town-boards — Wisconsin Towns Association | 1 |
-| Ask mi-city-township-boards — ten Michigan city and township clerks (drafted later the same day, by the Michigan thread; Burton's has no recipient yet) | 10 |
+| Ask mi-city-township-boards — ten Michigan city and township clerks (drafted later the same day, by the Michigan thread; nine SENT by the operator at 14:48–14:51 UTC, Burton's has no recipient yet) | 10 |
 
 **Ask 30's twelve addresses came from `ia/data/app/ia-county-auditors.json` and that is
 worth stating, because the ask's own note says Iowa auditor mailboxes "are patterned
@@ -3843,14 +3843,21 @@ work out how. A yes costs the city nothing it has not already published.
 
 ## Ask mi-city-township-boards — Michigan cities and townships whose board pages this app cannot read
 
-> **NOT YET ASKED — DRAFTED 2026-10-01, AND IN THE OPERATOR'S GMAIL AS TEN DRAFTS THE SAME
-> DAY (none sent).** One message per unit, to its clerk. Each unit has its
+> **ASKED 2026-10-01 FOR NINE OF THE TEN — the operator sent them from his own mailbox between
+> 14:48 and 14:51 UTC. BURTON IS NOT YET ASKED**, because its clerk's address has not been read
+> (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and a correction to each is
+> in the operator's drafts as a reply in the same thread, unsent; see "Three letters went out on
+> a wrong reason" below. One message per unit, to its clerk. Each unit has its
 > own gap record in `docs/DATA_LAYER_GUIDEBOOK.md` (named in the table below), already carrying
 > `"covers": ["local-government:<its geoid>"]`. On send, add `"ask": {"who": "<clerk, by name>", "asked":
 > "<date>"}` to that unit's record and change its `NOT YET ASKED — DRAFTED` to `ASKED <date>`;
 > add `followedUp` on the follow-up, and `outcome` (`refused`, or `unresponsive` once thirty days
 > have passed from the follow-up) when it is true. A reply that sends the list is `answered`,
 > and the work is then to read it, not to record the level.
+>
+> **The nine records carry the send as a dated `ASKED 2026-10-01` line and no `ask` field yet**,
+> because `scripts/build_coverage_gaps.py` accepts an `ask` only with an `outcome`, and none of
+> the nine has one. The field goes on with its outcome, carrying `asked: 2026-10-01`.
 
 **Why these letters exist.** The done standard asks that a reader in any Michigan city or
 township over 25,000 people be told who governs it. Of the 82 such units, most publish their
@@ -3864,9 +3871,9 @@ has said no, or has been asked, followed up once and given 30 days.
 | Norton Shores (city) | `norton-shores-council-roster` | its robots.txt asks every automated client to stay out | 2026-10-01 |
 | West Bloomfield (charter township) | `west-bloomfield-township-board` | its website vendor's robots.txt, served for the township's own address, asks every automated client to stay out | 2026-10-01 |
 | Bedford (township) | `bedford-township-board` | the same vendor default as West Bloomfield | 2026-10-01 |
-| Shelby (charter township) | `shelby-township-board` | the site answers this client "Access Denied" | 2026-10-01 |
-| Northville (township) | `northville-township-board` | the site answers this client "Access Denied" | 2026-10-01 |
-| Ypsilanti (charter township) | `ypsilanti-township-board` | a Cloudflare challenge page, which is an access control and is never worked around | 2026-10-01 |
+| Shelby (charter township) | `shelby-township-board` | ~~the site answers this client "Access Denied"~~ **wrong: one client was tried; the fleet's browser-class client is served the page** | 2026-10-01 |
+| Northville (township) | `northville-township-board` | ~~the site answers this client "Access Denied"~~ **wrong: one client was tried; the fleet's browser-class client is served the page** | 2026-10-01 |
+| Ypsilanti (charter township) | `ypsilanti-township-board` | ~~a Cloudflare challenge page, which is an access control and is never worked around~~ **no longer true: re-read the same day, the page is served to our own token** | 2026-10-01 |
 | Burton (city) | `burton-council-roster` | a Cloudflare challenge page | 2026-10-01 |
 | Lansing (city) | `lansing-council-roster` | the page answers, but the names are loaded by a script after the page arrives, so the page itself carries none | 2026-10-01 |
 | Wyoming (city) | `wyoming-mi-council-roster` | **the operator's own ruling keeps this project off the city's site entirely.** Whether to write at all is Adam's decision; the draft is here so the decision is the only thing left. | ruling |
@@ -3890,10 +3897,33 @@ e-mail addresses from automated readers, so its draft has no recipient yet.
 | Bedford Township | Trudy L. Hershberger, Township Clerk | `thershberger@bedfordmi.org` | the township clerk's page |
 | Shelby Township | Stanley Grot, Township Clerk | `sgrot@shelbytwp.org` | the township clerk's office page |
 | Northville Township | Cynthia L. Jankowski, Township Clerk | `cjankowski@twp.northville.mi.us` | the township clerk's office page (the office's shared address is Clerk@twp.northville.mi.us) |
-| Ypsilanti Township | the Township Clerk's office | `clerk@ypsitownship.org` | the township clerk's office page; the clerk is named differently by two search listings, so the letter is addressed to the office |
+| Ypsilanti Township | the Township Clerk's office | `clerk@ypsitownship.org` | the township clerk's office page; the clerk is named differently by two search listings, so the letter is addressed to the office. Township Clerk Debbie Swanson (`dswanson@ypsitownship.org`) answered it herself |
 | Burton | Racheal Boggs, City Clerk | **none recorded** | NOT FOUND: the city's clerk page hides its e-mail addresses from automated readers, so the address must be read in a browser |
 | Lansing | Chris Swope, City Clerk | `city.clerk@lansingmi.gov` | the Clerk's Office address printed on the city's own published notices |
 | Wyoming | Kelli VandenBerg, City Clerk | `clerk_info@wyomingmi.gov` | a search listing of the city's clerk page; this project does not read the city's site |
+
+**Three letters went out on a wrong reason, and the check that would have caught it ran after
+they were sent.** Before the operator sent anything, each unit's site was meant to be re-read
+with exactly the client that would crawl it; that re-read happened at 15:09 UTC, after the
+send. It held for six (Rochester Hills, Norton Shores, West Bloomfield and Bedford refuse us in
+robots.txt; Burton serves a Cloudflare challenge; Lansing's page names nobody without its
+scripts) and Wyoming was not fetched, by ruling. It failed for three:
+
+- **Shelby and Northville** were recorded "Access Denied, no other client tried", and the letter
+  repeated it. Through the fleet's four-rung probe both serve the board page to the browser
+  string with Chrome client hints on the stdlib stack, the Kendall and McHenry shape. A site
+  that needs a browser-class client has not refused automation, and this project's rule allows
+  that client where the token is measurably refused, so these two need a reader, not a letter.
+- **Ypsilanti** answered with a Cloudflare challenge in the morning and served the scraper's own
+  token in the afternoon. The clerk replied at 15:13 UTC that she has forwarded the request to
+  the township's technology staff.
+
+Each of the three has a short correction in the operator's drafts, as a reply in the same
+thread, saying the site can be read after all and nothing needs changing; Ypsilanti's also
+thanks the clerk. They are unsent. The three gap records now say the page is readable and the
+reader is not yet written. **The order is the lesson: re-read the premise with the crawling
+client before a letter is drafted, not after it is sent.** A record that says "no other client
+was tried" is a record that has not yet been measured.
 
 **Two versions of one letter**, because the ask differs: the robots.txt units are asked for
 permission; the other units are asked whether the refusal is meant for a site like this one.
