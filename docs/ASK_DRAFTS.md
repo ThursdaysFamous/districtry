@@ -2590,11 +2590,23 @@ The Clerk's own named county address, so the name vouches for it.
 >   never be found — now reached through the sitemap the host's own robots.txt declares — and the
 >   roster spells its chair `Jack Seward Jr.`, whose last token is the suffix, which the name
 >   reader took for a surname and then reported as the county naming no district.
-> * **Palo Alto — ANSWERED, and held.** Auditor Carmen Moser, 2026-10-01, sent two PDFs, both
->   dated **2020**: a supervisor-district letter naming five people and a precinct letter. A
->   six-year-old letter names who held each district then, which is not who holds it now, so
->   nothing is published from it and she has been asked whether those five still serve. Like
->   Cass, **answered-and-pending**: the thirty-day clock does not apply.
+> * **Palo Alto — ANSWERED TWICE, and still held, on a DIFFERENT question from the one it
+>   started on.** Auditor Carmen Moser, 2026-10-01 at 15:38 UTC, sent two PDFs, both dated
+>   **2020**: a precinct letter and a supervisor-district letter. Asked whether a six-year-old
+>   letter still describes the board, she answered at 16:24 UTC, in full: `Yes. the 5
+>   supervisors are current. The documents are labeled 2020 due to redistricting, but both are
+>   current.` **THAT CLOSES THE CURRENCY QUESTION AND IS NOT THE THING THAT WAS BLOCKING.** The
+>   pairing itself is inside the PDF, and the Gmail connector available to these sessions lists
+>   an attachment and cannot fetch its bytes — so this project has still never read which
+>   supervisor holds which district here. The county's own host answers 202, an access control,
+>   so there is no page to read it off either. **NOTHING IS TAKEN FROM A FILENAME**, and the
+>   file is called `PaloAltoCoIA_SupDist_Letter_2020_SupNames.pdf`, which is exactly the
+>   temptation that rule exists for: an earlier version of this bullet said the letter named
+>   five people, which was read off its name rather than its contents. So the county is
+>   **answered-and-pending** alongside Cass, for the same mechanical reason and not for want of
+>   an answer: the five pairings have to reach this project as text, either typed out by the
+>   office or read out of the attachment by the operator, who can open it. The thirty-day clock
+>   does not apply.
 >
 > **ONE REPLY CAME IN ON A DIFFERENT ASK AND IS WORTH READING HERE.** Tama County Auditor Karen
 > Rohrs, 2026-10-01, named five supervisors with their districts 1 to 5 in plain text, answering
