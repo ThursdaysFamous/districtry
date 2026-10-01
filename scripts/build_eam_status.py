@@ -1571,12 +1571,20 @@ ANSWERS = {
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary",
             "school-district-secondary"),
-        # Kentucky's own thread has confirmed that all four of its court levels
-        # elect by district — Supreme Court, Court of Appeals, 57 circuits and 59
-        # district-court districts — and that every one of those districts is a
-        # set of whole counties written into statute, so the lines are buildable
-        # from statute text and the county boundaries this app already ships.
-        "courts-by-district": OPEN,
+        # ALL FOUR COURTS ANSWER, from statute text alone. Every Kentucky
+        # judge is elected from a district or circuit made of WHOLE COUNTIES
+        # named in the statute (KRS 21A.010, 22A.010(2), 23A.020, 24A.030), so
+        # the three tilings dissolve offline from the county fabric this app
+        # already ships — no publisher asked and no map read. Measured
+        # 2026-10-01, each one partitions all 120 counties exactly once. Three
+        # files answer four courts because KRS 22A.010(2) gives the Court of
+        # Appeals the Supreme Court's own districts. No judge is NAMED on any of
+        # the four cards, and that is the coverage gap ky-judges rather than a
+        # hole in this level: the standard asks whether the app answers the
+        # level, and the county tier is where it asks for people by name.
+        "courts-by-district": answers(
+            "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
+            "ky-district-court"),
         # KENTUCKY HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT, which is the
         # standard's "the state does not have the level" case. Measured
         # 2026-10-01: the only sub-county units the Census publishes for

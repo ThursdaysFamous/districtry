@@ -81,13 +81,9 @@
     ]
   },
   "10": {
-    "name": "Aisha Wahab",
-    "party": "Democratic",
-    "url": "https://sd10.senate.ca.gov/",
-    "districtOffice": [
-      "39510 Paseo Padre Parkway, Suite 280, Fremont, CA 94538",
-      "Phone: 510-794-3900"
-    ]
+    "vacant": true,
+    "asOf": "2026-10-01",
+    "sourceUrl": "https://www.senate.ca.gov/senators"
   },
   "11": {
     "name": "Scott Wiener",

@@ -1453,6 +1453,27 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/validate_officeholder_names.py
 
+      # A chamber roster built from a bulk export has no row for a seat nobody
+      # holds, and on 2026-10-01 that absence was reaching readers three ways at
+      # once: the card showed the district number and no explanation, each
+      # legislature page takes its seat count from the roster's own length and so
+      # published a chamber smaller than the state elects (California's Assembly
+      # as 79 of 80, Iowa's Senate as 49 of 50), and the floor guard spent slack
+      # on it that exists to catch a truncated download. No gate could see it —
+      # validate_index.py checks a roster has at LEAST what it expects, and the
+      # retention gate compares against the base, where a seat that was never
+      # there is not a field that stopped being published. This asks whether the
+      # roster carries a key for every district the chamber elects, reading each
+      # chamber's size from the builder that writes it, and holds a nameless
+      # record to saying WHICH kind of empty it is: the chamber's own page says
+      # the seat is vacant (with the page and the date), or our source merely
+      # named nobody. Stdlib only.
+      - name: Every legislative seat has a record
+        if: ${{ !cancelled() }}
+        run: |
+          python3 scripts/validate_chamber_rosters.py --selftest
+          python3 scripts/validate_chamber_rosters.py
+
       # A roster's count guard proves it still has twelve members; it proves
       # nothing about whether those twelve still carry an e-mail. On 2026-08-08
       # Cloudflare's e-mail obfuscation quietly emptied all seven of Brown
