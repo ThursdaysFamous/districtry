@@ -169,13 +169,17 @@ no letter is owed. Withdrawn is not unanswered.
 
 ### Sent later on 2026-10-01 — every reply, apology and correction went the same afternoon
 
-Read off the sent folder at 16:30, not off this file. **Thirty letters went between 15:18
-and 16:19**: eight replies to offices that had answered, six apologies, the three Michigan
-corrections, Hardin's follow-up, and then twelve of the letters that had been sitting in
-the drafted-and-waiting table — Bellevue, New York's local-government directory, Logan,
-Will, Whiteside, Grundy, Knox's continuation, Lafayette, Ozaukee, the League of Wisconsin
-Municipalities, Colona and Marion. Nothing owed to an office that wrote to us is still a
-draft.
+Read off the sent folder at 16:35, not off this file. **Seventy-three letters left the
+mailbox over the whole day**, counted from the rows of
+`/mnt/project-files/letters/sent-2026-10-01.md`, which lists every one with its office,
+its address and its send time to the second. Of those, 68 were a first or follow-up letter
+to an office, four were a second copy of a letter already sent, and one reached nobody —
+so 68 is the figure a record should carry. **Thirty-one went after 15:18**: eight replies
+to offices that had answered, six apologies, the three Michigan corrections, Hardin's
+follow-up, and thirteen of the letters that had been sitting in the drafted-and-waiting
+table — one of which, Grundy's, bounced. Nothing owed to an office that wrote to us is
+still a draft. That figure was written as thirty-two and then counted, which is the right
+order round only because the counting happened at all.
 
 **TWO COUNTS IN AN EARLIER VERSION OF THIS SECTION WERE WRONG AND BOTH WERE WRONG IN THE
 FLATTERING DIRECTION.** It said twenty letters, between 14:46 and 16:08, and that the nine
@@ -188,10 +192,16 @@ stated minute, and never a count of what was drafted plus a belief that it went.
 the same error this whole section opens by naming, made inside the section that names it.
 
 **What is waiting on the operator's hand is not a short list and should not be summarised
-as one.** Counted at 16:30: fifteen letters with an address — the Johnson, Perry, Pope,
-Scott and Ford county clerks in Illinois, the Cass reply, Henderson, Christian, Clark,
-Bureau, Jones County, Kentucky's Administrative Office of the Courts, and Grundy's
-re-addressed letter — plus three deliberately blank ones.
+as one.** Counted from the draft folder at 16:35: twelve letters with an address — the
+Ford, Johnson, Perry, Pope and Scott county clerks, the Henderson, Christian, Clark and
+Bureau county offices, Knox County GIS, the reply to Cass, and Grundy's re-addressed
+letter — plus three deliberately blank ones (Beloit, Oshkosh, Burton). **A FIRST VERSION
+OF THIS LINE SAID FIFTEEN AND WAS WRONG IN BOTH DIRECTIONS AT ONCE**: it put Jones County
+and Kentucky's court administrator among the waiting, and both had gone at 16:23 and
+16:24, while it left out Knox County GIS, which this file had just counted as sent and
+which is still a draft. **A LIST OF WHAT IS WAITING IS READ OFF THE DRAFT FOLDER AND A
+LIST OF WHAT WENT IS READ OFF THE SENT FOLDER**, within the same minute; assembling either
+from the other plus a belief is how all three of this section's wrong counts were made.
 
 **THE GRUNDY LETTER WAS SENT AND REACHED NOBODY.** The county's own GIS Data Request page
 publishes `gisdatarequest@grundycountyil.gov`, and the county's own mail server refused it
