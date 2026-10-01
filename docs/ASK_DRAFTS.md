@@ -4334,9 +4334,12 @@ difference between a gap we have measured and a gap we have merely noticed.
 
 ## Ask ky-judge-district-join — Kentucky Administrative Office of the Courts: which district was each judge elected from?
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to one desk. On send, change
-> `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `ky-judges` blocker in
-> `docs/DATA_LAYER_GUIDEBOOK.md` and regenerate `ky/data/app/coverage-gaps.json`.
+> **SENT 2026-10-01 16:24:34 UTC by the operator, from his own address, to the one desk
+> below. AWAITING A REPLY.** Verified in his sent folder rather than taken from a report:
+> one message, subject as drafted, salutation `Dear Mr. Sturtevant`, so the sender's own
+> name and address went out filled rather than as the placeholders this public file keeps.
+> The thirty-day silence clock starts 2026-10-01; one follow-up only, and the mailbox
+> thread owns both. Nothing was re-asked and no second copy was sent.
 >
 > **This ask exists because the geometry arrived without the people.** Kentucky's four court
 > maps shipped on 2026-10-01, dissolved offline from statute — no publisher was asked for any

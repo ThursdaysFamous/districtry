@@ -237,6 +237,14 @@ jobs:
             # unpublish il/data/app, wi/data/app and every other instance's
             # runtime files while every guard below still passed.
             data/search-performance.json
+            # Any dot-prefixed .mjs, which in this tree is only ever an
+            # ad-hoc browser harness (.gitignore's reason block names the
+            # convention). Those ignore patterns protect only names that follow
+            # them, and on 2026-10-01 `.courtprobe.tmp.mjs` followed neither,
+            # rode a merge into main and was served at the site root. Matched by
+            # BASENAME on purpose — an rsync pattern with no slash matches at any
+            # depth, and no legitimate file here is a dot-prefixed .mjs.
+            '.*.mjs'
             node_modules package.json package-lock.json
             engine metros.json metro-worksheet.json point-transmission.json
             layer-sources.json layer-load.json tiger-mirror.json portal-mirror.json
