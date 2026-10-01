@@ -471,6 +471,68 @@ then deleted as the duplicate described above, so 31 and 27 is arithmetic and is
 arithmetic — the mailbox was not re-read after the deletion, and no time is attached to those
 two numbers.
 
+### THE AFTERNOON'S SENDS, AND WHAT A FIRST LETTER DOES NOT EARN
+
+Between 18:02 and 18:15 UTC on 2026-10-01 the operator sent fifteen letters: five replies this
+thread had drafted to answers that arrived during the afternoon (Tama, Hardin, Calumet, Ozaukee
+and the one-line question to the New York Department of State), follow-ups in the Palo Alto and
+Tama threads, and thirteen first approaches — Shawano in Wisconsin; Marion, Macoupin, Lawrence,
+Jersey, Fayette, Cumberland, Bond, Ford and Scott in Illinois; the Grundy County GIS officer on
+the redrafted letter; and the OU Center for Spatial Analysis.
+
+**A FIRST RECORD OF THAT BATCH SAID THEIR "THIRTY-DAY CLOCKS START TODAY", AND THAT IS WRONG IN
+THE DIRECTION THAT WOULD HAVE EARNED CREDIT THIS PROJECT HAD NOT EARNED.** A first letter starts
+no clock that counts for anything. Silence substitutes for an answer only after a follow-up **and
+then** thirty days, and only once a person records the outcome as unresponsive. So a first
+approach is `pending` and nothing more: it records that we asked, never that we were refused.
+Keeping a follow-up due date is useful; calling it "the clock" invites a later reader to take
+thirty days of quiet as a measured no.
+
+**The Oklahoma letter went fifteen minutes after it was drafted.** That is the argument against
+drafting with a blank `To` field and a note explaining why: there was no window in which anybody
+would have gone looking for the address. Its recipient was verified first — see below.
+
+### A RECIPIENT CAN BE UNREACHABLE AT THE HOST A RECORD NAMES AND PUBLISHED SOMEWHERE ELSE
+
+`ok-csa-precinct-terms` recorded that `csa.ou.edu` does not resolve from this project's network
+and concluded that the centre's address "must be read off the centre's own contact page in a
+browser". The first half is still true and the conclusion was wrong: **the centre's site is not
+at that host any more.** It is at `www.ou.edu/ags/csa`, which answers normally, and whose robots
+policy permits this project (93 bytes, one binding group, no rule matching any path read). Nobody
+needed a browser; the host had moved.
+
+Read off the centre's own Faculty & Staff page: Chengbin Deng, PhD, **Director**
+(`cdeng@ou.edu`); Todd Fagin, PhD, **Executive Associate Director** (`tfagin@ou.edu`); Zakary
+Gipson, Senior GIS Analyst (`zakarygipson@ou.edu`), also named on the centre's own GIS Data
+Warehouse page. The letter went to the Director with the Executive Associate Director copied.
+**This project's preference for an office mailbox over a person's desk could not be honoured
+here, and that is a measurement**: the centre's Contact Us page offers a web form and no address
+at all, and the only general address it publishes anywhere is a footer maintenance byline on a
+domain with no address record, so whether mail to it is delivered could not be tested. Gipson
+was considered and not used — the warehouse page names him for help navigating that site, which
+is a different question from what may be done with the files.
+
+**A SEARCH ENGINE'S SUMMARY IS NOT A SOURCE, AND IT ANSWERED THIS ONE CONFIDENTLY.** A first pass
+produced all three names, all three titles, a street address and a telephone number out of a
+search result's own summary text. Every one was re-read on the centre's own pages before any of
+it was used, and the telephone number was not used at all.
+
+### TWO BOUNCES IN ONE DAY, BOTH ON AN ADDRESS SOMEBODY HAD PUBLISHED
+
+`gisdatarequest@grundycountyil.gov`, printed on Grundy County's own GIS Data Request page, was
+refused as undeliverable at 16:17. `kristy.opperman@co.waupaca.wi.us` was refused at 18:09 with
+`550 permanent failure ... (kristy.opperman@co.waupaca.wi.us:blocked)`.
+
+**"BLOCKED" IS NOT "NO SUCH USER", AND READING IT AS A STALE ADDRESS WOULD BE A GUESS.** The
+mailbox may well exist and the county's mail server may be refusing this sender. Waupaca was
+redrafted to the Chief Deputy County Clerk, whose address the county's own department page
+publishes, opening by saying the earlier copy was refused — and if that bounces the same way the
+cause is the county's filtering rather than the address, and a third address will not fix it.
+
+**A LETTER THAT BOUNCED IS NOT A LETTER THAT WAS SENT.** Neither county is awaiting a reply and
+neither has a follow-up due. Recording either as silence would be wrong in a way nothing else
+would later catch.
+
 ---
 
 ## Ask 1 — Iowa county officers — **WITHDRAWN 2026-09-03, never sent**
