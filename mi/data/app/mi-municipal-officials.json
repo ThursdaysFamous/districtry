@@ -1,0 +1,3091 @@
+{
+ "2601380": {
+  "name": "Allen Park",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 6,
+  "members": [
+   {
+    "name": "Nancy Knick",
+    "role": "Mayor Pro Tem",
+    "email": "nknick@cityofallenpark.org"
+   },
+   {
+    "name": "Matthew E. Valerius",
+    "role": "Council Member",
+    "email": "mvalerius@cityofallenpark.org"
+   },
+   {
+    "name": "Gerald Barr Jr.",
+    "role": "Council Member",
+    "email": "gbarr@cityofallenpark.org"
+   },
+   {
+    "name": "Gary Schlack",
+    "role": "Council Member",
+    "email": "gschlack@cityofallenpark.org"
+   },
+   {
+    "name": "Dan Loyd",
+    "role": "Council Member",
+    "email": "dloyd@cityofallenpark.org"
+   },
+   {
+    "name": "Ed Wurtzbacher",
+    "role": "Council Member",
+    "email": "ewurtzbacher@cityofallenpark.org"
+   }
+  ],
+  "sourceUrl": "https://www.cityofallenpark.org/government/elected_officials.php",
+  "readAt": "2026-10-01"
+ },
+ "2603000": {
+  "name": "Ann Arbor",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 11,
+  "members": [
+   {
+    "name": "Christopher Taylor",
+    "role": "Mayor",
+    "phone": "734-794-6161",
+    "email": "ctaylor@a2gov.org"
+   },
+   {
+    "name": "Lisa Disch",
+    "role": "Council Member",
+    "seat": "Ward 1"
+   },
+   {
+    "name": "Cynthia Harrison",
+    "role": "Council Member",
+    "seat": "Ward 1",
+    "phone": "734-386-1221",
+    "email": "charrison@a2gov.org"
+   },
+   {
+    "name": "Jon Mallek",
+    "role": "Council Member",
+    "seat": "Ward 2",
+    "phone": "734-418-8143",
+    "email": "jmallek@a2gov.org"
+   },
+   {
+    "name": "Chris Watson",
+    "role": "Council Member",
+    "seat": "Ward 2",
+    "phone": "734-436-1504",
+    "email": "cwatson@a2gov.org"
+   },
+   {
+    "name": "Travis Radina",
+    "role": "Council Member",
+    "seat": "Ward 3",
+    "phone": "734-219-6551",
+    "email": "tradina@a2gov.org"
+   },
+   {
+    "name": "Ayesha Ghazi Edwin",
+    "role": "Council Member",
+    "seat": "Ward 3"
+   },
+   {
+    "name": "Jen Eyer",
+    "role": "Council Member",
+    "seat": "Ward 4"
+   },
+   {
+    "name": "Dharma Akmon",
+    "role": "Council Member",
+    "seat": "Ward 4"
+   },
+   {
+    "name": "Erica Briggs",
+    "role": "Council Member",
+    "seat": "Ward 5",
+    "phone": "734-355-3931",
+    "email": "ebriggs@a2gov.org"
+   },
+   {
+    "name": "Jenn Cornell",
+    "role": "Council Member",
+    "seat": "Ward 5",
+    "phone": "734-765-0174",
+    "email": "jcornell@a2gov.org"
+   }
+  ],
+  "sourceUrl": "https://www.a2gov.org/city-council/",
+  "readAt": "2026-10-01"
+ },
+ "2604521520": {
+  "name": "Delta",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Fonda J. Brewer",
+    "role": "Supervisor",
+    "email": "fbrewer@deltami.gov"
+   },
+   {
+    "name": "Mary R. Clark",
+    "role": "Clerk",
+    "email": "mclark@deltami.gov"
+   },
+   {
+    "name": "Dennis R. Fedewa",
+    "role": "Treasurer",
+    "email": "dfedewa@deltami.gov"
+   },
+   {
+    "name": "Elizabeth 'Beth' S. Bowen",
+    "role": "Trustee",
+    "email": "bbowen@deltami.gov"
+   },
+   {
+    "name": "Andrea M. Cascarilla",
+    "role": "Trustee",
+    "email": "acascarilla@deltami.gov"
+   },
+   {
+    "name": "Karen J. Mojica",
+    "role": "Trustee",
+    "email": "kmojica@deltami.gov"
+   },
+   {
+    "name": "Joshua I. Lyman",
+    "role": "Trustee",
+    "email": "jlyman@deltami.gov"
+   }
+  ],
+  "sourceUrl": "https://www.deltami.gov/government/township_board/index.php",
+  "readAt": "2026-10-01"
+ },
+ "2604929020": {
+  "name": "Flint",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Karyn Miller",
+    "role": "Supervisor",
+    "email": "kmiller@flinttownship.org"
+   },
+   {
+    "name": "Manya Triplett",
+    "role": "Clerk",
+    "email": "mtriplett@flinttownship.org"
+   },
+   {
+    "name": "Tom Klee",
+    "role": "Treasurer",
+    "email": "tklee@flinttownship.org"
+   },
+   {
+    "name": "Tenesia Todd-Lloyd",
+    "role": "Trustee",
+    "email": "tamadou@flinttownship.org"
+   },
+   {
+    "name": "Gene Leverette Sr.",
+    "role": "Trustee",
+    "email": "gleverette@flinttownship.org"
+   },
+   {
+    "name": "Jenna McIntire",
+    "role": "Trustee"
+   },
+   {
+    "name": "Barb Vert",
+    "role": "Trustee",
+    "email": "bvert@flinttownship.org"
+   }
+  ],
+  "sourceUrl": "https://www.flinttownship.org/government/board_of_trustees/index.php",
+  "readAt": "2026-10-01"
+ },
+ "2604933300": {
+  "name": "Grand Blanc",
+  "kind": "township",
+  "body": "Township Board",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Scott Bennett",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Dave Robertson",
+    "role": "Clerk"
+   },
+   {
+    "name": "Mike Yancho Sr.",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Joel Feick",
+    "role": "Trustee"
+   },
+   {
+    "name": "Sarah Hugo",
+    "role": "Trustee"
+   },
+   {
+    "name": "Paul White",
+    "role": "Trustee"
+   },
+   {
+    "name": "Michelle Ryder",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.grandblanctwpmi.gov/306/Township-Board",
+  "readAt": "2026-10-01"
+ },
+ "2606020": {
+  "name": "Bay City",
+  "kind": "city",
+  "body": "City Commission",
+  "seats": 10,
+  "members": [
+   {
+    "name": "Christopher Girard",
+    "role": "Mayor",
+    "phone": "989-402-5277",
+    "email": "cgirard@baycitymi.gov"
+   },
+   {
+    "name": "Laura Kubit",
+    "role": "Commissioner",
+    "seat": "Ward 1",
+    "phone": "989-318-4004",
+    "email": "lkubit@baycitymi.gov"
+   },
+   {
+    "name": "Craig Kokaly",
+    "role": "Commissioner",
+    "seat": "Ward 2",
+    "phone": "989-671-7412",
+    "email": "ckokaly@baycitymi.gov"
+   },
+   {
+    "name": "Katie Doyle",
+    "role": "Commissioner",
+    "seat": "Ward 3",
+    "phone": "989-316-9852",
+    "email": "kdoyle@baycitymi.gov"
+   },
+   {
+    "name": "Benjamin B. Tenney",
+    "role": "Commissioner",
+    "seat": "Ward 4",
+    "phone": "989-882-7708",
+    "email": "btenney@baycitymi.gov"
+   },
+   {
+    "name": "Mark T. Zanotti",
+    "role": "Commissioner",
+    "seat": "Ward 5",
+    "phone": "989-525-6209",
+    "email": "mzanotti@baycitymi.gov"
+   },
+   {
+    "name": "Alexander Dewitt",
+    "role": "Commissioner",
+    "seat": "Ward 6",
+    "phone": "989-778-4460",
+    "email": "adewitt@baycitymi.gov"
+   },
+   {
+    "name": "Christopher Runberg",
+    "role": "Commissioner",
+    "seat": "Ward 7",
+    "phone": "989-318-3850",
+    "email": "crunberg@baycitymi.gov"
+   },
+   {
+    "name": "Joseph Charlebois",
+    "role": "Commissioner",
+    "seat": "Ward 8",
+    "phone": "989-529-6921",
+    "email": "jcharlebois@baycitymi.gov"
+   },
+   {
+    "name": "Cordal D Morris",
+    "role": "Commissioner",
+    "seat": "Ward 9",
+    "phone": "989-525-3138",
+    "email": "cmorris@baycitymi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.baycitymi.gov/377/Contact-the-Commissioners",
+  "readAt": "2026-10-01"
+ },
+ "2606521420": {
+  "name": "Delhi",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Eddie Montemayor",
+    "role": "Supervisor",
+    "email": "eddie.montemayor@delhitownshipmi.gov"
+   },
+   {
+    "name": "Evan Hope",
+    "role": "Clerk",
+    "email": "evan.hope@delhitownshipmi.gov"
+   },
+   {
+    "name": "Tom Lenard",
+    "role": "Treasurer",
+    "email": "tom.lenard@delhitownshipmi.gov"
+   },
+   {
+    "name": "Fred Ford",
+    "role": "Trustee",
+    "email": "fred.ford@delhitownshipmi.gov"
+   },
+   {
+    "name": "Wendi King",
+    "role": "Trustee",
+    "email": "wendi.king@delhitownshipmi.gov"
+   },
+   {
+    "name": "Matt Lincoln",
+    "role": "Trustee",
+    "email": "matt.lincoln@delhitownshipmi.gov"
+   },
+   {
+    "name": "DiAnne Warfield",
+    "role": "Trustee",
+    "email": "dianne.warfield@delhitownshipmi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.delhitownshipmi.gov/233/Board-of-Trustees",
+  "readAt": "2026-10-01"
+ },
+ "2606553140": {
+  "name": "Meridian",
+  "kind": "township",
+  "body": "Township Board",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Scott Hendrickson",
+    "role": "Supervisor",
+    "email": "hendrickson@meridian.mi.us"
+   },
+   {
+    "name": "Angela Demas",
+    "role": "Clerk",
+    "phone": "517-853-4304",
+    "email": "demas@meridian.mi.us"
+   },
+   {
+    "name": "Linda Burghardt",
+    "role": "Treasurer",
+    "phone": "517-853-4144",
+    "email": "burghardt@meridian.mi.us"
+   },
+   {
+    "name": "Nickolas Lentz",
+    "role": "Trustee",
+    "email": "lentz@meridian.mi.us"
+   },
+   {
+    "name": "Kathy Ann Sundland",
+    "role": "Trustee",
+    "email": "sundland@meridian.mi.us"
+   },
+   {
+    "name": "Peter Trezise",
+    "role": "Trustee",
+    "email": "trezise@meridian.mi.us"
+   },
+   {
+    "name": "Marna Wilson",
+    "role": "Trustee",
+    "email": "wilson@meridian.mi.us"
+   }
+  ],
+  "sourceUrl": "https://www.meridian.mi.us/your-government/boards-commissions/township-board/",
+  "office": {
+   "phone": "517-853-4250"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2607508760": {
+  "name": "Blackman",
+  "kind": "township",
+  "body": "Township Board",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Pete Jancek",
+    "role": "Supervisor"
+   },
+   {
+    "name": "David Elwell",
+    "role": "Clerk"
+   },
+   {
+    "name": "Philip Preston",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Mike Ambs",
+    "role": "Trustee"
+   },
+   {
+    "name": "Michelle Boulter",
+    "role": "Trustee"
+   },
+   {
+    "name": "Scott Pack",
+    "role": "Trustee"
+   },
+   {
+    "name": "Mike Thomas",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://blackmantwp.com/elected-officials/",
+  "readAt": "2026-10-01"
+ },
+ "2608112240": {
+  "name": "Byron",
+  "kind": "township",
+  "body": "Township Board",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Donald Tillema",
+    "role": "Supervisor",
+    "phone": "616-878-1222",
+    "email": "amos@byrontownship.org"
+   },
+   {
+    "name": "Peggy Sattler",
+    "role": "Clerk",
+    "phone": "616-878-6011",
+    "email": "peggy@byrontownship.org"
+   },
+   {
+    "name": "Becky Beld",
+    "role": "Treasurer",
+    "phone": "616-878-3196",
+    "email": "finance@byrontownship.org"
+   },
+   {
+    "name": "Tom Hooker",
+    "role": "Trustee"
+   },
+   {
+    "name": "Jay DeKleine",
+    "role": "Trustee"
+   },
+   {
+    "name": "Marty Tilma",
+    "role": "Trustee"
+   },
+   {
+    "name": "Scott Tubergen",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.byrontownship.org/government/township_board/index.php",
+  "office": {
+   "phone": "616-878-9066"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2608131240": {
+  "name": "Gaines",
+  "kind": "township",
+  "body": "Township Board",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Bob Terpstra",
+    "role": "Supervisor",
+    "phone": "616-698-6640 ext. 137",
+    "email": "bob.terpstra@gainestownship.org"
+   },
+   {
+    "name": "Michael Brew",
+    "role": "Clerk",
+    "phone": "616-698-6640 ext. 130",
+    "email": "michael.brew@gainestownship.org"
+   },
+   {
+    "name": "Laurie Lemke",
+    "role": "Treasurer",
+    "phone": "616-698-6640 ext. 114",
+    "email": "laurie.lemke@gainestownship.org"
+   },
+   {
+    "name": "Kathy VanderStel",
+    "role": "Trustee",
+    "email": "kathy.vanderstel@hotmail.com"
+   },
+   {
+    "name": "Dan Fryling",
+    "role": "Trustee"
+   },
+   {
+    "name": "Tim Haagsma",
+    "role": "Trustee",
+    "email": "tim.haagsma@gainestownship.org"
+   },
+   {
+    "name": "Robert DeWard",
+    "role": "Trustee",
+    "email": "robert.deward@gainestownship.org"
+   }
+  ],
+  "sourceUrl": "https://www.gainestownship.org/trustees.php",
+  "office": {
+   "email": "info@gainestownship.org",
+   "phone": "616-698-6640"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2608164660": {
+  "name": "Plainfield",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Tom Coleman",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Steven McKellar",
+    "role": "Clerk"
+   },
+   {
+    "name": "Jack Hagedorn",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Kathey Batey",
+    "role": "Trustee"
+   },
+   {
+    "name": "Susan Morrow",
+    "role": "Trustee"
+   },
+   {
+    "name": "Frank Pfaff",
+    "role": "Trustee"
+   },
+   {
+    "name": "Bob Reminga",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.plainfieldmi.org/186/Board-of-Trustees",
+  "office": {
+   "phone": "616-364-8466"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2609915340": {
+  "name": "Chesterfield",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Bradley A. Kersten",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Cindy Berry",
+    "role": "Clerk"
+   },
+   {
+    "name": "Kathy Elliott",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Hank Anderson",
+    "role": "Trustee"
+   },
+   {
+    "name": "Pamela Hornberger",
+    "role": "Trustee"
+   },
+   {
+    "name": "David Joseph",
+    "role": "Trustee"
+   },
+   {
+    "name": "Kathy D. Vosburg",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.chesterfieldtwp.org/242/Elected-Officials",
+  "readAt": "2026-10-01"
+ },
+ "2609916520": {
+  "name": "Clinton",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Paul Gieleghem",
+    "role": "Supervisor",
+    "email": "p.gieleghem@clintontownship-mi.gov"
+   },
+   {
+    "name": "Kim Meltzer",
+    "role": "Clerk",
+    "email": "k.meltzer@clintontownship-mi.gov"
+   },
+   {
+    "name": "Mike Aiello",
+    "role": "Treasurer",
+    "email": "m.aiello@clintontownship-mi.gov"
+   },
+   {
+    "name": "Julie Matuzak",
+    "role": "Trustee",
+    "email": "j.matuzak@clintontownship-mi.gov"
+   },
+   {
+    "name": "Dan Kress",
+    "role": "Trustee",
+    "email": "d.kress@clintontownship-mi.gov"
+   },
+   {
+    "name": "Shannon King",
+    "role": "Trustee",
+    "email": "s.king@clintontownship-mi.gov"
+   },
+   {
+    "name": "Bruce Wade",
+    "role": "Trustee",
+    "email": "b.wade@clintontownship-mi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.clintontownship.com/318/Board-of-Trustees",
+  "readAt": "2026-10-01"
+ },
+ "2609950480": {
+  "name": "Macomb",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Frank J. Viviano",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Kristi L. Pozzi",
+    "role": "Clerk"
+   },
+   {
+    "name": "Leon Drolet",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Frank A. Cusumano Jr.",
+    "role": "Trustee"
+   },
+   {
+    "name": "Charles Oliver",
+    "role": "Trustee"
+   },
+   {
+    "name": "Peter J. Lucido III",
+    "role": "Trustee"
+   },
+   {
+    "name": "Ronald P. Papa Jr.",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.macomb-mi.gov/148/Board-of-Trustees",
+  "readAt": "2026-10-01"
+ },
+ "2609984120": {
+  "name": "Washington",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Sebastian 'Sam' Previti",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Audrey Brown",
+    "role": "Clerk"
+   },
+   {
+    "name": "Mike Nicley",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Dennis Stevenson",
+    "role": "Trustee"
+   },
+   {
+    "name": "Charles Reinhold",
+    "role": "Trustee"
+   },
+   {
+    "name": "Michele Milam",
+    "role": "Trustee"
+   },
+   {
+    "name": "John Chaplin",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.washingtontownship.org/doing_business/trustees.php",
+  "readAt": "2026-10-01"
+ },
+ "2612509110": {
+  "name": "Bloomfield",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Mike McCready",
+    "role": "Supervisor",
+    "email": "mmccready@bloomfieldtwpmi.gov"
+   },
+   {
+    "name": "Martin Brook",
+    "role": "Clerk",
+    "email": "mbrook@bloomfieldtwpmi.gov"
+   },
+   {
+    "name": "Michael Schostak",
+    "role": "Treasurer",
+    "email": "mschostak@bloomfieldtwpmi.gov"
+   },
+   {
+    "name": "Neal J. Barnett",
+    "role": "Trustee",
+    "email": "nbarnett@bloomfieldtwpmi.gov"
+   },
+   {
+    "name": "Valerie Murray",
+    "role": "Trustee",
+    "email": "vmurray@bloomfieldtwpmi.gov"
+   },
+   {
+    "name": "Chris Kolinski",
+    "role": "Trustee",
+    "email": "ckolinski@bloomfieldtwpmi.gov"
+   },
+   {
+    "name": "Mark Antakli",
+    "role": "Trustee",
+    "email": "mantakli@bloomfieldtwpmi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.bloomfieldtwp.org/government/board-of-trustees/",
+  "readAt": "2026-10-01"
+ },
+ "2612517640": {
+  "name": "Commerce",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Larry Gray",
+    "role": "Supervisor",
+    "email": "lgray@commercetwp.com"
+   },
+   {
+    "name": "Melissa Creech",
+    "role": "Clerk",
+    "email": "mcreech@commercetwp.com"
+   },
+   {
+    "name": "Katelyn Massey",
+    "role": "Treasurer",
+    "email": "kmassey@commercetwp.com"
+   },
+   {
+    "name": "Robert Berkheiser",
+    "role": "Trustee",
+    "email": "rberkheiser@commercetwp.com"
+   },
+   {
+    "name": "Rob Long",
+    "role": "Trustee",
+    "email": "rlong@commercetwp.com"
+   },
+   {
+    "name": "Rick Sovel",
+    "role": "Trustee",
+    "email": "rsovel@commercetwp.com"
+   },
+   {
+    "name": "George Weber",
+    "role": "Trustee",
+    "email": "gweber@commercetwp.com"
+   }
+  ],
+  "sourceUrl": "https://www.commercetwp.com/government/board-of-trustees/",
+  "readAt": "2026-10-01"
+ },
+ "2612540400": {
+  "name": "Independence",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Chuck Phyle II",
+    "role": "Supervisor",
+    "phone": "248-625-5111 ext. 213",
+    "email": "supervisor@indtwp.com"
+   },
+   {
+    "name": "Cari Neubeck",
+    "role": "Clerk",
+    "email": "cneubeck@indtwp.com"
+   },
+   {
+    "name": "Paul A Brown",
+    "role": "Treasurer",
+    "phone": "248-625-5115",
+    "email": "pbrown@indtwp.com"
+   },
+   {
+    "name": "David Hayward",
+    "role": "Trustee",
+    "phone": "248-623-0123",
+    "email": "dhayward@indtwp.com"
+   },
+   {
+    "name": "Sam Moraco",
+    "role": "Trustee",
+    "phone": "248-343-2963",
+    "email": "smoraco@indtwp.com"
+   },
+   {
+    "name": "Theresa 'Terri' A. Nallamothu",
+    "role": "Trustee",
+    "phone": "248-892-0210",
+    "email": "tnallamothu@indtwp.com"
+   },
+   {
+    "name": "Jim Tedder",
+    "role": "Trustee",
+    "phone": "248-343-5941",
+    "email": "jtedder@indtwp.com"
+   }
+  ],
+  "sourceUrl": "https://www.indtwp.com/government/board_of_trustees/index.php",
+  "office": {
+   "email": "board@indtwp.com"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2612561100": {
+  "name": "Orion",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Chris Barnett",
+    "role": "Supervisor",
+    "email": "cbarnett@oriontownship.org"
+   },
+   {
+    "name": "Julia Dalrymple",
+    "role": "Clerk",
+    "email": "jdalrymple@oriontownship.org"
+   },
+   {
+    "name": "Matt Pfeiffer",
+    "role": "Treasurer",
+    "email": "mpfeiffer@oriontownship.org"
+   },
+   {
+    "name": "Mike Flood",
+    "role": "Trustee",
+    "email": "mflood@oriontownship.org"
+   },
+   {
+    "name": "Jack Lovat",
+    "role": "Trustee",
+    "email": "jlovat@oriontownship.org"
+   },
+   {
+    "name": "Carrie Hilgendorf",
+    "role": "Trustee",
+    "email": "chilgendorf@oriontownship.org"
+   },
+   {
+    "name": "John Carson",
+    "role": "Trustee",
+    "email": "jcarson@oriontownship.org"
+   }
+  ],
+  "sourceUrl": "https://www.oriontownship.org/government/board_of_trustees/index.php",
+  "readAt": "2026-10-01"
+ },
+ "2612584240": {
+  "name": "Waterford",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Anthony Bartolotta",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Gary Allison",
+    "role": "Clerk",
+    "email": "gallison@waterfordmi.gov"
+   },
+   {
+    "name": "Steven Thomas",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Jeff Gilbert",
+    "role": "Trustee"
+   },
+   {
+    "name": "Sam Harris",
+    "role": "Trustee"
+   },
+   {
+    "name": "Marie E. Hauswirth",
+    "role": "Trustee"
+   },
+   {
+    "name": "Gary Wall",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://waterfordmi.gov/168/Board-of-Trustees",
+  "office": {
+   "email": "trustees@waterfordmi.gov"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2612586860": {
+  "name": "White Lake",
+  "kind": "township",
+  "body": "Township Board",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Rik Kowall",
+    "role": "Supervisor",
+    "phone": "248-698-3300 ext. 6"
+   },
+   {
+    "name": "Anthony L. Noble",
+    "role": "Clerk",
+    "phone": "248-459-3703"
+   },
+   {
+    "name": "Mike Roman",
+    "role": "Treasurer",
+    "phone": "248-698-3300 ext. 4"
+   },
+   {
+    "name": "Scott Ruggles",
+    "role": "Trustee",
+    "phone": "248-698-3300 ext. 140"
+   },
+   {
+    "name": "Steve Anderson",
+    "role": "Trustee",
+    "phone": "248-698-3300 ext. 143"
+   },
+   {
+    "name": "Andrea Voorheis",
+    "role": "Trustee",
+    "phone": "248-698-3300 ext. 142"
+   },
+   {
+    "name": "Liz Fessler Smith",
+    "role": "Trustee",
+    "phone": "248-698-3300 ext. 141"
+   }
+  ],
+  "sourceUrl": "https://www.whitelaketwp.com/bc-tb",
+  "readAt": "2026-10-01"
+ },
+ "2613901360": {
+  "name": "Allendale",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Adam Elenbaas",
+    "role": "Supervisor",
+    "phone": "616-892-3110",
+    "email": "supervisor@allendalemi.gov"
+   },
+   {
+    "name": "Jody L. Hansen",
+    "role": "Clerk",
+    "phone": "616-892-3111",
+    "email": "clerk@allendalemi.gov"
+   },
+   {
+    "name": "David Vander Wall",
+    "role": "Treasurer",
+    "phone": "616-892-3112",
+    "email": "dvanderwall@allendalemi.gov"
+   },
+   {
+    "name": "Ken Smit",
+    "role": "Trustee",
+    "email": "ksmit@allendalemi.gov"
+   },
+   {
+    "name": "Mikal MacDonald",
+    "role": "Trustee",
+    "email": "mmacdonald@allendalemi.gov"
+   },
+   {
+    "name": "Kris Schuitema",
+    "role": "Trustee",
+    "email": "kschuitema@allendalemi.gov"
+   },
+   {
+    "name": "Bruce Zeinstra",
+    "role": "Trustee",
+    "email": "bzeinstra@allendalemi.gov"
+   }
+  ],
+  "sourceUrl": "https://allendalemi.gov/board-of-trustees/",
+  "readAt": "2026-10-01"
+ },
+ "2613931880": {
+  "name": "Georgetown",
+  "kind": "township",
+  "body": "Township Board",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Jim Wierenga",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Kelly Kuiper",
+    "role": "Clerk"
+   },
+   {
+    "name": "Gene DeWitt",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Amy Grasman",
+    "role": "Trustee"
+   },
+   {
+    "name": "John Schwalm",
+    "role": "Trustee"
+   },
+   {
+    "name": "Kevin Kelly",
+    "role": "Trustee"
+   },
+   {
+    "name": "Gary Veldink",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.gtwp.com/179/Township-Board",
+  "office": {
+   "email": "board@georgetown-mi.gov"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2613938660": {
+  "name": "Holland",
+  "kind": "township",
+  "body": "Township Board",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Russell TeSlaa",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Michael Dalman",
+    "role": "Clerk"
+   },
+   {
+    "name": "Vince Bush",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Elliott Church",
+    "role": "Trustee"
+   },
+   {
+    "name": "Dave DeYoung",
+    "role": "Trustee"
+   },
+   {
+    "name": "Gretchen Molotky",
+    "role": "Trustee"
+   },
+   {
+    "name": "Terry Nienhuis",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://hct.holland.mi.us/elected-a-appointed/",
+  "readAt": "2026-10-01"
+ },
+ "2614570540": {
+  "name": "Saginaw",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Gary Fahndrich",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Lisa Y. Ingram",
+    "role": "Clerk"
+   },
+   {
+    "name": "James T. Wickman, III",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Amaya C. Bradley",
+    "role": "Trustee"
+   },
+   {
+    "name": "Lori L. Gorney",
+    "role": "Trustee"
+   },
+   {
+    "name": "Travis J. Hare",
+    "role": "Trustee"
+   },
+   {
+    "name": "Peter C. Ryan",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.saginawtownship.org/departments/board_of_trustees.php",
+  "office": {
+   "phone": "989-791-9800"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2616164560": {
+  "name": "Pittsfield",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Trish Reilly",
+    "role": "Supervisor",
+    "email": "reillyt@pittsfield-mi.gov"
+   },
+   {
+    "name": "Michelle L. Anzaldi",
+    "role": "Clerk"
+   },
+   {
+    "name": "Chris Ekpiken",
+    "role": "Treasurer"
+   },
+   {
+    "name": "David Brabec",
+    "role": "Trustee",
+    "email": "brabecd@pittsfield-mi.gov"
+   },
+   {
+    "name": "Yameen Jaffer",
+    "role": "Trustee",
+    "email": "jaffery@pittsfield-mi.gov"
+   },
+   {
+    "name": "Cami Khorrami",
+    "role": "Trustee",
+    "email": "khorramic@pittsfield-mi.gov"
+   },
+   {
+    "name": "Andrea Urda-Thompson",
+    "role": "Trustee",
+    "email": "urda-thompsona@pittsfield-mi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.pittsfield-mi.gov/118/Board-of-Trustees",
+  "readAt": "2026-10-01"
+ },
+ "2616311220": {
+  "name": "Brownstown",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Sherry Berecz",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Maureen Brinker",
+    "role": "Clerk"
+   },
+   {
+    "name": "Michael Eberth",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Steven R. Allen",
+    "role": "Trustee"
+   },
+   {
+    "name": "David Chapman",
+    "role": "Trustee"
+   },
+   {
+    "name": "Roger Jones",
+    "role": "Trustee"
+   },
+   {
+    "name": "Patrick Killian",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "http://brownstown-mi.org/government/township_departments/board_of_trustees/index.php",
+  "readAt": "2026-10-01"
+ },
+ "2616313120": {
+  "name": "Canton",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Anne Marie Graham-Hudak",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Michael A. Siegrist",
+    "role": "Clerk"
+   },
+   {
+    "name": "Dian Slavens",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Kate Borninski",
+    "role": "Trustee"
+   },
+   {
+    "name": "Sommer N. Foster",
+    "role": "Trustee"
+   },
+   {
+    "name": "Ammara Ansari",
+    "role": "Trustee"
+   },
+   {
+    "name": "Tania Ganguly",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.cantonmi.gov/206",
+  "readAt": "2026-10-01"
+ },
+ "2616365080": {
+  "name": "Plymouth",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Chuck Curmi",
+    "role": "Supervisor",
+    "email": "ccurmi@plymouthtownshipmi.gov"
+   },
+   {
+    "name": "Kim Gaedeke",
+    "role": "Clerk",
+    "email": "kgaedeke@plymouthtownshipmi.gov"
+   },
+   {
+    "name": "Bob Doroshewitz",
+    "role": "Treasurer",
+    "email": "bdoroshewitz@plymouthtownshipmi.gov"
+   },
+   {
+    "name": "Bill Ickes",
+    "role": "Trustee",
+    "email": "bickes@plymouthtownshipmi.gov"
+   },
+   {
+    "name": "John Stewart",
+    "role": "Trustee",
+    "email": "jstewart@plymouthtownshipmi.gov"
+   },
+   {
+    "name": "Joe Reilly",
+    "role": "Trustee",
+    "email": "jreilly@plymouthtownshipmi.gov"
+   },
+   {
+    "name": "Sandra Groth",
+    "role": "Trustee",
+    "email": "sgroth@plymouthtownshipmi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.plymouthtownshipmi.gov/government/board_of_trustees/index.php",
+  "office": {
+   "email": "group-boardoftrustees@plymouthtownshipmi.gov"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2616367625": {
+  "name": "Redford",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Pat McRae",
+    "role": "Supervisor",
+    "phone": "313-387-2705",
+    "email": "supervisor@redfordtwp.gov"
+   },
+   {
+    "name": "Karla M. Sanders",
+    "role": "Clerk",
+    "phone": "313-387-2755",
+    "email": "ksanders@redfordtwp.gov"
+   },
+   {
+    "name": "Lily Cavanagh",
+    "role": "Treasurer",
+    "phone": "313-387-2670",
+    "email": "tax@redfordtwp.gov"
+   },
+   {
+    "name": "Linda Jackson",
+    "role": "Trustee",
+    "email": "ljackson@redfordtwp.gov"
+   },
+   {
+    "name": "Edward King",
+    "role": "Trustee",
+    "email": "eking@redfordtwp.gov"
+   },
+   {
+    "name": "Gabriel Rees",
+    "role": "Trustee",
+    "email": "grees@redfordtwp.gov"
+   },
+   {
+    "name": "Kim Taylor",
+    "role": "Trustee",
+    "email": "ktaylor@redfordtwp.gov"
+   }
+  ],
+  "sourceUrl": "https://www.redfordtwp.gov/160/Board-of-Trustees",
+  "readAt": "2026-10-01"
+ },
+ "2616381660": {
+  "name": "Van Buren",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Kevin McNamara",
+    "role": "Supervisor",
+    "phone": "734-699-8910",
+    "email": "kmcnamara@vbtmi.gov"
+   },
+   {
+    "name": "Leon Wright",
+    "role": "Clerk",
+    "phone": "734-699-8909",
+    "email": "lwright@vbtmi.gov"
+   },
+   {
+    "name": "Sharry Budd",
+    "role": "Treasurer",
+    "phone": "734-699-8902",
+    "email": "sbudd@vbtmi.gov"
+   },
+   {
+    "name": "Bryon Kelley",
+    "role": "Trustee",
+    "email": "bkelley@vbtmi.gov"
+   },
+   {
+    "name": "Kevin Martin",
+    "role": "Trustee",
+    "email": "kmartin@vbtmi.gov"
+   },
+   {
+    "name": "Donald Boynton Jr.",
+    "role": "Trustee",
+    "email": "dboynton@vbtmi.gov"
+   },
+   {
+    "name": "Jeff Jahr",
+    "role": "Trustee",
+    "email": "jjahr@vbtmi.gov"
+   }
+  ],
+  "sourceUrl": "https://vbtmi.gov/government/elected_officials.php",
+  "readAt": "2026-10-01"
+ },
+ "2621000": {
+  "name": "Dearborn",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Michael T. Sareini",
+    "role": "Council President",
+    "email": "msareini@dearborn.gov"
+   },
+   {
+    "name": "Kamal Alsawafy",
+    "role": "Council President Pro Tem",
+    "email": "kalsawafy@dearborn.gov"
+   },
+   {
+    "name": "Mustapha Hammoud",
+    "role": "Council Member",
+    "email": "mhammoud@dearborn.gov"
+   },
+   {
+    "name": "Robert Abraham",
+    "role": "Council Member",
+    "email": "rabraham@dearborn.gov"
+   },
+   {
+    "name": "Ken Paris",
+    "role": "Council Member",
+    "email": "kparis@dearborn.gov"
+   },
+   {
+    "name": "Gary Enos",
+    "role": "Council Member",
+    "email": "genos@dearborn.gov"
+   },
+   {
+    "name": "Devon O'Reilly",
+    "role": "Council Member",
+    "email": "doreilly@dearborn.gov"
+   }
+  ],
+  "sourceUrl": "https://dearborn.gov/government/city-council/meet-city-council",
+  "readAt": "2026-10-01"
+ },
+ "2624120": {
+  "name": "East Lansing",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 5,
+  "members": [
+   {
+    "name": "Erik Altmann",
+    "role": "Mayor",
+    "phone": "517-927-8589",
+    "email": "erik.altmann@cityofeastlansing.com"
+   },
+   {
+    "name": "Mark Meadows",
+    "role": "Council Member",
+    "email": "mark.meadows@cityofeastlansing.com"
+   },
+   {
+    "name": "Chuck Grigsby",
+    "role": "Mayor Pro Tem",
+    "phone": "517-899-7277",
+    "email": "chuck.grigsby@cityofeastlansing.com"
+   },
+   {
+    "name": "Kerry Ebersole Singh",
+    "role": "Council Member",
+    "phone": "517-488-9029",
+    "email": "ksingh@cityofeastlansing.com"
+   },
+   {
+    "name": "Steven Whelan",
+    "role": "Council Member",
+    "phone": "517-899-7906",
+    "email": "steve.whelan@cityofeastlansing.com"
+   }
+  ],
+  "sourceUrl": "https://www.cityofeastlansing.com/996/Meet-the-Council",
+  "office": {
+   "email": "council@cityofeastlansing.com",
+   "phone": "517-319-6869"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2624290": {
+  "name": "Eastpointe",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 5,
+  "members": [
+   {
+    "name": "Michael Klinefelt",
+    "role": "Mayor"
+   },
+   {
+    "name": "Rob Baker",
+    "role": "Mayor Pro Tem"
+   },
+   {
+    "name": "Harvey Curley",
+    "role": "Council Member"
+   },
+   {
+    "name": "Margaret Podsiadlik",
+    "role": "Council Member"
+   },
+   {
+    "name": "Karen Scott",
+    "role": "Council Member"
+   }
+  ],
+  "sourceUrl": "https://www.eastpointemi.gov/government/mayor_and_council/index.php",
+  "readAt": "2026-10-01"
+ },
+ "2627440": {
+  "name": "Farmington Hills",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Theresa Rich",
+    "role": "Mayor",
+    "email": "trich@fhgov.com"
+   },
+   {
+    "name": "Jackie Boleware",
+    "role": "Mayor Pro Tem",
+    "email": "jboleware@fhgov.com"
+   },
+   {
+    "name": "Jon Aldred",
+    "role": "Council Member",
+    "email": "jaldred@fhgov.com"
+   },
+   {
+    "name": "Michael Bridges",
+    "role": "Council Member",
+    "email": "mbridges@fhgov.com"
+   },
+   {
+    "name": "William Dwyer",
+    "role": "Council Member",
+    "email": "bdwyer@fhgov.com"
+   },
+   {
+    "name": "Valerie Knol",
+    "role": "Council Member",
+    "email": "vknol@fhgov.com"
+   },
+   {
+    "name": "Charlie Starkman",
+    "role": "Council Member",
+    "email": "cstarkman@fhgov.com"
+   }
+  ],
+  "sourceUrl": "https://www.fhgov.com/citycouncil/",
+  "office": {
+   "phone": "248-871-2410"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2629000": {
+  "name": "Flint",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 9,
+  "members": [
+   {
+    "name": "Leon El-Alamin",
+    "role": "Council Member",
+    "seat": "Ward 1",
+    "phone": "810-766-7418 ext. 3160",
+    "email": "lel-alamin@cityofflint.com"
+   },
+   {
+    "name": "Ladel Lewis",
+    "role": "Council Member",
+    "seat": "Ward 2",
+    "phone": "810-766-7418 ext. 3162",
+    "email": "llewis@cityofflint.com"
+   },
+   {
+    "name": "LaShawn Johnson",
+    "role": "Council Member",
+    "seat": "Ward 3",
+    "phone": "810-766-7418 ext. 3161",
+    "email": "lrjohnson@cityofflint.com"
+   },
+   {
+    "name": "Judy Priestley",
+    "role": "Council Member",
+    "seat": "Ward 4",
+    "phone": "810-766-7418 ext. 3164",
+    "email": "jpriestley@cityofflint.com"
+   },
+   {
+    "name": "Jerri Winfrey-Carter",
+    "role": "Council Member",
+    "seat": "Ward 5",
+    "phone": "810-766-7418 ext. 3167",
+    "email": "jwinfrey-carter@cityofflint.com"
+   },
+   {
+    "name": "Tonya Burns",
+    "role": "Council Member",
+    "seat": "Ward 6",
+    "phone": "810-766-7418 ext. 3165",
+    "email": "tburns@cityofflint.com"
+   },
+   {
+    "name": "Candice Mushatt",
+    "role": "Council Member",
+    "seat": "Ward 7",
+    "phone": "810-766-7418 ext. 3163",
+    "email": "ccmushatt@cityofflint.com"
+   },
+   {
+    "name": "Dennis Pfeiffer",
+    "role": "Council Member",
+    "seat": "Ward 8",
+    "phone": "810-766-7418 ext. 3159",
+    "email": "dpfeiffer@cityofflint.com"
+   },
+   {
+    "name": "Jonathan Jarrett",
+    "role": "Council Member",
+    "seat": "Ward 9",
+    "phone": "810-766-7418 ext. 3158",
+    "email": "jejarrett@cityofflint.com"
+   }
+  ],
+  "sourceUrl": "https://www.cityofflint.com/city-council/",
+  "readAt": "2026-10-01"
+ },
+ "2631420": {
+  "name": "Garden City",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Mark Jacobs",
+    "role": "Mayor"
+   },
+   {
+    "name": "Jeff Dold",
+    "role": "Mayor Pro Tem"
+   },
+   {
+    "name": "Kim Dold",
+    "role": "Council Member"
+   },
+   {
+    "name": "Karen Hughes",
+    "role": "Council Member"
+   },
+   {
+    "name": "Stacy Karafotis",
+    "role": "Council Member"
+   },
+   {
+    "name": "Dominic King",
+    "role": "Council Member"
+   },
+   {
+    "name": "Zachary R. Witt",
+    "role": "Council Member"
+   }
+  ],
+  "sourceUrl": "https://gardencitymi.org/256/Mayor-City-Council",
+  "readAt": "2026-10-01"
+ },
+ "2636280": {
+  "name": "Hamtramck",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Adam Alharbi",
+    "role": "Mayor"
+   },
+   {
+    "name": "Mohammed Hassan",
+    "role": "Mayor Pro Tem",
+    "email": "mhassan@hamtramckcity.gov"
+   },
+   {
+    "name": "Abu Ahmed Musa",
+    "role": "Council Member",
+    "email": "amusa@hamtramckcity.gov"
+   },
+   {
+    "name": "Yousuf Saed",
+    "role": "Council Member",
+    "email": "ysaed@hamtramckcity.gov"
+   },
+   {
+    "name": "Mohammed Alsomiri",
+    "role": "Council Member",
+    "email": "malsomiri@hamtramckcity.gov"
+   },
+   {
+    "name": "Muhtasin Sadman",
+    "role": "Council Member",
+    "email": "msadman@hamtramckcity.gov"
+   },
+   {
+    "name": "Nayeem Choudhury",
+    "role": "Council Member",
+    "email": "nchoudhury@hamtramckcity.gov"
+   }
+  ],
+  "sourceUrl": "https://hamtramckcity.gov/city/city-council/",
+  "readAt": "2026-10-01"
+ },
+ "2638640": {
+  "name": "Holland",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 9,
+  "members": [
+   {
+    "name": "Nathan Bocks",
+    "role": "Mayor"
+   },
+   {
+    "name": "Tim Vreeman",
+    "role": "Council Member",
+    "seat": "Ward 1"
+   },
+   {
+    "name": "Lyn Raymond",
+    "role": "Council Member",
+    "seat": "Ward 2"
+   },
+   {
+    "name": "Tim Marroquin",
+    "role": "Council Member",
+    "seat": "Ward 3"
+   },
+   {
+    "name": "Kim Rowan",
+    "role": "Council Member",
+    "seat": "Ward 4"
+   },
+   {
+    "name": "Scott Corbin",
+    "role": "Council Member",
+    "seat": "Ward 5"
+   },
+   {
+    "name": "Devin Shea",
+    "role": "Council Member",
+    "seat": "Ward 6"
+   },
+   {
+    "name": "Abby Klomparens",
+    "role": "Council Member",
+    "seat": "At Large"
+   },
+   {
+    "name": "Michael Schultheis",
+    "role": "Council Member",
+    "seat": "At Large"
+   }
+  ],
+  "sourceUrl": "https://www.cityofholland.com/941/ContactLearn-about-Council-Members",
+  "readAt": "2026-10-01"
+ },
+ "2640680": {
+  "name": "Inkster",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Byron H. Nolen",
+    "role": "Mayor",
+    "email": "mayor@cityofinkstermi.gov"
+   },
+   {
+    "name": "Felicia Rutledge",
+    "role": "Council Member",
+    "phone": "313-505-7562",
+    "email": "frutledge@cityofinkstermi.gov"
+   },
+   {
+    "name": "Freddie Bishop III",
+    "role": "Council Member",
+    "phone": "313-505-6497",
+    "email": "fbishop@cityofinkstermi.gov"
+   },
+   {
+    "name": "Lindsay Scott",
+    "role": "Council Member",
+    "phone": "313-505-2894",
+    "email": "lscott@cityofinkstermi.gov"
+   },
+   {
+    "name": "Steven Chisholm",
+    "role": "Mayor Pro Tem",
+    "phone": "313-563-4232 ext. 1910",
+    "email": "schisholm@cityofinkstermi.gov"
+   },
+   {
+    "name": "Kim Howard",
+    "role": "Council Member",
+    "phone": "313-505-4768",
+    "email": "khoward@cityofinkstermi.gov"
+   },
+   {
+    "name": "DeArtriss Richardson",
+    "role": "Council Member",
+    "phone": "734-595-6593",
+    "email": "dcrichardson@cityofinkstermi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.cityofinkstermi.gov/368/City-Council",
+  "readAt": "2026-10-01"
+ },
+ "2642160": {
+  "name": "Kalamazoo",
+  "kind": "city",
+  "body": "City Commission",
+  "seats": 7,
+  "members": [
+   {
+    "name": "David Anderson",
+    "role": "Mayor",
+    "email": "mayor@kalamazoocity.org"
+   },
+   {
+    "name": "Drew Duncan",
+    "role": "Vice Mayor",
+    "email": "duncandm@kalamazoocity.org"
+   },
+   {
+    "name": "Jeanne Hess",
+    "role": "Commissioner",
+    "email": "hessj@kalamazoocity.org"
+   },
+   {
+    "name": "Stephanie Hoffman",
+    "role": "Commissioner",
+    "email": "hoffmans@kalamazoocity.org"
+   },
+   {
+    "name": "Chris Praedel",
+    "role": "Commissioner",
+    "email": "praedelc@kalamazoocity.org"
+   },
+   {
+    "name": "Jae Slaby",
+    "role": "Commissioner",
+    "email": "slabyja@kalamazoocity.org"
+   },
+   {
+    "name": "Alonzo Wilson",
+    "role": "Commissioner",
+    "email": "wilsona@kalamazoocity.org"
+   }
+  ],
+  "sourceUrl": "https://www.kalamazoocity.org/Government/Mayor-Vice-Mayor-and-City-Commissioners",
+  "readAt": "2026-10-01"
+ },
+ "2642820": {
+  "name": "Kentwood",
+  "kind": "city",
+  "body": "City Commission",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Stephen Kepley",
+    "role": "Mayor"
+   },
+   {
+    "name": "Clarkston Morgan",
+    "role": "Commissioner",
+    "seat": "Ward 1"
+   },
+   {
+    "name": "Robert Coughlin",
+    "role": "Commissioner",
+    "seat": "Ward 1"
+   },
+   {
+    "name": "David Moore",
+    "role": "Commissioner",
+    "seat": "Ward 2"
+   },
+   {
+    "name": "Jessica Ann Tyson",
+    "role": "Commissioner",
+    "seat": "Ward 2"
+   },
+   {
+    "name": "Betsy Artz",
+    "role": "Commissioner",
+    "seat": "At Large"
+   },
+   {
+    "name": "Dustin Moseley",
+    "role": "Commissioner",
+    "seat": "At Large"
+   }
+  ],
+  "sourceUrl": "https://www.kentwood.us/city_services/committees_and_boards/city_commission/index.php",
+  "readAt": "2026-10-01"
+ },
+ "2647800": {
+  "name": "Lincoln Park",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 6,
+  "members": [
+   {
+    "name": "Carlos Salcido",
+    "role": "Council President",
+    "email": "csalcido@citylp.com"
+   },
+   {
+    "name": "Jason Behr",
+    "role": "Council Member",
+    "email": "jbehr@citylp.com"
+   },
+   {
+    "name": "Tracy Duprey",
+    "role": "Council Member",
+    "email": "tduprey@citylp.com"
+   },
+   {
+    "name": "Jason Nichols",
+    "role": "Council Member",
+    "email": "jnichols@citylp.com"
+   },
+   {
+    "name": "Lylian Ross",
+    "role": "Council Member",
+    "email": "lross@citylp.com"
+   },
+   {
+    "name": "Eric Szor",
+    "role": "Council Member",
+    "email": "eszor@citylp.com"
+   }
+  ],
+  "sourceUrl": "https://www.citylp.com/162/Elected-Officials",
+  "readAt": "2026-10-01"
+ },
+ "2649000": {
+  "name": "Livonia",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Kayleigh Reid",
+    "role": "Council President"
+   },
+   {
+    "name": "Patrick Brockway",
+    "role": "Council Vice President"
+   },
+   {
+    "name": "Carrie Budzinski",
+    "role": "Council Member"
+   },
+   {
+    "name": "Brandon McCullough",
+    "role": "Council Member"
+   },
+   {
+    "name": "Eileen McDonnell",
+    "role": "Council Member"
+   },
+   {
+    "name": "Robin Persiconi",
+    "role": "Council Member"
+   },
+   {
+    "name": "Martha Ptashnik",
+    "role": "Council Member"
+   }
+  ],
+  "sourceUrl": "https://www.livonia.gov/1653/City-Council",
+  "readAt": "2026-10-01"
+ },
+ "2650560": {
+  "name": "Madison Heights",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Corey K. Haines",
+    "role": "Mayor",
+    "email": "chaines@madisonheightsmi.gov"
+   },
+   {
+    "name": "William J. Mier",
+    "role": "Mayor Pro Tem",
+    "email": "bmier@madisonheightsmi.gov"
+   },
+   {
+    "name": "Toya D. Aaron",
+    "role": "Council Member",
+    "email": "taaron@madisonheightsmi.gov"
+   },
+   {
+    "name": "Sean D. Fleming",
+    "role": "Council Member",
+    "email": "sfleming@madisonheightsmi.gov"
+   },
+   {
+    "name": "Laurie B. Geralds",
+    "role": "Council Member",
+    "email": "lgeralds@madisonheightsmi.gov"
+   },
+   {
+    "name": "Emily J. Rohrbach",
+    "role": "Council Member",
+    "email": "erohrbach@madisonheightsmi.gov"
+   },
+   {
+    "name": "Quinn Wright",
+    "role": "Council Member",
+    "email": "qwright@madisonheightsmi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.madisonheightsmi.gov/408/City-Council",
+  "readAt": "2026-10-01"
+ },
+ "2653780": {
+  "name": "Midland",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 5,
+  "members": [
+   {
+    "name": "Tim Soler",
+    "role": "Council Member",
+    "seat": "Ward 1",
+    "phone": "989-615-1755",
+    "email": "tsoler@midland-mi.org"
+   },
+   {
+    "name": "Maureen Donker",
+    "role": "Mayor",
+    "seat": "Ward 2",
+    "phone": "989-839-0531",
+    "email": "mdonker@midland-mi.org"
+   },
+   {
+    "name": "Dave Pasek",
+    "role": "Council Member",
+    "seat": "Ward 3",
+    "phone": "989-600-9727",
+    "email": "dpasek@midland-mi.org"
+   },
+   {
+    "name": "Diane Brown Wilhelm",
+    "role": "Mayor Pro Tem",
+    "seat": "Ward 4",
+    "phone": "989-513-5638",
+    "email": "dbrown@midland-mi.org"
+   },
+   {
+    "name": "Marty Wazbinski",
+    "role": "Council Member",
+    "seat": "Ward 5",
+    "phone": "989-631-6928",
+    "email": "mwazbinski@midland-mi.org"
+   }
+  ],
+  "sourceUrl": "https://www.cityofmidlandmi.gov/422/City-Council",
+  "readAt": "2026-10-01"
+ },
+ "2656320": {
+  "name": "Muskegon",
+  "kind": "city",
+  "body": "City Commission",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Ken Johnson",
+    "role": "Mayor"
+   },
+   {
+    "name": "Rebecca St Clair",
+    "role": "Commissioner",
+    "seat": "At Large"
+   },
+   {
+    "name": "Kiley Jackson",
+    "role": "Commissioner",
+    "seat": "At Large"
+   },
+   {
+    "name": "Jay Kilgo",
+    "role": "Commissioner",
+    "seat": "Ward 1"
+   },
+   {
+    "name": "Willie German Jr",
+    "role": "Commissioner",
+    "seat": "Ward 2"
+   },
+   {
+    "name": "Destinee Keener",
+    "role": "Vice Mayor",
+    "seat": "Ward 3"
+   },
+   {
+    "name": "Katrina Kochin",
+    "role": "Commissioner",
+    "seat": "Ward 4"
+   }
+  ],
+  "sourceUrl": "https://muskegon-mi.gov/city-services/elected-officials/city-commission/",
+  "readAt": "2026-10-01"
+ },
+ "2659440": {
+  "name": "Novi",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Justin Fischer",
+    "role": "Mayor"
+   },
+   {
+    "name": "Laura Marie Casey",
+    "role": "Mayor Pro Tem"
+   },
+   {
+    "name": "David Staudt",
+    "role": "Council Member"
+   },
+   {
+    "name": "Brian Smith",
+    "role": "Council Member"
+   },
+   {
+    "name": "Matt Heintz",
+    "role": "Council Member"
+   },
+   {
+    "name": "Priya Gurumurthy",
+    "role": "Council Member"
+   },
+   {
+    "name": "Aaron Martinez",
+    "role": "Council Member"
+   }
+  ],
+  "sourceUrl": "https://cityofnovi.org/government/city-council/",
+  "readAt": "2026-10-01"
+ },
+ "2659920": {
+  "name": "Oak Park",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 5,
+  "members": [
+   {
+    "name": "Marian McClellan",
+    "role": "Mayor"
+   },
+   {
+    "name": "Julie Edgar",
+    "role": "Mayor Pro Tem"
+   },
+   {
+    "name": "Stephanie Crawford",
+    "role": "Council Member"
+   },
+   {
+    "name": "Solomon Radner",
+    "role": "Council Member"
+   },
+   {
+    "name": "Rebecca Berman",
+    "role": "Council Member"
+   }
+  ],
+  "sourceUrl": "https://www.oakparkmi.gov/departments/city-council",
+  "readAt": "2026-10-01"
+ },
+ "2665440": {
+  "name": "Pontiac",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Chris Jackson",
+    "role": "Council Member",
+    "seat": "District 1"
+   },
+   {
+    "name": "Milanna Jones",
+    "role": "Council Member",
+    "seat": "District 2"
+   },
+   {
+    "name": "Mikal Goodman",
+    "role": "Council Member",
+    "seat": "District 3"
+   },
+   {
+    "name": "Kathalee James",
+    "role": "Council Member",
+    "seat": "District 4"
+   },
+   {
+    "name": "William Carrington",
+    "role": "Council President Pro Tem",
+    "seat": "District 5"
+   },
+   {
+    "name": "Regina Campbell",
+    "role": "Council Member",
+    "seat": "District 6"
+   },
+   {
+    "name": "Adrian Austin",
+    "role": "Council President",
+    "seat": "At Large"
+   }
+  ],
+  "sourceUrl": "https://www.pontiac.mi.us/government/city_council/index.php",
+  "readAt": "2026-10-01"
+ },
+ "2665560": {
+  "name": "Portage",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Patricia M. Randall",
+    "role": "Mayor",
+    "phone": "269-329-4400",
+    "email": "patricia.randall@portagemi.gov"
+   },
+   {
+    "name": "Jim Pearson",
+    "role": "Mayor Pro Tem",
+    "phone": "269-303-5459",
+    "email": "councilmemberjp@portagemi.gov"
+   },
+   {
+    "name": "Chris Burns",
+    "role": "Council Member",
+    "phone": "708-710-3102",
+    "email": "chris.burns@portagemi.gov"
+   },
+   {
+    "name": "Vic Ledbetter",
+    "role": "Council Member",
+    "phone": "269-330-6404",
+    "email": "vic.ledbetter@portagemi.gov"
+   },
+   {
+    "name": "Nicole Miller",
+    "role": "Council Member",
+    "phone": "269-924-1901",
+    "email": "nicole.miller@portagemi.gov"
+   },
+   {
+    "name": "Kathleen Olmsted",
+    "role": "Council Member",
+    "phone": "269-720-0085",
+    "email": "olmstedk@portagemi.gov"
+   },
+   {
+    "name": "Jihan Ain Young",
+    "role": "Council Member",
+    "phone": "269-759-0323",
+    "email": "jihan.young@portagemi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.portagemi.gov/487/Mayor-City-Council",
+  "readAt": "2026-10-01"
+ },
+ "2665820": {
+  "name": "Port Huron",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Anita Ashford",
+    "role": "Mayor",
+    "email": "ashforda@porthuron.org"
+   },
+   {
+    "name": "Sherry Archibald",
+    "role": "Mayor Pro Tem",
+    "phone": "810-434-4559",
+    "email": "archibas@porthuron.org"
+   },
+   {
+    "name": "Conrad Haremza",
+    "role": "Council Member",
+    "phone": "810-278-0599",
+    "email": "haremzac@porthuron.org"
+   },
+   {
+    "name": "Teri Lamb",
+    "role": "Council Member",
+    "phone": "810-434-6742",
+    "email": "lambt@porthuron.org"
+   },
+   {
+    "name": "Bob Mosurak",
+    "role": "Council Member",
+    "phone": "810-334-0559",
+    "email": "mosurakb@porthuron.org"
+   },
+   {
+    "name": "Barbara Payton",
+    "role": "Council Member",
+    "phone": "313-622-8412",
+    "email": "paytonb@porthuron.org"
+   },
+   {
+    "name": "Jeff Pemberton",
+    "role": "Council Member",
+    "phone": "810-373-2861",
+    "email": "pemberton@porthuron.org"
+   }
+  ],
+  "sourceUrl": "https://www.porthuron.org/government/city_council.php",
+  "readAt": "2026-10-01"
+ },
+ "2669420": {
+  "name": "Romulus",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Tina Talley",
+    "role": "Mayor Pro Tem",
+    "phone": "734-955-4506 ext. 1",
+    "email": "ttalley@romulusgov.com"
+   },
+   {
+    "name": "Celeste Roscoe",
+    "role": "Council Member",
+    "phone": "734-955-4506 ext. 6",
+    "email": "croscoe@romulusgov.com"
+   },
+   {
+    "name": "Kathleen Abdo",
+    "role": "Council Member",
+    "phone": "734-955-4506 ext. 2",
+    "email": "kabdo@romulusgov.com"
+   },
+   {
+    "name": "William Wadsworth",
+    "role": "Council Member",
+    "phone": "734-955-4506 ext. 7",
+    "email": "wjwadsworth@comcast.net"
+   },
+   {
+    "name": "James Bullock",
+    "role": "Council Member",
+    "phone": "734-955-4506 ext. 3",
+    "email": "jbullock@romulusgov.com"
+   },
+   {
+    "name": "Mark Wilhide",
+    "role": "Council Member",
+    "phone": "734-955-4506 ext. 5",
+    "email": "mrwilhide@romulusgov.com"
+   },
+   {
+    "name": "David Jones",
+    "role": "Council Member",
+    "phone": "734-955-4506 ext. 4",
+    "email": "djones@romulusgov.com"
+   }
+  ],
+  "sourceUrl": "https://www.romulusgov.com/320/City-Council",
+  "office": {
+   "phone": "734-955-4506"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2669800": {
+  "name": "Roseville",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Robert Taylor",
+    "role": "Mayor",
+    "email": "rtaylor@roseville-mi.gov"
+   },
+   {
+    "name": "Catherine Haugh",
+    "role": "Mayor Pro Tem",
+    "email": "chaugh@roseville-mi.gov"
+   },
+   {
+    "name": "Kurmmell Knox",
+    "role": "Council Member",
+    "email": "kwknox@roseville-mi.gov"
+   },
+   {
+    "name": "Colleen M. McCartney",
+    "role": "Council Member",
+    "email": "cmccartney@roseville-mi.gov"
+   },
+   {
+    "name": "Bill Shoemaker",
+    "role": "Council Member",
+    "email": "bshoemaker@roseville-mi.gov"
+   },
+   {
+    "name": "Steven Wietecha",
+    "role": "Council Member",
+    "email": "swietecha@roseville-mi.gov"
+   },
+   {
+    "name": "Jim Hoover",
+    "role": "Council Member",
+    "email": "jhoover@roseville-mi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.roseville-mi.gov/228/City-Council",
+  "readAt": "2026-10-01"
+ },
+ "2670040": {
+  "name": "Royal Oak",
+  "kind": "city",
+  "body": "City Commission",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Michael Fournier",
+    "role": "Mayor",
+    "email": "ccfournier@romi.gov"
+   },
+   {
+    "name": "Amanda Herzog",
+    "role": "Mayor Pro Tem"
+   },
+   {
+    "name": "Paul Bastian",
+    "role": "Commissioner"
+   },
+   {
+    "name": "Rebecca Cheezum",
+    "role": "Commissioner"
+   },
+   {
+    "name": "Woody Gontina",
+    "role": "Commissioner"
+   },
+   {
+    "name": "Monica Hunt",
+    "role": "Commissioner"
+   },
+   {
+    "name": "Brandon Kolo",
+    "role": "Commissioner"
+   }
+  ],
+  "sourceUrl": "https://www.romi.gov/412/City-Commission",
+  "office": {
+   "phone": "248-246-3203"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2670520": {
+  "name": "Saginaw",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 9,
+  "members": [
+   {
+    "name": "Brenda F. Moore",
+    "role": "Mayor"
+   },
+   {
+    "name": "Priscilla Garcia",
+    "role": "Mayor Pro Tem"
+   },
+   {
+    "name": "Michael D. Balls",
+    "role": "Council Member"
+   },
+   {
+    "name": "Carly R. Hammond",
+    "role": "Council Member"
+   },
+   {
+    "name": "Jacinta Seals",
+    "role": "Council Member"
+   },
+   {
+    "name": "Heidi G. Wiggins",
+    "role": "Council Member"
+   },
+   {
+    "name": "Eric D. Braddock, Sr.",
+    "role": "Council Member"
+   },
+   {
+    "name": "Bill Ostash",
+    "role": "Council Member"
+   },
+   {
+    "name": "Tobias Young",
+    "role": "Council Member"
+   }
+  ],
+  "sourceUrl": "https://www.saginaw-mi.com/230/City-Council",
+  "readAt": "2026-10-01"
+ },
+ "2670760": {
+  "name": "St. Clair Shores",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Kip C. Walby",
+    "role": "Mayor",
+    "phone": "586-335-8818",
+    "email": "walby.kip@scsmi.net"
+   },
+   {
+    "name": "Ronald J. Frederick",
+    "role": "Mayor Pro Tem",
+    "phone": "586-808-3478",
+    "email": "rfrederick@scsmi.net"
+   },
+   {
+    "name": "Linda C. Bertges",
+    "role": "Council Member",
+    "phone": "248-767-9961",
+    "email": "bertgesl@scsmi.net"
+   },
+   {
+    "name": "John D. Caron",
+    "role": "Council Member",
+    "phone": "586-777-0611",
+    "email": "caronj@scsmi.net"
+   },
+   {
+    "name": "David J. Rubello",
+    "role": "Council Member",
+    "phone": "586-489-8117",
+    "email": "rubellod@scsmi.net"
+   },
+   {
+    "name": "Candice B. Rusie",
+    "role": "Council Member",
+    "email": "rusiec@scsmi.net"
+   },
+   {
+    "name": "Chris M. Vitale",
+    "role": "Council Member",
+    "email": "vitalec@scsmi.net"
+   }
+  ],
+  "sourceUrl": "https://www.scsmi.net/167/City-Council",
+  "readAt": "2026-10-01"
+ },
+ "2674900": {
+  "name": "Southfield",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Charles Hicks",
+    "role": "Council President",
+    "phone": "248-796-5006",
+    "email": "chicks@cityofsouthfield.com"
+   },
+   {
+    "name": "Coretta Houge",
+    "role": "Council President Pro Tem",
+    "phone": "248-796-5007",
+    "email": "chouge@cityofsouthfield.com"
+   },
+   {
+    "name": "Nancy L.M. Banks",
+    "role": "Council Member",
+    "phone": "248-796-5003",
+    "email": "nbanks@cityofsouthfield.com"
+   },
+   {
+    "name": "Daniel Brightwell",
+    "role": "Council Member",
+    "phone": "248-796-5004",
+    "email": "dbrightwell@cityofsouthfield.com"
+   },
+   {
+    "name": "Ashanti Bland",
+    "role": "Council Member",
+    "phone": "248-796-5005",
+    "email": "abland@cityofsouthfield.com"
+   },
+   {
+    "name": "Yolanda C. Haynes",
+    "role": "Council Member",
+    "phone": "248-796-5002",
+    "email": "yhaynes@cityofsouthfield.com"
+   },
+   {
+    "name": "Michael Mandelbaum",
+    "role": "Council Member",
+    "phone": "248-796-5001",
+    "email": "mmandelbaum@cityofsouthfield.com"
+   }
+  ],
+  "sourceUrl": "https://www.cityofsouthfield.com/government/city-council/elected-officials",
+  "readAt": "2026-10-01"
+ },
+ "2674960": {
+  "name": "Southgate",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Zoey Kuspa",
+    "role": "Council President"
+   },
+   {
+    "name": "Christian Graziani",
+    "role": "Council Member"
+   },
+   {
+    "name": "Karen George",
+    "role": "Council Member"
+   },
+   {
+    "name": "Phillip Rauch",
+    "role": "Council Member"
+   },
+   {
+    "name": "Priscilla Ayres-Reiss",
+    "role": "Council Member",
+    "email": "priscilla@southgatemi.gov"
+   },
+   {
+    "name": "Ed Gawlik Jr.",
+    "role": "Council Member",
+    "email": "egawlik@southgatemi.gov"
+   },
+   {
+    "name": "Adriene Price",
+    "role": "Council Member",
+    "email": "aprice@southgatemi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.southgatemi.gov/government/city_council/index.php",
+  "readAt": "2026-10-01"
+ },
+ "2676460": {
+  "name": "Sterling Heights",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Robert Mijac",
+    "role": "Council Member",
+    "phone": "586-994-9110",
+    "email": "rmijac@sterlingheights.gov"
+   },
+   {
+    "name": "Michael V. Radtke Jr.",
+    "role": "Council Member",
+    "phone": "586-289-8788",
+    "email": "mradtke@sterlingheights.gov"
+   },
+   {
+    "name": "Liz Sierawski",
+    "role": "Mayor Pro Tem",
+    "phone": "586-230-3140",
+    "email": "lsierawski@sterlingheights.gov"
+   },
+   {
+    "name": "Maria G. Schmidt",
+    "role": "Council Member",
+    "phone": "810-499-5450",
+    "email": "mgschmidt@sterlingheights.gov"
+   },
+   {
+    "name": "Michael C. Taylor",
+    "role": "Mayor",
+    "phone": "586-333-9137",
+    "email": "mctaylor@sterlingheights.gov"
+   },
+   {
+    "name": "Henry Yanez",
+    "role": "Council Member",
+    "phone": "586-333-9138",
+    "email": "hyanez@sterlingheights.gov"
+   },
+   {
+    "name": "Barbara A. Ziarko",
+    "role": "Council Member",
+    "phone": "810-499-5408",
+    "email": "bziarko@sterlingheights.gov"
+   }
+  ],
+  "sourceUrl": "https://sterlingheights.gov/m/directory/department?did=37",
+  "office": {
+   "email": "citycouncil@sterling-heights.net"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2679000": {
+  "name": "Taylor",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Charley Johnson",
+    "role": "Council Chairman",
+    "email": "cjohnson@cityoftaylormi.gov"
+   },
+   {
+    "name": "Ron Thiede",
+    "role": "Council Chair Pro Tem",
+    "email": "rthiede@cityoftaylormi.gov"
+   },
+   {
+    "name": "Christian Armstrong",
+    "role": "Council Member"
+   },
+   {
+    "name": "Dan Wallace",
+    "role": "Council Member",
+    "email": "dwallace@cityoftaylormi.gov"
+   },
+   {
+    "name": "Gerald Thomas",
+    "role": "Council Member",
+    "email": "gthomas@cityoftaylormi.gov"
+   },
+   {
+    "name": "William Patts",
+    "role": "Council Member",
+    "email": "wpatts@cityoftaylormi.gov"
+   },
+   {
+    "name": "Chris Clark",
+    "role": "Council Member",
+    "email": "cclark@cityoftaylormi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.cityoftaylor.com/1669/City-Council-Members",
+  "readAt": "2026-10-01"
+ },
+ "2680700": {
+  "name": "Troy",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Ethan Baker",
+    "role": "Mayor",
+    "phone": "248-716-4279",
+    "email": "mayorbaker@troymi.gov"
+   },
+   {
+    "name": "Theresa Brooks",
+    "role": "Council Member",
+    "email": "theresa.brooks@troymi.gov"
+   },
+   {
+    "name": "Hirak Chanda",
+    "role": "Mayor Pro Tem",
+    "email": "hirak.chanda@troymi.gov"
+   },
+   {
+    "name": "Rebecca Chamberlain Creanga",
+    "role": "Council Member",
+    "email": "rachamberlain@troymi.gov"
+   },
+   {
+    "name": "Mark Gunn",
+    "role": "Council Member",
+    "phone": "248-525-5199",
+    "email": "mark.gunn@troymi.gov"
+   },
+   {
+    "name": "David Hamilton",
+    "role": "Council Member",
+    "phone": "586-930-5278",
+    "email": "david.hamilton@troymi.gov"
+   },
+   {
+    "name": "Annalisa Bluhm",
+    "role": "Council Member",
+    "email": "annalisa.bluhm@troymi.gov"
+   }
+  ],
+  "sourceUrl": "https://troymi.gov/community/government/citycouncil/contact_council.php",
+  "office": {
+   "phone": "248-524-3500",
+   "email": "citycouncilemail@troymi.gov"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2682960": {
+  "name": "Walker",
+  "kind": "city",
+  "body": "City Commission",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Gary Carey, Jr.",
+    "role": "Mayor"
+   },
+   {
+    "name": "Elaina Huizenga-Chase",
+    "role": "Mayor Pro Tem"
+   },
+   {
+    "name": "Steven Gilbert",
+    "role": "Commissioner",
+    "seat": "Ward 1"
+   },
+   {
+    "name": "Mike Burde",
+    "role": "Commissioner",
+    "seat": "Ward 1"
+   },
+   {
+    "name": "Roxanne Deschaine",
+    "role": "Commissioner",
+    "seat": "Ward 2"
+   },
+   {
+    "name": "Jessica Babcock",
+    "role": "Commissioner",
+    "seat": "Ward 2"
+   },
+   {
+    "name": "Melanie Grooters",
+    "role": "Commissioner",
+    "seat": "Ward 3"
+   }
+  ],
+  "sourceUrl": "https://www.walker.city/325/Elected-City-Officials",
+  "readAt": "2026-10-01"
+ },
+ "2684000": {
+  "name": "Warren",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Dave Dwyer",
+    "role": "Council Assistant Secretary / Mayor Pro Tem",
+    "seat": "At Large",
+    "phone": "586-665-0705",
+    "email": "ddwyer@cityofwarren.org"
+   },
+   {
+    "name": "Angela Rogensues",
+    "role": "Council President",
+    "seat": "At Large",
+    "phone": "586-209-4964",
+    "email": "angela@cityofwarren.org"
+   },
+   {
+    "name": "Melody Magee",
+    "role": "Council Vice President",
+    "seat": "District 1",
+    "phone": "586-275-7233",
+    "email": "mmagee@cityofwarren.org"
+   },
+   {
+    "name": "Jonathan Lafferty",
+    "role": "Council Member",
+    "seat": "District 2",
+    "phone": "586-804-9156",
+    "email": "jlafferty@cityofwarren.org"
+   },
+   {
+    "name": "Mindy Moore",
+    "role": "Council Secretary",
+    "seat": "District 3",
+    "phone": "586-703-5177",
+    "email": "mindy@cityofwarren.org"
+   },
+   {
+    "name": "Gary Boike",
+    "role": "Council Member",
+    "seat": "District 4",
+    "phone": "586-214-1653",
+    "email": "gboike@cityofwarren.org"
+   },
+   {
+    "name": "Henry Newnan",
+    "role": "Council Member",
+    "seat": "District 5",
+    "phone": "586-360-4998",
+    "email": "hnewnan@cityofwarren.org"
+   }
+  ],
+  "sourceUrl": "https://www.cityofwarren.org/government/city-council/city-council-members/",
+  "office": {
+   "email": "citycouncil@cityofwarren.org",
+   "phone": "586-258-2060"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2686000": {
+  "name": "Westland",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Mike McDermott",
+    "role": "Council President",
+    "phone": "734-793-9449",
+    "email": "mmcdermott@cityofwestland.com"
+   },
+   {
+    "name": "LeKisha Maxwell",
+    "role": "Council President Pro Tem",
+    "phone": "734-793-9493",
+    "email": "lmaxwell@cityofwestland.com"
+   },
+   {
+    "name": "Emily Bauman",
+    "role": "Council Member",
+    "phone": "734-224-3679",
+    "email": "ebauman@cityofwestland.com"
+   },
+   {
+    "name": "Antoinette Martin",
+    "role": "Council Member",
+    "phone": "734-793-9496",
+    "email": "amartin@cityofwestland.com"
+   },
+   {
+    "name": "Melissa Sampey",
+    "role": "Council Member",
+    "phone": "734-637-2078",
+    "email": "msampey@cityofwestland.com"
+   },
+   {
+    "name": "Andrea Rutkowski",
+    "role": "Council Member",
+    "phone": "734-793-9497",
+    "email": "arutkowski@cityofwestland.com"
+   },
+   {
+    "name": "John Sullivan",
+    "role": "Council Member",
+    "phone": "734-793-9492",
+    "email": "jsullivan@cityofwestland.com"
+   }
+  ],
+  "sourceUrl": "https://www.cityofwestland.com/266/City-Council",
+  "office": {
+   "phone": "734-467-3185"
+  },
+  "readAt": "2026-10-01"
+ },
+ "2688900": {
+  "name": "Wyandotte",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Robert A. DeSana",
+    "role": "Mayor"
+   },
+   {
+    "name": "Kelly M. Stec",
+    "role": "Mayor Pro Tem"
+   },
+   {
+    "name": "Patrick J. Sutka",
+    "role": "Council Member"
+   },
+   {
+    "name": "Chris Calvin",
+    "role": "Council Member"
+   },
+   {
+    "name": "Todd Hanna",
+    "role": "Council Member"
+   },
+   {
+    "name": "Robert Alderman",
+    "role": "Council Member"
+   },
+   {
+    "name": "Adriana Cerulla",
+    "role": "Council Member"
+   }
+  ],
+  "sourceUrl": "https://www.wyandottemi.gov/168/Mayor-City-Council",
+  "office": {
+   "phone": "734-324-4540"
+  },
+  "readAt": "2026-10-01"
+ }
+}

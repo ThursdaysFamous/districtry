@@ -493,6 +493,167 @@ try {
     await context.close();
   }
 
+  // 2a3. THE TOWNSHIP OFFICERS, BOTH BRANCHES, BECAUSE ONE ALONE PROVES
+  //      NOTHING. Twelve counties publish their township clerks and trustees
+  //      and about 1,400 townships are published by nobody, so the card has a
+  //      named branch and a "not shown" branch — and a test of either half
+  //      alone passes for a card that renders that half everywhere. The
+  //      county-subdivision layer is point-first, so both points are selected
+  //      with the census host LIVE (nothing else here can answer which
+  //      township a point is in), and a failure to reach it reads as the
+  //      check's own skip rather than as a wrong answer.
+  //
+  //      THE POINTS ARE THE CENSUS'S OWN GEOMETRY, not eyeballed: each is the
+  //      ring centroid of a township the shipped roster names (Bath township
+  //      in Cerro Gordo, which also publishes terms and whether each officer
+  //      was elected or appointed) and of one it does not (Liscomb township in
+  //      Marshall, the anchor county, which publishes no township page).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    for (const [lat, lng, township, want, why] of [
+      [43.03083, -93.19912, "Bath township", "Steve Sturges", "named by its county"],
+      [42.18000, -92.95000, "Liscomb township", "Not shown", "named by nobody"]
+    ]) {
+      const page = await booted(context,
+        `${BASE}#point=${lat},${lng}&layers=county-subdivision`);
+      const info = await cardText(page, "county-subdivision");
+      if (info.error || !info.text.includes(township)) {
+        // the census host did not answer this township — say so rather than
+        // failing on somebody else's server, the rule the tile checks follow
+        console.log(`  SKIP  township officers, ${why} — card did not name ${township}`);
+        await page.close();
+        continue;
+      }
+      check(`township officers, ${why} (${township})`,
+        info.text.includes(want), info.text.slice(0, 120));
+      await page.close();
+    }
+    await context.close();
+  }
+
+  // 2a4. THE CITY COUNCILS OF THE FOURTEEN LARGEST CITIES THAT NAMED NOBODY,
+  //      and the two SENTENCES the card says about them, because the names
+  //      alone would pass for a card that says the wrong thing around them.
+  //
+  //      Iowa has eighteen cities above 25,000. Four were answered already
+  //      and these fourteen published nothing, which was 96 officeholders a
+  //      reader in them could not get from this app.
+  //
+  //      THREE CASES, AND EACH IS A DIFFERENT BRANCH OF THE SAME CARD. Ames
+  //      names a mayor and six council members and must NOT carry the
+  //      missing-mayor sentence; Davenport names ten aldermen and no mayor
+  //      anywhere this project reads, and MUST carry it, or a reader takes a
+  //      city with a mayor for a city without one; and a city in neither file
+  //      must still reach the "Not shown" branch, because a test of the named
+  //      half alone passes for a card that names somebody everywhere.
+  //
+  //      AMES' SEVENTH SEAT IS THE ONE WORTH ASSERTING BY NAME. Its council
+  //      page links eight member pages and the eighth is the Iowa State
+  //      ex-officio, whom the scraper drops; Bronwyn Beatty-Hansen is the
+  //      council member a hyphen in her own URL slug lost from a first draft,
+  //      so the card named six of seven seats and the loss was invisible in
+  //      the copy around it.
+  //
+  //      The municipality layer answers from a committed vector-tile archive,
+  //      so these three need no government server. A card that does not name
+  //      the city at all is reported as this check's own skip rather than as
+  //      a wrong answer, the rule 2a3 above already follows.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    for (const [lat, lng, city, want, absent, why] of [
+      [42.03080, -93.63190, "Ames city", "Bronwyn Beatty-Hansen",
+       "does not name its mayor", "names its mayor and six council members"],
+      [41.52360, -90.57760, "Davenport city", "does not name its mayor",
+       null, "names ten aldermen and no mayor"],
+      [42.04940, -92.90710, "Marshalltown city", "Mike Ladehoff",
+       "does not name its mayor", "the anchor city, mayor and seven members"],
+      // AND A CITY IN NONE OF THE THREE ROSTERS, which is the half that keeps
+      // the other three honest: 819 Iowa cities name nobody in this app, and
+      // a check of the named branch alone passes for a card that names
+      // somebody everywhere. Adel's own card must still reach the "Not shown"
+      // branch, whose closing sentence this change also edited — it now
+      // counts the largest cities from the shipped file rather than naming
+      // three of them in prose.
+      [41.61400, -94.02200, "Adel city", "Not shown", null,
+       "a city named by nobody"]
+    ]) {
+      const page = await booted(context,
+        `${BASE}#point=${lat},${lng}&layers=municipality`);
+      const info = await cardText(page, "municipality");
+      if (info.error || !info.text.includes(city)) {
+        console.log(`  SKIP  city council, ${why} — card did not name ${city}`);
+        await page.close();
+        continue;
+      }
+      check(`city council, ${why}`,
+        info.text.includes(want), info.text.slice(0, 160));
+      if (absent) {
+        // THE HALF THAT KEEPS THE FIRST HONEST. A missing-mayor sentence on a
+        // city that names its mayor is the same false statement pointing the
+        // other way.
+        check(`city council, ${why} — no missing-mayor sentence`,
+          !info.text.includes(absent), info.text.slice(0, 160));
+      }
+      await page.close();
+    }
+    await context.close();
+  }
+
+  // 2a5. THE FOUR COUNTY BOARDS NAMED BY THE COUNTY ITSELF, and the sentence
+  //      the card says about why, because the names alone would pass for a
+  //      card that credits the wrong publisher.
+  //
+  //      Almost every Iowa county's supervisors come from one statewide
+  //      directory, gated against the districts this app draws. Where those
+  //      two disagree the whole board is WITHHELD rather than guessed, which
+  //      is right and left eight counties of 99 naming nobody. For four of
+  //      them the county's own board page settles it, so those names rest on
+  //      a publisher no other county's do and the card says so.
+  //
+  //      BOTH BRANCHES, for the reason 2a4 already gives. Adair must name a
+  //      supervisor AND carry the county-named sentence; Pottawattamie must
+  //      carry the withheld sentence and NOT the county-named one, because a
+  //      county-named line over a board we do not publish would credit a
+  //      page we were refused; and Marshall, the anchor county, comes from the
+  //      statewide directory like the other 95 and must name a supervisor with
+  //      NO county-named sentence at all -- which is the half that keeps the
+  //      first honest, since a sentence rendered for every county says nothing.
+  //
+  //      The county layer answers from a committed archive, so none of these
+  //      needs a government server. A card that does not name the county is
+  //      this check's own skip, the rule 2a3 and 2a4 already follow.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    for (const [lat, lng, county, want, absent, why] of [
+      [41.33000, -94.47000, "Adair County", "Named by the county",
+       null, "Adair, named by the county's own page"],
+      [41.33000, -94.47000, "Adair County", "Jerry Walker",
+       null, "Adair names a supervisor the statewide directory lost"],
+      [41.23000, -95.850000, "Pottawattamie County", "Not shown",
+       "Named by the county", "Pottawattamie, withheld and not credited"],
+      [42.04940, -92.90710, "Marshall County", "Supervisor",
+       "Named by the county", "Marshall, from the statewide directory"]
+    ]) {
+      const page = await booted(context,
+        `${BASE}#point=${lat},${lng}&layers=county`);
+      const info = await cardText(page, "county");
+      if (info.error || !info.text.includes(county)) {
+        console.log(`  SKIP  county board, ${why} — card did not name ${county}`);
+        await page.close();
+        continue;
+      }
+      check(`county board, ${why}`,
+        info.text.includes(want), info.text.slice(0, 200));
+      if (absent) {
+        check(`county board, ${why} — no county-named sentence`,
+          !info.text.includes(absent), info.text.slice(0, 200));
+      }
+      await page.close();
+    }
+    await context.close();
+  }
+
+
   // 2b. The negative ground-truth point (from the worksheet: a point outside
   //     every anchor layer). Anchors that declare a location-relevance test
   //     (mod.coverage — see NEGATIVE_HIDDEN above) HIDE there: the toggle

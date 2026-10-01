@@ -66,27 +66,11 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3EKY%3C/text%3E%3C/svg%3E" />
 
 <style>
-/* Self-hosted subset of index.html's faces — the weights this page paints,
-   measured in a browser rather than read off the rules below: display 700
-   (the wordmark and every h2), body 400/500/600/700. The 700 is the
-   browser's own default bold for <strong>, <b> and <th>, which no
-   declaration here names; the 500 is the layer-guide link. Same files, same
-   unicode-ranges as the app.
-
-   THE MONO PAIR WAS UNREACHABLE UNTIL 2026-09-18, and it was the stack that
-   was wrong rather than the faces. --font-mono read `ui-monospace,
-   SFMono-Regular, Menlo, Consolas, monospace` and named no IBM Plex Mono, so
-   the matrix's ids and urls rendered in whatever mono the reader's OS
-   supplies and these faces were never fetched (measured: status `unloaded` on
-   all six sources pages). The cause was two copies of one stack — the app
-   declared its own, naming Plex, because it carries its own --font-* names
-   and cannot read the tokens-brand fence. The stack is the design system's
-   now, stated once in districtry/tokens/districtry.tokens.css, and
-   build_brand_tokens.py holds every surface to it and fails on a page that
-   defines a Plex face its own stack cannot reach. 400 sets the ids and urls;
-   500 the matrix's column headers, which state their weight rather than
-   taking the browser's default bold for <th> — Plex ships here at 400 and 500
-   only. */
+/* Self-hosted subset of index.html's faces — only the weights this page
+   paints, measured in a browser rather than read off the rules below:
+   display 700 (the wordmark and every h2), body 400/600/700. The 700 is
+   the browser's own default bold for <strong>, <b> and <th>, which no
+   declaration here names. Same files, same unicode-ranges as the app. */
 @font-face {
   font-family: 'Barlow Condensed';
   font-style: normal;
@@ -122,22 +106,6 @@
 @font-face {
   font-family: 'Barlow';
   font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(fonts/barlow-500-latin-ext.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Barlow';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(fonts/barlow-500-latin.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Barlow';
-  font-style: normal;
   font-weight: 600;
   font-display: swap;
   src: url(fonts/barlow-600-latin-ext.woff2) format('woff2');
@@ -165,38 +133,6 @@
   font-weight: 700;
   font-display: swap;
   src: url(fonts/barlow-700-latin.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(fonts/ibm-plex-mono-400-latin-ext.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(fonts/ibm-plex-mono-400-latin.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(fonts/ibm-plex-mono-500-latin-ext.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(fonts/ibm-plex-mono-500-latin.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* ==== ENGINE:BEGIN tokens-brand ==== */
@@ -1111,6 +1047,7 @@ footer.site-footer a { color: var(--accent-deep); }
       officeholder.</p>
     <div class="footer-links">
       <a href="./">← Back to the map</a>
+      <a href="faq.html">Common questions</a>
       <a href="sources.html">Sources &amp; data layers</a>
       <a href="../privacy.html">Privacy</a>
       <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>

@@ -39,6 +39,7 @@ import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
     UA_ROSTER_BOT,
     require_robots_once,
+    output_path,
 )
 
 BOARD_URL = "https://www.whitecounty-il.gov/county-board"
@@ -142,7 +143,7 @@ def parse_polling(page):
 
 
 def main():
-    out_path = sys.argv[1] if len(sys.argv) > 1 else "white_county_board_raw.json"
+    out_path = output_path("white_county_board_raw.json")
     require_robots_once(BOARD_URL, HEADERS["User-Agent"], headers=HEADERS,
                         label="il-white-county-board-scraper")
     board_resp = requests.get(BOARD_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT)

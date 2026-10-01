@@ -85,7 +85,7 @@ All 99 counties: supervisor districts with each county's own election plan, town
 - [Who is on my city council?](https://districtry.com/ia/city-council.html)
 - [Who is my U.S. representative?](https://districtry.com/ia/congress.html)
 - [Who is my county auditor?](https://districtry.com/ia/county-auditor.html)
-- [Who is my county supervisor?](https://districtry.com/ia/county-supervisor.html): links a page per county, 91 of them, each naming every member with whatever contact details that county publishes.
+- [Who is my county supervisor?](https://districtry.com/ia/county-supervisor.html): links a page per county, 96 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/ia/sources.html)
 - [Who is my Iowa legislator?](https://districtry.com/ia/state-legislature.html)
 - [Common questions about Iowa districts](https://districtry.com/ia/faq.html)
@@ -93,9 +93,9 @@ All 99 counties: supervisor districts with each county's own election plan, town
 
 ## Michigan
 
-All 83 counties: commissioner districts, compiled by the state from the plan each county's apportionment commission files — plus townships and charter townships, cities and villages, school districts, and the Michigan Senate, House and U.S. House seats, and who holds those.
+All 83 counties: commissioner districts, compiled by the state from the plan each county's apportionment commission files — plus townships and charter townships, cities and villages, school districts and intermediate school districts, circuit courts and Court of Appeals districts, and the Michigan Senate, House and U.S. House seats, and who holds those.
 
-- [Michigan district lookup](https://districtry.com/mi/): 15 layers, all 83 counties.
+- [Michigan district lookup](https://districtry.com/mi/): 18 layers, all 83 counties.
 - [Who is on my city council?](https://districtry.com/mi/city-council.html)
 - [Who is my U.S. representative?](https://districtry.com/mi/congress.html)
 - [County commissioner district lookup](https://districtry.com/mi/county-commissioner.html): links a page per county, 83 of them, each naming every member with whatever contact details that county publishes.
@@ -108,7 +108,7 @@ All 83 counties: commissioner districts, compiled by the state from the plan eac
 
 All 87 counties: townships and cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Minnesota Senate, House and U.S. House districts, and who holds the U.S. House seats.
 
-- [Minnesota district lookup](https://districtry.com/mn/): 13 layers, all 87 counties.
+- [Minnesota district lookup](https://districtry.com/mn/): 14 layers, all 87 counties.
 - [Who is my U.S. representative?](https://districtry.com/mn/congress.html)
 - [Sources & data layers](https://districtry.com/mn/sources.html)
 
@@ -116,9 +116,10 @@ All 87 counties: townships and cities, school districts, ZIP codes, and the near
 
 All 120 counties: the county a point sits in, and the Kentucky Senate, House and U.S. House districts — with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the fiscal courts, and the Data gaps panel says why.
 
-- [Kentucky district lookup](https://districtry.com/ky/): 4 layers, all 120 counties.
+- [Kentucky district lookup](https://districtry.com/ky/): 8 layers, all 120 counties.
 - [Who is my U.S. representative?](https://districtry.com/ky/congress.html)
 - [Sources & data layers](https://districtry.com/ky/sources.html)
+- [Kentucky district questions](https://districtry.com/ky/faq.html)
 
 ## Where the answers come from
 

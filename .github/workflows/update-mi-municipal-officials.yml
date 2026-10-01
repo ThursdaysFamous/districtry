@@ -1,0 +1,100 @@
+name: Update Michigan city and township boards
+
+# Weekly refresh of mi/data/app/mi-municipal-officials.json, read by
+# mi/index.html's City or Village and Township or City cards.
+#
+# WHY IT IS ONE PAGE PER UNIT. Michigan publishes no statewide roster of city
+# councils or township boards, so each board comes from the unit's own website.
+# The units read are the UNITS tables in mi/scripts/mi_municipal_parsers_*.py
+# and are not restated here, because a count in a comment goes stale on the
+# change that moves it. Each is a city or township over 25,000 people whose own
+# page names every seat; the ones that refuse us, challenge us or name only
+# part of their board are recorded in the mi-municipal-officeholders and
+# mi-township-officers gap records instead.
+#
+# A unit whose page cannot be read this week keeps its last-read names, marked
+# with the date they were read, and the builder fails once a unit has been
+# carried for more than 45 days, so a dark source reaches a person.
+#
+# Nothing here works around an access control. robots.txt is read through
+# scripts/robots_policy.py before the first fetch of every host and a stated
+# Crawl-delay is honoured; a captcha or managed challenge is left alone.
+
+on:
+  schedule:
+    - cron: "30 20 * * 0" # Sunday 20:30 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # Full history: build_sitemap.py reads each page's lastmod from git,
+          # and a depth-1 clone dates every page today
+          # (update-mi-commissioner-roster.yml records the measurement).
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install -c mi/scripts/requirements.txt requests
+
+      # The builder carries an unread unit forward from the committed file,
+      # so nothing needs restoring before the scrape.
+      - name: Scrape each unit's own board page
+        run: python3 mi/scripts/mi_municipal_officials_scraper.py
+
+      - name: Rebuild the city and township board roster
+        run: python3 mi/scripts/build_mi_municipal_officials.py
+
+      - name: Validate app + data files
+        run: python3 mi/scripts/validate_index.py mi/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- mi/data/app/mi-municipal-officials.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR.
+          branch="bot/mi-municipal-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          # docs/EAM_STATUS.md counts the units this roster names, so regenerate
+          # it here or the smoke gate's `build_eam_status.py --check` fails on
+          # this PR (that script's check_workflows() names this job).
+          python3 scripts/build_eam_status.py
+          git add mi/data/app/mi-municipal-officials.json docs/EAM_STATUS.md
+          git commit -m "Update Michigan city and township boards"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Michigan city and township boards" \
+              --body "Automated weekly refresh of the names on the City or Village and Township or City cards, read from each unit's own board page. The units covered are the UNITS tables in \`mi/scripts/mi_municipal_parsers_*.py\`; the run's own log names each one and how many seats it named. A unit whose page could not be read keeps last week's names with the date they were read. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

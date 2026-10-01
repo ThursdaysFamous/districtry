@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **231 distinct hosts** those files
-name, **43 are fetched by the browser**; the other 188 are links.
+makes from a link a reader clicks. Of **234 distinct hosts** those files
+name, **43 are fetched by the browser**; the other 191 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -121,13 +121,13 @@ prose.
 | instance | layers that send the point | registered layers |
 |---|---|---|
 | il | 5 | 40 |
-| ny | 0 | 36 |
+| ny | 0 | 35 |
 | ca | 0 | 16 |
 | wi | 1 | 31 |
 | ia | 0 | 20 |
-| mi | 0 | 15 |
-| mn | 6 | 13 |
-| ky | 0 | 4 |
+| mi | 0 | 18 |
+| mn | 6 | 14 |
+| ky | 4 | 8 |
 
 ### Where each layer's shapes come from
 
@@ -180,7 +180,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`, `library`, `early-voting`.
 - Fetched by the app itself with no layer on, for its coverage tests: `data.cityofchicago.org`, `tigerweb.geo.census.gov`.
 
-#### ny — 14 of 36 layers fetch their shapes
+#### ny — 14 of 35 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -201,7 +201,6 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `county`, `nys-central-hs-district`, `nys-school-district`, `municipality`, `village`, `borough`, `judicial-district`, `borough-president`, `district-attorney`, `congress`, `municipal-court`, `state-senate`, `state-assembly`, `county-legislature`.
 - Point layers (locations, not shapes): `school-site`, `police-station`, `fire-station`, `post-office`, `library`, `early-voting`, `polling-place`.
-- **Not measured** — declared since the probe ran: `county-supervisor`.
 
 #### ca — 4 of 16 layers fetch their shapes
 
@@ -240,7 +239,7 @@ measured until the next run describes it.
 - Drawn from this site's own files: `us-house`, `ia-judicial-district`, `iowa-aea`, `ia-senate`, `county`, `ia-house`, `county-supervisor`, `school-district-unified`, `school-director-district`, `community-college`, `cc-director-district`, `city-ward`, `precinct`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `post-office`.
 
-#### mi — 5 of 15 layers fetch their shapes
+#### mi — 5 of 18 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -252,6 +251,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `mi-senate`, `county`, `mi-house`, `county-commissioner`, `city-ward`, `precinct`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+- **Not measured** — declared since the probe ran: `mi-court-of-appeals`, `mi-circuit-court`, `mi-isd`.
 
 #### mn — not measured
 
@@ -262,16 +262,16 @@ measured until the next run describes it.
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
 | il | 130 | 389 | 6 |
-| ny | 38 | 30 | 0 |
+| ny | 38 | 29 | 0 |
 | ca | 17 | 14 | 0 |
-| wi | 91 | 262 | 5 |
-| ia | 70 | 57 | 0 |
-| mi | 30 | 55 | 1 |
-| mn | 19 | 7 | 0 |
+| wi | 91 | 263 | 5 |
+| ia | 70 | 58 | 0 |
+| mi | 31 | 59 | 1 |
+| mn | 20 | 8 | 0 |
 | ky | 10 | 7 | 0 |
-| **total** | **405** | **821** | **12** |
+| **total** | **407** | **827** | **12** |
 
-**133 distinct source hosts** across the six manifests. Each instance's
+**134 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

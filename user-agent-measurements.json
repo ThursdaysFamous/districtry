@@ -17,9 +17,9 @@
   "robots-unreadable": 4,
   "stack-not-token": 7,
   "tls-chain": 1,
-  "token-ok": 226,
+  "token-ok": 241,
   "token-refused": 3,
-  "token-refused-and-stack": 15
+  "token-refused-and-stack": 18
  },
  "hosts": {
   "api.us.socrata.com": {
@@ -345,6 +345,7 @@
    "callers": {
     "ia/scripts/ia_county_city_officials_scraper.py": "self",
     "ia/scripts/ia_county_minutes_chair_scraper.py": "self",
+    "ia/scripts/ia_township_officers_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
   },
@@ -3395,6 +3396,7 @@
     "ia/scripts/build_cedar_rapids_wards.py": "self",
     "ia/scripts/build_ia_city_contact.py": "self",
     "ia/scripts/build_ia_school_districts.py": "self",
+    "ia/scripts/build_ia_township_officers.py": "self",
     "ia/scripts/build_legislative_boundaries.py": "unknown",
     "ia/scripts/build_metro_outline.py": "self",
     "ia/scripts/build_state_counties.py": "unknown",
@@ -3671,6 +3673,25 @@
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
   },
+  "www.ankenyiowa.gov": {
+   "host": "www.ankenyiowa.gov",
+   "url": "https://www.ankenyiowa.gov/456/Mayor-City-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 107821 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 107821 bytes",
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
+  },
   "www.appletonwi.gov": {
    "host": "www.appletonwi.gov",
    "url": "https://www.appletonwi.gov/government/common_council.php",
@@ -3746,6 +3767,25 @@
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser"
    }
+  },
+  "www.bettendorf.org": {
+   "host": "www.bettendorf.org",
+   "url": "https://www.bettendorf.org/government/mayor___council/index.php",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 123218 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 123218 bytes",
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
   },
   "www.bloomingtonil.gov": {
    "host": "www.bloomingtonil.gov",
@@ -3907,6 +3947,25 @@
    },
    "measured": "2026-09-13"
   },
+  "www.cedarfalls.com": {
+   "host": "www.cedarfalls.com",
+   "url": "https://www.cedarfalls.com/1106/City-Council-Members",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 105907 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 105907 bytes",
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
+  },
   "www.chicago.gov": {
    "host": "www.chicago.gov",
    "url": "https://www.chicago.gov/city/en/depts/dcd/supp_info/special_service_areassaprogram.html",
@@ -3975,6 +4034,25 @@
     "scripts/galesburg_council_scraper.py": "self"
    }
   },
+  "www.ci.greenfield.wi.us": {
+   "host": "www.ci.greenfield.wi.us",
+   "url": "https://www.ci.greenfield.wi.us/334/Common-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 97686 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 97686 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "browser"
+   },
+   "measured": "2026-10-01"
+  },
   "www.ci.neenah.wi.us": {
    "host": "www.ci.neenah.wi.us",
    "url": "https://www.ci.neenah.wi.us/common-council/",
@@ -3992,6 +4070,25 @@
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
+  },
+  "www.cityofames.org": {
+   "host": "www.cityofames.org",
+   "url": "https://www.cityofames.org/My-Government/Mayor-and-City-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 82832 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 36 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 82832 bytes",
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
   },
   "www.cityofcresthill.com": {
    "host": "www.cityofcresthill.com",
@@ -4024,6 +4121,25 @@
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
+  },
+  "www.cityofdubuque.org": {
+   "host": "www.cityofdubuque.org",
+   "url": "https://www.cityofdubuque.org/990/Mayor-City-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 120745 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 120745 bytes",
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
   },
   "www.cityoflockport.net": {
    "host": "www.cityoflockport.net",
@@ -4063,6 +4179,41 @@
     "wi/scripts/validate_sources.py": "both",
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
+  },
+  "www.cityofmarion.org": {
+   "host": "www.cityofmarion.org",
+   "url": "https://www.cityofmarion.org/about-us/mayor-city-council/council-profiles",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 88065 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 88065 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
   },
   "www.cityofwautoma.com": {
    "host": "www.cityofwautoma.com",
@@ -4636,6 +4787,25 @@
     "scripts/validate_sources.py": "self"
    }
   },
+  "www.councilbluffs-ia.gov": {
+   "host": "www.councilbluffs-ia.gov",
+   "url": "https://www.councilbluffs-ia.gov/m/directory/department?did=64",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 172154 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 172154 bytes",
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
+  },
   "www.cpsboe.org": {
    "host": "www.cpsboe.org",
    "url": "https://www.cpsboe.org/about/bios",
@@ -4693,6 +4863,25 @@
    "callers": {
     "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
+  },
+  "www.davenportiowa.com": {
+   "host": "www.davenportiowa.com",
+   "url": "https://www.davenportiowa.com/government/mayor_council/city_council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 149928 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 7 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 149928 bytes",
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
   },
   "www.desmoinescounty.iowa.gov": {
    "host": "www.desmoinescounty.iowa.gov",
@@ -4851,6 +5040,25 @@
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
+  },
+  "www.franklinwi.gov": {
+   "host": "www.franklinwi.gov",
+   "url": "https://www.franklinwi.gov/Departments/Elected-Officials/Common-Council.htm",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 75642 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 1 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 75642 bytes (page carries a captcha widget)",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "browser"
+   },
+   "measured": "2026-10-01"
   },
   "www.germantownwi.gov": {
    "host": "www.germantownwi.gov",
@@ -5037,6 +5245,41 @@
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
+  },
+  "www.icgov.org": {
+   "host": "www.icgov.org",
+   "url": "https://www.icgov.org/government/city-council",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 121809 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 121809 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
   },
   "www.ilga.gov": {
    "host": "www.ilga.gov",
@@ -5680,6 +5923,25 @@
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
+  "www.marshalltown-ia.gov": {
+   "host": "www.marshalltown-ia.gov",
+   "url": "https://www.marshalltown-ia.gov/154/Mayor-City-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 110308 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 110308 bytes",
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
+  },
   "www.massaccountyil.gov": {
    "host": "www.massaccountyil.gov",
    "url": "https://www.massaccountyil.gov/county-commissioner/",
@@ -5872,6 +6134,25 @@
     "scripts/il_county_commissioners_scraper.py": "browser"
    }
   },
+  "www.muskego.wi.gov": {
+   "host": "www.muskego.wi.gov",
+   "url": "https://www.muskego.wi.gov/government/boards_commissions/common_council.php",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 82128 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 82128 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "browser"
+   },
+   "measured": "2026-10-01"
+  },
   "www.newberlinwi.gov": {
    "host": "www.newberlinwi.gov",
    "url": "https://www.newberlinwi.gov/",
@@ -5952,6 +6233,25 @@
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
+  },
+  "www.ottumwa.us": {
+   "host": "www.ottumwa.us",
+   "url": "https://www.ottumwa.us/government/mayor_and_city_council_new.php",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 122191 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 122191 bytes",
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
   },
   "www.outagamie.gov": {
    "host": "www.outagamie.gov",
@@ -6197,6 +6497,25 @@
     "scripts/shelby_county_board_scraper.py": "self"
    }
   },
+  "www.sioux-city.org": {
+   "host": "www.sioux-city.org",
+   "url": "https://www.sioux-city.org/247/City-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 100079 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 100079 bytes",
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
+  },
   "www.skokie.org": {
    "host": "www.skokie.org",
    "url": "https://www.skokie.org/486/Board-of-Trustees",
@@ -6266,6 +6585,25 @@
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
+  },
+  "www.urbandale.org": {
+   "host": "www.urbandale.org",
+   "url": "https://www.urbandale.org/326/Mayor-City-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 111224 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 111224 bytes",
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
   },
   "www.vercounty.org": {
    "host": "www.vercounty.org",
@@ -6525,6 +6863,41 @@
     "scripts/will_city_councils_scraper.py": "self"
    }
   },
+  "www.wdm.iowa.gov": {
+   "host": "www.wdm.iowa.gov",
+   "url": "https://www.wdm.iowa.gov/government/mayor-city-council/biographies",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 104325 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 104325 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "ia/scripts/ia_city_council_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
+  },
   "www.webstercountyia.gov": {
    "host": "www.webstercountyia.gov",
    "url": "https://www.webstercountyia.gov/departments/auditor_commissioner_of_elections/index.php",
@@ -6543,6 +6916,25 @@
     "ia/scripts/ia_county_auditor_scraper.py": "self"
    },
    "measured": "2026-09-13"
+  },
+  "www.westbendwi.gov": {
+   "host": "www.westbendwi.gov",
+   "url": "https://www.westbendwi.gov/government/elected_officials/west_bend_common_council/index.php",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 101259 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 101259 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "browser"
+   },
+   "measured": "2026-10-01"
   },
   "www.whitecounty-il.gov": {
    "host": "www.whitecounty-il.gov",
