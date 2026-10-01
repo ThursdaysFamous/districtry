@@ -3017,11 +3017,14 @@ any local government's website.
 
 ## Ask il-five-counties-commissioner-roster — five Illinois county clerks: who holds the commissioner seats?
 
-**Status: HARDIN SENT 2026-10-01; THE OTHER FOUR DRAFTED 2026-10-01.** Named rather than
-numbered, for the reason `il-gurnee-board-names` above gives.
+**Status: HARDIN SENT 2026-10-01 AND ANSWERED THE SAME DAY; THE OTHER FOUR DRAFTED
+2026-10-01.** Named rather than numbered, for the reason `il-gurnee-board-names` above gives.
 
-Gaps `hardin-county-board`, `johnson-county-board`, `perry-county-website-blocked`,
-`pope-county-board`, `scott-county-commissioners`.
+Gaps `johnson-county-board`, `perry-county-website-blocked`, `pope-county-board`,
+`scott-county-commissioners`. **Hardin's gap record is gone**: Clerk Jill Cowsert answered
+within seven minutes of the letter, naming all three commissioners, and they ship — so the
+record that said they were unnamed no longer describes the county. This is the first of these
+five to close, and it closed on a reply rather than on anything found.
 
 **THREE OF THESE FIVE LETTERS WERE WRITTEN AS FIRST APPROACHES AND THREE OF THESE COUNTIES
 HAD ALREADY WRITTEN BACK.** Corrected 2026-10-01, after the operator asked whether we were
@@ -3055,7 +3058,7 @@ makes about the county against the county.**
 
 | county | seats | what blocks the roster | prior contact |
 |---|---|---|---|
-| Hardin | 6 precincts, commission form | the county has no website at all, as its Clerk stated on 24 August 2026 | 21 July, 5, 16 and 21 August 2026; answered 24 August; asked again 1 October |
+| Hardin — **CLOSED** | 3 commissioners | nothing now: all three are named and shipped | 21 July, 5, 16 and 21 August 2026; answered 24 August; asked again 1 October and answered the same day |
 | Johnson | 3 commissioners | the county has no website at all, as its Clerk stated on 21 July 2026 | 21 July 2026, answered the same day; 5 and 16 August, unanswered |
 | Perry | 3 commissioners | the county's site turns away automated visits | none |
 | Pope | unknown | the web address serves a template page carrying no county information, and the clerk's domain is mail-only with no website behind it | none |
@@ -3280,10 +3283,16 @@ answered from a different office, so the letter names both correctly.
 ### What each answer means
 
 - **A roster** — it ships on that county's board card, sourced to the county, and the card
-  stops saying nothing where it should name three or six people. Hardin, Johnson, Perry and
-  Scott each close on one reply. For Hardin and Johnson that reply is the only route there
-  will ever be, because each county's own Clerk has told us the county publishes no website —
-  so no amount of further looking can close those two.
+  stops saying nothing where it should name three or six people. **Hardin is the proof and it
+  took seven minutes**: Clerk Cowsert's reply of 1 October named all three commissioners, they
+  ship, and the gap record is gone. Johnson, Perry and Scott each close the same way, on one
+  reply. For Johnson that reply is the only route there will ever be — as it was for Hardin —
+  because each county's own Clerk has told us the county publishes no website, so no amount of
+  further looking could ever have closed either one.
+- **And a county with no website is a document roster permanently.** Hardin joins Edwards and
+  Wabash in the small table of counties whose members are carried from a letter rather than
+  re-read from a page, so every weekly run prints which document those three names came from
+  and how old it is. Nothing re-verifies itself here; the only refresh is another letter.
 - **Pope answering "county-wide"** — its commissioners ride the County card like nineteen
   other Illinois counties, with no district geometry and no toggle, and the county joins the
   tier it belongs to. Answering "by district" opens a map question instead, which is a
@@ -3691,6 +3700,15 @@ first line that we have written before and are not asking that again.
 SETTLE.** Writing "I wrote to you in August" to somebody who has had three letters, the last of
 them calling itself final, reads as not having kept track — which is exactly the impression a
 fourth letter can least afford.
+
+**AND THE GAP RECORD WAS CLAIMING SILENCE IT HAD NOT MEASURED.** It carried the 16 August
+follow-up and read UNRESPONSIVE, which was true of that letter and stopped being the whole truth
+when the 4 September one went: the record now names 4 September and reads PENDING, because the
+standard counts thirty days from the LAST time the county had a chance to answer and that is
+twenty-seven days ago. It turns back to unresponsive on 4 October without anybody editing
+anything, and the build prints the countdown on every run. **A later follow-up makes a silence
+claim younger, not older**, so the field has to hold the most recent letter rather than the
+first.
 
 **Why it is needed when the county publishes the answer.** Ford's own board page lists its
 members with their districts, and that page's record in this project has said so since
