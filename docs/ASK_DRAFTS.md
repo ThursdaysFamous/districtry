@@ -152,7 +152,7 @@ which is a claim about the ask and never about the source.
 | Will County Clerk | none | first contact, correct |
 | Grundy County GIS | the county CLERK was written 2026-07-21; this is a different mailbox | first contact to this office, correct |
 | Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
-| Hardin County Clerk (IL) | who holds the commissioner seats | **seal 2026-07-21; board 08-05, 08-16, 08-21; ANSWERED 08-24** — countywide board, and NO county website | **SENT 2026-10-01**, as a reply on her own thread. Illinois's wording said the county's web address "leads to a parked page"; the Clerk had already said there is no website, so that claim is gone |
+| Hardin County Clerk (IL) | who holds the commissioner seats | **seal 2026-07-21; board 08-05, 08-16, 08-21; ANSWERED 08-24** — countywide board, and NO county website | **SENT 2026-10-01 and ANSWERED IN SEVEN MINUTES**: three commissioners, with Darrick Armstrong as chairman, Ricky Williams as vice-chairman and Michael Belfor the third. That closes the county's roster gap, and it is the clearest argument this file has for the prior-contact check — the question was answered at the fourth attempt, by a clerk who had already told us twice what the county does not have. Illinois's wording said the county's web address "leads to a parked page"; the Clerk had already said there is no website, so that claim is gone |
 | Johnson County Clerk (IL) | the same | **seal 07-21, ANSWERED twice that day** ("We don't have a website to point back to"); board 08-05 and 08-16, no reply | drafted 2026-10-01. Illinois's wording said the county's website "declines automated visits"; the Clerk had already said there is none |
 | Perry County Clerk (IL) | the same | seal 07-20; two questions 08-05; follow-up 08-16; no reply | drafted 2026-10-01 with an opening citing all three |
 | Pope County Clerk (IL) | the board's form, then the names | seal 07-20; board 08-05; third note 08-16; no reply | drafted 2026-10-01, opening "This is my fourth note" |
@@ -169,15 +169,37 @@ no letter is owed. Withdrawn is not unanswered.
 
 ### Sent later on 2026-10-01 — every reply, apology and correction went the same afternoon
 
-Read off the sent folder at 16:15, not off this file. **Twenty more letters went between
-14:46 and 16:08**, which closes the whole morning's correspondence: the nine replies to
-offices that had answered, the seven apologies, the three Michigan corrections and
-Hardin's follow-up. Nothing that was owed to an office that wrote to us is still sitting
-as a draft.
+Read off the sent folder at 16:30, not off this file. **Thirty letters went between 15:18
+and 16:19**: eight replies to offices that had answered, six apologies, the three Michigan
+corrections, Hardin's follow-up, and then twelve of the letters that had been sitting in
+the drafted-and-waiting table — Bellevue, New York's local-government directory, Logan,
+Will, Whiteside, Grundy, Knox's continuation, Lafayette, Ozaukee, the League of Wisconsin
+Municipalities, Colona and Marion. Nothing owed to an office that wrote to us is still a
+draft.
 
-**Only five letters are now waiting on the operator's hand**: the Johnson, Perry, Pope,
-Scott and Ford county clerks in Illinois. Everything else in the table above either went
-or has no address to go to.
+**TWO COUNTS IN AN EARLIER VERSION OF THIS SECTION WERE WRONG AND BOTH WERE WRONG IN THE
+FLATTERING DIRECTION.** It said twenty letters, between 14:46 and 16:08, and that the nine
+replies had all gone. Eight had: the ninth, the reply to Cass asking for her pairing as
+text rather than as pictures, was still a draft while the sentence saying it had gone was
+being written. And 14:46 is when the MORNING batch started, not the afternoon's — those
+were the original asks, already recorded a section above, so the window swept in letters
+it then counted twice. **A count of what went is a count off the sent folder, taken at a
+stated minute, and never a count of what was drafted plus a belief that it went.** That is
+the same error this whole section opens by naming, made inside the section that names it.
+
+**What is waiting on the operator's hand is not a short list and should not be summarised
+as one.** Counted at 16:30: fifteen letters with an address — the Johnson, Perry, Pope,
+Scott and Ford county clerks in Illinois, the Cass reply, Henderson, Christian, Clark,
+Bureau, Jones County, Kentucky's Administrative Office of the Courts, and Grundy's
+re-addressed letter — plus three deliberately blank ones.
+
+**THE GRUNDY LETTER WAS SENT AND REACHED NOBODY.** The county's own GIS Data Request page
+publishes `gisdatarequest@grundycountyil.gov`, and the county's own mail server refused it
+at 16:17 as an undeliverable address — a published contact point that reaches no one, which
+is worth telling them. The letter already addressed the county's GIS officer by name, and
+the county's staff directory publishes his own address, so it is redrafted to him, opening
+by reporting the bounce. **A letter that bounced is not a letter that was sent**, and it
+earns no follow-up clock until it lands.
 
 **Four of the Iowa answers are complete, in plain text, and are buildable work rather
 than a wait** — Ida (three districts), Osceola, Sioux and Tama (five each) each name
