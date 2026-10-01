@@ -1261,20 +1261,6 @@ detail into `blocker`.
       "wanted": "Whether the board is elected by district or county-wide — then either the district boundaries as map data, or the commissioners' names from a county source."
     },
     {
-      "id": "quincy-ward-officeholders",
-      "concept": "City council members",
-      "area": "Quincy (Adams County)",
-      "counties": [
-        "adams"
-      ],
-      "kind": "no-source",
-      "layer": "ward",
-      "summary": "Quincy's seven wards are drawn, but the card names no alderman for them.",
-      "why": "The city's website turns away automated visits, and the one city archive that is readable names aldermen without ever saying which ward each of them holds.",
-      "blocker": "Checked 2 Aug 2026 and re-measured 2026-08-20. quincyil.gov answers 403 Access Denied (370-386 bytes) from AkamaiGHost with Akamai's edgesuite reference — the same Granicus GovAccess-behind-Akamai stack as its county, and the same flat refusal rather than a puzzle a browser works through; its TLS chain verifies cleanly, so this is not the Coles missing-intermediate case. A REAL DOCUMENT PATH WAS TESTED, not just the front page: a council minutes PDF harvested from search denies too. WHAT IS NEW, AND THE REASON THIS RECORD NOW SAYS MORE THAN \"BLOCKED\": quincyil.granicus.com sits OUTSIDE the WAF and is a live, machine-readable archive — 61 council meetings from May 2025 to Aug 2026, agendas as real text-layer PDFs, an RSS index, and minutes carrying a roll call. It was read, and it still cannot answer this gap. Across 49 agendas fetched, every aldermanic name appears incidentally (a committee appointment, a motion to table) and NOT ONE is paired with a ward; the minutes' roll call lists ten of the fourteen seats with no ward on any of them. The trap to name explicitly, because the next reader will hit it: agenda text does contain \"Ward 3\", \"Ward 4\", \"Wards 4 & 7\" — but those are the LOCATION OF THE AGENDA ITEM (a street closure, a parade route, a zoning case), not the speaking alderman's ward, and reading \"Ald. Sassen … Ward 4\" as a ward assignment is precisely the inference the honesty rules forbid. The two meetings that would settle it — the May 2025 post-election organizational meetings where oaths are administered by ward — are the only ones whose agendas the portal reports as not published. A SECOND TRAP, reproduced byte-for-byte and worth recording fleet-wide: one minutes link taken from Quincy's OWN archive returns HTTP 200 and a well-formed 3-page PDF that is the governing body of TOPEKA, KANSAS, served under a quincyil_-prefixed filename, identical md5 on two fetches. That is the AccessLiberty login-page-as-PDF class and worse, because what it hands you is a tidy roster of names paired with district numbers. Any Granicus reader must check that the document names the jurisdiction it asked for.",
-      "wanted": "Quincy's council roster BY WARD, from any source a program is allowed to read. Names alone aren't enough — this card answers which ward you're in."
-    },
-    {
       "id": "randolph-fire-park-library",
       "concept": "Fire and park districts",
       "area": "Randolph County",
@@ -4381,8 +4367,14 @@ these is a municipal-officials or roster gap where the county may hold a documen
 
 `kankakee-municipal-officials` · `lake-municipal-names` · `lee-municipal-officials` ·
 `whiteside-municipal-officials` · `mason-roster-is-a-scan` (ask for the board list as text
-or a spreadsheet rather than a scan) · `adams-county-board-roster` and
-`quincy-ward-officeholders` (both blocked at the website, neither asked directly).
+or a spreadsheet rather than a scan) · `adams-county-board-roster` (blocked at the
+website, never asked directly). `quincy-ward-officeholders` WAS LISTED HERE AND IS
+CLOSED, 2026-10-01, with no ask sent: the city rebuilt its site onto Granicus and it
+answers this project's own token with HTTP 200 and a full page, where on 2026-08-20 it
+answered 403 from AkamaiGHost. All fourteen aldermen are now named by ward from
+`https://www.quincyil.gov/Government/City-Council`. **RE-MEASURE A HOST BEFORE DRAFTING
+AN ASK ABOUT IT** — a refusal is a measurement of a day, and this one had been carried
+for six weeks.
 
 **Tier 3 — geometry, addressed to GIS.** The Ogle shape, and the largest tier by count.
 Precinct boundaries: Brown, Calhoun, Henry, Livingston, Marshall, Pike, Putnam,
@@ -8064,6 +8056,51 @@ writing that A is the village limits and B the unincorporated remainder, so one 
 districts and the count is eighteen on both surfaces. Reversing the decision is a separate change
 with its own argument, and the raw-canvass duplicate check described above has not been run for it.
 
+### 2026-10-01: five large cities name their councils, and the host that had refused us for six weeks
+
+The done standard's fourth test, settled the same day, asks that every general-purpose local
+government above 25,000 people name a governing body. Measured by `scripts/build_eam_status.py`,
+thirteen Illinois units above that line named nobody. Five of them — **Champaign, Decatur, Normal,
+Quincy and Danville** — are each the only unit above the line in a county with no municipal
+directory this project can read: Champaign, Macon, Adams and Vermilion publish none at all, and
+McLean's names three villages and omits the Town of Normal wholesale. All five now ship from their
+own council pages through `scripts/il_large_city_councils_scraper.py`, 53 people in total, read
+weekly by `update-municipal-officials.yml` and preserved per city if a run cannot reach them. That
+is the Galesburg and Freeport shape rather than a sweep: the five places are named in
+`PRESERVABLE`, and a sixth cannot join without an edit to that list.
+
+**THE QUINCY RECORD WAS A MEASUREMENT OF ONE DAY AND WAS CARRIED FOR SIX WEEKS.** The
+`quincy-ward-officeholders` gap said the city's site "turns away automated visits", measured
+2026-08-20 as a 403 from AkamaiGHost, and the Adams line in the coverage table said the same. Asked
+again on 2026-10-01 with the same client, `quincyil.gov` answers **HTTP 200 with 116,904 bytes**:
+the city has rebuilt onto Granicus, publishes one page per alderman, and each of those pages prints the
+alderman's name and the ward they hold, which is the pairing the retired record said
+was unavailable. Fourteen aldermen by ward, with a
+direct telephone and a city e-mail each, and the gap is retired. Nothing was asked and nothing was
+worked around — the only thing that had changed was the website, and nobody had looked.
+**Re-measure a refusing host before drafting an ask about it, and before repeating the refusal in
+a record.**
+
+**WHAT DID NOT CLOSE, AND WHY EACH IS DIFFERENT.** Seven of the thirteen are in Lake County, which
+this job already reads at the contact-only rung: the county's open-data portal publishes a hall
+address for all 41 of its municipalities and names nobody, and the Lake County Municipal League's
+member pages were read the same day and republish exactly the same address and telephone — rung 3
+is not deeper than rung 4 here. Seven city sites is past any bounded exception, so Lake wants its
+own decision rather than a quiet seventh entry in this scraper. The eighth is **Urbana**, whose
+host `urbanaillinois.us` reset the connection on every attempt from this project's sandbox, on both
+clients and both spellings. That is a measurement of this vantage and not of the city, so it is
+recorded to be re-measured from a GitHub runner rather than written up as a refusal.
+
+One fetch-class note worth keeping, because it is the "change the stack, not the name" case again:
+all five city hosts serve `requests` plus the districtry token a full page, while
+`www.lakecountyil.gov` answers that same token **403 on `requests` and 200 on the stdlib client**.
+No browser string is sent anywhere in this change.
+
+Addresses are shipped at the municipality level only. Quincy's alderman pages print a street
+address per person — 1665 Hampshire St on one, 600 Adams St on another, neither of them the City
+Hall at 730 Maine St — and nothing on the page says whether those are offices or homes, so none of
+them ships.
+
 ## Backlog — researched candidates, deliberately not (yet) built
 
 Every entry cites where it's recorded and the blocker.
@@ -10923,7 +10960,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
   | ~~county-board — Woodford~~ **SHIPPED 2026-08-02, and Woodford is now a SERVED COUNTY** | TIGER township dissolve per Ord 2020/21 #005 (scripts/build_woodford_board_districts.py — 3 districts of whole townships, five members elected at large from each; anchors prove the composition) + weekly directory scrape (woodford_county_board_scraper.py) | 17/17 township match, no reconciliation needed; roster 15/15 with phone AND e-mail (the pass recorded phones only — the e-mails are spam-wrapped but verbatim in the wrapper's own source); no chair marked — elected from within the body, the directory doesn't say who holds it. Precincts shipped in the same change: TCRPC's election service, 37, polling joined 37/37 on the numeric polling reference with the precinct's own name cross-checked in the polling row's grouped label |
   | ~~county-board — Henry~~ **SHIPPED 2026-08-02, and Henry is the TWENTY-EIGHTH dispatched county** | TIGER townships dissolved per adopted Ordinance 21-33 (scripts/build_henry_board_districts.py — two districts of twelve whole townships, ten members each, the fleet's widest multi-member districts) + weekly scrape of the county's own CivicPlus directory, which the county itself keys BY DISTRICT (DID=39/40) | The double population proof landed THREE ways: the composition reproduces all four printed district totals to the person (2010: 25,158 + 25,328; 2020: 24,931 + 24,353 — each summing to the county's official census total), all 24 printed 2020 township populations equal live Census POP100 exactly (re-asserted on every build), and all 24 names match TIGER 24/24. Roster 20/20 with e-mail, 15 with phone; no chair marked anywhere in the directory, so none is tagged (the Woodford posture). Precincts stay raster-only — recorded as the new gap henry-county-precincts; municipal-officials rungs not yet worked (backlog). Gap henry-county-board-districts closed and henry-county-precincts opened in its place (the block holds at 61) |
   | ~~county-board — Boone~~ **SHIPPED 2026-08-02** | the county GIS's three per-district MapServer layers (District_1/2/3 at indexes 0/1/2, each pre-dissolved — verified to tile the county outline: 0 overlaps on a 479-point grid, anchors match member addresses) merged and district-tagged at load time + weekly board-page scrape (boone_county_board_scraper.py) | 12/12 by district with phone, e-mail AND the term-expiry year (staggered terms — per-seat ballot information, rendered through the shared stale-year gate); role tags verbatim: one Vice-Chairman, and NO Chairman named anywhere — one member is merely listed above the district sections, which earns no title. The leftover census-block attributes on the merged features are read nowhere; the precinct card gained the standard best-effort board-district join. Gap boone-county-board closed (the gaps block drops to 62) |
-  | ~~Adams — wards, fire, library~~ **SHIPPED 2026-08-02 (pass 8, second tranche)** | the same county AGOL org (`Web_Voting_Data/0`, `Web_District_Data/3` and `/2`) | Quincy's 7 wards SEAT-ONLY — quincyil.gov sits behind the same Akamai deny as its county, so no alderman is named and gap quincy-ward-officeholders records it. 26 fire districts across the county's 48 polygons: the 911 layer splits each district into MUTUAL-AID sub-areas ("TTFD: MA-Payson", "TTFD: MA-E4"), so DsplayName is the district and MapLabel is which partner responds there — drawn as published rather than dissolved, since each sub-area is a real answer to "who comes here". Every row is keyed to @quincyadams911.org, so this is a DISPATCH tiling and the caveat rides every card (the St. Clair posture). Library: 7 districts on 10 polygons, one of which the county names "None" — that is the county recording an area NO library district serves, so the card states the absence instead of naming a district called None. **School districts deliberately NOT added**: the app already answers statewide from TIGERweb, and a county-specific copy would duplicate an existing answer |
+  | ~~Adams — wards, fire, library~~ **SHIPPED 2026-08-02 (pass 8, second tranche)** | the same county AGOL org (`Web_Voting_Data/0`, `Web_District_Data/3` and `/2`) | Quincy's 7 wards — SEAT-ONLY until 2026-10-01, when all fourteen aldermen were named by ward from the city's own council pages. The claim that stood here, that quincyil.gov sits behind the same Akamai deny as its county, was true on 2026-08-20 and is FALSE now: the city has rebuilt onto Granicus and serves this project's own token a full page. Gap quincy-ward-officeholders is retired. 26 fire districts across the county's 48 polygons: the 911 layer splits each district into MUTUAL-AID sub-areas ("TTFD: MA-Payson", "TTFD: MA-E4"), so DsplayName is the district and MapLabel is which partner responds there — drawn as published rather than dissolved, since each sub-area is a real answer to "who comes here". Every row is keyed to @quincyadams911.org, so this is a DISPATCH tiling and the caveat rides every card (the St. Clair posture). Library: 7 districts on 10 polygons, one of which the county names "None" — that is the county recording an area NO library district serves, so the card states the absence instead of naming a district called None. **School districts deliberately NOT added**: the app already answers statewide from TIGERweb, and a county-specific copy would duplicate an existing answer |
   | ~~Adams — board districts + precincts~~ **SHIPPED 2026-08-02 (pass 8; 39th dispatched county, and the fleet's westernmost)** | the county's own AGOL org (`Web_Voting_Data/2`, `Adams_County_Voting_Precincts_view/0`) | 7 board districts VERIFIED to tile the county before shipping — 99.997% of the TIGER outline covered, largest pairwise overlap 5e-7 deg², Quincy/Camp Point/Mendon each resolving to exactly one — four small city districts inside Quincy plus three rural, which the areas confirm (D1-D4 ≈ 14 sq mi against Quincy's 15.7; D5-D7 ≈ 856; county 867). 74 PRECINCTS DRAWN AS 92 SHAPES, whose own feature carries BOTH the polling place (92/92 shapes) and the precinct's board district, so the precinct card is the fleet's least-joined: no spatial join, no name match. **CORRECTED 2026-09-04 — this row said 92 PRECINCTS for a month and the county runs 74.** The layer's 92 features carry only 74 distinct Precinct values, because the county's GIS stores several precincts multipart: RIV 2 is thirteen separate pieces, RIV 3 five, Q 1 three. Counting features counted pieces. Nothing a reader saw was wrong — a click lands in one shape and that shape carries the precinct's own name — but every stated count was, and a shape count is not a precinct count. **NO ROSTER, and none invented**: adamscountyil.gov is an Akamai hard WAF deny (391 bytes, x-reference-error, errors.edgesuite.net — the Joliet class) and the Archive holds the site root but not the board page, so the board card names the district, says plainly that the county publishes no membership, and links the body. Gap adams-county-board-roster records what would lift it. Quincy's 7 wards, 48 fire, 10 library and 10 school districts are present on the same org and deliberately left for a later tranche |
   | ~~Schuyler — at-large board~~ **SHIPPED 2026-08-02 (pass 8, the SEVENTH at-large county)** | the county's own Meet-the-Board page (weekly CI via il_county_commissioners_scraper.py) | 7 members with per-member phone and county e-mail, roles read from the page's own HEADINGS rather than from each row — Schuyler is the first county in this file where "Chairman" is a section title above a name, so the parser carries the heading forward and drops any name appearing before one rather than defaulting a role. AT-LARGE PROVEN from the Clerk's certified canvass (elections.schuyler.il.us/results-2.pdf): the contest is "FOR MEMBERS OF THE COUNTY BOARD … (Vote for not more than four)" with "Precincts Reporting 17 of 17", and the word "District" appears nowhere in its 11 pages. All seven rows print the SAME courthouse address (102 S. Congress St., Suite 104, Rushville), so it is hoisted to the board office once rather than repeated as seven residences — the Calhoun/Monroe posture; the phones do differ and stay on the rows. No dispatch entry, no coverage function, no toggle: Rushville simply moves from OUTSIDE to INSIDE in build_metro_outline, exactly as its OUTSIDE comment predicted when Mason and Brown closed the line around it |
   | ~~county-board — Grundy~~ **SHIPPED 2026-08-02** | the SHIPPED precinct layer dissolved per the adopted 10/12/2021 map (scripts/build_grundy_board_districts.py, the LaSalle machinery minus the splits — Grundy's districts are compositions of whole current precincts) + weekly board-page scrape (grundy_county_board_scraper.py) | The "40-row color transcription" was done programmatically, not by eye: the map PDF rendered at 300 dpi, the teal district-boundary strokes isolated, the three enclosed regions flood-labeled, and each precinct label placed by its text-layer coordinates — then PROVEN arithmetically, because the map prints every precinct's 2020 population: all three district sums reproduce the printed totals to the person (17,663/17,364/17,506). Roster 18/18 with party, since-year, committees verbatim (per-committee Chair/Vice-Chair suffixes kept), phone + e-mail; Chairman Drew Muffler tagged from his own row. Precinct card gains the board-district join. Gap grundy-county-board closed (61 remain) |

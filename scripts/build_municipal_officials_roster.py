@@ -480,6 +480,19 @@ PRESERVABLE = {
     # the only source that names Plano's council at all — and its four wards
     # are already drawn, which is what made a card that named nobody visible.
     "plano": {"kind": "enrich", "places": ["City of Plano"]},
+    # The five large cities added 2026-10-01 for the done standard's fourth
+    # test, which asks that every general-purpose local government above
+    # 25,000 people name a governing body. Each of these is the ONLY unit above
+    # that line in a county this project has no municipal directory for —
+    # Champaign, Macon, Adams and Vermilion publish none at all, and McLean's
+    # names three villages and omits the town of Normal wholesale. That is the
+    # Galesburg and Freeport shape, not a sweep: the places are named here, and
+    # a sixth city cannot join without an edit to this list.
+    "champaign-city": {"kind": "enrich", "places": ["City of Champaign"]},
+    "decatur": {"kind": "enrich", "places": ["City of Decatur"]},
+    "normal": {"kind": "enrich", "places": ["Town of Normal"]},
+    "quincy": {"kind": "enrich", "places": ["City of Quincy"]},
+    "danville": {"kind": "enrich", "places": ["City of Danville"]},
 }
 
 # Tie-break for a municipality claimed by two counties, applied only AFTER
