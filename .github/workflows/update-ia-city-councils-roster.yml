@@ -1,0 +1,155 @@
+name: Update IA city councils roster
+
+# Weekly refresh of the mayor and council of the FOURTEEN IOWA CITIES ABOVE
+# 25,000 that published nobody in this app before 2026-10-01
+# (ia/data/app/ia-city-councils.json, read by ia/index.html's City card).
+#
+# WHY THIS FILE EXISTS. Iowa has eighteen incorporated cities over 25,000.
+# Four were answered — Des Moines and Waterloo by ward, Cedar Rapids and Des
+# Moines by their own builders — and the other fourteen named nobody at all,
+# which was 96 officeholders a reader in those cities could not get from this
+# app, and the whole of what this instance was missing at the
+# local-government level of the done standard's Covered test.
+#
+# A SEPARATE JOB FROM update-ia-city-officials-roster.yml ON PURPOSE. That one
+# refreshes five SMALL cities under global gates — six seats each, exactly one
+# plain Mayor, an e-mail for every member — and not one of those holds across
+# these fourteen: Davenport seats ten, Sioux City five, and Council Bluffs
+# publishes no member e-mail at all. Loosening those gates to admit these
+# cities would have retired the gates that protect the five.
+#
+# WHAT THIS RUN IS REALLY WATCHING is whether fourteen cities' pages still
+# parse, and every floor is what the pages published at first build rather
+# than a target: 96 seats, 47 e-mails, 47 phones, 61 named seats, and eight of
+# the fourteen publishing any contact at all. The seat count is EXACT per
+# city, because a council's size is set by its charter and does not drift the
+# way a county board's roster does.
+#
+# NINE CONVENTIONS FOR FOURTEEN CITIES, AND THE PLATFORM PREDICTS NONE OF
+# THEM. Ankeny, Marshalltown, Urbandale, Sioux City and Council Bluffs all run
+# the same content system and need five different parsers; Davenport writes
+# `Seat, Name` where Marshalltown writes `Name, Seat`; and Cedar Falls writes
+# `Name-Seat` for its five wards and `At Large-Name` for its two at-large
+# members in one list, so the side is decided per row. Each city's shape is
+# declared explicitly and the scraper's `--selftest` asserts every arm.
+#
+# THREE CITIES PUBLISH THEIR MEMBERS' HOME ADDRESSES — Bettendorf, Dubuque and
+# Ottumwa — and none of them ships. On all three pages the address sits
+# BETWEEN the role and the phone, so a parser taking the line after the role
+# would ship it. The scraper reads name, role, seat, phone, e-mail and term
+# only, and the builder refuses to write any field that reads as a street
+# address, per field and again over the whole record.
+#
+# NOT EVERY PERSON ON A COUNCIL PAGE IS ON THE COUNCIL. Ames' Iowa State
+# ex-officio, Council Bluffs' Assistant to the Mayor and Iowa City's student
+# liaison are each dropped with their NAME PRINTED, never silently, because a
+# title that stops matching looks exactly like a person who left.
+#
+# TWO CITIES NAME NO MAYOR anywhere this project has read, and that is carried
+# as a measurement rather than filled in: Davenport, whose own Mayor's Office
+# page gives the office's address and telephone and no person, and Cedar
+# Falls, whose council page names its seven members while the `/67/Mayor` path
+# a reader would guess answers 404. Both carry `namesMayor: false`, and the
+# builder fails if either ever ships a mayor or if a city that should name one
+# stops.
+
+on:
+  schedule:
+    - cron: "30 20 * * 6" # Saturday 20:30 UTC (after the township refresh)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent, so
+      # the refresh still runs — it just goes back to opening unchecked PRs.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit. Under the default depth-1 checkout git reports the single
+          # fetched commit as the last commit of EVERY file, so every entry takes
+          # today's date and `build_sitemap.py --check` passes on it anyway.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install -c ia/scripts/requirements.txt requests
+
+      - name: Scrape the cities' own council pages (robots.txt consulted first)
+        run: python3 ia/scripts/ia_city_council_scraper.py
+
+      - name: Rebuild the roster (per-city seat gates, no addresses)
+        run: python3 ia/scripts/build_ia_city_councils.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, and every data/app file must be present,
+      # well formed and cached in exactly one service-worker list.
+      - name: Validate app + data files
+        run: python3 ia/scripts/validate_index.py ia/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- ia/data/app/ia-city-councils.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # THE PR BODY IS AN env: BLOCK SCALAR, NOT A SHELL STRING, AND THAT IS
+          # LOAD-BEARING. A multi-line double-quoted string inside `run: |` puts
+          # its continuation lines at column 0, which ENDS the block scalar —
+          # GitHub then rejects the whole file as an invalid workflow and every
+          # run instant-fails with zero jobs.
+          PR_BODY: |
+            Automated weekly refresh of the mayor and council of the fourteen Iowa cities above 25,000 that publish a council page this app can read, shown on the City card. Generated by `ia/scripts/build_ia_city_councils.py` from `ia_city_council_scraper.py`.
+
+            Please review the diff before merging — this changes data about real officeholders.
+
+            **Three things worth reading closely here.** A city's seat count is EXACT, not a floor, so a change in one is the page changing shape or the city changing its charter and both need reading before this merges. No field may read as a street address: three of these cities publish their members' home addresses beside their names, and the builder refuses to write one. And a person appearing or disappearing may be a title that stopped matching rather than somebody leaving — the scraper prints every name it drops and why, so read that output beside the diff.
+
+            Two of the fourteen name no mayor on any page this project reads, which is carried as a measurement rather than filled in; the builder fails if that ever changes in either direction.
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR
+          # every week.
+          branch="bot/ia-city-councils-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          # REGENERATED HERE, AFTER THE CUT, AND NOT BEFORE IT. Building before
+          # the cut leaves shared files dirty, where `git checkout -B` refuses to
+          # move onto main's new tip.
+          python3 scripts/build_sitemap.py
+          git add ia/data/app/ia-city-councils.json sitemap.xml
+          git commit -m "Update the Iowa city councils roster from the cities' own pages"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update the Iowa city councils roster from the cities' own pages" \
+              --body "$PR_BODY" \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

@@ -13136,6 +13136,34 @@ function initIowaExplorer() {
   var loadCountyCityOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/ia-county-city-officials.json", {}, 2);
   });
+  // THE FOURTEEN LARGEST CITIES THAT NAMED NOBODY, read from each city's own
+  // council page. Iowa has eighteen cities above 25,000; four were answered
+  // already (Des Moines and Waterloo by ward, Cedar Rapids and one more by
+  // their own builders) and these fourteen named nobody at all, which is 96
+  // officeholders a reader in them could not get from this app.
+  //
+  // NINE OF THE FOURTEEN ELECT AT LEAST SOME MEMBERS BY WARD, so this branch
+  // makes NO at-large claim the way the five-city branch does: the seat rides
+  // the row where the city publishes one, and the copy says a ward is NAMED
+  // and not DRAWN, because this app draws no Iowa city ward outside Des
+  // Moines and Waterloo.
+  var loadCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ia-city-councils.json", {}, 2);
+  });
+  // How many of them the shipped file names, counted at render time rather
+  // than typed: a city refused by its own robots.txt leaves the file on its
+  // own, and every figure typed into a sentence on this card has gone stale
+  // at least once.
+  function cityCouncilCount(file) {
+    if (!file) return 0;
+    var n = 0;
+    for (var geoid in file) {
+      if (!Object.prototype.hasOwnProperty.call(file, geoid)) continue;
+      var members = file[geoid] && file[geoid].members;
+      if (members && members.length) n++;
+    }
+    return n;
+  }
 
   registerLayer({
     id: "municipality",
@@ -13164,7 +13192,8 @@ function initIowaExplorer() {
         queryFeatureAt(loadPlaces, point),
         loadCityContact().catch(function () { return null; }),
         loadCityOfficials().catch(function () { return null; }),
-        loadCountyCityOfficials().catch(function () { return null; })
+        loadCountyCityOfficials().catch(function () { return null; }),
+        loadCityCouncils().catch(function () { return null; })
       ]).then(function (parts) {
         var feature = parts[0];
         if (!feature) return null; // unincorporated — the engine renders this layer's own emptyNote
@@ -13173,6 +13202,12 @@ function initIowaExplorer() {
         var contact = (parts[1] && geoid != null) ? parts[1][String(geoid)] : null;
         var officials = (parts[2] && geoid != null) ? parts[2][String(geoid)] : null;
         var byCounty = (parts[3] && geoid != null) ? parts[3][String(geoid)] : null;
+        var council = (parts[4] && geoid != null) ? parts[4][String(geoid)] : null;
+        // A CITY'S OWN COUNCIL PAGE OUTRANKS ITS COUNTY'S LIST, which is the
+        // rule this card already applied between the five-city file and the
+        // county file. None of these three files names the same city today;
+        // the order is stated so that a city appearing in two is answered
+        // from the publisher closest to it rather than by whichever loaded.
         return {
           seq: seq,
           name: findPropCI(props, ["name"]),
@@ -13180,9 +13215,11 @@ function initIowaExplorer() {
           phone: contact ? contact.phone : null,
           email: contact ? contact.email : null,
           url: contact ? contact.url : null,
-          officials: officials || null,
-          countyOfficials: officials ? null : (byCounty || null),
-          countyPublishers: parts[3] || null
+          council: council || null,
+          officials: council ? null : (officials || null),
+          countyOfficials: (council || officials) ? null : (byCounty || null),
+          countyPublishers: parts[3] || null,
+          cityCouncils: parts[4] || null
         };
       });
     },
@@ -13218,7 +13255,54 @@ function initIowaExplorer() {
       // the third. It survives here only because it is a COMMENT: no rendered
       // string carries it, and the one count a reader does see (how many
       // counties publish) is counted from the file at render time below.
-      if (result.officials && result.officials.members && result.officials.members.length) {
+      if (result.council && result.council.members && result.council.members.length) {
+        wrap.appendChild(renderSectionLabel("MAYOR AND COUNCIL"));
+        wrap.appendChild(renderPersonRows(result.council.members.map(function (rec) {
+          var row = { name: String(rec.name) };
+          // THE CITY'S OWN WORDS FOR THE OFFICE, AND ONLY THOSE. The fourteen
+          // write fourteen vocabularies — Councilmember, Councilor, Alderman,
+          // Council Member At-Large, `3rd Ward`, `Ward One Representative` —
+          // and each is printed as that city writes it.
+          //
+          // THE NORMALISED SEAT IS DELIBERATELY NOT PRINTED BESIDE IT. It is
+          // DERIVED from the role, so every row that has one already names it
+          // and a badge carrying both read `Ward One Representative · Ward 1`
+          // in Dubuque and `1st Ward · Ward 1` in Marshalltown — the same
+          // fact twice, in a reader's way. A first draft suppressed the
+          // duplicate by substring, which caught Iowa City's `Mayor,
+          // At-Large` and missed every city spelling its wards in words or
+          // ordinals, so four of the fourteen said it twice. The field stays
+          // in the data file for anything that needs to sort or match seats.
+          if (rec.role) row.badge = String(rec.role);
+          if (rec.phone) row.phone = String(rec.phone);
+          if (rec.email) row.email = String(rec.email);
+          if (rec.termEnds) row.note = "Term ends " + String(rec.termEnds);
+          return row;
+        })));
+        var councilNote = "Named from this city's own council page" +
+          (result.council.asOf ? ", read " + String(result.council.asOf) : "") + ".";
+        // NO AT-LARGE CLAIM IS MADE HERE. Nine of these fourteen cities elect
+        // at least some members by ward or district, so the copy describes
+        // what the page published rather than asserting how the council is
+        // elected — the five-city branch below can assert at-large only
+        // because all five of those cities are.
+        var anySeat = result.council.members.some(function (rec) { return !!rec.seat; });
+        if (anySeat) {
+          councilNote += " A member's ward or district is NAMED above and not " +
+            "drawn: this app draws city wards in Des Moines and Waterloo only, " +
+            "so the map does not outline the seat you are standing in.";
+        }
+        // THE MAYOR IS NOT ALWAYS ON THE PAGE, AND SAYING SO BEATS SILENCE.
+        // Two of the fourteen name their council and not their mayor, and a
+        // card that simply omitted the mayor would read as a city that has
+        // none.
+        if (result.council.namesMayor === false) {
+          councilNote += " This city's council page does not name its mayor, and no " +
+            "other page this app reads does either, so the mayor is missing here " +
+            "rather than absent in the city.";
+        }
+        wrap.appendChild(renderFieldStack([{ label: "City officials", value: councilNote }]));
+      } else if (result.officials && result.officials.members && result.officials.members.length) {
         wrap.appendChild(renderSectionLabel("ELECTED BY THE WHOLE CITY"));
         wrap.appendChild(renderPersonRows(result.officials.members.map(function (rec) {
           var row = { name: String(rec.name) };
@@ -13309,6 +13393,15 @@ function initIowaExplorer() {
           "read; and Des Moines, Waterloo and Cedar Rapids elect by ward or " +
           "district, so those cards name the member for the seat you are " +
           "standing in.";
+        // AND THE LARGEST CITIES, COUNTED FROM THE FILE for the same reason
+        // the county figure above is: a city leaves this file by itself the
+        // week its page changes shape or its robots.txt refuses us.
+        var bigs = cityCouncilCount(result.cityCouncils);
+        if (bigs) {
+          note += " The " + bigs + " largest Iowa " +
+            (bigs === 1 ? "city" : "cities") + " that publish a council page " +
+            "this app can read name their mayor and council on their own cards.";
+        }
         wrap.appendChild(renderFieldStack([{ label: "City officials", value: note }]));
       }
       return wrap;

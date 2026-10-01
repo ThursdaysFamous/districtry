@@ -531,6 +531,74 @@ try {
     await context.close();
   }
 
+  // 2a4. THE CITY COUNCILS OF THE FOURTEEN LARGEST CITIES THAT NAMED NOBODY,
+  //      and the two SENTENCES the card says about them, because the names
+  //      alone would pass for a card that says the wrong thing around them.
+  //
+  //      Iowa has eighteen cities above 25,000. Four were answered already
+  //      and these fourteen published nothing, which was 96 officeholders a
+  //      reader in them could not get from this app.
+  //
+  //      THREE CASES, AND EACH IS A DIFFERENT BRANCH OF THE SAME CARD. Ames
+  //      names a mayor and six council members and must NOT carry the
+  //      missing-mayor sentence; Davenport names ten aldermen and no mayor
+  //      anywhere this project reads, and MUST carry it, or a reader takes a
+  //      city with a mayor for a city without one; and a city in neither file
+  //      must still reach the "Not shown" branch, because a test of the named
+  //      half alone passes for a card that names somebody everywhere.
+  //
+  //      AMES' SEVENTH SEAT IS THE ONE WORTH ASSERTING BY NAME. Its council
+  //      page links eight member pages and the eighth is the Iowa State
+  //      ex-officio, whom the scraper drops; Bronwyn Beatty-Hansen is the
+  //      council member a hyphen in her own URL slug lost from a first draft,
+  //      so the card named six of seven seats and the loss was invisible in
+  //      the copy around it.
+  //
+  //      The municipality layer answers from a committed vector-tile archive,
+  //      so these three need no government server. A card that does not name
+  //      the city at all is reported as this check's own skip rather than as
+  //      a wrong answer, the rule 2a3 above already follows.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    for (const [lat, lng, city, want, absent, why] of [
+      [42.03080, -93.63190, "Ames city", "Bronwyn Beatty-Hansen",
+       "does not name its mayor", "names its mayor and six council members"],
+      [41.52360, -90.57760, "Davenport city", "does not name its mayor",
+       null, "names ten aldermen and no mayor"],
+      [42.04940, -92.90710, "Marshalltown city", "Mike Ladehoff",
+       "does not name its mayor", "the anchor city, mayor and seven members"],
+      // AND A CITY IN NONE OF THE THREE ROSTERS, which is the half that keeps
+      // the other three honest: 819 Iowa cities name nobody in this app, and
+      // a check of the named branch alone passes for a card that names
+      // somebody everywhere. Adel's own card must still reach the "Not shown"
+      // branch, whose closing sentence this change also edited — it now
+      // counts the largest cities from the shipped file rather than naming
+      // three of them in prose.
+      [41.61400, -94.02200, "Adel city", "Not shown", null,
+       "a city named by nobody"]
+    ]) {
+      const page = await booted(context,
+        `${BASE}#point=${lat},${lng}&layers=municipality`);
+      const info = await cardText(page, "municipality");
+      if (info.error || !info.text.includes(city)) {
+        console.log(`  SKIP  city council, ${why} — card did not name ${city}`);
+        await page.close();
+        continue;
+      }
+      check(`city council, ${why}`,
+        info.text.includes(want), info.text.slice(0, 160));
+      if (absent) {
+        // THE HALF THAT KEEPS THE FIRST HONEST. A missing-mayor sentence on a
+        // city that names its mayor is the same false statement pointing the
+        // other way.
+        check(`city council, ${why} — no missing-mayor sentence`,
+          !info.text.includes(absent), info.text.slice(0, 160));
+      }
+      await page.close();
+    }
+    await context.close();
+  }
+
   // 2b. The negative ground-truth point (from the worksheet: a point outside
   //     every anchor layer). Anchors that declare a location-relevance test
   //     (mod.coverage — see NEGATIVE_HIDDEN above) HIDE there: the toggle
