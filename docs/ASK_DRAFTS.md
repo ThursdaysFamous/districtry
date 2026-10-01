@@ -15,6 +15,15 @@ the wording unreviewable and the batch uncountable. This file is the drafts.
    in `docs/DATA_LAYER_GUIDEBOOK.md`, changing `NOT YET ASKED — DRAFTED` to
    `ASKED <date>`. This is the Scott rule, and it exists because two ask ledgers in this
    repo once said "held" about e-mails that had already been sent.
+   **Put it in the record's own `ask` block too, as `outcome: "pending"` with `who` and
+   `asked`** (and `followedUp` once a follow-up goes), because the prose is for a reader
+   and that block is the half a program has to agree with. A sent ask had nowhere to sit
+   until 2026-10-01 — the three outcomes were all terminal — so send dates went into
+   `blocker` prose, which is the free-text state those fields exist to end.
+   `scripts/build_coverage_gaps.py` prints each pending ask's clock on every run: days
+   since the ask, days since the follow-up, and whether either is ripe. Nothing is
+   computed into a committed file, so **a pending ask never earns a level credit and
+   never turns into one by the calendar** — only step 3's edit moves it.
 3. **Follow up at ~3 weeks, again 2 weeks later, and only then record the route
    UNRESPONSIVE** — which is a different claim from "no source exists". A follow-up is a
    **recovery mechanism, not a nudge**: one county Clerk answered the question that
