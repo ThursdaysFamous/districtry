@@ -38,7 +38,7 @@ different thing from one it failed.
 
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
-| ca | **--M·** | — | — | 0 | 0 | — | 14 | all | 12 of 13 levels |
+| ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 13 levels |
 | ia | **EAM·** | 99 | 99/99 | 81 | 81 | all | 57 | all | 9 of 13 levels |
 | il | **EAM·** | 102 | 102/102 | 572 | 996 | all | 398 | all | 10 of 13 levels |
 | ky | **EAM·** | 120 | 120/120 § | 0 | 0 | by record | 7 | all | 3 of 13 levels |
@@ -56,13 +56,23 @@ per county, so each one is named under its state below.
 
 ## What each state still needs
 
-### ca — --M·
+### ca — **E.A.M.C.**
 
 - **E and A do not apply.** San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
   The mark therefore rests on Maintained alone.
-- **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `bart-directors.json`, `ca-assembly-districts.json`, `ca-senate-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `early-voting-sites.json`, `police-districts.json`, `san-francisco-county-outline.json`, `sf-neighborhoods.json`, `supervisor-districts.json`
-- **Covered: no.** 1 of the 13 expected levels of government are not answered. Each is a floor: no gap record is credited towards this test yet, so a level listed here may already have one behind it.
-  - **13. Tribal governments** — open (required only where the state has the level)
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
+- **Covered: yes.** Every expected level of government is answered.
+- **Does not apply here (7):** each one below is counted towards Covered by a stated fact rather than by work.
+  - **3. County boundaries** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
+  - **5. Municipal boundaries** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
+  - **7. School district boundaries** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
+  - **8. Courts whose judges are elected by district** — No court-district line falls inside San Francisco. California elects its Supreme Court at large statewide, its Court of Appeal by appellate district, and — Cal. Const. art. VI sec. 16 — its superior court judges "in their counties". San Francisco is one consolidated city and county, and it sits whole inside the twelve-county First Appellate District, so both lines are the city's own edge.
+  - **9. Townships or other general-purpose sub-county governments** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
+  - **10. School boards elected by district** — Neither San Francisco school board is elected by district. The San Francisco Unified School District's seven commissioners and City College of San Francisco's seven trustees are each elected by all of the district's voters, so there is no district to draw; the standard's at-large precedent is that naming the members is the whole answer, and both bodies are the city-wide school tier the app already covers.
+  - **13. Tribal governments** — No tribal land lies inside San Francisco: measured 2026-10-01, the current-vintage reservation, trust-land and state-reservation layers return no feature intersecting the city's own shipped outline's extent, with a box over North Carolina's Qualla Boundary as the positive control.
 
 ### ia — EAM·
 
