@@ -140,9 +140,42 @@ EXPECT_TOTAL_KEYS = 888        # 867 filed + 21 the state does not file:
 # with no district code because there are no districts — and the trustees belong
 # on the village's own card. "Appear to be" is not the village saying so, and a
 # card stating how a governing body is elected is not written on a guess.
+# PORT WASHINGTON'S COMPOSITION WAS COMPLETED BY ITS COUNTY CLERK ON 2026-10-01
+# AND THE CITY IS STILL EXCLUDED, for New London's reason exactly. Ozaukee
+# County Clerk Kellie Kretlow wrote that the city's ward 9 is in ALDERMANIC
+# DISTRICT 1 and county supervisor district 4. The city's other eight wards
+# carry 01-07 (wards 4 and 8 share 04), so ward 9 joining 01 completes a
+# seven-district plan with nothing left over.
+# THE SUPERVISOR HALF IS A CONTROL AND NOT A SECOND FACT: the state's own ward
+# file already carries SUPERID 04 on that ward, read 2026-10-01, so the half of
+# her answer that can be checked against a published source agrees with it
+# exactly. That is what makes the unpublished half worth acting on.
+# Built the day somebody writes the gate this shape wants — the county's coded
+# wards plus a clerk's sentence — rather than squeezed into LOCAL_COMPOSITION,
+# which means a city publishing its own composition.
+#
+# BRILLION'S BOARD FORM IS SETTLED AND ITS TWO UNCODED WARDS ARE ANSWERED.
+# Calumet County Clerk Beth Leary wrote on 2026-10-01 that the City of Brillion
+# elects its council AT LARGE, not by district, and that wards 5 and 6 — the two
+# its filing leaves uncoded — are bare land with no residents, accounted for at
+# elections. The county files districts 01-04 on wards 1-4 and the city's own
+# council page lists a Mayor and At-Large Representatives, so this record carried
+# two publishers disagreeing about the form of the body; THE OFFICE THAT FILES
+# THOSE CODES NOW SAYS THE COUNCIL IS NOT ELECTED FROM THEM, which is not a
+# preference between publishers but one of them answering for its own filing.
+# So the entry below is the correct and complete answer — nothing to draw — and
+# Brillion's council members are an at-large municipality-card fact.
+# THE NO-RESIDENTS HALF WAS CHECKED AND IS CONSISTENT RATHER THAN PROVEN: LTSB's
+# 2024 election-data layer reports PERSONS 822, 820, 798 and 822 for wards 1-4
+# and NULL for 5 and 6 (read 2026-10-01). It is not a proof, because the same
+# field is NULL on Port Washington's ward 8, which carries a district code, while
+# it reports 248 for Cuba City's uncoded ward 5 and 624 for Durand's uncoded
+# ward 3 — the two figures this project's own ask quoted. A NULL there means the
+# ward is absent from the 2024 data, which bare land would be and so would a new
+# annexation. The clerk is the source; this is the control, with its limit.
 EXCLUDED = {
     "06350": ("Bellevue", 11, 0.999),
-    "09725": ("Brillion", 2, 0.094),
+    "09725": ("Brillion", 2, 0.094),   # at large — see above; nothing to draw
     "17950": ("Cuba City", 1, 0.158),
     "21225": ("Durand", 1, 0.274),
     "56925": ("New London", 3, 0.429),

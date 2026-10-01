@@ -1690,7 +1690,7 @@ unaffected sources; the three district files are not in the tree.
 
 ## Ask 20 — six Wisconsin county clerks: the city wards your filing leaves without a district
 
-> **ASKED 2026-10-01 — ALL SIX SENT, TWO ANSWERED THE SAME DAY.** Six separate notes, one per
+> **ASKED 2026-10-01 — ALL SIX SENT, FOUR ANSWERED THE SAME DAY.** Six separate notes, one per
 > county clerk. Four ask the same question about a different city; two ask a different question.
 > They are not a batch: each note names one county's own filing, and one that named the wrong
 > city or the wrong ward would be worse than not writing.
@@ -1715,7 +1715,27 @@ unaffected sources; the three district files are not in the tree.
 > came from the county clerk in writing, so none had to be sourced against the clerks' own
 > withholding.
 >
-> Calumet, Pepin, Lafayette and Ozaukee have not replied. Follow up once at about 2026-10-21.
+> **CALUMET ANSWERED AND SETTLED BRILLION, WHICH RETIRES IT FROM THE GAP RATHER THAN FILLING IT
+> IN.** Clerk Beth Leary wrote that the City of Brillion elects its council AT LARGE, not by
+> district, and that wards 5 and 6 — the two her county's filing leaves with no district code —
+> are bare land with nobody living on them. So the uncoded wards are not missing data: there is no
+> district for them to be in. Brillion therefore leaves the `aldermanic-incomplete-filings` gap
+> record, which goes from six municipalities to five, and `calumet` leaves its county list. The
+> city's council members are a separate, still-open question and want the at-large municipality
+> card rather than this layer. A second reading is consistent with her answer and is not proof of
+> it: the state's own 2024 election file carries a population for Brillion's wards 1-4 and leaves
+> wards 5 and 6 empty.
+>
+> **OZAUKEE ANSWERED AND COMPLETED PORT WASHINGTON.** Clerk Kellie Kretlow wrote that City of Port
+> Washington ward 9 — the one ward her county's filing leaves uncoded — is in aldermanic district 1
+> and county supervisor district 4. The supervisor half is independently corroborated: the state's
+> own ward file already codes that ward into supervisor district 4, so the one claim that could be
+> checked against another publisher checks out, which is what makes the aldermanic half worth
+> relying on. That city's composition is now completely known and, like New London's, is written
+> down and not yet built, because it is the same county-coded-wards-plus-a-clerk's-sentence shape
+> that wants its own gate and an operator rebuild.
+>
+> Pepin and Lafayette have not replied. Follow up once at about 2026-10-21.
 
 **What this is about.** Wisconsin's aldermanic districts are drawn as groups of wards, and
 the ward file the Legislative Technology Services Bureau publishes is the only statewide
