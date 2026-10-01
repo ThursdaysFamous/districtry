@@ -19,7 +19,7 @@ whether the data exists** — a level no publisher offers, that we
 asked about and were refused, counts as covered — so a county
 publisher cannot fail an app on it.
 
-**2 gap-record claims name a level, 0 of which carry a
+**3 gap-record claims name a level, 0 of which carry a
 dated ask that counts.** A level this report calls open and
 that no record claims is still a floor. A claim that earns
 nothing is printed under its level with the reason, rather
