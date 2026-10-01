@@ -22691,14 +22691,20 @@ function initChiExplorer() {
       // Census's own text for the parcel: the Census writes "Prairie Band of
       // Potawatomi Nation Off-Reservation Trust Land", a description of a
       // piece of land rather than the name of a government.
+      // findPropCI LOWERCASES THE PROPERTY KEY AND COMPARES IT TO THE CANDIDATE AS
+      // GIVEN, so every `keys` entry below is lowercase while the shipped property
+      // is camelCase. A camelCase candidate matches NOTHING and the row simply does
+      // not render -- which is how the first build of this layer shipped four silent
+      // absences, the "Why no names" row among them, with every static gate green.
+      // The two smoke checks in each instance are what caught it and what keep it.
       { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
-      { name: "censusName", label: "Land", keys: ["censusName"] },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
       { name: "seat", label: "Seat of government", keys: ["seat"] },
-      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsNote"] },
-      { name: "populationNote", label: "Population", keys: ["populationNote"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
       // Why this card names no council member. It is the measurement the
       // builder recorded, so the card cannot drift from it.
-      { name: "rosterWhy", label: "Why no names", keys: ["rosterWhy"], when: function (r) { return r && !r.roster; } },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
       { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
       // extracted for primaryLink only — the hidden-column shape the SSA
       // layer below uses for the same purpose

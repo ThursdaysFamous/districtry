@@ -1460,7 +1460,16 @@ ANSWERS = {
         "school-boards-by-district": answers("mps-school-board"),
         "precincts": answers("ward"),
         "special-districts": answers("wtcs-district", "tid-district"),
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-01. The app draws all 21 pieces of tribal land in
+        # Wisconsin -- 11 reservations and 10 of off-reservation trust land --
+        # and names the nation that governs each and the town its government
+        # sits in, which is what this level asks for: a reader on that ground
+        # is told which government answers for it. It names NO COUNCIL MEMBER
+        # for any of the 12 nations, and that is the narrower gap recorded as
+        # `wi-tribal-government` rather than a level unanswered -- each
+        # nation's own published list is the only authority for a council, and
+        # the card states per nation which of the two reasons applies.
+        "tribal-government": answers("tribal-government"),
     },
     "ia": {
         "us-house": answers("us-house"),
@@ -1509,7 +1518,15 @@ ANSWERS = {
         # Intermediate school districts: special districts the Revised School
         # Code creates (MCL 380.601 et seq.), each with its own levy.
         "special-districts": answers("mi-isd"),
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-01, on the same builder and the same join as
+        # Wisconsin's: 24 areas, 13 reservations and 11 of off-reservation
+        # trust land, carrying 12 nations, each named with the town its
+        # government sits in. The Ontonagon Reservation is the fleet's one
+        # area the Census names and no BIA-listed government is filed under,
+        # and it is answered from two measurements by one publisher rather
+        # than inferred -- see `mi-tribal-government`, which is also where the
+        # council absence is recorded, per nation.
+        "tribal-government": answers("tribal-government"),
     },
     "mn": {
         "us-house": answers("us-house"),

@@ -138,6 +138,52 @@ POP_VINTAGE = "Census 2020"
 # and `check` refuses to ship an area that names nobody and explains nothing.
 # An entry leaves by the council becoming readable, never by being deleted.
 ROSTER_BLOCKED = {
+    "1410": {
+        "host": "hannahville.net",
+        "measured": "2026-10-01",
+        "why": "The nation's own site is the authority for its council, and that "
+               "host is recorded as answering some requests with a managed "
+               "challenge and others normally (challenged 3 of 6 reads across "
+               "two clients, measured 2026-09-29). Getting in on the reads where "
+               "a control happens to be off is working around it, so no name is "
+               "carried and the card links the nation instead.",
+    },
+    "1880": {
+        "host": "kbic-nsn.gov",
+        "measured": "2026-10-01",
+        "why": "The nation's own site is the authority for its council, and that "
+               "host is recorded as answering some requests with a managed "
+               "challenge (measured 2026-09-29). An access control is not worked "
+               "around, so no name is carried and the card links the nation.",
+    },
+    "1960": {
+        "host": "lrboi-nsn.gov",
+        "measured": "2026-10-01",
+        "why": "The nation publishes its council list to its own members only: "
+               "both of the paths its front page gives for the Tribal Council "
+               "answer HTTP 200 at /member-only-error, measured 2026-10-01. That "
+               "is the nation's own decision about its own roll, so no name is "
+               "carried and the card links the nation.",
+    },
+    "2580": {
+        "host": "kbic-nsn.gov",
+        "measured": "2026-10-01",
+        "why": "The Ontonagon Reservation is held by the same government as the "
+               "L'Anse Reservation, whose own site is recorded as answering some "
+               "requests with a managed challenge (measured 2026-09-29). An "
+               "access control is not worked around, so no name is carried and "
+               "the card links the nation.",
+    },
+    "3885": {
+        "host": "sokaogonchippewa.com",
+        "measured": "2026-10-01",
+        "why": "The nation's own site publishes no council page. Its navigation "
+               "names its history, news, events, twenty departments, its casino "
+               "and its contact details and no governing body, and "
+               "/tribal-council/, /tribal-government/ and the sitemap all answer "
+               "404 (measured 2026-10-01). There is nothing published to read, "
+               "so the card links the nation.",
+    },
     "2980": {
         "host": "pbpindiantribe.com",
         "measured": "2026-10-01",
@@ -148,6 +194,130 @@ ROSTER_BLOCKED = {
                "so no name is carried and the card links the nation instead.",
     },
 }
+
+# Where a nation publishes its own council, for the nations whose page answers
+# this project and whose names are NOT YET CARRIED. This is a different fact
+# from ROSTER_BLOCKED above: nothing stops the read, the work has not been done.
+# Each entry is a dated measurement of a named page -- robots.txt read with the
+# same client, then the page itself, HTTP 200 with a body -- so the card states
+# where a reader can find the names today and the remaining work is visible per
+# nation instead of reading as twenty silent absences. An entry leaves by the
+# names being carried, never by being deleted.
+#
+# WHY THE SENTENCE IS BUILT HERE AND NOT IN THE APP: the app has no way to tell
+# a council nobody can read from one nobody has read, and a card that guessed
+# between them would be making a claim about this project rather than reporting
+# a measurement.
+ROSTER_NOT_READ = {
+    "0140": {
+        "host": "badriver-nsn.gov",
+        "measured": "2026-10-01",
+        "page": "https://www.badriver-nsn.gov/government/",
+    },
+    "0170": {
+        "host": "baymills.org",
+        "measured": "2026-10-01",
+        "page": "https://www.baymills.org/executive-council",
+    },
+    "1125": {
+        "host": "fdlband.org",
+        "measured": "2026-10-01",
+        "page": "https://www.fdlband.org/government/tribal_council.php",
+    },
+    "1135": {
+        "host": "fcpotawatomi.com",
+        "measured": "2026-10-01",
+        "page": "https://www.fcpotawatomi.com/government/executive-council/",
+    },
+    "1370": {
+        "host": "gtbindians.org",
+        "measured": "2026-10-01",
+        "page": "https://www.gtbindians.org/council_members.asp",
+    },
+    "1450": {
+        "host": "ho-chunknation.com",
+        "measured": "2026-10-01",
+        "page": "https://ho-chunknation.com/government/",
+    },
+    "1550": {
+        "host": "nhbp-nsn.gov",
+        "measured": "2026-10-01",
+        "page": "https://nhbp-nsn.gov/tribal-council/",
+    },
+    "1610": {
+        "host": "sagchip.org",
+        "measured": "2026-10-01",
+        "page": "https://www.sagchip.org/council/index.htm",
+    },
+    "1815": {
+        "host": "lco-nsn.gov",
+        "measured": "2026-10-01",
+        "page": "https://lco-nsn.gov/tribal-governing-board/",
+    },
+    "1825": {
+        "host": "ldftribe.com",
+        "measured": "2026-10-01",
+        "page": "https://www.ldftribe.com/pages/16/tribal-council/",
+    },
+    "1830": {
+        "host": "lvd-nsn.gov",
+        "measured": "2026-10-01",
+        "page": "https://lvd-nsn.gov/Content/Tribal-Council.cfm",
+    },
+    "1963": {
+        "host": "ltbbodawa-nsn.gov",
+        "measured": "2026-10-01",
+        "page": "https://ltbbodawa-nsn.gov/tribal-council-and-legislative-office/",
+    },
+    "2150": {
+        "host": "gunlaketribe-nsn.gov",
+        "measured": "2026-10-01",
+        "page": "https://gunlaketribe-nsn.gov/about/tribal-council/",
+    },
+    "2175": {
+        "host": "menominee-nsn.gov",
+        "measured": "2026-10-01",
+        "page": "https://www.menominee-nsn.gov/GovernmentPages/Legislature",
+    },
+    "2560": {
+        "host": "oneida-nsn.gov",
+        "measured": "2026-10-01",
+        "page": "https://oneida-nsn.gov/government/business-committee/",
+    },
+    "2890": {
+        "host": "www.pokagonband-nsn.gov",
+        "measured": "2026-10-01",
+        "page": "https://www.pokagonband-nsn.gov/government/tribal-council/",
+    },
+    "3085": {
+        "host": "redcliff-nsn.gov",
+        "measured": "2026-10-01",
+        "page": "https://www.redcliff-nsn.gov/government/tribal_government/index.php",
+    },
+    "3305": {
+        "host": "stcroixojibwe-nsn.gov",
+        "measured": "2026-10-01",
+        "page": "https://stcroixojibwe-nsn.gov/tribal-council/",
+    },
+    "3635": {
+        "host": "saulttribe.com",
+        "measured": "2026-10-01",
+        "page": "https://www.saulttribe.com/government/board-of-directors",
+    },
+    "4015": {
+        "host": "mohican-nsn.gov",
+        "measured": "2026-10-01",
+        "page": "https://mohican-nsn.gov/tribal-council/",
+    },
+}
+
+
+def _not_read_why(entry):
+    """The card's own words for a council this project has not read yet."""
+    return ("Not carried yet. The nation publishes its council at %s, which "
+            "answered this project on %s; these names are not in this app yet, "
+            "so the card links the nation instead of naming anybody."
+            % (entry["page"], entry["measured"]))
 
 
 def load_join():
@@ -306,6 +476,7 @@ def _record(cls, feat, clip, entry, gov, district_names, counts, known):
     props = feat["properties"]
     code = str(props.get("AIANNH"))
     blocked = ROSTER_BLOCKED.get(code)
+    not_read = ROSTER_NOT_READ.get(code)
     return {
         "type": "Feature",
         "geometry": feat["geometry"],
@@ -342,9 +513,15 @@ def _record(cls, feat, clip, entry, gov, district_names, counts, known):
             "wholeAreaKm2": round(clip["whole_km2"], 4),
             "shareInState": round(clip["share"], 6),
             "roster": None,
-            "rosterWhy": blocked["why"] if blocked else None,
-            "rosterHost": blocked["host"] if blocked else None,
-            "rosterMeasured": blocked["measured"] if blocked else None,
+            # Why this card names nobody, from whichever of the two tables
+            # above describes this nation: a measured refusal, or a page that
+            # answers and has not been read yet. Never both, which `check`
+            # enforces, because a nation cannot be blocked and readable at once.
+            "rosterWhy": (blocked["why"] if blocked
+                          else _not_read_why(not_read) if not_read else None),
+            "rosterHost": (blocked or not_read or {}).get("host"),
+            "rosterMeasured": (blocked or not_read or {}).get("measured"),
+            "rosterPage": not_read["page"] if not_read else None,
         },
     }
 
@@ -429,16 +606,24 @@ def check():
             if p["roster"] is None and not p["rosterWhy"]:
                 raise RuntimeError(
                     "%s: AIANNH %s names nobody and says why nowhere — add a "
-                    "ROSTER_BLOCKED entry with the host and the date, or carry a "
-                    "roster" % (tag, p["aiannh"]))
-            if p["roster"] is None and p["aiannh"] not in ROSTER_BLOCKED:
+                    "ROSTER_BLOCKED or ROSTER_NOT_READ entry with the host and "
+                    "the date, or carry a roster" % (tag, p["aiannh"]))
+            if (p["roster"] is None
+                    and p["aiannh"] not in ROSTER_BLOCKED
+                    and p["aiannh"] not in ROSTER_NOT_READ):
                 raise RuntimeError(
                     "%s: AIANNH %s ships a reason this module does not declare, "
                     "so nothing re-reads it" % (tag, p["aiannh"]))
     if not seen:
         raise RuntimeError("no instance ships tribal-areas.json, so this gate "
                            "would pass vacuously")
-    orphans = sorted(set(ROSTER_BLOCKED) - {
+    both = sorted(set(ROSTER_BLOCKED) & set(ROSTER_NOT_READ))
+    if both:
+        raise RuntimeError(
+            "AIANNH %s is recorded as blocked AND as readable-but-not-read — a "
+            "nation cannot be both, so one of the two measurements is stale"
+            % ", ".join(both))
+    orphans = sorted((set(ROSTER_BLOCKED) | set(ROSTER_NOT_READ)) - {
         f["properties"]["aiannh"]
         for tag in os.listdir(REPO)
         for f in (json.load(open(os.path.join(REPO, tag, "data", "app",
@@ -447,7 +632,7 @@ def check():
                                                  "tribal-areas.json")) else [])})
     if orphans:
         raise RuntimeError(
-            "ROSTER_BLOCKED names AIANNH %s and no instance ships it — a "
+            "a roster record names AIANNH %s and no instance ships it — a "
             "measurement nothing reads is the shape this project keeps finding "
             "wrong" % ", ".join(orphans))
     print("build-tribal-areas --check: OK — %d instance(s), %d area(s); every "
@@ -506,10 +691,21 @@ def selftest():
     # measured block from a remembered one.
     for code, row in ROSTER_BLOCKED.items():
         assert row["host"] and len(row["measured"]) == 10 and row["why"], code
+    for code, row in ROSTER_NOT_READ.items():
+        assert row["host"] and len(row["measured"]) == 10, code
+        assert row["page"].startswith("https://"), code
+        assert row["page"] not in (other["page"] for c, other in
+                                   ROSTER_NOT_READ.items() if c != code), code
+    assert not (set(ROSTER_BLOCKED) & set(ROSTER_NOT_READ))
+    # The not-read sentence names the page and the date, so a reader is sent
+    # somewhere rather than told an absence with no remedy.
+    one = _not_read_why(ROSTER_NOT_READ["0170"])
+    assert "https://www.baymills.org/executive-council" in one and "2026-10-01" in one
 
     print("build-tribal-areas --selftest: OK — the join check fails three ways, "
-          "the seat never invents a city, and all %d blocked roster(s) name a "
-          "host and a date" % len(ROSTER_BLOCKED))
+          "the seat never invents a city, all %d blocked roster(s) name a host "
+          "and a date, and all %d not-yet-read roster(s) name a distinct page"
+          % (len(ROSTER_BLOCKED), len(ROSTER_NOT_READ)))
     return True
 
 

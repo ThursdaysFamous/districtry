@@ -147,6 +147,7 @@ const GEOMETRY_URLS = [
   "./data/app/madison-neighborhood-assocs.json",
   "./data/app/madison-outline.json",
   "./data/app/tid-districts.json",
+  "./data/app/tribal-areas.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
