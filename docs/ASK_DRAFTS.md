@@ -249,6 +249,33 @@ the person reading it, and Fayette's opens by naming the OFFICE and the two peop
 written to. **Check who holds the office before writing "you"** — and the sent folder is what
 settles who was written to, since the ledger records the county and not always the person.
 
+**THE TAMA MAP ASK IS DRAFTED AS A REPLY RATHER THAN A LETTER, AND THAT IS THE WHOLE POINT
+OF IT.** `ia-tama-supervisor-map` follows an answer, not a silence: the Auditor named all five
+supervisors against districts 1 to 5 within the hour of being asked, and the obstacle is at this
+end — the statewide supervisor-district layer this project draws from has three districts for
+Tama where the county elects from five. So the draft sits as the third message in her own thread,
+opens by saying the problem is ours, asks only what the five lines are today, and says plainly
+that if the county holds no map of its own then the repair belongs with the state agency. It also
+makes good a promise already made in her thread, where the reply sent that afternoon told her the
+county's entry would name all five with their districts. **A letter that says the publisher we
+read is wrong is a letter about the publisher**, so this one says in as many words that a map
+dated January 2024 may simply predate a redistricting the county has since adopted, and blames
+nobody.
+
+**NO ATTACHMENT CAN BE READ FROM THIS SESSION, AND THAT IS MEASURED RATHER THAN ASSUMED.** The
+mail tools here return an attachment's filename, MIME type, part id and attachment id and never
+its content — `PLAIN_TEXT` and `FULL_CONTENT` both fill the attachment list with metadata alone,
+and the attachment id's own description says the file needs a separate request this session has no
+tool for. Two Iowa answers arrived that way and the inventory is written to
+`/mnt/project-files/letters/iowa-palo-alto-cass.md` with no name and no district number
+transcribed, because taking one out of a file nobody read is the error this project refuses
+everywhere else. Two things in those messages matter anyway, and both came out of the mail BODY
+rather than the files: Palo Alto's second reply settles in plain text that her 2020-labelled
+documents are the plan in force, and Cass states in her own words that the pairing exists and
+what each picture is. **Neither county is waiting on us to ask it anything** — both are a reading
+problem now rather than a correspondence one, which is a different kind of blocker and should not
+be recorded as an open ask.
+
 **TWO REPLIES WERE OWED AND ARE DRAFTED.** Hardin County's Clerk named the county's three
 commissioners seven minutes after being asked, and Palo Alto County's Auditor answered a second
 time within the hour to confirm that her 2020-labelled documents are the plan in force. Both are
