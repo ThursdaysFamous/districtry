@@ -23,7 +23,7 @@
 
 | County | FIPS | Served through | Board | County-keyed dispatch entries | Open gaps |
 |---|---|---|---|---|---|
-| Adams | 17001 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 4 — `adams-county-board-roster` (no-source); `county-source-library-officials` (no-source); `fire-park-district-officers` (no-source); `quincy-ward-officeholders` (no-source) |
+| Adams | 17001 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 3 — `adams-county-board-roster` (no-source); `county-source-library-officials` (no-source); `fire-park-district-officers` (no-source) |
 | Alexander | 17003 | dispatch | at-large — County card | `library-district` | 2 — `alexander-precinct-geometry` (no-source); `statewide-library-officials` (no-source) |
 | Bond | 17005 | dispatch | no board layer — see gaps | `library-district` | 2 — `bond-county-board-districts` (no-source); `bond-precinct-geometry` (no-source) |
 | Boone | 17007 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `boone-fire-belvidere-city` (data-quality); `boone-fire-loves-park` (data-quality); `boone-fire-names` (data-quality) |
@@ -67,7 +67,7 @@
 | Kendall | 17093 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 5 — `aurora-council-contact` (blocked); `blocked-crawlers` (blocked); `county-source-library-officials` (no-source); `fire-park-district-officers` (no-source); `plano-ward-officials` (no-source) |
 | Knox | 17095 | dispatch | districted | `county-board`, `library-district` | 3 — `knox-precinct-geometry` (no-source); `library-governance-type` (data-quality); `statewide-library-officials` (no-source) |
 | LaSalle | 17099 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 5 — `lasalle-board-districts-stale` (no-source); `lasalle-municipal-wards` (no-source); `ogle-lasalle-special-districts` (no-source); `statewide-library-officials` (no-source); `wenona-two-clerks-disagree` (data-quality) |
-| Lake | 17097 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 3 — `county-source-library-officials` (no-source); `lake-municipal-names` (no-source); `park-city-wards` (no-source) |
+| Lake | 17097 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 4 — `county-source-library-officials` (no-source); `gurnee-village-board-names` (no-source); `lake-municipal-names` (no-source); `park-city-wards` (no-source) |
 | Lee | 17103 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 4 — `fire-park-district-officers` (no-source); `lee-municipal-officials` (no-source); `lee-park-library-districts` (no-source); `statewide-library-officials` (no-source) |
 | Livingston | 17105 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `livingston-special-districts` (no-source); `statewide-library-officials` (no-source) |
 | Logan | 17107 | dispatch | districted | `county-board`, `county-precinct`, `library-district`, `park-district` | 2 — `logan-fire-districts` (no-source); `logan-park-district-boards` (no-source) |
@@ -124,7 +124,7 @@ Counties outside the coverage ring that a research pass has already measured; ea
 | County | FIPS | Gap records |
 |---|---|---|
 | Bureau | 17011 | 1 — `bureau-county-board-districts` (no-source) |
-| Champaign | 17019 | 1 — `champaign-piatt-ccgisc-license` (blocked) |
+| Champaign | 17019 | 2 — `champaign-piatt-ccgisc-license` (blocked); `urbana-city-council-names` (no-source) |
 | Fayette | 17051 | 1 — `fayette-county-board-geometry` (no-source) |
 | Ford | 17053 | 1 — `ford-county-board-vintage` (no-source) |
 | Jasper | 17079 | 1 — `jasper-county-board` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 106 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 107 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
