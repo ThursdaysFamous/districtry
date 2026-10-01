@@ -1358,6 +1358,25 @@ UNSETTLED = Entry("unsettled")
 CITY_INSTANCE = ("San Francisco is one city, so its city tier is the whole app "
                  "and the state tiers above it are another app's subject.")
 
+# A STATE WITH NO TRIBAL LAND IS THE STANDARD'S "the state does not have the
+# level" CASE, and this reason is the record it asks for: the fact, and
+# where it was checked. It was measured against the Census's own AIANNHA
+# service — the current vintage's reservation, trust-land and state-reservation
+# layers, resolved by `scripts/tribal_areas.py` — with a CONTROL whose answer
+# was known before the query ran, because an ArcGIS service answers a bad query
+# with HTTP 200 carrying an error envelope and a bare `.get("features", [])`
+# turns that into a confident uniform zero.
+#
+# SAN FRANCISCO GETS NO GAP RECORD AND THAT IS DELIBERATE. A gap record tells a
+# reader the app cannot answer something it should; here there is nothing on the
+# ground to answer, so a record would be a false statement about the app rather
+# than an honest absence. The fact belongs here, beside the test it settles.
+NO_TRIBAL_LAND_SF = (
+    "No tribal land lies inside San Francisco: measured 2026-10-01, the "
+    "current-vintage reservation, trust-land and state-reservation layers "
+    "return no feature intersecting the city's own shipped outline's extent, "
+    "with a box over North Carolina's Qualla Boundary as the positive control.")
+
 # Measured 2026-10-01 by this app's own thread; the working is in ca/WATCH.md.
 SF_NO_COURT_DISTRICTS = (
     "No court-district line falls inside San Francisco. California elects its "
@@ -1512,6 +1531,13 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
+        # KENTUCKY'S OWN CHANGE CARRIES THIS LEVEL, not this one. Both threads
+        # measured the same fact on 2026-10-01 and reached the same answer, and
+        # Kentucky's measurement is the stronger of the two — six Census tribal
+        # classes against three, and controls in two states against one — so it
+        # is the record that ships, in the change where the rest of Kentucky's
+        # levels are settled. Leaving it out here also means neither change has
+        # to be resolved against the other over one line.
         "tribal-government": OPEN,
     },
     "ny": {
@@ -1554,7 +1580,7 @@ ANSWERS = {
         "school-boards-by-district": na(SF_SCHOOL_BOARDS_AT_LARGE),
         "precincts": answers("election-precinct"),
         "special-districts": answers("bart-director"),
-        "tribal-government": OPEN,
+        "tribal-government": na(NO_TRIBAL_LAND_SF),
     },
 }
 
@@ -2127,6 +2153,7 @@ def covered_lines(row):
     if not short:
         out.append("- **Covered: yes.** Every expected level of government is "
                    "answered.")
+        _append_not_applicable(row, out)
         return out
     out.append("- **Covered: no.** %d of the %d expected levels of government "
                "are not answered. Each is a floor: no gap record is credited "
@@ -2144,7 +2171,28 @@ def covered_lines(row):
                        "thread: whether the level exists here at all has not "
                        "been measured, so it is neither passed nor failed "
                        "quietly.")
+    _append_not_applicable(row, out)
     return out
+
+
+def _append_not_applicable(row, out):
+    """List the levels that do not apply here, with the reason each time.
+
+    A LEVEL THAT DOES NOT APPLY USED TO RENDER NOWHERE, which is the shape this
+    project keeps finding wrong: the test passes and a reader of the report
+    cannot see on what grounds. The standard's own words for this branch are
+    that "the record states the fact and where it was checked", so the fact and
+    the check are printed rather than left in this file's source.
+    """
+    skipped = [e for e in row["covered_entries"] if e["verdict"] == "na"]
+    if not skipped:
+        return
+    out.append("- **Does not apply here (%d):** each one below is counted "
+               "towards Covered by a stated fact rather than by work."
+               % len(skipped))
+    for e in skipped:
+        out.append("  - **%d. %s** — %s" % (e["number"], e["title"],
+                                            e["detail"] or "reason not stated"))
 
 
 def render(rows):
@@ -2229,7 +2277,11 @@ def render(rows):
     out.append("")
     for r in rows:
         done = is_done(r)
-        out.append("### %s — %s" % (r["tag"], "**E.A.M.**" if done else letters(r)))
+        # The mark is four tests since 2026-10-01, and this heading is the one
+        # place it was still spelled with three. San Francisco is the first
+        # instance to pass all four, so it is the first run where the stale
+        # literal would have been read by anybody.
+        out.append("### %s — %s" % (r["tag"], "**E.A.M.C.**" if done else letters(r)))
         out.append("")
         if not r["scored"]:
             out.append("- **E and A do not apply.** %s" % NO_COUNTY_TIER[r["tag"]])
