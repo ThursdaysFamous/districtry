@@ -183,7 +183,7 @@ Measured 2026-10-01, before any work against this standard.
 | Illinois | 35 | 83 | 89 |
 | Wisconsin | 28 | 14 | 35 |
 | Iowa | 3 | 3 | 18 |
-| Michigan | 3 | 3 | 82 |
+| Michigan | 7 | 3 | 82 |
 | New York | 1 | 1 | 104 |
 | Minnesota | 0 | 0 | 43 |
 | Kentucky | 0 | 0 | 17 |
@@ -192,9 +192,12 @@ No app names a single New York town board or Michigan township board today, so
 all 101 of those are new work.
 
 Illinois's six unanswered cities are Champaign, Danville, Decatur, Normal,
-Quincy and Urbana. Michigan's three are Detroit, Grand Rapids and Jackson — its
-own layer note names only the first two and is stale, which is the Michigan
-thread's to correct. Wisconsin's twenty-one unnamed councils are Beloit,
+Quincy and Urbana. Michigan draws seven — Detroit, Warren, Grand Rapids, Flint,
+Rochester Hills, Battle Creek and Jackson — and names members in three of them.
+Its own layer note names only Detroit and Grand Rapids and is stale, which is
+the Michigan thread's to correct; this table was first written from that note
+and read 3, which is why a count comes from the registrations and never from a
+comment about them. Wisconsin's twenty-one unnamed councils are Beloit,
 Brookfield, Caledonia, De Pere, Fitchburg, Fond du Lac, Franklin, Greenfield,
 Janesville, La Crosse, Menomonee Falls, Mequon, Mount Pleasant, Muskego, Oak
 Creek, Oshkosh, Sun Prairie, Wausau, Wauwatosa, West Allis and West Bend.
@@ -206,9 +209,10 @@ question.
 **Everything else**
 
 - Courts by district: Illinois, Wisconsin, Iowa and New York answer them.
-  Michigan, Minnesota and Kentucky ship no such layer. Whether each of those
-  three elects judges by district is for its own thread to confirm before the
-  entry is scored against it; nothing here measured it.
+  Michigan, Minnesota and Kentucky ship no such layer. Michigan and Minnesota
+  have since confirmed, each in its own notes, that they elect their trial
+  judges by district, so the entry is owed in both. Kentucky's answer is
+  pending and the entry is not scored against it until that thread confirms.
 - School boards elected by district: Chicago, Milwaukee, Racine, Iowa's
   statewide director districts and New York City's community education councils.
   Kentucky ships none, and whether its county school boards are elected by
