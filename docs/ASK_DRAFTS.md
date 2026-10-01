@@ -4662,12 +4662,31 @@ difference between a gap we have measured and a gap we have merely noticed.
 
 ## Ask ky-judge-district-join — Kentucky Administrative Office of the Courts: which district was each judge elected from?
 
-> **SENT 2026-10-01 16:24:34 UTC by the operator, from his own address, to the one desk
-> below. AWAITING A REPLY.** Verified in his sent folder rather than taken from a report:
-> one message, subject as drafted, salutation `Dear Mr. Sturtevant`, so the sender's own
-> name and address went out filled rather than as the placeholders this public file keeps.
-> The thirty-day silence clock starts 2026-10-01; one follow-up only, and the mailbox
-> thread owns both. Nothing was re-asked and no second copy was sent.
+> **ANSWERED 2026-10-01.** Sent 16:24:34 UTC by the operator from his own address; Daniel
+> Sturtevant replied at 17:16:25 UTC, 52 minutes later, naming two published surfaces. Both
+> were read the same day, and the measurement is in the `ky-judges` record in
+> `docs/DATA_LAYER_GUIDEBOOK.md`. In short: **he answered the question.** The Court of
+> Justice does print the numbered unit beside each judge, not only a county. The directory
+> search he named second (`kcoj.kycourts.net`) is **not a route for this project** — its
+> robots.txt is 25 bytes refusing every client, so nothing is fetched from it. The first,
+> `kycourts.gov`, answers in full: the Supreme Court's own page names all seven justices
+> against their districts, the Court of Appeals' own page all fourteen judges against the
+> seven appellate districts, and 119 of the 120 county pages name each trial judge's
+> judicial circuit or judicial district number — 818 numbered rows in all.
+>
+> **The one follow-up, and it is one line.** Jefferson County's page ships its judge list
+> commented out in its own HTML, and Jefferson is the only county in circuit 30 and in
+> district 30, so Louisville's circuit and district judges are named on no page of that
+> source while every other county's are. Follow-up to send, to the same desk, on the same
+> thread: *"Jefferson County's page at kycourts.gov/Courts/County-Information/Pages/Jefferson.aspx
+> shows no judges where every other county's page lists them — is there another page that
+> names Jefferson's circuit and district judges with their circuit or district number?"* The
+> appellate half needs nothing: both appellate pages are statewide and already cover
+> Jefferson. NOT YET SENT — DRAFTED 2026-10-01; the mailbox thread owns the send and the
+> thank-you.
+>
+> The thirty-day silence clock is retired with the answer. Nothing was re-asked and no
+> second copy of the original was sent.
 >
 > **This ask exists because the geometry arrived without the people.** Kentucky's four court
 > maps shipped on 2026-10-01, dissolved offline from statute — no publisher was asked for any
