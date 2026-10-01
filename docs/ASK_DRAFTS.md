@@ -3258,6 +3258,22 @@ may already publish would be asking them to do work this project should be doing
 > reads as a follow-up, never as an opening. **Nothing goes to the Comptroller until Mr.
 > Fatato answers**, because his answer may make the letter unnecessary.
 >
+> **ANSWERED AGAIN AT 18:20, AND THIS ONE IS SUBSTANTIVE: THE NAMES EXIST.** Mr. Fatato:
+> "We do receive names, but as I understand it the municipalities are responsible for
+> updating their own information so the information may not be as up-to-date as you're
+> looking for." So a statewide collection naming the people in local office DOES exist, held
+> by the Comptroller, and its currency is each municipality's own to maintain. **That settles
+> the question this ask was written to answer** — the state does hold such a thing — and it
+> does NOT close any level, because nothing has been obtained and nothing is dated.
+>
+> It also changes what is worth asking the Comptroller, which is why the letter was not
+> written before this reply came: the question is no longer whether names exist but whether
+> each record carries a DATE. This project's honesty rule is that a card never presents a
+> name as current without a verifiable source, so an undated self-reported roster cannot ship
+> as a roster. It would still be worth having as a STARTING LIST to check against each
+> municipality's own page, which is how this project works everywhere else. That letter is
+> `Ask ny-comptroller-local-officials` below.
+>
 > **Prior contact: none, and that was measured rather than assumed.** All of the operator's
 > mail was searched on 2026-10-01 for both domains and for the two offices by name, not just
 > the sent folder, and this thread is the only one. So the letter was correctly written as a
@@ -3377,6 +3393,82 @@ complaint about any local government's website. And nothing is asked about the f
 sites that would not answer this project: those readings were taken in a sandbox whose own
 network accounts for most of them, and the fleet's rule is to re-measure from the build machine
 before writing any publisher off.
+
+## Ask ny-comptroller-local-officials — New York's Comptroller: how current are the names, and are they dated?
+
+**Status: NOT YET ASKED — DRAFTED 2026-10-01.** Named rather than numbered. **This is a
+FOLLOW-UP, not an opening**: `localgov@osc.ny.gov` was copied in on Ask 33 at 16:09 on
+2026-10-01 and has not replied, so the letter cites that message rather than introducing the
+project from scratch.
+
+Gaps `ny-county-governing-body`, `ny-local-governing-body`.
+
+**What is already settled, and why this is a narrow letter.** Ask 33 went to the Department
+of State with the Comptroller copied in. The Department answered twice the same day: it gets
+its municipal contact information from the Comptroller, and that information **does include
+names**, with each municipality responsible for keeping its own entry up to date. So the
+existence question is closed and only two things are left to ask — whether the collection can
+be shared, and whether each record carries a date.
+
+**The date is the whole question, and that is this project's own rule rather than
+fussiness.** A card here never shows a person's name as current without a source that can be
+checked. A self-reported list with no date per record cannot be published as a roster, because
+there would be no way to tell a name that is right from one that is four years stale. The same
+list WITH a date per record can be published, each row carrying its own date exactly as the
+county cards already do. And even undated it is worth having, as a starting list to check
+against each municipality's own page — which is how every other state in this project is
+built.
+
+**It is kept short deliberately.** The operator shortened Ask 33 before sending it, which is
+the clearest signal available that these drafts run long. This one asks three things and
+stops.
+
+> Subject: Re: Is there a published directory of local elected officials in New York?
+>
+> Dear Division of Local Government and School Accountability,
+>
+> You were copied last week on a question I sent to the Department of State, asking whether
+> anyone at the state holds a directory of local elected officials. Mr. Fatato there has since
+> told me the Department gets its municipal contact information from your office, that it does
+> include names, and that each municipality is responsible for keeping its own entry current.
+>
+> I run districtry.com, a free, non-commercial map that shows anyone which civic districts
+> cover their address and who represents them there. Outside New York City it can draw every
+> county, city, town and village in the state and name almost nobody.
+>
+> Three questions, and I expect the answer to the first may settle the others:
+>
+> 1. Can that information be shared with me, in any form?
+> 2. Does each record carry a date — when the municipality last updated it?
+> 3. If not, is there anything in it that indicates how current an entry is?
+>
+> The date matters more than it might sound. I never show someone's name as current unless I
+> can point to a source for it, so an undated list is not something I could publish as a
+> roster. The same list with a date on each row I could publish, showing that date beside each
+> name. And even without dates it would be valuable to me as a starting point to check against
+> each municipality's own website, which is how I build this everywhere else.
+>
+> If it is not something you can share, that is a complete answer and I will record it as such
+> and not ask again. Whatever you are able to send, your office would be credited and linked on
+> every page that used it.
+>
+> Thank you,
+>
+> Adam Overberg
+> adam@overberg.co
+> districtry.com
+
+**What each answer means.**
+
+| answer | what it settles |
+|---|---|
+| shared, with a date per record | The strongest possible outcome: New York's county, local and sub-county levels close from one file, each row publishable with its own date. |
+| shared, undated | Not publishable as a roster on its own, and still a large gain: a starting list of names to check against each municipality's own page, which turns an open-ended search into a verification pass. |
+| cannot be shared | `REFUSED`, which counts immediately. The three gap records stand with the state's own answer as the reason, and the route is each county and town one at a time. |
+| no reply | `UNRESPONSIVE` thirty days after one follow-up — a claim about the ask and never about the office. |
+
+**One thing deliberately not asked.** Nothing about reuse terms or licensing, for the reason
+Ask 33 gives: there is nothing yet to license. If a file arrives, that is a separate letter.
 
 ## Ask il-five-counties-commissioner-roster — five Illinois county clerks: who holds the commissioner seats?
 
