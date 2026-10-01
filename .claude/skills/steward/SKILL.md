@@ -66,6 +66,8 @@ python3 scripts/tribal_areas.py --selftest                 # a shared boundary i
 python3 scripts/bia_tribal_governments.py --check          # the Bureau's government list, names only, no personal columns
 python3 scripts/validate_tribal_join.py --selftest         # the join gate catches each thing it exists to catch
 python3 scripts/validate_tribal_join.py --check            # no entry may name a government the Bureau does not carry
+python3 scripts/build_tribal_areas.py --selftest            # the join and population logic on fixtures
+python3 scripts/build_tribal_areas.py --check               # il's shipped tribal boundary vs its join table, offline
 python3 scripts/build_brand_tokens.py --check
 python3 scripts/validate_contrast.py                     # text vs ground, both tiers
 python3 scripts/compose_app.py --check                   # engine/ vs every instance's fences
