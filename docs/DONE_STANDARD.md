@@ -30,7 +30,9 @@ All three passed. The standard now has a fourth test that they do not pass.
 ## The four tests
 
 A state is done when it is **Examined**, **Answered**, **Maintained** and
-**Covered**.
+**Covered**. The mark becomes **E.A.M.C.** It stays internal — docs and CI,
+never a reader-facing badge — for the reason it always was: publishing it would
+promise readers something county publishers can revoke in any given week.
 
 The first three are unchanged and are documented in
 `scripts/build_eam_status.py`.
@@ -73,7 +75,8 @@ which entries apply does.
 4. The county governing body — its districts drawn where it elects by district,
    its members named — in every county of the state.
 5. Municipal boundaries.
-6. The governing body of every municipality above 25,000 people (see below).
+6. The governing body of every local government above 25,000 people that
+   governs its residents generally (see below).
 7. School district boundaries.
 
 **Required where the state has them**
@@ -92,23 +95,40 @@ record states that the state does not have it. Where a state genuinely lacks a
 level — a state with no townships, say — the entry is covered by that fact
 rather than by work, and the record states the fact and where it was checked.
 
-## Where the city line sits
+## Where the city line sits, and which units count
 
-The municipal governing body is required for every incorporated place of 25,000
-people or more, counted on the 2020 Census. Measured on 2026-10-01 that is 287
-cities across the seven statewide apps:
+The local governing body is required for every unit of 25,000 people or more on
+the 2020 Census that is the **general-purpose government** for its residents —
+the body that governs them because nothing smaller does.
 
-| app | cities at 25,000+ | share of the state's city population they hold |
+That is every incorporated city and village. It is **also** a New York town and
+a Michigan township, because in those two states the town or township is what
+governs everyone outside a village or city; leaving them out would let New York
+look answered while most of upstate was not. Measured 2026-10-01: 67 New York
+towns and 34 Michigan townships clear the line, all of them distinct from the
+cities and villages already counted.
+
+It is **not** an Illinois township. Eighty-four of those clear the line, and
+they are limited-purpose — roads, assessment, general assistance — while an
+unincorporated Illinois resident is governed generally by the county. They are
+still owed under entry 9 below, which is where Illinois's township officials
+already sit. No township or town in Iowa, Kentucky, Wisconsin or Minnesota
+reaches 25,000, so the question does not arise in those four today; if one ever
+does, it is answered by the general-purpose test above and not by a per-state
+exception.
+
+| app | units at 25,000+ | of which towns or townships |
 |---|---|---|
-| Illinois | 89 | 64% |
-| Michigan | 48 | 68% |
-| Minnesota | 43 | 59% |
-| New York | 37 | 84% |
-| Wisconsin | 35 | 56% |
-| Iowa | 18 | 49% |
-| Kentucky | 17 | 58% |
+| New York | 104 | 67 |
+| Illinois | 89 | — |
+| Michigan | 82 | 34 |
+| Minnesota | 43 | — |
+| Wisconsin | 35 | — |
+| Iowa | 18 | — |
+| Kentucky | 17 | — |
 
-San Francisco is one city, so its city tier is the whole app.
+That is 388 governments across the seven statewide apps. San Francisco is one
+city, so its city tier is the whole app.
 
 **A city is answered when a reader clicking inside it is told who governs that
 point.** Where the council elects by district, that means the districts are
@@ -124,8 +144,11 @@ A level counts as covered by record only when all of this is true:
 
 - The absence is **measured** — we know what the publisher does and does not
   offer, not that we could not find it.
-- We **asked**, by name, and were refused or got no answer. The ask is recorded
-  with its date in the existing ask ledger.
+- We **asked**, by name, and did not get what we wanted. A refusal counts
+  straight away. Silence counts once we have asked, sent one follow-up, and
+  waited thirty days from that follow-up — which is the ordinary case, because
+  most of these asks are never answered at all. Both the ask and the follow-up
+  are recorded with their dates in the existing ask ledger.
 - The record says what we wanted, who we asked and what happened, in the shape
   the gap records already use.
 
@@ -153,20 +176,25 @@ Measured 2026-10-01, before any work against this standard.
 | Minnesota | none | none |
 | Kentucky | none | none |
 
-**Municipal governing body, cities at 25,000+**
+**Local governing body, units at 25,000+**
 
 | app | districts drawn | members named | of |
 |---|---|---|---|
 | Illinois | 35 | 83 | 89 |
 | Wisconsin | 28 | 14 | 35 |
 | Iowa | 3 | 3 | 18 |
-| Michigan | 2 | 2 | 48 |
-| New York | 1 | 1 | 37 |
+| Michigan | 3 | 3 | 82 |
+| New York | 1 | 1 | 104 |
 | Minnesota | 0 | 0 | 43 |
 | Kentucky | 0 | 0 | 17 |
 
+No app names a single New York town board or Michigan township board today, so
+all 101 of those are new work.
+
 Illinois's six unanswered cities are Champaign, Danville, Decatur, Normal,
-Quincy and Urbana. Wisconsin's twenty-one unnamed councils are Beloit,
+Quincy and Urbana. Michigan's three are Detroit, Grand Rapids and Jackson — its
+own layer note names only the first two and is stale, which is the Michigan
+thread's to correct. Wisconsin's twenty-one unnamed councils are Beloit,
 Brookfield, Caledonia, De Pere, Fitchburg, Fond du Lac, Franklin, Greenfield,
 Janesville, La Crosse, Menomonee Falls, Mequon, Mount Pleasant, Muskego, Oak
 Creek, Oshkosh, Sun Prairie, Wausau, Wauwatosa, West Allis and West Bend.
