@@ -1458,8 +1458,11 @@ ANSWERS = {
         "courts-by-district": answers("mi-court-of-appeals", "mi-circuit-court"),
         # A Michigan township governs everyone outside a village or city, so
         # the 34 that clear 25,000 are already owed under the city tier; the
-        # rest are owed here. The app draws them and names no township board.
-        "sub-county-government": OPEN,
+        # rest are owed here. The app draws all 1,240 and names the board of
+        # each large township whose own page names every seat — the Illinois
+        # precedent above, which answers this level by drawing every township
+        # and naming Cook's 29 boards.
+        "sub-county-government": answers("county-subdivision"),
         "school-boards-by-district": na(MI_NO_SCHOOL_BOARD_DISTRICTS),
         "precincts": answers("precinct"),
         # Intermediate school districts: special districts the Revised School
@@ -1573,6 +1576,10 @@ CITY_ROSTERS = {
     "wi": [("wi/data/app/wi-alderpersons.json", "place5")],
     "ia": [("ia/data/app/ia-city-officials.json", "geoid7"),
            ("ia/data/app/ia-county-city-officials.json", "geoid7")],
+    # Keyed by the Census id as written: 7 digits for a city, 10 for a
+    # township (a county subdivision), which is the id the expected-units
+    # measurement carries for each.
+    "mi": [("mi/data/app/mi-municipal-officials.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is

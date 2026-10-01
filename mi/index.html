@@ -12636,11 +12636,64 @@ function initMichiganExplorer() {
    * second source to go stale. Measured: the four LSADC values yield exactly
    * four suffixes, 1,581 of 1,581.
    *
-   * NO OFFICEHOLDER. Michigan townships elect a supervisor, clerk, treasurer
-   * and trustees (MCL 41.61, 42.3 for charter townships), and no statewide
-   * roster of them was found — the card names the office and says plainly
-   * that this app does not know who holds it, which is the honesty floor.
-   * Recorded as gap mi-township-officers. ---------- */
+   * THE BOARD, WHERE THE TOWNSHIP'S OWN PAGE NAMES IT. Michigan townships
+   * elect a supervisor, clerk, treasurer and trustees (MCL 41.61, 42.3 for
+   * charter townships), and no statewide roster of them exists, so the large
+   * townships are read one by one from their own sites
+   * (mi-municipal-officials.json, joined on this card's GEOID). Every other
+   * township keeps the sentence naming the office and saying plainly that
+   * this app does not know who holds it, which is the honesty floor. Recorded
+   * as gap mi-township-officers. ---------- */
+  // THE BOARDS OF MICHIGAN'S LARGE CITIES AND TOWNSHIPS, keyed by the same
+  // TIGER GEOID these two cards already read (7-digit place, 10-digit county
+  // subdivision), so the join is on the feature the card found and nothing
+  // else. Read weekly from each unit's own website
+  // (mi/scripts/mi_municipal_officials_scraper.py, build_mi_municipal_officials.py).
+  // It covers the units over 25,000 people whose own page names every seat,
+  // not every Michigan city or township: a unit it does not carry keeps the
+  // "not named here" sentence, which stays true of that unit. A failed load is
+  // the same as a unit it does not carry, so the card never breaks on it.
+  var loadMunicipalOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-municipal-officials.json", {}, 2);
+  });
+  function municipalBoardFor(geoid) {
+    return loadMunicipalOfficials().then(function (all) {
+      return (all && geoid != null && all[String(geoid)]) || null;
+    }, function () { return null; });
+  }
+  // The board as the unit's own page names it: every member with the office
+  // the page prints, the ward or district only where the page states one, any
+  // seat the page says is vacant, and the page it came from with the date it
+  // was read. A unit whose site could not be read on the latest run keeps its
+  // last-read names, and the card says since when.
+  function renderMunicipalBoard(board) {
+    var frag = document.createDocumentFragment();
+    frag.appendChild(renderSectionLabel(String(board.body || "Board")));
+    frag.appendChild(renderPersonRows((board.members || []).map(function (m) {
+      return { name: String(m.name), badge: m.role ? String(m.role) : null,
+        note: m.seat ? String(m.seat) : null,
+        phone: m.phone || null, email: m.email || null };
+    })));
+    var vacant = board.vacant || [];
+    if (vacant.length) {
+      frag.appendChild(renderFieldStack([{ label: "Vacant",
+        value: vacant.map(String).join(", ") + " — the " + (board.kind === "township" ?
+          "township" : "city") + "'s own page lists this seat as vacant." }]));
+    }
+    var who = board.kind === "township" ? "township" : "city";
+    var when = board.preservedSince
+      ? "Last read " + board.readAt + "; the " + who + "'s site has not been readable since " +
+        board.preservedSince + ", so these are the names it published then."
+      : "As the " + who + " publishes it, read " + board.readAt + ".";
+    var office = board.office || {};
+    frag.appendChild(renderLinkRow({
+      title: "Source", note: when,
+      phone: office.phone || null, email: office.email || null,
+      links: [{ label: "The " + who + "'s own page", url: String(board.sourceUrl) }]
+    }));
+    return frag;
+  }
+
   var loadCountySubdivisions = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
     "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC", "county subdivisions");
@@ -12675,7 +12728,7 @@ function initMichiganExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // the civil-division type, taken from what TIGER's own NAME carries
@@ -12687,6 +12740,11 @@ function initMichiganExplorer() {
             : null,
           geoid: findPropCI(props, ["geoid"])
         };
+        if (result.kind !== "township" && result.kind !== "charter township") return result;
+        return municipalBoardFor(result.geoid).then(function (board) {
+          result.board = board;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -12720,7 +12778,9 @@ function initMichiganExplorer() {
       // WHO HOLDS THE OFFICE, said as the open question it is. Only a township
       // has an officer this card would name; a city's people belong on the
       // city's own card, and the water records have no government at all.
-      if (result.kind === "township" || result.kind === "charter township") {
+      if ((result.kind === "township" || result.kind === "charter township") && result.board) {
+        wrap.appendChild(renderMunicipalBoard(result.board));
+      } else if (result.kind === "township" || result.kind === "charter township") {
         wrap.appendChild(renderFieldStack([{
           label: "Your township board",
           value: "Not named here. No statewide roster of Michigan's township " +
@@ -12750,12 +12810,14 @@ function initMichiganExplorer() {
    * lookup: most of Michigan's land is unincorporated township, which IS an
    * answer, and the Township or City card is the one that names it.
    *
-   * NO OFFICEHOLDER. No statewide source names Michigan's mayors, village
-   * presidents, council members or clerks — the Michigan Municipal League's
-   * directory is membership-facing and the state publishes no aggregate — so
-   * the card names no one rather than guessing. Recorded as gap
-   * mi-municipal-officeholders; per-city rosters are later phase work, the
-   * route every other instance took. ---------- */
+   * THE COUNCIL, WHERE THE CITY'S OWN PAGE NAMES IT. No statewide source
+   * names Michigan's mayors, village presidents, council members or clerks —
+   * the Michigan Municipal League's directory is membership-facing and the
+   * state publishes no aggregate — so the large cities are read one by one
+   * from their own sites (mi-municipal-officials.json, joined on this card's
+   * GEOID), the route every other instance took. Every other city and village
+   * keeps the sentence naming no one rather than guessing. Recorded as gap
+   * mi-municipal-officeholders. ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC", "incorporated places");
@@ -12788,7 +12850,7 @@ function initMichiganExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // same NAME-minus-BASENAME technique as the subdivision card, for
@@ -12799,6 +12861,10 @@ function initMichiganExplorer() {
             : null,
           geoid: findPropCI(props, ["geoid"])
         };
+        return municipalBoardFor(result.geoid).then(function (board) {
+          result.board = board;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -12820,6 +12886,10 @@ function initMichiganExplorer() {
         wrap.appendChild(renderFieldStack([
           { label: "Type", value: KIND_NOTE[result.kind] }
         ]));
+      }
+      if (result.board) {
+        wrap.appendChild(renderMunicipalBoard(result.board));
+        return wrap;
       }
       wrap.appendChild(renderFieldStack([{
         label: "Your mayor or council",
