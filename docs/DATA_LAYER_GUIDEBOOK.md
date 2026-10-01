@@ -1954,6 +1954,7 @@ trusted.
     },
     {
       "id": "alderperson-rosters",
+      "covers": ["local-government"],
       "concept": "City and village council members",
       "area": "Wisconsin — statewide",
       "counties": [
@@ -2120,6 +2121,7 @@ trusted.
     },
     {
       "id": "municipal-officers",
+      "covers": ["local-government", "sub-county-government"],
       "concept": "Municipal officials",
       "area": "Wisconsin — statewide",
       "kind": "no-source",
