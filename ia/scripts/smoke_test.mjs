@@ -493,6 +493,44 @@ try {
     await context.close();
   }
 
+  // 2a3. THE TOWNSHIP OFFICERS, BOTH BRANCHES, BECAUSE ONE ALONE PROVES
+  //      NOTHING. Twelve counties publish their township clerks and trustees
+  //      and about 1,400 townships are published by nobody, so the card has a
+  //      named branch and a "not shown" branch — and a test of either half
+  //      alone passes for a card that renders that half everywhere. The
+  //      county-subdivision layer is point-first, so both points are selected
+  //      with the census host LIVE (nothing else here can answer which
+  //      township a point is in), and a failure to reach it reads as the
+  //      check's own skip rather than as a wrong answer.
+  //
+  //      THE POINTS ARE THE CENSUS'S OWN GEOMETRY, not eyeballed: each is the
+  //      ring centroid of a township the shipped roster names (Bath township
+  //      in Cerro Gordo, which also publishes terms and whether each officer
+  //      was elected or appointed) and of one it does not (Liscomb township in
+  //      Marshall, the anchor county, which publishes no township page).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    for (const [lat, lng, township, want, why] of [
+      [43.03083, -93.19912, "Bath township", "Steve Sturges", "named by its county"],
+      [42.18000, -92.95000, "Liscomb township", "Not shown", "named by nobody"]
+    ]) {
+      const page = await booted(context,
+        `${BASE}#point=${lat},${lng}&layers=county-subdivision`);
+      const info = await cardText(page, "county-subdivision");
+      if (info.error || !info.text.includes(township)) {
+        // the census host did not answer this township — say so rather than
+        // failing on somebody else's server, the rule the tile checks follow
+        console.log(`  SKIP  township officers, ${why} — card did not name ${township}`);
+        await page.close();
+        continue;
+      }
+      check(`township officers, ${why} (${township})`,
+        info.text.includes(want), info.text.slice(0, 120));
+      await page.close();
+    }
+    await context.close();
+  }
+
   // 2b. The negative ground-truth point (from the worksheet: a point outside
   //     every anchor layer). Anchors that declare a location-relevance test
   //     (mod.coverage — see NEGATIVE_HIDDEN above) HIDE there: the toggle

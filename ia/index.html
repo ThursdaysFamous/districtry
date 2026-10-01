@@ -12888,11 +12888,41 @@ function initIowaExplorer() {
    * BASENAME ("Brighton" + " township"), the same technique the WI
    * `county-subdivision` card uses, so the card can never disagree with
    * the name printed above it. Only the township kind names an elected
-   * office (trustees, clerk, assessor — Iowa Code ch. 359, ASSERTED); no
-   * statewide roster of township officers was found in the research pass,
-   * so the card states that plainly rather than guessing or staying
-   * silent — the fleet's honesty rule applied to a live-fetched layer
-   * exactly as it is to a pre-built one. ---------- */
+   * office (trustees, clerk, assessor — Iowa Code ch. 359, ASSERTED).
+   *
+   * THERE IS STILL NO STATEWIDE ROSTER OF TOWNSHIP OFFICERS, AND THAT WAS
+   * READ FOR FOURTEEN MONTHS AS THERE BEING NO ROSTER AT ALL. Twelve
+   * counties publish their own township clerks and trustees — every one of
+   * them at the same path under their own county site — which nothing in
+   * this instance had looked for, so this card's own note said no roster
+   * was found while 617 people were being published the whole time. A
+   * statewide absence is not a per-county absence; the two are measured
+   * separately (ia/scripts/ia_township_officers_scraper.py). The card now
+   * names whoever is published for the township the reader is standing in,
+   * credits the county that publishes them with the date it was read, and
+   * says plainly that the roughly fourteen hundred other townships name
+   * nobody. ---------- */
+  // TWELVE COUNTIES PUBLISH THEIR TOWNSHIP OFFICERS, one weekly file keyed by
+  // the same TIGER county-subdivision GEOID this card already reads, so a
+  // township is joined by its own identity rather than by its name.
+  var loadTownshipOfficers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ia-township-officers.json", {}, 2);
+  });
+  // COUNTED FROM THE FILE, NOT TYPED. The weekly run adds and drops counties
+  // as their pages change, so a figure written into the sentence below is
+  // wrong the first week it does its job -- the same rule the City card's own
+  // publisher count already follows.
+  function townshipPublisherCount(file) {
+    if (!file) return 0;
+    var seen = {}, n = 0;
+    for (var geoid in file) {
+      if (!Object.prototype.hasOwnProperty.call(file, geoid)) continue;
+      var c = file[geoid] && file[geoid].county;
+      if (c && !seen[c]) { seen[c] = true; n++; }
+    }
+    return n;
+  }
+
   var loadCountySubdivisions = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
     "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC", "county subdivisions");
@@ -12914,12 +12944,20 @@ function initIowaExplorer() {
     },
     query: function (point, seq) {
       // point-first (queryFeatureAt): one subdivision polygon instead of the
-      // statewide download gating the first click
-      return queryFeatureAt(loadCountySubdivisions, point).then(function (feature) {
+      // statewide download gating the first click. The officers file is a
+      // small same-origin read and its failure is NOT this layer's failure --
+      // the .catch is on that leg alone, so a township still answers
+      // identity-only exactly as it did before the file existed.
+      return Promise.all([
+        queryFeatureAt(loadCountySubdivisions, point),
+        loadTownshipOfficers().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0], officers = parts[1];
         if (!feature) return null;
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
+        var geoid = findPropCI(props, ["geoid"]);
         return {
           seq: seq,
           name: name,
@@ -12927,7 +12965,9 @@ function initIowaExplorer() {
                  String(name).indexOf(String(base)) === 0)
             ? String(name).slice(String(base).length).trim().toLowerCase()
             : null,
-          geoid: findPropCI(props, ["geoid"])
+          geoid: geoid,
+          officers: (officers && geoid != null && officers[String(geoid)]) || null,
+          officerPublishers: officers
         };
       });
     },
@@ -12939,8 +12979,7 @@ function initIowaExplorer() {
       }));
       var KIND_NOTE = {
         township: "Township — an active local government (elected trustees, " +
-          "clerk and assessor under Iowa Code ch. 359). No statewide roster " +
-          "of township officers was found in the research pass.",
+          "clerk and assessor under Iowa Code ch. 359).",
         city: "This is the Census Bureau's placeholder subdivision record for " +
           "an incorporated city with no separate township surviving under it " +
           "— not a second government distinct from the city itself.",
@@ -12953,6 +12992,55 @@ function initIowaExplorer() {
         wrap.appendChild(renderFieldStack([
           { label: "Type", value: KIND_NOTE[result.kind] }
         ]));
+      }
+      var rec = result.officers;
+      if (rec && rec.officials && rec.officials.length) {
+        wrap.appendChild(renderSectionLabel("TOWNSHIP OFFICERS"));
+        wrap.appendChild(renderPersonRows(rec.officials.map(function (o) {
+          var row = { name: String(o.name) };
+          if (o.role) row.badge = String(o.role);
+          if (o.phone) row.phone = String(o.phone);
+          var notes = [];
+          // THE SELECTION WORD IS THE COUNTY'S AND SITS ON THE TOWNSHIP, NOT
+          // ON THE PERSON. One county prints whether its township officers
+          // were elected or appointed to the seat; where it does, every row
+          // of that township carries it, because that is the scope of what
+          // the county actually said.
+          if (rec.selection) notes.push(String(rec.selection));
+          if (o.termEnds) notes.push("Term ends " + String(o.termEnds));
+          if (o.termLength) notes.push(String(o.termLength) + "-year term");
+          if (notes.length) row.note = notes.join(" \u00b7 ");
+          return row;
+        })));
+        var pubs = townshipPublisherCount(result.officerPublishers);
+        wrap.appendChild(renderFieldStack([{
+          label: "Township officers",
+          value: "Named by " + String(rec.county) + " County, which publishes " +
+            "the clerk and trustees of every township inside it" +
+            (rec.asOf ? ", read " + String(rec.asOf) : "") + ". Iowa has no " +
+            "statewide list of township officers, so " +
+            (pubs ? (pubs === 1 ? "one county names them"
+                                : pubs + " counties name them")
+                  : "only a few counties name them") +
+            " and the rest of Iowa's roughly fourteen hundred townships name " +
+            "nobody in this app."
+        }]));
+      } else if (result.kind === "township") {
+        // WHAT THIS CARD STILL CANNOT ANSWER, said with somewhere to go.
+        var pubs2 = townshipPublisherCount(result.officerPublishers);
+        wrap.appendChild(renderFieldStack([{
+          label: "Township officers",
+          value: "Not shown — Iowa publishes no statewide list of township " +
+            "clerks and trustees, and this township's own county does not " +
+            "publish one either, so this card names nobody rather than " +
+            "naming some. " +
+            (pubs2 ? (pubs2 === 1 ? "One Iowa county publishes"
+                                  : pubs2 + " Iowa counties publish")
+                   : "A few Iowa counties publish") +
+            " the officers of every township inside them, and those cards " +
+            "name them. The County card above names the county officials who " +
+            "answer for this ground either way."
+        }]));
       }
       return wrap;
     }
