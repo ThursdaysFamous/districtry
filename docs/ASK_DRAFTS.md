@@ -552,6 +552,41 @@ That is four Iowa counties answered from one afternoon's letters, and the shape 
 keeping is the one `ia-tama-supervisor-map` already recorded: the ask opened by saying
 the problem was at this end, and the county answered it by sending the thing it holds.
 
+### WHERE THE MAILBOX STANDS AT THE PAUSE, 2026-10-01 19:31 UTC
+
+The project pauses until Tuesday 6 October. Inbox monitoring stops, nothing is
+scheduled, and the drafts are left exactly as they are. This is the state to pick
+up from.
+
+**THIRTY-SEVEN DRAFTS WAIT IN THE OPERATOR'S FOLDER AND NOT ONE HAS BEEN SENT.**
+Nothing here sends; the operator sends. The five where somebody is actively
+waiting on an answer from us are the four Iowa replies (Ida, Osceola, Sioux,
+Washington) and Cumberland's one yes-or-no question. The rest are first
+approaches, thank-yous and follow-ups that can go whenever he gets to them.
+
+What was added on 1 October, by county: Ford's thank-you; Tama's map thank-you;
+Kentucky's Jefferson reply; Cumberland's 500E question; Iowa's twenty — four
+replies and sixteen first letters, counting Linn's.
+
+Four drafts remain deliberately blank in the `To` field and are listed for the
+operator rather than guessed at: Oshkosh, Beloit, Burton and the wingis host.
+
+**WHAT ARRIVES BEFORE TUESDAY IS NOT LOST AND IS NOT ROUTED EITHER.** Replies will
+land in the inbox unread by this project. The first action on Tuesday is a sweep
+of the inbox and the draft folder in one pass, because a draft missing from the
+folder is ambiguous until the sent folder is checked — it may have gone or it may
+have been deleted, and only the sent folder tells the two apart.
+
+**ONE CLOCK IS RUNNING AND IS RECORDED RATHER THAN REMEMBERED**: Tama's
+precinct-list follow-up is held for around 8 October, which falls after the pause
+ends.
+
+Two findings from the evening belong with the pause because they will be needed on
+Tuesday. Gmail's `update_draft` detaches a reply from its thread, so a reply draft
+is rebuilt with `create_draft` and never edited in place. And a changed ask record
+is not automatically a changed letter: the nineteen Iowa drafts were diffed rather
+than rewritten, because the correction was to the record's own prose.
+
 **A FOLLOW-UP IS HELD FOR AROUND 8 OCTOBER, AND DELIBERATELY KEPT OUT OF THE THANK-YOU.**
 The Iowa work found that the five-district plan she sent is NEWER than the precinct data
 this project holds, so the next thing Tama needs is the county's current precinct list.
