@@ -1358,6 +1358,31 @@ UNSETTLED = Entry("unsettled")
 CITY_INSTANCE = ("San Francisco is one city, so its city tier is the whole app "
                  "and the state tiers above it are another app's subject.")
 
+# A STATE WITH NO TRIBAL LAND IS THE STANDARD'S "the state does not have the
+# level" CASE, and these two reasons are the record it asks for: the fact, and
+# where it was checked. Both were measured against the Census's own AIANNHA
+# service — the current vintage's reservation, trust-land and state-reservation
+# layers, resolved by `scripts/tribal_areas.py` — with a CONTROL whose answer
+# was known before the query ran, because an ArcGIS service answers a bad query
+# with HTTP 200 carrying an error envelope and a bare `.get("features", [])`
+# turns that into a confident uniform zero.
+#
+# NEITHER STATE GETS A GAP RECORD AND THAT IS DELIBERATE. A gap record tells a
+# reader the app cannot answer something it should; here there is nothing on the
+# ground to answer, so a record would be a false statement about the app rather
+# than an honest absence. The fact belongs here, beside the test it settles.
+NO_TRIBAL_LAND_KY = (
+    "Kentucky has no federally recognised tribal land: measured 2026-10-01 "
+    "against the Census's tribal-areas service, 0 reservations, 0 off-"
+    "reservation trust lands and 0 state reservations inside state code 21, "
+    "with the state control returning 21 and North Carolina's Qualla Boundary "
+    "as the positive control that the query shape finds land where land is.")
+NO_TRIBAL_LAND_SF = (
+    "No tribal land lies inside San Francisco: measured 2026-10-01, the "
+    "current-vintage reservation, trust-land and state-reservation layers "
+    "return no feature intersecting the city's own shipped outline's extent, "
+    "with a box over North Carolina's Qualla Boundary as the positive control.")
+
 # Per instance, what answers each expected function. A tuple names the layer
 # ids; `depth(...)` is measured; OPEN is nothing yet; UNSETTLED is a question the
 # standard leaves to that state's thread.
@@ -1482,7 +1507,7 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        "tribal-government": OPEN,
+        "tribal-government": na(NO_TRIBAL_LAND_KY),
     },
     "ny": {
         "us-house": answers("congress"),
@@ -1522,7 +1547,7 @@ ANSWERS = {
         "school-boards-by-district": UNSETTLED,
         "precincts": answers("election-precinct"),
         "special-districts": answers("bart-director"),
-        "tribal-government": OPEN,
+        "tribal-government": na(NO_TRIBAL_LAND_SF),
     },
 }
 
@@ -2090,6 +2115,7 @@ def covered_lines(row):
     if not short:
         out.append("- **Covered: yes.** Every expected level of government is "
                    "answered.")
+        _append_not_applicable(row, out)
         return out
     out.append("- **Covered: no.** %d of the %d expected levels of government "
                "are not answered. Each is a floor: no gap record is credited "
@@ -2107,7 +2133,28 @@ def covered_lines(row):
                        "thread: whether the level exists here at all has not "
                        "been measured, so it is neither passed nor failed "
                        "quietly.")
+    _append_not_applicable(row, out)
     return out
+
+
+def _append_not_applicable(row, out):
+    """List the levels that do not apply here, with the reason each time.
+
+    A LEVEL THAT DOES NOT APPLY USED TO RENDER NOWHERE, which is the shape this
+    project keeps finding wrong: the test passes and a reader of the report
+    cannot see on what grounds. The standard's own words for this branch are
+    that "the record states the fact and where it was checked", so the fact and
+    the check are printed rather than left in this file's source.
+    """
+    skipped = [e for e in row["covered_entries"] if e["verdict"] == "na"]
+    if not skipped:
+        return
+    out.append("- **Does not apply here (%d):** each one below is counted "
+               "towards Covered by a stated fact rather than by work."
+               % len(skipped))
+    for e in skipped:
+        out.append("  - **%d. %s** — %s" % (e["number"], e["title"],
+                                            e["detail"] or "reason not stated"))
 
 
 def render(rows):

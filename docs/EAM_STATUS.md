@@ -38,10 +38,10 @@ different thing from one it failed.
 
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
-| ca | **--M·** | — | — | 0 | 0 | — | 14 | all | 10 of 13 levels |
+| ca | **--M·** | — | — | 0 | 0 | — | 14 | all | 11 of 13 levels |
 | ia | **EAM·** | 99 | 99/99 | 81 | 81 | all | 57 | all | 9 of 13 levels |
 | il | **EAM·** | 102 | 102/102 | 572 | 996 | all | 398 | all | 10 of 13 levels |
-| ky | **EAM·** | 120 | 120/120 § | 0 | 0 | by record | 7 | all | 3 of 13 levels |
+| ky | **EAM·** | 120 | 120/120 § | 0 | 0 | by record | 7 | all | 4 of 13 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 615 | all | 55 | all | 7 of 13 levels |
 | mn | **EAM·** | 87 | 87/87 § | 0 | 0 | by record | 7 | all | 5 of 13 levels |
 | ny | **--M·** | — | — | 16 | 16 | — | 29 | all | 8 of 13 levels |
@@ -61,12 +61,17 @@ per county, so each one is named under its state below.
 - **E and A do not apply.** San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
   The mark therefore rests on Maintained alone.
 - **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `bart-directors.json`, `ca-assembly-districts.json`, `ca-senate-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `early-voting-sites.json`, `police-districts.json`, `san-francisco-county-outline.json`, `sf-neighborhoods.json`, `supervisor-districts.json`
-- **Covered: no.** 3 of the 13 expected levels of government are not answered. Each is a floor: no gap record is credited towards this test yet, so a level listed here may already have one behind it.
+- **Covered: no.** 2 of the 13 expected levels of government are not answered. Each is a floor: no gap record is credited towards this test yet, so a level listed here may already have one behind it.
   - **8. Courts whose judges are elected by district** — unsettled (required only where the state has the level)
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **10. School boards elected by district** — unsettled (required only where the state has the level)
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
-  - **13. Tribal governments** — open (required only where the state has the level)
+- **Does not apply here (5):** each one below is counted towards Covered by a stated fact rather than by work.
+  - **3. County boundaries** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
+  - **5. Municipal boundaries** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
+  - **7. School district boundaries** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
+  - **9. Townships or other general-purpose sub-county governments** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
+  - **13. Tribal governments** — No tribal land lies inside San Francisco: measured 2026-10-01, the current-vintage reservation, trust-land and state-reservation layers return no feature intersecting the city's own shipped outline's extent, with a box over North Carolina's Qualla Boundary as the positive control.
 
 ### ia — EAM·
 
@@ -91,7 +96,7 @@ per county, so each one is named under its state below.
 - **Examined by a statewide record:** `ky-county-officers`, `ky-fiscal-court` account for every county in the state, which is what Examined rests on here: 0 of 120 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ky-house-districts.json`, `ky-senate-districts.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 10 of the 13 expected levels of government are not answered. Each is a floor: no gap record is credited towards this test yet, so a level listed here may already have one behind it.
+- **Covered: no.** 9 of the 13 expected levels of government are not answered. Each is a floor: no gap record is credited towards this test yet, so a level listed here may already have one behind it.
   - **4. The county governing body, in every county of the state** — open. 0 of 120 counties name a governing body
   - **5. Municipal boundaries** — open
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 17 units at 25,000+ name a governing body; unanswered: Bowling Green city, Covington city, Elizabethtown city, Florence city, Frankfort city, Georgetown city, Henderson city, Hopkinsville city and 9 more
@@ -101,7 +106,8 @@ per county, so each one is named under its state below.
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
+- **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
+  - **13. Tribal governments** — Kentucky has no federally recognised tribal land: measured 2026-10-01 against the Census's tribal-areas service, 0 reservations, 0 off-reservation trust lands and 0 state reservations inside state code 21, with the state control returning 21 and North Carolina's Qualla Boundary as the positive control that the query shape finds land where land is.
 
 ### mi — EAM·
 
