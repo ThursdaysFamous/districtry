@@ -230,3 +230,94 @@ refuses.
 
 Nothing in this entry ships. It is the Covered test's question answered, and the
 judicial layer is its own change.
+
+## The Covered test — what each missing level IS, measured 2026-10-01
+
+The report scores Minnesota 5 of 13 levels. Eight are open, and the report says
+of each only that it is open — "a floor", in its own words. This section is what
+each one actually is in Minnesota, so the next change builds instead of
+researching. **Nothing here is a gap record and nothing here is credited toward
+the test.** `docs/DONE_STANDARD.md` credits a record only after a dated ask that
+was refused, or an ask plus one follow-up and thirty days of silence, and **no
+Minnesota office has been asked anything by this project**. So every level below
+is open on the merits, which is the honest position.
+
+Law read from `www.revisor.mn.gov` (342-byte robots policy, no rule matches
+these paths). The catalogue read is `gis.data.mn.gov`, which `gisdata.mn.gov`
+301s to and whose **robots.txt states Crawl-delay 60** — honoured, one request a
+minute, which is why this was seven queries and not a sweep.
+
+**LEVEL 10, SCHOOL BOARDS BY DISTRICT, IS THE ONE THE STANDARD LEFT TO THIS
+THREAD, AND THE ANSWER IS: THE LEVEL EXISTS, OPT-IN, DISTRICT BY DISTRICT.**
+Minn. Stat. § 205A.12 subd. 1 — "Any independent school district **may** alter
+its organization into separate election districts for the purpose of election of
+board members by following the procedures in this section." It takes a board
+resolution or a petition and then a referendum (subd. 2-3), the districts must be
+compact, contiguous and near-equal in population and are numbered (subd. 4), and
+a candidate then files for the election district they live in (subd. 5). So this
+is neither a statewide yes like Iowa's director districts nor a no: **some
+Minnesota school districts elect by district and most elect at large, and which
+ones is a measurement nobody here has taken.** The level is therefore OPEN and
+not "does not exist". What the catalogue does publish is school district
+BOUNDARIES statewide, which is the wrong geometry for this level — a district's
+own election districts are a sub-fabric, published if at all by the district.
+
+**LEVEL 4, COUNTY BOARDS, IS DISTRICTED IN EVERY COUNTY BY STATUTE — AND THE
+GEOMETRY IS PUBLISHED COUNTY BY COUNTY, NOT STATEWIDE.** Minn. Stat. § 375.025
+subd. 1: "Each county **shall** be divided into as many districts numbered
+consecutively as it has members of the county board", bounded by town, municipal,
+ward or precinct lines, within ten percent of the county average. So there is no
+at-large county in Minnesota to carry on a County card, and all 87 want drawn
+districts — the Illinois shape, 87 times. A relevance search of the state
+catalogue returned **no statewide commissioner-district layer** and two
+county-published ones (Hennepin's `Commissioner Districts`, Dakota's
+`County Commissioner Districts (2022)`), with Ramsey publishing its own
+precincts. **That is a relevance search of ten rows, not an inventory**, so it
+is evidence that no statewide layer surfaced and not proof that none exists.
+
+**LEVEL 9, TOWNSHIPS, EXISTS AND ITS BODY IS ELECTED TOWN-WIDE.** Minn. Stat.
+§ 367.03 subd. 1 — three supervisors elected in each town at the town general
+election, two under option A. So the town is the unit and there is no sub-town
+district to draw: the level is answered by naming each town's board, exactly the
+shape `docs/DONE_STANDARD.md` counts for New York's towns and Michigan's
+townships. The GEOMETRY is already published statewide —
+**`City, Township, and Unorganized Territory in Minnesota`** (MnDOT_GIS, the CTU
+fabric), with a `County, City and Township (CTU) Lookup Table` beside it. The
+ROSTERS are the whole of the work and they are per-town, in the high hundreds;
+no statewide roster surfaced.
+
+**LEVEL 11, PRECINCTS, HAS A STATEWIDE PUBLISHER.** **`Voting Districts,
+Minnesota`** on the state's own catalogue, beside `Minnesota General Election
+Results, 2022-2030` per precinct. This is the cheapest of the eight to close and
+it is a layer a reader sees, so it is not this thread's to self-merge.
+
+**LEVEL 12, SPECIAL DISTRICTS, HAS AT LEAST ONE ELECTED-BY-AREA BODY AND AT
+LEAST ONE THAT IS APPOINTED, AND THE DIFFERENCE DECIDES WHETHER IT BELONGS ON A
+MAP AT ALL.** Hospital districts: § 447.32 subd. 1 — "governed by a hospital
+board composed of one member elected from each city and town in the district and
+one member elected at large", which is an elected-by-area body and in scope.
+Watershed districts: § 103D.311 subd. 2 — managers are **APPOINTED** by the
+county boards, so a watershed district has no elected seat and drawing one would
+name an appointee as a representative. `Watershed Management Districts and
+Organizations` is published statewide; that makes it drawable and not an
+officeholder level. **Which Minnesota special districts elect and which appoint
+has not been enumerated**, and this project's own rule is that the answer decides
+the layer, not the availability of the boundary.
+
+**LEVEL 8, THE TEN JUDICIAL DISTRICTS, IS CONFIRMED ABOVE AND ITS GEOMETRY NEEDS
+NO PUBLISHER.** See the judicial section: § 2.722's county lists partition the
+state 87/87, so the districts dissolve from `state-counties.json`. A relevance
+search of the catalogue surfaced no judicial-district layer, which is consistent
+and is again not proof. **The roster is the blocker, not the boundary**: 287
+judgeships and no machine-readable list established, and a layer that draws ten
+districts and names nobody is the faked depth this project refuses.
+
+**LEVEL 13, TRIBAL GOVERNMENTS, IS NOT THIS INSTANCE'S.** The fleet-wide
+tribal-government thread owns it, as the section above already records.
+
+**WHAT THIS MEANS FOR THE MARK.** Six of the eight want a layer and a roster
+that a reader sees, so none of them is this thread's to self-merge, and two of
+them (every county's board, every town's board) are the largest single pieces of
+work this instance has in front of it. Nothing here can be closed by writing a
+record, because nobody has been asked. Minnesota will not pass Covered today and
+saying otherwise would be the thing this file exists to prevent.
