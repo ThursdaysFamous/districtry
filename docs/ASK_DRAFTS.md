@@ -2716,6 +2716,11 @@ on at least one City surface, so the question is purely about how it may be read
 
 ## Ask 34 — Village of Gurnee: your board page names nobody
 
+> **THE NUMBER IS PROVISIONAL.** Main ended at 33 when this was written and the Wisconsin,
+> Michigan and Iowa branches each claim 34 as well, so whoever merges second renumbers
+> rather than letting two asks share a number. Check main's last ask number immediately
+> before merging, not when the branch was cut.
+
 > **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the Village Clerk. On send, change
 > `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `gurnee-village-board-names` blocker in
 > `docs/DATA_LAYER_GUIDEBOOK.md` — Illinois has no `WATCH.md`, so that blocker is the whole
