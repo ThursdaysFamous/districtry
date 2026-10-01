@@ -157,6 +157,88 @@ having.
 
 ---
 
+## Measured, not yet built — the fourteen cities above 25,000 that name nobody
+
+Taken 2026-10-01 against the live pages, so the next pass does not repeat the sweep. Iowa
+has eighteen cities above 25,000 people on the 2020 census; three elect by ward and have
+their own layers (Des Moines, Cedar Rapids, Waterloo) and one is named by its county
+(Marion is not — see below). **ALL FOURTEEN OF THE REST ARE READABLE.** Nothing here is
+blocked; what is left is fourteen parse conventions, each with its own seat count, and that
+is the work rather than the research.
+
+**Which client each host serves**, measured four rungs per host (each HTTP stack with the
+Iowa token and with Chrome/126 plus its client hints) and recorded here because the fleet's
+rule is to read robots.txt with the exact client that will crawl:
+
+| City | Page | Client |
+|---|---|---|
+| Ames | `cityofames.org/My-Government/Mayor-and-City-Council` | token |
+| Ankeny | `ankenyiowa.gov/456/Mayor-City-Council` | token |
+| Bettendorf | `bettendorf.org/government/mayor___council/index.php` | token |
+| Cedar Falls | `cedarfalls.com/1106/City-Council-Members` | token |
+| Council Bluffs | `councilbluffs-ia.gov/m/directory/department?did=64` | token |
+| Davenport | `davenportiowa.com/government/mayor_council/city_council` | token |
+| Dubuque | `cityofdubuque.org/990/Mayor-City-Council` | token |
+| Iowa City | `icgov.org/government/city-council` | Chrome/126 + hints |
+| Marion | `cityofmarion.org/about-us/mayor-city-council/contact-council` | Chrome/126 + hints |
+| Marshalltown | `marshalltown-ia.gov/154/Mayor-City-Council` | token |
+| Ottumwa | `ottumwa.us/government/mayor_and_city_council_new.php` | token |
+| Sioux City | `sioux-city.org/247/City-Council` | token |
+| Urbandale | `urbandale.org/326/Mayor-City-Council` | token |
+| West Des Moines | `wdm.iowa.gov/government/mayor-city-council/biographies` | Chrome/126 + hints |
+
+Eleven serve the Iowa token a full page. Three refuse it and serve Chrome/126 with its
+client hints, which is the licensed browser-string case, and each of those three had its
+robots.txt read **with that same Chrome client** rather than with the token — the
+consistency rule, not an escalation to get a better verdict. Those three answer 403 on
+robots.txt, which under RFC 9309 §2.3.1.3 means no policy published; the other eleven
+either serve a policy with no rule binding us or answer 404.
+
+**OTTUMWA WAS RECORDED UNREACHABLE AND THAT WAS OUR OWN WRONG ADDRESS.**
+`ottumwaiowa.gov` has no DNS record at all. The city is at `www.ottumwa.us`
+(`www.cityofottumwa.org` 301s there), which serves the Iowa token 200 with no robots.txt.
+This is the wrong-address defect the repo already records for 60 hosts in its first
+user-agent sweep, one step further in: the host was not refusing us, it did not exist.
+
+**Guessed URLs are not a route.** Several council pages were first reached by guessing a
+CivicPlus path, and two guesses landed on a live page about something else — `/146/…`
+answered a form and `/171/…` answered an electrical-code board. Each city's page here was
+found by reading its own government index and following the link text.
+
+**Three cities publish officers' HOME addresses** beside their names — Dubuque, Bettendorf
+and Ottumwa. Those must never ship, the same refusal `build_ia_township_officers.py`
+already enforces per-field and over the whole record.
+
+**Six parse conventions, and the existing five-city pipeline's guards do not fit any of
+them.** `build_ia_city_officials.py` requires exactly six seats per city, exactly one plain
+Mayor record and an e-mail for every member, which is true of the four small at-large
+cities it reads and of none of these fourteen: the councils run five to ten seats, several
+mark a Mayor Pro Tem, and some publish no e-mail at all. So these need per-city
+declarations rather than a loosened global guard — never lower a guard to make a build
+pass. The shapes measured:
+
+- **Name line then role line** (CivicPlus member list): Ankeny (5), Sioux City.
+- **Role heading then name**: Bettendorf, Ottumwa.
+- **Name and seat in one line**: Davenport (`At-Large, Kyle Gripp`, `Ward 1, Rick Dunn` —
+  2 at-large and 8 wards), Marshalltown (`Mike Ladehoff, Mayor`, `… , 1st Ward`),
+  West Des Moines (`Matthew McKinney, Councilmember At-Large`).
+- **Name and seat in the link text**: Cedar Falls (`Gil Schultz—1st Ward`, `At Large—Kelly
+  Dunn`; 5 wards + 2 at-large, mayor elsewhere), Urbandale (`/335/Amy-Croll---Councilmember`).
+- **Role lines on the page, names in a staff-directory component**: Iowa City (`Mayor,
+  At-Large`, `Councilor, District A`), Marion.
+- **Names in link text, role only in the URL**: Ames, where the mayor is identified by his
+  page's own `Mayor-` prefix. **AMES IS THE ONE TO BE CAREFUL WITH**: its page says the
+  city is served by a mayor and six council members plus an ex-officio member from Iowa
+  State University, and seven non-mayor names are linked — so one of the seven is the
+  student member, who does not govern, and which one is NOT established here. Read each
+  member's own page for the seat before shipping any of them.
+
+Council Bluffs's directory names five council members with the role `City Councilmember`
+and no ward on any of them, so whether that council elects by ward is an open question
+rather than a settled at-large answer.
+
+---
+
 ## Grow this file
 
 Every new layer ships with a row here naming when its source moves (school-year datasets
