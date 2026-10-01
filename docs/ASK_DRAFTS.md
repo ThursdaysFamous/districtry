@@ -2028,10 +2028,52 @@ unaffected sources; the three district files are not in the tree.
 
 ## Ask 20 — six Wisconsin county clerks: the city wards your filing leaves without a district
 
-> **NOT YET ASKED — DRAFTED 2026-09-08.** Six separate notes, one per county clerk. Four
-> ask the same question about a different city; two ask a different question. They are not
-> a batch: each note names one county's own filing, and one that named the wrong city or
-> the wrong ward would be worse than not writing.
+> **ASKED 2026-10-01 — ALL SIX SENT, FOUR ANSWERED THE SAME DAY.** Six separate notes, one per
+> county clerk. Four ask the same question about a different city; two ask a different question.
+> They are not a batch: each note names one county's own filing, and one that named the wrong
+> city or the wrong ward would be worse than not writing.
+>
+> Send times, read off the sent folder (`/mnt/project-files/letters/sent-2026-10-01.md`, which is
+> the only record of what actually went, as against what a thread drafted): Calumet 14:52:02,
+> Brown 14:52:11, Outagamie 14:52:19, Pepin 14:52:38, Lafayette 16:14:29, Ozaukee 16:14:42 UTC.
+>
+> **OUTAGAMIE ANSWERED AND SETTLED NEW LONDON.** Clerk Kelly Gerrits wrote that City of New
+> London wards 10, 11 and 12 are all in New London Aldermanic District 5 — exactly the three
+> uncoded wards this note asked about, so that city's composition is now completely known. It is
+> written down in `wi/scripts/build_wi_aldermanic_districts.py`'s `EXCLUDED` table and in
+> `wi/WATCH.md` and is not yet built, because composing a city from the county's coded wards plus
+> three sentences from a clerk is a different shape from the city-publishes-its-own-composition
+> route `LOCAL_COMPOSITION` holds, and wants its own gate and its own operator rebuild.
+>
+> **BROWN HEDGED AND THEN POINTED SOMEWHERE BETTER.** Clerk Patrick Moynihan wrote that the
+> Village of Bellevue's board "appear to be at large", which is a qualified guess and not the
+> village's own statement, and then endorsed asking the village itself. That is why ask
+> `wi-bellevue-board-form` exists and went the same day; see the "Why the county clerk and not
+> the city clerk" section below, whose rule this does not break — the village clerk's address
+> came from the county clerk in writing, so none had to be sourced against the clerks' own
+> withholding.
+>
+> **CALUMET ANSWERED AND SETTLED BRILLION, WHICH RETIRES IT FROM THE GAP RATHER THAN FILLING IT
+> IN.** Clerk Beth Leary wrote that the City of Brillion elects its council AT LARGE, not by
+> district, and that wards 5 and 6 — the two her county's filing leaves with no district code —
+> are bare land with nobody living on them. So the uncoded wards are not missing data: there is no
+> district for them to be in. Brillion therefore leaves the `aldermanic-incomplete-filings` gap
+> record, which goes from six municipalities to five, and `calumet` leaves its county list. The
+> city's council members are a separate, still-open question and want the at-large municipality
+> card rather than this layer. A second reading is consistent with her answer and is not proof of
+> it: the state's own 2024 election file carries a population for Brillion's wards 1-4 and leaves
+> wards 5 and 6 empty.
+>
+> **OZAUKEE ANSWERED AND COMPLETED PORT WASHINGTON.** Clerk Kellie Kretlow wrote that City of Port
+> Washington ward 9 — the one ward her county's filing leaves uncoded — is in aldermanic district 1
+> and county supervisor district 4. The supervisor half is independently corroborated: the state's
+> own ward file already codes that ward into supervisor district 4, so the one claim that could be
+> checked against another publisher checks out, which is what makes the aldermanic half worth
+> relying on. That city's composition is now completely known and, like New London's, is written
+> down and not yet built, because it is the same county-coded-wards-plus-a-clerk's-sentence shape
+> that wants its own gate and an operator rebuild.
+>
+> Pepin and Lafayette have not replied. Follow up once at about 2026-10-21.
 
 **What this is about.** Wisconsin's aldermanic districts are drawn as groups of wards, and
 the ward file the Legislative Technology Services Bureau publishes is the only statewide
@@ -4306,7 +4348,44 @@ next step rather than a mailing.
 
 ---
 
-## Ask wi-city-council-pages — five Wisconsin cities: may we read your council page?
+## Ask wi-city-council-pages — Beloit: may we read your council page?
+
+> **WITHDRAWN FOR FOUR OF THE FIVE CITIES, 2026-10-01, later the same day. JANESVILLE,
+> WAUSAU, WAUWATOSA AND MEQUON DO NOT BLOCK THIS PROJECT AND NEVER NEEDED A LETTER.** All four
+> serve their robots.txt with HTTP 200 and PERMIT `/`, and all four serve their home and council
+> pages — 146,771, 96,666, 111,716 and 57,621 bytes, Mequon's through Cloudflare. Their Gmail
+> drafts were deleted rather than held, because a letter telling a city it turns us away when it
+> does not is worse than no letter.
+>
+> **THE CAUSE WAS READING THE POLICY WITH A THINNER CLIENT THAN THE ONE THAT CRAWLS**, which is
+> the one defect CLAUDE.md names for this exact pair of hosts and which this ask reproduced
+> anyway. The measurement above was taken with `UA_HEADERS_ROSTER_BOT`, which carries no
+> `sec-ch-ua` client hints. `wi/scripts/wi_municipal_executive_scraper.py` had already settled
+> on 2026-09-29, leave-one-out and two reads per rung, that **those three headers are the whole
+> difference** on `www.milwaukee.gov` and `www.wauwatosa.net` — 403 without them, a policy that
+> permits us with them. Asked with `UA_HINTS_CHROME_126`, the client the Wisconsin scrapers
+> actually send, all four answer 200.
+>
+> **THIS IS NOT AN ESCALATION AND THE DISTINCTION IS THE WHOLE RULE.** The fleet does not try a
+> richer client to get a better verdict; it reads the policy with the client that will crawl.
+> For a Wisconsin municipal host that client is Chrome plus the pinned hints, so the token read
+> was the WRONG measurement rather than the cautious one. Beloit was deliberately **not**
+> re-probed: its robots.txt is served to the token and says `Disallow: /`, which is a published
+> refusal, and re-asking a host that already answered in order to get a different answer is
+> exactly the escalation the rule forbids.
+>
+> **WHAT REPLACES THE FOUR LETTERS IS WORK, NOT AN ASK.** Four readable councils now want a
+> scraper and a builder. Wausau's alderpersons page already shows 11 districts and 29
+> alderperson mentions in its served bytes; Janesville says "council member" rather than
+> "alderperson" and Mequon's list is not linked from its home page, so each needs its own look.
+> That is Wisconsin's level 6 moving from waiting-on-a-reply to buildable.
+>
+> **AND THE GENERAL LESSON IS THE ONE THAT KEEPS COSTING THIS PROJECT.** A refusal is a dated
+> measurement taken with a named client. Re-measure it with the client that crawls before
+> writing to anyone about it, and above all before recording it as the reason a city names
+> nobody — because a wrong refusal reads exactly like a right one, and it stops the work rather
+> than prompting it.
+
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** Five near-identical letters, one per city. Each asks
 > permission to read a page the city already publishes to the public. Nothing is blocked that
@@ -4326,10 +4405,23 @@ after an ask has been refused, or sent with one follow-up and thirty days' silen
 | city | 2020 population | what it answers |
 |---|---|---|
 | Beloit | 36,657 | `robots.txt` publishes `User-agent: * / Disallow: /` under six named crawlers that get narrow rules. The city's own file on the city's own host, so it binds fully. |
-| Janesville | 65,615 | HTTP 403 at the HOME page, not merely on `robots.txt` |
-| Wausau | 39,994 | HTTP 403 at the HOME page |
-| Wauwatosa | 48,387 | HTTP 403 at the HOME page |
-| Mequon | 25,129 | HTTP 403 at the HOME page |
+| Janesville | 65,615 | HTTP 403 at the HOME page, not merely on `robots.txt`. **AkamaiGHost** answers it, with an `Access Denied` body |
+| Wausau | 39,994 | HTTP 403 at the HOME page, **AkamaiGHost**, same body |
+| Wauwatosa | 48,387 | HTTP 403 at the HOME page, **AkamaiGHost**, same body |
+| Mequon | 25,129 | **CORRECTED 2026-10-01, later the same day.** `robots.txt` is SERVED — HTTP 200, 2,005 bytes, deterministic over three reads fifteen seconds apart — and no rule in its one binding group matches `/`, so Mequon's published policy PERMITS this project. What stops the read is a **Cloudflare managed challenge** on the content pages: the home page's 403 carries the `Just a moment...` interstitial, which is an access control and is never solved or worked around |
+
+**WHO ANSWERED THE 403 WAS CHECKED, AND THAT IS NOT A FORMALITY.** CLAUDE.md records that a 403
+from an egress proxy is not a 403 from a site — in this sandbox `github.com` itself 403s with the
+proxy's own JSON body — so a refusal recorded without reading the responder is a guess. All four
+came from the cities' own edge (`Server: AkamaiGHost` on three, `Server: cloudflare` on Mequon),
+so the measurement holds.
+
+**THE MEQUON CORRECTION DID NOT CHANGE WHAT WE MAY DO AND DID CHANGE WHAT WE MAY SAY.** A city
+whose rules file turns us away has decided something; a city whose rules file welcomes us while a
+security product turns us away probably has not, and its letter says so and asks for the hand-off
+on that basis. It is also NOT a `CHALLENGE_FRONTED_HOSTS` entry: that table is for a host whose
+answers are non-deterministic, and Mequon's are not — the robots read is stable and the page
+challenge is consistent.
 
 **The four 403s are a site-wide block that enforces itself**, which is #1271's own reading of why
 a 403 on `robots.txt` needed no strict treatment: a server refusing every path needs no policy
@@ -4348,10 +4440,28 @@ which this project already ships — so no refused site was read to find them:
 | Wausau | Rachel Brown | 715-261-6622 |
 | Wauwatosa | Deyanira Nevarez | 414-479-8917 |
 
-**The Commission's directory carries no e-mail address for any of the five**, and the cities'
-own contact pages are behind the very block this ask is about, so each address has to be taken
-from the city's own site by the operator — who browses as a person, which all five sites serve
-perfectly well. That is a two-minute lookup and it is deliberately not automated here.
+**THERE IS NO E-MAIL ADDRESS TO FIND, AND THAT IS A WITHHOLDING BY THE PEOPLE NAMED RATHER THAN
+A GAP IN OUR READING** (settled 2026-10-01, when the six letters were drafted into the operator's
+mailbox). The Commission's directory carries no e-mail address for any of the five — 0 of 1,848
+records in the shipped file contain an `@`, the source PDF's own `/Subject` metadata reads
+`WI Municipal Clerks PDF - no emails:`, and the Commission said why: *"that was at their
+request"*. `wi/scripts/build_wi_municipal_clerks.py` already rules on what follows from that, and
+the rule covers this ask exactly: **nothing here goes looking for those addresses elsewhere to
+backfill them.** The cities' own contact pages are behind the very block this ask is about, so
+there was nowhere permitted to look even if the rule allowed it.
+
+**SO FIVE OF THE SIX DRAFTS CARRY NO RECIPIENT**, and the empty address field is the safeguard —
+a mail client will not send without one. Each opens with a bracketed note naming the clerk and
+their telephone number, saying why the address is blank, and asking the operator to supply it. The
+operator browses as a person, which all five sites serve perfectly well; that lookup is
+deliberately not automated, and it is the operator's to make rather than ours to route around.
+
+**WAUWATOSA IS THE ONE EXCEPTION AND IT IS A PUBLISHED OFFICE ADDRESS, NOT A PERSON'S.**
+`wi/data/app/wi-municipal-executives.json` already ships `mayor@wauwatosa.net`, from Milwaukee
+County GIS — a government publisher, fetched legitimately, and an address belonging to an office
+rather than to anyone the Commission's withholding protects. That draft is addressed to the Clerk
+and routed through the Mayor's office, and it says in its first line that it is being routed and
+why, so nobody is left guessing how the letter arrived.
 
 Draft (one per city; `<CITY>`, `<CLERK>` and the bracketed clause are the only parts that change):
 
@@ -4426,6 +4536,14 @@ round.
 
 **To:** City of Oshkosh, City Clerk's Office — Darla Salinas, City Clerk; (920) 236-5013
 **Subject:** Our automated reader cannot reach https://www.ci.oshkosh.wi.us/robots.txt
+
+> **NO E-MAIL ADDRESS, FOR THE SAME REASON AS THE FIVE ABOVE** (2026-10-01). The Elections
+> Commission's clerk directory withholds every municipal clerk's address at the clerks' own
+> request, and this project's standing rule is not to go looking for those addresses elsewhere
+> to backfill them. Oshkosh's own site cannot be reached by this client at all, so there was
+> nowhere permitted to look in any case. The draft sits in the operator's mailbox with the
+> address field empty — which is what stops it being sent by accident — and opens with a
+> bracketed note naming the clerk, her telephone number and the reason.
 
 **Why this ask exists.** Oshkosh publishes its Common Council on a public page and we would
 like to name those seven officials on a free, non-commercial map. Before reading any page on a
@@ -5016,6 +5134,93 @@ it lets the record that tells our readers what is missing say the county was ask
 
 ---
 
+## Ask wi-bellevue-board-form — Village of Bellevue Clerk: is the village board elected at large?
+
+> **ASKED 2026-10-01**, sent 16:10:19 UTC to mseidl@villageofbellevuewi.gov. One message, to
+> the Village Clerk. Recorded from `/mnt/project-files/letters/sent-2026-10-01.md`, which is read
+> off the sent folder — the only record of what actually went, as against what a thread drafted.
+> The matching Bellevue note in `wi/scripts/build_wi_aldermanic_districts.py`'s `EXCLUDED` table
+> and the `aldermanic-incomplete-filings` gap blocker were updated the same day. Follow up once
+> at about 2026-10-21; thirty days of silence after that follow-up is what would let a gap record
+> say the village was asked.
+>
+> **NO `ask` BLOCK GOES WITH IT, AND THAT IS THE STANDARD RATHER THAN AN OMISSION.** An `ask`
+> block can only ever matter on a record that declares `covers`, and
+> `aldermanic-incomplete-filings` declares none — Bellevue is a village of about 15,000 people,
+> under the 25,000 the local tier counts, so no level is waiting on this answer. The reply is
+> wanted for the map, not for the scorecard.
+>
+> **AND `pending` WOULD EARN NOTHING EVEN THERE, WHICH IS WORTH SAYING SO NOBODY READS IT AS A
+> HALF-CREDIT.** `pending` records only that a letter went; it earns nothing however old it gets.
+> Credit comes two ways and neither is automatic: a refusal counts straight away, and silence
+> counts only after a follow-up and thirty days, and only once a person reads the silence and
+> writes the outcome as `unresponsive`. The clock is printed on stdout and no committed byte
+> depends on it, so no record ever starts counting on its own.
+>
+> **NO PRIOR CONTACT, CHECKED RATHER THAN ASSUMED.** Searched Adam's mail on 2026-10-01 for
+> Bellevue, `bellevuewi.gov` and Seidl across every folder including trash: the only thread is
+> the Brown County one below, and nobody has written to the village. So this is a first letter
+> and is written as one.
+>
+> **WHY IT IS BEING SENT AT ALL, WHEN A COUNTY CLERK HAS ALREADY ANSWERED.** Brown County
+> Clerk Patrick Moynihan replied on 2026-10-01: "They appear to be at large. Have you contacted
+> Bellevue for any clarifying statements? The Municipal Clerk Michelle Seidl's email is
+> mseidl@villageofbellevuewi.gov". **"Appear to be" is a hedge and not the village's own
+> statement**, and the thing being decided is whether a card tells a reader their village board
+> is elected by the whole village. This project does not print a governing body's form on
+> somebody's qualified guess, however well informed — so Bellevue is not recorded as at-large on
+> that reply, and the county clerk himself pointed at the person who can say. He also gave the
+> address, which is why no address had to be hunted for.
+>
+> **WHAT IS AT STAKE IS WHICH CARD BELLEVUE'S BOARD RIDES.** Brown County files all eleven of
+> Bellevue's wards with no aldermanic district code, which is why the village has no district
+> geometry in the shipped map. If the board is elected at large that is the correct and complete
+> answer and the trustees belong on the village's own card beside its clerk; if it is elected by
+> district, the eleven wards need an assignment and the county's filing is incomplete. One
+> sentence from the clerk settles which of those two pieces of work is the right one.
+
+**Subject:** One question about how the Village of Bellevue elects its board
+
+Dear Clerk Seidl,
+
+I maintain districtry.com/wi/, a free, non-commercial website that helps people in Wisconsin
+find out which civic districts they live in and who represents them there. It is not funded by
+anyone and carries no advertising.
+
+I have one question about the Village of Bellevue.
+
+Are the members of the Village Board elected at large, by the whole village, or does each
+trustee represent a district or ward?
+
+I ask because Brown County files all eleven of Bellevue's wards without an aldermanic district
+code, which is what the county does for a municipality that has no districts to report. Clerk
+Patrick Moynihan at the county kindly suggested I check with you directly, and gave me your
+address.
+
+If the board is elected at large, I will list Bellevue's trustees on the village's own page
+alongside the village clerk, and the site will say plainly that every seat is elected by the
+whole village. If each trustee does represent a ward or a group of wards, I would be grateful
+to know which wards go with which seat, and I will draw it that way instead.
+
+Either answer is useful, and a one-line reply is plenty. If the answer is already on a page of
+the village's website, a link to it is just as good and I will not trouble you further.
+
+Thank you for your time.
+
+Adam Overberg
+districtry.com/wi/
+
+**What is deliberately not asked.** Nothing about reuse terms, because the names of elected
+village officers are public record. No request to change the village's website or the county's
+filing. And no suggestion that the county got anything wrong — the county clerk's reply is what
+prompted this letter and said so.
+
+**Why a no is still useful.** If the village does not answer, the record that tells our readers
+what is missing can say Bellevue was asked, which is the difference between a gap this project
+has measured and one it has merely noticed.
+
+---
+
 ## Ask ky-judge-district-join — Kentucky Administrative Office of the Courts: which district was each judge elected from?
 
 > **ANSWERED 2026-10-01.** Sent 16:24:34 UTC by the operator from his own address; Daniel
@@ -5091,6 +5296,169 @@ the AOC was asked — which is a different and more honest claim than that nobod
 
 **Nothing about reuse terms is asked**, because who holds an elected office is public record,
 and nothing is asked of any named judge personally.
+
+## Ask marion-wi-council-districts — two county clerks: how many districts does the City of Marion elect, and which of you files which?
+
+> **ONE SENT AND BOUNCED, ONE NOT SENT.** Written 2026-10-01. Two letters, one to each of the two
+> county clerks who file the City of Marion's wards. The Waupaca letter went that day and was
+> refused as a permanent failure by the county's own mail server, so it reached nobody and
+> **Waupaca is not awaiting a reply and no follow-up clock has started** — the bounce note below
+> gives the measurement and the two addresses the county itself publishes for the same office. The
+> Shawano letter has not been sent. **NO PRIOR-CONTACT SEARCH HAS BEEN RUN FOR THESE TWO ADDRESSES**,
+> and that is the Letters thread's step rather than this one's: this thread writes the text, the
+> Letters thread searches Adam's sent folder and inbox, turns anything it finds into a follow-up
+> rather than a first letter, and creates the Gmail drafts. Nothing here is sent by anybody but
+> Adam.
+>
+> **WHY THE CITY ITSELF IS NOT THE RECIPIENT, THOUGH IT IS THE AUTHORITY.** Marion's own site
+> asks automated clients to stay out — `cityofmarionwi.gov`'s robots.txt is `Disallow: /`, which
+> this project obeys without exception, so nothing has been read from it. That refusal governs
+> what we fetch and not who we may write to, so a letter to the city would be entirely proper;
+> what is missing is an address. The Wisconsin Elections Commission's clerk directory names
+> Clerk Mary S Rogers and Deputy Clerk Jodilyn Zillmer with the telephone 715-754-2124 and no
+> e-mail address, and municipal clerks' e-mail addresses are deliberately not published
+> statewide in Wisconsin. So a city letter is a telephone call or a posted letter, which is
+> Adam's to make if he would rather go straight to the source; the two county clerks both
+> publish an address and both hold part of the answer.
+>
+> **WHAT IS ACTUALLY UNKNOWN, AND WHAT IS NOT.** The shipped map draws four aldermanic districts
+> for Marion, keyed `01`, `21`, `22` and `23`. Measured against the Census Bureau's own county
+> boundaries on 2026-10-01, `01` lies in Shawano County and `21`-`23` lie in Waupaca County,
+> and `01` sits north of the other three and overlaps none of them — Marion straddles the county
+> line, and the two counties file its wards under two different numbering schemes. So the city's
+> four drawn districts may be three districts plus a second county's copy of one of them, which
+> would mean the map draws a district that does not exist. **The council size is deliberately
+> not inferred from the key count, because the key count is the thing in question.**
+>
+> **AND THIS IS THE ONE OF FOUR CITIES STILL OPEN.** Manawa, Waupaca and Weyauwega were in the
+> same position — the state's filing keys their districts somewhere other than 1 upward — and all
+> three were settled on 2026-10-01 by reading each city's own council page, which numbers its
+> districts from one. Those three are relabelled accordingly. Marion could not be read, which is
+> why it takes a letter.
+
+> **THE WAUPACA LETTER BOUNCED AND THE ADDRESS WAS NOT GUESSED — THE COUNTY PUBLISHES IT IN THREE
+> PLACES.** Sent 2026-10-01, it was refused at 18:09 as a permanent failure by the county's own
+> mail server. Measured the same day, reading each page with the client that crawls and after
+> reading each host's robots.txt (`www.co.waupaca.wi.us` and `www.waupacacounty-wi.gov` both answer
+> 404 for robots.txt, which permits):
+>
+> | the county's own page | what it publishes for the clerk |
+> |---|---|
+> | County Clerk department page (both domains, byte-identical) | `Kristy.Opperman@co.waupaca.wi.us`, telephone (715) 258-6200, fax (715) 258-6212 |
+> | County staff directory | `kristy.opperman@co.waupaca.wi.us` — character for character the address that bounced |
+> | Directory of Public Officials, updated 5 August 2026, compiled by the Clerk's own office | County Clerk Kristy K. Opperman, 811 Harding St., Waupaca 54981, telephone (715) 258-6200 — **no e-mail address at all** |
+>
+> **AND THE REJECTION SAYS WHICH KIND OF REFUSAL IT IS, WHICH CHANGES WHAT A SECOND ADDRESS CAN
+> FIX.** The server answered `550 permanent failure ... blocked`, not *unknown user*. So the
+> clerk's mailbox probably exists and the county's mail server is refusing the SENDER rather than
+> the recipient — and if that is what happened, every address at the county will refuse the same
+> sender, so trying a third one is not a measurement, it is the same failure again. **If the
+> redraft to the Chief Deputy also comes back blocked, do not look for another address**: the
+> office's own telephone, (715) 258-6200, is the next step, and that is a person's to make rather
+> than this project's. The first reading written here said only that a published mailbox was
+> refusing mail, which was true of the address and said nothing about the cause.
+>
+> So a published mailbox is refusing mail, which is the same shape as the Grundy County bounce
+> the same day, and **no replacement is invented here.** Two addresses the county publishes on the
+> clerk's own department page are the alternatives, in this order, and both are the county's own
+> words rather than a pattern guessed from a name:
+>
+> 1. **Chief Deputy County Clerk Ellen Radies — `Ellen.Radies@co.waupaca.wi.us`**, same office, same
+>    telephone. A deputy clerk answers for the office, so this asks the same office the same question.
+> 2. **Deputy County Clerk Nicole Houdek — `Nicole.Houdek@co.waupaca.wi.us`**, likewise.
+>
+> The redraft went to Ellen Radies on 2026-10-01. **If that also comes back blocked, stop**: the
+> office's own telephone and postal address above are what is left, and both are a person's job
+> rather than this project's. The second deputy is listed only in case the first address fails for
+> a reason specific to it, and a sender-level block is not that reason. **Nothing has been sent to either
+> address and Waupaca is not awaiting a reply**, so no follow-up clock has started. The letter text
+> below is unchanged and still correct: only the recipient line moves. The Shawano County letter in
+> this same ask is unaffected.
+>
+> One thing deliberately not concluded: the Clerk's own Directory links the elections page on
+> `www.waupacacounty-wi.gov`, a newer domain for the same site, which could suggest the county's
+> mail has moved too. Both domains serve the identical page naming `@co.waupaca.wi.us` addresses,
+> and nothing published here names a mailbox on the new domain, so **no address on it is guessed.**
+
+### Waupaca County Clerk's office — address line to be redrawn, see the bounce note above
+
+**Subject:** Two questions about the City of Marion's aldermanic districts
+
+Dear Clerk Opperman,
+
+I maintain districtry.com/wi/, a free, non-commercial website that helps people in Wisconsin
+find out which civic districts they live in and who represents them there. It is not funded by
+anyone and carries no advertising.
+
+I have two questions about the City of Marion, which as I understand it lies partly in Waupaca
+County and partly in Shawano County.
+
+First, how many aldermanic districts does the Common Council have?
+
+Second, the state's current ward file lists Marion's wards under district numbers 21, 22 and 23
+in your county, and under district number 1 in Shawano County. Are those four numbers four
+different districts, or are they the two counties' own ways of labelling the same council's
+districts?
+
+I ask because our map draws one district for each distinct number it finds, so if Marion's
+council has three districts and the two counties label them differently, our map is currently
+drawing a fourth district that does not exist, and telling anyone who clicks there that they
+live in it.
+
+A one-line answer to each is plenty, and if the City of Marion is the right office to ask
+instead, I would be glad to be pointed there.
+
+Thank you for your time.
+
+Adam Overberg
+districtry.com/wi/
+
+### Shawano County Clerk — `raymond.rigsby@shawanocountywi.gov`
+
+**Subject:** One question about the City of Marion's aldermanic districts
+
+Dear Clerk Rigsby,
+
+I maintain districtry.com/wi/, a free, non-commercial website that helps people in Wisconsin
+find out which civic districts they live in and who represents them there. It is not funded by
+anyone and carries no advertising.
+
+I have one question about the part of the City of Marion that lies in Shawano County.
+
+The state's current ward file lists Marion's ward or wards in your county under aldermanic
+district number 1, while Waupaca County lists the rest of the city under district numbers 21, 22
+and 23. Is the district you file as number 1 a district of its own, or is it the same council
+district that Waupaca County files under one of its own numbers?
+
+I ask because our map draws one district for each distinct number it finds, so if those are
+labels for the same districts rather than four separate ones, our map is drawing a district that
+does not exist and telling anyone who clicks there that they live in it.
+
+A one-line answer is plenty, and if the City of Marion or Waupaca County is the better office to
+ask, I would be glad to be pointed there.
+
+Thank you for your time.
+
+Adam Overberg
+districtry.com/wi/
+
+### What each answer means
+
+- **A council size and a mapping.** If either clerk says how many districts the council has and
+  which filed numbers correspond, the map draws that many districts with the city's own numbers,
+  the same way Manawa, Waupaca and Weyauwega now do.
+- **"Four separate districts."** Then the map is already right about the count, and only the
+  numbering question is left — which `ALDER_DISTRICT_LABELS` in `wi/index.html` can carry as soon
+  as somebody states what the city calls them.
+- **A refusal, or silence.** Either lets the gap record say the two counties were asked, which is
+  the difference between a gap this project has measured and one it has merely noticed. Neither
+  changes the shipped map: Marion stays exactly as filed.
+
+**What is deliberately not asked.** Nothing about reuse terms, because ward filings and the
+names of elected officers are public record. No request to change either county's filing or the
+city's website. And nothing about Marion's robots.txt, which is the city's own choice about
+automated clients and is being respected rather than negotiated.
+---
 
 ---
 

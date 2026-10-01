@@ -13625,7 +13625,11 @@ function initWisconsinExplorer() {
    * the Commission's file omits, and the provisional status itself, are the
    * Data gaps panel's `ward-polling-places` record. ---------- */
   var LTSB_WARDS_LAYER = "https://services1.arcgis.com/FDsAtKBk8Hy4cAH0/arcgis/rest/services/WI_Municipal_Wards_Current/FeatureServer/0";
-  var WARD_OUT_FIELDS = "WARDID,MCD_NAME,CTV,CNTY_NAME,SUPERID,ALDERID";
+  // COUSUBFP IS HERE FOR THE ALDERMANIC ROW, not for the ward's own
+  // identity: alderDistrictNumber keys the per-city renaming table on it,
+  // and without it this card would print the filed district number where
+  // the aldermanic card prints the city's own.
+  var WARD_OUT_FIELDS = "WARDID,COUSUBFP,MCD_NAME,CTV,CNTY_NAME,SUPERID,ALDERID";
   // Milwaukee's ward -> polling place pairing (phase 4 PR 3): pre-built by
   // wi/scripts/build_mke_polling_places.py from the city's CC-BY dataset,
   // ward keys gated equal to LTSB's Milwaukee wards, every pair witnessed
@@ -13755,6 +13759,7 @@ function initWisconsinExplorer() {
           ward: wardNumber(props),
           place: wardPlaceName(props),
           county: findPropCI(props, ["cnty_name"]),
+          cousubfp: findPropCI(props, ["cousubfp"]),
           superid: findPropCI(props, ["superid"]),
           // "00" is LTSB's no-aldermanic-districts placeholder — never a district
           alderid: (alder != null && String(alder) !== "" && String(alder) !== "00") ? String(alder) : null,
@@ -13851,7 +13856,7 @@ function initWisconsinExplorer() {
         rows.push({ label: "County board district", value: "District " + String(parseInt(String(result.superid), 10) || result.superid) });
       }
       if (result.alderid != null) {
-        rows.push({ label: "Aldermanic district", value: "District " + String(parseInt(result.alderid, 10) || result.alderid) });
+        rows.push({ label: "Aldermanic district", value: "District " + alderDistrictNumber(result.cousubfp, result.alderid) });
       }
       if (!result.polling) return renderFieldStack(rows);
       // A city's ward -> polling place pairing (Milwaukee or Madison): the
@@ -14115,10 +14120,48 @@ function initWisconsinExplorer() {
     return String(findPropCI(props, ["ctv"]) || "").toUpperCase() === "V"
       ? "Trustee District" : "Aldermanic District";
   }
+  // WHAT A CITY CALLS ITS OWN COUNCIL DISTRICTS, where that differs from the
+  // number in the state's ward filing. ALDERID is the filed key, and this app
+  // printed parseInt(ALDERID) as the district number — right for 155 of the
+  // 159 municipalities built here and wrong for four. The filings key Manawa
+  // 11-13, Waupaca 41-45, Weyauwega 51-53 and Marion 01/21/22/23, where every
+  // other municipality the layer ships runs 01 upward with no gap, Clintonville
+  // — in the same county as all four — included, which is what disproves a
+  // per-county decade-block convention. Measured 2026-10-01 from each city's own page:
+  //   Manawa     cityofmanawa.org/government-2/mayor/ names 1st, 2nd and 3rd
+  //              Ward alderpersons, and its own maps are Ward 1, 2 and 3.
+  //   Waupaca    the city's council page lists District 1 to District 5 with
+  //              the wards each holds ("District 1 ... Wards 1 & 8").
+  //   Weyauwega  cityofweyauwega-wi.gov/mayor-and-common-council carries
+  //              exactly three headings: Aldermanic District One, Two, Three.
+  // The city is the publisher of its own district names, so this table renames
+  // those three. MARION IS DELIBERATELY ABSENT: its site refuses this client
+  // (robots.txt Disallow: /), so its council size is unread, and its `01` is
+  // the Shawano County part of a city that straddles two counties — measured
+  // against TIGERweb, not inferred — which the two counties file under two
+  // schemes. A guessed renumbering there would invent a district count. The
+  // ask for Marion's own wording is in docs/ASK_DRAFTS.md; see wi/WATCH.md.
+  // ALDERID AND KEY ARE UNTOUCHED, so the roster join, the vector-tile key and
+  // the dissolve all still read the filed value and only the label moves.
+  // wi/scripts/validate_index.py holds this table to the shipped boundary
+  // file: an entry naming a district the state no longer files fails, and so
+  // does a municipality this table renames only part of.
+  var ALDER_DISTRICT_LABELS = {
+    "48350": { "11": "1", "12": "2", "13": "3" },                        // Manawa
+    "84375": { "41": "1", "42": "2", "43": "3", "44": "4", "45": "5" },   // Waupaca
+    "86400": { "51": "1", "52": "2", "53": "3" }                          // Weyauwega
+  };
+  function alderDistrictNumber(cousub, alderid) {
+    var raw = String(alderid == null ? "" : alderid).trim();
+    var table = ALDER_DISTRICT_LABELS[String(cousub == null ? "" : cousub)];
+    if (table && table[raw]) return table[raw];
+    var n = parseInt(raw, 10);
+    return isNaN(n) ? raw : String(n);
+  }
   function alderDistrictLabel(props) {
-    var raw = findPropCI(props, ["alderid"]);
-    var n = parseInt(String(raw), 10);
-    return alderDistrictWord(props) + " " + (isNaN(n) ? String(raw) : String(n));
+    return alderDistrictWord(props) + " " +
+      alderDistrictNumber(findPropCI(props, ["cousubfp"]),
+                          findPropCI(props, ["alderid"]));
   }
 
   registerLayer({
