@@ -361,8 +361,14 @@ NEENAH_INDEX = "https://www.ci.neenah.wi.us/common-council/"
 # NOT a challenge -- HTTP 200 with the whole council on it -- which is the
 # false-positive class CLAUDE.md already records for keyword matching on a body.
 #
-# THE FOUR THAT ARE SHUT, measured the same day and worth as much as the four
-# that shipped (a fifth was written down here as shut and is not — see Oshkosh):
+# THE FIVE THAT ARE SHUT, measured the same day and worth as much as the four
+# that shipped. The heading over this block has now been wrong twice and both
+# errors are the same one: it read FIVE while the bullets below it named SIX
+# cities, because the middle bullet is four cities in one line, and the
+# correction that removed Oshkosh then wrote FOUR, subtracting one from the
+# wrong total. COUNT THE CITIES, NOT THE BULLETS. The 21 unnamed cities of
+# 2026-10-01 are 4 built here, 5 shut below, 1 Oshkosh (open, at large) and 11
+# readable behind a page that assembles itself in the browser:
 #   BELOIT publishes `User-agent: * / Disallow: /` under six named crawlers that
 #   get narrow rules. That is the city's own host and its own file, so it binds
 #   fully, and nothing here renames an agent to get past it.
@@ -392,7 +398,8 @@ NEENAH_INDEX = "https://www.ci.neenah.wi.us/common-council/"
 #   "seven elected officials in the Common Council including the mayor, the
 #   deputy mayor, and five council members", so it has no district to draw and
 #   belongs in a municipal at-large roster rather than in this file, which is
-#   keyed by district. SO FOUR ARE SHUT, NOT FIVE.
+#   keyed by district. SO FIVE CITIES ARE SHUT -- Beloit, Janesville, Wausau,
+#   Wauwatosa and Mequon -- and Oshkosh is not one of them.
 FRANKLIN_INDEX = ("https://www.franklinwi.gov/Departments/Elected-Officials"
                   "/Common-Council.htm")
 GREENFIELD_INDEX = "https://www.ci.greenfield.wi.us/334/Common-Council"
