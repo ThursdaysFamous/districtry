@@ -178,24 +178,26 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 # The county universe per state. STATED, then checked against the tree below.
 # Counted from a coverage list instead, E would measure nothing: a state serves
 # every county it has listed, by construction.
-STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87, "ky": 120}
+STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
+                  "ky": 120, "ny": 62}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
 #
-# NEW YORK'S REASON USED TO READ "there is no county to examine" AND THAT IS NOT
-# TRUE OF THE TREE: the instance ships tompkins-legislature-members.json and
-# build_county_pages' own `ny_legislature` adapter reads it, so one county's
-# legislature is served and named. What is true is that the instance's subject
-# is New York City; its county frontier is not the state's 62, and scoring E
-# against that number would hand the New York thread a 62-county obligation on
-# the strength of a bookkeeping change rather than a decision. So E and A are
-# recorded as not applying, the county roster it does ship is REPORTED beside
-# the row rather than gated, and M is scored exactly as it is everywhere else.
+# NEW YORK IS SCORED AS A STATEWIDE APP ON ALL FOUR TESTS SINCE 2026-10-01, and
+# the reading it replaces is kept here because this file's convention is to put
+# a superseded reading under its correction rather than delete it. That reading
+# ran: "the instance's subject is New York City; its county frontier is not the
+# state's 62, and scoring E against that number would hand the New York thread a
+# 62-county obligation on the strength of a bookkeeping change rather than a
+# decision." The missing piece was the decision, and it has been taken by the
+# thread that bears the obligation: New York asked for all four tests to score
+# it statewide, having first MEASURED the tier it was asking to be held to —
+# #1328 records what 57 county front pages outside the city publish, and what
+# they do not. So E and A now use the state's own 62 and C's separate
+# COVERED_COUNTIES entry is no longer a divergence. San Francisco stays a city
+# app, because a consolidated city and county has no county above it.
 NO_COUNTY_TIER = {
-    "ny": "New York City — the instance's subject is the city, not the state's "
-          "62-county frontier. It does ship one county's legislature "
-          "(Tompkins), which is reported below and not scored.",
     "ca": "San Francisco — a consolidated city and county, so the county tier "
           "is the city and there is no frontier.",
 }
@@ -2057,15 +2059,15 @@ def score_covered(tag, counties_named, total_counties, expected, records):
     return entries, covered
 
 
-# THE FOURTH TEST SCORES NEW YORK'S COUNTY TIER WHILE E AND A DASH IT, and the
-# difference is deliberate rather than an inconsistency left lying about. E asks
-# where we LOOKED, and handing the New York thread a 62-county obligation on the
-# strength of a bookkeeping change was refused above. C asks what we SHIP, and
-# docs/DONE_STANDARD.md scores New York against the whole state — it is the app
-# that answers for New York, whatever its deepest work is about. San Francisco
+# THE FOURTH TEST USED TO SCORE NEW YORK'S COUNTY TIER WHILE E AND A DASHED IT,
+# on the reading recorded above, and that divergence is gone: New York is scored
+# statewide on all four tests, so this table is STATE_COUNTIES and the keys
+# agree by construction. It is kept as its own name because the two questions
+# are still different ones — E asks where we looked and C asks what we ship — and
+# a state could again need a different denominator for the two. San Francisco
 # has no county above it to ship, so its entry is absent and reads as "does not
 # apply" rather than as a failing zero.
-COVERED_COUNTIES = dict(STATE_COUNTIES, ny=62)
+COVERED_COUNTIES = dict(STATE_COUNTIES)
 
 
 def measure(counties, paths, B):
