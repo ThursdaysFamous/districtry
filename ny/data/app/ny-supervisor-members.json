@@ -1,0 +1,370 @@
+{
+  "saratoga": {
+    "board": "Saratoga County Board of Supervisors",
+    "county": "Saratoga",
+    "seats": 23,
+    "sourceUrl": "https://www.saratogacountyny.gov/board-of-supervisors/",
+    "units": {
+      "Ballston": {
+        "members": [
+          {
+            "name": "John Antoski"
+          }
+        ],
+        "type": "town"
+      },
+      "Charlton": {
+        "members": [
+          {
+            "name": "Joe Grasso"
+          }
+        ],
+        "type": "town"
+      },
+      "Clifton Park": {
+        "members": [
+          {
+            "name": "Philip C. Barrett"
+          },
+          {
+            "name": "Ram mohan Lalukota"
+          }
+        ],
+        "type": "town"
+      },
+      "Corinth": {
+        "members": [
+          {
+            "name": "Eric Butler"
+          }
+        ],
+        "type": "town"
+      },
+      "Day": {
+        "members": [
+          {
+            "name": "Harry Brennan"
+          }
+        ],
+        "type": "town"
+      },
+      "Edinburg": {
+        "members": [
+          {
+            "name": "Robert D. Anderson"
+          }
+        ],
+        "type": "town"
+      },
+      "Galway": {
+        "members": [
+          {
+            "name": "J.D. Arnold"
+          }
+        ],
+        "type": "town"
+      },
+      "Greenfield": {
+        "members": [
+          {
+            "name": "Michael Gyarmathy"
+          }
+        ],
+        "type": "town"
+      },
+      "Hadley": {
+        "members": [
+          {
+            "name": "Arthur M. Wright"
+          }
+        ],
+        "type": "town"
+      },
+      "Halfmoon": {
+        "members": [
+          {
+            "name": "Kevin J. Tollisen"
+          }
+        ],
+        "type": "town"
+      },
+      "Malta": {
+        "members": [
+          {
+            "name": "Cynthia Young"
+          }
+        ],
+        "type": "town"
+      },
+      "Mechanicville": {
+        "members": [
+          {
+            "name": "Thomas Richardson"
+          }
+        ],
+        "type": "city"
+      },
+      "Milton": {
+        "members": [
+          {
+            "name": "Scott Ostrander"
+          }
+        ],
+        "type": "town"
+      },
+      "Moreau": {
+        "members": [
+          {
+            "name": "Jesse Fish"
+          }
+        ],
+        "type": "town"
+      },
+      "Northumberland": {
+        "members": [
+          {
+            "name": "Willard Peck"
+          }
+        ],
+        "type": "town"
+      },
+      "Providence": {
+        "members": [
+          {
+            "name": "Susan Wemple"
+          }
+        ],
+        "type": "town"
+      },
+      "Saratoga": {
+        "members": [
+          {
+            "name": "Ian Murray"
+          }
+        ],
+        "type": "town"
+      },
+      "Saratoga Springs": {
+        "members": [
+          {
+            "name": "Sarah J. Burger"
+          },
+          {
+            "name": "Minita Sanghvi"
+          }
+        ],
+        "type": "city"
+      },
+      "Stillwater": {
+        "members": [
+          {
+            "name": "Edward D. Kinowski"
+          }
+        ],
+        "type": "town"
+      },
+      "Waterford": {
+        "members": [
+          {
+            "name": "Dave Ball"
+          }
+        ],
+        "type": "town"
+      },
+      "Wilton": {
+        "members": [
+          {
+            "name": "Toni Sturm"
+          }
+        ],
+        "type": "town"
+      }
+    }
+  },
+  "schoharie": {
+    "board": "Schoharie County Board of Supervisors",
+    "county": "Schoharie",
+    "seats": 16,
+    "sourceUrl": "https://www.schohariecounty-ny.gov/departments/board_of_supervisors/index.php",
+    "units": {
+      "Blenheim": {
+        "members": [
+          {
+            "address": "PO Box 928, N. Blenheim, NY 12131",
+            "name": "Donald M. Airey",
+            "party": "Republican",
+            "phone": "(607) 652-7492",
+            "role": "Vice Chairman"
+          }
+        ],
+        "type": "town"
+      },
+      "Broome": {
+        "members": [
+          {
+            "address": "920 State Route 145 Middleburgh, NY 12122",
+            "name": "William M. Smith III",
+            "party": "Republican",
+            "phone": "(518) 321-2803"
+          }
+        ],
+        "type": "town"
+      },
+      "Carlisle": {
+        "members": [
+          {
+            "address": "137 Prairie Road, Sloansville, NY 12160",
+            "name": "John H. Leavitt",
+            "party": "Republican",
+            "phone": "(518) 429-8365"
+          }
+        ],
+        "type": "town"
+      },
+      "Cobleskill": {
+        "members": [
+          {
+            "address": "378 Mineral Springs Rd., Suite 5,\u00a0 Cobleskill, NY 12043",
+            "name": "Werner T. Hampel",
+            "party": "Republican",
+            "phone": "(518) 221-5332"
+          }
+        ],
+        "type": "town"
+      },
+      "Conesville": {
+        "members": [
+          {
+            "address": "832 South Mountain Rd, Gilboa, NY 12076",
+            "name": "William Federice",
+            "party": "Republican",
+            "phone": "(607) 588-7211",
+            "role": "Chairman of the Board"
+          }
+        ],
+        "type": "town"
+      },
+      "Esperance": {
+        "members": [
+          {
+            "address": "PO Box 226, Esperance, NY 12066",
+            "name": "Earl VanWormer III",
+            "party": "Republican",
+            "phone": "(518) 875-6109"
+          }
+        ],
+        "type": "town"
+      },
+      "Fulton": {
+        "members": [
+          {
+            "address": "126 Chapman Road, Fultonham, NY 12071",
+            "name": "Philip Skowfoe Jr.",
+            "party": "Democrat",
+            "phone": "(518) 827-4896"
+          }
+        ],
+        "type": "town"
+      },
+      "Gilboa": {
+        "members": [
+          {
+            "address": "373 State Rte 990V, Suite 1 PO Box 267, Gilboa, NY 12076",
+            "name": "Alicia Terry",
+            "party": "Conservative",
+            "phone": "(607) 588-7213"
+          }
+        ],
+        "type": "town"
+      },
+      "Jefferson": {
+        "members": [
+          {
+            "address": "PO Box 34, Jefferson, NY 12093",
+            "name": "Margaret Hait",
+            "party": "Republican",
+            "phone": "(607) 652-7931"
+          }
+        ],
+        "type": "town"
+      },
+      "Middleburgh": {
+        "members": [
+          {
+            "address": "1276 Clauverwie Rd, Middleburgh, NY 12122",
+            "name": "John Youmans",
+            "party": "Republican",
+            "phone": "(518) 827-5100"
+          }
+        ],
+        "type": "town"
+      },
+      "Richmondville": {
+        "members": [
+          {
+            "address": "104 Municipal Lane,\u00a0 Richmondville, NY 12149",
+            "name": "Jeffrey Haslun",
+            "party": "Republican",
+            "phone": "(518) 294-7116"
+          }
+        ],
+        "type": "town"
+      },
+      "Schoharie": {
+        "members": [
+          {
+            "address": "321 Colby Road Schoharie, NY 12157",
+            "name": "Benjamin J. Oevering",
+            "party": "Republican",
+            "phone": "(518) 495-6587"
+          }
+        ],
+        "type": "town"
+      },
+      "Seward": {
+        "members": [
+          {
+            "address": "5093 State Route 145 Cobleskill NY 12043",
+            "name": "Mark Fletcher",
+            "party": "Republican",
+            "phone": "(518) 517-9311"
+          }
+        ],
+        "type": "town"
+      },
+      "Sharon": {
+        "members": [
+          {
+            "address": "PO Box 204, Sharon Springs, NY 13459",
+            "name": "Sandra Manko",
+            "party": "Democrat",
+            "phone": "(518) 284-3010"
+          }
+        ],
+        "type": "town"
+      },
+      "Summit": {
+        "members": [
+          {
+            "address": "Po Box 295 Summit NY 12175",
+            "name": "Roger Gural",
+            "party": "Republican",
+            "phone": "(518) 339-8419"
+          }
+        ],
+        "type": "town"
+      },
+      "Wright": {
+        "members": [
+          {
+            "address": "105A School Street, Schoharie, NY 12157",
+            "name": "Alexander Luniewski",
+            "party": "Republican",
+            "phone": "(518) 872-9348"
+          }
+        ],
+        "type": "town"
+      }
+    }
+  }
+}

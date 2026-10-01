@@ -8559,6 +8559,7 @@ function initNycExplorer() {
     "nys-central-hs-district", // 3 central high school districts, each drawn OVER its own component districts — larger than the districts inside it, so it restacks beneath them and heads them in the hover list
     "nys-school-district", // 716 school districts statewide; the city's own 32 Community School Districts are a different concept and stay on their own layer
     "municipality",      // 995 cities and towns, which tile the state; villages sit inside towns and are their own layer
+    "county-supervisor", // The towns and cities of the counties whose county board IS their own supervisors sitting together, so a unit here is the same size as a unit of the cities-and-towns layer above it. It sits below that layer rather than beside it because it answers in two counties, not the whole state.
     "county-legislature", // 16 districts in Tompkins County today, each about half the area of an average New York town, so this sits between the cities-and-towns layer and the villages. The table grows one county at a time and only over counties that ELECT a legislature from districts: a board-of-supervisors county has no district to draw, because its seat is the town.
     "village",           // 532 villages, nested inside towns rather than beside them, so a point can be in both a village and its town
     // borough / judicial-district / BP / DA are the same 5 county polygons —
@@ -12726,6 +12727,165 @@ function initNycExplorer() {
             : null;
         }
       }
+    ]
+  });
+
+  /* ---------- COUNTY SUPERVISOR (board-of-supervisors counties) ----------
+   * A New York county board comes in two forms, and this is the other one.
+   * Where a county ELECTS A LEGISLATURE from districts the districts have to
+   * be drawn before anybody can be named, which is the county-legislature
+   * layer above. Where a county is governed by a BOARD OF SUPERVISORS the
+   * seat IS the town or city, so there is no district to draw and this layer
+   * answers over ground the instance already ships: the same
+   * ny-cities-towns.json fabric the City or Town card answers from, sliced to
+   * the county. Nothing new is drawn and nothing is derived.
+   *
+   * IT IS ITS OWN LAYER RATHER THAN A ROW ON THE CITY OR TOWN CARD, because
+   * that card is registered through the shared polygon factory, which is an
+   * ENGINE block: adding a roster hook to it would be a fleet-wide change for
+   * two New York counties. A reader who wants the town gets the town, and a
+   * reader who wants the county's governing body gets this.
+   *
+   * COVERAGE IS SLICED FROM ny-counties.json, the file the County card itself
+   * answers from, so a point the card calls Saratoga is a point this layer is
+   * asked about — the Tompkins reasoning, with no second outline file to keep
+   * in step.
+   *
+   * MORE THAN ONE SUPERVISOR PER UNIT IS NORMAL and the card prints all of
+   * them: New York County Law lets a town or city elect more than one, and
+   * Saratoga seats two for the town of Clifton Park and two for the city of
+   * Saratoga Springs.
+   *
+   * NO emptyNote, and that is deliberate rather than an omission: the county
+   * dispatcher does not forward one from an entry or from the layer, so a
+   * field here would be dead code that reads as a shipped sentence. The
+   * engine's own default answers an empty point. ----------------------- */
+  var loadNySupervisorMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ny-supervisor-members.json", {}, 2);
+  });
+  function nyCountyUnitsLoader(county) {
+    return makeCached(function () {
+      return loadNyCitiesTowns().then(function (geojson) {
+        return {
+          type: "FeatureCollection",
+          features: (geojson.features || []).filter(function (f) {
+            return findPropCI(f.properties || {}, ["county"]) === county;
+          })
+        };
+      });
+    });
+  }
+  function nyCountyCoverageFor(county) {
+    return function (point) {
+      return loadNyCounties().then(function (geojson) {
+        return (geojson.features || []).some(function (f) {
+          return findPropCI(f.properties || {}, ["name"]) === county
+            && f.geometry && pointInGeometry(point, f.geometry);
+        });
+      });
+    };
+  }
+  function nySupervisorsFor(roster, key, unit) {
+    var county = roster && roster[key];
+    var entry = county && county.units && county.units[unit];
+    return (entry && entry.members) || [];
+  }
+  function nySupervisorEntry(key, county) {
+    var loadUnits = nyCountyUnitsLoader(county);
+    return {
+      key: key,
+      coverage: nyCountyCoverageFor(county),
+      loadGeometry: loadUnits,
+      hoverName: function (feature) {
+        var n = findPropCI(feature.properties || {}, ["name"]);
+        return (n === null || n === undefined || n === "") ? null : String(n);
+      },
+      // Prefetched on toggle-on and read from the same roster the card reads,
+      // so the hover and the card cannot disagree about who holds the seat.
+      hoverOfficial: {
+        load: loadNySupervisorMembers,
+        name: function (feature, roster) {
+          var people = nySupervisorsFor(
+            roster, key, findPropCI(feature.properties || {}, ["name"]));
+          return people.length ? people[0].name : null;
+        }
+      },
+      query: function (point, seq) {
+        return Promise.all([
+          queryFeatureAt(loadUnits, point),
+          loadNySupervisorMembers().catch(function () { return null; })
+        ]).then(function (results) {
+          var feature = results[0];
+          if (!feature) return null;
+          var props = feature.properties || {};
+          return {
+            seq: seq,
+            unit: findPropCI(props, ["name"]),
+            unitType: findPropCI(props, ["muni_type"]),
+            roster: results[1]
+          };
+        });
+      },
+      render: function (result) {
+        var wrap = cardEl("div", "card-flush");
+        var roster = (result.roster || {})[key] || {};
+        wrap.appendChild(renderBodyIntro({
+          title: roster.board || (county + " County Board of Supervisors"),
+          note: "In this county the county board is the towns' and cities' own "
+            + "supervisors sitting together, so there is no separate county "
+            + "district: the seat is the town or city."
+        }));
+        var people = nySupervisorsFor(result.roster, key, result.unit);
+        if (people.length) {
+          wrap.appendChild(renderPersonRows(people.map(function (person) {
+            var row = { name: person.name, badge: person.role || "Supervisor" };
+            if (person.party) row.note = person.party;
+            if (person.phone) row.phone = person.phone;
+            if (person.email) row.email = person.email;
+            if (person.address) {
+              row.details = { label: "Mailing address", items: [person.address] };
+            }
+            return row;
+          })));
+        } else {
+          wrap.appendChild(renderFieldStack([{
+            label: "Who holds the seat",
+            value: "This county's published roster names no supervisor for "
+              + String(result.unit) + ". The card names none rather than "
+              + "guessing."
+          }]));
+        }
+        if (roster.sourceUrl) {
+          wrap.appendChild(renderBodyIntro({
+            note: "Members: " + county + " County's own board of supervisors "
+              + "page. Boundary: the same New York State cities-and-towns "
+              + "fabric the City or Town card answers from."
+          }));
+        }
+        return wrap;
+      },
+      cardIdentifier: function (result) {
+        if (!result.unit) return null;
+        var kind = result.unitType === "city" ? "City" : "Town";
+        return kind + " of " + String(result.unit);
+      },
+      primaryLink: function (result) {
+        var roster = (result.roster || {})[key] || {};
+        return roster.sourceUrl
+          ? { label: county + " County Board of Supervisors (official)",
+              url: roster.sourceUrl }
+          : null;
+      }
+    };
+  }
+  registerCountyLayer({
+    id: "county-supervisor",
+    group: "political",
+    label: "County Board Supervisor",
+    style: { color: "#0E5A8A", weight: 2, fillColor: "#2E7FAE", fillOpacity: 0.05, dashArray: "9 3 3 3" },
+    counties: [
+      nySupervisorEntry("saratoga", "Saratoga"),
+      nySupervisorEntry("schoharie", "Schoharie")
     ]
   });
 
@@ -17050,16 +17210,17 @@ function initNycExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#0A4D5C": "#53A0B5", "#0B5394": "#4CA1FB", "#0B7285": "#49BED8",
-    "#14181C": "#696F76", "#14532D": "#5AA872", "#155C4B": "#58AE96", "#1D3557": "#6689BA",
-    "#1E7A8C": "#53C4DD", "#1F5C3A": "#60AF7F", "#1F6F5C": "#5ABEA3", "#1F6FB2": "#6EB7FD",
-    "#2E7D5B": "#63C99B", "#3A0CA3": "#8178FE", "#3B8FD4": "#98CDFE", "#4361EE": "#9BB4FD",
-    "#457B9D": "#7AC1EF", "#4B2E83": "#9C79EF", "#4CA98F": "#70EAC8", "#4E6E9C": "#89B4F3",
-    "#5A6B7C": "#9BB2CA", "#5B2A86": "#B172F0", "#5FB49C": "#81F2D2", "#6A3FA0": "#B886FE",
-    "#6B4E8C": "#B992E7", "#6B7280": "#ADB6C9", "#7048E8": "#B0A7FE", "#7A0A1C": "#E8595F",
-    "#7A1E5C": "#E063B2", "#7A5901": "#CDA040", "#7A6A55": "#C4AF92", "#7C2D12": "#E27451",
-    "#7CC49B": "#9EFDC7", "#8A5A00": "#E09E3C", "#8C6A2E": "#DBAD5E", "#8C6D3F": "#D9AF72",
-    "#A15C00": "#F99B38", "#B3261E": "#FE8171", "#B5179E": "#FE79E3", "#B8860B": "#FEC141",
-    "#C2410C": "#FF9776", "#C8102E": "#FE8B89", "#E4572E": "#FDB5A0", "#F72585": "#FDB1C7"};
+    "#0E5A8A": "#4FA8EB", "#14181C": "#696F76", "#14532D": "#5AA872", "#155C4B": "#58AE96",
+    "#1D3557": "#6689BA", "#1E7A8C": "#53C4DD", "#1F5C3A": "#60AF7F", "#1F6F5C": "#5ABEA3",
+    "#1F6FB2": "#6EB7FD", "#2E7D5B": "#63C99B", "#2E7FAE": "#69C5FE", "#3A0CA3": "#8178FE",
+    "#3B8FD4": "#98CDFE", "#4361EE": "#9BB4FD", "#457B9D": "#7AC1EF", "#4B2E83": "#9C79EF",
+    "#4CA98F": "#70EAC8", "#4E6E9C": "#89B4F3", "#5A6B7C": "#9BB2CA", "#5B2A86": "#B172F0",
+    "#5FB49C": "#81F2D2", "#6A3FA0": "#B886FE", "#6B4E8C": "#B992E7", "#6B7280": "#ADB6C9",
+    "#7048E8": "#B0A7FE", "#7A0A1C": "#E8595F", "#7A1E5C": "#E063B2", "#7A5901": "#CDA040",
+    "#7A6A55": "#C4AF92", "#7C2D12": "#E27451", "#7CC49B": "#9EFDC7", "#8A5A00": "#E09E3C",
+    "#8C6A2E": "#DBAD5E", "#8C6D3F": "#D9AF72", "#A15C00": "#F99B38", "#B3261E": "#FE8171",
+    "#B5179E": "#FE79E3", "#B8860B": "#FEC141", "#C2410C": "#FF9776", "#C8102E": "#FE8B89",
+    "#E4572E": "#FDB5A0", "#F72585": "#FDB1C7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -40,12 +40,13 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 
 Counties, towns and villages, school and judicial districts across the state, plus the city's boroughs, Council and community districts, NYPD precincts and school zones.
 
-- [New York district lookup](https://districtry.com/ny/): 35 layers, statewide, 5 boroughs in depth.
+- [New York district lookup](https://districtry.com/ny/): 36 layers, statewide, 5 boroughs in depth.
 - [Who is my borough president?](https://districtry.com/ny/borough.html)
 - [What community board am I in?](https://districtry.com/ny/community-board.html)
 - [Who is my U.S. representative?](https://districtry.com/ny/congress.html)
 - [What Council district am I in?](https://districtry.com/ny/council-district.html)
 - [Who is my county legislator?](https://districtry.com/ny/county-legislature.html): links a page per county, 1 of them, each naming every member with whatever contact details that county publishes.
+- [Who is my county supervisor?](https://districtry.com/ny/county-supervisor.html): links a page per county, 2 of them, each naming every member with whatever contact details that county publishes.
 - [What NYPD precinct am I in?](https://districtry.com/ny/police-precinct.html)
 - [Sources & data layers](https://districtry.com/ny/sources.html)
 - [Who is my NY state legislator?](https://districtry.com/ny/state-legislature.html)

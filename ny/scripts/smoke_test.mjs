@@ -58,7 +58,7 @@ const OFFLINE = ["judicial-district", "county", "nys-school-district", "municipa
 const EXPECT_DISTRICT = { "judicial-district": "3", "county": "Albany", "nys-school-district": "ALBANY", "municipality": "Albany" };
 const NEGATIVE_POINT = "41.76370,-72.68510"; // Downtown Hartford, Connecticut — outside New York State and 66 km from the nearest geometry this instance ships. NOT a water point: the county, school-district, cities-towns, villages and three legislative files are all water-inclusive off Long Island and in Lake Ontario, so a mid-Sound or mid-lake click is positive, not negative
 const APP_NAME = "districtry New York";
-const EXPECT_LAYERS = 35; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
+const EXPECT_LAYERS = 36; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
 // ==== GENERATED:END smoke-config ====
 const POINT2 = "40.69354,-73.98963"; // Brooklyn Borough Hall (Brooklyn) — the re-classify hop stays fork test code
 // THE CITY GROUND TRUTH SURVIVES THE GO-LIVE AS FORK TEST CODE. The worksheet's
@@ -446,6 +446,70 @@ try {
         return { card: visible(block), toggle: visible(toggle) };
       });
       check(`county-legislature stays hidden at ${where}`,
+        !shown.card && !shown.toggle, JSON.stringify(shown));
+      await context.close();
+    }
+  }
+
+  // 2c2. THE OTHER FORM OF COUNTY BOARD. county-supervisor is the second
+  //      dispatched concept over New York's counties, and it answers where the
+  //      county board seat IS the town or city: the supervisor elected to run
+  //      your town is the one who votes for you at the county. Two entries
+  //      today, Saratoga and Schoharie.
+  //
+  //      THE CLAIM WORTH HAVING IS THE TWO-SEAT ONE. New York County Law lets a
+  //      county weight its board so a larger unit sends more than one
+  //      supervisor, and the city of Saratoga Springs sends two. A roster keyed
+  //      one name per town would pass every other check in this file and name
+  //      half a reader's representation, so the card is asserted to carry BOTH
+  //      names the shipped roster gives that unit.
+  //
+  //      NO NAME IS A LITERAL HERE, for the county-legislature reason above:
+  //      every name is read out of the shipped roster, so the join is proved and
+  //      an election is not a regression. The UNIT is a literal, because the
+  //      points below were derived from the shipped cities-and-towns fabric and
+  //      each lands in exactly one unit with a 3 km margin to its nearest edge.
+  {
+    const roster = JSON.parse(readFileSync(
+      join(INSTANCE_DIR, "data/app/ny-supervisor-members.json"), "utf8"));
+    const cases = [
+      // [label, point, roster key, unit, how the card should name it]
+      ["the city of Saratoga Springs", "43.06900,-73.81775", "saratoga",
+       "Saratoga Springs", "City of Saratoga Springs"],
+      ["the town of Schoharie", "42.67590,-74.30704", "schoharie",
+       "Schoharie", "Town of Schoharie"]
+    ];
+    for (const [label, pt, key, unit, identifier] of cases) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=county-supervisor`);
+      const card = await cardText(page, "county-supervisor");
+      const people = roster[key].units[unit].members.map((m) => m.name);
+      check(`county-supervisor answers at ${label} and names the county's board`,
+        !card.error && card.text.includes(identifier)
+          && card.text.includes(roster[key].board), card.text.slice(0, 120));
+      check(`every supervisor the shipped roster gives ${unit} is on the card (${people.length})`,
+        people.length > 0 && people.every((n) => card.text.includes(n)),
+        `${people.join(" / ")} | ${card.text.slice(0, 140)}`);
+      await context.close();
+    }
+  }
+  {
+    // Hidden where no county in the table covers the point. The upstate anchor
+    // is Albany, whose own county elects a legislature this app cannot answer
+    // for yet, so a broken coverage test would show a reader there a "County
+    // Board Supervisor" toggle over a county that has no such board at all.
+    for (const [where, pt] of [["the upstate anchor, outside both counties", POINT],
+                               ["New York City, which absorbed its counties", NYC_POINT]]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=county-supervisor`);
+      const shown = await page.evaluate(() => {
+        const card = document.getElementById("card-county-supervisor");
+        const block = card && card.closest(".layer-block");
+        const toggle = document.querySelector('[data-layer="county-supervisor"]');
+        const visible = (el) => !!el && !el.hidden && el.offsetParent !== null;
+        return { card: visible(block), toggle: visible(toggle) };
+      });
+      check(`county-supervisor stays hidden at ${where}`,
         !shown.card && !shown.toggle, JSON.stringify(shown));
       await context.close();
     }
