@@ -15,36 +15,87 @@ Holding a state open until every county ships hands the definition
 to county publishers; a county that will never publish a map would
 keep a state open forever while telling a reader nothing.
 
+Every instance the deploy publishes is scored, and a state joins
+this table on the commit that publishes it: the fleet is read from
+the tree and the deploy's own excludes, never from a list here. A
+`-` is a test that does not apply to an instance, which is a
+different thing from one it failed.
+
 | state | E.A.M. | counties | examined | districts | named | answered | files | maintained |
 |---|---|---|---|---|---|---|---|---|
-| il | **EAM** | 102 | 102/102 | 572 | 996 | all | 398 | all |
-| wi | **EAM** | 72 | 72/72 | 1590 | 1,574 | all | 262 | all |
+| ca | **--M** | — | — | 0 | 0 | — | 14 | all |
 | ia | **EAM** | 99 | 99/99 | 81 | 81 | all | 57 | all |
+| il | **EAM** | 102 | 102/102 | 572 | 996 | all | 398 | all |
+| ky | **EAM** | 120 | 120/120 § | 0 | 0 | by record | 7 | all |
 | mi | **EAM** | 83 | 83/83 | 619 | 615 | all | 55 | all |
+| mn | **EAM** | 87 | 87/87 § | 0 | 0 | by record | 7 | all |
+| ny | **--M** | — | — | 16 | 16 | — | 29 | all |
+| wi | **EAM** | 72 | 72/72 | 1590 | 1,574 | all | 262 | all |
 
-- **ca** — no county tier, so E does not apply. San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
-- **ny** — no county tier, so E does not apply. New York City — the instance serves five boroughs, not a county frontier, so there is no county to examine.
+§ Examined in part by a record covering the whole state rather
+than county by county. That is a weaker statement than a record
+per county, so each one is named under its state below.
+
+- **ca** — no county frontier, so E and A do not apply. San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
+- **ny** — no county frontier, so E and A do not apply. New York City — the instance's subject is the city, not the state's 62-county frontier. It does ship one county's legislature (Tompkins), which is reported below and not scored.
 
 ## What each state still needs
 
-### il — **E.A.M.**
+### ca — **E.A.M.**
 
-Examined, Answered and Maintained. Expansion is finished;
-this instance is in maintenance.
+- **E and A do not apply.** San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
+  The mark therefore rests on Maintained alone.
 
-- **Watched, not rewritten:** `il/data/app/mason-county-board-members.json` is refreshed by no job because it cannot safely be — `.github/workflows/watch-mason-roster-source.yml` checks its source weekly and opens an issue when it moves. That is a weaker guarantee than a rewrite: it tells you the source changed and a person still has to act.
-
-### wi — **E.A.M.**
-
-Examined, Answered and Maintained. Expansion is finished;
+Every test that applies is met. Expansion is finished;
 this instance is in maintenance.
 
 ### ia — **E.A.M.**
 
-Examined, Answered and Maintained. Expansion is finished;
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
+### il — **E.A.M.**
+
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
+- **Watched, not rewritten:** `il/data/app/mason-county-board-members.json` is refreshed by no job because it cannot safely be — `.github/workflows/watch-mason-roster-source.yml` checks its source weekly and opens an issue when it moves. That is a weaker guarantee than a rewrite: it tells you the source changed and a person still has to act.
+
+### ky — **E.A.M.**
+
+- **Examined by a statewide record:** `ky-county-officers`, `ky-fiscal-court` account for every county in the state, which is what Examined rests on here: 0 of 120 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
+
+Every test that applies is met. Expansion is finished;
 this instance is in maintenance.
 
 ### mi — **E.A.M.**
 
-Examined, Answered and Maintained. Expansion is finished;
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
+### mn — **E.A.M.**
+
+- **Examined by a statewide record:** `mn-county-commissioner-roster`, `mn-county-officers` account for every county in the state, which is what Examined rests on here: 0 of 87 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
+### ny — **E.A.M.**
+
+- **E and A do not apply.** New York City — the instance's subject is the city, not the state's 62-county frontier. It does ship one county's legislature (Tompkins), which is reported below and not scored.
+  The county roster it does ship is reported and not gated: 16 district(s), 16 people named.
+  The mark therefore rests on Maintained alone.
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
+### wi — **E.A.M.**
+
+
+Every test that applies is met. Expansion is finished;
 this instance is in maintenance.

@@ -80,7 +80,34 @@ REQUIRED = ("id", "concept", "area", "kind", "summary", "why", "blocker", "wante
 # compares content rather than dict ordering. `blocker` is deliberately absent:
 # it is the maintainer's record, kept in the guidebook and never shipped.
 FIELD_ORDER = ("id", "kind", "concept", "area", "layer", "counties",
-               "summary", "why", "wanted")
+               "everyCounty", "summary", "why", "wanted")
+
+# `everyCounty` SAYS THIS RECORD ACCOUNTS FOR EVERY COUNTY IN THE STATE, and it
+# is a different claim from a `counties` tag rather than a shortcut for one.
+#
+# A `counties` tag is a promise the Data gaps panel can LOCATE that county — it
+# fetches data/app/<slug>-county-outline.json to decide whether the gap is where
+# a reader clicked, which is why the check above refuses a tag with no outline.
+# EXAMINED asks something else entirely: is every county in the state either
+# served by a roster or named by a record saying why not. A state whose answer
+# is uniform writes that once, over the whole state, and ships no outlines at
+# all — Minnesota's county-commissioner record reads "Minnesota — all 87
+# counties" and Kentucky's fiscal-court record "Kentucky — all 120 counties".
+#
+# Read through the tags alone, both states scored 0 counties examined out of 87
+# and 120, which is false and points the wrong way: it would send a state to
+# ship 87 county outlines to satisfy a bookkeeping gate, when the outlines exist
+# for the reader's panel and the panel has nothing to show there. So the claim
+# is DECLARED on the record, never inferred from the `area` prose, because every
+# instrument in this repository that has read a claim out of prose has been
+# wrong about it at least once.
+#
+# It is refused beside a `counties` list: a record either accounts for the whole
+# state or names which counties it covers, and one saying both is one of the two
+# by accident. `build_eam_status.py` prints every record it counts this way on
+# each run, and reports per-county coverage separately, so a statewide
+# declaration cannot quietly stand in for county-by-county work.
+EVERY_COUNTY = "everyCounty"
 
 # The three fields a voter reads, and the budget each gets. 240 characters is
 # about two lines in the panel — enough for a plain sentence and not enough for
@@ -281,6 +308,19 @@ def validate(entries, layer_ids, outlines):
                     "where a reader clicked, so the tag would make it claim a "
                     "clean spot inside a county this gap covers"
                     % (where, slug, slug))
+        if e.get(EVERY_COUNTY) is not None:
+            if e.get(EVERY_COUNTY) is not True:
+                problems.append(
+                    "%s: %s must be true or absent, never %r — it is a claim, "
+                    "and a false one is the same as not making it"
+                    % (where, EVERY_COUNTY, e.get(EVERY_COUNTY)))
+            if e.get("counties"):
+                problems.append(
+                    "%s: %s says this record accounts for every county in the "
+                    "state and `counties` names %d of them. Those are different "
+                    "claims: drop the tags if the record is statewide, or drop "
+                    "%s if it covers only the counties it lists"
+                    % (where, EVERY_COUNTY, len(e["counties"]), EVERY_COUNTY))
         problems.extend(counted_prose_problems(where, e))
     return problems
 
@@ -335,6 +375,11 @@ def render(entries):
                 row[key] = list(e.get("counties") or [])
             elif key == "layer":
                 row[key] = e.get("layer") or None
+            elif key == EVERY_COUNTY:
+                # Omitted when absent rather than written false, so adding the
+                # field churns no record that does not claim it.
+                if e.get(key):
+                    row[key] = True
             else:
                 row[key] = e[key]
         out.append(row)
