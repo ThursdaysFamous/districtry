@@ -4279,8 +4279,12 @@ and nothing is asked of any named judge personally.
 
 ## Ask marion-wi-council-districts — two county clerks: how many districts does the City of Marion elect, and which of you files which?
 
-> **NOT SENT.** Written 2026-10-01. Two letters, one to each of the two county clerks who file
-> the City of Marion's wards. **NO PRIOR-CONTACT SEARCH HAS BEEN RUN FOR THESE TWO ADDRESSES**,
+> **ONE SENT AND BOUNCED, ONE NOT SENT.** Written 2026-10-01. Two letters, one to each of the two
+> county clerks who file the City of Marion's wards. The Waupaca letter went that day and was
+> refused as a permanent failure by the county's own mail server, so it reached nobody and
+> **Waupaca is not awaiting a reply and no follow-up clock has started** — the bounce note below
+> gives the measurement and the two addresses the county itself publishes for the same office. The
+> Shawano letter has not been sent. **NO PRIOR-CONTACT SEARCH HAS BEEN RUN FOR THESE TWO ADDRESSES**,
 > and that is the Letters thread's step rather than this one's: this thread writes the text, the
 > Letters thread searches Adam's sent folder and inbox, turns anything it finds into a follow-up
 > rather than a first letter, and creates the Gmail drafts. Nothing here is sent by anybody but
@@ -4312,7 +4316,39 @@ and nothing is asked of any named judge personally.
 > districts from one. Those three are relabelled accordingly. Marion could not be read, which is
 > why it takes a letter.
 
-### Waupaca County Clerk — `kristy.opperman@co.waupaca.wi.us`
+> **THE WAUPACA LETTER BOUNCED AND THE ADDRESS WAS NOT GUESSED — THE COUNTY PUBLISHES IT IN THREE
+> PLACES.** Sent 2026-10-01, it was refused at 18:09 as a permanent failure by the county's own
+> mail server. Measured the same day, reading each page with the client that crawls and after
+> reading each host's robots.txt (`www.co.waupaca.wi.us` and `www.waupacacounty-wi.gov` both answer
+> 404 for robots.txt, which permits):
+>
+> | the county's own page | what it publishes for the clerk |
+> |---|---|
+> | County Clerk department page (both domains, byte-identical) | `Kristy.Opperman@co.waupaca.wi.us`, telephone (715) 258-6200, fax (715) 258-6212 |
+> | County staff directory | `kristy.opperman@co.waupaca.wi.us` — character for character the address that bounced |
+> | Directory of Public Officials, updated 5 August 2026, compiled by the Clerk's own office | County Clerk Kristy K. Opperman, 811 Harding St., Waupaca 54981, telephone (715) 258-6200 — **no e-mail address at all** |
+>
+> So a published mailbox is refusing mail, which is the same shape as the Grundy County bounce
+> the same day, and **no replacement is invented here.** Two addresses the county publishes on the
+> clerk's own department page are the alternatives, in this order, and both are the county's own
+> words rather than a pattern guessed from a name:
+>
+> 1. **Chief Deputy County Clerk Ellen Radies — `Ellen.Radies@co.waupaca.wi.us`**, same office, same
+>    telephone. A deputy clerk answers for the office, so this asks the same office the same question.
+> 2. **Deputy County Clerk Nicole Houdek — `Nicole.Houdek@co.waupaca.wi.us`**, likewise.
+>
+> If the second also bounces, the office's own telephone and postal address above are what is left,
+> and both are a person's job rather than this project's. **Nothing has been sent to either
+> address and Waupaca is not awaiting a reply**, so no follow-up clock has started. The letter text
+> below is unchanged and still correct: only the recipient line moves. The Shawano County letter in
+> this same ask is unaffected.
+>
+> One thing deliberately not concluded: the Clerk's own Directory links the elections page on
+> `www.waupacacounty-wi.gov`, a newer domain for the same site, which could suggest the county's
+> mail has moved too. Both domains serve the identical page naming `@co.waupaca.wi.us` addresses,
+> and nothing published here names a mailbox on the new domain, so **no address on it is guessed.**
+
+### Waupaca County Clerk's office — address line to be redrawn, see the bounce note above
 
 **Subject:** Two questions about the City of Marion's aldermanic districts
 
