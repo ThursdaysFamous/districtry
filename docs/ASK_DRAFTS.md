@@ -2767,6 +2767,276 @@ any local government's website.
 
 ---
 
+## Ask wi-town-boards — Wisconsin Towns Association: is there a list of town board members?
+
+> **NOT YET ASKED — DRAFTED 2026-10-01.** A first approach to this organisation. It asks
+> whether a list exists and on what terms, not for anything free: the association is a
+> membership body, not a government, and a list it compiles from its members is its own work
+> to price as it likes.
+
+**Why this ask exists.** The fourth test asks whether the app answers every expected level of
+government. Wisconsin's towns are a level: outside a city or village a TOWN is the
+general-purpose government, the app draws every one of them, and what it names there is the
+town CLERK, who administers rather than governs. The town BOARD — a chairperson and two or four
+supervisors — is named for no town in the state.
+
+**What was measured first, on 2026-10-01, before writing anything.** The state aggregates
+exactly one municipal officer, the clerk, through the Elections Commission, and that file is
+what the app already ships for all 1,847 municipalities. Nothing public pairs a town with its
+board. The League of Wisconsin Municipalities, which Ask 17 is drafted to, is the wrong body
+for this question: its membership is cities and villages, not towns. The Wisconsin Towns
+Association is the towns' own body, and `wisctowns.com` publishes no officer roster — a vendor
+directory and the association's own board of directors, and nothing naming any town's officers.
+
+**Why it is nevertheless likely to hold one.** The association's front page links a **Member
+Update Form**, which is how a membership body keeps a current contact for each member town. A
+body that collects officer updates from 1,250-odd towns almost certainly holds, somewhere, the
+very pairing this level needs. Whether it will share it, sell it, or decline is exactly what one
+reply settles.
+
+**Recipient.** `wtowns@wisctowns.com`, telephone (715) 526-3157 — the office mailbox the
+association's own Contact Us page publishes. Not a named individual: the question is about
+whether an organisation holds a dataset and on what terms, which belongs on a desk rather than
+on a person.
+
+**Measured before fetching.** `www.wisctowns.com` serves a 1,248-byte `robots.txt` and its
+binding group permits the pages read here, read with the same client that would crawl it. Note
+the host: `wisconsintowns.org` has no DNS record at all, which is the wrong spelling and was
+tried first.
+
+Draft:
+
+> Subject: districtry.com — is there a list of town board members?
+>
+> Dear Wisconsin Towns Association,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which units of
+> government cover a given address and who represents them there. Wisconsin's part of it is at
+> districtry.com/wi/, and it already draws every town, village and city in the state and names
+> each one's clerk, from the Elections Commission's own file.
+>
+> What it cannot do is name a town board. Click inside a town and the map tells a reader who the
+> clerk is, which is useful, but the clerk is not who governs — the chairperson and supervisors
+> are, and the map names them nowhere in Wisconsin. As far as I can tell nothing public pairs a
+> town with its board: the state aggregates only the clerk, and the League of Wisconsin
+> Municipalities covers cities and villages rather than towns.
+>
+> So my question is simply whether the Association holds such a list — each town with its
+> chairperson and supervisors — and if so, on what terms it could be used. I ask because your
+> site publishes a Member Update Form, which suggests you keep a current record for each member
+> town, and you are the towns' own organisation rather than a third party guessing at it.
+>
+> I should be plain about three things:
+>
+> 1. I am not asking for it free. Compiling and maintaining 1,200-odd records is real work and
+>    yours to price. If there is a licence fee or a members-only restriction, tell me what it is
+>    and I will either pay it or record that the data exists and is not available to me, which
+>    is a far more honest thing to tell a reader than silence.
+> 2. I would publish each board member's name and the town they serve, each credited to the
+>    Association as its source, with a link back to you. Nothing else — no personal addresses,
+>    no telephone numbers unless they are the town's own office line.
+> 3. A plain "no" is a genuinely useful answer and I will not follow it up. What I would do
+>    instead is record on the map that Wisconsin's town boards are not named, and why.
+>
+> If the answer is that no such list exists in one place, that is worth knowing too, and I would
+> be glad of a pointer to whoever would be closest — a county towns association, or a particular
+> county's clerk who keeps one for their own towns.
+>
+> Thank you for the work the Association does; a state where 1,200 small governments have a
+> common voice is better served than one where they do not.
+>
+> <YOUR NAME>
+> districtry.com
+> <YOUR E-MAIL>
+
+**What each answer means.**
+
+| answer | what it settles |
+|---|---|
+| "yes, here it is" / "yes, for a fee" | The level closes properly: a roster file, a weekly or annual refresh, and the Association credited on the card and the sources page. A fee is the operator's call. |
+| "members only" | The level closes with a RECORD rather than a layer, and a good one: the data exists, is held by a named body, and is not available on terms this project can meet. That is the measured absence the fourth test asks for. |
+| "no such list exists" | Also a record, and a stronger one than the measurement alone, because the towns' own organisation is the best-placed witness there could be. The pointer to a county-level keeper, if one comes, is the next ask. |
+| no reply after the follow-up cadence | `UNRESPONSIVE` in the ledger — a claim about the ask and never about the data. Follow up once at about three weeks, then once more, then record it. |
+
+**One thing deliberately not done.** No town was written to directly. There are roughly 1,250
+of them, most with a part-time clerk, and 1,250 letters to close one level is a cost borne by
+other people for this project's convenience. The Association is one letter to the body that
+exists precisely to answer for all of them, and if it says no then a sample of counties is the
+next step rather than a mailing.
+
+---
+
+## Ask wi-city-council-pages — five Wisconsin cities: may we read your council page?
+
+> **NOT YET ASKED — DRAFTED 2026-10-01.** Five near-identical letters, one per city. Each asks
+> permission to read a page the city already publishes to the public. Nothing is blocked that
+> this project is working around, nothing is currently being fetched from any of the five, and
+> no agent is renamed to get past anything.
+
+**Why these five and not the other sixteen.** Of Wisconsin's 21 general-purpose governments
+above 25,000 people that named no governing body on 2026-10-01: four were built the same day
+(Franklin, Greenfield, Muskego, West Bend), Oshkosh turned out to be open and elects at large,
+and eleven are readable and simply need their own small piece of work. These five are the only
+ones where the obstacle is the city's own answer to an automated reader, so they are the only
+ones where a record can substitute for a layer — and under the fourth test a record counts only
+after an ask has been refused, or sent with one follow-up and thirty days' silence.
+
+**What was measured, 2026-10-01, with the exact client that would crawl.**
+
+| city | 2020 population | what it answers |
+|---|---|---|
+| Beloit | 36,657 | `robots.txt` publishes `User-agent: * / Disallow: /` under six named crawlers that get narrow rules. The city's own file on the city's own host, so it binds fully. |
+| Janesville | 65,615 | HTTP 403 at the HOME page, not merely on `robots.txt` |
+| Wausau | 39,994 | HTTP 403 at the HOME page |
+| Wauwatosa | 48,387 | HTTP 403 at the HOME page |
+| Mequon | 25,129 | HTTP 403 at the HOME page |
+
+**The four 403s are a site-wide block that enforces itself**, which is #1271's own reading of why
+a 403 on `robots.txt` needed no strict treatment: a server refusing every path needs no policy
+rule to be effective. **None of the five was probed with a second client.** A host that refuses
+the first is not an invitation to try a richer one, and escalating to get a better answer is
+working around an access control rather than measuring one.
+
+**Recipients.** Each city's Clerk, from the Wisconsin Elections Commission's own directory,
+which this project already ships — so no refused site was read to find them:
+
+| city | clerk | telephone |
+|---|---|---|
+| Beloit | Rebecca Wallendal | 608-364-6682 |
+| Janesville | Lori Stottler | 608-755-3070 |
+| Mequon | Caroline Fochs | 262-236-2912 |
+| Wausau | Rachel Brown | 715-261-6622 |
+| Wauwatosa | Deyanira Nevarez | 414-479-8917 |
+
+**The Commission's directory carries no e-mail address for any of the five**, and the cities'
+own contact pages are behind the very block this ask is about, so each address has to be taken
+from the city's own site by the operator — who browses as a person, which all five sites serve
+perfectly well. That is a two-minute lookup and it is deliberately not automated here.
+
+Draft (one per city; `<CITY>`, `<CLERK>` and the bracketed clause are the only parts that change):
+
+> Subject: districtry.com — may we read the Common Council page automatically?
+>
+> Dear <CLERK>,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which units of
+> government cover a given address and who represents them there. Wisconsin's part of it is at
+> districtry.com/wi/. It draws every aldermanic district in <CITY> and, at the moment, names
+> nobody in them, which is the thing I am writing about.
+>
+> [For Beloit: Your website's robots.txt asks automated readers to stay off the whole site, and
+> I am following that request — this letter is not a complaint about it and I have not tried to
+> get around it.]
+> [For the other four: Your website turns away the sort of automated reader I use, on every
+> page rather than only on the rules file, and I have taken that as an answer rather than trying
+> a different disguise.]
+>
+> The page I would like to read is your Common Council page — the one that lists each
+> alderperson and their district. It is already public, and anyone with a browser can read it; I
+> am asking only whether a small program may read the same page about once a week so the names
+> on the map stay current when your council changes.
+>
+> Concretely, what that means: one request a week to one page, identifying itself plainly as
+> districtry, honouring whatever rules you publish. Nothing else on your site, no bulk download,
+> no attempt to reach anything that is not already public. The names appear on the map credited
+> to the City of <CITY> with a link back to your page.
+>
+> Three answers, any of which is genuinely useful:
+>
+> 1. **Yes.** A short note is all I need, and I will record it with the page.
+> 2. **Yes for that page only**, or by a different route — your open-data portal, a file you
+>    e-mail, whatever is least trouble for you. Naming it closes the question for good.
+> 3. **No.** Then I will record on the map that <CITY> does not name its council members here,
+>    and that the reason is a decision of the City's, which is a far more honest thing to tell a
+>    reader than silence. I will not ask again.
+>
+> If the block is not deliberate — some of these are a default setting on a web server rather
+> than anyone's decision — then whoever looks after the website would be the person to ask, and
+> I would be glad of the hand-off.
+>
+> Thank you for your time. Publishing a council list at all is more than some cities manage.
+>
+> <YOUR NAME>
+> districtry.com
+> <YOUR E-MAIL>
+
+**What each answer means.**
+
+| answer | what it settles |
+|---|---|
+| "yes" / "yes, this route" | That city joins the aldermanic roster on its next weekly run, with the permission recorded beside its scraper and the date it was given. |
+| "no" | The city tier closes for that unit with a RECORD, and a properly earned one: a measured block, a named ask, a dated refusal. That is exactly what the fourth test asks for. |
+| "that was not deliberate, talk to IT" | The best outcome, and likelier than it sounds for the four 403s. The hand-off becomes the ask. |
+| no reply | Follow up once at about three weeks. Thirty days of silence after that follow-up makes the record count, per the standard. A claim about the ask, never about the city. |
+
+**Two things deliberately not done.** No second client was tried against any of the five, for the
+reason above. And no third-party copy was sought — an archived or mirrored council page would
+answer the data question and sidestep the permission question entirely, which is the wrong way
+round.
+
+---
+
+## Ask wi-oshkosh-council — City of Oshkosh Clerk: our reader cannot reach your robots.txt
+
+> **NOT YET ASKED — DRAFTED 2026-10-01.** The only one of the 21 unnamed Wisconsin cities where
+> the obstacle is neither a refusal nor a page that needs a browser, but a connection this
+> project cannot complete and cannot explain. It asks one question and offers the city
+> something useful in return: the symptom, from two independent addresses, which a city's own
+> IT staff can act on and nobody outside the city can.
+
+**To:** City of Oshkosh, City Clerk's Office — Darla Salinas, City Clerk; (920) 236-5013
+**Subject:** Our automated reader cannot reach https://www.ci.oshkosh.wi.us/robots.txt
+
+**Why this ask exists.** Oshkosh publishes its Common Council on a public page and we would
+like to name those seven officials on a free, non-commercial map. Before reading any page on a
+site, this project reads that site's `robots.txt` and obeys it, and where that file cannot be
+read at all the rule we follow (RFC 9309 §2.3.1.4) says to treat the site as closed. So
+Oshkosh is the one city of the 21 that is not shut by anybody's decision and is not shipped
+either — and the ask is simply whether the city intends that, and whether it is something the
+city can see from its side.
+
+**What was measured first, and is stated in the ask so it does not read as a question somebody
+could have answered by searching.** Measured 2026-10-01 from two independent addresses with
+the same client that would do the reading:
+
+| Where | What happened |
+| --- | --- |
+| A sandboxed build environment | the TLS handshake fails with `UNEXPECTED_EOF_WHILE_READING`, unchanged over three attempts |
+| A GitHub Actions runner, which is where our weekly jobs run | `Connection reset by peer`, three reads fifteen seconds apart, every one |
+| `curl` from the same sandbox | completes, and returns the file |
+
+**The two symptoms are different and we do not claim to know what they share.** One fails
+inside the TLS handshake and the other at the socket; both sit below HTTP. What makes it worth
+writing about is the third row: a plain `curl` reaches the same server from the same address
+that the Python client cannot, so the server is not down and something about the connection is
+the variable. That is a difference the city's own staff or its hosting provider can see in a
+log and we cannot.
+
+**What is deliberately NOT asked and not done.** We do not ask for a rule to be changed in our
+favour, and we are not asking to be allowed past anything: if Oshkosh intends automated readers
+to be turned away, that is a complete answer and the city tells us so in one line. We did not
+try a different client, a browser user-agent, or a lowered TLS security level to get through —
+the first is not what this project does, and the last would be reading a site's permissions
+with a client we do not crawl with, which defeats the point of reading them. We did not take
+the council names from an archived or mirrored copy, which would answer the data question while
+sidestepping the permission question. And no named official is asked for anything personally;
+this is a question for whoever looks after the city's website.
+
+**Why even a no is useful and is said so plainly.** A no closes this for good and lets the
+record we show readers say that the city asked not to be read, rather than that we could not
+work out how. A yes costs the city nothing it has not already published.
+
+**What each answer means**
+
+| Answer | What happens |
+| --- | --- |
+| "Yes, read it" plus a fix or an explanation of the connection failure | the council page is read weekly and the seven officials are named on the card, exactly as five other Wisconsin municipalities already are |
+| "We do not want automated readers" | the city is recorded as having declined, with the date, and nothing is fetched from it again; under the fourth test that record stands in for the layer |
+| "We do not know why" | the symptom is recorded as measured from both addresses and unexplained, which is the honest state, and the city is not asked again |
+| No reply | followed up once after about three weeks, and once more after another two; thirty days' silence after that is recorded as the answer |
+
+---
+
 ## Ask ia-pottawattamie-tama-wright-boards — three Iowa counties: how many supervisors sit on the board, and who are they?
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** Three separate messages, one per county, each to

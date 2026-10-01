@@ -247,9 +247,9 @@
    ],
    "04": [
     {
-     "email": "jdougherty@blackriverfallswi.gov",
-     "name": "Justin Dougherty",
-     "phone": "(715) 896-1599"
+     "email": "bmiles@blackriverfallswi.gov",
+     "name": "Brenda Miles",
+     "phone": "(715) 896-0920"
     },
     {
      "email": "joel.busse@blackriverfallswi.gov",
@@ -392,6 +392,44 @@
   "seats": 5,
   "sourceUrl": "https://www.eauclairewi.gov/310/City-Council"
  },
+ "27300": {
+  "districts": 6,
+  "members": {
+   "01": [
+    {
+     "name": "Clarke Johnson"
+    }
+   ],
+   "02": [
+    {
+     "name": "Michelle Eichmann"
+    }
+   ],
+   "03": [
+    {
+     "name": "Yousef Hasan"
+    }
+   ],
+   "04": [
+    {
+     "name": "Mira Kresovic"
+    }
+   ],
+   "05": [
+    {
+     "name": "Nabil Salous"
+    }
+   ],
+   "06": [
+    {
+     "name": "Danelle Kenney"
+    }
+   ]
+  },
+  "municipality": "Franklin",
+  "seats": 6,
+  "sourceUrl": "https://www.franklinwi.gov/Departments/Elected-Officials/Common-Council.htm"
+ },
  "28875": {
   "districts": 4,
   "members": {
@@ -522,6 +560,44 @@
   "municipality": "Green Bay",
   "seats": 12,
   "sourceUrl": "https://www.greenbaywi.gov/m/directory"
+ },
+ "31175": {
+  "districts": 5,
+  "members": {
+   "01": [
+    {
+     "name": "Andrew Drzewiecki",
+     "url": "https://www.ci.greenfield.wi.us/directory.aspx?EID=235"
+    }
+   ],
+   "02": [
+    {
+     "name": "Bruce Bailey",
+     "url": "http://www.ci.greenfield.wi.us/directory.aspx?EID=113"
+    }
+   ],
+   "03": [
+    {
+     "name": "Karl Kastner",
+     "url": "http://www.ci.greenfield.wi.us/directory.aspx?EID=114"
+    }
+   ],
+   "04": [
+    {
+     "name": "Pamela Akers",
+     "url": "http://www.ci.greenfield.wi.us/directory.aspx?EID=115"
+    }
+   ],
+   "05": [
+    {
+     "name": "Shirley Saryan",
+     "url": "http://www.ci.greenfield.wi.us/directory.aspx?EID=119"
+    }
+   ]
+  },
+  "municipality": "Greenfield",
+  "seats": 5,
+  "sourceUrl": "https://www.ci.greenfield.wi.us/334/Common-Council"
  },
  "35750": {
   "districts": 3,
@@ -1143,6 +1219,49 @@
   "municipality": "Milwaukee",
   "seats": 15,
   "sourceUrl": "https://webapi.legistar.com/v1/milwaukee/officerecords?$filter=OfficeRecordBodyId%20eq%201&$top=1000"
+ },
+ "55275": {
+  "districts": 7,
+  "members": {
+   "01": [
+    {
+     "name": "Robert Wolfe"
+    }
+   ],
+   "02": [
+    {
+     "name": "Bob Hammel"
+    }
+   ],
+   "03": [
+    {
+     "name": "Doug Bellows"
+    }
+   ],
+   "04": [
+    {
+     "name": "Erica Bryce"
+    }
+   ],
+   "05": [
+    {
+     "name": "Deb Schroeder"
+    }
+   ],
+   "06": [
+    {
+     "name": "Tom Duelge"
+    }
+   ],
+   "07": [
+    {
+     "name": "Eileen Madden"
+    }
+   ]
+  },
+  "municipality": "Muskego",
+  "seats": 7,
+  "sourceUrl": "https://www.muskego.wi.gov/government/boards_commissions/common_council.php"
  },
  "55750": {
   "districts": 3,
@@ -2067,5 +2186,61 @@
   "municipality": "Wautoma",
   "seats": 6,
   "sourceUrl": "http://www.cityofwautoma.com/common-council"
+ },
+ "85350": {
+  "districts": 8,
+  "members": {
+   "01": [
+    {
+     "email": "district1@westbendwi.gov",
+     "name": "Travis Prindl"
+    }
+   ],
+   "02": [
+    {
+     "email": "district2@westbendwi.gov",
+     "name": "Rhett Engelking"
+    }
+   ],
+   "03": [
+    {
+     "email": "district3@westbendwi.gov",
+     "name": "Johnny Skidmore"
+    }
+   ],
+   "04": [
+    {
+     "email": "district4@westbendwi.gov",
+     "name": "Matt Sternig"
+    }
+   ],
+   "05": [
+    {
+     "email": "district5@westbendwi.gov",
+     "name": "Mary Beth Seiser"
+    }
+   ],
+   "06": [
+    {
+     "email": "district6@westbendwi.gov",
+     "name": "John Spartz"
+    }
+   ],
+   "07": [
+    {
+     "email": "district7@westbendwi.gov",
+     "name": "Justice Madl"
+    }
+   ],
+   "08": [
+    {
+     "email": "district8@westbendwi.gov",
+     "name": "Aaron Zingsheim"
+    }
+   ]
+  },
+  "municipality": "West Bend",
+  "seats": 8,
+  "sourceUrl": "https://www.westbendwi.gov/government/elected_officials/west_bend_common_council/index.php"
  }
 }

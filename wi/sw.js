@@ -310,6 +310,7 @@ const ROSTER_URLS = [
   "./data/app/wi-county-facts.json",
   "./data/app/wi-county-officers.json",
   "./data/app/wi-court-of-appeals-roster.json",
+  "./data/app/wi-municipal-boards.json",
   "./data/app/wi-municipal-clerks.json",
   "./data/app/wi-municipal-executives.json",
   "./data/app/wi-municipal-facts.json",

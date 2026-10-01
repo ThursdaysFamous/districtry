@@ -162,6 +162,29 @@ FLOORS = {
     # Every one of the seven has a mailbox and a direct phone; the floors are
     # that measured count less one, as everywhere above.
     "59250": ("Oconomowoc", 4, 7, 6, 6, 0),
+    # THE TRANCHE OF 2026-10-01 — the first chosen by what the done standard
+    # asks rather than by what happened to be readable. That test wants every
+    # general-purpose government above 25,000 people to name its governing body,
+    # Wisconsin named 14 of its 35, and these four are what the other 21 yielded:
+    # one alderperson per district in each, so `districts` and the named floor
+    # agree. The contact floors are this tranche's first measured run, and each
+    # zero is a field the page genuinely does not carry where this scrape reads
+    # rather than a column left unguarded:
+    #   Franklin   six names on the council page and no contact of any kind
+    #              beside them; the page routes contact through one shared form.
+    #   Greenfield five names, each linking its own entry in the city directory,
+    #              so the url floor is five and e-mail and phone are zero — the
+    #              addresses live one hop away on those entries, not here.
+    #   Muskego    seven names on one line each, no contact beside them.
+    #   West Bend  eight names each with the seat mailbox districtN@westbendwi.gov.
+    #              THE E-MAIL FLOOR IS THE FULL EIGHT RATHER THAN SEVEN, the
+    #              Sturgeon Bay precedent: an address built from the district
+    #              number cannot go blank for one member the way a typed one can,
+    #              so a drop to seven means the page changed and is worth failing.
+    "27300": ("Franklin", 6, 6, 0, 0, 0),
+    "31175": ("Greenfield", 5, 5, 0, 0, 5),
+    "55275": ("Muskego", 7, 7, 0, 0, 0),
+    "85350": ("West Bend", 8, 8, 8, 0, 0),
 }
 
 

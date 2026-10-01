@@ -1625,7 +1625,13 @@ ANSWERS = {
 CITY_ROSTERS = {
     # tag: (relative path, how the file's keys reach a Census place id)
     "il": [("il/data/app/municipal-officials.json", "geoid7")],
-    "wi": [("wi/data/app/wi-alderpersons.json", "place5")],
+    # TWO FILES FOR WISCONSIN BECAUSE THE STATE ELECTS TWO WAYS. The first is
+    # keyed by district; the second carries the municipalities that elect their
+    # whole board at large, where there is no district to key on. Counting only
+    # the first would read an at-large municipality as naming nobody, which is
+    # the shape a first triage of this tier got wrong.
+    "wi": [("wi/data/app/wi-alderpersons.json", "place5"),
+           ("wi/data/app/wi-municipal-boards.json", "geoid7")],
     "ia": [("ia/data/app/ia-city-officials.json", "geoid7"),
            ("ia/data/app/ia-county-city-officials.json", "geoid7")],
 }
