@@ -209,6 +209,28 @@ ALWAYS_ASKED = {
 }
 
 
+# A HOST A GAP RECORD NAMES AS THE NEXT SOURCE, which nothing fetches yet and
+# which this address cannot read. It is not in the inventory, because the
+# inventory is built from url literals in scrapers and no scraper reads it — and
+# that is exactly the ordering problem this probe exists to solve: the question
+# "would this host answer us" has to be settled BEFORE a scraper is written, not
+# after. A deferral is the wrong instrument, because `ROBOTS_DEFERRED_HOSTS`
+# LICENSES fetching a host without reading its policy, and nothing here wants to
+# fetch these at all yet.
+#
+# AN ENTRY LEAVES WHEN THE HOST ENTERS THE INVENTORY: once something fetches it,
+# it is an ordinary subject and a candidacy that outlived its answer would be a
+# second, quieter list of hosts to measure. `--check` fails on an entry the
+# inventory now carries, naming it, which is the `ACCEPTED_DROPS` property.
+CANDIDATE_HOSTS = {
+    "www.urbanaillinois.us":
+        "the only route to Urbana's council — Champaign County publishes no "
+        "municipal officials — and it resets every connection from a Claude "
+        "Code sandbox, robots.txt included, which is a reading of that address "
+        "rather than of the city (gap `urbana-city-council-names`)",
+}
+
+
 def subject(inventory):
     """Every host the tree fetches, which is what the robots question is about.
 
@@ -249,7 +271,19 @@ def subject(inventory):
     hosts = set(inventory)
     hosts.update(sc.ROBOTS_DEFERRED_HOSTS)
     hosts.update(ALWAYS_ASKED)
+    hosts.update(CANDIDATE_HOSTS)
     return sorted(hosts)
+
+
+def audit_candidates(inventory, fail):
+    """A candidacy ends when something fetches the host; say so rather than keep it."""
+    for host, why in sorted(CANDIDATE_HOSTS.items()):
+        if host in inventory:
+            fail("CANDIDATE_HOSTS still carries %s and the tree now fetches it "
+                 "— drop the entry; it is an ordinary subject now (%s)"
+                 % (host, why))
+        else:
+            print("  candidate %s — %s" % (host, why))
 
 
 def read_verdicts(path=MEASUREMENTS):
@@ -449,8 +483,10 @@ def check(args):
         return 0
     payload = json.load(open(args.out, encoding="utf-8"))
     rows = payload.get("hosts", {})
-    hosts = set(subject(ua.build_inventory()))
+    inventory = ua.build_inventory()
+    hosts = set(subject(inventory))
     problems = []
+    audit_candidates(inventory, problems.append)
     for host in sorted(set(rows) - hosts):
         problems.append("%s is in the record and nothing in the tree fetches it "
                         "— remove the entry" % host)
