@@ -37,6 +37,7 @@ import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
     UA_ROSTER_BOT,
     require_robots_once,
+    output_path,
 )
 
 SOURCE_URL = "https://www.carrollcountyil.gov/county_board/board_members.php"
@@ -112,7 +113,7 @@ def parse(page):
 
 
 def main():
-    out_path = sys.argv[1] if len(sys.argv) > 1 else "carroll_county_board_raw.json"
+    out_path = output_path("carroll_county_board_raw.json")
     require_robots_once(SOURCE_URL, HEADERS["User-Agent"], headers=HEADERS,
                         label="il-carroll-county-board-scraper")
     resp = requests.get(SOURCE_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT)

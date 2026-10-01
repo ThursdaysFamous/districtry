@@ -107,8 +107,8 @@ python3 scripts/validate_workflow_deps.py
 python3 scripts/validate_workflow_checkout.py             # a workflow that commits sitemap.xml checks out full history and does not re-shallow it
 python3 scripts/undeliverable.py                         # the shipped e-mail domains still resolve MX; the recorded dead ones are still dead
 python3 scripts/validate_skills.py                       # every skill's pointers resolve
-python3 scripts/validate_python_hygiene.py --selftest     # proves both checks below catch their defect AND pass its near-miss
-python3 scripts/validate_python_hygiene.py                # a name imported nowhere (Logan's missing `import os` filed a robots decline as an outage) and a dict key set twice (Python keeps the LAST, as PyYAML does)
+python3 scripts/validate_python_hygiene.py --selftest     # proves all four checks below catch their defect AND pass its near-miss
+python3 scripts/validate_python_hygiene.py                # a name imported nowhere (Logan's missing `import os` filed a robots decline as an outage), a dict key set twice (Python keeps the LAST, as PyYAML does), a shared module shadowing an instance's own copy, and a bare sys.argv[1] opened for writing (a `--help` run wrote a file called `--help`)
 python3 scripts/validate_arcgis_format.py                # no app asks ArcGIS for f=geojson
 node scripts/esri_rings_test.mjs                          # ring nesting, on fixtures
 node scripts/build_og_image.mjs --check                    # every surface's social card is the one the renderer wrote, labelled with its metros.json tag (provenance, not pixels)
