@@ -195,7 +195,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "995 cities and towns, which tile the state; villages sit inside towns and are their own layer",
       "source": {
         "answers": "Which city or town contains the point. Cities and towns together cover every part of New York's land with no gaps and no overlaps; a point out on Lake Erie, Lake Ontario or Long Island Sound is in neither.",
@@ -213,7 +213,7 @@
       "id": "village",
       "label": "Village",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 9,
       "rank_note": "532 villages, nested inside towns rather than beside them, so a point can be in both a village and its town",
       "source": {
         "answers": "Which village, if any, contains the point. A village is a government inside one or more towns, so a village address is also a town address.",
@@ -231,7 +231,7 @@
       "id": "borough",
       "label": "Borough / County",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 10,
       "rank_note": "5 counties — largest",
       "rank_comment": [
         "borough / judicial-district / BP / DA are the same 5 county polygons —",
@@ -270,7 +270,7 @@
       "id": "borough-president",
       "label": "Borough President",
       "group": "political",
-      "area_rank": 9,
+      "area_rank": 11,
       "source": {
         "answers": "Which Borough President's office covers this address.",
         "boundary": [
@@ -287,7 +287,7 @@
       "id": "district-attorney",
       "label": "District Attorney",
       "group": "political",
-      "area_rank": 10,
+      "area_rank": 12,
       "source": {
         "answers": "Which District Attorney's office covers this address.",
         "boundary": [
@@ -304,7 +304,7 @@
       "id": "congress",
       "label": "U.S. House District",
       "group": "political",
-      "area_rank": 11,
+      "area_rank": 13,
       "rank_note": "~13 in-city U.S. House districts",
       "source": {
         "answers": "Which U.S. House district covers this address, and who represents it.",
@@ -322,7 +322,7 @@
       "id": "municipal-court",
       "label": "Civil Court (Municipal Court) District",
       "group": "political",
-      "area_rank": 12,
+      "area_rank": 14,
       "rank_note": "28 Civil Court districts",
       "source": {
         "answers": "Which Civil (Municipal) Court district covers this address.",
@@ -340,7 +340,7 @@
       "id": "state-senate",
       "label": "NY State Senate District",
       "group": "political",
-      "area_rank": 13,
+      "area_rank": 15,
       "rank_note": "~26 in-city",
       "source": {
         "answers": "Which New York State Senate district covers this address, and who holds the seat.",
@@ -358,7 +358,7 @@
       "id": "school-district",
       "label": "Community School District",
       "group": "schools",
-      "area_rank": 14,
+      "area_rank": 16,
       "rank_note": "32 community school districts",
       "source": {
         "answers": "Which community school district this address is in.",
@@ -376,7 +376,7 @@
       "id": "cec",
       "label": "Community Education Council",
       "group": "schools",
-      "area_rank": 15,
+      "area_rank": 17,
       "rank_note": "same 32, drawn just after school-district",
       "source": {
         "answers": "Which Community Education Council serves this address.",
@@ -394,7 +394,7 @@
       "id": "fire-battalion",
       "label": "FDNY Battalion",
       "group": "safety",
-      "area_rank": 16,
+      "area_rank": 18,
       "rank_note": "49 FDNY battalions",
       "source": {
         "answers": "Which FDNY battalion covers this address.",
@@ -413,7 +413,7 @@
       "guide": { "href": "council-district.html", "text": "What Council district am I in?" },
       "label": "City Council District",
       "group": "political",
-      "area_rank": 17,
+      "area_rank": 19,
       "rank_note": "51 City Council districts",
       "source": {
         "answers": "Which City Council district covers this address, and who represents it.",
@@ -432,7 +432,7 @@
       "guide": { "href": "community-board.html", "text": "What community board am I in?" },
       "label": "Community District / Board",
       "group": "political",
-      "area_rank": 18,
+      "area_rank": 20,
       "rank_note": "59 community districts",
       "source": {
         "answers": "Which community district covers this address, and which community board advises on it.",
@@ -450,7 +450,7 @@
       "id": "election-district",
       "label": "Election District",
       "group": "political",
-      "area_rank": 19,
+      "area_rank": 21,
       "rank_comment": [
         "election-district (~4,200) sits just BEFORE its parent Assembly so the",
         "Assembly outline frames its fills (same rule as police-sector below)"
@@ -471,7 +471,7 @@
       "id": "state-assembly",
       "label": "NY State Assembly District",
       "group": "political",
-      "area_rank": 20,
+      "area_rank": 22,
       "rank_note": "~65 in-city",
       "source": {
         "answers": "Which New York State Assembly district covers this address, and who holds the seat.",
@@ -489,7 +489,7 @@
       "id": "police-sector",
       "label": "NYPD Sector",
       "group": "safety",
-      "area_rank": 21,
+      "area_rank": 23,
       "rank_note": "303 sectors — just before its parent precinct",
       "source": {
         "answers": "Which NYPD sector — the patrol area inside a precinct — covers this address.",
@@ -507,7 +507,7 @@
       "id": "police-precinct",
       "label": "NYPD Precinct",
       "group": "safety",
-      "area_rank": 22,
+      "area_rank": 24,
       "rank_note": "78 NYPD precincts",
       "source": {
         "answers": "Which NYPD precinct covers this address, and who commands it.",
@@ -525,7 +525,7 @@
       "id": "zip-code",
       "label": "ZIP Code (MODZCTA)",
       "group": "geography",
-      "area_rank": 24,
+      "area_rank": 26,
       "rank_note": "~178 MODZCTA",
       "source": {
         "answers": "Which Modified ZIP Code Tabulation Area contains this address.",
@@ -543,7 +543,7 @@
         "id": "nys-zip-code",
         "label": "ZIP Code",
         "group": "geography",
-        "area_rank": 23,
+        "area_rank": 25,
         "rank_note": "ZIP Code Tabulation Areas statewide; stands down inside New York City, where the city's own MODZCTA layer answers",
         "source": {
           "answers": "The Census Bureau's ZIP Code Tabulation Area covering this point, anywhere in New York State outside New York City.",
@@ -561,7 +561,7 @@
       "id": "neighborhood",
       "label": "Neighborhood (NTA)",
       "group": "geography",
-      "area_rank": 25,
+      "area_rank": 27,
       "rank_note": "~262 NTAs",
       "source": {
         "answers": "Which Neighborhood Tabulation Area contains this address.",
@@ -579,7 +579,7 @@
       "id": "hs-zone",
       "label": "High School Zone",
       "group": "schools",
-      "area_rank": 26,
+      "area_rank": 28,
       "rank_note": "high-school zones (sparse)",
       "source": {
         "answers": "Which zoned high school serves this address, where one does.",
@@ -597,7 +597,7 @@
       "id": "ms-zone",
       "label": "Middle School Zone",
       "group": "schools",
-      "area_rank": 27,
+      "area_rank": 29,
       "rank_note": "middle-school zones (partial)",
       "source": {
         "answers": "Which zoned middle school serves this address, where one does.",
@@ -615,7 +615,7 @@
       "id": "es-zone",
       "label": "Elementary School Zone",
       "group": "schools",
-      "area_rank": 28,
+      "area_rank": 30,
       "rank_note": "elementary zones — smallest polygon layer",
       "source": {
         "answers": "Which zoned elementary school serves this address.",
@@ -633,7 +633,7 @@
       "id": "school-site",
       "label": "School",
       "group": "schools",
-      "area_rank": 29,
+      "area_rank": 31,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The nearest school sites to this point, by straight-line distance, anywhere in New York State.",
@@ -651,7 +651,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 30,
+      "area_rank": 32,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The nearest police stations to this point, by straight-line distance.",
@@ -669,7 +669,7 @@
       "id": "fire-station",
       "label": "Fire Station",
       "group": "safety",
-      "area_rank": 31,
+      "area_rank": 33,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The nearest fire stations to this point, by straight-line distance, anywhere in New York State.",
@@ -687,7 +687,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 32,
+      "area_rank": 34,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The nearest post offices to this point, by straight-line distance, anywhere in New York State.",
@@ -705,7 +705,7 @@
       "id": "library",
       "label": "Library",
       "group": "geography",
-      "area_rank": 33,
+      "area_rank": 35,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The nearest public libraries to this point, by straight-line distance.",
@@ -727,7 +727,7 @@
         "id": "early-voting",
         "label": "Early Voting Site",
         "group": "political",
-        "area_rank": 34,
+        "area_rank": 36,
         "rank_note": "point marker — always topmost",
         "source": {
           "answers": "The nearest early-voting sites to this point for the current election, anywhere in New York State. It does not say which one is yours.",
@@ -745,7 +745,7 @@
       "id": "polling-place",
       "label": "Election Day Poll Site",
       "group": "political",
-      "area_rank": 35,
+      "area_rank": 37,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The Election Day poll sites nearest this point, by straight-line distance, anywhere in New York State. It does not say which one is yours.",
@@ -763,7 +763,7 @@
       "id": "county-legislature",
       "label": "County Legislature District",
       "group": "political",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "16 districts in Tompkins County today, each about half the area of an average New York town, so this sits between the cities-and-towns layer and the villages. The table grows one county at a time and only over counties that ELECT a legislature from districts: a board-of-supervisors county has no district to draw, because its seat is the town.",
       "source": {
         "answers": "Which county-legislature district contains the point, who represents it, and the district's own 2020 census population. Only counties that elect a legislature from single-member districts are in this layer; a New York county governed by a board of supervisors seats the towns' own supervisors, so there is no county district to draw and no card here.",
@@ -775,6 +775,42 @@
         ],
         "people": "Each district's legislator, party, e-mail, committees and \u2014 for the nine who publish one rather than the Legislature's switchboard \u2014 a direct telephone, scraped weekly from Tompkins County's own Legislature page and its own contact sheet. The boundary layer carries a member column and it is deliberately not read: the weekly run compares it and reports a disagreement instead.",
         "applies": "Tompkins County. The other 61 counties are not in this layer yet, and the five boroughs never will be \u2014 New York City absorbed its counties' government, so they have no legislature to answer for."
+      }
+    },
+    {
+      "id": "fire-district",
+      "label": "Fire District",
+      "group": "safety",
+      "area_rank": 8,
+      "rank_note": "45 fire districts in Sullivan County today, averaging about half the area of a New York town, so this sits between the county-legislature districts and the villages. The table grows one county at a time.",
+      "source": {
+        "answers": "Which fire district contains the point. Sullivan County's fire districts cover the whole county, so a point there is always in one; a point a few metres outside is on the seam where the state's drawing of the county and the county's own drawing disagree.",
+        "boundary": [
+          {
+            "label": "Sullivan County's own Special Districts map service, layer 7, credited by the county to its Real Property Services office and its ITS GIS Program \u2014 the register's per-municipality pieces unioned by district name and shipped with the app. New York State's own map server publishes no statutory special district, so this tier is reached county by county.",
+            "url": "https://gis.sullivanny.us/arcgis/rest/services/Special_Districts/MapServer/7"
+          }
+        ],
+        "people": "No roster is joined. A New York fire district is governed by five elected fire commissioners and a fire protection district by the town board, and nothing Sullivan County or the state publishes names either, so the card states the rule and names nobody.",
+        "applies": "Sullivan County. The other 61 counties are not in this layer yet."
+      }
+    },
+    {
+      "id": "library-district",
+      "label": "Library District",
+      "group": "geography",
+      "area_rank": 5,
+      "rank_note": "2 library districts in Sullivan County today, each larger than an average New York town, so this sits above the cities-and-towns layer. Most Sullivan towns have no library district and the layer says so rather than covering the county.",
+      "source": {
+        "answers": "Which library district contains the point, where one does. Only two are published in Sullivan County, covering about a fifth of it, so a point in the county is more often outside a library district than inside one.",
+        "boundary": [
+          {
+            "label": "Sullivan County's own Special Districts map service, layer 11, credited by the county to its Real Property Services office and its ITS GIS Program \u2014 the register's per-municipality pieces unioned by district name and shipped with the app.",
+            "url": "https://gis.sullivanny.us/arcgis/rest/services/Special_Districts/MapServer/11"
+          }
+        ],
+        "people": "No roster is joined. A New York library district's trustees are elected by the voters of the district, and nothing Sullivan County or the state publishes names them.",
+        "applies": "Sullivan County. The other 61 counties are not in this layer yet."
       }
     }],
   "min_register_layer": 5,
@@ -867,6 +903,24 @@
         "max_features": 1,
         "note": "Tompkins County sliced verbatim from ny-counties.json, so the county-legislature layer's coverage test and the county card cannot disagree about where Tompkins is \u2014 and what a Data gaps record needs in order to name this county.",
         "dynamic_reference": true
+      },
+      {
+        "file": "sullivan-fire-districts.json",
+        "min_features": 45,
+        "max_features": 45,
+        "note": "Sullivan County's 45 fire districts (ny/scripts/build_sullivan_special_districts.py), the county's own register unioned from its 58 per-municipality rows and simplified with Douglas-Peucker at a 10 m interval \u2014 about one step of the source's own median. The bounds are EXACT rather than a floor: a change in the count means the county has created or dissolved a district, which a person reads."
+      },
+      {
+        "file": "sullivan-library-districts.json",
+        "min_features": 2,
+        "max_features": 2,
+        "note": "Sullivan County's 2 library districts (same builder, same interval, simplified together with the fire districts so the two layers' shared edges are simplified once). Exact bounds for the same reason."
+      },
+      {
+        "file": "sullivan-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Sullivan County sliced verbatim from ny-counties.json, so the fire-district and library-district layers' coverage test and the county card cannot disagree about where Sullivan is."
       }],
     "rosters": [
       { "file": "nypd-precinct-info.json", "min_keys": 70,
@@ -888,7 +942,7 @@
       }]
   },
   "sw": {
-    "cache_name": "nyc-district-explorer-shell-v20",
+    "cache_name": "nyc-district-explorer-shell-v21",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",

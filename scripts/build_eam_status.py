@@ -1628,7 +1628,12 @@ ANSWERS = {
         "sub-county-government": OPEN,
         "school-boards-by-district": answers("cec"),
         "precincts": answers("election-district"),
-        "special-districts": OPEN,
+        # Sullivan County's own register, the first county in this tier. New
+        # York State's map server publishes not one statutory special district,
+        # so this level is reached county by county; the twelve other layers in
+        # Sullivan's service are tax-map assessment districts a town board
+        # governs, with no body of their own, so they are not governments.
+        "special-districts": answers("fire-district", "library-district"),
         "tribal-government": OPEN,
     },
     "ca": {
@@ -2101,6 +2106,13 @@ ASK_CREDIT_CASES = (
      "an answered ask means the data is obtainable, so the work is to use it"),
     ({"who": "County Clerk", "asked": "2026-06-01"}, False,
      "an ask with no outcome has not reached one of the standard's two states"),
+    ({"who": "County Clerk", "asked": "2026-06-01",
+      "outcome": "pending"}, False,
+     "a letter that is out and waiting earns nothing, whatever its date"),
+    ({"who": "County Clerk", "asked": "2026-01-01",
+      "followedUp": "2026-01-20", "outcome": "pending"}, False,
+     "and still nothing once the thirty days are long past: only the thread "
+     "writing `unresponsive` moves it, never the calendar"),
 )
 
 
@@ -2146,6 +2158,16 @@ def ask_credit(ask):
     if outcome == "answered":
         return False, ("the ask was answered, so this level is work to do "
                        "rather than a level to record")
+    if outcome == "pending":
+        # SENT AND WAITING, WHICH IS NOT ONE OF THE STANDARD'S TWO STATES. It
+        # earns nothing however old it is, and deliberately says so without
+        # arithmetic: reading the clock here would flip this record the morning
+        # the thirtieth day passed, with nothing edited. The clock is printed by
+        # `build_coverage_gaps.pending_ask_lines`, on stdout, where no committed
+        # byte depends on it.
+        return False, ("%s was asked on %s and has not answered; the record "
+                       "earns nothing until a thread writes the outcome"
+                       % (ask.get("who"), ask.get("asked")))
     return False, "ask outcome %r earns nothing" % outcome
 
 
