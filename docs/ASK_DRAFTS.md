@@ -907,6 +907,21 @@ route it there itself.
 
 ## Ask 8 — Iowa Secretary of State: a statewide list of city clerks
 
+> **SENT 2026-09-04 to `elections@sos.iowa.gov`**, subject "Is there a statewide list of Iowa
+> city clerks?". No reply on that thread as of 2026-10-01, so one follow-up is due and the
+> thirty-day silence mark falls on 2026-10-04.
+>
+> **THE SEND WAS RECORDED NOWHERE FOR TWENTY-SEVEN DAYS**, and it is worth saying how that
+> happened, because the failure is invisible from inside the repository. This file and the
+> `ia-municipal-officeholders` blocker both read `NOT YET ASKED — DRAFTED` until 2026-10-01,
+> when the operator's own sent folder was read and the message was sitting in it. Nothing was
+> wrong with the letter and nothing was wrong with the ledger's rules; what was missing is
+> that the rule says the send date is written on the day it goes, and the only person who can
+> write it is the one who sends. **A ledger entry that is wrong in the "still to do"
+> direction looks like pending work rather than an error**, so nobody counts the days, no
+> follow-up falls due, and the gap record goes on telling readers the office was never asked.
+> When an ask's clock matters, read the sent folder and not the ledger.
+
 **This is the ask Iowa never made, and Wisconsin's whole municipal tier rests on its
 counterpart.** Wisconsin ships a clerk for all 608 of its cities and villages because ONE
 publisher — the Wisconsin Elections Commission — holds all 1,848 municipalities in one file,
@@ -2845,11 +2860,97 @@ The Clerk's own named county address, so the name vouches for it.
 
 ## Ask 30 — twelve Iowa counties: which supervisor holds which district
 
-> **NOT YET ASKED — DRAFTED 2026-09-25.** Twelve separate messages, one per county, each to
-> that county's Auditor. On send, change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the
-> `ia-supervisor-district-seats` blocker in `docs/DATA_LAYER_GUIDEBOOK.md` AND in row 35 of
-> `ia/WATCH.md` — Iowa keeps the ledger in both, unlike Illinois. Record the date per county
-> if they go out on different days; twelve counties will not all answer at once.
+> **ASKED 2026-10-01 — ALL TWELVE. SEVEN ANSWERED THE SAME AFTERNOON, FOUR OF THEM WITHIN AN
+> HOUR, AND THREE OF THOSE SEVEN SHIP.**
+> Twelve separate messages, one per county, each to that county's Auditor, every one confirmed
+> in the operator's own sent folder: **Black Hawk, Calhoun, Cass, Dickinson, Guthrie, Ida, Lee,
+> Montgomery, Osceola, Palo Alto, Sioux and Washington**. A follow-up falls due for the five
+> still silent at about three weeks (2026-10-22) and the thirty-day silence mark at 2026-10-31:
+> **Black Hawk, Calhoun, Guthrie, Lee and Montgomery**. Cass and Palo Alto are
+> answered-and-pending and are not among them.
+>
+> **SEVEN REPLIES IN ONE AFTERNOON IS THE FINDING, not the three counties that shipped.** This
+> project spent weeks measuring the same two statewide files and then re-measuring county pages
+> that do not carry the join; one letter per auditor, sent once, answered more of this gap in
+> four hours than any sweep had. Use the same letter for the counties that remain and for the
+> other Iowa asks.
+>
+> * **Osceola — ANSWERED, and it ships.** Auditor Rochelle Van Tilburg, 2026-10-01, gave all
+>   five pairings in plain text. The county has left the gap record.
+> * **Dickinson — REFUSED, and only of the pairing.** Auditor Lori Pedersen, 2026-10-01, in
+>   full: `no`. That is the answer this letter asks for in as many words, so no follow-up goes
+>   out and the county stays in the gap record for a stated reason. It refuses the one question
+>   the letter put — which supervisor holds which district — and says nothing about whether the
+>   board is elected by district, which the state's own plan type already settles, or about any
+>   other question this project might put to the county. Reading a one-word refusal as wider
+>   than the question it answers is how a county comes to be written off for things it never
+>   declined.
+> * **Cass — ANSWERED, and waiting on one more exchange.** Auditor Kathy Somers, 2026-10-01,
+>   sent the district numbers with names as INLINE IMAGES plus a district-map PDF; the message's
+>   plain text carries none of it, and the Gmail connector available to these sessions lists an
+>   attachment and cannot fetch its bytes. Nothing is guessed from a filename. She has been asked
+>   to type the names out or confirm a reading of the image, so the county is
+>   **answered-and-pending**: the thirty-day clock does not apply to it and nothing ships until
+>   that answer is in.
+> * **Ida — ANSWERED, and it ships.** Auditor Kristy Gilbert, 2026-10-01, gave all three
+>   pairings in plain text. The county has left the gap record. It is also the reply that turned
+>   the name join into a gate: the county wrote `Devlun Whiteing` where the gated roster spells
+>   it `Devlun P. Whiteing`, so the table now holds each letter VERBATIM and the builder joins an
+>   unmatched name on a unique surname, prints every such join, and stops on an ambiguous one.
+>> * **Sioux — ANSWERED, and it ships.** The Auditor's office, 2026-10-01, sent a table headed
+>   `2026 Board of Supervisors` pairing all five names with their districts, in plain text. The
+>   county has left the gap record, and it is the one county where a letter is the only route
+>   there will ever be: its own host fronts robots.txt with a managed challenge, so no weekly run
+>   reads a page of that site. It exercises the name join a second time — the office wrote
+>   `Carl Vande Weerd` where the gated roster spells it `Carl L. Vande Weerd`.
+> * **Washington — ANSWERED by pointing at the county's own page, and it ships from that page
+>   rather than from the letter.** Auditor Tamera Stewart, 2026-10-01, gave the url of the board
+>   page that states each supervisor's district, plus a district-map PDF. So the weekly scraper
+>   reads it like any other county and the card cites the page. It took two fixes on this side,
+>   each of which had this project saying something false about the county: its menu is built by
+>   script, so the home page carries the word `supervisor` zero times and the board's link could
+>   never be found — now reached through the sitemap the host's own robots.txt declares — and the
+>   roster spells its chair `Jack Seward Jr.`, whose last token is the suffix, which the name
+>   reader took for a surname and then reported as the county naming no district.
+> * **Palo Alto — ANSWERED TWICE, and still held, on a DIFFERENT question from the one it
+>   started on.** Auditor Carmen Moser, 2026-10-01 at 15:38 UTC, sent two PDFs, both dated
+>   **2020**: a precinct letter and a supervisor-district letter. Asked whether a six-year-old
+>   letter still describes the board, she answered at 16:24 UTC, in full: `Yes. the 5
+>   supervisors are current. The documents are labeled 2020 due to redistricting, but both are
+>   current.` **THAT CLOSES THE CURRENCY QUESTION AND IS NOT THE THING THAT WAS BLOCKING.** The
+>   pairing itself is inside the PDF, and the Gmail connector available to these sessions lists
+>   an attachment and cannot fetch its bytes — so this project has still never read which
+>   supervisor holds which district here. The county's own host answers 202, an access control,
+>   so there is no page to read it off either. **NOTHING IS TAKEN FROM A FILENAME**, and the
+>   file is called `PaloAltoCoIA_SupDist_Letter_2020_SupNames.pdf`, which is exactly the
+>   temptation that rule exists for: an earlier version of this bullet said the letter named
+>   five people, which was read off its name rather than its contents. So the county is
+>   **answered-and-pending** alongside Cass, for the same mechanical reason and not for want of
+>   an answer: the five pairings have to reach this project as text, either typed out by the
+>   office or read out of the attachment by the operator, who can open it. The thirty-day clock
+>   does not apply.
+>
+> **ONE REPLY CAME IN ON A DIFFERENT ASK AND IS WORTH READING HERE.** Tama County Auditor Karen
+> Rohrs, 2026-10-01, named five supervisors with their districts 1 to 5 in plain text, answering
+> Ask `ia-pottawattamie-tama-wright-boards`. Nothing ships from it yet and the reason is the map
+> rather than the names: the shipped district layer draws THREE districts for Tama against the
+> five she names, so two supervisors would be placed in districts the map does not draw. It
+> settles the board's size and members and opens a narrower follow-up to the same auditor — the
+> county's current five-district map. **The reply sent in the operator's name says the entry
+> `will list all five supervisors along with their respective districts`, which the shipped map
+> cannot yet support**, so that follow-up matters to a promise already made.
+>
+> **THE FIRST WRITE-UP OF THIS SAID SEVEN SENT AND FIVE DRAFTED, AND IT WENT STALE INSIDE THE
+> HOUR.** The sent folder was read at 14:42–14:46 UTC and the other five went at 14:47, so a
+> reading taken minutes earlier was written down as the state of the mailbox. It cost more than
+> a wrong sentence: five counties were written to TWICE, at 14:47 and again at 14:53–14:54,
+> because this thread drafted letters the Letters thread had already prepared and both sets went
+> out. A sent-folder read is a snapshot, and in this project another session may be sending in
+> the same minutes — re-read it immediately before writing a ledger line, and check for an
+> existing draft before creating one.
+>
+> The ledger lives in the `ia-supervisor-district-seats` blocker in
+> `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps it in both, unlike Illinois.
 
 **This ask is twelve counties and not eighteen, and the narrowing is the point.** Of the
 eighteen in this record on 2026-09-24, six publish the supervisor-to-district join on their
@@ -2894,17 +2995,27 @@ could re-check and which only a person can.
 The recipient is each county's **Auditor**, Iowa's commissioner of elections under Iowa Code
 §47.2 and the office whose page publishes the district map — the same reasoning as Ask 14.
 
-**No auditor address exists anywhere in this repository, and the addresses that do exist are
-the wrong offices.** `ia-county-board-directory.json` carries county, plan, seats and a URL and
-no contact at all. `ia-county-officers.json` carries two to four verified addresses for every
-one of the twelve, but its keys are `countyAttorney`, `recorder`, `sheriff` and `treasurer`.
-Asking a Sheriff which supervisor holds District 3 is the wrong office.
+**CORRECTED 2026-10-01 — THE ADDRESSES ARE IN THIS REPOSITORY AND WERE WHEN THE SEVEN WENT
+OUT.** This section used to read "No auditor address exists anywhere in this repository, and
+the addresses that do exist are the wrong offices", and then set out, correctly for what it
+believed, why the twelve addresses had to be read off each county's site by a person at send.
+That was true of the two files it named — `ia-county-board-directory.json` carries county,
+plan, seats and a URL and no contact at all, and `ia-county-officers.json`'s keys are
+`countyAttorney`, `recorder`, `sheriff` and `treasurer`, so asking a Sheriff which supervisor
+holds District 3 is the wrong office. It was never true of the file that actually answers:
+**`ia/data/app/ia-county-auditors.json` carries a name, an office, a telephone and an e-mail
+for the auditor of all 99 counties**, and it is what `ia/scripts/ia_county_auditor_scraper.py`
+builds weekly.
 
-Iowa auditor mailboxes are patterned enough that one could be guessed, and **guessing is what
-this file exists to prevent**: a wrong address on an outbound ask is worse than no ask, the
-standard `docs/PRESS_LIST.md` already holds. So the addresses are read off each county's own
-site at send — twelve reads a person does in a browser in a few minutes, where this client can
-reach only six. That division is the honest one rather than a half-list of mixed provenance.
+**The seven addresses the operator sent to on 2026-10-01 match that file exactly, all seven**,
+which is what establishes it as the right source rather than an assumption about it. So the
+remaining five were drafted straight from it — Black Hawk (Karen Showalter), Calhoun (Jena
+Patzner), Cass (Kathy Somers), Dickinson (Lori Pedersen) and Guthrie (Dani Fink) — with no
+address guessed and none read off a page this client cannot reach. **The rule against guessing
+an address stands unchanged**; what was wrong here was a claim about this repository's own
+contents, which is the kind a search settles in one command and nobody ran. A sentence saying
+a fact is absent from the tree is a claim about the tree, and it goes stale the day a scraper
+ships the fact.
 
 ### Draft
 
@@ -2948,10 +3059,11 @@ reach only six. That division is the honest one rather than a half-list of mixed
 
 ## Ask 31 — Worth County Auditor: the city-officials page is published and empty
 
-> **NOT YET ASKED — DRAFTED 2026-09-25.** One message, to the Worth County Auditor. On send,
-> change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `ia-municipal-officeholders`
-> blocker in `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in
-> both, unlike Illinois.
+> **ASKED 2026-10-01**, to `auditor@worthcounty.org` under the subject "Your city officials
+> page" — confirmed in the operator's own sent folder on the day it went. One follow-up falls
+> due at about three weeks (2026-10-22) and the thirty-day silence mark at 2026-10-31. The
+> ledger lives in the `ia-municipal-officeholders` blocker in `docs/DATA_LAYER_GUIDEBOOK.md`
+> AND in `ia/WATCH.md` — Iowa keeps it in both, unlike Illinois.
 
 **This is a better-founded ask than the usual one, and the difference is worth stating.** The
 standard ask puts a question to a county that publishes nothing: would you send us a list. This
@@ -4783,11 +4895,25 @@ Subject: Wyoming City Council members on districtry.com: how would you like them
 
 ## Ask ia-pottawattamie-tama-wright-boards — three Iowa counties: how many supervisors sit on the board, and who are they?
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** Three separate messages, one per county, each to
-> that county's Auditor. On send, change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the
+> **ASKED 2026-10-01 — ALL THREE, AND TAMA ANSWERED THE SAME AFTERNOON.** Three separate
+> messages, one per county, each to that county's Auditor at the address
+> `ia/data/app/ia-county-auditors.json` carries, every one confirmed in the operator's own sent
+> folder: Tama (Karen Rohrs, 14:53:51 UTC), Wright (Amanda Meyer, 14:53:56) and Pottawattamie
+> (Mary Ann Hanusa, 14:54:03). The ledger is updated in the
 > `ia-supervisor-count-impossible` and `ia-supervisor-count-disagrees` blockers in
-> `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in both. Record
-> the date per county if they go out on different days.
+> `docs/DATA_LAYER_GUIDEBOOK.md` and in `ia/WATCH.md`, and both records now carry an `ask` block
+> reading `pending`. A follow-up falls due for the two still silent at about three weeks
+> (2026-10-22) and the thirty-day silence mark at 2026-10-31.
+>
+> **TAMA'S REPLY SPLIT THE RECORD IT CAME FROM.** Auditor Rohrs named five supervisors against
+> districts 1 to 5, which settles the board's size and its members and makes the statewide
+> directory's four the stale half — so Tama's question is answered and its card still names
+> nobody, because the map this project ships draws three districts for the county. That is a
+> different blocker from Pottawattamie's, which is a publisher's error plus a site this project
+> may not read, so Tama left `ia-supervisor-count-impossible` for a record of its own,
+> `ia-tama-supervisor-map`, and its follow-up is the ask of that name below. **A RECORD THAT
+> HOLDS TWO COUNTIES CANNOT STATE EITHER ONE'S STATE ONCE THEY DIVERGE**, and it cannot carry an
+> `ask` block at all, because that block names one desk.
 >
 > **THE NUMBER 34 IS CONTESTED AND MAY NOT BE THIS ASK'S.** Measured 2026-10-01: main's last
 > ask is 33, and three open branches each number their next one 34 — this one (#1331),
@@ -4837,6 +4963,56 @@ what the county itself reports.
 **Why a no is still useful.** A refusal, or thirty days of silence after one follow-up, lets
 the record that tells our readers what is missing say that the county was asked, which is the
 difference between a gap we have measured and a gap we have merely noticed.
+
+
+## Ask ia-tama-supervisor-map — Tama County Auditor: your county's current five-district map
+
+> **NOT YET ASKED — DRAFTED 2026-10-01**, to Tama County Auditor Karen Rohrs at the address
+> `ia/data/app/ia-county-auditors.json` carries for the county, which is the same address that
+> answered this project the same afternoon. One message. On send, change `NOT YET ASKED —
+> DRAFTED` to `ASKED <date>` in the `ia-tama-supervisor-map` blocker in
+> `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in both — and add
+> an `ask` block to that record reading `pending`.
+>
+> **THIS IS A FOLLOW-UP TO AN ANSWER, NOT TO SILENCE.** Auditor Rohrs answered
+> `ia-pottawattamie-tama-wright-boards` within the hour, in plain text, naming five supervisors
+> against districts 1 to 5. Nothing is wrong with that reply and nothing more is wanted from it.
+> The one thing between it and a card naming all five is a map: the statewide
+> supervisor-district layer this project ships draws **three** districts for Tama, so publishing
+> the five would seat two supervisors in districts no reader can be shown.
+>
+> **IT MATTERS TO A PROMISE ALREADY MADE.** The reply sent in the operator's name told her the
+> county's entry would list all five supervisors with their respective districts. The shipped
+> map cannot support that yet, so this letter is what makes that sentence true rather than
+> something that quietly went unkept.
+
+### What the app already has, and what it is missing
+
+* **Her five names and districts are in hand** and are not in doubt. This asks nothing about
+  them.
+* **Every other elected county office ships for Tama** — treasurer, recorder, sheriff, county
+  attorney and auditor.
+* **The supervisor card names the county and no supervisors**, and says in its own words that
+  the map it draws has three districts where the county elects from five.
+
+**What the ask says.** Thank you for the five names and districts, which answered the question
+completely. One thing on our side is still in the way: the statewide supervisor-district map we
+draw from, published by the Legislative Services Agency and dated January 2024, has three
+districts for Tama County rather than the five you named, so we cannot yet show a reader which
+of your five districts covers their address. Does the county have a current map of its five
+supervisor districts — a PDF, an image, a shapefile, or a description by township or precinct,
+whichever is easiest to send? Anything that says where the five district lines run would let us
+finish the entry.
+
+**What is deliberately not asked.** Nothing about reuse terms, because district boundaries are
+public record. Nothing about the telephone numbers, which is a separate reply already sent.
+Nothing is implied about the Legislative Services Agency being at fault — a map dated January
+2024 may simply predate a redistricting the county has since adopted, and the question is only
+what the lines are today.
+
+**Why a no is still useful.** If the county has no map of its own, saying so closes the
+question: it tells us the repair belongs with the state agency rather than with the county, and
+it lets the record that tells our readers what is missing say the county was asked.
 
 ---
 
