@@ -44,7 +44,7 @@ different thing from one it failed.
 | ky | **EAM·** | 120 | 120/120 § | 0 | 0 | by record | 7 | all | 3 of 13 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 615 | all | 55 | all | 7 of 13 levels |
 | mn | **EAM·** | 87 | 87/87 § | 0 | 0 | by record | 7 | all | 5 of 13 levels |
-| ny | **--M·** | — | — | 16 | 16 | — | 29 | all | 8 of 13 levels |
+| ny | **--M·** | — | — | 16 | 16 | — | 32 | all | 9 of 13 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,574 | all | 262 | all | 10 of 13 levels |
 
 § Examined in part by a record covering the whole state rather
@@ -142,12 +142,11 @@ this instance is in maintenance.
 - **E and A do not apply.** New York City — the instance's subject is the city, not the state's 62-county frontier. It does ship one county's legislature (Tompkins), which is reported below and not scored.
   The county roster it does ship is reported and not gated: 16 district(s), 16 people named.
   The mark therefore rests on Maintained alone.
-- **Under a WATCH.md plan (21):** re-checked on a stated cadence rather than by a job — `borough-boundaries.json`, `bronx-county-outline.json`, `brooklyn-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `judicial-districts.json`, `manhattan-county-outline.json`, `metro-outline.json`, `municipal-court-districts.json`, `ny-central-hs-districts.json`, `ny-cities-towns.json`, `ny-counties.json`, `ny-school-districts.json`, `ny-state-outline.json`, `ny-villages.json`, `queens-county-outline.json`, `state-assembly-districts.json`, `state-senate-districts.json`, `staten-island-county-outline.json`, `tompkins-county-outline.json`, `tompkins-legislature-districts.json`
-- **Covered: no.** 5 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 1 of 62 counties name a governing body
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 1 of 104 units at 25,000+ name a governing body; unanswered: Albany city, Amherst town, Auburn city, Babylon town, Bethlehem town, Binghamton city, Brighton town, Brookhaven town and 95 more
+- **Under a WATCH.md plan (24):** re-checked on a stated cadence rather than by a job — `borough-boundaries.json`, `bronx-county-outline.json`, `brooklyn-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `judicial-districts.json`, `manhattan-county-outline.json`, `metro-outline.json`, `municipal-court-districts.json`, `ny-central-hs-districts.json`, `ny-cities-towns.json`, `ny-counties.json`, `ny-school-districts.json`, `ny-state-outline.json`, `ny-villages.json`, `queens-county-outline.json`, `state-assembly-districts.json`, `state-senate-districts.json`, `staten-island-county-outline.json`, `sullivan-county-outline.json`, `sullivan-fire-districts.json`, `sullivan-library-districts.json`, `tompkins-county-outline.json`, `tompkins-legislature-districts.json`
+- **Covered: no.** 4 of the 13 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
+  - **4. The county governing body, in every county of the state** — open. 1 of 62 counties name a governing body. A record declares this level and earns nothing: `ny-county-governing-body` — no ask recorded, so it covers nothing yet under the standard
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 1 of 104 units at 25,000+ name a governing body; unanswered: Albany city, Amherst town, Auburn city, Babylon town, Bethlehem town, Binghamton city, Brighton town, Brookhaven town and 95 more. A record declares this level and earns nothing: `ny-local-governing-body` — no ask recorded, so it covers nothing yet under the standard
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
-  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
   - **13. Tribal governments** — open (required only where the state has the level)
 
 ### wi — EAM·
