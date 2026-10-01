@@ -307,6 +307,23 @@ LOCAL_COMPOSITION = {
         # problem — its page numbers 1-5 where LTSB keys 41-45, with nothing
         # witnessing the correspondence. Berlin has an anchor that agrees;
         # Waupaca has a visible mismatch.
+        #
+        # THAT MISMATCH WAS MEASURED ON 2026-10-01 AND IS NOT WAUPACA'S ALONE.
+        # Four of the state's 159 built municipalities key their districts
+        # somewhere other than 01 upward — Manawa 11-13, Waupaca 41-45,
+        # Weyauwega 51-53, Marion 01/21/22/23 — and every other one, including
+        # Clintonville in the same county, runs 01 upward with no gap. Three of
+        # the four were read and all three number from one: Waupaca's council
+        # page lists District 1 to District 5 with their wards, Manawa's names
+        # 1st/2nd/3rd Ward alderpersons, Weyauwega's names Aldermanic District
+        # One/Two/Three. Marion's site refuses this client (robots.txt
+        # `Disallow: /`), so its council size is unread, and its `01` is the
+        # SHAWANO COUNTY part of the city — measured against TIGERweb, not
+        # inferred: `01` lies in Shawano, `21`-`23` in Waupaca, and `01` sits
+        # north of all three and overlaps none. So the two counties file one
+        # city's wards in two schemes and the dissolve reads that as a fourth
+        # district. Nothing is relabelled here yet: the card prints
+        # parseInt(ALDERID), so a change is reader-visible. See wi/WATCH.md.
         "balance": 12.55,
     },
     "22575": {
