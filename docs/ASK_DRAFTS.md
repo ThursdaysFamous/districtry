@@ -96,6 +96,16 @@ Whatever makes that letter easy to answer — it names what the site already has
 what it will not guess, and says a one-line no is a complete answer — is worth copying
 into the asks that have been waiting for weeks.
 
+**The New York state letter at the foot of the table went the same afternoon, at 16:09 UTC,
+after that count was taken, and the count above is deliberately left at thirty-six.** That
+figure is a measurement of which sent messages are project letters, and the sent folder holds
+the operator's ordinary mail beside them, so adding one to it is arithmetic on somebody else's
+reading rather than a reading of the folder — which is the correction this file already records
+going wrong twice. The New York letter is in the table because its own message was read; the
+total is not restated because it was not re-measured. It was also found by searching the sent
+folder for its own address before a duplicate was drafted, which is the rule this section opens
+with, working as intended.
+
 | recipient | letter | prior contact | reply |
 |---|---|---|---|
 | Worth County Auditor (IA) | city officials page | none | — |
@@ -122,6 +132,7 @@ into the asks that have been waiting for weeks.
 | Chillicothe, West Peoria, Galva city clerks (IL) | ward boundaries | none | — |
 | Oklahoma State Election Board | precinct maps in the CSA Data Warehouse | none | — |
 | Cherokee Nation Election Commission | council district maps | none | — |
+| NYS Dept of State, Division of Local Government Services, cc the Comptroller's local-government division | is there a directory of local elected officials | none | — |
 
 **Four of those were sent twice**, six or seven minutes apart, because two sessions
 drafted the same letter from the same source and both copies went: Black Hawk, Cass,
@@ -3227,12 +3238,23 @@ may already publish would be asking them to do work this project should be doing
 
 ## Ask 33 — New York State: is there a directory of local elected officials?
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** This is the one ask that belongs to the STATE
-> rather than to 57 county clerks and a hundred town clerks, and it is drafted first for
-> that reason: if the answer is yes, a single file closes most of New York's county and
-> local tiers, and a hundred and sixty separate asks were never the right opening move.
-> It is also the cheapest possible ask — one question, one reply, and a clean no is worth
-> as much as a yes because it settles the route for good.
+> **ASKED 2026-10-01**, to the address and cc below, and read off the sent folder rather
+> than off this file. This is the one ask that belongs to the STATE rather than to 57
+> county clerks and a hundred town clerks, which is why it went first: if the answer is
+> yes, a single file closes most of New York's county and local tiers, and a hundred and
+> sixty separate asks were never the right opening move. It is also the cheapest possible
+> ask — one question, one reply, and a clean no is worth as much as a yes because it
+> settles the route for good.
+>
+> **The operator shortened the letter before sending it, and the sent wording is what was
+> asked.** It keeps the three things a reply has to be read against: the question itself,
+> naming the same four kinds of officeholder; the statement that the catalogue, the
+> Comptroller's pages and the county sites were all looked at first; and all three
+> acceptable answers — it exists, it exists and cannot be released, it does not exist. It
+> drops the specific measurements (the five-way catalogue search, 43 of 57 county sites
+> answering) and the sentence saying nothing is being asked about reuse terms. That second
+> omission is the one to watch: a reply that raises licensing is answering a question the
+> sent letter did not disclaim, so it is new ground rather than a refusal.
 
 **To:** New York State Department of State, Division of Local Government Services —
 `localgov@dos.ny.gov`
@@ -3265,6 +3287,69 @@ say the state does not publish it rather than that we did not find it.
 there is nothing yet to license. No individual is named. And no county or town is named,
 because this is a question about whether a statewide product exists, not a complaint about
 any local government's website.
+
+**The letter as drafted.** The operator shortened it before sending; the status note
+above says what the sent version keeps and drops, and the sent folder carries its words.
+
+> Subject: Is there a published directory of local elected officials in New York?
+>
+> Dear Division of Local Government Services,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which civic
+> districts cover a given address and who represents them there. New York is one of eight
+> states it answers for, at districtry.com/ny/.
+>
+> Inside New York City it names the Council Member, the borough officials and the community
+> education council for a point. Outside the city it draws the county, the city, town or
+> village, the school district and the legislative districts, and for almost all of that
+> ground it can name nobody, so a reader is told which county and town they live in and not
+> who governs either.
+>
+> My question is simply whether the Department, or the Comptroller's office, holds a
+> directory of the people currently holding local elective office — county legislators and
+> supervisors, city council members, town board members and village trustees — in any form,
+> including one that is not on the open-data portal.
+>
+> I looked before writing, so this is not a question you could answer by pointing me at a
+> search. The state open-data catalogue returns code-enforcement officials, grant awards,
+> lobbying filings and four directories of local government WEBSITES, and no list of
+> officeholders. The Comptroller's local-government pages publish financial filings and a
+> guide for newly elected officials. I have read the website your own county table publishes
+> for each of the 57 counties outside the city, and 43 of them answered.
+>
+> A no is as useful to me as a yes, and I would rather have it than keep looking. It means
+> the route is each county and each town one at a time, which is the work this project is
+> already doing in Illinois, and it lets the notes that tell our readers what is missing say
+> that the state does not publish it rather than that we did not find it.
+>
+> If a directory exists but is not something you can share, that is an answer too and I will
+> record it as such and not ask again.
+>
+> I am not asking about reuse terms or licensing, because there is nothing yet to license. If
+> there is a directory, I will come back about that separately.
+>
+> Thank you,
+>
+> <YOUR NAME>
+> districtry.com
+> <YOUR E-MAIL>
+
+**What each answer means.**
+
+| answer | what it settles |
+|---|---|
+| "yes, here it is" | The statewide route opens and most of New York's county, local and sub-county tiers close from one file. The three gap records come down to whatever the file does not carry. |
+| "it exists and we cannot share it" | `REFUSED` in the ledger, which counts straight away: the three gap records stand with the state's own answer as the reason, and the route goes county by county. |
+| "no such directory exists" | The best possible no. The statewide route closes for good, the records say the state does not publish it rather than that we did not find it, and nobody re-asks this in a year. |
+| "ask the counties and towns" | The same as the above in practice, and it also tells us which desk each one is, which is worth having before 160 letters. |
+| no reply after the follow-up cadence | `UNRESPONSIVE` in the ledger, thirty days after one follow-up — a claim about the ask and never about the state. |
+
+**Three things deliberately left out.** No individual is named, at either office. No county or
+town is named, because this is a question about whether a statewide product exists and not a
+complaint about any local government's website. And nothing is asked about the fourteen county
+sites that would not answer this project: those readings were taken in a sandbox whose own
+network accounts for most of them, and the fleet's rule is to re-measure from the build machine
+before writing any publisher off.
 
 ## Ask il-five-counties-commissioner-roster — five Illinois county clerks: who holds the commissioner seats?
 
