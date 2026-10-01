@@ -565,29 +565,33 @@ SHAPE_CASES = (
 # failing two bars when it is answering the only one it has, and `is_done` has to
 # treat the dash as satisfied or no city instance could ever be done.
 MARK_CASES = (
-    (True, True, True, "EAM", True, "every bar met"),
-    (True, True, False, "EA\u00b7", False, "Wisconsin today — M outstanding"),
-    (False, True, True, "\u00b7AM", False, "a tranche landed without records"),
-    (None, None, True, "--M", True,
-     "a city instance: E and A are the wrong question, so the mark rests on M"),
-    (None, None, False, "--\u00b7", False,
-     "New York and San Francisco today"),
-    (None, True, True, "-AM", True, "mixed, for completeness"),
+    (True, True, True, True, "EAMC", True, "every bar met"),
+    (True, True, False, True, "EA\u00b7C", False, "M outstanding"),
+    (False, True, True, True, "\u00b7AMC", False,
+     "a tranche landed without records"),
+    (True, True, True, False, "EAM\u00b7", False,
+     "every state today: the fourth test is the one nothing passes yet"),
+    (None, None, True, False, "--M\u00b7", False,
+     "a city instance: E and A are the wrong question, and C is still a bar"),
+    (None, None, True, True, "--MC", True,
+     "a city instance with every test it is asked met"),
+    (None, None, False, False, "--\u00b7\u00b7", False, "nothing met"),
+    (None, True, True, True, "-AMC", True, "mixed, for completeness"),
 )
 
 
 def check_marks():
     bad = 0
-    for E_, A_, M_, want, want_done, why in MARK_CASES:
-        row = {"E": E_, "A": A_, "M": M_}
+    for E_, A_, M_, C_, want, want_done, why in MARK_CASES:
+        row = {"E": E_, "A": A_, "M": M_, "C": C_}
         got, got_done = letters(row), is_done(row)
         if got != want or got_done != want_done:
             bad += 1
-            print("  MARK  E=%-5s A=%-5s M=%-5s want=%s/%s got=%s/%s  (%s)"
-                  % (E_, A_, M_, want, want_done, got, got_done, why))
+            print("  MARK  E=%-5s A=%-5s M=%-5s C=%-5s want=%s/%s got=%s/%s  (%s)"
+                  % (E_, A_, M_, C_, want, want_done, got, got_done, why))
     print("  MARK  %d mark case(s), %d done / %d not"
-          % (len(MARK_CASES), sum(1 for c in MARK_CASES if c[4]),
-             sum(1 for c in MARK_CASES if not c[4])))
+          % (len(MARK_CASES), sum(1 for c in MARK_CASES if c[5]),
+             sum(1 for c in MARK_CASES if not c[5])))
     return bad
 
 
@@ -665,7 +669,7 @@ def selftest():
     fifth correction was the classifier, so the classifier gets one.
     """
     bad = check_marks() + check_live_fleet() + check_name_shapes()
-    bad += check_watch_tables()
+    bad += check_watch_tables() + check_named_unit()
     for head, want, why in HEADER_CASES:
         got = is_schedule_table([head])
         if got != want:
@@ -701,9 +705,10 @@ def selftest():
         fail("%d case(s) failed" % bad)
     print("build-eam-status: selftest OK — %d shape case(s), %d cadence cell(s), "
           "%d table header(s), %d watch row(s), %d mark case(s), "
-          "%d name-value case(s)"
+          "%d name-value case(s), %d unit-roster case(s)"
           % (len(SHAPE_CASES), len(WHEN_CASES), len(HEADER_CASES),
-             len(WATCH_TABLE_CASES), len(MARK_CASES), len(NAME_SHAPE_CASES)))
+             len(WATCH_TABLE_CASES), len(MARK_CASES), len(NAME_SHAPE_CASES),
+             len(NAMED_UNIT_CASES)))
 
 
 def check_geometry_names_nobody():
@@ -1259,11 +1264,606 @@ def prefix_classes(tag):
     return out
 
 
+# ---- the fourth test: COVERED --------------------------------------------
+#
+# Settled with Adam on 2026-10-01 and specified in `docs/DONE_STANDARD.md`,
+# which is the rule of record; this is its implementation and takes its rules
+# from that document. An app is Covered when it answers every level of
+# government it is expected to answer, or carries a measured record of why it
+# cannot.
+#
+# WHAT THIS SCORES IS WHETHER WE DID THE WORK, NOT WHETHER THE DATA EXISTS,
+# which is the whole reason coverage was kept out of the standard in September
+# and the reason it can be let back in now. A level no publisher offers, that we
+# asked about and were refused, counts as covered; a level nobody has looked at
+# does not. So a county clerk cannot fail an app — only we can.
+#
+# THE EXPECTED LIST IS ONE LIST FOR EVERY STATE and the entries are FUNCTIONS,
+# not layer names: a county governing body is a board in Illinois and Wisconsin,
+# supervisors in Iowa, commissioners in Michigan, a fiscal court in Kentucky, a
+# legislature in New York. Each instance maps its own layers onto the function.
+#
+# WHY THE MAP IS DECLARED RATHER THAN DERIVED. Nothing in the tree says that a
+# technical college district is a special district the state's law creates and a
+# post office is not a government at all; no pattern over layer ids can tell
+# them apart, and one that tried would be guessing in a report whose subject is
+# honesty. So the map is stated, and two guards keep a stated map from rotting:
+# every layer id it names must exist in that instance's own worksheet, so a
+# rename fails the build; and every registered layer it does NOT name is printed
+# on every run, so a layer that answers an expected function cannot sit
+# unclaimed without somebody seeing it.
+FUNCTIONS = (
+    # number, key, title, required in every state
+    (1, "us-house", "The U.S. House seat", True),
+    (2, "state-legislature", "Both chambers of the state legislature", True),
+    (3, "county-boundaries", "County boundaries", True),
+    (4, "county-government",
+     "The county governing body, in every county of the state", True),
+    (5, "municipal-boundaries", "Municipal boundaries", True),
+    (6, "local-government",
+     "The governing body of every general-purpose local government "
+     "above 25,000 people", True),
+    (7, "school-district-boundaries", "School district boundaries", True),
+    (8, "courts-by-district",
+     "Courts whose judges are elected by district", False),
+    (9, "sub-county-government",
+     "Townships or other general-purpose sub-county governments", False),
+    (10, "school-boards-by-district",
+     "School boards elected by district", False),
+    (11, "precincts", "Election precincts", False),
+    (12, "special-districts",
+     "Special districts the state's own law creates", False),
+    (13, "tribal-government", "Tribal governments", False),
+)
+
+# Two entries have a SIZE in them rather than a layer, so they are measured
+# against the state's own county list and against the committed population
+# measurement rather than read off a map of layer ids.
+class Entry(object):
+    """How one instance stands on one expected function.
+
+    `verdict` is one of:
+      answered   the app answers it, and `layers` names what does
+      depth      it has a size in it, so it is measured; `layers` names what
+                 the app draws towards it, which the unclaimed-layer print needs
+      open       nothing answers it yet — work to do, or a record to write
+      unsettled  the standard leaves a question to that state's thread, and
+                 nothing here measured it, so it is neither passed nor failed
+                 quietly: it is printed as the question it is
+      na         the function does not apply to this instance, reason stated
+    """
+
+    def __init__(self, verdict, layers=(), reason=None):
+        self.verdict = verdict
+        self.layers = tuple(layers)
+        self.reason = reason
+
+
+def answers(*layer_ids):
+    return Entry("answered", layer_ids)
+
+
+def depth(*layer_ids):
+    return Entry("depth", layer_ids)
+
+
+def na(reason):
+    return Entry("na", reason=reason)
+
+
+OPEN = Entry("open")
+UNSETTLED = Entry("unsettled")
+
+
+CITY_INSTANCE = ("San Francisco is one city, so its city tier is the whole app "
+                 "and the state tiers above it are another app's subject.")
+
+# Per instance, what answers each expected function. A tuple names the layer
+# ids; `depth(...)` is measured; OPEN is nothing yet; UNSETTLED is a question the
+# standard leaves to that state's thread.
+ANSWERS = {
+    "il": {
+        "us-house": answers("congress"),
+        "state-legislature": answers("il-senate", "il-house"),
+        "county-boundaries": answers("county"),
+        "county-government": depth("county-board"),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth("ward"),
+        "school-district-boundaries": answers("school-district-unified", "school-district-elementary", "school-district-secondary"),
+        # Illinois elects its circuit judges from subcircuits in nine counties.
+        "courts-by-district": answers("judicial-subcircuit"),
+        # Illinois townships are limited purpose, which is why they are NOT in
+        # the 25,000 city tier above; they are owed here, and the app draws them
+        # and names Cook's township boards.
+        "sub-county-government": answers("township"),
+        "school-boards-by-district": answers("school-board"),
+        "precincts": answers("county-precinct", "ward-precinct"),
+        "special-districts": answers("fire-district", "park-district", "library-district", "mwrd", "ssa"),
+        "tribal-government": OPEN,
+    },
+    "wi": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("wi-senate", "wi-assembly"),
+        "county-boundaries": answers("county"),
+        "county-government": depth("county-board"),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth("aldermanic-district"),
+        "school-district-boundaries": answers("school-district-unified", "school-district-elementary", "school-district-secondary"),
+        "courts-by-district": answers("wi-circuit-court", "wi-court-of-appeals"),
+        # A Wisconsin town IS the general-purpose government outside a village
+        # or city, and the app draws it — but what it names there is the town
+        # CLERK, who does not govern. The standard's test is that a reader is
+        # told who governs the point, so this is open rather than answered, and
+        # `town-clerks-*.json` is named here as what was considered.
+        "sub-county-government": OPEN,
+        "school-boards-by-district": answers("mps-school-board"),
+        "precincts": answers("ward"),
+        "special-districts": answers("wtcs-district", "tid-district"),
+        "tribal-government": OPEN,
+    },
+    "ia": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ia-senate", "ia-house"),
+        "county-boundaries": answers("county"),
+        "county-government": depth("county-supervisor"),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth("city-ward"),
+        "school-district-boundaries": answers("school-district-unified"),
+        "courts-by-district": answers("ia-judicial-district"),
+        # Iowa townships are limited purpose and none reaches the city floor.
+        # Nothing draws a township government, so this is open.
+        "sub-county-government": OPEN,
+        "school-boards-by-district": answers("school-director-district"),
+        "precincts": answers("precinct"),
+        "special-districts": answers("community-college", "cc-director-district", "iowa-aea"),
+        "tribal-government": OPEN,
+    },
+    "mi": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("mi-senate", "mi-house"),
+        "county-boundaries": answers("county"),
+        "county-government": depth("county-commissioner"),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth("city-ward"),
+        "school-district-boundaries": answers("school-district-unified", "school-district-elementary"),
+        # The standard says Michigan ships no such layer and that whether it
+        # elects judges by district is the Michigan thread's to confirm.
+        "courts-by-district": UNSETTLED,
+        # A Michigan township governs everyone outside a village or city, so
+        # the 34 that clear 25,000 are already owed under the city tier; the
+        # rest are owed here. The app draws them and names no township board.
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": answers("precinct"),
+        "special-districts": OPEN,
+        "tribal-government": OPEN,
+    },
+    "mn": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("mn-senate", "mn-house"),
+        "county-boundaries": answers("county"),
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        "school-district-boundaries": answers("school-district-unified", "school-district-elementary", "school-district-secondary"),
+        "courts-by-district": UNSETTLED,
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": OPEN,
+    },
+    "ky": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ky-senate", "ky-house"),
+        "county-boundaries": answers("county"),
+        "county-government": depth(),
+        "municipal-boundaries": OPEN,
+        "local-government": depth(),
+        "school-district-boundaries": OPEN,
+        "courts-by-district": UNSETTLED,
+        # Kentucky has no township tier at all, which is the standard's "the
+        # state does not have the level" case — but that is covered by a RECORD
+        # stating the fact, and no record states it yet.
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": OPEN,
+    },
+    "ny": {
+        "us-house": answers("congress"),
+        "state-legislature": answers("state-senate", "state-assembly"),
+        "county-boundaries": answers("county", "borough"),
+        "county-government": depth("county-legislature"),
+        "municipal-boundaries": answers("municipality", "village"),
+        "local-government": depth("council"),
+        "school-district-boundaries": answers("nys-school-district", "nys-central-hs-district"),
+        "courts-by-district": answers("judicial-district", "municipal-court"),
+        # A New York town governs everyone outside a village or city, so the 67
+        # that clear 25,000 are owed under the city tier; the rest are owed
+        # here. The app draws towns and names no town board.
+        "sub-county-government": OPEN,
+        "school-boards-by-district": answers("cec"),
+        "precincts": answers("election-district"),
+        "special-districts": OPEN,
+        "tribal-government": OPEN,
+    },
+    "ca": {
+        "us-house": answers("congress"),
+        "state-legislature": answers("ca-senate", "ca-assembly"),
+        "county-boundaries": na(CITY_INSTANCE),
+        # San Francisco's Board of Supervisors is both the county governing body
+        # and the city council, drawn by district and named.
+        "county-government": answers("supervisor-district"),
+        "municipal-boundaries": na(CITY_INSTANCE),
+        # Its city tier is one city, and the same board is its council,
+        # drawn by district and named, so there is no size to measure.
+        "local-government": answers("supervisor-district"),
+        "school-district-boundaries": na(CITY_INSTANCE),
+        "courts-by-district": UNSETTLED,
+        "sub-county-government": na(CITY_INSTANCE),
+        "school-boards-by-district": UNSETTLED,
+        "precincts": answers("election-precinct"),
+        "special-districts": answers("bart-director"),
+        "tribal-government": OPEN,
+    },
+}
+
+# What names the governing body of each 25,000+ unit the app answers, and what
+# the join is keyed on. A keyed roster is joined by the unit's own Census id; an
+# instance that publishes one file per city declares the unit instead, because a
+# filename is not a key.
+#
+# A city is answered when a reader clicking inside it is told who governs that
+# point. Where the council elects by district that means the districts are drawn
+# and the members named; where it elects at large, naming the members is the
+# whole answer and there is no district to draw — which is why the test below is
+# NAMES rather than districts. Many Illinois villages above the floor elect
+# their trustees at large, and a rule demanding drawn districts would fail them
+# for a boundary that does not exist.
+CITY_ROSTERS = {
+    # tag: (relative path, how the file's keys reach a Census place id)
+    "il": [("il/data/app/municipal-officials.json", "geoid7")],
+    "wi": [("wi/data/app/wi-alderpersons.json", "place5")],
+    "ia": [("ia/data/app/ia-city-officials.json", "geoid7"),
+           ("ia/data/app/ia-county-city-officials.json", "geoid7")],
+}
+
+# One file per city, so the unit is declared rather than keyed. A filename is
+# not a key: `mi-grand-rapids-council-members.json` is a name somebody chose and
+# the Census id is what the measurement carries, so the two are joined here once
+# and the build fails if a declared id is not in the measurement.
+
+CITY_FILES = {
+    "ia": {"1912000": "ia/data/app/cedar-rapids-council-members.json",
+           "1921000": "ia/data/app/dsm-council-members.json",
+           "1982425": "ia/data/app/waterloo-council-members.json"},
+    "mi": {"2622000": "mi/data/app/mi-detroit-council-members.json",
+           "2634000": "mi/data/app/mi-grand-rapids-council-members.json",
+           "2641420": "mi/data/app/mi-jackson-council-members.json"},
+    "ny": {"3651000": "ny/data/app/council-members.json"},
+}
+
+
+EXPECTED_GOVERNMENTS = os.path.join(REPO_ROOT, "docs", "expected-governments.json")
+
+
+def worksheet_layer_ids(tag):
+    """The layer ids this instance registers, from its own worksheet."""
+    path = (os.path.join(REPO_ROOT, "metro-worksheet.json") if tag == "il"
+            else os.path.join(REPO_ROOT, tag, "metro-worksheet.json"))
+    with open(path, encoding="utf-8") as fh:
+        return {l["id"] for l in json.load(fh)["layers"]}
+
+
+def check_answer_map(live):
+    """A stated map must keep describing the tree, in both directions.
+
+    FORWARD: every layer id the map names must exist in that instance's own
+    worksheet, so a rename fails the build rather than quietly un-answering an
+    expected function. REVERSE: every registered layer the map does NOT name is
+    printed, so a layer that answers an expected function cannot sit unclaimed
+    without somebody seeing it. The reverse direction is a print and not a
+    failure, because most layers are facilities and census geography rather than
+    governments and no pattern can tell those apart.
+    """
+    missing = []
+    for tag in live:
+        if tag not in ANSWERS:
+            fail("%s is live and has no entry in ANSWERS, so the fourth test "
+                 "would skip it — and a skipped row reads like a passing one. "
+                 "Map that instance's layers onto the expected functions in "
+                 "scripts/build_eam_status.py." % tag)
+        have = worksheet_layer_ids(tag)
+        claimed = set()
+        for key, entry in ANSWERS[tag].items():
+            for lid in entry.layers:
+                claimed.add(lid)
+                if lid not in have:
+                    missing.append("  %s: `%s` answers `%s` in the map and is "
+                                   "not a layer this instance registers"
+                                   % (tag, lid, key))
+        for key in ANSWERS[tag]:
+            if key not in {k for _, k, _, _ in FUNCTIONS}:
+                fail("%s: ANSWERS names `%s`, which is not an expected "
+                     "function. The list of functions is "
+                     "docs/DONE_STANDARD.md's." % (tag, key))
+        for _, key, _, _ in FUNCTIONS:
+            if key not in ANSWERS[tag]:
+                fail("%s: ANSWERS says nothing about the expected function "
+                     "`%s`. Every entry gets a verdict, including `open`."
+                     % (tag, key))
+        unclaimed = sorted(have - claimed)
+        print("build-eam-status: %s — %d of %d registered layer(s) answer an "
+              "expected function; the rest are not claimed by one: %s"
+              % (tag, len(claimed), len(have),
+                 ", ".join(unclaimed) or "none"))
+    if missing:
+        fail("the expected-function map names layers that do not exist:\n"
+             + "\n".join(missing))
+
+
+def load_expected_units():
+    """The committed 25,000+ measurement, audited before it is used.
+
+    IT CANNOT GO STALE BEFORE 2030, which is why it is committed rather than
+    re-fetched: the floor is a 2020 decennial count, so no unit crosses it until
+    the next census. What CAN move is a unit's government — a village
+    incorporating, a township charter — and that reaches this report through the
+    rosters rather than through the population.
+    """
+    if not os.path.exists(EXPECTED_GOVERNMENTS):
+        fail("docs/expected-governments.json is missing — run "
+             "`python3 scripts/build_expected_governments.py` (it needs the "
+             "network). The fourth test's city tier cannot be scored without "
+             "it, and scoring it as covered would be a false pass.")
+    with open(EXPECTED_GOVERNMENTS, encoding="utf-8") as fh:
+        doc = json.load(fh)
+    floor = doc.get("floor")
+    if not isinstance(floor, int) or floor <= 0:
+        fail("docs/expected-governments.json states no floor")
+    seen = {}
+    for tag, units in sorted(doc.get("units", {}).items()):
+        if not units:
+            fail("docs/expected-governments.json lists no unit for %s. A state "
+                 "with no unit above the floor is possible, but it has never "
+                 "been measured as empty here, so this is more likely a failed "
+                 "fetch recorded as an answer." % tag)
+        for u in units:
+            if u["pop"] < floor:
+                fail("docs/expected-governments.json: %s %s is below the "
+                     "stated floor of %d" % (tag, u["geoid"], floor))
+            if u["kind"] not in ("place", "subdivision"):
+                fail("docs/expected-governments.json: %s %s has an unknown "
+                     "kind %r" % (tag, u["geoid"], u["kind"]))
+            if u["kind"] == "subdivision" and not doc.get(
+                    "subdivision_is_general_purpose", {}).get(tag):
+                fail("docs/expected-governments.json counts a county "
+                     "subdivision in %s while recording that state's "
+                     "subdivisions as not the general-purpose government. One "
+                     "of the two is wrong." % tag)
+            key = (tag, u["geoid"])
+            if key in seen:
+                fail("docs/expected-governments.json lists %s twice in %s"
+                     % (u["geoid"], tag))
+            seen[key] = u
+    return doc
+
+
+# The state each statewide app answers for, for the one join that needs it: a
+# Wisconsin roster is keyed by the five-digit place code inside the state.
+STATE_FIPS_OF = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
+                 "mn": "27", "ky": "21", "ny": "36"}
+
+
+def _named_anywhere(record):
+    """Does this unit's roster record name a person anywhere inside it?
+
+    NESTED, through the report's own `_records` walk, because these rosters put
+    the people a level or two down — Illinois under `board` and `head`, Wisconsin
+    under `members` keyed by district, Iowa under `members`.
+
+    THE UNIT RECORD'S OWN `name` IS THE UNIT'S NAME AND IS SKIPPED. Illinois
+    writes "Village of Gurnee" there, and six of its units carry that and an
+    office address and nobody at all; counting the top-level name would report
+    each of them as a city whose government is named.
+
+    AND THE TEST IS THE NAME'S SHAPE RATHER THAN `names_in`, which asks for a
+    person field beside the name. That companion test is right where it is used —
+    telling a person from a place in a file whose shape is unknown — and wrong
+    here, where the file is a DECLARED roster of a governing body: Kenosha,
+    Milwaukee, Racine, Sheboygan, Eau Claire and New Berlin publish their
+    alderpersons as a bare name, so `names_in` answers nobody for all six and
+    Wisconsin's city tier read 8 where it is 14. `is_name_shaped` is the fleet's
+    one name-shape reader, which is what keeps this from being a second opinion
+    about what a name is.
+    """
+    for sub in _records(record):
+        if sub is not record:
+            v = sub.get("name")
+            if isinstance(v, str) and is_name_shaped(v):
+                return True
+        for key, _f, _w in ROLE_NAME_KEYS:
+            v = sub.get(key)
+            if isinstance(v, str) and is_name_shaped(v):
+                return True
+    return False
+
+
+def city_tier(tag, expected):
+    """Which of this state's 25,000+ units the app names a governing body for.
+
+    The test is NAMES, because the standard's test is that a reader clicking
+    inside the unit is told who governs that point: where the council elects at
+    large there is no district to draw, and many units above the floor do.
+    """
+    units = {u["geoid"]: u for u in expected.get("units", {}).get(tag, [])}
+    named = set()
+    for rel, keyed_by in CITY_ROSTERS.get(tag, []):
+        path = os.path.join(REPO_ROOT, rel)
+        if not os.path.exists(path):
+            fail("%s: the fourth test reads `%s` for its city tier and the "
+                 "file is gone. Point CITY_ROSTERS at what replaced it rather "
+                 "than letting the tier read as unanswered." % (tag, rel))
+        with open(path, encoding="utf-8") as fh:
+            roster = json.load(fh)
+        if not isinstance(roster, dict):
+            fail("%s: `%s` is not keyed by unit, so the city-tier join cannot "
+                 "be made" % (tag, rel))
+        hit = 0
+        for key, record in roster.items():
+            if keyed_by == "geoid7":
+                geoid = str(key)
+            elif keyed_by == "place5":
+                geoid = STATE_FIPS_OF.get(tag, "") + str(key)
+            else:
+                fail("%s: CITY_ROSTERS asks for an unknown join `%s`"
+                     % (tag, keyed_by))
+            if geoid in units and _named_anywhere(record):
+                named.add(geoid)
+                hit += 1
+        print("build-eam-status: %s — city tier: `%s` names a governing body "
+              "for %d of this state's %d unit(s) at %s+"
+              % (tag, rel, hit, len(units),
+                 "{:,}".format(expected["floor"])))
+    for geoid, rel in sorted(CITY_FILES.get(tag, {}).items()):
+        path = os.path.join(REPO_ROOT, rel)
+        if not os.path.exists(path):
+            fail("%s: the fourth test reads `%s` for unit %s and the file is "
+                 "gone" % (tag, rel, geoid))
+        with open(path, encoding="utf-8") as fh:
+            doc = json.load(fh)
+        if not _named_anywhere(doc):
+            fail("%s: `%s` is declared as naming unit %s's governing body and "
+                 "names nobody" % (tag, rel, geoid))
+        if geoid not in units:
+            fail("%s: CITY_FILES declares unit %s and the measurement does not "
+                 "carry it. Either the unit has fallen below the floor or the "
+                 "id is wrong; a declaration matching nothing is a pass nobody "
+                 "earned." % (tag, geoid))
+        named.add(geoid)
+        print("build-eam-status: %s — city tier: `%s` names %s's governing body"
+              % (tag, rel, units[geoid]["name"]))
+    return units, named
+
+
+# `_named_anywhere` decides whether a 25,000+ unit is answered, which is the
+# whole of the fourth test's city tier, and both halves of it have been wrong
+# once already in one sitting — too strict on six Wisconsin cities, too loose on
+# six Illinois villages. So the cases are stated.
+NAMED_UNIT_CASES = (
+    ({"members": {"01": [{"name": "Eric J. Haugaard"}]}}, True,
+     "Kenosha's shape: a bare name under a district, no person field beside it"),
+    ({"board": [{"name": "Braden Meyer", "role": "Trustee"}],
+      "head": {"name": "Tom Hundley", "role": "Mayor"}}, True,
+     "Illinois's shape: people under `board` and `head`"),
+    ({"members": [{"name": "Roy Miller", "role": "Mayor"}]}, True,
+     "Iowa's shape: people under `members`"),
+    ({"name": "Village of Gurnee", "county": "Lake",
+      "office": {"address": "325 N O'Plaine Rd", "phone": "847-599-7500"},
+      "url": "https://www.gurnee.il.us/"}, False,
+     "the unit's own name and an address and nobody at all — six Illinois "
+     "units look like this, and counting the top-level name would pass them"),
+    ({"name": "City of Normal", "office": {"address": "11 Uptown Cir"}}, False,
+     "the same, with no county"),
+    ({"chair": "Jane Doe"}, True,
+     "a declared role key at the top level is a person"),
+    ({"districts": 4, "seats": 4, "municipality": "Altoona"}, False,
+     "seat counts and a municipality name are structure, not people"),
+)
+
+
+def check_named_unit():
+    bad = 0
+    for record, want, why in NAMED_UNIT_CASES:
+        got = _named_anywhere(record)
+        if got != want:
+            bad += 1
+            print("  UNIT  want=%s got=%s  (%s)" % (want, got, why))
+    print("  UNIT  %d unit-roster case(s), %d named / %d not"
+          % (len(NAMED_UNIT_CASES),
+             sum(1 for _, w, _ in NAMED_UNIT_CASES if w),
+             sum(1 for _, w, _ in NAMED_UNIT_CASES if not w)))
+    return bad
+
+
+def score_covered(tag, counties_named, total_counties, expected):
+    """Every expected function for one instance: verdict, and why.
+
+    Returns (entries, covered) where `entries` is one record per function in the
+    standard's own order and `covered` is True only when every function is
+    answered or does not apply. An `open` or `unsettled` function fails, and the
+    two are reported differently: open is work to do or a record to write,
+    unsettled is a question the standard hands to that state's thread.
+
+    NO RECORD IS CREDITED YET, AND THAT IS STATED RATHER THAN IMPLIED. The
+    standard lets a record cover a function, but only after a dated ask — a
+    refusal counts at once, silence after one follow-up and thirty days. Nothing
+    in a gap record says which expected function it is about, and nothing joins
+    one to the ask ledger, so crediting a record here would mean inferring both.
+    The report therefore reports `open` where a record may well already exist,
+    and says so, which understates an app rather than passing one.
+    """
+    entries = []
+    for number, key, title, required in FUNCTIONS:
+        entry = ANSWERS[tag][key]
+        verdict, detail = entry.verdict, None
+        if verdict == "depth":
+            if key == "county-government":
+                if total_counties is None:
+                    verdict = "na"
+                    detail = NO_COUNTY_TIER.get(tag)
+                else:
+                    short = total_counties - counties_named
+                    verdict = "answered" if short == 0 else "open"
+                    detail = ("%d of %d counties name a governing body"
+                              % (counties_named, total_counties))
+            elif key == "local-government":
+                units, named = city_tier(tag, expected)
+                short = len(units) - len(named)
+                verdict = "answered" if short == 0 else "open"
+                detail = ("%d of %d units at %s+ name a governing body"
+                          % (len(named), len(units),
+                             "{:,}".format(expected["floor"])))
+                if short:
+                    rest = sorted((u["name"] for g, u in units.items()
+                                   if g not in named))
+                    detail += "; unanswered: " + ", ".join(rest[:8])
+                    if len(rest) > 8:
+                        detail += " and %d more" % (len(rest) - 8)
+            else:
+                fail("%s: `%s` is measured as a depth entry and nothing "
+                     "measures it" % (tag, key))
+        elif verdict == "answered":
+            detail = ", ".join("`%s`" % l for l in entry.layers)
+        elif verdict == "na":
+            detail = entry.reason
+        entries.append(dict(number=number, key=key, title=title,
+                           required=required, verdict=verdict, detail=detail,
+                           layers=entry.layers))
+    covered = all(e["verdict"] in ("answered", "na") for e in entries)
+    return entries, covered
+
+
+# THE FOURTH TEST SCORES NEW YORK'S COUNTY TIER WHILE E AND A DASH IT, and the
+# difference is deliberate rather than an inconsistency left lying about. E asks
+# where we LOOKED, and handing the New York thread a 62-county obligation on the
+# strength of a bookkeeping change was refused above. C asks what we SHIP, and
+# docs/DONE_STANDARD.md scores New York against the whole state — it is the app
+# that answers for New York, whatever its deepest work is about. San Francisco
+# has no county above it to ship, so its entry is absent and reads as "does not
+# apply" rather than as a failing zero.
+COVERED_COUNTIES = dict(STATE_COUNTIES, ny=62)
+
+
 def measure(counties, paths, B):
     staged = staged_paths()
     watchers = watcher_texts()
     live = live_instances()
     check_county_universe(live)
+    check_answer_map(live)
+    expected = load_expected_units()
     rows = []
 
     for tag in live:
@@ -1308,7 +1908,17 @@ def measure(counties, paths, B):
 
         districts = unanswered = people = 0
         unanswered_names = []
+        counties_named = 0
         for name, rec in counties.get(tag, {}).items():
+            # A COUNTY NAMES A GOVERNING BODY WHEN ANY OF ITS SEATS NAMES
+            # SOMEBODY, which is the fourth test's county-tier question and is
+            # not the same as Answered's: Answered asks whether every district
+            # the app DRAWS says something, and passes a county whose board is
+            # recorded as unavailable. Covered asks how many of the state's
+            # counties the app answers at all.
+            if any(m.get("name") for d in (rec.get("districts") or [])
+                   for m in (d.get("members") or [])):
+                counties_named += 1
             for d in rec.get("districts") or []:
                 districts += 1
                 people += sum(1 for m in d.get("members") or []
@@ -1408,6 +2018,9 @@ def measure(counties, paths, B):
                      "different clocks; split the row."
                      % (tag, label, reach, len(surface), ceiling))
 
+        cov_entries, cov = score_covered(
+            tag, counties_named, COVERED_COUNTIES.get(tag), expected)
+
         rows.append(dict(
             tag=tag, scored=scored, total=total, ring=ring,
             served=len(served), recorded=len(recorded), covered=len(covered),
@@ -1423,44 +2036,97 @@ def measure(counties, paths, B):
             E=(unexamined == 0) if scored else None,
             A=(unanswered == 0 and answered_by is not None) if scored else None,
             M=(not unmaintained),
+            counties_named=counties_named,
+            covered_entries=cov_entries,
+            C=cov,
         ))
     return rows
 
 
+TESTS = ("E", "A", "M", "C")
+
+
 def letters(row):
-    """E.A.M. for this row, with `-` where a test does not apply.
+    """E.A.M.C. for this row, with `-` where a test does not apply.
 
     A dot is a test this instance failed and a dash is one it was never asked,
-    and the two must not render alike: `··M` for San Francisco would read as an
-    instance failing two bars when it is answering the only one it has.
+    and the two must not render alike: `··M·` for San Francisco would read as an
+    instance failing three bars when it is answering the ones it has.
     """
     return "".join("-" if row[L] is None else (L if row[L] else "\u00b7")
-                   for L in ("E", "A", "M"))
+                   for L in TESTS)
 
 
 def is_done(row):
     """Done when every test that APPLIES is met."""
-    return all(row[L] is not False for L in ("E", "A", "M"))
+    return all(row[L] is not False for L in TESTS)
+
+
+VERDICT_WORD = {"answered": "answered", "open": "open",
+                "unsettled": "unsettled", "na": "does not apply"}
+
+
+def covered_lines(row):
+    """The fourth test for one instance, level by level, in the standard's order."""
+    out = []
+    short = [e for e in row["covered_entries"]
+             if e["verdict"] not in ("answered", "na")]
+    if not short:
+        out.append("- **Covered: yes.** Every expected level of government is "
+                   "answered.")
+        return out
+    out.append("- **Covered: no.** %d of the %d expected levels of government "
+               "are not answered. Each is a floor: no gap record is credited "
+               "towards this test yet, so a level listed here may already have "
+               "one behind it."
+               % (len(short), len(row["covered_entries"])))
+    for e in short:
+        out.append("  - **%d. %s** — %s%s%s"
+                   % (e["number"], e["title"], VERDICT_WORD[e["verdict"]],
+                      "" if e["required"] else " (required only where the "
+                                               "state has the level)",
+                      (". " + e["detail"]) if e["detail"] else ""))
+        if e["verdict"] == "unsettled":
+            out.append("    The standard leaves this one to this state's own "
+                       "thread: whether the state has the level at all has not "
+                       "been measured, so it is neither passed nor failed "
+                       "quietly.")
+    return out
 
 
 def render(rows):
     out = []
-    out.append("# E.A.M. status")
+    out.append("# E.A.M.C. status")
     out.append("")
     out.append("**Generated by `scripts/build_eam_status.py` — never hand-edit.**")
     out.append("`--check` runs in CI. Regenerate after any roster, gap-record or")
     out.append("workflow change.")
     out.append("")
-    out.append("A state is **done** when it is Examined, Answered and Maintained,")
-    out.append("at which point its session moves from expansion to maintenance. The")
-    out.append("mark is computed on every run and **goes backward** the moment a")
-    out.append("tranche lands without records, a district stops naming anyone, or a")
-    out.append("roster loses its scheduled job.")
+    out.append("A state is **done** when it is Examined, Answered, Maintained")
+    out.append("and Covered, at which point its session moves from expansion to")
+    out.append("maintenance. The mark is computed on every run and **goes")
+    out.append("backward** the moment a tranche lands without records, a district")
+    out.append("stops naming anyone, a roster loses its scheduled job, or a layer")
+    out.append("that answered an expected level stops shipping.")
     out.append("")
-    out.append("Coverage completeness is reported and is deliberately **not** a bar.")
-    out.append("Holding a state open until every county ships hands the definition")
-    out.append("to county publishers; a county that will never publish a map would")
-    out.append("keep a state open forever while telling a reader nothing.")
+    out.append("**Covered** is the fourth test, settled on 2026-10-01 and specified")
+    out.append("in [`DONE_STANDARD.md`](DONE_STANDARD.md): the app answers every")
+    out.append("level of government it is expected to answer, or carries a measured")
+    out.append("record of why it cannot. It scores **whether we did the work, not")
+    out.append("whether the data exists** — a level no publisher offers, that we")
+    out.append("asked about and were refused, counts as covered — so a county")
+    out.append("publisher cannot fail an app on it.")
+    out.append("")
+    out.append("**No record is credited towards Covered yet, so every count here is")
+    out.append("a floor.** The standard lets a record cover a level, but only after")
+    out.append("a dated ask. Nothing in a gap record says which expected level it")
+    out.append("is about and nothing joins one to the ask ledger, so a level this")
+    out.append("report calls open may already have a record behind it. The report")
+    out.append("understates an app rather than passing one.")
+    out.append("")
+    out.append("Raw gap-record counts are still reported and are deliberately")
+    out.append("**not** a bar: a county that will never publish a map would keep a")
+    out.append("state open forever while telling a reader nothing.")
     out.append("")
     out.append("Every instance the deploy publishes is scored, and a state joins")
     out.append("this table on the commit that publishes it: the fleet is read from")
@@ -1468,8 +2134,9 @@ def render(rows):
     out.append("`-` is a test that does not apply to an instance, which is a")
     out.append("different thing from one it failed.")
     out.append("")
-    out.append("| state | E.A.M. | counties | examined | districts | named | answered | files | maintained |")
-    out.append("|---|---|---|---|---|---|---|---|---|")
+    out.append("| state | E.A.M.C. | counties | examined | districts | named | "
+               "answered | files | maintained | covered |")
+    out.append("|---|---|---|---|---|---|---|---|---|---|")
     for r in rows:
         if r["scored"]:
             counties = "%d" % r["total"]
@@ -1484,11 +2151,15 @@ def render(rows):
                 answered = "by record"
         else:
             counties = examined = answered = "—"
-        out.append("| %s | **%s** | %s | %s | %d | %s | %s | %d | %s |" % (
+        ok = sum(1 for e in r["covered_entries"]
+                 if e["verdict"] in ("answered", "na"))
+        out.append("| %s | **%s** | %s | %s | %d | %s | %s | %d | %s | %s |" % (
             r["tag"], letters(r), counties, examined,
             r["districts"], "{:,}".format(r["people"]), answered,
             r["rosters"],
             "all" if r["M"] else "%d without a job" % len(r["unmaintained"]),
+            "all %d levels" % len(r["covered_entries"]) if r["C"]
+            else "%d of %d levels" % (ok, len(r["covered_entries"])),
         ))
     out.append("")
     if any(r["load_bearing"] for r in rows):
@@ -1536,6 +2207,8 @@ def render(rows):
             out.append("")
             out.append("Every test that applies is met. Expansion is finished;")
             out.append("this instance is in maintenance.")
+            out.append("")
+            out.extend(covered_lines(r))
             out.append("")
             for rel, workflow in r["watched"]:
                 out.append("- **Watched, not rewritten:** `%s` is refreshed by no "
@@ -1609,6 +2282,7 @@ def render(rows):
                                "(seat counts, addresses, links). Slower to "
                                "rot, on link rot rather than on officeholder "
                                "churn, and still refreshed by nothing." % rel)
+        out.extend(covered_lines(r))
         out.append("")
     return "\n".join(out).rstrip() + "\n"
 
@@ -1712,11 +2386,19 @@ def main():
             f.write(body)
 
     marks = " ".join("%s=%s" % (r["tag"], letters(r)) for r in rows)
+    for r in rows:
+        short = [e for e in r["covered_entries"]
+                 if e["verdict"] not in ("answered", "na")]
+        print("build-eam-status: %s — covered: %d of %d expected level(s)%s"
+              % (r["tag"], len(r["covered_entries"]) - len(short),
+                 len(r["covered_entries"]),
+                 "" if not short else "; not answered: " +
+                 ", ".join("%d %s" % (e["number"], e["key"]) for e in short)))
     done = [r["tag"] for r in rows if is_done(r)]
     print("build-eam-status: OK — %s; %s" % (
         marks,
         ("in maintenance: " + ", ".join(done)) if done
-        else "no instance is E.A.M. yet"))
+        else "no instance is E.A.M.C. yet"))
 
 
 if __name__ == "__main__":
