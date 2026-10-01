@@ -58,7 +58,7 @@ const OFFLINE = ["judicial-district", "county", "nys-school-district", "municipa
 const EXPECT_DISTRICT = { "judicial-district": "3", "county": "Albany", "nys-school-district": "ALBANY", "municipality": "Albany" };
 const NEGATIVE_POINT = "41.76370,-72.68510"; // Downtown Hartford, Connecticut — outside New York State and 66 km from the nearest geometry this instance ships. NOT a water point: the county, school-district, cities-towns, villages and three legislative files are all water-inclusive off Long Island and in Lake Ontario, so a mid-Sound or mid-lake click is positive, not negative
 const APP_NAME = "districtry New York";
-const EXPECT_LAYERS = 36; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
+const EXPECT_LAYERS = 38; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
 // ==== GENERATED:END smoke-config ====
 const POINT2 = "40.69354,-73.98963"; // Brooklyn Borough Hall (Brooklyn) — the re-classify hop stays fork test code
 // THE CITY GROUND TRUTH SURVIVES THE GO-LIVE AS FORK TEST CODE. The worksheet's
@@ -451,92 +451,66 @@ try {
     }
   }
 
-  // 2c2. THE OTHER FORM OF COUNTY BOARD. county-supervisor is the second
-  //      dispatched concept over New York's counties, and it answers where the
-  //      county board seat IS the town or city: the supervisor elected to run
-  //      your town is the one who votes for you at the county. Four entries
-  //      today: Saratoga, Schoharie, Warren and Delaware.
+  // 2d. THE SPECIAL-DISTRICT TIER'S FIRST COUNTY. fire-district and
+  //     library-district are two dispatched concepts with one entry each, and
+  //     they make the same two claims the county tier does: each ANSWERS inside
+  //     Sullivan and each is coverage-HIDDEN everywhere else. The hidden half is
+  //     again the one worth having, because a broken county test would show a
+  //     "Fire District" toggle to a reader in Albany whose fire district this app
+  //     cannot answer for at all.
   //
-  //      THE CLAIM WORTH HAVING IS THE SEVERAL-SEATS ONE, and it is asserted
-  //      three ways because the three are different arrangements rather than
-  //      one repeated. New York County Law lets a county weight its board, so
-  //      the city of Saratoga Springs sends TWO supervisors elected
-  //      city-wide; the city of Glens Falls sends FIVE, one elected from each
-  //      of its wards under its own charter; and the town of Queensbury sends
-  //      FIVE, one Town Supervisor plus four County Supervisors. A roster
-  //      keyed one name per unit would pass every other check in this file
-  //      and name a fifth of a Glens Falls reader's representation, so each
-  //      card is asserted to carry EVERY name the shipped roster gives its
-  //      unit. Glens Falls also asserts the ROLE, because five names with no
-  //      role reads as five people who all represent the whole city.
+  //     THE DISTRICT NAMES ARE COMPARED AGAINST THE SHIPPED FILES rather than
+  //     pinned as literals, for the Tompkins reason one step further on: a town
+  //     can alter or dissolve a fire district at any time on petition, so a
+  //     pinned name would go red on a real change that is not a regression,
+  //     while pinning nothing would let a broken card pass. The POINT is a
+  //     literal, because it is in the middle of Monticello.
   //
-  //      NO NAME IS A LITERAL HERE, for the county-legislature reason above:
-  //      every name is read out of the shipped roster, so the join is proved and
-  //      an election is not a regression. The UNIT is a literal, because the
-  //      points below were derived from the shipped cities-and-towns fabric and
-  //      each lands in exactly one unit with a 3 km margin to its nearest edge.
+  //     IT ALSO ASSERTS THE CARD NAMES NOBODY, which is a claim about honesty
+  //     rather than about plumbing: nothing published names a Sullivan fire
+  //     commissioner or library trustee, so the card has to say so. A card that
+  //     started naming people would mean a roster had been joined from
+  //     somewhere, which is exactly the change a person should read first.
   {
-    const roster = JSON.parse(readFileSync(
-      join(INSTANCE_DIR, "data/app/ny-supervisor-members.json"), "utf8"));
-    const cases = [
-      // [label, point, roster key, unit, how the card should name it]
-      ["the city of Saratoga Springs", "43.06900,-73.81775", "saratoga",
-       "Saratoga Springs", "City of Saratoga Springs"],
-      ["the town of Schoharie", "42.67590,-74.30704", "schoharie",
-       "Schoharie", "Town of Schoharie"],
-      ["the city of Glens Falls, seated by ward", "43.30774,-73.65564",
-       "warren", "Glens Falls", "City of Glens Falls"],
-      ["the town of Queensbury, one town seat and four county seats",
-       "43.33701,-73.68177", "warren", "Queensbury", "Town of Queensbury"],
-      ["the town of Delhi", "42.27261,-74.96215", "delaware",
-       "Delhi", "Town of Delhi"]
-    ];
-    for (const [label, pt, key, unit, identifier] of cases) {
+    const MONTICELLO = "41.6553,-74.6896";       // the middle of Monticello, Sullivan County
+    for (const [layer, file, label] of [
+      ["fire-district", "data/app/sullivan-fire-districts.json", "fire"],
+      ["library-district", "data/app/sullivan-library-districts.json", "library"]]) {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${pt}&layers=county-supervisor`);
-      const card = await cardText(page, "county-supervisor");
-      const people = roster[key].units[unit].members.map((m) => m.name);
-      check(`county-supervisor answers at ${label} and names the county's board`,
-        !card.error && card.text.includes(identifier)
-          && card.text.includes(roster[key].board), card.text.slice(0, 120));
-      check(`every supervisor the shipped roster gives ${unit} is on the card (${people.length})`,
-        people.length > 0 && people.every((n) => card.text.includes(n)),
-        `${people.join(" / ")} | ${card.text.slice(0, 140)}`);
+      const page = await booted(context, `${BASE}#point=${MONTICELLO}&layers=${layer}`);
+      const card = await cardText(page, layer);
+      const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, file), "utf8"));
+      const named = shipped.features
+        .map((f) => f.properties.name)
+        .filter((name) => card.text.includes(name));
+      check(`${layer} answers inside Sullivan County and names a district the shipped file carries`,
+        !card.error && named.length === 1, `${named.join(", ") || "none"} | ${card.text.slice(0, 70)}`);
+      check(`the ${label}-district card names nobody, because nothing published names them`,
+        /names none rather than guessing/.test(card.text), card.text.slice(-80));
+      check(`the ${label}-district card credits the county's own GIS`,
+        /Sullivan County Real Property Services/.test(card.text), card.text.slice(-70));
       await context.close();
     }
-    // THE ROLE IS ITS OWN ASSERTION, on the one unit where the names alone
-    // would mislead. Glens Falls elects a supervisor per ward and this app
-    // draws no Glens Falls ward, so the card shows a reader five people of
-    // whom one is theirs; the ward each holds is the only thing that says so.
-    const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context,
-      `${BASE}#point=43.30774,-73.65564&layers=county-supervisor`);
-    const card = await cardText(page, "county-supervisor");
-    const roles = roster.warren.units["Glens Falls"].members.map((m) => m.role);
-    check(`each Glens Falls supervisor's ward is on the card (${roles.length})`,
-      roles.length === 5 && roles.every((r) => r && card.text.includes(r)),
-      `${roles.join(" / ")} | ${card.text.slice(0, 160)}`);
-    await context.close();
   }
   {
-    // Hidden where no county in the table covers the point. The upstate anchor
-    // is Albany, whose own county elects a legislature this app cannot answer
-    // for yet, so a broken coverage test would show a reader there a "County
-    // Board Supervisor" toggle over a county that has no such board at all.
-    for (const [where, pt] of [["the upstate anchor, outside both counties", POINT],
-                               ["New York City, which absorbed its counties", NYC_POINT]]) {
-      const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${pt}&layers=county-supervisor`);
-      const shown = await page.evaluate(() => {
-        const card = document.getElementById("card-county-supervisor");
-        const block = card && card.closest(".layer-block");
-        const toggle = document.querySelector('[data-layer="county-supervisor"]');
-        const visible = (el) => !!el && !el.hidden && el.offsetParent !== null;
-        return { card: visible(block), toggle: visible(toggle) };
-      });
-      check(`county-supervisor stays hidden at ${where}`,
-        !shown.card && !shown.toggle, JSON.stringify(shown));
-      await context.close();
+    // hidden where no county in either table covers the point: the upstate
+    // anchor, which is in Albany County, and inside the city.
+    for (const layer of ["fire-district", "library-district"]) {
+      for (const [where, pt] of [["the upstate anchor, outside Sullivan", POINT],
+                                 ["New York City", NYC_POINT]]) {
+        const context = await browser.newContext({ serviceWorkers: "block" });
+        const page = await booted(context, `${BASE}#point=${pt}&layers=${layer}`);
+        const shown = await page.evaluate((id) => {
+          const card = document.getElementById("card-" + id);
+          const block = card && card.closest(".layer-block");
+          const toggle = document.querySelector('[data-layer="' + id + '"]');
+          const visible = (el) => !!el && !el.hidden && el.offsetParent !== null;
+          return { card: visible(block), toggle: visible(toggle) };
+        }, layer);
+        check(`${layer} stays hidden at ${where}`,
+          !shown.card && !shown.toggle, JSON.stringify(shown));
+        await context.close();
+      }
     }
   }
 

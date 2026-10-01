@@ -1608,7 +1608,12 @@ ANSWERS = {
         "sub-county-government": OPEN,
         "school-boards-by-district": answers("cec"),
         "precincts": answers("election-district"),
-        "special-districts": OPEN,
+        # Sullivan County's own register, the first county in this tier. New
+        # York State's map server publishes not one statutory special district,
+        # so this level is reached county by county; the twelve other layers in
+        # Sullivan's service are tax-map assessment districts a town board
+        # governs, with no body of their own, so they are not governments.
+        "special-districts": answers("fire-district", "library-district"),
         "tribal-government": OPEN,
     },
     "ca": {
