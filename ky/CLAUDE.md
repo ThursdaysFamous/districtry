@@ -233,6 +233,76 @@ The one roster, `congress-roster.json` (`ky/scripts/build_congress_roster.py`, f
 unitedstates/congress-legislators), is count-guarded and refreshed weekly by CI as a reviewed
 PR.
 
+## Two concepts measured 2026-10-01, both from primary law, neither built
+
+Asked for by the fleet's fourth done-standard test. Each was read out of the statute or the
+constitution itself, through `scraper_common.require_robots_once` with the client that fetched
+— `apps.legislature.ky.gov` publishes no robots.txt (HTTP 404, allow), `www.kycourts.gov`
+serves one with no matching rule, `education.ky.gov`'s is empty.
+
+**KENTUCKY ELECTS EVERY JUDGE FROM A DISTRICT, AND EVERY ONE OF THOSE DISTRICTS IS A GROUP OF
+WHOLE COUNTIES ENUMERATED IN STATUTE.** Constitution §117: "Justices of the Supreme Court and
+judges of the Court of Appeals, Circuit and District Court shall be elected from their
+respective districts or circuits on a nonpartisan basis as provided by law." The four tiers:
+**7 Supreme Court districts**, county by county in KRS 21A.010 (redrawn by 2022 Ky. Acts ch. 5,
+effective 2022-01-18; District 4 is Jefferson County alone); **7 Court of Appeals districts**,
+14 judges two per district, and KRS 22A.010(2) says outright they "correspond in geographical
+dimensions to the districts of the Supreme Court" — so the two tiers are ONE geometry drawn
+twice, which is the thing to check before building the second; **57 judicial circuits** in KRS
+23A.020 (effective 2023-01-02); and **59 judicial districts** in KRS 24A.030.
+
+So unlike the fiscal court, **neither geometry needs a publisher**: both are unions of whole
+counties and this instance already ships a 120-feature county fabric, so all four layers
+dissolve offline from text plus `state-counties.json`. The Court of Justice also publishes its
+own district and circuit maps (`SC_COA_districtsmap.pdf`, `P-107 KY Judicial Circuits Map`,
+`circuitfacemap.pdf`), which are a WITNESS to check a dissolve against and never the source.
+And unlike Illinois, where a judge is elected from a subcircuit and then sits circuit-wide so
+no judge belongs to the subcircuit, a Kentucky judge is elected from the circuit they sit in —
+the roster join is the district itself.
+
+**THE TRAP IS THE WORD DIVISION, WHICH MEANS TWO DIFFERENT THINGS IN KENTUCKY LAW.** A circuit
+with more than one judge has "numbered divisions" (KRS 23A.040 and the sections after it) and
+those are SEATS, elected by the whole circuit, carrying no geometry of their own — the circuit
+is the ground. A school board's division is the opposite and is real geography. Reading the
+first as the second would invent sub-circuit boundaries that do not exist.
+
+**KRS 24A.030 HAS A SECOND VERSION ALREADY ENACTED, EFFECTIVE 2031-01-01**, which is a dated
+redistricting with a known trigger rather than a cycle to watch: 2022 Ky. Acts ch. 129 sec. 7
+takes the district courts from 59 to 58 — Edmonson moves from the 38th to the 8th, Marshall
+from the 58th to the 42nd, and Cumberland and Monroe become the 58th. Recorded in `WATCH.md`.
+
+**COUNTY SCHOOL BOARDS ARE ELECTED BY DIVISION AND INDEPENDENT ONES AT LARGE** (KRS 160.210,
+effective 2026-04-14). Subsection (1) is the whole answer: "In independent school districts,
+the members of the school board shall be elected from the district at large. In county school
+districts, members shall be elected from divisions." Each county district has **five**
+divisions, and subsection (2) requires them to contain "integral voting precincts" — §(6) says
+flatly that no precinct may be redrawn or divided to accommodate a division line. **So every
+division is a union of whole precincts**, which is the composition route this project has used
+in Clark, Hancock and Gallatin, and Kentucky's precinct fabric is published and current (3,193
+precincts). Division lines are frozen for five years after any change, and §(4) lets 100
+residents petition the state board to force a redraw.
+
+**JEFFERSON COUNTY'S FIVE DIVISIONS ARE WRITTEN OUT IN STATUTE AS PRECINCT LISTS.** KRS 160.211
+— created 2026 Ky. Acts ch. 154 sec. 9, effective 2026-04-14 — names 643 distinct precinct
+codes across the five divisions, keyed to "the precinct identification codes and precinct
+boundaries maintained by the Jefferson County Clerk's Office as of March 19, 2026". That is a
+complete description of the largest school board in the state with no map to read. **Its one
+measured limit is in §(2)**: a precinct of the district that the list omits is added by the
+county board of elections to a contiguous division, so the list is not guaranteed exhaustive
+and the residual assignment is made by a body that may not publish it. Measured, not assumed.
+
+**WHAT IS NOT ESTABLISHED, and both are stated rather than inferred.** KDE's own districts page
+says Kentucky has **171 school districts**; how many are county and how many independent was
+NOT measured, and is deliberately not derived by subtracting 120, because this project's record
+is full of figures that were arithmetic rather than measurement. The directory that would
+settle it, `openhouse.education.ky.gov`, could not be read from this sandbox at all: its
+robots.txt fails certificate verification in this client, the gate therefore refuses the host,
+and nothing was fetched from it. That is this vantage's route rather than the publisher's
+answer — the `web.archive.org` pattern — and it wants a runner measurement. **No publisher of
+division GEOMETRY has been found for any county**, which is an open question and not a measured
+refusal: KRS 160.210(6) requires changes to be filed with the county board of education and the
+county board of elections and published under KRS Chapter 424, and names no central publisher.
+
 ## Growing this instance
 
 A new layer or county-level concept follows the repo's `docs/EXPANSION_GUIDE.md`. The working
