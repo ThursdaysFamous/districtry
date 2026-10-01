@@ -49,6 +49,14 @@ the monthly one would be half a fix. An earlier version of this paragraph said
 the fetch was "still running as this is written" and that stopping it was "its
 own change rather than done here"; both were true for about an hour.
 
+AND THE CLERK HAS BEEN ASKED, which is the other half of waiting for a path to
+change on its own. A letter went to elections@logancountyil.gov on 2026-10-01
+asking for either a short note permitting a weekly read of that one PDF, or the
+yearbook moved or linked outside /images/, and saying that the 2025-2026 edition
+stays on the map meanwhile, marked with its edition. No reply yet. Nothing here
+changes on the strength of the letter: the resume condition is still the path or
+an explicit permission, and if neither arrives the reader goes on declining.
+
 URL DISCOVERY, not a hardcoded path. The yearbook lives under
 /images/Reference_and_Yearbook_*.pdf and the filename carries the edition;
 the link is read off the clerk's page and the constant below is only the

@@ -1,0 +1,97 @@
+name: Update eight Illinois counties' board rosters
+
+# Weekly refresh of Bond, Bureau, Cumberland, Fayette, Jasper, Jersey, Lawrence and Piatt from
+# each county's own board page.
+#
+# WHY EIGHT COUNTIES IN ONE JOB. They are one finding rather than eight sources.
+# Each was recorded as a county that had been written to about its board and had
+# not replied, and each had its members on its own website the whole time: the
+# ask was for a MAP FILE, and nobody went back to the site to ask who sits on
+# the board. `scripts/il_county_board_pages_scraper.py` records the measurement.
+#
+# WHY data/SOURCE. None of the eight has county-board geometry, so no card reads
+# these rosters and `validate_index.py` would rightly refuse a file in data/app
+# that index.html does not reference. What they are for is the eight
+# il/county-board/<county>.html pages, which name the members for a reader and a
+# crawler.
+
+on:
+  schedule:
+    - cron: "0 19 * * 0" # Sunday 19:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; a PR opened with the default GITHUB_TOKEN fires no workflows.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit. Under a depth-1 checkout git reports the single fetched
+          # commit as the last commit of every file, so every entry takes today.
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+      - name: Fetch the eight counties' board pages
+        run: python3 scripts/il_county_board_pages_scraper.py --out il_boards.json
+      - name: Rebuild rosters
+        # The scraper refuses to emit a county that falls short of its own
+        # member and district floors; this refuses a district that names nobody
+        # and gives no reason.
+        run: python3 scripts/build_il_county_board_pages.py il_boards.json
+      - name: Validate app + data files
+        run: python3 scripts/validate_index.py il/index.html
+      - name: Check for changes
+        id: diff
+        run: |
+          git diff --quiet -- il/data/source/ \
+            && echo "changed=false" >> "$GITHUB_OUTPUT" \
+            || echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/il-county-board-pages-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip rather than from the checkout
+          # this run started with: these runs take tens of minutes, and a branch
+          # that also differs from main in .github/workflows/ reads to GitHub as
+          # a workflow update and is refused for a token without `workflow`
+          # scope. Full history for the sitemap's per-file lastmods.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 scripts/il_county_board_pages_scraper.py --out il_boards.json
+          python3 scripts/build_il_county_board_pages.py il_boards.json
+          # The eight per-county pages are GENERATED from the rosters this job just
+          # rewrote, so regenerate them here or the smoke gate's
+          # `build_county_pages.py --check` fails on this PR with pages naming
+          # last week's members. The sitemap follows, because those pages are in
+          # it and each lastmod is that file's own last commit.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          # docs/EAM_STATUS.md counts the districts these rosters name, so a
+          # county gaining or losing a member moves it and the smoke gate's
+          # `build_eam_status.py --check` fails on this PR.
+          python3 scripts/build_eam_status.py
+          git add il/data/source il/county-board il/county-board.html about.html sitemap.xml docs/EAM_STATUS.md
+          git commit -m "Update eight Illinois counties' board rosters from their own board pages"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create --title "Update eight Illinois counties' board rosters" \
+              --body "Automated weekly refresh of the Bond, Bureau, Cumberland, Fayette, Jasper, Jersey, Lawrence and Piatt county boards from each county's own board page (\`scripts/il_county_board_pages_scraper.py\` + \`build_il_county_board_pages.py\`), with the eight \`il/county-board/<county>.html\` pages regenerated from them. None of these counties has board-district geometry, so no map card is affected. Review before merging." \
+              --base main --head "$branch"
+          fi
