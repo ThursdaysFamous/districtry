@@ -115,9 +115,10 @@ All 87 counties: townships and cities, school districts, ZIP codes, and the near
 
 All 120 counties: the county a point sits in, and the Kentucky Senate, House and U.S. House districts — with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the fiscal courts, and the Data gaps panel says why.
 
-- [Kentucky district lookup](https://districtry.com/ky/): 4 layers, all 120 counties.
+- [Kentucky district lookup](https://districtry.com/ky/): 8 layers, all 120 counties.
 - [Who is my U.S. representative?](https://districtry.com/ky/congress.html)
 - [Sources & data layers](https://districtry.com/ky/sources.html)
+- [Kentucky district questions](https://districtry.com/ky/faq.html)
 
 ## Where the answers come from
 

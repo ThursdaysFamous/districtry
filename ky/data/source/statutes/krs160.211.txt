@@ -1,0 +1,114 @@
+160.211 Divisions for the Jefferson County Board of Education.
+(1)   The divisions for the Jefferson County Board of Education shall be based upon the
+      precinct identification codes and precinct boundaries maintained by the Jefferson
+      County Clerk’s Office as of March 19, 2026. The divisions shall be composed of
+      the following territory in Jefferson County that is part of the Jefferson County
+      School District:
+      (a) Division One shall consist of the following territory:
+      G140       G141        G143       G144       G145        G146     G150
+      G156       G161        G169       G174       G177        G186     G189
+      G190       G191        G192       G193       J173        J174     K110
+      K111       K112        K113       K114       K116        K117     K122
+      K123       K125        K140       K142       K150        K155     K159
+      K160       K161        K162       K163       K164        K165     K167
+      K169       K170        K171       K172       K173        K176     K177
+      K178       K179        L169       L170       L171        L172     L173
+      L174       L175        L176       L195       L203        L204     L205
+      L206       L207        L208       L216       L217        L218     L219
+      L220       M107        M110       M121       M129        M181     M185
+      M186       M188        M189       M191       M192        M193     M194
+      M195       M196        M197       M198       M199        M201     M202
+      M203       N101        N102       N103       N104        N105     N106
+      N107       N115        N117       N128       N134        N135     N136
+      N145       N147        N148       N152       N157        N162     N163
+      N164       N165        N167       N171       N173        N179     O105
+      O107       O112        O117       O119       O121        O127     O135
+      O136       O145        O146       O147       O150        O151     O152
+      O153       O154
+      (b) Division Two shall consist of the following territory:
+      C123       C124        C128       C130       C131        C137     C138
+      D114       D116        D117       D120       D122        D132     D137
+      D139       D141        D142       D146       D147        D148     D149
+      D150       D151        D155       D156       D157        D158     D159
+      D160       D161        D163       D164       D165        D166     D167
+      E139       E141        E142       E143       E144        E154     E155
+      E157       E162        E171       E173       E175        E176     E183
+      E185       E188        E189       G157       G158        G159     G160
+      G163       G164        G165       G170       G171        G172     G173
+      G178       G179        G180       G181       G182        G183     G184
+      G185       G187        G188       G194       G195        G196     H117
+H120     H121       H164         K153        L165        L167   L168
+L177     L178       L179         L180        L181        L182   L183
+L184     L186       L187         L188        L189        L192   L193
+L194     L196       L197         L198        L199        L201   L209
+L210     L211       L212         L213        L215        M159   M176
+M177     M178       M179         M210        M213        N151   N153
+N170     N174       N177         N181        Q107        Q137   Q138
+Q140     Q142       Q146         Q150        Q151        Q156   Q162
+Q163     Q164       Q165         Q166        Q167        Q168   Q169
+V101     V106       V133         V134
+(c) Division Three shall consist of the following territory:
+B153     B158       B159         B161        B172        B183   B191
+B192     B193       B198         B199        B201        B202   D152
+D153     D154       D168         D169        D171        D172   D173
+E145     E181       E190         E191        E192        E193   E194
+E195     E196       E197         E198        E199        E201   E202
+E203     E204       E205         E206        E207        F106   F145
+F151     F152       F153         F158        F163        F164   F167
+F169     F170       F171         F172        F176        F179   F180
+F184     F188       F189         F190        F191        F192   G175
+G176     N130       N178         S116        S118        S125   S126
+S128     S129       S130         S139        S140        S143   S144
+S153     S160       S161         S165        S166        S167   S168
+S169     S170       S171         S172        S173        S174   S175
+S176     S177       S178         S179        V104        V105   V107
+V108     V109       V110         V111        V112        V113   V114
+V116     V118       V120         V121        V123        V125   V126
+V127     V129       V130         V131        V136        V137   V138
+V139     V140       V141         V142        V143        V144   V145
+V146
+(d) Division Four shall consist of the following territory:
+A146     A147       A148         A149        A150        A151   A154
+C101     C102       C103         C104        C105        C106   C108
+C109     C110       C111         C113        C115        C126   C129
+C134     C152       C153         C154        C155        C156   C157
+H123     H124       H125         H126        H130        H154   H155
+H163     H165       H166         H167        H168        H171   H176
+H177     H178       H180         H181        H182        H185   I169
+      J105        J108         J111       J113         J117       J119       J120
+      J140        J163         J165       J166         J168       J169       J170
+      J171        J172         K118       K119         K131       K134       K135
+      K137        K141         K143       K151         K152       K154       K156
+      K157        K158         K166       K168         K174       K175       K180
+      L166        L185         M123       M124         M131       M168       M180
+      M182        M183         M184       M211         M212       N154       N155
+      N156        N158         N160       N161         N166       N168       N169
+      N172        N175         N176       N180         O109       O111       O113
+      O124        O126         O130       O131         O138       O148       O149
+      Q103        Q127         Q148       Q153         Q154       Q155       Q161
+      Q170
+      (e) Division Five shall consist of the following territory:
+      A107        A108         A111       A113         A114       A115       A118
+      A119        A121         A124       A125         A126       A127       A128
+      A129        A134         A136       A139         A142       A145       A152
+      A153        B124         B134       B149         B154       B160       B162
+      B163        B166         B168       B169         B173       B175       B177
+      B184        B187         B188       B189         B190       B194       B195
+      B196        B197         H138       H144         H147       H169       H173
+      H175        H183         H184       I126         I130       I133       I135
+      I141        I144         I145       I146         I151       I152       I153
+      I154        I157         I158       I159         I160       I161       I162
+      I163        I164         I165       I166         I167       I168       I170
+      I171        I172         I173       I174         I175       J122       J123
+      J135        J137         J138       J145         J150       J152       J153
+      J156        J157         J158       J159         J160       J162       J164
+      O141        O144         Q109       Q115         Q125       Q132       Q141
+      Q143        Q144         Q145       Q171         Q172
+(2)   If any precinct or part of a precinct that is part of Jefferson County School District
+      is not identified in subsection (1) of this section, the county board of elections shall
+      add that territory to a contiguous division. All actions taken by the county board of
+      elections under this subsection shall be to ensure that minimal changes are made
+      that allow the divisions to fall within a five percent (5%) population deviation.
+               Effective: April 14, 2026
+               History: Created 2026 Ky. Acts ch. 154, sec. 9, effective April 14, 2026.
+
