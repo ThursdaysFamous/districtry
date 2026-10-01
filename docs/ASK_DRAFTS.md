@@ -2759,10 +2759,13 @@ any local government's website.
 
 ## Ask 34 — Michigan cities and townships whose board pages this app cannot read
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** One message per unit, to its clerk. On send, change
-> `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `mi-municipal-officeholders` blocker (the
-> cities) or the `mi-township-officers` blocker (the townships) in
-> `docs/DATA_LAYER_GUIDEBOOK.md`, per unit. The number may need to move if another draft lands
+> **NOT YET ASKED — DRAFTED 2026-10-01.** One message per unit, to its clerk. Each unit has its
+> own gap record in `docs/DATA_LAYER_GUIDEBOOK.md` (named in the table below), already carrying
+> `"covers": ["local-government"]`. On send, add `"ask": {"who": "<clerk, by name>", "asked":
+> "<date>"}` to that unit's record and change its `NOT YET ASKED — DRAFTED` to `ASKED <date>`;
+> add `followedUp` on the follow-up, and `outcome` (`refused`, or `unresponsive` once thirty days
+> have passed from the follow-up) when it is true. A reply that sends the list is `answered`,
+> and the work is then to read it, not to record the level. The number may need to move if another draft lands
 > on main as Ask 34 first.
 
 **Why these letters exist.** The done standard asks that a reader in any Michigan city or
@@ -2771,18 +2774,18 @@ board on a page this project reads every week. The ones below do not, for one of
 and the standard counts a unit as recorded rather than missing only once it has been asked and
 has said no, or has been asked, followed up once and given 30 days.
 
-| unit | what stops us | measured |
-|---|---|---|
-| Rochester Hills (city) | its robots.txt asks every automated client to stay out | 2026-09-06 |
-| Norton Shores (city) | its robots.txt asks every automated client to stay out | 2026-10-01 |
-| West Bloomfield (charter township) | its website vendor's robots.txt, served for the township's own address, asks every automated client to stay out | 2026-10-01 |
-| Bedford (township) | the same vendor default as West Bloomfield | 2026-10-01 |
-| Shelby (charter township) | the site answers this client "Access Denied" | 2026-10-01 |
-| Northville (township) | the site answers this client "Access Denied" | 2026-10-01 |
-| Ypsilanti (charter township) | a Cloudflare challenge page, which is an access control and is never worked around | 2026-10-01 |
-| Burton (city) | a Cloudflare challenge page | 2026-10-01 |
-| Lansing (city) | the page answers, but the names are loaded by a script after the page arrives, so the page itself carries none | 2026-10-01 |
-| Wyoming (city) | **the operator's own ruling keeps this project off the city's site entirely.** Whether to write at all is Adam's decision; the draft is here so the decision is the only thing left. | ruling |
+| unit | record | what stops us | measured |
+|---|---|---|---|
+| Rochester Hills (city) | `rochester-hills-council-roster` | its robots.txt asks every automated client to stay out | 2026-09-06 |
+| Norton Shores (city) | `norton-shores-council-roster` | its robots.txt asks every automated client to stay out | 2026-10-01 |
+| West Bloomfield (charter township) | `west-bloomfield-township-board` | its website vendor's robots.txt, served for the township's own address, asks every automated client to stay out | 2026-10-01 |
+| Bedford (township) | `bedford-township-board` | the same vendor default as West Bloomfield | 2026-10-01 |
+| Shelby (charter township) | `shelby-township-board` | the site answers this client "Access Denied" | 2026-10-01 |
+| Northville (township) | `northville-township-board` | the site answers this client "Access Denied" | 2026-10-01 |
+| Ypsilanti (charter township) | `ypsilanti-township-board` | a Cloudflare challenge page, which is an access control and is never worked around | 2026-10-01 |
+| Burton (city) | `burton-council-roster` | a Cloudflare challenge page | 2026-10-01 |
+| Lansing (city) | `lansing-council-roster` | the page answers, but the names are loaded by a script after the page arrives, so the page itself carries none | 2026-10-01 |
+| Wyoming (city) | `wyoming-mi-council-roster` | **the operator's own ruling keeps this project off the city's site entirely.** Whether to write at all is Adam's decision; the draft is here so the decision is the only thing left. | ruling |
 
 **Recipients are compiled at send, deliberately not here.** Most of these sites refuse this
 client, so the clerk's address is read off each unit's own site by a person in a browser, which
