@@ -1406,6 +1406,11 @@
     "phone": "(414) 278-4472"
    },
    {
+    "branch": "13",
+    "name": "Ana Berrios-Schroeder",
+    "phone": "(414) 278-5316"
+   },
+   {
     "branch": "14",
     "name": "Amber Raffeet August",
     "phone": "(414) 278-4911"
@@ -1572,10 +1577,9 @@
     "phone": "(414) 278-4490"
    },
    {
-    "name": "Ana Berrios-Schroeder"
-   },
-   {
-    "name": "Kristy Yang"
+    "branch": "47",
+    "name": "Kristy Yang",
+    "phone": "(414) 278-4486"
    }
   ],
   "sourceUrl": "https://county.milwaukee.gov/EN/Courts/Clerk-of-Courts"
