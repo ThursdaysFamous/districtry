@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **233 distinct hosts** those files
-name, **43 are fetched by the browser**; the other 190 are links.
+makes from a link a reader clicks. Of **234 distinct hosts** those files
+name, **43 are fetched by the browser**; the other 191 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -125,7 +125,7 @@ prose.
 | ca | 0 | 16 |
 | wi | 1 | 31 |
 | ia | 0 | 20 |
-| mi | 0 | 15 |
+| mi | 0 | 18 |
 | mn | 6 | 14 |
 | ky | 4 | 8 |
 
@@ -239,7 +239,7 @@ measured until the next run describes it.
 - Drawn from this site's own files: `us-house`, `ia-judicial-district`, `iowa-aea`, `ia-senate`, `county`, `ia-house`, `county-supervisor`, `school-district-unified`, `school-director-district`, `community-college`, `cc-director-district`, `city-ward`, `precinct`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `post-office`.
 
-#### mi — 5 of 15 layers fetch their shapes
+#### mi — 5 of 18 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -251,6 +251,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `mi-senate`, `county`, `mi-house`, `county-commissioner`, `city-ward`, `precinct`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+- **Not measured** — declared since the probe ran: `mi-court-of-appeals`, `mi-circuit-court`, `mi-isd`.
 
 #### mn — not measured
 
@@ -265,10 +266,10 @@ measured until the next run describes it.
 | ca | 17 | 14 | 0 |
 | wi | 91 | 263 | 5 |
 | ia | 70 | 58 | 0 |
-| mi | 30 | 55 | 1 |
+| mi | 31 | 59 | 1 |
 | mn | 20 | 8 | 0 |
 | ky | 10 | 7 | 0 |
-| **total** | **406** | **823** | **12** |
+| **total** | **407** | **827** | **12** |
 
 **134 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

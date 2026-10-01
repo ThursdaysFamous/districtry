@@ -3037,6 +3037,115 @@ work out how. A yes costs the city nothing it has not already published.
 
 ---
 
+## Ask mi-city-township-boards — Michigan cities and townships whose board pages this app cannot read
+
+> **NOT YET ASKED — DRAFTED 2026-10-01.** One message per unit, to its clerk. Each unit has its
+> own gap record in `docs/DATA_LAYER_GUIDEBOOK.md` (named in the table below), already carrying
+> `"covers": ["local-government:<its geoid>"]`. On send, add `"ask": {"who": "<clerk, by name>", "asked":
+> "<date>"}` to that unit's record and change its `NOT YET ASKED — DRAFTED` to `ASKED <date>`;
+> add `followedUp` on the follow-up, and `outcome` (`refused`, or `unresponsive` once thirty days
+> have passed from the follow-up) when it is true. A reply that sends the list is `answered`,
+> and the work is then to read it, not to record the level.
+
+**Why these letters exist.** The done standard asks that a reader in any Michigan city or
+township over 25,000 people be told who governs it. Of the 82 such units, most publish their
+board on a page this project reads every week. The ones below do not, for one of three reasons,
+and the standard counts a unit as recorded rather than missing only once it has been asked and
+has said no, or has been asked, followed up once and given 30 days.
+
+| unit | record | what stops us | measured |
+|---|---|---|---|
+| Rochester Hills (city) | `rochester-hills-council-roster` | its robots.txt asks every automated client to stay out | 2026-09-06 |
+| Norton Shores (city) | `norton-shores-council-roster` | its robots.txt asks every automated client to stay out | 2026-10-01 |
+| West Bloomfield (charter township) | `west-bloomfield-township-board` | its website vendor's robots.txt, served for the township's own address, asks every automated client to stay out | 2026-10-01 |
+| Bedford (township) | `bedford-township-board` | the same vendor default as West Bloomfield | 2026-10-01 |
+| Shelby (charter township) | `shelby-township-board` | the site answers this client "Access Denied" | 2026-10-01 |
+| Northville (township) | `northville-township-board` | the site answers this client "Access Denied" | 2026-10-01 |
+| Ypsilanti (charter township) | `ypsilanti-township-board` | a Cloudflare challenge page, which is an access control and is never worked around | 2026-10-01 |
+| Burton (city) | `burton-council-roster` | a Cloudflare challenge page | 2026-10-01 |
+| Lansing (city) | `lansing-council-roster` | the page answers, but the names are loaded by a script after the page arrives, so the page itself carries none | 2026-10-01 |
+| Wyoming (city) | `wyoming-mi-council-roster` | **the operator's own ruling keeps this project off the city's site entirely.** Whether to write at all is Adam's decision; the draft is here so the decision is the only thing left. | ruling |
+
+**Recipients are compiled at send, deliberately not here.** Most of these sites refuse this
+client, so the clerk's address is read off each unit's own site by a person in a browser, which
+takes a minute each. Guessing a municipal address is how a letter reaches the wrong office.
+
+**Two versions of one letter**, because the ask differs: the robots.txt units are asked for
+permission; the other units are asked whether the refusal is meant for a site like this one.
+
+### Draft A — the unit's robots.txt asks automated clients to stay out
+
+> **Subject: <Unit> board members on districtry.com — may an automated reader see your board page?**
+>
+> Dear <Clerk's name>,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments
+> cover their address and who represents them there. Michigan's map is at districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a
+> week from the government's own website so it stays current. For <Unit> it names nobody,
+> because your website's robots.txt file asks automated tools not to read any of it, and this
+> project follows that request.
+>
+> Three answers would each settle it, and a plain "no" is a useful one:
+>
+> 1. If one automated read of your board members page a week is acceptable, a short note saying
+>    so is all I need.
+> 2. If you would rather send the list yourself whenever it changes, that works too, and the map
+>    will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site
+>    instead.
+>
+> There is no cost or obligation of any kind.
+>
+> <YOUR NAME>
+> districtry.com
+> <YOUR E-MAIL>
+
+### Draft B — the unit's site refuses or challenges this client
+
+> **Subject: <Unit> board members on districtry.com — your website blocks our weekly reader**
+>
+> Dear <Clerk's name>,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments
+> cover their address and who represents them there. Michigan's map is at districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a
+> week from the government's own website so it stays current. For <Unit> it names nobody,
+> because your website turns away our reader before any page loads. That is very likely a
+> general security setting rather than a decision about us, and I do not try to get around it.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If whoever runs the site can let one automated read of the board page a week through, it
+>    identifies itself as "districtry.com roster bot".
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list
+>    came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> <YOUR NAME>
+> districtry.com
+> <YOUR E-MAIL>
+
+For **Lansing**, replace the second paragraph's reason with: "because the council page builds
+its list of members in the browser after the page loads, so the page an automated reader
+receives has no names in it", and ask whether the same list is published anywhere as plain text
+or a file.
+
+### What each answer means
+
+| answer | what it settles |
+|---|---|
+| "yes, that is fine" / "we've allowed it" | The unit gets a parser in `mi/scripts/mi_municipal_parsers_*.py` and its board ships the next week, with the permission recorded in `mi/WATCH.md`. |
+| "here is the list" | The list ships as a dated document roster, never re-read, and the card says so. A follow-up ask goes out when the unit's next election seats new members. |
+| "please name nobody" | A closing answer. The card keeps its link to the unit's own site and the gap record cites the reply. |
+| no reply after one follow-up and 30 days | `UNRESPONSIVE` against the ask, never against the unit, and the unit counts as recorded for the done standard. |
+
+---
+
 ## Ask ia-pottawattamie-tama-wright-boards — three Iowa counties: how many supervisors sit on the board, and who are they?
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** Three separate messages, one per county, each to

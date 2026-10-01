@@ -1399,6 +1399,15 @@ SF_SCHOOL_BOARDS_AT_LARGE = (
     "at-large precedent is that naming the members is the whole answer, and "
     "both bodies are the city-wide school tier the app already covers.")
 
+# Measured 2026-10-01 by Michigan's own thread; the working is in mi/WATCH.md.
+MI_NO_SCHOOL_BOARD_DISTRICTS = (
+    "Michigan elects no school board by district. Ordinary boards are elected "
+    "at large under the Revised School Code; its one by-district scheme is for "
+    "a first-class district, and no district is first-class; and the Detroit "
+    "Public Schools Community District's board is elected districtwide under "
+    "MCL 380.384(3). Every board contest on the Wayne and Macomb 2024 "
+    "canvasses is districtwide.")
+
 # Per instance, what answers each expected function. A tuple names the layer
 # ids; `depth(...)` is measured; OPEN is nothing yet; UNSETTLED is a question the
 # standard leaves to that state's thread.
@@ -1473,18 +1482,22 @@ ANSWERS = {
         "municipal-boundaries": answers("municipality"),
         "local-government": depth("city-ward"),
         "school-district-boundaries": answers("school-district-unified", "school-district-elementary"),
-        # Michigan's own thread has confirmed it elects judges by district, so
-        # the entry is owed rather than open to question.
-        "courts-by-district": OPEN,
+        # Built 2026-10-01 from statute as unions of whole counties; the judges
+        # are not named (gap mi-judge-roster: the court system's site refuses
+        # every client).
+        "courts-by-district": answers("mi-court-of-appeals", "mi-circuit-court"),
         # A Michigan township governs everyone outside a village or city, so
         # the 34 that clear 25,000 are already owed under the city tier; the
-        # rest are owed here. The app draws them and names no township board.
-        "sub-county-government": OPEN,
-        # Still the Michigan thread's to confirm: its courts question is settled
-        # and whether it elects any school board by district is not.
-        "school-boards-by-district": UNSETTLED,
+        # rest are owed here. The app draws all 1,240 and names the board of
+        # each large township whose own page names every seat — the Illinois
+        # precedent above, which answers this level by drawing every township
+        # and naming Cook's 29 boards.
+        "sub-county-government": answers("county-subdivision"),
+        "school-boards-by-district": na(MI_NO_SCHOOL_BOARD_DISTRICTS),
         "precincts": answers("precinct"),
-        "special-districts": OPEN,
+        # Intermediate school districts: special districts the Revised School
+        # Code creates (MCL 380.601 et seq.), each with its own levy.
+        "special-districts": answers("mi-isd"),
         "tribal-government": OPEN,
     },
     "mn": {
@@ -1641,6 +1654,10 @@ CITY_ROSTERS = {
     "ia": [("ia/data/app/ia-city-officials.json", "geoid7"),
            ("ia/data/app/ia-city-councils.json", "geoid7"),
            ("ia/data/app/ia-county-city-officials.json", "geoid7")],
+    # Keyed by the Census id as written: 7 digits for a city, 10 for a
+    # township (a county subdivision), which is the id the expected-units
+    # measurement carries for each.
+    "mi": [("mi/data/app/mi-municipal-officials.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is
