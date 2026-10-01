@@ -87,9 +87,9 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
-them used. MEASURED 2026-10-01 on this branch, AFTER its last edit: a static gate is
-one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **102**;
-counted instead as script invocations the whole battery is **148 — 134 that need no browser and
+them used. MEASURED 2026-10-01 on this branch, AFTER the merge that was its last edit: a static
+gate is one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **103**;
+counted instead as script invocations the whole battery is **150 — 136 that need no browser and
 14 that boot Chromium** (a Playwright smoke test per instance
 `il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`/`nc`/`ky`, 2 root-page tests, and the two fleet-wide probes
 for point transmission and contrast pairs), the per-instance `validate_index.py` runs included, and
@@ -128,19 +128,27 @@ the textual conflict that saved the 2026-09-19 case does not occur at all, and t
 either diff to look at. Re-run `validate_gate_counts.py` after every merge into a branch that
 touches the battery — not after every edit to it, after every merge.
 
-**AND A TENTH CHANGE, WHERE THE PAIR MOVES BY ONE AND TWO AND THE SECOND INVOCATION IS
-AGAIN THE BUILDER'S OWN SELFTEST.** Illinois's tribal-government layer adds
-ONE named step carrying TWO invocations — `scripts/build_tribal_areas.py --selftest`, which
-exercises the land-to-government join and the population logic on fixtures, and the gate itself,
-which re-derives the shipped boundary file's properties offline from the join table and the
-Bureau's government list. So the battery is **102 / 148 — 134 no browser, 14 Chromium**, measured
-after this branch's last edit. The 101/146 below is left standing as the record of what the previous
-change measured, in the posture this section takes toward every superseded figure. This landed on a branch cut before Iowa's two changes, so it measured 99/145 correctly
-against a base that went stale under it — the N-branches case again, with N set by how many
-threads are landing that day; re-measured on the merged tree it is 102/148. **A NEW LAYER IS NOT A NEW INSTANCE AND MOVES THE PAIR
-DIFFERENTLY**: the four state branches above each added
+**AND A TENTH CHANGE, WHICH IS TWO CHANGES, AND IS THE IDENTICAL-FIGURE MERGE CAUGHT IN THE ACT.**
+Two branches each added one named step carrying TWO invocations — a gate and its own selftest.
+Illinois's tribal-government layer adds `scripts/build_tribal_areas.py --selftest`, which exercises
+the land-to-government join and the population logic on fixtures, beside the gate itself, which
+re-derives the shipped boundary file's properties offline from the join table and the Bureau's
+government list. The chamber-roster gate — every district a legislature elects has a record in its
+roster — adds its `--selftest` beside its own gate. **Each measured 102 / 148 correctly against a
+base that predated the other**, which is the four-state case above with the step count moving this
+time: merged, the battery is **103 / 150 — 136 no browser, 14 Chromium**, measured after the merge.
+The 101/146 below is left standing as the record of what the previous change measured, in the
+posture this section takes toward every superseded figure. Two readings generalise. **A NEW LAYER
+IS NOT A NEW INSTANCE AND MOVES THE PAIR DIFFERENTLY**: the four state branches above each added
 three invocations to three steps that already ran one line per instance, leaving the step count
-unmoved; a layer with its own builder adds a step nothing else could carry.
+unmoved, while a gate with its own builder adds a step nothing else could carry. And a selftest
+counts because it is a command CI runs, so the step count and the invocation count move by
+different amounts in one change and neither can be derived from the other — the
+`validate_python_hygiene.py` shape, worth noting twice. The two rival paragraphs this replaces are
+collapsed rather than both kept, because both cannot be about the tenth change.
+
+**AND A NINTH CHANGE, WHERE THE PAIR MOVES BY ONE EACH IN THE SAME BRANCH THAT HAD JUST MOVED
+IT BY TWO.** Iowa's county-board-page reader adds one named step carrying one invocation, so the
 
 **AND A NINTH CHANGE, WHERE THE PAIR MOVES BY ONE EACH IN THE SAME BRANCH THAT HAD JUST MOVED
 IT BY TWO.** Iowa's county-board-page reader adds one named step carrying one invocation, so the
@@ -328,8 +336,8 @@ each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-10-01, **148
-invocations for 148**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-10-01, **150
+invocations for 150**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on
