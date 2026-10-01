@@ -60,7 +60,7 @@ import requests
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from robots_policy import RobotsGate                      # noqa: E402
-from scraper_common import UA_ROSTER_BOT                  # noqa: E402
+from scraper_common import UA_ROSTER_BOT, output_path  # noqa: E402
 
 TIMEOUT = 60
 DEFAULT_OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -156,7 +156,7 @@ def fail(msg):
 
 
 def main():
-    out_path = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_OUT
+    out_path = output_path(DEFAULT_OUT)
     session = requests.Session()
     gate = RobotsGate(session, UA_ROSTER_BOT, timeout=30)
 

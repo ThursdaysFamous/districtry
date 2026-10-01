@@ -104,7 +104,10 @@ import requests
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import aia_bundle  # noqa: E402 (shared machinery — do not fork)
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    UA_CHROME_WIN_126,
+    output_path,
+)
 
 BASE = "https://www.colesco.illinois.gov"
 SOURCE_URL = BASE + "/board/"
@@ -252,7 +255,7 @@ def parse_board_contact(page):
 
 
 def main():
-    out_path = sys.argv[1] if len(sys.argv) > 1 else "coles-board-raw.json"
+    out_path = output_path("coles-board-raw.json")
     # The county serves the Coles pattern this module's docstring describes;
     # aia_bundle holds the pinned GoDaddy intermediate (the one copy).
     verify = aia_bundle.ca_bundle("coles")

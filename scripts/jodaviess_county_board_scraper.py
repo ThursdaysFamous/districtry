@@ -68,7 +68,12 @@ import sys
 import time
 
 import requests
-from scraper_common import require_robots_once, UA_ROSTER_BOT, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    require_robots_once,
+    UA_ROSTER_BOT,
+    fetch as fetch_with_retry,
+    output_path,
+)
 
 BASE = "https://www.jodaviesscountyil.gov"
 SOURCE_URL = BASE + "/1199/County-Board"
@@ -226,8 +231,7 @@ def enrich_from_directory(rec):
 
 
 def main():
-    out_path = (sys.argv[1] if len(sys.argv) > 1
-                else "jodaviess_county_board_raw.json")
+    out_path = output_path("jodaviess_county_board_raw.json")
     records, vacancies = parse_board_page(get(SOURCE_URL))
     if not records:
         print("jodaviess-scraper: FAIL — parsed 0 members; the Members list "
