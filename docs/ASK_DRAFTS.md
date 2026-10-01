@@ -2886,10 +2886,23 @@ after an ask has been refused, or sent with one follow-up and thirty days' silen
 | city | 2020 population | what it answers |
 |---|---|---|
 | Beloit | 36,657 | `robots.txt` publishes `User-agent: * / Disallow: /` under six named crawlers that get narrow rules. The city's own file on the city's own host, so it binds fully. |
-| Janesville | 65,615 | HTTP 403 at the HOME page, not merely on `robots.txt` |
-| Wausau | 39,994 | HTTP 403 at the HOME page |
-| Wauwatosa | 48,387 | HTTP 403 at the HOME page |
-| Mequon | 25,129 | HTTP 403 at the HOME page |
+| Janesville | 65,615 | HTTP 403 at the HOME page, not merely on `robots.txt`. **AkamaiGHost** answers it, with an `Access Denied` body |
+| Wausau | 39,994 | HTTP 403 at the HOME page, **AkamaiGHost**, same body |
+| Wauwatosa | 48,387 | HTTP 403 at the HOME page, **AkamaiGHost**, same body |
+| Mequon | 25,129 | **CORRECTED 2026-10-01, later the same day.** `robots.txt` is SERVED — HTTP 200, 2,005 bytes, deterministic over three reads fifteen seconds apart — and no rule in its one binding group matches `/`, so Mequon's published policy PERMITS this project. What stops the read is a **Cloudflare managed challenge** on the content pages: the home page's 403 carries the `Just a moment...` interstitial, which is an access control and is never solved or worked around |
+
+**WHO ANSWERED THE 403 WAS CHECKED, AND THAT IS NOT A FORMALITY.** CLAUDE.md records that a 403
+from an egress proxy is not a 403 from a site — in this sandbox `github.com` itself 403s with the
+proxy's own JSON body — so a refusal recorded without reading the responder is a guess. All four
+came from the cities' own edge (`Server: AkamaiGHost` on three, `Server: cloudflare` on Mequon),
+so the measurement holds.
+
+**THE MEQUON CORRECTION DID NOT CHANGE WHAT WE MAY DO AND DID CHANGE WHAT WE MAY SAY.** A city
+whose rules file turns us away has decided something; a city whose rules file welcomes us while a
+security product turns us away probably has not, and its letter says so and asks for the hand-off
+on that basis. It is also NOT a `CHALLENGE_FRONTED_HOSTS` entry: that table is for a host whose
+answers are non-deterministic, and Mequon's are not — the robots read is stable and the page
+challenge is consistent.
 
 **The four 403s are a site-wide block that enforces itself**, which is #1271's own reading of why
 a 403 on `robots.txt` needed no strict treatment: a server refusing every path needs no policy
@@ -2908,10 +2921,28 @@ which this project already ships — so no refused site was read to find them:
 | Wausau | Rachel Brown | 715-261-6622 |
 | Wauwatosa | Deyanira Nevarez | 414-479-8917 |
 
-**The Commission's directory carries no e-mail address for any of the five**, and the cities'
-own contact pages are behind the very block this ask is about, so each address has to be taken
-from the city's own site by the operator — who browses as a person, which all five sites serve
-perfectly well. That is a two-minute lookup and it is deliberately not automated here.
+**THERE IS NO E-MAIL ADDRESS TO FIND, AND THAT IS A WITHHOLDING BY THE PEOPLE NAMED RATHER THAN
+A GAP IN OUR READING** (settled 2026-10-01, when the six letters were drafted into the operator's
+mailbox). The Commission's directory carries no e-mail address for any of the five — 0 of 1,848
+records in the shipped file contain an `@`, the source PDF's own `/Subject` metadata reads
+`WI Municipal Clerks PDF - no emails:`, and the Commission said why: *"that was at their
+request"*. `wi/scripts/build_wi_municipal_clerks.py` already rules on what follows from that, and
+the rule covers this ask exactly: **nothing here goes looking for those addresses elsewhere to
+backfill them.** The cities' own contact pages are behind the very block this ask is about, so
+there was nowhere permitted to look even if the rule allowed it.
+
+**SO FIVE OF THE SIX DRAFTS CARRY NO RECIPIENT**, and the empty address field is the safeguard —
+a mail client will not send without one. Each opens with a bracketed note naming the clerk and
+their telephone number, saying why the address is blank, and asking the operator to supply it. The
+operator browses as a person, which all five sites serve perfectly well; that lookup is
+deliberately not automated, and it is the operator's to make rather than ours to route around.
+
+**WAUWATOSA IS THE ONE EXCEPTION AND IT IS A PUBLISHED OFFICE ADDRESS, NOT A PERSON'S.**
+`wi/data/app/wi-municipal-executives.json` already ships `mayor@wauwatosa.net`, from Milwaukee
+County GIS — a government publisher, fetched legitimately, and an address belonging to an office
+rather than to anyone the Commission's withholding protects. That draft is addressed to the Clerk
+and routed through the Mayor's office, and it says in its first line that it is being routed and
+why, so nobody is left guessing how the letter arrived.
 
 Draft (one per city; `<CITY>`, `<CLERK>` and the bracketed clause are the only parts that change):
 
@@ -2986,6 +3017,14 @@ round.
 
 **To:** City of Oshkosh, City Clerk's Office — Darla Salinas, City Clerk; (920) 236-5013
 **Subject:** Our automated reader cannot reach https://www.ci.oshkosh.wi.us/robots.txt
+
+> **NO E-MAIL ADDRESS, FOR THE SAME REASON AS THE FIVE ABOVE** (2026-10-01). The Elections
+> Commission's clerk directory withholds every municipal clerk's address at the clerks' own
+> request, and this project's standing rule is not to go looking for those addresses elsewhere
+> to backfill them. Oshkosh's own site cannot be reached by this client at all, so there was
+> nowhere permitted to look in any case. The draft sits in the operator's mailbox with the
+> address field empty — which is what stops it being sent by accident — and opens with a
+> bracketed note naming the clerk, her telephone number and the reason.
 
 **Why this ask exists.** Oshkosh publishes its Common Council on a public page and we would
 like to name those seven officials on a free, non-commercial map. Before reading any page on a
