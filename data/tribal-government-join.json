@@ -2,9 +2,10 @@
   "measured": "2026-09-30",
   "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
   "vintage": "current",
-  "note": "Land to government. The key is the Census's own AIANNH code, which a reservation and its off-reservation trust land share. Governments are named exactly as the Bureau of Indian Affairs names them in data/bia-tribal-governments.json.",
+  "note": "Land to government. The key is the Census's own AIANNH code, which a reservation and its off-reservation trust land share. Governments are named exactly as the Bureau of Indian Affairs names them in data/bia-tribal-governments.json. Kentucky is covered with NO AREAS, which is a measurement rather than an omission: all six AIANNH layers return zero features over the state's whole extent, with North Carolina run as a control on the same six queries and answering 7, 2 and 2 on three of them, so the queries work. Re-measured 2026-09-30 at that instance's go-live.",
   "statesCovered": [
     "Illinois",
+    "Kentucky",
     "Minnesota"
   ],
   "statesNotYetCovered": [

@@ -302,7 +302,7 @@
   "negative_point": {
     "lat": 38.2527,
     "lng": -85.7585,
-    "note": "downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down)"
+    "note": "downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json, which is what the pan hand-off reads — the same fix Iowa, Illinois and Wisconsin each made rather than moving their own point. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day."
   },
   "coverage_key": {
     "outside": "Outside Indiana"
@@ -435,6 +435,8 @@
       "bbox": { "minLng": -87.6, "minLat": 41.7, "maxLng": -82.11, "maxLat": 48.01 } },
     { "id": "minnesota", "label": "Minnesota", "url": "https://districtry.com/mn/", "emoji": "🛶", "explorer_name": "districtry Minnesota",
       "bbox": { "minLng": -97.3, "minLat": 43.44, "maxLng": -89.58, "maxLat": 49.44 } },
+    { "id": "kentucky", "label": "Kentucky", "url": "https://districtry.com/ky/", "emoji": "🐎", "explorer_name": "districtry Kentucky",
+      "bbox": { "minLng": -89.62, "minLat": 36.45, "maxLng": -81.91, "maxLat": 39.2 } },
     { "id": "indiana", "label": "Indiana", "url": "https://districtry.com/in/", "emoji": "🏁", "explorer_name": "districtry Indiana",
       "bbox": { "minLng": -88.1, "minLat": 37.77, "maxLng": -84.78, "maxLat": 41.77 } }
   ]

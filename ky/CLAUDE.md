@@ -9,11 +9,24 @@ search an address) and it reports every civic district containing that point and
 represents you there. It is a folder of the consolidated districtry repo, following the shape
 `docs/EXPANSION_GUIDE.md` Part 2 sets out for a new state instance.
 
-**IT IS NOT PUBLISHED YET.** PR 1 arrived DARK: `ky/**` is blanket-excluded from the Pages
-deploy and `metros.json` deliberately carries no `ky` entry, so nothing here is reachable by a
-reader. `validate_instance_registration.py` holds those two together in BOTH directions — an
-entry in the manifest while the folder is excluded would render a live landing card linking to
-a 404. `ky/WATCH.md`'s GO-LIVE section is what the publishing change has to carry.
+**IT IS PUBLISHED.** PR 1 arrived DARK on 2026-09-30 — `ky/**` blanket-excluded from the
+Pages deploy, no `ky` entry in `metros.json` — and the go-live change the same day narrowed
+that exclude to the granular set the siblings use, registered the instance and regenerated
+every surface that counts the fleet. `validate_instance_registration.py` holds the exclude and
+the manifest together in BOTH directions, which is why they moved in one change: an entry in
+the manifest while the folder was excluded would have rendered a live landing card linking to
+a 404. `ky/WATCH.md`'s GO-LIVE section is kept with its dates as the record of what that
+change had to carry.
+
+**THE GO-LIVE'S ONE REAL FINDING WAS IN ANOTHER INSTANCE.** `ky/WATCH.md` carried a row saying
+to re-run the cross-instance point audit on the day rather than trust its earlier result, and
+the re-run found that Indiana's own negative point is Louisville — the same coordinate as this
+instance's ground-truth anchor — landed there between PR 1 and go-live. Publishing Kentucky
+therefore changed what Indiana's app does at that point, so three fixes went in the same
+change: its two checks that put the point at the map's centre now refuse the fleet outline
+file, its routing check gains Louisville as a case that must open `/ky/`, and its uncovered
+case moved to Butler County, Ohio. An audit that is re-run rather than trusted is the only
+reason any of that was seen before it broke.
 
 It ships four layers, the national tier every U.S. state can serve from national publishers:
 **County** (120, from Census TIGERweb, identity-only), **U.S. House** (6 districts, TIGERweb

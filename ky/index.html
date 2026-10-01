@@ -3823,14 +3823,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
            gaps button. The "why" link is the project's own standing answer to
            why this exists, and it lives off-site at overberg.co rather than
            being restated per app — one page to keep true for the whole fleet.
-           THE THREE SUB-PAGE LINKS THE SIBLINGS CARRY HERE — sources.html,
-           faq.html and history.html — ARE DELIBERATELY ABSENT, because this
-           instance ships none of those pages yet and a link to a file the tree
-           does not contain is a 404 the moment the page is published.
-           validate_instance_assets.py is what says so, and it said so about
-           these three. ky/WATCH.md carries sources.html as a pre-go-live item:
-           the worksheet's layers[] already hold a `source` block apiece, so
-           that page generates from what is there the day it lands. -->
+           SOURCES.HTML LANDED WITH THE GO-LIVE CHANGE (2026-09-30) and is
+           linked here. It was absent through PR 1 for a reason that was correct
+           then — a link to a file the tree does not contain is a 404 the moment
+           the page is published, which validate_instance_assets.py says out
+           loud — and the fix was to ship the page rather than to publish a
+           state whose reader cannot see where any boundary came from. It needed
+           no research: every entry in the worksheet's layers[] already carried
+           a `source` block, so the page's matrix and credit rows generate.
+           faq.html and history.html are STILL absent, and deliberately: both
+           are hand-written prose rather than generated, so each is its own
+           change. ky/WATCH.md carries them. -->
+      <a class="masthead-action-link" href="./sources.html">Sources &amp; data layers</a>
       <a class="masthead-action-link" href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
       <span class="districtry-toggle-sep" aria-hidden="true"></span>
       <button type="button" class="districtry-theme-toggle" aria-label="Switch to the dark theme"><span class="dtt-labels"><span class="dtt-dark">Dark</span><span class="dtt-light">Light</span></span></button>
@@ -4101,7 +4105,7 @@ function initKentuckyExplorer() {
     { id: "minnesota", label: "Minnesota", url: "https://districtry.com/mn/", emoji: "🛶", explorerName: "districtry Minnesota",
       bbox: { minLng: -97.3, minLat: 43.44, maxLng: -89.58, maxLat: 49.44 } },
     { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
-      bbox: { minLng: -89.57, minLat: 36.5, maxLng: -81.96, maxLat: 39.15 } }
+      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
