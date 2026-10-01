@@ -654,76 +654,52 @@ try {
   }
 
 
-  // 2a6. A COUNTY THAT ANSWERED IN A LETTER, and the sentence that says so.
-  //      Osceola's auditor gave the supervisor-to-district pairing by e-mail
-  //      on 2026-10-01; the county publishes no page that names a district, so
-  //      the roster record carries no sourceUrl and there is nothing to
-  //      re-read. The card therefore dates it and says it was confirmed BY THE
-  //      COUNTY rather than read off its board page -- the wording that fits a
-  //      preserved county and is a false statement about this one.
+  // 2a6. WHOSE NUMBERING HAS BEEN CHECKED, AND WHOSE HAS NOT.
+  //      This instance joins a supervisor to a district by NUMBER, and on
+  //      2026-10-01 that number turned out not to be the same number: the
+  //      Legislative Services Agency's statewide layer orders each county's
+  //      districts its own way, and of the first four counties measured THREE
+  //      disagreed with their own county's page. Butler and Pocahontas were
+  //      live naming supervisors in the wrong districts. So a county's board is
+  //      keyed only where somebody has measured the pairing
+  //      (NUMBERING_CHECKED in ia/scripts/build_ia_supervisor_roster.py), and
+  //      every other county keeps its supervisors on the County card, unkeyed.
   //
-  //      BOTH BRANCHES. Osceola must name its District 1 supervisor AND carry
-  //      the confirmed-by-the-county wording AND NOT the read-from-its-page
-  //      wording; and Adams, keyed from its own board page like the other
-  //      nineteen, must name its supervisor with NO dated sentence of either
-  //      kind -- which is the half that keeps the first honest, since a
-  //      sentence rendered for every county says nothing.
+  //      POCAHONTAS IS THE ROW THAT MATTERS, because its map is a real
+  //      permutation rather than the identity: the county's District 5 is this
+  //      layer's district 4. A point in Fonda is in this layer's district 4 and
+  //      must name Louis Stauter, whom the county calls its District 5
+  //      supervisor -- and must NOT name Brent Aden, who is the county's
+  //      District 4 and is exactly who a regression dropping the remap would
+  //      print. Both branches are asserted, because a card naming a real
+  //      supervisor of the right county reads perfectly either way.
   //
-  //      The point is the Census's own internal point for Osceola County,
-  //      which the shipped district geometry puts in District 1. Both layers
-  //      answer from committed files, so neither needs a government server.
+  //      HOWARD IS THE IDENTITY CASE and Washington is the withheld one. A
+  //      county whose numbering is unchecked must name NOBODY here: its card
+  //      answers the district and leaves the person to the County card. That
+  //      is the half that keeps the first two honest -- a regression that
+  //      simply keyed every county again would pass the Pocahontas row only by
+  //      accident and would fail this one outright.
+  //
+  //      Every point is a published place centroid and every layer answers
+  //      from committed files, so none of this needs a government server.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     for (const [lat, lng, county, want, absent, why] of [
-      [43.3784695, -95.6338858, "Osceola County", "LeRoy DeBoer",
-       "last read from its own board page",
-       "Osceola, named by the county's own letter"],
-      [43.3784695, -95.6338858, "Osceola County", "last confirmed by the county itself",
-       null, "Osceola dates a pairing it cannot re-read"],
-      // IDA IS THE NAME-JOIN CASE. Its auditor wrote "Devlun Whiteing";
-      // the gated roster spells it "Devlun P. Whiteing", and the roster's
-      // spelling is what ships, because the roster is the gated source for
-      // who these people are and the letter only says which district each
-      // holds. The absent branch is the one that matters: a regression
-      // shipping the letter's own spelling would still name a real person
-      // and read perfectly.
-      [42.33342, -95.50360, "Ida County", "Devlun P. Whiteing",
-       "Devlun Whiteing", "Ida, the name joined to the gated roster"],
-      // SIOUX IS THE NAME JOIN A SECOND TIME, and the only county in this
-      // instance where a letter is the ONLY route there will ever be: its
-      // host fronts robots.txt with a managed challenge, so no weekly run
-      // reads a page of that site. Its auditor's office wrote "Carl Vande
-      // Weerd"; the gated roster spells it "Carl L. Vande Weerd". The point
-      // is inside District 4 and inside no other Sioux district.
-      [43.20237, -96.42920, "Sioux County", "Carl L. Vande Weerd",
-       "Carl Vande Weerd", "Sioux, the name joined to the gated roster"],
-      // WASHINGTON IS THE OPPOSITE BRANCH AND IT IS WHAT MAKES THE FIRST
-      // ONE MEAN SOMETHING. Its auditor answered by pointing at the county's
-      // own board page, so the weekly scraper reads it, the record carries a
-      // sourceUrl, and the card must say the supervisors were READ FROM THAT
-      // PAGE and must NOT say they were confirmed by the county. The name is
-      // also the suffix case: the roster spells its chair "Jack Seward Jr.",
-      // whose last token is the suffix, and reading that as a surname is what
-      // had this county skipped with a sentence about what IT publishes.
-      // The point is the Census's own internal point for the county, which
-      // the shipped geometry puts in District 1.
-      [41.3294124, -91.7250385, "Washington County", "Jack Seward Jr.",
-       "last confirmed by the county itself",
-       "Washington, keyed from the page its auditor pointed at"],
-      // AND THE OTHER SIDE OF THAT SENTENCE, which is the branch the letter
-      // counties created. Bremer is PRESERVED: its robots.txt answers 500, so
-      // the county is not re-read, and its record keeps BOTH a date and the
-      // page it was last read from -- so its card must say READ FROM ITS OWN
-      // BOARD PAGE and must NOT say confirmed by the county. Without this row
-      // a regression collapsing the two wordings into the letter's one would
-      // pass every other assertion here. The point is inside Bremer District 1
-      // and inside no other Bremer district.
-      [42.72795, -92.46789, "Bremer County", "last read from its own board page",
-       "last confirmed by the county itself",
-       "Bremer, preserved from a page it can no longer re-read"],
-      [41.03000, -94.64000, "Adams County", "Supervisor",
-       "last confirmed by the county itself",
-       "Adams, keyed from a page, carries no dated sentence"]
+      [42.5816991, -94.8455189, "Pocahontas County", "Louis Stauter",
+       "Brent Aden",
+       "Pocahontas district 4 names the county's District 5 supervisor"],
+      [42.847502, -94.8479386, "Pocahontas County", "Clarence J. Siepker",
+       "Peter Seehusen",
+       "Pocahontas district 1 names the county's District 2 supervisor"],
+      [43.3717458, -92.1162868, "Howard County", "Pat Murray", null,
+       "Howard, whose own numbering matches this layer's"],
+      // THE WITHHELD BRANCH. Washington County's numbering has not been
+      // measured, so its district card names nobody at all -- not its chair,
+      // not anyone. Its supervisors are still on the County card.
+      [41.3294124, -91.7250385, "Washington County", "District",
+       "Jack Seward Jr.",
+       "Washington, unchecked, names nobody on a district card"]
     ]) {
       const page = await booted(context,
         `${BASE}#point=${lat},${lng}&layers=county-supervisor`);
@@ -736,7 +712,7 @@ try {
       check(`supervisor district, ${why}`,
         info.text.includes(want), info.text.slice(0, 200));
       if (absent) {
-        check(`supervisor district, ${why} — no wrong-source sentence`,
+        check(`supervisor district, ${why} — the other county's number`,
           !info.text.includes(absent), info.text.slice(0, 200));
       }
       await page.close();
