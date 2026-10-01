@@ -15,6 +15,10 @@ name: Update IA county officers roster
 #   ia_county_officer_sources_scraper.py  the recorder's, sheriff's and county
 #                                         attorney's own statewide directories,
 #                                         two of which are PDFs.
+#   ia_county_board_page_scraper.py       the four counties' OWN board pages,
+#                                         read only because ISAC and the state's
+#                                         district geometry disagree about how
+#                                         many seats those boards have.
 #
 # The builder refuses to write a board of supervisors whose size is illegal
 # under Iowa Code 331.201, or that disagrees with the district geometry this
@@ -68,6 +72,16 @@ jobs:
       # county pages at 0.6s apart, so this is the long step.
       - name: Scrape treasurer and sheriff e-mail addresses from the county sites
         run: python3 ia/scripts/ia_county_officer_email_scraper.py
+
+      # FOUR COUNTIES whose two outside publishers disagree about the board's
+      # size are read from the county's OWN board page, which is the publisher
+      # that IS the board. Four requests, robots.txt read first with the same
+      # client that crawls. The builder consults this cache only for a county it
+      # would otherwise withhold, so a failed read here costs those four
+      # counties their supervisors and nothing else -- which is why this step is
+      # not allowed to fail the run's earlier work.
+      - name: Scrape the four county board pages
+        run: python3 ia/scripts/ia_county_board_page_scraper.py
 
       - name: Rebuild the county officer roster
         run: python3 ia/scripts/build_ia_county_officers.py

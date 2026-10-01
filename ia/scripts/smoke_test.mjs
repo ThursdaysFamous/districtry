@@ -599,6 +599,61 @@ try {
     await context.close();
   }
 
+  // 2a5. THE FOUR COUNTY BOARDS NAMED BY THE COUNTY ITSELF, and the sentence
+  //      the card says about why, because the names alone would pass for a
+  //      card that credits the wrong publisher.
+  //
+  //      Almost every Iowa county's supervisors come from one statewide
+  //      directory, gated against the districts this app draws. Where those
+  //      two disagree the whole board is WITHHELD rather than guessed, which
+  //      is right and left eight counties of 99 naming nobody. For four of
+  //      them the county's own board page settles it, so those names rest on
+  //      a publisher no other county's do and the card says so.
+  //
+  //      BOTH BRANCHES, for the reason 2a4 already gives. Adair must name a
+  //      supervisor AND carry the county-named sentence; Pottawattamie must
+  //      carry the withheld sentence and NOT the county-named one, because a
+  //      county-named line over a board we do not publish would credit a
+  //      page we were refused; and Marshall, the anchor county, comes from the
+  //      statewide directory like the other 95 and must name a supervisor with
+  //      NO county-named sentence at all -- which is the half that keeps the
+  //      first honest, since a sentence rendered for every county says nothing.
+  //
+  //      The county layer answers from a committed archive, so none of these
+  //      needs a government server. A card that does not name the county is
+  //      this check's own skip, the rule 2a3 and 2a4 already follow.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    for (const [lat, lng, county, want, absent, why] of [
+      [41.33000, -94.47000, "Adair County", "Named by the county",
+       null, "Adair, named by the county's own page"],
+      [41.33000, -94.47000, "Adair County", "Jerry Walker",
+       null, "Adair names a supervisor the statewide directory lost"],
+      [41.23000, -95.850000, "Pottawattamie County", "Not shown",
+       "Named by the county", "Pottawattamie, withheld and not credited"],
+      [42.04940, -92.90710, "Marshall County", "Supervisor",
+       "Named by the county", "Marshall, from the statewide directory"]
+    ]) {
+      const page = await booted(context,
+        `${BASE}#point=${lat},${lng}&layers=county`);
+      const info = await cardText(page, "county");
+      if (info.error || !info.text.includes(county)) {
+        console.log(`  SKIP  county board, ${why} — card did not name ${county}`);
+        await page.close();
+        continue;
+      }
+      check(`county board, ${why}`,
+        info.text.includes(want), info.text.slice(0, 200));
+      if (absent) {
+        check(`county board, ${why} — no county-named sentence`,
+          !info.text.includes(absent), info.text.slice(0, 200));
+      }
+      await page.close();
+    }
+    await context.close();
+  }
+
+
   // 2b. The negative ground-truth point (from the worksheet: a point outside
   //     every anchor layer). Anchors that declare a location-relevance test
   //     (mod.coverage — see NEGATIVE_HIDDEN above) HIDE there: the toggle

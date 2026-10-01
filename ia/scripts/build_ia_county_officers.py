@@ -84,6 +84,9 @@ BOARD_DIRECTORY = os.path.join(APP_DATA_DIR, "ia-county-board-directory.json")
 ISAC_CACHE = os.path.join(CACHE_DIR, "ia_county_officers.json")
 SOURCES_CACHE = os.path.join(CACHE_DIR, "ia_county_officer_sources.json")
 EMAILS_CACHE = os.path.join(CACHE_DIR, "ia_county_officer_emails.json")
+# The county's own board page, for the handful whose two outside publishers
+# disagree. Optional: a tree with no such cache behaves exactly as before.
+BOARD_PAGES_CACHE = os.path.join(CACHE_DIR, "ia_county_board_pages.json")
 OUT = os.path.join(APP_DATA_DIR, "ia-county-officers.json")
 
 EXPECT_COUNTIES = 99
@@ -571,6 +574,14 @@ def main():
         print("  no previously shipped roster -- nothing to carry forward",
               file=sys.stderr)
     board_dir = load(BOARD_DIRECTORY, "county board directory")
+    try:
+        with open(BOARD_PAGES_CACHE, encoding="utf-8") as f:
+            board_pages = json.load(f)
+    except OSError:
+        board_pages = {}
+        print("  no county board-page cache -- the counties whose directories "
+              "disagree stay withheld (run "
+              "ia/scripts/ia_county_board_page_scraper.py)", file=sys.stderr)
     # ia-county-board-directory.json is keyed by 3-digit county FIPS.
     seats_by_geoid = {"19" + k.zfill(3): v.get("seats")
                       for k, v in board_dir.items()}
@@ -586,6 +597,7 @@ def main():
     directory = {}
     filled = {k: 0 for k, _ in OFFICES}
     boards = withheld = divergences = mislabels = resolved = switchboards = 0
+    from_page = 0
     scraped_emails = unwitnessed = carried_emails = dropped_emails = 0
     pins_used = set()
     withheld_detail = []
@@ -769,10 +781,67 @@ def main():
         elif seats is not None and len(sups) != seats:
             reason = ("the county directory lists %d, and the supervisor-district "
                       "geometry seats %d" % (len(sups), seats))
+        # ---- the third witness: the county's OWN board page
+        # Two outside publishers disagreeing is not resolved by preference, and
+        # that is what the gates above enforce. But the county is the publisher
+        # OF ITS OWN BOARD, so where it names a legal board that agrees with
+        # the districts this app draws, nothing is being preferred -- the body
+        # itself has answered. It is consulted ONLY where the gates have
+        # already failed, so a county the two directories agree about is
+        # untouched, and it must clear BOTH gates on its own: a legal size, and
+        # the seat count the shipped geometry draws. A page that cannot is
+        # reported and the board stays withheld.
+        if reason and geoid[2:] in board_pages:
+            page = board_pages[geoid[2:]]
+            page_members = page.get("members") or []
+            if page.get("verdict") != "ok":
+                print("  PAGE      %-13s %s" % (county, page.get("verdict")),
+                      file=sys.stderr)
+            elif len(page_members) not in LEGAL_BOARD_SIZES:
+                print("  PAGE      %-13s names %d, which Iowa Code 331.201 "
+                      "does not allow" % (county, len(page_members)),
+                      file=sys.stderr)
+            elif seats is not None and len(page_members) != seats:
+                print("  PAGE      %-13s names %d and the geometry draws %d -- "
+                      "the MAP is what is stale here, which is a different "
+                      "repair" % (county, len(page_members), seats),
+                      file=sys.stderr)
+            else:
+                members = []
+                for r in page_members:
+                    shown = display_name(r["name"])
+                    if shown != r["name"]:
+                        honorifics.append("%s supervisor: %r -> %r"
+                                          % (county, r["name"], shown))
+                    # ONE SHAPE FOR ALL 99 COUNTIES. These pages also publish
+                    # a district label, a term and often an e-mail, and the
+                    # cache keeps all three as the page's own witness -- but no
+                    # other county's supervisors carry them, nothing on the
+                    # card renders them, and four counties of 99 with extra
+                    # fields is an inconsistency a reader would see. So the
+                    # shipped record is name, phone and party, exactly like
+                    # every other board, and the structural refusal below stays
+                    # as tight as it was.
+                    m = {"name": shown}
+                    ph = clean_phone(r.get("phone"))
+                    if ph:
+                        m["phone"] = ph
+                    members.append(m)
+                members.sort(key=lambda m: surname(m["name"]))
+                entry["supervisors"] = members
+                entry["supervisorSource"] = page["url"]
+                from_page += 1
+                print("  PAGE      %-13s %d supervisor(s) from the county's own "
+                      "page (%s)" % (county, len(members), reason),
+                      file=sys.stderr)
+                reason = None
+
         if reason:
             entry["supervisorsWithheld"] = reason
             withheld += 1
             withheld_detail.append("%s (%s)" % (county, reason))
+        elif entry.get("supervisors"):
+            boards += 1
         else:
             members = []
             for r in sups:
@@ -887,6 +956,9 @@ def main():
           % (len(directory), ", ".join("%s %d" % (k, filled[k]) for k, _ in OFFICES),
              boards, withheld, emails, phones, divergences, mislabels, resolved),
           file=sys.stderr)
+    if from_page:
+        print("  %d board(s) came from the county's own page, where the two "
+              "outside directories disagreed" % from_page, file=sys.stderr)
     for line in withheld_detail:
         print("  supervisors withheld: %s" % line, file=sys.stderr)
 

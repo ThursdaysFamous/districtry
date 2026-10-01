@@ -12450,6 +12450,23 @@ function initIowaExplorer() {
               title: "Board office", phone: String(officers.boardPhone)
             }));
           }
+          // A HANDFUL OF BOARDS COME FROM A DIFFERENT PUBLISHER AND SAY SO.
+          // Almost every county's supervisors come from one statewide
+          // directory, checked against the districts this app draws. Where
+          // those two disagree the board is withheld rather than guessed --
+          // and for four counties the county's OWN board page settles it, so
+          // those names rest on a source the others do not. A reader deciding
+          // whether to trust a name is owed the page it came from.
+          if (officers.supervisorSource) {
+            wrap.appendChild(renderLinkRow({
+              title: "Named by the county",
+              note: "The statewide directory and this county's districts "
+                + "disagree about the board's size, so these names are the "
+                + "county's own.",
+              links: [{ label: "Board of supervisors page",
+                        url: String(officers.supervisorSource) }]
+            }));
+          }
         } else if (officers.supervisorsWithheld) {
           unresolved.push({
             label: "Board of supervisors",
