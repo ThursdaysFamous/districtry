@@ -3,13 +3,10 @@
  "vantage": "GitHub Actions runner on runnervmtr4k5",
  "subject": "robots.txt of every host the tree fetches, read with the client user-agent-measurements.json records as serving it",
  "summary": {
-  "hosts": 508,
+  "hosts": 509,
   "allow": 451,
-  "refuse": 57,
-  "unreadable": 16,
-  "removed_not_a_subject": {
-   "127.0.0.1": "A loopback server this repository starts itself: build_district_search.py serves the app to a headless browser and selftest_scraper_common.py serves its own fixture. The recorded row was a connection refused against the literal template 'http://127.0.0.1:%d/il/' with nothing listening, so it was a measurement of nothing carrying allows: false -- a loopback address reading as a host that refuses us. Removed 2026-09-30, in the change that added the address to probe_user_agents.SKIP_HOST_RE beside 'localhost', which was already there; the two are one address written two ways."
-  }
+  "refuse": 58,
+  "unreadable": 17
  },
  "hosts": {
   "adamscounty.iowa.gov": {
@@ -4428,6 +4425,39 @@
    "why": "robots.txt served (6960 bytes): no rule in 1 binding group(s) matches /Government-Resources/County-Legislature/Tompkins-County-Legislators",
    "allows": true,
    "http_status": 200
+  },
+  "www.urbanaillinois.us": {
+   "host": "www.urbanaillinois.us",
+   "url": "https://www.urbanaillinois.us/",
+   "client": "token",
+   "status": "unreachable",
+   "why": "robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)",
+   "allows": false,
+   "http_status": null,
+   "reads": 3,
+   "gap_seconds": 15,
+   "readings": [
+    {
+     "status": "unreachable",
+     "why": "robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)",
+     "allows": false,
+     "http_status": null
+    },
+    {
+     "status": "unreachable",
+     "why": "robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)",
+     "allows": false,
+     "http_status": null
+    },
+    {
+     "status": "unreachable",
+     "why": "robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)",
+     "allows": false,
+     "http_status": null
+    }
+   ],
+   "measured": "2026-10-01",
+   "vantage": "GitHub Actions runner on runnervmtr4k5"
   },
   "www.vercounty.org": {
    "host": "www.vercounty.org",
