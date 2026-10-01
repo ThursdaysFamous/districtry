@@ -1872,11 +1872,31 @@ def metro_key(tag):
     fact the worksheets already carry, which is how `compose_app.SUBPAGES` came
     to miss five pages.
     """
-    ws = os.path.join(REPO_ROOT, tag, "metro-worksheet.json")
+    # ILLINOIS'S WORKSHEET IS AT THE REPO ROOT, NOT UNDER il/, and the first
+    # version of this function looked only under <tag>/ — so metro_key("il")
+    # returned None, blocks.get(None) returned None, and ALL 105 of Illinois's
+    # gap records were dropped from the fourth test with nothing said. R2.3 kept
+    # the repo-level files (metro-worksheet.json, metros.json, sitemap.xml) at
+    # the root when the app moved into il/, which build_about_page.py and
+    # audit_layer_provenance.py both already spell out the same way.
+    ws = os.path.join(REPO_ROOT, *(("metro-worksheet.json",) if tag == "il"
+                                   else (tag, "metro-worksheet.json")))
+    # AND A MISSING WORKSHEET FAILS RATHER THAN RETURNING None. A None key reads
+    # downstream as "this instance declares no records", which is exactly what a
+    # state with a hundred records looks like when the path is wrong, and is the
+    # silent-absence shape this report exists to refuse.
     if not os.path.exists(ws):
-        return None
+        fail("%s: no worksheet at %s, so the guidebook block holding this "
+             "instance's gap records cannot be named. Every live instance has "
+             "one; Illinois's is the repo-root file."
+             % (tag, os.path.relpath(ws, REPO_ROOT)))
     with open(ws, encoding="utf-8") as f:
-        return json.load(f).get("this_metro")
+        key = json.load(f).get("this_metro")
+    if not key:
+        fail("%s: %s sets no `this_metro`, so there is no guidebook block name "
+             "to read its gap records from"
+             % (tag, os.path.relpath(ws, REPO_ROOT)))
+    return key
 
 
 ASK_CREDIT_CASES = (
@@ -1945,7 +1965,13 @@ def ask_credit(ask):
 def covering_records(live):
     """{tag: {function key: [record]}} — every gap record declaring `covers`.
 
-    Each record is (id, qualifies, note). `qualifies` is the standard's own rule
+    Each record is (id, qualifies, note, unit). `unit` is the id after the colon
+    in a `<level key>:<unit id>` entry, or None for a claim about a whole level.
+    A level measured over every county or every large town is credited UNIT BY
+    UNIT, so it needs the unit; `score_covered` refuses a whole-level claim on
+    one of those by name.
+
+    `qualifies` is the standard's own rule
     in `docs/DONE_STANDARD.md`: a refusal counts straight away, silence counts
     once we have asked, followed up once and waited thirty days from the
     follow-up. A record with no `ask` is legal and qualifies for nothing, which
@@ -1974,20 +2000,43 @@ def covering_records(live):
             if not covers:
                 continue
             gid = rec.get("id") or "<unnamed record>"
-            for fkey in covers:
+            claims = []
+            for entry in covers:
+                fkey, _sep, unit = entry.partition(":")
+                unit = unit.strip() or None
                 if fkey not in known:
                     fail("%s: gap record `%s` says it covers %r and no expected "
                          "level has that key. The keys are the ones in "
                          "`FUNCTIONS`: %s"
                          % (tag, gid, fkey, ", ".join(sorted(known))))
+                claims.append((fkey, unit))
             qualifies, note = ask_credit(rec.get(ASK))
-            for fkey in covers:
-                per.setdefault(fkey, []).append((gid, qualifies, note))
+            for fkey, unit in claims:
+                per.setdefault(fkey, []).append((gid, qualifies, note, unit))
         out[tag] = per
     return out
 
 
-def score_covered(tag, counties_named, total_counties, expected, records):
+def _names_a_body(rec):
+    """Does this county record name anybody on its governing body?
+
+    Two shapes, because the fleet's boards come in two: a districted board
+    keys its people under `districts[].members[]`, and a board elected AT
+    LARGE has no districts at all and carries `members[]` at the top of the
+    record beside `at_large`. Both are a county naming its governing body.
+    """
+    for d in rec.get("districts") or []:
+        for m in d.get("members") or []:
+            if isinstance(m, dict) and m.get("name"):
+                return True
+    for m in rec.get("members") or []:
+        if isinstance(m, dict) and m.get("name"):
+            return True
+    return False
+
+
+def score_covered(tag, counties_named, total_counties, expected, records,
+                  named_counties=()):
     """Every expected function for one instance: verdict, and why.
 
     Returns (entries, covered) where `entries` is one record per function in the
@@ -2017,6 +2066,11 @@ def score_covered(tag, counties_named, total_counties, expected, records):
     for number, key, title, required in FUNCTIONS:
         entry = ANSWERS[tag][key]
         verdict, detail = entry.verdict, None
+        # `short_units` is None where the level is NOT measured unit by unit,
+        # and otherwise the ids of the units the app does not answer. Its
+        # presence is what makes a level credited per unit below.
+        short_units, unit_universe = None, None
+        unit_word = unit_plural = None
         if verdict == "depth":
             if key == "county-government":
                 if total_counties is None:
@@ -2027,6 +2081,21 @@ def score_covered(tag, counties_named, total_counties, expected, records):
                     verdict = "answered" if short == 0 else "open"
                     detail = ("%d of %d counties name a governing body"
                               % (counties_named, total_counties))
+                    # THE COUNTY UNIVERSE IS A COUNT, NOT A LIST. STATE_COUNTIES
+                    # holds a number on purpose (every derivable list is a
+                    # coverage list, which would make the denominator vacuous),
+                    # so the unanswered counties cannot be enumerated and a
+                    # credited slug cannot be checked against a universe. What
+                    # CAN be checked is the arithmetic: the level closes only
+                    # when the counties that name a body plus the distinct
+                    # counties with a credited record reach the state's total,
+                    # and a slug naming an already-answered county earns
+                    # nothing. So `short_units` is the shortfall as a NUMBER of
+                    # unnamed counties, carried as an opaque sentinel rather
+                    # than a set.
+                    short_units = short
+                    unit_word, unit_plural = "county", "counties"
+                    unit_universe = set(named_counties)
             elif key == "local-government":
                 units, named = city_tier(tag, expected)
                 short = len(units) - len(named)
@@ -2040,6 +2109,9 @@ def score_covered(tag, counties_named, total_counties, expected, records):
                     detail += "; unanswered: " + ", ".join(rest[:8])
                     if len(rest) > 8:
                         detail += " and %d more" % (len(rest) - 8)
+                short_units = {g for g in units if g not in named}
+                unit_universe = set(units)
+                unit_word, unit_plural = "unit", "units"
             else:
                 fail("%s: `%s` is measured as a depth entry and nothing "
                      "measures it" % (tag, key))
@@ -2048,14 +2120,97 @@ def score_covered(tag, counties_named, total_counties, expected, records):
         elif verdict == "na":
             detail = entry.reason
         claimed = records.get(key) or []
+        # ONE LETTER MUST NOT PASS A WHOLE TIER. A level measured over every
+        # county or every large town used to turn `recorded` the moment ANY
+        # record covering it qualified, so one city's refusal would have passed
+        # a state's whole local tier with the other units unasked. A record on
+        # such a level therefore names the unit it is about, and the level
+        # closes only when EVERY unanswered unit has one.
+        if short_units is not None:
+            # A WHOLE-LEVEL CLAIM WITH NO QUALIFYING ASK IS LEGAL AND EARNS
+            # NOTHING, which is the ordinary state of a level nobody has written
+            # to yet — New York's two are exactly that, and a first version of
+            # this refused them on SHAPE alone, failing the build over records
+            # that could never have been credited. The fault Michigan found is
+            # about CREDITING, so that is where the refusal belongs: a claim
+            # carrying an ask that counts must name its units, because that is
+            # the one that would otherwise pass a tier on one letter.
+            for gid, qualifies, _n, unit in claimed:
+                if unit is None and qualifies:
+                    fail("%s: gap record `%s` carries an ask that counts and "
+                         "claims the whole of `%s`, which is measured %s by %s. "
+                         "Name the %s it is about, as `%s:<%s id>` — one letter "
+                         "cannot speak for the %s nobody has asked about."
+                         % (tag, gid, key, unit_word, unit_word, unit_word,
+                            key, unit_word, unit_plural))
+        else:
+            for gid, _q, _n, unit in claimed:
+                if unit is not None:
+                    fail("%s: gap record `%s` names unit %r under `%s`, which "
+                         "is answered for the whole state at once rather than "
+                         "unit by unit. Drop the unit."
+                         % (tag, gid, unit, key))
+
         credited = [r for r in claimed if r[1]]
-        if verdict == "open" and credited:
+        if verdict == "open" and short_units is not None:
+            # A credited unit the app already answers earns nothing and is
+            # reported: it is a record written about the wrong unit, which is a
+            # mistake worth seeing rather than a free pass.
+            answered_already = sorted(
+                {u for _g, q, _n, u in credited
+                 if q and unit_universe is not None and u in unit_universe})
+            got = {u for _g, q, _n, u in credited
+                   if q and not (unit_universe is not None
+                                 and u in unit_universe)}
+            if isinstance(short_units, set):
+                outside = sorted(got - short_units)
+                if outside:
+                    fail("%s: `%s` has credited record(s) naming %s, which is "
+                         "not a unit this level measures. The level's units are "
+                         "this state's %s at the standard's floor."
+                         % (tag, key, ", ".join(repr(u) for u in outside),
+                            unit_plural))
+                left = len(short_units - got)
+                closed = len(short_units) - left
+                total_short = len(short_units)
+            else:
+                left = max(short_units - len(got), 0)
+                closed, total_short = len(got), short_units
+            if closed:
+                detail = ((detail.rstrip(". ") + ". " if detail else "")
+                          + "%d of the %d unanswered %s %s a credited "
+                            "record: %s"
+                          % (closed, total_short, unit_plural,
+                             "has" if closed == 1 else "have",
+                             "; ".join("`%s` (%s) — %s" % (gid, u, note)
+                                       for gid, q, note, u in credited if q)))
+            if closed and left == 0:
+                verdict = "recorded"
+            elif closed and left:
+                # Only where there is PARTIAL credit. With no credited record
+                # the first clause already says how many units are unanswered,
+                # and repeating it would make every open level carry the same
+                # number twice.
+                detail = ((detail.rstrip(". ") + ". " if detail else "")
+                          + "The other %d still %s neither an answer nor a "
+                            "credited record, so the level stays open"
+                          % (left, "has" if left == 1 else "have"))
+            if answered_already:
+                detail = ((detail.rstrip(". ") + ". " if detail else "")
+                          + "Credited record(s) name %s, which the app already "
+                            "answers, so they earn nothing here"
+                          % ", ".join(answered_already))
+        elif verdict == "open" and credited:
             verdict = "recorded"
             detail = "; ".join("`%s` — %s" % (gid, note)
-                               for gid, _q, note in credited)
-        elif verdict == "open" and claimed:
-            unearned = "; ".join("`%s` — %s" % (gid, note)
-                                 for gid, _q, note in claimed)
+                               for gid, _q, note, _u in credited)
+        # A whole-level claim on a per-unit level cannot be credited, so it is
+        # never in `credited` and falls through to the earns-nothing line below
+        # with its own reason.
+        if verdict == "open" and claimed and not credited:
+            unearned = "; ".join(
+                "`%s`%s — %s" % (gid, " (%s)" % u if u else "", note)
+                for gid, _q, note, u in claimed)
             detail = ((detail.rstrip(". ") + ". " if detail else "")
                       + "A record declares this level and earns nothing: "
                       + unearned)
@@ -2130,7 +2285,11 @@ def measure(counties, paths, B):
 
         districts = unanswered = people = 0
         unanswered_names = []
-        counties_named = 0
+        # The SLUGS of the counties that name a governing body, not just how
+        # many: the fourth test credits a county-level record by the county it
+        # names, and a record naming a county the app already answers has to be
+        # told apart from one naming a county nobody has reached.
+        named_counties = set()
         for name, rec in counties.get(tag, {}).items():
             # A COUNTY NAMES A GOVERNING BODY WHEN ANY OF ITS SEATS NAMES
             # SOMEBODY, which is the fourth test's county-tier question and is
@@ -2138,9 +2297,22 @@ def measure(counties, paths, B):
             # the app DRAWS says something, and passes a county whose board is
             # recorded as unavailable. Covered asks how many of the state's
             # counties the app answers at all.
-            if any(m.get("name") for d in (rec.get("districts") or [])
-                   for m in (d.get("members") or [])):
-                counties_named += 1
+            #
+            # AN AT-LARGE BOARD HAS NO DISTRICTS AND ITS MEMBERS SIT AT THE TOP
+            # OF THE RECORD, so a walk of `districts` alone finds nothing in it
+            # and the county reads as naming nobody. Measured on 2026-10-01, 20
+            # Illinois and 70 Iowa records are that shape and every one names
+            # real people, so Illinois published 63 of 102 counties where it is
+            # 83 and Iowa 21 of 99 where it is 91. The standard is explicit that
+            # naming the members IS the whole answer for a body elected at
+            # large — there is no district to draw — so both shapes count.
+            # Wisconsin and Michigan carry no flat records and do not move.
+            #
+            # The two routes are exhaustive on today's tree: 63 + 20 = 83 is
+            # every Illinois county with a record and 21 + 70 = 91 every Iowa
+            # one, so no county is left naming somebody by a third route.
+            if _names_a_body(rec):
+                named_counties.add(B.slug_of(name))
             for d in rec.get("districts") or []:
                 districts += 1
                 people += sum(1 for m in d.get("members") or []
@@ -2240,9 +2412,10 @@ def measure(counties, paths, B):
                      "different clocks; split the row."
                      % (tag, label, reach, len(surface), ceiling))
 
+        counties_named = len(named_counties)
         cov_entries, cov = score_covered(
             tag, counties_named, COVERED_COUNTIES.get(tag), expected,
-            covering.get(tag) or {})
+            covering.get(tag) or {}, named_counties)
 
         rows.append(dict(
             tag=tag, scored=scored, total=total, ring=ring,
@@ -2391,12 +2564,37 @@ def render(rows):
     out.append("asked about and were refused, counts as covered — so a county")
     out.append("publisher cannot fail an app on it.")
     out.append("")
-    out.append("**No record is credited towards Covered yet, so every count here is")
-    out.append("a floor.** The standard lets a record cover a level, but only after")
-    out.append("a dated ask. Nothing in a gap record says which expected level it")
-    out.append("is about and nothing joins one to the ask ledger, so a level this")
-    out.append("report calls open may already have a record behind it. The report")
-    out.append("understates an app rather than passing one.")
+    # THIS PARAGRAPH IS MEASURED, NOT WRITTEN. It used to state that nothing in
+    # a gap record says which level it is about and that no record is credited —
+    # true on the day the fourth test shipped, false from the moment a thread
+    # tagged its first record, and it would have gone on saying it above a list
+    # of credited levels. It is the second hardcoded claim in this renderer to
+    # have needed that treatment.
+    tagged = sum(len(e["claimed"]) for r in rows
+                 for e in r["covered_entries"])
+    credited = sum(1 for r in rows for e in r["covered_entries"]
+                   for c in e["claimed"] if c[1])
+    if not tagged:
+        out.append("**No gap record claims a level yet, so every count here is a")
+        out.append("floor.** A record can say which levels it covers and who was")
+        out.append("asked, when, and what came back; none does, so a level this")
+        out.append("report calls open may already have a record behind it. The")
+        out.append("report understates an app rather than passing one.")
+    else:
+        out.append("**%d gap-record claim%s name%s a level, %d of which %s a"
+                   % (tagged, "" if tagged == 1 else "s",
+                      "s" if tagged == 1 else "", credited,
+                      "carries" if credited == 1 else "carry"))
+        out.append("dated ask that counts.** A level this report calls open and")
+        out.append("that no record claims is still a floor. A claim that earns")
+        out.append("nothing is printed under its level with the reason, rather")
+        out.append("than passed.")
+    out.append("")
+    out.append("A level measured over every county, or every local government")
+    out.append("above the standard's floor, is credited **unit by unit**: a record")
+    out.append("names the county or unit it is about and the level closes only")
+    out.append("when every unanswered one is either answered or has its own")
+    out.append("credited record. One refusal cannot carry a whole tier.")
     out.append("")
     out.append("Raw gap-record counts are still reported and are deliberately")
     out.append("**not** a bar: a county that will never publish a map would keep a")
