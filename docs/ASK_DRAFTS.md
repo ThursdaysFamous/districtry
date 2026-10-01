@@ -4328,6 +4328,16 @@ and nothing is asked of any named judge personally.
 > | County staff directory | `kristy.opperman@co.waupaca.wi.us` — character for character the address that bounced |
 > | Directory of Public Officials, updated 5 August 2026, compiled by the Clerk's own office | County Clerk Kristy K. Opperman, 811 Harding St., Waupaca 54981, telephone (715) 258-6200 — **no e-mail address at all** |
 >
+> **AND THE REJECTION SAYS WHICH KIND OF REFUSAL IT IS, WHICH CHANGES WHAT A SECOND ADDRESS CAN
+> FIX.** The server answered `550 permanent failure ... blocked`, not *unknown user*. So the
+> clerk's mailbox probably exists and the county's mail server is refusing the SENDER rather than
+> the recipient — and if that is what happened, every address at the county will refuse the same
+> sender, so trying a third one is not a measurement, it is the same failure again. **If the
+> redraft to the Chief Deputy also comes back blocked, do not look for another address**: the
+> office's own telephone, (715) 258-6200, is the next step, and that is a person's to make rather
+> than this project's. The first reading written here said only that a published mailbox was
+> refusing mail, which was true of the address and said nothing about the cause.
+>
 > So a published mailbox is refusing mail, which is the same shape as the Grundy County bounce
 > the same day, and **no replacement is invented here.** Two addresses the county publishes on the
 > clerk's own department page are the alternatives, in this order, and both are the county's own
@@ -4337,8 +4347,10 @@ and nothing is asked of any named judge personally.
 >    telephone. A deputy clerk answers for the office, so this asks the same office the same question.
 > 2. **Deputy County Clerk Nicole Houdek — `Nicole.Houdek@co.waupaca.wi.us`**, likewise.
 >
-> If the second also bounces, the office's own telephone and postal address above are what is left,
-> and both are a person's job rather than this project's. **Nothing has been sent to either
+> The redraft went to Ellen Radies on 2026-10-01. **If that also comes back blocked, stop**: the
+> office's own telephone and postal address above are what is left, and both are a person's job
+> rather than this project's. The second deputy is listed only in case the first address fails for
+> a reason specific to it, and a sender-level block is not that reason. **Nothing has been sent to either
 > address and Waupaca is not awaiting a reply**, so no follow-up clock has started. The letter text
 > below is unchanged and still correct: only the recipient line moves. The Shawano County letter in
 > this same ask is unaffected.
