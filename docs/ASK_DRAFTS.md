@@ -80,20 +80,29 @@ letters exist as drafts, which have gone, and what came back.
 ### Sent 2026-10-01
 
 Thirty-six letters went out that afternoon. Counted from the sent folder, not from this
-file:
+file. **Eight of them were answered within the hour**, which is worth recording as a fact
+about the asks rather than about the offices: of the counties written to about which
+supervisor represents which district, most answered the same afternoon and one refused.
+Whatever makes that letter easy to answer — it names what the site already has, states
+what it will not guess, and says a one-line no is a complete answer — is worth copying
+into the asks that have been waiting for weeks.
 
 | recipient | letter | prior contact | reply |
 |---|---|---|---|
 | Worth County Auditor (IA) | city officials page | none | — |
 | Wisconsin Towns Association | town board members | none | — |
 | City of Milwaukee GIS | permission to read Map Milwaukee | none | automatic acknowledgement only, saying the team is reviewing it. **An acknowledgement is not a permission** and the three builders stay on hold |
-| Palo Alto, Montgomery, Lee, Washington, Sioux county auditors (IA) | which supervisor represents which district | none | — |
+| Montgomery and Lee county auditors (IA) | which supervisor represents which district | none | — |
+| Sioux County (IA) | the same | none | **ANSWERED same day**, in plain text under the heading "2026 Board of Supervisors": all five districts paired |
+| Washington County Auditor (IA) | the same | none | **ANSWERED same day** by pointing at the county's OWN supervisors page, which states each district, plus a district map. Better than a list: a page the weekly reader can return to does not age the way an email does |
+| Palo Alto County Auditor (IA) | the same | none | **ANSWERED same day** with two PDFs — a supervisor-district letter carrying the names, and a precinct letter nobody asked for — **both dated 2020**, so no name ships until she confirms the five are still serving |
 | Ida County Auditor (IA) | the same | none | **ANSWERED same day**, in plain text: districts 1, 2 and 3 with their supervisors' names |
 | Osceola County Auditor (IA) | the same | none | **ANSWERED same day**: all five districts paired with their supervisor |
 | Dickinson County Auditor (IA) | the same | none | **ANSWERED same day**: a bare "no", which the letter itself had offered as a complete answer. It settles that the office will not supply the pairing; it says NOTHING about whether the board is elected by district, and must not be read as if it did |
 | Black Hawk and Guthrie county auditors (IA) | the same | none | — |
 | Calhoun County Auditor (IA) | the same | none | — |
-| Pottawattamie, Tama, Wright county auditors (IA) | how many supervisors, and who | none | — |
+| Pottawattamie and Wright county auditors (IA) | how many supervisors, and who | none | — |
+| Tama County Auditor (IA) | the same | none | **ANSWERED same day**, in full: five supervisors with districts, and contact details that need care — District 1's address is a personal one and his telephone is outside the county's own number block, so neither ships until she says which lines are the county's |
 | Franklin County Clerk (IL) | which Public Square address the board meets at | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | nine Michigan city and township clerks | may an automated reader see your board page | none | Ypsilanti Township **ANSWERED same day**: the clerk was passing the request to the township's technology staff, and the correction reached her at 15:23. Lansing acknowledged automatically, with no content |
@@ -146,7 +155,7 @@ which is a claim about the ask and never about the source.
 | Colona, Marion (IA) city clerks; Jones County Auditor; League of Wisconsin Municipalities; Lafayette (Cuba City) and Ozaukee (Port Washington) county clerks; Kentucky Administrative Office of the Courts; Burton (MI) clerk; City of Beloit clerk; City of Oshkosh clerk; WinGIS | none for any | first contact, correct |
 | seven apologies — Clinton, Franklin, and the four double-sent Iowa auditors | see above | drafted 2026-10-01; Dickinson's and Cass's already sent |
 | three Michigan corrections — Shelby, Northville and Ypsilanti townships | written to earlier the same day | drafted 2026-10-01 as replies on their own threads; Ypsilanti's sent 15:23 |
-| five replies to offices that answered — Osceola, Ida, Cass, Outagamie, Brown | answered 2026-10-01 | drafted 2026-10-01 as replies on their own threads. Cass's asks for the pairing as text; Brown's answers the Clerk's own question and says the village will be asked to confirm |
+| nine replies to offices that answered — Osceola, Ida, Cass, Sioux, Tama, Washington, Palo Alto (IA), Outagamie, Brown (WI) | answered 2026-10-01 | drafted 2026-10-01 as replies on their own threads. Four ask something back rather than only thanking: Cass for the pairing as text, Palo Alto whether the 2020 names still stand, Tama which telephone numbers are county lines, Brown answering the Clerk's own question |
 | Calhoun County Auditor | sent 2026-10-01 | **a duplicate of the sent letter**; the draft is marked do-not-send and awaits the operator's deletion |
 
 **Four Wisconsin city-clerk drafts were WITHDRAWN on 2026-10-01** — Janesville, Wausau,
