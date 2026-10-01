@@ -4444,6 +4444,51 @@ it lets the record that tells our readers what is missing say the county was ask
 
 ---
 
+## Ask ia-linn-supervisor-districts — Linn County Auditor: which precincts are in each supervisor district?
+
+> **NOT YET ASKED — DRAFTED 2026-10-01**, to Linn County Auditor Todd Taylor at the address
+> `ia/data/app/ia-county-auditors.json` carries for the county. One message. On send, change
+> `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the Linn blocker in
+> `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in both — and add
+> an `ask` block to that record reading `pending`.
+>
+> **THIS ONE IS ASKED BECAUSE A MEASUREMENT CLOSED EVERY OTHER ROUTE, and the measurement is
+> what makes it a short letter.** The county's own certified 2024 Primary canvass reports its
+> County Board of Supervisors District 3 contest in 41 named precincts, all three party ballots
+> agreeing. Placed against the statewide supervisor-district map this project draws, 36 of those
+> 41 fall inside that map's district 3 and five fall wholly inside its district 2 — Cedar Rapids
+> 01, 04, 07 and 27, and Hiawatha 03. The map's district 3 is a strict subset of the county's:
+> 36 of 41, with nothing the other way. So the two are different lines rather than the same
+> lines under different numbers, and no renumbering on this side can reconcile them.
+
+### What the app already has, and what it is missing
+
+* **Linn's three supervisors are in hand** and are not in doubt. This asks nothing about them.
+* **Every other elected county office ships for Linn.**
+* **The supervisor card draws the district and names nobody**, because naming a supervisor
+  against a district whose lines this project cannot confirm would put a name on the wrong
+  ground.
+
+**What the ask says.** We publish a free map of civic districts, and for Linn County we draw
+supervisor districts from the Legislative Services Agency's statewide layer, dated January 2024.
+Your county's own certified 2024 Primary canvass reports the District 3 board contest in 41
+precincts, and five of those — Cedar Rapids 01, Cedar Rapids 04, Cedar Rapids 07, Cedar Rapids
+27 and Hiawatha 03 — sit inside what that statewide layer calls District 2. We would rather ask
+than assume which is current. Does the county have its current supervisor-district plan in a
+form you can send — a map, a shapefile, or simply a list of which precincts make up each of the
+three districts, whichever is easiest? A precinct list would be enough on its own.
+
+**What is deliberately not asked.** Nothing about reuse terms, because district boundaries are
+public record. Nothing about the supervisors themselves. Nothing is implied about the
+Legislative Services Agency being at fault — a map dated January 2024 may simply predate a
+change the county has since adopted, and the question is only what the lines are today.
+
+**Why a no is still useful.** If the county publishes no plan of its own, saying so closes the
+question: it tells us the repair belongs with the state agency rather than with the county, and
+it lets the record that tells our readers what is missing say the county was asked.
+
+---
+
 ## Ask ky-judge-district-join — Kentucky Administrative Office of the Courts: which district was each judge elected from?
 
 > **SENT 2026-10-01 16:24:34 UTC by the operator, from his own address, to the one desk

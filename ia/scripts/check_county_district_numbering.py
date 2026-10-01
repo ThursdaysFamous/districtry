@@ -94,6 +94,33 @@ that the names carry towns -- so the towns' own census centroids are an
 independent second witness, and on Lyon they agree with the precinct route on
 every pairing they can speak to. RUN BOTH WHERE A PRECINCT NAME CARRIES A TOWN.
 
+LINN COUNTY IS THE FIRST COUNTY MEASURED FROM CERTIFIED PER-PRECINCT RETURNS,
+AND IT IS A NEGATIVE: THE TWO SIDES ARE NOT ONE PLAN UNDER TWO LABELS. Iowa's
+Secretary of State publishes results through Clarity, and a Clarity archive's
+`reports/detailxml.zip` carries every contest broken out per precinct -- so a
+single-member district's contest names exactly the precincts entitled to vote in
+it. Linn's own certified 2024 Primary (electionresults.iowa.gov/IA/Linn/121565/,
+version 342004) runs one board contest, District 3, and all three party ballots
+agree on the same 42 reporting units: 41 named precincts plus an Absentee
+bucket, every one of the 41 present in this instance's shipped precinct layer.
+Placed against the layer's three Linn districts, 36 of the 41 land in the
+layer's district 3 and FIVE land wholly inside its district 2 -- Cedar Rapids
+01, 04, 07 and 27 and Hiawatha 03, each by 166 to 308 interior sample cells with
+no district-3 presence at all, which is a different line and not a digitisation
+sliver. The layer's district 3 is a STRICT SUBSET of the county's District 3,
+36 of 41 with nothing the other way, so no relabelling can reconcile them and
+Linn stays withheld. This is the Butler shape reached by a different route, and
+what it wants is the county's own current plan rather than another derivation.
+
+THE ROUTE IS EXHAUSTED FOR IOWA AND THAT IS A MEASUREMENT RATHER THAN A GUESS.
+Sweeping all 99 counties' Clarity election indexes on 2026-10-01, FIVE answer
+with any election at all -- Henry, Jasper, Lee, Linn and Page -- and of those
+only Linn's 2024 Primary carries a board contest; the STATE-level archive
+(electionresults.iowa.gov/IA/) carries federal and statewide offices only, with
+no board contest at any election and no precinct breakdown, which is the same
+shape as Illinois's state election archive. So certified returns settle one
+Iowa county and cannot settle the other sixteen.
+
 THIS SCRIPT IS THE MEASUREMENT AND NOT A GATE. The map route needs a county map,
 which most counties do not publish; the town route needs a county page that names
 a place per district; the precinct route needs one that names precincts. None can
@@ -124,6 +151,62 @@ CONTROLS = {
     "Rodman":      ((469.8, 307.2), (43.0265836, -94.5273686)),
     "Ruthven":     (( 42.1, 469.2), (43.1300541, -94.8986909)),
 }
+
+# Linn County, measured from its own certified returns and REFUSED. The 41 named
+# precincts the county's 2024 Primary reports under its County Board of
+# Supervisors District 3 contest, all three party ballots agreeing. Recorded so
+# the comparison below can be re-run offline: the external document is read
+# once, here, and everything else is the shipped tree.
+LINN_D3_PRECINCTS = [
+    "Bertram Township",
+    "Boulder-Buffalo",
+    "Brown-Linn",
+    "Cedar Rapids 01",
+    "Cedar Rapids 04",
+    "Cedar Rapids 07",
+    "Cedar Rapids 27",
+    "Fayette Township",
+    "Franklin Township",
+    "Grant Township",
+    "Hiawatha 03",
+    "Jackson Township",
+    "Maine Township",
+    "Marion 01",
+    "Marion 02",
+    "Marion 03",
+    "Marion 04",
+    "Marion 05",
+    "Marion 06",
+    "Marion 07",
+    "Marion 08",
+    "Marion 09",
+    "Marion 10",
+    "Marion 11",
+    "Marion 12",
+    "Marion 13",
+    "Marion 14",
+    "Marion 15",
+    "Marion 16",
+    "Marion 17",
+    "Marion 18",
+    "Marion Township 01",
+    "Marion Township 02",
+    "Monroe Township 01",
+    "Monroe Township 02",
+    "Mount Vernon 01",
+    "Mount Vernon 02",
+    "Otter Creek Township",
+    "Robins",
+    "Spring Grove Township",
+    "Washington Township"
+]
+# The five the county puts in District 3 and the layer draws inside its own
+# district 2. A STRICT SUBSET in one direction and nothing in the other, which
+# is what rules out a renumbering.
+LINN_DISAGREE = ("Cedar Rapids 01", "Cedar Rapids 04", "Cedar Rapids 07",
+                 "Cedar Rapids 27", "Hiawatha 03")
+PRECINCT_LAYER = "ia/data/app/ia-precincts.json"
+
 COUNTY = "Palo Alto"
 LAYER = "ia/data/app/ia-supervisor-districts.json"
 # The pairing this script measured, so a rerun that disagrees is visible rather
@@ -452,6 +535,86 @@ def check_precincts():
     return agreeing
 
 
+def precinct_majority(county, polys, grid=18):
+    """Which of `polys` each of the county's shipped precincts mostly lies in.
+
+    A precinct's own interior is sampled on a grid and each sample tested
+    against every district, so a precinct is placed by where its GROUND is
+    rather than by one representative point -- which is what lets a genuine
+    split be told from a digitisation sliver.
+    """
+    with open(PRECINCT_LAYER, encoding="utf-8") as f:
+        g = json.load(f)
+    out = {}
+    for feat in g["features"]:
+        if feat["properties"].get("county") != county:
+            continue
+        geom = feat["geometry"]
+        parts = ([geom["coordinates"]] if geom["type"] == "Polygon"
+                 else geom["coordinates"])
+        xs = [c[0] for part in parts for ring in part for c in ring]
+        ys = [c[1] for part in parts for ring in part for c in ring]
+        hits = {}
+        for i in range(grid):
+            for j in range(grid):
+                lon = min(xs) + (max(xs) - min(xs)) * (i + 0.5) / grid
+                lat = min(ys) + (max(ys) - min(ys)) * (j + 0.5) / grid
+                if not contains(lon, lat, geom):
+                    continue
+                for d, dgeom in polys.items():
+                    if contains(lon, lat, dgeom):
+                        hits[d] = hits.get(d, 0) + 1
+        if hits:
+            out[feat["properties"]["name"]] = max(hits, key=hits.get)
+    return out
+
+
+def check_linn():
+    """Re-prove Linn's REFUSAL offline, against the shipped tree.
+
+    The county's own certified returns are read once, into
+    LINN_D3_PRECINCTS. Everything here is this instance's own files, so the
+    check fails the day either layer is redrawn -- which is exactly when
+    somebody should re-read the county's plan rather than trust this record.
+
+    THE SUBSET IS EXACT IN BOTH DIRECTIONS, which is what rules out a
+    renumbering rather than merely suggesting one: the layer's district 3
+    holds 36 precincts, every one of them among the county's 41, and there is
+    no precinct anywhere in the layer's district 3 that the county's District 3
+    leaves out. Broken on purpose three ways it fails three ways -- a
+    disagreeing precinct dropped from the record, a precinct added that the
+    layer puts in another district, and a precinct named that this instance
+    does not draw at all.
+    """
+    polys = polygons("Linn", expect=3)
+    mostly = precinct_majority("Linn", polys)
+    missing = [n for n in LINN_D3_PRECINCTS if n not in mostly]
+    if missing:
+        sys.exit("check-county-district-numbering: FAIL -- Linn's certified "
+                 "District 3 names %d precinct(s) this instance no longer "
+                 "draws: %s" % (len(missing), ", ".join(sorted(missing))))
+    canvass = set(LINN_D3_PRECINCTS)
+    layer3 = {n for n, d in mostly.items() if d == "3"}
+    extra = sorted(layer3 - canvass)
+    disagree = sorted(canvass - layer3)
+    if extra:
+        sys.exit("check-county-district-numbering: FAIL -- the layer's Linn "
+                 "district 3 is no longer a subset of the county's District 3; "
+                 "it now also holds %s. The two plans have moved, so re-read "
+                 "the county's own plan." % ", ".join(extra))
+    if tuple(disagree) != LINN_DISAGREE:
+        sys.exit("check-county-district-numbering: FAIL -- Linn's disagreement "
+                 "has moved: %s, against the recorded %s"
+                 % (", ".join(disagree), ", ".join(LINN_DISAGREE)))
+    print("check-county-district-numbering: Linn -- %d of %d precinct(s) the "
+          "county certifies in its District 3 land in this layer's district 3, "
+          "and %d land wholly inside its district 2 (%s). The layer's district "
+          "3 is a strict subset of the county's, so this is two plans and not "
+          "two numberings; Linn stays withheld."
+          % (len(canvass) - len(disagree), len(canvass), len(disagree),
+             ", ".join(disagree)))
+
+
 def main():
     polys = polygons()
     apply, rms, rot = fit(list(CONTROLS))
@@ -484,6 +647,7 @@ def main():
           % (len(CONTROLS), len(identity), len(got)))
     check_towns()
     check_precincts()
+    check_linn()
 
 
 if __name__ == "__main__":
