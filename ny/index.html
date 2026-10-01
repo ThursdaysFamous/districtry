@@ -12831,9 +12831,18 @@ function initNycExplorer() {
         var roster = (result.roster || {})[key] || {};
         wrap.appendChild(renderBodyIntro({
           title: roster.board || (county + " County Board of Supervisors"),
+          // THE SECOND CLAUSE EXISTS BECAUSE OF GLENS FALLS. The first draft
+          // said flatly "the seat is the town or city", which is true of
+          // every unit in three of the four counties and false in Warren,
+          // where the city of Glens Falls elects a supervisor from each of
+          // its five wards and the town of Queensbury elects a Town
+          // Supervisor plus four County Supervisors. The card names each
+          // person's own seat beside them, so the note says that rather
+          // than a sentence the card's own rows contradict.
           note: "In this county the county board is the towns' and cities' own "
-            + "supervisors sitting together, so there is no separate county "
-            + "district: the seat is the town or city."
+            + "supervisors sitting together, so no separate county district is "
+            + "drawn. Where a unit sends more than one supervisor, each one's "
+            + "own seat is named beside them."
         }));
         var people = nySupervisorsFor(result.roster, key, result.unit);
         if (people.length) {
@@ -12884,8 +12893,10 @@ function initNycExplorer() {
     label: "County Board Supervisor",
     style: { color: "#0E5A8A", weight: 2, fillColor: "#2E7FAE", fillOpacity: 0.05, dashArray: "9 3 3 3" },
     counties: [
+      nySupervisorEntry("delaware", "Delaware"),
       nySupervisorEntry("saratoga", "Saratoga"),
-      nySupervisorEntry("schoharie", "Schoharie")
+      nySupervisorEntry("schoharie", "Schoharie"),
+      nySupervisorEntry("warren", "Warren")
     ]
   });
 

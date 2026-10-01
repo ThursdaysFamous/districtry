@@ -454,15 +454,21 @@ try {
   // 2c2. THE OTHER FORM OF COUNTY BOARD. county-supervisor is the second
   //      dispatched concept over New York's counties, and it answers where the
   //      county board seat IS the town or city: the supervisor elected to run
-  //      your town is the one who votes for you at the county. Two entries
-  //      today, Saratoga and Schoharie.
+  //      your town is the one who votes for you at the county. Four entries
+  //      today: Saratoga, Schoharie, Warren and Delaware.
   //
-  //      THE CLAIM WORTH HAVING IS THE TWO-SEAT ONE. New York County Law lets a
-  //      county weight its board so a larger unit sends more than one
-  //      supervisor, and the city of Saratoga Springs sends two. A roster keyed
-  //      one name per town would pass every other check in this file and name
-  //      half a reader's representation, so the card is asserted to carry BOTH
-  //      names the shipped roster gives that unit.
+  //      THE CLAIM WORTH HAVING IS THE SEVERAL-SEATS ONE, and it is asserted
+  //      three ways because the three are different arrangements rather than
+  //      one repeated. New York County Law lets a county weight its board, so
+  //      the city of Saratoga Springs sends TWO supervisors elected
+  //      city-wide; the city of Glens Falls sends FIVE, one elected from each
+  //      of its wards under its own charter; and the town of Queensbury sends
+  //      FIVE, one Town Supervisor plus four County Supervisors. A roster
+  //      keyed one name per unit would pass every other check in this file
+  //      and name a fifth of a Glens Falls reader's representation, so each
+  //      card is asserted to carry EVERY name the shipped roster gives its
+  //      unit. Glens Falls also asserts the ROLE, because five names with no
+  //      role reads as five people who all represent the whole city.
   //
   //      NO NAME IS A LITERAL HERE, for the county-legislature reason above:
   //      every name is read out of the shipped roster, so the join is proved and
@@ -477,7 +483,13 @@ try {
       ["the city of Saratoga Springs", "43.06900,-73.81775", "saratoga",
        "Saratoga Springs", "City of Saratoga Springs"],
       ["the town of Schoharie", "42.67590,-74.30704", "schoharie",
-       "Schoharie", "Town of Schoharie"]
+       "Schoharie", "Town of Schoharie"],
+      ["the city of Glens Falls, seated by ward", "43.30774,-73.65564",
+       "warren", "Glens Falls", "City of Glens Falls"],
+      ["the town of Queensbury, one town seat and four county seats",
+       "43.33701,-73.68177", "warren", "Queensbury", "Town of Queensbury"],
+      ["the town of Delhi", "42.27261,-74.96215", "delaware",
+       "Delhi", "Town of Delhi"]
     ];
     for (const [label, pt, key, unit, identifier] of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -492,6 +504,19 @@ try {
         `${people.join(" / ")} | ${card.text.slice(0, 140)}`);
       await context.close();
     }
+    // THE ROLE IS ITS OWN ASSERTION, on the one unit where the names alone
+    // would mislead. Glens Falls elects a supervisor per ward and this app
+    // draws no Glens Falls ward, so the card shows a reader five people of
+    // whom one is theirs; the ward each holds is the only thing that says so.
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context,
+      `${BASE}#point=43.30774,-73.65564&layers=county-supervisor`);
+    const card = await cardText(page, "county-supervisor");
+    const roles = roster.warren.units["Glens Falls"].members.map((m) => m.role);
+    check(`each Glens Falls supervisor's ward is on the card (${roles.length})`,
+      roles.length === 5 && roles.every((r) => r && card.text.includes(r)),
+      `${roles.join(" / ")} | ${card.text.slice(0, 160)}`);
+    await context.close();
   }
   {
     // Hidden where no county in the table covers the point. The upstate anchor

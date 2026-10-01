@@ -128,7 +128,7 @@ ROSTER_FILES = {
     "cec-members.json": 0,  # honest placeholder (floor 0): CEC members are decentralized across 32 independent council sites with no scrapable central source or Open Data dataset; card links to the DOE hub (see scripts/cec_scraper.py)
     "borough-officials.json": 5,  # 10 offices (5 BP + 5 DA), operator-maintained from official sites; floor 5 = one entry per borough (build_borough_officials.py keys by borough)
     "tompkins-legislature-members.json": 17,  # The 16 legislators keyed by district plus one `board` key carrying the Legislature's own office, switchboard, fax and term — so 17 keys, not 16. People from the county's own Legislature page and contact sheet, never from the boundary layer's own member column.
-    "ny-supervisor-members.json": 2,  # The board-of-supervisors counties, keyed by county, each carrying its board's name, its own page's stated seat count and a members list per town or city. The floor is the county count rather than the seat count, because the roster grows one county at a time while the builder already refuses to write a county whose seats do not add up.
+    "ny-supervisor-members.json": 4,  # The board-of-supervisors counties, keyed by county, each carrying its board's name, its own page's stated seat count and a members list per town or city. The floor is the county count rather than the seat count, because the roster grows one county at a time while the builder already refuses to write a county whose seats do not add up.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

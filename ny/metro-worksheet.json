@@ -906,7 +906,7 @@
       },
       {
         "file": "ny-supervisor-members.json",
-        "min_keys": 2,
+        "min_keys": 4,
         "note": "The board-of-supervisors counties, keyed by county, each carrying its board's name, its own page's stated seat count and a members list per town or city. The floor is the county count rather than the seat count, because the roster grows one county at a time while the builder already refuses to write a county whose seats do not add up."
       }]
   },
