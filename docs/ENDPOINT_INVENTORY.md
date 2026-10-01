@@ -121,7 +121,7 @@ prose.
 | instance | layers that send the point | registered layers |
 |---|---|---|
 | il | 5 | 40 |
-| ny | 0 | 35 |
+| ny | 0 | 36 |
 | ca | 0 | 16 |
 | wi | 1 | 31 |
 | ia | 0 | 20 |
@@ -180,7 +180,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`, `library`, `early-voting`.
 - Fetched by the app itself with no layer on, for its coverage tests: `data.cityofchicago.org`, `tigerweb.geo.census.gov`.
 
-#### ny — 14 of 35 layers fetch their shapes
+#### ny — 14 of 36 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -201,6 +201,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `county`, `nys-central-hs-district`, `nys-school-district`, `municipality`, `village`, `borough`, `judicial-district`, `borough-president`, `district-attorney`, `congress`, `municipal-court`, `state-senate`, `state-assembly`, `county-legislature`.
 - Point layers (locations, not shapes): `school-site`, `police-station`, `fire-station`, `post-office`, `library`, `early-voting`, `polling-place`.
+- **Not measured** — declared since the probe ran: `county-supervisor`.
 
 #### ca — 4 of 16 layers fetch their shapes
 
@@ -262,14 +263,14 @@ measured until the next run describes it.
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
 | il | 130 | 389 | 6 |
-| ny | 38 | 29 | 0 |
+| ny | 38 | 30 | 0 |
 | ca | 17 | 14 | 0 |
 | wi | 91 | 263 | 5 |
 | ia | 70 | 58 | 0 |
 | mi | 31 | 59 | 1 |
 | mn | 20 | 8 | 0 |
 | ky | 10 | 7 | 0 |
-| **total** | **407** | **827** | **12** |
+| **total** | **407** | **828** | **12** |
 
 **134 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
