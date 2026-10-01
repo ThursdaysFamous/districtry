@@ -1452,7 +1452,13 @@ ANSWERS = {
         "school-district-boundaries": answers("school-district-unified"),
         "courts-by-district": answers("ia-judicial-district"),
         # Iowa townships are limited purpose and none reaches the city floor.
-        # Nothing draws a township government, so this is open.
+        # The app DRAWS them and, since 2026-10-01, names the clerk and trustees
+        # of 186 of them from the twelve counties that publish a roster — which
+        # is why the older reading here, that nothing draws a township
+        # government, no longer describes the tree. It stays open on the
+        # measurement rather than on that reading: Iowa has roughly 1,600 civil
+        # townships, so about 1,400 still name nobody and the card says so on
+        # every one of them.
         "sub-county-government": OPEN,
         "school-boards-by-district": answers("school-director-district"),
         "precincts": answers("precinct"),
@@ -1633,6 +1639,7 @@ CITY_ROSTERS = {
     "wi": [("wi/data/app/wi-alderpersons.json", "place5"),
            ("wi/data/app/wi-municipal-boards.json", "geoid7")],
     "ia": [("ia/data/app/ia-city-officials.json", "geoid7"),
+           ("ia/data/app/ia-city-councils.json", "geoid7"),
            ("ia/data/app/ia-county-city-officials.json", "geoid7")],
 }
 
@@ -1879,6 +1886,109 @@ NAMED_UNIT_CASES = (
     ({"districts": 4, "seats": 4, "municipality": "Altoona"}, False,
      "seat counts and a municipality name are structure, not people"),
 )
+
+
+# A ROSTER NOBODY ADDED TO THE TABLES ABOVE READS AS AN ABSENCE, SILENTLY. Both
+# tables are stated, which is right -- a filename cannot say which unit a file
+# names, and a clerk directory cannot say that a clerk does not govern -- but a
+# stated table has one cost: a file nobody added reads exactly like a file that
+# does not exist. On 2026-10-01 Iowa shipped its fourteen city councils and the
+# city tier went on reporting 4 of 18 units answered, because the row that reads
+# the file is written by hand and nobody wrote it. Nothing was red.
+#
+# So the sweep below runs the question backwards: any file in a live instance's
+# own `data/app` whose keys reach units of that state at the floor AND which
+# names people is a candidate for the city tier, and an undeclared candidate
+# FAILS. Two ways to clear it -- read the file, or record here why it is not a
+# governing body.
+#
+# Declared entries are re-audited every run and fail when they stop describing
+# the tree, which is the property `ACCEPTED_DROPS` has: an entry naming a file
+# that is gone, or one the sweep no longer finds, is an exception covering
+# nothing.
+CITY_ROSTER_NOT_GOVERNING = {
+    # relative path: (why it is not a governing body, when that was decided)
+    "wi/data/app/wi-municipal-clerks.json": (
+        "A CLERK IS NOT A COUNCIL. This names the clerk of 608 Wisconsin "
+        "municipalities, which is the person who runs the election and keeps "
+        "the records, not the body that governs. Counting it would answer all "
+        "35 of this state's units at the floor with nobody who holds a seat. "
+        "Wisconsin's own instructions state this rule for exactly this file.",
+        "2026-10-01"),
+}
+
+
+def city_roster_candidates(tag, expected):
+    """Files in this instance's `data/app` that could answer its city tier.
+
+    A candidate is keyed by the unit's own Census place id -- either the whole
+    7-digit id or the 5-digit place within this state, the two joins the tables
+    above use -- and names at least one person under a key that is a unit at the
+    floor. Everything else in `data/app` is a different question: a 5-digit key
+    is a county and a 10-digit one a county subdivision, and neither is the city
+    tier.
+    """
+    units = {u["geoid"] for u in expected.get("units", {}).get(tag, [])}
+    fips = STATE_FIPS_OF.get(tag, "")
+    folder = os.path.join(REPO_ROOT, tag, "data", "app")
+    found = {}
+    if not units or not os.path.isdir(folder):
+        return found
+    for name in sorted(os.listdir(folder)):
+        if not name.endswith(".json"):
+            continue
+        rel = "%s/data/app/%s" % (tag, name)
+        try:
+            with open(os.path.join(folder, name), encoding="utf-8") as fh:
+                doc = json.load(fh)
+        except (ValueError, OSError):
+            continue
+        if not isinstance(doc, dict):
+            continue
+        hits = [k for k in doc
+                if (str(k) in units or (fips and fips + str(k) in units))
+                and isinstance(doc[k], (dict, list))
+                and _named_anywhere(doc[k])]
+        if hits:
+            found[rel] = len(hits)
+    return found
+
+
+def check_city_rosters(live, expected):
+    """Every candidate city roster is either read or recorded as not governing."""
+    bad = 0
+    read = {rel for rows in CITY_ROSTERS.values() for rel, _join in rows}
+    read |= {rel for mapping in CITY_FILES.values()
+             for rel in mapping.values()}
+    seen = set()
+    for tag in sorted(live):
+        found = city_roster_candidates(tag, expected)
+        for rel, hits in sorted(found.items()):
+            seen.add(rel)
+            if rel in read or rel in CITY_ROSTER_NOT_GOVERNING:
+                continue
+            bad += 1
+            print("build-eam-status: FAIL — `%s` names people for %d of %s's "
+                  "unit(s) at the floor and the city tier does not read it, so "
+                  "those units read as unanswered. Either add it to "
+                  "CITY_ROSTERS (or CITY_FILES, if it is one city) or record "
+                  "in CITY_ROSTER_NOT_GOVERNING why it is not a governing "
+                  "body." % (rel, hits, tag))
+    for rel, (_why, when) in sorted(CITY_ROSTER_NOT_GOVERNING.items()):
+        if not os.path.exists(os.path.join(REPO_ROOT, rel)):
+            bad += 1
+            print("build-eam-status: FAIL — CITY_ROSTER_NOT_GOVERNING records "
+                  "`%s` (%s) and that file is gone, so the exception covers "
+                  "nothing." % (rel, when))
+        elif rel not in seen:
+            bad += 1
+            print("build-eam-status: FAIL — CITY_ROSTER_NOT_GOVERNING records "
+                  "`%s` (%s) and the sweep no longer finds it, so the "
+                  "exception covers nothing. Retire the entry." % (rel, when))
+        else:
+            print("build-eam-status: `%s` is recorded as not a governing body "
+                  "(%s), still matching" % (rel, when))
+    return bad
 
 
 def check_named_unit():
@@ -2272,6 +2382,8 @@ def measure(counties, paths, B):
     check_county_universe(live)
     check_answer_map(live)
     expected = load_expected_units()
+    if check_city_rosters(live, expected):
+        sys.exit(1)
     covering = covering_records(live)
     rows = []
 
