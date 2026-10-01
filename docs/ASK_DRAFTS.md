@@ -552,6 +552,15 @@ That is four Iowa counties answered from one afternoon's letters, and the shape 
 keeping is the one `ia-tama-supervisor-map` already recorded: the ask opened by saying
 the problem was at this end, and the county answered it by sending the thing it holds.
 
+**A FOLLOW-UP IS HELD FOR AROUND 8 OCTOBER, AND DELIBERATELY KEPT OUT OF THE THANK-YOU.**
+The Iowa work found that the five-district plan she sent is NEWER than the precinct data
+this project holds, so the next thing Tama needs is the county's current precinct list.
+That is a second ask, and putting it in a letter whose whole point is that nothing further
+is being asked would have made the thank-you untrue in its own closing line. It waits
+about a week, as its own letter, and it is recorded here rather than left to be
+remembered. **A THANK-YOU THAT SAYS IT ASKS NOTHING MUST ASK NOTHING**, even when the next
+question is already known.
+
 ### A KENTUCKY REPLY ASKS WHY A POLICY ABOUT OUR READER STOPS A PERSON READING A PAGE
 
 The Court of Justice's Data Officer answered `ky-judges-by-district` twice. The first
