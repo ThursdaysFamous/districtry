@@ -44,6 +44,35 @@ re-check the catalog each cycle in case that changes).
 
 ---
 
+## Per-file re-checks — the boundary files no job rewrites
+
+`docs/EAM_STATUS.md` measures whether every data file the app reads is under a
+stated plan, and on 2026-10-01 **seven of San Francisco's fourteen were under
+none.** Six are boundary geometry and one is the gap record; not one of them
+names a person, so no officeholder was going stale. Geometry is exactly the
+case a weekly job cannot serve — a scraper run every Tuesday against a city
+boundary that has not moved since 1856 is a guaranteed no-op — and the honest
+alternative is a stated cadence here.
+
+Each row names its own files so the instrument can see them. The checkpoint
+rows below state the same triggers in prose and name no file, which is why
+these exist beside them rather than instead of them.
+
+| Cadence | Files | Why this clock | Last done |
+|---|---|---|---|
+| **Annually**, when TIGERweb publishes a new legislative vintage | `congress-districts.json` | *Decennial + court/mid-decade.* The annual vintage roll is the only detector this file has, and it is not theoretical: the 119th→120th roll in 2026 carried a real statewide California remap (Prop 50), which the SF clip happened to survive unchanged. The decennial response is the 2031–2032 checkpoint below | 2026-09-03 (rebuilt on CD120; SF's six districts identical in both vintages) |
+| **Annually**, on the same TIGERweb vintage roll | `ca-senate-districts.json`, `ca-assembly-districts.json` | *Decennial.* Same source and same roll as the row above, split from it because the 2026 roll re-read Congress and did not re-read these two — one row would have claimed a verification that did not happen | **_(never)_** |
+| **Annually**, on the same TIGERweb vintage roll | `san-francisco-county-outline.json` | *Almost-never.* The city and county boundary is consolidated and has not moved since 1856; TIGER re-publishing it is the only thing that can change these bytes. A year is the shortest cadence that is not a pretence | **_(never)_** |
+| **Annually** | `police-districts.json` | *Administrative, rare.* SFPD redraws its districts by departmental decision, last in 2015, so there is no date to anchor to. The monthly source scan probes the DataSF dataset for reachability and a rename; it cannot see the boundary itself move under the same dataset id, which is what this re-read is for | **_(never)_** |
+| **Annually** | `sf-neighborhoods.json` | *Administrative, rare.* The city's 41 analysis neighborhoods are maintained by Planning and revised on no schedule. Same gap as the row above: the dataset id is watched, the geometry inside it is not | **_(never)_** |
+| **Annually** | `coverage-gaps.json` | The one file here with no upstream: its source is the guidebook's own gaps block, and `build_coverage_gaps.py --check` re-emits and compares on every pull request, so file-versus-record drift is already impossible. The cadence is for the RECORD — a gap can go stale in the direction nothing detects, which is a blocker quietly lifting with no one re-reading it | **_(never)_** |
+
+**A `--check` PROVES A FILE MATCHES ITS INPUTS AND NEVER THAT THE INPUTS ARE
+CURRENT**, which is why the gap record is in the table rather than excused by
+it.
+
+---
+
 ## Fixed checkpoints (put these on a real calendar)
 
 | Date | Trigger | Action | Done |
