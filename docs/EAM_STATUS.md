@@ -38,7 +38,7 @@ different thing from one it failed.
 
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
-| ca | **--M·** | — | — | 0 | 0 | — | 14 | all | 10 of 13 levels |
+| ca | **--M·** | — | — | 0 | 0 | — | 14 | all | 12 of 13 levels |
 | ia | **EAM·** | 99 | 99/99 | 81 | 81 | all | 57 | all | 9 of 13 levels |
 | il | **EAM·** | 102 | 102/102 | 572 | 996 | all | 398 | all | 10 of 13 levels |
 | ky | **EAM·** | 120 | 120/120 § | 0 | 0 | by record | 7 | all | 3 of 13 levels |
@@ -61,11 +61,7 @@ per county, so each one is named under its state below.
 - **E and A do not apply.** San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
   The mark therefore rests on Maintained alone.
 - **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `bart-directors.json`, `ca-assembly-districts.json`, `ca-senate-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `early-voting-sites.json`, `police-districts.json`, `san-francisco-county-outline.json`, `sf-neighborhoods.json`, `supervisor-districts.json`
-- **Covered: no.** 3 of the 13 expected levels of government are not answered. Each is a floor: no gap record is credited towards this test yet, so a level listed here may already have one behind it.
-  - **8. Courts whose judges are elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+- **Covered: no.** 1 of the 13 expected levels of government are not answered. Each is a floor: no gap record is credited towards this test yet, so a level listed here may already have one behind it.
   - **13. Tribal governments** — open (required only where the state has the level)
 
 ### ia — EAM·
