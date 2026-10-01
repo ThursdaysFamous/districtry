@@ -30,7 +30,7 @@ STRING. The sentence above said "several sites in this fleet" for ten days
 (it landed 2026-09-02) without naming one. scripts/probe_user_agents.py asks each host the same page
 four ways — each stack with UA_ROSTER_BOT and with UA_CHROME_WIN_126 plus
 UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
-2026-09-12 across 296 hosts, of which 283 are reached by a browser-string
+2026-09-12 across 300 hosts, of which 210 are reached by a browser-string
 caller, 66 of them measured or re-measured since — 61 on 2026-09-13 at the page a
 scraper reads rather than the directory above it, four county GIS services on
 2026-09-15, and www.cpsboe.org on 2026-09-23, when the Chicago school board roster
@@ -41,11 +41,21 @@ stack made. (The first sweep read 203: 37 hosts had been probed at the first
 half of a URL split across two string literals, and 23 more at a directory a
 page sat under; not one re-probe moved a host INTO a refusal.) Per file
 (`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
-and the artifact rather than remembered): 101 files send a browser string; 62
+and the artifact rather than remembered): 41 files send a browser string; 2
 of them reach only hosts that serve the token a full page, 22 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 17 reach at least one host that refuses it -- and 267 of
-the 300 measured hosts are still reached by such a caller. `fetch_stdlib` came
+`requests` stack), and 17 reach at least one host that refuses it -- and 210 of
+the 300 measured hosts are still reached by such a caller. The pair 101/62 that
+stood here until 2026-10-01 was the state before SIXTY scrapers were switched
+off a Chrome string onto our own token in one change: every page each of them
+fetches was re-read with the token on that file's own HTTP stack and answered in
+full, which is the measurement that licenses a rename. The 2 left in that bucket
+are the two the sweep deliberately held, both of which fetch hosts discovered as
+they run -- wi_municipal_executive_scraper.py follows each municipality's own
+site out of a county layer, and dupage_municipal_officials_scraper.py each
+village's, and several of those hosts measurably refuse the token. A FILE'S URL
+LITERALS ARE NOT ALWAYS THE HOSTS IT READS, which is why that bucket cannot be
+emptied by arithmetic. `fetch_stdlib` came
 OFF the browser-marker list on 2026-09-25, which is what moved these four: it is
 the CLIENT for two of the four rungs and sends whatever headers its caller
 passes, so naming it says nothing about the User-Agent. Two files were
@@ -136,6 +146,24 @@ def ua_requests_default():
 
 UA_CIVIC_BOT = ("Mozilla/5.0 (compatible; districtry.com civic data bot; "
                 "+https://districtry.com/)")
+
+
+# --- OUR OWN TOKEN, SENT COMPLETELY. The headers a districtry client sends
+# beside UA_ROSTER_BOT, kept here as ONE copy because two readers of one
+# question is where this fleet's recurring defect starts: probe_user_agents.py
+# measures every host with exactly this set and imports it rather than
+# restating it, so a scraper switched to the token sends what was measured.
+# `Accept-Encoding: identity` for the reason the comment inside says -- the
+# stdlib client does not decode for us, and a compressed body measured as-is
+# is how validate_card_links.py called a real 1,705-byte page an 805-byte
+# hollow one. No `sec-ch-ua*` hints: those belong to the Chrome rung and
+# claiming them beside a districtry UA would be a client that does not exist.
+UA_HEADERS_ROSTER_BOT = {
+    "User-Agent": UA_ROSTER_BOT,
+    "Accept": "text/html,application/xhtml+xml,application/pdf,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "identity",
+}
 
 
 # --- The stdlib rung: a DIFFERENT HTTP STACK, plus the client hints a real

@@ -24,7 +24,7 @@ on:
   workflow_dispatch:
     inputs:
       host:
-        description: "Re-measure only this host (leave empty for every host)"
+        description: "Re-measure only these hosts, space-separated (empty = every host)"
         required: false
         default: ""
       reads:
@@ -59,8 +59,17 @@ jobs:
           if [ -n "${{ inputs.host }}" ]; then
             # A targeted run MERGES into the record rather than replacing it,
             # so every other host's reading survives a one-host re-measurement.
+            #
+            # SEVERAL HOSTS IN ONE DISPATCH, because the reading a
+            # challenge-fronted host needs to be released takes three reads
+            # fifteen seconds apart, and running those one dispatch per host
+            # would have each run merge into the record it checked out and drop
+            # the one before it. The input is split on whitespace and each name
+            # passed as its own --host, which the script already accepts.
+            hosts=""
+            for h in ${{ inputs.host }}; do hosts="$hosts --host $h"; done
             python3 scripts/probe_robots_verdicts.py \
-              --host "${{ inputs.host }}" --reads "${{ inputs.reads }}"
+              $hosts --reads "${{ inputs.reads }}"
           else
             python3 scripts/probe_robots_verdicts.py
           fi

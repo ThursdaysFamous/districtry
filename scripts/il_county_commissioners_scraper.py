@@ -40,7 +40,9 @@ _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
 import aia_bundle
 import platinum_canvass
 import requests
-from scraper_common import UA_CHROME_X11_128  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    require_robots_once, UA_CHROME_X11_128,
+)
 
 UA = {"User-Agent": UA_CHROME_X11_128}
 
@@ -1372,6 +1374,22 @@ def fetch(session, url, verify=True):
     then on Calhoun, then on neither, which is the signature of flake rather
     than of a page that changed.
     """
+    # EVERY COUNTY'S RULES ARE READ BEFORE ITS FIRST PAGE, once per host, with
+    # the identity this fetch sends — which for this file is a browser string,
+    # and the client decides which robots group binds, so reading the policy as
+    # anything else would answer a different question. The bundle this caller
+    # verifies with is passed through, because two of these hosts serve a
+    # leaf-only chain and their policy cannot be read without it.
+    #
+    # The two hosts whose recorded readings had shut this file out were both
+    # re-measured from a GitHub runner on 2026-10-01, the vantage the weekly job
+    # crawls from: salinecounty.illinois.gov serves a 126-byte policy and
+    # www.calhouncountyil.gov a 127-byte one, neither matching any path read
+    # here, on all three reads of a deliberate re-measurement fifteen seconds
+    # apart. Both had been recorded as answering every client with a challenge.
+    require_robots_once(url, UA["User-Agent"], headers=UA,
+                        label="il-county-commissioners",
+                        verify=None if verify is True else verify)
     last = None
     for attempt in range(FETCH_ATTEMPTS):
         try:

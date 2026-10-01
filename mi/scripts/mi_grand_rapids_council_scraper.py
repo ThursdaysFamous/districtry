@@ -95,7 +95,8 @@ import urllib.request
 _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
-from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+from scraper_common import (UA_HEADERS_ROSTER_BOT,  # noqa: E402  (FLEET_SHARED)
+                            require_robots_once)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE = os.path.join(HERE, ".cache", "mi_grand_rapids_council.json")
@@ -109,10 +110,14 @@ EXPECT_WARDS = ("1", "2", "3")
 COMMISSIONERS_PER_WARD = 2
 EXPECT_SEATS = len(EXPECT_WARDS) * COMMISSIONERS_PER_WARD + 1   # + the Mayor
 
-UA = {"User-Agent": ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-                     "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"),
-      "Accept": "text/html,application/xhtml+xml,*/*;q=0.8",
-      "Accept-Language": "en-US,en;q=0.9"}
+# OUR OWN IDENTITY, MEASURED RATHER THAN ASSUMED (2026-10-01). This file
+# used to send a Chrome string. Every page it fetches was re-read with
+# scraper_common's districtry token on this file's own HTTP stack and
+# answered in full, so the browser string was claiming a client this
+# project does not run for no measured gain. A site that measurably
+# refuses the token gets the browser rung back, per host, with the
+# measurement written here.
+UA = dict(UA_HEADERS_ROSTER_BOT)
 
 PAUSE_S = 1.0   # the city sets no Crawl-delay; this is politeness, not policy
 

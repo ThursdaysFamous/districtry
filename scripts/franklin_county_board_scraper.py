@@ -61,7 +61,9 @@ import re
 import sys
 
 import requests
-from scraper_common import make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    make_fail, require_robots_once, UA_ROSTER_BOT,
+)
 
 BOARD_URL = "https://franklincountyil.gov/county-board-members/"
 # The Clerk's results system. TURNOUT_URL reports the county's live precinct
@@ -99,6 +101,18 @@ fail = make_fail("franklin-board-scraper")
 
 
 def get(url):
+    # THE COUNTY'S RULES ARE READ BEFORE ITS FIRST PAGE, with the identity this
+    # fetch sends — AND THAT RETIRES THE HOLD ON THIS FILE. It was the one
+    # scraper the robots-adoption sweep deliberately held back, on the measured
+    # ground that franklincountyil.gov answered the robots request itself with a
+    # managed challenge, which is a class needing a ruling rather than a default.
+    # Re-measured from a GitHub runner on 2026-10-01, the vantage the weekly job
+    # crawls from, it serves a 678-byte policy of four groups, none of whose
+    # rules match the paths read here, on all three reads of a deliberate
+    # re-measurement fifteen seconds apart. The challenge was this sandbox's
+    # route, not the county's policy, so no ruling is owed.
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="franklin-board-scraper")
     try:
         resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
         resp.raise_for_status()

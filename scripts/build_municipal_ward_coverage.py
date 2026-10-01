@@ -35,7 +35,7 @@ import urllib.parse
 import urllib.request
 
 from arcgis_error import raise_for_arcgis_error
-from scraper_common import require_robots_once, UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "municipal-ward-coverage.json")
@@ -46,7 +46,7 @@ TIGER_PLACES = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
 COOK_WARDS = ("https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/"
               "MapServer/22/query")
 
-USER_AGENT = UA_CHROME_WIN_124
+USER_AGENT = UA_ROSTER_BOT
 TIMEOUT = 120
 
 # Entries whose municipality list is fixed by the service itself (one service,

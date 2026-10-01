@@ -97,9 +97,10 @@ import unicodedata
 import urllib.parse
 import urllib.request
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                "..", "..", "scripts"))
-from scraper_common import require_robots_once  # noqa: E402
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 import zipfile
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -487,16 +488,21 @@ KENOSHA_CANVASS_WINS = {}
 
 
 def fetch(url, binary=False, tries=3, timeout=60):
-    # ROBOTS.TXT IS READ BEFORE THE FIRST FETCH OF EACH HOST, from 2026-10-01.
-    # This file crawled 30-odd municipal hosts for a month with its policies read
-    # by hand and recorded in the comments above, which is a measurement nobody
-    # re-takes; `scripts/validate_robots_adoption.py` had it on its shrink-only
-    # UNWIRED_AT_SWEEP list for exactly that reason. The seam is asked with UA —
-    # the SAME client this function then crawls as — because which client crawls
-    # decides which group binds, and reading the policy with a thinner or richer
-    # client than the crawl is the inconsistency #1271 settled. It raises on a
-    # refusal, which is what a refusal is for: attempt() turns that into one
-    # city's recorded failure rather than the run's.
+    # EVERY HOST'S RULES ARE READ BEFORE ITS FIRST PAGE, through the shared seam
+    # rather than the hand-recorded readings in the comments above, and with the
+    # identity this fetch sends. This file follows each municipality's own site
+    # out of a list, so the hosts it reaches are not all in its own source and no
+    # fixed table could cover them; asking at the fetch is the only way to ask
+    # about every one.
+    #
+    # The three hosts whose recorded readings had shut this file out were all
+    # re-measured from a GitHub runner on 2026-10-01, the vantage the weekly job
+    # crawls from: viroqua-wisconsin.com and www.altoonawi.gov answer HTTP 404
+    # for robots.txt, so they publish no rules; www.portagewi.gov serves a
+    # 29-byte policy matching none of the paths read here, on all three of a
+    # deliberate re-measurement's reads fifteen seconds apart. Portage states
+    # `Crawl-delay: 5`, which is satisfied by construction for the reason
+    # Dodgeville's 15 already is above — one page per host per run.
     #
     # A ROBOTS VERDICT IS ISOLATED PER CITY AND DOES NOT END THE RUN, which is a
     # deliberate reading of the block above `attempt()` rather than a hole in it.
@@ -516,7 +522,7 @@ def fetch(url, binary=False, tries=3, timeout=60):
     # catchable.
     try:
         require_robots_once(url, UA["User-Agent"], headers=UA,
-                            label="wi_alderperson_scraper")
+                            label="wi-alderperson-scraper")
     except SystemExit:
         # `require_robots_allowed` prints the verdict and exits 1, so the
         # exception itself carries only the status code — the first version of

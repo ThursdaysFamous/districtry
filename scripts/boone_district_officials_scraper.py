@@ -213,6 +213,7 @@ sys.path.insert(0, HERE)
 DEFAULT_OUT = os.path.normpath(os.path.join(HERE, "..", "il", "data", "source",
                                             "boone-district-officials.json"))
 
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 from boone_municipal_officials_scraper import (  # noqa: E402
     HEADERS,
     INDEX_PAGE,
@@ -700,6 +701,17 @@ def _get(url, warnings, what, retries=2):
     """
     import requests
     import time
+    # EVERY HOST'S RULES ARE READ BEFORE ITS FIRST PAGE, once per host, with the
+    # identity this fetch sends. This file follows each district's own website
+    # out of a yearbook, so the hosts it reaches are not all in its own source
+    # and no fixed table could cover them. Re-measured from a GitHub runner on
+    # 2026-10-01, the vantage the weekly job crawls from: idapubliclibrary.org,
+    # the one host whose recorded reading had shut this file out, serves a
+    # 471-byte policy whose binding group matches none of the paths read here, on
+    # all three reads of a deliberate re-measurement fifteen seconds apart. It
+    # had been recorded as answering every client with a managed challenge.
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="boone-district-officials")
     last = None
     made = 0
     for attempt in range(retries + 1):
@@ -1261,6 +1273,9 @@ def normalise_websites(bodies, warnings):
             continue
         url = site if re.match(r"(?i)^https?://", site) else "https://" + site
         try:
+            # This address check is a fetch like any other, so it asks too.
+            require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                                label="boone-district-officials")
             resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT,
                                 allow_redirects=True)
             body["office"]["website"] = url

@@ -28,10 +28,19 @@ count is assumed instead of checked.
 """
 
 import io
+import os
 import re
+import sys
 
 import pymupdf
 import requests
+
+# The shared header set, imported rather than restated. This module is read
+# by scrapers in this same directory, so scripts/ is already importable for
+# every caller; the insert keeps it importable when it is run on its own.
+if os.path.dirname(os.path.abspath(__file__)) not in sys.path:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import UA_HEADERS_ROSTER_BOT  # noqa: E402  (shared machinery)
 
 REPORT_URL = "https://platinumelectionresults.com/history/reports/summary/{slug}/{cid}"
 RESULTS_HOME = "https://platinumelectionresults.com/history"
@@ -40,9 +49,14 @@ RESULTS_HOME = "https://platinumelectionresults.com/history"
 # serves those for elections a carried county did not publish through it.
 MIN_REAL_REPORT_BYTES = 10000
 
-HEADERS = {"User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                          "AppleWebKit/537.36 (KHTML, like Gecko) "
-                          "Chrome/126.0 Safari/537.36")}
+# OUR OWN IDENTITY, MEASURED RATHER THAN ASSUMED (2026-10-01). This file
+# used to send a Chrome string. Every page it fetches was re-read with
+# scraper_common's districtry token on this file's own HTTP stack and
+# answered in full, so the browser string was claiming a client this
+# project does not run for no measured gain. A site that measurably
+# refuses the token gets the browser rung back, per host, with the
+# measurement written here.
+HEADERS = dict(UA_HEADERS_ROSTER_BOT)
 TIMEOUT = 90
 
 ANCHOR = "Number of Precincts:"
