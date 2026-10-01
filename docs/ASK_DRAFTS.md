@@ -258,6 +258,27 @@ the person reading it, and Fayette's opens by naming the OFFICE and the two peop
 written to. **Check who holds the office before writing "you"** — and the sent folder is what
 settles who was written to, since the ledger records the county and not always the person.
 
+**THE TWO MARION LETTERS ARE FIRST APPROACHES AND THE SEARCH IS WHAT ESTABLISHES THAT.**
+`marion-wi-council-districts` asks the Waupaca and Shawano county clerks how many districts the
+City of Marion's council has, the city straddling the county line and the two counties filing its
+wards under two numbering schemes. Neither clerk's address appears anywhere in the sent folder or
+the inbox — the only Wisconsin thread near it is New London's, a different county and a different
+city — so both letters open as a first approach, correctly. **A first letter is a CLAIM about the
+sent folder exactly as a follow-up is**, and it is the cheaper of the two to get wrong, because
+nothing in it looks odd to a reader who has in fact heard from us before.
+
+**The city itself is not written to, and the reason is an address rather than its robots.txt.**
+Marion's site refuses automated clients, which this project obeys, and that governs what we fetch
+and never who we may write to — but the Elections Commission's directory gives the city clerk a
+telephone number and no e-mail, and Wisconsin's municipal clerks' addresses are withheld
+statewide at their own request. So the city route is a telephone call, which is the operator's to
+make, and the two county clerks both publish an address and each holds part of the answer.
+
+**One thing was added to each letter that the ask's text did not carry**: the signature in
+`docs/ASK_DRAFTS.md` ends at the site's address, and both drafts carry Adam's own e-mail above it,
+as every other letter in the mailbox does. A letter asking a clerk for a one-line answer should
+not make her hunt for where to send it.
+
 **THE TAMA MAP ASK IS DRAFTED AS A REPLY RATHER THAN A LETTER, AND THAT IS THE WHOLE POINT
 OF IT.** `ia-tama-supervisor-map` follows an answer, not a silence: the Auditor named all five
 supervisors against districts 1 to 5 within the hour of being asked, and the obstacle is at this
