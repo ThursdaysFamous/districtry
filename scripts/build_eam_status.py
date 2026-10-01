@@ -169,6 +169,8 @@ sys.path.insert(0, HERE)
 # already holds metros.json, the tree and the deploy's own excludes together on
 # every pull request, so reading its two functions means a state reaches this
 # report on the commit that publishes it and no table here has to be remembered.
+from build_coverage_gaps import (  # noqa: E402  (ONE reader of the gaps block)
+    ASK, ASK_OUTCOMES, ASK_SILENCE_DAYS, COVERS, load_gaps)
 from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
     dark_instances, discovered_instances,
 )
@@ -669,7 +671,7 @@ def selftest():
     fifth correction was the classifier, so the classifier gets one.
     """
     bad = check_marks() + check_live_fleet() + check_name_shapes()
-    bad += check_watch_tables() + check_named_unit()
+    bad += check_watch_tables() + check_named_unit() + check_ask_credit()
     for head, want, why in HEADER_CASES:
         got = is_schedule_table([head])
         if got != want:
@@ -705,10 +707,11 @@ def selftest():
         fail("%d case(s) failed" % bad)
     print("build-eam-status: selftest OK — %d shape case(s), %d cadence cell(s), "
           "%d table header(s), %d watch row(s), %d mark case(s), "
-          "%d name-value case(s), %d unit-roster case(s)"
+          "%d name-value case(s), %d unit-roster case(s), "
+          "%d ask-credit case(s)"
           % (len(SHAPE_CASES), len(WHEN_CASES), len(HEADER_CASES),
              len(WATCH_TABLE_CASES), len(MARK_CASES), len(NAME_SHAPE_CASES),
-             len(NAMED_UNIT_CASES)))
+             len(NAMED_UNIT_CASES), len(ASK_CREDIT_CASES)))
 
 
 def check_geometry_names_nobody():
@@ -1606,7 +1609,8 @@ CITY_FILES = {
     "ia": {"1912000": "ia/data/app/cedar-rapids-council-members.json",
            "1921000": "ia/data/app/dsm-council-members.json",
            "1982425": "ia/data/app/waterloo-council-members.json"},
-    "mi": {"2622000": "mi/data/app/mi-detroit-council-members.json",
+    "mi": {"2605920": "mi/data/app/mi-battle-creek-commission-members.json",
+           "2622000": "mi/data/app/mi-detroit-council-members.json",
            "2634000": "mi/data/app/mi-grand-rapids-council-members.json",
            "2641420": "mi/data/app/mi-jackson-council-members.json"},
     "ny": {"3651000": "ny/data/app/council-members.json"},
@@ -1855,7 +1859,131 @@ def check_named_unit():
     return bad
 
 
-def score_covered(tag, counties_named, total_counties, expected):
+def metro_key(tag):
+    """The guidebook's own block name for this instance, read off its worksheet.
+
+    `docs/DATA_LAYER_GUIDEBOOK.md` keys its gaps block by metro (`chicago`,
+    `nyc`, `sf`) where this report keys by tag, and the mapping is in each
+    instance's own `this_metro`. A hand table here would be a second copy of a
+    fact the worksheets already carry, which is how `compose_app.SUBPAGES` came
+    to miss five pages.
+    """
+    ws = os.path.join(REPO_ROOT, tag, "metro-worksheet.json")
+    if not os.path.exists(ws):
+        return None
+    with open(ws, encoding="utf-8") as f:
+        return json.load(f).get("this_metro")
+
+
+ASK_CREDIT_CASES = (
+    (None, False, "no ask at all — the ordinary state of a gap nobody has "
+                  "written to, legal and worth nothing"),
+    ({}, False, "an empty ask is the same as none"),
+    ({"who": "County Clerk Amy Britton", "asked": "2026-08-01",
+      "outcome": "refused"}, True,
+     "a refusal counts straight away, with no follow-up needed"),
+    ({"who": "County Clerk", "asked": "2026-06-01",
+      "followedUp": "2026-06-22", "outcome": "unresponsive"}, True,
+     "silence after one follow-up and thirty days"),
+    ({"who": "County Clerk", "asked": "2026-06-01",
+      "outcome": "answered"}, False,
+     "an answered ask means the data is obtainable, so the work is to use it"),
+    ({"who": "County Clerk", "asked": "2026-06-01"}, False,
+     "an ask with no outcome has not reached one of the standard's two states"),
+)
+
+
+def check_ask_credit():
+    bad = 0
+    for ask, want, why in ASK_CREDIT_CASES:
+        got, _note = ask_credit(ask)
+        if got != want:
+            bad += 1
+            print("  ASK   want=%s got=%s  (%s)" % (want, got, why))
+    print("  ASK   %d ask-credit case(s), %d credited / %d not"
+          % (len(ASK_CREDIT_CASES),
+             sum(1 for _, w, _ in ASK_CREDIT_CASES if w),
+             sum(1 for _, w, _ in ASK_CREDIT_CASES if not w)))
+    return bad
+
+
+def ask_credit(ask):
+    """(qualifies, note) for one record's `ask` block.
+
+    The standard's rule, and nothing more: a refusal counts straight away,
+    silence counts once we have asked, followed up once and waited thirty days
+    from that follow-up. Anything else earns nothing and says why.
+
+    THE THIRTY DAYS ARE NOT COUNTED HERE. `build_coverage_gaps.ask_problems`
+    refuses an `unresponsive` claim whose own follow-up date is more recent than
+    that, in CI, so the outcome this function reads is one the dates already
+    bear out. Counting them again would put the verdict on the calendar: the
+    same record would earn nothing one morning and credit the next with nothing
+    edited, which moves a generated document by the clock and fails `--check` on
+    a day nobody touched the tree.
+    """
+    if not ask:
+        return False, ("no ask recorded, so it covers nothing yet under the "
+                       "standard")
+    outcome = ask.get("outcome")
+    if outcome == "refused":
+        return True, "%s refused on %s" % (ask.get("who"), ask.get("asked"))
+    if outcome == "unresponsive":
+        return True, ("%s asked %s, followed up %s, no reply in %d days"
+                      % (ask.get("who"), ask.get("asked"),
+                         ask.get("followedUp"), ASK_SILENCE_DAYS))
+    if outcome == "answered":
+        return False, ("the ask was answered, so this level is work to do "
+                       "rather than a level to record")
+    return False, "ask outcome %r earns nothing" % outcome
+
+
+def covering_records(live):
+    """{tag: {function key: [record]}} — every gap record declaring `covers`.
+
+    Each record is (id, qualifies, note). `qualifies` is the standard's own rule
+    in `docs/DONE_STANDARD.md`: a refusal counts straight away, silence counts
+    once we have asked, followed up once and waited thirty days from the
+    follow-up. A record with no `ask` is legal and qualifies for nothing, which
+    the standard asks be SAID rather than passed — so it is returned with its
+    reason and printed, not dropped.
+
+    THE DATES ARE NOT RE-ARITHMETICKED HERE. `build_coverage_gaps.ask_problems`
+    already refuses an `unresponsive` claim its own follow-up date does not
+    support, in CI, so by the time a record reaches this function the outcome it
+    states is one the dates bear out. Two readers of the thirty days is exactly
+    the duplication this repository keeps finding wrong; this one reads the
+    stated outcome and names the gate that holds it.
+
+    A `covers` key no function uses FAILS, by name: the whole point of the field
+    is to join a record to a level, and a typo joins it to nothing while looking
+    exactly like a record that counts.
+    """
+    known = {key for _n, key, _t, _r in FUNCTIONS}
+    blocks = load_gaps()
+    out = {}
+    for tag in live:
+        key = metro_key(tag)
+        per = {}
+        for rec in blocks.get(key) or []:
+            covers = rec.get(COVERS)
+            if not covers:
+                continue
+            gid = rec.get("id") or "<unnamed record>"
+            for fkey in covers:
+                if fkey not in known:
+                    fail("%s: gap record `%s` says it covers %r and no expected "
+                         "level has that key. The keys are the ones in "
+                         "`FUNCTIONS`: %s"
+                         % (tag, gid, fkey, ", ".join(sorted(known))))
+            qualifies, note = ask_credit(rec.get(ASK))
+            for fkey in covers:
+                per.setdefault(fkey, []).append((gid, qualifies, note))
+        out[tag] = per
+    return out
+
+
+def score_covered(tag, counties_named, total_counties, expected, records):
     """Every expected function for one instance: verdict, and why.
 
     Returns (entries, covered) where `entries` is one record per function in the
@@ -1864,13 +1992,22 @@ def score_covered(tag, counties_named, total_counties, expected):
     two are reported differently: open is work to do or a record to write,
     unsettled is a question the standard hands to that state's thread.
 
-    NO RECORD IS CREDITED YET, AND THAT IS STATED RATHER THAN IMPLIED. The
-    standard lets a record cover a function, but only after a dated ask — a
-    refusal counts at once, silence after one follow-up and thirty days. Nothing
-    in a gap record says which expected function it is about, and nothing joins
-    one to the ask ledger, so crediting a record here would mean inferring both.
-    The report therefore reports `open` where a record may well already exist,
-    and says so, which understates an app rather than passing one.
+    A RECORD CAN NOW COVER A FUNCTION, which is what `covers` and `ask` on a
+    gap record are for. The standard lets a written record stand in for a level
+    the app cannot answer, but only after a dated ask: a refusal counts at once,
+    silence once we have asked, followed up and waited thirty days. A qualifying
+    record turns `open` into `recorded`, which satisfies the test.
+
+    A record that declares `covers` and carries no qualifying ask leaves the
+    function OPEN and is reported beside it with the reason. That is the
+    standard's own instruction — "a record written without an ask does not
+    count, and the report should say so rather than pass it" — and it is the
+    direction that matters, because the cheap failure here is an app passing on
+    a note somebody wrote without ever contacting a publisher.
+
+    A record is never credited against a function the app ALREADY answers: the
+    verdict is read before the records are, so a stray `covers` cannot turn a
+    real answer into a recorded one.
     """
     entries = []
     for number, key, title, required in FUNCTIONS:
@@ -1906,10 +2043,23 @@ def score_covered(tag, counties_named, total_counties, expected):
             detail = ", ".join("`%s`" % l for l in entry.layers)
         elif verdict == "na":
             detail = entry.reason
+        claimed = records.get(key) or []
+        credited = [r for r in claimed if r[1]]
+        if verdict == "open" and credited:
+            verdict = "recorded"
+            detail = "; ".join("`%s` — %s" % (gid, note)
+                               for gid, _q, note in credited)
+        elif verdict == "open" and claimed:
+            unearned = "; ".join("`%s` — %s" % (gid, note)
+                                 for gid, _q, note in claimed)
+            detail = ((detail.rstrip(". ") + ". " if detail else "")
+                      + "A record declares this level and earns nothing: "
+                      + unearned)
         entries.append(dict(number=number, key=key, title=title,
                            required=required, verdict=verdict, detail=detail,
-                           layers=entry.layers))
-    covered = all(e["verdict"] in ("answered", "na") for e in entries)
+                           layers=entry.layers, claimed=claimed))
+    covered = all(e["verdict"] in ("answered", "na", "recorded")
+                  for e in entries)
     return entries, covered
 
 
@@ -1931,6 +2081,7 @@ def measure(counties, paths, B):
     check_county_universe(live)
     check_answer_map(live)
     expected = load_expected_units()
+    covering = covering_records(live)
     rows = []
 
     for tag in live:
@@ -2086,7 +2237,8 @@ def measure(counties, paths, B):
                      % (tag, label, reach, len(surface), ceiling))
 
         cov_entries, cov = score_covered(
-            tag, counties_named, COVERED_COUNTIES.get(tag), expected)
+            tag, counties_named, COVERED_COUNTIES.get(tag), expected,
+            covering.get(tag) or {})
 
         rows.append(dict(
             tag=tag, scored=scored, total=total, ring=ring,
@@ -2130,24 +2282,50 @@ def is_done(row):
 
 
 VERDICT_WORD = {"answered": "answered", "open": "open",
-                "unsettled": "unsettled", "na": "does not apply"}
+                "recorded": "covered by a record", "unsettled": "unsettled",
+                "na": "does not apply"}
 
 
 def covered_lines(row):
-    """The fourth test for one instance, level by level, in the standard's order."""
+    """The fourth test for one instance, level by level, in the standard's order.
+
+    A level covered by a RECORD is printed as well as a level that is short.
+    Passing on a written record is a different thing from answering, and the
+    whole point of the fourth test is that the difference stays legible — a
+    credited level dropping silently out of this list would make an app read as
+    though it answered something it only accounted for.
+
+    THE FLOOR SENTENCE IS CONDITIONAL, because it is a claim about this
+    instance and it stops being true the moment one of its records is credited.
+    A first draft stated it unconditionally; it was correct on the day the test
+    shipped, when nothing declared `covers`, and would have gone on telling a
+    reader that nothing is credited underneath a list of credited levels.
+    """
     out = []
-    short = [e for e in row["covered_entries"]
-             if e["verdict"] not in ("answered", "na")]
+    entries = row["covered_entries"]
+    short = [e for e in entries if e["verdict"] not in ("answered", "na",
+                                                       "recorded")]
+    recorded = [e for e in entries if e["verdict"] == "recorded"]
+    unearned = [e for e in short if e.get("claimed")]
     if not short:
         out.append("- **Covered: yes.** Every expected level of government is "
-                   "answered.")
+                   "answered%s."
+                   % ("" if not recorded else
+                      " or covered by a record, %d of them by record"
+                      % len(recorded)))
+        for e in recorded:
+            out.append("  - **%d. %s** — covered by a record rather than "
+                       "answered: %s"
+                       % (e["number"], e["title"], e["detail"]))
         _append_not_applicable(row, out)
         return out
-    out.append("- **Covered: no.** %d of the %d expected levels of government "
-               "are not answered. Each is a floor: no gap record is credited "
-               "towards this test yet, so a level listed here may already have "
-               "one behind it."
-               % (len(short), len(row["covered_entries"])))
+    floor = ("Each is a floor: a level listed here may already have a "
+             "record behind it that does not yet say which level it "
+             "covers." if not unearned else
+             "A level whose record earns nothing says so underneath it.")
+    out.append("- **Covered: no.** %d of the %d expected levels of "
+               "government are not answered. %s"
+               % (len(short), len(entries), floor))
     for e in short:
         out.append("  - **%d. %s** — %s%s%s"
                    % (e["number"], e["title"], VERDICT_WORD[e["verdict"]],
@@ -2159,6 +2337,9 @@ def covered_lines(row):
                        "thread: whether the level exists here at all has not "
                        "been measured, so it is neither passed nor failed "
                        "quietly.")
+    for e in recorded:
+        out.append("  - **%d. %s** — covered by a record rather than answered: "
+                   "%s" % (e["number"], e["title"], e["detail"]))
     _append_not_applicable(row, out)
     return out
 
