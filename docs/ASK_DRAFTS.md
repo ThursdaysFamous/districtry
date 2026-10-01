@@ -203,6 +203,16 @@ which is still a draft. **A LIST OF WHAT IS WAITING IS READ OFF THE DRAFT FOLDER
 LIST OF WHAT WENT IS READ OFF THE SENT FOLDER**, within the same minute; assembling either
 from the other plus a belief is how all three of this section's wrong counts were made.
 
+**Counted again from the draft folder at 16:36, after the seven Illinois letters and the two
+replies were added: twenty-five drafts, twenty-one of them addressed and four with the address
+field left empty.** The twelve-plus-three count above was correct when it was taken an hour
+earlier and is left standing rather than edited, which is this file's practice everywhere. Two
+things about the new count are worth stating rather than leaving to arithmetic. Twelve plus the
+nine added here is twenty-one, so every addressed letter is accounted for and none has gone in
+between. And the blank ones are FOUR rather than the three named above — Beloit, Oshkosh and
+Burton plus one dating from 28 September — so the earlier line was a list of three, not a count
+of all of them, and a reader should take the number from a count and the names from the list.
+
 **THE GRUNDY LETTER WAS SENT AND REACHED NOBODY.** The county's own GIS Data Request page
 publishes `gisdatarequest@grundycountyil.gov`, and the county's own mail server refused it
 at 16:17 as an undeliverable address — a published contact point that reaches no one, which
@@ -220,6 +230,31 @@ source to read. Three are still not usable and each for its own stated reason: C
 pairing arrived as pictures, Palo Alto's two documents are dated 2020, and Tama's
 District 1 contact details look personal rather than official. Those three are waiting on
 answers to questions already asked, not on anything further to draft.
+
+**SEVEN MORE ILLINOIS LETTERS WERE DRAFTED AT 16:50 AND EVERY ONE OF THEM IS A THIRD
+LETTER.** `il-seven-counties-board-districts` — Bond, Cumberland, Fayette, Jersey, Lawrence,
+Macoupin and Marion — each about where that county's board district lines run. Before drafting,
+every one of the seven was looked up in the sent folder, and the lookup confirms the ask rather
+than merely agreeing with it: six show a first letter in early August and a follow-up on
+16 August, every message in those threads is ours, and **not one of the six has a reply of any
+kind**, so each letter's opening sentence names dates the clerk can check against their own
+inbox. Jersey's thread also confirms the odd history its letter recounts — a letter on 9 August,
+withdrawn the same morning, and two questions put again on 16 August.
+
+**FAYETTE IS THE ONE THAT PROVES THE CHECK WAS WORTH RUNNING.** A search of its new recipient's
+address returns NOTHING, which is correct: August's letters went to Clerk Barker and then, on the
+office's own auto-reply, to Chief Deputy Clerk Cheryl Pollard. The clerk roster now names Kara
+Dugan. So the letter that would have said "I wrote to you in August" would have been wrong about
+the person reading it, and Fayette's opens by naming the OFFICE and the two people actually
+written to. **Check who holds the office before writing "you"** — and the sent folder is what
+settles who was written to, since the ledger records the county and not always the person.
+
+**TWO REPLIES WERE OWED AND ARE DRAFTED.** Hardin County's Clerk named the county's three
+commissioners seven minutes after being asked, and Palo Alto County's Auditor answered a second
+time within the hour to confirm that her 2020-labelled documents are the plan in force. Both are
+answers to direct questions, so both get a short thank-you naming what will ship and who it is
+credited to. Hardin's also says we will not keep writing to check, because the county publishes
+no website and her note is the only source there is.
 
 **Brown County answered a second time and it is the answer that matters**: asked whether
 the village had been written to, the Clerk replied "Indeed. That's the place to start."
