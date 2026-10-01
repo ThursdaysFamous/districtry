@@ -62,6 +62,28 @@ county publishers control (ruled by Adam, 2026-09-22):
               mention, and the difference is the whole reason this clause can
               be allowed.
 
+              AND THAT SENTENCE WAS THE RULE WHILE THE CODE DID NOT ENFORCE IT,
+              found by the Minnesota thread on 2026-10-01. Every WATCH.md
+              carries several tables and only some are cadence tables; the rest
+              lead with a prose SUBJECT — blockers, open questions, deliberate
+              omissions. Reading the first cell alone for a cadence word meant
+              every long row in those tables counted as a plan for whatever file
+              it happened to name, so Minnesota's narrative about another
+              state's negative point and its record of a coordinate sweep were
+              read as plans for four files neither row is about. Minnesota had
+              SIX files with no plan, not five. The table's own first-column
+              header decides now, against a declared set of time words
+              (`is_schedule_table`), and the fix immediately found its own
+              opposite: a BLANK LINE inside Illinois's exposure-class table had
+              read as the end of that table, dropping the four real plans in the
+              rows after it and taking the one instance that passes all three
+              tests down to two. A headerless fragment is a CONTINUATION; prose
+              or a heading is what ends a table. Re-scored across all eight live
+              instances, no state's mark moves and only Minnesota's count does —
+              which is worth saying plainly, because a stricter reading that
+              changed nothing anywhere would have been the tell that it was not
+              reading anything.
+
               THE WATCHER CASE IS NOT A LOOPHOLE AND WAS LEARNED THE HARD WAY.
               Mason County's roster is transcribed BY HAND on purpose: its
               source is a scanned PDF whose text layer extracts as noise that
@@ -600,6 +622,41 @@ def check_live_fleet():
     return bad
 
 
+# (tag, filename, is it planned, why this case is here). Both halves of the
+# table-header rule, held to the two real files that forced it. A check on only
+# the refusals would pass a reader that credits nothing, and a check on only the
+# credits would pass the lenient reader this replaced.
+WATCH_TABLE_CASES = (
+    ("mn", "fleet-outlines.json", False,
+     "named in passing by a blockers row about ANOTHER state's negative point. "
+     "That table leads with a prose subject, not a cadence"),
+    ("mn", "metros.json", False, "named by a row recording a coordinate sweep"),
+    ("il", "metro-outline.json", True,
+     "a real plan, in a row that sits after a BLANK LINE inside its own "
+     "exposure-class table — the continuation case"),
+    ("il", "coverage-gaps.json", True, "the last row of that same continuation"),
+    ("il", "early-voting-sites.json", True,
+     "a plan in an ordinary `Cadence | What` table, so it holds whichever way "
+     "the continuation rule goes"),
+)
+
+
+def check_watch_tables():
+    """Hold the table-header rule to real rows in real WATCH.md files."""
+    bad = 0
+    for tag, name, want, why in WATCH_TABLE_CASES:
+        got = name in watch_rows(tag)[0]
+        if got != want:
+            bad += 1
+            print("  WATCH %-4s %-32s want=%s got=%s  (%s)"
+                  % (tag, name, want, got, why))
+    print("  WATCH %d watch-row case(s), %d planned / %d not"
+          % (len(WATCH_TABLE_CASES),
+             sum(1 for _, _, w, _ in WATCH_TABLE_CASES if w),
+             sum(1 for _, _, w, _ in WATCH_TABLE_CASES if not w)))
+    return bad
+
+
 def selftest():
     """Hold `shape_of` to files whose shape is settled.
 
@@ -608,6 +665,15 @@ def selftest():
     fifth correction was the classifier, so the classifier gets one.
     """
     bad = check_marks() + check_live_fleet() + check_name_shapes()
+    bad += check_watch_tables()
+    for head, want, why in HEADER_CASES:
+        got = is_schedule_table([head])
+        if got != want:
+            bad += 1
+            print("  HEAD  %-20s want=%s got=%s  (%s)" % (head, want, got, why))
+    print("  HEAD  %d table-header case(s), %d schedules / %d not"
+          % (len(HEADER_CASES), sum(1 for _, w, _ in HEADER_CASES if w),
+             sum(1 for _, w, _ in HEADER_CASES if not w)))
     for cell, want, why in WHEN_CASES:
         got = states_a_when(cell)
         if got != want:
@@ -634,9 +700,10 @@ def selftest():
     if bad:
         fail("%d case(s) failed" % bad)
     print("build-eam-status: selftest OK — %d shape case(s), %d cadence cell(s), "
-          "%d mark case(s), %d name-value case(s)"
-          % (len(SHAPE_CASES), len(WHEN_CASES), len(MARK_CASES),
-             len(NAME_SHAPE_CASES)))
+          "%d table header(s), %d watch row(s), %d mark case(s), "
+          "%d name-value case(s)"
+          % (len(SHAPE_CASES), len(WHEN_CASES), len(HEADER_CASES),
+             len(WATCH_TABLE_CASES), len(MARK_CASES), len(NAME_SHAPE_CASES)))
 
 
 def check_geometry_names_nobody():
@@ -893,6 +960,35 @@ WHEN = re.compile(r"(?i)\b(dail|week|month|quarter|semiannual|semi-annual|annual
 # nothing.
 SAME_AS_ABOVE = re.compile(r"(?i)^\W*same\b")
 
+
+# A ROW CAN ONLY STATE A SCHEDULE IF ITS TABLE IS A SCHEDULE, AND READING THE
+# FIRST CELL ALONE IS WHAT GOT THIS WRONG. Every WATCH.md carries several
+# tables, and only some of them are cadence tables: the rest are blockers
+# (`What | Why it cannot wait | Last done`), open questions (`Question | Why it
+# is open | What would close it`) and deliberate omissions (`What | Why it was
+# left, and what it costs a reader | Last done`). Their first column is a
+# SUBJECT, written as prose — and prose about a boundary or an election matches
+# the cadence vocabulary readily, so every long row in those tables read as a
+# plan for whatever file it happened to mention. Measured on `mn/WATCH.md`: four
+# files were credited by two rows, one a narrative about another state's
+# negative point and one a record of a coordinate sweep, neither of them a plan
+# for anything. Minnesota had six files with no plan, not five.
+#
+# So the table's own header decides, and the header words are DECLARED rather
+# than guessed at from the shape of the cell: measured across all eight live
+# instances' files, the first column is one of `Cadence`, `When`, `Date` or
+# `Edition` in every cadence table and one of `What` or `Question` in every
+# table that is not one. A header this does not know is treated as NOT a
+# schedule, so a new table shape reads as unplanned — visible as files short of
+# a plan — rather than silently crediting its rows.
+TIME_HEADERS = ("cadence", "when", "date", "edition")
+
+
+def is_schedule_table(header_cells):
+    """True when this table's first column commits each row to a time."""
+    first = (header_cells[0] if header_cells else "").strip().strip("*").lower()
+    return first in TIME_HEADERS
+
 # A DATE IS A WHEN, AND ONLY WHERE THE CELL LEADS WITH IT (Adam's ruling,
 # 2026-09-25: "widen the vocabulary to accept a date"). A year — with or without
 # a quarter or a range — is a MORE specific commitment than `annually`, and
@@ -948,6 +1044,31 @@ WHEN_CASES = (
 )
 
 
+# (first header cell, is it a schedule table, why this case is here). Every one
+# is a REAL header row from a WATCH.md in this tree, read 2026-10-01 across all
+# eight live instances — the refused ones being the tables whose rows were
+# counted as plans before this reader existed.
+HEADER_CASES = (
+    ("Cadence", True, "the weekly-jobs table at the top of all eight files"),
+    ("When", True, "the runbook and post-election tables"),
+    ("Date", True, "il's and ca's trigger tables"),
+    ("Edition", True, "il's CPS attendance-dataset roll"),
+    ("What", False,
+     "THE negative test. mn's and ky's blockers table, mn's deliberate "
+     "omissions, ia's and ky's open-questions tables all lead with a prose "
+     "SUBJECT, and prose about a boundary or an election matches the cadence "
+     "vocabulary readily — which is how two mn rows, one about another state's "
+     "negative point and one a coordinate sweep, were read as plans for four "
+     "files neither row is about"),
+    ("Question", False, "mi's open-questions table; a question is not a clock"),
+    ("Trigger", False,
+     "a real header, but never a FIRST column — it is il's and ca's second. "
+     "Refused here so the set cannot be widened by a word that happens to "
+     "appear in a header somewhere"),
+    ("", False, "a separator with no header above it credits nothing"),
+)
+
+
 # ILLINOIS'S WATCH FILE IS THE ROOT ONE, and reading `<tag>/WATCH.md` for
 # every state meant reading NOTHING for the instance that carries most of the
 # fleet's files. Five instances ship `<tag>/WATCH.md`; Illinois does not and
@@ -987,11 +1108,34 @@ def watch_rows(tag):
     if not os.path.exists(path):
         return {}, []
     out, globs, last_when = {}, [], None
+    # The header is the row BEFORE the `|---|` separator, so each row is held
+    # until the separator says whether the table it opened is a schedule.
+    pending, schedule = None, False
     for line in open(path, encoding="utf-8"):
         if not line.lstrip().startswith("|"):
+            # A BLANK LINE DOES NOT END THE TABLE, and reading it as one cost
+            # Illinois its mark. `WATCH.md`'s exposure-class table has a blank
+            # line in the middle of it, for breathing room — the three rows
+            # after it carry no header of their own, so resetting there read
+            # them as a headerless table and dropped the plans for
+            # `metro-outline.json`, `il-state-outline.json`,
+            # `il-county-board-offices.json` and `coverage-gaps.json`. A
+            # fragment with no header and no separator of its own is a
+            # CONTINUATION; what genuinely ends a table is prose or a heading,
+            # and a real new table re-establishes the verdict with its own
+            # header and separator anyway.
+            if line.strip():
+                pending, schedule, last_when = None, False, None
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if not cells or set(cells[0]) <= set("-: "):
+        if not cells:
+            continue
+        if set(cells[0]) <= set("-: "):
+            schedule = is_schedule_table(pending or [])
+            last_when = None
+            continue
+        pending = cells
+        if not schedule:
             continue
         when = None
         if states_a_when(cells[0]):
