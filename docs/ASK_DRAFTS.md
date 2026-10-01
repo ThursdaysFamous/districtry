@@ -2537,12 +2537,20 @@ The Clerk's own named county address, so the name vouches for it.
 
 ## Ask 30 — twelve Iowa counties: which supervisor holds which district
 
-> **ASKED 2026-10-01 — ALL TWELVE. FOUR HAVE ALREADY ANSWERED.**
+> **ASKED 2026-10-01 — ALL TWELVE. SEVEN ANSWERED THE SAME AFTERNOON, FOUR OF THEM WITHIN AN
+> HOUR, AND THREE OF THOSE SEVEN SHIP.**
 > Twelve separate messages, one per county, each to that county's Auditor, every one confirmed
 > in the operator's own sent folder: **Black Hawk, Calhoun, Cass, Dickinson, Guthrie, Ida, Lee,
-> Montgomery, Osceola, Palo Alto, Sioux and Washington**. A follow-up falls due for the eight
-> still silent at about three weeks (2026-10-22) and the thirty-day silence mark at 2026-10-31.
-> Cass is answered-and-pending and is not one of the eight.
+> Montgomery, Osceola, Palo Alto, Sioux and Washington**. A follow-up falls due for the five
+> still silent at about three weeks (2026-10-22) and the thirty-day silence mark at 2026-10-31:
+> **Black Hawk, Calhoun, Guthrie, Lee and Montgomery**. Cass and Palo Alto are
+> answered-and-pending and are not among them.
+>
+> **SEVEN REPLIES IN ONE AFTERNOON IS THE FINDING, not the three counties that shipped.** This
+> project spent weeks measuring the same two statewide files and then re-measuring county pages
+> that do not carry the join; one letter per auditor, sent once, answered more of this gap in
+> four hours than any sweep had. Use the same letter for the counties that remain and for the
+> other Iowa asks.
 >
 > * **Osceola — ANSWERED, and it ships.** Auditor Rochelle Van Tilburg, 2026-10-01, gave all
 >   five pairings in plain text. The county has left the gap record.
@@ -2566,6 +2574,36 @@ The Clerk's own named county address, so the name vouches for it.
 >   the name join into a gate: the county wrote `Devlun Whiteing` where the gated roster spells
 >   it `Devlun P. Whiteing`, so the table now holds each letter VERBATIM and the builder joins an
 >   unmatched name on a unique surname, prints every such join, and stops on an ambiguous one.
+>> * **Sioux — ANSWERED, and it ships.** The Auditor's office, 2026-10-01, sent a table headed
+>   `2026 Board of Supervisors` pairing all five names with their districts, in plain text. The
+>   county has left the gap record, and it is the one county where a letter is the only route
+>   there will ever be: its own host fronts robots.txt with a managed challenge, so no weekly run
+>   reads a page of that site. It exercises the name join a second time — the office wrote
+>   `Carl Vande Weerd` where the gated roster spells it `Carl L. Vande Weerd`.
+> * **Washington — ANSWERED by pointing at the county's own page, and it ships from that page
+>   rather than from the letter.** Auditor Tamera Stewart, 2026-10-01, gave the url of the board
+>   page that states each supervisor's district, plus a district-map PDF. So the weekly scraper
+>   reads it like any other county and the card cites the page. It took two fixes on this side,
+>   each of which had this project saying something false about the county: its menu is built by
+>   script, so the home page carries the word `supervisor` zero times and the board's link could
+>   never be found — now reached through the sitemap the host's own robots.txt declares — and the
+>   roster spells its chair `Jack Seward Jr.`, whose last token is the suffix, which the name
+>   reader took for a surname and then reported as the county naming no district.
+> * **Palo Alto — ANSWERED, and held.** Auditor Carmen Moser, 2026-10-01, sent two PDFs, both
+>   dated **2020**: a supervisor-district letter naming five people and a precinct letter. A
+>   six-year-old letter names who held each district then, which is not who holds it now, so
+>   nothing is published from it and she has been asked whether those five still serve. Like
+>   Cass, **answered-and-pending**: the thirty-day clock does not apply.
+>
+> **ONE REPLY CAME IN ON A DIFFERENT ASK AND IS WORTH READING HERE.** Tama County Auditor Karen
+> Rohrs, 2026-10-01, named five supervisors with their districts 1 to 5 in plain text, answering
+> Ask `ia-pottawattamie-tama-wright-boards`. Nothing ships from it yet and the reason is the map
+> rather than the names: the shipped district layer draws THREE districts for Tama against the
+> five she names, so two supervisors would be placed in districts the map does not draw. It
+> settles the board's size and members and opens a narrower follow-up to the same auditor — the
+> county's current five-district map. **The reply sent in the operator's name says the entry
+> `will list all five supervisors along with their respective districts`, which the shipped map
+> cannot yet support**, so that follow-up matters to a promise already made.
 >
 > **THE FIRST WRITE-UP OF THIS SAID SEVEN SENT AND FIVE DRAFTED, AND IT WENT STALE INSIDE THE
 > HOUR.** The sent folder was read at 14:42–14:46 UTC and the other five went at 14:47, so a

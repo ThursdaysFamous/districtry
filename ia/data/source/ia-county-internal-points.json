@@ -107,13 +107,6 @@
       "name": "Pottawattamie County",
       "slug": "pottawattamie"
     },
-    "sioux": {
-      "fips": "167",
-      "lat": 43.0826179,
-      "lng": -96.1779798,
-      "name": "Sioux County",
-      "slug": "sioux"
-    },
     "tama": {
       "fips": "171",
       "lat": 42.074848,
@@ -127,13 +120,6 @@
       "lng": -93.5687512,
       "name": "Warren County",
       "slug": "warren"
-    },
-    "washington": {
-      "fips": "183",
-      "lat": 41.3294124,
-      "lng": -91.7250385,
-      "name": "Washington County",
-      "slug": "washington"
     },
     "worth": {
       "fips": "195",

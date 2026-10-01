@@ -689,6 +689,38 @@ try {
       // and read perfectly.
       [42.33342, -95.50360, "Ida County", "Devlun P. Whiteing",
        "Devlun Whiteing", "Ida, the name joined to the gated roster"],
+      // SIOUX IS THE NAME JOIN A SECOND TIME, and the only county in this
+      // instance where a letter is the ONLY route there will ever be: its
+      // host fronts robots.txt with a managed challenge, so no weekly run
+      // reads a page of that site. Its auditor's office wrote "Carl Vande
+      // Weerd"; the gated roster spells it "Carl L. Vande Weerd". The point
+      // is inside District 4 and inside no other Sioux district.
+      [43.20237, -96.42920, "Sioux County", "Carl L. Vande Weerd",
+       "Carl Vande Weerd", "Sioux, the name joined to the gated roster"],
+      // WASHINGTON IS THE OPPOSITE BRANCH AND IT IS WHAT MAKES THE FIRST
+      // ONE MEAN SOMETHING. Its auditor answered by pointing at the county's
+      // own board page, so the weekly scraper reads it, the record carries a
+      // sourceUrl, and the card must say the supervisors were READ FROM THAT
+      // PAGE and must NOT say they were confirmed by the county. The name is
+      // also the suffix case: the roster spells its chair "Jack Seward Jr.",
+      // whose last token is the suffix, and reading that as a surname is what
+      // had this county skipped with a sentence about what IT publishes.
+      // The point is the Census's own internal point for the county, which
+      // the shipped geometry puts in District 1.
+      [41.3294124, -91.7250385, "Washington County", "Jack Seward Jr.",
+       "last confirmed by the county itself",
+       "Washington, keyed from the page its auditor pointed at"],
+      // AND THE OTHER SIDE OF THAT SENTENCE, which is the branch the letter
+      // counties created. Bremer is PRESERVED: its robots.txt answers 500, so
+      // the county is not re-read, and its record keeps BOTH a date and the
+      // page it was last read from -- so its card must say READ FROM ITS OWN
+      // BOARD PAGE and must NOT say confirmed by the county. Without this row
+      // a regression collapsing the two wordings into the letter's one would
+      // pass every other assertion here. The point is inside Bremer District 1
+      // and inside no other Bremer district.
+      [42.72795, -92.46789, "Bremer County", "last read from its own board page",
+       "last confirmed by the county itself",
+       "Bremer, preserved from a page it can no longer re-read"],
       [41.03000, -94.64000, "Adams County", "Supervisor",
        "last confirmed by the county itself",
        "Adams, keyed from a page, carries no dated sentence"]

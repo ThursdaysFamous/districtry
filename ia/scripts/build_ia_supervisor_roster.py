@@ -155,6 +155,34 @@ CORRESPONDENCE_ROSTERS = {
             "2026; the county publishes no page that names a district, so "
             "this app has no page to re-read."),
     },
+    "Sioux": {
+        # Transcribed from the reply exactly as the county wrote it, INCLUDING
+        # "Carl Vande Weerd", which the gated roster spells "Carl L. Vande
+        # Weerd". The resolution below turns that into the roster's own
+        # spelling, prints the join every run, and refuses an ambiguous one.
+        "districts": {
+            "1": "John Degen",
+            "2": "Jerry Muilenburg",
+            "3": "Dan Altena",
+            "4": "Carl Vande Weerd",
+            "5": "Craig Hoftyzer",
+        },
+        "readOn": "2026-10-01",
+        "why": (
+            "The Sioux County Auditor's office, by e-mail, 2026-10-01, "
+            "answering this project's ask: a table headed '2026 Board of "
+            "Supervisors' pairing each of the five names with 'Sioux County "
+            "District <n>'. Sent from joevt@siouxcounty.org, copying the "
+            "auditor@siouxcounty.org account the ask was addressed to. "
+            "Sioux's own host fronts robots.txt with a 202 sgcaptcha "
+            "challenge, which is an access control, so this project reads no "
+            "page of that site at all -- the letter is the only route to the "
+            "pairing, and there is no page for a weekly run to re-read."),
+        "cardNote": (
+            "Sioux County's auditor's office gave this pairing by e-mail on 1 "
+            "October 2026; this app reads no page of the county's own site, "
+            "so it has no page to re-read."),
+    },
 }
 
 # A ROBOTS REFUSAL IS A RECORDED DROP -- NOT AN OUTAGE, AND NOT A BLANKET
@@ -358,16 +386,46 @@ def main():
             row = {"name": name}
             if src.get("party"):
                 row["party"] = src["party"]
-            # src carries no phone by construction (the officer builder hoists
-            # the shared board number out of its member rows). Should a source
-            # ever start publishing a genuine per-supervisor line, it has to be
-            # let through deliberately rather than inherited by this loop.
-            if src.get("phone"):
+            # A PER-PERSON NUMBER IS DROPPED HERE, DELIBERATELY AND OUT LOUD.
+            # This used to raise, on the reading that src carries no phone by
+            # construction -- the officer builder hoists a shared board number
+            # out of its member rows -- so a number on a member row would be a
+            # new fact nobody had looked at. It stopped being hypothetical on
+            # 2026-10-01, when Humboldt gained a gated roster read off the
+            # county's own board page and that page prints a number beside each
+            # of its five supervisors.
+            #
+            # IT IS MEASURABLY NOT A SWITCHBOARD, which is the question the
+            # raise asked: the five numbers are FIVE DISTINCT numbers, two
+            # adjacent office extensions and three on other exchanges, where a
+            # shared board line would be one number repeated five times. So it
+            # cannot be hoisted as the board's number either.
+            #
+            # WHAT IT IS DOES NOT SETTLE WHETHER IT SHIPS. This builder
+            # publishes a name and a party and no contact detail for any of its
+            # counties, and three of these five read as personal mobiles rather
+            # than office lines. Shipping them would be a reader-visible change
+            # to the card, for one county, in the class of fact this project is
+            # deliberately cautious with -- so the number is dropped, the drop
+            # is printed on every run, and whether these cards should carry a
+            # supervisor's own line at all is the operator's question rather
+            # than this loop's. The county's own board page is linked from the
+            # card, and it is where the numbers are published.
+            #
+            # ANY OTHER NEW FIELD STILL STOPS THE BUILD. The raise below is
+            # what the phone raise was for: a field this builder has never seen
+            # must be looked at by a person rather than inherited or discarded.
+            extra = sorted(k for k in src
+                           if k not in ("name", "party", "phone"))
+            if extra:
                 raise RuntimeError(
-                    "%s names a phone on supervisor %s -- a per-person number "
-                    "is a new fact here. Confirm it is that supervisor's line "
-                    "and not the board switchboard before shipping it."
-                    % (county, name))
+                    "%s names %s on supervisor %s -- a field this builder has "
+                    "never shipped. Look at it before it is inherited or "
+                    "dropped." % (county, ", ".join(extra), name))
+            if src.get("phone"):
+                print("  phone dropped  %-12s %s -- this builder ships no "
+                      "per-person contact detail; the county's own board page "
+                      "publishes it" % (county, name), file=sys.stderr)
             members[dist] = row
         rec = {
             "county": county,
