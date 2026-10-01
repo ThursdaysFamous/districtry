@@ -19,7 +19,7 @@
   "tls-chain": 1,
   "token-ok": 242,
   "token-refused": 3,
-  "token-refused-and-stack": 21
+  "token-refused-and-stack": 23
  },
  "hosts": {
   "api.us.socrata.com": {
@@ -6586,6 +6586,41 @@
     "scripts/shelby_county_board_scraper.py": "self"
    }
   },
+  "www.shelbytwp.org": {
+   "host": "www.shelbytwp.org",
+   "url": "https://www.shelbytwp.org/government/board-of-trustees",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 148379 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 148379 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "mi/scripts/mi_municipal_parsers_browser.py": "browser"
+   },
+   "measured": "2026-10-01"
+  },
   "www.sioux-city.org": {
    "host": "www.sioux-city.org",
    "url": "https://www.sioux-city.org/247/City-Council",
@@ -6674,6 +6709,41 @@
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
+  },
+  "www.twp.northville.mi.us": {
+   "host": "www.twp.northville.mi.us",
+   "url": "https://www.twp.northville.mi.us/your-government/board-of-trustees",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 139795 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 139795 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "mi/scripts/mi_municipal_parsers_browser.py": "browser"
+   },
+   "measured": "2026-10-01"
   },
   "www.urbandale.org": {
    "host": "www.urbandale.org",

@@ -4305,13 +4305,23 @@ work out how. A yes costs the city nothing it has not already published.
 
 ## Ask mi-city-township-boards — Michigan cities and townships whose board pages this app cannot read
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** One message per unit, to its clerk. Each unit has its
+> **ASKED 2026-10-01 FOR NINE OF THE TEN — the operator sent them from his own mailbox between
+> 14:48 and 14:51 UTC. BURTON IS NOT YET ASKED**, because its clerk's address has not been read
+> (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and the operator sent a
+> correction to each, in the same thread, at 15:21-15:23 UTC; see "Three letters went out on a
+> wrong reason" below. One message per unit, to its clerk. Each unit has its
 > own gap record in `docs/DATA_LAYER_GUIDEBOOK.md` (named in the table below), already carrying
 > `"covers": ["local-government:<its geoid>"]`. On send, add `"ask": {"who": "<clerk, by name>", "asked":
 > "<date>"}` to that unit's record and change its `NOT YET ASKED — DRAFTED` to `ASKED <date>`;
 > add `followedUp` on the follow-up, and `outcome` (`refused`, or `unresponsive` once thirty days
 > have passed from the follow-up) when it is true. A reply that sends the list is `answered`,
 > and the work is then to read it, not to record the level.
+>
+> **The six letters still waiting carry an `ask` field with `outcome: "pending"`** (Rochester
+> Hills, Norton Shores, West Bloomfield, Bedford, Lansing, Wyoming), `asked: 2026-10-01` and
+> the clerk's name; the send times stay in the table above. The other three records were
+> retired when their boards shipped. Lansing's 14:51 reply was an automatic acknowledgement,
+> which is not an answer, so its ask stays pending.
 
 **Why these letters exist.** The done standard asks that a reader in any Michigan city or
 township over 25,000 people be told who governs it. Of the 82 such units, most publish their
@@ -4325,16 +4335,66 @@ has said no, or has been asked, followed up once and given 30 days.
 | Norton Shores (city) | `norton-shores-council-roster` | its robots.txt asks every automated client to stay out | 2026-10-01 |
 | West Bloomfield (charter township) | `west-bloomfield-township-board` | its website vendor's robots.txt, served for the township's own address, asks every automated client to stay out | 2026-10-01 |
 | Bedford (township) | `bedford-township-board` | the same vendor default as West Bloomfield | 2026-10-01 |
-| Shelby (charter township) | `shelby-township-board` | the site answers this client "Access Denied" | 2026-10-01 |
-| Northville (township) | `northville-township-board` | the site answers this client "Access Denied" | 2026-10-01 |
-| Ypsilanti (charter township) | `ypsilanti-township-board` | a Cloudflare challenge page, which is an access control and is never worked around | 2026-10-01 |
+| Shelby (charter township) | `shelby-township-board` | ~~the site answers this client "Access Denied"~~ **wrong: one client was tried; the fleet's browser-class client is served the page** | 2026-10-01 |
+| Northville (township) | `northville-township-board` | ~~the site answers this client "Access Denied"~~ **wrong: one client was tried; the fleet's browser-class client is served the page** | 2026-10-01 |
+| Ypsilanti (charter township) | `ypsilanti-township-board` | ~~a Cloudflare challenge page, which is an access control and is never worked around~~ **no longer true: re-read the same day, the page is served to our own token** | 2026-10-01 |
 | Burton (city) | `burton-council-roster` | a Cloudflare challenge page | 2026-10-01 |
 | Lansing (city) | `lansing-council-roster` | the page answers, but the names are loaded by a script after the page arrives, so the page itself carries none | 2026-10-01 |
 | Wyoming (city) | `wyoming-mi-council-roster` | **the operator's own ruling keeps this project off the city's site entirely.** Whether to write at all is Adam's decision; the draft is here so the decision is the only thing left. | ruling |
 
-**Recipients are compiled at send, deliberately not here.** Most of these sites refuse this
-client, so the clerk's address is read off each unit's own site by a person in a browser, which
-takes a minute each. Guessing a municipal address is how a letter reaches the wrong office.
+**Recipients, recorded 2026-10-01 on the operator's instruction that every letter also goes
+into his mailbox.** This section used to say the addresses would be read off each unit's own
+site at send, because most of these sites refuse this client. They were found instead through a
+web search engine's listings of each unit's own clerk page, without fetching any of the ten
+sites: reading a site that asks us not to, or that challenges us, would be the thing these
+letters are asking permission for. A search listing is one step removed from the page, so
+**open each unit's clerk page in a browser before sending and check the address and the name**.
+Two are known to need it: the search listings name two different people as Ypsilanti
+Township's clerk, so that letter is addressed to the office; and Burton's clerk page hides its
+e-mail addresses from automated readers, so its draft has no recipient yet.
+
+| unit | addressed to | address | where the address came from |
+|---|---|---|---|
+| Rochester Hills | Leanne Scott, City Clerk | `clerksoffice@rochesterhills.org` | the Clerk's Office address the city publishes on its clerk and election pages |
+| Norton Shores | Rachel Pavlich, City Clerk | `rpavlich@nortonshores.org` | the city's clerk page |
+| West Bloomfield Township | Debbie Binder, Township Clerk | `dbinder@wbtownship.org` | the township clerk's directory page |
+| Bedford Township | Trudy L. Hershberger, Township Clerk | `thershberger@bedfordmi.org` | the township clerk's page |
+| Shelby Township | Stanley Grot, Township Clerk | `sgrot@shelbytwp.org` | the township clerk's office page |
+| Northville Township | Cynthia L. Jankowski, Township Clerk | `cjankowski@twp.northville.mi.us` | the township clerk's office page (the office's shared address is Clerk@twp.northville.mi.us) |
+| Ypsilanti Township | the Township Clerk's office | `clerk@ypsitownship.org` | the township clerk's office page; the clerk is named differently by two search listings, so the letter is addressed to the office. Township Clerk Debbie Swanson (`dswanson@ypsitownship.org`) answered it herself |
+| Burton | Racheal Boggs, City Clerk | **none recorded** | NOT FOUND: the city's clerk page hides its e-mail addresses from automated readers, so the address must be read in a browser |
+| Lansing | Chris Swope, City Clerk | `city.clerk@lansingmi.gov` | the Clerk's Office address printed on the city's own published notices |
+| Wyoming | Kelli VandenBerg, City Clerk | `clerk_info@wyomingmi.gov` | a search listing of the city's clerk page; this project does not read the city's site |
+
+**Three letters went out on a wrong reason, and the check that would have caught it ran after
+they were sent.** Before the operator sent anything, each unit's site was meant to be re-read
+with exactly the client that would crawl it; that re-read happened at 15:09 UTC, after the
+send. It held for six (Rochester Hills, Norton Shores, West Bloomfield and Bedford refuse us in
+robots.txt; Burton serves a Cloudflare challenge; Lansing's page names nobody without its
+scripts) and Wyoming was not fetched, by ruling. It failed for three:
+
+- **Shelby and Northville** were recorded "Access Denied, no other client tried", and the letter
+  repeated it. Through the fleet's four-rung probe both serve the board page to the browser
+  string with Chrome client hints on the stdlib stack, the Kendall and McHenry shape. A site
+  that needs a browser-class client has not refused automation, and this project's rule allows
+  that client where the token is measurably refused, so these two need a reader, not a letter.
+- **Ypsilanti** answered with a Cloudflare challenge in the morning and served the scraper's own
+  token in the afternoon. The clerk replied at 15:13 UTC that she has forwarded the request to
+  the township's technology staff.
+
+Each of the three got a short correction, as a reply in the same thread, saying the site can be
+read after all and nothing needs changing; Ypsilanti's also thanks the clerk. The operator sent
+them at 15:21 (Northville), 15:22 (Shelby) and 15:23 UTC (Ypsilanti). **Ypsilanti's office had
+already done work on a request we then withdrew**: the clerk passed it to the township's
+technology staff at 15:13, ten minutes before the correction reached her. That is the cost of
+the wrong order, and it fell on somebody else. The three gap records now say the page is readable and the
+reader is not yet written. **Later the same day the readers were written** and the three
+records retired: Shelby and Northville are read with the browser string their sites serve
+(the measurement is in `mi/scripts/mi_municipal_parsers_browser.py`), Ypsilanti with the roster
+token. The rows below for those three are kept as the record of what the letters said.
+**The order is the lesson: re-read the premise with the crawling
+client before a letter is drafted, not after it is sent.** A record that says "no other client
+was tried" is a record that has not yet been measured.
 
 **Two versions of one letter**, because the ask differs: the robots.txt units are asked for
 permission; the other units are asked whether the refusal is meant for a site like this one.
@@ -4400,6 +4460,253 @@ For **Lansing**, replace the second paragraph's reason with: "because the counci
 its list of members in the browser after the page loads, so the page an automated reader
 receives has no names in it", and ask whether the same list is published anywhere as plain text
 or a file.
+
+### The ten letters, as drafted in the operator's mailbox
+
+Draft A and Draft B above are the templates. These are the filled letters, word for word as
+they sit in Gmail, so the mailbox and this file cannot drift. Lansing takes the variant noted
+above, and Wyoming has its own second paragraph because this project does not read its site
+at all. **Whether to send Wyoming's is still the operator's decision.**
+
+#### Rochester Hills
+
+To: clerksoffice@rochesterhills.org  
+Subject: Rochester Hills City Council members on districtry.com: may an automated reader see your council page?
+
+> Dear Ms. Scott,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Rochester Hills it names nobody, because your website's robots.txt file asks automated tools not to read any of it, and this project follows that request.
+>
+> Three answers would each settle it, and a plain "no" is a useful one:
+>
+> 1. If one automated read of your council members page a week is acceptable, a short note saying so is all I need.
+> 2. If you would rather send the list yourself whenever it changes, that works too, and the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site instead.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Norton Shores
+
+To: rpavlich@nortonshores.org  
+Subject: Norton Shores City Council members on districtry.com: may an automated reader see your council page?
+
+> Dear Ms. Pavlich,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Norton Shores it names nobody, because your website's robots.txt file asks automated tools not to read any of it, and this project follows that request.
+>
+> Three answers would each settle it, and a plain "no" is a useful one:
+>
+> 1. If one automated read of your council members page a week is acceptable, a short note saying so is all I need.
+> 2. If you would rather send the list yourself whenever it changes, that works too, and the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site instead.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### West Bloomfield Township
+
+To: dbinder@wbtownship.org  
+Subject: West Bloomfield Township board members on districtry.com: may an automated reader see your board page?
+
+> Dear Ms. Binder,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For West Bloomfield Township it names nobody, because your website's robots.txt file asks automated tools not to read any of it, and this project follows that request.
+>
+> Three answers would each settle it, and a plain "no" is a useful one:
+>
+> 1. If one automated read of your board members page a week is acceptable, a short note saying so is all I need.
+> 2. If you would rather send the list yourself whenever it changes, that works too, and the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site instead.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Bedford Township
+
+To: thershberger@bedfordmi.org  
+Subject: Bedford Township board members on districtry.com: may an automated reader see your board page?
+
+> Dear Ms. Hershberger,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Bedford Township it names nobody, because your website's robots.txt file asks automated tools not to read any of it, and this project follows that request.
+>
+> Three answers would each settle it, and a plain "no" is a useful one:
+>
+> 1. If one automated read of your board members page a week is acceptable, a short note saying so is all I need.
+> 2. If you would rather send the list yourself whenever it changes, that works too, and the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site instead.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Shelby Township
+
+To: sgrot@shelbytwp.org  
+Subject: Shelby Township board members on districtry.com: your website blocks our weekly reader
+
+> Dear Mr. Grot,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Shelby Township it names nobody, because your website turns away our reader before any page loads. That is very likely a general security setting rather than a decision about us, and I do not try to get around it.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If whoever runs the site can let one automated read of the board page a week through, it identifies itself as "districtry.com roster bot".
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Northville Township
+
+To: cjankowski@twp.northville.mi.us  
+Subject: Northville Township board members on districtry.com: your website blocks our weekly reader
+
+> Dear Ms. Jankowski,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Northville Township it names nobody, because your website turns away our reader before any page loads. That is very likely a general security setting rather than a decision about us, and I do not try to get around it.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If whoever runs the site can let one automated read of the board page a week through, it identifies itself as "districtry.com roster bot".
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Ypsilanti Township
+
+To: clerk@ypsitownship.org  
+Subject: Ypsilanti Township board members on districtry.com: your website blocks our weekly reader
+
+> Dear Township Clerk,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Ypsilanti Township it names nobody, because your website turns away our reader before any page loads. That is very likely a general security setting rather than a decision about us, and I do not try to get around it.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If whoever runs the site can let one automated read of the board page a week through, it identifies itself as "districtry.com roster bot".
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Burton
+
+To: (no address yet: read it off the city clerk page in a browser)  
+Subject: Burton City Council members on districtry.com: your website blocks our weekly reader
+
+> Dear Ms. Boggs,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Burton it names nobody, because your website turns away our reader before any page loads. That is very likely a general security setting rather than a decision about us, and I do not try to get around it.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If whoever runs the site can let one automated read of the council page a week through, it identifies itself as "districtry.com roster bot".
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Lansing
+
+To: city.clerk@lansingmi.gov  
+Subject: Lansing City Council members on districtry.com: is the member list published as plain text?
+
+> Dear Mr. Swope,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Lansing it names nobody, because the council page builds its list of members in the browser after the page loads, so the page an automated reader receives has no names in it.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If the same list of council members is published anywhere as plain text or as a file, a link to it is all I need.
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Wyoming
+
+To: clerk_info@wyomingmi.gov  
+Subject: Wyoming City Council members on districtry.com: how would you like them listed?
+
+> Dear Ms. VandenBerg,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Wyoming it names nobody, because this project has chosen not to read your city's website at all, out of respect for the limits the site sets on automated tools.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If you would be glad for an automated reader to look at the council members page once a week, a short note saying so is all I need.
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
 
 ### What each answer means
 
@@ -4561,12 +4868,31 @@ has measured and one it has merely noticed.
 
 ## Ask ky-judge-district-join — Kentucky Administrative Office of the Courts: which district was each judge elected from?
 
-> **SENT 2026-10-01 16:24:34 UTC by the operator, from his own address, to the one desk
-> below. AWAITING A REPLY.** Verified in his sent folder rather than taken from a report:
-> one message, subject as drafted, salutation `Dear Mr. Sturtevant`, so the sender's own
-> name and address went out filled rather than as the placeholders this public file keeps.
-> The thirty-day silence clock starts 2026-10-01; one follow-up only, and the mailbox
-> thread owns both. Nothing was re-asked and no second copy was sent.
+> **ANSWERED 2026-10-01.** Sent 16:24:34 UTC by the operator from his own address; Daniel
+> Sturtevant replied at 17:16:25 UTC, 52 minutes later, naming two published surfaces. Both
+> were read the same day, and the measurement is in the `ky-judges` record in
+> `docs/DATA_LAYER_GUIDEBOOK.md`. In short: **he answered the question.** The Court of
+> Justice does print the numbered unit beside each judge, not only a county. The directory
+> search he named second (`kcoj.kycourts.net`) is **not a route for this project** — its
+> robots.txt is 25 bytes refusing every client, so nothing is fetched from it. The first,
+> `kycourts.gov`, answers in full: the Supreme Court's own page names all seven justices
+> against their districts, the Court of Appeals' own page all fourteen judges against the
+> seven appellate districts, and 119 of the 120 county pages name each trial judge's
+> judicial circuit or judicial district number — 818 numbered rows in all.
+>
+> **The one follow-up, and it is one line.** Jefferson County's page ships its judge list
+> commented out in its own HTML, and Jefferson is the only county in circuit 30 and in
+> district 30, so Louisville's circuit and district judges are named on no page of that
+> source while every other county's are. Follow-up to send, to the same desk, on the same
+> thread: *"Jefferson County's page at kycourts.gov/Courts/County-Information/Pages/Jefferson.aspx
+> shows no judges where every other county's page lists them — is there another page that
+> names Jefferson's circuit and district judges with their circuit or district number?"* The
+> appellate half needs nothing: both appellate pages are statewide and already cover
+> Jefferson. NOT YET SENT — DRAFTED 2026-10-01; the mailbox thread owns the send and the
+> thank-you.
+>
+> The thirty-day silence clock is retired with the answer. Nothing was re-asked and no
+> second copy of the original was sent.
 >
 > **This ask exists because the geometry arrived without the people.** Kentucky's four court
 > maps shipped on 2026-10-01, dissolved offline from statute — no publisher was asked for any
