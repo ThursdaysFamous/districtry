@@ -3278,3 +3278,76 @@ what the county itself reports.
 **Why a no is still useful.** A refusal, or thirty days of silence after one follow-up, lets
 the record that tells our readers what is missing say that the county was asked, which is the
 difference between a gap we have measured and a gap we have merely noticed.
+
+
+---
+
+## Ask wi-bellevue-board-form — Village of Bellevue Clerk: is the village board elected at large?
+
+> **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the Village Clerk. On send, change
+> `NOT YET ASKED — DRAFTED` to `ASKED 2026-10-01` here and in the Bellevue note in
+> `wi/scripts/build_wi_aldermanic_districts.py`'s `EXCLUDED` table. Follow up once at about
+> 2026-10-21; thirty days of silence after that follow-up is what lets the gap record say the
+> village was asked.
+>
+> **NO PRIOR CONTACT, CHECKED RATHER THAN ASSUMED.** Searched Adam's mail on 2026-10-01 for
+> Bellevue, `bellevuewi.gov` and Seidl across every folder including trash: the only thread is
+> the Brown County one below, and nobody has written to the village. So this is a first letter
+> and is written as one.
+>
+> **WHY IT IS BEING SENT AT ALL, WHEN A COUNTY CLERK HAS ALREADY ANSWERED.** Brown County
+> Clerk Patrick Moynihan replied on 2026-10-01: "They appear to be at large. Have you contacted
+> Bellevue for any clarifying statements? The Municipal Clerk Michelle Seidl's email is
+> mseidl@villageofbellevuewi.gov". **"Appear to be" is a hedge and not the village's own
+> statement**, and the thing being decided is whether a card tells a reader their village board
+> is elected by the whole village. This project does not print a governing body's form on
+> somebody's qualified guess, however well informed — so Bellevue is not recorded as at-large on
+> that reply, and the county clerk himself pointed at the person who can say. He also gave the
+> address, which is why no address had to be hunted for.
+>
+> **WHAT IS AT STAKE IS WHICH CARD BELLEVUE'S BOARD RIDES.** Brown County files all eleven of
+> Bellevue's wards with no aldermanic district code, which is why the village has no district
+> geometry in the shipped map. If the board is elected at large that is the correct and complete
+> answer and the trustees belong on the village's own card beside its clerk; if it is elected by
+> district, the eleven wards need an assignment and the county's filing is incomplete. One
+> sentence from the clerk settles which of those two pieces of work is the right one.
+
+**Subject:** One question about how the Village of Bellevue elects its board
+
+Dear Clerk Seidl,
+
+I maintain districtry.com/wi/, a free, non-commercial website that helps people in Wisconsin
+find out which civic districts they live in and who represents them there. It is not funded by
+anyone and carries no advertising.
+
+I have one question about the Village of Bellevue.
+
+Are the members of the Village Board elected at large, by the whole village, or does each
+trustee represent a district or ward?
+
+I ask because Brown County files all eleven of Bellevue's wards without an aldermanic district
+code, which is what the county does for a municipality that has no districts to report. Clerk
+Patrick Moynihan at the county kindly suggested I check with you directly, and gave me your
+address.
+
+If the board is elected at large, I will list Bellevue's trustees on the village's own page
+alongside the village clerk, and the site will say plainly that every seat is elected by the
+whole village. If each trustee does represent a ward or a group of wards, I would be grateful
+to know which wards go with which seat, and I will draw it that way instead.
+
+Either answer is useful, and a one-line reply is plenty. If the answer is already on a page of
+the village's website, a link to it is just as good and I will not trouble you further.
+
+Thank you for your time.
+
+Adam Overberg
+districtry.com/wi/
+
+**What is deliberately not asked.** Nothing about reuse terms, because the names of elected
+village officers are public record. No request to change the village's website or the county's
+filing. And no suggestion that the county got anything wrong — the county clerk's reply is what
+prompted this letter and said so.
+
+**Why a no is still useful.** If the village does not answer, the record that tells our readers
+what is missing can say Bellevue was asked, which is the difference between a gap this project
+has measured and one it has merely noticed.

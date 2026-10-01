@@ -185,6 +185,27 @@ FLOORS = {
     "31175": ("Greenfield", 5, 5, 0, 0, 5),
     "55275": ("Muskego", 7, 7, 0, 0, 0),
     "85350": ("West Bend", 8, 8, 8, 0, 0),
+    # THE TWO AKAMAI-FRONTED COUNCILS OF 2026-10-01, and the reason they arrive
+    # late is a measurement this project got wrong rather than anything either
+    # city does. Both were recorded as sites that block automated readers; both
+    # serve a policy that permits these pages and serve the pages themselves,
+    # to the header set wi_municipal_executive_scraper.py had already measured
+    # on one of these very hosts two days earlier. What the thin client gets is
+    # not a refusal but no answer at all.
+    #   Wausau     eleven districts, one alderperson each, with a direct phone
+    #              and a city mailbox for every one of the eleven — so both
+    #              contact floors are the full count. District 9's mailbox reads
+    #              Victoria where the city prints Vicki; the city's own
+    #              rendering of her name is what ships.
+    #   Wauwatosa  twelve districts, one alderperson each, each linking their own
+    #              directory entry, so the url floor is the full twelve. The
+    #              phone floor is TEN of twelve, measured: districts 2 and 12
+    #              have an empty phone cell. E-MAIL IS ZERO BY ACCESS CONTROL,
+    #              not by absence — the directory's Email button carries only a
+    #              numeric staff id and the addresses are not in the page, which
+    #              is the New Lisbon case and is not worked around.
+    "84475": ("Wausau", 11, 11, 11, 11, 0),
+    "84675": ("Wauwatosa", 12, 12, 0, 10, 12),
 }
 
 

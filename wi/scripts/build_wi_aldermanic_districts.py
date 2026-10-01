@@ -120,6 +120,25 @@ EXPECT_TOTAL_KEYS = 888        # 867 filed + 21 the state does not file:
 # supply the assignment either. The ask to the county clerk stands
 # (docs/ASK_DRAFTS.md). Recorded so the next pass does not re-probe a host
 # that answers, or expect a reopened door to close this gap.
+# NEW LONDON'S THREE UNCODED WARDS WERE NAMED BY THE COUNTY CLERK ON 2026-10-01
+# AND THE CITY IS STILL EXCLUDED, deliberately. Outagamie County Clerk Kelly
+# Gerrits wrote that City of New London wards 10, 11 and 12 are ALL IN NEW LONDON
+# ALDERMANIC DISTRICT 5 — which is exactly the three wards counted below, so the
+# city's composition is now completely known. It is recorded here rather than
+# built because LOCAL_COMPOSITION takes a city's own full statement of its own
+# composition, and this would be the county's coded wards plus three sentences
+# from the Clerk: a different shape, wanting its own gate and its own operator
+# rebuild rather than a row squeezed into a table that means something else.
+# The statement is written down now because an emailed fact that lives only in an
+# inbox is a fact this project loses. See wi/WATCH.md.
+# BELLEVUE'S BOARD FORM IS BEING ASKED AND IS NOT RECORDED FROM A HEDGE.
+# Brown County Clerk Patrick Moynihan replied on 2026-10-01 that the village board
+# "appear to be at large" and pointed at the village clerk, who has not yet been
+# written to (docs/ASK_DRAFTS.md, ask wi-bellevue-board-form). If the board is
+# elected at large this entry is the correct and complete answer — eleven wards
+# with no district code because there are no districts — and the trustees belong
+# on the village's own card. "Appear to be" is not the village saying so, and a
+# card stating how a governing body is elected is not written on a guess.
 EXCLUDED = {
     "06350": ("Bellevue", 11, 0.999),
     "09725": ("Brillion", 2, 0.094),
