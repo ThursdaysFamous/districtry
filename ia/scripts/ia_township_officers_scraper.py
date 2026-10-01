@@ -80,7 +80,9 @@ import requests
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)          # robots_gate is a sibling, not a package
+sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
 from robots_gate import RobotsGate  # noqa: E402
+from validate_officeholder_names import is_vacancy_marker  # noqa: E402  (one reader for the word)
 
 CACHE_DIR = os.path.join(HERE, ".cache")
 OUT_PATH = os.path.join(CACHE_DIR, "ia_township_officers.json")
@@ -173,7 +175,22 @@ def parse(page):
             if not person or role not in ROLES:
                 continue
             text = clean(chunk)
-            rec = {"name": person, "role": role}
+            # A COUNTY'S WORD FOR AN EMPTY SEAT IS A FACT ABOUT THE SEAT AND
+            # NEVER A PERSON. Jackson County prints "Vacant" in the name cell
+            # of one Iowa township trustee row, and carrying that string
+            # through would ship a township officer called Vacant -- which is
+            # exactly what this repo already published twice in Illinois
+            # before `validate_officeholder_names.py` started refusing the
+            # word. The seat is recorded structurally instead: the role is
+            # kept, because the county is naming a seat that exists, and the
+            # name is dropped rather than replaced. The word list has ONE
+            # reader (scripts/validate_officeholder_names.py) so this scraper
+            # and that gate cannot come to disagree about which words mean an
+            # empty seat.
+            if is_vacancy_marker(person):
+                rec = {"role": role, "vacant": True}
+            else:
+                rec = {"name": person, "role": role}
             phone = PHONE.search(text)
             if phone:
                 rec["phone"] = phone.group(0)
@@ -260,6 +277,28 @@ def _selftest():
     blob = json.dumps(got)
     check("823 F Ave" not in blob and "Ogden" not in blob,
           "no home address appears in any parsed field")
+
+    # 3b. A COUNTY'S OWN WORD FOR AN EMPTY SEAT becomes a fact about the seat
+    #     rather than a person. Jackson County prints "Vacant" in the name
+    #     cell of one Iowa township trustee row, and carrying it through would
+    #     ship a township officer of that name -- which this fleet published
+    #     twice in Illinois before a gate started refusing the word. The ROLE
+    #     survives, because the county is naming a seat that exists, so a
+    #     four-seat township still reads as four seats.
+    got = parse(_township("iowa", "Iowa",
+                          _row("Melanie Macy", "Clerk"),
+                          _row("Vacant", "Trustee"),
+                          _row("Dean Papke", "Trustee")))
+    rows = got.get("Iowa", {}).get("officials", [])
+    check(len(rows) == 3, "vacant seat: the empty seat is still a row (got %d)"
+          % len(rows))
+    check(rows[1].get("vacant") is True and "name" not in rows[1],
+          "vacant seat: recorded structurally, with no name (got %r)" % (rows[1],))
+    check(rows[1].get("role") == "Trustee",
+          "vacant seat: the role survives, so the seat is still counted")
+    check("Vacant" not in json.dumps(
+              [r for r in rows if "name" in r]),
+          "vacant seat: the word reaches no name field")
 
     # 4. CERRO GORDO'S SUFFIX is split off the name and kept as a fact.
     got = parse(_township("bath", "Bath Appointed", _row("Pat Doe", "Trustee")))

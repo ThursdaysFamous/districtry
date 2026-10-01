@@ -14,6 +14,8 @@
    "party": "Republican",
    "phone": "(641) 743-2148"
   },
+  "supervisorPlan": "PLAN 3",
+  "supervisorSeats": 5,
   "supervisorSource": "https://www.adaircounty.iowa.gov/supervisors/",
   "supervisors": [
    {
@@ -1531,6 +1533,8 @@
    "party": "No party",
    "phone": "(641) 228-1821"
   },
+  "supervisorPlan": "PLAN 3",
+  "supervisorSeats": 3,
   "supervisorSource": "https://floydco.iowa.gov/m/directory/department?did=21",
   "supervisors": [
    {
@@ -2060,6 +2064,8 @@
    "party": "Republican",
    "phone": "(515) 332-2471"
   },
+  "supervisorPlan": "PLAN 3",
+  "supervisorSeats": 5,
   "supervisorSource": "https://www.humboldtcounty.iowa.gov/offices/administrative/board_of_supervisors/index.php",
   "supervisors": [
    {
@@ -2650,6 +2656,8 @@
    "party": "Republican",
    "phone": "(641) 774-5083"
   },
+  "supervisorPlan": "PLAN 1",
+  "supervisorSeats": 3,
   "supervisorSource": "https://lucascounty.iowa.gov/board_of_supervisors/",
   "supervisors": [
    {

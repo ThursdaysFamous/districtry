@@ -84,6 +84,8 @@ import urllib.parse
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # ia/
 FLEET_ROOT = os.path.dirname(REPO_ROOT)
+sys.path.insert(0, os.path.join(FLEET_ROOT, "scripts"))
+from validate_officeholder_names import is_vacancy_marker  # noqa: E402  (one reader for the word)
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
 CACHE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache",
                      "ia_township_officers.json")
@@ -211,12 +213,48 @@ def clean_officials(county, township, officials, flagged=None):
                 "%s County, %s township: %r holds %r, and this file ships only "
                 "%s. An office nobody measured is a page to read."
                 % (county, township, name, role, " and ".join(ROLES)))
-        if not name or not NAME_RE.match(name) or re.search(r"\d", name):
+        # A SEAT THE COUNTY SAYS IS EMPTY, which is a fact about the seat and
+        # not a person. The scraper converts the county's own word for it
+        # (`is_vacancy_marker`, one reader for the list) into this shape
+        # BEFORE it can reach a roster, so the row carries a role and no
+        # name. It ships, because dropping it would make a four-seat township
+        # read as a three-seat one -- the county is naming a seat that exists
+        # and saying nobody holds it. A row carrying both is a parse that went
+        # wrong rather than a publisher saying something subtle, so it stops
+        # the build.
+        # THE CONVERSION IS ASKED FOR AGAIN HERE, AND NOT BECAUSE THE SCRAPER
+        # IS DISTRUSTED. The scraper writes a cache that outlives it, so a
+        # cache taken before the scraper learned the word would otherwise ship
+        # a township officer called Vacant through this builder -- which is
+        # the file a reader actually downloads. Both call ONE reader for the
+        # word list (scripts/validate_officeholder_names.py), so the two can
+        # never come to disagree about which words mean an empty seat; what
+        # is duplicated is where the question is asked, not the answer.
+        vacant = bool(official.get("vacant")) or is_vacancy_marker(name)
+        if vacant and is_vacancy_marker(name):
+            name = None
+        if vacant:
+            if name:
+                raise RuntimeError(
+                    "%s County, %s township: a %s row is marked vacant and "
+                    "also carries the name %r. One of the two is wrong, and "
+                    "guessing which would either invent an officer or hide one."
+                    % (county, township, role, name))
+            row = {"role": role, "vacant": True}
+        elif not name or not NAME_RE.match(name) or re.search(r"\d", name):
             raise RuntimeError("%s County, %s township: %r is not a name"
                                % (county, township, name))
-        if flagged is not None and unusual(name):
-            flagged.append("%s County, %s township: %s" % (county, township, name))
-        row = {"name": name, "role": role}
+        else:
+            if flagged is not None and unusual(name):
+                flagged.append("%s County, %s township: %s"
+                               % (county, township, name))
+            row = {"name": name, "role": role}
+        # The term fields describe the SEAT and so are kept on a vacant row
+        # too: a county saying this trustee's term ends in 2026 is telling a
+        # reader when the empty seat is next filled. A phone on a vacant row
+        # is a different matter and the loop below carries it if the county
+        # publishes one, because it would be the seat's line rather than
+        # anybody's -- none of the twelve counties does today.
         for field in ("phone", "termEnds", "termLength"):
             value = (official.get(field) or "").strip()
             if not value:

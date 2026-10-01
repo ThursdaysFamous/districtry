@@ -70,7 +70,6 @@ const GEOMETRY_URLS = [
   "./data/app/adair-county-outline.json",
   "./data/app/floyd-county-outline.json",
   "./data/app/humboldt-county-outline.json",
-  "./data/app/lucas-county-outline.json",
   "./data/app/pottawattamie-county-outline.json",
   "./data/app/tama-county-outline.json",
   "./data/app/warren-county-outline.json",

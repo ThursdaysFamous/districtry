@@ -2354,10 +2354,10 @@
     "termLength": "4"
    },
    {
-    "name": "Vacant",
     "role": "Trustee",
     "termEnds": "2026",
-    "termLength": "4"
+    "termLength": "4",
+    "vacant": true
    },
    {
     "name": "Emmett Machande",

@@ -841,6 +841,22 @@ def main():
                 members.sort(key=lambda m: surname(m["name"]))
                 entry["supervisors"] = members
                 entry["supervisorSource"] = page["url"]
+                # THE PLAN AND THE SEAT COUNT ARE SET HERE TOO, from the same
+                # county board directory the ISAC path reads. Leaving them off
+                # was a silent half-answer: a board resolved on this path
+                # shipped its five supervisors and no election method, so
+                # `scripts/build_county_pages.py` refused to write those four
+                # counties' pages at all rather than print a method nobody
+                # measured -- correct of that gate, and a defect here. The
+                # branch above has ALREADY proved len(page_members) == seats,
+                # so the seat count is not a new claim; it is the number this
+                # block just checked against.
+                plan = (board_dir.get(geoid[2:].lstrip("0").zfill(3), {})
+                        or {}).get("plan")
+                if plan:
+                    entry["supervisorPlan"] = plan
+                if seats is not None:
+                    entry["supervisorSeats"] = seats
                 from_page += 1
                 print("  PAGE      %-13s %d supervisor(s) from the county's own "
                       "page (%s)" % (county, len(members), reason),

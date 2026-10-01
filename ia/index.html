@@ -13014,10 +13014,23 @@ function initIowaExplorer() {
       if (rec && rec.officials && rec.officials.length) {
         wrap.appendChild(renderSectionLabel("TOWNSHIP OFFICERS"));
         wrap.appendChild(renderPersonRows(rec.officials.map(function (o) {
-          var row = { name: String(o.name) };
+          // A SEAT THE COUNTY SAYS IS EMPTY GETS A ROW SAYING SO. The roster
+          // records a vacancy structurally -- a role and no name -- so this
+          // card states it in the one place a reader is looking for that
+          // seat's officer. Dropping the row would make a four-seat township
+          // read as a three-seat one, and carrying the county's own word
+          // through as a name would ship a trustee called Vacant, which is
+          // what this fleet already published twice in Illinois before a
+          // gate started refusing the word. Same wording as Wisconsin's
+          // supervisor card, which is the fleet's precedent for this state.
+          var row = { name: o.vacant ? "Vacant" : String(o.name) };
           if (o.role) row.badge = String(o.role);
           if (o.phone) row.phone = String(o.phone);
           var notes = [];
+          // The county said the seat is empty, so the card says it in words
+          // as well as in the name slot -- "Vacant" beside a role badge
+          // could otherwise be read as a surname.
+          if (o.vacant) notes.push("The county reports this seat empty");
           // THE SELECTION WORD IS THE COUNTY'S AND SITS ON THE TOWNSHIP, NOT
           // ON THE PERSON. One county prints whether its township officers
           // were elected or appointed to the seat; where it does, every row
