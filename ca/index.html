@@ -12972,6 +12972,44 @@ function initSFExplorer() {
     function memberProfileUrl(member) {
       return member && member.url ? safeHttpUrl(member.url) : null;
     }
+    // A SEAT THE CHAMBER ITSELF CALLS EMPTY IS A RECORD, NOT AN ABSENCE. Until
+    // 2026-10-01 a roster built from a bulk export simply had no row for a
+    // vacant district, so three things went wrong at once and all three were
+    // reader-facing: the card fell through to the no-roster path and said only
+    // the district number, the chamber's own seat count was taken from the
+    // roster's length and read one short (the generated table on each
+    // legislature page said "All 79 seats on the California State Assembly"
+    // for a chamber of 80), and nothing anywhere said why. The roster carries a
+    // record for every district the map draws now, and the record says which of
+    // two different things is true.
+    //
+    // THE TWO ARE KEPT APART BECAUSE ONE IS A STRONGER STATEMENT THAN THE
+    // OTHER. `vacant: true` means the chamber's own members page says the seat
+    // is empty — California's prints "Member Vacant" — and that is the only way
+    // a reader is ever told "Vacant". A record with no name and no `vacant`
+    // means our source named nobody, which is a fact about our source, so it
+    // reads "No member listed". Reporting the second as a vacancy would be
+    // guessing an officeholder out of existence, which is the same honesty rule
+    // that forbids guessing one into it.
+    function isMember(member) {
+      return !!(member && member.name);
+    }
+    // THE RECORD STATES THE CLAIM AND THIS ONLY PRINTS IT. Where the authority
+    // does not use the word, the record carries its own one-sentence reason:
+    // Iowa's chamber roster ends a member's service with a date and names
+    // nobody after them, so a hardcoded "its members page says this seat is
+    // vacant" would be false of the very page cited. The default sentence
+    // serves the chambers that do print the word.
+    function vacancyNote(member) {
+      // `asOf` is the day the chamber said it, carried so a reader can see how
+      // old the statement is. A record with no date says the thing without
+      // dating it rather than inventing a day.
+      var when = member && member.asOf ? String(member.asOf) : null;
+      var why = member && member.vacantWhy
+        ? String(member.vacantWhy)
+        : "The chamber's own members page says nobody holds this seat.";
+      return "Vacant — " + why + (when ? " Read on " + when + "." : "");
+    }
     registerLayer({
       id: opts.id,
       group: "political",
@@ -12995,7 +13033,12 @@ function initSFExplorer() {
           var props = feature.properties || {};
           var district = extractDistrictNumber(props, opts.districtFields);
           var member = district != null ? roster[String(district)] : undefined;
-          return { seq: seq, district: district, member: member || null };
+          // A nameless record is NOT a member and must not reach the person
+          // row, which would render the string "undefined" as somebody's name.
+          // It is carried separately so the card can say which kind it is.
+          return { seq: seq, district: district,
+                   member: isMember(member) ? member : null,
+                   seat: member || null };
         });
       },
       render: function (result) {
@@ -13005,10 +13048,20 @@ function initSFExplorer() {
         var wrap = cardEl("div", "card-flush");
         var member = result.member;
         if (!member) {
-          // roster gap or roster-fetch failure: district identity + the
-          // official directory (primaryLink in the footer) — never an
-          // invented name (honesty rules).
-          wrap.appendChild(renderBodyIntro({ title: districtLabel(result) || "Unknown district" }));
+          // Three states, told apart. A seat the chamber calls vacant says so;
+          // a record naming nobody says that instead; and no record at all is
+          // either a roster gap or a roster-fetch failure, which is OUR silence
+          // rather than the chamber's, so it claims neither and shows district
+          // identity plus the official directory (primaryLink in the footer) —
+          // never an invented name (honesty rules).
+          var seat = result.seat;
+          var note = null;
+          if (seat && seat.vacant) note = vacancyNote(seat);
+          else if (seat) note = "No member listed for this seat.";
+          wrap.appendChild(renderBodyIntro({
+            title: districtLabel(result) || "Unknown district",
+            note: note
+          }));
           return wrap;
         }
         var person = { name: String(member.name) };
@@ -13058,7 +13111,13 @@ function initSFExplorer() {
           if (!roster) return null;
           var d = extractDistrictNumber(feature.properties || {}, opts.districtFields);
           var member = d != null ? roster[String(d)] : null;
-          return member ? member.name : null;
+          if (isMember(member)) return member.name;
+          // The hover names who holds the seat, so a seat the chamber calls
+          // empty is named "Vacant" — the hover and the card cannot disagree.
+          // A record naming nobody hovers as nothing, exactly as a missing
+          // record always has, because "no member listed" is a sentence about
+          // our source and does not belong in a one-word popup.
+          return member && member.vacant ? "Vacant" : null;
         }
       }
     });
