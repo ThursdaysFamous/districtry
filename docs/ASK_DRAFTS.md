@@ -1690,10 +1690,32 @@ unaffected sources; the three district files are not in the tree.
 
 ## Ask 20 — six Wisconsin county clerks: the city wards your filing leaves without a district
 
-> **NOT YET ASKED — DRAFTED 2026-09-08.** Six separate notes, one per county clerk. Four
-> ask the same question about a different city; two ask a different question. They are not
-> a batch: each note names one county's own filing, and one that named the wrong city or
-> the wrong ward would be worse than not writing.
+> **ASKED 2026-10-01 — ALL SIX SENT, TWO ANSWERED THE SAME DAY.** Six separate notes, one per
+> county clerk. Four ask the same question about a different city; two ask a different question.
+> They are not a batch: each note names one county's own filing, and one that named the wrong
+> city or the wrong ward would be worse than not writing.
+>
+> Send times, read off the sent folder (`/mnt/project-files/letters/sent-2026-10-01.md`, which is
+> the only record of what actually went, as against what a thread drafted): Calumet 14:52:02,
+> Brown 14:52:11, Outagamie 14:52:19, Pepin 14:52:38, Lafayette 16:14:29, Ozaukee 16:14:42 UTC.
+>
+> **OUTAGAMIE ANSWERED AND SETTLED NEW LONDON.** Clerk Kelly Gerrits wrote that City of New
+> London wards 10, 11 and 12 are all in New London Aldermanic District 5 — exactly the three
+> uncoded wards this note asked about, so that city's composition is now completely known. It is
+> written down in `wi/scripts/build_wi_aldermanic_districts.py`'s `EXCLUDED` table and in
+> `wi/WATCH.md` and is not yet built, because composing a city from the county's coded wards plus
+> three sentences from a clerk is a different shape from the city-publishes-its-own-composition
+> route `LOCAL_COMPOSITION` holds, and wants its own gate and its own operator rebuild.
+>
+> **BROWN HEDGED AND THEN POINTED SOMEWHERE BETTER.** Clerk Patrick Moynihan wrote that the
+> Village of Bellevue's board "appear to be at large", which is a qualified guess and not the
+> village's own statement, and then endorsed asking the village itself. That is why ask
+> `wi-bellevue-board-form` exists and went the same day; see the "Why the county clerk and not
+> the city clerk" section below, whose rule this does not break — the village clerk's address
+> came from the county clerk in writing, so none had to be sourced against the clerks' own
+> withholding.
+>
+> Calumet, Pepin, Lafayette and Ozaukee have not replied. Follow up once at about 2026-10-21.
 
 **What this is about.** Wisconsin's aldermanic districts are drawn as groups of wards, and
 the ward file the Legislative Technology Services Bureau publishes is the only statewide
@@ -4096,11 +4118,19 @@ difference between a gap we have measured and a gap we have merely noticed.
 
 ## Ask wi-bellevue-board-form — Village of Bellevue Clerk: is the village board elected at large?
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the Village Clerk. On send, change
-> `NOT YET ASKED — DRAFTED` to `ASKED 2026-10-01` here and in the Bellevue note in
-> `wi/scripts/build_wi_aldermanic_districts.py`'s `EXCLUDED` table. Follow up once at about
-> 2026-10-21; thirty days of silence after that follow-up is what lets the gap record say the
-> village was asked.
+> **ASKED 2026-10-01**, sent 16:10:19 UTC to mseidl@villageofbellevuewi.gov. One message, to
+> the Village Clerk. Recorded from `/mnt/project-files/letters/sent-2026-10-01.md`, which is read
+> off the sent folder — the only record of what actually went, as against what a thread drafted.
+> The matching Bellevue note in `wi/scripts/build_wi_aldermanic_districts.py`'s `EXCLUDED` table
+> and the `aldermanic-incomplete-filings` gap blocker were updated the same day. Follow up once
+> at about 2026-10-21; thirty days of silence after that follow-up is what would let a gap record
+> say the village was asked.
+>
+> **NO `ask` BLOCK GOES WITH IT, AND THAT IS THE STANDARD RATHER THAN AN OMISSION.** An `ask`
+> block earns Covered credit on a record that declares `covers`, and
+> `aldermanic-incomplete-filings` declares none — Bellevue is a village of about 15,000 people,
+> under the 25,000 the local tier counts, so no level is waiting on this answer. The reply is
+> wanted for the map, not for the scorecard.
 >
 > **NO PRIOR CONTACT, CHECKED RATHER THAN ASSUMED.** Searched Adam's mail on 2026-10-01 for
 > Bellevue, `bellevuewi.gov` and Seidl across every folder including trash: the only thread is

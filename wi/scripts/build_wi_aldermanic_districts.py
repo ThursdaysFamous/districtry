@@ -131,10 +131,11 @@ EXPECT_TOTAL_KEYS = 888        # 867 filed + 21 the state does not file:
 # rebuild rather than a row squeezed into a table that means something else.
 # The statement is written down now because an emailed fact that lives only in an
 # inbox is a fact this project loses. See wi/WATCH.md.
-# BELLEVUE'S BOARD FORM IS BEING ASKED AND IS NOT RECORDED FROM A HEDGE.
+# BELLEVUE'S BOARD FORM HAS BEEN ASKED AND IS NOT RECORDED FROM A HEDGE.
 # Brown County Clerk Patrick Moynihan replied on 2026-10-01 that the village board
-# "appear to be at large" and pointed at the village clerk, who has not yet been
-# written to (docs/ASK_DRAFTS.md, ask wi-bellevue-board-form). If the board is
+# "appear to be at large" and pointed at the village clerk, who was written to the
+# same day — ASKED 2026-10-01, sent 16:10:19 UTC, no reply yet
+# (docs/ASK_DRAFTS.md, ask wi-bellevue-board-form). If the board is
 # elected at large this entry is the correct and complete answer — eleven wards
 # with no district code because there are no districts — and the trustees belong
 # on the village's own card. "Appear to be" is not the village saying so, and a
