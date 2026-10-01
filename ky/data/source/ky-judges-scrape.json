@@ -1,0 +1,4819 @@
+{
+ "emptyCounties": [
+  "Jefferson"
+ ],
+ "pages": {
+  "court-of-appeals-page": 14,
+  "supreme-court-page": 7
+ },
+ "readOn": "2026-10-01",
+ "rows": [
+  {
+   "court": "Supreme Court",
+   "division": null,
+   "name": "Debra Hembree Lambert",
+   "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/3rd-Supreme-Court-District.aspx",
+   "readFrom": "supreme-court-page",
+   "role": "Chief Justice of Kentucky",
+   "tier": "supreme",
+   "unit": 3
+  },
+  {
+   "court": "Supreme Court",
+   "division": null,
+   "name": "Robert B. Conley",
+   "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/7th-Supreme-Court-District.aspx",
+   "readFrom": "supreme-court-page",
+   "role": "Deputy Chief Justice",
+   "tier": "supreme",
+   "unit": 7
+  },
+  {
+   "court": "Supreme Court",
+   "division": null,
+   "name": "C. Shea Nickell",
+   "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/1st-Supreme-Court-District.aspx",
+   "readFrom": "supreme-court-page",
+   "role": "Justice",
+   "tier": "supreme",
+   "unit": 1
+  },
+  {
+   "court": "Supreme Court",
+   "division": null,
+   "name": "Kelly Thompson",
+   "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/2nd-Supreme-Court-District.aspx",
+   "readFrom": "supreme-court-page",
+   "role": "Justice",
+   "tier": "supreme",
+   "unit": 2
+  },
+  {
+   "court": "Supreme Court",
+   "division": null,
+   "name": "Angela McCormick Bisig",
+   "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/4th-Supreme-Court-District.aspx",
+   "readFrom": "supreme-court-page",
+   "role": "Justice",
+   "tier": "supreme",
+   "unit": 4
+  },
+  {
+   "court": "Supreme Court",
+   "division": null,
+   "name": "Pamela R. Goodwine",
+   "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/5th-Supreme-Court-District.aspx",
+   "readFrom": "supreme-court-page",
+   "role": "Justice",
+   "tier": "supreme",
+   "unit": 5
+  },
+  {
+   "court": "Supreme Court",
+   "division": null,
+   "name": "Michelle M. Keller",
+   "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/6th-Supreme-Court-District.aspx",
+   "readFrom": "supreme-court-page",
+   "role": "Justice",
+   "tier": "supreme",
+   "unit": 6
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 2,
+   "name": "Larry E. Thompson",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/7th-Appellate-District-Division-2.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Chief Judge",
+   "tier": "appeals",
+   "unit": 7
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 1,
+   "name": "J. Christopher McNeill",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/1st-Appellate-District-Division-1.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Deputy Chief Judge",
+   "tier": "appeals",
+   "unit": 1
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 2,
+   "name": "Lisa P. Jones",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/1st-Appellate-District-Division-2.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Judge",
+   "tier": "appeals",
+   "unit": 1
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 1,
+   "name": "Jeff S. Taylor",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/2nd-Appellate-District-Division-1.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Judge",
+   "tier": "appeals",
+   "unit": 2
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 2,
+   "name": "Kelly Mark Easton",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/2nd-Appellate-District-Division-2.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Judge",
+   "tier": "appeals",
+   "unit": 2
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 1,
+   "name": "Jacqueline M. Caldwell",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/3rd-Appellate-District-Division-1.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Judge",
+   "tier": "appeals",
+   "unit": 3
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 2,
+   "name": "Vacant",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/3rd-Appellate-District-Division-2.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Judge",
+   "tier": "appeals",
+   "unit": 3
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 1,
+   "name": "Audra Jean Eckerle",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/4th-Appellate-District-Division-1.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Judge",
+   "tier": "appeals",
+   "unit": 4
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 2,
+   "name": "Annette C. Karem",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/4th-Appellate-District-Division-2.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Judge",
+   "tier": "appeals",
+   "unit": 4
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 1,
+   "name": "Will Moynahan",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/5th-Appellate-District-Division-1.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Judge",
+   "tier": "appeals",
+   "unit": 5
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 2,
+   "name": "Glenn E. Acree",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/5th-Appellate-District-Division-2.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Judge",
+   "tier": "appeals",
+   "unit": 5
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 1,
+   "name": "Allison Jones",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/6th-Appellate-District-Division-1.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Judge",
+   "tier": "appeals",
+   "unit": 6
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 2,
+   "name": "Susanne M. Cetrulo",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/6th-Appellate-District-Division-2.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Judge",
+   "tier": "appeals",
+   "unit": 6
+  },
+  {
+   "court": "Court of Appeals",
+   "division": 1,
+   "name": "Sara Walter Combs",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/7th-Appellate-District-Division-1.aspx",
+   "readFrom": "court-of-appeals-page",
+   "role": "Judge",
+   "tier": "appeals",
+   "unit": 7
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Judy Vance Murphy",
+   "profileUrl": null,
+   "readFrom": "Adair",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 29
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Michael Loy",
+   "profileUrl": null,
+   "readFrom": "Adair",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 29
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Mark A. Thurmond",
+   "profileUrl": null,
+   "readFrom": "Allen",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 49
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Ashley Douglas",
+   "profileUrl": null,
+   "readFrom": "Allen",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 49
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Martha Blair Harrison",
+   "profileUrl": null,
+   "readFrom": "Allen",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 49
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Melanie Brummer",
+   "profileUrl": null,
+   "readFrom": "Anderson",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 53
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "S. Marie Hellard",
+   "profileUrl": null,
+   "readFrom": "Anderson",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 53
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Laura Witt",
+   "profileUrl": null,
+   "readFrom": "Anderson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 53
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Donna G. Dutton",
+   "profileUrl": null,
+   "readFrom": "Anderson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 53
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Timothy A. Langford",
+   "profileUrl": null,
+   "readFrom": "Ballard",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 1
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Mark Stephen Medlin",
+   "profileUrl": null,
+   "readFrom": "Ballard",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 1
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "John T. Alexander",
+   "profileUrl": null,
+   "readFrom": "Barren",
+   "role": "Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 43
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Mica Wood Pence",
+   "profileUrl": null,
+   "readFrom": "Barren",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 43
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "J. Gabriel Pendleton",
+   "profileUrl": null,
+   "readFrom": "Barren",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 43
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Elizabeth Davis",
+   "profileUrl": null,
+   "readFrom": "Bath",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 21
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "David Barber",
+   "profileUrl": null,
+   "readFrom": "Bath",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 21
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "William W. Roberts",
+   "profileUrl": null,
+   "readFrom": "Bath",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 21
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Don Blair",
+   "profileUrl": null,
+   "readFrom": "Bath",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 21
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Keith Nagle",
+   "profileUrl": null,
+   "readFrom": "Bell",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 44
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Robert T. Yoakum",
+   "profileUrl": null,
+   "readFrom": "Bell",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 44
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Richard A. Brueggemann",
+   "profileUrl": null,
+   "readFrom": "Boone",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 54
+  },
+  {
+   "court": "Circuit Court",
+   "division": 3,
+   "name": "James R. Schrand",
+   "profileUrl": null,
+   "readFrom": "Boone",
+   "role": "Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 54
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Kendra L. McCardle",
+   "profileUrl": null,
+   "readFrom": "Boone",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 54
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Jennifer R. Dusing",
+   "profileUrl": null,
+   "readFrom": "Boone",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 54
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Jeffrey S. Smith",
+   "profileUrl": null,
+   "readFrom": "Boone",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 54
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Marcia L. Thomas",
+   "profileUrl": null,
+   "readFrom": "Boone",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 54
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Jeremy M. Mattox",
+   "profileUrl": null,
+   "readFrom": "Bourbon",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 14
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Kathryn H. Gabhart",
+   "profileUrl": null,
+   "readFrom": "Bourbon",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 14
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Lisa H. Morgan",
+   "profileUrl": null,
+   "readFrom": "Bourbon",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 14
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "William J. Fooks",
+   "profileUrl": null,
+   "readFrom": "Bourbon",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 14
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Bolton Bevins",
+   "profileUrl": null,
+   "readFrom": "Bourbon",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 14
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Sarah Hays Spedding",
+   "profileUrl": null,
+   "readFrom": "Bourbon",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 14
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "George W. Davis III",
+   "profileUrl": null,
+   "readFrom": "Boyd",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 32
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "John F. Vincent",
+   "profileUrl": null,
+   "readFrom": "Boyd",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 32
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Scott T. Reese",
+   "profileUrl": null,
+   "readFrom": "Boyd",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 32
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Devon E. Reams",
+   "profileUrl": null,
+   "readFrom": "Boyd",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 32
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Whitney Z. Johns",
+   "profileUrl": null,
+   "readFrom": "Boyle",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 50
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Bruce Petrie",
+   "profileUrl": null,
+   "readFrom": "Boyle",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 50
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Patrick Barsotti",
+   "profileUrl": null,
+   "readFrom": "Boyle",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 50
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Jeffrey L. Schumacher",
+   "profileUrl": null,
+   "readFrom": "Bracken",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 19
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Kim Razor",
+   "profileUrl": null,
+   "readFrom": "Bracken",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 19
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Lisa Hayden Whisman",
+   "profileUrl": null,
+   "readFrom": "Breathitt",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 39
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Monica S. Lacy",
+   "profileUrl": null,
+   "readFrom": "Breathitt",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 39
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Gary Salyers",
+   "profileUrl": null,
+   "readFrom": "Breathitt",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 39
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Bruce T. Butler",
+   "profileUrl": null,
+   "readFrom": "Breckinridge",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 46
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Kenneth Harold Goff II",
+   "profileUrl": null,
+   "readFrom": "Breckinridge",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 46
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Bradley S. Butler",
+   "profileUrl": null,
+   "readFrom": "Breckinridge",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 46
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Steven R. Crebessa",
+   "profileUrl": null,
+   "readFrom": "Breckinridge",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 46
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Rodney D. Burress",
+   "profileUrl": null,
+   "readFrom": "Bullitt",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 55
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Elis\u00e8 Givhan Spainhour",
+   "profileUrl": null,
+   "readFrom": "Bullitt",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 55
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Monica K. Meredith",
+   "profileUrl": null,
+   "readFrom": "Bullitt",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 55
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Jennifer E. Porter",
+   "profileUrl": null,
+   "readFrom": "Bullitt",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 55
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Timothy R. Coleman",
+   "profileUrl": null,
+   "readFrom": "Butler",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 38
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Benjamin D. McKown",
+   "profileUrl": null,
+   "readFrom": "Butler",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 38
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Gregory Vincent",
+   "profileUrl": null,
+   "readFrom": "Butler",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 38
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Daniel Boling",
+   "profileUrl": null,
+   "readFrom": "Butler",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 38
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "James R. Redd III",
+   "profileUrl": null,
+   "readFrom": "Caldwell",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 56
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Natalie White",
+   "profileUrl": null,
+   "readFrom": "Caldwell",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 56
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Roger Brandon Knoth",
+   "profileUrl": null,
+   "readFrom": "Caldwell",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 56
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Matt Schalk",
+   "profileUrl": null,
+   "readFrom": "Caldwell",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 56
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Andrea L. Moore",
+   "profileUrl": null,
+   "readFrom": "Calloway",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 42
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Stephanie J. Perlow",
+   "profileUrl": null,
+   "readFrom": "Calloway",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 42
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Randall A. Hutchens",
+   "profileUrl": null,
+   "readFrom": "Calloway",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 42
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Julie Reinhardt Ward",
+   "profileUrl": null,
+   "readFrom": "Campbell",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 17
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Daniel J. Zalla",
+   "profileUrl": null,
+   "readFrom": "Campbell",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 17
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Abigail E. Voelker",
+   "profileUrl": null,
+   "readFrom": "Campbell",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 17
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Cameron J. Blau",
+   "profileUrl": null,
+   "readFrom": "Campbell",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 17
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Erin Matthews Sizemore",
+   "profileUrl": null,
+   "readFrom": "Campbell",
+   "role": "Vice-Chief Regional District Judge",
+   "tier": "district",
+   "unit": 17
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Timothy A. Langford",
+   "profileUrl": null,
+   "readFrom": "Carlisle",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 1
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Mark Stephen Medlin",
+   "profileUrl": null,
+   "readFrom": "Carlisle",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 1
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Leslie R. Knight",
+   "profileUrl": null,
+   "readFrom": "Carroll",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 15
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Casey Cheesman",
+   "profileUrl": null,
+   "readFrom": "Carroll",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 15
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Elizabeth A. Chandler",
+   "profileUrl": null,
+   "readFrom": "Carroll",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 15
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Thomas M. Funk",
+   "profileUrl": null,
+   "readFrom": "Carroll",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 15
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Rebecca K. Phillips",
+   "profileUrl": null,
+   "readFrom": "Carter",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 37
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Jeniffer Barker Neice",
+   "profileUrl": null,
+   "readFrom": "Carter",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 37
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "H. Rupert Wilhoit III",
+   "profileUrl": null,
+   "readFrom": "Carter",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 37
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Judy Vance Murphy",
+   "profileUrl": null,
+   "readFrom": "Casey",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 29
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Michael Loy",
+   "profileUrl": null,
+   "readFrom": "Casey",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 29
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Andrew C. Self",
+   "profileUrl": null,
+   "readFrom": "Christian",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 3
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "John L. Atkins",
+   "profileUrl": null,
+   "readFrom": "Christian",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 3
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Jason Shea Fleming",
+   "profileUrl": null,
+   "readFrom": "Christian",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 3
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Katherine Demps",
+   "profileUrl": null,
+   "readFrom": "Christian",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 3
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "John Lindsey Adams",
+   "profileUrl": null,
+   "readFrom": "Christian",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 3
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "J. Foster Cotthoff",
+   "profileUrl": null,
+   "readFrom": "Christian",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 3
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "David M. Ward",
+   "profileUrl": null,
+   "readFrom": "Clark",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 25
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Cole Adams Maier",
+   "profileUrl": null,
+   "readFrom": "Clark",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 25
+  },
+  {
+   "court": "Circuit Court",
+   "division": 5,
+   "name": "Kristin J. Clouse",
+   "profileUrl": null,
+   "readFrom": "Clark",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 25
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Nora J. Shepherd",
+   "profileUrl": null,
+   "readFrom": "Clark",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 25
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Kimberly Blair Walson",
+   "profileUrl": null,
+   "readFrom": "Clark",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 25
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Tyler Frazier",
+   "profileUrl": null,
+   "readFrom": "Clark",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 25
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Robert V. Jennings",
+   "profileUrl": null,
+   "readFrom": "Clark",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 25
+  },
+  {
+   "court": "District Court",
+   "division": 3,
+   "name": "Earl-Ray Neal",
+   "profileUrl": null,
+   "readFrom": "Clark",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 25
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Oscar Gayle House",
+   "profileUrl": null,
+   "readFrom": "Clay",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 41
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Clint J. Harris",
+   "profileUrl": null,
+   "readFrom": "Clay",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 41
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Allen B. Roberts",
+   "profileUrl": null,
+   "readFrom": "Clay",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 41
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Henria Bailey-Lewis",
+   "profileUrl": null,
+   "readFrom": "Clay",
+   "role": "Vice-Chief Regional District Judge",
+   "tier": "district",
+   "unit": 41
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "David L. Williams",
+   "profileUrl": null,
+   "readFrom": "Clinton",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 40
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Scarlett B. Latham",
+   "profileUrl": null,
+   "readFrom": "Clinton",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 40
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "James M. Lawson",
+   "profileUrl": null,
+   "readFrom": "Clinton",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 40
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Daniel M. Heady",
+   "profileUrl": null,
+   "readFrom": "Crittenden",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 5
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Brandi H. Rogers",
+   "profileUrl": null,
+   "readFrom": "Crittenden",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 5
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Ben Leonard",
+   "profileUrl": null,
+   "readFrom": "Crittenden",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 5
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "David L. Williams",
+   "profileUrl": null,
+   "readFrom": "Cumberland",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 40
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Kristi Renee Castillo",
+   "profileUrl": null,
+   "readFrom": "Cumberland",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 59
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Bryce Lowry Caldwell",
+   "profileUrl": null,
+   "readFrom": "Daviess",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 6
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "David C. Payne",
+   "profileUrl": null,
+   "readFrom": "Daviess",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 6
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Jennifer Hendricks",
+   "profileUrl": null,
+   "readFrom": "Daviess",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 6
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Angela Thompson",
+   "profileUrl": null,
+   "readFrom": "Daviess",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 6
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Misty L. Miller",
+   "profileUrl": null,
+   "readFrom": "Daviess",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 6
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Brian L. Quattrocchi",
+   "profileUrl": null,
+   "readFrom": "Daviess",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 6
+  },
+  {
+   "court": "District Court",
+   "division": 3,
+   "name": "Shannon L. Meyer",
+   "profileUrl": null,
+   "readFrom": "Daviess",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 6
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Christopher T. Cohron",
+   "profileUrl": null,
+   "readFrom": "Edmonson",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 8
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "John R. Grise",
+   "profileUrl": null,
+   "readFrom": "Edmonson",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 8
+  },
+  {
+   "court": "Circuit Court",
+   "division": 5,
+   "name": "J.B. Hines",
+   "profileUrl": null,
+   "readFrom": "Edmonson",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 8
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Rebecca Simpson",
+   "profileUrl": null,
+   "readFrom": "Edmonson",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 8
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Catherine Rice Holderfield",
+   "profileUrl": null,
+   "readFrom": "Edmonson",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 8
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Gregory Vincent",
+   "profileUrl": null,
+   "readFrom": "Edmonson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 38
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Daniel Boling",
+   "profileUrl": null,
+   "readFrom": "Edmonson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 38
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Rebecca K. Phillips",
+   "profileUrl": null,
+   "readFrom": "Elliott",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 37
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Jeniffer Barker Neice",
+   "profileUrl": null,
+   "readFrom": "Elliott",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 37
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "H. Rupert Wilhoit III",
+   "profileUrl": null,
+   "readFrom": "Elliott",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 37
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Michael Dean",
+   "profileUrl": null,
+   "readFrom": "Estill",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 23
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "William \"Bo\" Leach",
+   "profileUrl": null,
+   "readFrom": "Estill",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 23
+  },
+  {
+   "court": "Circuit Court",
+   "division": 3,
+   "name": "Lucy A. VanMeter",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 22
+  },
+  {
+   "court": "Circuit Court",
+   "division": 4,
+   "name": "Julie Muth Goodman",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 22
+  },
+  {
+   "court": "Circuit Court",
+   "division": 7,
+   "name": "Diane Minnifield",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 22
+  },
+  {
+   "court": "Circuit Court",
+   "division": 8,
+   "name": "Thomas L. Travis",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 22
+  },
+  {
+   "court": "Circuit Court",
+   "division": 9,
+   "name": "Kimberly Nell Bunnell",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 22
+  },
+  {
+   "court": "Family Court",
+   "division": 1,
+   "name": "Libby G. Messer",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 22
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Traci Brislin",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 22
+  },
+  {
+   "court": "Family Court",
+   "division": 5,
+   "name": "Ross Ewing",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 22
+  },
+  {
+   "court": "Family Court",
+   "division": 6,
+   "name": "Tiffany Yahr",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 22
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Denotra Ann Spruill Gunther",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 22
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Bruce T. Bell",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 22
+  },
+  {
+   "court": "District Court",
+   "division": 3,
+   "name": "Lindsay Hughes Thurston",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Vice-Chief Regional District Judge",
+   "tier": "district",
+   "unit": 22
+  },
+  {
+   "court": "District Court",
+   "division": 4,
+   "name": "Melissa Moore Murphy",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 22
+  },
+  {
+   "court": "District Court",
+   "division": 5,
+   "name": "John Lindsay Tackett",
+   "profileUrl": null,
+   "readFrom": "Fayette",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 22
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Jeffrey L. Schumacher",
+   "profileUrl": null,
+   "readFrom": "Fleming",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 19
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Kim Razor",
+   "profileUrl": null,
+   "readFrom": "Fleming",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 19
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Johnny Ray Harris",
+   "profileUrl": null,
+   "readFrom": "Floyd",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 31
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Dwight S. Marshall",
+   "profileUrl": null,
+   "readFrom": "Floyd",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 31
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Jimmy R. Marcum",
+   "profileUrl": null,
+   "readFrom": "Floyd",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 31
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Tyler Green",
+   "profileUrl": null,
+   "readFrom": "Floyd",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 31
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Phillip Shepherd",
+   "profileUrl": null,
+   "readFrom": "Franklin",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 48
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Thomas D. Wingate",
+   "profileUrl": null,
+   "readFrom": "Franklin",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 48
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Squire N. Williams III",
+   "profileUrl": null,
+   "readFrom": "Franklin",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 48
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Kathy R. Mangeot",
+   "profileUrl": null,
+   "readFrom": "Franklin",
+   "role": "Vice-Chief Regional District Judge",
+   "tier": "district",
+   "unit": 48
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Chris Olds",
+   "profileUrl": null,
+   "readFrom": "Franklin",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 48
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Timothy A. Langford",
+   "profileUrl": null,
+   "readFrom": "Fulton",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 1
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Mark Stephen Medlin",
+   "profileUrl": null,
+   "readFrom": "Fulton",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 1
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Richard A. Brueggemann",
+   "profileUrl": null,
+   "readFrom": "Gallatin",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 54
+  },
+  {
+   "court": "Circuit Court",
+   "division": 3,
+   "name": "James R. Schrand",
+   "profileUrl": null,
+   "readFrom": "Gallatin",
+   "role": "Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 54
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Kendra L. McCardle",
+   "profileUrl": null,
+   "readFrom": "Gallatin",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 54
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Jennifer R. Dusing",
+   "profileUrl": null,
+   "readFrom": "Gallatin",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 54
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Jeffrey S. Smith",
+   "profileUrl": null,
+   "readFrom": "Gallatin",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 54
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Marcia L. Thomas",
+   "profileUrl": null,
+   "readFrom": "Gallatin",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 54
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Hunter Daugherty",
+   "profileUrl": null,
+   "readFrom": "Garrard",
+   "role": "Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 13
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Jeff Moss",
+   "profileUrl": null,
+   "readFrom": "Garrard",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 13
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Bill Oliver",
+   "profileUrl": null,
+   "readFrom": "Garrard",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 13
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Janet C. Booth",
+   "profileUrl": null,
+   "readFrom": "Garrard",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 13
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Leslie R. Knight",
+   "profileUrl": null,
+   "readFrom": "Grant",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 15
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Elizabeth A. Chandler",
+   "profileUrl": null,
+   "readFrom": "Grant",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 15
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Thomas M. Funk",
+   "profileUrl": null,
+   "readFrom": "Grant",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 15
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Kevin D. Bishop",
+   "profileUrl": null,
+   "readFrom": "Graves",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 52
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Scott R. Robbins",
+   "profileUrl": null,
+   "readFrom": "Graves",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 52
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Bruce T. Butler",
+   "profileUrl": null,
+   "readFrom": "Grayson",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 46
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Kenneth Harold Goff II",
+   "profileUrl": null,
+   "readFrom": "Grayson",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 46
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Bradley S. Butler",
+   "profileUrl": null,
+   "readFrom": "Grayson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 46
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Steven R. Crebessa",
+   "profileUrl": null,
+   "readFrom": "Grayson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 46
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Samuel Todd Spalding",
+   "profileUrl": null,
+   "readFrom": "Green",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 11
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Kaelin G. Reed",
+   "profileUrl": null,
+   "readFrom": "Green",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 11
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Amy S. Anderson",
+   "profileUrl": null,
+   "readFrom": "Green",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 11
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Mike Hall Jr.",
+   "profileUrl": null,
+   "readFrom": "Green",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 11
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Brian C. McCloud",
+   "profileUrl": null,
+   "readFrom": "Greenup",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 20
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Jeffrey L. Preston",
+   "profileUrl": null,
+   "readFrom": "Greenup",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 20
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Paul E. Craft",
+   "profileUrl": null,
+   "readFrom": "Greenup",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 20
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Timothy R. Coleman",
+   "profileUrl": null,
+   "readFrom": "Hancock",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 38
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Benjamin D. McKown",
+   "profileUrl": null,
+   "readFrom": "Hancock",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 38
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Gregory Vincent",
+   "profileUrl": null,
+   "readFrom": "Hancock",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 38
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Daniel Boling",
+   "profileUrl": null,
+   "readFrom": "Hancock",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 38
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "John David Simcoe",
+   "profileUrl": null,
+   "readFrom": "Hardin",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 9
+  },
+  {
+   "court": "Circuit Court",
+   "division": 3,
+   "name": "Larry Ashlock",
+   "profileUrl": null,
+   "readFrom": "Hardin",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 9
+  },
+  {
+   "court": "Family Court",
+   "division": 1,
+   "name": "Dawn Lonneman Blair",
+   "profileUrl": null,
+   "readFrom": "Hardin",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 9
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Brent Hall",
+   "profileUrl": null,
+   "readFrom": "Hardin",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 9
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Deborah Lewis Shaw",
+   "profileUrl": null,
+   "readFrom": "Hardin",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 9
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Kimberly W. Shumate",
+   "profileUrl": null,
+   "readFrom": "Hardin",
+   "role": "Vice-Chief Regional District Judge",
+   "tier": "district",
+   "unit": 9
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Kent Hendrickson",
+   "profileUrl": null,
+   "readFrom": "Harlan",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 26
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Timothy Jason Jackson",
+   "profileUrl": null,
+   "readFrom": "Harlan",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 26
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "William J. Verax IV",
+   "profileUrl": null,
+   "readFrom": "Harrison",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 18
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Heather Fryman",
+   "profileUrl": null,
+   "readFrom": "Harrison",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 18
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Gregory Coulson",
+   "profileUrl": null,
+   "readFrom": "Harrison",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 18
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Charles C. Simms III",
+   "profileUrl": null,
+   "readFrom": "Hart",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 10
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Joe G. Ballard",
+   "profileUrl": null,
+   "readFrom": "Hart",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 10
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Teresa McMahan",
+   "profileUrl": null,
+   "readFrom": "Hart",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 10
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Karen L. Wilson",
+   "profileUrl": null,
+   "readFrom": "Henderson",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 51
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "David Curlin",
+   "profileUrl": null,
+   "readFrom": "Henderson",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 51
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Jill Brady",
+   "profileUrl": null,
+   "readFrom": "Henderson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 51
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Leslie M. Newman",
+   "profileUrl": null,
+   "readFrom": "Henderson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 51
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Jerry D. Crosby II",
+   "profileUrl": null,
+   "readFrom": "Henry",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 12
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Doreen S. Goodwin",
+   "profileUrl": null,
+   "readFrom": "Henry",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 12
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Daniel Fendley",
+   "profileUrl": null,
+   "readFrom": "Henry",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 12
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Vacant",
+   "profileUrl": null,
+   "readFrom": "Henry",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 12
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Timothy A. Langford",
+   "profileUrl": null,
+   "readFrom": "Hickman",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 1
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Mark Stephen Medlin",
+   "profileUrl": null,
+   "readFrom": "Hickman",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 1
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Christopher B. Oglesby",
+   "profileUrl": null,
+   "readFrom": "Hopkins",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 4
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Susan Wesley McClure",
+   "profileUrl": null,
+   "readFrom": "Hopkins",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 4
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "David G. Massamore",
+   "profileUrl": null,
+   "readFrom": "Hopkins",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 4
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Kim Poe Gilliam",
+   "profileUrl": null,
+   "readFrom": "Hopkins",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 4
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Oscar Gayle House",
+   "profileUrl": null,
+   "readFrom": "Jackson",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 41
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Clint J. Harris",
+   "profileUrl": null,
+   "readFrom": "Jackson",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 41
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Allen B. Roberts",
+   "profileUrl": null,
+   "readFrom": "Jackson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 41
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Henria Bailey-Lewis",
+   "profileUrl": null,
+   "readFrom": "Jackson",
+   "role": "Vice-Chief Regional District Judge",
+   "tier": "district",
+   "unit": 41
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Hunter Daugherty",
+   "profileUrl": null,
+   "readFrom": "Jessamine",
+   "role": "Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 13
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Jeff Moss",
+   "profileUrl": null,
+   "readFrom": "Jessamine",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 13
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Bill Oliver",
+   "profileUrl": null,
+   "readFrom": "Jessamine",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 13
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Janet C. Booth",
+   "profileUrl": null,
+   "readFrom": "Jessamine",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 13
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "John Kevin Holbrook",
+   "profileUrl": null,
+   "readFrom": "Johnson",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 24
+  },
+  {
+   "court": "Family Court",
+   "division": 1,
+   "name": "Adam Scott O'Bryan",
+   "profileUrl": null,
+   "readFrom": "Johnson",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 24
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "John T. Chafin",
+   "profileUrl": null,
+   "readFrom": "Johnson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 24
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "D. Brett Butcher",
+   "profileUrl": null,
+   "readFrom": "Johnson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 24
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Kathy Lape",
+   "profileUrl": null,
+   "readFrom": "Kenton",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 16
+  },
+  {
+   "court": "Circuit Court",
+   "division": 3,
+   "name": "Kate Molloy",
+   "profileUrl": null,
+   "readFrom": "Kenton",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 16
+  },
+  {
+   "court": "Circuit Court",
+   "division": 4,
+   "name": "Patricia M. Summe",
+   "profileUrl": null,
+   "readFrom": "Kenton",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 16
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Terri King Schoborg",
+   "profileUrl": null,
+   "readFrom": "Kenton",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 16
+  },
+  {
+   "court": "Family Court",
+   "division": 5,
+   "name": "Acena J. Beck",
+   "profileUrl": null,
+   "readFrom": "Kenton",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 16
+  },
+  {
+   "court": "Family Court",
+   "division": 6,
+   "name": "Thomas A. Rauf",
+   "profileUrl": null,
+   "readFrom": "Kenton",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 16
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Ann Ruttle",
+   "profileUrl": null,
+   "readFrom": "Kenton",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 16
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Kenneth L. Easterling",
+   "profileUrl": null,
+   "readFrom": "Kenton",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 16
+  },
+  {
+   "court": "District Court",
+   "division": 3,
+   "name": "Douglas J. Grothaus",
+   "profileUrl": null,
+   "readFrom": "Kenton",
+   "role": "Vice-Chief District Judge",
+   "tier": "district",
+   "unit": 16
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Kim Cornett Childers",
+   "profileUrl": null,
+   "readFrom": "Knott",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 36
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Dennis B. Prater",
+   "profileUrl": null,
+   "readFrom": "Knott",
+   "role": "Vice-Chief Regional District Judge",
+   "tier": "district",
+   "unit": 36
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Gregory A. Lay",
+   "profileUrl": null,
+   "readFrom": "Knox",
+   "role": "Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 27
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Michael O. Caperton",
+   "profileUrl": null,
+   "readFrom": "Knox",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 27
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Stephen M. Jones",
+   "profileUrl": null,
+   "readFrom": "Knox",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 27
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Lucas M. Joyner",
+   "profileUrl": null,
+   "readFrom": "Knox",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 27
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Wendell Lewis \"Skip\" Hammons Jr.",
+   "profileUrl": null,
+   "readFrom": "Knox",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 27
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "John Paul Chappell",
+   "profileUrl": null,
+   "readFrom": "Knox",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 27
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Charles C. Simms III",
+   "profileUrl": null,
+   "readFrom": "Larue",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 10
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Joe G. Ballard",
+   "profileUrl": null,
+   "readFrom": "Larue",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 10
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Teresa McMahan",
+   "profileUrl": null,
+   "readFrom": "Larue",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 10
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Gregory A. Lay",
+   "profileUrl": null,
+   "readFrom": "Laurel",
+   "role": "Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 27
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Michael O. Caperton",
+   "profileUrl": null,
+   "readFrom": "Laurel",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 27
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Stephen M. Jones",
+   "profileUrl": null,
+   "readFrom": "Laurel",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 27
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Lucas M. Joyner",
+   "profileUrl": null,
+   "readFrom": "Laurel",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 27
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Wendell Lewis \"Skip\" Hammons Jr.",
+   "profileUrl": null,
+   "readFrom": "Laurel",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 27
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "John Paul Chappell",
+   "profileUrl": null,
+   "readFrom": "Laurel",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 27
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "John Kevin Holbrook",
+   "profileUrl": null,
+   "readFrom": "Lawrence",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 24
+  },
+  {
+   "court": "Family Court",
+   "division": 1,
+   "name": "Adam Scott O'Bryan",
+   "profileUrl": null,
+   "readFrom": "Lawrence",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 24
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "John T. Chafin",
+   "profileUrl": null,
+   "readFrom": "Lawrence",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 24
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "D. Brett Butcher",
+   "profileUrl": null,
+   "readFrom": "Lawrence",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 24
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Michael Dean",
+   "profileUrl": null,
+   "readFrom": "Lee",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 23
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "William \"Bo\" Leach",
+   "profileUrl": null,
+   "readFrom": "Lee",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 23
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Oscar Gayle House",
+   "profileUrl": null,
+   "readFrom": "Leslie",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 41
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Clint J. Harris",
+   "profileUrl": null,
+   "readFrom": "Leslie",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 41
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Allen B. Roberts",
+   "profileUrl": null,
+   "readFrom": "Leslie",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 41
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Henria Bailey-Lewis",
+   "profileUrl": null,
+   "readFrom": "Leslie",
+   "role": "Vice-Chief Regional District Judge",
+   "tier": "district",
+   "unit": 41
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "James W. Craft II",
+   "profileUrl": null,
+   "readFrom": "Letcher",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 47
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Nick Whitaker",
+   "profileUrl": null,
+   "readFrom": "Letcher",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 47
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Brian C. McCloud",
+   "profileUrl": null,
+   "readFrom": "Lewis",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 20
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Jeffrey L. Preston",
+   "profileUrl": null,
+   "readFrom": "Lewis",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 20
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Paul E. Craft",
+   "profileUrl": null,
+   "readFrom": "Lewis",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 20
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Teresa Whitaker",
+   "profileUrl": null,
+   "readFrom": "Lincoln",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 28
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Eddy Montgomery",
+   "profileUrl": null,
+   "readFrom": "Lincoln",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 28
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Marcus L. Vanover",
+   "profileUrl": null,
+   "readFrom": "Lincoln",
+   "role": "Chief Judge",
+   "tier": "circuit",
+   "unit": 28
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Jane Adams Venters",
+   "profileUrl": null,
+   "readFrom": "Lincoln",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 28
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Bill Oliver",
+   "profileUrl": null,
+   "readFrom": "Lincoln",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 13
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Janet C. Booth",
+   "profileUrl": null,
+   "readFrom": "Lincoln",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 13
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "James R. Redd III",
+   "profileUrl": null,
+   "readFrom": "Livingston",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 56
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Natalie White",
+   "profileUrl": null,
+   "readFrom": "Livingston",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 56
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Roger Brandon Knoth",
+   "profileUrl": null,
+   "readFrom": "Livingston",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 56
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Matt Schalk",
+   "profileUrl": null,
+   "readFrom": "Livingston",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 56
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Joe W. Hendricks Jr.",
+   "profileUrl": null,
+   "readFrom": "Logan",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 7
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Kenneth R. Williams Jr.",
+   "profileUrl": null,
+   "readFrom": "Logan",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 7
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "James R. Redd III",
+   "profileUrl": null,
+   "readFrom": "Lyon",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 56
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Natalie White",
+   "profileUrl": null,
+   "readFrom": "Lyon",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 56
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Roger Brandon Knoth",
+   "profileUrl": null,
+   "readFrom": "Lyon",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 56
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Matt Schalk",
+   "profileUrl": null,
+   "readFrom": "Lyon",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 56
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "David M. Ward",
+   "profileUrl": null,
+   "readFrom": "Madison",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 25
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Cole Adams Maier",
+   "profileUrl": null,
+   "readFrom": "Madison",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 25
+  },
+  {
+   "court": "Circuit Court",
+   "division": 5,
+   "name": "Kristin J. Clouse",
+   "profileUrl": null,
+   "readFrom": "Madison",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 25
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Nora J. Shepherd",
+   "profileUrl": null,
+   "readFrom": "Madison",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 25
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Kimberly Blair Walson",
+   "profileUrl": null,
+   "readFrom": "Madison",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 25
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Tyler Frazier",
+   "profileUrl": null,
+   "readFrom": "Madison",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 25
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Robert V. Jennings",
+   "profileUrl": null,
+   "readFrom": "Madison",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 25
+  },
+  {
+   "court": "District Court",
+   "division": 3,
+   "name": "Earl-Ray Neal",
+   "profileUrl": null,
+   "readFrom": "Madison",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 25
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Kim Cornett Childers",
+   "profileUrl": null,
+   "readFrom": "Magoffin",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 36
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Dennis B. Prater",
+   "profileUrl": null,
+   "readFrom": "Magoffin",
+   "role": "Vice-Chief Regional District Judge",
+   "tier": "district",
+   "unit": 36
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Samuel Todd Spalding",
+   "profileUrl": null,
+   "readFrom": "Marion",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 11
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Kaelin G. Reed",
+   "profileUrl": null,
+   "readFrom": "Marion",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 11
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Amy S. Anderson",
+   "profileUrl": null,
+   "readFrom": "Marion",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 11
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Mike Hall Jr.",
+   "profileUrl": null,
+   "readFrom": "Marion",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 11
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Andrea L. Moore",
+   "profileUrl": null,
+   "readFrom": "Marshall",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 42
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Stephanie J. Perlow",
+   "profileUrl": null,
+   "readFrom": "Marshall",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 42
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Jack M. Telle",
+   "profileUrl": null,
+   "readFrom": "Marshall",
+   "role": "Vice-Chief Regional District Judge",
+   "tier": "district",
+   "unit": 58
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "John Kevin Holbrook",
+   "profileUrl": null,
+   "readFrom": "Martin",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 24
+  },
+  {
+   "court": "Family Court",
+   "division": 1,
+   "name": "Adam Scott O'Bryan",
+   "profileUrl": null,
+   "readFrom": "Martin",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 24
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "John T. Chafin",
+   "profileUrl": null,
+   "readFrom": "Martin",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 24
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "D. Brett Butcher",
+   "profileUrl": null,
+   "readFrom": "Martin",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 24
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Jeffrey L. Schumacher",
+   "profileUrl": null,
+   "readFrom": "Mason",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 19
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Kim Razor",
+   "profileUrl": null,
+   "readFrom": "Mason",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 19
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Joseph Roark",
+   "profileUrl": null,
+   "readFrom": "McCracken",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 2
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "W. A. Kitchen",
+   "profileUrl": null,
+   "readFrom": "McCracken",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 2
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Deanna Wise Henschel",
+   "profileUrl": null,
+   "readFrom": "McCracken",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 2
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Todd S. Jones",
+   "profileUrl": null,
+   "readFrom": "McCracken",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 2
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Jenny Hines",
+   "profileUrl": null,
+   "readFrom": "McCracken",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 2
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Daniel Ballou",
+   "profileUrl": null,
+   "readFrom": "McCreary",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 34
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Paul K. Winchester",
+   "profileUrl": null,
+   "readFrom": "McCreary",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 34
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Cathy E. Prewitt",
+   "profileUrl": null,
+   "readFrom": "McCreary",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 34
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Fred F. White",
+   "profileUrl": null,
+   "readFrom": "McCreary",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 34
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Brian W. Wiggins",
+   "profileUrl": null,
+   "readFrom": "McLean",
+   "role": "Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 45
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Eric S. Stovall",
+   "profileUrl": null,
+   "readFrom": "McLean",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 45
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Bruce T. Butler",
+   "profileUrl": null,
+   "readFrom": "Meade",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 46
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Kenneth Harold Goff II",
+   "profileUrl": null,
+   "readFrom": "Meade",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 46
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Bradley S. Butler",
+   "profileUrl": null,
+   "readFrom": "Meade",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 46
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Steven R. Crebessa",
+   "profileUrl": null,
+   "readFrom": "Meade",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 46
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Elizabeth Davis",
+   "profileUrl": null,
+   "readFrom": "Menifee",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 21
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "David Barber",
+   "profileUrl": null,
+   "readFrom": "Menifee",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 21
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "William W. Roberts",
+   "profileUrl": null,
+   "readFrom": "Menifee",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 21
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Don Blair",
+   "profileUrl": null,
+   "readFrom": "Menifee",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 21
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Whitney Z. Johns",
+   "profileUrl": null,
+   "readFrom": "Mercer",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 50
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Bruce Petrie",
+   "profileUrl": null,
+   "readFrom": "Mercer",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 50
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Patrick Barsotti",
+   "profileUrl": null,
+   "readFrom": "Mercer",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 50
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "John T. Alexander",
+   "profileUrl": null,
+   "readFrom": "Metcalfe",
+   "role": "Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 43
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Mica Wood Pence",
+   "profileUrl": null,
+   "readFrom": "Metcalfe",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 43
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "J. Gabriel Pendleton",
+   "profileUrl": null,
+   "readFrom": "Metcalfe",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 43
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "David L. Williams",
+   "profileUrl": null,
+   "readFrom": "Monroe",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 40
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Kristi Renee Castillo",
+   "profileUrl": null,
+   "readFrom": "Monroe",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 59
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Elizabeth Davis",
+   "profileUrl": null,
+   "readFrom": "Montgomery",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 21
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "David Barber",
+   "profileUrl": null,
+   "readFrom": "Montgomery",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 21
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "William W. Roberts",
+   "profileUrl": null,
+   "readFrom": "Montgomery",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 21
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Don Blair",
+   "profileUrl": null,
+   "readFrom": "Montgomery",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 21
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Rebecca K. Phillips",
+   "profileUrl": null,
+   "readFrom": "Morgan",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 37
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Jeniffer Barker Neice",
+   "profileUrl": null,
+   "readFrom": "Morgan",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 37
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "H. Rupert Wilhoit III",
+   "profileUrl": null,
+   "readFrom": "Morgan",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 37
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Brian W. Wiggins",
+   "profileUrl": null,
+   "readFrom": "Muhlenberg",
+   "role": "Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 45
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Eric S. Stovall",
+   "profileUrl": null,
+   "readFrom": "Muhlenberg",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 45
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Charles C. Simms III",
+   "profileUrl": null,
+   "readFrom": "Nelson",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 10
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Joe G. Ballard",
+   "profileUrl": null,
+   "readFrom": "Nelson",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 10
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "John S. \"Jack\" Kelley V",
+   "profileUrl": null,
+   "readFrom": "Nelson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 57
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "William J. Verax IV",
+   "profileUrl": null,
+   "readFrom": "Nicholas",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 18
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Heather Fryman",
+   "profileUrl": null,
+   "readFrom": "Nicholas",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 18
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Gregory Coulson",
+   "profileUrl": null,
+   "readFrom": "Nicholas",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 18
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Timothy R. Coleman",
+   "profileUrl": null,
+   "readFrom": "Ohio",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 38
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Benjamin D. McKown",
+   "profileUrl": null,
+   "readFrom": "Ohio",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 38
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Gregory Vincent",
+   "profileUrl": null,
+   "readFrom": "Ohio",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 38
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Daniel Boling",
+   "profileUrl": null,
+   "readFrom": "Ohio",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 38
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Jerry D. Crosby II",
+   "profileUrl": null,
+   "readFrom": "Oldham",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 12
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Doreen S. Goodwin",
+   "profileUrl": null,
+   "readFrom": "Oldham",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 12
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Daniel Fendley",
+   "profileUrl": null,
+   "readFrom": "Oldham",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 12
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Vacant",
+   "profileUrl": null,
+   "readFrom": "Oldham",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 12
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Leslie R. Knight",
+   "profileUrl": null,
+   "readFrom": "Owen",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 15
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Casey Cheesman",
+   "profileUrl": null,
+   "readFrom": "Owen",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 15
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Elizabeth A. Chandler",
+   "profileUrl": null,
+   "readFrom": "Owen",
+   "role": "Chief Regional District Judge",
+   "tier": "district",
+   "unit": 15
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Thomas M. Funk",
+   "profileUrl": null,
+   "readFrom": "Owen",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 15
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Michael Dean",
+   "profileUrl": null,
+   "readFrom": "Owsley",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 23
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "William \"Bo\" Leach",
+   "profileUrl": null,
+   "readFrom": "Owsley",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 23
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "William J. Verax IV",
+   "profileUrl": null,
+   "readFrom": "Pendleton",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 18
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Heather Fryman",
+   "profileUrl": null,
+   "readFrom": "Pendleton",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 18
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Gregory Coulson",
+   "profileUrl": null,
+   "readFrom": "Pendleton",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 18
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Alison C. Wells",
+   "profileUrl": null,
+   "readFrom": "Perry",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 33
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Cody Goehring",
+   "profileUrl": null,
+   "readFrom": "Perry",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 33
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Eddy Coleman",
+   "profileUrl": null,
+   "readFrom": "Pike",
+   "role": "Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 35
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Howard Keith Hall",
+   "profileUrl": null,
+   "readFrom": "Pike",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 35
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Kent Varney",
+   "profileUrl": null,
+   "readFrom": "Pike",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 35
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Robert F. Wright",
+   "profileUrl": null,
+   "readFrom": "Pike",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 35
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Tommy R. May",
+   "profileUrl": null,
+   "readFrom": "Pike",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 35
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Lisa Hayden Whisman",
+   "profileUrl": null,
+   "readFrom": "Powell",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 39
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Monica S. Lacy",
+   "profileUrl": null,
+   "readFrom": "Powell",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 39
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Gary Salyers",
+   "profileUrl": null,
+   "readFrom": "Powell",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 39
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Teresa Whitaker",
+   "profileUrl": null,
+   "readFrom": "Pulaski",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 28
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Eddy Montgomery",
+   "profileUrl": null,
+   "readFrom": "Pulaski",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 28
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Marcus L. Vanover",
+   "profileUrl": null,
+   "readFrom": "Pulaski",
+   "role": "Chief Judge",
+   "tier": "circuit",
+   "unit": 28
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Jane Adams Venters",
+   "profileUrl": null,
+   "readFrom": "Pulaski",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 28
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Benjamin R. Hardy",
+   "profileUrl": null,
+   "readFrom": "Pulaski",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 28
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Kathryn G. Slone",
+   "profileUrl": null,
+   "readFrom": "Pulaski",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 28
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Heather Fryman",
+   "profileUrl": null,
+   "readFrom": "Robertson",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 18
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "William J. Verax IV",
+   "profileUrl": null,
+   "readFrom": "Robertson",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 18
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Gregory Coulson",
+   "profileUrl": null,
+   "readFrom": "Robertson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 18
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Teresa Whitaker",
+   "profileUrl": null,
+   "readFrom": "Rockcastle",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 28
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Eddy Montgomery",
+   "profileUrl": null,
+   "readFrom": "Rockcastle",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 28
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Marcus L. Vanover",
+   "profileUrl": null,
+   "readFrom": "Rockcastle",
+   "role": "Chief Judge",
+   "tier": "circuit",
+   "unit": 28
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Jane Adams Venters",
+   "profileUrl": null,
+   "readFrom": "Rockcastle",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 28
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Benjamin R. Hardy",
+   "profileUrl": null,
+   "readFrom": "Rockcastle",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 28
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Kathryn G. Slone",
+   "profileUrl": null,
+   "readFrom": "Rockcastle",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 28
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Elizabeth Davis",
+   "profileUrl": null,
+   "readFrom": "Rowan",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 21
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "David Barber",
+   "profileUrl": null,
+   "readFrom": "Rowan",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 21
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "William W. Roberts",
+   "profileUrl": null,
+   "readFrom": "Rowan",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 21
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Don Blair",
+   "profileUrl": null,
+   "readFrom": "Rowan",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 21
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Sara Beth Gregory",
+   "profileUrl": null,
+   "readFrom": "Russell",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 57
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Jennifer Upchurch Edwards",
+   "profileUrl": null,
+   "readFrom": "Russell",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 57
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Scarlett B. Latham",
+   "profileUrl": null,
+   "readFrom": "Russell",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 40
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "James M. Lawson",
+   "profileUrl": null,
+   "readFrom": "Russell",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 40
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Jeremy M. Mattox",
+   "profileUrl": null,
+   "readFrom": "Scott",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 14
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Kathryn H. Gabhart",
+   "profileUrl": null,
+   "readFrom": "Scott",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 14
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Lisa H. Morgan",
+   "profileUrl": null,
+   "readFrom": "Scott",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 14
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "William J. Fooks",
+   "profileUrl": null,
+   "readFrom": "Scott",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 14
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Bolton Bevins",
+   "profileUrl": null,
+   "readFrom": "Scott",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 14
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Sarah Hays Spedding",
+   "profileUrl": null,
+   "readFrom": "Scott",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 14
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Melanie Brummer",
+   "profileUrl": null,
+   "readFrom": "Shelby",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 53
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "S. Marie Hellard",
+   "profileUrl": null,
+   "readFrom": "Shelby",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 53
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Laura Witt",
+   "profileUrl": null,
+   "readFrom": "Shelby",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 53
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Donna G. Dutton",
+   "profileUrl": null,
+   "readFrom": "Shelby",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 53
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Mark A. Thurmond",
+   "profileUrl": null,
+   "readFrom": "Simpson",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 49
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Ashley Douglas",
+   "profileUrl": null,
+   "readFrom": "Simpson",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 49
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Martha Blair Harrison",
+   "profileUrl": null,
+   "readFrom": "Simpson",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 49
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Melanie Brummer",
+   "profileUrl": null,
+   "readFrom": "Spencer",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 53
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "S. Marie Hellard",
+   "profileUrl": null,
+   "readFrom": "Spencer",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 53
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Laura Witt",
+   "profileUrl": null,
+   "readFrom": "Spencer",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 53
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Donna G. Dutton",
+   "profileUrl": null,
+   "readFrom": "Spencer",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 53
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Samuel Todd Spalding",
+   "profileUrl": null,
+   "readFrom": "Taylor",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 11
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Kaelin G. Reed",
+   "profileUrl": null,
+   "readFrom": "Taylor",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 11
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Amy S. Anderson",
+   "profileUrl": null,
+   "readFrom": "Taylor",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 11
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Mike Hall Jr.",
+   "profileUrl": null,
+   "readFrom": "Taylor",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 11
+  },
+  {
+   "court": "Circuit Court",
+   "division": null,
+   "name": "Joe W. Hendricks Jr.",
+   "profileUrl": null,
+   "readFrom": "Todd",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 7
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Kenneth R. Williams Jr.",
+   "profileUrl": null,
+   "readFrom": "Todd",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 7
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "James R. Redd III",
+   "profileUrl": null,
+   "readFrom": "Trigg",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 56
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Natalie White",
+   "profileUrl": null,
+   "readFrom": "Trigg",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 56
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Roger Brandon Knoth",
+   "profileUrl": null,
+   "readFrom": "Trigg",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 56
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Matt Schalk",
+   "profileUrl": null,
+   "readFrom": "Trigg",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 56
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Jerry D. Crosby II",
+   "profileUrl": null,
+   "readFrom": "Trimble",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 12
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Doreen S. Goodwin",
+   "profileUrl": null,
+   "readFrom": "Trimble",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 12
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Daniel Fendley",
+   "profileUrl": null,
+   "readFrom": "Trimble",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 12
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Vacant",
+   "profileUrl": null,
+   "readFrom": "Trimble",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 12
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Daniel M. Heady",
+   "profileUrl": null,
+   "readFrom": "Union",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 5
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Brandi H. Rogers",
+   "profileUrl": null,
+   "readFrom": "Union",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 5
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Ben Leonard",
+   "profileUrl": null,
+   "readFrom": "Union",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 5
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Christopher T. Cohron",
+   "profileUrl": null,
+   "readFrom": "Warren",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 8
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "John R. Grise",
+   "profileUrl": null,
+   "readFrom": "Warren",
+   "role": "Vice Chief Regional Circuit Judge",
+   "tier": "circuit",
+   "unit": 8
+  },
+  {
+   "court": "Circuit Court",
+   "division": 5,
+   "name": "J.B. Hines",
+   "profileUrl": null,
+   "readFrom": "Warren",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 8
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Rebecca Simpson",
+   "profileUrl": null,
+   "readFrom": "Warren",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 8
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "Catherine Rice Holderfield",
+   "profileUrl": null,
+   "readFrom": "Warren",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 8
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Kimberly Geoghegan",
+   "profileUrl": null,
+   "readFrom": "Warren",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 8
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Brent J. Potter",
+   "profileUrl": null,
+   "readFrom": "Warren",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 8
+  },
+  {
+   "court": "District Court",
+   "division": 3,
+   "name": "John B. Brown",
+   "profileUrl": null,
+   "readFrom": "Warren",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 8
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Samuel Todd Spalding",
+   "profileUrl": null,
+   "readFrom": "Washington",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 11
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Kaelin G. Reed",
+   "profileUrl": null,
+   "readFrom": "Washington",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 11
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Amy S. Anderson",
+   "profileUrl": null,
+   "readFrom": "Washington",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 11
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Mike Hall Jr.",
+   "profileUrl": null,
+   "readFrom": "Washington",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 11
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Sara Beth Gregory",
+   "profileUrl": null,
+   "readFrom": "Wayne",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 57
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Jennifer Upchurch Edwards",
+   "profileUrl": null,
+   "readFrom": "Wayne",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 57
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Scarlett B. Latham",
+   "profileUrl": null,
+   "readFrom": "Wayne",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 40
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "James M. Lawson",
+   "profileUrl": null,
+   "readFrom": "Wayne",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 40
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Daniel M. Heady",
+   "profileUrl": null,
+   "readFrom": "Webster",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 5
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Brandi H. Rogers",
+   "profileUrl": null,
+   "readFrom": "Webster",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 5
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Ben Leonard",
+   "profileUrl": null,
+   "readFrom": "Webster",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 5
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Daniel Ballou",
+   "profileUrl": null,
+   "readFrom": "Whitley",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 34
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Paul K. Winchester",
+   "profileUrl": null,
+   "readFrom": "Whitley",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 34
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Cathy E. Prewitt",
+   "profileUrl": null,
+   "readFrom": "Whitley",
+   "role": "Chief District Judge",
+   "tier": "district",
+   "unit": 34
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Fred F. White",
+   "profileUrl": null,
+   "readFrom": "Whitley",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 34
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Lisa Hayden Whisman",
+   "profileUrl": null,
+   "readFrom": "Wolfe",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 39
+  },
+  {
+   "court": "Family Court",
+   "division": 2,
+   "name": "Monica S. Lacy",
+   "profileUrl": null,
+   "readFrom": "Wolfe",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 39
+  },
+  {
+   "court": "District Court",
+   "division": null,
+   "name": "Gary Salyers",
+   "profileUrl": null,
+   "readFrom": "Wolfe",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 39
+  },
+  {
+   "court": "Circuit Court",
+   "division": 1,
+   "name": "Jeremy M. Mattox",
+   "profileUrl": null,
+   "readFrom": "Woodford",
+   "role": "Chief Circuit Judge",
+   "tier": "circuit",
+   "unit": 14
+  },
+  {
+   "court": "Circuit Court",
+   "division": 2,
+   "name": "Kathryn H. Gabhart",
+   "profileUrl": null,
+   "readFrom": "Woodford",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 14
+  },
+  {
+   "court": "Family Court",
+   "division": 3,
+   "name": "Lisa H. Morgan",
+   "profileUrl": null,
+   "readFrom": "Woodford",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 14
+  },
+  {
+   "court": "Family Court",
+   "division": 4,
+   "name": "William J. Fooks",
+   "profileUrl": null,
+   "readFrom": "Woodford",
+   "role": "Judge",
+   "tier": "circuit",
+   "unit": 14
+  },
+  {
+   "court": "District Court",
+   "division": 1,
+   "name": "Bolton Bevins",
+   "profileUrl": null,
+   "readFrom": "Woodford",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 14
+  },
+  {
+   "court": "District Court",
+   "division": 2,
+   "name": "Sarah Hays Spedding",
+   "profileUrl": null,
+   "readFrom": "Woodford",
+   "role": "Judge",
+   "tier": "district",
+   "unit": 14
+  }
+ ],
+ "source": {
+  "countyPages": "https://www.kycourts.gov/Courts/County-Information/Pages/<County>.aspx",
+  "courtOfAppeals": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/default.aspx",
+  "note": "Named in the Administrative Office of the Courts' reply to Ask ky-judge-district-join, 2026-10-01. The directory search the same reply named is not read: its robots.txt refuses every client.",
+  "publisher": "Kentucky Court of Justice",
+  "supremeCourt": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/default.aspx"
+ }
+}
