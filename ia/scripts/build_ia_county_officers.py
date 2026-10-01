@@ -44,13 +44,24 @@ county's supervisors ship only when BOTH hold:
      which was derived from the Legislature's own supervisor-district geometry
      in phase 2 -- a completely independent publisher.
 
-Seven counties fail one or both (measured 2026-08-28): Adair returns 4 rows,
-Floyd 2, Henry 4, Humboldt 6, Tama 4 -- all impossible; Warren and Wright
-return a legal 5 against the geometry's 3. Those counties ship every other
-office and carry `supervisorsWithheld` naming the reason, so the card can say
-what it does not know instead of showing a board that is the wrong size. The
-same reader still gets the board through the county-supervisor layer, which is
-built from the geometry rather than from this table.
+NO COUNT IS STATED HERE, because this one moved four times in five weeks and
+the stale figure outlived two of the moves: an earlier version of this
+paragraph said seven counties and named Henry, while the shipped file carried
+eight and Henry was not among them. The run prints the number it wrote. A
+county that fails one of the two tests ships every other office and carries
+`supervisorsWithheld` naming the reason, so the card says what it does not know
+instead of showing a board that is the wrong size, and the same reader still
+gets the board through the county-supervisor layer, which is built from the
+geometry rather than from this table.
+
+A THIRD PUBLISHER IS CONSULTED ONLY FOR A COUNTY THAT WOULD OTHERWISE BE
+WITHHELD: the county's OWN board page, read by ia_county_board_page_scraper.py,
+which is the publisher that IS the board. It is not a tie-break between the two
+tables above -- it has to clear both of the same gates on its own, a lawful size
+and agreement with the geometry, and a page that names a board the geometry
+disagrees with is reported as the MAP being stale rather than preferred over it.
+A county whose page is unreachable, or whose cache is absent, is withheld
+exactly as before.
 
 NO ADDRESS FROM ANY OF THESE SOURCES IS SHIPPED. The ISAC table and both PDFs
 print an address block per officer, and the ICAA's are a mix of courthouse and
