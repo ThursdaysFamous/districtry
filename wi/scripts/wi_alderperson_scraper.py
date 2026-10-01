@@ -402,6 +402,12 @@ NEENAH_INDEX = "https://www.ci.neenah.wi.us/common-council/"
 # wrong total. COUNT THE CITIES, NOT THE BULLETS. The 21 unnamed cities of
 # 2026-10-01 are 4 built here, 5 shut below, 1 Oshkosh (open, at large) and 11
 # readable behind a page that assembles itself in the browser:
+#   THAT BREAKDOWN IS THE 2026-10-01 MORNING STATE AND THREE OF ITS ENTRIES HAVE
+#   MOVED SINCE; the corrected block below, headed THAT SWEEP SAID FIVE CITIES
+#   WERE SHUT, is the authority. Wausau and Wauwatosa ship from this file, and
+#   Janesville ships from `wi_municipal_board_scraper.py`, its council being
+#   elected at large. No total is restated here, because the two errors this
+#   heading has already made were both arithmetic on a figure nobody recounted.
 #   BELOIT publishes `User-agent: * / Disallow: /` under six named crawlers that
 #   get narrow rules. That is the city's own host and its own file, so it binds
 #   fully, and nothing here renames an agent to get past it.
@@ -465,7 +471,15 @@ NEENAH_INDEX = "https://www.ci.neenah.wi.us/common-council/"
 # elected on a nonpartisan basis and represent the city as a whole") so it has no
 # district to draw and belongs in the at-large roster, not here. Beloit is the one
 # of the five that genuinely refuses: its robots.txt answers the districtry token
-# with `Disallow: /`, and that is obeyed. Mequon cannot be read from a Claude Code
+# with `Disallow: /`, and that is obeyed.
+#
+# JANESVILLE SHIPPED ON 2026-10-01, from `wi_municipal_board_scraper.py` rather
+# than from this file, because its seven councilmembers are elected at large and
+# a row keyed by a seat number here would tell a reader they were elected in a
+# way they were not. Its edge wants BOTH a non-urllib3 stack AND Chrome's client
+# hints — the Kendall shape — and the policy it then serves is BYTE-IDENTICAL to
+# Kendall County's own, one CMS vendor's default, which binds at the city's host
+# and is never to be cited as Janesville's choice. Mequon cannot be read from a Claude Code
 # sandbox at all -- every spelling of its host fails at the egress gateway with
 # `Tunnel connection failed: 502`, which is a fact about this route and says
 # nothing about the city -- so it waits on a measurement from a GitHub runner

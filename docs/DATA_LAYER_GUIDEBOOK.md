@@ -4273,7 +4273,7 @@ five Illinois sources with or without browser headers, because urllib3's TLS Cli
 differs from the ssl module's and these edges fingerprint it. A probe that varied only the
 name would credit a browser string with a fix the stack made.
 
-**WHAT IT FOUND, across 316 hosts** (2026-09-12; 87 measured or re-measured since — see below).
+**WHAT IT FOUND, across 319 hosts** (2026-09-12; 90 measured or re-measured since — see below).
 It was 291 until #944's second commit: `drive.google.com` was recorded
 `robots-disallows-this-path`, the Wisconsin board scrape stopped fetching the Drive
 document it named, and `--check` then failed the entry as orphaned. A host leaving the
@@ -4285,24 +4285,24 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 | verdict | hosts | what it means |
 |---|---|---|
-| `token-ok` | 241 | the districtry token gets a full page on the plain `requests` stack |
-| `token-refused-and-stack` | 20 | refuses the token on both stacks, serves stdlib + Chrome |
+| `token-ok` | 242 | the districtry token gets a full page on the plain `requests` stack |
+| `token-refused-and-stack` | 21 | refuses the token on both stacks, serves stdlib + Chrome |
 | `stack-not-token` | 7 | refuses `requests`, serves the SAME token on stdlib |
 | `token-refused` | 3 | refuses the token on `requests`, serves Chrome on `requests` |
 | `all-refused` / `challenged` | 12 | refuses or challenges all four; a captcha is never answered |
 | `answers-nothing` / `path-answers-nothing` | 11 | HTTP 200 too small to be a page, or a 404/405/500 on the probed path |
 | `robots-disallows-this-path` | 11 | the `*` group disallows the probe's own chosen path, so it was not fetched |
 | `crawl-delay-too-long` | 5 | Crawl-delay 15–60s; four rungs at that pace is not a polite probe |
-| `robots-unreadable` | 4 | robots.txt could not be read by any rung, so no page was asked for: Coles, Gallatin and Vermilion (the incomplete-chain hosts) and docs.legis.wisconsin.gov (timed out twice on 2026-09-13 from the sandbox, curl included; the 2026-09-12 sweep read it `token-ok`, so this is the vantage's route, not the host) |
+| `robots-unreadable` | 5 | robots.txt could not be read by any rung, so no page was asked for: Coles, Gallatin and Vermilion (the incomplete-chain hosts), docs.legis.wisconsin.gov (timed out twice on 2026-09-13 from the sandbox, curl included; the 2026-09-12 sweep read it `token-ok`, so this is the vantage's route, not the host) and — added 2026-10-01 — www.ci.oshkosh.wi.us, whose handshake fails under every one of the four rungs here while `curl` completes one, and which a GitHub runner reads as `Connection reset by peer` on three reads fifteen seconds apart. The two symptoms sit below HTTP and what they have in common is NOT established; the city is being asked rather than a client tuned until one gets through (`wi/scripts/wi_municipal_board_scraper.py`) |
 | `tls-chain` / `proxy-denied` | 2 | an incomplete chain (`probe_incomplete_tls_chains.py`'s subject) or this sandbox's egress |
 
 **THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
 
-**23 HOSTS REFUSE THE TOKEN AND 241 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
---inventory` prints it on this tree: 42 files send a browser string; 19 reach at least one
+**24 HOSTS REFUSE THE TOKEN AND 242 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
+--inventory` prints it on this tree: 43 files send a browser string; 20 reach at least one
 host that genuinely refuses the token, **2 reach only hosts that serve the token a full
 page, and 21 more reach no host that refuses it** (one or more answered nothing or refused
-the `requests` stack); 226 of the 316 measured hosts are still reached by such a caller.
+the `requests` stack); 229 of the 319 measured hosts are still reached by such a caller.
 The 101 and 62 those first two figures read until 2026-10-01 were the state before SIXTY
 scrapers were switched onto our own token in one change, each of them re-measured at the
 pages it actually fetches. The 2 that remain are held on purpose: both follow links out of
