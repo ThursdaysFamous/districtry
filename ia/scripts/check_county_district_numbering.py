@@ -50,11 +50,41 @@ constant 36.18-38.34 pt left of its D-label centre, against a column pitch of
 a whole column. The names themselves still come from the gated officer roster;
 the letter only ever says which district each person holds.
 
-THIS SCRIPT IS THE MEASUREMENT AND NOT A GATE. It needs a county map, which
-most counties do not publish, so it cannot be run for the fleet and says
-nothing about a county it has not been pointed at. What it is for is the next
-county, and the question it leaves open is the important one: 21 counties
-already shipping a member keyed to a district took the same numbering on trust.
+THE OBVIOUS ALTERNATIVE EXPLANATION WAS RULED OUT BY THE COUNTY, NOT BY
+REASONING. If Palo Alto had redrawn its districts after the 2020 census, this
+map would be the OLD plan and the test would have compared one plan's labels
+against another plan's shapes, which says nothing about numbering. The map
+carries no date in its own content; the only "2020" anywhere is in the filename
+its attachment arrived under, and nothing is taken from a filename. Asked
+directly, Auditor Moser answered on 2026-10-01: "the 5 supervisors are current.
+The documents are labeled 2020 due to redistricting, but both are current." So
+the label is the census the plan was drawn to, and this is two numberings of one
+plan. ASK THE PUBLISHER WHEN A DOCUMENT'S VINTAGE DECIDES WHAT A MEASUREMENT
+MEANS: no other route was open here, because the district areas are a raster
+image -- the whole page has ONE stroke operator and its five vector fills are
+the legend swatches -- and paloaltocountyia.gov is unreachable from this
+network.
+
+HOWARD COUNTY IS THE SECOND COUNTY AND IT AGREES, SO THIS IS A PER-COUNTY FACT
+RATHER THAN A FLEET-WIDE ERROR. It is also the CHEAP shape and the one to reach
+for first: its own board page names a residence TOWN beside each of its three
+supervisors, so the test is one page read and three point-in-polygon tests, with
+no map, no PDF and no georeferencing. All three towns -- the county seat and two
+others, far apart and each wholly inside one district -- land in the district the
+county numbers them. Only the TOWN is recorded: a supervisor's street address is
+never written down here or anywhere else in this repository, which is why
+TOWN_COUNTIES carries places and not people.
+
+THIS SCRIPT IS THE MEASUREMENT AND NOT A GATE. The map route needs a county map,
+which most counties do not publish; the town route needs a county page that names
+a place per district. Neither can be run for the fleet, and the script says
+nothing about a county it has not been pointed at. The question it leaves open is
+the important one: 21 counties already shipping a member keyed to a district took
+the same numbering on trust, and one county agreeing does not clear the others.
+Where no county page names a place, the general instrument is certified
+per-precinct returns from the Secretary of State -- every one of Iowa's 40
+districted counties is PLAN 3 single-member, so a district's contest appears only
+in its own precincts and the returns compose it.
 """
 import json
 import math
@@ -79,6 +109,24 @@ LAYER = "ia/data/app/ia-supervisor-districts.json"
 # The pairing this script measured, so a rerun that disagrees is visible rather
 # than quietly replacing it.
 MEASURED = {1: "4", 2: "1", 3: "2", 4: "5", 5: "3"}
+
+# The second county, and the CHEAP shape: where a county's own board page names
+# a residence TOWN beside each supervisor, no map and no georeferencing are
+# needed -- the town's own published centroid is the test point. Only the town
+# is recorded. A supervisor's street address is never written down here or
+# anywhere else in this repository, which is why this table carries places and
+# not people. Towns are TIGERweb place centroids; the district is what the
+# county's own page says.
+TOWN_COUNTIES = {
+    "Howard": {
+        "source": "https://howardcounty.iowa.gov/board-of-supervisors/",
+        "towns": {
+            "Cresco":       ("1", (43.3717458, -92.1162868)),
+            "Lime Springs": ("2", (43.4498991, -92.2840640)),
+            "Riceville":    ("3", (43.3619761, -92.5538710)),
+        },
+    },
+}
 
 LAT0 = 43.1
 KX = math.cos(math.radians(LAT0)) * 111.320
@@ -116,15 +164,16 @@ def fit(keys):
     return apply, rms, math.degrees(math.atan2(b, a))
 
 
-def polygons():
+def polygons(county=COUNTY, expect=None):
     with open(LAYER, encoding="utf-8") as f:
         g = json.load(f)
     out = {f["properties"]["DISTRICT"]: f["geometry"] for f in g["features"]
-           if f["properties"].get("COUNTY") == COUNTY}
-    if len(out) != len(MAP_LABELS):
+           if f["properties"].get("COUNTY") == county}
+    if len(out) != (expect if expect is not None else len(MAP_LABELS)):
         sys.exit("check-county-district-numbering: FAIL -- %s draws %d district(s) "
                  "for %s and the map carries %d label(s)"
-                 % (LAYER, len(out), COUNTY, len(MAP_LABELS)))
+                 % (LAYER, len(out), county,
+                    expect if expect is not None else len(MAP_LABELS)))
     return out
 
 
@@ -153,6 +202,29 @@ def place(apply, polys):
         hit = [d for d, geom in polys.items() if contains(lon, lat, geom)]
         out[label] = hit[0] if len(hit) == 1 else "/".join(hit) or "none"
     return out
+
+
+def check_towns():
+    """The town route: one page read, no map. Returns the number of counties
+    whose own numbering agrees with this layer's."""
+    agreeing = 0
+    for county, rec in sorted(TOWN_COUNTIES.items()):
+        towns = rec["towns"]
+        polys = polygons(county, expect=len(towns))
+        same = 0
+        for town, (claimed, (lat, lon)) in sorted(towns.items()):
+            hit = [d for d, geom in polys.items() if contains(lon, lat, geom)]
+            got = hit[0] if len(hit) == 1 else "/".join(hit) or "none"
+            if got == claimed:
+                same += 1
+            print("  %s: %s sits in this layer's district %s; the county puts "
+                  "its District %s there" % (county, town, got, claimed))
+        if same == len(towns):
+            agreeing += 1
+        print("check-county-district-numbering: %s -- %d of %d town(s) land in "
+              "the district the county numbers them (%s)"
+              % (county, same, len(towns), rec["source"]))
+    return agreeing
 
 
 def main():
@@ -185,6 +257,7 @@ def main():
           "stable under leave-one-out over all %d control point(s); %d of %d "
           "district number(s) agree between the county and this layer"
           % (len(CONTROLS), len(identity), len(got)))
+    check_towns()
 
 
 if __name__ == "__main__":
