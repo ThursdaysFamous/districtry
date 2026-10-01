@@ -117,13 +117,56 @@ MEASURED = {1: "4", 2: "1", 3: "2", 4: "5", 5: "3"}
 # anywhere else in this repository, which is why this table carries places and
 # not people. Towns are TIGERweb place centroids; the district is what the
 # county's own page says.
+#
+# MONONA IS THE SAME ROUTE WITH A COMPLETE PARTITION BEHIND IT, and it is the
+# strongest witness this route has produced. Its own supervisor-district map
+# (mononacountyiowa.gov/files/supervisors/supervisor_district_map_38766.pdf) is
+# a vector PDF whose lower half is TEXT: it names, per district, every township
+# and city the district contains, so nothing on the drawing is read at all --
+# not a fill, not a label position, not a pixel. The nineteen townships and the
+# city of Onawa it lists are exactly the twenty county subdivisions TIGERweb
+# publishes for the county, so the county's own statement partitions the county
+# with nothing left over and nothing named twice, and every one of the twenty
+# interior points lands in the district this table pairs it with. The map's own
+# content dates itself ("Revised after 2020 Census") rather than its filename,
+# and its legend names the same three supervisors in the same three districts
+# as the gated roster, which is what makes it the plan in force rather than a
+# superseded one.
 TOWN_COUNTIES = {
     "Howard": {
         "source": "https://howardcounty.iowa.gov/board-of-supervisors/",
+        "districts": 3,
         "towns": {
             "Cresco":       ("1", (43.3717458, -92.1162868)),
             "Lime Springs": ("2", (43.4498991, -92.2840640)),
             "Riceville":    ("3", (43.3619761, -92.5538710)),
+        },
+    },
+    "Monona": {
+        "source": "https://mononacountyiowa.gov/files/supervisors/"
+                  "supervisor_district_map_38766.pdf",
+        "districts": 3,
+        "towns": {
+            "Ashton":        ("1", (42.0889412, -96.0903664)),
+            "Belvidere":     ("1", (41.9862474, -95.9663895)),
+            "Center":        ("1", (42.0925902, -95.8262991)),
+            "Fairview":      ("1", (42.1803438, -96.2970697)),
+            "Franklin":      ("1", (41.9905909, -96.0935195)),
+            "Grant":         ("1", (42.1754833, -95.9450839)),
+            "Kennebec":      ("1", (42.0769620, -95.9732708)),
+            "Lake":          ("1", (42.1642791, -96.2040485)),
+            "Lincoln":       ("1", (42.0773247, -96.2040064)),
+            "Sherman":       ("1", (41.8982190, -96.0832369)),
+            "Sioux":         ("1", (41.9138232, -95.9535027)),
+            "West Fork":     ("1", (42.1797571, -96.0908998)),
+            "Cooper":        ("2", (42.1621131, -95.7232194)),
+            "Jordan":        ("2", (41.9976634, -95.8433519)),
+            "Maple":         ("2", (42.1682353, -95.8542875)),
+            "Soldier":       ("2", (42.0044272, -95.7404976)),
+            "Spring Valley": ("2", (41.9053936, -95.8444687)),
+            "St. Clair":     ("2", (42.0778832, -95.7288008)),
+            "Willow":        ("2", (41.8963162, -95.7288486)),
+            "Onawa":         ("3", (42.0264757, -96.0909168)),
         },
     },
 }
@@ -205,25 +248,41 @@ def place(apply, polys):
 
 
 def check_towns():
-    """The town route: one page read, no map. Returns the number of counties
-    whose own numbering agrees with this layer's."""
+    """The town route: one page read, no map. Prints the pairing each county's
+    own places imply and whether that pairing is a clean bijection -- which is
+    what makes it trustworthy, exactly as the map route's bijection is. Returns
+    the number of counties whose own numbering agrees with this layer's."""
     agreeing = 0
     for county, rec in sorted(TOWN_COUNTIES.items()):
         towns = rec["towns"]
-        polys = polygons(county, expect=len(towns))
-        same = 0
+        polys = polygons(county, expect=rec["districts"])
+        implied = {}
+        bad = []
         for town, (claimed, (lat, lon)) in sorted(towns.items()):
             hit = [d for d, geom in polys.items() if contains(lon, lat, geom)]
             got = hit[0] if len(hit) == 1 else "/".join(hit) or "none"
-            if got == claimed:
-                same += 1
             print("  %s: %s sits in this layer's district %s; the county puts "
                   "its District %s there" % (county, town, got, claimed))
-        if same == len(towns):
+            if implied.setdefault(claimed, got) != got:
+                bad.append("the county's District %s reaches this layer's %s "
+                           "and %s" % (claimed, implied[claimed], got))
+        if len(set(implied.values())) != len(implied):
+            bad.append("two of the county's districts land in one of this "
+                       "layer's")
+        if len(implied) != rec["districts"]:
+            bad.append("only %d of the county's %d district(s) are spoken for"
+                       % (len(implied), rec["districts"]))
+        pairing = ", ".join("%s->%s" % (c, implied[c]) for c in sorted(implied))
+        if bad:
+            print("check-county-district-numbering: %s -- NO PAIRING: %s (%s)"
+                  % (county, "; ".join(bad), rec["source"]))
+            continue
+        same = sum(1 for c, d in implied.items() if c == d)
+        if same == len(implied):
             agreeing += 1
-        print("check-county-district-numbering: %s -- %d of %d town(s) land in "
-              "the district the county numbers them (%s)"
-              % (county, same, len(towns), rec["source"]))
+        print("check-county-district-numbering: %s -- %d place(s) agree on "
+              "county->layer %s, %d of %d number(s) the same (%s)"
+              % (county, len(towns), pairing, same, len(implied), rec["source"]))
     return agreeing
 
 

@@ -694,6 +694,14 @@ try {
        "Pocahontas district 1 names the county's District 2 supervisor"],
       [43.3717458, -92.1162868, "Howard County", "Pat Murray", null,
        "Howard, whose own numbering matches this layer's"],
+      // Monona, measured off its own map's TEXT rather than its drawing: the
+      // county's District 1 is this layer's 2, so a point in Ashton township
+      // must name Bo Fox and a point in Maple township must name Tom
+      // Brouillette. Shown the other way round before 2026-10-01.
+      [42.0889412, -96.0903664, "Monona County", "Bo Fox", "Tom Brouillette",
+       "Monona district 2 names the county's District 1 supervisor"],
+      [42.1682353, -95.8542875, "Monona County", "Tom Brouillette", "Bo Fox",
+       "Monona district 1 names the county's District 2 supervisor"],
       // THE WITHHELD BRANCH. Washington County's numbering has not been
       // measured, so its district card names nobody at all -- not its chair,
       // not anyone. Its supervisors are still on the County card.

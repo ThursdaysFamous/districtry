@@ -19,6 +19,26 @@
   "readOn": "2026-10-01",
   "sourceUrl": "https://howardcounty.iowa.gov/board-of-supervisors/"
  },
+ "133": {
+  "boardPhone": "(712) 433-1585",
+  "county": "Monona",
+  "districts": {
+   "1": {
+    "name": "Tom Brouillette",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Bo Fox",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Vincent Phillips",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-01",
+  "sourceUrl": "https://www.mononacountyiowa.gov/supervisors/"
+ },
  "151": {
   "boardPhone": "(712) 335-3361",
   "county": "Pocahontas",

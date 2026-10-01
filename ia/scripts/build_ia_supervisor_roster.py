@@ -106,8 +106,8 @@ TODAY = dt.date.today().isoformat()
 # numbering has been CHECKED, which is a different quantity with its own floor,
 # and the two figures must never be confused: a run that keys twenty counties on
 # trust would clear the old floor and would be exactly the defect.
-MIN_COUNTIES = 2
-MIN_DISTRICTS = 8
+MIN_COUNTIES = 3
+MIN_DISTRICTS = 11
 
 # WHETHER A COUNTY'S OWN DISTRICT NUMBER IS THIS INSTANCE'S DISTRICT NUMBER.
 #
@@ -163,6 +163,19 @@ NUMBERING_CHECKED = {
                    "8 city centroids agree on this pairing with no "
                    "contradiction, Laurens settling district 2 and the city of "
                    "Pocahontas district 3",
+    },
+    "Monona": {
+        "map": {"1": "2", "2": "1", "3": "3"},
+        "checked": "2026-10-01",
+        "witness": "the county's own supervisor-district map states in TEXT, "
+                   "per district, every township and city that district "
+                   "contains -- nothing on the drawing is read -- and those "
+                   "twenty places are exactly the twenty county subdivisions "
+                   "the census publishes for the county, so the statement "
+                   "partitions the county with nothing left over; all twenty "
+                   "interior points agree on this pairing, and the map's own "
+                   "legend names the same three supervisors in the same three "
+                   "districts as this roster",
     },
 }
 
