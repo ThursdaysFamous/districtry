@@ -2009,6 +2009,24 @@ def covering_records(live):
     return out
 
 
+def _names_a_body(rec):
+    """Does this county record name anybody on its governing body?
+
+    Two shapes, because the fleet's boards come in two: a districted board
+    keys its people under `districts[].members[]`, and a board elected AT
+    LARGE has no districts at all and carries `members[]` at the top of the
+    record beside `at_large`. Both are a county naming its governing body.
+    """
+    for d in rec.get("districts") or []:
+        for m in d.get("members") or []:
+            if isinstance(m, dict) and m.get("name"):
+                return True
+    for m in rec.get("members") or []:
+        if isinstance(m, dict) and m.get("name"):
+            return True
+    return False
+
+
 def score_covered(tag, counties_named, total_counties, expected, records,
                   named_counties=()):
     """Every expected function for one instance: verdict, and why.
@@ -2260,8 +2278,21 @@ def measure(counties, paths, B):
             # the app DRAWS says something, and passes a county whose board is
             # recorded as unavailable. Covered asks how many of the state's
             # counties the app answers at all.
-            if any(m.get("name") for d in (rec.get("districts") or [])
-                   for m in (d.get("members") or [])):
+            #
+            # AN AT-LARGE BOARD HAS NO DISTRICTS AND ITS MEMBERS SIT AT THE TOP
+            # OF THE RECORD, so a walk of `districts` alone finds nothing in it
+            # and the county reads as naming nobody. Measured on 2026-10-01, 20
+            # Illinois and 70 Iowa records are that shape and every one names
+            # real people, so Illinois published 63 of 102 counties where it is
+            # 83 and Iowa 21 of 99 where it is 91. The standard is explicit that
+            # naming the members IS the whole answer for a body elected at
+            # large — there is no district to draw — so both shapes count.
+            # Wisconsin and Michigan carry no flat records and do not move.
+            #
+            # The two routes are exhaustive on today's tree: 63 + 20 = 83 is
+            # every Illinois county with a record and 21 + 70 = 91 every Iowa
+            # one, so no county is left naming somebody by a third route.
+            if _names_a_body(rec):
                 named_counties.add(B.slug_of(name))
             for d in rec.get("districts") or []:
                 districts += 1
