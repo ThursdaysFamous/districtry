@@ -32,16 +32,29 @@ What it checks (findings carry a severity — FAIL, WARN, or OK):
      data/app file is present.                             [WARN / FAIL if gone]
   4. Live service endpoints (Census TIGERweb): reachable.                  [WARN]
 
-Crawl-delay: this file probes TWO pages on www.iowacourts.gov, which states
-`Crawl-delay: 30` in a group that binds every token this project sends, and
-one PDF on www.issda.org, which states 10. Measured 2026-09-12, it honoured
-neither — the two iowacourts.gov probes went out back to back. They are now
-paced by scripts/robots_policy.py's HostPacer, the same object the six-worker
-board-chair scrape uses, and the hosts it held are printed to stderr at the
-end of the run so an honoured delay can be told from an ignored one. A single
-request to a host is never paced by anything, so issda.org's 10 seconds cost
-this run nothing; the pacer is there for the day a second issda.org URL is
+Crawl-delay: NO HOST THIS FILE PROBES STATES ONE, and NONE OF THE THREE PUBLISHES
+A READABLE POLICY AT ALL. Measured 2026-10-01 with this file's own user agent, one
+robots.txt read per host, over the three the manifest actually reaches (13 live
+endpoints and 6 provenance entries, and SOCRATA is empty — this instance draws on
+no portal dataset): tigerweb.geo.census.gov serves 189 bytes of HTML at that path
+rather than a policy, unitedstates.github.io answers 404, and carto.nationalmap.gov
+answers 403 — which under RFC 9309 is a file that was never published rather than a
+refusal (CLAUDE.md records the ruling and why reading it as a refusal cost this
+fleet real data). The pacer is wired anyway
+(scripts/robots_policy.py's HostPacer, the same object the Iowa board-chair
+scrape uses) and prints the hosts it held to stderr at the end of the run, so an
+honoured delay can be told from an ignored one the day a source with one is
 added.
+
+THE PARAGRAPH THIS REPLACES WAS IOWA'S AND WAS FALSE OF THIS FILE from the day
+the instance shipped. It stated that this file probes two pages on
+www.iowacourts.gov and one PDF on www.issda.org and that neither delay was
+honoured before the pacer landed. Minnesota reaches neither host — there is no
+sheriff directory and no county-attorney roster in this manifest — so the
+measurement was about a sibling's code and read as a measurement about this
+one. Carried over wholesale with the file, the same way Michigan's go-live
+shipped Iowa's identity block, and corrected rather than deleted so the next
+clone can see the class of mistake.
 
 WHAT THIS FILE STILL DOES NOT DO, stated rather than left to be assumed: it
 reads robots.txt for the DELAY and does not act on the file's allow/disallow.
@@ -56,8 +69,12 @@ scrapers fetch without asking, and that is the next thing to fix.
 Exit status: 0 when nothing needs a human (OK or WARN only), 1 on any FAIL.
 Newer-edition detection is deliberately WARN, not FAIL — the current dataset
 still works and a person decides whether/when to migrate. The scheduled
-workflow (no scheduled workflow yet -- this instance is dark; mn/WATCH.md's GO-LIVE section carries it) opens an issue on WARN or
-FAIL so drift is never silent, without turning the build red.
+workflow (.github/workflows/mn-validate-sources.yml, 1st of the month at
+18:00 UTC) opens an issue on WARN or FAIL so drift is never silent, without
+turning the build red. THAT WORKFLOW ARRIVED ON 2026-10-01, TWO DAYS AFTER
+THIS FILE AND A DAY AFTER GO-LIVE: this sentence used to defer it on the
+ground that the instance was dark and point at a GO-LIVE row in mn/WATCH.md
+that nobody wrote, so the deferral had nothing holding it.
 
 Usage:
     python3 mn/scripts/validate_sources.py                 # human-readable report
