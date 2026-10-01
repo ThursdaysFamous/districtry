@@ -19,12 +19,17 @@ whether the data exists** — a level no publisher offers, that we
 asked about and were refused, counts as covered — so a county
 publisher cannot fail an app on it.
 
-**No record is credited towards Covered yet, so every count here is
-a floor.** The standard lets a record cover a level, but only after
-a dated ask. Nothing in a gap record says which expected level it
-is about and nothing joins one to the ask ledger, so a level this
-report calls open may already have a record behind it. The report
-understates an app rather than passing one.
+**No gap record claims a level yet, so every count here is a
+floor.** A record can say which levels it covers and who was
+asked, when, and what came back; none does, so a level this
+report calls open may already have a record behind it. The
+report understates an app rather than passing one.
+
+A level measured over every county, or every local government
+above the standard's floor, is credited **unit by unit**: a record
+names the county or unit it is about and the level closes only
+when every unanswered one is either answered or has its own
+credited record. One refusal cannot carry a whole tier.
 
 Raw gap-record counts are still reported and are deliberately
 **not** a bar: a county that will never publish a map would keep a

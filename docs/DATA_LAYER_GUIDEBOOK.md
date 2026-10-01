@@ -119,6 +119,15 @@ credited none of them and every count it published was a floor.
   `sub-county-government`, `special-districts`, `tribal-government`, and the rest — run
   `python3 scripts/build_eam_status.py --check` and a wrong key prints the full list).
   It is a list, because one record can account for more than one level.
+- **A level measured over every county, or every local government above the standard's
+  floor, is credited UNIT BY UNIT**, and an entry about one of those names its unit:
+  `"county-government:ford"`, `"local-government:2605920"` — the county slug, or the
+  7-digit GEOID the city tier is keyed by. The level closes only when **every** unanswered
+  unit is either answered or has its own credited record. Without that, one city's refusal
+  would carry a whole state's local tier while the other units were unasked, which is what
+  the first version of this did; a whole-level claim on one of those two levels now fails
+  by name. The other eleven levels are answered for a whole state at once and take a bare
+  key — a unit on one of them fails too.
 - **`ask`** is the ledger entry, on the record itself, because **the record is the
   ledger**: `docs/ASK_DRAFTS.md` step 2 says the send date is written "in the relevant gap
   record in `docs/DATA_LAYER_GUIDEBOOK.md`", and that prose is all there has ever been.
@@ -132,6 +141,12 @@ credited none of them and every count it published was a floor.
 "ask": {"who": "County Clerk Amy Britton", "asked": "2026-08-01",
         "followedUp": "2026-08-22", "outcome": "unresponsive"}
 ```
+
+A record may also cite an ask in its prose, as `Ask 12` or `Ask il-ford-board-map`. A
+**new** ask takes a subject id rather than the next number, for the reason
+`docs/ASK_DRAFTS.md` step 6 gives: two branches both take "the next number" and git merges
+both without a conflict. `build_coverage_gaps.py` fails on a duplicate ask id and on a
+record citing an ask the drafts file does not have.
 
 A **refusal counts straight away**. **Silence counts as `unresponsive`** once the ask has
 had one follow-up and thirty days have passed from that follow-up — a follow-up being a
