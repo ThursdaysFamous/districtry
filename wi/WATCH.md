@@ -128,7 +128,7 @@ re-reasoned here. That file is what to DO when one of these moves; this is when 
 look.
 
 **ONE CORRECTION TO THE INSTRUMENT'S OWN READING, and it concerns the only row
-below whose files name people.** `docs/EAM_STATUS.md` reports all 229 of these as
+below whose files name people.** `docs/EAM_STATUS.md` reported all 229 of these as
 naming nobody, and the clerk directories do: `town-clerks-<CCC>.json` and
 `wi-municipal-clerks.json` carry a named clerk, and usually a named deputy, for
 every one of Wisconsin's 1,847 municipalities — **measured on the shipped files,
@@ -137,8 +137,10 @@ files.** The report's shape test looks for a
 record key literally called `name`, and these files key the person as `clerk` and
 `deputyClerk`, so they fall through to structure. That is a defect in the shared
 instrument rather than a reason to write a weaker plan here — the row below states
-the cadence a file of officeholders deserves, and the miss is reported to the
-session that owns the instrument.
+the cadence a file of officeholders deserves. The miss was reported to the session
+that owns the instrument and **fixed on 2026-10-01**: the shape test now reads a
+person out of a `clerk` or `deputyClerk` key as well as a `name` one, so these 72
+files count as naming people in every state, not only here.
 
 **A MAP'S PLAN STATES A DATE FOR RE-READING ITS LINES, not only a watch on
 whether its source still answers.** A monthly reachability check catches a dead
