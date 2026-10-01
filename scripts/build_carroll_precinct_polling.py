@@ -35,7 +35,7 @@ import re
 import sys
 
 import requests
-from scraper_common import make_fail, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pypdf
@@ -47,7 +47,7 @@ NOTICE_URL = ("https://cms9files.revize.com/carrollil/"
 CLERK_PAGE = ("https://www.carrollcountyil.gov/county_departments/"
               "clerk___recorder/index.php")
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "carroll-precinct-polling.json")
@@ -124,6 +124,8 @@ def parse_notice(pdf_bytes):
 
 def main():
     check = "--check" in sys.argv
+    require_robots_once(NOTICE_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-carroll-precinct-polling")
     resp = requests.get(NOTICE_URL, headers=HEADERS, timeout=120)
     resp.raise_for_status()
     if not resp.content.startswith(b"%PDF"):

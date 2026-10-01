@@ -31,6 +31,7 @@ Usage:
     python3 scripts/crawford_county_board_scraper.py [-o raw.json]
 """
 
+import os
 import argparse
 import html
 import json
@@ -39,6 +40,9 @@ import sys
 
 import requests
 from scraper_common import make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
 
 BOARD_URL = "https://crawfordcounty.illinois.gov/department/county-board/"
 RESULTS_URL = "https://il-crawford.pollresults.net/"
@@ -60,6 +64,8 @@ fail = make_fail("crawford-board-scraper")
 
 
 def get(url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-crawford-county-board-scraper")
     resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
     resp.raise_for_status()
     return resp.text

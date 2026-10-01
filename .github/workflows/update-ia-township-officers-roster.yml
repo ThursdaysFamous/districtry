@@ -1,0 +1,145 @@
+name: Update IA township officers roster
+
+# Weekly refresh of the township clerks and trustees TWELVE IOWA COUNTIES
+# publish (ia/data/app/ia-township-officers.json, read by ia/index.html's
+# County Subdivision card).
+#
+# WHY THIS FILE EXISTS AT ALL. Until 2026-10-01 the County Subdivision card
+# said "no statewide roster of township officers was found in the research
+# pass". That was true about a STATEWIDE roster and was read for fourteen
+# months as there being no roster anywhere, while twelve counties were
+# publishing one the whole time — every one of them at the same path under
+# their own county site, which nothing in this instance had ever requested. A
+# statewide absence and a per-county absence are different measurements, and
+# the first does not settle the second.
+#
+# NOT A STATEWIDE ROSTER AND NEVER TO BE DESCRIBED AS ONE. Iowa has roughly
+# 1,600 civil townships. These twelve counties cover 186 of them, so about
+# 1,400 name nobody in this app, which the card says on every one of those
+# cards and which the `ia-township-officers` gap record carries.
+#
+# WHAT THIS RUN IS REALLY WATCHING is whether twelve counties' CMS pages still
+# parse, and the floors are set so a plausible-looking shortfall cannot ship:
+# twelve counties, 180 townships, 590 officials and 170 phone numbers, each a
+# floor under what the first build measured (12 / 186 / 617 / 181).
+#
+# TWO MARKUP SHAPES, SIX COUNTIES EACH. Six wrap each officer in a div the CMS
+# calls `offContact4x offContactName` and six use a bare `offInfo` div, so a
+# parser written against either shape returns six counties and zero officials
+# for the other six — which is exactly what the first draft did. The row
+# pattern is wrapper-agnostic for that reason and the scraper's `--selftest`
+# asserts BOTH arms rather than only the shape it was written against.
+#
+# NO ADDRESS IS EVER READ FROM THESE PAGES. They publish officers' HOME
+# addresses beside their names. The builder refuses to write any field that
+# reads as a street address, per-field and again over the whole record, so a
+# page that changes shape cannot quietly move a home address onto a card.
+#
+# THE JOIN IS BY GEOID, NOT BY NAME. The card reads TIGER's county-subdivision
+# fabric, so the file is keyed by the same GEOID and a township is matched by
+# its own identity. That is also what settles Cerro Gordo's Clear Lake, where a
+# township and a city share one BASENAME: only records whose NAME is the
+# BASENAME plus " township" are indexed, the same suffix the card itself reads.
+# Every township must match exactly one census record or the build refuses to
+# write.
+
+on:
+  schedule:
+    - cron: "30 19 * * 6" # Saturday 19:30 UTC (after the supervisor refresh)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent, so
+      # the refresh still runs — it just goes back to opening unchecked PRs.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit. Under the default depth-1 checkout git reports the single
+          # fetched commit as the last commit of EVERY file, so every entry takes
+          # today's date and `build_sitemap.py --check` passes on it anyway.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install -c ia/scripts/requirements.txt requests
+
+      - name: Scrape the counties' own township pages (robots.txt consulted first)
+        run: python3 ia/scripts/ia_township_officers_scraper.py
+
+      - name: Rebuild the roster (joined to the census fabric, no addresses)
+        run: python3 ia/scripts/build_ia_township_officers.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, and every data/app file must be present,
+      # well formed and cached in exactly one service-worker list.
+      - name: Validate app + data files
+        run: python3 ia/scripts/validate_index.py ia/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- ia/data/app/ia-township-officers.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # THE PR BODY IS AN env: BLOCK SCALAR, NOT A SHELL STRING, AND THAT IS
+          # LOAD-BEARING. A multi-line double-quoted string inside `run: |` puts
+          # its continuation lines at column 0, which ENDS the block scalar —
+          # GitHub then rejects the whole file as an invalid workflow and every
+          # run instant-fails with zero jobs.
+          PR_BODY: |
+            Automated weekly refresh of the township clerks and trustees that twelve Iowa counties publish, read by the County Subdivision card. Generated by `ia/scripts/build_ia_township_officers.py` from `ia_township_officers_scraper.py`.
+
+            Please review the diff before merging — this changes data about real officeholders.
+
+            **Three things worth reading closely here.** A county leaving the file is either a page that changed shape or a robots.txt that now refuses us, and those are different problems — the scraper prints a verdict per county either way. A name changing spelling matters: four of these counties publish names with unusual punctuation, and those ship verbatim rather than being corrected, so a diff that tidies one is the parser changing rather than the county. And no field here may read as a street address: these pages publish officers' home addresses beside their names, and the builder refuses to write one.
+
+            This is **186 townships of roughly 1,600** and must not be described as a statewide roster; the `ia-township-officers` gap record stays open for the rest.
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR
+          # every week.
+          branch="bot/ia-township-officers-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          # REGENERATED HERE, AFTER THE CUT, AND NOT BEFORE IT. Building before
+          # the cut leaves shared files dirty, where `git checkout -B` refuses to
+          # move onto main's new tip.
+          python3 scripts/build_sitemap.py
+          git add ia/data/app/ia-township-officers.json sitemap.xml
+          git commit -m "Update the Iowa township officers roster from the counties' own pages"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update the Iowa township officers roster from the counties' own pages" \
+              --body "$PR_BODY" \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

@@ -42,7 +42,9 @@ import re
 import sys
 import time
 
-from scraper_common import UA_CHROME_X11_128, fetch  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    fetch, require_robots_once, UA_ROSTER_BOT,
+)
 
 try:
     import pdfplumber
@@ -52,7 +54,7 @@ except ImportError:                                    # pragma: no cover
 SOURCE_URL = ("https://marshallcountyillinois.gov/wp-content/uploads/2026/01/"
               "2026-New-County-Board-Roster-.pdf")
 ROSTER_PAGE = "https://marshallcountyillinois.gov/directory/county-board/"
-UA = {"User-Agent": UA_CHROME_X11_128}
+UA = {"User-Agent": UA_ROSTER_BOT}
 
 # Column left edges in PDF points, measured against the 2026 revision's header
 # row (Official 24 / Title 142 / Address 213 / City 294 / Phone 328 /
@@ -85,6 +87,15 @@ PDF_RETRY_GAP_S = 4.0
 
 
 def fetch_pdf(url, attempts=PDF_ATTEMPTS):
+    # THE COUNTY'S RULES ARE READ BEFORE THE PDF, with the identity this fetch
+    # sends. marshallcountyillinois.gov had been recorded as answering every
+    # client with a managed challenge; re-measured from a GitHub runner on
+    # 2026-10-01, the vantage the weekly job crawls from, it serves a 185-byte
+    # policy whose binding group matches none of the paths read here — the
+    # roster PDF's own path included — on all three reads of a deliberate
+    # re-measurement fifteen seconds apart.
+    require_robots_once(url, UA["User-Agent"], headers=UA,
+                        label="marshall-board-scraper")
     last = None
     for attempt in range(attempts):
         resp = fetch(url, UA, timeout=90)

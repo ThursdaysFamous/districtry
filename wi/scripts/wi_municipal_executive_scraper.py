@@ -70,6 +70,38 @@ only one the builder may carry. The block above the `fetch` function carries
 the reasoning; each verdict also gets its own withheld sentence, because "could
 not be read" was standing in for all three on the card too.
 
+RE-MEASURED 2026-09-30, AND THREE OF THE FOUR REFUSALS WERE OURS. The tables
+above stand as what was true on their own days. Today the nineteen answer TEN
+witnessed and nine withheld, and Milwaukee — the largest city in Wisconsin —
+names a mayor here for the first time.
+
+Two changes produced that. #1271 made the fleet read robots.txt by RFC 9309 and
+with the client that crawls, so the "403 on robots.txt, taken strictly" pair
+above is gone: Wauwatosa witnesses Dennis McBride on its own page. Milwaukee's
+robots.txt then served us while its PAGE went on answering 403, and that gap is
+what settled the second cause. The 403 was a Cloudflare MANAGED CHALLENGE
+(`Cf-Mitigated: challenge`, the "Just a moment..." body) provoked by a defect in
+OUR handshake — see the comment inside `fetch()` for the mechanism. Measured on
+www.milwaukee.gov/mayor in both orders, 20 to 30 s apart, with identical
+headers throughout: explicit SSL context 403 twice, explicit context with ALPN
+set by hand 200 at 52,682 bytes, no context 200 at 52,682.
+
+So "Milwaukee, Oak Creek, River Hills and Wauwatosa refuse this client with 403"
+was wrong about three of the four. Milwaukee and Wauwatosa witness; River Hills
+is a 404 on the layer's own link, the dead-link class; Oak Creek had already
+moved there on 2026-09-18. NOTHING HERE DEFEATS A CHALLENGE — this stops
+provoking one, and a refusal is still never retried with a heavier client.
+
+WEST MILWAUKEE CHANGED VERDICT AND ITS CARD WAS SAYING SOMETHING FALSE. Its
+whole host resets the connection, measured three reads each of robots.txt and
+/gov, so its 2026-09-03 contradiction finding is no longer reachable and the
+village asks us nothing. A robots.txt that cannot be READ and one that says
+`Disallow: /` were both arriving as `robots-refused` and sharing one sentence,
+and that sentence is false of the first — `WITHHELD_WHY` now carries a
+`robots-unread` wording beside it, and `robots_allows()` returns the status that
+picks between them. The CARRY rule is deliberately unchanged: whether an
+unreadable robots.txt should expire is the operator's open question from #1271.
+
 TWENTY-ONE ROWS ARE NINETEEN MUNICIPALITIES. The City of Milwaukee appears
 THREE times (Muni_Code 53000), one row per polygon part. Keying on rows rather
 than on Muni_Code ships the same mayor three times and makes every count in
@@ -84,7 +116,6 @@ import html
 import json
 import os
 import re
-import ssl
 import sys
 import time
 import urllib.parse
@@ -96,6 +127,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 # instance from shadowing it, the mistake wi_county_board_scraper.py records.
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(SCRIPT_DIR)), "scripts"))
 import robots_policy as rp                                       # noqa: E402
+import scraper_common as sc                                      # noqa: E402
 CACHE_DIR = os.path.join(SCRIPT_DIR, ".cache")
 DEFAULT_OUT = os.path.join(CACHE_DIR, "wi_municipal_executives_raw.json")
 
@@ -110,6 +142,20 @@ HDRS = {
     "Accept-Encoding": "identity",
     "Connection": "close",
 }
+# THE THREE HEADERS THAT DECIDE WHETHER TWO CITIES HAVE A MAYOR. Without the
+# `sec-ch-ua*` client hints, www.milwaukee.gov and www.wauwatosa.net answer 403
+# on /robots.txt; with them both serve a policy that PERMITS us -- 74 and 6,641
+# bytes (measured 2026-09-29, leave-one-out, two reads per rung, stable). Under
+# the strict reading this file used to take, that 403 is why the largest city in
+# Wisconsin ships an office and no mayor's name.
+#
+# IMPORTED, NEVER RESTATED. The first draft of this fix typed the three values
+# out and got `sec-ch-ua` wrong -- a plausible-looking Chrome string that is not
+# the one the measurement used -- which would have left the file claiming a
+# result it no longer reproduced. scraper_common is stdlib-only at module scope,
+# so importing it adds nothing to this workflow's pip line.
+HDRS.update({k: v for k, v in sc.UA_HINTS_CHROME_126.items()
+             if k.lower().startswith("sec-ch-ua")})
 
 LAYER = ("https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/"
          "Milwaukee_County_Municipal_Executives/FeatureServer/42")
@@ -130,6 +176,11 @@ WITHHELD_WHY = {
     "robots-refused": "the municipality's own site asks automated clients not to "
                       "read it, so its page is not fetched and no name is "
                       "witnessed",
+    # Same verdict, different event: nothing was read, so nobody said no. See
+    # robots_allows() for why these cannot share a sentence.
+    "robots-unread": "the municipality's own site did not answer when asked for "
+                     "its crawling policy, so its page is not fetched and no "
+                     "name is witnessed",
 }
 
 EXPECT_MUNIS = 19          # Milwaukee County's incorporated municipalities
@@ -158,22 +209,28 @@ def fail(msg):
 # always truthy, and so every host read as allowing. A PROBE THAT CANNOT
 # RETURN NO HAS NOT MEASURED ANYTHING.
 #
-# TWO READINGS IN ONE FILE, AND THE SPLIT IS THE ONE CLAUDE.md STATES. A
-# 401/403 on robots.txt itself is `refused`, and what that means depends on who
-# answers it. The nineteen municipal pages are WEBSITES, where a 403 is a
-# firewall refusing this client, so they take the STRICT reading
-# (`refused_is_refusal=True`) the DuPage, Michigan and Iowa supervisor scrapers
-# already take — measured today it shuts Milwaukee and Wauwatosa, both of which
-# 403 the page as well, so nothing changes but the verdict's honesty. The LAYER
-# host is an ArcGIS Online FeatureServer, which is the API case the module's
-# default was written for — services2.arcgis.com answers 403 on robots.txt and
-# serves its data to everyone — so it takes the default. Having both in one
-# file is deliberate, not drift.
+# ONE READING NOW, AND THIS FILE IS THE CASE THAT RETIRED THE OTHER. It used to
+# split: the ArcGIS LAYER host took the module's default (a 401/403 on
+# robots.txt allows) and the nineteen municipal pages took the strict reading,
+# on the note "measured today it shuts Milwaukee and Wauwatosa, both of which
+# 403 the page as well, so nothing changes but the verdict's honesty."
+#
+# THAT PARENTHESIS WAS THE LOAD-BEARING PART AND IT WAS MEASURED WITH THIS
+# FILE'S OWN CLIENT. HDRS below is a Chrome string and four headers with no
+# `sec-ch-ua` client hints, and those three headers are the whole difference:
+# measured 2026-09-29, leave-one-out, two reads per rung, www.milwaukee.gov and
+# www.wauwatosa.net answer 403 to HDRS as it was and 200 to HDRS plus the hints,
+# serving 74 and 6,641 bytes of policy that PERMIT us. So the strict reading was
+# not costless honesty; it is why the largest city in Wisconsin ships an office
+# and no mayor's name. A 401/403 allows now, per RFC 9309 §2.3.1.3 and the
+# operator's ruling of 2026-09-29, and HDRS carries the fleet's pinned hint set.
 #
 # THE POLICY IS READ WITH THE HEADERS THE CRAWL SENDS, which is why
-# RobotsGate now forwards them: a caller that crawls with seven headers and
-# reads robots.txt with two is measuring a different client, and five county
-# hosts in this instance already answer the two differently.
+# RobotsGate forwards them — and the lesson above is what that rule is FOR: a
+# caller that crawls with one client and reads robots.txt with a thinner one is
+# measuring a different client, and five county hosts in this instance already
+# answer the two differently. Never escalate the client to get a better robots
+# verdict, and never drop to a thinner one after a challenge.
 #
 # A stated Crawl-delay is honoured per host by HostPacer. No host stated one
 # today; the pacer costs nothing when none does and the run prints which.
@@ -193,15 +250,28 @@ _PACER = rp.HostPacer(_ROBOTS_GATE)
 _ROBOTS_SAID = {}
 
 
-def robots_allows(url, refused_is_refusal):
-    """(allowed, why) for one URL, as the client this file actually sends.
+def robots_allows(url):
+    """(allowed, why, status) for one URL, as the client this file sends.
 
     Prints one line per host the first time it is decided, so a run says what
     every policy said rather than only what stopped it.
+
+    THE STATUS IS RETURNED BECAUSE TWO DIFFERENT EVENTS WERE SHARING ONE
+    SENTENCE ON THE CARD (2026-09-30). A host that serves `Disallow: /` has
+    said no; a host whose robots.txt cannot be read has said nothing at all,
+    and the fleet's reader shuts it anyway. Both arrived here as
+    `robots-refused`, and the one sentence that covers them — "the
+    municipality's own site asks automated clients not to read it" — is FALSE
+    of the second. Measured that day, www.westmilwaukee.org resets the
+    connection on robots.txt AND on the page, three reads each: the village
+    asks us nothing, its host answers nobody. The carry rule is deliberately
+    NOT changed here (a robots.txt that cannot be read still refuses, and
+    whether that should expire is the operator's open question from #1271);
+    only the sentence a reader is shown is made true.
     """
     verdict = _ROBOTS_GATE.verdict(url)
     ua = HDRS["User-Agent"]
-    allowed, why = verdict.allows(ua, url, refused_is_refusal=refused_is_refusal)
+    allowed, why = verdict.allows(ua, url)
     host = urllib.parse.urlsplit(url).netloc
     if host not in _ROBOTS_SAID:
         _ROBOTS_SAID[host] = (verdict.status, bool(allowed))
@@ -212,7 +282,7 @@ def robots_allows(url, refused_is_refusal):
                  "" if not delay else "  (crawl-delay %g s)" % delay,
                  "" if not signal else "  (content-signal %s)" % signal),
               file=sys.stderr)
-    return bool(allowed), why
+    return bool(allowed), why, verdict.status
 
 
 # WHY A FAILED FETCH IS THREE VERDICTS AND NOT ONE. The builder carries a
@@ -262,9 +332,35 @@ def fetch(url, tries=3, timeout=45):
             # The pacer is a no-op for a host that states no Crawl-delay, and
             # it wraps the RETRY too: a delay asked for once is asked for on
             # every request, not only the first.
+            # NO EXPLICIT SSL CONTEXT, AND THAT IS THE WHOLE OF WHY MILWAUKEE
+            # HAS A MAYOR AGAIN. This call used to pass
+            # `context=ssl.create_default_context()`, which looks like a
+            # no-op restatement of the default and is not one: `http.client`
+            # applies `set_alpn_protocols(["http/1.1"])` and enables
+            # post-handshake auth ONLY on the context it builds itself, so
+            # handing it one suppresses the ALPN extension and our ClientHello
+            # goes out advertising no protocol. Cloudflare answers that
+            # handshake with a managed challenge — 403, `Cf-Mitigated:
+            # challenge`, the "Just a moment..." body — on a site that serves
+            # the same URL to the same seven headers without it.
+            #
+            # MEASURED 2026-09-30 on www.milwaukee.gov/mayor, both orders, 20
+            # to 30 s apart: explicit context 403 twice, explicit context with
+            # ALPN set by hand 200 (52,682 bytes), no context 200 (52,682).
+            # The headers are identical in all three; only the handshake moves.
+            #
+            # THIS IS NOT WORKING AROUND A CHALLENGE, AND THE DISTINCTION IS
+            # THE POINT. Nothing here solves a challenge, escalates to a
+            # heavier client or retries a refusal: the fix removes a defect in
+            # OUR handshake that was provoking one. The test that settles it is
+            # #1271's own consistency requirement — read robots.txt with the
+            # exact client that crawls. `robots_policy` calls
+            # `urlopen(req, timeout=...)` with no context, so it was already
+            # sending ALPN while this line was not, which is exactly how
+            # www.milwaukee.gov came to serve us its policy and challenge its
+            # page. One code path now, so the two cannot diverge again.
             with _PACER.hold(url), \
-                    urllib.request.urlopen(req, timeout=timeout,
-                                           context=ssl.create_default_context()) as r:
+                    urllib.request.urlopen(req, timeout=timeout) as r:
                 return r.read().decode("utf-8", "replace"), None, "read"
         except Exception as e:                   # noqa: BLE001 - reported per row
             last = e
@@ -312,7 +408,7 @@ def main():
 
     # The layer's own host, before the layer is asked for. The API reading:
     # see the robots block above for why this one is not strict.
-    allowed, why = robots_allows(LAYER_QUERY, refused_is_refusal=False)
+    allowed, why, _ = robots_allows(LAYER_QUERY)
     if not allowed:
         fail("the county's own GIS host declines this client by robots.txt (%s) "
              "— nothing is fetched from it" % why)
@@ -373,10 +469,15 @@ def main():
         # with that reason, never fetched anyway, and never carried by the
         # builder — the Iowa chair rule that a site which has said no must not
         # have its data kept alive by us.
-        allowed, why = robots_allows(url, refused_is_refusal=True)
+        allowed, why, robots_status = robots_allows(url)
         if not allowed:
+            # `served` is the host stating a policy that shuts us; anything
+            # else is the host not answering, and the two get their own words.
+            said_no = robots_status == "served"
             rec.update(witnessed=False, pageStatus="robots-refused",
-                       robotsWhy=why, withheldWhy=WITHHELD_WHY["robots-refused"])
+                       robotsWhy=why,
+                       withheldWhy=WITHHELD_WHY["robots-refused" if said_no
+                                                else "robots-unread"])
             out[code] = rec
             print("  %-18s %-22s %-11s %s"
                   % (muni, name, "ROBOTS", why[:44]), file=sys.stderr)

@@ -55,7 +55,6 @@ tippecanoe and build_vector_tiles.py's Python packages.
 
 import argparse
 import datetime
-import hashlib
 import json
 import os
 import re
@@ -64,6 +63,10 @@ import subprocess
 import sys
 import tempfile
 import urllib.parse
+
+from tile_mirror_common import (archive_path, key, registered_tiles, sha256_bytes,
+                                sha256_file)
+import tile_mirror_common
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(HERE)
@@ -164,14 +167,6 @@ def fail(msg):
     sys.exit(1)
 
 
-def key(tag, layer):
-    return "%s:%s" % (tag, layer)
-
-
-def archive_path(tag, layer):
-    return os.path.join(REPO_ROOT, tag, "data", "app", "tiles", layer + ".pmtiles")
-
-
 def query_url(row):
     """The query recorded for a layer. A box row's is the query WITHOUT its
     page window; fetch_pages adds resultOffset/resultRecordCount per page."""
@@ -186,18 +181,6 @@ def query_url(row):
             "&geometryPrecision=5&orderByFields=OBJECTID"
             % (SERVICES, row["service"], row["index"], urllib.parse.quote("1=1"),
                urllib.parse.quote(env), row["fields"]))
-
-
-def sha256_bytes(b):
-    return hashlib.sha256(b).hexdigest()
-
-
-def sha256_file(path):
-    h = hashlib.sha256()
-    with open(path, "rb") as fh:
-        for chunk in iter(lambda: fh.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
 
 
 def load_record():
@@ -240,10 +223,6 @@ def envelope_matches(html, row):
         return False
     return ("JSON.stringify(%s)" % row["env_var"]) in html and "PUMA_TAD_TAZ_UGA_ZCTA" in html \
         and "outFields=ZCTA5" in html
-
-
-def registered_tiles(html):
-    return set(m for m in re.findall(r'\btiles:\s*"data/app/tiles/([^"/]+)\.pmtiles"', html))
 
 
 # ---- fetch and convert ---------------------------------------------------------
@@ -381,38 +360,8 @@ def fetch_as_geojson(row, work):
 
 # ---- the service worker's cache --------------------------------------------------
 
-def worksheet_path(tag):
-    # Illinois's worksheet is the repo-root one, the others sit in their folder
-    return os.path.join(REPO_ROOT, "metro-worksheet.json") if tag == "il" \
-        else os.path.join(REPO_ROOT, tag, "metro-worksheet.json")
-
-
 def bump_cache(tags):
-    """A REPLACED archive reaches a returning visitor only through a new
-    CACHE_NAME: the service worker serves every byte range under data/app/tiles/
-    from its cache without asking again (engine sw-handlers), and
-    scripts/check_cache_version.py fails a change that modifies an archive
-    without one. So each app whose archive this run replaced gets its worksheet's
-    cache_name moved on by one and its generated files rewritten. An archive
-    that is NEW needs nothing — no visitor holds it."""
-    for tag in sorted(tags):
-        path = worksheet_path(tag)
-        with open(path, encoding="utf-8") as fh:
-            text = fh.read()
-        found = re.findall(r'"cache_name":\s*"([^"]*?)(\d+)"', text)
-        if len(found) != 1:
-            fail("%s: expected one cache_name ending in a number, found %d" % (path, len(found)))
-        stem, n = found[0]
-        new = "%s%d" % (stem, int(n) + 1)
-        text = re.sub(r'("cache_name":\s*")[^"]*(")', lambda m: m.group(1) + new + m.group(2), text, count=1)
-        with open(path, "w", encoding="utf-8") as fh:
-            fh.write(text)
-        print("  cache  %-36s %s%s -> %s" % (tag, stem, n, new), flush=True)
-    if tags:
-        got = subprocess.run([sys.executable, os.path.join(HERE, "generate_metro_files.py")],
-                             cwd=REPO_ROOT, capture_output=True, text=True)
-        if got.returncode != 0:
-            fail("generate_metro_files.py failed after the cache bump: %s" % (got.stderr or got.stdout)[-600:])
+    tile_mirror_common.bump_cache(tags, fail)
 
 
 # ---- refresh -------------------------------------------------------------------

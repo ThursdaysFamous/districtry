@@ -60,7 +60,9 @@ import sys
 from datetime import datetime, timezone
 
 import requests
-from scraper_common import UA_CHROME_WIN_124, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    UA_CHROME_WIN_124, fetch as fetch_with_retry, require_robots_once,
+)
 
 CLERK_PAGE = "https://www.willcountyclerk.gov/local-election-officials/"
 FLIPBOOK_HOST = "https://fliphtml5.com"
@@ -169,6 +171,20 @@ def fetch(url):
     # scraper_common.fetch retries 429/5xx (numeric Retry-After honoured,
     # capped) and refuses to retry 401/403/404 — the Henry rule. Parsing and
     # every page check stay in this file.
+    #
+    # THE TWO HOSTS THIS SCRIPT READS ARE THE CLERK'S OWN SITE AND THE FLIPBOOK
+    # THE CLERK PUBLISHES THE DIRECTORY ON, and both publish a policy that
+    # permits the paths read here (124 and 9,778 bytes, no matching rule,
+    # measured from a runner 2026-09-30). The Clarity and village addresses in
+    # the comments below are citations rather than fetches, so neither is asked.
+    #
+    # READ WITH THE CLIENT THAT CRAWLS: HEADERS is what the fetch sends, so it
+    # is what the policy is read with. This file sends the pinned Chrome
+    # User-Agent without Chrome's client-hint headers, and the recorded reading
+    # was taken with the hints as well; the read here is the file's own client
+    # either way, and the record is corroboration rather than the answer.
+    require_robots_once(url, HEADERS["User-Agent"], headers=dict(HEADERS),
+                        label="will-municipal-officials")
     return fetch_with_retry(url, HEADERS, timeout=REQUEST_TIMEOUT).text
 
 

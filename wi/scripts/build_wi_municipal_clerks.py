@@ -145,6 +145,10 @@ import re
 import sys
 import urllib.parse
 import urllib.request
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once, UA_STDLIB_DEFAULT  # noqa: E402  (FLEET_SHARED)
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INSTANCE_ROOT = os.path.dirname(SCRIPT_DIR)
@@ -402,6 +406,7 @@ def tiger_places():
         "returnGeometry": "false", "f": "json", "resultRecordCount": "2000",
     })
     try:
+        require_robots_once(TIGER_PLACES + "?" + query, UA_STDLIB_DEFAULT, label="wi-build-wi-municipal-clerks")
         with urllib.request.urlopen(TIGER_PLACES + "?" + query, timeout=120) as r:
             payload = json.load(r)
     except Exception as e:                  # noqa: BLE001 - reported, not raised
@@ -469,6 +474,7 @@ def cousub_towns():
         "returnGeometry": "false", "f": "json", "resultRecordCount": "4000",
     })
     try:
+        require_robots_once(COUSUB_LAYER + "?" + query, UA_STDLIB_DEFAULT, label="wi-build-wi-municipal-clerks")
         with urllib.request.urlopen(COUSUB_LAYER + "?" + query, timeout=120) as r:
             payload = json.load(r)
     except Exception as e:                       # noqa: BLE001 - reported, not raised

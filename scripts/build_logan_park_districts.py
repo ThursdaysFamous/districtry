@@ -139,6 +139,7 @@ import requests
 from arcgis_error import ArcGISServiceError, raise_for_arcgis_error
 from shapely import make_valid
 from shapely.geometry import mapping, shape
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "il", "data", "app", "logan-park-districts.json")
@@ -204,6 +205,8 @@ def get_json(url, what, _tries=4):
     last = None
     for attempt in range(_tries):
         try:
+            require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                                label="il-build-logan-park-districts")
             r = requests.get(url, timeout=60, headers=HEADERS)
             r.raise_for_status()
             payload = r.json()

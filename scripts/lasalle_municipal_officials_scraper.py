@@ -61,12 +61,20 @@ import sys
 
 import pdfplumber
 import requests
+from scraper_common import (UA_ROSTER_BOT,  # noqa: E402  (FLEET_SHARED)
+                            require_robots_once)
 
 DIRECTORY_URL = ("https://lasallecountyil.gov/DocumentCenter/View/1425/"
                  "Municipality-Officials-PDF")
 OFFICIALS_PAGE = "https://lasallecountyil.gov/294/Officials"
-BROWSER_UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-              "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
+# OUR OWN IDENTITY, MEASURED RATHER THAN ASSUMED (2026-10-01). This file
+# used to send a Chrome string. Every page it fetches was re-read with
+# scraper_common's districtry token on this file's own HTTP stack and
+# answered in full, so the browser string was claiming a client this
+# project does not run for no measured gain. A site that measurably
+# refuses the token gets the browser rung back, per host, with the
+# measurement written here.
+BROWSER_UA = UA_ROSTER_BOT
 REQUEST_TIMEOUT = 60
 
 # Column bands: (x0_low, x0_high, name). Derived from the header row and
@@ -297,6 +305,8 @@ def looks_like_person(name):
 
 
 def fetch_pdf(url):
+    require_robots_once(url, BROWSER_UA, headers={"User-Agent": BROWSER_UA},
+                        label="il-lasalle-municipal-officials-scraper")
     resp = requests.get(url, headers={"User-Agent": BROWSER_UA},
                         timeout=REQUEST_TIMEOUT, allow_redirects=True)
     resp.raise_for_status()

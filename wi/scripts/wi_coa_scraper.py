@@ -33,6 +33,11 @@ import sys
 import urllib.error
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "wi_coa_raw.json")
 # WHY A DISTRICTRY TOKEN AND NOT A CHROME STRING (2026-09-12). This file sent
 # `Mozilla/5.0 ... Chrome/124.0` until today, with nothing recorded about a
@@ -108,12 +113,35 @@ def fetch(url, tries=3, timeout=45):
     pages over somebody else's network. What clears THIS failure is a different
     runner, so the remedy is re-running the job, never anything in here.
     """
+    # THE SITE'S RULES ARE READ BEFORE THE FIRST PAGE, with the identity this
+    # fetch sends. Measured from a GitHub runner on 2026-10-01, the vantage the
+    # weekly job crawls from: www.wicourts.gov answers HTTP 404 for robots.txt,
+    # so it publishes no rules and every path is permitted. The earlier reading
+    # of this host as unreadable was a timeout taken on one runner moment, which
+    # RFC 9309 files as disallow-all and is not anybody's policy.
+    require_robots_once(url, UA["User-Agent"], headers=UA,
+                        label="wi-coa-scraper")
     last = None
     for i in range(tries):
         try:
             req = urllib.request.Request(url, headers=UA)
-            with urllib.request.urlopen(req, timeout=timeout,
-                                        context=ssl.create_default_context()) as r:
+            # NO EXPLICIT SSL CONTEXT. This call used to pass
+            # `context=ssl.create_default_context()`, which reads like a restatement
+            # of the default and is not one: `http.client` applies
+            # `set_alpn_protocols(["http/1.1"])` and enables post-handshake auth ONLY
+            # on the context it builds itself, so handing it one sends a ClientHello
+            # advertising no protocol. Cloudflare answers that handshake with a
+            # MANAGED CHALLENGE -- 403, `Cf-Mitigated: challenge`, the "Just a
+            # moment..." body -- on a site that serves the same URL to the same
+            # headers without it. That is how www.milwaukee.gov read as refusing this
+            # project for weeks while serving its robots.txt fine (#1277, measured
+            # 2026-09-30: explicit context 403 twice, explicit context with ALPN set
+            # by hand 200 at 52,682 bytes, no context 200 at 52,682). Removing it
+            # defeats no challenge -- it stops provoking one -- and it puts this fetch
+            # on the identical call `scripts/robots_policy.py` already makes, which is
+            # #1271's consistency requirement: read robots.txt with the client that
+            # crawls.
+            with urllib.request.urlopen(req, timeout=timeout) as r:
                 data = r.read()
             return data.decode("utf-8", "replace")
         except Exception as e:  # noqa: BLE001 — retried, then re-raised

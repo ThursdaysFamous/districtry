@@ -83,7 +83,10 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_metro_outline import point_in_rings  # noqa: E402
 import vtd_board_districts as V  # noqa: E402
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    make_fail,
+    require_robots_once,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PRECINCTS = os.path.join(REPO_ROOT, "il", "data", "app", "jackson-precincts.json")
@@ -196,6 +199,8 @@ def fetch_blocks(shape_fn):
     import requests
     out, offset = {}, 0
     while True:
+        require_robots_once(BLOCK_URL, V["User-Agent"], headers=V,
+                            label="il-build-jackson-boundaries")
         resp = requests.get(BLOCK_URL, headers=V.HEADERS, timeout=V.REQUEST_TIMEOUT,
                             params={"where": "STATE='17' AND COUNTY='%s'" % COUNTY_FIPS,
                                     "outFields": "GEOID,POP100", "returnGeometry": "true",

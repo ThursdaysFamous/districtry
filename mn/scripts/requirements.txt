@@ -1,0 +1,28 @@
+# Pinned dependencies for this instance's pipeline (playbook R10 — heuristic
+# HTML parsers are exactly the code that breaks on silent dependency drift).
+#
+# Installed by:
+#   .github/workflows/mn-validate-sources.yml   (+ requests)
+#
+# .github/workflows/update-mn-congress-roster.yml installs nothing: the roster
+# builder is stdlib-only. mn/scripts/build_state_counties.py,
+# build_metro_outline.py and build_legislative_boundaries.py use only curl (via
+# subprocess) and npx mapshaper, so no Python HTTP library either.
+#
+# THIS FILE WAS IOWA'S VERBATIM UNTIL 2026-10-01 and described work this
+# instance does not do. It named three ia-* workflows and two ia/scripts
+# builders, and pinned pdfplumber, shapely and pyproj with Iowa's reasons
+# attached — a multi-column sheriff directory, a county-attorney roster, and
+# Story County's printed supervisor map read in NAD83 / Iowa North. Minnesota
+# reaches none of that: measured across every mn/scripts/*.py, the only
+# third-party imports anywhere in this instance are requests and jsonschema.
+# Nothing installed this file at all, so the three unused pins constrained no
+# run and the wrong prose was never contradicted. Recorded rather than quietly
+# swapped, because this is the same cloned-prose defect that put Iowa's
+# identity block on Michigan's sources page.
+requests==2.33.1
+
+# Conversion 2 (docs/MECHANIZATION_PLAYBOOK.md): worksheet validation in
+# scripts/generate_metro_files.py. The generator is otherwise stdlib-only;
+# validate_index.py deliberately stays stdlib and does NOT import this.
+jsonschema==4.26.0

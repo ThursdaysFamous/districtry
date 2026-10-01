@@ -104,6 +104,10 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro wisconsin --out wi/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro iowa --out ia/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro michigan --out mi/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro minnesota --out mn/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro indiana --out in/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro northcarolina --out nc/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro kentucky --out ky/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -197,6 +201,26 @@ jobs:
       - name: IA gap outlines match the counties its gap records name
         if: ${{ !cancelled() }}
         run: python3 ia/scripts/build_ia_gap_outlines.py --check
+
+      # THE TRIBAL LAND-TO-GOVERNMENT JOIN. No publisher provides this join: the
+      # Census draws the land and names no government, the Bureau of Indian
+      # Affairs names the governments and draws no land, and matching by name
+      # leaves 40 of 312 reservations unmatched. So the table is written by hand
+      # and both of its failure directions are checked — a piece of land with no
+      # entry (needs the Census, so it runs on --measure, not here) and an entry
+      # naming a government the Bureau does not carry (offline, here). The
+      # reader's own selftest covers the two readings this project has already
+      # got wrong: a shared boundary read as an overlap, and an ArcGIS error
+      # envelope read as "no features". pyproj and shapely are for the area
+      # measurements only; the two --check gates are stdlib.
+      - name: Tribal areas reader and its land-to-government table
+        if: ${{ !cancelled() }}
+        run: |
+          pip install -c scripts/requirements.txt shapely pyproj
+          python3 scripts/tribal_areas.py --selftest
+          python3 scripts/bia_tribal_governments.py --check
+          python3 scripts/validate_tribal_join.py --selftest
+          python3 scripts/validate_tribal_join.py --check
 
       # districtry/tokens/districtry.tokens.css is the ONE source of the brand
       # surface, and this is what makes that true rather than aspirational. The
@@ -611,8 +635,11 @@ jobs:
       # lastmod from that file's own last commit, and in a depth-1 clone there is
       # one commit, so all 243 entries take the run date. A bot run on
       # 2026-09-17 shipped 241 wrong dates that way. build_sitemap.py --check is
-      # structurally blind to it: it fails on a date that is BEHIND, and this
-      # moves every date forward to today. Stdlib only, no network.
+      # used to be structurally blind to it: it failed on a date that is BEHIND,
+      # and this moves every date forward to today. Since 2026-09-30 that check
+      # also fails on a date too NEW and refuses a shallow clone outright, so
+      # this gate is the second reader: it asks whether the job was given the
+      # history, which a tree cannot answer. Stdlib only, no network.
       - name: Sitemap-committing workflows check out full history
         if: ${{ !cancelled() }}
         run: python3 scripts/validate_workflow_checkout.py
@@ -895,6 +922,32 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/robots_policy.py --selftest
 
+      # Adoption of that reader was per caller and unmeasured, so every count of
+      # it came off a hand-written list and every one was an undercount: seven
+      # files on 2026-09-12, four more in #1271's follow-on, and 224 of 266
+      # fetching scripts when the tree was finally asked. Nothing compared the
+      # tree against the rule, so a new scraper could ship fetching a host
+      # nobody had asked about with every check green. The backlog is seeded with
+      # what the sweep found, so this lands green and can only shrink.
+      - name: Every fetching script reads robots.txt, or is recorded as not yet wired
+        if: ${{ !cancelled() }}
+        run: |
+          python3 scripts/validate_robots_adoption.py --selftest
+          python3 scripts/validate_robots_adoption.py
+
+      # The runner-side robots measurement's own offline audit. It was kept OUT of
+      # the battery when it was written, on the stated ground that a gate which can
+      # only SKIP is a vacuous gate: with no measurement in the tree it had nothing
+      # to check. It has something now whether or not the measurement is there --
+      # PINNED_CHAINS, the four hosts that serve only their leaf certificate and the
+      # intermediate each scraper completes the chain with. That is a claim about the
+      # tree, so it is wrong on the day a scraper drops its pinning rather than on
+      # the day somebody next dispatches the probe, and it caught a key this table
+      # had guessed on its first run.
+      - name: The runner robots measurement still describes the tree
+        if: ${{ !cancelled() }}
+        run: python3 scripts/probe_robots_verdicts.py --check
+
       # Two reports say whether a weekly roster refresh is still running, and both
       # used to take a workflow's newest completed run without asking whether it
       # was a run. GitHub records one for a workflow file it cannot START, with no
@@ -1166,6 +1219,53 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 ia/scripts/ia_city_officials_scraper.py --selftest
 
+      # FOURTEEN CITIES, FIVE PARSERS, AND ONE CONVENTION THAT READS A WARD AS A
+      # STREET. These are the cities above 25,000 that named nobody, and the five
+      # already answered share none of their shapes -- one plain Mayor line, six
+      # seats, an e-mail for everyone -- so they are a separate pipeline rather
+      # than a widened one, and the gates protecting the five stay where they are.
+      # The defect this fixture keeps reproducing: `3rd Ward` parsed as a street
+      # address, because the address pattern had no word boundary before its
+      # street-word group, so `3` read as a house number and the trailing `rd`
+      # matched the road abbreviation -- four cities shipped one member each.
+      # Three more are declared: a caps line carrying role AND name together
+      # (MAYOR ROBERT S. GALLAGHER), a name the role-splitter invented out of
+      # `COUNCIL MEMBER - AT LARGE`, and the staff titles on a council page that
+      # must be dropped WITH THEIR NAMES PRINTED rather than silently skipped.
+      # 69 cases on synthetic pages, no network.
+      - name: The fourteen Iowa city council pages still parse to their own conventions
+        if: ${{ !cancelled() }}
+        run: python3 ia/scripts/ia_city_council_scraper.py --selftest
+
+      # THREE OF THOSE CITIES PUBLISH HOME ADDRESSES, and on all three the
+      # address sits between the role and the phone, which is exactly where a
+      # parser reaches for a field -- so the refusal is in the builder as well as
+      # the scraper, per field and over the whole record. Two cities name no
+      # mayor anywhere this project has read, carried as a stated fact the card
+      # prints, and the build fails if that changes in EITHER direction: a mayor
+      # appearing where none was named is as much a finding as one going missing.
+      # --check re-applies every floor and every refusal to the SHIPPED file,
+      # offline and stdlib, because the scrape cache is gitignored and a check
+      # that can only skip is a check that gates nothing.
+      - name: The shipped Iowa city councils still refuse an address and keep their seat counts
+        if: ${{ !cancelled() }}
+        run: python3 ia/scripts/build_ia_city_councils.py --check
+      # FOUR COUNTIES WHOSE TWO OUTSIDE PUBLISHERS DISAGREE about their board's
+      # size are read from the county's OWN board page instead, and the four
+      # pages take four shapes. Three defects are declared here because each
+      # shipped a wrong board once: a role word at the END of a line made
+      # `Matt Wedemeyer District 1NW` into a name (the split now cuts at the
+      # FIRST of a role word or `District`, and the right half must itself carry
+      # a role, or a committee line called `Fifth Judicial District-Corrections`
+      # invents a sixth supervisor); a bare-name line was taken for a member
+      # because the NEXT line carried someone else's role; and one county
+      # separates `District 1` from the name with a NO-BREAK SPACE, which
+      # `strip(" -")` does not strip, so that page returned zero members.
+      # 25 cases on synthetic pages, no network.
+      - name: The four Iowa county board pages still parse to their own conventions
+        if: ${{ !cancelled() }}
+        run: python3 ia/scripts/ia_county_board_page_scraper.py --selftest
+
       # The parcel-fabric builder repairs invalid geometry before it writes, and
       # its repair had four branches nothing exercised. One of them was wrong
       # for as long as it existed: `dropped` was `len(parts) - len(polys)`,
@@ -1341,6 +1441,27 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/validate_officeholder_names.py
 
+      # A chamber roster built from a bulk export has no row for a seat nobody
+      # holds, and on 2026-10-01 that absence was reaching readers three ways at
+      # once: the card showed the district number and no explanation, each
+      # legislature page takes its seat count from the roster's own length and so
+      # published a chamber smaller than the state elects (California's Assembly
+      # as 79 of 80, Iowa's Senate as 49 of 50), and the floor guard spent slack
+      # on it that exists to catch a truncated download. No gate could see it —
+      # validate_index.py checks a roster has at LEAST what it expects, and the
+      # retention gate compares against the base, where a seat that was never
+      # there is not a field that stopped being published. This asks whether the
+      # roster carries a key for every district the chamber elects, reading each
+      # chamber's size from the builder that writes it, and holds a nameless
+      # record to saying WHICH kind of empty it is: the chamber's own page says
+      # the seat is vacant (with the page and the date), or our source merely
+      # named nobody. Stdlib only.
+      - name: Every legislative seat has a record
+        if: ${{ !cancelled() }}
+        run: |
+          python3 scripts/validate_chamber_rosters.py --selftest
+          python3 scripts/validate_chamber_rosters.py
+
       # A roster's count guard proves it still has twelve members; it proves
       # nothing about whether those twelve still carry an e-mail. On 2026-08-08
       # Cloudflare's e-mail obfuscation quietly emptied all seven of Brown
@@ -1477,6 +1598,10 @@ jobs:
           python3 wi/scripts/validate_index.py wi/index.html
           python3 ia/scripts/validate_index.py ia/index.html
           python3 mi/scripts/validate_index.py mi/index.html
+          python3 mn/scripts/validate_index.py mn/index.html
+          python3 in/scripts/validate_index.py in/index.html
+          python3 nc/scripts/validate_index.py nc/index.html
+          python3 ky/scripts/validate_index.py ky/index.html
 
       # ONE server, EVERY instance. Until R3 this ran il alone, which is what
       # the repo had — ca and ny were separate repos with their own CI. They
@@ -1512,6 +1637,10 @@ jobs:
           BASE_URL=http://localhost:8000/wi/  node wi/scripts/smoke_test.mjs  || status=1
           BASE_URL=http://localhost:8000/ia/  node ia/scripts/smoke_test.mjs  || status=1
           BASE_URL=http://localhost:8000/mi/  node mi/scripts/smoke_test.mjs  || status=1
+          BASE_URL=http://localhost:8000/mn/  node mn/scripts/smoke_test.mjs  || status=1
+          BASE_URL=http://localhost:8000/in/  node in/scripts/smoke_test.mjs  || status=1
+          BASE_URL=http://localhost:8000/nc/  node nc/scripts/smoke_test.mjs  || status=1
+          BASE_URL=http://localhost:8000/ky/  node ky/scripts/smoke_test.mjs  || status=1
           # The root landing page and — the part that matters — its forwarding
           # guard, which is what keeps every already-distributed share link and
           # embed snippet built from the OLD root URL reaching the app. A regex

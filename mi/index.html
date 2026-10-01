@@ -4101,7 +4101,11 @@ function initMichiganExplorer() {
     { id: "iowa", label: "Iowa", url: "https://districtry.com/ia/", emoji: "🌽", explorerName: "districtry Iowa",
       bbox: { minLng: -96.64, minLat: 40.37, maxLng: -90.14, maxLat: 43.5 } },
     { id: "michigan", label: "Michigan", url: "https://districtry.com/mi/", emoji: "🚗", explorerName: "districtry Michigan",
-      bbox: { minLng: -87.6, minLat: 41.7, maxLng: -82.11, maxLat: 48.01 } }
+      bbox: { minLng: -87.6, minLat: 41.7, maxLng: -82.11, maxLat: 48.01 } },
+    { id: "minnesota", label: "Minnesota", url: "https://districtry.com/mn/", emoji: "🛶", explorerName: "districtry Minnesota",
+      bbox: { minLng: -97.3, minLat: 43.44, maxLng: -89.58, maxLat: 49.44 } },
+    { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
+      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -8361,8 +8365,11 @@ function initMichiganExplorer() {
   // geometry library in this codebase to compute polygon area from data.
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
+    "mi-court-of-appeals", // Four appellate districts — the broadest boundary this instance draws below the state itself, above the 13 congressional districts
     "us-house",          // 13 congressional districts — the largest districts Michigan carries below the state itself
     "mi-senate",         // 38 Senate districts — larger on average than a county, smaller than a congressional district
+    "mi-circuit-court",  // 57 circuits — 37 single counties and 20 statutory unions of two to four counties, so broader than the county fabric
+    "mi-isd",            // 56 intermediate school districts — each a group of local school districts, so broader than the 541 school districts under them
     "county",            // 83 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "mi-house",          // 110 House districts — the finest political tiling this instance ships today
     "school-district-unified", // 514 unified (K-12) districts covering all but 27 pockets of the state, live from TIGERweb (no data/app file) — 469 km2 mean feature area, the largest of the four fabric layers this phase adds
@@ -8370,7 +8377,7 @@ function initMichiganExplorer() {
     "county-commissioner", // 619 districts across all 83 counties — the finest tiling this instance ships, smaller than a state House district
     "county-subdivision", // 1,581 records tiling the state, live from TIGERweb (no data/app file) — 1,122 general-law townships, 118 charter townships, 301 city placeholder records for 281 distinct cities (18 of which cross a county line), and 40 'not defined' records that are pure Great Lakes water
     "zip-code",          // 1,010 ZIP Code Tabulation Areas covering Michigan, live from TIGERweb (no data/app file) — 139.7 km2 mean feature area, between a township and a precinct
-    "city-ward",         // Detroit's seven districts over 139 sq mi and Grand Rapids's three wards over 45 — both smaller than a typical Michigan ZCTA and far larger than a precinct; ranked on the larger city's districts
+    "city-ward",         // Seven cities: Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson. Their districts run from Detroit's seven over 139 sq mi (about 20 each) down to Jackson's six wards over 11 (about 2 each), measured 2026-10-01 — all smaller than a typical Michigan ZCTA; ranked on Detroit's, the largest
     "precinct",          // 3,895 voting precincts across all 83 counties, pre-built from the state's own 2026-cycle layer — 38.8 km2 mean feature area against a 6.4 km2 median, a six-fold skew because a rural township precinct and a city precinct are barely the same kind of object; the finest tiling this instance ships
     "municipality",      // 533 incorporated places, live from TIGERweb (no data/app file) — 281 cities and 252 villages, small dense pockets inside the township fabric, so the smallest layer this instance ships at a 12 km2 mean
     "police-station",    // 1,290 police-station points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
@@ -11742,6 +11749,10 @@ function initMichiganExplorer() {
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       // hover popup: same identity the card headline shows — the zoned school's
       // name, or the honest "None" where requireId treats the feature as unzoned.
       hoverName: function (feature) {
@@ -11827,6 +11838,10 @@ function initMichiganExplorer() {
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       overlay: { load: loadNetworks, style: opts.style },
       // point-first by default (queryFeatureAt) — same pattern as the other factories
       query: function (point, seq) {
@@ -12010,6 +12025,44 @@ function initMichiganExplorer() {
     function memberProfileUrl(member) {
       return member && member.url ? safeHttpUrl(member.url) : null;
     }
+    // A SEAT THE CHAMBER ITSELF CALLS EMPTY IS A RECORD, NOT AN ABSENCE. Until
+    // 2026-10-01 a roster built from a bulk export simply had no row for a
+    // vacant district, so three things went wrong at once and all three were
+    // reader-facing: the card fell through to the no-roster path and said only
+    // the district number, the chamber's own seat count was taken from the
+    // roster's length and read one short (the generated table on each
+    // legislature page said "All 79 seats on the California State Assembly"
+    // for a chamber of 80), and nothing anywhere said why. The roster carries a
+    // record for every district the map draws now, and the record says which of
+    // two different things is true.
+    //
+    // THE TWO ARE KEPT APART BECAUSE ONE IS A STRONGER STATEMENT THAN THE
+    // OTHER. `vacant: true` means the chamber's own members page says the seat
+    // is empty — California's prints "Member Vacant" — and that is the only way
+    // a reader is ever told "Vacant". A record with no name and no `vacant`
+    // means our source named nobody, which is a fact about our source, so it
+    // reads "No member listed". Reporting the second as a vacancy would be
+    // guessing an officeholder out of existence, which is the same honesty rule
+    // that forbids guessing one into it.
+    function isMember(member) {
+      return !!(member && member.name);
+    }
+    // THE RECORD STATES THE CLAIM AND THIS ONLY PRINTS IT. Where the authority
+    // does not use the word, the record carries its own one-sentence reason:
+    // Iowa's chamber roster ends a member's service with a date and names
+    // nobody after them, so a hardcoded "its members page says this seat is
+    // vacant" would be false of the very page cited. The default sentence
+    // serves the chambers that do print the word.
+    function vacancyNote(member) {
+      // `asOf` is the day the chamber said it, carried so a reader can see how
+      // old the statement is. A record with no date says the thing without
+      // dating it rather than inventing a day.
+      var when = member && member.asOf ? String(member.asOf) : null;
+      var why = member && member.vacantWhy
+        ? String(member.vacantWhy)
+        : "The chamber's own members page says nobody holds this seat.";
+      return "Vacant — " + why + (when ? " Read on " + when + "." : "");
+    }
     registerLayer({
       id: opts.id,
       group: "political",
@@ -12033,7 +12086,12 @@ function initMichiganExplorer() {
           var props = feature.properties || {};
           var district = extractDistrictNumber(props, opts.districtFields);
           var member = district != null ? roster[String(district)] : undefined;
-          return { seq: seq, district: district, member: member || null };
+          // A nameless record is NOT a member and must not reach the person
+          // row, which would render the string "undefined" as somebody's name.
+          // It is carried separately so the card can say which kind it is.
+          return { seq: seq, district: district,
+                   member: isMember(member) ? member : null,
+                   seat: member || null };
         });
       },
       render: function (result) {
@@ -12043,10 +12101,20 @@ function initMichiganExplorer() {
         var wrap = cardEl("div", "card-flush");
         var member = result.member;
         if (!member) {
-          // roster gap or roster-fetch failure: district identity + the
-          // official directory (primaryLink in the footer) — never an
-          // invented name (honesty rules).
-          wrap.appendChild(renderBodyIntro({ title: districtLabel(result) || "Unknown district" }));
+          // Three states, told apart. A seat the chamber calls vacant says so;
+          // a record naming nobody says that instead; and no record at all is
+          // either a roster gap or a roster-fetch failure, which is OUR silence
+          // rather than the chamber's, so it claims neither and shows district
+          // identity plus the official directory (primaryLink in the footer) —
+          // never an invented name (honesty rules).
+          var seat = result.seat;
+          var note = null;
+          if (seat && seat.vacant) note = vacancyNote(seat);
+          else if (seat) note = "No member listed for this seat.";
+          wrap.appendChild(renderBodyIntro({
+            title: districtLabel(result) || "Unknown district",
+            note: note
+          }));
           return wrap;
         }
         var person = { name: String(member.name) };
@@ -12096,7 +12164,13 @@ function initMichiganExplorer() {
           if (!roster) return null;
           var d = extractDistrictNumber(feature.properties || {}, opts.districtFields);
           var member = d != null ? roster[String(d)] : null;
-          return member ? member.name : null;
+          if (isMember(member)) return member.name;
+          // The hover names who holds the seat, so a seat the chamber calls
+          // empty is named "Vacant" — the hover and the card cannot disagree.
+          // A record naming nobody hovers as nothing, exactly as a missing
+          // record always has, because "no member listed" is a sentence about
+          // our source and does not belong in a one-word popup.
+          return member && member.vacant ? "Vacant" : null;
         }
       }
     });
@@ -12621,11 +12695,99 @@ function initMichiganExplorer() {
    * second source to go stale. Measured: the four LSADC values yield exactly
    * four suffixes, 1,581 of 1,581.
    *
-   * NO OFFICEHOLDER. Michigan townships elect a supervisor, clerk, treasurer
-   * and trustees (MCL 41.61, 42.3 for charter townships), and no statewide
-   * roster of them was found — the card names the office and says plainly
-   * that this app does not know who holds it, which is the honesty floor.
-   * Recorded as gap mi-township-officers. ---------- */
+   * THE BOARD, WHERE THE TOWNSHIP'S OWN PAGE NAMES IT. Michigan townships
+   * elect a supervisor, clerk, treasurer and trustees (MCL 41.61, 42.3 for
+   * charter townships), and no statewide roster of them exists, so the large
+   * townships are read one by one from their own sites
+   * (mi-municipal-officials.json, joined on this card's GEOID). Every other
+   * township keeps the sentence naming the office and saying plainly that
+   * this app does not know who holds it, which is the honesty floor. Recorded
+   * as gap mi-township-officers. ---------- */
+  // THE BOARDS OF MICHIGAN'S LARGE CITIES AND TOWNSHIPS, keyed by the same
+  // TIGER GEOID these two cards already read (7-digit place, 10-digit county
+  // subdivision), so the join is on the feature the card found and nothing
+  // else. Read weekly from each unit's own website
+  // (mi/scripts/mi_municipal_officials_scraper.py, build_mi_municipal_officials.py).
+  // It covers the units over 25,000 people whose own page names every seat,
+  // not every Michigan city or township: a unit it does not carry keeps the
+  // "not named here" sentence, which stays true of that unit. A failed load is
+  // the same as a unit it does not carry, so the card never breaks on it.
+  var loadMunicipalOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-municipal-officials.json", {}, 2);
+  });
+  function municipalBoardFor(geoid) {
+    return loadMunicipalOfficials().then(function (all) {
+      return (all && geoid != null && all[String(geoid)]) || null;
+    }, function () { return null; });
+  }
+  // The board as the unit's own page names it: every member with the office
+  // the page prints, the ward or district only where the page states one, any
+  // seat the page says is vacant, and the page it came from with the date it
+  // was read. A unit whose site could not be read on the latest run keeps its
+  // last-read names, and the card says since when.
+  function renderMunicipalBoard(board) {
+    var frag = document.createDocumentFragment();
+    frag.appendChild(renderSectionLabel(String(board.body || "Board")));
+    frag.appendChild(renderPersonRows((board.members || []).map(function (m) {
+      return { name: String(m.name), badge: m.role ? String(m.role) : null,
+        note: m.seat ? String(m.seat) : null,
+        phone: m.phone || null, email: m.email || null };
+    })));
+    var vacant = board.vacant || [];
+    if (vacant.length) {
+      frag.appendChild(renderFieldStack([{ label: "Vacant",
+        value: vacant.map(String).join(", ") + " — the " + (board.kind === "township" ?
+          "township" : "city") + "'s own page lists this seat as vacant." }]));
+    }
+    var who = board.kind === "township" ? "township" : "city";
+    var when = board.preservedSince
+      ? "Last read " + board.readAt + "; the " + who + "'s site has not been readable since " +
+        board.preservedSince + ", so these are the names it published then."
+      : "As the " + who + " publishes it, read " + board.readAt + ".";
+    var office = board.office || {};
+    frag.appendChild(renderLinkRow({
+      title: "Source", note: when,
+      phone: office.phone || null, email: office.email || null,
+      links: [{ label: "The " + who + "'s own page", url: String(board.sourceUrl) }]
+    }));
+    return frag;
+  }
+
+  // The ward card for a city whose council page states each member's seat:
+  // the member for this point's seat, then any members the page says are
+  // elected at large, under their own heading (the Iowa mixed-body shape).
+  // Returns null when the page names nobody for this seat, so the caller
+  // keeps its own wording rather than printing an empty list.
+  function renderBoardSeat(board, seatLabel) {
+    if (!board || !seatLabel) return null;
+    var mine = [], atLarge = [];
+    (board.members || []).forEach(function (m) {
+      if (m.seat === seatLabel) mine.push(m);
+      else if (m.seat === "At Large") atLarge.push(m);
+    });
+    if (!mine.length) return null;
+    function row(m) {
+      return { name: String(m.name), badge: m.role ? String(m.role) : null,
+        phone: m.phone || null, email: m.email || null };
+    }
+    var frag = document.createDocumentFragment();
+    frag.appendChild(renderPersonRows(mine.map(row)));
+    if (atLarge.length) {
+      frag.appendChild(renderSectionLabel("Elected citywide"));
+      frag.appendChild(renderPersonRows(atLarge.map(row), { tinted: true }));
+    }
+    var office = board.office || {};
+    frag.appendChild(renderLinkRow({
+      title: "Source",
+      note: board.preservedSince
+        ? "Last read " + board.readAt + " from the city's own council page; it has not been readable since " + board.preservedSince + "."
+        : "As the city publishes it on its own council page, read " + board.readAt + ".",
+      phone: office.phone || null, email: office.email || null,
+      links: [{ label: "The city's own page", url: String(board.sourceUrl) }]
+    }));
+    return frag;
+  }
+
   var loadCountySubdivisions = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
     "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC", "county subdivisions");
@@ -12660,7 +12822,7 @@ function initMichiganExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // the civil-division type, taken from what TIGER's own NAME carries
@@ -12672,6 +12834,11 @@ function initMichiganExplorer() {
             : null,
           geoid: findPropCI(props, ["geoid"])
         };
+        if (result.kind !== "township" && result.kind !== "charter township") return result;
+        return municipalBoardFor(result.geoid).then(function (board) {
+          result.board = board;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -12705,7 +12872,9 @@ function initMichiganExplorer() {
       // WHO HOLDS THE OFFICE, said as the open question it is. Only a township
       // has an officer this card would name; a city's people belong on the
       // city's own card, and the water records have no government at all.
-      if (result.kind === "township" || result.kind === "charter township") {
+      if ((result.kind === "township" || result.kind === "charter township") && result.board) {
+        wrap.appendChild(renderMunicipalBoard(result.board));
+      } else if (result.kind === "township" || result.kind === "charter township") {
         wrap.appendChild(renderFieldStack([{
           label: "Your township board",
           value: "Not named here. No statewide roster of Michigan's township " +
@@ -12735,12 +12904,14 @@ function initMichiganExplorer() {
    * lookup: most of Michigan's land is unincorporated township, which IS an
    * answer, and the Township or City card is the one that names it.
    *
-   * NO OFFICEHOLDER. No statewide source names Michigan's mayors, village
-   * presidents, council members or clerks — the Michigan Municipal League's
-   * directory is membership-facing and the state publishes no aggregate — so
-   * the card names no one rather than guessing. Recorded as gap
-   * mi-municipal-officeholders; per-city rosters are later phase work, the
-   * route every other instance took. ---------- */
+   * THE COUNCIL, WHERE THE CITY'S OWN PAGE NAMES IT. No statewide source
+   * names Michigan's mayors, village presidents, council members or clerks —
+   * the Michigan Municipal League's directory is membership-facing and the
+   * state publishes no aggregate — so the large cities are read one by one
+   * from their own sites (mi-municipal-officials.json, joined on this card's
+   * GEOID), the route every other instance took. Every other city and village
+   * keeps the sentence naming no one rather than guessing. Recorded as gap
+   * mi-municipal-officeholders. ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC", "incorporated places");
@@ -12773,7 +12944,7 @@ function initMichiganExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // same NAME-minus-BASENAME technique as the subdivision card, for
@@ -12784,6 +12955,10 @@ function initMichiganExplorer() {
             : null,
           geoid: findPropCI(props, ["geoid"])
         };
+        return municipalBoardFor(result.geoid).then(function (board) {
+          result.board = board;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -12805,6 +12980,10 @@ function initMichiganExplorer() {
         wrap.appendChild(renderFieldStack([
           { label: "Type", value: KIND_NOTE[result.kind] }
         ]));
+      }
+      if (result.board) {
+        wrap.appendChild(renderMunicipalBoard(result.board));
+        return wrap;
       }
       wrap.appendChild(renderFieldStack([{
         label: "Your mayor or council",
@@ -12951,6 +13130,104 @@ function initMichiganExplorer() {
   });
 
 
+  /* ---------- 10a. Court of Appeals and Circuit Court — county unions ----------
+   * Michigan elects its judges by district (Const. 1963 art. 6): Court of
+   * Appeals judges by appellate district, circuit judges by circuit, both on a
+   * nonpartisan ballot for six-year terms. No agency publishes either boundary
+   * as geometry (an ArcGIS Online catalogue search answered ten queries with no
+   * government court layer, 2026-10-01), so the shipped files draw NO NEW LINE:
+   * every district and circuit is a union of whole counties from the same
+   * county file the County layer ships, composed as the statute lists them —
+   * MCL 600.302 for the four appellate districts, MCL 600.502-600.549i for the
+   * 57 circuits — and witnessed county for county by the Michigan Manual
+   * 2025-2026. mi/scripts/build_mi_courts.py carries both lists and the gates.
+   *
+   * NEITHER CARD NAMES A JUDGE, and each says why. The court system's own site
+   * (www.courts.michigan.gov) publishes `User-agent: *` / `Disallow: /`, so it
+   * is linked for a reader and never read by this project; the only statewide
+   * list that can be read is the Michigan Manual, a December 2025 snapshot
+   * printed every two years. Gap mi-judge-roster. ---------- */
+  var loadMiCoaDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-court-of-appeals-districts.json", {}, 2);
+  });
+  var loadMiCircuitCourts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-circuit-courts.json", {}, 2);
+  });
+  var MI_COURTS_LINK = { label: "Michigan courts", url: "https://www.courts.michigan.gov/" };
+
+  registerPolygonLayer({
+    id: "mi-court-of-appeals",
+    group: "political",
+    label: "Court of Appeals District",
+    loader: loadMiCoaDistricts,
+    // plum, long-dashed — the broadest political boundary this app draws
+    style: { color: "#5B2A86", weight: 2, fillColor: "#5B2A86", fillOpacity: 0.04, dashArray: "10 4" },
+    fields: [
+      { name: "name", label: "District", keys: ["name"], primary: true },
+      { name: "countyCount", label: "Counties in this district", keys: ["county_count"] },
+      { label: "Judges",
+        value: "Elected by the voters of this district on a nonpartisan " +
+               "ballot, for six-year terms. This app does not name them yet: " +
+               "the state court system's website asks automated tools not to " +
+               "read it." }
+    ],
+    primaryLink: function () { return MI_COURTS_LINK; }
+  });
+
+  registerPolygonLayer({
+    id: "mi-circuit-court",
+    group: "political",
+    label: "Circuit Court",
+    loader: loadMiCircuitCourts,
+    // deep violet, the fleet's judicial hue
+    style: { color: "#4A2E8C", weight: 1.5, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "6 3" },
+    fields: [
+      { name: "name", label: "Circuit", keys: ["name"], primary: true },
+      { name: "counties", label: "Covers", keys: ["counties"] },
+      { label: "Judges",
+        value: "Elected by the voters of this circuit on a nonpartisan " +
+               "ballot, for six-year terms. This app does not name them yet: " +
+               "the state court system's website asks automated tools not to " +
+               "read it." }
+    ],
+    primaryLink: function () { return MI_COURTS_LINK; }
+  });
+
+  /* ---------- 10b. Intermediate School District — the state's own map ----------
+   * 56 ISDs (also called RESAs, ESAs and ESDs), the regional school districts
+   * the Revised School Code creates (MCL 380.601 et seq.), from the state's
+   * Michigan Geographic Framework layer, pre-built by
+   * mi/scripts/build_mi_isd_districts.py. A special district rather than an
+   * elected one: its board is normally elected by one representative of each
+   * local school board (MCL 380.614), or by voters where they approved that
+   * (MCL 380.615-617). No statewide roster of those boards was found, so the
+   * card says how the board is chosen and names nobody. The framework is
+   * land-only, so the card's empty state says what being outside every ISD
+   * means rather than reading as a failed lookup. ---------- */
+  var loadMiIsdDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-isd-districts.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "mi-isd",
+    group: "schools",
+    label: "Intermediate School District",
+    loader: loadMiIsdDistricts,
+    emptyNote: "This point is not in a Michigan intermediate school district. " +
+      "The state's map of them covers land only, so a point on one of the " +
+      "Great Lakes, or outside Michigan, is in none.",
+    style: { color: "#1F6F78", weight: 1.5, fillColor: "#2A8C96", fillOpacity: 0.04, dashArray: "4 4" },
+    fields: [
+      { name: "name", label: "District", keys: ["name"], primary: true },
+      { label: "How its board is chosen",
+        value: "Most intermediate school district boards are elected by one " +
+               "representative from each local school board in the district, " +
+               "not by voters. Where voters approved it, the board is elected " +
+               "on the ballot instead. This app does not name the members." }
+    ]
+  });
+
+
   /* ---------- 11. ZIP Code — live TIGERweb ZCTAs ----------
    * ZCTAs carry no STATE field (they cross state lines), so unlike every
    * other TIGERweb layer here this one cannot use the STATE='26' filter and
@@ -13003,17 +13280,47 @@ function initMichiganExplorer() {
       TIGERWEB_SERVICES + "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11", point, "ZCTA5");
   };
 
+  /* THIS LAYER ALONE AMONG THE STATEWIDE ONES DECLARES A COVERAGE TEST, and the
+   * reason is the missing state field. Every other statewide layer here is
+   * fetched with STATE='26', so it is silent outside Michigan by construction;
+   * a ZCTA query carries no state filter, so at a point in a neighbouring state
+   * the live fallback returns THAT state's ZIP code — an answer about a place
+   * this instance does not serve, on ground every other card here correctly
+   * declines. The committed tile archive holds Michigan's ZCTAs only, so the
+   * archive path was already silent; the defect was on the FALLBACK, which runs
+   * when the archive cannot be read and on a browser that cannot read one at
+   * all. Declaring coverage hides the toggle, the card and the overlay outside
+   * the state instead, which is the engine's own mechanism for "where a layer's
+   * data applies", and makes the instance consistent at one more point rather
+   * than only most of it.
+   *
+   * The ground is the same metro-outline.json the coverage wash and the app's
+   * own hand-off already read, so ZIP agrees with the rest of the app about where Michigan is
+   * rather than keeping a notion of its own, and the test is same-origin and
+   * cache-first — it costs no request and answers identically on a runner that
+   * can reach TIGERweb and in a sandbox that cannot. A throwing test fails
+   * open, which is the engine's rule. */
+  function insideMichigan(point) {
+    return loadMetroOutline().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+
   registerPolygonLayer({
     id: "zip-code",
     tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
+    coverage: insideMichigan,
     loader: loadZipCodes,
-    // The archive keeps only the ZCTAs inside this app's own state (scripts/
-    // mirror_tiger_tiles.py, STATE_OVERLAP_MIN), so an empty card here is a fact
-    // about the archive, not about the place: the generic "isn't inside any
-    // district" would be false for a point in, say, a neighbouring state's ZIP.
-    emptyNote: "No ZIP code here. This map holds Michigan's ZIP codes only, so a point outside Michigan gets none.",
+    // WITH COVERAGE DECLARED ABOVE, AN OUT-OF-STATE POINT HIDES THIS LAYER
+    // RATHER THAN ANSWERING IT, so the note that used to stand here — "This map
+    // holds Michigan's ZIP codes only, so a point outside Michigan gets none",
+    // citing the archive's STATE_OVERLAP_MIN filter — describes a case that can
+    // no longer render, and a note that cannot render is a claim nothing keeps
+    // true. What is left is a point inside Michigan that no ZCTA covers, so the
+    // note now says only what the query answered.
+    emptyNote: "No ZIP Code Tabulation Area covers this point.",
     // dotted outline (a distinct pattern from Township or City's long dash) + its own hue
     style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
     fields: [
@@ -13574,6 +13881,9 @@ function initMichiganExplorer() {
 
 
   /* ---------- 15. City Council District — Detroit and Grand Rapids ----------
+   * (Written when these were the only two. The layer now draws seven cities;
+   * Warren, Flint, Rochester Hills, Battle Creek and Jackson have their
+   * entries further down this section.)
    * ONE DISPATCHED LAYER, TWO CITIES, each entry pre-built from that city's
    * own ArcGIS org and each bringing its own card, because the two bodies are
    * not alike. Grand Rapids's half is further down, after Detroit's.
@@ -13661,6 +13971,12 @@ function initMichiganExplorer() {
   });
   var loadRochesterHillsWards = makeCached(function () {
     return fetchJSONWithRetry("data/app/mi-rochester-hills-wards.json", {}, 2);
+  });
+  var loadJacksonWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-jackson-wards.json", {}, 2);
+  });
+  var loadJacksonRoster = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-jackson-council-members.json", {}, 2);
   });
 
   function detroitCoverage(point) {
@@ -13925,10 +14241,14 @@ function initMichiganExplorer() {
     });
   }
 
-  // WARREN NAMES NO COUNCIL MEMBERS HERE, and that is the honesty floor rather
-  // than an oversight: the city's council page publishes meeting documents and
-  // no member roster, so the card names your ward and links the Council itself
-  // instead of inventing a name. Recorded as gap `warren-council-roster`.
+  // WARREN'S MEMBERS COME FROM THE CITY'S OWN COUNCIL MEMBERS PAGE
+  // (mi-municipal-officials.json, read weekly). The gap this replaced said the
+  // city published no roster, which was true of /city-council/ and not of
+  // /government/city-council/city-council-members/, where each member sits
+  // under a "District N" or "At Large" heading. The city's council DISTRICTS
+  // are the wards this layer draws (five of them, one member each), so ward N
+  // is matched to the page's District N. If the page stops naming a member for
+  // that district the card falls back to naming the ward and nobody.
   var warrenEntry = {
     key: "warren",
     label: "Warren",
@@ -13941,10 +14261,11 @@ function initMichiganExplorer() {
     query: function (point, seq) {
       return queryFeatureAt(loadWarrenWards, point).then(function (feature) {
         if (!feature) return null;
-        return {
-          seq: seq,
-          ward: findPropCI(feature.properties || {}, ["ward"])
-        };
+        var result = { seq: seq, ward: findPropCI(feature.properties || {}, ["ward"]) };
+        return municipalBoardFor("2684000").then(function (board) {
+          result.board = board;
+          return result;
+        });
       });
     },
     cardIdentifier: function (result) {
@@ -13952,6 +14273,11 @@ function initMichiganExplorer() {
     },
     render: function (result) {
       var wrap = cardEl("div", "card-flush");
+      var named = result.ward ? renderBoardSeat(result.board, "District " + String(result.ward)) : null;
+      if (named) {
+        wrap.appendChild(named);
+        return wrap;
+      }
       wrap.appendChild(renderLinkRow({
         title: result.ward ? "Ward " + String(result.ward) : "Warren City Council",
         note: "Warren elects one council member from each of five wards. The city "
@@ -13965,6 +14291,140 @@ function initMichiganExplorer() {
     }
   };
 
+  function jacksonCoverage(point) {
+    // Jackson's six wards are COMPOSED from Jackson County's precinct layer,
+    // and the builder measures them against the Census place: the same
+    // 31,309 people, so the wards tile the city. A load failure rejects to
+    // the engine's fail-open.
+    return loadJacksonWards().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+
+  // The city publishes one page per ward naming that ward's council member,
+  // and the roster file carries that page as each member's `profileUrl`. The
+  // table below is the fallback link when the roster cannot be read, so a
+  // reader is still sent to their own ward's page rather than the council's.
+  // The page ids are the city's own and not sequential, read from its
+  // navigation; the scraper fails if the council page stops linking them.
+  var JACKSON_WARD_PAGES = {
+    "1": "https://www.cityofjackson.org/498/Ward-1",
+    "2": "https://www.cityofjackson.org/499/Ward-2",
+    "3": "https://www.cityofjackson.org/500/Ward-3",
+    "4": "https://www.cityofjackson.org/504/Ward-4",
+    "5": "https://www.cityofjackson.org/511/Ward-5",
+    "6": "https://www.cityofjackson.org/512/Ward-6"
+  };
+  // NAMES FROM THE CITY'S PAGES, LINES FROM THE COUNTY'S MAP. The members come
+  // from mi-jackson-council-members.json, which the weekly scraper builds only
+  // when each ward's own page and the council page name the same person. The
+  // ward geometry carries the ward number and nothing else.
+  var jacksonEntry = {
+    key: "jackson",
+    label: "Jackson",
+    coverage: jacksonCoverage,
+    loadGeometry: loadJacksonWards,
+    hoverName: function (feature) {
+      var v = findPropCI(feature.properties || {}, ["ward"]);
+      return (v == null || v === "") ? null : "Ward " + String(v);
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadJacksonWards, point),
+        loadJacksonRoster().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var ward = findPropCI(feature.properties || {}, ["ward"]);
+        var roster = parts[1];
+        return {
+          seq: seq,
+          ward: ward,
+          members: (roster && roster.wards && ward != null)
+            ? (roster.wards[String(ward)] || []) : [],
+          citywide: (roster && roster.citywide) || null,
+          office: (roster && roster.office) || null,
+          seatsPerWard: roster ? roster.seatsPerWard : null,
+          rosterUrl: roster ? roster.sourceUrl : null
+        };
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.ward ? "Ward " + String(result.ward) : "Unknown ward";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var named = (result.members && result.members.length) || 0;
+      if (named) {
+        wrap.appendChild(renderPersonRows(result.members.map(function (rec) {
+          return {
+            name: rec.name,
+            badge: "Councilmember",
+            phone: rec.phone || null,
+            // The member's own page is the ward page, which the card's footer
+            // already links, so the row does not repeat it.
+            email: rec.email || null
+          };
+        })));
+      } else if (result.seatsPerWard) {
+        // A ward naming nobody is a seat the city's pages do not fill, not a
+        // ward with no representative. Say which it is.
+        wrap.appendChild(renderLinkRow({
+          title: "This ward's seat",
+          note: "Jackson elects one councilmember from each of its six wards, and "
+              + "the city's pages name nobody for this one, so this app names "
+              + "nobody either.",
+          links: safeHttpUrl(result.rosterUrl)
+            ? [{ label: "City Council", url: result.rosterUrl }] : null
+        }));
+      } else {
+        // The roster could not be read. The ward is still right, so name it
+        // and send the reader to the city's own page for the member.
+        wrap.appendChild(renderLinkRow({
+          title: result.ward ? "Ward " + String(result.ward) : "Jackson City Council",
+          note: "Jackson elects one councilmember from each of six wards. The "
+              + "city names each ward's member on a page of its own, linked below."
+        }));
+      }
+      if (result.citywide && result.citywide.length) {
+        wrap.appendChild(renderSectionLabel("ELECTED BY THE WHOLE CITY"));
+        wrap.appendChild(renderPersonRows(result.citywide.map(function (rec) {
+          return {
+            name: rec.name,
+            badge: rec.seat || "Citywide",
+            phone: rec.phone || null,
+            email: rec.email || null,
+            links: safeHttpUrl(rec.profileUrl)
+              ? [{ label: "Mayor's page", url: rec.profileUrl }] : null
+          };
+        }), { tinted: true }));
+      }
+      if (result.office && (result.office.phone || (result.office.lines || []).length)) {
+        wrap.appendChild(renderOfficeGroup({
+          label: result.office.label || "City Hall",
+          offices: [{
+            label: "Jackson City Council",
+            lines: result.office.lines || [],
+            phone: result.office.phone
+          }]
+        }));
+      }
+      var rows = [{ label: "Ward", value: result.ward ? String(result.ward) : "Unknown",
+                    primary: true }];
+      rows.push({ label: "Where the ward lines come from",
+                  value: "Jackson County's precinct map, since the city publishes no "
+                       + "ward map of its own." });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var url = result && result.ward ? JACKSON_WARD_PAGES[String(result.ward)] : null;
+      if (url) return { label: "Ward " + String(result.ward) + " on the city's site", url: url };
+      return { label: "Jackson City Council",
+               url: "https://www.cityofjackson.org/289/Mayor-City-Council-City-Manager" };
+    }
+  };
+
   function flintCoverage(point) {
     // Nine wards drawn to within a few people of each other; the builder
     // measures them against the Census place and bounds the difference at ten
@@ -13974,11 +14434,14 @@ function initMichiganExplorer() {
     });
   }
 
-  // FLINT NAMES NO COUNCIL MEMBER HERE. Its council page runs to 1.4 MB and the
-  // ONLY ward-to-name pairing anywhere in it is an In Memoriam for the First
-  // Ward councilman who died in 2024 — so a scraper that paired a ward with the
-  // nearest name would ship a dead man as sitting. The card names your ward and
-  // links the Council. Recorded as gap `flint-council-roster`.
+  // FLINT'S MEMBERS COME FROM THE CITY'S OWN COUNCIL PAGE
+  // (mi-municipal-officials.json, read weekly). That page runs to 1.5 MB and
+  // carries an In Memoriam for the First Ward councilman who died in 2024, so a
+  // scraper pairing a ward with the nearest name would ship a dead man as
+  // sitting. The parser reads only the page's council-members directory, where
+  // each member's own entry says "City Council – Nth Ward", and stops before
+  // the memorial. If the page stops naming a member for a ward the card falls
+  // back to naming the ward and nobody.
   var flintEntry = {
     key: "flint",
     label: "Flint",
@@ -13991,7 +14454,11 @@ function initMichiganExplorer() {
     query: function (point, seq) {
       return queryFeatureAt(loadFlintWards, point).then(function (feature) {
         if (!feature) return null;
-        return { seq: seq, ward: findPropCI(feature.properties || {}, ["ward"]) };
+        var result = { seq: seq, ward: findPropCI(feature.properties || {}, ["ward"]) };
+        return municipalBoardFor("2629000").then(function (board) {
+          result.board = board;
+          return result;
+        });
       });
     },
     cardIdentifier: function (result) {
@@ -13999,6 +14466,11 @@ function initMichiganExplorer() {
     },
     render: function (result) {
       var wrap = cardEl("div", "card-flush");
+      var named = result.ward ? renderBoardSeat(result.board, "Ward " + String(result.ward)) : null;
+      if (named) {
+        wrap.appendChild(named);
+        return wrap;
+      }
       wrap.appendChild(renderLinkRow({
         title: result.ward ? "Ward " + String(result.ward) : "Flint City Council",
         note: "Flint elects one council member from each of nine wards. The city "
@@ -14231,9 +14703,10 @@ function initMichiganExplorer() {
     // ORDERED BY POPULATION: §3.1 says to order the table so the cheapest
     // already-cached coverage test short-circuits the OR, and the city most
     // selections land in should be tried first. Detroit, then Warren, then
-    // Grand Rapids, then Flint, then Rochester Hills, then Battle Creek.
+    // Grand Rapids, then Flint, then Rochester Hills, then Battle Creek,
+    // then Jackson.
     entries: [detroitEntry, warrenEntry, grandRapidsEntry, flintEntry,
-              rochesterHillsEntry, battleCreekEntry]
+              rochesterHillsEntry, battleCreekEntry, jacksonEntry]
   });
 
 
@@ -15726,10 +16199,14 @@ function initMichiganExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "mi-senate", "mi-house", "county-commissioner",
     // The city tier sits after the county board: same Political family, one
-    // level finer. It hides outside the two cities that publish boundaries
-    // (Detroit and Grand Rapids), so for most readers this slot is not there.
+    // level finer. It hides outside the seven cities whose boundaries it
+    // draws (Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle
+    // Creek and Jackson), so for most readers this slot is not there.
     "city-ward",
-    "school-district-unified", "school-district-elementary",
+    // Courts follow the elected bodies: judges are elected by district too,
+    // but a reader asks first who represents them.
+    "mi-circuit-court", "mi-court-of-appeals",
+    "school-district-unified", "school-district-elementary", "mi-isd",
     "county", "county-subdivision", "municipality", "zip-code", "precinct", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -16191,12 +16668,12 @@ function initMichiganExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#0F5C8C": "#52ADF0", "#14181C": "#696F76",
-    "#1B4F8C": "#5CA0F5", "#1B7A3D": "#58CD7A", "#2E8FC4": "#92D3FD", "#2E9E6B": "#5BEAA5",
-    "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#5C4B8C": "#AB95EF", "#6B7280": "#B1BBCE",
-    "#7A5C3E": "#CFA57D", "#8C2E4A": "#F47294", "#8F7BC4": "#D1C2FF", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B26A00": "#FFB15F", "#D06A9C": "#FFBDDA",
-    "#D19133": "#FED7A7"};
+    "#1B4F8C": "#5CA0F5", "#1B7A3D": "#58CD7A", "#1F6F78": "#5CC0CC", "#2A8C96": "#5CD8E5",
+    "#2E8FC4": "#92D3FD", "#2E9E6B": "#5BEAA5", "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93",
+    "#5B2A86": "#B375F2", "#5C4B8C": "#AB95EF", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
+    "#8C2E4A": "#F47294", "#8F7BC4": "#D1C2FF", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
+    "#B0316E": "#FD88B8", "#B26A00": "#FFB15F", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -1,0 +1,598 @@
+#!/usr/bin/env python3
+"""
+A new scraper can ship today without ever reading robots.txt, with every gate
+green. This is the gate that stops that.
+
+WHY. CLAUDE.md's rule is that robots.txt is read before the first fetch of a
+host, through `scripts/robots_policy.py`, with the same client that will crawl.
+`scraper_common.require_robots_allowed` is the seam that enacts it. Adoption was
+per caller and unmeasured, and every measurement of it has been an undercount
+taken off a hand-written list: the 2026-09-12 sweep named seven files, #1271's
+follow-on named four more, and the re-measurement of 2026-09-30 found the gap
+two orders of magnitude wider than either. Nothing compared the tree against
+the rule, so the only thing standing between a new unwired scraper and `main`
+was somebody remembering.
+
+WHAT IT MEASURES. Every tracked `*.py` file, split three ways:
+
+  * it FETCHES if it calls a network entry point — `requests` or `httpx` at
+    module or Session level, `urllib.request.urlopen`/`urlretrieve`, this
+    fleet's own `scraper_common.fetch`/`fetch_stdlib`, or Playwright's
+    `page.goto`. Read by AST, never by a text match, because a text match
+    counts a docstring that merely NAMES one of those (this module would count
+    itself twice over) and misses a call spelled across two lines.
+  * it READS THE POLICY if it reaches `require_robots_allowed`, `RobotsGate` or
+    `robots_deferred`. Also AST, for the same reason: `docs`-style prose about
+    robots.txt is not a reading of it, and half a dozen builders write an
+    `elections.il.gov` url into their output without ever requesting it — a
+    CITATION IS NOT A FETCH, and by the same token a MENTION IS NOT A GATE.
+  * otherwise it is neither and this gate says nothing about it.
+
+A file that fetches and does not read the policy must be DECLARED, and the
+declarations are re-audited every run in the `ACCEPTED_DROPS` shape this fleet
+already uses for `EXPECTED_UNREACHABLE`, `ACCEPTED_SHORTFALLS` and
+`ROBOTS_DECLINED`: an entry FAILS when it stops describing the tree — the file
+gone, or no longer fetching, or now reading the policy — so the list can only
+shrink and cannot rot into a permanent hole with nothing saying so.
+
+TWO TABLES, BECAUSE THEY ARE TWO DIFFERENT CLAIMS.
+
+  `UNWIRED_AT_SWEEP` is a BACKLOG. Its entries share one reason, stated once
+  here rather than copied 200 times into strings that would all say the same
+  thing: as of the sweep date below, nobody had wired these. It is seeded with
+  exactly what the tree had that day, so this gate lands green and its only
+  possible movement is downward. Removing a name from it is the unit of
+  progress, and adding one is not available to a new scraper — a file that
+  fetches, reads nothing and is not already listed FAILS.
+
+  WHAT IS LEFT IN IT NO LONGER SHARES THAT REASON, and the shared-reason design
+  is why nothing in this file says so. The wiring pass took it from 224 entries
+  to 30 in a day, and the next pass took the last 25 of those in one, leaving a
+  single name. What that pass found is the reason the paragraph it replaces was
+  wrong about its own remainder: those 25 were described as reaching hosts that
+  refuse us, challenge us, or answer nothing, and all three of those readings
+  came from a record measured on 2026-09-30. Re-measured from a runner a day
+  later, TWENTY-EIGHT HOSTS ANSWERED — eleven that had answered with a managed
+  challenge served a policy on all three reads of a deliberate re-measurement
+  fifteen seconds apart, and nine that had timed out either serve a policy or
+  answer HTTP 404, which is no policy at all and permits everything.
+
+  A RECORDED REFUSAL GOES STALE AND NOTHING RE-READS IT. That is the lesson, and
+  it is the same one #1340 found in two scrapers' hand-written notes about a
+  browser string. A refusal is a measurement with a date, so a backlog built on
+  one is a backlog with an expiry nobody prints. Re-measure before concluding
+  that a decision is owed.
+
+  THE ONE ENTRY LEFT IS NOT A DECISION EITHER. coles_county_board_scraper.py
+  reads www.colesco.illinois.gov, whose own leaf certificate EXPIRED around
+  2026-09-27: its weekly refresh has failed since, with "certificate has
+  expired", and the robots read fails the same way through the pinned
+  intermediate that used to complete its chain. Nothing can read that site until
+  the county renews, so there is no policy to obey and nothing to wire; the
+  shipped roster keeps its last-good records under Adam's ruling of 2026-09-19.
+  It stays here rather than being excused, because the day the certificate is
+  renewed this is an ordinary task again.
+
+  THREE OF THOSE 30 WERE NEVER IN THAT CLASS AND WERE SORTED THERE BY READING A
+  URL LITERAL, which is the same defect this gate's own AST rule exists to avoid
+  one level up. `scripts/build_stephenson_fire_districts.py`,
+  `ia/scripts/build_ia_judicial_district.py` and
+  `scripts/will_municipal_officials_scraper.py` each name a refusing host — an
+  `elections.il.gov` map url written into every feature as `mapUrl`, the Code of
+  Iowa sections and Judicial Branch pages a docstring cites, a Clarity asset
+  address in a comment — and none of the three ever requests it. A CITATION IS
+  NOT A FETCH, so the hosts they do read (TIGERweb, one ArcGIS feature service,
+  the Will County Clerk and the flipbook the Clerk publishes on) all permit
+  them, and all three were wired on 2026-09-30 with no ruling needed. Bucketing
+  a file by the addresses it contains over-counts for exactly the reason a text
+  match for the seam over-counts: the literal is evidence of a mention, never of
+  a request.
+
+  `DECLARED_EXEMPT` is for a file whose fetch genuinely must not be gated, each
+  with its own reason and date. It was EMPTY on introduction, which was called a
+  measurement rather than an omission: "the three candidates considered were the
+  two `indexnow_submit.py` submitters and `scripts/mirror_*_tiles.py`, and all
+  three are ordinary automatic clients fetching somebody else's host, so all
+  three belong in the backlog and none is exempt."
+
+  THAT READING WAS WRONG ABOUT THE TWO SUBMITTERS, and it is kept above rather
+  than deleted because the way it was wrong is the thing to learn. It asked
+  WHICH HOST is contacted and WHETHER A PROGRAM does the contacting — both true
+  of an IndexNow submission — and never asked WHICH DIRECTION the content moves.
+  robots.txt says which of a site's pages a crawler may READ. A submitter hands
+  over a list of our own addresses and reads nothing, so there is no page for a
+  policy to permit or refuse, and the rule has nothing to say about it. The
+  three copies of that script are exempt (2026-09-30), each arguing its own case
+  in its own file. `mirror_*_tiles.py` is unaffected: it really does read
+  somebody else's data, and it was wired rather than excused. The one real class of
+  unreadable policy already has a home in
+  `scraper_common.ROBOTS_DEFERRED_HOSTS`, which is per HOST and records the
+  measurement; a per-FILE exemption would hide the same fact where nobody
+  measures it.
+
+  EVERY ENTRY IS the class the paragraph above was holding the table open for
+  rather than a loosening of it, and they fall in four groups, the group being
+  the argument in each case. check() requires every path in the table to be
+  named in this list, so the list cannot quietly stop describing the table; no
+  count is stated in either place, because the run's own OK line prints it:
+
+    * a read of this project's OWN data with its OWN credential —
+      `scripts/goatcounter_fetch.py`, `scripts/gsc_fetch.py`,
+      `scripts/bing_fetch.py`, `scripts/verify_google_api_access.py`,
+      `scripts/fleet_status.py`, `scripts/check_roster_workflow_health.py`,
+      `wi/scripts/wi_coa_staleness.py`. The blanket rule on each of those hosts
+      is aimed at search engines reading customer dashboards and web interfaces,
+      not at an account holder reading their own account through the API the
+      credential was issued for.
+    * an OUTBOUND submission of our own addresses, reading nothing — the three
+      copies of that script: `scripts/indexnow_submit.py`,
+      `ca/scripts/indexnow_submit.py`, `ny/scripts/indexnow_submit.py`.
+    * a step in completing a TLS HANDSHAKE, or a MEASUREMENT of one —
+      `scripts/aia_bundle.py`, which fetches the intermediate certificate named
+      inside a leaf a host has just served, and
+      `scripts/probe_incomplete_tls_chains.py`, whose subject is the set of hosts
+      whose chain no plain client can complete. Gating either is circular: those
+      hosts' robots.txt cannot be read until the intermediate is in hand, which
+      is the thing the probe is run to discover.
+    * a file that talks only to a server IT STARTED ITSELF —
+      `scripts/selftest_scraper_common.py`, whose one host is loopback.
+    * a NAME LOOKUP rather than a read — `scripts/build_county_clerk_roster.py`,
+      whose one fetch asks a DNS-over-HTTPS resolver whether each shipped
+      address's domain has a mail route. A resolver is the layer BELOW the one
+      robots.txt governs: every gated fetch here resolves a name first,
+      including the fetch of robots.txt itself.
+
+  The test is never which host answers. It is whose data and whose credential,
+  or whose content and which direction, or whether any page is read at all — and
+  EVERY entry argues its own case at length in its own file rather than in the
+  one-line reason here, so no exemption can be picked up by analogy from this
+  table.
+
+WHAT IT CANNOT SEE, stated rather than implied. It asks whether a file reaches
+the seam, never whether it reaches it BEFORE its first fetch or for EVERY host
+it touches. A scraper that gates one rung of a three-client ladder and fetches
+on the other two passes here. That is a reading of control flow this does not
+attempt, and it is why the seam raises rather than returning False.
+"""
+
+import ast
+import os
+import re
+import subprocess
+import sys
+
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+SWEEP_DATE = "2026-09-30"
+
+# Attribute names that open a connection, whatever the object they hang off.
+NET_ATTRS_ANY = {"urlopen", "urlretrieve", "goto"}
+# Attribute names that open a connection only on an HTTP client object.
+NET_ATTRS_CLIENT = {"get", "post", "head", "put", "patch", "delete", "request",
+                    "Session", "Client"}
+# Module names whose attributes above are network calls.
+CLIENT_MODULES = {"requests", "httpx"}
+# Bare names that are network calls once imported from these modules.
+IMPORTABLE_NET = {
+    "urllib.request": {"urlopen", "urlretrieve"},
+    "requests": NET_ATTRS_CLIENT,
+    "httpx": NET_ATTRS_CLIENT,
+    "scraper_common": {"fetch", "fetch_stdlib"},
+}
+ROBOTS_NAMES = {"require_robots_allowed", "require_robots_once", "RobotsGate",
+                "robots_deferred"}
+# Modules whose job IS the policy, so anything imported from one and called is a
+# reading. `robots_gate` is the per-instance shim validate_workflow_deps allows.
+ROBOTS_MODULES = {"robots_policy", "robots_gate", "scraper_common"}
+# Entry points those modules expose. CORRECTED 2026-09-30, hours after the sweep:
+# the first version knew only the four names above, and SEVEN files that read the
+# policy through `robots_policy.classify` or `fetch_verdict` were therefore
+# recorded as unwired -- an overcount, so the published figure overstated the
+# problem. A detector that knows only some of a module's doors reports the rest of
+# the building as unlocked.
+ROBOTS_ENTRY = ROBOTS_NAMES | {"classify", "fetch_verdict", "RobotsPolicy",
+                               "Verdict", "HostPacer"}
+
+
+def _root_name(node):
+    """The leftmost Name of an attribute chain, or None."""
+    while isinstance(node, ast.Attribute):
+        node = node.value
+    return node.id if isinstance(node, ast.Name) else None
+
+
+class _Reader(ast.NodeVisitor):
+    def __init__(self):
+        self.net_names = set()      # bare names bound to a network entry point
+        self.client_objs = set()    # names holding a requests/httpx client
+        self.fetches = []
+        self.robots = []
+        self.robots_names = set(ROBOTS_NAMES)  # bare names bound to a reading
+        self.robots_mods = set(ROBOTS_MODULES)  # local names of a policy module
+
+    def visit_Import(self, node):
+        # `import robots_policy as rp` — two files read the policy that way, and
+        # the first version of this reader knew only the `from ... import` shape,
+        # so both were recorded as unwired.
+        for alias in node.names:
+            if alias.name in ROBOTS_MODULES:
+                self.robots_mods.add(alias.asname or alias.name)
+        self.generic_visit(node)
+
+    def visit_ImportFrom(self, node):
+        mod = node.module or ""
+        wanted = IMPORTABLE_NET.get(mod, set())
+        for alias in node.names:
+            local = alias.asname or alias.name
+            if alias.name in wanted:
+                self.net_names.add(local)
+            if mod in ROBOTS_MODULES and alias.name in ROBOTS_ENTRY:
+                self.robots_names.add(local)  # importing is not calling; see visit_Call
+        self.generic_visit(node)
+
+    def visit_Assign(self, node):
+        val = node.value
+        if isinstance(val, ast.Call):
+            attr = getattr(val.func, "attr", None)
+            root = _root_name(val.func) if isinstance(val.func, ast.Attribute) else None
+            if attr in {"Session", "Client"} and root in CLIENT_MODULES:
+                for tgt in node.targets:
+                    if isinstance(tgt, ast.Name):
+                        self.client_objs.add(tgt.id)
+        self.generic_visit(node)
+
+    def visit_Call(self, node):
+        f = node.func
+        if isinstance(f, ast.Name):
+            if f.id in self.net_names:
+                self.fetches.append((f.id, node.lineno))
+            if f.id in self.robots_names:
+                self.robots.append((f.id, node.lineno))
+        elif isinstance(f, ast.Attribute):
+            root = _root_name(f)
+            if f.attr in NET_ATTRS_ANY:
+                self.fetches.append((f.attr, node.lineno))
+            elif f.attr in NET_ATTRS_CLIENT and (root in CLIENT_MODULES
+                                                 or root in self.client_objs):
+                self.fetches.append(("%s.%s" % (root, f.attr), node.lineno))
+            elif (root == "scraper_common"
+                  and f.attr in IMPORTABLE_NET["scraper_common"]):
+                self.fetches.append(("%s.%s" % (root, f.attr), node.lineno))
+            elif f.attr in ROBOTS_ENTRY or f.attr in {"allows"}:
+                if root in self.robots_mods or f.attr in ROBOTS_NAMES:
+                    self.robots.append((f.attr, node.lineno))
+        self.generic_visit(node)
+
+
+def classify(path):
+    """(fetches, reads_policy) for one file; a syntax error is a hard failure."""
+    with open(path, encoding="utf-8", errors="replace") as fh:
+        src = fh.read()
+    tree = ast.parse(src, filename=path)
+    r = _Reader()
+    r.visit(tree)
+    # A name used as a decorator or bare reference also counts as reaching the
+    # seam: `gate = require_robots_allowed` then `gate(...)` is one indirection
+    # this does not follow, so the reference itself is taken as the reading.
+    if not r.robots:
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Name) and node.id in ROBOTS_NAMES:
+                r.robots.append((node.id, node.lineno))
+                break
+    return bool(r.fetches), bool(r.robots)
+
+
+def tracked_python():
+    out = subprocess.run(["git", "-C", REPO, "ls-files", "*.py"],
+                         capture_output=True, text=True, check=True).stdout
+    return sorted(out.split())
+
+
+# ---------------------------------------------------------------------------
+# Every file that fetched without reading the policy on the sweep date. One
+# shared reason, stated in this module's docstring: nobody had wired it yet.
+# The list can only shrink; the gate FAILS on an entry that no longer describes
+# the tree, and on a fetching file that is not here and reads nothing.
+# ---------------------------------------------------------------------------
+UNWIRED_AT_SWEEP = frozenset("""
+    scripts/coles_county_board_scraper.py
+""".split())
+
+# path -> (reason, date). EMPTY on introduction, deliberately; see the docstring.
+# Every entry is the class the docstring said it was reserving the table for: a
+# fetch that genuinely must not be gated, rather than one that has not been
+# gated yet. The docstring groups them and says why each group is not a crawl,
+# and check() requires every path here to be NAMED there — two places stating a
+# COUNT is how the two come to disagree, so neither states one and the run's own
+# OK line prints it. EVERY ONE carries its whole argument in its own file rather
+# than a pointer at a sibling, so no exemption can be borrowed by analogy from a
+# row in this table.
+#
+# A PATH IN BOTH TABLES IS EXCUSED TWICE AND COUNTED TWICE, which is what
+# happened to the two entries below when they were declared exempt and left in
+# the backlog they had been swept into. A file excused by both is also a file
+# whose exemption can be deleted with nothing turning red, because the backlog
+# goes on covering it silently. check() refuses an overlap for that reason.
+DECLARED_EXEMPT = {
+    "scripts/build_county_clerk_roster.py": (
+        "ITS ONE FETCH IS A NAME LOOKUP: it asks a DNS-over-HTTPS resolver "
+        "whether each shipped clerk address's domain has a mail route, and what "
+        "comes back is a DNS answer rather than a page. A resolver sits BELOW "
+        "the layer robots.txt governs — every gated fetch in this repository "
+        "resolves a name first, the fetch of robots.txt included, so gating "
+        "this one would need a name lookup to perform it. THE TEST IS WHETHER "
+        "SOMEBODY'S PAGES ARE BEING READ, never which host answers; argued at "
+        "length in the file",
+        "2026-09-30"),
+    "scripts/aia_bundle.py": (
+        "NOT A CRAWL BUT A STEP IN A TLS HANDSHAKE: it fetches an "
+        "intermediate CA certificate from the AIA url printed inside a leaf "
+        "certificate a host has just served, which is what an AIA url is "
+        "for, and each one is pinned by hash. Gating it would also be "
+        "circular — the four hosts it completes chains for serve an "
+        "incomplete chain, so their robots.txt cannot be read until the "
+        "intermediate is in hand. THE TEST IS WHETHER SOMEBODY'S PAGES ARE "
+        "BEING READ, never which host answers; the argument is made at "
+        "length in the file itself so it cannot be applied by analogy from "
+        "here",
+        "2026-09-30"),
+    "scripts/probe_incomplete_tls_chains.py": (
+        "THE SAME CIRCULARITY AS aia_bundle.py, and the same class: what it "
+        "MEASURES is whether a TLS chain completes. It asks each host for `/`, "
+        "throws the body away and keeps the status code and the certificate, so "
+        "there is no content it takes. Its subject is precisely the hosts whose "
+        "chain no plain client can complete, so their robots.txt cannot be read "
+        "either until the intermediate is in hand — which is the thing this probe "
+        "is run to discover — and an unreachable robots.txt disallows, so a gated "
+        "version would refuse every host it was pointed at and measure nothing. "
+        "Every scraper that goes on to READ one of these hosts is gated in full "
+        "and passes the completed bundle to the robots read. THE TEST IS WHETHER "
+        "SOMEBODY'S PAGES ARE BEING READ, never which host answers; argued at "
+        "length in the file",
+        "2026-10-01"),
+    "scripts/indexnow_submit.py": (
+        "OUTBOUND SUBMISSION, NOT A READ: it hands districtry's own "
+        "addresses to an ingestion endpoint that exists to receive them, "
+        "keyed by a file on districtry's own domain. robots.txt says which "
+        "of a site's pages a crawler may READ, and there is no page here to "
+        "read. THE TEST IS WHOSE CONTENT AND WHICH DIRECTION, never which "
+        "host; argued at length in the file",
+        "2026-09-30"),
+    "ca/scripts/indexnow_submit.py": (
+        "The same script and the same argument as "
+        "scripts/indexnow_submit.py, carried in full in its own file rather "
+        "than by pointer so none of the three copies reads as an exemption "
+        "extended by analogy. (It still names chidistricts.com, a pre- "
+        "rebrand leftover recorded for that instance's owner rather than "
+        "changed here — it does not affect the exemption either way)",
+        "2026-09-30"),
+    "ny/scripts/indexnow_submit.py": (
+        "The third copy of that script, argument carried in full in its own "
+        "file for the same reason. (Also still names chidistricts.com; same "
+        "note)",
+        "2026-09-30"),
+    "scripts/fleet_status.py": (
+        "AUTHENTICATED READ OF THIS PROJECT'S OWN REPOSITORY: "
+        "api.github.com with this project's own token, asking GitHub about "
+        "districtry's own runs and pull requests through the API the token "
+        "is issued for. That host's blanket robots rule addresses crawlers "
+        "of the web interface, not an account holder reading their own "
+        "repository. THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never "
+        "which host; argued at length in the file",
+        "2026-09-30"),
+    "scripts/check_roster_workflow_health.py": (
+        "The same class, argued in full in its own file rather than pointed "
+        "at fleet_status.py: our token, our repository, the documented API, "
+        "no page read",
+        "2026-09-30"),
+    "wi/scripts/wi_coa_staleness.py": (
+        "The same class again, argued in full in its own file: our token "
+        "asking whether Wisconsin's own weekly verification actually ran",
+        "2026-09-30"),
+    "scripts/selftest_scraper_common.py": (
+        "IT TALKS ONLY TO ITS OWN SERVER. The one host is 127.0.0.1, an "
+        "HTTP server the file starts a few lines earlier to serve its own "
+        "fixtures, so a robots read would be the file asking itself for "
+        "permission — the same reason probe_user_agents.py skips loopback. "
+        "THE TEST IS WHOSE SITE, never which client",
+        "2026-09-30"),
+    "scripts/verify_google_api_access.py": (
+        "AUTHENTICATED CHECK OF THIS PROJECT'S OWN CREDENTIALS: it presents "
+        "the operator's service-account key to Search Console and GA4 and "
+        "asks which of districtry's own properties that key can read. No "
+        "page read, no link followed. THE TEST IS WHOSE DATA AND WHOSE "
+        "CREDENTIAL, never which host; argued at length in the file",
+        "2026-09-30"),
+    "scripts/goatcounter_fetch.py": (
+        "AUTHENTICATED READ OF THIS PROJECT'S OWN ACCOUNT, not a crawl of "
+        "somebody else's pages. districtry.goatcounter.com serves `User-agent: * "
+        "/ Disallow: /` (26 bytes, measured 2026-09-30), which taken literally "
+        "would stop the traffic report; robots.txt is a protocol for crawlers "
+        "reading a site's public pages, and this fetch presents districtry's own "
+        "share token to read districtry's own visit counts, which is the "
+        "service's documented way to do that. The blanket rule keeps search "
+        "engines out of customer dashboards and is not a service telling an "
+        "account holder not to read their own statistics. THE TEST IS WHOSE DATA "
+        "AND WHOSE CREDENTIAL, never which host: every other fetch in this "
+        "repository is an unauthenticated read of somebody else's public pages, "
+        "where the rule binds in full. The argument is made at length in the "
+        "file itself so it cannot be applied by analogy from here",
+        "2026-09-30"),
+    "scripts/gsc_fetch.py": (
+        "THE SAME CLASS AS goatcounter_fetch.py ABOVE, and swept in the day the "
+        "wiring pass reached it: a Google service-account credential the operator "
+        "granted to districtry's own Search Console properties, asking that "
+        "service for districtry's own traffic statistics through the API Google "
+        "documents for it. No page is read, no link followed, no url discovered. "
+        "THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never which host: an "
+        "unauthenticated read of a page on a Google host would be gated in full. "
+        "The argument is made at length in the file itself so it cannot be "
+        "applied by analogy from here",
+        "2026-09-30"),
+    "scripts/bing_fetch.py": (
+        "The sibling half of the pair above, exempt for the same reason and on "
+        "the same test: a Bing Webmaster Tools key issued to the operator for "
+        "districtry's own verified properties, reading districtry's own search "
+        "statistics. Its own file carries the whole argument rather than a "
+        "pointer at gsc_fetch.py, so neither reads as an exemption extended by "
+        "analogy",
+        "2026-09-30"),
+}
+
+
+def main(argv):
+    if "--selftest" in argv:
+        return _selftest()
+
+    files = tracked_python()
+    fetchers, unwired = [], []
+    for rel in files:
+        full = os.path.join(REPO, rel)
+        if not os.path.exists(full):
+            continue
+        fetches, reads = classify(full)
+        if not fetches:
+            continue
+        fetchers.append(rel)
+        if not reads:
+            unwired.append(rel)
+
+    problems = []
+
+    undeclared = [p for p in unwired
+                  if p not in UNWIRED_AT_SWEEP and p not in DECLARED_EXEMPT]
+    for p in undeclared:
+        problems.append("%s fetches over HTTP and never reads robots.txt. Reach "
+                        "scraper_common.require_robots_allowed() before its "
+                        "first fetch, with the same client that will crawl."
+                        % p)
+
+    on_disk = set(files)
+    wired_now = set(fetchers) - set(unwired)
+    # Tokenised rather than a substring test: "scripts/indexnow_submit.py" is a
+    # substring of "ca/scripts/indexnow_submit.py", so a plain `in` would let one
+    # instance's copy satisfy the root copy's requirement and pass three paths on
+    # one mention.
+    named = set(re.findall(r"[A-Za-z0-9_./-]+\.py", __doc__ or ""))
+    for p in sorted(DECLARED_EXEMPT):
+        if p not in named:
+            problems.append("%s is in DECLARED_EXEMPT and is not named in this "
+                            "module's docstring, where the exemptions are "
+                            "grouped and each group's reason is given. A table "
+                            "row carries a one-line reason; the docstring is "
+                            "where a reader learns which KIND of fetch is "
+                            "excused, and a row missing from it is an exemption "
+                            "in a class nobody stated." % p)
+    for p in sorted(set(UNWIRED_AT_SWEEP) & set(DECLARED_EXEMPT)):
+        problems.append("%s is in UNWIRED_AT_SWEEP and in DECLARED_EXEMPT. The "
+                        "two tables say different things — not gated YET, and "
+                        "must not be gated — so a path cannot honestly be in "
+                        "both, it is excused twice, it is counted twice in the "
+                        "OK line, and deleting its exemption turns nothing red "
+                        "because the backlog keeps covering it. Take it out of "
+                        "the backlog." % p)
+    for p in sorted(UNWIRED_AT_SWEEP):
+        if p not in on_disk:
+            problems.append("%s is in UNWIRED_AT_SWEEP and is not in the tree — "
+                            "remove the entry." % p)
+        elif p in wired_now:
+            problems.append("%s now reads robots.txt — remove it from "
+                            "UNWIRED_AT_SWEEP, which is how this list shrinks."
+                            % p)
+        elif p not in set(fetchers):
+            problems.append("%s is in UNWIRED_AT_SWEEP and no longer fetches "
+                            "over HTTP — remove the entry." % p)
+    for p in sorted(DECLARED_EXEMPT):
+        if p not in on_disk:
+            problems.append("%s is in DECLARED_EXEMPT and is not in the tree — "
+                            "remove the entry." % p)
+        elif p not in set(fetchers):
+            problems.append("%s is in DECLARED_EXEMPT and no longer fetches — "
+                            "remove the entry." % p)
+        elif p in wired_now:
+            problems.append("%s is in DECLARED_EXEMPT and now reads robots.txt "
+                            "— remove the entry." % p)
+
+    if problems:
+        print("validate-robots-adoption: FAIL\n    %s"
+              % "\n    ".join(problems), file=sys.stderr)
+        return 1
+
+    print("validate-robots-adoption: OK — %d of %d fetching script(s) read "
+          "robots.txt before crawling; %d recorded as not yet wired (swept %s), "
+          "%d declared exempt"
+          % (len(fetchers) - len(unwired), len(fetchers),
+             len(UNWIRED_AT_SWEEP), SWEEP_DATE, len(DECLARED_EXEMPT)))
+    return 0
+
+
+def _selftest():
+    import tempfile
+    cases = [
+        ("import requests\nrequests.get(u)\n", True, False),
+        ("import requests\ns = requests.Session()\ns.get(u)\n", True, False),
+        ("from urllib.request import urlopen\nurlopen(u)\n", True, False),
+        ("import urllib.request\nurllib.request.urlopen(u)\n", True, False),
+        ("from scraper_common import fetch\nfetch(u, h)\n", True, False),
+        ("from scraper_common import fetch_stdlib\nfetch_stdlib(u)\n", True, False),
+        ("page.goto(u)\n", True, False),
+        # a mention is not a gate
+        ('"""reads robots.txt and require_robots_allowed"""\n'
+         "import requests\nrequests.get(u)\n", True, False),
+        # the real thing, both spellings
+        ("import requests\nfrom scraper_common import require_robots_allowed\n"
+         "require_robots_allowed(u, ua)\nrequests.get(u)\n", True, True),
+        ("import requests\nfrom robots_policy import RobotsGate\n"
+         "RobotsGate(None, ua).allows(u)\nrequests.get(u)\n", True, True),
+        ("import scraper_common\n"
+         "scraper_common.robots_deferred(u)\nscraper_common.fetch(u, h)\n",
+         True, True),
+        # A POLICY MODULE HAS MORE THAN ONE DOOR. These four shapes were all
+        # read as unwired by the first version of this reader, and the seven
+        # files that use them were published as part of the problem. Each is a
+        # real spelling taken from the tree.
+        ("import requests\nimport robots_policy as rp\n"
+         "rp.fetch_verdict(r, ua)\nrequests.get(u)\n", True, True),
+        ("import requests\nimport robots_policy as rp\n"
+         "rp.classify(200, body)\nrequests.get(u)\n", True, True),
+        ("import requests\nfrom robots_policy import classify\n"
+         "classify(200, body)\nrequests.get(u)\n", True, True),
+        ("import requests\nfrom robots_gate import RobotsGate, HostPacer\n"
+         "RobotsGate(s, ua).allows(u)\nrequests.get(u)\n", True, True),
+        ("import requests\nfrom scraper_common import require_robots_once\n"
+         "require_robots_once(u, ua)\nrequests.get(u)\n", True, True),
+        # An unrelated module's `classify` is not a policy reading: this repo has
+        # `dropped_rings.classify`, so the name alone must not count.
+        ("import requests\nfrom dropped_rings import classify\n"
+         "classify(x)\nrequests.get(u)\n", True, False),
+        # neither
+        ("import json\njson.load(open('x'))\n", False, False),
+        # a citation is not a fetch
+        ('URL = "https://elections.il.gov/x"\n', False, False),
+    ]
+    bad = []
+    for i, (src, want_fetch, want_robots) in enumerate(cases):
+        with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False) as fh:
+            fh.write(src)
+            name = fh.name
+        try:
+            got = classify(name)
+        finally:
+            os.unlink(name)
+        if got != (want_fetch, want_robots):
+            bad.append("case %d: wanted %s, got %s for %r"
+                       % (i, (want_fetch, want_robots), got, src))
+    if bad:
+        print("validate-robots-adoption --selftest: FAIL\n    %s"
+              % "\n    ".join(bad), file=sys.stderr)
+        return 1
+    print("validate-robots-adoption --selftest: OK — %d detector case(s), "
+          "including a docstring that names the seam without reaching it, "
+          "five spellings of a policy module's own doors, and an unrelated "
+          "module's classify() that is not one"
+          % len(cases))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

@@ -54,7 +54,10 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_ROSTER_BOT,
+    require_robots_once,
+)
 
 try:
     import pypdf
@@ -65,7 +68,7 @@ PDF_URL = ("https://rockislandcountyil.gov/DocumentCenter/View/291/"
            "Elected-Officials-Listing-PDF")
 OFFICIALS_PAGE = "https://rockislandcountyil.gov/236/County-Clerk"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 120
 
@@ -123,6 +126,8 @@ def clean(value):
 
 
 def fetch_pdf(url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-rock-island-municipal-officials-scraper")
     resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     if not resp.content.startswith(b"%PDF"):

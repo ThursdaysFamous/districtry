@@ -47,6 +47,10 @@ python3 scripts/build_coverage_gaps.py --check
 python3 scripts/build_coverage_gaps.py --check --metro wisconsin --out wi/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro iowa      --out ia/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro michigan  --out mi/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro minnesota --out mn/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro indiana   --out in/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro northcarolina --out nc/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro kentucky  --out ky/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
 python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
@@ -58,6 +62,10 @@ python3 wi/scripts/build_wi_county_board_directory.py --check
 python3 wi/scripts/build_wi_county_outlines.py --check
 python3 mi/scripts/build_mi_gap_outlines.py --check       # a county tag with no outline makes the gaps panel claim a clean spot
 python3 ia/scripts/build_ia_gap_outlines.py --check       # same, derived from the gap records themselves
+python3 scripts/tribal_areas.py --selftest                 # a shared boundary is not an overlap; an error envelope is not "no features"
+python3 scripts/bia_tribal_governments.py --check          # the Bureau's government list, names only, no personal columns
+python3 scripts/validate_tribal_join.py --selftest         # the join gate catches each thing it exists to catch
+python3 scripts/validate_tribal_join.py --check            # no entry may name a government the Bureau does not carry
 python3 scripts/build_brand_tokens.py --check
 python3 scripts/validate_contrast.py                     # text vs ground, both tiers
 python3 scripts/compose_app.py --check                   # engine/ vs every instance's fences
@@ -99,8 +107,8 @@ python3 scripts/validate_workflow_deps.py
 python3 scripts/validate_workflow_checkout.py             # a workflow that commits sitemap.xml checks out full history and does not re-shallow it
 python3 scripts/undeliverable.py                         # the shipped e-mail domains still resolve MX; the recorded dead ones are still dead
 python3 scripts/validate_skills.py                       # every skill's pointers resolve
-python3 scripts/validate_python_hygiene.py --selftest     # proves both checks below catch their defect AND pass its near-miss
-python3 scripts/validate_python_hygiene.py                # a name imported nowhere (Logan's missing `import os` filed a robots decline as an outage) and a dict key set twice (Python keeps the LAST, as PyYAML does)
+python3 scripts/validate_python_hygiene.py --selftest     # proves all four checks below catch their defect AND pass its near-miss
+python3 scripts/validate_python_hygiene.py                # a name imported nowhere (Logan's missing `import os` filed a robots decline as an outage), a dict key set twice (Python keeps the LAST, as PyYAML does), a shared module shadowing an instance's own copy, and a bare sys.argv[1] opened for writing (a `--help` run wrote a file called `--help`)
 python3 scripts/validate_arcgis_format.py                # no app asks ArcGIS for f=geojson
 node scripts/esri_rings_test.mjs                          # ring nesting, on fixtures
 node scripts/build_og_image.mjs --check                    # every surface's social card is the one the renderer wrote, labelled with its metros.json tag (provenance, not pixels)
@@ -115,6 +123,9 @@ python3 scripts/validate_doc_counts.py                    # "N layers" in prose 
 python3 scripts/validate_doc_counts.py --selftest         # pattern C reads the one real "N for <instance>" count and not the four sentences sharing its shape
 python3 scripts/validate_serp_lengths.py                  # every page's title and description fit a search result
 python3 scripts/robots_policy.py --selftest                # the one robots.txt reader against three saved files AND this site's own (its Content-Signal must parse: search=yes, ai-input=yes, ai-train=no, use=reference), plus the per-host Crawl-delay pacer: one queue per delay-stating site, `www.` folded, others parallel
+python3 scripts/validate_robots_adoption.py --selftest   # the fetch/robots-read detector against 13 cases, including a docstring that names the seam without reaching it
+python3 scripts/probe_robots_verdicts.py --check   # the runner robots record still describes the tree
+python3 scripts/validate_robots_adoption.py             # every fetching script reads robots.txt or is in UNWIRED_AT_SWEEP; entries FAIL when orphaned or now wired, so the backlog only shrinks
 python3 scripts/workflow_run_evidence.py --selftest        # tells a run from a run GitHub recorded for a workflow file it could not START: no job, nothing scraped, and not evidence about the refresh
 python3 scripts/check_roster_workflow_health.py --selftest   # the watchdog's verdicts: a forgiven run concludes success having rebuilt nothing, so the staleness clock reads the run whose rebuild step RAN; and ROBOTS_DECLINED, where a workflow red because its scraper declined a host that refuses us reads ROBOTS-REFUSED — every entry re-audited against the tree, any OTHER step failing still FAILING
 python3 scripts/probe_user_agents.py --selftest           # read_robots() over stub responses: the robots-read path --probe depends on
@@ -134,6 +145,9 @@ python3 wi/scripts/build_wi_municipal_executives.py --selftest      # the same, 
 python3 ia/scripts/build_ia_county_officers.py --selftest           # display_name strips a salutation and keeps a Jr./Sr. suffix and a published credential; and the party name-join, which ships no party when no ISAC row matches the officer or when two do
 python3 ia/scripts/ia_supervisor_district_scraper.py --selftest     # the supervisor scrape's robots gate, both halves: a refused URL never reaches requests.get, and two fetches of a delay-stating host are actually spaced
 python3 ia/scripts/ia_city_officials_scraper.py --selftest           # the bound on a council page's LAST member, whom no next member bounds: a footer's city-hall number never becomes their phone, and a real one at the page's own offset survives
+python3 ia/scripts/ia_city_council_scraper.py --selftest             # the fourteen 25k-plus cities' five parser shapes: `3rd Ward` is not a street address, a caps line can carry role and name together, and a staff title is dropped with its name printed
+python3 ia/scripts/build_ia_city_councils.py --check                 # the shipped city councils: every seat count exact, no home address in any field, and the two cities that name no mayor still naming none
+python3 ia/scripts/ia_county_board_page_scraper.py --selftest       # the four county board pages whose two outside publishers disagree: a role word at the end of a line is not a name, a committee line is not a supervisor, and a no-break space still separates `District 1` from the name
 python3 scripts/build_parcel_fabric_districts.py --selftest        # the geometry repair's three refusals and its drop count
 python3 scripts/validate_geometry_measure.py                      # the engine's area/overlap/point-weight block, held to shapely
 python3 scripts/validate_qr_code.py                               # the engine's QR block, every mask held to qrcode's matrix
@@ -148,6 +162,8 @@ python3 scripts/scraper_common.py --selftest                # the nine AFR build
 python3 scripts/arcgis_error.py --selftest                   # a rate limit told apart from a shape error, both measured wordings and a 429; the 5/15/45 ladder taken then raised, never waited on a 404
 python3 scripts/comptroller_afr.py --selftest                # the AFR parser eight scrapers import: LOCALITY_CORRECTIONS all three ways, and the middle initial's comma corrected, printed, suffix left alone
 python3 scripts/validate_officeholder_names.py              # absolute: a shipped name that is a phone number, a party label or a page-footer fragment
+python3 scripts/validate_chamber_rosters.py --selftest       # the seat-record rules, both ways
+python3 scripts/validate_chamber_rosters.py                 # every district a chamber elects has a record; a nameless one says which kind of empty it is
 python3 scripts/check_roster_retention.py --base origin/main
 python3 scripts/check_cache_version.py --base origin/main       # cache-first data vs CACHE_NAME
 
@@ -158,6 +174,10 @@ python3 ny/scripts/validate_index.py ny/index.html
 python3 wi/scripts/validate_index.py wi/index.html
 python3 ia/scripts/validate_index.py ia/index.html
 python3 mi/scripts/validate_index.py mi/index.html
+python3 mn/scripts/validate_index.py mn/index.html
+python3 in/scripts/validate_index.py in/index.html
+python3 nc/scripts/validate_index.py nc/index.html
+python3 ky/scripts/validate_index.py ky/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
 python3 -m http.server 8000 &
@@ -167,6 +187,10 @@ BASE_URL=http://localhost:8000/ny/ node ny/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/wi/ node wi/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ia/ node ia/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/mi/ node mi/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/mn/ node mn/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/in/ node in/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/nc/ node nc/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ky/ node ky/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check

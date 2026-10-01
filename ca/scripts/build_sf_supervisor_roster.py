@@ -25,6 +25,10 @@ import json
 import os
 import sys
 import urllib.request
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 # DataSF MOVED TO data.sf.gov, AND THE OLD HOST REFUSES EXACTLY THIS QUERY.
 # This scraper failed with HTTP 403 on every run from 2026-09-09; measured
@@ -66,6 +70,8 @@ def load_rows(path):
     if path:
         with open(path) as f:
             return json.load(f)
+    require_robots_once(SOURCE_URL, UA,
+                        headers={"User-Agent": UA}, label="ca-build-sf-supervisor-roster")
     req = urllib.request.Request(SOURCE_URL, headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=60) as resp:
         return json.load(resp)

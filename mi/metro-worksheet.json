@@ -80,7 +80,7 @@
       "id": "us-house",
       "label": "U.S. House",
       "group": "political",
-      "area_rank": 1,
+      "area_rank": 2,
       "rank_note": "13 congressional districts — the largest districts Michigan carries below the state itself",
       "source": {
         "answers": "The U.S. House district covering the point, and the representative holding it.",
@@ -98,7 +98,7 @@
       "id": "mi-senate",
       "label": "Michigan Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "38 Senate districts — larger on average than a county, smaller than a congressional district",
       "source": {
         "answers": "The Michigan Senate district covering the point, and the senator holding it.",
@@ -116,7 +116,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 6,
       "rank_note": "83 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point.",
@@ -134,7 +134,7 @@
       "id": "mi-house",
       "label": "Michigan House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 7,
       "rank_note": "110 House districts — the finest political tiling this instance ships today",
       "source": {
         "answers": "The Michigan House district covering the point, and the representative holding it.",
@@ -152,7 +152,7 @@
       "id": "school-district-unified",
       "label": "School District (Unified)",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 8,
       "rank_note": "514 unified (K-12) districts covering all but 27 pockets of the state, live from TIGERweb (no data/app file) — 469 km2 mean feature area, the largest of the four fabric layers this phase adds",
       "source": {
         "answers": "The unified (K-12) school district covering the point.",
@@ -170,7 +170,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 6,
+      "area_rank": 9,
       "rank_note": "27 districts that operate no high school of their own, live from TIGERweb (no data/app file) — 350 km2 mean feature area, though the mean is pulled well above the 45 km2 median by Bois Blanc Pines, whose district takes in a large area of Lake Huron",
       "source": {
         "answers": "The elementary school district covering the point, in the 27 places Michigan runs one.",
@@ -192,7 +192,7 @@
       },
       "label": "County Commissioner District",
       "group": "political",
-      "area_rank": 7,
+      "area_rank": 10,
       "rank_note": "619 districts across all 83 counties — the finest tiling this instance ships, smaller than a state House district",
       "source": {
         "answers": "The county commissioner district covering the point, its county, the population it was apportioned on, and — where the county publishes a district-keyed roster — the commissioner who holds it.",
@@ -210,7 +210,7 @@
       "id": "county-subdivision",
       "label": "Township or City",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 11,
       "rank_note": "1,581 records tiling the state, live from TIGERweb (no data/app file) — 1,122 general-law townships, 118 charter townships, 301 city placeholder records for 281 distinct cities (18 of which cross a county line), and 40 'not defined' records that are pure Great Lakes water",
       "source": {
         "answers": "The township covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is.",
@@ -228,7 +228,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 12,
       "rank_note": "1,010 ZIP Code Tabulation Areas covering Michigan, live from TIGERweb (no data/app file) — 139.7 km2 mean feature area, between a township and a precinct",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -246,10 +246,10 @@
       "id": "city-ward",
       "label": "City Council District",
       "group": "political",
-      "area_rank": 10,
-      "rank_note": "Detroit's seven districts over 139 sq mi and Grand Rapids's three wards over 45 — both smaller than a typical Michigan ZCTA and far larger than a precinct; ranked on the larger city's districts",
+      "area_rank": 13,
+      "rank_note": "Seven cities: Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson. Their districts run from Detroit's seven over 139 sq mi (about 20 each) down to Jackson's six wards over 11 (about 2 each), measured 2026-10-01 — all smaller than a typical Michigan ZCTA; ranked on Detroit's, the largest",
       "source": {
-        "answers": "Which city council or commission district you live in, in the two Michigan cities that publish their own boundaries — Detroit's seven council districts and Grand Rapids's three commission wards — and who represents you in it.",
+        "answers": "Which city council or commission district you live in, in the Michigan cities whose council boundaries this app can draw — Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson — and who represents you in it where the city publishes that.",
         "boundary": [
           {
             "label": "City of Detroit — \"Detroit City Council Districts 2026\", from the city's own ArcGIS org, pre-built and shipped with the app. THE CITY PUBLISHES FOUR COUNCIL-DISTRICT BOUNDARY SERVICES and their names do not settle which is in force: one titled \"Current\" dating from 2016, one named for 2026, one named for 2013 that was CREATED in December 2025, and NewDistrictBoundariesOption6, which reads like a rejected draft and is the same plan redigitised (99.575% point agreement, measured) — it is the one whose own description names the adoption. The plan was approved by the Council on 2024-02-06 and took effect on 2026-01-01, both stated in this service's own description. The builder decides it by measurement — \"Current\" carries geometry identical to the 2026 service and different from the 2013 one, and against Census 2020 blocks the shipped plan runs 87,393-94,820 against a 91,302 ideal (worst 4.28%) where the archived plan runs 78,966-100,623 (13.51%), which is what a plan drawn on the 2010 census looks like now. Both comparisons are gates in both directions. The seven districts sum to 639,111 — Detroit's Census 2020 population exactly — so they tile the city with no block double-counted or missed. The item carries no licenceInfo and is shared public by the city.",
@@ -258,17 +258,37 @@
           {
             "label": "City of Grand Rapids — \"Boundaries - City of Grand Rapids Wards\" (CGR_Wards), from the city's own ArcGIS org, pre-built and shipped with the app. THE CITY PUBLISHES EIGHT WARD SERVICES AND NONE IS A NEWER PLAN, measured 2026-09-05 by sweeping all 681 of the org's feature services rather than the first 100 (which is how an earlier version of this note said two). Three are 100.000% identical to what ships, one differs only at the perimeter, and three are SINGLE wards rather than rival plans — each agreeing with its own shipped ward. The build gates on the one sibling that has tracked this service byte for byte. THE CURRENCY QUESTION WAS REAL AND IS ANSWERED BY MEASUREMENT: the geometry was last edited 2018-01-24, before the census it is checked against, while the item description claims it is \"maintained to reflect the most current adopted ward configuration\". Michigan's own 2026 voting-precinct layer assigns each of the city's 59 precincts to a ward (20/20/19), and dissolved by that column it agrees with these polygons on 99.575% of 4,000 points — two independent publishers drawing the same three lines, so 2018 means unchanged rather than stale. That comparison is a gate. Against Census 2020 the three wards run 64,400-68,716 on a 66,328 ideal (worst 3.60%). Unlike Detroit the population identity is NOT exact and is not claimed to be: 21 of 2,883 blocks fall on one side of the ward outline and the other side of the Census place outline, a +66 difference against 198,917, which is two digitisations of one city edge. The item's licence is a use agreement conditioning use on carrying the city's disclaimer; the card quotes the sentences of that agreement that describe the DATA, in the city's own words and order rather than paraphrasing them, with the one cut (its two acceptance sentences, addressed to whoever accesses the data rather than to a reader) marked by an ellipsis. The builder ASSERTS every segment of that quotation against the live licenceInfo on each run, so a reworded agreement fails the build rather than leaving the card quoting words the city has stopped saying.",
             "url": "https://services2.arcgis.com/L81TiOwAPO1ZvU9b/arcgis/rest/services/CGR_Wards/FeatureServer/0"
+          },
+          {
+            "label": "City of Warren — \"Council Wards 2023\", from the city's own ArcGIS account, pre-built and shipped with the app. The ward layer sits at service index 32, and the builder reads the service root rather than assuming /0. Currency is checked against the state's own 2026 precincts.",
+            "url": "https://services8.arcgis.com/oGUlQVwqEiX7aF12/arcgis/rest/services/Warren_Council_Wards_2023/FeatureServer"
+          },
+          {
+            "label": "City of Flint — \"Wards22\", the plan effective 2 August 2022, from the city's own ArcGIS org, pre-built and shipped with the app. Two other layers in the same org carry the older 2012 plan under newer-sounding names, so the builder decides by measurement against the state's own 2026 precincts rather than by name.",
+            "url": "https://services2.arcgis.com/5ckbIY7K9TUKoseK/arcgis/rest/services/Wards22/FeatureServer"
+          },
+          {
+            "label": "City of Rochester Hills — the city's own ArcGIS Server (Election_Dataset), pre-built and shipped with the app. The city publishes the four council districts; its council roster is on a website whose robots.txt asks automated visitors not to read it, so the card names the district only.",
+            "url": "https://gis.rochesterhills.org/server/rest/services/ElectoralDistricts/Election_Dataset/MapServer"
+          },
+          {
+            "label": "City of Battle Creek — \"Wards_BC\", from the city's own ArcGIS org, pre-built and shipped with the app.",
+            "url": "https://services6.arcgis.com/cuKwt0IKP5B84jop/arcgis/rest/services/Wards_BC/FeatureServer/0"
+          },
+          {
+            "label": "Jackson County — the county's own voting-precinct layer, from which the City of Jackson's six wards are COMPOSED by dissolving its ten precincts on the county's WARD column. The city publishes no ward map of its own. The state's 2026 precincts are an independent check: both publishers assign the precincts to wards identically, and the six wards add up to the city's Census 2020 population exactly.",
+            "url": "https://gis.mijackson.org/countygis/rest/services/Voting/VotingPrecincts/MapServer/0"
           }
         ],
         "people": "The nine members of Detroit's City Council, from the council's own page at detroitmi.gov — seven by district and two at large, per the 2012 charter Art. 4 §4-101. THE LIVE PAGE REFUSES THIS CLIENT: detroitmi.gov sits behind a Cloudflare managed challenge on both the plain and the client-hints rungs, and this project does not defeat a challenge, so the roster is read from the Internet Archive's copy of that same page — the fleet's terminal fetch rung, in weekly use for Kendall and McHenry since 2026-07 — and the card states which day's copy it read. A snapshot older than 45 days is refused rather than served. NO PER-MEMBER phone or e-mail ships: neither the listing nor a member's own profile page carries a single mailto: or tel: link, measured on both, and that absence is the gap detroit-council-contact. The BODY's own office does ship — City Council Office, 2 Woodward Ave. Suite 1340, (313) 224-3443, published once for the whole Council — rendered for the body under the switchboard rule rather than attached to any member. mvic.sos.state.mi.us is challenged the same way; data.detroitmi.gov is NOT (it answers 200 with a readable robots.txt, and an earlier version of this note said otherwise on the strength of one substring match). Detroit's Legistar is abandoned since 2017 and never carried a district in OfficeRecordTitle even while maintained, where Milwaukee's carries \"3rd District\" in that same field — test a vendor by content per city, never by its name; its Persons table also flags all 45 records active, five of them system accounts. GRAND RAPIDS: the city's own City Commission pages, which are readable — www.grandrapidsmi.gov answers 200 and its robots.txt permits /government/ — so there is no archive hop here. The city states its own arithmetic (\"This legislative body consists of the Mayor and six Commissioners... The residents of each Ward directly elect two commissioners\"), and publishes SIX of those seven seats: one Ward 1 commissioner where Wards 2 and 3 each have two. THAT SEAT IS VACANT AND THE CITY SAYS SO OFF THE COMMISSION PAGE — its news post of 2026-04-17 states the vacancy \"was created following the resignation of former Commissioner Drew Robbins\"; an earlier version of this note said the city stated nothing, having measured only the commission page. No city source found states how the vacancy was resolved, so the card names the vacancy and its cause and stops there. The roster carries `seats` and `seatsPerWard` beside its members and a `vacancies` map KEYED BY WARD, so the card accounts for the seventh seat rather than concealing it or inventing a name — the Alexander County machinery, used here for the first time on a districted body. The cause is data, not prose: it was a ward-agnostic string literal in the card at first, on a row that fires for any ward short of its seats, so a later Ward 2 or 3 vacancy would have rendered Ward 1's predecessor by name on the wrong card. A ward that is short with no verified cause gets the neutral sentence instead, which stays true whatever caused it. Each member's own page supplies their ward, e-mail and direct phone; THE E-MAIL DOMAIN IS grcity.us AND NOT THE WEBSITE'S, so a scraper keyed to the site's own hostname finds none. 616.456.3000 is on every member's page and is the city switchboard, DETECTED as the number common to all of them and hoisted to the body rather than hardcoded.",
-        "applies": "Detroit and Grand Rapids only — the two Michigan cities that publish their own council boundaries. Outside both the layer hides itself."
+        "applies": "Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson only. Outside those cities the layer hides itself."
       }
     },
     {
       "id": "precinct",
       "label": "Precinct",
       "group": "political",
-      "area_rank": 11,
+      "area_rank": 14,
       "rank_note": "3,895 voting precincts across all 83 counties, pre-built from the state's own 2026-cycle layer — 38.8 km2 mean feature area against a 6.4 km2 median, a six-fold skew because a rural township precinct and a city precinct are barely the same kind of object; the finest tiling this instance ships",
       "source": {
         "answers": "The voting precinct covering the point, its county, and how many voters were registered in it for the 2026 cycle.",
@@ -286,7 +306,7 @@
       "id": "municipality",
       "label": "City or Village",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 15,
       "rank_note": "533 incorporated places, live from TIGERweb (no data/app file) — 281 cities and 252 villages, small dense pockets inside the township fabric, so the smallest layer this instance ships at a 12 km2 mean",
       "source": {
         "answers": "The incorporated city or village covering the point, if any — and which of the two it is, because in Michigan that changes what else governs the point.",
@@ -304,7 +324,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 16,
       "rank_note": "1,290 police-station points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -322,7 +342,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 17,
       "rank_note": "2,838 fire and EMS station points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest fire and EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -340,7 +360,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 18,
       "rank_note": "1,799 post-office points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -352,6 +372,60 @@
         ],
         "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a federal facility, not an elected district. The card answers where the nearest ones are, not who runs them.",
         "applies": "Michigan — plus the border strip its envelope necessarily includes. Of the 1,799 points, 900 are in Michigan and the rest are in Wisconsin (535), Illinois (334) and a handful in Iowa, Ohio, Indiana and Minnesota. THAT IS DELIBERATE, NOT SPILL: nearest-3 is a proximity fact rather than a jurisdictional claim, so for a reader in Menominee the nearest post office really is across the river in Wisconsin, and the card's intro says these are straight-line distances."
+      }
+    },
+    {
+      "id": "mi-court-of-appeals",
+      "label": "Court of Appeals District",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "Four appellate districts — the broadest boundary this instance draws below the state itself, above the 13 congressional districts",
+      "source": {
+        "answers": "The Court of Appeals district covering the point, how many counties it spans, and how its judges are chosen. It names no judge yet, and says why.",
+        "boundary": [
+          {
+            "label": "Derived county unions — no agency publishes Michigan's appellate districts as geometry (an ArcGIS Online catalogue search answered ten queries with no government court layer, measured 2026-10-01), so no new line is drawn: each district is a union of whole counties from the app's own TIGERweb county file, as MCL 600.302 lists them, witnessed county for county by the Michigan Manual 2025-2026 (pp. 453-454). Built by mi/scripts/build_mi_courts.py.",
+            "url": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-302"
+          }
+        ],
+        "people": "NO JUDGE IS NAMED, and that is a measurement. The state court system's own site, www.courts.michigan.gov, publishes `User-agent: *` / `Disallow: /`, so this project does not read it; the one statewide list this project can read is the Michigan Manual 2025-2026, a December 2025 snapshot printed every two years, and a list that old cannot say who sits today. Recorded as gap mi-judge-roster.",
+        "applies": "Michigan — statewide, all 83 counties across 4 districts."
+      }
+    },
+    {
+      "id": "mi-circuit-court",
+      "label": "Circuit Court",
+      "group": "political",
+      "area_rank": 4,
+      "rank_note": "57 circuits — 37 single counties and 20 statutory unions of two to four counties, so broader than the county fabric",
+      "source": {
+        "answers": "The circuit court whose judges serve the point — Michigan's trial court for serious criminal cases, larger civil cases and family matters — the counties it covers, and how its judges are chosen. It names no judge yet, and says why.",
+        "boundary": [
+          {
+            "label": "Derived county unions — no agency publishes circuit geometry (measured 2026-10-01), so no new line is drawn: each circuit is a union of whole counties from the app's own TIGERweb county file, as MCL 600.502-600.549i list them (one section per circuit), witnessed by the Michigan Manual 2025-2026 (pp. 468-469 and 471-472). Five sections are written conditionally (5th/56th, 33rd/57th, 40th/54th); the Manual shows the split form in force, with a judge seated in each, and that is what is drawn. Built by mi/scripts/build_mi_courts.py.",
+            "url": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-502"
+          }
+        ],
+        "people": "NO JUDGE IS NAMED, for the reason the Court of Appeals row gives: the court system's own site asks automated tools not to read it, and the Michigan Manual's December 2025 list is a dated snapshot. Recorded as gap mi-judge-roster.",
+        "applies": "Michigan — statewide, all 83 counties across 57 circuits."
+      }
+    },
+    {
+      "id": "mi-isd",
+      "label": "Intermediate School District",
+      "group": "schools",
+      "area_rank": 5,
+      "rank_note": "56 intermediate school districts — each a group of local school districts, so broader than the 541 school districts under them",
+      "source": {
+        "answers": "The intermediate school district (ISD, RESA, ESA or ESD) covering the point — the regional school district that serves the local districts inside it — and how its board is chosen.",
+        "boundary": [
+          {
+            "label": "State of Michigan, DTMB Center for Shared Solutions — Michigan Geographic Framework \"Intermediate School Districts\" (version V26, 56 features, last edited 2026-03-03), on the state's open-data hub; its licence reads \"This dataset is a public record and ... there are no restrictions on the use, reproduction, or distribution of this dataset.\" Pre-built by mi/scripts/build_mi_isd_districts.py (Douglas-Peucker, 50 m, 2,000-point agreement gate at 100.00%). The framework is land-only, so a point out on a Great Lake is in no ISD.",
+            "url": "https://services3.arcgis.com/dxRQUfTDNtfqZ301/arcgis/rest/services/IntermediateSchoolDistrict/FeatureServer/0"
+          }
+        ],
+        "people": "NO BOARD MEMBER IS NAMED. An ISD board is normally elected by one representative from each local school board (MCL 380.614), not by voters; a district whose voters approved it elects its board at the ballot instead (MCL 380.615-617). No statewide roster of ISD board members was found, and the layer carries no people, so the card says how the board is chosen and links the district.",
+        "applies": "Michigan — statewide, every part of the state's land, 56 districts."
       }
     }
   ],
@@ -381,12 +455,24 @@
     {
       "layer": "county-commissioner",
       "expected": "9"
+    },
+    {
+      "layer": "mi-court-of-appeals",
+      "expected": "Court of Appeals District 4"
+    },
+    {
+      "layer": "mi-circuit-court",
+      "expected": "30th Circuit Court"
+    },
+    {
+      "layer": "mi-isd",
+      "expected": "Ingham ISD"
     }
   ],
   "negative_point": {
     "lat": 41.6528,
     "lng": -83.5379,
-    "note": "downtown Toledo, Ohio — south of the Michigan line and inside permalink_gate's minLat (41.55), so the point is still selectable; measured to miss all five ANCHOR layers (phase 3's four live TIGERweb fabric layers are deliberately not anchors — anchors are pre-built and election-stable)"
+    "note": "downtown Toledo, Ohio — south of the Michigan line and inside permalink_gate's minLat (41.55), so the point is still selectable; measured to miss all eight ANCHOR layers (phase 3's four live TIGERweb fabric layers are deliberately not anchors — anchors are pre-built and election-stable)"
   },
   "coverage_key": {
     "outside": "Outside Michigan"
@@ -470,6 +556,12 @@
         "min_features": 4,
         "max_features": 4,
         "note": "Rochester Hills's four city council districts, from the city's OWN ArcGIS Server (gis.rochesterhills.org), built by mi/scripts/build_mi_rochester_hills_wards.py. The AGO item is shared public with an empty licenseInfo (the Detroit/Warren/Flint/Battle Creek case). THE RECORD SAID NO SERVICE EXISTED: the 23-city sweep reported none, and the city runs both its own AGOL org and its own server — a catalogue that does not list it is not a publisher that lacks it. Currency measured against the state's own 2026 precinct WARD column (21 precincts, 6/5/5/5) at 99.725%; balance -2.72% to +3.36% on Census 2020, 76,138 against the Census place's 76,300. THAT -162 IS ONE BLOCK 26 m INSIDE THE CITY LINE, which is why the builder's population ceiling is 0.22% here against the fleet's 0.2% — raised for this city alone on a measurement, with a new and strictly tightening 100 m edge test added beside it so the raise cannot hide a hole. NO OFFICEHOLDER SHIPS: the city's council page is maintained and its robots.txt disallows general crawlers, so the card names the district and links the city."
+      },
+      {
+        "file": "mi-jackson-wards.json",
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Jackson's six council wards, COMPOSED from Jackson County's own precinct layer (gis.mijackson.org, Voting/VotingPrecincts) by dissolving the City of Jackson's ten precincts on their WARD column; built by mi/scripts/build_mi_jackson_wards.py. The first Michigan city whose wards come from a COUNTY rather than the city, on the operator's ruling of 2026-09-29 that a county's published map may be the source for a city — the state's own 2026 precinct fabric stays an independent second witness, which is what the 2026-09-21 ruling against using the STATE fabric as a source protects. Both publishers assign the ten precincts 1/2/2/2/1/2 and the build refuses if either moves; the dissolve and the state's precincts agree on 99.375% of 4,000 sampled points; the six wards sum to 31,309 on Census 2020, the Census place's population exactly, and run -2.07% to +1.34%. Shipped UNSIMPLIFIED at 6-decimal precision, so the lines are the county's own. The county's service states no terms and the builder refuses to rebuild if it ever does."
       },
       {
         "file": "alger-county-outline.json",
@@ -687,6 +779,24 @@
         "max_features": 1,
         "note": "Wexford County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Wexford County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
         "dynamic_reference": true
+      },
+      {
+        "file": "mi-court-of-appeals-districts.json",
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Michigan's four Court of Appeals districts, dissolved from the app's own county file by mi/scripts/build_mi_courts.py as MCL 600.302 lists them (witnessed by the Michigan Manual 2025-2026). Exact band: the statute fixes four districts."
+      },
+      {
+        "file": "mi-circuit-courts.json",
+        "min_features": 57,
+        "max_features": 57,
+        "note": "Michigan's 57 circuit courts, dissolved from the app's own county file by mi/scripts/build_mi_courts.py as MCL 600.502-600.549i list them (witnessed by the Michigan Manual 2025-2026). Exact band: a change in the number of circuits is an act of the Legislature, so the builder and this count both move only when the statute does."
+      },
+      {
+        "file": "mi-isd-districts.json",
+        "min_features": 56,
+        "max_features": 56,
+        "note": "Michigan's 56 intermediate school districts, from the state's own Michigan Geographic Framework layer (V26), mi/scripts/build_mi_isd_districts.py. Exact band: ISDs merge rarely and by vote, and a merger is real information rather than drift."
       }
     ],
     "rosters": [
@@ -726,6 +836,11 @@
         "note": "Battle Creek's City Commission — all nine seats: one commissioner per ward for five wards, three at-large commissioners and the Mayor, the split the city states in its own prose on the page the roster is read from. Built by mi/scripts/build_mi_battle_creek_commission.py from mi_battle_creek_commission_scraper.py's cache. Six top-level keys: wards, citywide, office (City Hall's address, the city switchboard and the shared contact form, all hoisted to the body), seats, seatsPerWard, sourceUrl."
       },
       {
+        "file": "mi-jackson-council-members.json",
+        "min_keys": 5,
+        "note": "Jackson's City Council — the Mayor and one councilmember from each of six wards, as the city's council page lists them. Built by mi/scripts/build_mi_jackson_council.py from mi_jackson_council_scraper.py's cache, which reads the council page and each ward's own page and refuses to write unless the two name the same person in every ward. Six top-level keys: wards, citywide (the Mayor), office (City Hall's address and switchboard, hoisted to the body), seats, seatsPerWard, sourceUrl. No per-member street address ships: two ward pages print one and nothing says whether it is an office or a home."
+      },
+      {
         "file": "mi-commissioner-returns.json",
         "min_keys": 29,
         "note": "Commissioner NAMES for the 31 counties mi-commissioner-members.json does NOT reach, from the state district layer's own certified-returns column, built by mi/scripts/build_mi_returns_roster.py. THIS IS A DIFFERENT KIND OF ROSTER FROM THE FILE ABOVE AND EVERY RECORD SAYS SO: these are the winners the State of Michigan certified in the general election of 5 November 2024, not a list any county keeps current, so each record carries its own `lede` naming that election and the builder REFUSES TO WRITE a record without one. mi-commissioner-districts.json stays name-free and its BANNED_FIELDS guard is untouched — the 2026-09-03 decision to strip those columns off the BOUNDARY file stands. How stale the column is, measured 2026-09-22 on the 366 seats where the scraped roster gives a comparand: 234 identical, 104 the same surname in a different form (Dave/David, middle initials, diacritics, suffixes) and 28 a different surname, which a hand reading splits 18 naming a different person (4.9% of the 366), 9 misspelling the same person and 1 a missing space. Five of the 31 — Washtenaw, Bay, Manistee, Newaygo, Van Buren — do publish their own roster and only the parsing is hard, so each carries a `betterSource` note saying a scraper remains the better answer. min_keys is a floor that tolerates two counties leaving the cohort as they ship a real roster; it FALLS as counties move to the scraped file, which is the one direction it may move without a source change. MOVED 35 -> 31 on 2026-09-24 and this floor 33 -> 29 with it, when Gratiot, Keweenaw, Ogemaw and Shiawassee left this cohort for their own counties' board pages. That is the fall this note already described and it had not happened before."
@@ -734,11 +849,16 @@
         "file": "mi-commissioner-members.json",
         "min_keys": 50,
         "note": "Which commissioner holds each county commissioner district, keyed by 3-digit county FIPS — the same CountyFIPS mi-commissioner-districts.json carries. Built county by county from each county's own board page by mi/scripts/mi_commissioner_scraper.py + build_mi_commissioner_roster.py, refreshed weekly by update-mi-commissioner-roster.yml. IT ARRIVES IN TRANCHES and is not meant to reach 83: 52 counties and 388 of the 619 districts through tranche 8 (2026-09-24), which is 62.7% of Michigan's 10,077,331 people — Census 2020 on both sides of that fraction, because the district layer's own Population column sums to 10,007,596 and reads 0 for all seven of Cheboygan's districts. A county record may be SHORT, and `unnamedDistricts` names which district while `unnamedWhy` carries a per-district reason. FOUR ARE SHORT AND FOR THREE DIFFERENT REASONS, each stated in its own words on the card: Monroe's own directory row for District 2 names no commissioner; Ionia's and Clinton's board pages call District 3 and District 4 vacant, Clinton carrying its own Notice of Vacancy for that seat on the same page; and Lenawee District 5's row names Jim Daly where the same county's News Flash of 10 September 2026 announces his death, so two county surfaces disagree and nothing here names that seat. All four state which district on the card and on the county page rather than dropping it. min_keys is a floor that tolerates any two of the fifty-two going dark and refuses a collapse — raise it when a tranche lands, never lower it to get past a failure. RAISED 46 -> 50 on 2026-09-24 with tranche 8: Shiawassee, Ogemaw, Keweenaw and Gratiot, 22 seats, each from a board page on a host no earlier sweep had asked for. THE HEAD OF THIS NOTE WENT ON SAYING 48 AND 366 FOR FIVE DAYS AFTER THAT SENTENCE WAS WRITTEN, so one note contradicted itself and nothing compared the two halves: min_keys gates the FLOOR, and the counts beside it are prose. Corrected 2026-09-29 by re-measuring — the county and district counts off the shipped file, the population share off TIGERweb's Census2020 county layer summed over all 83 counties, which reproduces the 10,077,331 this note already carried. The two agree exactly: the four tranche-8 counties are 132,671 people and 6,184,606 + 132,671 = 6,317,277, so the superseded 61.4% was right when it was written."
+      },
+      {
+        "file": "mi-municipal-officials.json",
+        "min_keys": 62,
+        "note": "The elected boards of Michigan's large cities (7-digit Census place id) and townships (10-digit county-subdivision id), read weekly from each unit's own page by mi/scripts/mi_municipal_officials_scraper.py and built by build_mi_municipal_officials.py, refreshed by update-mi-municipal-officials.yml. Covers the units over 25,000 people whose own page names every seat; a unit not carried keeps the card's 'not named here' sentence."
       }
     ]
   },
   "sw": {
-    "cache_name": "districtry-mi-shell-v15",
+    "cache_name": "districtry-mi-shell-v18",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
@@ -786,9 +906,19 @@
       "schedule": "Fri 20:30 UTC"
     },
     {
+      "file": "update-mi-jackson-council-roster.yml",
+      "purpose": "Jackson City Council roster (the city's council page and six ward pages)",
+      "schedule": "Fri 21:30 UTC"
+    },
+    {
       "file": "update-mi-commissioner-roster.yml",
       "purpose": "County commissioner roster (each county's own board page, in tranches)",
       "schedule": "Sat 20:30 UTC"
+    },
+    {
+      "file": "update-mi-municipal-officials.yml",
+      "purpose": "Michigan city council and township board rosters (each unit's own page)",
+      "schedule": "Sun 20:30 UTC"
     }
   ],
   "geocoder": {
@@ -891,83 +1021,21 @@
     ]
   },
   "metro_explorers": [
-    {
-      "id": "chicago",
-      "label": "Illinois",
-      "url": "https://districtry.com/il/",
-      "emoji": "🌭",
-      "explorer_name": "districtry Illinois",
-      "bbox": {
-        "minLng": -91.52,
-        "minLat": 36.96,
-        "maxLng": -87.01,
-        "maxLat": 42.51
-      }
-    },
-    {
-      "id": "nyc",
-      "label": "New York",
-      "url": "https://districtry.com/ny/",
-      "emoji": "🗽",
-      "explorer_name": "districtry New York",
-      "bbox": {
-        "minLng": -79.82,
-        "minLat": 40.43,
-        "maxLng": -71.62,
-        "maxLat": 45.07
-      }
-    },
-    {
-      "id": "sf",
-      "label": "San Francisco",
-      "url": "https://districtry.com/ca/",
-      "emoji": "🌉",
-      "explorer_name": "districtry San Francisco",
-      "bbox": {
-        "minLng": -122.6,
-        "minLat": 37.6,
-        "maxLng": -122.3,
-        "maxLat": 37.95
-      }
-    },
-    {
-      "id": "wisconsin",
-      "label": "Wisconsin",
-      "url": "https://districtry.com/wi/",
-      "emoji": "🧀",
-      "explorer_name": "districtry Wisconsin",
-      "bbox": {
-        "minLng": -92.89,
-        "minLat": 42.49,
-        "maxLng": -86.25,
-        "maxLat": 47.31
-      }
-    },
-    {
-      "id": "iowa",
-      "label": "Iowa",
-      "url": "https://districtry.com/ia/",
-      "emoji": "🌽",
-      "explorer_name": "districtry Iowa",
-      "bbox": {
-        "minLng": -96.64,
-        "minLat": 40.37,
-        "maxLng": -90.14,
-        "maxLat": 43.5
-      }
-    },
-    {
-      "id": "michigan",
-      "label": "Michigan",
-      "url": "https://districtry.com/mi/",
-      "emoji": "🚗",
-      "explorer_name": "districtry Michigan",
-      "bbox": {
-        "minLng": -87.6,
-        "minLat": 41.7,
-        "maxLng": -82.11,
-        "maxLat": 48.01
-      }
-    }
+    { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
+      "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },
+    { "id": "nyc", "label": "New York", "url": "https://districtry.com/ny/", "emoji": "🗽", "explorer_name": "districtry New York",
+      "bbox": { "minLng": -79.82, "minLat": 40.43, "maxLng": -71.62, "maxLat": 45.07 } },
+    { "id": "sf", "label": "San Francisco", "url": "https://districtry.com/ca/", "emoji": "🌉", "explorer_name": "districtry San Francisco",
+      "bbox": { "minLng": -122.6, "minLat": 37.6, "maxLng": -122.3, "maxLat": 37.95 } },
+    { "id": "wisconsin", "label": "Wisconsin", "url": "https://districtry.com/wi/", "emoji": "🧀", "explorer_name": "districtry Wisconsin",
+      "bbox": { "minLng": -92.89, "minLat": 42.49, "maxLng": -86.25, "maxLat": 47.31 } },
+    { "id": "iowa", "label": "Iowa", "url": "https://districtry.com/ia/", "emoji": "🌽", "explorer_name": "districtry Iowa",
+      "bbox": { "minLng": -96.64, "minLat": 40.37, "maxLng": -90.14, "maxLat": 43.5 } },
+    { "id": "michigan", "label": "Michigan", "url": "https://districtry.com/mi/", "emoji": "🚗", "explorer_name": "districtry Michigan",
+      "bbox": { "minLng": -87.6, "minLat": 41.7, "maxLng": -82.11, "maxLat": 48.01 } },
+    { "id": "minnesota", "label": "Minnesota", "url": "https://districtry.com/mn/", "emoji": "🛶", "explorer_name": "districtry Minnesota",
+      "bbox": { "minLng": -97.3, "minLat": 43.44, "maxLng": -89.58, "maxLat": 49.44 } },
+    { "id": "kentucky", "label": "Kentucky", "url": "https://districtry.com/ky/", "emoji": "🐎", "explorer_name": "districtry Kentucky",
+      "bbox": { "minLng": -89.62, "minLat": 36.45, "maxLng": -81.91, "maxLat": 39.2 } }
   ]
 }

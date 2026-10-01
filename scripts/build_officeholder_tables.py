@@ -241,12 +241,12 @@ def district_council_members(data):
 def city_council(data):
     """A city council or commission: the at-large seats, then the wards.
 
-    SIX ROSTERS, FOUR SHAPES, and the variation is in the containers rather
+    SEVEN ROSTERS, FOUR SHAPES, and the variation is in the containers rather
     than in the records. The at-large members are always a list under
-    `citywide`; the ward members live under `wards` in five of the six and
-    under `districts` in Detroit's, and the value is a single record in three
-    of them and a LIST in the two cities that elect more than one member per
-    ward (Grand Rapids seats two). Every record already carries its own `seat`
+    `citywide`; the ward members live under `wards` in six of the seven and
+    under `districts` in Detroit's, and the value is a single record in four
+    of them and a LIST in the other three (Grand Rapids, Battle Creek and
+    Jackson; Grand Rapids seats two per ward). Every record already carries its own `seat`
     — "Mayor", "At-Large", "Ward 1", "City Council District 2" — written by the
     city itself, so the label is read rather than composed, and a city that
     calls its districts wards is not told it has districts.
@@ -687,6 +687,11 @@ CITY_TABLES = [
                   office_label="City hall", body="the Battle Creek City Commission",
                   org="Battle Creek City Commission",
                   heading="Who sits on the Battle Creek City Commission"),
+             dict(roster="data/app/mi-jackson-council-members.json",
+                  adapter="city_council", seat="Seat", holder="Councilmember",
+                  office_label="City hall", body="the Jackson City Council",
+                  org="Jackson City Council",
+                  heading="Who sits on the Jackson City Council"),
          ]),
     dict(tag="ia", page="city-council.html", worksheet="ia/metro-worksheet.json",
          sections=[
@@ -852,15 +857,21 @@ def legislator_tables():
     """The twelve legislator pages, read from the script that generates them."""
     out = []
     for tag, inst in sorted(LEGISLATOR_INSTANCES.items()):
-        spec = inst["legislature"]
-        out.append(dict(
-            tag=tag, page=spec["file"], worksheet=inst["worksheet"],
-            sections=[dict(roster="data/app/" + ch["roster"],
-                           seat="District", holder=ch["holder"],
-                           office_label="District office",
-                           body="the " + ch["name"], org=ch["name"],
-                           heading="Who represents each %s district" % ch["name"])
-                      for ch in spec["chambers"]]))
+        # An instance with no `legislature` key ships no state-legislature page,
+        # which build_legislator_pages.NO_LEGISLATURE_PAGE records with its
+        # reason and re-audits every run. There is no page here to put a table
+        # on, and a section keyed on a roster file that does not exist would
+        # fail on a page nobody serves.
+        spec = inst.get("legislature")
+        if spec:
+            out.append(dict(
+                tag=tag, page=spec["file"], worksheet=inst["worksheet"],
+                sections=[dict(roster="data/app/" + ch["roster"],
+                               seat="District", holder=ch["holder"],
+                               office_label="District office",
+                               body="the " + ch["name"], org=ch["name"],
+                               heading="Who represents each %s district" % ch["name"])
+                          for ch in spec["chambers"]]))
         cong = inst["congress"]
         out.append(dict(
             tag=tag, page=cong["file"], worksheet=inst["worksheet"],

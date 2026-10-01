@@ -62,6 +62,18 @@ survive:** they encode lat/lng, not district ids, so a point permalink still res
 resolves to the NEW district after geometry updates, which is correct behavior. This is confirmed
 against the architecture: permalinks are lat/lng-based, so no permalink migration is needed.
 
+**THREE LIVE INSTANCES HAVE NO SECTION HERE, AND MICHIGAN HAS NO QUICK TABLE.** Measured
+2026-10-01: this document names CHI, NYC, SF, WI and MI below and mentions Iowa, Kentucky and
+Minnesota nowhere at all, while all eight are live and serving readers. Until 2026-10-01 nothing in
+the file said so, which is the same silent-absence shape this project keeps finding: an app whose
+boundary exposure is unwritten reads exactly like an app with none. The stubs below and in the
+appendix exist to be SEEN in the heading list rather than to say anything — a missing section a
+reader can find is the whole point, and inventing one would be worse than leaving it empty, because
+these entries name which authority redraws each layer, where the next map publishes and when the
+current one took effect, and none of that can be inferred from a sibling state. Each is its own
+state thread's to fill: `ia/WATCH.md`, `ky/WATCH.md` and `mn/WATCH.md` are where that work is
+tracked.
+
 ### CHI (37 layers)
 
 | Layer | Exposure class | Enacting authority | What breaks |
@@ -90,7 +102,7 @@ of 2021, and `scripts/build_il_court_justices.py` holds a transcription of its c
 weekly roster run refuses to write unless the counties the court's own district pages name still
 match it, so a redraw surfaces as a failing refresh rather than as silence.
 
-### NYC (35 layers)
+### NYC (37 layers)
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
@@ -169,6 +181,20 @@ MI's per-date calendar lives in `mi/WATCH.md`. Note the roster axis moves on a D
 the geometry here: commissioner terms went to FOUR years under PA 121-122 of 2021, so the boards
 seated January 2025 run to December 2028 and the live risk is mid-term vacancies rather than an
 election.
+
+---
+
+### IA — NOT YET WRITTEN
+
+No blast-radius entries for Iowa. Owned by the Iowa thread.
+
+### KY — NOT YET WRITTEN
+
+No blast-radius entries for Kentucky. Owned by the Kentucky thread.
+
+### MN — NOT YET WRITTEN
+
+No blast-radius entries for Minnesota. Owned by the Minnesota thread.
 
 ---
 
@@ -370,3 +396,19 @@ Conversion 3's fleet-status stay green.
 | WI Senate (33) / Assembly (99) | WI Legislature (2024 remap signed after Clarke v. WEC) | TIGERweb Legislative layers 1/2 | 2024 maps, effective the 2024 general — a MID-DECADE change; watch for more |
 | County subdivisions / places / school districts | Census Bureau (TIGER vintage) | TIGERweb (live layers self-update) | rolling |
 
+### MI — NOT YET WRITTEN
+
+No quick table for Michigan, although it has a blast-radius section above. Owned by the Michigan
+thread.
+
+### IA — NOT YET WRITTEN
+
+No quick table for Iowa. Owned by the Iowa thread.
+
+### KY — NOT YET WRITTEN
+
+No quick table for Kentucky. Owned by the Kentucky thread.
+
+### MN — NOT YET WRITTEN
+
+No quick table for Minnesota. Owned by the Minnesota thread.

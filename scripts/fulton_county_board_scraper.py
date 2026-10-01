@@ -40,7 +40,7 @@ import datetime
 import json
 import re
 import sys
-from scraper_common import UA_CIVIC_BOT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CIVIC_BOT  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import requests
@@ -115,6 +115,8 @@ def main():
         with open(args.html, encoding="utf-8") as handle:
             html = handle.read()
     else:
+        require_robots_once(SOURCE_URL, USER_AGENT, headers={"User-Agent": USER_AGENT},
+                            label="il-fulton-county-board-scraper")
         response = requests.get(SOURCE_URL, timeout=TIMEOUT,
                                 headers={"User-Agent": USER_AGENT})
         response.raise_for_status()

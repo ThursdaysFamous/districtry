@@ -49,11 +49,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "42.73370,-84.55530"; // the Michigan State Capitol, downtown Lansing (Ingham County)
-const OFFLINE = ["county", "us-house", "mi-senate", "mi-house", "county-commissioner"];
-const EXPECT_DISTRICT = { "county": "Ingham County", "us-house": "7", "mi-senate": "21", "mi-house": "77", "county-commissioner": "9" };
-const NEGATIVE_POINT = "41.65280,-83.53790"; // downtown Toledo, Ohio — south of the Michigan line and inside permalink_gate's minLat (41.55), so the point is still selectable; measured to miss all five ANCHOR layers (phase 3's four live TIGERweb fabric layers are deliberately not anchors — anchors are pre-built and election-stable)
+const OFFLINE = ["county", "us-house", "mi-senate", "mi-house", "county-commissioner", "mi-court-of-appeals", "mi-circuit-court", "mi-isd"];
+const EXPECT_DISTRICT = { "county": "Ingham County", "us-house": "7", "mi-senate": "21", "mi-house": "77", "county-commissioner": "9", "mi-court-of-appeals": "Court of Appeals District 4", "mi-circuit-court": "30th Circuit Court", "mi-isd": "Ingham ISD" };
+const NEGATIVE_POINT = "41.65280,-83.53790"; // downtown Toledo, Ohio — south of the Michigan line and inside permalink_gate's minLat (41.55), so the point is still selectable; measured to miss all eight ANCHOR layers (phase 3's four live TIGERweb fabric layers are deliberately not anchors — anchors are pre-built and election-stable)
 const APP_NAME = "districtry Michigan";
-const EXPECT_LAYERS = 15;
+const EXPECT_LAYERS = 18;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -87,9 +87,23 @@ const MOVE_POINT = { lat: 0, lng: 0, district: "0" };
 const STRAGGLER_FILE = "data/app/state-counties.json";
 const STRAGGLER_POINT = "0,0";
 // Layers expected to HIDE (not merely report no district) at NEGATIVE_POINT.
-// The starter layers declare no coverage() test, so none hide — they all take
-// the honest "no district here" branch instead.
-const NEGATIVE_HIDDEN = [];
+// The starter layers declare no coverage() test, so they all take the honest
+// "no district here" branch instead.
+//
+// ZIP CODE IS THE ONE THAT HIDES, and it is checked here rather than left to
+// validate_sources.py BECAUSE THE TEST IS OFFLINE. A ZCTA has no state field,
+// so the layer's query carries no STATE='26' filter and outside Michigan the live
+// fallback answers a neighbouring state's ZIP code — on ground every other
+// statewide card here correctly declines. What keeps that from reaching a
+// reader is the layer's coverage() test, which reads the shipped state outline
+// (same-origin, cache-first) and needs no third party at all, so the browser
+// can prove it in both directions: hidden at the negative point (2b) and NOT
+// hidden at the anchor (2a2). Both halves are needed — a hide test alone passes
+// for a layer that is hidden everywhere.
+const NEGATIVE_HIDDEN = ["zip-code"];
+// The ids checked at the negative point: the offline anchors plus every
+// coverage-declaring layer above, deduped in case one is already an anchor.
+const NEGATIVE_IDS = OFFLINE.concat(NEGATIVE_HIDDEN.filter((id) => !OFFLINE.includes(id)));
 const BOOT_TIMEOUT = 45000; // Leaflet CDN + first paint on a cold CI runner
 const QUERY_TIMEOUT = 25000;
 
@@ -469,6 +483,30 @@ try {
     await context.close();
   }
 
+  // 2a2. THE OTHER HALF OF THE ZIP COVERAGE CHECK IN 2b. A hide test alone
+  //      passes for a layer that is hidden everywhere, which would be a ZIP
+  //      toggle no reader ever sees — so the anchor must show the same layer
+  //      VISIBLE. Both halves read only the shipped state outline, with the
+  //      census host refused, so neither depends on a government server being
+  //      up.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=${NEGATIVE_HIDDEN.join(",")}`, async (p) => {
+      await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
+    });
+    for (const id of NEGATIVE_HIDDEN) {
+      const visible = await page
+        .waitForFunction((cid) => {
+          const box = document.getElementById("toggle-" + cid);
+          const block = box && box.closest(".layer-block");
+          return !!block && block.hidden === false;
+        }, id, { timeout: QUERY_TIMEOUT })
+        .then(() => true, () => false);
+      check(`${id} is in coverage at the Lansing anchor (not hidden)`, visible, `visible=${visible}`);
+    }
+    await context.close();
+  }
+
   // 2b. The negative ground-truth point (from the worksheet: a point outside
   //     every anchor layer). Anchors that declare a location-relevance test
   //     (mod.coverage — see NEGATIVE_HIDDEN above) HIDE there: the toggle
@@ -485,10 +523,15 @@ try {
     // fallback's own catch ("stand on the first tiling's verdict") runs
     // deterministically fast in every environment; the verdict here is
     // identical either way — the negative point is outside both tilings.
-    const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=${OFFLINE.join(",")}`, async (p) => {
+    const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=${NEGATIVE_IDS.join(",")}`, async (p) => {
       await p.route(`**${PORTAL_HOST}**`, (r) => r.abort());
+      // And the census host, for the ZIP layer in NEGATIVE_IDS. Its coverage
+      // test reads the shipped state outline and never the census, so the hide
+      // verdict is identical either way — aborting it is what keeps this
+      // check's verdict independent of whether a runner can reach TIGERweb.
+      await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
     });
-    for (const id of OFFLINE) {
+    for (const id of NEGATIVE_IDS) {
       if (NEGATIVE_HIDDEN.includes(id)) {
         const hidden = await page
           .waitForFunction((cid) => {
@@ -737,45 +780,70 @@ try {
       await page.close();
     }
 
-    // WARREN, the third city on this dispatcher — one check, because the
-    // entry is deliberately thin: it names the ward and no member, since the
-    // city publishes no roster (gap `warren-council-roster`). What this proves
-    // is that a THIRD entry in the table still resolves to its own city rather
-    // than being shadowed by the two ahead of it in the OR.
+    // WARREN AND FLINT name their members from the city's own council page
+    // (mi-municipal-officials.json). Each point asserts its OWN seat's member
+    // is named and that no other seat's member is, because a card that named
+    // the whole council at every point would pass a check that only looked
+    // for the right name. Warren also elects two members at large, who are
+    // named on every Warren card under their own heading. The expected names
+    // come from the shipped roster, so a weekly refresh does not break this.
+    // Each city is also the check that a later entry in the dispatcher's OR
+    // still resolves to its own city rather than being shadowed.
     {
-      const page = await booted(context, `${BASE}#point=42.50057,-83.00112&layers=city-ward`);
-      const card = await cardText(page, "city-ward");
-      const pill = await page.evaluate(() => {
-        const el = document.getElementById("card-city-ward");
-        const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
-        return p ? p.textContent.trim() : null;
-      });
-      check("city-ward resolves a Warren point to its own ward",
-        pill === "Ward 3", `pill=${JSON.stringify(pill)}`);
-      check("Warren's card names no member and says why",
-        /publishes its ward map but no list/.test(card.text || "") &&
-        !/City Commissioner/.test(card.text || ""), (card.text || "").slice(0, 130));
-      await page.close();
-    }
+      const boards = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app",
+        "mi-municipal-officials.json"), "utf8"));
+      const CITY_POINTS = [
+        { city: "Warren", geoid: "2684000", pt: "42.50057,-83.00112", ward: "3", seat: "District 3" },
+        // Flint is the furthest down the dispatcher's OR, so this is also the
+        // check that the table has not started shadowing its tail. Its page
+        // carries an In Memoriam for a First Ward councilman who died in 2024,
+        // and the parser stops before it; the card must never name him.
+        { city: "Flint", geoid: "2629000", pt: "43.02123,-83.70302", ward: "5", seat: "Ward 5" },
+      ];
+      for (const c of CITY_POINTS) {
+        const board = boards[c.geoid];
+        const page = await booted(context, `${BASE}#point=${c.pt}&layers=city-ward`);
+        const card = await cardText(page, "city-ward");
+        const got = await page.evaluate(() => {
+          const el = document.getElementById("card-city-ward");
+          const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+          return {
+            pill: p ? p.textContent.trim() : null,
+            names: el ? [...el.querySelectorAll(".card-person-name")].map((n) => n.textContent) : [],
+          };
+        });
+        check(`city-ward resolves a ${c.city} point to its own ward`,
+          got.pill === `Ward ${c.ward}`, `pill=${JSON.stringify(got.pill)}`);
+        const mine = board ? board.members.filter((m) => m.seat === c.seat).map((m) => m.name) : [];
+        const atLarge = board ? board.members.filter((m) => m.seat === "At Large").map((m) => m.name) : [];
+        const others = board ? board.members.filter((m) => m.seat && m.seat !== c.seat && m.seat !== "At Large").map((m) => m.name) : [];
+        check(`${c.city} ${c.seat}'s own member is named, with the at-large members`,
+          mine.length > 0 && [...mine, ...atLarge].every((n) => got.names.includes(n)),
+          JSON.stringify(got.names));
+        check(`${c.city}'s card names no other seat's member`,
+          !others.some((n) => got.names.includes(n)) && !/Mays/.test(card.text || ""),
+          JSON.stringify(got.names));
+        await page.close();
+      }
 
-    // FLINT, the fourth entry — the one furthest down the dispatcher's OR, so
-    // this is also the check that the table has not started shadowing its tail.
-    {
-      const page = await booted(context, `${BASE}#point=43.02123,-83.70302&layers=city-ward`);
-      const card = await cardText(page, "city-ward");
-      const pill = await page.evaluate(() => {
-        const el = document.getElementById("card-city-ward");
-        const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
-        return p ? p.textContent.trim() : null;
+      // The City or Village card names the whole council for a city the
+      // roster carries, and keeps its "not named here" sentence for one it
+      // does not (Lansing, whose council page builds its list in the browser).
+      const page = await booted(context, `${BASE}#point=42.50057,-83.00112&layers=municipality`);
+      await cardText(page, "municipality");
+      const muni = await page.evaluate(() => {
+        const el = document.getElementById("card-municipality");
+        return el ? [...el.querySelectorAll(".card-person-name")].map((n) => n.textContent) : [];
       });
-      check("city-ward resolves a Flint point to its own ward",
-        pill === "Ward 5", `pill=${JSON.stringify(pill)}`);
-      // Flint's council page names exactly one person beside a ward and he died
-      // in 2024. Nobody is named on this card, deliberately.
-      check("Flint's card names nobody",
-        /no current list of who holds each seat/.test(card.text || "") &&
-        !/Mays/.test(card.text || ""), (card.text || "").slice(0, 130));
+      const warren = boards["2684000"].members.map((m) => m.name);
+      check("the City or Village card names Warren's whole council",
+        warren.every((n) => muni.includes(n)) && muni.length === warren.length, JSON.stringify(muni));
       await page.close();
+      const lansing = await booted(context, `${BASE}#point=42.73370,-84.55530&layers=municipality`);
+      const lcard = await cardText(lansing, "municipality");
+      check("a city the roster does not carry keeps its 'not named here' sentence",
+        /Not named here/.test(lcard.text || ""), (lcard.text || "").slice(0, 130));
+      await lansing.close();
     }
 
     // BATTLE CREEK, the fifth entry, and the one whose card is built to defeat
@@ -869,6 +937,52 @@ try {
       check(`Battle Creek ward ${bc.ward} explains the absent e-mail`,
         /publishes no e-mail address for individual/.test(text), text.slice(0, 200));
       await page.close();
+    }
+
+    // JACKSON, the seventh entry and now the tail of the OR — the first city
+    // whose ward lines come from its COUNTY's precinct map (Adam's ruling,
+    // 2026-09-29), with its members from the city's own pages. Two points, so
+    // a ward that resolves to its neighbour's number fails, and each card must
+    // name ITS ward's member and not the other's. The names are read from the
+    // shipped roster rather than typed here, so the weekly refresh does not
+    // break this check when a seat changes hands.
+    {
+      const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app",
+        "mi-jackson-council-members.json"), "utf8"));
+      const memberOf = (w) => ((roster.wards[w] || [])[0] || {}).name || null;
+      const mayor = (roster.citywide || [])[0] || {};
+      for (const jx of [
+        { ward: "1", other: "6", point: "42.23291,-84.40371", page: "/498/Ward-1" },
+        { ward: "6", other: "1", point: "42.22580,-84.42096", page: "/512/Ward-6" }
+      ]) {
+        const page = await booted(context, `${BASE}#point=${jx.point}&layers=city-ward`);
+        const card = await cardText(page, "city-ward");
+        const got = await page.evaluate(() => {
+          const el = document.getElementById("card-city-ward");
+          const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+          return {
+            pill: p ? p.textContent.trim() : null,
+            names: el ? [...el.querySelectorAll(".card-person-name")].map((n) => n.textContent.trim()) : [],
+            // The link is the card FOOTER, a sibling of the card body.
+            links: el && el.parentElement
+              ? [...el.parentElement.querySelectorAll(".card-footer a")].map((a) => a.href) : [],
+          };
+        });
+        const text = card.text || "";
+        check(`city-ward resolves a Jackson point to ward ${jx.ward}`,
+          got.pill === `Ward ${jx.ward}`, `pill=${JSON.stringify(got.pill)}`);
+        check(`Jackson ward ${jx.ward} names its own councilmember and the Mayor`,
+          !!memberOf(jx.ward) && got.names.includes(memberOf(jx.ward)) &&
+          !!mayor.name && got.names.includes(mayor.name), JSON.stringify(got.names));
+        check(`Jackson ward ${jx.ward} does not name ward ${jx.other}'s`,
+          !got.names.includes(memberOf(jx.other)), JSON.stringify(got.names));
+        check(`Jackson ward ${jx.ward} says where its lines come from`,
+          /Jackson County's precinct map/.test(text), text.slice(0, 200));
+        check(`Jackson ward ${jx.ward} links its own ward page`,
+          got.links.some((h) => h.includes("cityofjackson.org" + jx.page)),
+          JSON.stringify(got.links));
+        await page.close();
+      }
     }
 
     // THE SCENARIO THAT ACTUALLY CATCHES THE ORIGINAL BUG, and the two checks

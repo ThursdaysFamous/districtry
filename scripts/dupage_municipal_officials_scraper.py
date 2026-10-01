@@ -63,8 +63,9 @@ it, because Western Springs came back 708.
 
 The seven DuPage municipalities that did not are three different things rather
 than one, and the gap record names each: four answer HTTP 403 to any automated
-client (West Chicago and Downers Grove on the page itself, Wood Dale and Carol
-Stream on robots.txt); two serve genuinely broken TLS — darienil.gov a
+client (West Chicago and Downers Grove on the page itself, and — RE-MEASURED
+2026-09-30 — Wood Dale and Carol Stream on the page too, where this docstring
+used to say robots.txt); two serve genuinely broken TLS — darienil.gov a
 self-signed certificate and villageofwayne.org a key too weak for a modern
 client, which is NOT the incomplete-chain pattern Coles and Gallatin taught
 this project to recognise, and is said on a measurement because
@@ -78,11 +79,24 @@ run, so a municipality that refuses this client today and answers a GitHub
 runner — or answers next month — ships its phone with no edit.
 
 **ROBOTS.TXT IS CHECKED FOR EVERY SITE AND OBEYED**, as everywhere else here.
-All 25 readable policies allow the homepage; seven municipalities answer 403 to
-the request for robots.txt ITSELF, so their policy could not be read and
-nothing is fetched from them (the posture this project already took for Port
-Washington), and four more could not be reached to ask. A 404 is a different
-answer and means what it says — no policy published, so the default applies.
+All 25 readable policies allow the homepage. Seven municipalities answer 403 to
+the request for robots.txt ITSELF, and until 2026-09-29 this file shut them out
+on its own invented reading — a site that will not show its policy has not
+published one this client can read, the posture it took from Port Washington.
+The operator retired that reading; under RFC 9309 §2.3.1.3 a 403 on robots.txt
+is an unreadable policy and ALLOWS. A 404 is a different answer and means what
+it says — no policy published, so the default applies. Four more could not be
+reached to ask, which is still a disallow under §2.3.1.4.
+
+RE-RUN 2026-09-30 TO SEE WHAT THAT BOUGHT, AND IN DUPAGE IT BOUGHT NOTHING.
+Wood Dale and Carol Stream were the only two municipalities here the old
+posture actually shut out. Both now pass the robots gate and both answer HTTP
+403 at the PAGE to the same client, so they join West Chicago and Downers Grove
+rather than moving into the witnessed set, and the run's total is unchanged at
+23 of 36. That is the general argument in #1271's own body — a site-wide bot
+block enforces itself at the page, so a robots-level discriminator buys nothing
+the page fetch does not already say — confirmed on the two hosts it was said to
+have cost. Nothing is hardcoded to that outcome: both are attempted every run.
 
 COVERAGE: DMMC has 35 full members plus 1 associate. A handful of
 municipalities that touch DuPage are not DMMC members and therefore carry no
@@ -416,11 +430,20 @@ def robots_allows(url, report):
     5xx on robots.txt ALLOWED the crawl (RFC 9309 §2.3.1.4 says disallow, and
     the Iowa gate always did), and urllib.robotparser kept only the first
     `User-agent: *` group of a file and the first matching rule rather than
-    the longest. The 403 posture above is unchanged and is THIS scraper's
-    choice, passed as refused_is_refusal=True: the shared module's default is
-    the RFC's (allow), because API hosts like ArcGIS Online answer 403 to
-    /robots.txt while serving everyone, and a municipal website is the case
-    where a 403 there is a WAF refusing the client.
+    the longest. THE 403 POSTURE IS RETIRED (2026-09-29, the
+    operator's ruling). This file invented it -- "a site that will not show its
+    policy has not published one this client can read" -- and it became the
+    fleet's strict opt-in. Measured fleet-wide that day it was reading an
+    artefact: fourteen of eighteen hosts that 403 their robots.txt publish a
+    policy PERMITTING us once the file is asked for with the client that
+    crawls, and Wood Dale and Carol Stream, the two hosts this scraper's
+    posture actually shut out, are both among them. A 401/403 now allows, per
+    RFC 9309 §2.3.1.3.
+
+    RE-MEASURED 2026-09-30 by running this scraper: both hosts now pass this
+    gate and both answer HTTP 403 at the page, so the witnessed count did not
+    move. The retired posture was wrong about what a 403 means and was not, in
+    DuPage, costing any data.
     """
     import urllib.parse
     from robots_policy import classify
@@ -432,7 +455,7 @@ def robots_allows(url, report):
         report.append("robots.txt unreadable (%s)" % type(exc).__name__)
         return False
     verdict = classify(resp.status_code, resp.text, final_url=resp.url)
-    allowed, why = verdict.allows(HEADERS["User-Agent"], url, refused_is_refusal=True)
+    allowed, why = verdict.allows(HEADERS["User-Agent"], url)
     if not allowed:
         report.append(why if verdict.status != "served" else "robots.txt disallows this client (%s)" % why)
     return allowed

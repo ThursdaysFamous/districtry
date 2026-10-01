@@ -1,0 +1,344 @@
+{
+  "measured": "2026-09-30",
+  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
+  "vintage": "current",
+  "note": "Land to government. The key is the Census's own AIANNH code, which a reservation and its off-reservation trust land share. Governments are named exactly as the Bureau of Indian Affairs names them in data/bia-tribal-governments.json. Kentucky is covered with NO AREAS, which is a measurement rather than an omission: all six AIANNH layers return zero features over the state's whole extent, with North Carolina run as a control on the same six queries and answering 7, 2 and 2 on three of them, so the queries work. Re-measured 2026-09-30 at that instance's go-live.",
+  "statesCovered": [
+    "Illinois",
+    "Kentucky",
+    "Minnesota"
+  ],
+  "statesNotYetCovered": [
+    "California",
+    "Iowa",
+    "Michigan",
+    "New York",
+    "Wisconsin"
+  ],
+  "areas": {
+    "0335": {
+      "government": "Minnesota Chippewa Tribe - Bois Forte Band (Nett Lake)",
+      "parentGovernment": "Minnesota Chippewa Tribe, Minnesota",
+      "governmentState": "MN",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "reservation",
+          "geoid": "0335R",
+          "name": "Bois Forte Reservation",
+          "state": "Minnesota",
+          "km2": 548.678,
+          "share": 1.0
+        },
+        {
+          "class": "trust-land",
+          "geoid": "0335T",
+          "name": "Bois Forte Off-Reservation Trust Land",
+          "state": "Minnesota",
+          "km2": 5.452,
+          "share": 1.0
+        }
+      ]
+    },
+    "1125": {
+      "government": "Minnesota Chippewa Tribe - Fond du Lac Band",
+      "parentGovernment": "Minnesota Chippewa Tribe, Minnesota",
+      "governmentState": "MN",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "reservation",
+          "geoid": "1125R",
+          "name": "Fond du Lac Reservation",
+          "state": "Minnesota",
+          "km2": 411.411,
+          "share": 1.0
+        }
+      ]
+    },
+    "1355": {
+      "government": "Minnesota Chippewa Tribe - Grand Portage Band",
+      "parentGovernment": "Minnesota Chippewa Tribe, Minnesota",
+      "governmentState": "MN",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "reservation",
+          "geoid": "1355R",
+          "name": "Grand Portage Reservation",
+          "state": "Minnesota",
+          "km2": 196.068,
+          "share": 1.0
+        },
+        {
+          "class": "trust-land",
+          "geoid": "1355T",
+          "name": "Grand Portage Off-Reservation Trust Land",
+          "state": "Minnesota",
+          "km2": 0.146,
+          "share": 1.0
+        }
+      ]
+    },
+    "1450": {
+      "government": "Ho-Chunk Nation of Wisconsin",
+      "parentGovernment": null,
+      "governmentState": "WI",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "trust-land",
+          "geoid": "1450T",
+          "name": "Ho-Chunk Nation Off-Reservation Trust Land",
+          "state": "Minnesota",
+          "km2": 1.238,
+          "share": 0.0354
+        }
+      ]
+    },
+    "1940": {
+      "government": "Minnesota Chippewa Tribe - Leech Lake Band",
+      "parentGovernment": "Minnesota Chippewa Tribe, Minnesota",
+      "governmentState": "MN",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "reservation",
+          "geoid": "1940R",
+          "name": "Leech Lake Reservation",
+          "state": "Minnesota",
+          "km2": 3393.82,
+          "share": 1.0
+        },
+        {
+          "class": "trust-land",
+          "geoid": "1940T",
+          "name": "Leech Lake Off-Reservation Trust Land",
+          "state": "Minnesota",
+          "km2": 0.254,
+          "share": 1.0
+        }
+      ]
+    },
+    "2055": {
+      "government": "Lower Sioux Indian Community in the State of Minnesota",
+      "parentGovernment": null,
+      "governmentState": "MN",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "reservation",
+          "geoid": "2055R",
+          "name": "Lower Sioux Indian Community",
+          "state": "Minnesota",
+          "km2": 7.895,
+          "share": 1.0
+        },
+        {
+          "class": "trust-land",
+          "geoid": "2055T",
+          "name": "Lower Sioux Off-Reservation Trust Land",
+          "state": "Minnesota",
+          "km2": 1.466,
+          "share": 1.0
+        }
+      ]
+    },
+    "2270": {
+      "government": "Minnesota Chippewa Tribe - Mille Lacs Band",
+      "parentGovernment": "Minnesota Chippewa Tribe, Minnesota",
+      "governmentState": "MN",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "reservation",
+          "geoid": "2270R",
+          "name": "Mille Lacs Reservation",
+          "state": "Minnesota",
+          "km2": 412.751,
+          "share": 1.0
+        },
+        {
+          "class": "trust-land",
+          "geoid": "2270T",
+          "name": "Mille Lacs Off-Reservation Trust Land",
+          "state": "Minnesota",
+          "km2": 5.888,
+          "share": 1.0
+        }
+      ]
+    },
+    "2285": {
+      "government": "Minnesota Chippewa Tribe, Minnesota",
+      "parentGovernment": null,
+      "governmentState": "MN",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "trust-land",
+          "geoid": "2285T",
+          "name": "Minnesota Chippewa Trust Land",
+          "state": "Minnesota",
+          "km2": 1.163,
+          "share": 1.0
+        }
+      ]
+    },
+    "2980": {
+      "government": "Prairie Band Potawatomi Nation",
+      "parentGovernment": null,
+      "governmentState": "KS",
+      "states": [
+        "Illinois"
+      ],
+      "lands": [
+        {
+          "class": "trust-land",
+          "geoid": "2980T",
+          "name": "Prairie Band of Potawatomi Nation Off-Reservation Trust Land",
+          "state": "Illinois",
+          "km2": 0.521,
+          "share": 1.0
+        }
+      ]
+    },
+    "2985": {
+      "government": "Prairie Island Indian Community in the State of Minnesota",
+      "parentGovernment": null,
+      "governmentState": "MN",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "reservation",
+          "geoid": "2985R",
+          "name": "Prairie Island Indian Community",
+          "state": "Minnesota",
+          "km2": 2.323,
+          "share": 1.0
+        },
+        {
+          "class": "trust-land",
+          "geoid": "2985T",
+          "name": "Prairie Island Off-Reservation Trust Land",
+          "state": "Minnesota",
+          "km2": 13.784,
+          "share": 1.0
+        }
+      ]
+    },
+    "3100": {
+      "government": "Red Lake Band of Chippewa Indians, Minnesota",
+      "parentGovernment": null,
+      "governmentState": "MN",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "reservation",
+          "geoid": "3100R",
+          "name": "Red Lake Reservation",
+          "state": "Minnesota",
+          "km2": 3262.964,
+          "share": 1.0
+        }
+      ]
+    },
+    "3680": {
+      "government": "Shakopee Mdewakanton Sioux Community of Minnesota",
+      "parentGovernment": null,
+      "governmentState": "MN",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "reservation",
+          "geoid": "3680R",
+          "name": "Shakopee Mdewakanton Sioux Community",
+          "state": "Minnesota",
+          "km2": 1.04,
+          "share": 1.0
+        },
+        {
+          "class": "trust-land",
+          "geoid": "3680T",
+          "name": "Shakopee Mdewakanton Sioux Off-Reservation Trust Land",
+          "state": "Minnesota",
+          "km2": 16.247,
+          "share": 0.6648
+        }
+      ]
+    },
+    "4445": {
+      "government": "Upper Sioux Community, Minnesota",
+      "parentGovernment": null,
+      "governmentState": "MN",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "reservation",
+          "geoid": "4445R",
+          "name": "Upper Sioux Community",
+          "state": "Minnesota",
+          "km2": 5.316,
+          "share": 1.0
+        },
+        {
+          "class": "trust-land",
+          "geoid": "4445T",
+          "name": "Upper Sioux Off-Reservation Trust Land",
+          "state": "Minnesota",
+          "km2": 0.764,
+          "share": 1.0
+        }
+      ]
+    },
+    "4595": {
+      "government": "Minnesota Chippewa Tribe - White Earth Band",
+      "parentGovernment": "Minnesota Chippewa Tribe, Minnesota",
+      "governmentState": "MN",
+      "states": [
+        "Minnesota"
+      ],
+      "lands": [
+        {
+          "class": "reservation",
+          "geoid": "4595R",
+          "name": "White Earth Reservation",
+          "state": "Minnesota",
+          "km2": 3012.18,
+          "share": 1.0
+        },
+        {
+          "class": "trust-land",
+          "geoid": "4595T",
+          "name": "White Earth Off-Reservation Trust Land",
+          "state": "Minnesota",
+          "km2": 10.336,
+          "share": 1.0
+        }
+      ]
+    }
+  }
+}

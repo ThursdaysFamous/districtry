@@ -135,6 +135,18 @@ Usage:
     python3 scripts/check_roster_workflow_health.py --report r.md --status-file s.txt
     python3 scripts/check_roster_workflow_health.py --list           # offline: what it watches
     python3 scripts/check_roster_workflow_health.py --selftest       # offline: the verdicts
+
+NOT GATED ON robots.txt: AUTHENTICATED READ OF THIS PROJECT'S OWN REPOSITORY.
+It asks api.github.com, with this project's own token, which of districtry's
+own weekly refreshes last did their work -- the API GitHub issues the token
+for. No page is read and no link is followed, and the blanket rule in that
+host's robots.txt is aimed at crawlers of the web interface rather than at an
+account holder reading their own runs.
+
+THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never which host: an
+unauthenticated read of a page on github.com would be gated in full. Stated
+here in full rather than as a pointer at fleet_status.py, so neither reads as
+an exemption extended by analogy.
 """
 
 import argparse
@@ -214,6 +226,12 @@ NOT_A_REFRESH = {
     "smoke-test.yml", "deploy-pages.yml", "validate-sources.yml",
     "engine-parity.yml", "fleet-status.yml", "release-engine.yml",
     "create-engine-tag.yml", "roster-health.yml",
+    # Dispatched by hand rather than scheduled, and it refreshes no roster: it
+    # reads every host's robots.txt so a batch of scrapers can be wired against
+    # a measured verdict. With no cron there is no cadence to be stale against,
+    # and a report that listed it would be reporting that nobody pressed the
+    # button.
+    "probe-robots-verdicts.yml",
 }
 
 CRON_RE = re.compile(r"^\s*-\s*cron:\s*[\"']([^\"']+)[\"']", re.M)
@@ -390,11 +408,15 @@ def audit_robots_declined(watched):
                 problems.append("%s says %s reads %s and that host is not named in it "
                                 "any more — the scraper has been re-sourced; retire "
                                 "the entry" % (where, dec["script"], dec["host"]))
-            if "require_robots_allowed" not in sc_src:
-                problems.append("%s says %s declines, and it no longer calls "
-                                "require_robots_allowed — whatever is failing there "
-                                "now is not a refusal"
-                                % (where, dec["script"]))
+            # EITHER SPELLING OF THE SEAM. `require_robots_once` wraps
+            # `require_robots_allowed` with a per-host memo and raises exactly as
+            # it does; reading only the inner name reported a wired scraper as
+            # having stopped declining, which is the opposite of true.
+            if not any(n in sc_src for n in ("require_robots_allowed",
+                                             "require_robots_once")):
+                problems.append("%s says %s declines, and it no longer calls the "
+                                "robots seam — whatever is failing there now is "
+                                "not a refusal" % (where, dec["script"]))
         if dec["host"] not in MEASURED_REFUSALS:
             problems.append("%s names %s, which validate_card_links.ROBOTS_DECLINED "
                             "no longer records as refusing us. Either the host "

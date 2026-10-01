@@ -70,6 +70,17 @@ priority. The build path always writes the exact date. One day of slack does not
 weaken the thing this gate exists for: the drift it was written against ran to a
 median of 18 days.
 
+AND IT FAILS THE SAME WAY ON A DATE THAT IS TOO NEW, which it did not until
+2026-09-30. The gate measured staleness only, so a lastmod claiming a page had
+changed more recently than it had passed every run — and 375 of the 396 entries
+on main were in exactly that state, by 1 to 4 days, because they had been
+regenerated in a shallow clone (see shallow() below). A date that is too new is
+the same lie about freshness as one that is too old, told in the direction a
+crawler acts on: it invites a recrawl of a page that has not changed, and once
+the crawler notices, this site's dates stop being worth reading. The tolerance
+is one day each way, because the squash-merge and timezone slack that justifies
+it cuts both ways.
+
 Usage:
     python3 scripts/build_sitemap.py           # rewrite sitemap.xml
     python3 scripts/build_sitemap.py --check   # fail on real drift
@@ -99,12 +110,26 @@ NOINDEX = re.compile(r"<meta[^>]+name=[\"']robots[\"'][^>]+noindex", re.I)
 def instances():
     """A top-level directory with its own index.html and data/app IS an
     instance — the same rule validate_card_links.py and
-    validate_instance_registration.py discover by. Never a hand-kept list."""
+    validate_instance_registration.py discover by. Never a hand-kept list.
+
+    A DARK INSTANCE IS NOT LISTED, BECAUSE A SITEMAP ENTRY IS AN INVITATION TO
+    CRAWL. A new state is built over several PRs and its folder carries one
+    blanket `<tag>/**` line in deploy-pages.yml's EXCLUDES until go-live, so
+    nothing half-built reaches the site — and a sitemap naming a path the
+    deploy does not publish points every crawler that reads it at a 404. The
+    darkness signal is imported from validate_instance_registration rather than
+    re-derived here: that module owns the question, its own check reads the
+    same answer in both directions, and two readers of one question is where
+    this fleet's recurring defect starts.
+    """
+    from validate_instance_registration import dark_instances
+    dark = dark_instances()
     out = []
     for name in sorted(os.listdir(REPO)):
         d = os.path.join(REPO, name)
         if (os.path.isdir(d) and os.path.isfile(os.path.join(d, "index.html"))
-                and os.path.isdir(os.path.join(d, "data", "app"))):
+                and os.path.isdir(os.path.join(d, "data", "app"))
+                and name not in dark):
             out.append(name)
     return out
 
@@ -148,6 +173,31 @@ RULES = {
 # Files with no commit yet, collected rather than printed one line at a time:
 # adding il/county-board/ put 73 of them in one run, which buried the result.
 NEW_FILES = []
+
+
+def shallow():
+    """True when this clone has a graft boundary, so `git log -1 -- <file>`
+    cannot answer for any file the boundary commit did not itself change.
+
+    In a shallow clone every file that predates the boundary reports the
+    BOUNDARY's date as its last change, which is newer than the truth and
+    usually the same date for every page at once. That is not a subtle error:
+    measured on main 2026-09-30, 377 of 396 entries carried one date,
+    2026-09-27, and 375 of them were 1 to 4 days newer than the page's real
+    last change. Every one of the 100 workflows that regenerates this file
+    checks out full history for exactly this reason; an agent session's clone
+    is shallow by default and four of them shipped the wrong dates on
+    2026-09-29 alone.
+
+    So both paths refuse rather than answer. `git fetch --unshallow` is the
+    fix, and it is one command."""
+    try:
+        out = subprocess.run(["git", "rev-parse", "--is-shallow-repository"],
+                             cwd=REPO, capture_output=True, text=True,
+                             timeout=30).stdout.strip()
+    except Exception:                                          # noqa: BLE001
+        return False
+    return out == "true"
 
 
 def _dirty():
@@ -271,6 +321,14 @@ def main():
                     help="fail if the shipped sitemap differs from the generated one")
     args = ap.parse_args()
 
+    if shallow():
+        sys.stderr.write(
+            "build-sitemap: FAIL — this clone is shallow, so every page's last "
+            "commit reads as the boundary commit.\n"
+            "  Every lastmod would be wrong, and newer than the truth. Run "
+            "`git fetch --unshallow` first.\n")
+        return 1
+
     rows = collect()
     if NEW_FILES:
         sys.stderr.write(
@@ -304,6 +362,9 @@ def main():
             if behind >= 2:
                 problems.append("STALE    %s  %s -> %s  (%d days behind)"
                                 % (loc, got[0], mod, behind))
+            elif behind <= -2:
+                problems.append("AHEAD    %s  %s -> %s  (%d days too new)"
+                                % (loc, got[0], mod, -behind))
         for loc in shipped:
             if loc not in {r[0] for r in rows}:
                 problems.append("EXTRA    %s" % loc)
@@ -314,8 +375,8 @@ def main():
             for line in problems:
                 sys.stderr.write("  %s\n" % line)
             return 1
-        print("build-sitemap: OK — %d URL(s), no entry stale by more than a day, "
-              "URL set and fields exact" % len(rows))
+        print("build-sitemap: OK — %d URL(s), no entry off by more than a day in "
+              "either direction, URL set and fields exact" % len(rows))
         return 0
 
     # render() composes XML by hand, so parsing the result is the only thing

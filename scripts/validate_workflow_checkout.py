@@ -13,8 +13,20 @@ Nothing caught it, and the reason is worth stating because it is the general
 shape. `build_sitemap.py --check` compares the shipped file against a rebuild
 and fails when an entry is STALE — behind the file's real last commit. A
 shallow clone moves every date FORWARD, to today, which is never stale. So the
-check that owns this file is structurally blind to the defect, and passes on
-the very run that introduces it.
+check that owns this file was structurally blind to the defect, and passed on
+the very run that introduced it.
+
+THAT BLINDNESS CLOSED ON 2026-09-30, and this gate is still worth having. It
+took three years of this paragraph being true to cost anything, and then it cost
+375 of 396 entries at once — dates 1 to 4 days too new, all carrying one agent
+session's clone boundary. `build_sitemap.py` now refuses to run at all in a
+shallow clone, and its `--check` fails on a date that is too NEW by two days or
+more, not only one that is too old. This gate still asks a different question:
+that gate reads a tree, and a tree cannot say whether the job that produced it
+was given the history it needed. A workflow wired to shallow-clone would now
+fail loudly instead of shipping wrong dates quietly, which is better, but
+failing every weekly roster refresh at 3am is not the outcome to aim for
+either.
 
 WHAT IT CHECKS, per workflow file, offline and stdlib-only:
 

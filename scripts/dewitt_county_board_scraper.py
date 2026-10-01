@@ -32,10 +32,13 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_X11_128  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_ROSTER_BOT,
+    require_robots_once,
+)
 
 SOURCE_URL = "https://www.dewittcountyil.gov/government/county_board.php"
-UA = {"User-Agent": UA_CHROME_X11_128}
+UA = {"User-Agent": UA_ROSTER_BOT}
 
 NAME_RE = re.compile(r"^[A-Z][A-Z.'\-]*(?:\s+[A-Z][A-Z.'\-]*){1,3}$")
 DISTRICT_RE = re.compile(r"^District\s+([A-D])$", re.I)
@@ -66,6 +69,8 @@ def normalize_phone(raw):
 
 
 def main():
+    require_robots_once(SOURCE_URL, UA["User-Agent"], headers=UA,
+                        label="il-dewitt-county-board-scraper")
     resp = requests.get(SOURCE_URL, headers=UA, timeout=60)
     resp.raise_for_status()
     lines = text_lines(resp.text)

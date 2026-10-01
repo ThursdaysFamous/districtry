@@ -52,7 +52,7 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pdfplumber
@@ -63,7 +63,7 @@ SERVICE_DIRECTORY_PAGE = "https://www.peoriacounty.gov/250/Service-Directory"
 COUNTY_SITE = "https://www.peoriacounty.gov"
 DIRECTORY_FALLBACK = "https://www.peoriacounty.gov/DocumentCenter/View/295"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 180
 
@@ -131,6 +131,8 @@ MIN_DISTRICT_SEATS = 11
 
 def discover_pdf_url(session, warnings):
     try:
+        require_robots_once(SERVICE_DIRECTORY_PAGE, HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-peoria-municipal-officials-scraper")
         resp = session.get(SERVICE_DIRECTORY_PAGE, headers=HEADERS, timeout=REQUEST_TIMEOUT)
         resp.raise_for_status()
     except Exception as exc:  # noqa: BLE001 — discovery is best-effort
@@ -147,6 +149,8 @@ def discover_pdf_url(session, warnings):
 
 
 def fetch_pdf(session, url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-peoria-municipal-officials-scraper")
     resp = session.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     if not resp.content.startswith(b"%PDF"):

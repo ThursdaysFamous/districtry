@@ -1,0 +1,93 @@
+{
+  "1": {
+    "name": "James Comer",
+    "party": "Republican",
+    "url": "https://comer.house.gov",
+    "capitolOffice": [
+      "2410 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3115"
+    ],
+    "districtOffice": [
+      "300 S. 3rd St.",
+      "Paducah, KY 42003",
+      "Phone: 270-408-1865"
+    ]
+  },
+  "2": {
+    "name": "Brett Guthrie",
+    "party": "Republican",
+    "url": "https://guthrie.house.gov",
+    "capitolOffice": [
+      "2161 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3501"
+    ],
+    "districtOffice": [
+      "996 Wilkinson Trce., Suite B2",
+      "Bowling Green, KY 42103",
+      "Phone: 270-842-9896"
+    ]
+  },
+  "3": {
+    "name": "Morgan McGarvey",
+    "party": "Democrat",
+    "url": "https://mcgarvey.house.gov",
+    "capitolOffice": [
+      "1527 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5401"
+    ],
+    "districtOffice": [
+      "600 Dr Martin Luther King Jr Pl, Suite 216",
+      "Romano L. Mazzoli Federal Building",
+      "Louisville, KY 40202",
+      "Phone: 502-582-5129"
+    ]
+  },
+  "4": {
+    "name": "Thomas Massie",
+    "party": "Republican",
+    "url": "https://massie.house.gov",
+    "capitolOffice": [
+      "2371 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3465"
+    ],
+    "districtOffice": [
+      "541 Buttermilk Pike, Suite 208",
+      "Crescent Springs, KY 41017",
+      "Phone: 859-426-0080"
+    ]
+  },
+  "5": {
+    "name": "Harold Rogers",
+    "party": "Republican",
+    "url": "https://halrogers.house.gov",
+    "capitolOffice": [
+      "2406 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4601"
+    ],
+    "districtOffice": [
+      "48 S. KY Hwy. 15",
+      "Hazard, KY 41701",
+      "Phone: 606-439-0794"
+    ]
+  },
+  "6": {
+    "name": "Andy Barr",
+    "party": "Republican",
+    "url": "https://barr.house.gov",
+    "capitolOffice": [
+      "2430 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4706"
+    ],
+    "districtOffice": [
+      "2709 Old Rosebud Rd., Ste. 100",
+      "Lexington, KY 40509",
+      "Phone: 859-219-1366"
+    ]
+  }
+}

@@ -108,6 +108,18 @@ sixty consecutive days — is not one a ceiling can help with anyway.
 Usage:
     python3 wi/scripts/wi_coa_staleness.py --ceiling-days 60
     python3 wi/scripts/wi_coa_staleness.py --selftest   # offline, no API
+
+NOT GATED ON robots.txt: AUTHENTICATED READ OF THIS PROJECT'S OWN REPOSITORY.
+The fetch is api.github.com with this project's own token, asking whether
+Wisconsin's own weekly verification has actually run -- the API the token is
+issued for, about our own runs. No page is read and no link is followed, and
+that host's blanket rule addresses crawlers of the web interface rather than an
+account holder reading their own history.
+
+THE TEST IS WHOSE DATA AND WHOSE CREDENTIAL, never which host: an
+unauthenticated read of a page on github.com would be gated in full. Written
+out here rather than pointed at a sibling, so it cannot be borrowed by
+analogy.
 """
 
 import argparse

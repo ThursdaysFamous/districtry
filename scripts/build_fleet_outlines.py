@@ -62,6 +62,19 @@ SOURCES = {
     "wi": "wi/data/app/wi-state-outline.json",
     "ia": "ia/data/app/metro-outline.json",
     "mi": "mi/data/app/metro-outline.json",
+    # Minnesota's coverage ring IS its state outline — the instance ships one
+    # tier and its thirteen layers all answer statewide — so the dissolve of
+    # its 87 counties is the widest ground it answers on, the same shape as ia
+    # and mi.
+    "mn": "mn/data/app/metro-outline.json",
+    # Kentucky's coverage ring IS its state outline too: its four layers are the
+    # national tier and every one answers over the whole state, so the dissolve
+    # of its 120 counties is the widest ground it answers on. THE OUTLINE IS A
+    # MULTIPOLYGON and that matters here rather than being a detail: the Kentucky
+    # Bend — the part of Fulton County west of the Mississippi — is detached, so
+    # a reader in Tiptonville's neighbouring bend is covered by a ring the main
+    # body does not contain.
+    "ky": "ky/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

@@ -33,6 +33,16 @@ generator's INSTANCES as truth would make this gate agree with itself about a
 sixth instance nobody registered — the folder is the thing that exists, and
 every table is a claim about it.
 
+A THIRD MISS, SAME SHAPE, found 2026-10-01: nothing asked whether a live
+instance's monthly source check is SCHEDULED. Each instance ships its own
+validate_sources.py — the only thing that notices a publisher superseding a
+dataset the app hardcodes — and Minnesota's was never wired to a workflow, so
+its map sources went unchecked and every gate stayed green, because the checks
+only ever looked for jobs that EXIST. That had already happened once:
+wi-validate-sources.yml's own comment records Wisconsin's script existing
+complete with nothing scheduling it while CA and NY both had theirs. Twice is a
+rule, so check_source_job() asks it of every instance in the tree.
+
 WHAT IT DOES NOT CHECK. That a registered instance is CORRECT — that its
 worksheet path resolves, its compose targets are right, its smoke test passes.
 Other gates own those. This one asks only: does every surface know the
@@ -236,6 +246,65 @@ def check_workflow(expected):
                  % (WORKFLOW, label, sorted(extra)))
 
 
+# ILLINOIS HAS NO PER-INSTANCE COPY, and that is the one exception rather than a
+# looseness in the rule: the repo-root scripts/validate_sources.py IS Illinois's,
+# scheduled by .github/workflows/validate-sources.yml, and il/scripts/ carries no
+# validate_sources.py at all. Every other tag's script lives under its own folder.
+SOURCE_SCRIPT = {"il": os.path.join("scripts", "validate_sources.py")}
+WORKFLOW_DIR = os.path.join(".github", "workflows")
+SCHEDULE_KEY = re.compile(r"^\s*schedule:\s*$", re.M)
+CRON_KEY = re.compile(r"^\s*-\s*cron:\s*\S", re.M)
+
+
+def source_script(tag):
+    """The validate_sources.py this tag's monthly job has to run."""
+    return SOURCE_SCRIPT.get(tag, os.path.join(tag, "scripts",
+                                               "validate_sources.py"))
+
+
+def check_source_job(expected):
+    """Every instance's own source check must be run by a SCHEDULED workflow.
+
+    A script nothing schedules is indistinguishable from no script, and reads
+    worse: the file is there, so a reader looking for coverage finds it.
+    """
+    wf_dir = os.path.join(REPO_ROOT, WORKFLOW_DIR)
+    if not os.path.isdir(wf_dir):
+        fail("cannot read %s — the monthly source checks cannot be verified"
+             % WORKFLOW_DIR)
+        return
+    scheduled = {}
+    for name in sorted(os.listdir(wf_dir)):
+        if not name.endswith((".yml", ".yaml")):
+            continue
+        try:
+            src = read(os.path.join(WORKFLOW_DIR, name))
+        except OSError:
+            continue
+        # A workflow a person has to remember to press is not a plan, so the
+        # run must be on a cron rather than dispatch-only. BOTH KEYS ARE
+        # ANCHORED TO THEIR OWN LINE, and a first draft that merely searched for
+        # the words passed a workflow whose cron had been commented out — these
+        # files discuss their own schedules in prose, so an unanchored match
+        # reads a comment about a cron as a cron.
+        if not (SCHEDULE_KEY.search(src) and CRON_KEY.search(src)):
+            continue
+        for tag in expected:
+            if source_script(tag).replace(os.sep, "/") in src:
+                scheduled.setdefault(tag, name)
+    for tag in sorted(expected):
+        rel = source_script(tag)
+        if not os.path.isfile(os.path.join(REPO_ROOT, rel)):
+            fail("%s ships no %s, so nothing checks whether its map sources "
+                 "are still the ones its app reads" % (tag, rel))
+            continue
+        if tag not in scheduled:
+            fail("%s exists and no scheduled workflow runs it — %s's map "
+                 "sources are checked by nobody, and a publisher superseding a "
+                 "dataset would go unnoticed. Add a monthly workflow that runs "
+                 "it, as the other instances have." % (rel, tag))
+
+
 def main():
     expected = discovered_instances()
     if len(expected) < 2:
@@ -251,6 +320,7 @@ def main():
     check_tables(expected)
     check_manifest(expected)
     check_workflow(expected)
+    check_source_job(expected)
 
     if problems:
         for p in problems:
@@ -262,7 +332,8 @@ def main():
         sys.exit(1)
 
     print("validate-instance-registration: OK — %d instance(s) (%s) registered "
-          "in 5 table(s), metros.json and %d workflow list(s)"
+          "in 5 table(s), metros.json and %d workflow list(s), each with its own "
+          "source check on a schedule"
           % (len(expected), ", ".join(sorted(expected)), len(WORKFLOW_LISTS)))
 
 

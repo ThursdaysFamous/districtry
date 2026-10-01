@@ -517,7 +517,7 @@
   "negative_point": {
     "lat": 43.65,
     "lng": -93.37,
-    "note": "inside Minnesota (near Albert Lea), north of the Iowa land border (~43.50) and inside permalink_gate's maxLat (43.70) so the point is still selectable"
+    "note": "inside Minnesota (near Albert Lea), north of the Iowa land border (~43.50) and inside permalink_gate's maxLat (43.70) so the point is still selectable. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: sampling permalink_gate every 0.25 degrees and naming each point's state off TIGERweb, the ground it reaches outside Iowa's own ring is Minnesota, Wisconsin, Illinois, Missouri, Nebraska and South Dakota and nothing else — one live instance, one published dark, four states that could each take one later. Widening the gate to reach a seventh state would move a reader-facing \"where we serve\" bound to suit a test. So the point stays and the two checks that select it refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; Iowa asserts nothing about fleet routing."
   },
   "coverage_key": {
     "outside": "Outside Iowa"
@@ -660,13 +660,6 @@
         "max_features": 1,
         "dynamic_reference": true,
         "note": "Humboldt County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Humboldt County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
-        "file": "lucas-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Lucas County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Lucas County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
       },
       {
         "file": "pottawattamie-county-outline.json",
@@ -875,11 +868,21 @@
         "file": "ia-county-board-chairs.json",
         "min_keys": 33,
         "note": "Which supervisor chairs each county board, from two surfaces each county publishes itself: its board-of-supervisors page and its own board minutes. NO LIVE COUNT IS STATED HERE, because this one moves every week and a number written into a sentence is exactly what goes stale: the min_keys beside this entry is the page route's FLOOR, the shipped file's own total is printed by build_ia_county_chair.py on every run, and the reader-facing figure lives in one place only, the `ia-board-chair` gap record. CORRECTED 2026-09-21: this note said 43 of Iowa's 99 counties as of 2026-09-12, 38 from its board-of-supervisors page and 5 from its own board minutes, and was wrong twice over. 43 was a superseded total, since the file holds 38; and that 38 was the same total misread as the PAGE count, where the split ia/WATCH.md measured on 2026-09-18 is 33 from pages and 5 from minutes. The gap record and WATCH.md were both corrected in #1034 on 2026-09-19 and this note was missed, which is why it was the last place in the tree carrying 43. RE-MEASURED 2026-09-29: the file holds 43 again, having gone 38 to 43 on 2026-09-25 when five more counties began naming a chair — so the correction above is a true record of 2026-09-21 and today's 43 is a different 43, reached legitimately. The sentence in this layer's own `people` text went on claiming 43 AS OF 2026-09-12, a date on which the file held 38, and it was the last hand-typed copy of this count in the tree; it now states none, which is what this note already required. No statewide publisher records it: ISAC's directory, which is this app's source for the supervisors themselves, carries no chair field at all, and the chair is chosen by the board's own vote each January, so a one-time answer from 99 offices would be stale within the year — which is why this is a weekly re-scrape and not an ask. The `ia-board-chair` gap record had closed this as impossible on the ground that nothing could separate a real name from furniture like `Contact Information` or `Term Expires`; the separator was in the repo already, because a name that is not on that county's own supervisor roster is not a chair. Roster membership alone is NOT enough and an earlier attempt shipped a vice-chairman on it, so the pairing is structural: the role and the name must share the smallest DOM element that holds no OTHER supervisor, a role standing BEFORE a name is refused when a person-shaped phrase stands before it, and the two must sit within 30 characters (widest true pairing measured 28, tightest false one 84). Two further refusals came out of review: a chair QUALIFIED by another body is refused on a window cut backwards from the parent, and a pairing whose own term dates have expired is refused — the latter is why 35 shipped rather than 36 when that was measured, Mahaska's page dating itself two board terms ago — AND MAHASKA IS BACK, from its MINUTES: its board page is still stale and still refused, while its minutes are current and dated-filename, which is the whole argument for reading two surfaces rather than one. Boards-and-commissions pages are excluded outright — a supervisor's chairmanship of some other body is not evidence about the county board, which is how Des Moines County produced a wrong answer that all three structural tests passed. Of the 35 the page route shipped then, 19 were checkable against the county's own minutes and 19 agreed, none disagreed — which is what the MINUTES route was then built on. It reads the two most recent board minutes of counties the page route missed and RESOLVES six, requiring both documents to name the same chair — but ships FIVE (Cerro Gordo, Clinton, Dallas, Des Moines, Mahaska). JOHNSON RESOLVES AND DOES NOT SHIP: its minutes live on a Granicus portal whose robots.txt refuses `districtry` on every path, so the scraper asks before it fetches and never requests the page. The entry stays in the table, so the county re-enters by itself if that file changes. Its own trap is the flattened signature block: Des Moines County's `Shane McCampbell, Chair` / `Tom Broeker, Vice Chair` becomes one line in which the role has a name on BOTH sides, so an occurrence that resolves to two different members is refused and the attendance line settles it. Story County is refused on vocabulary rather than reach — three consecutive packets say `with Murken presiding` and never `chair`, and who gavelled a meeting is not who holds the office. The two routes are FLOORED SEPARATELY, because four counties is a tenth of this file and could collapse entirely behind the page route's healthy number; where the two disagree about a county the county is dropped rather than resolved by preferring a route. The card joins BY NAME so a chair who leaves the board stops rendering rather than sliding onto a successor. THE BOARD-PAGE SCRAPE GOT ITS OWN ROBOTS GATE ON 2026-09-06, which is why 34 ship where 35 did: Cherokee's site redirects /robots.txt to the Revize CMS, whose file ends `User-agent: * / Disallow: /`, so its page is no longer requested and its chair no longer ships. Hamilton is refused by the same vendor file and was never shipping. Both entries stay in the directory, so either re-enters by itself if that file changes. A COUNTY THAT GOES QUIET IS NOW REPORTED RATHER THAN SILENTLY DROPPED, and a narrow subset are carried: the builder reads the shipped file as an input and keeps a record only when this run's verdict was `unreachable` — the one verdict meaning we could not ASK — never on a robots refusal, never past 60 days from the record's own `confirmedOn`, never across a 1 January board reorganisation, and never for a name that has left the county's supervisor roster. A carried county counts toward neither route's floor. This exists because the 2026-09-08 run dropped Clayton and its log could not say why: the scrape printed a line only for a county it RESOLVED, so a county that left the file was visible only as a summary count that moved. Clayton's page names Ray Peterson as chairperson to this project's own client and did on the day it was dropped; the county sits behind Cloudflare, which answers one caller and not another. Both scrapers now print every county's verdict. Built by ia/scripts/ia_county_chair_scraper.py + ia_county_minutes_chair_scraper.py + build_ia_county_chair.py, refreshed weekly by update-ia-county-chair-roster.yml."
+      },
+      {
+        "file": "ia-township-officers.json",
+        "min_keys": 180,
+        "note": "The township clerks and trustees TWELVE IOWA COUNTIES publish for the 186 townships inside them -- 617 officials, 181 of them with a phone number. THIS CLOSES A CLAIM THE APP ITSELF WAS MAKING: the County Subdivision card read 'no statewide roster of township officers was found in the research pass', which was true about a STATEWIDE roster and was read as there being no roster anywhere, while twelve counties were publishing one the whole time -- all twelve at the same path under their own county site (/about/elected_officials/township/), none of which this instance had ever requested. A statewide absence and a per-county absence are different measurements. TWO MARKUP SHAPES, SIX COUNTIES EACH, and the first parser knew only one: six wrap each officer in a div the CMS calls offContact4x offContactName and six use a bare offInfo div, so a parser written against either shape returns six counties and zero officials for the other six -- the row pattern is wrapper-agnostic for that reason (a bolded name, then a break, then the role) and the selftest asserts BOTH arms. NO ADDRESS IS EVER READ FROM THESE PAGES: they publish officers' HOME addresses, so the builder refuses to write any field that reads as a street address, per-field and again over the whole record. Keyed by TIGER county-subdivision GEOID so the card joins a township by its own identity rather than by its name, which also settles Cerro Gordo's Clear Lake, where a township and a city share one BASENAME -- only records whose NAME is the BASENAME plus ' township' are indexed, the same suffix the card itself reads. One alias is recorded (Crawford's Nishnabotna for the census's Nishnabotny) and every township matches exactly one census record, 186 of 186, or the build refuses to write. FOUR PUBLISHED NAMES CARRY UNUSUAL PUNCTUATION AND SHIP VERBATIM, printed on every run rather than corrected or dropped: a comma where an initial's period belongs, a curly apostrophe, a parenthesised familiar name and a quoted nickname. A person's name is theirs as published. NOT a statewide roster and never to be described as one: Iowa has roughly 1,600 civil townships, so about 1,400 name nobody in this app and the card says so on every one of them (ia-township-officers gap record). Cerro Gordo alone publishes whether each township's officers were elected or appointed, which sits on the township rather than on the person because that is the scope of what the county stated. Built by ia/scripts/ia_township_officers_scraper.py + build_ia_township_officers.py, refreshed weekly by update-ia-township-officers-roster.yml."
+      },
+      {
+        "file": "ia-city-councils.json",
+        "min_keys": 14,
+        "note": "The mayor and council of the FOURTEEN IOWA CITIES ABOVE 25,000 that named nobody in this app before 2026-10-01 -- 96 officeholders, 47 with an e-mail, 47 with a phone and 61 with a ward, district or at-large seat. Iowa has eighteen cities over 25,000; Des Moines and Waterloo were already answered by ward and Cedar Rapids and Des Moines by their own builders, and these fourteen published nothing, which was the whole of what this instance was missing at the local-government level of the done standard's Covered test. A SEPARATE FILE FROM ia-city-officials.json ON PURPOSE: that one holds five SMALL cities under global gates (six seats each, exactly one plain Mayor, an e-mail for everyone) and not one of those holds here -- Davenport seats ten, Sioux City five, Council Bluffs publishes no member e-mail at all -- so admitting these fourteen would have retired the gates protecting the five. Every declaration is PER CITY and every one is a measurement of that city's own page taken 2026-10-01. NINE CONVENTIONS FOR FOURTEEN CITIES AND THE PLATFORM PREDICTS NONE OF THEM: Ankeny, Marshalltown, Urbandale, Sioux City and Council Bluffs run the SAME content system and need five different parsers, Davenport writes `Seat, Name` where Marshalltown writes `Name, Seat`, and Cedar Falls writes `Name-Seat` for its wards and `At Large-Name` for its at-large members in one list, so the side is decided per row. THREE CITIES PUBLISH THEIR MEMBERS' HOME ADDRESSES (Bettendorf, Dubuque, Ottumwa) and none of them ships: the scraper reads name, role, seat, phone, e-mail and term only, and the builder refuses to write any field that reads as a street address, per field and over the whole record. TWO CITIES NAME NO MAYOR anywhere this project has read -- Davenport, whose own Mayor's Office page carries the office's address and telephone and no person, and Cedar Falls, whose /67/Mayor path answers 404 -- so both carry namesMayor false and the card says the mayor is missing here rather than absent in the city. NOT EVERY PERSON ON A COUNCIL PAGE IS ON THE COUNCIL: Ames' Iowa State ex-officio, Council Bluffs' Assistant to the Mayor and Iowa City's student liaison are each dropped WITH THEIR NAME PRINTED, never silently, because a title that stops matching looks exactly like a person who left. A PHONE EVERY MEMBER SHARES IS THE OFFICE'S and is dropped -- Council Bluffs prints one council-office number beside all five members. Three cities answer only a browser client (Iowa City, Marion, West Des Moines) and their robots.txt is read with that same client, which is the consistency rule and not an escalation. A member's ward is NAMED and not DRAWN: this app draws city wards in Des Moines and Waterloo only. Built by ia/scripts/ia_city_council_scraper.py + build_ia_city_councils.py, refreshed weekly by update-ia-city-councils-roster.yml."
       }
     ]
   },
   "sw": {
-    "cache_name": "districtry-ia-shell-v14",
+    "cache_name": "districtry-ia-shell-v16",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
@@ -962,6 +965,16 @@
       "schedule": "Thu 20:30 UTC"
     },
     {
+      "file": "update-ia-township-officers-roster.yml",
+      "purpose": "the township clerks and trustees twelve Iowa counties publish for the 186 townships inside them (of roughly 1,600 statewide \u2014 no statewide publisher names a township officer)",
+      "schedule": "Sat 19:30 UTC"
+    },
+    {
+      "file": "update-ia-city-councils-roster.yml",
+      "purpose": "the mayor and council of the fourteen Iowa cities above 25,000 that published nobody in this app before 2026-10-01 (of eighteen such cities \u2014 Des Moines and Waterloo answer by ward and Cedar Rapids by its own builder)",
+      "schedule": "Sat 20:30 UTC"
+    },
+    {
       "file": "ia-validate-sources.yml",
       "purpose": "source freshness (IA manifest: TIGERweb, congress-legislators, Open States, legis.iowa.gov)",
       "schedule": "1st of month 15:00 UTC"
@@ -1032,83 +1045,21 @@
     ]
   },
   "metro_explorers": [
-    {
-      "id": "chicago",
-      "label": "Illinois",
-      "url": "https://districtry.com/il/",
-      "emoji": "🌭",
-      "explorer_name": "districtry Illinois",
-      "bbox": {
-        "minLng": -91.52,
-        "minLat": 36.96,
-        "maxLng": -87.01,
-        "maxLat": 42.51
-      }
-    },
-    {
-      "id": "nyc",
-      "label": "New York",
-      "url": "https://districtry.com/ny/",
-      "emoji": "🗽",
-      "explorer_name": "districtry New York",
-      "bbox": {
-        "minLng": -79.82,
-        "minLat": 40.43,
-        "maxLng": -71.62,
-        "maxLat": 45.07
-      }
-    },
-    {
-      "id": "sf",
-      "label": "San Francisco",
-      "url": "https://districtry.com/ca/",
-      "emoji": "🌉",
-      "explorer_name": "districtry San Francisco",
-      "bbox": {
-        "minLng": -122.6,
-        "minLat": 37.6,
-        "maxLng": -122.3,
-        "maxLat": 37.95
-      }
-    },
-    {
-      "id": "wisconsin",
-      "label": "Wisconsin",
-      "url": "https://districtry.com/wi/",
-      "emoji": "🧀",
-      "explorer_name": "districtry Wisconsin",
-      "bbox": {
-        "minLng": -92.89,
-        "minLat": 42.49,
-        "maxLng": -86.25,
-        "maxLat": 47.31
-      }
-    },
-    {
-      "id": "iowa",
-      "label": "Iowa",
-      "url": "https://districtry.com/ia/",
-      "emoji": "🌽",
-      "explorer_name": "districtry Iowa",
-      "bbox": {
-        "minLng": -96.64,
-        "minLat": 40.37,
-        "maxLng": -90.14,
-        "maxLat": 43.5
-      }
-    },
-    {
-      "id": "michigan",
-      "label": "Michigan",
-      "url": "https://districtry.com/mi/",
-      "emoji": "🚗",
-      "explorer_name": "districtry Michigan",
-      "bbox": {
-        "minLng": -87.6,
-        "minLat": 41.7,
-        "maxLng": -82.11,
-        "maxLat": 48.01
-      }
-    }
+    { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
+      "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },
+    { "id": "nyc", "label": "New York", "url": "https://districtry.com/ny/", "emoji": "🗽", "explorer_name": "districtry New York",
+      "bbox": { "minLng": -79.82, "minLat": 40.43, "maxLng": -71.62, "maxLat": 45.07 } },
+    { "id": "sf", "label": "San Francisco", "url": "https://districtry.com/ca/", "emoji": "🌉", "explorer_name": "districtry San Francisco",
+      "bbox": { "minLng": -122.6, "minLat": 37.6, "maxLng": -122.3, "maxLat": 37.95 } },
+    { "id": "wisconsin", "label": "Wisconsin", "url": "https://districtry.com/wi/", "emoji": "🧀", "explorer_name": "districtry Wisconsin",
+      "bbox": { "minLng": -92.89, "minLat": 42.49, "maxLng": -86.25, "maxLat": 47.31 } },
+    { "id": "iowa", "label": "Iowa", "url": "https://districtry.com/ia/", "emoji": "🌽", "explorer_name": "districtry Iowa",
+      "bbox": { "minLng": -96.64, "minLat": 40.37, "maxLng": -90.14, "maxLat": 43.5 } },
+    { "id": "michigan", "label": "Michigan", "url": "https://districtry.com/mi/", "emoji": "🚗", "explorer_name": "districtry Michigan",
+      "bbox": { "minLng": -87.6, "minLat": 41.7, "maxLng": -82.11, "maxLat": 48.01 } },
+    { "id": "minnesota", "label": "Minnesota", "url": "https://districtry.com/mn/", "emoji": "🛶", "explorer_name": "districtry Minnesota",
+      "bbox": { "minLng": -97.3, "minLat": 43.44, "maxLng": -89.58, "maxLat": 49.44 } },
+    { "id": "kentucky", "label": "Kentucky", "url": "https://districtry.com/ky/", "emoji": "🐎", "explorer_name": "districtry Kentucky",
+      "bbox": { "minLng": -89.62, "minLat": 36.45, "maxLng": -81.91, "maxLat": 39.2 } }
   ]
 }

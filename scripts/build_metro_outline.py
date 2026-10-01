@@ -96,6 +96,9 @@ import math
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
+
 # `requests` is imported INSIDE fetch_counties() and fetch_state() rather than
 # here. Those two are the only uses in this file and both are the TIGERweb
 # build path; the --check path never calls either, and `import requests` at
@@ -1572,6 +1575,8 @@ def fetch_counties():
     import requests
     where = "STATE='%s' AND COUNTY IN (%s)" % (
         STATE_FIPS, ",".join("'%s'" % c for c in METRO_COUNTY_FIPS))
+    require_robots_once(TIGERWEB, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-metro-outline")
     resp = requests.get(TIGERWEB, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": where,
         "outFields": "NAME,GEOID",
@@ -1595,6 +1600,8 @@ def fetch_state():
     county half already uses; one feature is expected and anything else means
     the service moved."""
     import requests
+    require_robots_once(TIGERWEB_STATE, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-metro-outline")
     resp = requests.get(TIGERWEB_STATE, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "STATE='%s'" % STATE_FIPS,
         "outFields": "NAME",

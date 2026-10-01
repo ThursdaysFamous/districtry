@@ -37,10 +37,13 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_X11_128  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_ROSTER_BOT,
+    require_robots_once,
+)
 
 SOURCE_URL = "https://co.cass.il.us/elected-officials/cass-county-board"
-UA = {"User-Agent": UA_CHROME_X11_128}
+UA = {"User-Agent": UA_ROSTER_BOT}
 
 HEADING_RE = re.compile(r"District\s+No\.\s*(\d+)", re.I)
 CHAIR_RE = re.compile(r"Chairman of the Cass County Board:\s*(.+)$", re.I)
@@ -79,6 +82,8 @@ def name_keys(name):
 
 
 def main():
+    require_robots_once(SOURCE_URL, UA["User-Agent"], headers=UA,
+                        label="il-cass-county-board-scraper")
     resp = requests.get(SOURCE_URL, headers=UA, timeout=60)
     resp.raise_for_status()
     lines = text_lines(resp.text)

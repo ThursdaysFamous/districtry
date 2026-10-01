@@ -41,6 +41,10 @@ import re
 import sys
 import time
 import urllib.request
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_OUT = os.path.join(SCRIPT_DIR, ".cache", "rusd_school_board_raw.json")
@@ -58,6 +62,8 @@ def fetch(url, tries=4, timeout=90):
     last = None
     for i in range(tries):
         try:
+            require_robots_once(url, UA["User-Agent"],
+                                headers=UA, label="wi-rusd-school-board-scraper")
             req = urllib.request.Request(url, headers=UA)
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 return r.read().decode("utf-8", "replace")

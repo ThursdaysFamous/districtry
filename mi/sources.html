@@ -1069,7 +1069,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">15 layers — 6 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">18 layers — 8 political and legislative, 2 public safety, 3 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1078,7 +1078,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">8 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1086,6 +1086,17 @@ table.matrix code {
               <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
             </thead>
             <tbody>
+              <tr id="layer-mi-court-of-appeals">
+                <th scope="row"><span class="layer-name">Court of Appeals District</span><code>mi-court-of-appeals</code></th>
+                <td data-label="What it answers">The Court of Appeals district covering the point, how many counties it spans, and how its judges are chosen. It names no judge yet, and says why.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-302" target="_blank" rel="noopener">Derived county unions — no agency publishes Michigan's appellate districts as geometry (an ArcGIS Online catalogue search answered ten queries with no government court layer, measured 2026-10-01), so no new line is drawn: each district is a union of whole counties from the app's own TIGERweb county file, as MCL 600.302 lists them, witnessed county for county by the Michigan Manual 2025-2026 (pp. 453-454). Built by mi/scripts/build_mi_courts.py.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO JUDGE IS NAMED, and that is a measurement. The state court system's own site, www.courts.michigan.gov, publishes `User-agent: *` / `Disallow: /`, so this project does not read it; the one statewide list this project can read is the Michigan Manual 2025-2026, a December 2025 snapshot printed every two years, and a list that old cannot say who sits today. Recorded as gap mi-judge-roster.</td>
+                <td data-label="Where it applies">Michigan — statewide, all 83 counties across 4 districts.</td>
+              </tr>
               <tr id="layer-us-house">
                 <th scope="row"><span class="layer-name">U.S. House</span><code>us-house</code></th>
                 <td data-label="What it answers">The U.S. House district covering the point, and the representative holding it.</td>
@@ -1107,6 +1118,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">mi-senate-members.json, rebuilt weekly by CI — the Open States current-people export (name, party, e-mail, personal site) merged with the Michigan Senate's own all-senators directory, which publishes a Capitol phone, e-mail, office building and contact page for all 38 seats. Open States carries no capitol address or phone for any Michigan legislator (measured 0 of 148), so that contact block comes entirely from the Senate's own directory.</td>
                 <td data-label="Where it applies">Michigan — statewide, all 38 districts.</td>
+              </tr>
+              <tr id="layer-mi-circuit-court">
+                <th scope="row"><span class="layer-name">Circuit Court</span><code>mi-circuit-court</code></th>
+                <td data-label="What it answers">The circuit court whose judges serve the point — Michigan's trial court for serious criminal cases, larger civil cases and family matters — the counties it covers, and how its judges are chosen. It names no judge yet, and says why.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-502" target="_blank" rel="noopener">Derived county unions — no agency publishes circuit geometry (measured 2026-10-01), so no new line is drawn: each circuit is a union of whole counties from the app's own TIGERweb county file, as MCL 600.502-600.549i list them (one section per circuit), witnessed by the Michigan Manual 2025-2026 (pp. 468-469 and 471-472). Five sections are written conditionally (5th/56th, 33rd/57th, 40th/54th); the Manual shows the split form in force, with a judge seated in each, and that is what is drawn. Built by mi/scripts/build_mi_courts.py.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO JUDGE IS NAMED, for the reason the Court of Appeals row gives: the court system's own site asks automated tools not to read it, and the Michigan Manual's December 2025 list is a dated snapshot. Recorded as gap mi-judge-roster.</td>
+                <td data-label="Where it applies">Michigan — statewide, all 83 counties across 57 circuits.</td>
               </tr>
               <tr id="layer-mi-house">
                 <th scope="row"><span class="layer-name">Michigan House District</span><code>mi-house</code></th>
@@ -1132,15 +1154,20 @@ table.matrix code {
               </tr>
               <tr id="layer-city-ward">
                 <th scope="row"><span class="layer-name">City Council District</span><code>city-ward</code></th>
-                <td data-label="What it answers">Which city council or commission district you live in, in the two Michigan cities that publish their own boundaries — Detroit's seven council districts and Grand Rapids's three commission wards — and who represents you in it.</td>
+                <td data-label="What it answers">Which city council or commission district you live in, in the Michigan cities whose council boundaries this app can draw — Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson — and who represents you in it where the city publishes that.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/city_council_districts_2026/FeatureServer/0" target="_blank" rel="noopener">City of Detroit — &quot;Detroit City Council Districts 2026&quot;, from the city's own ArcGIS org, pre-built and shipped with the app. THE CITY PUBLISHES FOUR COUNCIL-DISTRICT BOUNDARY SERVICES and their names do not settle which is in force: one titled &quot;Current&quot; dating from 2016, one named for 2026, one named for 2013 that was CREATED in December 2025, and NewDistrictBoundariesOption6, which reads like a rejected draft and is the same plan redigitised (99.575% point agreement, measured) — it is the one whose own description names the adoption. The plan was approved by the Council on 2024-02-06 and took effect on 2026-01-01, both stated in this service's own description. The builder decides it by measurement — &quot;Current&quot; carries geometry identical to the 2026 service and different from the 2013 one, and against Census 2020 blocks the shipped plan runs 87,393-94,820 against a 91,302 ideal (worst 4.28%) where the archived plan runs 78,966-100,623 (13.51%), which is what a plan drawn on the 2010 census looks like now. Both comparisons are gates in both directions. The seven districts sum to 639,111 — Detroit's Census 2020 population exactly — so they tile the city with no block double-counted or missed. The item carries no licenceInfo and is shared public by the city.</a></li>
                     <li><a href="https://services2.arcgis.com/L81TiOwAPO1ZvU9b/arcgis/rest/services/CGR_Wards/FeatureServer/0" target="_blank" rel="noopener">City of Grand Rapids — &quot;Boundaries - City of Grand Rapids Wards&quot; (CGR_Wards), from the city's own ArcGIS org, pre-built and shipped with the app. THE CITY PUBLISHES EIGHT WARD SERVICES AND NONE IS A NEWER PLAN, measured 2026-09-05 by sweeping all 681 of the org's feature services rather than the first 100 (which is how an earlier version of this note said two). Three are 100.000% identical to what ships, one differs only at the perimeter, and three are SINGLE wards rather than rival plans — each agreeing with its own shipped ward. The build gates on the one sibling that has tracked this service byte for byte. THE CURRENCY QUESTION WAS REAL AND IS ANSWERED BY MEASUREMENT: the geometry was last edited 2018-01-24, before the census it is checked against, while the item description claims it is &quot;maintained to reflect the most current adopted ward configuration&quot;. Michigan's own 2026 voting-precinct layer assigns each of the city's 59 precincts to a ward (20/20/19), and dissolved by that column it agrees with these polygons on 99.575% of 4,000 points — two independent publishers drawing the same three lines, so 2018 means unchanged rather than stale. That comparison is a gate. Against Census 2020 the three wards run 64,400-68,716 on a 66,328 ideal (worst 3.60%). Unlike Detroit the population identity is NOT exact and is not claimed to be: 21 of 2,883 blocks fall on one side of the ward outline and the other side of the Census place outline, a +66 difference against 198,917, which is two digitisations of one city edge. The item's licence is a use agreement conditioning use on carrying the city's disclaimer; the card quotes the sentences of that agreement that describe the DATA, in the city's own words and order rather than paraphrasing them, with the one cut (its two acceptance sentences, addressed to whoever accesses the data rather than to a reader) marked by an ellipsis. The builder ASSERTS every segment of that quotation against the live licenceInfo on each run, so a reworded agreement fails the build rather than leaving the card quoting words the city has stopped saying.</a></li>
+                    <li><a href="https://services8.arcgis.com/oGUlQVwqEiX7aF12/arcgis/rest/services/Warren_Council_Wards_2023/FeatureServer" target="_blank" rel="noopener">City of Warren — &quot;Council Wards 2023&quot;, from the city's own ArcGIS account, pre-built and shipped with the app. The ward layer sits at service index 32, and the builder reads the service root rather than assuming /0. Currency is checked against the state's own 2026 precincts.</a></li>
+                    <li><a href="https://services2.arcgis.com/5ckbIY7K9TUKoseK/arcgis/rest/services/Wards22/FeatureServer" target="_blank" rel="noopener">City of Flint — &quot;Wards22&quot;, the plan effective 2 August 2022, from the city's own ArcGIS org, pre-built and shipped with the app. Two other layers in the same org carry the older 2012 plan under newer-sounding names, so the builder decides by measurement against the state's own 2026 precincts rather than by name.</a></li>
+                    <li><a href="https://gis.rochesterhills.org/server/rest/services/ElectoralDistricts/Election_Dataset/MapServer" target="_blank" rel="noopener">City of Rochester Hills — the city's own ArcGIS Server (Election_Dataset), pre-built and shipped with the app. The city publishes the four council districts; its council roster is on a website whose robots.txt asks automated visitors not to read it, so the card names the district only.</a></li>
+                    <li><a href="https://services6.arcgis.com/cuKwt0IKP5B84jop/arcgis/rest/services/Wards_BC/FeatureServer/0" target="_blank" rel="noopener">City of Battle Creek — &quot;Wards_BC&quot;, from the city's own ArcGIS org, pre-built and shipped with the app.</a></li>
+                    <li><a href="https://gis.mijackson.org/countygis/rest/services/Voting/VotingPrecincts/MapServer/0" target="_blank" rel="noopener">Jackson County — the county's own voting-precinct layer, from which the City of Jackson's six wards are COMPOSED by dissolving its ten precincts on the county's WARD column. The city publishes no ward map of its own. The state's 2026 precincts are an independent check: both publishers assign the precincts to wards identically, and the six wards add up to the city's Census 2020 population exactly.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">The nine members of Detroit's City Council, from the council's own page at detroitmi.gov — seven by district and two at large, per the 2012 charter Art. 4 §4-101. THE LIVE PAGE REFUSES THIS CLIENT: detroitmi.gov sits behind a Cloudflare managed challenge on both the plain and the client-hints rungs, and this project does not defeat a challenge, so the roster is read from the Internet Archive's copy of that same page — the fleet's terminal fetch rung, in weekly use for Kendall and McHenry since 2026-07 — and the card states which day's copy it read. A snapshot older than 45 days is refused rather than served. NO PER-MEMBER phone or e-mail ships: neither the listing nor a member's own profile page carries a single mailto: or tel: link, measured on both, and that absence is the gap detroit-council-contact. The BODY's own office does ship — City Council Office, 2 Woodward Ave. Suite 1340, (313) 224-3443, published once for the whole Council — rendered for the body under the switchboard rule rather than attached to any member. mvic.sos.state.mi.us is challenged the same way; data.detroitmi.gov is NOT (it answers 200 with a readable robots.txt, and an earlier version of this note said otherwise on the strength of one substring match). Detroit's Legistar is abandoned since 2017 and never carried a district in OfficeRecordTitle even while maintained, where Milwaukee's carries &quot;3rd District&quot; in that same field — test a vendor by content per city, never by its name; its Persons table also flags all 45 records active, five of them system accounts. GRAND RAPIDS: the city's own City Commission pages, which are readable — www.grandrapidsmi.gov answers 200 and its robots.txt permits /government/ — so there is no archive hop here. The city states its own arithmetic (&quot;This legislative body consists of the Mayor and six Commissioners... The residents of each Ward directly elect two commissioners&quot;), and publishes SIX of those seven seats: one Ward 1 commissioner where Wards 2 and 3 each have two. THAT SEAT IS VACANT AND THE CITY SAYS SO OFF THE COMMISSION PAGE — its news post of 2026-04-17 states the vacancy &quot;was created following the resignation of former Commissioner Drew Robbins&quot;; an earlier version of this note said the city stated nothing, having measured only the commission page. No city source found states how the vacancy was resolved, so the card names the vacancy and its cause and stops there. The roster carries `seats` and `seatsPerWard` beside its members and a `vacancies` map KEYED BY WARD, so the card accounts for the seventh seat rather than concealing it or inventing a name — the Alexander County machinery, used here for the first time on a districted body. The cause is data, not prose: it was a ward-agnostic string literal in the card at first, on a row that fires for any ward short of its seats, so a later Ward 2 or 3 vacancy would have rendered Ward 1's predecessor by name on the wrong card. A ward that is short with no verified cause gets the neutral sentence instead, which stays true whatever caused it. Each member's own page supplies their ward, e-mail and direct phone; THE E-MAIL DOMAIN IS grcity.us AND NOT THE WEBSITE'S, so a scraper keyed to the site's own hostname finds none. 616.456.3000 is on every member's page and is the city switchboard, DETECTED as the number common to all of them and hoisted to the body rather than hardcoded.</td>
-                <td data-label="Where it applies">Detroit and Grand Rapids only — the two Michigan cities that publish their own council boundaries. Outside both the layer hides itself.</td>
+                <td data-label="Where it applies">Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson only. Outside those cities the layer hides itself.</td>
               </tr>
               <tr id="layer-precinct">
                 <th scope="row"><span class="layer-name">Precinct</span><code>precinct</code></th>
@@ -1195,7 +1222,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="schools">
-        <h2>Schools <span class="matrix-count">2 layers</span></h2>
+        <h2>Schools <span class="matrix-count">3 layers</span></h2>
         <p class="matrix-blurb">The district, the attendance zone, and the schools nearest the point.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1203,6 +1230,17 @@ table.matrix code {
               <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
             </thead>
             <tbody>
+              <tr id="layer-mi-isd">
+                <th scope="row"><span class="layer-name">Intermediate School District</span><code>mi-isd</code></th>
+                <td data-label="What it answers">The intermediate school district (ISD, RESA, ESA or ESD) covering the point — the regional school district that serves the local districts inside it — and how its board is chosen.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://services3.arcgis.com/dxRQUfTDNtfqZ301/arcgis/rest/services/IntermediateSchoolDistrict/FeatureServer/0" target="_blank" rel="noopener">State of Michigan, DTMB Center for Shared Solutions — Michigan Geographic Framework &quot;Intermediate School Districts&quot; (version V26, 56 features, last edited 2026-03-03), on the state's open-data hub; its licence reads &quot;This dataset is a public record and ... there are no restrictions on the use, reproduction, or distribution of this dataset.&quot; Pre-built by mi/scripts/build_mi_isd_districts.py (Douglas-Peucker, 50 m, 2,000-point agreement gate at 100.00%). The framework is land-only, so a point out on a Great Lake is in no ISD.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO BOARD MEMBER IS NAMED. An ISD board is normally elected by one representative from each local school board (MCL 380.614), not by voters; a district whose voters approved it elects its board at the ballot instead (MCL 380.615-617). No statewide roster of ISD board members was found, and the layer carries no people, so the card says how the board is chosen and links the district.</td>
+                <td data-label="Where it applies">Michigan — statewide, every part of the state's land, 56 districts.</td>
+              </tr>
               <tr id="layer-school-district-unified">
                 <th scope="row"><span class="layer-name">School District (Unified)</span><code>school-district-unified</code></th>
                 <td data-label="What it answers">The unified (K-12) school district covering the point.</td>
@@ -1315,6 +1353,28 @@ table.matrix code {
   "dataset": [
     {
       "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-mi-court-of-appeals",
+      "identifier": "mi-court-of-appeals",
+      "name": "Court of Appeals District",
+      "description": "The Court of Appeals district covering the point, how many counties it spans, and how its judges are chosen. It names no judge yet, and says why. NO JUDGE IS NAMED, and that is a measurement. The state court system's own site, www.courts.michigan.gov, publishes `User-agent: *` / `Disallow: /`, so this project does not read it; the one statewide list this project can read is the Michigan Manual 2025-2026, a December 2025 snapshot printed every two years, and a list that old cannot say who sits today. Recorded as gap mi-judge-roster.",
+      "url": "https://districtry.com/mi/sources.html#layer-mi-court-of-appeals",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Derived county unions — no agency publishes Michigan's appellate districts as geometry (an ArcGIS Online catalogue search answered ten queries with no government court layer, measured 2026-10-01), so no new line is drawn: each district is a union of whole counties from the app's own TIGERweb county file, as MCL 600.302 lists them, witnessed county for county by the Michigan Manual 2025-2026 (pp. 453-454). Built by mi/scripts/build_mi_courts.py.",
+          "url": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-302"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, all 83 counties across 4 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
       "@id": "https://districtry.com/mi/sources.html#dataset-us-house",
       "identifier": "us-house",
       "name": "U.S. House",
@@ -1355,6 +1415,50 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Michigan — statewide, all 38 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-mi-circuit-court",
+      "identifier": "mi-circuit-court",
+      "name": "Circuit Court",
+      "description": "The circuit court whose judges serve the point — Michigan's trial court for serious criminal cases, larger civil cases and family matters — the counties it covers, and how its judges are chosen. It names no judge yet, and says why. NO JUDGE IS NAMED, for the reason the Court of Appeals row gives: the court system's own site asks automated tools not to read it, and the Michigan Manual's December 2025 list is a dated snapshot. Recorded as gap mi-judge-roster.",
+      "url": "https://districtry.com/mi/sources.html#layer-mi-circuit-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Derived county unions — no agency publishes circuit geometry (measured 2026-10-01), so no new line is drawn: each circuit is a union of whole counties from the app's own TIGERweb county file, as MCL 600.502-600.549i list them (one section per circuit), witnessed by the Michigan Manual 2025-2026 (pp. 468-469 and 471-472). Five sections are written conditionally (5th/56th, 33rd/57th, 40th/54th); the Manual shows the split form in force, with a judge seated in each, and that is what is drawn. Built by mi/scripts/build_mi_courts.py.",
+          "url": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-502"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, all 83 counties across 57 circuits"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-mi-isd",
+      "identifier": "mi-isd",
+      "name": "Intermediate School District",
+      "description": "The intermediate school district (ISD, RESA, ESA or ESD) covering the point — the regional school district that serves the local districts inside it — and how its board is chosen. NO BOARD MEMBER IS NAMED. An ISD board is normally elected by one representative from each local school board (MCL 380.614), not by voters; a district whose voters approved it elects its board at the ballot instead (MCL 380.615-617). No statewide roster of ISD board members was found, and the layer carries no people, so the card says how the board is chosen and links the district.",
+      "url": "https://districtry.com/mi/sources.html#layer-mi-isd",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "State of Michigan, DTMB Center for Shared Solutions — Michigan Geographic Framework \"Intermediate School Districts\" (version V26, 56 features, last edited 2026-03-03), on the state's open-data hub; its licence reads \"This dataset is a public record and ... there are no restrictions on the use, reproduction, or distribution of this dataset.\" Pre-built by mi/scripts/build_mi_isd_districts.py (Douglas-Peucker, 50 m, 2,000-point agreement gate at 100.00%). The framework is land-only, so a point out on a Great Lake is in no ISD.",
+          "url": "https://services3.arcgis.com/dxRQUfTDNtfqZ301/arcgis/rest/services/IntermediateSchoolDistrict/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, every part of the state's land, 56 districts"
       }
     },
     {
@@ -1516,7 +1620,7 @@ table.matrix code {
       "@id": "https://districtry.com/mi/sources.html#dataset-city-ward",
       "identifier": "city-ward",
       "name": "City Council District",
-      "description": "Which city council or commission district you live in, in the two Michigan cities that publish their own boundaries — Detroit's seven council districts and Grand Rapids's three commission wards — and who represents you in it. The nine members of Detroit's City Council, from the council's own page at detroitmi.gov — seven by district and two at large, per the 2012 charter Art. 4 §4-101. THE LIVE PAGE REFUSES THIS CLIENT: detroitmi.gov sits behind a Cloudflare managed challenge on both the plain and the client-hints rungs, and this project does not defeat a challenge, so the roster is read from the Internet Archive's copy of that same page — the fleet's terminal fetch rung, in weekly use for Kendall and McHenry since 2026-07 — and the card states which day's copy it read. A snapshot older than 45 days is refused rather than served. NO PER-MEMBER phone or e-mail ships: neither the listing nor a member's own profile page carries a single mailto: or tel: link, measured on both, and that absence is the gap detroit-council-contact. The BODY's own office does ship — City Council Office, 2 Woodward Ave. Suite 1340, (313) 224-3443, published once for the whole Council — rendered for the body under the switchboard rule rather than attached to any member. mvic.sos.state.mi.us is challenged the same way; data.detroitmi.gov is NOT (it answers 200 with a readable robots.txt, and an earlier version of this note said otherwise on the strength of one substring match). Detroit's Legistar is abandoned since 2017 and never carried a district in OfficeRecordTitle even while maintained, where Milwaukee's carries \"3rd District\" in that same field — test a vendor by content per city, never by its name; its Persons table also flags all 45 records active, five of them system accounts. GRAND RAPIDS: the city's own City Commission pages, which are readable — www.grandrapidsmi.gov answers 200 and its robots.txt permits /government/ — so there is no archive hop here. The city states its own arithmetic (\"This legislative body consists of the Mayor and six Commissioners... The residents of each Ward directly elect two commissioners\"), and publishes SIX of those seven seats: one Ward 1 commissioner where Wards 2 and 3 each have two. THAT SEAT IS VACANT AND THE CITY SAYS SO OFF THE COMMISSION PAGE — its news post of 2026-04-17 states the vacancy \"was created following the resignation of former Commissioner Drew Robbins\"; an earlier version of this note said the city stated nothing, having measured only the commission page. No city source found states how the vacancy was resolved, so the card names the vacancy and its cause and stops there. The roster carries `seats` and `seatsPerWard` beside its members and a `vacancies` map KEYED BY WARD, so the card accounts for the seventh seat rather than concealing it or inventing a name — the Alexander County machinery, used here for the first time on a districted body. The cause is data, not prose: it was a ward-agnostic string literal in the card at first, on a row that fires for any ward short of its seats, so a later Ward 2 or 3 vacancy would have rendered Ward 1's predecessor by name on the wrong card. A ward that is short with no verified cause gets the neutral sentence instead, which stays true whatever caused it. Each member's own page supplies their ward, e-mail and direct phone; THE E-MAIL DOMAIN IS grcity.us AND NOT THE WEBSITE'S, so a scraper keyed to the site's own hostname finds none. 616.456.3000 is on every member's page and is the city switchboard, DETECTED as the number common to all of them and hoisted to the body rather than hardcoded.",
+      "description": "Which city council or commission district you live in, in the Michigan cities whose council boundaries this app can draw — Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson — and who represents you in it where the city publishes that. The nine members of Detroit's City Council, from the council's own page at detroitmi.gov — seven by district and two at large, per the 2012 charter Art. 4 §4-101. THE LIVE PAGE REFUSES THIS CLIENT: detroitmi.gov sits behind a Cloudflare managed challenge on both the plain and the client-hints rungs, and this project does not defeat a challenge, so the roster is read from the Internet Archive's copy of that same page — the fleet's terminal fetch rung, in weekly use for Kendall and McHenry since 2026-07 — and the card states which day's copy it read. A snapshot older than 45 days is refused rather than served. NO PER-MEMBER phone or e-mail ships: neither the listing nor a member's own profile page carries a single mailto: or tel: link, measured on both, and that absence is the gap detroit-council-contact. The BODY's own office does ship — City Council Office, 2 Woodward Ave. Suite 1340, (313) 224-3443, published once for the whole Council — rendered for the body under the switchboard rule rather than attached to any member. mvic.sos.state.mi.us is challenged the same way; data.detroitmi.gov is NOT (it answers 200 with a readable robots.txt, and an earlier version of this note said otherwise on the strength of one substring match). Detroit's Legistar is abandoned since 2017 and never carried a district in OfficeRecordTitle even while maintained, where Milwaukee's carries \"3rd District\" in that same field — test a vendor by content per city, never by its name; its Persons table also flags all 45 records active, five of them system accounts. GRAND RAPIDS: the city's own City Commission pages, which are readable — www.grandrapidsmi.gov answers 200 and its robots.txt permits /government/ — so there is no archive hop here. The city states its own arithmetic (\"This legislative body consists of the Mayor and six Commissioners... The residents of each Ward directly elect two commissioners\"), and publishes SIX of those seven seats: one Ward 1 commissioner where Wards 2 and 3 each have two. THAT SEAT IS VACANT AND THE CITY SAYS SO OFF THE COMMISSION PAGE — its news post of 2026-04-17 states the vacancy \"was created following the resignation of former Commissioner Drew Robbins\"; an earlier version of this note said the city stated nothing, having measured only the commission page. No city source found states how the vacancy was resolved, so the card names the vacancy and its cause and stops there. The roster carries `seats` and `seatsPerWard` beside its members and a `vacancies` map KEYED BY WARD, so the card accounts for the seventh seat rather than concealing it or inventing a name — the Alexander County machinery, used here for the first time on a districted body. The cause is data, not prose: it was a ward-agnostic string literal in the card at first, on a row that fires for any ward short of its seats, so a later Ward 2 or 3 vacancy would have rendered Ward 1's predecessor by name on the wrong card. A ward that is short with no verified cause gets the neutral sentence instead, which stays true whatever caused it. Each member's own page supplies their ward, e-mail and direct phone; THE E-MAIL DOMAIN IS grcity.us AND NOT THE WEBSITE'S, so a scraper keyed to the site's own hostname finds none. 616.456.3000 is on every member's page and is the city switchboard, DETECTED as the number common to all of them and hoisted to the body rather than hardcoded.",
       "url": "https://districtry.com/mi/sources.html#layer-city-ward",
       "isPartOf": {
         "@id": "https://districtry.com/mi/sources.html#catalog"
@@ -1531,11 +1635,36 @@ table.matrix code {
           "@type": "Dataset",
           "name": "City of Grand Rapids — \"Boundaries - City of Grand Rapids Wards\" (CGR_Wards), from the city's own ArcGIS org, pre-built and shipped with the app. THE CITY PUBLISHES EIGHT WARD SERVICES AND NONE IS A NEWER PLAN, measured 2026-09-05 by sweeping all 681 of the org's feature services rather than the first 100 (which is how an earlier version of this note said two). Three are 100.000% identical to what ships, one differs only at the perimeter, and three are SINGLE wards rather than rival plans — each agreeing with its own shipped ward. The build gates on the one sibling that has tracked this service byte for byte. THE CURRENCY QUESTION WAS REAL AND IS ANSWERED BY MEASUREMENT: the geometry was last edited 2018-01-24, before the census it is checked against, while the item description claims it is \"maintained to reflect the most current adopted ward configuration\". Michigan's own 2026 voting-precinct layer assigns each of the city's 59 precincts to a ward (20/20/19), and dissolved by that column it agrees with these polygons on 99.575% of 4,000 points — two independent publishers drawing the same three lines, so 2018 means unchanged rather than stale. That comparison is a gate. Against Census 2020 the three wards run 64,400-68,716 on a 66,328 ideal (worst 3.60%). Unlike Detroit the population identity is NOT exact and is not claimed to be: 21 of 2,883 blocks fall on one side of the ward outline and the other side of the Census place outline, a +66 difference against 198,917, which is two digitisations of one city edge. The item's licence is a use agreement conditioning use on carrying the city's disclaimer; the card quotes the sentences of that agreement that describe the DATA, in the city's own words and order rather than paraphrasing them, with the one cut (its two acceptance sentences, addressed to whoever accesses the data rather than to a reader) marked by an ellipsis. The builder ASSERTS every segment of that quotation against the live licenceInfo on each run, so a reworded agreement fails the build rather than leaving the card quoting words the city has stopped saying.",
           "url": "https://services2.arcgis.com/L81TiOwAPO1ZvU9b/arcgis/rest/services/CGR_Wards/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Warren — \"Council Wards 2023\", from the city's own ArcGIS account, pre-built and shipped with the app. The ward layer sits at service index 32, and the builder reads the service root rather than assuming /0. Currency is checked against the state's own 2026 precincts.",
+          "url": "https://services8.arcgis.com/oGUlQVwqEiX7aF12/arcgis/rest/services/Warren_Council_Wards_2023/FeatureServer"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Flint — \"Wards22\", the plan effective 2 August 2022, from the city's own ArcGIS org, pre-built and shipped with the app. Two other layers in the same org carry the older 2012 plan under newer-sounding names, so the builder decides by measurement against the state's own 2026 precincts rather than by name.",
+          "url": "https://services2.arcgis.com/5ckbIY7K9TUKoseK/arcgis/rest/services/Wards22/FeatureServer"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Rochester Hills — the city's own ArcGIS Server (Election_Dataset), pre-built and shipped with the app. The city publishes the four council districts; its council roster is on a website whose robots.txt asks automated visitors not to read it, so the card names the district only.",
+          "url": "https://gis.rochesterhills.org/server/rest/services/ElectoralDistricts/Election_Dataset/MapServer"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Battle Creek — \"Wards_BC\", from the city's own ArcGIS org, pre-built and shipped with the app.",
+          "url": "https://services6.arcgis.com/cuKwt0IKP5B84jop/arcgis/rest/services/Wards_BC/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Jackson County — the county's own voting-precinct layer, from which the City of Jackson's six wards are COMPOSED by dissolving its ten precincts on the county's WARD column. The city publishes no ward map of its own. The state's 2026 precincts are an independent check: both publishers assign the precincts to wards identically, and the six wards add up to the city's Census 2020 population exactly.",
+          "url": "https://gis.mijackson.org/countygis/rest/services/Voting/VotingPrecincts/MapServer/0"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "Detroit and Grand Rapids only — the two Michigan cities that publish their own council boundaries. Outside both the layer hides itself"
+        "name": "Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson only. Outside those cities the layer hides itself"
       }
     },
     {

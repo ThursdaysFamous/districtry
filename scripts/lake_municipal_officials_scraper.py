@@ -48,7 +48,7 @@ import sys
 from datetime import datetime, timezone
 
 import requests
-from scraper_common import UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
 
 SERVICE_URL = (
     "https://services3.arcgis.com/HESxeTbDliKKvec2/arcgis/rest/services"
@@ -79,6 +79,8 @@ def fetch_features():
         "returnGeometry": "false",
         "f": "json",
     }
+    require_robots_once(QUERY_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-lake-municipal-officials-scraper")
     resp = requests.get(QUERY_URL, params=params, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     payload = resp.json()

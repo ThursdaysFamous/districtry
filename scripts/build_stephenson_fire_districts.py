@@ -55,7 +55,9 @@ from build_stephenson_board_districts import (  # noqa: E402  (same map series)
     as_features, need, pt_seg_factory, rings_of_path,
     DERIVED_TOLERANCE_M, HYDRO_COLOURS,
 )
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    make_fail, require_robots_once,
+)
 
 # WHY THIS FIT IS INVERTED RELATIVE TO THE BOARD BUILD. The board map's
 # polygons tile exactly one township, so their union outline IS the fit
@@ -197,6 +199,18 @@ def main():
     # ---- georeference: fit the map's hydrography to TIGER hydrography -------
     pt_seg = pt_seg_factory(np)
 
+    # WHICH HOST'S POLICY THIS ASKS FOR, AND WHY IT IS NOT elections.il.gov.
+    # SOURCE_URL above is an SBE address, and that host refuses us — but this
+    # script never reads it. The map is archived under data/source/raw/ and the
+    # url is written into each feature as `mapUrl` so a reader can see where the
+    # boundary came from. A CITATION IS NOT A FETCH: robots.txt governs what we
+    # crawl, not what we link. The only host this script contacts is TIGERweb,
+    # for the county outline and the hydrography the georeference is fitted on,
+    # and it publishes no robots.txt at all (HTTP 200, 189 bytes of HTML at
+    # /arcgis/rest/services, measured from a runner 2026-09-30), which under
+    # RFC 9309 2.3.1.3 is no policy and therefore allow.
+    require_robots_once(TIGERWEB, HEADERS["User-Agent"], headers=dict(HEADERS),
+                        label="stephenson-fire-districts")
     resp = requests.get(TIGERWEB, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "STATE='%s' AND COUNTY='%s'" % (STATE_FIPS, COUNTY_FIPS),
         "outFields": "NAME", "returnGeometry": "true", "outSR": "4326", "f": "geojson"})

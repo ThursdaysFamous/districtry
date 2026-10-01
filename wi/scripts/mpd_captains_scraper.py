@@ -44,6 +44,7 @@ Usage:
     python3 wi/scripts/mpd_captains_scraper.py --out /tmp/mpd_captains.json
 """
 
+import os
 import argparse
 import html as html_mod
 import json
@@ -53,6 +54,11 @@ import time
 from datetime import datetime, timezone
 
 import requests
+
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 BASE = "https://city.milwaukee.gov"
 INDEX = BASE + "/police/districts"
@@ -86,6 +92,8 @@ def fetch(url, tries=3):
     last = None
     for attempt in range(tries):
         try:
+            require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                                label="wi-mpd-captains-scraper")
             resp = requests.get(url, headers=HEADERS, timeout=45)
             if resp.status_code == 200:
                 return resp.text

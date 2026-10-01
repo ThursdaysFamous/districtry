@@ -40,6 +40,21 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+# scraper_common lives in the ROOT scripts/ and build_metro_outline in this
+# instance's own, so both directories have to be on the path: HERE alone was
+# enough until the robots read arrived, and CI runs this as
+# `python3 ia/scripts/build_ia_gap_outlines.py`, which puts only HERE on it.
+#
+# APPENDED, NEVER INSERTED AT 0. The root scripts/ carries its OWN
+# build_metro_outline.py -- Illinois's, with Illinois's STATE_FIPS and
+# METRO_COUNTY_FIPS -- so putting it ahead of HERE shadows this instance's copy
+# with another state's constants. Done that way for an hour on 2026-09-30 it did
+# not fail on the import, which would have been obvious; it ran and compared
+# this state's roster against Illinois's counties, and the check reported the
+# state fabric as missing five county codes.
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(HERE)),
+                             "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 from build_metro_outline import (  # noqa: E402  (shared machinery — do not fork)
     HEADERS, METRO_COUNTY_FIPS, REQUEST_TIMEOUT, SIMPLIFY_TOLERANCE_M,
     STATE_FIPS, TIGERWEB, group_rings, point_in_rings, rings_of, simplify,
@@ -181,6 +196,8 @@ def fetch(slugs):
     import requests  # noqa: PLC0415 (network only on the build path)
     where = "STATE='%s' AND COUNTY IN (%s)" % (
         STATE_FIPS, ",".join("'%s'" % f for f in sorted(METRO_COUNTY_FIPS)))
+    require_robots_once(TIGERWEB, HEADERS["User-Agent"], headers=HEADERS,
+                        label="ia-build-ia-gap-outlines")
     resp = requests.get(TIGERWEB, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": where,
         "outFields": "NAME,GEOID,COUNTY,INTPTLAT,INTPTLON",

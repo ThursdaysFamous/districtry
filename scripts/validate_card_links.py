@@ -378,6 +378,65 @@ ROBOTS_DECLINED = {
         "`city-ward` card links the city for a READER while naming no council member, "
         "and mi/scripts/build_mi_rochester_hills_wards.py takes its geometry from "
         "gis.rochesterhills.org, a different host that serves no robots.txt at all",
+    # NINE HOSTS THIS CHECKER WAS STILL FETCHING WHILE THEY REFUSED IT, found
+    # 2026-09-30 by scripts/probe_robots_verdicts.py's runner sweep. That sweep
+    # asks the scheduled SCRAPERS' question; this monthly check is a different
+    # client with its own token, so each of the nine was re-read here with
+    # HONEST_UA before being written down, and all nine refuse it.
+    #
+    # SEVEN ARE ONE CMS VENDOR'S DEFAULT, NOT SEVEN COUNTIES' DECISIONS: the
+    # files at ashlandcountywi.gov, dunncountywi.gov, richlandcountywi.gov,
+    # ruskcounty.org, www.barroncountywi.gov, www.co.jackson.wi.us and
+    # www.co.pepin.wi.us are BYTE-IDENTICAL apart from their own Sitemap line
+    # (md5 6c25eb6f506daebb4fcec9d19a912b33 with that line dropped). Each names
+    # six crawlers — Googlebot, bingbot, ia_archiver, archive.org_bot,
+    # W3C-checklink, CCBot — gives each of them two narrow Disallows, and then
+    # states `User-agent: *` / `Disallow: /`. It is published at each county's
+    # own host so it binds us fully, and it must never be cited as something
+    # that county chose. Same reading as the Kendall/McHenry/Joliet case.
+    "ashlandcountywi.gov":
+        "the `*` group is `Disallow: /`, under six named-crawler groups with narrow "
+        "rules of their own. Measured 2026-09-30 with this checker's own token. One "
+        "CMS vendor's default, byte-identical across seven Wisconsin county hosts",
+    "dunncountywi.gov":
+        "the same vendor default: named crawlers get narrow rules, `*` gets "
+        "`Disallow: /`. Measured 2026-09-30. See the Ashland entry",
+    "richlandcountywi.gov":
+        "the same vendor default. Measured 2026-09-30. See the Ashland entry",
+    "ruskcounty.org":
+        "the same vendor default. Measured 2026-09-30. See the Ashland entry",
+    "www.barroncountywi.gov":
+        "the same vendor default. Measured 2026-09-30. See the Ashland entry",
+    "www.co.jackson.wi.us":
+        "the same vendor default. Measured 2026-09-30. See the Ashland entry",
+    "www.co.pepin.wi.us":
+        "the same vendor default. Measured 2026-09-30. See the Ashland entry",
+    "www.polkcountywi.gov":
+        "robots.txt redirects to the county's CMS host (cms5.revize.com/revize/polk/) "
+        "and allows five named bots — Googlebot, Bingbot, FacebookBot, LinkedInBot, "
+        "Twitterbot — then states `User-agent: *` / `Disallow: /`. Measured "
+        "2026-09-30. Redirects are followed on purpose: a reader that stops at the "
+        "redirect sees no rules at all, which is how Rochester Hills was first "
+        "misread. Published at the county's host, so it binds; it is that CMS "
+        "vendor's default and is not the county's own choice",
+    "milwaukeemaps.milwaukee.gov":
+        "135 bytes: `Google` and `Googlebot` are allowed everything but "
+        "/nogooglebot/, and `User-agent: *` is `Disallow: /`. Measured 2026-09-30. "
+        "The city's map server refuses every client but Google's. Four Wisconsin "
+        "operator builds still read this host and that is a separate question, put "
+        "to the operator on 2026-09-30 and owned by the Wisconsin thread; what this "
+        "entry stops is THIS check's monthly probing of it",
+    "www.courts.michigan.gov":
+        "robots.txt is 26 bytes, `User-agent: *` and `Disallow: /`. Measured "
+        "2026-10-01 with this checker's own token and with a browser string, the "
+        "same answer both ways; its Last-Modified header is the time of the "
+        "request, so it says nothing about how long the rule has stood. The mi "
+        "Court of Appeals and circuit court cards LINK the state court system for "
+        "a reader, and no Michigan builder reads this host, which is why those "
+        "cards name no judge (gap mi-judge-roster)",
+    "courts.michigan.gov":
+        "the bare host 301s robots.txt to www.courts.michigan.gov, whose file "
+        "refuses every client. Measured 2026-10-01. See the www entry",
 }
 
 # A HOST CAN DECLINE ONE DIRECTORY RATHER THAN ITSELF, and the table above

@@ -35,10 +35,13 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_X11_128  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_ROSTER_BOT,
+    require_robots_once,
+)
 
 SOURCE_URL = "https://iroquoiscountyil.gov/offices/county-board"
-UA = {"User-Agent": UA_CHROME_X11_128}
+UA = {"User-Agent": UA_ROSTER_BOT}
 
 ROMAN = {"I": 1, "II": 2, "III": 3, "IV": 4}
 ROLE_RE = re.compile(r"^(Chairman|Vice\s*-?\s*Chairman)$", re.I)
@@ -98,6 +101,8 @@ def rows_of(page):
 
 
 def main():
+    require_robots_once(SOURCE_URL, UA["User-Agent"], headers=UA,
+                        label="il-iroquois-county-board-scraper")
     resp = requests.get(SOURCE_URL, headers=UA, timeout=60)
     resp.raise_for_status()
     page = resp.text

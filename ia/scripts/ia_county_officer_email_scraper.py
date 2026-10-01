@@ -80,6 +80,12 @@ import time
 
 import requests
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import (UA_HEADERS_ROSTER_BOT,  # noqa: E402  (FLEET_SHARED)
+                            require_robots_once)
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # ia/
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
 CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache")
@@ -89,8 +95,14 @@ OFFICERS = os.path.join(APP_DATA_DIR, "ia-county-officers.json")
 DIRECTORY = os.path.join(APP_DATA_DIR, "ia-county-board-directory.json")
 AUDITORS = os.path.join(APP_DATA_DIR, "ia-county-auditors.json")
 
-HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-                         "(KHTML, like Gecko) Chrome/126 Safari/537.36"}
+# OUR OWN IDENTITY, MEASURED RATHER THAN ASSUMED (2026-10-01). This file
+# used to send a Chrome string. Every page it fetches was re-read with
+# scraper_common's districtry token on this file's own HTTP stack and
+# answered in full, so the browser string was claiming a client this
+# project does not run for no measured gain. A site that measurably
+# refuses the token gets the browser rung back, per host, with the
+# measurement written here.
+HEADERS = dict(UA_HEADERS_ROSTER_BOT)
 TREASHOME = "https://www.iowatreasurers.org/index.php?module=treashome&idCounty=%d"
 
 # AN href AND ITS OWN LINK TEXT CAN NAME DIFFERENT PEOPLE, and this is why the
@@ -191,6 +203,8 @@ def classify(email, person, office, county):
 
 def get(url, timeout=25):
     try:
+        require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                            label="ia-ia-county-officer-email-scraper")
         r = requests.get(url, headers=HEADERS, timeout=timeout, allow_redirects=True)
         return str(r.status_code), (r.text if r.status_code == 200 else "")
     except Exception as e:

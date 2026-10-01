@@ -1,0 +1,78 @@
+{
+ "citywide": [
+  {
+   "email": "dmahoney@cityofjackson.org",
+   "name": "Daniel Mahoney",
+   "phone": "517-914-2706",
+   "profileUrl": "https://www.cityofjackson.org/291/Mayors-Office",
+   "seat": "Mayor"
+  }
+ ],
+ "office": {
+  "label": "City Hall",
+  "lines": [
+   "161 W. Michigan Avenue",
+   "Jackson, Michigan 49201"
+  ],
+  "phone": "517-768-6060"
+ },
+ "seats": 7,
+ "seatsPerWard": 1,
+ "sourceUrl": "https://www.cityofjackson.org/289/Mayor-City-Council-City-Manager",
+ "wards": {
+  "1": [
+   {
+    "email": "arobinson@cityofjackson.org",
+    "name": "Arlene Robinson",
+    "phone": "517-960-5866",
+    "profileUrl": "https://www.cityofjackson.org/498/Ward-1",
+    "seat": "Councilmember, Ward 1"
+   }
+  ],
+  "2": [
+   {
+    "email": "f_dancy@hotmail.com",
+    "name": "Freddie Dancy",
+    "phone": "517-740-1250",
+    "profileUrl": "https://www.cityofjackson.org/499/Ward-2",
+    "seat": "Councilmember, Ward 2 & Vice Mayor"
+   }
+  ],
+  "3": [
+   {
+    "email": "Angela_Velasco@yahoo.com",
+    "name": "Angelita V. Gunn",
+    "phone": "517-258-3455",
+    "profileUrl": "https://www.cityofjackson.org/500/Ward-3",
+    "seat": "Councilmember, Ward 3"
+   }
+  ],
+  "4": [
+   {
+    "email": "cwood@cityofjackson.org",
+    "name": "Conner Wood",
+    "phone": "989-444-9151",
+    "profileUrl": "https://www.cityofjackson.org/504/Ward-4",
+    "seat": "Councilmember, Ward 4"
+   }
+  ],
+  "5": [
+   {
+    "email": "shunt@cityofjackson.org",
+    "name": "Shalanda Hunt",
+    "phone": "517-315-7111",
+    "profileUrl": "https://www.cityofjackson.org/511/Ward-5",
+    "seat": "Councilmember, Ward 5"
+   }
+  ],
+  "6": [
+   {
+    "email": "forgravefor6@gmail.com",
+    "name": "Will Forgrave",
+    "phone": "517-316-5750",
+    "profileUrl": "https://www.cityofjackson.org/512/Ward-6",
+    "seat": "Councilmember, Ward 6"
+   }
+  ]
+ }
+}

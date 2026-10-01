@@ -4507,6 +4507,64 @@
     ],
     "sourceUrl": "https://cms9files.revize.com/carrollil/2025-2026%20YEARBOOK.pdf"
   },
+  "1712385": {
+    "board": [
+      {
+        "district": "District 1",
+        "name": "Davion Williams",
+        "phone": "847-901-3237",
+        "role": "Council Member"
+      },
+      {
+        "district": "District 2",
+        "name": "Bob Pollett",
+        "role": "Council Member"
+      },
+      {
+        "district": "District 3",
+        "name": "Shauna Clayborn",
+        "role": "Council Member"
+      },
+      {
+        "district": "District 4",
+        "name": "Michael Foellmer",
+        "role": "Council Member"
+      },
+      {
+        "district": "District 5",
+        "name": "Vanna Pianfetti",
+        "phone": "217-417-2417",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Kathy Shannon",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Matthew Gladney",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Will Kyles",
+        "phone": "217-552-3625",
+        "role": "Council Member"
+      }
+    ],
+    "county": "Champaign",
+    "head": {
+      "name": "Deborah Frank Feinen",
+      "role": "Mayor"
+    },
+    "name": "City of Champaign",
+    "office": {
+      "address": "102 N Neil St., Champaign IL 61820",
+      "phone": "217-403-8720"
+    },
+    "sourceUrl": "https://champaignil.gov/city-council/"
+  },
   "1712450": {
     "board": [
       {
@@ -6587,6 +6645,106 @@
     ],
     "sourceUrl": "https://lasallecountyil.gov/DocumentCenter/View/1425/Municipality-Officials-PDF"
   },
+  "1718563": {
+    "board": [
+      {
+        "district": "Ward 1",
+        "name": "Ed Butler",
+        "phone": "217-920-2825",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 1",
+        "name": "Jaleel Jones",
+        "phone": "872-336-6155",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 2",
+        "name": "Carolyn DeToye",
+        "phone": "217-274-0685",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 2",
+        "name": "Rick Strebing",
+        "phone": "217-443-0899",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 3",
+        "name": "Sharon Pickering",
+        "phone": "217-442-8410",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 3",
+        "name": "Thomas Hightower",
+        "phone": "217-213-4715",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 4",
+        "name": "Mike O'Kane",
+        "phone": "217-442-3419",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 4",
+        "name": "Tricia Teague",
+        "phone": "217-303-8934",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 5",
+        "name": "Eve Ludwig",
+        "phone": "217-443-4121",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 5",
+        "name": "Mike Puhr",
+        "phone": "217-260-1983",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 6",
+        "name": "James Poshard",
+        "phone": "217-918-8248",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 6",
+        "name": "Jon Cooper",
+        "phone": "217-474-1901",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 7",
+        "name": "Barry Johnson",
+        "phone": "217-260-4197",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 7",
+        "name": "Doug Ahrens",
+        "phone": "217-918-7816",
+        "role": "Alderman"
+      }
+    ],
+    "county": "Vermilion",
+    "head": {
+      "name": "Rickey Williams, Jr",
+      "phone": "217-431-2400",
+      "role": "Mayor"
+    },
+    "name": "City of Danville",
+    "office": {
+      "address": "17 West Main Street, Danville IL 61832",
+      "phone": "217-431-2400"
+    },
+    "sourceUrl": "https://www.cityofdanville.org/220/City-Council"
+  },
   "1718628": {
     "county": "DuPage",
     "head": {
@@ -6772,6 +6930,50 @@
     ],
     "sourceUrl": "https://sangamonil.gov/departments/a-c/county-clerk/elected-officials/local-officials/city-village-officials",
     "url": "http://villageofdawson.com"
+  },
+  "1718823": {
+    "board": [
+      {
+        "district": "At Large",
+        "name": "Consuelo Cruz",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "David Horn",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Dennis Cooper",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Ed Culp",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Lisa Gregory",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Patrick McDaniel",
+        "role": "Council Member"
+      }
+    ],
+    "county": "Macon",
+    "head": {
+      "name": "Julie Moore Wolfe",
+      "role": "Mayor"
+    },
+    "name": "City of Decatur",
+    "office": {
+      "address": "1 Gary K. Anderson Plaza, Decatur IL 62523"
+    },
+    "sourceUrl": "https://www.decaturil.gov/300/Mayor-Council"
   },
   "1718940": {
     "board": [
@@ -12218,7 +12420,43 @@
     "url": "https://www.highlandil.gov"
   },
   "1734722": {
+    "board": [
+      {
+        "district": "At Large",
+        "name": "Andrés Tapia",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Annette Lidawer",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Anthony E. Blumberg",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Barisa Meckler Bruckman",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Jon Center",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Yumi Ross",
+        "role": "Council Member"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "name": "Nancy R. Rotering",
+      "role": "Mayor"
+    },
     "name": "City of Highland Park",
     "office": {
       "address": "1707 St Johns Ave, Highland Park IL 60035",
@@ -18624,7 +18862,49 @@
     "sourceUrl": "https://www.logancountyil.gov/images/Reference_and_Yearbook_2025-2026_updated.pdf"
   },
   "1751349": {
+    "board": [
+      {
+        "district": "At Large",
+        "name": "Arnold Krinski",
+        "phone": "847-566-5426",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Daniel Juarez",
+        "phone": "847-613-5181",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Erich Schwenk",
+        "phone": "224-360-0306",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Kara Lambert",
+        "phone": "224-522-8279",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Monique Davis",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Tony Ugaste",
+        "phone": "847-707-3324",
+        "role": "Trustee"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "name": "Robin Meier",
+      "phone": "847-949-5347",
+      "role": "Mayor"
+    },
     "name": "Village of Mundelein",
     "office": {
       "address": "300 Plaza Cir, Mundelein IL 60060",
@@ -19357,6 +19637,51 @@
     ],
     "sourceUrl": "https://www.macoupinvotes.gov/election-results/elected-officials/"
   },
+  "1753234": {
+    "board": [
+      {
+        "district": "At Large",
+        "name": "Andy Byars",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Karyn Smith",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Kathleen Lorenz",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Kevin McCarthy",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Rory Roberge",
+        "role": "Council Member"
+      },
+      {
+        "district": "At Large",
+        "name": "Scott Preston",
+        "role": "Council Member"
+      }
+    ],
+    "county": "McLean",
+    "head": {
+      "name": "Chris Koos",
+      "role": "Mayor"
+    },
+    "name": "Town of Normal",
+    "office": {
+      "address": "11 Uptown Circle, Normal IL 61761",
+      "phone": "309-454-2444"
+    },
+    "sourceUrl": "https://normalil.gov/1135/Meet-the-Council"
+  },
   "1753377": {
     "board": [
       {
@@ -19500,7 +19825,58 @@
     "url": "https://northbrook.il.us"
   },
   "1753559": {
+    "board": [
+      {
+        "district": "Ward 1",
+        "email": "1stWardNC@gmail.com",
+        "name": "Michael R. Jackson",
+        "phone": "224-284-1672",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 2",
+        "email": "antcol@northchicago.org",
+        "name": "Anthony D. Coleman",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 3",
+        "email": "careva@northchicago.org",
+        "name": "Carl Evans",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 4",
+        "email": "boball@northchicago.org",
+        "name": "Bobby Allen",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 5",
+        "email": "tabwra@northchicago.org",
+        "name": "Tabitha Wray",
+        "phone": "847-772-5640",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 6",
+        "email": "donacmurphy@gmail.com",
+        "name": "Dona C. Murphy",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 7",
+        "email": "danbro@northchicago.org",
+        "name": "Dante Brooks",
+        "phone": "847-544-6369",
+        "role": "Alderman"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "name": "Leon Rockingham, Jr.",
+      "role": "Mayor"
+    },
     "name": "City of North Chicago",
     "office": {
       "address": "1850 S Lewis Ave, North Chicago IL 60064",
@@ -22650,6 +23026,119 @@
     "sourceUrl": "https://www.cookcountyclerkil.gov/elections/directory-elected-officials",
     "url": "https://prospect-heights.il.us"
   },
+  "1762367": {
+    "board": [
+      {
+        "district": "Ward 1",
+        "email": "eric.entrup@quincyil.gov",
+        "name": "Eric Entrup",
+        "phone": "217-577-5500",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 1",
+        "email": "greg.fletcher@quincyil.gov",
+        "name": "Greg Fletcher",
+        "phone": "217-779-1009",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 2",
+        "email": "dave.bauer@quincyil.gov",
+        "name": "Dave Bauer",
+        "phone": "217-592-6993",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 2",
+        "email": "jeff.bergman@quincyil.gov",
+        "name": "Jeff Bergman",
+        "phone": "217-222-9263",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 3",
+        "email": "kelly.mays@quincyil.gov",
+        "name": "Kelly Mays",
+        "phone": "217-577-6102",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 3",
+        "email": "mike.adkins@quincyil.gov",
+        "name": "Michael Adkins",
+        "phone": "217-779-0990",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 4",
+        "email": "tony.sassen@quincyil.gov",
+        "name": "Anthony Sassen",
+        "phone": "217-577-6998",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 4",
+        "email": "karol.ehmen@quincyil.gov",
+        "name": "Karol Ehmen",
+        "phone": "217-653-7731",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 5",
+        "email": "glen.ebbing@quincyil.gov",
+        "name": "Glen Ebbing",
+        "phone": "217-257-7355",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 5",
+        "email": "laura.mcreynolds@quincyil.gov",
+        "name": "Laura McReynolds",
+        "phone": "217-653-6908",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 6",
+        "email": "jake.reed@quincyil.gov",
+        "name": "Jake Reed",
+        "phone": "217-577-9401",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 6",
+        "email": "richie.reis@quincyil.gov",
+        "name": "Richie Reis",
+        "phone": "217-257-0380",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 7",
+        "email": "ben.uzelac@quincyil.gov",
+        "name": "Ben Uzelac",
+        "phone": "217-577-8869",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 7",
+        "email": "jack.holtschlag@quincyil.gov",
+        "name": "Jack Holtschlag",
+        "phone": "217-223-4675",
+        "role": "Alderman"
+      }
+    ],
+    "county": "Adams",
+    "head": {
+      "name": "Dr. Linda K. Moore",
+      "role": "Mayor"
+    },
+    "name": "City of Quincy",
+    "office": {
+      "address": "730 Maine St, Quincy IL 62301",
+      "phone": "217-228-4500"
+    },
+    "sourceUrl": "https://www.quincyil.gov/Government/City-Council"
+  },
   "1762523": {
     "board": [
       {
@@ -24155,7 +24644,43 @@
     "url": "https://www.eroundlake.com/"
   },
   "1766040": {
+    "board": [
+      {
+        "district": "At Large",
+        "name": "Bill Morales",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Christy Davis",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Chuck Husk",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Dana Hillesheim",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Martha Ibarra",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "name": "Paul Stout",
+        "role": "Trustee"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "name": "Scott Nickles",
+      "role": "Mayor"
+    },
     "name": "Village of Round Lake Beach",
     "office": {
       "address": "1937 N Municipal Way, Round Lake Beach IL 60073",
@@ -28007,7 +28532,52 @@
     "sourceUrl": "https://www.ewgateway.org/wp-content/uploads/2026/05/2026-POD.pdf"
   },
   "1777694": {
+    "board": [
+      {
+        "district": "At Large",
+        "email": "CraigT@vhills.org",
+        "name": "Craig Takaoka",
+        "phone": "847-274-7294",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "email": "DavidO@vhills.org",
+        "name": "David Oppenheim. MD",
+        "phone": "847-859-9501",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "email": "MikeM@vhills.org",
+        "name": "Michael Marquardt",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "email": "mikesc@vhills.org",
+        "name": "Michael Schenk",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "email": "monical@vhills.org",
+        "name": "Monica Lundeen",
+        "role": "Trustee"
+      },
+      {
+        "district": "At Large",
+        "email": "nancyf@vhills.org",
+        "name": "Nancy Forster",
+        "role": "Trustee"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "email": "ThomK@vhills.org",
+      "name": "Thom Koch",
+      "role": "Village President"
+    },
     "name": "Village of Vernon Hills",
     "office": {
       "address": "290 Evergreen Dr, Vernon Hills IL 60061",
@@ -28618,7 +29188,58 @@
     "url": "https://wauconda-il.gov/"
   },
   "1779293": {
+    "board": [
+      {
+        "district": "Ward 1",
+        "name": "Dr. Sylvia Sims Bolton",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 2",
+        "name": "Jose A. Guzman",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 3",
+        "name": "Juan A. Martinez",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 4",
+        "name": "Victor M. Felix",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 5",
+        "name": "Edith L. Newsome",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 6",
+        "name": "Keith E. Turner",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 7",
+        "name": "Michael P. Donnenwirth",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 8",
+        "name": "Dr. Lynn M. Florian",
+        "role": "Alderperson"
+      },
+      {
+        "district": "Ward 9",
+        "name": "Thomas J. Hayes",
+        "role": "Alderperson"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "name": "Samuel D. Cunningham, Jr.",
+      "role": "Mayor"
+    },
     "name": "City of Waukegan",
     "office": {
       "address": "100 N Martin Luther King Jr., Waukegan IL 60085",

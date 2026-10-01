@@ -30,9 +30,19 @@ index.html and a data/app/ is an instance. Nothing here is hand-listed, so an
 instance is covered the day its folder exists.
 
 WHAT IT REFUSES TO JUDGE, and why each exclusion is narrow rather than
-convenient. <script> bodies are stripped before the attribute scan: a page that
+convenient. <script> BODIES are stripped before the attribute scan: a page that
 builds `'<a href="' + url + '">'` is not naming a file, and reading it as one
-produced 40-odd findings like `ny/i.cb_website.url` on the first run. A
+produced 40-odd findings like `ny/i.cb_website.url` on the first run. THE
+OPENING TAG IS KEPT, and dropping it with the body was a real hole, found
+2026-10-01: the whole element went, so `<script src="...">` — a stated address,
+not a built one — was read by nothing, and NO SCRIPT THIS SITE LOADS WAS
+CHECKED ANYWHERE. Indiana and North Carolina both shipped an index.html asking
+for `vendor/leaflet-maplibre-gl.js`, the committed basemap bridge every other
+instance ships, with no such file in their folders; the page 404s it and the
+vector basemap cannot start. A browser gate noticed it as a console error,
+which is incidental rather than the question being asked — this is the gate
+that owns it, because it reads every authored page rather than a sample and
+needs no browser. `check_script_strip()` holds the distinction on every run. A
 reference is then only considered when it carries a known asset extension or
 ends in `/`, because a prefix is not an address — the same rule
 validate_card_links.py applies to its concatenated urls. Anything holding a
@@ -78,7 +88,8 @@ CSS_URL_RE = re.compile(r'url\(\s*([^)\s]+?)\s*\)', re.I)
 # data, not code: it carries the same preview-image url as the meta tags and
 # concatenates nothing, so stripping it would reopen exactly the hole above.
 SCRIPT_RE = re.compile(
-    r'<script\b(?![^>]*application/ld\+json).*?</script\s*>', re.I | re.S)
+    r'(<script\b(?![^>]*application/ld\+json)[^>]*>).*?</script\s*>',
+    re.I | re.S)
 # Any absolute url on this fleet's own origin, wherever it appears in the
 # surviving markup — which is how the ld+json block's "image"/"url" values are
 # read without hand-listing JSON-LD's key names.
@@ -221,6 +232,40 @@ def to_repo_path(ref, page_rel):
     return rel
 
 
+# Four stated cases for the strip above, run on every invocation rather than
+# behind a flag, because the hole it closed was invisible for as long as it
+# existed and no CI step is needed to ask a question this cheap. Each case names
+# the text that must survive the strip, or must not.
+SCRIPT_STRIP_CASES = (
+    ('<script src="vendor/bridge.js"></script>',
+     "vendor/bridge.js", True,
+     "a script's own src is a STATED address and must survive"),
+    ('<script type="module" src="a/b.mjs"></script>',
+     "a/b.mjs", True,
+     "an attribute before src must not hide it"),
+    ("<script>var h = '<a href=\"' + u + '\">';</script>",
+     "href=", False,
+     "a path a BODY builds is not an address"),
+    ('<script type="application/ld+json">{"image":"x.png"}</script>',
+     "x.png", True,
+     "ld+json is data, not code, and is kept whole"),
+)
+
+
+def check_script_strip():
+    """Fail when the body strip starts eating a stated script address."""
+    bad = []
+    for markup, needle, want, why in SCRIPT_STRIP_CASES:
+        got = needle in SCRIPT_RE.sub(r"\1", markup)
+        if got != want:
+            bad.append("  script strip: %r want=%s got=%s — %s"
+                       % (needle, want, got, why))
+    if bad:
+        print("FAIL: the <script> body strip no longer reads stated addresses:")
+        print("\n".join(bad))
+    return len(bad)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -239,11 +284,12 @@ def main():
     missing = []
     checked = 0
     seen_known = set()
+    strip_bad = check_script_strip()
 
     for page_rel, page_path in pages:
         with open(page_path, encoding="utf-8") as fh:
             src = fh.read()
-        markup = SCRIPT_RE.sub(" ", src)
+        markup = SCRIPT_RE.sub(r"\1", src)
         refs = set(ATTR_RE.findall(markup)) | set(CSS_URL_RE.findall(markup))
         # ld+json survives the strip above; its own url values are JSON strings
         # rather than attributes, so they need their own read.
@@ -297,7 +343,15 @@ def main():
     for p in problems:
         print("FAIL: %s" % p, file=sys.stderr)
 
-    if missing or problems:
+    if strip_bad and not (missing or problems):
+        # Say which question failed. A summary about references would read as
+        # "0 references are missing" on a run where the reader itself is broken.
+        print("validate-instance-assets: FAIL — the <script> strip no longer "
+              "reads a stated script address, so no script this site loads was "
+              "checked. Nothing about the tree was established.", file=sys.stderr)
+        sys.exit(1)
+
+    if missing or problems or strip_bad:
         print("validate-instance-assets: FAIL — %d same-origin reference(s) point "
               "at a file this repo does not contain%s. Each one is a 404 the "
               "moment the page is published, and nothing else here would have "
@@ -309,8 +363,10 @@ def main():
 
     print("validate-instance-assets: OK — %d same-origin reference(s) across %d "
           "authored page(s) in %d instance(s) all resolve to a file in the tree "
-          "(%d recorded exemption(s), each still referenced)"
-          % (checked, len(pages), len(instances()), len(KNOWN_ABSENT)))
+          "(%d recorded exemption(s), each still referenced; %d script-strip "
+          "case(s))"
+          % (checked, len(pages), len(instances()), len(KNOWN_ABSENT),
+             len(SCRIPT_STRIP_CASES)))
 
 
 if __name__ == "__main__":

@@ -207,6 +207,15 @@ SIMPLIFY = ["dp", "keep-shapes", "interval=15"]
 # 43.4 m (ia-house) and 43.9 m (ia-senate) over 1,586 and 1,385 steps
 # (2026-09-26), so 45 m is about one Iowa step.
 #
+# THE RULE, stated so a rebuild can reapply it rather than inherit this number:
+# the ceiling is the STATE'S OWN median step, rounded to a round figure and no
+# more than about 1.1x the measured median. Here 43.9 -> 45.0 is 1.03x. The
+# multiplier is a rounding allowance and not headroom: a ceiling materially
+# above one step stops bounding the harm it exists to bound, which is what the
+# 126 m and 86.89 m ceilings rejected elsewhere in this fleet demonstrate.
+# Re-measure the median on the new geometry after a redistricting; do not carry
+# 45 m forward on the strength of its having passed before.
+#
 # THE METHOD WAS VALIDATED AGAINST ILLINOIS BEFORE BEING TRUSTED HERE: run
 # unchanged on Illinois's own House layer it answers 19.7 m, against the 17.9 m
 # Illinois measured by hand around the neighbourhood the defect was reported in.

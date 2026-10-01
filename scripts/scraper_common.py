@@ -30,22 +30,32 @@ STRING. The sentence above said "several sites in this fleet" for ten days
 (it landed 2026-09-02) without naming one. scripts/probe_user_agents.py asks each host the same page
 four ways — each stack with UA_ROSTER_BOT and with UA_CHROME_WIN_126 plus
 UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
-2026-09-12 across 296 hosts, of which 283 are reached by a browser-string
-caller, 66 of them measured or re-measured since — 61 on 2026-09-13 at the page a
+2026-09-12 across 314 hosts, of which 224 are reached by a browser-string
+caller, 85 of them measured or re-measured since — 61 on 2026-09-13 at the page a
 scraper reads rather than the directory above it, four county GIS services on
 2026-09-15, and www.cpsboe.org on 2026-09-23, when the Chicago school board roster
-began reading it: 226 serve UA_ROSTER_BOT a full page, 18 refuse it and answer the
+began reading it: 241 serve UA_ROSTER_BOT a full page, 21 refuse it and answer the
 browser string, and 7 refuse the `requests` STACK while serving the same token
 on the stdlib client, so on those a browser string is credited with a fix the
 stack made. (The first sweep read 203: 37 hosts had been probed at the first
 half of a URL split across two string literals, and 23 more at a directory a
 page sat under; not one re-probe moved a host INTO a refusal.) Per file
 (`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
-and the artifact rather than remembered): 102 files send a browser string; 63
+and the artifact rather than remembered): 42 files send a browser string; 2
 of them reach only hosts that serve the token a full page, 22 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 17 reach at least one host that refuses it -- and 266 of
-the 296 measured hosts are still reached by such a caller. `fetch_stdlib` came
+`requests` stack), and 18 reach at least one host that refuses it -- and 224 of
+the 314 measured hosts are still reached by such a caller. The pair 101/62 that
+stood here until 2026-10-01 was the state before SIXTY scrapers were switched
+off a Chrome string onto our own token in one change: every page each of them
+fetches was re-read with the token on that file's own HTTP stack and answered in
+full, which is the measurement that licenses a rename. The 2 left in that bucket
+are the two the sweep deliberately held, both of which fetch hosts discovered as
+they run -- wi_municipal_executive_scraper.py follows each municipality's own
+site out of a county layer, and dupage_municipal_officials_scraper.py each
+village's, and several of those hosts measurably refuse the token. A FILE'S URL
+LITERALS ARE NOT ALWAYS THE HOSTS IT READS, which is why that bucket cannot be
+emptied by arithmetic. `fetch_stdlib` came
 OFF the browser-marker list on 2026-09-25, which is what moved these four: it is
 the CLIENT for two of the four rungs and sends whatever headers its caller
 passes, so naming it says nothing about the User-Agent. Two files were
@@ -75,6 +85,7 @@ walks module-scope import closures against each workflow's pip line, and this
 module is imported by scripts whose workflows install nothing. `requests` is
 imported inside fetch(), the one function that needs it.
 """
+import io
 import json
 import os
 import sys
@@ -108,9 +119,51 @@ UA_CHROME_X11_120 = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
 # witness; a refusal of the new token is a data event with a name, not a
 # reason to put the old one back.
 UA_ROSTER_BOT = "districtry.com roster bot (civic data; contact via site)"
+
+# What a bare `urllib.request.urlopen(url)` call sends, so a robots read can be
+# made with the SAME client that will crawl. Dozens of this fleet's builders
+# fetch that way and set no User-Agent at all, so the string is urllib's own and
+# no robots group names it -- `*` binds, which is the answer either way. Stating
+# it is the honest reading; RENAMING those callers to a districtry token is a
+# different change and needs its own per-host measurement (CLAUDE.md: a rename is
+# licensed by a measurement at the page the scraper reads).
+UA_STDLIB_DEFAULT = "Python-urllib/%d.%d" % sys.version_info[:2]
 UA_ROSTER_COMPACT = "Mozilla/5.0 (compatible; districtry-roster/1.0)"
+
+
+# The same honest reading one stack over: what a bare `requests.get(url)` call
+# sends when the caller sets no headers. A dozen builders in this fleet fetch that
+# way, and a robots read has to be made with the SAME client that will crawl, so
+# the string is the library's own rather than a districtry token. It is a FUNCTION
+# and not a constant because `requests` is imported inside fetch() on purpose --
+# see the module docstring -- and a module-level constant would drag the
+# dependency into every stdlib-only caller of this file. No robots group names
+# this string either, so `*` binds, which is the answer either way; stating it
+# keeps the reading honest rather than changing the verdict.
+def ua_requests_default():
+    import requests  # function-local: see the module docstring
+    return "python-requests/%s" % requests.__version__
+
 UA_CIVIC_BOT = ("Mozilla/5.0 (compatible; districtry.com civic data bot; "
                 "+https://districtry.com/)")
+
+
+# --- OUR OWN TOKEN, SENT COMPLETELY. The headers a districtry client sends
+# beside UA_ROSTER_BOT, kept here as ONE copy because two readers of one
+# question is where this fleet's recurring defect starts: probe_user_agents.py
+# measures every host with exactly this set and imports it rather than
+# restating it, so a scraper switched to the token sends what was measured.
+# `Accept-Encoding: identity` for the reason the comment inside says -- the
+# stdlib client does not decode for us, and a compressed body measured as-is
+# is how validate_card_links.py called a real 1,705-byte page an 805-byte
+# hollow one. No `sec-ch-ua*` hints: those belong to the Chrome rung and
+# claiming them beside a districtry UA would be a client that does not exist.
+UA_HEADERS_ROSTER_BOT = {
+    "User-Agent": UA_ROSTER_BOT,
+    "Accept": "text/html,application/xhtml+xml,application/pdf,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "identity",
+}
 
 
 # --- The stdlib rung: a DIFFERENT HTTP STACK, plus the client hints a real
@@ -167,7 +220,24 @@ def fetch_stdlib(url, headers=None, timeout=30):
     return body.decode("utf-8", "replace")
 
 
-def require_robots_allowed(url, user_agent, headers=None, label=None):
+def _robots_client(verify):
+    """A requests session pinned to `verify`, or None for the stdlib reader.
+
+    None keeps the stdlib client every existing caller reads with, so this module
+    stays importable where requests is not installed. With a bundle path the read
+    goes through requests, which is the only one of the two clients that takes a
+    CA bundle per call.
+    """
+    if verify is None:
+        return None
+    import requests
+
+    session = requests.Session()
+    session.verify = verify
+    return session
+
+
+def require_robots_allowed(url, user_agent, headers=None, label=None, verify=None):
     """Stop the process unless this client may fetch `url` under the host's own
     robots.txt. Returns the reason when permitted, so a caller can log it.
 
@@ -197,11 +267,32 @@ def require_robots_allowed(url, user_agent, headers=None, label=None):
     unmeasured number of working refreshes in one commit, which is a different
     change from obeying a refusal this project has measured. Adopt this per
     caller, with the measurement recorded, the way the user-agent rungs were.
+
+    `verify` IS THE TRUST STORE THE CRAWL USES, and a caller with a pinned CA
+    bundle must pass it. Four hosts in this fleet serve only their leaf
+    certificate -- www.ilga.gov, www.colesco.illinois.gov, gallatinco.illinois.gov
+    and www.vercounty.org -- so every automated client reports a verification
+    failure while a browser notices nothing, and each of those scrapers already
+    completes the chain itself from `scripts/aia_bundle.py`'s pinned intermediate.
+    Read with the stdlib client instead, their robots.txt is UNREACHABLE, which
+    RFC 9309 2.3.1.4 disallows: measured from a GitHub runner on 2026-09-30, all
+    four read that way, so wiring them without this argument would stop four
+    working refreshes on a verdict about this reader's trust store rather than
+    about anybody's policy. That is the same consistency requirement the
+    `headers` argument exists for -- read the policy with the client that
+    crawls -- one level further down, in the TLS handshake.
+
+    IT TAKES A BUNDLE PATH AND NOT A SESSION, deliberately. A caller's own
+    session may carry cookies, auth or a cleared challenge, and reading a policy
+    with a stronger client than the crawl is defeating a control rather than
+    measuring one; a CA bundle is the narrow thing these four hosts need and
+    cannot carry anything else. Nothing here can disable verification -- the
+    path is handed to requests as `verify`, which still verifies.
     """
     from robots_policy import RobotsGate  # scripts/ sibling; stdlib-only
 
     fail = make_fail(label or "robots")
-    ok, why = RobotsGate(None, user_agent, headers=headers).allows(url)
+    ok, why = RobotsGate(_robots_client(verify), user_agent, headers=headers).allows(url)
     if not ok:
         fail("%s refuses this client: %s. Nothing is fetched from it. A refusal "
              "stops the FETCH and never unpublishes what we already have "
@@ -209,6 +300,143 @@ def require_robots_allowed(url, user_agent, headers=None, label=None):
              "built from this host keeps its last-good records and its own "
              "read stamp." % (url, why))
     return why
+
+
+# Hosts a caller may fetch WITHOUT reading robots.txt, each with the measurement
+# that put it here and the reason the reading is deferred rather than taken. This
+# is a recorded gap, never a permission: an entry says nobody here has managed to
+# read the policy, not that the policy permits.
+#
+# THE ONE ENTRY IS web.archive.org, the host four Illinois scrapers read a
+# snapshot's own bytes from on their terminal fetch rung. Measured 2026-09-30
+# through robots_policy's reader, it resets the connection on every attempt from
+# this project's sandbox — three reads through the shared reader and a plain curl
+# alike. An unreachable robots.txt is RFC 9309 2.3.1.4, which disallows, so
+# wiring that reading would stop four working weekly refreshes on a verdict about
+# this sandbox's route rather than about the Archive's policy. The honest fix is
+# to measure it from a GitHub runner, which can reach the host, and then wire it.
+#
+# ITS SIBLING archive.org IS NOT HERE AND IS GATED NORMALLY: the same run read a
+# 238-byte policy from it in which no rule matches /wayback/available. Two hosts,
+# two different answers, so only the one that could not be read is deferred.
+#
+# THE RUNNER MEASUREMENT THIS ENTRY ASKS FOR WAS TAKEN ON 2026-09-30 AND DID NOT
+# INCLUDE THIS HOST, because `probe_robots_verdicts.py` read the host list through
+# `probe_user_agents.subject_hosts` -- the browser-string subject -- which does not
+# carry it, and nothing thought to add the deferred hosts to a probe whose whole
+# purpose these entries name. That probe asks them now, so the next dispatch
+# answers this entry rather than measuring around it.
+# EMPTY, AND THAT IS A MEASUREMENT RATHER THAN AN OMISSION. web.archive.org was
+# the one entry: its robots.txt reset the connection on every read from this
+# sandbox (3 reads through the shared reader plus a plain curl), and an
+# unreachable robots.txt disallows under RFC 9309 2.3.1.4, so wiring that reading
+# would have stopped four working weekly refreshes on a verdict about this
+# sandbox's route rather than about the Archive's policy. The entry named a
+# runner measurement as the fix it was waiting for, and that measurement was
+# taken on 2026-09-30: HTTP 404 — no policy, allow all — from the runner AND,
+# re-read the same day, from this sandbox too. Two vantages, one answer, so the
+# deferral is retired rather than re-dated, and every caller now asks.
+#
+# AN ENTRY HERE IS NOT A PERMISSION. It records that a host is fetched without a
+# robots read and why, and `require_robots_once` prints "NOT READ" for it, so the
+# next pass can tell a host nobody here can read from one nobody asked.
+ROBOTS_DEFERRED_HOSTS = {}
+
+
+def robots_deferred(url):
+    """The recorded reason this url's host is fetched without a robots read, or
+    None when the host must be asked. Callers print the reason, so a deferral is
+    visible in the log of every run rather than silent."""
+    from urllib.parse import urlsplit
+
+    return ROBOTS_DEFERRED_HOSTS.get(urlsplit(url).hostname or "")
+
+
+_ROBOTS_ASKED = set()
+
+
+def require_robots_once(url, user_agent, headers=None, label=None, out=None,
+                        verify=None):
+    """Ask this url's host for its robots.txt the first time a run reaches it,
+    then let the fetch proceed; a later url on the same host costs nothing.
+
+    WHY THIS EXISTS RATHER THAN A HELPER PER SCRAPER. `require_robots_allowed`
+    above is the seam that reads the policy, and every caller wired to it so far
+    has wrapped it in the same eight lines: a module-level set of hosts already
+    asked, a `urlsplit` to get the host, the call, a line to stderr. When this was
+    written, `scripts/validate_robots_adoption.py` measured 224 of this fleet's
+    266 fetching scripts unwired, so that wrapper was about to be written another
+    224 times — and two copies of one question is where this fleet's recurring
+    defect starts. One copy, one reading. THE FIGURE MOVES WITH EVERY BATCH, so
+    read today's off that gate's own OK line rather than out of this paragraph.
+
+    THE MEMO IS KEYED ON (host, user_agent), not on the host alone. Which client
+    crawls decides which robots group binds, so one host asked with two clients
+    is two different questions; keying on the host would answer the second from
+    the first client's verdict.
+
+    `verify` is the CA bundle the caller's own fetches use, passed straight
+    through; see `require_robots_allowed` for the four hosts that cannot be read
+    without one. THE MEMO DOES NOT KEY ON IT, because a bundle changes whether the
+    file can be READ and never which group binds, so two reads of one host with
+    and without it are the same question and the answer that arrived is the one to
+    keep.
+
+    It raises exactly as `require_robots_allowed` does — a refusal is not
+    something a caller may carry on past — and honours `ROBOTS_DEFERRED_HOSTS`,
+    printing the recorded reason so a deferral is visible in the log of every run
+    rather than silent. Returns the reason string either way, so a caller that
+    wants to log it itself can.
+    """
+    from urllib.parse import urlsplit
+
+    stream = out if out is not None else sys.stderr
+    host = urlsplit(url).hostname or ""
+    key = (host, user_agent)
+    deferred = robots_deferred(url)
+    if deferred:
+        if key not in _ROBOTS_ASKED:
+            print("robots.txt %s: NOT READ — %s" % (host, deferred), file=stream)
+            _ROBOTS_ASKED.add(key)
+        return deferred
+    if key in _ROBOTS_ASKED:
+        return "already asked this run"
+    why = require_robots_allowed(url, user_agent, headers=headers, label=label,
+                                 verify=verify)
+    print("robots.txt %s: %s" % (host, why), file=stream)
+    _ROBOTS_ASKED.add(key)
+    return why
+
+
+def output_path(default, usage=None):
+    """The output path a scraper was told to write, or `default`.
+
+    WHY THIS EXISTS, MEASURED. Seventeen scrapers read their output path as a
+    bare `sys.argv[1]`, so a FLAG in that position was taken as a filename and
+    the payload was written to a file named after the flag. On 2026-10-01 two
+    such files were found committed at the top of this repository, `--help` and
+    `--out`, byte-identical copies of Macon County's board payload: somebody
+    asked a scraper for its usage and it answered by writing a file, and
+    somebody spelled the path as an option and it believed them. Neither run
+    failed, so nothing said anything was wrong.
+
+    A leading `-` is never a path a caller meant, so it is refused rather than
+    written to, and `-h`/`--help` prints the usage it was asking for. Exit 2 is
+    the shell's own convention for a usage error, which keeps it distinct from
+    the exit 1 a scrape failure uses.
+    """
+    args = sys.argv[1:]
+    if args and args[0] in ("-h", "--help"):
+        print(usage or ("usage: %s [OUTPUT.json]   (default: %s)"
+                        % (os.path.basename(sys.argv[0]),
+                           default if default else "stdout only, no file")))
+        sys.exit(0)
+    if args and args[0].startswith("-"):
+        print("%s: %r is not an output path. This script takes the path as a "
+              "bare argument, with no option name; pass --help for usage."
+              % (os.path.basename(sys.argv[0]), args[0]), file=sys.stderr)
+        sys.exit(2)
+    return args[0] if args else default
 
 
 def make_fail(label):
@@ -502,6 +730,149 @@ def _selftest():
     except ValueError:
         pass
 
+    # --- require_robots_once: asked once per (host, client), offline ---------
+    #
+    # Stubbed at the seam rather than at the network, because what is under test
+    # is the memo and the deferral, not the reading. The real reading has its own
+    # gate (robots_policy.py --selftest, 20 assertions against saved bytes).
+    global require_robots_allowed
+    real_seam, asked = require_robots_allowed, []
+
+    def _stub(url, user_agent, headers=None, label=None, verify=None):
+        asked.append((url, user_agent, verify))
+        if "refuses" in url:
+            make_fail(label or "robots")("stubbed refusal")
+        return "stubbed allow"
+
+    require_robots_allowed = _stub
+    try:
+        _ROBOTS_ASKED.clear()
+        log = io.StringIO()
+        for _ in range(3):
+            require_robots_once("https://example.test/a", "token", out=log)
+        require_robots_once("https://example.test/b", "token", out=log)
+        if len(asked) != 1:
+            fails.append("one host with one client should reach the seam once, "
+                         "reached it %d time(s)" % len(asked))
+        if len(log.getvalue().strip().splitlines()) != 1:
+            fails.append("a host asked once should print one line")
+        require_robots_once("https://example.test/a", "chrome", out=log)
+        if len(asked) != 2:
+            fails.append("a second client on the same host is a second question")
+        require_robots_once("https://other.test/a", "token", out=log)
+        if len(asked) != 3:
+            fails.append("a second host should be asked")
+        # THE CA BUNDLE REACHES THE SEAM. Four hosts serve only their leaf
+        # certificate and cannot be read without one, so a `verify` that is
+        # accepted and then dropped is a gate that refuses those four for a
+        # reason that has been fixed.
+        require_robots_once("https://pinned.test/a", "token", out=log,
+                            verify="/tmp/bundle.pem")
+        if asked[-1][2] != "/tmp/bundle.pem":
+            fails.append("verify must reach require_robots_allowed; the seam saw "
+                         "%r" % (asked[-1][2],))
+        # AND IT IS NOT PART OF THE MEMO'S KEY: a bundle changes whether the file
+        # can be read, never which group binds, so the same host asked again with
+        # the same client is the same question and must not be re-read.
+        before = len(asked)
+        require_robots_once("https://pinned.test/b", "token", out=log)
+        if len(asked) != before:
+            fails.append("a bundle must not split the memo: one host and one "
+                         "client is one question")
+
+        # A STUBBED ENTRY, NEVER A LIVE ONE. This case used to name
+        # web.archive.org out of the table above, so retiring that entry for the
+        # right reason turned the selftest red -- a test that dies when the thing
+        # it tests is correctly fixed. The behaviour under test is the table's,
+        # not any one host's.
+        _ROBOTS_ASKED.clear()
+        del asked[:]
+        log = io.StringIO()
+        reason = "selftest: stubbed deferral"
+        ROBOTS_DEFERRED_HOSTS["deferred.test"] = reason
+        for _ in range(2):
+            why = require_robots_once(
+                "https://deferred.test/a", "token", out=log)
+        del ROBOTS_DEFERRED_HOSTS["deferred.test"]
+        if asked:
+            fails.append("a deferred host must not reach the seam")
+        if why != reason:
+            fails.append("a deferred host should return its recorded reason")
+        if len(log.getvalue().strip().splitlines()) != 1:
+            fails.append("a deferred host should print its reason once")
+        if "NOT READ" not in log.getvalue():
+            fails.append("a deferral must read as unread, not as a permission")
+
+        _ROBOTS_ASKED.clear()
+        try:
+            require_robots_once("https://example.test/refuses", "token",
+                                label="selftest-robots",
+                                out=io.StringIO())
+            fails.append("a refusal must stop the process, not return")
+        except SystemExit:
+            pass
+    finally:
+        require_robots_allowed = real_seam
+        _ROBOTS_ASKED.clear()
+
+    # --- output_path: a flag is never a filename -----------------------------
+    # The defect this guards WROTE FILES, so every case asserts what the helper
+    # does with a flag rather than only that it complains. A plain path must
+    # still pass through untouched, or seventeen scrapers lose their argument.
+    real_argv = sys.argv
+    try:
+        for flag in ("-h", "--help"):
+            sys.argv = ["scrape.py", flag]
+            buf, real_out = io.StringIO(), sys.stdout
+            sys.stdout = buf
+            try:
+                output_path("default.json")
+                fails.append("%s must exit, not return a path" % flag)
+            except SystemExit as exc:
+                if exc.code != 0:
+                    fails.append("%s is a request, not an error: expected "
+                                 "exit 0, got %r" % (flag, exc.code))
+            finally:
+                sys.stdout = real_out
+            if "usage" not in buf.getvalue():
+                fails.append("%s must print the usage it asked for" % flag)
+            if "default.json" not in buf.getvalue():
+                fails.append("%s should name the default output" % flag)
+
+        # THE CASE THAT ACTUALLY HAPPENED: `--out somewhere.json`, where the
+        # option name itself became the filename.
+        for argv in (["scrape.py", "--out", "real.json"],
+                     ["scrape.py", "-o"],
+                     ["scrape.py", "--outfile=real.json"]):
+            sys.argv = argv
+            buf, real_err = io.StringIO(), sys.stderr
+            sys.stderr = buf
+            try:
+                got = output_path("default.json")
+                fails.append("%r must be refused, not written to; got %r"
+                             % (argv[1], got))
+            except SystemExit as exc:
+                if exc.code != 2:
+                    fails.append("a usage error is exit 2, distinct from a "
+                                 "scrape failure's 1; got %r" % (exc.code,))
+            finally:
+                sys.stderr = real_err
+            if argv[1] not in buf.getvalue():
+                fails.append("the refusal must name the argument it refused")
+
+        sys.argv = ["scrape.py", "out/real.json"]
+        if output_path("default.json") != "out/real.json":
+            fails.append("a plain path must pass through unchanged")
+        sys.argv = ["scrape.py"]
+        if output_path("default.json") != "default.json":
+            fails.append("no argument must give the default")
+        # A SCRAPER THAT WRITES NOTHING BY DEFAULT (Will County) passes None,
+        # and None must survive rather than becoming the string "None".
+        if output_path(None) is not None:
+            fails.append("a None default must stay None")
+    finally:
+        sys.argv = real_argv
+
     if fails:
         print("scraper-common selftest: FAIL", file=sys.stderr)
         for f in fails:
@@ -509,7 +880,10 @@ def _selftest():
         return 1
     print("scraper-common selftest: OK — the what-moved line is proven both "
           "ways (quiet week, changed record, add/remove, payload field, depth 3) "
-          "too deep refuses, too shallow stays correct but vaguer")
+          "too deep refuses, too shallow stays correct but vaguer; "
+          "robots is asked once per host per client, a deferral reads as "
+          "unread, a refusal stops the process; a flag in the output-path "
+          "position is refused rather than written to, and --help prints")
     return 0
 
 

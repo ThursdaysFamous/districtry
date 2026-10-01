@@ -55,7 +55,10 @@ import sys
 import urllib.parse
 
 import requests
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_ROSTER_BOT,
+    require_robots_once,
+)
 
 try:
     import pypdf
@@ -67,7 +70,7 @@ REFERENCE_PAGE = "https://www.livingstoncountyil.gov/"
 YEARBOOK_URL = ("https://www.livingstoncountyil.gov/Documents/Government/"
                 "Yearbook%20updated%2006-2026.pdf")
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 120
 
@@ -121,6 +124,8 @@ def clean(value):
 
 def discover_pdf_url(warnings):
     try:
+        require_robots_once(REFERENCE_PAGE, HEADERS["User-Agent"], headers=HEADERS,
+                            label="il-livingston-municipal-officials-scraper")
         resp = requests.get(REFERENCE_PAGE, headers=HEADERS, timeout=REQUEST_TIMEOUT)
         resp.raise_for_status()
     except Exception as exc:  # noqa: BLE001
@@ -141,6 +146,8 @@ def discover_pdf_url(warnings):
 
 
 def fetch_pdf(url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-livingston-municipal-officials-scraper")
     resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     if not resp.content.startswith(b"%PDF"):

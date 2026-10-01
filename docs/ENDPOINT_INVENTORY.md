@@ -12,16 +12,16 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **223 distinct hosts** those files
-name, **42 are fetched by the browser**; the other 181 are links.
+makes from a link a reader clicks. Of **235 distinct hosts** those files
+name, **43 are fetched by the browser**; the other 192 are links.
 
 ### Geocoder — 3 host(s)
 
 | host | instances |
 |---|---|
 | `geosearch.planninglabs.nyc` | ny |
-| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi |
-| `photon.komoot.io` | il, ny, ca, wi, ia, mi |
+| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky |
+| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky |
 
 The most sensitive flow on the site: it is **the text a reader
 types**. `build_privacy_page.py` owns what each receives and links
@@ -32,9 +32,9 @@ per-app measurement, so the two cannot disagree.
 
 | host | instances |
 |---|---|
-| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi |
-| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi |
-| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi |
+| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky |
+| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky |
+| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky |
 
 One service. Several host spellings appear because the tile URL is a
 `{s}.` template and some are `preconnect` hints — one recipient, not
@@ -44,7 +44,7 @@ several.
 
 | host | instances |
 |---|---|
-| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi |
+| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky |
 
 Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
@@ -52,7 +52,7 @@ Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
 | host | instances |
 |---|---|
-| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi |
+| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky |
 | `www.googletagmanager.com` | il, ny |
 
 ### Webfonts — none
@@ -65,9 +65,9 @@ a font CDN would be a recipient the privacy page does not name.
 
 | host | instances |
 |---|---|
-| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi |
+| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky |
 
-### Socrata — 6 host(s)
+### Socrata — 7 host(s)
 
 | host | instances |
 |---|---|
@@ -76,6 +76,7 @@ a font CDN would be a recipient the privacy page does not name.
 | `data.macoupincountyil.gov` | il |
 | `data.milwaukee.gov` | wi |
 | `data.nysed.gov` | ny |
+| `data.sf.gov` | ca |
 | `data.sfgov.org` | ca |
 
 ### ArcGIS — 26 host(s)
@@ -83,7 +84,7 @@ a font CDN would be a recipient the privacy page does not name.
 | host | instances |
 |---|---|
 | `arcgispublicmap.co.st-clair.il.us` | il |
-| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi |
+| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn |
 | `gis.aurora.il.us` | il |
 | `gis.cookcountyil.gov` | il |
 | `gis.fultoncountyil.gov` | il |
@@ -119,12 +120,14 @@ prose.
 
 | instance | layers that send the point | registered layers |
 |---|---|---|
-| il | 12 | 40 |
-| ny | 4 | 35 |
+| il | 5 | 40 |
+| ny | 0 | 37 |
 | ca | 0 | 16 |
 | wi | 1 | 31 |
 | ia | 0 | 20 |
-| mi | 0 | 15 |
+| mi | 0 | 18 |
+| mn | 6 | 14 |
+| ky | 4 | 12 |
 
 ### Where each layer's shapes come from
 
@@ -177,7 +180,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`, `library`, `early-voting`.
 - Fetched by the app itself with no layer on, for its coverage tests: `data.cityofchicago.org`, `tigerweb.geo.census.gov`.
 
-#### ny — 14 of 35 layers fetch their shapes
+#### ny — 14 of 37 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -198,6 +201,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `county`, `nys-central-hs-district`, `nys-school-district`, `municipality`, `village`, `borough`, `judicial-district`, `borough-president`, `district-attorney`, `congress`, `municipal-court`, `state-senate`, `state-assembly`, `county-legislature`.
 - Point layers (locations, not shapes): `school-site`, `police-station`, `fire-station`, `post-office`, `library`, `early-voting`, `polling-place`.
+- **Not measured** — declared since the probe ran: `fire-district`, `library-district`.
 
 #### ca — 4 of 16 layers fetch their shapes
 
@@ -236,7 +240,7 @@ measured until the next run describes it.
 - Drawn from this site's own files: `us-house`, `ia-judicial-district`, `iowa-aea`, `ia-senate`, `county`, `ia-house`, `county-supervisor`, `school-district-unified`, `school-director-district`, `community-college`, `cc-director-district`, `city-ward`, `precinct`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `post-office`.
 
-#### mi — 5 of 15 layers fetch their shapes
+#### mi — 5 of 18 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -248,20 +252,27 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `mi-senate`, `county`, `mi-house`, `county-commissioner`, `city-ward`, `precinct`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+- **Not measured** — declared since the probe ran: `mi-court-of-appeals`, `mi-circuit-court`, `mi-isd`.
+
+#### mn — not measured
+
+#### ky — not measured
 
 ## 2. Build-time datasets
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
 | il | 130 | 389 | 6 |
-| ny | 38 | 29 | 0 |
+| ny | 38 | 32 | 0 |
 | ca | 17 | 14 | 0 |
-| wi | 91 | 262 | 5 |
-| ia | 70 | 57 | 0 |
-| mi | 25 | 53 | 1 |
-| **total** | **371** | **804** | **12** |
+| wi | 91 | 263 | 5 |
+| ia | 70 | 58 | 0 |
+| mi | 31 | 59 | 1 |
+| mn | 20 | 8 | 0 |
+| ky | 10 | 10 | 0 |
+| **total** | **407** | **833** | **12** |
 
-**131 distinct source hosts** across the six manifests. Each instance's
+**134 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

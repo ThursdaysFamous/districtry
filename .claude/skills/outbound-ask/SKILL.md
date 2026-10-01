@@ -24,8 +24,29 @@ The ledger is a hypothesis about the mailbox, not a record of it: Pope's
 record said NOT YET ASKED across three sends, and a near-duplicate fourth was
 drafted off it and caught only because the operator recognised the address.
 Grep `docs/DATA_LAYER_GUIDEBOOK.md`, `docs/ASK_DRAFTS.md` and the instance's
-`WATCH.md` for the office, and ask the operator to search the sent mail for
-its address. Write the real dates back before drafting anything.
+`WATCH.md` for the office, and write the real dates back before drafting
+anything.
+
+**SEARCH THE SENT FOLDER, BY ADDRESS AND BY DOMAIN, AND TRUST IT OVER THIS
+REPOSITORY.** Where the Gmail connector is available that is one query
+(`before:<today> in:anywhere {to:<domain> from:<domain>}`) and it is not
+optional: on 2026-10-01 eleven letters this repo called unsent had already
+gone, and two went out that afternoon introducing the project to clerks
+written to twice in August. Search by DOMAIN as well as by address — the same
+county answers at a clerk, a GIS and an assessor mailbox, and a letter to one
+should not read as a first approach to the county. Bare keywords match
+personal mail and tell you nothing; use `to:`/`from:`. The record of what has
+been sent, drafted and answered is `docs/ASK_DRAFTS.md` § "The mailbox record".
+
+**AND THE SEARCH IS A FACT CHECK ON THE LETTER, NOT ONLY ON ITS OPENING LINE.**
+Before drafting, read what the office has already SAID and check it against what
+the letter ASSERTS. On 2026-10-01 two Illinois letters explained a missing roster
+by describing what a request to the county's published web address returns, when
+both clerks had already written that their county has no website at all — a
+measurement of a host is not a statement about a county, and where the office has
+made the statement, the measurement is the weaker source. Count the earlier
+letters and their dates too: one county recorded as never contacted had two
+threads, and one recorded as having had two letters had had three.
 
 ## 1. An ask is the residue of a probe, never a first move
 
@@ -80,6 +101,17 @@ the agent that wrote it — `docs/ASK_DRAFTS.md` rule 1, and the one never in
 this file that has no exception. A new draft is a new `## Ask N —` section
 there, or a `### <Unit> — <Recipient> <address>` block under a tranche
 heading.
+
+**And put it in the operator's mailbox as well as in the file** — his
+instruction of 2026-10-01: *"All emails should be drafted in my mailbox along
+side the repo."* One Gmail draft per recipient, created with the Gmail
+connector's `create_draft`, never `send_message`; the wording copied from
+`docs/ASK_DRAFTS.md` verbatim with `<YOUR NAME>` and `<YOUR E-MAIL>` filled in
+and the Markdown taken out, because a mail client renders none of it. A draft
+in the mailbox is the same state as a draft in the file — one step closer to
+his hand, and no send date anywhere. Skip any letter whose recipient address
+the repo does not record, and say which. `docs/ASK_DRAFTS.md` § "Which asks
+have a draft in the operator's mailbox" is the record of which already do.
 
 ## 5. Record DRAFTED where the gap lives — and know where "there" is
 

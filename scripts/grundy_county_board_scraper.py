@@ -23,7 +23,10 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_ROSTER_COMPACT,
+    require_robots_once,
+)
 
 LIST_URL = "https://www.grundycountyil.gov/government/county_board.php"
 UA = {"User-Agent": UA_ROSTER_COMPACT}
@@ -48,6 +51,8 @@ def clean_item(s):
 
 
 def main():
+    require_robots_once(LIST_URL, UA["User-Agent"], headers=UA,
+                        label="il-grundy-county-board-scraper")
     r = requests.get(LIST_URL, headers=UA, timeout=60)
     r.raise_for_status()
 

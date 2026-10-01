@@ -88,6 +88,7 @@ from shapely.validation import make_valid
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from arcgis_nesting import assert_nesting_repaired  # noqa: E402
+from scraper_common import require_robots_once, ua_requests_default  # noqa: E402  (FLEET_SHARED)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP_DIR = os.path.join(os.path.dirname(HERE), "il", "data", "app")
@@ -320,6 +321,7 @@ def fetch_layer():
     """
     feats, offset = [], 0
     while True:
+        require_robots_once(SERVICE + "/query", ua_requests_default(), label="il-build-statewide-library-districts")
         page = requests.get(SERVICE + "/query", params={
             "where": "1=1", "outFields": "Library,LibraryType", "outSR": 4326,
             "f": "geojson", "geometryPrecision": 6,
@@ -634,6 +636,7 @@ def _tiger_units(url):
     """Every Illinois feature from a TIGERweb layer, paged, refusing truncation."""
     out, offset = [], 0
     while True:
+        require_robots_once(url, ua_requests_default(), label="il-build-statewide-library-districts")
         page = requests.get(url, params={
             "where": "STATE='17'", "outFields": "BASENAME", "outSR": 4326,
             "f": "geojson", "geometryPrecision": 6,

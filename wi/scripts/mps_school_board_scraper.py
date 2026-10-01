@@ -26,7 +26,6 @@ import html as html_mod
 import json
 import os
 import re
-import ssl
 import sys
 import time
 import unicodedata
@@ -108,8 +107,23 @@ def crawl_delay():
 
 def fetch(url):
     req = urllib.request.Request(url, headers=UA)
-    with urllib.request.urlopen(req, timeout=60,
-                                context=ssl.create_default_context()) as r:
+    # NO EXPLICIT SSL CONTEXT. This call used to pass
+    # `context=ssl.create_default_context()`, which reads like a restatement
+    # of the default and is not one: `http.client` applies
+    # `set_alpn_protocols(["http/1.1"])` and enables post-handshake auth ONLY
+    # on the context it builds itself, so handing it one sends a ClientHello
+    # advertising no protocol. Cloudflare answers that handshake with a
+    # MANAGED CHALLENGE -- 403, `Cf-Mitigated: challenge`, the "Just a
+    # moment..." body -- on a site that serves the same URL to the same
+    # headers without it. That is how www.milwaukee.gov read as refusing this
+    # project for weeks while serving its robots.txt fine (#1277, measured
+    # 2026-09-30: explicit context 403 twice, explicit context with ALPN set
+    # by hand 200 at 52,682 bytes, no context 200 at 52,682). Removing it
+    # defeats no challenge -- it stops provoking one -- and it puts this fetch
+    # on the identical call `scripts/robots_policy.py` already makes, which is
+    # #1271's consistency requirement: read robots.txt with the client that
+    # crawls.
+    with urllib.request.urlopen(req, timeout=60) as r:
         return r.read().decode("utf-8", "replace")
 
 

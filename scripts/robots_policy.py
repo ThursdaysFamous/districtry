@@ -39,33 +39,67 @@ one reading the caller chooses:
   200 with a body         the file is read
   200 empty, 404, other 4xx
                           no policy is published: allow all (§2.3.1.3)
-  401, 403                status `refused`, and by default ALLOW, as the RFC
-                          says (it files these with 404). The fleet had two
-                          readings of this on 2026-09-12 — the Iowa gate
-                          allowed, scripts/dupage_municipal_officials_scraper.py
-                          fetched nothing ("a site that will not show its
-                          policy has not published one this client can read")
-                          — and the first draft of this module took DuPage's
-                          side for the whole fleet. Measured the same hour, that
-                          would have called EVERY ArcGIS Online FeatureServer
-                          disallowed: services1/2/3/8/9.arcgis.com answer 403
-                          to /robots.txt from Azure Front Door while serving
-                          their layers to every client, and carto.nationalmap.gov
-                          and data.openstates.org do the same. An API host with
-                          no readable robots.txt is not refusing its API. So the
-                          RFC reading is the default and the status stays
-                          VISIBLE: a caller reading a municipal WEBSITE, where a
-                          403 on robots.txt is a WAF refusing the client, passes
-                          refused_is_refusal=True and fetches nothing, which is
-                          what DuPage does. Whether that stricter reading should
-                          be every website scraper's is an open policy question;
-                          this module makes it a one-argument choice rather
-                          than four different accidents.
+  401, 403                status `refused`, and ALLOW, as the RFC says (it
+                          files these with 404). The status stays VISIBLE so a
+                          caller can report it, but it no longer changes the
+                          answer for anybody.
+
+                          THE `refused_is_refusal` OPT-IN WAS RETIRED ON
+                          2026-09-29, BY THE OPERATOR, AFTER MEASURING WHAT THE
+                          403 ACTUALLY WAS. Eighteen hosts recorded as refusing
+                          robots.txt were asked three ways — a bare districtry
+                          token, the token plus the fleet's pinned Chrome client
+                          hints, and the Chrome string plus those hints.
+                          FOURTEEN PUBLISH A POLICY THAT PERMITS US once asked
+                          with the client that actually crawls; three
+                          `sec-ch-ua` headers are the whole difference on
+                          www.milwaukee.gov and www.wauwatosa.net. One
+                          (ilsos.gov) turned out to refuse us by a real
+                          `Disallow: /`, which belongs in a declined table
+                          rather than in a list of hosts we cannot read. Three
+                          hold at 403 on every rung. So the 403 was mostly an
+                          artefact of reading the policy with a THINNER CLIENT
+                          THAN THE CRAWL — the defect wi/scripts/
+                          wi_county_board_scraper.py had already found on five
+                          county hosts on 2026-09-13 and nobody generalised.
+
+                          Two further reasons the strict reading bought nothing.
+                          Of the 28 hosts in user-agent-measurements.json that
+                          403 their robots.txt, TEN serve their pages to the
+                          districtry token perfectly well and all ten are GIS or
+                          data APIs — services{,1,2,3,6,7,8,9}.arcgis.com,
+                          carto.nationalmap.gov, data.openstates.org — which is
+                          the case this default was written for. The other
+                          eighteen refuse the token at the PAGE too, so a
+                          site-wide bot block enforces itself and needs no
+                          policy rule. And Google documents in as many words
+                          that "all 4xx errors, except 429" read as no
+                          robots.txt and that 401 and 403 must not be used to
+                          limit crawling, so an operator cannot reasonably mean
+                          a 403 here as a refusal.
+
+                          WHAT REPLACES IT IS A CONDITION ON THE READ, NOT A
+                          LOOSER RULE: robots.txt is read with the EXACT client
+                          that will crawl — same User-Agent, same headers — and
+                          `RobotsGate` takes a `headers` argument for that
+                          reason. Which client crawls is still decided by the
+                          browser-string rule in CLAUDE.md; the robots read
+                          FOLLOWS that choice rather than leading it. Never
+                          escalate to a browser string in order to get a better
+                          robots verdict, and never drop to a thinner client
+                          after a challenge.
   202                     an HTTP 202 is never a document; it is what captcha
                           fronts return, so it is read as an access control
                           and the host is not fetched (the fleet's standing
                           rule; the RFC does not contemplate it)
+  a managed challenge     read as an access control, and STICKY per host: see
+                          CHALLENGE_FRONTED_HOSTS for why one permissive read
+                          from such a host is not believed
   5xx, network failure    the file is unreachable: disallow all (§2.3.1.4)
+  a redirect that never    status `absent`, and ALLOW: §2.3.1.2 lets a crawler
+  resolves (a loop, or     assume the file is UNAVAILABLE after five
+  more than five hops)     consecutive redirects, and §2.3.1.3 files
+                           unavailable with 404. See `_REDIRECTS_UNRESOLVED`.
 Redirects are followed and the final URL is reported, because a county's
 robots.txt is sometimes its CMS vendor's (Revize serves cherokeecounty.iowa.gov's
 from cms7files.revize.com) and the reader should be able to see that.
@@ -89,6 +123,7 @@ saved robots.txt files under scripts/fixtures/robots/, asserts the readings
 this project has already established by hand for each, and proves the pacer's
 rules with threads and no network.
 """
+import inspect
 import re
 import sys
 import threading
@@ -319,13 +354,33 @@ class Verdict(object):
         self.final_url = final_url
         self.http_status = http_status
 
-    def allows(self, user_agent, url, refused_is_refusal=False):
-        """(allowed, why). `refused_is_refusal` is the caller's reading of a
-        401/403 on robots.txt itself — see the module docstring's table."""
+    def allows(self, user_agent, url):
+        """(allowed, why).
+
+        A `refused` status (401/403 on robots.txt itself) ALLOWS, with no
+        caller opt-in — see this module's docstring for the measurement that
+        retired `refused_is_refusal` on 2026-09-29.
+
+        THE CHALLENGE-STICKINESS GUARD IS HERE, AND HERE IS WHY RATHER THAN IN
+        `fetch_verdict` ALONE. Not every Verdict comes from a fetch: callers
+        build one straight from `classify` — `probe_user_agents.read_robots`
+        does, and so does wi_county_board_scraper.py's selftest harness, which
+        is how the hole was found. This method is the one place EVERY fetch
+        decision passes through, so the table cannot be bypassed by
+        constructing a Verdict another way. `fetch_verdict` downgrades the
+        STATUS as well, so a run that prints the status reports it honestly;
+        both read the same table, so they cannot come to disagree.
+        """
+        blocked = _challenge_fronted(url)
+        if blocked is not None and self.status != "challenge":
+            return False, ("this host is recorded as fronting robots.txt with a "
+                           "managed challenge (%s) — an access control is not "
+                           "worked around on the reads where it happens to be "
+                           "off; the read itself said: %s" % (blocked, self.why))
         if self.status == "absent":
             return True, self.why
         if self.status == "refused":
-            return (not refused_is_refusal), self.why
+            return True, self.why
         if self.status in ("challenge", "unreachable"):
             return False, self.why
         # Served: the `why` keeps the "robots.txt served (N bytes)" prefix the
@@ -386,6 +441,32 @@ def _html_shape(text):
     return "challenge" if any(m in low for m in _CHALLENGE_MARKERS) else "html"
 
 
+# A REDIRECT THAT NEVER RESOLVES IS AN UNAVAILABLE FILE, NOT AN UNREACHABLE HOST.
+# Both clients below follow redirects, so a 3xx can only reach `classify` when the
+# follower gave up -- a loop, or more hops than it allows. RFC 9309 2.3.1.2 says a
+# crawler SHOULD follow at least five consecutive redirects and MAY then assume the
+# file is UNAVAILABLE, and 2.3.1.3 files unavailable with 404: allow all. Reading it
+# as `unreachable` instead disallows the whole host, which is the opposite verdict.
+#
+# MEASURED ON www.browncoil.org, 2026-09-30, from a GitHub runner and from this
+# sandbox alike: /robots.txt 301s in a loop, the county's own pages serve fine, and
+# `scripts/il_county_commissioners_scraper.py` reads Brown County's commissioners
+# from it. Under the old reading, wiring that scraper would have stopped a working
+# refresh on a broken redirect at one path.
+#
+# THE TWO CLIENTS REPORTED IT DIFFERENTLY, WHICH IS WHY THE LOOP IS HANDLED IN BOTH
+# PLACES: the stdlib raises HTTPError 301 ("would lead to an infinite loop"), which
+# reaches here as a status, while requests raises TooManyRedirects, which used to
+# fall through to the generic network handler and answer `unreachable`. One host,
+# one policy, two verdicts depending on which client asked.
+# The argument is HOW the client learned the chain does not resolve, never a
+# status code of this module's own invention: requests raises rather than handing
+# back a status, and writing a plausible-looking number there would put a figure
+# in the record that no server ever sent.
+_REDIRECTS_UNRESOLVED = ("robots.txt redirects did not resolve (%s) — RFC 9309 "
+                         "2.3.1.2 allows treating that as unavailable: allow all")
+
+
 def classify(http_status, body, final_url=None, error=None):
     """Turn a robots.txt response into a Verdict. Pure, so it is testable.
 
@@ -420,6 +501,9 @@ def classify(http_status, body, final_url=None, error=None):
     if http_status in (401, 403):
         return Verdict("refused", "robots.txt refused to this client (HTTP %d) — no readable policy" % http_status,
                        final_url=final_url, http_status=http_status)
+    if 300 <= http_status < 400:
+        return Verdict("absent", _REDIRECTS_UNRESOLVED % ("HTTP %d" % http_status),
+                       policy=RobotsPolicy(""), final_url=final_url, http_status=http_status)
     if 400 <= http_status < 500:
         return Verdict("absent", "no robots.txt (HTTP %d, allow all)" % http_status,
                        policy=RobotsPolicy(""), final_url=final_url, http_status=http_status)
@@ -448,7 +532,19 @@ def _fetch_once(robots_url, user_agent, timeout=30, session=None, headers=None):
         else {"User-Agent": user_agent, "Accept": "text/plain,*/*"}
     try:
         if session is not None:
-            r = session.get(robots_url, headers=headers, timeout=timeout, allow_redirects=True)
+            try:
+                r = session.get(robots_url, headers=headers, timeout=timeout,
+                                allow_redirects=True)
+            except Exception as exc:
+                # A redirect loop is the SAME FACT whichever client meets it, and
+                # requests reports it as an exception where the stdlib reports a
+                # status. Matched on the class name so this module stays
+                # stdlib-only and needs no `requests` import to read its own
+                # policy; see `_REDIRECTS_UNRESOLVED`.
+                if type(exc).__name__ == "TooManyRedirects":
+                    return Verdict("absent", _REDIRECTS_UNRESOLVED % "the client stopped following the chain",
+                                   policy=RobotsPolicy(""), final_url=robots_url)
+                raise
             return classify(r.status_code, r.text, final_url=r.url)
         import urllib.request
         import urllib.error
@@ -497,6 +593,53 @@ RETRY_ATTEMPTS = 3
 RETRY_BACKOFF = (1, 2)      # seconds before attempts 2 and 3
 
 
+# HOSTS MEASURED FRONTING THEIR robots.txt WITH A MANAGED CHALLENGE, and the
+# reason a single permissive read from one of them is not believed.
+#
+# A challenge-fronted host answers NON-DETERMINISTICALLY, and the client is not
+# the variable. Measured 2026-09-29, three reads per rung twenty seconds apart,
+# on the two hosts the tribal-layer survey had recorded as challenges: TEN of
+# twenty-four reads challenged, and SEVEN of the eight host-and-client pairs
+# produced BOTH answers. kbic-nsn.gov challenged the bare districtry token and
+# served the pinned Chrome client; hannahville.net did the reverse an hour
+# later. So a browser string does not make such a host less readable, and a
+# read that comes back `served` is not evidence that the control is not there --
+# it is evidence that this read missed it.
+#
+# `RobotsGate` caches one verdict per host per run, so without this table
+# whether the fleet crawls such a host for a whole run is settled by a coin
+# flip on the first read. CLAUDE.md: a captcha or managed challenge is an
+# access control, never worked around. Getting in on the reads where the
+# control happens to be off is working around it.
+#
+# STICKY IS NOT PERMANENT, and the tribal-layer thread was right to press on
+# this: writing a host off for good on one read is the failure this whole
+# re-examination was about. An entry is carried until a DELIBERATE
+# re-measurement retires it, and the standard for that is stated rather than
+# left to whoever next gets a lucky read: the crawling client must come back
+# `served` on THREE consecutive reads at least fifteen seconds apart, recorded
+# here with its date. One serve retires nothing.
+CHALLENGE_FRONTED_HOSTS = {
+    "kbic-nsn.gov": "10 of 24 reads challenged across both clients; measured 2026-09-29",
+    "www.kbic-nsn.gov": "same host, www spelling; measured 2026-09-29",
+    "hannahville.net": "challenged the bare token 1 of 3; measured 2026-09-29",
+    "www.hannahville.net": "challenged 3 of 6 across both clients; measured 2026-09-29",
+}
+
+
+def _challenge_fronted(url):
+    """The recorded reason this host fronts robots.txt with a challenge, or None.
+
+    Takes a robots.txt URL or a page URL — only the host is read. KEYED ON THE
+    EXACT HOST, never folded: measured 2026-09-29, www.redlakenation.org is
+    challenge-fronted while bare redlakenation.org is a default IIS page, so
+    the two spellings are different facts and a fold would carry a block from
+    one to a host that never earned it.
+    """
+    host = (urllib.parse.urlsplit(url).hostname or "").lower()
+    return CHALLENGE_FRONTED_HOSTS.get(host)
+
+
 def fetch_verdict(robots_url, user_agent, timeout=30, session=None, headers=None,
                   attempts=None):
     """GET one robots.txt and classify it, re-asking an `unreachable` verdict.
@@ -521,10 +664,28 @@ def fetch_verdict(robots_url, user_agent, timeout=30, session=None, headers=None
         if verdict.status != "unreachable":
             if i:
                 verdict.why = "%s (on attempt %d of %d)" % (verdict.why, i + 1, attempts)
-            return verdict
+            return _apply_challenge_stickiness(verdict, robots_url)
     if attempts > 1:
         verdict.why = "%s (unchanged after %d attempts)" % (verdict.why, attempts)
     return verdict
+
+
+def _apply_challenge_stickiness(verdict, robots_url):
+    """Downgrade a permissive read from a host recorded as challenge-fronted.
+
+    Only a verdict that would let a fetch through is changed, so a host that
+    challenges this read is already reported as challenged and a host that has
+    started refusing outright keeps its own status.
+    """
+    reason = _challenge_fronted(robots_url)
+    if reason is None or verdict.status not in ("served", "absent", "refused"):
+        return verdict
+    return Verdict("challenge",
+                   "robots.txt read as %s, but this host is recorded as fronting it "
+                   "with a managed challenge (%s) — an access control is not worked "
+                   "around on the reads where it happens to be off"
+                   % (verdict.status, reason),
+                   final_url=verdict.final_url, http_status=verdict.http_status)
 
 
 class RobotsGate(object):
@@ -822,10 +983,67 @@ def _selftest():
     check(classify(410, "").status == "absent", "410 -> absent (any other 4xx is no policy)")
     check(classify(403, "").allows(ua, "https://h/")[0] is True,
           "refused -> allowed by default (RFC 9309 §2.3.1.3; ArcGIS Online 403s its robots.txt)")
-    check(classify(403, "").allows(ua, "https://h/", refused_is_refusal=True)[0] is False,
-          "refused -> not fetched when the caller reads a website's 403 as a refusal")
+    check(classify(401, "").allows(ua, "https://h/")[0] is True,
+          "401 -> allowed, same as 403 (RFC 9309 files both with 404)")
+    # THE OPT-IN STAYS RETIRED, asserted on the SIGNATURE and never by grepping
+    # this file: the docstring above names `refused_is_refusal` in order to
+    # record that it was retired, so a text search finds the sentence saying it
+    # is gone and fails. That is the same trap build_endpoint_inventory.py's
+    # "not recorded anywhere" probes had to be got out of.
+    check("refused_is_refusal" not in inspect.signature(Verdict.allows).parameters,
+          "the refused_is_refusal opt-in stays retired (operator's ruling, 2026-09-29)")
+
+    # Challenge stickiness. A recorded challenge host's permissive read is not
+    # believed; an unrecorded host's is. Pure, so no network is touched.
+    known = sorted(CHALLENGE_FRONTED_HOSTS)[0]
+    for status, body in ((200, "User-agent: *\nAllow: /\n"), (404, ""), (403, "")):
+        v = _apply_challenge_stickiness(classify(status, body),
+                                        "https://%s/robots.txt" % known)
+        check(v.status == "challenge",
+              "challenge-fronted host: a %d read is downgraded, not believed" % status)
+        check(v.allows(ua, "https://%s/x" % known)[0] is False,
+              "challenge-fronted host: a %d read does not let a fetch through" % status)
+    v = _apply_challenge_stickiness(classify(200, "User-agent: *\nAllow: /\n"),
+                                    "https://not-a-challenge-host.invalid/robots.txt")
+    check(v.status == "served" and v.allows(ua, "https://not-a-challenge-host.invalid/x")[0] is True,
+          "an unrecorded host is untouched by the stickiness table")
+    check(_apply_challenge_stickiness(
+              Verdict("challenge", "challenged"),
+              "https://%s/robots.txt" % known).status == "challenge",
+          "a host that challenges this read keeps its own challenge status")
+    check(_challenge_fronted("https://%s/robots.txt" % known.upper()) is not None,
+          "the stickiness table is matched case-insensitively")
+    # THE GUARD MUST HOLD ON A VERDICT THAT NEVER WENT THROUGH fetch_verdict.
+    # wi_county_board_scraper.py's selftest seeds its cache with a bare
+    # classify(), and probe_user_agents.read_robots builds one the same way, so
+    # a guard living only in fetch_verdict would be bypassed by both.
+    check(classify(200, "User-agent: *\nAllow: /\n").allows(
+              ua, "https://%s/supervisors" % known)[0] is False,
+          "a classify()-built verdict is still caught by the stickiness table")
+    check("managed challenge" in classify(200, "User-agent: *\nAllow: /\n").allows(
+              ua, "https://%s/supervisors" % known)[1],
+          "the reason says the host is challenge-fronted, not that a rule refused")
     check(classify(202, "").status == "challenge", "202 -> challenge")
     check(classify(500, "").status == "unreachable", "500 -> unreachable")
+    # A REDIRECT THAT NEVER RESOLVES: allow, not disallow. Both clients follow
+    # redirects, so a 3xx here means the follower gave up, which RFC 9309 2.3.1.2
+    # lets a crawler read as unavailable -- and 2.3.1.3 files unavailable with 404.
+    # The direction is the point: read as `unreachable` it would refuse the whole
+    # host, which is what www.browncoil.org measured as before this rule.
+    for code in (301, 302, 303, 307, 308):
+        v = classify(code, "")
+        check(v.status == "absent", "%d -> absent (redirects did not resolve)" % code)
+        check(v.allows(ua, "https://h/anything")[0],
+              "%d -> allowed, per RFC 9309 2.3.1.2 + 2.3.1.3" % code)
+    check("RFC 9309" in classify(301, "").why and "301" in classify(301, "").why,
+          "the reason names the rule and the status a server actually sent")
+    check("310" not in _REDIRECTS_UNRESOLVED,
+          "the reason template invents no status code of its own")
+    # A 3xx must NOT read as a served policy: the body of a redirect page is not
+    # a policy, and an empty allow-all is the honest reading of no policy at all.
+    check(classify(301, "User-agent: *\nDisallow: /").allows(ua, "https://h/x")[0],
+          "a redirect's own body is never parsed as rules")
+
     check(classify(None, None, error="timeout").status == "unreachable", "network error -> unreachable")
     check(classify(200, "   ").status == "absent", "200 with an empty body -> allow all")
     v = classify(200, "User-agent: *\nDisallow: /private\n")

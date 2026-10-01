@@ -57,7 +57,7 @@ import re
 import time
 
 import requests  # noqa: F401  (callers pass a session; imported for the dep pin)
-from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_COMPACT  # noqa: E402  (shared — do not fork)
 
 WAREHOUSE = ("https://illinoiscomptroller.gov/constituent-services/"
              "local-government/local-government-warehouse/")
@@ -396,6 +396,8 @@ def new_session():
     """A session holding the ColdFusion cookie the results endpoint needs."""
     s = requests.Session()
     s.headers.update(HEADERS)
+    require_robots_once(SEARCH_FORM, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-comptroller-afr")
     s.get(SEARCH_FORM, timeout=TIMEOUT)
     return s
 
@@ -451,6 +453,8 @@ def latest_fiscal_year(session, code):
     District's latest is FY2024 where every other Peoria and Logan unit
     measured is FY2025.
     """
+    require_robots_once(WAREHOUSE + "landingpage", HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-comptroller-afr")
     r = session.get(WAREHOUSE + "landingpage",
                     params={"code": code, "searchtype": "AFRSearch"},
                     timeout=TIMEOUT)

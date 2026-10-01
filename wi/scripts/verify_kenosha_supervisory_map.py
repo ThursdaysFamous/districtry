@@ -52,6 +52,11 @@ import re
 import sys
 
 import pymupdf
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import (  # noqa: E402  (FLEET_SHARED)
+    UA_ROSTER_BOT, require_robots_once)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GEOMETRY = os.path.join(REPO_ROOT, "data", "app", "county-supervisory-districts.json")
@@ -80,9 +85,10 @@ BASELINE_INSIDE = 86
 
 def fetch(url, binary=False):
     import urllib.request
-    req = urllib.request.Request(url, headers={
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                      "(KHTML, like Gecko) Chrome/124.0 Safari/537.36"})
+    headers = {"User-Agent": UA_ROSTER_BOT}
+    require_robots_once(url, UA_ROSTER_BOT, headers=headers,
+                        label="wi-verify-kenosha-supervisory-map")
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=120) as r:
         data = r.read()
     return data if binary else data.decode("utf-8", "replace")

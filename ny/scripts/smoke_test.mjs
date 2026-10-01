@@ -58,7 +58,7 @@ const OFFLINE = ["judicial-district", "county", "nys-school-district", "municipa
 const EXPECT_DISTRICT = { "judicial-district": "3", "county": "Albany", "nys-school-district": "ALBANY", "municipality": "Albany" };
 const NEGATIVE_POINT = "41.76370,-72.68510"; // Downtown Hartford, Connecticut — outside New York State and 66 km from the nearest geometry this instance ships. NOT a water point: the county, school-district, cities-towns, villages and three legislative files are all water-inclusive off Long Island and in Lake Ontario, so a mid-Sound or mid-lake click is positive, not negative
 const APP_NAME = "districtry New York";
-const EXPECT_LAYERS = 35; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
+const EXPECT_LAYERS = 37; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
 // ==== GENERATED:END smoke-config ====
 const POINT2 = "40.69354,-73.98963"; // Brooklyn Borough Hall (Brooklyn) — the re-classify hop stays fork test code
 // THE CITY GROUND TRUTH SURVIVES THE GO-LIVE AS FORK TEST CODE. The worksheet's
@@ -255,10 +255,15 @@ try {
     // property of the panel, and it moved 3 -> 4 on 2026-09-26 when
     // `nyc-county-clerk-names` shipped naming Manhattan, Queens and Staten
     // Island — the three boroughs whose card names no County Clerk. City Hall
-    // is in Manhattan, so it correctly matches, and it correctly does NOT
-    // match in the Bronx or Brooklyn, whose cards do name one. Update the
-    // number when a record's `counties` changes; never widen the regex to
-    // stop it mattering, which is the only way this check could go quiet.
+    // is in Manhattan, so it correctly matched.
+    //
+    // IT MOVED BACK TO 3 ON 2026-09-29, when those three cards started naming
+    // a clerk from the city's own Green Book and that record was retired. Its
+    // successor `nyc-bronx-county-clerk` names the Bronx alone — what is left
+    // there is two publishers disagreeing about a named person, not an absence
+    // — so City Hall correctly stops matching it. Update the number when a
+    // record's `counties` changes; never widen the regex to stop it mattering,
+    // which is the only way this check could go quiet.
     // NYC_POINT, not POINT: all three location-keyed gap records name the five
     // boroughs, so at the Albany anchor none is matched and the "Where you
     // clicked" section this asserts would not exist at all.
@@ -268,7 +273,7 @@ try {
     const clicked = warm.sections.filter((t) => /^Where you clicked/.test(t));
     check("selecting a point regroups the gaps without dropping one",
       warm.items === expected && clicked.length === 1 &&
-      warm.sections.length > 1 && /Where you clicked4$/.test(clicked[0]),
+      warm.sections.length > 1 && /Where you clicked3$/.test(clicked[0]),
       `${warm.items}/${expected} items, sections=${JSON.stringify(warm.sections)}`);
 
     // THE THREE BANDS OF THE WASH, IN THE PANEL'S OWN WORDS — and this instance
@@ -446,6 +451,69 @@ try {
     }
   }
 
+  // 2d. THE SPECIAL-DISTRICT TIER'S FIRST COUNTY. fire-district and
+  //     library-district are two dispatched concepts with one entry each, and
+  //     they make the same two claims the county tier does: each ANSWERS inside
+  //     Sullivan and each is coverage-HIDDEN everywhere else. The hidden half is
+  //     again the one worth having, because a broken county test would show a
+  //     "Fire District" toggle to a reader in Albany whose fire district this app
+  //     cannot answer for at all.
+  //
+  //     THE DISTRICT NAMES ARE COMPARED AGAINST THE SHIPPED FILES rather than
+  //     pinned as literals, for the Tompkins reason one step further on: a town
+  //     can alter or dissolve a fire district at any time on petition, so a
+  //     pinned name would go red on a real change that is not a regression,
+  //     while pinning nothing would let a broken card pass. The POINT is a
+  //     literal, because it is in the middle of Monticello.
+  //
+  //     IT ALSO ASSERTS THE CARD NAMES NOBODY, which is a claim about honesty
+  //     rather than about plumbing: nothing published names a Sullivan fire
+  //     commissioner or library trustee, so the card has to say so. A card that
+  //     started naming people would mean a roster had been joined from
+  //     somewhere, which is exactly the change a person should read first.
+  {
+    const MONTICELLO = "41.6553,-74.6896";       // the middle of Monticello, Sullivan County
+    for (const [layer, file, label] of [
+      ["fire-district", "data/app/sullivan-fire-districts.json", "fire"],
+      ["library-district", "data/app/sullivan-library-districts.json", "library"]]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${MONTICELLO}&layers=${layer}`);
+      const card = await cardText(page, layer);
+      const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, file), "utf8"));
+      const named = shipped.features
+        .map((f) => f.properties.name)
+        .filter((name) => card.text.includes(name));
+      check(`${layer} answers inside Sullivan County and names a district the shipped file carries`,
+        !card.error && named.length === 1, `${named.join(", ") || "none"} | ${card.text.slice(0, 70)}`);
+      check(`the ${label}-district card names nobody, because nothing published names them`,
+        /names none rather than guessing/.test(card.text), card.text.slice(-80));
+      check(`the ${label}-district card credits the county's own GIS`,
+        /Sullivan County Real Property Services/.test(card.text), card.text.slice(-70));
+      await context.close();
+    }
+  }
+  {
+    // hidden where no county in either table covers the point: the upstate
+    // anchor, which is in Albany County, and inside the city.
+    for (const layer of ["fire-district", "library-district"]) {
+      for (const [where, pt] of [["the upstate anchor, outside Sullivan", POINT],
+                                 ["New York City", NYC_POINT]]) {
+        const context = await browser.newContext({ serviceWorkers: "block" });
+        const page = await booted(context, `${BASE}#point=${pt}&layers=${layer}`);
+        const shown = await page.evaluate((id) => {
+          const card = document.getElementById("card-" + id);
+          const block = card && card.closest(".layer-block");
+          const toggle = document.querySelector('[data-layer="' + id + '"]');
+          const visible = (el) => !!el && !el.hidden && el.offsetParent !== null;
+          return { card: visible(block), toggle: visible(toggle) };
+        }, layer);
+        check(`${layer} stays hidden at ${where}`,
+          !shown.card && !shown.toggle, JSON.stringify(shown));
+        await context.close();
+      }
+    }
+  }
+
   // 2b. THE CITY GROUND TRUTH, kept as fork test code at its own literal. These
   //     three layers are coverage-hidden at the upstate anchor, so they can only
   //     be asserted here — and they must still be asserted, because the go-live
@@ -583,6 +651,54 @@ try {
     const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=county`);
     const county = await cardText(page, "county");
     check("a point outside New York State resolves to no county (honest empty state)", !county.error && county.empty, county.text.slice(0, 70));
+    await context.close();
+  }
+
+  // 3c. THE STATEWIDE ZIP LAYER HIDES OUTSIDE NEW YORK STATE, AND IS VISIBLE
+  //     INSIDE IT. Both halves, because a hide test alone passes for a layer
+  //     that is hidden everywhere. A ZCTA carries no state field, so this
+  //     layer's envelope fetch and its point-first hook both answer for
+  //     neighbouring states — measured in index.html's own loader comment,
+  //     2,007 of the 3,833 the envelope returns are out of state — and its
+  //     coverage test used to say only "not in the five boroughs", so a click
+  //     in Hartford got Hartford's ZIP code from a New York app. The test now
+  //     reads the shipped state outline and the borough fabric, both
+  //     same-origin and already cached for other cards, so the census host is
+  //     refused here and the verdict is the same either way.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const hiddenPage = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=nys-zip-code`, async (p) => {
+      await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
+    });
+    const hidden = await hiddenPage
+      .waitForFunction(() => {
+        const box = document.getElementById("toggle-nys-zip-code");
+        const block = box && box.closest(".layer-block");
+        return !!block && block.hidden === true;
+      }, null, { timeout: QUERY_TIMEOUT })
+      .then(() => true, () => false);
+    // The invariant directly, not just its hash reflection: hiding must never
+    // mutate state.layersOn, which is what keeps a layers= permalink intact and
+    // makes the layer reappear when the point comes back into the state.
+    const stillOn = await hiddenPage.evaluate(
+      () => window.NycExplorer.state.layersOn["nys-zip-code"] === true);
+    check("nys-zip-code hides outside New York State (permalink intact)",
+      hidden && stillOn, `hidden=${hidden} layersOn=${stillOn}`);
+    await context.close();
+  }
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=nys-zip-code`, async (p) => {
+      await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
+    });
+    const visible = await page
+      .waitForFunction(() => {
+        const box = document.getElementById("toggle-nys-zip-code");
+        const block = box && box.closest(".layer-block");
+        return !!block && block.hidden === false;
+      }, null, { timeout: QUERY_TIMEOUT })
+      .then(() => true, () => false);
+    check("nys-zip-code is in coverage at the Albany anchor (not hidden)", visible, `visible=${visible}`);
     await context.close();
   }
 

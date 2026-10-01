@@ -4101,7 +4101,11 @@ function initWisconsinExplorer() {
     { id: "iowa", label: "Iowa", url: "https://districtry.com/ia/", emoji: "🌽", explorerName: "districtry Iowa",
       bbox: { minLng: -96.64, minLat: 40.37, maxLng: -90.14, maxLat: 43.5 } },
     { id: "michigan", label: "Michigan", url: "https://districtry.com/mi/", emoji: "🚗", explorerName: "districtry Michigan",
-      bbox: { minLng: -87.6, minLat: 41.7, maxLng: -82.11, maxLat: 48.01 } }
+      bbox: { minLng: -87.6, minLat: 41.7, maxLng: -82.11, maxLat: 48.01 } },
+    { id: "minnesota", label: "Minnesota", url: "https://districtry.com/mn/", emoji: "🛶", explorerName: "districtry Minnesota",
+      bbox: { minLng: -97.3, minLat: 43.44, maxLng: -89.58, maxLat: 49.44 } },
+    { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
+      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -11759,6 +11763,10 @@ function initWisconsinExplorer() {
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       // hover popup: same identity the card headline shows — the zoned school's
       // name, or the honest "None" where requireId treats the feature as unzoned.
       hoverName: function (feature) {
@@ -11844,6 +11852,10 @@ function initWisconsinExplorer() {
       group: "schools",
       label: opts.label,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // optional: a vector-tile archive this layer is drawn and answered from
+      // where the browser can (tile-overlay block); its GeoJSON loader stays
+      // the fallback and what the comparison features read
+      tiles: opts.tiles,
       overlay: { load: loadNetworks, style: opts.style },
       // point-first by default (queryFeatureAt) — same pattern as the other factories
       query: function (point, seq) {
@@ -12027,6 +12039,44 @@ function initWisconsinExplorer() {
     function memberProfileUrl(member) {
       return member && member.url ? safeHttpUrl(member.url) : null;
     }
+    // A SEAT THE CHAMBER ITSELF CALLS EMPTY IS A RECORD, NOT AN ABSENCE. Until
+    // 2026-10-01 a roster built from a bulk export simply had no row for a
+    // vacant district, so three things went wrong at once and all three were
+    // reader-facing: the card fell through to the no-roster path and said only
+    // the district number, the chamber's own seat count was taken from the
+    // roster's length and read one short (the generated table on each
+    // legislature page said "All 79 seats on the California State Assembly"
+    // for a chamber of 80), and nothing anywhere said why. The roster carries a
+    // record for every district the map draws now, and the record says which of
+    // two different things is true.
+    //
+    // THE TWO ARE KEPT APART BECAUSE ONE IS A STRONGER STATEMENT THAN THE
+    // OTHER. `vacant: true` means the chamber's own members page says the seat
+    // is empty — California's prints "Member Vacant" — and that is the only way
+    // a reader is ever told "Vacant". A record with no name and no `vacant`
+    // means our source named nobody, which is a fact about our source, so it
+    // reads "No member listed". Reporting the second as a vacancy would be
+    // guessing an officeholder out of existence, which is the same honesty rule
+    // that forbids guessing one into it.
+    function isMember(member) {
+      return !!(member && member.name);
+    }
+    // THE RECORD STATES THE CLAIM AND THIS ONLY PRINTS IT. Where the authority
+    // does not use the word, the record carries its own one-sentence reason:
+    // Iowa's chamber roster ends a member's service with a date and names
+    // nobody after them, so a hardcoded "its members page says this seat is
+    // vacant" would be false of the very page cited. The default sentence
+    // serves the chambers that do print the word.
+    function vacancyNote(member) {
+      // `asOf` is the day the chamber said it, carried so a reader can see how
+      // old the statement is. A record with no date says the thing without
+      // dating it rather than inventing a day.
+      var when = member && member.asOf ? String(member.asOf) : null;
+      var why = member && member.vacantWhy
+        ? String(member.vacantWhy)
+        : "The chamber's own members page says nobody holds this seat.";
+      return "Vacant — " + why + (when ? " Read on " + when + "." : "");
+    }
     registerLayer({
       id: opts.id,
       group: "political",
@@ -12050,7 +12100,12 @@ function initWisconsinExplorer() {
           var props = feature.properties || {};
           var district = extractDistrictNumber(props, opts.districtFields);
           var member = district != null ? roster[String(district)] : undefined;
-          return { seq: seq, district: district, member: member || null };
+          // A nameless record is NOT a member and must not reach the person
+          // row, which would render the string "undefined" as somebody's name.
+          // It is carried separately so the card can say which kind it is.
+          return { seq: seq, district: district,
+                   member: isMember(member) ? member : null,
+                   seat: member || null };
         });
       },
       render: function (result) {
@@ -12060,10 +12115,20 @@ function initWisconsinExplorer() {
         var wrap = cardEl("div", "card-flush");
         var member = result.member;
         if (!member) {
-          // roster gap or roster-fetch failure: district identity + the
-          // official directory (primaryLink in the footer) — never an
-          // invented name (honesty rules).
-          wrap.appendChild(renderBodyIntro({ title: districtLabel(result) || "Unknown district" }));
+          // Three states, told apart. A seat the chamber calls vacant says so;
+          // a record naming nobody says that instead; and no record at all is
+          // either a roster gap or a roster-fetch failure, which is OUR silence
+          // rather than the chamber's, so it claims neither and shows district
+          // identity plus the official directory (primaryLink in the footer) —
+          // never an invented name (honesty rules).
+          var seat = result.seat;
+          var note = null;
+          if (seat && seat.vacant) note = vacancyNote(seat);
+          else if (seat) note = "No member listed for this seat.";
+          wrap.appendChild(renderBodyIntro({
+            title: districtLabel(result) || "Unknown district",
+            note: note
+          }));
           return wrap;
         }
         var person = { name: String(member.name) };
@@ -12113,7 +12178,13 @@ function initWisconsinExplorer() {
           if (!roster) return null;
           var d = extractDistrictNumber(feature.properties || {}, opts.districtFields);
           var member = d != null ? roster[String(d)] : null;
-          return member ? member.name : null;
+          if (isMember(member)) return member.name;
+          // The hover names who holds the seat, so a seat the chamber calls
+          // empty is named "Vacant" — the hover and the card cannot disagree.
+          // A record naming nobody hovers as nothing, exactly as a missing
+          // record always has, because "no member listed" is a sentence about
+          // our source and does not belong in a one-word popup.
+          return member && member.vacant ? "Vacant" : null;
         }
       }
     });
@@ -12251,6 +12322,21 @@ function initWisconsinExplorer() {
   // from the clerk's own house, and demonstrably contains both).
   var loadWiMunicipalClerks = makeCached(function () {
     return fetchJSONWithRetry("data/app/wi-municipal-clerks.json", {}, 2);
+  });
+  // The governing BODY, in the municipalities that elect their whole board AT
+  // LARGE. A separate roster from wi-alderpersons.json for one reason: that file
+  // is keyed by DISTRICT, and a council elected citywide has none, so seating
+  // these members under numbers would tell a reader they were elected in a way
+  // they were not.
+  //
+  // THE SEAT LABEL IS NOT A DISTRICT and the card never prints it as one.
+  // Caledonia's village board labels its members Trustee 1 to Trustee 6, which
+  // reads exactly like a district number, while the village's own board page
+  // states that "The Trustees and President represent the entire Village". So
+  // the label rides each person as their ROLE and the block says in words that
+  // the whole board is elected by the whole municipality.
+  var loadWiMunicipalBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wi-municipal-boards.json", {}, 2);
   });
   // Three facts from the Wisconsin Blue Book 2025-26 section 190, used by
   // written permission from the Legislative Reference Bureau (LICENSE-DATA.md
@@ -13279,7 +13365,8 @@ function initWisconsinExplorer() {
         queryFeatureAt(loadPlaces, point),
         loadWiMunicipalExecutives().catch(function () { return null; }),
         loadWiMunicipalClerks().catch(function () { return null; }),
-        loadWiMunicipalFacts().catch(function () { return null; })
+        loadWiMunicipalFacts().catch(function () { return null; }),
+        loadWiMunicipalBoards().catch(function () { return null; })
       ]).then(function (parts) {
         var feature = parts[0];
         if (!feature) return null; // unincorporated — the engine renders this layer's own emptyNote
@@ -13289,6 +13376,7 @@ function initWisconsinExplorer() {
         var exec = (parts[1] && key) ? parts[1][key] : null;
         var clerk = (parts[2] && key) ? parts[2][key] : null;
         var facts = (parts[3] && key) ? parts[3][key] : null;
+        var board = (parts[4] && key) ? parts[4][key] : null;
         return {
           seq: seq,
           name: findPropCI(props, ["name"]),
@@ -13296,6 +13384,7 @@ function initWisconsinExplorer() {
           executive: exec || null,
           clerk: clerk || null,
           facts: facts || null,
+          board: board || null,
           factsEdition: (parts[3] && parts[3]._meta) ? parts[3]._meta.asOf : null,
           factsLoaded: !!parts[3]
         };
@@ -13396,6 +13485,52 @@ function initWisconsinExplorer() {
           });
           wrap.appendChild(renderFieldStack(stack));
         }
+      }
+      // THE GOVERNING BODY, where the whole of it is elected at large. Its own
+      // labelled block, between the executive and the clerk, because the three
+      // are three different things and an unlabelled run of names would read as
+      // one body.
+      //
+      // THE BLOCK SAYS HOW THEY WERE ELECTED, in words, for the reason the seat
+      // labels exist: Caledonia's are Trustee 1 to Trustee 6 and a reader seeing
+      // a number beside a name will read it as a district unless told otherwise.
+      // The sentence is what makes the number safe to print at all.
+      var board = result.board;
+      if (board && board.board && board.board.length) {
+        wrap.appendChild(renderSectionLabel(
+          board.board.length + " members, elected at large"));
+        wrap.appendChild(renderPersonRows(board.board.map(function (m) {
+          var person = { name: String(m.name) };
+          if (m.role) person.badge = String(m.role);
+          if (m.phone) person.phone = String(m.phone);
+          if (m.email) person.email = String(m.email);
+          return person;
+        })));
+        var boardRows = [{
+          label: "How they are elected",
+          value: "Every seat on this body is elected by the whole " +
+            "municipality, so the numbers beside these names are seats rather " +
+            "than districts and there is no district to draw."
+        }];
+        // A CARRIED ROSTER SAYS SO, the same posture as the executive above: the
+        // whole value of a weekly re-read is that a shown name was corroborated
+        // this week, and without this row a carried one reads identically.
+        if (board.carriedFrom) {
+          boardRows.push({
+            label: "Last re-read",
+            value: "The municipality's own source could not be read since " +
+              String(board.carriedFrom) + "; these names are carried from the " +
+              "last refresh that could read it" +
+              (board.carriedWhy ? " (" + String(board.carriedWhy) + ")" : "") + "."
+          });
+        } else if (board.asOf) {
+          boardRows.push({
+            label: "As of",
+            value: "Read from the municipality's own source on " +
+              String(board.asOf) + "."
+          });
+        }
+        wrap.appendChild(renderFieldStack(boardRows));
       }
       // THE CLERK — statewide, and the one officer this card can name
       // everywhere. Kept in its own labelled block below the executive so the
@@ -14887,17 +15022,47 @@ function initWisconsinExplorer() {
     return loadArcGISPointGeoJSON(TIGERWEB_SERVICES + "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11", point, "ZCTA5");
   };
 
+  /* THIS LAYER ALONE AMONG THE STATEWIDE ONES DECLARES A COVERAGE TEST, and the
+   * reason is the missing state field. Every other statewide layer here is
+   * fetched with STATE='55', so it is silent outside Wisconsin by construction;
+   * a ZCTA query carries no state filter, so at a point in a neighbouring state
+   * the live fallback returns THAT state's ZIP code — an answer about a place
+   * this instance does not serve, on ground every other card here correctly
+   * declines. The committed tile archive holds Wisconsin's ZCTAs only, so the
+   * archive path was already silent; the defect was on the FALLBACK, which runs
+   * when the archive cannot be read and on a browser that cannot read one at
+   * all. Declaring coverage hides the toggle, the card and the overlay outside
+   * the state instead, which is the engine's own mechanism for "where a layer's
+   * data applies", and makes the instance consistent at one more point rather
+   * than only most of it.
+   *
+   * The ground is the same wi-state-outline.json the coverage wash and the app's
+   * own hand-off already read, so ZIP agrees with the rest of the app about where Wisconsin is
+   * rather than keeping a notion of its own, and the test is same-origin and
+   * cache-first — it costs no request and answers identically on a runner that
+   * can reach TIGERweb and in a sandbox that cannot. A throwing test fails
+   * open, which is the engine's rule. */
+  function insideWisconsin(point) {
+    return loadStateOutline().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+
   registerPolygonLayer({
     id: "zip-code",
     tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
+    coverage: insideWisconsin,
     loader: loadZipCodes,
-    // The archive keeps only the ZCTAs inside this app's own state (scripts/
-    // mirror_tiger_tiles.py, STATE_OVERLAP_MIN), so an empty card here is a fact
-    // about the archive, not about the place: the generic "isn't inside any
-    // district" would be false for a point in, say, a neighbouring state's ZIP.
-    emptyNote: "No ZIP code here. This map holds Wisconsin's ZIP codes only, so a point outside Wisconsin gets none.",
+    // WITH COVERAGE DECLARED ABOVE, AN OUT-OF-STATE POINT HIDES THIS LAYER
+    // RATHER THAN ANSWERING IT, so the note that used to stand here — "This map
+    // holds Wisconsin's ZIP codes only, so a point outside Wisconsin gets none",
+    // citing the archive's STATE_OVERLAP_MIN filter — describes a case that can
+    // no longer render, and a note that cannot render is a claim nothing keeps
+    // true. What is left is a point inside Wisconsin that no ZCTA covers, so the
+    // note now says only what the query answered.
+    emptyNote: "No ZIP Code Tabulation Area covers this point.",
     // dotted outline (distinct pattern from County Subdivision's long dash) + different hue
     style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
     fields: [

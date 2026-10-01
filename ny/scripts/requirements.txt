@@ -16,3 +16,11 @@ playwright==1.61.0
 # scripts/generate_metro_files.py. The generator is otherwise stdlib-only;
 # validate_index.py deliberately stays stdlib and does NOT import this.
 jsonschema==4.26.0
+
+# build_sullivan_special_districts.py unions each district's per-municipality
+# register rows into one shape. mapshaper's own two routes were measured first
+# and both lose districts on this input — `-dissolve2` destroys two whole
+# districts' geometry where a source piece is self-intersecting, and `-clean`
+# drops three features and reports 26 intersections it cannot repair — so the
+# union is shapely's. Same pin as scripts/requirements.txt.
+shapely==2.1.2

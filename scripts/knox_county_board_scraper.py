@@ -3,11 +3,43 @@
 
 WHY THE MINUTES. Knox's board page lists all fifteen members with district and
 contact details and this project may not read it: knoxcountyil.gov answers 403
-to every client, and the Internet Archive never captured the page. What IS
-readable is the same website's DOCUMENTS, which are served from its Revize CMS
-at cms2.revize.com/revize/knoxcounty/ with no block of any kind. Every set of
-minutes opens with a roll call that names EVERY SEAT BY DISTRICT, which is the
-roster this county was recorded as not having.
+to every client, and the Internet Archive never captured the page. What ANSWERS
+this client is the same website's DOCUMENTS, served from its Revize CMS at
+cms2.revize.com/revize/knoxcounty/. Every set of minutes opens with a roll call
+that names EVERY SEAT BY DISTRICT, which is the roster this county was recorded
+as not having.
+
+THAT HOST'S POLICY ALLOWS THESE DOCUMENTS, AND A FIRST READING OF IT SAID
+OTHERWISE. The sentence above read "with no block of any kind" from the day this
+file was written, which was a claim about the PAGES answering and not about the
+policy — so the policy was read on 2026-09-30, and the first reading of it was
+wrong in the opposite direction. cms2.revize.com serves a 414-byte robots.txt
+whose `*` group is a list of document extensions followed by a blanket refusal:
+
+    User-agent: *
+    Allow: /*.pdf          (plus .doc .docx .ppt .pptx .xml .txt and upper case)
+    Disallow: /
+
+That reading was taken at `/revize/knoxcounty/`, the DIRECTORY, where
+`Disallow: /` is indeed the longest match — and this scrape never fetches a
+directory. It fetches `.pdf` paths only, where `Allow: /*.pdf` is the longest
+match and RFC 9309 §2.2.2 gives it the decision, so every document this file
+reads is explicitly permitted. The verdict was recorded as a refusal in this
+docstring and in two gate tables for part of one day; nothing stopped fetching,
+because the seam below asks about the PDF path and always answered allow.
+
+MEASURE THE PATH THE SCRAPER FETCHES, NEVER A DIRECTORY ABOVE IT. This project's
+own record already carries that lesson for 60 hosts measured at the wrong address
+in the first user-agent sweep; this is the same defect at rule level, where the
+cost is the opposite of the usual one — not a browser string licensed by a wrong
+reading, but a working source recorded as shut. A host that allows documents and
+refuses crawling is a common CMS default and cannot be judged from one path.
+
+THE REFUSAL IT WOULD HAVE BEEN IS STILL THE VENDOR'S, not the county's, and that
+part of the first reading was right: this policy is published at the CMS
+vendor's own host, which is the reverse of the Kendall/McHenry/Joliet case, where
+one vendor's default is published at each GOVERNMENT'S host, binds for that
+reason, and must never be cited as something that government chose.
 
   "The Meeting was called to order by County Board Chair Jared Hawkinson and
    upon roll call the following Members reported present:
@@ -35,6 +67,7 @@ Usage:
     python3 scripts/knox_county_board_scraper.py [-o raw.json]
 """
 
+import os
 import argparse
 import datetime
 import io
@@ -45,6 +78,9 @@ import urllib.parse
 
 import pymupdf
 import requests
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
 
 CMS_ROOT = "https://cms2.revize.com/revize/knoxcounty/"
 MINUTES_TEMPLATE = "Board Minutes {month} {year}.pdf"
@@ -108,6 +144,8 @@ SEAT = re.compile(r"District\s+([1-9])\b\s*"
 
 
 def fetch(url):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-knox-county-board-scraper")
     r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
     if r.status_code != 200:
         return None

@@ -104,6 +104,10 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(_HERE)), "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE = os.path.join(HERE, ".cache", "mi_detroit_council.json")
 
@@ -121,9 +125,12 @@ EXPECT_SEATS = len(EXPECT_DISTRICTS) + EXPECT_AT_LARGE
 WAYBACK_MAX_AGE_DAYS = 45
 
 # The fleet's genuine-browser header set (scripts/scraper_common.py's
-# UA_HINTS_CHROME_126). Copied rather than imported: instance scripts resolve
-# imports inside their own tree, and scripts/validate_workflow_deps.py fails a
-# sys.path reach across trees.
+# UA_HINTS_CHROME_126), copied rather than imported. THE STATED REASON IS NO
+# LONGER THE WHOLE TRUTH: validate_workflow_deps.py permits the reach for a
+# module named in its own FLEET_SHARED set, which scraper_common is, and this
+# file now imports the robots seam from exactly there. The copy is left alone
+# because replacing it would change what a host is told, which is a separate
+# change; it is byte-identical to the shared set today.
 UA_HINTS_CHROME_126 = {
     "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                    "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"),
@@ -142,6 +149,26 @@ def fail(msg):
 
 
 def _get(url, timeout=90):
+    # Read the site's policy before the first fetch of its host, with the SAME
+    # client that does the fetching — the header set below, browser string and
+    # client hints included, because which client crawls decides which group
+    # binds. Asked once per (host, client) by require_robots_once, so the
+    # wayback rung asks about web.archive.org on its own.
+    #
+    # BOTH HOSTS PERMIT THE FETCH AND NEITHER BY PUBLISHING A PERMISSION.
+    # Measured from a runner 2026-09-30: detroitmi.gov answers the robots
+    # request itself with HTTP 403, which under RFC 9309 2.3.1.3 is no published
+    # policy and therefore allows -- the reading the operator settled on
+    # 2026-09-29 -- and web.archive.org answers 404, allow all. That second one
+    # was in ROBOTS_DEFERRED_HOSTS until the runner measurement retired the
+    # deferral, so a comment citing that record would already be out of date.
+    #
+    # The address is whatever the caller passes rather than a constant, so the
+    # reading goes here and not at the top of the file: this scraper's rungs
+    # include a url built from the live page's own markup.
+    require_robots_once(url, UA_HINTS_CHROME_126["User-Agent"],
+                        headers=dict(UA_HINTS_CHROME_126),
+                        label="mi-detroit-council-scraper")
     req = urllib.request.Request(url, headers=dict(UA_HINTS_CHROME_126))
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return resp.read().decode("utf-8", "replace")

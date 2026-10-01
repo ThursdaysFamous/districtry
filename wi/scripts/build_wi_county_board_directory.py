@@ -149,7 +149,6 @@ Usage:
 import json
 import os
 import re
-import ssl
 import sys
 import urllib.error
 import urllib.request
@@ -331,6 +330,39 @@ PROBE_UA = {
 }
 
 
+def robots_verdict(url, headers):
+    """None when this host permits `url`; else why it does not, for the report.
+
+    Imported per call, like `probe_headers` and for the same reason: `--check`
+    is offline and stdlib-only, and must stay runnable where the shared reader's
+    dependencies are not installed. An unavailable reader is ANNOUNCED and stops
+    the probe rather than being treated as a permission -- a probe that quietly
+    crawls because it could not read the rules is the failure this exists to
+    prevent.
+    """
+    sys.path.insert(0, os.path.join(
+        os.path.dirname(os.path.dirname(os.path.dirname(
+            os.path.abspath(__file__)))), "scripts"))
+    try:
+        import robots_policy
+    except Exception as exc:  # pragma: no cover - import-environment only
+        raise SystemExit("probe: the shared robots.txt reader is not importable "
+                         "(%s), so no host's rules can be read. Install "
+                         "scripts/requirements.txt and re-run; this probe will "
+                         "not fetch a page it has not asked about." % exc)
+    # `RobotsGate.allows` TAKES THE PAGE URL and derives the robots.txt address
+    # itself, caching one read per host. Two wrong spellings of this were written
+    # first and both read as a permission, which is the direction that matters:
+    # `fetch_verdict` takes the ROBOTS URL, so handing it a page fetches the page
+    # and classifies 72 KB of HTML as "no robots.txt, allow all"; and
+    # `Verdict.allows` is a method taking (user_agent, url), so `if verdict.allows`
+    # tests a bound method and is always true. Either one is a gate that cannot
+    # fail, which is worse than no gate, because it reports that it checked.
+    ok, why = robots_policy.RobotsGate(
+        None, headers.get("User-Agent", ""), headers=headers).allows(url)
+    return None if ok else why
+
+
 def probe_headers(fips, url):
     """The scraper's own per-host header set, with this file's as the fallback.
 
@@ -359,13 +391,61 @@ PROBE_STUBS = re.compile(
 
 
 def probe():
-    """Fetch every URL and say which are no longer the county's own site."""
+    """Fetch every URL and say which are no longer the county's own site.
+
+    EACH HOST IS ASKED FOR ITS ROBOTS.TXT FIRST, with `probe_headers`' own
+    client -- the same consistency requirement the rest of this file already
+    meets about which client asks for a page.
+
+    NINE OF THE 72 REFUSE US, AND THIS DOCSTRING SAID TWO for the first day it
+    existed. Eight publish a `*` group of one `Disallow: /` -- Ashland, Barron,
+    Dunn, Jackson, Pepin, Polk, Richland and Rusk, seven of them the same
+    admin-rules-then-blanket-refusal shape beneath rules for six named search
+    engines -- and Taylor answers the robots request with HTTP 202, an access
+    control rather than a document. The weekly scraper and the officer scrape
+    already leave seven of the nine alone for exactly this reason; this
+    operator-run mode was the one route still crawling them.
+
+    THE CODE WAS RIGHT AND THE SENTENCE BESIDE IT WAS NOT, which is the harder
+    half to catch: `robots_verdict` reported all nine on the run that measured
+    them, and the docstring recorded the two the author was looking for. The
+    count was corrected on 2026-09-30 from an independent reading -- the
+    runner-side measurement in `robots-verdicts.json`, which asks every host the
+    tree fetches with no notion of what this file expects. A figure written from
+    the output you went looking for is not a measurement of the output.
+
+    A REFUSING HOST IS REPORTED, NEVER SILENTLY PASSED. Its URL goes unchecked,
+    which is the honest outcome -- the thing this probe detects is a URL that
+    has stopped being the county's own site, and a host we may not read is a
+    URL we cannot answer that about. Saying so is different from saying the URL
+    is fine, and it is different from calling it broken.
+    """
     findings = []
     for fips, (name, url) in sorted(COUNTY_SITES.items(), key=lambda kv: kv[1][0]):
+        headers = probe_headers(fips, url)
+        verdict = robots_verdict(url, headers)
+        if verdict is not None:
+            findings.append("%s (%s): NOT CHECKED — %s" % (name, url, verdict))
+            continue
         try:
-            req = urllib.request.Request(url, headers=probe_headers(fips, url))
-            with urllib.request.urlopen(req, timeout=35,
-                                        context=ssl.create_default_context()) as r:
+            req = urllib.request.Request(url, headers=headers)
+            # NO EXPLICIT SSL CONTEXT. This call used to pass
+            # `context=ssl.create_default_context()`, which reads like a restatement
+            # of the default and is not one: `http.client` applies
+            # `set_alpn_protocols(["http/1.1"])` and enables post-handshake auth ONLY
+            # on the context it builds itself, so handing it one sends a ClientHello
+            # advertising no protocol. Cloudflare answers that handshake with a
+            # MANAGED CHALLENGE -- 403, `Cf-Mitigated: challenge`, the "Just a
+            # moment..." body -- on a site that serves the same URL to the same
+            # headers without it. That is how www.milwaukee.gov read as refusing this
+            # project for weeks while serving its robots.txt fine (#1277, measured
+            # 2026-09-30: explicit context 403 twice, explicit context with ALPN set
+            # by hand 200 at 52,682 bytes, no context 200 at 52,682). Removing it
+            # defeats no challenge -- it stops provoking one -- and it puts this fetch
+            # on the identical call `scripts/robots_policy.py` already makes, which is
+            # #1271's consistency requirement: read robots.txt with the client that
+            # crawls.
+            with urllib.request.urlopen(req, timeout=35) as r:
                 body = r.read(200000)
                 code = r.status
         except urllib.error.HTTPError as e:

@@ -51,13 +51,13 @@ import sys
 from datetime import datetime, timezone
 
 import requests
-from scraper_common import UA_CHROME_WIN_124, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
 
 BOARD_URL = "https://www.skokie.org/486/Board-of-Trustees"
 ELECTORAL_CHANGES_URL = "https://www.skokie.org/1379/2025-Electoral-Changes"
 
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_124,
+    "User-Agent": UA_ROSTER_BOT,
     "Accept": ("text/html,application/xhtml+xml,application/xml;q=0.9,"
                "image/avif,image/webp,*/*;q=0.8"),
     "Accept-Language": "en-US,en;q=0.9",
@@ -78,6 +78,8 @@ def fetch(url):
     # scraper_common.fetch retries 429/5xx (numeric Retry-After honoured,
     # capped) and refuses to retry 401/403/404 — the Henry rule. Parsing and
     # every page check stay in this file.
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-skokie-trustee-districts-scraper")
     return fetch_with_retry(url, HEADERS, timeout=REQUEST_TIMEOUT).text
 
 

@@ -52,7 +52,10 @@ import requests  # noqa: E402
 from build_metro_outline import (  # noqa: E402  (shared machinery — do not fork)
     HEADERS, REQUEST_TIMEOUT, point_in_rings,
 )
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    make_fail,
+    require_robots_once,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "dewitt-county-board-districts.json")
@@ -95,6 +98,8 @@ def norm(name):
 
 
 def fetch_precincts():
+    require_robots_once(PRECINCT_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-dewitt-board-districts")
     resp = requests.get(PRECINCT_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "1=1", "outFields": "NAME20", "returnGeometry": "true",
         "outSR": "4326", "resultRecordCount": "100", "f": "geojson",
@@ -108,6 +113,8 @@ def fetch_precincts():
 
 def fetch_vtd_populations():
     """{precinct name: POP100} from the Census 2020 voting-district layer."""
+    require_robots_once(CENSUS_VTD_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-dewitt-board-districts")
     resp = requests.get(CENSUS_VTD_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "STATE='%s' AND COUNTY='%s'" % (STATE_FIPS, COUNTY_FIPS),
         "outFields": "BASENAME,NAME,POP100", "returnGeometry": "false", "f": "json",

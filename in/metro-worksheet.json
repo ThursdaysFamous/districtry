@@ -1,0 +1,443 @@
+{
+  "this_metro": "indiana",
+  "metro_name": "Indiana",
+  "metro_bbox": {
+    "minLng": -88.1,
+    "minLat": 37.77,
+    "maxLng": -84.78,
+    "maxLat": 41.77
+  },
+  "metro_center": [
+    39.77,
+    -86.44
+  ],
+  "permalink_gate": {
+    "minLat": 37.6,
+    "maxLat": 41.95,
+    "minLng": -88.3,
+    "maxLng": -84.6
+  },
+  "poi_geocode_bbox": {
+    "minLng": -88.3,
+    "minLat": 37.6,
+    "maxLng": -84.6,
+    "maxLat": 41.95
+  },
+  "brand": {
+    "app_name": "districtry Indiana",
+    "product_name": "districtry",
+    "instance_tag": "in",
+    "jsonld": {
+      "site_description": "Find every civic district that covers a point or address in Indiana, and who represents you there.",
+      "app_description": "Click any point in Indiana, or search an address, to see every civic district that covers it — county, township, city or town, school district, ZIP code, both General Assembly chambers and the U.S. House — with the district's own identity on each card.",
+      "keywords": "Indiana district map, what district am I in, Indiana Senate district, Indiana House district, county lookup, civic districts, who represents me",
+      "area_served": {
+        "state": "Indiana"
+      }
+    },
+    "tagline": "Every civic district that covers your point in Indiana, and who represents you there.",
+    "theme_color": "#6d3fd1",
+    "favicon_data_uri": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3EMI%3C/text%3E%3C/svg%3E",
+    "apple_touch_icon": "icons/apple-touch-icon.png",
+    "head": {
+      "title": "Indiana district lookup — districtry Indiana",
+      "description": "Tap the map or search an Indiana address: county, Indiana Senate and House, U.S. House district — and the districts that cover it. Free, no login.",
+      "og_title": "Indiana district lookup — districtry Indiana",
+      "og_description": "Every civic district that covers a point in Indiana.",
+      "og_image_alt": "districtry Indiana — every district that covers a point.",
+      "twitter_title": "Indiana district lookup — districtry Indiana",
+      "twitter_description": "Click or search an Indiana address to see every district that covers it."
+    },
+    "analytics": {
+      "goatcounter_url": "https://districtry.goatcounter.com/count"
+    }
+  },
+  "socrata_host": "https://data.invalid",
+  "socrata_app_token": "",
+  "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
+  "feedback_subject": "districtry Indiana feedback",
+  "hover_number_keys": [
+    [
+      "district",
+      "basename",
+      "cd120",
+      "sldu",
+      "sldl"
+    ],
+    [
+      "zcta5",
+      "geoid"
+    ]
+  ],
+  "hover_name_keys": [
+    [
+      "name",
+      "namelsad"
+    ]
+  ],
+  "layers": [
+    {
+      "id": "us-house",
+      "label": "U.S. House",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "9 congressional districts — the largest districts Indiana carries below the state itself",
+      "source": {
+        "answers": "The U.S. House district covering the point, and the representative holding it.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app. The layer's own district field is CD120; 9 features for Indiana, measured 2026-09-29.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
+          }
+        ],
+        "people": "congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
+        "applies": "Indiana — statewide, all 9 districts."
+      }
+    },
+    {
+      "id": "in-senate",
+      "label": "Indiana Senate District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "50 Senate districts — larger on average than a county, smaller than a congressional district",
+      "source": {
+        "answers": "The Indiana Senate district covering the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber, field SLDU), pre-built for the state and shipped with the app; 50 features, measured 2026-09-29.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
+          }
+        ],
+        "people": "NO ROSTER SHIPS IN THIS CHANGE, and the card says so: it names the district and links the General Assembly's own member directory rather than naming a senator this instance has not fetched. Recorded as gap in-general-assembly-roster; the Open States export lands in its own change with its own weekly workflow, the route every other instance took.",
+        "applies": "Indiana — statewide, all 50 districts."
+      }
+    },
+    {
+      "id": "county",
+      "label": "County",
+      "group": "geography",
+      "area_rank": 3,
+      "rank_note": "92 counties, pre-built from TIGERweb; the instance's offline anchor layer",
+      "source": {
+        "answers": "Which county contains the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 92 features, measured 2026-09-29.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+          }
+        ],
+        "people": "None yet — identity only. An Indiana county is governed by TWO elected bodies, a three-member board of commissioners (the executive) and a county council (the fiscal body, four districts plus three at large in most counties), and both are this instance's flagship work in a later change rather than being half-joined here. The card names the county and claims nothing about who runs it.",
+        "applies": "Indiana — statewide, all 92 counties."
+      }
+    },
+    {
+      "id": "in-house",
+      "label": "Indiana House District",
+      "group": "political",
+      "area_rank": 4,
+      "rank_note": "100 House districts — the finest political tiling this instance ships today",
+      "source": {
+        "answers": "The Indiana House district covering the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber, field SLDL), pre-built for the state and shipped with the app; 100 features, measured 2026-09-29.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
+          }
+        ],
+        "people": "NO ROSTER SHIPS IN THIS CHANGE — the same gap as the Senate layer (in-general-assembly-roster); the card names the district and links the chamber's own directory.",
+        "applies": "Indiana — statewide, all 100 districts."
+      }
+    },
+    {
+      "id": "school-district-unified",
+      "label": "School District",
+      "group": "schools",
+      "area_rank": 5,
+      "rank_note": "291 unified (K-12) districts, live from TIGERweb (no data/app file). Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles",
+      "source": {
+        "answers": "The school district covering the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 291 features for Indiana, measured 2026-09-29. Layers 1 (SECONDARY) and 2 (ELEMENTARY) both return zero features for Indiana and are recorded drops — see docs/DATA_LAYER_GUIDEBOOK.md",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Indiana school board members are elected — the Election Division certifies a School Board Member office category, whose own description says most members are elected and some are appointed — and the certified returns name 742 of them, but this change ships no roster and no districted geometry exists statewide, so nobody is named. Recorded as gap in-school-board-members.",
+        "applies": "Indiana — statewide. The 291 unified districts are the whole of the state's school-district fabric."
+      }
+    },
+    {
+      "id": "zip-code",
+      "label": "ZIP Code",
+      "group": "geography",
+      "area_rank": 6,
+      "rank_note": "882 ZIP Code Tabulation Areas intersecting Indiana, live from TIGERweb (no data/app file) — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan",
+      "source": {
+        "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='18', in Esri's own {xmin,ymin,xmax,ymax} shape; 1,491 features fall in this instance's envelope and 882 actually intersect Indiana, measured 2026-09-29 against the state's own TIGERweb polygon",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one.",
+        "applies": "Indiana — the 882 ZCTAs that intersect the state. A point outside Indiana gets the layer's own empty note rather than a ZIP code."
+      }
+    },
+    {
+      "id": "county-subdivision",
+      "label": "Township",
+      "group": "geography",
+      "area_rank": 7,
+      "rank_note": "1,012 county-subdivision records tiling the state, live from TIGERweb (no data/app file) — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29",
+      "source": {
+        "answers": "The civil township covering the point — in Indiana a real unit of government, not a Census construct.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 1,012 features for Indiana, measured 2026-09-29",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET, AND THE CARD SAYS SO. An Indiana township elects a trustee and a three-member township board (five in Marion County), and some townships also elect an assessor — all four are separate certified office categories in the Election Division's own returns, so the people exist and are fetchable. This change ships the boundary and names the offices without naming who holds them. Recorded as gap in-township-officers.",
+        "applies": "Indiana — statewide. The card distinguishes a civil township from the eight records that are Census bookkeeping rather than a government."
+      }
+    },
+    {
+      "id": "municipality",
+      "label": "City or Town",
+      "group": "geography",
+      "area_rank": 8,
+      "rank_note": "566 incorporated places, live from TIGERweb (no data/app file) — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29",
+      "source": {
+        "answers": "The incorporated city or town covering the point, if any — and which of the two it is, because in Indiana that changes what governs the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 566 features for Indiana, measured 2026-09-29",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET, AND THE CARD SAYS SO. Indiana's municipal officers are elected in the odd-year municipal general and certified by the Election Division, so a roster is reachable; it is not fetched in this change. Recorded as gap in-municipal-officeholders.",
+        "applies": "Indiana — statewide, all 566 incorporated places. 'Indianapolis city (balance)' is the Census record for the part of the consolidated Indianapolis–Marion County government outside its included towns, not a separate municipality."
+      }
+    },
+    {
+      "id": "police-station",
+      "label": "Police Station",
+      "group": "safety",
+      "area_rank": 9,
+      "rank_note": "650 police-station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
+      "source": {
+        "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 53 (Police Stations), queried live at runtime by a bounding envelope through the shared paged loader (no builder script, no committed data/app file). Public domain. 650 points in this instance's envelope, measured 2026-09-29",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a police station is a facility, not an elected district.",
+        "applies": "Indiana — plus the border strip its envelope necessarily includes (449 of the 650 are in Indiana; the rest Illinois 123, Kentucky 75, Ohio 2 and Michigan 1, measured 2026-09-29 on the app's own metro_bbox envelope)."
+      }
+    },
+    {
+      "id": "fire-station",
+      "label": "Fire & EMS Station",
+      "group": "safety",
+      "area_rank": 10,
+      "rank_note": "1,758 fire and EMS station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer",
+      "source": {
+        "answers": "The three nearest fire or EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 51 (Fire and EMS Stations), queried live at runtime by a bounding envelope through the shared paged loader. Public domain. 1,758 points in this instance's envelope, measured 2026-09-29",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a station is a facility. Indiana's fire and EMS RESPONSE AREAS are a different thing, filed by the state's NG911 programme, and ship as their own layers in a later change.",
+        "applies": "Indiana — plus the border strip its envelope necessarily includes (1,245 of the 1,758 are in Indiana; the rest Illinois 304, Kentucky 201 and Ohio 8, measured 2026-09-29 on the app's own metro_bbox envelope)."
+      }
+    },
+    {
+      "id": "post-office",
+      "label": "Post Office",
+      "group": "geography",
+      "area_rank": 11,
+      "rank_note": "1,012 post-office points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers",
+      "source": {
+        "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 38 (Post Offices), queried live at runtime by a bounding envelope through the shared paged loader. Public domain. 1,012 points in this instance's envelope, measured 2026-09-29",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a federal facility, not an elected district.",
+        "applies": "Indiana — plus the border strip its envelope necessarily includes (716 of the 1,012 are in Indiana; the rest Illinois 182, Kentucky 107 and Ohio 5, plus one record each the publisher places in Maine and Iowa, measured 2026-09-29 on the app's own metro_bbox envelope)."
+      }
+    }
+  ],
+  "min_register_layer": 9,
+  "anchor_point": {
+    "lat": 39.7686,
+    "lng": -86.1626,
+    "note": "the Indiana Statehouse, downtown Indianapolis (Marion County)"
+  },
+  "anchors": [
+    {
+      "layer": "county",
+      "expected": "Marion County"
+    },
+    {
+      "layer": "us-house",
+      "expected": "7"
+    },
+    {
+      "layer": "in-senate",
+      "expected": "46"
+    },
+    {
+      "layer": "in-house",
+      "expected": "97"
+    }
+  ],
+  "negative_point": {
+    "lat": 38.2527,
+    "lng": -85.7585,
+    "note": "downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json, which is what the pan hand-off reads — the same fix Iowa, Illinois and Wisconsin each made rather than moving their own point. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day."
+  },
+  "coverage_key": {
+    "outside": "Outside Indiana"
+  },
+  "data_files": {
+    "geometry": [
+      {
+        "file": "metro-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "The whole-Indiana-state outline for the coverage wash (loadMetroOutline), dissolved from all 92 counties' TIGERweb State_County layer-1 geometry by in/scripts/build_metro_outline.py (METRO_COUNTY_FIPS = every county; DISPATCH_COUNTY_FIPS empty — no layer is county-keyed yet). Indiana is 2-band coverage: every layer answers statewide, so there is no wider region band."
+      },
+      {
+        "file": "state-counties.json",
+        "min_features": 92,
+        "max_features": 92,
+        "note": "Every county, pre-built from TIGERweb State_County layer 1."
+      },
+      {
+        "file": "congress-districts.json",
+        "min_features": 9,
+        "max_features": 9,
+        "note": "U.S. House districts, pre-built from TIGERweb Legislative layer 0 (field CD120 — the 120th Congress)."
+      },
+      {
+        "file": "in-senate-districts.json",
+        "min_features": 50,
+        "max_features": 50,
+        "note": "Indiana Senate districts, pre-built by in/scripts/build_legislative_boundaries.py (2,000-point agreement gate)."
+      },
+      {
+        "file": "in-house-districts.json",
+        "min_features": 100,
+        "max_features": 100,
+        "note": "Indiana House districts, pre-built by in/scripts/build_legislative_boundaries.py (2,000-point agreement gate)."
+      }
+    ],
+    "rosters": [
+      {
+        "file": "congress-roster.json",
+        "min_keys": 9,
+        "note": "All 9 U.S. House members, rebuilt weekly by CI from unitedstates/congress-legislators."
+      },
+      {
+        "file": "coverage-gaps.json",
+        "min_keys": 1,
+        "note": "The recorded gaps this instance ships, generated by scripts/build_coverage_gaps.py from the guidebook's gaps block."
+      }
+    ]
+  },
+  "sw": {
+    "cache_name": "districtry-in-shell-v1",
+    "shell_urls": [
+      "./",
+      "./manifest.webmanifest",
+      "./icons/icon-192.png",
+      "./icons/icon-512.png",
+      "./icons/apple-touch-icon.png",
+      "./icons/icon-maskable-512.png",
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
+      "./vendor/leaflet-maplibre-gl.js"
+    ]
+  },
+  "data_sources": {
+    "registry": "in/scripts/validate_sources.py"
+  },
+  "workflows": [
+    {
+      "file": "update-in-congress-roster.yml",
+      "purpose": "U.S. House (IN) roster (unitedstates/congress-legislators)",
+      "schedule": "Mon 15:45 UTC"
+    }
+  ],
+  "geocoder": {
+    "address": "Photon (Indiana-bounded type-ahead)",
+    "unbounded": "Photon (whole-coverage, sibling-metro lookup)",
+    "poi": "Nominatim (office-address pin lookup, Indiana-bounded, serial >=1s queue)",
+    "search_placeholder": "Search an Indiana address"
+  },
+  "palette": {
+    "accent": "#6d3fd1",
+    "accent_deep": "#5730ab",
+    "accent_warm": "#b0316e",
+    "accent_warm_deep": "#8f2659",
+    "label": "districtry palette — brand violet is CHROME ONLY, never map data; shared with the fleet, not state-themed by convention"
+  },
+  "domains": {
+    "canonical": "https://districtry.com/in/"
+  },
+  "exports_name": "IndianaExplorer",
+  "verified_date": "September 29, 2026",
+  "sources_page": {
+    "file": "in/sources.html",
+    "credits": [
+      {
+        "label": "U.S. Census Bureau TIGERweb",
+        "url": "https://tigerweb.geo.census.gov/",
+        "note": "County, legislative-district, school-district, township, place and ZCTA boundaries."
+      },
+      {
+        "label": "unitedstates/congress-legislators",
+        "url": "https://github.com/unitedstates/congress-legislators",
+        "note": "U.S. House roster (CC0)."
+      },
+      {
+        "label": "USGS The National Map",
+        "url": "https://www.usgs.gov/programs/national-geospatial-program/national-map",
+        "note": "Police station, fire and EMS station and post office points (public domain)."
+      },
+      {
+        "label": "Indiana General Assembly",
+        "url": "https://iga.in.gov/",
+        "note": "The chamber directories both legislative cards link to while no roster ships."
+      }
+    ]
+  },
+  "metro_explorers": [
+    { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
+      "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },
+    { "id": "nyc", "label": "New York", "url": "https://districtry.com/ny/", "emoji": "🗽", "explorer_name": "districtry New York",
+      "bbox": { "minLng": -79.82, "minLat": 40.43, "maxLng": -71.62, "maxLat": 45.07 } },
+    { "id": "sf", "label": "San Francisco", "url": "https://districtry.com/ca/", "emoji": "🌉", "explorer_name": "districtry San Francisco",
+      "bbox": { "minLng": -122.6, "minLat": 37.6, "maxLng": -122.3, "maxLat": 37.95 } },
+    { "id": "wisconsin", "label": "Wisconsin", "url": "https://districtry.com/wi/", "emoji": "🧀", "explorer_name": "districtry Wisconsin",
+      "bbox": { "minLng": -92.89, "minLat": 42.49, "maxLng": -86.25, "maxLat": 47.31 } },
+    { "id": "iowa", "label": "Iowa", "url": "https://districtry.com/ia/", "emoji": "🌽", "explorer_name": "districtry Iowa",
+      "bbox": { "minLng": -96.64, "minLat": 40.37, "maxLng": -90.14, "maxLat": 43.5 } },
+    { "id": "michigan", "label": "Michigan", "url": "https://districtry.com/mi/", "emoji": "🚗", "explorer_name": "districtry Michigan",
+      "bbox": { "minLng": -87.6, "minLat": 41.7, "maxLng": -82.11, "maxLat": 48.01 } },
+    { "id": "minnesota", "label": "Minnesota", "url": "https://districtry.com/mn/", "emoji": "🛶", "explorer_name": "districtry Minnesota",
+      "bbox": { "minLng": -97.3, "minLat": 43.44, "maxLng": -89.58, "maxLat": 49.44 } },
+    { "id": "kentucky", "label": "Kentucky", "url": "https://districtry.com/ky/", "emoji": "🐎", "explorer_name": "districtry Kentucky",
+      "bbox": { "minLng": -89.62, "minLat": 36.45, "maxLng": -81.91, "maxLat": 39.2 } },
+    { "id": "indiana", "label": "Indiana", "url": "https://districtry.com/in/", "emoji": "🏁", "explorer_name": "districtry Indiana",
+      "bbox": { "minLng": -88.1, "minLat": 37.77, "maxLng": -84.78, "maxLat": 41.77 } }
+  ]
+}

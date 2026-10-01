@@ -161,9 +161,11 @@ THE CLIENT
 UA_ROSTER_BOT, the districtry token, exactly as mi_commissioner_scraper.py
 sends it -- no browser string anywhere in this file. Every host's robots.txt is
 read through scripts/robots_policy.py (via the robots_gate shim) BEFORE its
-first page fetch, with the STRICT reading of a 401/403 that county websites take
-(refused_is_refusal=True): on a website that status is a firewall refusing this
-client, and fetching anyway is walking past a no. A stated Crawl-delay is
+first page fetch. A 401/403 on robots.txt ALLOWS, per RFC 9309 §2.3.1.3 and the
+operator's ruling of 2026-09-29 that retired the strict opt-in this file used to
+take: measured that day, such a 403 is usually the site's edge refusing the READ
+rather than a policy, and a host that really refuses every client refuses the
+page too, which needs no policy rule. A stated Crawl-delay is
 honoured PER HOST by HostPacer, so one slow county does not pace the other 58.
 
 DNS resolution is not a fetch and asks nobody's robots.txt; stage 1 resolves
@@ -711,7 +713,7 @@ def confirm_host(session, gate, pacer, host, county, notes):
     names the county."""
     root = "https://%s/" % host
     verdict = gate.verdict(root)
-    allowed, _why = verdict.allows(UA_ROSTER_BOT, root, refused_is_refusal=True)
+    allowed, _why = verdict.allows(UA_ROSTER_BOT, root)
     # THE VERDICT IS RETURNED ON EVERY PATH, including the ones that reject the
     # host, so the caller can record what was read rather than only what was
     # decided. See robots_record() for why the status alone is not enough.
@@ -852,7 +854,7 @@ def sitemap_pages(session, gate, pacer, root):
     out = []
     for name in ("sitemap.xml", "sitemap_index.xml"):
         url = urljoin(root, name)
-        if not gate.verdict(url).allows(UA_ROSTER_BOT, url, refused_is_refusal=True):
+        if not gate.verdict(url).allows(UA_ROSTER_BOT, url):
             continue
         try:
             with pacer.hold(url):
@@ -863,8 +865,7 @@ def sitemap_pages(session, gate, pacer, root):
             continue
         locs = re.findall(r"<loc>\s*([^<\s]+)\s*</loc>", r.text)
         for child in [l for l in locs if l.lower().endswith(".xml")][:4]:
-            if not gate.verdict(child).allows(UA_ROSTER_BOT, child,
-                                              refused_is_refusal=True):
+            if not gate.verdict(child).allows(UA_ROSTER_BOT, child):
                 continue
             try:
                 with pacer.hold(child):
@@ -1100,7 +1101,7 @@ def probe_county(row):
                          "a board page" % host)
         for url in pages:
             v = gate.verdict(url)
-            page_ok, _why = v.allows(UA_ROSTER_BOT, url, refused_is_refusal=True)
+            page_ok, _why = v.allows(UA_ROSTER_BOT, url)
             if not page_ok:
                 notes.append("%s robots %s — not fetched" % (url, v.status))
                 continue
@@ -1228,7 +1229,7 @@ def refresh_robots(rows):
             if not url:
                 continue
             verdict = gate.verdict(url)
-            allowed, _why = verdict.allows(UA_ROSTER_BOT, url, refused_is_refusal=True)
+            allowed, _why = verdict.allows(UA_ROSTER_BOT, url)
             fresh = robots_record(url, verdict, allowed)
             read += 1
             was = (rec.get("robots") or {}).get(kind)

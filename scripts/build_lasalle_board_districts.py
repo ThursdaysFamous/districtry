@@ -58,7 +58,9 @@ import requests  # noqa: E402
 from build_metro_outline import (  # noqa: E402  (shared machinery — do not fork)
     HEADERS, REQUEST_TIMEOUT, point_in_rings,
 )
-from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    make_fail, require_robots_once,
+)
 
 # WHY SHAPELY AND NOT build_metro_outline's dissolve(): that dissolve cancels
 # segments walked twice, which requires the fabric to share EXACT vertex chains
@@ -150,6 +152,14 @@ fail = make_fail("lasalle-board")
 
 
 def fetch_precincts():
+    # THE SITE'S RULES ARE READ BEFORE THE FIRST QUERY, with the identity this
+    # fetch sends. gis.lasallecounty.org had been recorded as unreadable, which
+    # RFC 9309 files as disallow-all; re-measured from a GitHub runner on
+    # 2026-10-01, the vantage this builder runs from, it answers HTTP 404 for
+    # robots.txt and so publishes no rules at all. The earlier reading was a
+    # timeout on one runner moment and was never anybody's policy.
+    require_robots_once(PRECINCT_URL, HEADERS["User-Agent"], headers=HEADERS,
+                        label="lasalle-board")
     resp = requests.get(PRECINCT_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "1=1",
         "outFields": "PRECINCT,SUM_P0010001",

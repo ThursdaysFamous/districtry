@@ -98,6 +98,7 @@ from shapely.ops import unary_union
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import aia_bundle                                             # noqa: E402
 import vtd_board_districts as V                               # noqa: E402
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
@@ -156,6 +157,8 @@ def fail(msg):
 
 
 def arcgis_features(url, out_fields, verify=True):
+    require_robots_once(url + "/query", HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-build-knox-board-districts")
     r = requests.get(url + "/query",
                      params={"where": "1=1", "outFields": out_fields,
                              "outSR": 4326, "f": "geojson"},

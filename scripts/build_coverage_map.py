@@ -74,6 +74,18 @@ AREAS = {
     "wi": {"outline": "wi/data/app/metro-outline.json", "state_outline": "wi/data/app/wi-state-outline.json"},
     "ia": {"outline": "ia/data/app/metro-outline.json", "state_outline": None},
     "mi": {"outline": "mi/data/app/metro-outline.json", "state_outline": None},
+    # Minnesota joined at the 2026-09-30 go-live. ONE tier, like ia and mi: its
+    # thirteen layers are the national tier, every one of which answers over the
+    # whole state, so there is no inner ring for a solid fill to mean. Its
+    # coverage_key carries `outside` alone and no `region`, which is the same
+    # fact read from the worksheet.
+    "mn": {"outline": "mn/data/app/metro-outline.json", "state_outline": None},
+    # Kentucky joined at the 2026-09-30 go-live. ONE tier, like ia, mi and mn:
+    # its four layers are the national tier, every one of which answers over the
+    # whole state, so there is no inner ring for a solid fill to mean. Its
+    # coverage_key carries `outside` alone and no `region`, which is the same
+    # fact read from the worksheet.
+    "ky": {"outline": "ky/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,

@@ -32,10 +32,13 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_CHROME_X11_128  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_ROSTER_BOT,
+    require_robots_once,
+)
 
 SOURCE_URL = "https://washingtonco.illinois.gov/county-board/"
-UA = {"User-Agent": UA_CHROME_X11_128}
+UA = {"User-Agent": UA_ROSTER_BOT}
 
 HEADING_RE = re.compile(r"County Board District No\.\s*(\d+)", re.I)
 COMPOSITION_RE = re.compile(r"^\(?\s*Composed of (.+?)\s*Townships?\.?\)?$", re.I)
@@ -59,6 +62,8 @@ def normalize_phone(raw):
 
 
 def main():
+    require_robots_once(SOURCE_URL, UA["User-Agent"], headers=UA,
+                        label="il-washington-county-board-scraper")
     resp = requests.get(SOURCE_URL, headers=UA, timeout=60)
     resp.raise_for_status()
     page = resp.text

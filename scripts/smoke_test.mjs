@@ -44,7 +44,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "41.88250,-87.62850"; // downtown Loop — inside Cook County
 const OFFLINE = ["school-board", "il-supreme-court", "ccbr"];
 const EXPECT_DISTRICT = { "school-board": "District 6b", "il-supreme-court": "1", "ccbr": "3" };
-const NEGATIVE_POINT = "41.70000,-87.10000"; // Lake Michigan, Indiana waters — outside all three anchor layers
+const NEGATIVE_POINT = "41.70000,-87.10000"; // Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Three of those are live instances, Indiana is published dark, and Kentucky and Missouri are both on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays and the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; check 1i is where Illinois asserts fleet routing, on its own points.
 const APP_NAME = "districtry Illinois";
 const EXPECT_LAYERS = 40; // 17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) = 40 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07
 // ==== GENERATED:END smoke-config ====
@@ -91,13 +91,27 @@ const MOVE_POINT = { lat: 41.99, lng: -87.66, district: "2b" }; // school-board 
 const STRAGGLER_FILE = "data/app/stephenson-county-board-districts.json";
 const APP_DIR = "il/";
 const STRAGGLER_POINT = "42.29660,-89.62120"; // Freeport, Stephenson County — inside board District B of the delayed file
-// Anchor layers that declare a location-relevance test (mod.coverage) HIDE at
-// an out-of-coverage point instead of reporting an empty card — this list
-// mirrors the fork's coverage declarations in index.html (school-board is
+// Layers that declare a location-relevance test (mod.coverage) HIDE at an
+// out-of-coverage point instead of reporting an empty card — this list mirrors
+// the fork's coverage declarations in index.html (school-board is
 // Chicago-scoped via chicagoCoverage; ccbr is Cook-scoped via
 // cookCountyCoverage). il-supreme-court declares none and keeps the honest
 // "no district here" empty state at the negative point.
-const NEGATIVE_HIDDEN = ["school-board", "ccbr"];
+//
+// ZIP CODE IS THE ONE THAT IS NOT AN ANCHOR, and it is checked here rather
+// than left to validate_sources.py BECAUSE THE TEST IS OFFLINE. A ZCTA has no
+// state field, so the layer's query carries no STATE='17' filter and outside
+// Illinois the live fallback answers a neighbouring state's ZIP code — on
+// ground every other statewide card here correctly declines. What keeps that
+// from reaching a reader is the layer's coverage() test, which reads the
+// shipped state outline (same-origin, cache-first) and needs no third party at
+// all, so the browser can prove it in both directions: hidden at the negative
+// point (2b) and NOT hidden at the anchor (1i2). Both halves are needed — a
+// hide test alone passes for a layer that is hidden everywhere.
+const NEGATIVE_HIDDEN = ["school-board", "ccbr", "zip-code"];
+// The ids checked at the negative point: the offline anchors plus every
+// coverage-declaring layer above, deduped because most of them are anchors.
+const NEGATIVE_IDS = OFFLINE.concat(NEGATIVE_HIDDEN.filter((id) => !OFFLINE.includes(id)));
 // ==== TEMPLATE:END smoke-fork-constants ====
 
 // Disk reads are anchored to THIS SCRIPT, never to the process CWD. APP_DIR
@@ -243,7 +257,24 @@ try {
   //     so this needs no network.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, BASE);
+    // THE FLEET FILE IS REFUSED FOR THE WHOLE OF THIS CHECK, because its
+    // coverage-band half selects NEGATIVE_POINT and setSelectedPoint PANS
+    // there, which puts the map's CENTRE outside Illinois and arms the pan
+    // hand-off (ENGINE metro-portal's moveend -> placeOwner -> offerMetroPortal,
+    // which sets window.location.href). Illinois's negative point is in
+    // Indiana's waters of Lake Michigan and every other point it could be is
+    // in a sibling's state too -- see the measured note on NEGATIVE_POINT at
+    // the top of this file -- so the day in/ enters fleet-outlines.json this
+    // check would navigate to /in/ mid-assertion. MEASURED 2026-09-29 against
+    // a synthetic fleet file carrying Indiana's TIGER outline and an Indiana
+    // METRO_EXPLORERS row: setSelectedPoint at the negative point left for
+    // https://districtry.com/in/#zoom=15 and the check never ran.
+    // Refused, placeOwner's own error leg answers "nobody", which is the
+    // state this check is about.
+    // Illinois asserts fleet routing in check 1i, which is unaffected.
+    const page = await booted(context, BASE, async (p) => {
+      await p.route("**/fleet-outlines.json", (r) => r.abort());
+    });
     const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/coverage-gaps.json"), "utf8"));
     const expected = Object.keys(shipped).length;
 
@@ -822,17 +853,30 @@ try {
     }
   }
 
-  // 1i2. THE ZIP CARD OUTSIDE THE STATE SAYS WHY IT IS EMPTY. The ZIP archive
-  //      holds Illinois's ZCTAs only (scripts/mirror_tiger_tiles.py), so Gary,
-  //      Indiana gets no ZIP code — and the card must say that is the map's
-  //      limit, never the generic "isn't inside any district", which would be
-  //      false of a point inside Indiana's 46402.
+  // 1i2. THE OTHER HALF OF THE ZIP COVERAGE CHECK IN 2b. A hide test alone
+  //      passes for a layer that is hidden everywhere, which would be a ZIP
+  //      toggle no reader ever sees — so the anchor must show the same layer
+  //      VISIBLE. THIS CHECK REPLACED ONE THAT ASSERTED THE CARD'S EMPTY NOTE
+  //      AT GARY, INDIANA ("this map holds Illinois's ZIP codes only"): with
+  //      coverage declared the layer hides there instead of rendering a note,
+  //      so that wording could no longer appear and the note itself was retired
+  //      rather than left as a claim nothing keeps true.
+  //
+  //      Both halves read only the shipped state outline, with the census host
+  //      refused, so neither depends on a government server being up.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, `${BASE}#point=41.60000,-87.34000&layers=zip-code`);
-    const zip = await cardText(page, "zip-code");
-    check("the ZIP card in Gary, Indiana says the map holds Illinois's ZIP codes only",
-      /Illinois's ZIP codes only/.test(zip.text) && !/isn't inside any district/.test(zip.text), zip.text);
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=zip-code`, async (p) => {
+      await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
+    });
+    const visible = await page
+      .waitForFunction(() => {
+        const box = document.getElementById("toggle-zip-code");
+        const block = box && box.closest(".layer-block");
+        return !!block && block.hidden === false;
+      }, null, { timeout: QUERY_TIMEOUT })
+      .then(() => true, () => false);
+    check("zip-code is in coverage at the Loop anchor (not hidden)", visible, `visible=${visible}`);
     await context.close();
   }
 
@@ -876,6 +920,14 @@ try {
   //     stubbed portal: the layer loads all 1,291, and a response that exactly
   //     fills the page fails validation so the walk falls through to the
   //     export route, which hands over the whole dataset.
+  //
+  //     THE ARCHIVE IS REFUSED SO THE PORTAL PATH RUNS AT ALL. Since phase 6c
+  //     this layer draws and answers from a committed tile archive and never
+  //     asks the portal, so a stub of the portal would sit unused and this
+  //     check would pass without exercising anything. Refusing the archive
+  //     puts the layer back on its whole-file loader (tile-overlay block,
+  //     redrawFromFile) — the same fallback smoke check 2d holds — which is
+  //     where the route walk lives and where the defect was.
   {
     const TOTAL = 1291;
     const [plat, plng] = POINT.split(",").map(Number);
@@ -889,6 +941,9 @@ try {
     const context = await browser.newContext({ serviceWorkers: "block" });
     let exportRoute = 0;
     const page = await booted(context, `${BASE}#point=${POINT}&layers=ward-precinct`, async (p) => {
+      // the archive is refused, so the layer reads its whole file as it did
+      // before phase 6c — which is the path the route walk is on
+      await p.route("**/data/app/tiles/ward-precinct.pmtiles", (r) => r.fulfill({ status: 404, body: "" }));
       // the primary route: it hands back exactly as many features as it was
       // asked for, which is what a truncated page looks like from the browser
       await p.route("**/data.cityofchicago.org/resource/i8fv-xe4b.geojson*", (route) => {
@@ -1245,10 +1300,28 @@ try {
     // fallback's own catch ("stand on the first tiling's verdict") runs
     // deterministically fast in every environment; the verdict here is
     // identical either way — the negative point is outside both tilings.
-    const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=${OFFLINE.join(",")}`, async (p) => {
+    const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=${NEGATIVE_IDS.join(",")}`, async (p) => {
       await p.route(`**${PORTAL_HOST}**`, (r) => r.abort());
+      // And the census host, for the ZIP layer in NEGATIVE_IDS. Its coverage
+      // test reads the shipped state outline and never the census, so the hide
+      // verdict is identical either way — aborting it is what keeps this
+      // check's verdict independent of whether a runner can reach TIGERweb.
+      await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
+      // And the fleet file, for the reason given on the gaps-panel check
+      // above: this permalink pans the map's centre into Indiana's waters, so
+      // once a sibling covers them the pan hand-off navigates away
+      // mid-assertion. THIS ONE IS A RACE RATHER THAN A CERTAINTY AND THAT IS
+      // WHY IT IS REFUSED TOO. Measured 2026-09-29 with Indiana live: the
+      // permalink restore alone did NOT leave, because Illinois paints its
+      // wash at whenIdle behind two CDN fetches and the restore pan happens
+      // first, so servedHereNow still answered null at that moveend. ONE
+      // FURTHER MOVE IS ENOUGH -- a 1px panBy after the wash painted left for
+      // https://districtry.com/in/#zoom=15 -- and which of the two lands first
+      // is a property of the runner's network, not of this check. A check that
+      // passes because a fetch was slow is not a check.
+      await p.route("**/fleet-outlines.json", (r) => r.abort());
     });
-    for (const id of OFFLINE) {
+    for (const id of NEGATIVE_IDS) {
       if (NEGATIVE_HIDDEN.includes(id)) {
         const hidden = await page
           .waitForFunction((cid) => {

@@ -733,9 +733,9 @@ def city_council_page(tag, spec, worksheet):
     place = spec["place"]
 
     missing = ("" if not unrostered else
-               " The map also draws %s, where no roster this project can read "
-               "names the members, so those wards answer with the ward number "
-               "and nothing else." % _join(unrostered))
+               " The map also draws %s, where this app does not name the "
+               "members yet, so those cards give the ward and a link to the "
+               "city rather than a name." % _join(unrostered))
     elsewhere = ("" if not at_large_named else
                  " %d more sit on the councils of %d smaller %s cities that "
                  "elect at large and have no wards to draw; their own county "
@@ -1144,20 +1144,25 @@ PAGES = [
                 ("Detroit", "mi/data/app/mi-detroit-council-districts.json"),
                 ("Flint", "mi/data/app/mi-flint-wards.json"),
                 ("Grand Rapids", "mi/data/app/mi-grand-rapids-wards.json"),
+                ("Jackson", "mi/data/app/mi-jackson-wards.json"),
                 ("Rochester Hills", "mi/data/app/mi-rochester-hills-wards.json"),
                 ("Warren", "mi/data/app/mi-warren-wards.json")],
          rosters=[("Detroit", "mi/data/app/mi-detroit-council-members.json", "city_council"),
                   ("Grand Rapids", "mi/data/app/mi-grand-rapids-council-members.json",
                    "city_council"),
                   ("Battle Creek", "mi/data/app/mi-battle-creek-commission-members.json",
+                   "city_council"),
+                  ("Jackson", "mi/data/app/mi-jackson-council-members.json",
                    "city_council")],
          counts=["mi/data/app/mi-detroit-council-members.json",
                  "mi/data/app/mi-grand-rapids-council-members.json",
                  "mi/data/app/mi-battle-creek-commission-members.json",
+                 "mi/data/app/mi-jackson-council-members.json",
                  "mi/data/app/mi-battle-creek-wards.json",
                  "mi/data/app/mi-detroit-council-districts.json",
                  "mi/data/app/mi-flint-wards.json",
                  "mi/data/app/mi-grand-rapids-wards.json",
+                 "mi/data/app/mi-jackson-wards.json",
                  "mi/data/app/mi-rochester-hills-wards.json",
                  "mi/data/app/mi-warren-wards.json"],
          sibling=dict(page="county-commissioner.html",
@@ -1323,7 +1328,7 @@ def build(spec, metros):
                   page["sections"], related_rows(spec, landing, metros),
                   preserved_from_disk(path),
                   shared_head_block(tag, THEMEBOOT_RE, "theme boot script"),
-                  shared_head_block(tag, MARK_RE, "districtry mark"))
+                  shared_head_block(tag, MARK_RE, "districtry mark"), tag)
     return rel, path, text, page["named"]
 
 

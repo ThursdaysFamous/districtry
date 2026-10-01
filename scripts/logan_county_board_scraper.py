@@ -28,7 +28,10 @@ import re
 import sys
 
 import requests
-from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
+    UA_ROSTER_COMPACT,
+    require_robots_once,
+)
 from validate_officeholder_names import is_vacancy_marker  # noqa: E402  (one reader for the word)
 
 LIST_URL = ("https://www.logancountyil.gov/index.php?option=com_content"
@@ -42,6 +45,8 @@ EMAIL_RE = re.compile(r"^([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})$")
 
 def main():
     import html as html_mod
+    require_robots_once(LIST_URL, UA["User-Agent"], headers=UA,
+                        label="il-logan-county-board-scraper")
     r = requests.get(LIST_URL, headers=UA, timeout=60)
     r.raise_for_status()
     text = re.sub(r"<script.*?</script>|<style.*?</style>", " ", r.text, flags=re.S | re.I)

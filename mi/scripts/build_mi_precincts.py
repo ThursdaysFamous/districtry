@@ -113,6 +113,12 @@ import tempfile
 import time
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once, UA_STDLIB_DEFAULT  # noqa: E402  (FLEET_SHARED)
+
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
@@ -158,6 +164,7 @@ def fetch_json(url, attempts=4):
     requests plus a count, so a single transient reset would otherwise throw
     away a full simplify-and-validate cycle. A reset is not a reason to ship
     a partial file — every failure still raises once the attempts are spent."""
+    require_robots_once(url, UA_STDLIB_DEFAULT, label="mi-build-mi-precincts")
     last = None
     for attempt in range(attempts):
         try:

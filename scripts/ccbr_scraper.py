@@ -52,11 +52,11 @@ from datetime import datetime, timezone
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from scraper_common import UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://www.cookcountyboardofreview.com"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_124,
+    "User-Agent": UA_ROSTER_BOT,
     "Accept-Language": "en-US,en;q=0.9",
 }
 REQUEST_TIMEOUT = 30
@@ -133,6 +133,8 @@ def contact_phones(text):
 
 
 def fetch(url, session):
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="il-ccbr-scraper")
     resp = session.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     return resp.text
