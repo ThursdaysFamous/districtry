@@ -499,7 +499,7 @@ than off a page, so nothing re-reads it weekly — it is a dated snapshot from t
 county and has to be labelled as one, the way the two document-sourced rosters
 already are.
 
-### AN ANSWERED REFUSAL IS NOT SILENCE, AND MUST NOT BE LEFT READING LIKE IT
+### AN ANSWERED REFUSAL IS NOT SILENCE, AND MUST NOT BE LEFT READING LIKE IT — WRONG, SEE THE CORRECTION BELOW
 
 Ypsilanti Township's Clerk answered three times on 2026-10-01 and the third answer
 was no. At 15:13 UTC Debbie Swanson referred the request to the township's
@@ -517,6 +517,64 @@ for a source that has been asked and has refused, which is exactly what this is.
 The reply this thread drafted to that refusal was removed from the draft folder
 unsent. **Deleting a draft is the operator's call**, so it has not been recreated,
 and the removal is recorded here rather than quietly undone.
+
+**CORRECTED 2026-10-01, WITHIN THE HOUR: SHE REFUSED NOTHING, AND THIS WHOLE SECTION
+IS WRONG ABOUT WHAT HER THIRD ANSWER WAS.** The wording above is left standing under
+this correction rather than edited away. The request Debbie Swanson answered at 18:23
+had already been **withdrawn** at 15:23, when this project rechecked the township's
+board page, found it served to our own reader, and wrote to say so. Her "our system
+will not allow this request at this time" is therefore an answer to a question nobody
+was still asking, and reading it as a refusal invented a blocker. Ypsilanti Township's
+whole seven-member Board of Trustees has been on the map since 18:43 UTC, read from the
+township's own board page and dated, so nothing about this level is unanswered and no
+refusal record is wanted. The outcome is **a reply to a withdrawn request**, which earns
+nothing and blocks nothing.
+
+The reading that went wrong is worth naming, because it is not carelessness about the
+facts: every sentence above about who wrote what and when is accurate. What it got wrong
+is which question the last letter answered. **A LATE REPLY IS A REPLY TO THE LETTER IT
+QUOTES, NOT TO THE STATE OF THE WORK TODAY** — when a request has been corrected or
+withdrawn in between, check which version the correspondent was holding before filing
+their answer as a verdict on anything.
+
+### TAMA'S MAP ARRIVED, AND THE THANK-YOU ASKS NOTHING
+
+Auditor Karen Rohrs answered `ia-tama-supervisor-map` at 18:24 UTC on 2026-10-01 with
+the county's own supervisor district map attached — a drawn map of all five districts,
+which is the whole of what was asked. The Iowa work has read it and it settles the
+blocker: the five lines can be drawn as the county draws them rather than as the
+statewide layer carries them, which had three. She has now answered three times in one
+afternoon, and the reply drafted to her asks for nothing further and says so in as many
+words. Both the five supervisors and the five lines are credited to her office and
+dated 1 October 2026.
+
+That is four Iowa counties answered from one afternoon's letters, and the shape worth
+keeping is the one `ia-tama-supervisor-map` already recorded: the ask opened by saying
+the problem was at this end, and the county answered it by sending the thing it holds.
+
+### A KENTUCKY REPLY ASKS WHY A POLICY ABOUT OUR READER STOPS A PERSON READING A PAGE
+
+The Court of Justice's Data Officer answered `ky-judges-by-district` twice. The first
+answer solved it — the county pages on the Court's own site pair each sitting judge
+with a circuit and district number, which covered 119 of the 120 counties. The second,
+at 18:56 UTC on 2026-10-01, is the interesting one. Jefferson County's page names no
+judges, he could not find the page that does, and he asks, reasonably: the directory
+asks automated clients not to read it, but why would that stop a person reading it by
+hand today? He adds that his division cannot produce reports identifying individuals,
+and that anything static he sent would say exactly what the directory already shows.
+
+**THE ANSWER IS NOT ABOUT PERMISSION, IT IS ABOUT WHAT HAPPENS AFTERWARDS**, and the
+drafted reply says so plainly: a page our weekly reader may not visit cannot be
+re-read, so anything taken from it by hand becomes a snapshot that ages while still
+looking current, which is the one thing this project will not publish. A static list
+from his office is a different thing — dated, citable, and labelled as supplied rather
+than as checked weekly — so the reply accepts that offer, says it will ask for no
+routine, and says that a no is an acceptable answer that will be recorded as one.
+
+**IT IS WORTH NOTING THAT HE IS RIGHT THAT NOTHING FORBIDS THE MANUAL READ.** The rule
+in this project is about the crawler, not about a person, and a reply that implied
+otherwise would be overstating a policy in order to sound careful. What the reply
+claims instead is a standard this project actually holds itself to.
 
 ### THE AFTERNOON'S SENDS, AND WHAT A FIRST LETTER DOES NOT EARN
 
