@@ -471,6 +471,217 @@ then deleted as the duplicate described above, so 31 and 27 is arithmetic and is
 arithmetic — the mailbox was not re-read after the deletion, and no time is attached to those
 two numbers.
 
+### A FOURTH LETTER ANSWERED IN THIRTY-NINE MINUTES, AFTER THREE WENT UNANSWERED
+
+Three letters went to the Ford County Clerk and none was answered — 3 August,
+16 August and 4 September — and the status table above records that run. A fourth
+went at 18:12 UTC on 2026-10-01 and Clerk Kelsie Vaughn replied at 18:51 with the
+whole board: twelve members under three numbered districts, four to a district,
+with Chase McCall named Chairman and Carson Vaughn Vice Chairman, over the Clerk &
+Recorder's own office address and telephone number.
+
+**Three letters unanswered is not a closed door**, and reading it as one would have
+cost this roster. Nothing about the county changed between September and tonight;
+the fourth letter arrived on a day somebody read it. That is the case for sending
+the fourth letter rather than recording the county as unresponsive and moving on —
+and it is the counterpart to the correction above, which says silence earns a
+project nothing. Silence earns nothing AND proves nothing.
+
+What it answers is bounded and the thank-you says so to the Clerk rather than
+leaving her to guess: it names the twelve PEOPLE, from the office that maintains
+them, and says nothing about the three district BOUNDARIES, which are Ford's actual
+blocker, its maps being scans with no map file behind them. No geometry ask was
+reopened with her in the same breath.
+
+Two traps for whoever ships it. The Clerk and the Vice Chairman are both named
+Vaughn, so a surname is not a key here. And the roster arrived by letter rather
+than off a page, so nothing re-reads it weekly — it is a dated snapshot from the
+county and has to be labelled as one, the way the two document-sourced rosters
+already are.
+
+### AN ANSWERED REFUSAL IS NOT SILENCE, AND MUST NOT BE LEFT READING LIKE IT — WRONG, SEE THE CORRECTION BELOW
+
+Ypsilanti Township's Clerk answered three times on 2026-10-01 and the third answer
+was no. At 15:13 UTC Debbie Swanson referred the request to the township's
+technical staff; at 15:23 this project corrected its own claim, having rechecked
+and found the board page readable after all; at 18:23 she wrote, in full: "Our
+system will not allow this request at this time."
+
+So the outcome is **asked-and-refused**, which is a different thing from
+asked-and-waiting and wants recording as its own state. No thirty-day clock
+applies to it, there is nothing to follow up, and a record that left it looking
+like an unanswered letter would misdescribe a correspondent who answered promptly
+three times. Under the project's coverage standard a published record substitutes
+for a source that has been asked and has refused, which is exactly what this is.
+
+The reply this thread drafted to that refusal was removed from the draft folder
+unsent. **Deleting a draft is the operator's call**, so it has not been recreated,
+and the removal is recorded here rather than quietly undone.
+
+**CORRECTED 2026-10-01, WITHIN THE HOUR: SHE REFUSED NOTHING, AND THIS WHOLE SECTION
+IS WRONG ABOUT WHAT HER THIRD ANSWER WAS.** The wording above is left standing under
+this correction rather than edited away. The request Debbie Swanson answered at 18:23
+had already been **withdrawn** at 15:23, when this project rechecked the township's
+board page, found it served to our own reader, and wrote to say so. Her "our system
+will not allow this request at this time" is therefore an answer to a question nobody
+was still asking, and reading it as a refusal invented a blocker. Ypsilanti Township's
+whole seven-member Board of Trustees has been on the map since 18:43 UTC, read from the
+township's own board page and dated, so nothing about this level is unanswered and no
+refusal record is wanted. The outcome is **a reply to a withdrawn request**, which earns
+nothing and blocks nothing.
+
+The reading that went wrong is worth naming, because it is not carelessness about the
+facts: every sentence above about who wrote what and when is accurate. What it got wrong
+is which question the last letter answered. **A LATE REPLY IS A REPLY TO THE LETTER IT
+QUOTES, NOT TO THE STATE OF THE WORK TODAY** — when a request has been corrected or
+withdrawn in between, check which version the correspondent was holding before filing
+their answer as a verdict on anything.
+
+### TAMA'S MAP ARRIVED, AND THE THANK-YOU ASKS NOTHING
+
+Auditor Karen Rohrs answered `ia-tama-supervisor-map` at 18:24 UTC on 2026-10-01 with
+the county's own supervisor district map attached — a drawn map of all five districts,
+which is the whole of what was asked. The Iowa work has read it and it settles the
+blocker: the five lines can be drawn as the county draws them rather than as the
+statewide layer carries them, which had three. She has now answered three times in one
+afternoon, and the reply drafted to her asks for nothing further and says so in as many
+words. Both the five supervisors and the five lines are credited to her office and
+dated 1 October 2026.
+
+That is four Iowa counties answered from one afternoon's letters, and the shape worth
+keeping is the one `ia-tama-supervisor-map` already recorded: the ask opened by saying
+the problem was at this end, and the county answered it by sending the thing it holds.
+
+### WHERE THE MAILBOX STANDS AT THE PAUSE, 2026-10-01 19:31 UTC
+
+The project pauses until Tuesday 6 October. Inbox monitoring stops, nothing is
+scheduled, and the drafts are left exactly as they are. This is the state to pick
+up from.
+
+**THIRTY-SEVEN DRAFTS WAIT IN THE OPERATOR'S FOLDER AND NOT ONE HAS BEEN SENT.**
+Nothing here sends; the operator sends. The five where somebody is actively
+waiting on an answer from us are the four Iowa replies (Ida, Osceola, Sioux,
+Washington) and Cumberland's one yes-or-no question. The rest are first
+approaches, thank-yous and follow-ups that can go whenever he gets to them.
+
+What was added on 1 October, by county: Ford's thank-you; Tama's map thank-you;
+Kentucky's Jefferson reply; Cumberland's 500E question; Iowa's twenty — four
+replies and sixteen first letters, counting Linn's.
+
+Four drafts remain deliberately blank in the `To` field and are listed for the
+operator rather than guessed at: Oshkosh, Beloit, Burton and the wingis host.
+
+**WHAT ARRIVES BEFORE TUESDAY IS NOT LOST AND IS NOT ROUTED EITHER.** Replies will
+land in the inbox unread by this project. The first action on Tuesday is a sweep
+of the inbox and the draft folder in one pass, because a draft missing from the
+folder is ambiguous until the sent folder is checked — it may have gone or it may
+have been deleted, and only the sent folder tells the two apart.
+
+**ONE CLOCK IS RUNNING AND IS RECORDED RATHER THAN REMEMBERED**: Tama's
+precinct-list follow-up is held for around 8 October, which falls after the pause
+ends.
+
+Two findings from the evening belong with the pause because they will be needed on
+Tuesday. Gmail's `update_draft` detaches a reply from its thread, so a reply draft
+is rebuilt with `create_draft` and never edited in place. And a changed ask record
+is not automatically a changed letter: the nineteen Iowa drafts were diffed rather
+than rewritten, because the correction was to the record's own prose.
+
+**A FOLLOW-UP IS HELD FOR AROUND 8 OCTOBER, AND DELIBERATELY KEPT OUT OF THE THANK-YOU.**
+The Iowa work found that the five-district plan she sent is NEWER than the precinct data
+this project holds, so the next thing Tama needs is the county's current precinct list.
+That is a second ask, and putting it in a letter whose whole point is that nothing further
+is being asked would have made the thank-you untrue in its own closing line. It waits
+about a week, as its own letter, and it is recorded here rather than left to be
+remembered. **A THANK-YOU THAT SAYS IT ASKS NOTHING MUST ASK NOTHING**, even when the next
+question is already known.
+
+### A KENTUCKY REPLY ASKS WHY A POLICY ABOUT OUR READER STOPS A PERSON READING A PAGE
+
+The Court of Justice's Data Officer answered `ky-judges-by-district` twice. The first
+answer solved it — the county pages on the Court's own site pair each sitting judge
+with a circuit and district number, which covered 119 of the 120 counties. The second,
+at 18:56 UTC on 2026-10-01, is the interesting one. Jefferson County's page names no
+judges, he could not find the page that does, and he asks, reasonably: the directory
+asks automated clients not to read it, but why would that stop a person reading it by
+hand today? He adds that his division cannot produce reports identifying individuals,
+and that anything static he sent would say exactly what the directory already shows.
+
+**THE ANSWER IS NOT ABOUT PERMISSION, IT IS ABOUT WHAT HAPPENS AFTERWARDS**, and the
+drafted reply says so plainly: a page our weekly reader may not visit cannot be
+re-read, so anything taken from it by hand becomes a snapshot that ages while still
+looking current, which is the one thing this project will not publish. A static list
+from his office is a different thing — dated, citable, and labelled as supplied rather
+than as checked weekly — so the reply accepts that offer, says it will ask for no
+routine, and says that a no is an acceptable answer that will be recorded as one.
+
+**IT IS WORTH NOTING THAT HE IS RIGHT THAT NOTHING FORBIDS THE MANUAL READ.** The rule
+in this project is about the crawler, not about a person, and a reply that implied
+otherwise would be overstating a policy in order to sound careful. What the reply
+claims instead is a standard this project actually holds itself to.
+
+### THE AFTERNOON'S SENDS, AND WHAT A FIRST LETTER DOES NOT EARN
+
+Between 18:02 and 18:15 UTC on 2026-10-01 the operator sent fifteen letters: five replies this
+thread had drafted to answers that arrived during the afternoon (Tama, Hardin, Calumet, Ozaukee
+and the one-line question to the New York Department of State), follow-ups in the Palo Alto and
+Tama threads, and thirteen first approaches — Shawano in Wisconsin; Marion, Macoupin, Lawrence,
+Jersey, Fayette, Cumberland, Bond, Ford and Scott in Illinois; the Grundy County GIS officer on
+the redrafted letter; and the OU Center for Spatial Analysis.
+
+**A FIRST RECORD OF THAT BATCH SAID THEIR "THIRTY-DAY CLOCKS START TODAY", AND THAT IS WRONG IN
+THE DIRECTION THAT WOULD HAVE EARNED CREDIT THIS PROJECT HAD NOT EARNED.** A first letter starts
+no clock that counts for anything. Silence substitutes for an answer only after a follow-up **and
+then** thirty days, and only once a person records the outcome as unresponsive. So a first
+approach is `pending` and nothing more: it records that we asked, never that we were refused.
+Keeping a follow-up due date is useful; calling it "the clock" invites a later reader to take
+thirty days of quiet as a measured no.
+
+**The Oklahoma letter went fifteen minutes after it was drafted.** That is the argument against
+drafting with a blank `To` field and a note explaining why: there was no window in which anybody
+would have gone looking for the address. Its recipient was verified first — see below.
+
+### A RECIPIENT CAN BE UNREACHABLE AT THE HOST A RECORD NAMES AND PUBLISHED SOMEWHERE ELSE
+
+`ok-csa-precinct-terms` recorded that `csa.ou.edu` does not resolve from this project's network
+and concluded that the centre's address "must be read off the centre's own contact page in a
+browser". The first half is still true and the conclusion was wrong: **the centre's site is not
+at that host any more.** It is at `www.ou.edu/ags/csa`, which answers normally, and whose robots
+policy permits this project (93 bytes, one binding group, no rule matching any path read). Nobody
+needed a browser; the host had moved.
+
+Read off the centre's own Faculty & Staff page: Chengbin Deng, PhD, **Director**
+(`cdeng@ou.edu`); Todd Fagin, PhD, **Executive Associate Director** (`tfagin@ou.edu`); Zakary
+Gipson, Senior GIS Analyst (`zakarygipson@ou.edu`), also named on the centre's own GIS Data
+Warehouse page. The letter went to the Director with the Executive Associate Director copied.
+**This project's preference for an office mailbox over a person's desk could not be honoured
+here, and that is a measurement**: the centre's Contact Us page offers a web form and no address
+at all, and the only general address it publishes anywhere is a footer maintenance byline on a
+domain with no address record, so whether mail to it is delivered could not be tested. Gipson
+was considered and not used — the warehouse page names him for help navigating that site, which
+is a different question from what may be done with the files.
+
+**A SEARCH ENGINE'S SUMMARY IS NOT A SOURCE, AND IT ANSWERED THIS ONE CONFIDENTLY.** A first pass
+produced all three names, all three titles, a street address and a telephone number out of a
+search result's own summary text. Every one was re-read on the centre's own pages before any of
+it was used, and the telephone number was not used at all.
+
+### TWO BOUNCES IN ONE DAY, BOTH ON AN ADDRESS SOMEBODY HAD PUBLISHED
+
+`gisdatarequest@grundycountyil.gov`, printed on Grundy County's own GIS Data Request page, was
+refused as undeliverable at 16:17. `kristy.opperman@co.waupaca.wi.us` was refused at 18:09 with
+`550 permanent failure ... (kristy.opperman@co.waupaca.wi.us:blocked)`.
+
+**"BLOCKED" IS NOT "NO SUCH USER", AND READING IT AS A STALE ADDRESS WOULD BE A GUESS.** The
+mailbox may well exist and the county's mail server may be refusing this sender. Waupaca was
+redrafted to the Chief Deputy County Clerk, whose address the county's own department page
+publishes, opening by saying the earlier copy was refused — and if that bounces the same way the
+cause is the county's filtering rather than the address, and a third address will not fix it.
+
+**A LETTER THAT BOUNCED IS NOT A LETTER THAT WAS SENT.** Neither county is awaiting a reply and
+neither has a follow-up due. Recording either as silence would be wrong in a way nothing else
+would later catch.
+
 ---
 
 ## Ask 1 — Iowa county officers — **WITHDRAWN 2026-09-03, never sent**
