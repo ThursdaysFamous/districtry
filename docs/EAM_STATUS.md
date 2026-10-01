@@ -28,7 +28,7 @@ different thing from one it failed.
 | il | **EAM** | 102 | 102/102 | 572 | 996 | all | 398 | all |
 | ky | **EAM** | 120 | 120/120 § | 0 | 0 | by record | 7 | all |
 | mi | **EAM** | 83 | 83/83 | 619 | 615 | all | 55 | all |
-| mn | **EA·** | 87 | 87/87 § | 0 | 0 | by record | 7 | 6 without a job |
+| mn | **EAM** | 87 | 87/87 § | 0 | 0 | by record | 7 | all |
 | ny | **--M** | — | — | 16 | 16 | — | 29 | all |
 | wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 262 | 240 without a job |
 
@@ -77,17 +77,13 @@ this instance is in maintenance.
 Every test that applies is met. Expansion is finished;
 this instance is in maintenance.
 
-### mn — EA·
+### mn — **E.A.M.**
 
 - **Examined by a statewide record:** `mn-county-commissioner-roster`, `mn-county-officers` account for every county in the state, which is what Examined rests on here: 0 of 87 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Maintained: no.** 6 file(s) under no scheduled job at all, neither rewriting nor watching — 5 boundary, 0 census, 1 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
-  - `mn/data/app/congress-districts.json` — **8** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mn/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `mn/data/app/metro-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mn/data/app/mn-house-districts.json` — **134** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mn/data/app/mn-senate-districts.json` — **67** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `mn/data/app/state-counties.json` — **87** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
 
 ### ny — **E.A.M.**
 
