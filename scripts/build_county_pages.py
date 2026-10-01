@@ -2119,6 +2119,16 @@ NOT_COUNTY_BOARDS = {
                "municipal page of their own is its own piece of work, the same "
                "answer municipal-officials.json gets above.",
     ),
+    "ia/data/app/ia-township-officers.json": dict(
+        date="2026-10-01",
+        reason="township clerks and trustees, published by twelve Iowa "
+               "counties for the 186 townships inside them. A township is a "
+               "unit below the county, not the board of supervisors — the "
+               "same reading il/data/app/township-officials.json already "
+               "takes. The file is keyed by county only because the county is "
+               "the publisher, which is exactly the shape this gate cannot "
+               "tell apart from a county roster on its own.",
+    ),
     "ia/data/app/ia-county-auditors.json": dict(
         date="2026-09-13",
         reason="the county auditor, who runs elections. One per county, not a "

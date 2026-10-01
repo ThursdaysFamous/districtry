@@ -3831,9 +3831,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
            state whose reader cannot see where any boundary came from. It needed
            no research: every entry in the worksheet's layers[] already carried
            a `source` block, so the page's matrix and credit rows generate.
-           faq.html and history.html are STILL absent, and deliberately: both
-           are hand-written prose rather than generated, so each is its own
-           change. ky/WATCH.md carries them. -->
+           FAQ.HTML LANDED THE SAME WAY (2026-10-01), for the same reason one
+           step on: a reader who meets three cards that name nobody should be
+           able to find out why, and the sources page answers where a boundary
+           came from rather than why a seat is unnamed. history.html is STILL
+           absent, and deliberately — it is hand-written prose rather than
+           generated, so it is its own change, and ky/WATCH.md carries it. -->
+      <a class="masthead-action-link" href="./faq.html">Common questions</a>
       <a class="masthead-action-link" href="./sources.html">Sources &amp; data layers</a>
       <a class="masthead-action-link" href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
       <span class="districtry-toggle-sep" aria-hidden="true"></span>
@@ -8368,7 +8372,11 @@ function initKentuckyExplorer() {
     "us-house",          // 6 congressional districts — the largest districts Kentucky carries below the state itself
     "ky-senate",         // 38 Senate districts; they do not nest with the House, so the two chambers are independent tilings of the state
     "ky-house",          // 100 House districts, drawn independently of the 38 Senate districts
-    "county"             // 120 counties, pre-built from TIGERweb; this instance's offline anchor layer, and smaller on average than a House district
+    "county",            // 120 counties, pre-built from TIGERweb; this instance's offline anchor layer, and smaller on average than a House district
+    "school-district-unified", // 170 districts covering all but 39 km2 of Kentucky, live from TIGERweb (no data/app file) — 601 km2 mean feature area, just under a county
+    "municipality",      // 415 incorporated places, live from TIGERweb (no data/app file) — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land
+    "school-district-elementary", // 4 independent districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points
+    "school-district-secondary" // 4 county districts serving grades 9-12 over the four elementary districts, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area, the same ground as the elementary tiling
   ];
   /* ==== GENERATED:END layer-area-rank ==== */
   /* ==== ENGINE:BEGIN layer-registry ==== */
@@ -12377,6 +12385,271 @@ function initKentuckyExplorer() {
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
   });
 
+
+  /* ---------- 5-8. live TIGERweb fabrics, point-first ----------
+   * Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
+   * answers "which feature holds this point" in one small spatial query, so a
+   * first click never waits on a multi-MB statewide download. The full set
+   * still downloads for the map overlay, on toggle. Measured 2026-10-01 for
+   * STATE='21' at geometryPrecision=5: unified school districts 6.53 MB raw /
+   * 1.72 MB gzipped, incorporated places 4.72 MB / 1.18 MB, and the two
+   * four-feature school tilings 0.04 MB each — so the hook is what the two
+   * large ones need, and the two small ones inherit it for free.
+   *
+   * THIS IS THE CHANGE THAT MAKES THE HOOK REAL HERE, AND THAT MATTERS TO A
+   * GENERATED PAGE. scripts/build_privacy_page.py measures which layers send a
+   * reader's selected point to a third-party server by counting the
+   * loadArcGISPointGeoJSON call sites a browser probe sees FIRE, so this
+   * instance's published privacy row moves from "None." to the four layers
+   * below the day this merges. Re-run scripts/probe_point_transmission.mjs and
+   * scripts/build_privacy_page.py with any change to this block. Michigan
+   * shipped the wrapper UNUSED and its privacy page claimed a transmission that
+   * never happened; the lesson is that dead code is not free when a generator
+   * measures the code.
+   * ---------- */
+  function tigerStatewideLoader(servicePath, layerIndex, outFields, label) {
+    var load = makeCached(function () {
+      return loadTigerLayer(servicePath, layerIndex, outFields, label);
+    });
+    load.atPoint = function (point) {
+      return loadArcGISPointGeoJSON(servicePath + "/" + layerIndex, point, outFields,
+        "STATE='" + STATE_FIPS + "'");
+    };
+    return load;
+  }
+
+  /* ---------- 5, 7, 8. the three school tilings ----------
+   * TIGER publishes three mutually exclusive school tilings, and Kentucky runs
+   * all three with the tidiest arrangement in the fleet. Measured 2026-10-01
+   * against TIGERweb School/MapServer for STATE='21': layer 0 (unified) 170
+   * districts, layer 2 (elementary) 4, layer 1 (secondary) 4.
+   *
+   * THE ARRANGEMENT IS MEASURED, NOT ASSUMED, and it is a one-for-one pairing.
+   * The four elementary districts are independent districts running PK/KG-8 —
+   * Anchorage, Southgate, East Bernstadt and Science Hill — and each of the
+   * four secondary districts is the county district that runs grades 9-12 over
+   * exactly one of them: Jefferson over Anchorage, Campbell over Southgate,
+   * Laurel over East Bernstadt, Pulaski over Science Hill. At all four
+   * elementary interior points the secondary layer returns its partner, 4 of 4,
+   * and the reverse, 4 of 4; the unified layer returns NOTHING at any of those
+   * eight points, and at 20 randomly sampled unified interior points neither of
+   * the other two returns anything, 0 of 20. The probe uses INTPTLAT/INTPTLON,
+   * the interior point TIGER guarantees is inside the polygon, never
+   * CENTLAT/CENTLON, whose centroid can fall outside a non-convex shape.
+   *
+   * THE ARITHMETIC IS THE INDEPENDENT WITNESS. The Census's own AREALAND sums
+   * to 102,228.8 km2 over the 170 unified districts and 39.0 km2 over the four
+   * elementary ones, and the two together are 102,267.8 km2 — EXACTLY the
+   * 120-county total from the same service. So unified plus elementary
+   * partitions Kentucky's land with nothing left over and nothing counted
+   * twice, and the secondary tiling's own 39.0 km2 is the same ground as the
+   * elementary one. Shipping the unified layer alone would therefore answer "no
+   * school district" to every reader inside those four areas — a wrong answer
+   * rather than a missing one, which is why all three ship.
+   *
+   * WHAT THESE CARDS DO NOT SAY. They print the grade range TIGER gives and
+   * which tiling the district sits in. They do not say which grades a district
+   * operates beyond that, and they name no board member: Kentucky elects every
+   * county board by division and every independent board at large, and neither
+   * roster is built here. Recorded as the coverage gap ky-school-board-members.
+   *
+   * NO RECONCILIATION WITH THE STATE'S OWN COUNT IS CLAIMED. The Kentucky
+   * Department of Education's districts page says 171 school districts; the
+   * Census publishes 170 unified plus 4 elementary records here. The two are
+   * counting different things, nothing measured here resolves them, and neither
+   * figure is presented as the other.
+   * ---------- */
+  var KY_EDUCATION_DIRECTORY = "https://education.ky.gov/districts/Pages/default.aspx";
+  var KY_CITY_DIRECTORY = "https://kydlgweb.ky.gov/Cities/16_CityHome.cfm";
+
+  var loadSchoolDistrictsUnified = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "School/MapServer", 0,
+    "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE", "unified school districts");
+  var loadSchoolDistrictsElementary = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "School/MapServer", 2,
+    "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE", "elementary school districts");
+  var loadSchoolDistrictsSecondary = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "School/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE", "secondary school districts");
+
+  function kySchoolQuery(load) {
+    return function (point, seq) {
+      return queryFeatureAt(load, point).then(function (feature) {
+        if (!feature) return null; // the engine renders this layer's emptyNote
+        var props = feature.properties || {};
+        var lo = findPropCI(props, ["lograde"]);
+        var hi = findPropCI(props, ["higrade"]);
+        return {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          geoid: findPropCI(props, ["geoid"]),
+          grades: (lo != null && hi != null) ? String(lo) + "–" + String(hi) : null
+        };
+      });
+    };
+  }
+
+  function kySchoolCard(tierNote) {
+    return function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? String(result.name) : "Unknown school district",
+        note: result.geoid != null ? "GEOID " + String(result.geoid) : null
+      }));
+      var rows = [];
+      // TIGER's own LOGRADE-HIGRADE, printed as published and never interpreted
+      if (result.grades) rows.push({ label: "Grades, as the Census records them", value: result.grades });
+      rows.push({ label: "Census tiling", value: tierNote });
+      rows.push({
+        label: "Your school board",
+        value: "Not named here. A Kentucky county school board is elected by " +
+          "division and an independent school board at large, and neither " +
+          "roster is built into this app yet — so it names nobody rather " +
+          "than guessing. The Department of Education's district directory is " +
+          "the current source."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    };
+  }
+
+  function kySchoolLink() {
+    return {
+      label: "Kentucky Department of Education — district directory",
+      url: KY_EDUCATION_DIRECTORY
+    };
+  }
+
+  function kyNameHover(feature) {
+    var name = findPropCI(feature.properties || {}, ["name"]);
+    return name != null ? String(name) : null;
+  }
+
+  registerLayer({
+    id: "school-district-unified",
+    group: "schools",
+    label: "School District (Unified)",
+    emptyNote: "This point is in one of the four small areas where Kentucky " +
+      "splits the job in two — an independent district for the younger " +
+      "grades and the county district for the high school. The two other " +
+      "School District cards name them.",
+    overlay: {
+      load: loadSchoolDistrictsUnified,
+      style: { color: "#1F6F4A", weight: 1.5, fillColor: "#3E9E72", fillOpacity: 0.05 }
+    },
+    hoverName: kyNameHover,
+    query: kySchoolQuery(loadSchoolDistrictsUnified),
+    render: kySchoolCard("Unified — the Census records this district as serving every grade."),
+    primaryLink: kySchoolLink
+  });
+
+  registerLayer({
+    id: "school-district-elementary",
+    group: "schools",
+    label: "School District (Elementary)",
+    emptyNote: "Kentucky has only four elementary-only school districts — " +
+      "Anchorage, Southgate, East Bernstadt and Science Hill — covering 39 " +
+      "square kilometres between them. Everywhere else the Unified School " +
+      "District card is the answer.",
+    overlay: {
+      load: loadSchoolDistrictsElementary,
+      style: { color: "#1F6F4A", weight: 1.5, fillColor: "#7FC4A3", fillOpacity: 0.07, dashArray: "4 2" }
+    },
+    hoverName: kyNameHover,
+    query: kySchoolQuery(loadSchoolDistrictsElementary),
+    render: kySchoolCard("Elementary — one of the four districts the Census places in its elementary tiling."),
+    primaryLink: kySchoolLink
+  });
+
+  registerLayer({
+    id: "school-district-secondary",
+    group: "schools",
+    label: "School District (Secondary)",
+    emptyNote: "Kentucky separates the high school from the elementary district " +
+      "in four places only. Everywhere else one unified district runs every " +
+      "grade, and the Unified School District card is the answer.",
+    overlay: {
+      load: loadSchoolDistrictsSecondary,
+      style: { color: "#14503A", weight: 1.5, fillColor: "#2E7D5B", fillOpacity: 0.07, dashArray: "1 3" }
+    },
+    hoverName: kyNameHover,
+    query: kySchoolQuery(loadSchoolDistrictsSecondary),
+    render: kySchoolCard("Secondary — the county district that runs grades 9–12 over one of the four elementary districts."),
+    primaryLink: kySchoolLink
+  });
+
+  /* ---------- 6. City ----------
+   * TIGERweb's incorporated places, point-first. Measured 2026-10-01 for
+   * STATE='21': 415 features over 4,978.5 km2 of land — under 5% of Kentucky,
+   * at a 12.00 km2 mean — and EVERY ONE carries the Census's city descriptor
+   * (LSADC 25). Kentucky incorporates no villages and no towns, so this card
+   * needs no unit-type row where Michigan's does.
+   *
+   * THE EMPTY CARD IS A REAL ANSWER HERE AND THE NOTE SAYS WHAT IT MEANS.
+   * Kentucky has no township tier at all, so a reader outside every city limit
+   * is governed by their county rather than by some smaller body this app is
+   * failing to draw. That is a different sentence from Minnesota's, where the
+   * same empty card means "you are in a township", and it is why this note is
+   * written for Kentucky rather than carried across.
+   *
+   * NO OFFICEHOLDER. Kentucky cities elect a mayor and a city legislative body;
+   * no roster of their members is built here, so the card names nobody and
+   * links the Department for Local Government's municipal directory, which is a
+   * per-city search rather than a downloadable roster (read 2026-10-01; its
+   * robots.txt permits the path). Which statutory plan of government a given
+   * city runs under was not measured and is not claimed. Recorded as the
+   * coverage gap ky-municipal-officeholders.
+   * ---------- */
+  var loadKyPlaces = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
+    "GEOID,NAME,BASENAME,STATE,LSADC", "incorporated places");
+
+  registerLayer({
+    id: "municipality",
+    group: "geography",
+    label: "City",
+    emptyNote: "This point is not inside a city. Kentucky has no township tier, " +
+      "so the county is the government for everyone outside a city limit — " +
+      "the County card is the answer here, not a missing layer.",
+    overlay: {
+      load: loadKyPlaces,
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+    },
+    hoverName: kyNameHover,
+    query: function (point, seq) {
+      return queryFeatureAt(loadKyPlaces, point).then(function (feature) {
+        if (!feature) return null; // not in a city — the engine renders emptyNote
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          geoid: findPropCI(props, ["geoid"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? String(result.name) : "Unknown city",
+        note: result.geoid != null ? "FIPS " + String(result.geoid) : null
+      }));
+      wrap.appendChild(renderFieldStack([{
+        label: "Your mayor and council",
+        value: "Not named here. No roster of Kentucky's mayors and city " +
+          "legislative bodies is built into this app yet, and it does not guess " +
+          "— the state's municipal directory and the city's own website " +
+          "are the current sources."
+      }]));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Kentucky Department for Local Government — municipal directory",
+        url: KY_CITY_DIRECTORY
+      };
+    }
+  });
+
   /* =========================================================================
    * GROWING THIS INSTANCE — docs/EXPANSION_GUIDE.md Part 3 (deepening a
    * state) and Part 4 (a new concept). Next: the fiscal court's magisterial
@@ -13872,7 +14145,9 @@ function initKentuckyExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ky-senate", "ky-house", "county"];
+  var LAYER_SIDEBAR_RANK = ["us-house", "ky-senate", "ky-house",
+    "school-district-unified", "school-district-elementary",
+    "school-district-secondary", "county", "municipality"];
   (function applySidebarRank() {
     var pos = {};
     for (var i = 0; i < LAYER_SIDEBAR_RANK.length; i++) pos[LAYER_SIDEBAR_RANK[i]] = i;
@@ -14334,8 +14609,10 @@ function initKentuckyExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#6B7280": "#B1BBCE", "#8C2E4A": "#F47294"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#14503A": "#5AA485", "#1F6F4A": "#5ABE8B",
+    "#2E7D5B": "#63C99A", "#3E9E72": "#65E3A8", "#41B6E6": "#B3E6FF", "#444B54": "#8F99A6",
+    "#4A2E8C": "#9879FA", "#6B7280": "#ACB6C9", "#7FC4A3": "#A0FBD0", "#8C2E4A": "#F06F91",
+    "#B0316E": "#FE80B4", "#D06A9C": "#FEB3D4"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

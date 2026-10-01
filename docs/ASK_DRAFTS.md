@@ -3034,3 +3034,62 @@ work out how. A yes costs the city nothing it has not already published.
 | "We do not want automated readers" | the city is recorded as having declined, with the date, and nothing is fetched from it again; under the fourth test that record stands in for the layer |
 | "We do not know why" | the symptom is recorded as measured from both addresses and unexplained, which is the honest state, and the city is not asked again |
 | No reply | followed up once after about three weeks, and once more after another two; thirty days' silence after that is recorded as the answer |
+
+---
+
+## Ask ia-pottawattamie-tama-wright-boards — three Iowa counties: how many supervisors sit on the board, and who are they?
+
+> **NOT YET ASKED — DRAFTED 2026-10-01.** Three separate messages, one per county, each to
+> that county's Auditor. On send, change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the
+> `ia-supervisor-count-impossible` and `ia-supervisor-count-disagrees` blockers in
+> `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in both. Record
+> the date per county if they go out on different days.
+>
+> **THE NUMBER 34 IS CONTESTED AND MAY NOT BE THIS ASK'S.** Measured 2026-10-01: main's last
+> ask is 33, and three open branches each number their next one 34 — this one (#1331),
+> Wisconsin's (#1330) and Michigan's (#1333). Only the first to merge keeps it. Whoever merges
+> after renumbers against main's last heading and updates every record that points at its own
+> ask: for this one that is the heading below, the `ASK:` lines in the
+> `ia-supervisor-count-impossible` and `ia-supervisor-count-disagrees` blockers in
+> `docs/DATA_LAYER_GUIDEBOOK.md`, the row in `ia/WATCH.md`, and #1331's own description. Check
+> main immediately before merging, not when the draft was written.
+>
+> **This ask is three counties and not eight, and the narrowing is what makes it worth
+> sending.** On 2026-09-22 eight Iowa counties named no supervisor at all. Five closed without
+> writing to anybody: Warren's was a defect in this repo, and Adair, Floyd, Humboldt and Lucas
+> each publish their own board page. Pottawattamie, Tama and Wright are what is left, and each
+> of them has a route that only a person can open.
+
+### What the app already has, and what it is missing
+
+* **The districts are drawn and they ship.** A reader clicking inside any of these three
+  counties is correctly told which supervisor district they live in.
+* **Every other county office ships.** Treasurer, recorder, sheriff, county attorney and
+  auditor are all named in all three counties, from the same sources that fail on the board.
+* **The board is the one row the card leaves blank**, and it says so in its own words rather
+  than naming a board this project cannot confirm.
+
+### The three, and why each is stuck
+
+| county | what two publishers say | why it cannot be settled here |
+|---|---|---|
+| **Pottawattamie** | the county directory lists **six** supervisors | Iowa Code 331.201 allows three or five, so six cannot describe a lawful board. The county's own site answers HTTP 403 to every client this project will send, while publishing no robots.txt — so the refusal is at the edge rather than from the county, and reading past it would be defeating an access control. |
+| **Tama** | the county directory lists **four** | Four is not a lawful board size either, so one row is spurious or one is missing, and nothing published says which. |
+| **Wright** | the directory lists **five**, in districts 1 to 5; the state's own district map draws **three** | Five is lawful and the county naming districts 1 to 5 is strong evidence it elects from five, so the names are not in doubt — the MAP is. Publishing five names against a three-district map would seat a supervisor in a district no reader can be shown. |
+
+**What the ask says.** We publish a free, non-commercial map that tells a reader which civic
+districts cover a point and who represents them there, and Iowa is one of eight states it
+answers for. We carry every other elected county office for your county and we are missing the
+board of supervisors, because the two statewide sources we read disagree with each other. For
+Pottawattamie and Tama: how many members does the board seat today, and who are they? For
+Wright: how many districts does the board elect from today, and which supervisor holds each?
+
+**What is deliberately not asked.** Nothing about reuse terms, because county officeholders are
+public record. No request to change any website, and for Pottawattamie no mention of the 403 at
+all — that is this project's problem to work around by asking a person, which is what this
+letter is. And nothing is implied about either statewide source being at fault; the question is
+what the county itself reports.
+
+**Why a no is still useful.** A refusal, or thirty days of silence after one follow-up, lets
+the record that tells our readers what is missing say that the county was asked, which is the
+difference between a gap we have measured and a gap we have merely noticed.

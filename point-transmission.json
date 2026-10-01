@@ -187,18 +187,28 @@
       ]
     },
     "ky": {
-      "layers_sending_point": 0,
-      "layers": [],
+      "layers_sending_point": 4,
+      "layers": [
+        "municipality",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified"
+      ],
       "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
+        "load",
         "load"
       ],
-      "atpoint_hooks_fired": 0,
+      "atpoint_hooks_fired": 1,
       "layer_ids": [
         "county",
         "ky-house",
         "ky-senate",
+        "municipality",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
         "us-house"
       ]
     },
