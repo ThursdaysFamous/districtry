@@ -4322,3 +4322,59 @@ what the county itself reports.
 **Why a no is still useful.** A refusal, or thirty days of silence after one follow-up, lets
 the record that tells our readers what is missing say that the county was asked, which is the
 difference between a gap we have measured and a gap we have merely noticed.
+
+---
+
+## Ask ky-judge-district-join — Kentucky Administrative Office of the Courts: which district was each judge elected from?
+
+> **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to one desk. On send, change
+> `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `ky-judges` blocker in
+> `docs/DATA_LAYER_GUIDEBOOK.md` and regenerate `ky/data/app/coverage-gaps.json`.
+>
+> **This ask exists because the geometry arrived without the people.** Kentucky's four court
+> maps shipped on 2026-10-01, dissolved offline from statute — no publisher was asked for any
+> of them, because KRS 21A.010, 22A.010(2), 23A.020 and 24A.030 write out which counties make
+> up each district, circuit and district-court district. So every one of the four cards can
+> tell a reader which court covers them and none of them can name a judge, and the missing
+> thing is not a map.
+
+**To:** Administrative Office of the Courts, Division of Research & Statistics — Daniel
+Sturtevant, Data Officer; (502) 573-2350 x50719
+**Subject:** Which district or circuit was each sitting judge elected from?
+
+**Why this desk and not another.** Three offices at the AOC could plausibly hold this: Research
+& Statistics, Records Services, and Communications. It goes to the Data Officer because the
+question is for a field in a dataset rather than a document or a statement — and because the
+answer that would serve best is a table, not prose.
+
+### What the app already has, and the one field it is missing
+
+* **All four court tilings ship and are drawn from statute**, not from a map anyone published:
+  7 Supreme Court districts, the 7 Court of Appeals districts that KRS 22A.010(2) defines as
+  the same geography, 57 circuits and 59 district-court districts.
+* **The Court of Justice already publishes its judges**, by court, which this project can read.
+* **What nothing published states is the join** — for a named sitting judge, the number of the
+  district or circuit they were elected from. Without it the four cards say, in their own
+  words, that the court is known and the judge is not.
+
+**What is deliberately NOT inferred, and the ask says so.** A judge's county of residence is
+published and would place most judges in a district by arithmetic. That is a different fact
+from the one the ballot settled, and a roster built on it would be this project guessing at an
+officeholder, which it does not do. Nor is a circuit's numbered **division** read as a place:
+KRS 23A.040 and following make a division a seat elected by the whole circuit, so a division
+number is not a district and joining on it would invent boundaries that do not exist.
+
+**What is asked for, in order of usefulness**
+
+| What | Why it would serve |
+|---|---|
+| A table of sitting judges with the district or circuit number each was elected from | the four cards name a judge the week it arrives, and the join is re-read on a schedule rather than transcribed once |
+| A pointer to where that number is already published, if it is | better than a table, because it keeps the AOC out of the loop afterwards |
+| "We do not hold that in a form we can share" | a complete answer; it closes the question and the record says the office was asked |
+
+**Why even a no is useful and is said so plainly.** This project tells readers what it does not
+know and why. A refusal, or thirty days of silence after one follow-up, lets that record say
+the AOC was asked — which is a different and more honest claim than that nobody looked.
+
+**Nothing about reuse terms is asked**, because who holds an elected office is public record,
+and nothing is asked of any named judge personally.

@@ -88,8 +88,8 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
 them used. MEASURED 2026-10-01 on this branch, AFTER its last edit: a static gate is
-one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **101**;
-counted instead as script invocations the whole battery is **146 — 132 that need no browser and
+one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **102**;
+counted instead as script invocations the whole battery is **148 — 134 that need no browser and
 14 that boot Chromium** (a Playwright smoke test per instance
 `il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`/`nc`/`ky`, 2 root-page tests, and the two fleet-wide probes
 for point transmission and contrast pairs), the per-instance `validate_index.py` runs included, and
@@ -127,6 +127,15 @@ is the failure MODE: when two branches each add a per-instance line they write t
 the textual conflict that saved the 2026-09-19 case does not occur at all, and there is nothing in
 either diff to look at. Re-run `validate_gate_counts.py` after every merge into a branch that
 touches the battery — not after every edit to it, after every merge.
+
+**AND A TENTH CHANGE, WHERE ONE STEP CARRIES TWO INVOCATIONS BECAUSE A GATE'S SELFTEST RUNS
+BESIDE IT.** The chamber-roster gate — every district a legislature elects has a record in its
+roster — adds one named step holding its `--selftest` and the gate itself, so the battery is
+**102 / 148 — 134 no browser, 14 Chromium**, measured after this branch's last edit. The 101/146
+below is left standing as the record of what the previous measurement found. It is the
+`validate_python_hygiene.py` shape again, and it is worth noting twice: a selftest counts because
+it is a command CI runs, so the step count and the invocation count move by different amounts in
+one change and neither can be derived from the other.
 
 **AND A NINTH CHANGE, WHERE THE PAIR MOVES BY ONE EACH IN THE SAME BRANCH THAT HAD JUST MOVED
 IT BY TWO.** Iowa's county-board-page reader adds one named step carrying one invocation, so the
@@ -314,8 +323,8 @@ each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-10-01, **146
-invocations for 146**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-10-01, **148
+invocations for 148**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on
