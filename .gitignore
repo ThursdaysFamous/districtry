@@ -44,8 +44,18 @@ dist/
 # so /tmp will not do), and five of them once rode a `git add -A` into main —
 # where the deploy's rsync would have published them, since -a copies dotfiles
 # and no exclude names them. Name a scratch harness like this and it cannot.
+#
+# A SIXTH ONE GOT IN ANYWAY, on 2026-10-01: `.courtprobe.tmp.mjs`, a throwaway
+# that checked Kentucky's four court cards in real Chromium, matched neither
+# pattern and rode #1344 into main, where the deploy published it — it answered
+# 200 at districtry.com/.courtprobe.tmp.mjs until the next deploy after its
+# removal. THESE PATTERNS ONLY PROTECT NAMES THAT FOLLOW THEM, which is a weaker
+# guarantee than the sentence above claims, so `.*.tmp.mjs` is covered too and
+# the deploy now excludes every dot-prefixed .mjs whatever it is called —
+# defence at the publishing step rather than at the naming step.
 /.scratch-*.mjs
 /.*-test.mjs
+/.*.tmp.mjs
 
 # A --force-blocked build of a LICENSED source writes here, never into
 # il/data/app/. The licence forbids redistributing a derived product, and a
