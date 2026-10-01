@@ -61,6 +61,86 @@ citable yes or no at the end of it.
 
 ---
 
+## Which asks have a draft in the operator's mailbox
+
+**39 drafts were created in the operator's Gmail on 2026-10-01, one per recipient.
+NONE WAS SENT, and no send date is recorded here or anywhere else as a result** — a
+draft in a mailbox is the same state as a draft in this file, one step closer to the
+operator's hand. Rule 1 above is unchanged: the operator sends. Rule 2 is unchanged
+too: the day a letter goes, its date is written in the gap record and here, and not
+before.
+
+The drafts carry each letter's wording from this file verbatim, with `<YOUR NAME>` and
+`<YOUR E-MAIL>` filled in and the Markdown removed, because a mail client renders
+neither.
+
+| ask | recipients drafted |
+|---|---|
+| Ask 9 — Bureau County | 1 |
+| Ask 10 — Clark County | 1 |
+| Ask 14 — Jones County, Iowa | 1 |
+| Ask 15 — City of Marion, Iowa | 1 |
+| Ask 16 — four Illinois city clerks | 4 |
+| Ask 17 — League of Wisconsin Municipalities | 1 |
+| Ask 18 — Grundy County GIS | 1 |
+| Ask 19 — Whiteside County GIS | 1 |
+| Ask 20 — six Wisconsin county clerks | 6 |
+| Ask 21 — Knox County GIS | 1 |
+| Ask 23 — Logan County Clerk | 1 |
+| Ask 26 — Henderson County Clerk | 1 |
+| Ask 27 — Christian County Clerk | 1 |
+| Ask 28 — Will County Clerk | 1 |
+| Ask 29 — Clinton and Franklin County Clerks | 2 |
+| Ask 30 — twelve Iowa county auditors | 12 |
+| Ask 31 — Worth County Auditor | 1 |
+| Ask 32 — City of Milwaukee GIS | 1 |
+| Ask wi-town-boards — Wisconsin Towns Association | 1 |
+
+**Ask 30's twelve addresses came from `ia/data/app/ia-county-auditors.json` and that is
+worth stating, because the ask's own note says Iowa auditor mailboxes "are patterned
+enough that one could be guessed, and guessing is what this file exists to prevent".**
+Nothing was guessed: that roster's addresses are scraped from the auditors' own
+association directory and from each county's card on `sos.iowa.gov`, which is a
+published source rather than a pattern. The same applies to Ask 23's Logan County
+address, taken from `il/data/app/il-county-clerks.json`, which the ask section itself
+omits.
+
+### What was deliberately not drafted
+
+| letter | why not |
+|---|---|
+| Ask 11 — CCGISC | No recipient address is recorded in this file. |
+| Asks 13, 25, 33, `wi-oshkosh-council`, `ia-pottawattamie-tama-wright-boards` | The section argues the ask and records its recipient, but no letter wording has been written yet. Drafting one would be writing the letter, which is its author's to do. |
+| Ask `wi-city-council-pages` — Beloit, Janesville, Wausau, Wauwatosa, Mequon | No e-mail address for any of the five clerks is recorded anywhere in the repository. `wi/data/app/wi-municipal-clerks.json` carries their names and telephone numbers and no mailbox. |
+| Ten Michigan clerks; Gurnee; Urbana; a New York local-officials letter | Named as outstanding in a coordinating session's notes, but **no letter for any of them exists in this repository**, so there was nothing to draft. |
+| Every ask this file marks `ASKED <date>` | Already sent. |
+| `docs/PRESS_LIST.md` | A separate discipline with its own send rules; left untouched. |
+
+### Two places where this file and the mailbox disagreed
+
+Both are recorded rather than quietly worked around, and both are the failure the Scott
+rule in rule 2 above exists to prevent — a ledger saying "held" about a letter that has
+already gone.
+
+- **Ask 8** reads `DRAFTED IN THE OPERATOR'S MAILBOX 2026-09-04 … Not sent`, and the
+  mailbox's sent folder carries *"Is there a statewide list of Iowa city clerks?"* to
+  `elections@sos.iowa.gov` on **2026-09-04**.
+- **Ask 12's follow-ups** to Ford, Christian and Knox counties are likewise recorded as
+  held, and all three went on **2026-09-04**.
+
+Neither was re-drafted. Whoever next touches those two asks should establish the real
+dates from the sent folder and write them in, here and in
+`docs/DATA_LAYER_GUIDEBOOK.md`.
+
+### A note on the eight Illinois drafts from 2026-09-04
+
+Asks 9 to 13 are recorded as having been "queued in Gmail" on 2026-09-04. No such
+drafts were in the mailbox on 2026-10-01 — the mailbox held one unrelated draft and
+nothing else — so those queued drafts no longer exist. Asks 9 and 10 were recreated in
+this batch; 11 and 13 are in the skip list above for their own reasons.
+
+---
+
 ## Ask 1 — Iowa county officers — **WITHDRAWN 2026-09-03, never sent**
 
 Drafted 2026-08-29 as a template plus fifteen filled per-county e-mails: one to each
