@@ -1492,9 +1492,19 @@ ANSWERS = {
         # Minnesota's own thread has confirmed it elects judges by district.
         "courts-by-district": OPEN,
         "sub-county-government": OPEN,
-        # Still the Minnesota thread's to confirm.
-        "school-boards-by-district": UNSETTLED,
-        "precincts": OPEN,
+        # SETTLED 2026-10-01 by this instance's own thread, and the answer is
+        # that the level exists but only where a district has opted into it:
+        # Minn. Stat. 205A.12 subds. 1-5 let a school district divide itself
+        # into from three to seven election districts by board resolution or
+        # by petition, and a district that has not done so elects its whole
+        # board at large. So this is OPEN rather than the standard's "the
+        # state does not have the level" case — and which districts have opted
+        # in is not published anywhere this project has found, which is the
+        # work the level is waiting on (mn/WATCH.md).
+        "school-boards-by-district": OPEN,
+        # The Secretary of State publishes all 4,105 precincts statewide, from
+        # the office that maintains them, and the app draws them.
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         "tribal-government": OPEN,
     },
