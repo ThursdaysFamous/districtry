@@ -58,13 +58,6 @@
       "name": "Humboldt County",
       "slug": "humboldt"
     },
-    "ida": {
-      "fips": "093",
-      "lat": 42.3918601,
-      "lng": -95.5074206,
-      "name": "Ida County",
-      "slug": "ida"
-    },
     "johnson": {
       "fips": "103",
       "lat": 41.670668,

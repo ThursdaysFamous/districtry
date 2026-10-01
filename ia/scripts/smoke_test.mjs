@@ -680,6 +680,15 @@ try {
        "Osceola, named by the county's own letter"],
       [43.3784695, -95.6338858, "Osceola County", "last confirmed by the county itself",
        null, "Osceola dates a pairing it cannot re-read"],
+      // IDA IS THE NAME-JOIN CASE. Its auditor wrote "Devlun Whiteing";
+      // the gated roster spells it "Devlun P. Whiteing", and the roster's
+      // spelling is what ships, because the roster is the gated source for
+      // who these people are and the letter only says which district each
+      // holds. The absent branch is the one that matters: a regression
+      // shipping the letter's own spelling would still name a real person
+      // and read perfectly.
+      [42.33342, -95.50360, "Ida County", "Devlun P. Whiteing",
+       "Devlun Whiteing", "Ida, the name joined to the gated roster"],
       [41.03000, -94.64000, "Adams County", "Supervisor",
        "last confirmed by the county itself",
        "Adams, keyed from a page, carries no dated sentence"]

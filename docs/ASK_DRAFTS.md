@@ -2448,23 +2448,35 @@ The Clerk's own named county address, so the name vouches for it.
 
 ## Ask 30 — twelve Iowa counties: which supervisor holds which district
 
-> **ASKED 2026-10-01 — ALL TWELVE. THREE HAVE ALREADY ANSWERED.**
+> **ASKED 2026-10-01 — ALL TWELVE. FOUR HAVE ALREADY ANSWERED.**
 > Twelve separate messages, one per county, each to that county's Auditor, every one confirmed
 > in the operator's own sent folder: **Black Hawk, Calhoun, Cass, Dickinson, Guthrie, Ida, Lee,
-> Montgomery, Osceola, Palo Alto, Sioux and Washington**. A follow-up falls due for the nine
+> Montgomery, Osceola, Palo Alto, Sioux and Washington**. A follow-up falls due for the eight
 > still silent at about three weeks (2026-10-22) and the thirty-day silence mark at 2026-10-31.
+> Cass is answered-and-pending and is not one of the eight.
 >
 > * **Osceola — ANSWERED, and it ships.** Auditor Rochelle Van Tilburg, 2026-10-01, gave all
 >   five pairings in plain text. The county has left the gap record.
-> * **Dickinson — REFUSED.** Auditor Lori Pedersen, 2026-10-01, in full: `no`. That is the
->   answer this letter asks for in as many words, so no follow-up goes out and the county stays
->   in the gap record for a stated reason.
-> * **Cass — ANSWERED, and not yet readable here.** Auditor Kathy Somers, 2026-10-01, sent the
->   district numbers with names as an INLINE IMAGE plus a district-map PDF; the message's plain
->   text carries none of it, and the Gmail connector available to these sessions lists an
->   attachment and cannot fetch its bytes. Nothing is guessed from a filename. The county is
->   recorded as having answered, so no follow-up goes out, and the five lines need a reader
->   that can read an image.
+> * **Dickinson — REFUSED, and only of the pairing.** Auditor Lori Pedersen, 2026-10-01, in
+>   full: `no`. That is the answer this letter asks for in as many words, so no follow-up goes
+>   out and the county stays in the gap record for a stated reason. It refuses the one question
+>   the letter put — which supervisor holds which district — and says nothing about whether the
+>   board is elected by district, which the state's own plan type already settles, or about any
+>   other question this project might put to the county. Reading a one-word refusal as wider
+>   than the question it answers is how a county comes to be written off for things it never
+>   declined.
+> * **Cass — ANSWERED, and waiting on one more exchange.** Auditor Kathy Somers, 2026-10-01,
+>   sent the district numbers with names as INLINE IMAGES plus a district-map PDF; the message's
+>   plain text carries none of it, and the Gmail connector available to these sessions lists an
+>   attachment and cannot fetch its bytes. Nothing is guessed from a filename. She has been asked
+>   to type the names out or confirm a reading of the image, so the county is
+>   **answered-and-pending**: the thirty-day clock does not apply to it and nothing ships until
+>   that answer is in.
+> * **Ida — ANSWERED, and it ships.** Auditor Kristy Gilbert, 2026-10-01, gave all three
+>   pairings in plain text. The county has left the gap record. It is also the reply that turned
+>   the name join into a gate: the county wrote `Devlun Whiteing` where the gated roster spells
+>   it `Devlun P. Whiteing`, so the table now holds each letter VERBATIM and the builder joins an
+>   unmatched name on a unique surname, prints every such join, and stops on an ambiguous one.
 >
 > **THE FIRST WRITE-UP OF THIS SAID SEVEN SENT AND FIVE DRAFTED, AND IT WENT STALE INSIDE THE
 > HOUR.** The sent folder was read at 14:42–14:46 UTC and the other five went at 14:47, so a

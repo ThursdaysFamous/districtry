@@ -79,7 +79,6 @@ const GEOMETRY_URLS = [
   "./data/app/cass-county-outline.json",
   "./data/app/dickinson-county-outline.json",
   "./data/app/guthrie-county-outline.json",
-  "./data/app/ida-county-outline.json",
   "./data/app/kossuth-county-outline.json",
   "./data/app/lee-county-outline.json",
   "./data/app/montgomery-county-outline.json",

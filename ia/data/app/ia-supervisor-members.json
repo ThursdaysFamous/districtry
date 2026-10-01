@@ -207,6 +207,27 @@
   "readOn": "2026-09-26",
   "sourceUrl": "https://howardcounty.iowa.gov/board-of-supervisors/"
  },
+ "093": {
+  "asOf": "2026-10-01",
+  "asOfWhy": "Ida County's auditor gave this pairing by e-mail on 1 October 2026; the county publishes no page that names a district, so this app has no page to re-read.",
+  "boardPhone": "(712) 364-2632",
+  "county": "Ida",
+  "districts": {
+   "1": {
+    "name": "Creston Schubert",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Kyle Rohlk",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Devlun P. Whiteing",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-01"
+ },
  "113": {
   "boardPhone": "(319) 892-5000",
   "county": "Linn",

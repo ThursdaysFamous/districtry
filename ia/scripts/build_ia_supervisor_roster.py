@@ -133,6 +133,28 @@ CORRESPONDENCE_ROSTERS = {
             "October 2026; the county publishes no page that names a "
             "district, so this app has no page to re-read."),
     },
+    "Ida": {
+        # Transcribed from the reply exactly as the county wrote it, INCLUDING
+        # "Devlun Whiteing", which the gated roster spells "Devlun P.
+        # Whiteing". The resolution below turns that into the roster's own
+        # spelling, prints the join every run, and refuses an ambiguous one.
+        "districts": {
+            "1": "Creston Schubert",
+            "2": "Kyle Rohlk",
+            "3": "Devlun Whiteing",
+        },
+        "readOn": "2026-10-01",
+        "why": (
+            "Ida County Auditor Kristy Gilbert, by e-mail, 2026-10-01, "
+            "answering this project's ask: 'Here is their district "
+            "information.' followed by all three pairings. The county's own "
+            "board page names its three supervisors and attaches no district "
+            "to any of them, which is why it was asked."),
+        "cardNote": (
+            "Ida County's auditor gave this pairing by e-mail on 1 October "
+            "2026; the county publishes no page that names a district, so "
+            "this app has no page to re-read."),
+    },
 }
 
 # A ROBOTS REFUSAL IS A RECORDED DROP -- NOT AN OUTAGE, AND NOT A BLANKET
@@ -242,10 +264,39 @@ def main():
                 "page this run -- the entry is stale. Retire it: a page the county "
                 "publishes is the better source and is re-read every week."
                 % county)
-        cache[county] = {"districts": dict(told["districts"]),
-                         "readOn": told["readOn"]}
+        # THE TABLE IS A TRANSCRIPT OF THE LETTER, NOT OF THE ROSTER, so it
+        # may spell a name the way the county's own auditor typed it -- Ida
+        # wrote "Devlun Whiteing" where the gated roster has "Devlun P.
+        # Whiteing". Silently accepting either would be a normalisation nobody
+        # can see; silently FAILING would discard a county's own answer over a
+        # middle initial. So a name the roster does not carry is joined on a
+        # UNIQUE surname, the join is PRINTED on every run, and an ambiguous
+        # or unmatched one stops the build. The ROSTER'S spelling is what
+        # ships, because the roster is the gated source for who these people
+        # are and the letter is the source for which district each holds.
+        board = board_by_county.get(county) or []
+        names = {m["name"] for m in board}
+        resolved = {}
+        for dist, written in told["districts"].items():
+            if written in names:
+                resolved[dist] = written
+                continue
+            surname = written.split()[-1]
+            hits = sorted(n for n in names if n.split()[-1] == surname)
+            if len(hits) != 1:
+                raise RuntimeError(
+                    "%s district %s: the county wrote %r, which the gated "
+                    "roster does not carry, and %d roster name(s) share the "
+                    "surname %r (%s). Settle it by hand rather than guessing."
+                    % (county, dist, written, len(hits), surname,
+                       ", ".join(hits) or "none"))
+            print("  name joined   %-12s district %s: the county wrote %r, "
+                  "the gated roster spells it %r -- the roster's spelling "
+                  "ships" % (county, dist, written, hits[0]), file=sys.stderr)
+            resolved[dist] = hits[0]
+        cache[county] = {"districts": resolved, "readOn": told["readOn"]}
         print("  from a letter  %-12s %d district(s), %s"
-              % (county, len(told["districts"]), told["why"]), file=sys.stderr)
+              % (county, len(resolved), told["why"]), file=sys.stderr)
 
     # THE ROSTER THIS RUN IS ABOUT TO OVERWRITE, read in FULL rather than as
     # district counts. It is two things at once: the Grundy guard below still
