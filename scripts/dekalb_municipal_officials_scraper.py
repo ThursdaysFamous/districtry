@@ -69,7 +69,9 @@ import time
 import urllib.parse
 
 import requests
-from scraper_common import UA_CHROME_WIN_126, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    fetch as fetch_with_retry, require_robots_once, UA_CHROME_WIN_126,
+)
 
 try:
     import pypdf
@@ -206,6 +208,16 @@ def _reference_page_playwright():
 
 
 def discover_pdf_url(warnings):
+    # THE COUNTY'S RULES ARE READ BEFORE ANY RUNG, with the identity every rung
+    # sends, so a refusal stops the ladder rather than being met by the next rung
+    # down. dekalbcounty.org had been recorded as answering every client with a
+    # managed challenge; re-measured from a GitHub runner on 2026-10-01, the
+    # vantage the weekly job crawls from, it serves a 37-byte policy whose
+    # binding group matches none of the paths read here, on all three reads of a
+    # deliberate re-measurement fifteen seconds apart. The challenge is on the
+    # PAGE and not on the policy, which is why the ladder below still exists.
+    require_robots_once(REFERENCE_PAGE, HEADERS["User-Agent"], headers=HEADERS,
+                        label="dekalb-municipal-officials-scraper")
     markup, failures = None, []
     for rung in (_reference_page_requests, _reference_page_playwright):
         try:
@@ -233,6 +245,14 @@ def discover_pdf_url(warnings):
 
 
 def fetch_pdf(url):
+    # THE YEARBOOK IS ON THE CLERK'S OWN HOST, which is a second host and a
+    # second question, so it is asked separately. Re-measured from a GitHub
+    # runner on 2026-10-01: dekalbcountyclerkil.gov serves a 181-byte policy
+    # matching none of the paths read here, the yearbook PDF's own included, on
+    # all three reads of a deliberate re-measurement fifteen seconds apart. It
+    # too had been recorded as answering every client with a challenge.
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="dekalb-municipal-officials-scraper")
     # scraper_common.fetch retries 429/5xx (numeric Retry-After honoured,
     # capped) and refuses to retry 401/403/404 — the Henry rule. Parsing and
     # every page check stay in this file.

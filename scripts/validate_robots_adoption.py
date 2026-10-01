@@ -47,13 +47,31 @@ TWO TABLES, BECAUSE THEY ARE TWO DIFFERENT CLAIMS.
 
   WHAT IS LEFT IN IT NO LONGER SHARES THAT REASON, and the shared-reason design
   is why nothing in this file says so. The wiring pass took it from 224 entries
-  to 30 in a day, and what remains is not a remainder of the sweep: each one
-  reaches a host the runner record shows REFUSING us, answering with a MANAGED
-  CHALLENGE we do not work around, or answering NOTHING at all. Each wants
-  either a re-read from a runner or an operator ruling, neither of which is a
-  line of code, so each is a decision rather than a task. A backlog whose
-  entries stop sharing their stated reason wants splitting; that split waits on
-  the rulings, because how they are grouped is part of what is being decided.
+  to 30 in a day, and the next pass took the last 25 of those in one, leaving a
+  single name. What that pass found is the reason the paragraph it replaces was
+  wrong about its own remainder: those 25 were described as reaching hosts that
+  refuse us, challenge us, or answer nothing, and all three of those readings
+  came from a record measured on 2026-09-30. Re-measured from a runner a day
+  later, TWENTY-EIGHT HOSTS ANSWERED — eleven that had answered with a managed
+  challenge served a policy on all three reads of a deliberate re-measurement
+  fifteen seconds apart, and nine that had timed out either serve a policy or
+  answer HTTP 404, which is no policy at all and permits everything.
+
+  A RECORDED REFUSAL GOES STALE AND NOTHING RE-READS IT. That is the lesson, and
+  it is the same one #1340 found in two scrapers' hand-written notes about a
+  browser string. A refusal is a measurement with a date, so a backlog built on
+  one is a backlog with an expiry nobody prints. Re-measure before concluding
+  that a decision is owed.
+
+  THE ONE ENTRY LEFT IS NOT A DECISION EITHER. coles_county_board_scraper.py
+  reads www.colesco.illinois.gov, whose own leaf certificate EXPIRED around
+  2026-09-27: its weekly refresh has failed since, with "certificate has
+  expired", and the robots read fails the same way through the pinned
+  intermediate that used to complete its chain. Nothing can read that site until
+  the county renews, so there is no policy to obey and nothing to wire; the
+  shipped roster keeps its last-good records under Adam's ruling of 2026-09-19.
+  It stays here rather than being excused, because the day the certificate is
+  renewed this is an ordinary task again.
 
   THREE OF THOSE 30 WERE NEVER IN THAT CLASS AND WERE SORTED THERE BY READING A
   URL LITERAL, which is the same defect this gate's own AST rule exists to avoid
@@ -109,9 +127,13 @@ TWO TABLES, BECAUSE THEY ARE TWO DIFFERENT CLAIMS.
     * an OUTBOUND submission of our own addresses, reading nothing — the three
       copies of that script: `scripts/indexnow_submit.py`,
       `ca/scripts/indexnow_submit.py`, `ny/scripts/indexnow_submit.py`.
-    * a step in completing a TLS HANDSHAKE — `scripts/aia_bundle.py`, which
-      fetches the intermediate certificate named inside a leaf a host has just
-      served.
+    * a step in completing a TLS HANDSHAKE, or a MEASUREMENT of one —
+      `scripts/aia_bundle.py`, which fetches the intermediate certificate named
+      inside a leaf a host has just served, and
+      `scripts/probe_incomplete_tls_chains.py`, whose subject is the set of hosts
+      whose chain no plain client can complete. Gating either is circular: those
+      hosts' robots.txt cannot be read until the intermediate is in hand, which
+      is the thing the probe is run to discover.
     * a file that talks only to a server IT STARTED ITSELF —
       `scripts/selftest_scraper_common.py`, whose one host is loopback.
     * a NAME LOOKUP rather than a read — `scripts/build_county_clerk_roster.py`,
@@ -273,31 +295,7 @@ def tracked_python():
 # the tree, and on a fetching file that is not here and reads nothing.
 # ---------------------------------------------------------------------------
 UNWIRED_AT_SWEEP = frozenset("""
-    ca/scripts/validate_sources.py
-    ny/scripts/validate_sources.py
-    scripts/boone_district_officials_scraper.py
-    scripts/build_lasalle_board_districts.py
-    scripts/build_logan_precinct_polling.py
-    scripts/clay_county_board_scraper.py
     scripts/coles_county_board_scraper.py
-    scripts/dekalb_county_board_scraper.py
-    scripts/dekalb_municipal_officials_scraper.py
-    scripts/edgar_county_board_scraper.py
-    scripts/franklin_county_board_scraper.py
-    scripts/il_county_commissioners_scraper.py
-    scripts/il_library_contacts_scraper.py
-    scripts/marshall_county_board_scraper.py
-    scripts/probe_incomplete_tls_chains.py
-    wi/scripts/build_rusd_school_board_districts.py
-    wi/scripts/validate_sources.py
-    wi/scripts/wi_alderperson_scraper.py
-    wi/scripts/wi_bluebook_municipal_scraper.py
-    wi/scripts/wi_circuit_judges_scraper.py
-    wi/scripts/wi_coa_scraper.py
-    wi/scripts/wi_county_clerk_scraper.py
-    wi/scripts/wi_county_officer_contact_scraper.py
-    wi/scripts/wi_wec_probe.py
-    wi/scripts/wi_wec_recon.py
 """.split())
 
 # path -> (reason, date). EMPTY on introduction, deliberately; see the docstring.
@@ -338,6 +336,20 @@ DECLARED_EXEMPT = {
         "length in the file itself so it cannot be applied by analogy from "
         "here",
         "2026-09-30"),
+    "scripts/probe_incomplete_tls_chains.py": (
+        "THE SAME CIRCULARITY AS aia_bundle.py, and the same class: what it "
+        "MEASURES is whether a TLS chain completes. It asks each host for `/`, "
+        "throws the body away and keeps the status code and the certificate, so "
+        "there is no content it takes. Its subject is precisely the hosts whose "
+        "chain no plain client can complete, so their robots.txt cannot be read "
+        "either until the intermediate is in hand — which is the thing this probe "
+        "is run to discover — and an unreachable robots.txt disallows, so a gated "
+        "version would refuse every host it was pointed at and measure nothing. "
+        "Every scraper that goes on to READ one of these hosts is gated in full "
+        "and passes the completed bundle to the robots read. THE TEST IS WHETHER "
+        "SOMEBODY'S PAGES ARE BEING READ, never which host answers; argued at "
+        "length in the file",
+        "2026-10-01"),
     "scripts/indexnow_submit.py": (
         "OUTBOUND SUBMISSION, NOT A READ: it hands districtry's own "
         "addresses to an ingestion endpoint that exists to receive them, "

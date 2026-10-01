@@ -40,13 +40,13 @@ import sys
 
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_X11_120,
+    UA_ROSTER_BOT,
     require_robots_once,
 )
 
 SOURCE_URL = "https://wincoil.gov/government/county-board"
 HEADERS = {
-    "User-Agent": UA_CHROME_X11_120,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 60
 

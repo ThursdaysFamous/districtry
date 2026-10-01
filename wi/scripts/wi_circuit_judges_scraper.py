@@ -60,6 +60,11 @@ import sys
 import urllib.error
 import urllib.request
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "wi_circuit_judges_raw.json")
 # WHY A DISTRICTRY TOKEN AND NOT A CHROME STRING (2026-09-12). This file sent
 # `Mozilla/5.0 ... Chrome/124.0` until today, with nothing recorded about a
@@ -120,6 +125,14 @@ MIN_JUDGES = 240
 
 
 def fetch(url):
+    # THE SITE'S RULES ARE READ BEFORE THE FIRST PAGE, with the same identity
+    # the page fetch sends. Measured from a GitHub runner on 2026-10-01, the
+    # vantage the weekly job crawls from: www.wicourts.gov answers HTTP 404 for
+    # robots.txt, so it publishes no rules and every path is permitted. The
+    # earlier reading of this host as unreadable was a timeout taken on one
+    # runner moment, which RFC 9309 files as disallow-all and is not a policy.
+    require_robots_once(url, UA["User-Agent"], headers=UA,
+                        label="wi-circuit-judges-scraper")
     ctx = ssl.create_default_context()
     req = urllib.request.Request(url, headers=UA)
     with urllib.request.urlopen(req, timeout=45, context=ctx) as r:

@@ -40,7 +40,7 @@ import sys
 
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_WIN_126,
+    UA_ROSTER_BOT,
     require_robots_once,
 )
 
@@ -48,7 +48,7 @@ SOURCE_URL = "https://www.oglecountyil.gov/staff_directory/county_board_members.
 # The county site serves a bare client fine; a browser UA is used anyway so a
 # future bot filter degrades to a clear HTTP error rather than a silent stub.
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 60
 

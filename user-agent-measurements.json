@@ -325,7 +325,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 61864 bytes",
    "callers": {
-    "scripts/ccpsa_scraper.py": "browser"
+    "scripts/ccpsa_scraper.py": "self"
    }
   },
   "cerrogordo.gov": {
@@ -726,8 +726,8 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 78537 bytes",
    "callers": {
-    "scripts/build_carroll_precinct_polling.py": "browser",
-    "scripts/carroll_municipal_officials_scraper.py": "browser"
+    "scripts/build_carroll_precinct_polling.py": "self",
+    "scripts/carroll_municipal_officials_scraper.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -748,8 +748,8 @@
    "callers": {
     "scripts/build_cass_board_districts.py": "self",
     "scripts/build_cass_board_roster.py": "unknown",
-    "scripts/cass_county_board_scraper.py": "browser",
-    "scripts/cass_municipal_officials_scraper.py": "browser"
+    "scripts/cass_county_board_scraper.py": "self",
+    "scripts/cass_municipal_officials_scraper.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -1190,7 +1190,7 @@
     "wi/scripts/build_wi_legislature_roster.py": "unknown",
     "wi/scripts/validate_sources.py": "both",
     "ia/scripts/build_ia_legislature_roster.py": "unknown",
-    "ia/scripts/ia_legislature_scraper.py": "browser",
+    "ia/scripts/ia_legislature_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self",
     "mi/scripts/build_mi_legislature_roster.py": "unknown",
     "mi/scripts/validate_sources.py": "self",
@@ -1690,7 +1690,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 9005 bytes",
    "callers": {
-    "scripts/build_municipal_ward_coverage.py": "browser",
+    "scripts/build_municipal_ward_coverage.py": "self",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/cook_county_board_scraper.py": "self",
     "scripts/il_special_district_officials_scraper.py": "self",
@@ -1786,8 +1786,8 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 5427 bytes",
    "callers": {
-    "scripts/build_mcdonough_board_districts.py": "browser",
-    "scripts/build_mcdonough_precincts.py": "browser"
+    "scripts/build_mcdonough_board_districts.py": "self",
+    "scripts/build_mcdonough_precincts.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -1864,7 +1864,7 @@
    "note": "requests+token HTTP 200, 170656 bytes",
    "callers": {
     "scripts/build_hancock_boundaries.py": "unknown",
-    "scripts/hancock_county_board_scraper.py": "browser"
+    "scripts/hancock_county_board_scraper.py": "self"
    }
   },
   "harrisoncounty.iowa.gov": {
@@ -1882,7 +1882,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 97626 bytes",
    "callers": {
-    "ia/scripts/ia_county_auditor_scraper.py": "both"
+    "ia/scripts/ia_county_auditor_scraper.py": "self"
    }
   },
   "il-clark.accessliberty.com": {
@@ -1940,7 +1940,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 97119 bytes (page carries a captcha widget)",
    "callers": {
-    "ia/scripts/build_ia_aea.py": "both"
+    "ia/scripts/build_ia_aea.py": "self"
    }
   },
   "iowaauditors.org": {
@@ -1958,7 +1958,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 99913 bytes",
    "callers": {
-    "ia/scripts/ia_county_auditor_scraper.py": "both",
+    "ia/scripts/ia_county_auditor_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
   },
@@ -1996,7 +1996,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 634438 bytes",
    "callers": {
-    "ia/scripts/build_ia_city_contact.py": "both",
+    "ia/scripts/build_ia_city_contact.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
   },
@@ -2016,7 +2016,7 @@
    "note": "requests+token HTTP 200, 69256 bytes",
    "callers": {
     "scripts/build_iroquois_board_roster.py": "unknown",
-    "scripts/iroquois_county_board_scraper.py": "browser"
+    "scripts/iroquois_county_board_scraper.py": "self"
    }
   },
   "jeffersoncounty.illinois.gov": {
@@ -2036,7 +2036,7 @@
    "callers": {
     "scripts/build_jefferson_board_roster.py": "unknown",
     "scripts/build_jefferson_precincts.py": "unknown",
-    "scripts/jefferson_county_board_scraper.py": "browser"
+    "scripts/jefferson_county_board_scraper.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -2174,7 +2174,7 @@
    "callers": {
     "scripts/build_lasalle_board_roster.py": "unknown",
     "scripts/lasalle_county_board_scraper.py": "self",
-    "scripts/lasalle_municipal_officials_scraper.py": "browser",
+    "scripts/lasalle_municipal_officials_scraper.py": "self",
     "scripts/validate_sources.py": "self"
    }
   },
@@ -2212,7 +2212,7 @@
    "note": "requests+token HTTP 200, 1293304 bytes (page carries a captcha widget)",
    "callers": {
     "scripts/build_macon_board_roster.py": "unknown",
-    "scripts/macon_county_board_scraper.py": "browser"
+    "scripts/macon_county_board_scraper.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -2252,7 +2252,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 17294 bytes",
    "callers": {
-    "scripts/boone_municipal_officials_scraper.py": "browser",
+    "scripts/boone_municipal_officials_scraper.py": "self",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/validate_sources.py": "self"
    },
@@ -2372,7 +2372,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 8029 bytes",
    "callers": {
-    "scripts/build_winnebago_county_board_roster.py": "browser",
+    "scripts/build_winnebago_county_board_roster.py": "self",
     "scripts/il_gis_board_scraper.py": "self",
     "scripts/validate_sources.py": "self",
     "scripts/winnebago_municipal_officials_scraper.py": "browser"
@@ -2466,7 +2466,7 @@
    "callers": {
     "scripts/build_marshall_board_districts.py": "self",
     "scripts/build_marshall_board_roster.py": "unknown",
-    "scripts/marshall_county_board_scraper.py": "browser",
+    "scripts/marshall_county_board_scraper.py": "self",
     "scripts/marshall_municipal_officials_scraper.py": "unknown"
    },
    "measured": "2026-09-13"
@@ -2489,7 +2489,7 @@
     "scripts/build_mason_board_districts.py": "self",
     "scripts/build_mason_board_roster.py": "self",
     "scripts/mason_municipal_officials_scraper.py": "self",
-    "scripts/mason_roster_watch.py": "browser"
+    "scripts/mason_roster_watch.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -2508,9 +2508,9 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 27942 bytes",
    "callers": {
-    "scripts/build_mcdonough_board_districts.py": "browser",
-    "scripts/build_mcdonough_precincts.py": "browser",
-    "scripts/mcdonough_county_board_scraper.py": "browser",
+    "scripts/build_mcdonough_board_districts.py": "self",
+    "scripts/build_mcdonough_precincts.py": "self",
+    "scripts/mcdonough_county_board_scraper.py": "self",
     "scripts/validate_index.py": "unknown"
    }
   },
@@ -2589,7 +2589,7 @@
    "callers": {
     "scripts/build_montgomery_board_roster.py": "unknown",
     "scripts/build_montgomery_precinct_polling.py": "unknown",
-    "scripts/montgomery_county_board_scraper.py": "browser"
+    "scripts/montgomery_county_board_scraper.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -2709,7 +2709,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 395411 bytes",
    "callers": {
-    "scripts/adams_county_board_scraper.py": "browser",
+    "scripts/adams_county_board_scraper.py": "self",
     "scripts/build_adams_county_board_roster.py": "unknown",
     "scripts/build_clinton_boundaries.py": "unknown",
     "scripts/build_franklin_boundaries.py": "unknown",
@@ -2717,7 +2717,7 @@
     "scripts/build_wayne_boundaries.py": "unknown",
     "scripts/clinton_county_board_scraper.py": "self",
     "scripts/franklin_county_board_scraper.py": "self",
-    "scripts/platinum_canvass.py": "browser"
+    "scripts/platinum_canvass.py": "self"
    }
   },
   "public4.co.waupaca.wi.us": {
@@ -2874,7 +2874,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 123295 bytes",
    "callers": {
-    "scripts/rock_island_municipal_officials_scraper.py": "browser"
+    "scripts/rock_island_municipal_officials_scraper.py": "self"
    }
   },
   "rod.danecounty.gov": {
@@ -2943,8 +2943,8 @@
    "note": "requests+token HTTP 200, 215010 bytes",
    "callers": {
     "scripts/build_sangamon_county_board_roster.py": "unknown",
-    "scripts/sangamon_county_board_scraper.py": "browser",
-    "scripts/sangamon_municipal_officials_scraper.py": "browser"
+    "scripts/sangamon_county_board_scraper.py": "self",
+    "scripts/sangamon_municipal_officials_scraper.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -3020,7 +3020,7 @@
     "ia/scripts/build_cedar_rapids_wards.py": "self",
     "ia/scripts/build_dsm_council.py": "self",
     "ia/scripts/build_dsm_wards.py": "self",
-    "ia/scripts/build_ia_aea.py": "both",
+    "ia/scripts/build_ia_aea.py": "self",
     "ia/scripts/build_ia_cc_director_districts.py": "self",
     "ia/scripts/build_ia_community_colleges.py": "unknown",
     "ia/scripts/build_ia_precincts.py": "unknown",
@@ -3267,7 +3267,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 238759 bytes",
    "callers": {
-    "ia/scripts/ia_county_auditor_scraper.py": "both",
+    "ia/scripts/ia_county_auditor_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
   },
@@ -3289,8 +3289,8 @@
     "scripts/build_stephenson_board_districts.py": "self",
     "scripts/build_stephenson_county_board_roster.py": "unknown",
     "scripts/build_stephenson_precincts.py": "self",
-    "scripts/stephenson_county_board_scraper.py": "browser",
-    "scripts/stephenson_municipal_officials_scraper.py": "browser",
+    "scripts/stephenson_county_board_scraper.py": "self",
+    "scripts/stephenson_municipal_officials_scraper.py": "self",
     "scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-13"
@@ -3330,7 +3330,7 @@
    "callers": {
     "scripts/build_tazewell_board_roster.py": "unknown",
     "scripts/tazewell_county_board_scraper.py": "self",
-    "scripts/tazewell_municipal_officials_scraper.py": "browser"
+    "scripts/tazewell_municipal_officials_scraper.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -3355,6 +3355,7 @@
     "scripts/build_clay_boundaries.py": "unknown",
     "scripts/build_dewitt_board_districts.py": "self",
     "scripts/build_district_search.py": "self",
+    "scripts/build_expected_governments.py": "self",
     "scripts/build_henry_board_districts.py": "self",
     "scripts/build_jackson_boundaries.py": "unknown",
     "scripts/build_jodaviess_board_districts.py": "self",
@@ -3363,7 +3364,7 @@
     "scripts/build_marshall_board_districts.py": "self",
     "scripts/build_mason_board_districts.py": "self",
     "scripts/build_metro_outline.py": "self",
-    "scripts/build_municipal_ward_coverage.py": "browser",
+    "scripts/build_municipal_ward_coverage.py": "self",
     "scripts/build_ogle_board_districts.py": "self",
     "scripts/build_place_outline.py": "self",
     "scripts/build_shelby_board_districts.py": "unknown",
@@ -3376,7 +3377,7 @@
     "scripts/build_white_boundaries.py": "unknown",
     "scripts/build_woodford_board_districts.py": "self",
     "scripts/il_library_contacts_scraper.py": "self",
-    "scripts/isbe_precinct_fabric.py": "browser",
+    "scripts/isbe_precinct_fabric.py": "self",
     "scripts/mirror_tiger_tiles.py": "self",
     "scripts/tribal_areas.py": "unknown",
     "scripts/validate_sources.py": "self",
@@ -3392,7 +3393,7 @@
     "wi/scripts/build_wi_municipal_clerks.py": "unknown",
     "wi/scripts/validate_sources.py": "both",
     "ia/scripts/build_cedar_rapids_wards.py": "self",
-    "ia/scripts/build_ia_city_contact.py": "both",
+    "ia/scripts/build_ia_city_contact.py": "self",
     "ia/scripts/build_ia_school_districts.py": "self",
     "ia/scripts/build_legislative_boundaries.py": "unknown",
     "ia/scripts/build_metro_outline.py": "self",
@@ -3516,7 +3517,7 @@
    "callers": {
     "scripts/build_washington_board_districts.py": "self",
     "scripts/build_washington_board_roster.py": "unknown",
-    "scripts/washington_county_board_scraper.py": "browser",
+    "scripts/washington_county_board_scraper.py": "self",
     "scripts/washington_municipal_officials_scraper.py": "unknown"
    }
   },
@@ -3555,9 +3556,9 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 127055 bytes (page carries a captcha widget)",
    "callers": {
-    "scripts/build_winnebago_county_board_roster.py": "browser",
+    "scripts/build_winnebago_county_board_roster.py": "self",
     "scripts/il_gis_board_scraper.py": "self",
-    "scripts/winnebago_county_board_scraper.py": "browser"
+    "scripts/winnebago_county_board_scraper.py": "self"
    }
   },
   "wingis.org": {
@@ -3795,7 +3796,7 @@
    "note": "requests+token HTTP 200, 72915 bytes",
    "callers": {
     "scripts/boone_county_board_scraper.py": "self",
-    "scripts/boone_municipal_officials_scraper.py": "browser",
+    "scripts/boone_municipal_officials_scraper.py": "self",
     "scripts/build_boone_board_roster.py": "unknown",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/validate_sources.py": "self"
@@ -3899,9 +3900,9 @@
    "callers": {
     "scripts/build_carroll_board_districts.py": "self",
     "scripts/build_carroll_county_board_roster.py": "unknown",
-    "scripts/build_carroll_precinct_polling.py": "browser",
-    "scripts/carroll_county_board_scraper.py": "browser",
-    "scripts/carroll_municipal_officials_scraper.py": "browser",
+    "scripts/build_carroll_precinct_polling.py": "self",
+    "scripts/carroll_county_board_scraper.py": "self",
+    "scripts/carroll_municipal_officials_scraper.py": "self",
     "scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-13"
@@ -3953,7 +3954,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 191565 bytes",
    "callers": {
-    "scripts/cpd_district_scraper.py": "browser"
+    "scripts/cpd_district_scraper.py": "self"
    }
   },
   "www.ci.galesburg.il.us": {
@@ -3971,7 +3972,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 130791 bytes",
    "callers": {
-    "scripts/galesburg_council_scraper.py": "browser"
+    "scripts/galesburg_council_scraper.py": "self"
    }
   },
   "www.ci.neenah.wi.us": {
@@ -4007,7 +4008,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 238800 bytes",
    "callers": {
-    "scripts/will_city_councils_scraper.py": "browser"
+    "scripts/will_city_councils_scraper.py": "self"
    }
   },
   "www.cityofdodgeville.com": {
@@ -4039,7 +4040,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 138856 bytes",
    "callers": {
-    "scripts/will_city_councils_scraper.py": "browser"
+    "scripts/will_city_councils_scraper.py": "self"
    }
   },
   "www.cityofmadison.com": {
@@ -4595,7 +4596,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 48345 bytes",
    "callers": {
-    "scripts/ccbr_scraper.py": "browser",
+    "scripts/ccbr_scraper.py": "self",
     "scripts/validate_sources.py": "self"
    }
   },
@@ -4728,7 +4729,7 @@
    "callers": {
     "scripts/build_dewitt_board_districts.py": "self",
     "scripts/build_dewitt_board_roster.py": "unknown",
-    "scripts/dewitt_county_board_scraper.py": "browser",
+    "scripts/dewitt_county_board_scraper.py": "self",
     "scripts/dewitt_municipal_officials_scraper.py": "unknown"
    }
   },
@@ -4768,8 +4769,8 @@
     "scripts/build_calhoun_precincts.py": "unknown",
     "scripts/build_stephenson_fire_districts.py": "self",
     "scripts/build_vtd_precincts.py": "unknown",
-    "scripts/il_county_clerk_scraper.py": "browser",
-    "scripts/isbe_precinct_fabric.py": "browser",
+    "scripts/il_county_clerk_scraper.py": "self",
+    "scripts/isbe_precinct_fabric.py": "self",
     "scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-13"
@@ -4789,7 +4790,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 19605997 bytes",
    "callers": {
-    "scripts/ewg_municipal_officials_scraper.py": "browser"
+    "scripts/ewg_municipal_officials_scraper.py": "self"
    }
   },
   "www.fdlco.wi.gov": {
@@ -4885,7 +4886,7 @@
    "note": "requests+token HTTP 200, 86241 bytes (page carries a captcha widget)",
    "callers": {
     "mi/scripts/build_mi_grand_rapids_council.py": "unknown",
-    "mi/scripts/mi_grand_rapids_council_scraper.py": "browser",
+    "mi/scripts/mi_grand_rapids_council_scraper.py": "self",
     "mi/scripts/validate_sources.py": "self"
    }
   },
@@ -4946,7 +4947,7 @@
     "scripts/build_grundy_board_roster.py": "unknown",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/grundy_county_board_scraper.py": "self",
-    "scripts/grundy_municipal_officials_scraper.py": "browser"
+    "scripts/grundy_municipal_officials_scraper.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -4996,9 +4997,9 @@
    "callers": {
     "scripts/build_henry_board_districts.py": "self",
     "scripts/build_henry_board_roster.py": "unknown",
-    "scripts/build_henry_precinct_polling.py": "browser",
+    "scripts/build_henry_precinct_polling.py": "self",
     "scripts/henry_county_board_scraper.py": "self",
-    "scripts/henry_municipal_officials_scraper.py": "browser"
+    "scripts/henry_municipal_officials_scraper.py": "self"
    }
   },
   "www.hillsborowi.com": {
@@ -5159,7 +5160,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 93922 bytes (page carries a captcha widget)",
    "callers": {
-    "ia/scripts/ia_county_officer_email_scraper.py": "browser",
+    "ia/scripts/ia_county_officer_email_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
   },
@@ -5319,7 +5320,7 @@
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/validate_sources.py": "both",
-    "wi/scripts/verify_kenosha_supervisory_map.py": "browser",
+    "wi/scripts/verify_kenosha_supervisory_map.py": "self",
     "wi/scripts/wi_alderperson_scraper.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
@@ -5450,7 +5451,7 @@
    "note": "requests+token HTTP 200, 89299 bytes",
    "callers": {
     "scripts/build_lee_county_board_roster.py": "unknown",
-    "scripts/lee_county_board_scraper.py": "browser",
+    "scripts/lee_county_board_scraper.py": "self",
     "scripts/validate_sources.py": "self"
    }
   },
@@ -5471,7 +5472,7 @@
    "callers": {
     "ia/scripts/build_ia_judicial_district.py": "unknown",
     "ia/scripts/build_story_supervisor_districts.py": "self",
-    "ia/scripts/ia_legislature_scraper.py": "browser",
+    "ia/scripts/ia_legislature_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
   },
@@ -5511,8 +5512,8 @@
    "callers": {
     "scripts/build_livingston_board_districts.py": "self",
     "scripts/build_livingston_county_board_roster.py": "unknown",
-    "scripts/livingston_county_board_scraper.py": "browser",
-    "scripts/livingston_municipal_officials_scraper.py": "browser"
+    "scripts/livingston_county_board_scraper.py": "self",
+    "scripts/livingston_municipal_officials_scraper.py": "self"
    }
   },
   "www.logancountyil.gov": {
@@ -5772,7 +5773,7 @@
    "note": "requests+token HTTP 200, 14967 bytes (page carries a captcha widget)",
    "callers": {
     "scripts/build_menard_commissioners_roster.py": "unknown",
-    "scripts/menard_commissioners_scraper.py": "browser"
+    "scripts/menard_commissioners_scraper.py": "self"
    }
   },
   "www.menashawi.gov": {
@@ -5926,8 +5927,8 @@
    "callers": {
     "scripts/build_ogle_board_districts.py": "self",
     "scripts/build_ogle_county_board_roster.py": "unknown",
-    "scripts/ogle_county_board_scraper.py": "browser",
-    "scripts/ogle_municipal_officials_scraper.py": "browser",
+    "scripts/ogle_county_board_scraper.py": "self",
+    "scripts/ogle_municipal_officials_scraper.py": "self",
     "scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-13"
@@ -5988,7 +5989,7 @@
    "callers": {
     "scripts/build_peoria_board_roster.py": "unknown",
     "scripts/peoria_county_board_scraper.py": "self",
-    "scripts/peoria_municipal_officials_scraper.py": "browser"
+    "scripts/peoria_municipal_officials_scraper.py": "self"
    }
   },
   "www.pikecountyil.org": {
@@ -6078,7 +6079,7 @@
    "note": "requests+token HTTP 200, 142943 bytes",
    "callers": {
     "scripts/build_rock_island_county_board_roster.py": "unknown",
-    "scripts/rock_island_county_board_scraper.py": "browser",
+    "scripts/rock_island_county_board_scraper.py": "self",
     "scripts/validate_sources.py": "self"
    }
   },
@@ -6193,7 +6194,7 @@
    "callers": {
     "scripts/build_shelby_board_districts.py": "unknown",
     "scripts/build_shelby_board_roster.py": "unknown",
-    "scripts/shelby_county_board_scraper.py": "browser"
+    "scripts/shelby_county_board_scraper.py": "self"
    }
   },
   "www.skokie.org": {
@@ -6211,7 +6212,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 232145 bytes",
    "callers": {
-    "scripts/skokie_trustee_districts_scraper.py": "browser",
+    "scripts/skokie_trustee_districts_scraper.py": "self",
     "scripts/validate_sources.py": "self"
    }
   },
@@ -6375,7 +6376,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 11166 bytes",
    "callers": {
-    "ia/scripts/ia_county_auditor_scraper.py": "both"
+    "ia/scripts/ia_county_auditor_scraper.py": "self"
    }
   },
   "www.washburnsheriff.org": {
@@ -6521,7 +6522,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 50544 bytes (page carries a captcha widget)",
    "callers": {
-    "scripts/will_city_councils_scraper.py": "browser"
+    "scripts/will_city_councils_scraper.py": "self"
    }
   },
   "www.webstercountyia.gov": {
@@ -6539,7 +6540,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 47817 bytes",
    "callers": {
-    "ia/scripts/ia_county_auditor_scraper.py": "both"
+    "ia/scripts/ia_county_auditor_scraper.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -6561,7 +6562,7 @@
     "scripts/build_white_boundaries.py": "unknown",
     "scripts/build_white_county_board.py": "unknown",
     "scripts/validate_sources.py": "self",
-    "scripts/white_county_board_scraper.py": "browser"
+    "scripts/white_county_board_scraper.py": "self"
    }
   },
   "www.whitesidecountyil.gov": {
@@ -6581,7 +6582,7 @@
    "callers": {
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/il_gis_board_scraper.py": "self",
-    "scripts/whiteside_municipal_officials_scraper.py": "browser"
+    "scripts/whiteside_municipal_officials_scraper.py": "self"
    }
   },
   "www.wicourts.gov": {
@@ -6653,7 +6654,7 @@
    "note": "requests+token HTTP 200, 186609 bytes (page carries a captcha widget)",
    "callers": {
     "scripts/validate_sources.py": "self",
-    "scripts/will_city_councils_scraper.py": "browser"
+    "scripts/will_city_councils_scraper.py": "self"
    }
   },
   "www.winnebagocountywi.gov": {
@@ -6717,5 +6718,5 @@
    }
   }
  },
- "callers_refreshed": "2026-09-30"
+ "callers_refreshed": "2026-10-01"
 }

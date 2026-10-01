@@ -153,8 +153,10 @@ SRC_OVERLAP_CEILING = 0.10       # percent of in-state points
 
 STATE_BBOX = {"minLng": -96.84, "minLat": 40.17, "maxLng": -89.94, "maxLat": 43.70}
 UA = "districtry/1.0 (+https://districtry.com/ia/)"
-BROWSER_UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-              "Chrome/126.0.0.0 Safari/537.36")
+# THE BROWSER STRING THIS FILE USED TO SEND FOR find-my-aea IS RETIRED
+# (2026-10-01). Measured that day on this file's own stack -- curl with the
+# districtry token and nothing else -- iowaaea.org answered HTTP 200 and
+# 97,110 bytes, so the page needs no browser claim.
 
 
 def _curl(url, ua=UA):
@@ -207,7 +209,7 @@ def fetch_agency_directory():
     number — the same value the Department's geometry carries in `AEA`. That is
     what makes this a keyed join rather than a name match.
     """
-    page = _curl(FIND_MY_AEA, ua=BROWSER_UA).decode("utf-8", "replace")
+    page = _curl(FIND_MY_AEA).decode("utf-8", "replace")
     blocks = re.findall(r'<div class="fm-map__info" id="(\d{2})"[^>]*>(.*?)</div>',
                         page, re.S)
     out = {}

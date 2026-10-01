@@ -110,7 +110,7 @@ import re
 import sys
 
 import requests
-from scraper_common import require_robots_once, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pdfplumber
@@ -120,7 +120,7 @@ except ImportError:  # pragma: no cover
 CLERK_PAGE = "https://www.henrycty.com/221/County-Clerk"
 HANDBOOK_FALLBACK = "https://www.henrycty.com/DocumentCenter/View/1102/THEHANDBOOK"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 120
 

@@ -107,6 +107,25 @@ an oversight.
 ---
 
 
+## Open work the done standard asks for (measured 2026-10-01, not scheduled)
+
+New York fails the standard's Covered test on four levels of government besides tribal,
+and these two rows are the things a later pass must not have to rediscover. Neither is a
+cadence: they are owed once, and then they are done.
+
+| What | Why it is here | Done |
+|---|---|---|
+| **Re-measure the sites that would not answer, from the build machine** — 14 of the 57 county sites and 36 of the 101 largest town, city and village sites | Measured from a sandbox whose own route failed on most of them: re-read one at a time, only ONE was a real access control (Seneca's HTTP 202 managed challenge), against expired and mismatched certificates, resets, a 522 and four 403s. An unreachable robots.txt correctly disallows, so the reader was right and the input was the network. **Draft no ask about any of those units until this is done** | ☐ |
+| **The county and town tranche programme** — 56 county governing bodies and 103 local ones | The route is measured and recorded in the guidebook section "New York's county and local tiers": no statewide roster exists, the state publishes every unit's own website with a GNIS id and a SWIS code, and in a board-of-supervisors county the county board seat IS the town supervisor, so one county's board page names every one of its towns' supervisors in a single fetch. Form first, from a certified document, per the Tompkins order | ☐ |
+
+The one letter worth sending before any of that is Ask 33 in `docs/ASK_DRAFTS.md`, to the
+state rather than to a hundred and sixty clerks: whether the Department of State or the
+Comptroller holds a directory of local elected officials that is not on the open-data
+portal. A clean no closes the statewide route for good.
+
+---
+
+
 ## Fixed checkpoints (put these on a real calendar)
 
 | Date | Trigger | Action | Done |
