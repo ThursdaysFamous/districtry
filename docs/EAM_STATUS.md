@@ -19,7 +19,7 @@ whether the data exists** — a level no publisher offers, that we
 asked about and were refused, counts as covered — so a county
 publisher cannot fail an app on it.
 
-**19 gap-record claims name a level, 2 of which carry a
+**20 gap-record claims name a level, 2 of which carry a
 dated ask that counts.** A level this report calls open and
 that no record claims is still a floor. A claim that earns
 nothing is printed under its level with the reason, rather
@@ -82,7 +82,7 @@ this instance is in maintenance.
 
 - **Under a WATCH.md plan (38):** re-checked on a stated cadence rather than by a job — `adair-county-outline.json`, `black-hawk-county-outline.json`, `calhoun-county-outline.json`, `cass-county-outline.json`, `cedar-rapids-wards.json`, `congress-districts.json`, `coverage-gaps.json`, `dickinson-county-outline.json`, `dsm-wards.json`, `floyd-county-outline.json`, `guthrie-county-outline.json`, `humboldt-county-outline.json`, `ia-aeas.json`, `ia-cc-director-districts.json`, `ia-community-colleges.json`, `ia-county-board-directory.json`, `ia-house-districts.json`, `ia-judicial-districts.json`, `ia-precincts.json`, `ia-school-director-districts.json`, `ia-school-districts.json`, `ia-school-sites.json`, `ia-senate-districts.json`, `ia-supervisor-districts.json`, `johnson-county-outline.json`, `jones-county-outline.json`, `kossuth-county-outline.json`, `lee-county-outline.json`, `metro-outline.json`, `montgomery-county-outline.json`, `palo-alto-county-outline.json`, `pottawattamie-county-outline.json`, `state-counties.json`, `tama-county-outline.json`, `warren-county-outline.json`, `waterloo-wards.json`, `worth-county-outline.json`, `wright-county-outline.json`
 - **Covered: no.** 3 of the 13 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
-  - **4. The county governing body, in every county of the state** — open. 96 of 99 counties name a governing body. A record declares this level and earns nothing: `ia-supervisor-count-disagrees` — no ask recorded, so it covers nothing yet under the standard; `ia-supervisor-count-impossible` — no ask recorded, so it covers nothing yet under the standard
+  - **4. The county governing body, in every county of the state** — open. 96 of 99 counties name a governing body. A record declares this level and earns nothing: `ia-supervisor-count-disagrees` — County Auditor Amanda Meyer was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `ia-tama-supervisor-map` — no ask recorded, so it covers nothing yet under the standard; `ia-supervisor-count-impossible` — County Auditor Mary Ann Hanusa was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **13. Tribal governments** — open (required only where the state has the level)
 

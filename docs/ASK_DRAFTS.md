@@ -104,6 +104,7 @@ neither.
 | Ask 31 — Worth County Auditor | 1 |
 | Ask 32 — City of Milwaukee GIS | 1 |
 | Ask wi-town-boards — Wisconsin Towns Association | 1 |
+| Ask ia-tama-supervisor-map — Tama County Auditor | 1 |
 
 **Ask 30's twelve addresses came from `ia/data/app/ia-county-auditors.json` and that is
 worth stating, because the ask's own note says Iowa auditor mailboxes "are patterned
@@ -4060,14 +4061,25 @@ or a file.
 
 ## Ask ia-pottawattamie-tama-wright-boards — three Iowa counties: how many supervisors sit on the board, and who are they?
 
-> **NOT YET ASKED — DRAFTED 2026-10-01, and since the same day each sits in the operator's
-> mailbox as its own draft**, addressed to that county's auditor from
-> `ia/data/app/ia-county-auditors.json`: Pottawattamie (Mary Ann Hanusa), Tama (Karen Rohrs)
-> and Wright (Amanda Meyer). Three separate messages, one per county, each to
-> that county's Auditor. On send, change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the
+> **ASKED 2026-10-01 — ALL THREE, AND TAMA ANSWERED THE SAME AFTERNOON.** Three separate
+> messages, one per county, each to that county's Auditor at the address
+> `ia/data/app/ia-county-auditors.json` carries, every one confirmed in the operator's own sent
+> folder: Tama (Karen Rohrs, 14:53:51 UTC), Wright (Amanda Meyer, 14:53:56) and Pottawattamie
+> (Mary Ann Hanusa, 14:54:03). The ledger is updated in the
 > `ia-supervisor-count-impossible` and `ia-supervisor-count-disagrees` blockers in
-> `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in both. Record
-> the date per county if they go out on different days.
+> `docs/DATA_LAYER_GUIDEBOOK.md` and in `ia/WATCH.md`, and both records now carry an `ask` block
+> reading `pending`. A follow-up falls due for the two still silent at about three weeks
+> (2026-10-22) and the thirty-day silence mark at 2026-10-31.
+>
+> **TAMA'S REPLY SPLIT THE RECORD IT CAME FROM.** Auditor Rohrs named five supervisors against
+> districts 1 to 5, which settles the board's size and its members and makes the statewide
+> directory's four the stale half — so Tama's question is answered and its card still names
+> nobody, because the map this project ships draws three districts for the county. That is a
+> different blocker from Pottawattamie's, which is a publisher's error plus a site this project
+> may not read, so Tama left `ia-supervisor-count-impossible` for a record of its own,
+> `ia-tama-supervisor-map`, and its follow-up is the ask of that name below. **A RECORD THAT
+> HOLDS TWO COUNTIES CANNOT STATE EITHER ONE'S STATE ONCE THEY DIVERGE**, and it cannot carry an
+> `ask` block at all, because that block names one desk.
 >
 > **THE NUMBER 34 IS CONTESTED AND MAY NOT BE THIS ASK'S.** Measured 2026-10-01: main's last
 > ask is 33, and three open branches each number their next one 34 — this one (#1331),
@@ -4117,3 +4129,53 @@ what the county itself reports.
 **Why a no is still useful.** A refusal, or thirty days of silence after one follow-up, lets
 the record that tells our readers what is missing say that the county was asked, which is the
 difference between a gap we have measured and a gap we have merely noticed.
+
+
+## Ask ia-tama-supervisor-map — Tama County Auditor: your county's current five-district map
+
+> **NOT YET ASKED — DRAFTED 2026-10-01**, to Tama County Auditor Karen Rohrs at the address
+> `ia/data/app/ia-county-auditors.json` carries for the county, which is the same address that
+> answered this project the same afternoon. One message. On send, change `NOT YET ASKED —
+> DRAFTED` to `ASKED <date>` in the `ia-tama-supervisor-map` blocker in
+> `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in both — and add
+> an `ask` block to that record reading `pending`.
+>
+> **THIS IS A FOLLOW-UP TO AN ANSWER, NOT TO SILENCE.** Auditor Rohrs answered
+> `ia-pottawattamie-tama-wright-boards` within the hour, in plain text, naming five supervisors
+> against districts 1 to 5. Nothing is wrong with that reply and nothing more is wanted from it.
+> The one thing between it and a card naming all five is a map: the statewide
+> supervisor-district layer this project ships draws **three** districts for Tama, so publishing
+> the five would seat two supervisors in districts no reader can be shown.
+>
+> **IT MATTERS TO A PROMISE ALREADY MADE.** The reply sent in the operator's name told her the
+> county's entry would list all five supervisors with their respective districts. The shipped
+> map cannot support that yet, so this letter is what makes that sentence true rather than
+> something that quietly went unkept.
+
+### What the app already has, and what it is missing
+
+* **Her five names and districts are in hand** and are not in doubt. This asks nothing about
+  them.
+* **Every other elected county office ships for Tama** — treasurer, recorder, sheriff, county
+  attorney and auditor.
+* **The supervisor card names the county and no supervisors**, and says in its own words that
+  the map it draws has three districts where the county elects from five.
+
+**What the ask says.** Thank you for the five names and districts, which answered the question
+completely. One thing on our side is still in the way: the statewide supervisor-district map we
+draw from, published by the Legislative Services Agency and dated January 2024, has three
+districts for Tama County rather than the five you named, so we cannot yet show a reader which
+of your five districts covers their address. Does the county have a current map of its five
+supervisor districts — a PDF, an image, a shapefile, or a description by township or precinct,
+whichever is easiest to send? Anything that says where the five district lines run would let us
+finish the entry.
+
+**What is deliberately not asked.** Nothing about reuse terms, because district boundaries are
+public record. Nothing about the telephone numbers, which is a separate reply already sent.
+Nothing is implied about the Legislative Services Agency being at fault — a map dated January
+2024 may simply predate a redistricting the county has since adopted, and the question is only
+what the lines are today.
+
+**Why a no is still useful.** If the county has no map of its own, saying so closes the
+question: it tells us the repair belongs with the state agency rather than with the county, and
+it lets the record that tells our readers what is missing say the county was asked.
