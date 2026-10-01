@@ -3845,9 +3845,9 @@ work out how. A yes costs the city nothing it has not already published.
 
 > **ASKED 2026-10-01 FOR NINE OF THE TEN — the operator sent them from his own mailbox between
 > 14:48 and 14:51 UTC. BURTON IS NOT YET ASKED**, because its clerk's address has not been read
-> (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and a correction to each is
-> in the operator's drafts as a reply in the same thread, unsent; see "Three letters went out on
-> a wrong reason" below. One message per unit, to its clerk. Each unit has its
+> (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and the operator sent a
+> correction to each, in the same thread, at 15:21-15:23 UTC; see "Three letters went out on a
+> wrong reason" below. One message per unit, to its clerk. Each unit has its
 > own gap record in `docs/DATA_LAYER_GUIDEBOOK.md` (named in the table below), already carrying
 > `"covers": ["local-government:<its geoid>"]`. On send, add `"ask": {"who": "<clerk, by name>", "asked":
 > "<date>"}` to that unit's record and change its `NOT YET ASKED — DRAFTED` to `ASKED <date>`;
@@ -3918,10 +3918,17 @@ scripts) and Wyoming was not fetched, by ruling. It failed for three:
   token in the afternoon. The clerk replied at 15:13 UTC that she has forwarded the request to
   the township's technology staff.
 
-Each of the three has a short correction in the operator's drafts, as a reply in the same
-thread, saying the site can be read after all and nothing needs changing; Ypsilanti's also
-thanks the clerk. They are unsent. The three gap records now say the page is readable and the
-reader is not yet written. **The order is the lesson: re-read the premise with the crawling
+Each of the three got a short correction, as a reply in the same thread, saying the site can be
+read after all and nothing needs changing; Ypsilanti's also thanks the clerk. The operator sent
+them at 15:21 (Northville), 15:22 (Shelby) and 15:23 UTC (Ypsilanti). **Ypsilanti's office had
+already done work on a request we then withdrew**: the clerk passed it to the township's
+technology staff at 15:13, ten minutes before the correction reached her. That is the cost of
+the wrong order, and it fell on somebody else. The three gap records now say the page is readable and the
+reader is not yet written. **Later the same day the readers were written** and the three
+records retired: Shelby and Northville are read with the browser string their sites serve
+(the measurement is in `mi/scripts/mi_municipal_parsers_browser.py`), Ypsilanti with the roster
+token. The rows below for those three are kept as the record of what the letters said.
+**The order is the lesson: re-read the premise with the crawling
 client before a letter is drafted, not after it is sent.** A record that says "no other client
 was tried" is a record that has not yet been measured.
 

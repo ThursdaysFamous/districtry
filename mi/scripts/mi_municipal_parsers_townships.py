@@ -712,6 +712,36 @@ def parse_gaines(h, also):
     return _finish(out, office)
 
 
+def parse_ypsilanti(h, also):
+    """A 'Members' paragraph: one 'Name, Office' line per member, the three
+    officers' names linking to their offices. The board's shared address sits
+    under 'Contact Board Members'.
+
+    Recorded in the gap record and docs/ASK_DRAFTS.md: on the morning of
+    2026-10-01 this page answered the roster token with a Cloudflare challenge,
+    and that afternoon it served the same client the page itself. A letter had
+    gone to the clerk on the earlier reading; she forwarded it to the
+    township's technology staff, and a correction saying nothing needs to
+    change was sent ten minutes later. If the challenge returns, the scraper records it as a
+    challenge and does not work around it."""
+    body = _section(h, r'Members</span>', r'Meeting Schedule', "Ypsilanti")
+    out = []
+    for line in re.split(r"<br\s*/?>", body):
+        t = txt(line)
+        if not t:
+            continue
+        m = re.match(r"^(.+?),\s*(Supervisor|Clerk|Treasurer|Trustee)$", t)
+        _need(m, "Ypsilanti: %r is not a 'Name, Office' line" % t[:80])
+        out.append(member(_name(m.group(1)), m.group(2)))
+    office = {}
+    c = re.search(r"Contact Board Members</h3>(.{0,400})", h, re.S)
+    if c:
+        e = _email(c.group(1))
+        if e:
+            office["email"] = e
+    return _finish(out, office)
+
+
 def _u(geoid, name, body, url, parse, seats=7, also=None):
     u = {"geoid": geoid, "name": name, "kind": "township", "body": body,
          "url": url, "seats": seats, "parse": parse}
@@ -789,4 +819,7 @@ UNITS = [
     _u("2608131240", "Gaines", "Township Board",
        "https://www.gainestownship.org/trustees.php", parse_gaines,
        also=["https://www.gainestownship.org/how_do_i/staff_directory.php"]),
+    _u("2616189160", "Ypsilanti", "Board of Trustees",
+       "https://ypsitownship.org/government/boards___commissions/board_of_trustees/index.php",
+       parse_ypsilanti),
 ]

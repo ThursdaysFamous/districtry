@@ -2467,14 +2467,14 @@ trusted.
     {
       "id": "mi-township-officers",
       "concept": "Township board",
-      "area": "Michigan — every township below 25,000 people, and five above it",
+      "area": "Michigan — every township below 25,000 people, and two above it",
       "counties": [],
       "kind": "no-source",
       "layer": "county-subdivision",
-      "summary": "The Township or City card names the board of 29 of Michigan's largest townships, read weekly from their own websites. For every other township it names the township but not its board: no statewide list of township officers exists.",
+      "summary": "The Township or City card names the board of 32 of Michigan's largest townships, read weekly from their own websites. For every other township it names the township but not its board: no statewide list of township officers exists.",
       "why": "Each township elects its own board and nobody publishes them as one list, so each board is read from its own township's site. That is done for the large townships; for the rest the card names the office rather than guessing who holds it.",
-      "blocker": "MEASURED 2026-09-04. The boundary layer is the Census MCD fabric, which carries geography and no officeholder field of any kind. The state's own surfaces stop at the county, and the Michigan Townships Association's public directory lists member townships, not their officers. PARTLY CLOSED 2026-10-01, for the done standard's 25,000-person floor: of the 34 townships above it, 29 are read weekly from their own board pages by mi/scripts/mi_municipal_officials_scraper.py into mi/data/app/mi-municipal-officials.json (robots.txt read first, with the fleet's roster token), and the card lists each board in statutory order (MCL 41.70: supervisor, clerk, treasurer, trustees) with the date the page was read. FIVE ABOVE THE FLOOR COULD NOT BE READ, each measured that day and each for a reason this project does not route around: West Bloomfield and Bedford publish a robots.txt that refuses this client; Shelby and Northville refuse it at the page; Ypsilanti charter township answers with a managed challenge. Burton and Norton Shores are cities and sit in mi-municipal-officeholders. Each of the five has its own record (west-bloomfield-township-board, bedford-township-board, shelby-township-board, northville-township-board, ypsilanti-township-board) carrying its own ask, drafted as Ask mi-city-township-boards in docs/ASK_DRAFTS.md, one letter per unit for the operator to send. THE 1,206 TOWNSHIPS BELOW THE FLOOR are not attempted: the standard does not ask for them, and a township-by-township build at that scale is its own piece of work.",
-      "wanted": "For West Bloomfield, Bedford, Shelby, Northville and Ypsilanti charter township: permission to read the board page, or a copy of the board list. For the rest: a statewide roster from the state or the townships association."
+      "blocker": "MEASURED 2026-09-04. The boundary layer is the Census MCD fabric, which carries geography and no officeholder field of any kind. The state's own surfaces stop at the county, and the Michigan Townships Association's public directory lists member townships, not their officers. PARTLY CLOSED 2026-10-01, for the done standard's 25,000-person floor: of the 34 townships above it, 29 are read weekly from their own board pages by mi/scripts/mi_municipal_officials_scraper.py into mi/data/app/mi-municipal-officials.json (robots.txt read first, with the fleet's roster token), and the card lists each board in statutory order (MCL 41.70: supervisor, clerk, treasurer, trustees) with the date the page was read. FIVE ABOVE THE FLOOR COULD NOT BE READ, each measured that day and each for a reason this project does not route around: West Bloomfield and Bedford publish a robots.txt that refuses this client; Shelby and Northville refuse it at the page; Ypsilanti charter township answers with a managed challenge. Burton and Norton Shores are cities and sit in mi-municipal-officeholders. Each of the five had its own record (west-bloomfield-township-board and bedford-township-board remain) carrying its own ask, drafted as Ask mi-city-township-boards in docs/ASK_DRAFTS.md, one letter per unit for the operator to send. THREE OF THE FIVE WERE MISREAD, CORRECTED THE SAME DAY: Shelby and Northville had been read with one client only, and both serve the board page to the browser string with Chrome client hints on the stdlib stack, which the fleet's browser-string rule allows where the token is measurably refused (measured on all four rungs and recorded in mi/scripts/mi_municipal_parsers_browser.py); Ypsilanti's challenge was gone by the afternoon and the page serves the roster token. All three are now read weekly, which makes 32 of the 34, and their three records are retired. The letters to their clerks had already gone, so the operator sent a correction to each the same afternoon (docs/ASK_DRAFTS.md, Ask mi-city-township-boards). TWO REMAIN: West Bloomfield and Bedford, whose robots.txt refuses this client. THE 1,206 TOWNSHIPS BELOW THE FLOOR are not attempted: the standard does not ask for them, and a township-by-township build at that scale is its own piece of work.",
+      "wanted": "For West Bloomfield and Bedford: permission to read the board page, or a copy of the board list. For the rest: a statewide roster from the state or the townships association."
     },
     {
       "id": "norton-shores-council-roster",
@@ -2564,51 +2564,6 @@ trusted.
       "blocker": "MEASURED 2026-10-01 with the fleet's roster token, robots.txt read first: the same website vendor default as West Bloomfield's, refusing every client it does not name. The board page was not fetched. ASKED 2026-10-01: the operator sent the letter at 14:50 UTC to Township Clerk Trudy L. Hershberger. (Ask mi-city-township-boards in docs/ASK_DRAFTS.md.) the level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days.",
       "covers": [
         "local-government:2611506740"
-      ]
-    },
-    {
-      "id": "shelby-township-board",
-      "kind": "no-source",
-      "concept": "Township board",
-      "area": "Shelby charter township (Macomb County), Michigan",
-      "layer": "county-subdivision",
-      "counties": [],
-      "summary": "In Shelby charter township the Township or City card names the township but not its board yet.",
-      "why": "The township's board page can be read; this app has not yet been taught to read it.",
-      "wanted": "A reader for the township's own board page, which is the next Michigan change.",
-      "blocker": "CORRECTED 2026-10-01, AFTER THE LETTER WENT. The line above was measured with ONE client, and the letter repeated it. Re-read the same day through the fleet's four-rung probe (scripts/probe_user_agents.py) with robots.txt read first: the token on either HTTP stack and the browser string on the requests stack are refused, and the browser string with Chrome client hints on the stdlib stack is served the full board page. That is the Kendall and McHenry shape \u2014 a site that needs a browser-class client is not a site that blocks automation \u2014 so this is a reader not yet written, not a refusal. A correction to the clerk is in the operator's drafts as a reply in the same thread. MEASURED 2026-10-01 with the fleet's roster token, robots.txt read first: the board page answered Access Denied. No other client was tried. ASKED 2026-10-01: the operator sent the letter at 14:50 UTC to Township Clerk Stanley Grot. (Ask mi-city-township-boards in docs/ASK_DRAFTS.md.) the level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days.",
-      "covers": [
-        "local-government:2609972820"
-      ]
-    },
-    {
-      "id": "northville-township-board",
-      "kind": "no-source",
-      "concept": "Township board",
-      "area": "Northville township, Michigan",
-      "layer": "county-subdivision",
-      "counties": [],
-      "summary": "In Northville township the Township or City card names the township but not its board yet.",
-      "why": "The township's board page can be read; this app has not yet been taught to read it.",
-      "wanted": "A reader for the township's own board page, which is the next Michigan change.",
-      "blocker": "CORRECTED 2026-10-01, AFTER THE LETTER WENT. The line above was measured with ONE client, and the letter repeated it. Re-read the same day through the fleet's four-rung probe (scripts/probe_user_agents.py) with robots.txt read first: the browser string with Chrome client hints on the stdlib stack is served the full board page, the Shelby result exactly. So this is a reader not yet written, not a refusal. A correction to the clerk is in the operator's drafts as a reply in the same thread. MEASURED 2026-10-01 with the fleet's roster token, robots.txt read first: the board page answered Access Denied. No other client was tried. ASKED 2026-10-01: the operator sent the letter at 14:50 UTC to Township Clerk Cynthia L. Jankowski. (Ask mi-city-township-boards in docs/ASK_DRAFTS.md.) the level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days.",
-      "covers": [
-        "local-government:2616359000"
-      ]
-    },
-    {
-      "id": "ypsilanti-township-board",
-      "kind": "no-source",
-      "concept": "Township board",
-      "area": "Ypsilanti charter township, Michigan",
-      "layer": "county-subdivision",
-      "counties": [],
-      "summary": "In Ypsilanti charter township the Township or City card names the township but not its board yet.",
-      "why": "The township's board page can be read; this app has not yet been taught to read it.",
-      "wanted": "A reader for the township's own board page, which is the next Michigan change.",
-      "blocker": "CORRECTED 2026-10-01, AFTER THE LETTER WENT. Re-read the same day with the scraper's own client (the fleet's roster token on requests, robots.txt read first), the board page answered 200 with the page itself and no challenge, so whatever served the challenge earlier is not in front of this client now. The clerk, Debbie Swanson, replied at 15:13 UTC that she has forwarded the request to the township's technology staff; a reply in the same thread, thanking her and saying no change is needed, is in the operator's drafts. MEASURED 2026-10-01 with the fleet's roster token, robots.txt read first: the board page answered with a Cloudflare managed challenge. A challenge is never solved or worked around. ASKED 2026-10-01: the operator sent the letter at 14:49 UTC to the Township Clerk's office address, addressed to the office; Township Clerk Debbie Swanson answered it herself. (Ask mi-city-township-boards in docs/ASK_DRAFTS.md.) the level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days.",
-      "covers": [
-        "local-government:2616189160"
       ]
     },
     {
@@ -4259,7 +4214,7 @@ five Illinois sources with or without browser headers, because urllib3's TLS Cli
 differs from the ssl module's and these edges fingerprint it. A probe that varied only the
 name would credit a browser string with a fix the stack made.
 
-**WHAT IT FOUND, across 314 hosts** (2026-09-12; 85 measured or re-measured since — see below).
+**WHAT IT FOUND, across 316 hosts** (2026-09-12; 85 measured or re-measured since — see below).
 It was 291 until #944's second commit: `drive.google.com` was recorded
 `robots-disallows-this-path`, the Wisconsin board scrape stopped fetching the Drive
 document it named, and `--check` then failed the entry as orphaned. A host leaving the
@@ -4272,7 +4227,7 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 | verdict | hosts | what it means |
 |---|---|---|
 | `token-ok` | 241 | the districtry token gets a full page on the plain `requests` stack |
-| `token-refused-and-stack` | 18 | refuses the token on both stacks, serves stdlib + Chrome |
+| `token-refused-and-stack` | 20 | refuses the token on both stacks, serves stdlib + Chrome |
 | `stack-not-token` | 7 | refuses `requests`, serves the SAME token on stdlib |
 | `token-refused` | 3 | refuses the token on `requests`, serves Chrome on `requests` |
 | `all-refused` / `challenged` | 12 | refuses or challenges all four; a captcha is never answered |
@@ -4284,11 +4239,11 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 
 **THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
 
-**21 HOSTS REFUSE THE TOKEN AND 241 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
---inventory` prints it on this tree: 42 files send a browser string; 18 reach at least one
+**23 HOSTS REFUSE THE TOKEN AND 241 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
+--inventory` prints it on this tree: 43 files send a browser string; 19 reach at least one
 host that genuinely refuses the token, **2 reach only hosts that serve the token a full
 page, and 22 more reach no host that refuses it** (one or more answered nothing or refused
-the `requests` stack); 224 of the 314 measured hosts are still reached by such a caller.
+the `requests` stack); 226 of the 316 measured hosts are still reached by such a caller.
 The 101 and 62 those first two figures read until 2026-10-01 were the state before SIXTY
 scrapers were switched onto our own token in one change, each of them re-measured at the
 pages it actually fetches. The 2 that remain are held on purpose: both follow links out of
