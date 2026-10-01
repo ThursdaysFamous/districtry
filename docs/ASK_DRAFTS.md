@@ -4545,3 +4545,100 @@ the AOC was asked — which is a different and more honest claim than that nobod
 
 **Nothing about reuse terms is asked**, because who holds an elected office is public record,
 and nothing is asked of any named judge personally.
+
+---
+
+## Ask ia-supervisor-district-composition — nineteen Iowa county auditors: which precincts or townships make up each numbered supervisor district?
+
+> **NOT YET ASKED — DRAFTED 2026-10-01**, to the nineteen county auditors in the table below,
+> each at the address `ia/data/app/ia-county-auditors.json` carries for that county. **ONE
+> MESSAGE PER AUDITOR** — nineteen letters, not one letter to nineteen people, because the
+> question names a particular county's own districts and an answer from one office says nothing
+> about another. On send, change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the
+> `ia-supervisor-district-seats` record in `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md`
+> — Iowa keeps the ledger in both — and add an `ask` block reading `pending`.
+>
+> **SEVERAL OF THESE DESKS HAVE ALREADY BEEN WRITTEN TO, SOME OF THEM TODAY, AND THE MAILBOX
+> THREAD OWNS THAT DISTINCTION.** Osceola, Ida, Sioux and Washington all answered Ask 30 the
+> same afternoon it went, and this is a second question to the same people rather than a repeat
+> of the first — so each of those four is a FOLLOW-UP and must read as one, crediting their
+> own reply. The mailbox thread checks the sent folder before drafting and turns a repeat into a
+> follow-up; nothing here should be sent as a first contact without that check.
+>
+> **LINN IS NOT IN THIS TRANCHE.** It asks the same question and has its own letter, because
+> its letter can cite five named precincts that measurably disagree, which no other county's can
+> (`Ask ia-linn-supervisor-districts` above). Sending both would ask Linn the same thing twice.
+
+### Why this is asked, in one paragraph
+
+The statewide supervisor-district map this project draws from numbers each county's districts in
+its own order, and **that order is not always the county's own**. Measured on seven counties:
+Howard's two numberings agree, while Palo Alto, Pocahontas, Monona and Lyon are **one plan under
+two numberings** — identical lines, different numbers on them — and Butler and Linn are **two
+different plans**. So a county that tells us "District 1 is Smith" and a map whose district 1 is
+somewhere else combine into a card naming the wrong person over the wrong ground. There is no way
+to tell the two cases apart from the map alone, and every route that does not involve asking the
+county has now been measured closed for these nineteen: their board pages do not state it, the
+certified election returns published for Iowa break out a board contest by precinct in one county
+only, and the state agency's own published plan reports carry the agency's numbering, which is the
+numbering being checked.
+
+### What the app already has, and what it is missing
+
+* **The districts are drawn and ship.** A reader clicking in any of these counties sees which
+  numbered district covers them.
+* **The supervisors are in hand** for most of these counties, from the county officers roster.
+* **The two are not joined.** The card lists the county's supervisors without placing any of
+  them in a district, and says so, rather than placing one on a number this project cannot
+  confirm.
+
+### The nineteen desks
+
+| County | Auditor | Districts drawn | Note |
+| --- | --- | --- | --- |
+| Adams | Betsy Stormer | 5 | |
+| Butler | Leslie Groen | 3 | **Measured: two different plans.** The letter should ask which of the county's two published surfaces is current. |
+| Cerro Gordo | Adam Wedmore | 3 | |
+| Chickasaw | Sheila Shekleton | 5 | |
+| Franklin | Katy Flint | 3 | |
+| Grundy | Alan Tscherter | 5 | |
+| Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. |
+| Ida | Kristy Gilbert | 3 | **Follow-up** — answered Ask 30 on 2026-10-01 with the three pairings. |
+| Madison | Michele Brant | 3 | |
+| Mitchell | Rachel Foster | 5 | |
+| Osceola | Rochelle Van Tilburg | 5 | **Follow-up** — answered Ask 30 on 2026-10-01 with the five pairings. |
+| Polk | Jamie Fitzgerald | 5 | The address the roster carries is the elections desk rather than a person; the letter goes there as published. |
+| Sac | Renee Roland | 3 | |
+| Sioux | Joe Van Tol | 5 | **Follow-up** — answered Ask 30 on 2026-10-01. The county's own site fronts every page with a managed challenge, so a letter is the only route there will ever be. |
+| Taylor | Judy Henry | 3 | |
+| Washington | Tamera Stewart | 5 | **Follow-up** — answered Ask 30 on 2026-10-01 by naming the county's own board page. |
+| Webster | Krystal Lloyd | 5 | |
+| Winnebago | Karla Weiss | 3 | |
+| Winneshiek | Benjamin D. Steines | 5 | |
+
+**What the ask says.** We publish a free map of civic districts, and for your county we draw the
+board of supervisors districts from the Legislative Services Agency's statewide layer, dated
+January 2024. That layer numbers each county's districts in its own order, and on several Iowa
+counties we have found its numbering runs differently from the county's own — the same lines,
+with different numbers on them — so we are reluctant to tell a reader which supervisor
+represents them until we can check it. Could you tell us which precincts, or which townships,
+make up each of your numbered supervisor districts? A list is all we need; a map or a shapefile
+would do just as well if one is easier to send.
+
+**For the four who have already answered**, the letter opens by thanking them for their earlier
+reply and says plainly that this is a second and different question — their names and districts
+are not in doubt, and what is missing is on our side: we cannot yet tell whether the district
+they call 1 is the one our map calls 1.
+
+**For Butler**, the letter adds that the county appears to publish two different supervisor
+district plans and asks which is in force today, rather than asking for a precinct list alone.
+
+**What is deliberately not asked.** Nothing about reuse terms, because district boundaries are
+public record. Nothing about the supervisors personally — no home address, no personal telephone
+number. Nothing is implied about the Legislative Services Agency being at fault: a numbering
+difference is an ordinary consequence of two offices numbering the same plan independently, and
+the question is only which order the county itself uses.
+
+**Why a no is still useful.** If the county cannot say, saying so closes the question and lets
+the record that tells our readers what is missing say the county was asked — which is a
+different and more honest claim than that nobody looked.
