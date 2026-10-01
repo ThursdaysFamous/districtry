@@ -4355,19 +4355,32 @@ name the centre as where the file came from) while the reason for it is differen
 organisation that returns no name to an unauthenticated caller is not an organisation with no
 name**, which is the Knox shape at the level of a metadata field.
 
-### Recipient — NOT YET VERIFIED, and that is this ask's one blocker
+### Recipient — VERIFIED 2026-10-01, and the blocker was an address that had moved
 
-`csa.ou.edu` **does not resolve from this project's network** — measured again 2026-10-01, no
-response on the bare host or the `www` name, while `ou.edu` itself answers 200 and its robots.txt
-allows us outside `/content`. That is a limit of where this agent sits, not a refusal by the
-centre: its hosted map services and its open-data portal
-(`csagis-uok.opendata.arcgis.com`, which asks for 60 seconds between requests) were reachable
-throughout. **So the address must be read off the centre's own contact page in a browser before this
-goes out**, not guessed and not derived from the `thom0780_uok` account name. What is known:
+**The letter goes to Chengbin Deng, PhD, the centre's Director (`cdeng@ou.edu`), copying Todd
+Fagin, PhD, its Executive Associate Director (`tfagin@ou.edu`)**, both read off the centre's own
+Faculty & Staff page at `www.ou.edu/ags/csa/csa-team/csa-faculty-staff`.
+
+**THIS ENTRY SAID THE ADDRESS HAD TO BE READ IN A BROWSER, AND THAT WAS WRONG ABOUT THE CENTRE.**
+It recorded that `csa.ou.edu` does not resolve from this project's network and concluded that the
+centre's contact page was reachable only in a browser. `csa.ou.edu` still does not resolve, and
+that is because **the centre's site is not there any more**: it is at `www.ou.edu/ags/csa`, which
+answers normally from here under a robots policy that permits every path read. So a host that had
+MOVED was recorded as a network limit on this agent, which is the shape this project keeps finding
+— a measurement that was accurate about the thing measured and wrong about the thing it was taken
+to describe. **When a host does not resolve, look for the site before recording a blocker.**
+
+The centre publishes no office mailbox that can be relied on — its Contact Us page offers only a
+web form in a frame, and the one general address it prints (`contact.us@csa.ou.edu`, in the footer
+byline) sits on a domain with no address record — so a policy question about the centre's own data
+goes to the Director with the Executive Associate Director copied, rather than to an address that
+might quietly fail. The centre's Senior GIS Analyst is named on the warehouse page for help
+navigating the site, which is a different question from what may be done with the files, and is
+deliberately not the recipient. What else is known:
 
 | known | value |
 |---|---|
-| the centre's own site | `csa.ou.edu` (unreachable from here; reachable in a browser) |
+| the centre's own site | `www.ou.edu/ags/csa` (the old `csa.ou.edu` no longer resolves) |
 | its open-data portal | `csagis-uok.opendata.arcgis.com` |
 | the precinct layer | `State_Wide_2020_Precincts`, 1,984 features |
 | the commissioner copy | `services.arcgis.com/3xOwF6p0r7IHIjfn`, owner `thom0780_uok` |
@@ -4377,12 +4390,12 @@ goes out**, not guessed and not derived from the `thom0780_uok` account name. Wh
 
 > Subject: Permission question about the Oklahoma precinct maps in your data warehouse
 >
-> Hello,
+> Dear Dr Deng,
 >
 > I run districtry.com, a free public website that answers one question: you click a point on a
 > map and it tells you every district you are in and who represents you there. It covers Illinois,
-> Wisconsin, Iowa, Michigan, New York City and San Francisco today, and I am preparing to add
-> Oklahoma.
+> Wisconsin, Iowa, Michigan, Minnesota, Kentucky, New York City and San Francisco today, and I am
+> preparing to add Oklahoma.
 >
 > I wrote to the State Election Board asking whether I may use the statewide precinct boundaries
 > from your data warehouse. They told me the files are downloadable and that questions about
