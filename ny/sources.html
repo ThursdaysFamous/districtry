@@ -1107,7 +1107,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">35 layers — 13 political and legislative, 5 public safety, 8 schools, 9 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">37 layers — 13 political and legislative, 6 public safety, 8 schools, 10 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1273,7 +1273,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="safety">
-        <h2>Public safety <span class="matrix-count">5 layers</span></h2>
+        <h2>Public safety <span class="matrix-count">6 layers</span></h2>
         <p class="matrix-blurb">Who answers a call at this address, and where they answer it from.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1281,6 +1281,17 @@ table.matrix code {
               <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
             </thead>
             <tbody>
+              <tr id="layer-fire-district">
+                <th scope="row"><span class="layer-name">Fire District</span><code>fire-district</code></th>
+                <td data-label="What it answers">Which fire district contains the point. Sullivan County's fire districts cover the whole county, so a point there is always in one; a point a few metres outside is on the seam where the state's drawing of the county and the county's own drawing disagree.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.sullivanny.us/arcgis/rest/services/Special_Districts/MapServer/7" target="_blank" rel="noopener">Sullivan County's own Special Districts map service, layer 7, credited by the county to its Real Property Services office and its ITS GIS Program — the register's per-municipality pieces unioned by district name and shipped with the app. New York State's own map server publishes no statutory special district, so this tier is reached county by county.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No roster is joined. A New York fire district is governed by five elected fire commissioners and a fire protection district by the town board, and nothing Sullivan County or the state publishes names either, so the card states the rule and names nobody.</td>
+                <td data-label="Where it applies">Sullivan County. The other 61 counties are not in this layer yet.</td>
+              </tr>
               <tr id="layer-fire-battalion">
                 <th scope="row"><span class="layer-name">FDNY Battalion</span><code>fire-battalion</code></th>
                 <td data-label="What it answers">Which FDNY battalion covers this address.</td>
@@ -1444,7 +1455,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">9 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">10 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1462,6 +1473,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">No roster is joined on this layer. New York's counties are governed in three different forms and no statewide list of who holds those seats has been found, so the county card names nobody; where a county elects a legislature from districts and this project has built it, the county-legislature layer names its members district by district.</td>
                 <td data-label="Where it applies">All of New York State.</td>
+              </tr>
+              <tr id="layer-library-district">
+                <th scope="row"><span class="layer-name">Library District</span><code>library-district</code></th>
+                <td data-label="What it answers">Which library district contains the point, where one does. Only two are published in Sullivan County, covering about a fifth of it, so a point in the county is more often outside a library district than inside one.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.sullivanny.us/arcgis/rest/services/Special_Districts/MapServer/11" target="_blank" rel="noopener">Sullivan County's own Special Districts map service, layer 11, credited by the county to its Real Property Services office and its ITS GIS Program — the register's per-municipality pieces unioned by district name and shipped with the app.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No roster is joined. A New York library district's trustees are elected by the voters of the district, and nothing Sullivan County or the state publishes names them.</td>
+                <td data-label="Where it applies">Sullivan County. The other 61 counties are not in this layer yet.</td>
               </tr>
               <tr id="layer-municipality">
                 <th scope="row"><span class="layer-name">City or Town</span><code>municipality</code></th>
@@ -1661,6 +1683,28 @@ table.matrix code {
     },
     {
       "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-library-district",
+      "identifier": "library-district",
+      "name": "Library District",
+      "description": "Which library district contains the point, where one does. Only two are published in Sullivan County, covering about a fifth of it, so a point in the county is more often outside a library district than inside one. No roster is joined. A New York library district's trustees are elected by the voters of the district, and nothing Sullivan County or the state publishes names them.",
+      "url": "https://districtry.com/ny/sources.html#layer-library-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Sullivan County's own Special Districts map service, layer 11, credited by the county to its Real Property Services office and its ITS GIS Program — the register's per-municipality pieces unioned by district name and shipped with the app.",
+          "url": "https://gis.sullivanny.us/arcgis/rest/services/Special_Districts/MapServer/11"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Sullivan County. The other 61 counties are not in this layer yet"
+      }
+    },
+    {
+      "@type": "Dataset",
       "@id": "https://districtry.com/ny/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City or Town",
@@ -1701,6 +1745,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Tompkins County. The other 61 counties are not in this layer yet, and the five boroughs never will be — New York City absorbed its counties' government, so they have no legislature to answer for"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-fire-district",
+      "identifier": "fire-district",
+      "name": "Fire District",
+      "description": "Which fire district contains the point. Sullivan County's fire districts cover the whole county, so a point there is always in one; a point a few metres outside is on the seam where the state's drawing of the county and the county's own drawing disagree. No roster is joined. A New York fire district is governed by five elected fire commissioners and a fire protection district by the town board, and nothing Sullivan County or the state publishes names either, so the card states the rule and names nobody.",
+      "url": "https://districtry.com/ny/sources.html#layer-fire-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Sullivan County's own Special Districts map service, layer 7, credited by the county to its Real Property Services office and its ITS GIS Program — the register's per-municipality pieces unioned by district name and shipped with the app. New York State's own map server publishes no statutory special district, so this tier is reached county by county.",
+          "url": "https://gis.sullivanny.us/arcgis/rest/services/Special_Districts/MapServer/7"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Sullivan County. The other 61 counties are not in this layer yet"
       }
     },
     {
