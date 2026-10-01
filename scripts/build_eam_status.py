@@ -1359,24 +1359,18 @@ CITY_INSTANCE = ("San Francisco is one city, so its city tier is the whole app "
                  "and the state tiers above it are another app's subject.")
 
 # A STATE WITH NO TRIBAL LAND IS THE STANDARD'S "the state does not have the
-# level" CASE, and these two reasons are the record it asks for: the fact, and
-# where it was checked. Both were measured against the Census's own AIANNHA
+# level" CASE, and this reason is the record it asks for: the fact, and
+# where it was checked. It was measured against the Census's own AIANNHA
 # service — the current vintage's reservation, trust-land and state-reservation
 # layers, resolved by `scripts/tribal_areas.py` — with a CONTROL whose answer
 # was known before the query ran, because an ArcGIS service answers a bad query
 # with HTTP 200 carrying an error envelope and a bare `.get("features", [])`
 # turns that into a confident uniform zero.
 #
-# NEITHER STATE GETS A GAP RECORD AND THAT IS DELIBERATE. A gap record tells a
+# SAN FRANCISCO GETS NO GAP RECORD AND THAT IS DELIBERATE. A gap record tells a
 # reader the app cannot answer something it should; here there is nothing on the
 # ground to answer, so a record would be a false statement about the app rather
 # than an honest absence. The fact belongs here, beside the test it settles.
-NO_TRIBAL_LAND_KY = (
-    "Kentucky has no federally recognised tribal land: measured 2026-10-01 "
-    "against the Census's tribal-areas service, 0 reservations, 0 off-"
-    "reservation trust lands and 0 state reservations inside state code 21, "
-    "with the state control returning 21 and North Carolina's Qualla Boundary "
-    "as the positive control that the query shape finds land where land is.")
 NO_TRIBAL_LAND_SF = (
     "No tribal land lies inside San Francisco: measured 2026-10-01, the "
     "current-vintage reservation, trust-land and state-reservation layers "
@@ -1524,7 +1518,14 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        "tribal-government": na(NO_TRIBAL_LAND_KY),
+        # KENTUCKY'S OWN CHANGE CARRIES THIS LEVEL, not this one. Both threads
+        # measured the same fact on 2026-10-01 and reached the same answer, and
+        # Kentucky's measurement is the stronger of the two — six Census tribal
+        # classes against three, and controls in two states against one — so it
+        # is the record that ships, in the change where the rest of Kentucky's
+        # levels are settled. Leaving it out here also means neither change has
+        # to be resolved against the other over one line.
+        "tribal-government": OPEN,
     },
     "ny": {
         "us-house": answers("congress"),
