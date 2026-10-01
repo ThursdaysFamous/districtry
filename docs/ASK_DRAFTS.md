@@ -2765,6 +2765,15 @@ any local government's website.
 > `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in both. Record
 > the date per county if they go out on different days.
 >
+> **THE NUMBER 34 IS CONTESTED AND MAY NOT BE THIS ASK'S.** Measured 2026-10-01: main's last
+> ask is 33, and three open branches each number their next one 34 — this one (#1331),
+> Wisconsin's (#1330) and Michigan's (#1333). Only the first to merge keeps it. Whoever merges
+> after renumbers against main's last heading and updates every record that points at its own
+> ask: for this one that is the heading below, the `ASK:` lines in the
+> `ia-supervisor-count-impossible` and `ia-supervisor-count-disagrees` blockers in
+> `docs/DATA_LAYER_GUIDEBOOK.md`, the row in `ia/WATCH.md`, and #1331's own description. Check
+> main immediately before merging, not when the draft was written.
+>
 > **This ask is three counties and not eight, and the narrowing is what makes it worth
 > sending.** On 2026-09-22 eight Iowa counties named no supervisor at all. Five closed without
 > writing to anybody: Warren's was a defect in this repo, and Adair, Floyd, Humboldt and Lucas
