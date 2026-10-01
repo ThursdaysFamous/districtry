@@ -75,10 +75,30 @@ county numbers them. Only the TOWN is recorded: a supervisor's street address is
 never written down here or anywhere else in this repository, which is why
 TOWN_COUNTIES carries places and not people.
 
+THE PRECINCT ROUTE IS THE BEST OF THE THREE AND IT NEEDS NO FETCH AT ALL BEYOND
+THE COUNTY'S OWN PAGE. Where a county names its own PRECINCTS beside each
+supervisor -- Lyon County writes "District 1 - Precinct 9,10" in each member's
+own title -- the test runs entirely against two files this instance already
+ships: `ia-precincts.json` names every precinct in the county, and each
+precinct's interior is sampled on a grid and tested against the supervisor
+districts. It beats the town route on completeness, because a county's precincts
+PARTITION it while its towns do not: Lyon has no town lying wholly inside its
+fifth district, so the towns can only ever speak for four of five, while all ten
+precincts are each wholly inside one district and every district is spoken for.
+
+ITS ONE WEAKNESS IS NAMED RATHER THAN IGNORED: the precinct layer and the
+supervisor layer come from the SAME publisher, so the precinct route cannot by
+itself rule out that publisher having numbered both in its own order. What rules
+it out is that a precinct's NAME is a filed name rather than an ordering, and
+that the names carry towns -- so the towns' own census centroids are an
+independent second witness, and on Lyon they agree with the precinct route on
+every pairing they can speak to. RUN BOTH WHERE A PRECINCT NAME CARRIES A TOWN.
+
 THIS SCRIPT IS THE MEASUREMENT AND NOT A GATE. The map route needs a county map,
 which most counties do not publish; the town route needs a county page that names
-a place per district. Neither can be run for the fleet, and the script says
-nothing about a county it has not been pointed at. The question it leaves open is
+a place per district; the precinct route needs one that names precincts. None can
+be run for the fleet, and the script says nothing about a county it has not been
+pointed at. The question it leaves open is
 the important one: 21 counties already shipping a member keyed to a district took
 the same numbering on trust, and one county agreeing does not clear the others.
 Where no county page names a place, the general instrument is certified
@@ -170,6 +190,48 @@ TOWN_COUNTIES = {
         },
     },
 }
+
+# THE PRECINCT ROUTE. Where a county names its own PRECINCTS beside each
+# supervisor, the test needs nothing but two files this instance already ships.
+# Keys are the precinct layer's own names; values are the district the COUNTY
+# puts that precinct in. A county's precincts partition it, so unlike the town
+# route this can speak for every district.
+PRECINCT_COUNTIES = {
+    "Lyon": {
+        "source": "https://lyoncounty.iowa.gov/supervisors/",
+        "districts": 5,
+        # The county writes the precinct numbers into each member's own title:
+        # "District 1 - Precinct 9,10", and so on through all ten precincts.
+        "precincts": {
+            "Pct 9 Lester":        "1",
+            "Pct 10 Larchwood":    "1",
+            "Pct 6 Inwood":        "2",
+            "Pct 7 Logan S":       "2",
+            "Pct 8 Logan N":       "2",
+            "Pct 1 George":        "3",
+            "Pct 2 Little Rock":   "3",
+            "Pct 4 Rock Rapids S": "4",
+            "Pct 5 Doon":          "4",
+            "Pct 3 Rock Rapids N": "5",
+        },
+        # The independent half: six towns each lying wholly inside one of those
+        # precincts, from TIGERweb's own place centroids. They can only speak
+        # for four of the five districts -- Rock Rapids is split between the
+        # county's District 4 and 5, so no town names either -- which is why
+        # they corroborate the precincts rather than standing alone.
+        "towns": {
+            "Lester":      ("1", (43.4402929, -96.3314163)),
+            "Larchwood":   ("1", (43.4546482, -96.4363405)),
+            "Inwood":      ("2", (43.3092095, -96.4343566)),
+            "George":      ("3", (43.3418726, -96.0032567)),
+            "Little Rock": ("3", (43.4470661, -95.8804342)),
+            "Doon":        ("4", (43.2789717, -96.2329074)),
+        },
+    },
+}
+
+PRECINCTS = "ia/data/app/ia-precincts.json"
+GRID = 40
 
 LAT0 = 43.1
 KX = math.cos(math.radians(LAT0)) * 111.320
@@ -286,6 +348,110 @@ def check_towns():
     return agreeing
 
 
+def interior_points(geom, grid=GRID):
+    """Points provably inside a polygon: a grid over its own bounding box,
+    kept only where the point-in-polygon test says inside."""
+    parts = ([geom["coordinates"]] if geom["type"] == "Polygon"
+             else geom["coordinates"])
+    xs = [c[0] for part in parts for ring in part for c in ring]
+    ys = [c[1] for part in parts for ring in part for c in ring]
+    out = []
+    for i in range(1, grid):
+        x = min(xs) + (max(xs) - min(xs)) * i / grid
+        for j in range(1, grid):
+            y = min(ys) + (max(ys) - min(ys)) * j / grid
+            if contains(x, y, geom):
+                out.append((x, y))
+    return out
+
+
+def check_precincts():
+    """The precinct route: the county's own page names its precincts per
+    district, and both the precincts and the districts are files this instance
+    already ships. Returns the number of counties whose own numbering agrees
+    with this layer's."""
+    with open(PRECINCTS, encoding="utf-8") as f:
+        pfile = json.load(f)
+    agreeing = 0
+    for county, rec in sorted(PRECINCT_COUNTIES.items()):
+        polys = polygons(county, expect=rec["districts"])
+        shipped = {f["properties"]["name"]: f["geometry"]
+                   for f in pfile["features"]
+                   if f["properties"].get("county") == county}
+        claimed = rec["precincts"]
+        missing = sorted(set(claimed) - set(shipped))
+        extra = sorted(set(shipped) - set(claimed))
+        if missing or extra:
+            print("check-county-district-numbering: %s -- NO PAIRING: the "
+                  "county's list and the shipped precincts are not the same "
+                  "set (county only: %s; layer only: %s) (%s)"
+                  % (county, ", ".join(missing) or "none",
+                     ", ".join(extra) or "none", rec["source"]))
+            continue
+        implied = {}
+        bad = []
+        for name in sorted(claimed, key=lambda n: claimed[n]):
+            pts = interior_points(shipped[name])
+            hits = {}
+            for x, y in pts:
+                hit = [d for d, g in polys.items() if contains(x, y, g)]
+                key = hit[0] if len(hit) == 1 else "/".join(hit) or "none"
+                hits[key] = hits.get(key, 0) + 1
+            real = {k: v for k, v in hits.items() if k != "none"}
+            got = max(real, key=real.get) if real else "none"
+            # A precinct straddling two districts would be the county and the
+            # layer describing different plans rather than numbering one -- the
+            # Butler case -- so it is reported rather than resolved by majority.
+            spread = sorted(k for k in real if k != got)
+            print("  %s: %s lies in this layer's district %s%s; the county puts "
+                  "its District %s there (%d interior point(s))"
+                  % (county, name, got,
+                     " AND " + ", ".join(spread) if spread else "",
+                     claimed[name], len(pts)))
+            if spread:
+                bad.append("%s straddles this layer's %s"
+                           % (name, ", ".join([got] + spread)))
+            if implied.setdefault(claimed[name], got) != got:
+                bad.append("the county's District %s reaches this layer's %s "
+                           "and %s" % (claimed[name], implied[claimed[name]], got))
+        if len(set(implied.values())) != len(implied):
+            bad.append("two of the county's districts land in one of this "
+                       "layer's")
+        if len(implied) != rec["districts"]:
+            bad.append("only %d of the county's %d district(s) are spoken for"
+                       % (len(implied), rec["districts"]))
+        pairing = ", ".join("%s->%s" % (c, implied[c])
+                            for c in sorted(implied, key=int))
+        if bad:
+            print("check-county-district-numbering: %s -- NO PAIRING: %s (%s)"
+                  % (county, "; ".join(bad), rec["source"]))
+            continue
+        same = sum(1 for c, d in implied.items() if c == d)
+        if same == len(implied):
+            agreeing += 1
+        print("check-county-district-numbering: %s -- %d precinct(s), each "
+              "wholly inside one district, agree on county->layer %s, %d of %d "
+              "number(s) the same (%s)"
+              % (county, len(claimed), pairing, same, len(implied),
+                 rec["source"]))
+        # The independent half. The towns cannot speak for every district, so
+        # they confirm or contradict rather than deciding.
+        towns = rec.get("towns") or {}
+        if towns:
+            agree = []
+            for town, (cd, (lat, lon)) in sorted(towns.items()):
+                hit = [d for d, g in polys.items() if contains(lon, lat, g)]
+                got = hit[0] if len(hit) == 1 else "/".join(hit) or "none"
+                agree.append(got == implied.get(cd))
+                print("  %s: %s sits in this layer's district %s; the precincts "
+                      "put the county's District %s at %s"
+                      % (county, town, got, cd, implied.get(cd)))
+            print("check-county-district-numbering: %s -- %d of %d town(s) "
+                  "independently agree with the precinct pairing"
+                  % (county, sum(agree), len(agree)))
+    return agreeing
+
+
 def main():
     polys = polygons()
     apply, rms, rot = fit(list(CONTROLS))
@@ -317,6 +483,7 @@ def main():
           "district number(s) agree between the county and this layer"
           % (len(CONTROLS), len(identity), len(got)))
     check_towns()
+    check_precincts()
 
 
 if __name__ == "__main__":

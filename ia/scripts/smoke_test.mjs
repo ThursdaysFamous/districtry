@@ -702,6 +702,14 @@ try {
        "Monona district 2 names the county's District 1 supervisor"],
       [42.1682353, -95.8542875, "Monona County", "Tom Brouillette", "Bo Fox",
        "Monona district 1 names the county's District 2 supervisor"],
+      // Lyon, measured off the county's own precinct numbers against this
+      // instance's own precinct layer: NOT ONE of its five numbers agrees, so
+      // the town of Lester, which the county puts in its District 1, is this
+      // layer's district 5 and names Douglas Bosch there.
+      [43.4402929, -96.3314163, "Lyon County", "Douglas Bosch", "Steven Herman",
+       "Lyon district 5 names the county's District 1 supervisor"],
+      [43.3418726, -96.0032567, "Lyon County", "Cory Altena", "Douglas Bosch",
+       "Lyon district 1 names the county's District 3 supervisor"],
       // THE WITHHELD BRANCH. Washington County's numbering has not been
       // measured, so its district card names nobody at all -- not its chair,
       // not anyone. Its supervisors are still on the County card.

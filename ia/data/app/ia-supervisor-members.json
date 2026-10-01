@@ -19,6 +19,34 @@
   "readOn": "2026-10-01",
   "sourceUrl": "https://howardcounty.iowa.gov/board-of-supervisors/"
  },
+ "119": {
+  "boardPhone": "(712) 472-8517",
+  "county": "Lyon",
+  "districts": {
+   "1": {
+    "name": "Cory Altena",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Steven Herman",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Cody Hoefert",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Dennis Scholten",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Douglas Bosch",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-01",
+  "sourceUrl": "https://lyoncounty.iowa.gov/supervisors/"
+ },
  "133": {
   "boardPhone": "(712) 433-1585",
   "county": "Monona",

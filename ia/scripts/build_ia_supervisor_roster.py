@@ -106,8 +106,8 @@ TODAY = dt.date.today().isoformat()
 # numbering has been CHECKED, which is a different quantity with its own floor,
 # and the two figures must never be confused: a run that keys twenty counties on
 # trust would clear the old floor and would be exactly the defect.
-MIN_COUNTIES = 3
-MIN_DISTRICTS = 11
+MIN_COUNTIES = 4
+MIN_DISTRICTS = 16
 
 # WHETHER A COUNTY'S OWN DISTRICT NUMBER IS THIS INSTANCE'S DISTRICT NUMBER.
 #
@@ -176,6 +176,17 @@ NUMBERING_CHECKED = {
                    "interior points agree on this pairing, and the map's own "
                    "legend names the same three supervisors in the same three "
                    "districts as this roster",
+    },
+    "Lyon": {
+        "map": {"1": "5", "2": "4", "3": "1", "4": "3", "5": "2"},
+        "checked": "2026-10-01",
+        "witness": "the county writes its own PRECINCT numbers into each "
+                   "member's title (District 1 - Precinct 9,10, and so on "
+                   "through all ten), and this instance's own precinct layer "
+                   "names those precincts; each of the ten lies wholly inside "
+                   "one of this layer's districts and all five are spoken for, "
+                   "with six towns' census centroids independently agreeing on "
+                   "every pairing they can speak to",
     },
 }
 
