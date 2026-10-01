@@ -247,7 +247,7 @@
       "label": "City Council District",
       "group": "political",
       "area_rank": 10,
-      "rank_note": "Detroit's seven districts over 139 sq mi and Grand Rapids's three wards over 45 — both smaller than a typical Michigan ZCTA and far larger than a precinct; ranked on the larger city's districts",
+      "rank_note": "Seven cities: Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson. Their districts run from Detroit's seven over 139 sq mi (about 20 each) down to Jackson's six wards over 11 (about 2 each), measured 2026-10-01 — all smaller than a typical Michigan ZCTA; ranked on Detroit's, the largest",
       "source": {
         "answers": "Which city council or commission district you live in, in the Michigan cities whose council boundaries this app can draw — Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson — and who represents you in it where the city publishes that.",
         "boundary": [
