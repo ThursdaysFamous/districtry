@@ -830,6 +830,7 @@ try {
       // roster carries, and keeps its "not named here" sentence for one it
       // does not (Lansing, whose council page builds its list in the browser).
       const page = await booted(context, `${BASE}#point=42.50057,-83.00112&layers=municipality`);
+      await cardText(page, "municipality");
       const muni = await page.evaluate(() => {
         const el = document.getElementById("card-municipality");
         return el ? [...el.querySelectorAll(".card-person-name")].map((n) => n.textContent) : [];
