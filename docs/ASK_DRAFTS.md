@@ -3263,8 +3263,9 @@ may already publish would be asking them to do work this project should be doing
 > the sent folder, and this thread is the only one. So the letter was correctly written as a
 > first approach.
 >
-> Read off the sent folder rather
-> than off this file. This is the one ask that belongs to the STATE rather than to 57
+> **Every date and address above is read off the sent folder, not off this file.**
+>
+> This is the one ask that belongs to the STATE rather than to 57
 > county clerks and a hundred town clerks, which is why it went first: if the answer is
 > yes, a single file closes most of New York's county and local tiers, and a hundred and
 > sixty separate asks were never the right opening move. It is also the cheapest possible
