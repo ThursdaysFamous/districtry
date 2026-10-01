@@ -4205,10 +4205,15 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 **THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
 
 **18 HOSTS REFUSE THE TOKEN AND 226 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
---inventory` prints it on this tree: 101 files send a browser string; 17 reach at least one
-host that genuinely refuses the token, **62 reach only hosts that serve the token a full
+--inventory` prints it on this tree: 41 files send a browser string; 17 reach at least one
+host that genuinely refuses the token, **2 reach only hosts that serve the token a full
 page, and 22 more reach no host that refuses it** (one or more answered nothing or refused
-the `requests` stack); 263 of the 296 measured hosts are still reached by such a caller.
+the `requests` stack); 206 of the 296 measured hosts are still reached by such a caller.
+The 101 and 62 those first two figures read until 2026-10-01 were the state before SIXTY
+scrapers were switched onto our own token in one change, each of them re-measured at the
+pages it actually fetches. The 2 that remain are held on purpose: both follow links out of
+a directory to hosts not in their own source, so no sweep of their URL literals can
+measure what they read.
 **FIVE OF THOSE FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THE SWEEP** and the per-file
 figures move with them — the Iowa minutes-chair scraper (#916) and the Iowa county-officers
 scraper (both measured `token-ok`), `jodaviess_county_board_scraper.py` (#945, whose own

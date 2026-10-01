@@ -55,7 +55,7 @@ import sys
 
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_WIN_126,
+    UA_ROSTER_BOT,
     require_robots_once,
 )
 
@@ -68,7 +68,7 @@ PDF_URL = ("https://rockislandcountyil.gov/DocumentCenter/View/291/"
            "Elected-Officials-Listing-PDF")
 OFFICIALS_PAGE = "https://rockislandcountyil.gov/236/County-Clerk"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 120
 

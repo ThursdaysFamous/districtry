@@ -49,7 +49,7 @@ from collections import Counter
 
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_WIN_126,
+    UA_ROSTER_BOT,
     require_robots_once,
 )
 
@@ -61,7 +61,7 @@ except ImportError:  # pragma: no cover
 LISTING_URL = ("https://sangamonil.gov/departments/a-c/county-clerk/"
                "elected-officials/local-officials/city-village-officials")
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 120
 

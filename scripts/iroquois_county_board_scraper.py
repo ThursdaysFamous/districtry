@@ -36,12 +36,12 @@ import sys
 
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_X11_128,
+    UA_ROSTER_BOT,
     require_robots_once,
 )
 
 SOURCE_URL = "https://iroquoiscountyil.gov/offices/county-board"
-UA = {"User-Agent": UA_CHROME_X11_128}
+UA = {"User-Agent": UA_ROSTER_BOT}
 
 ROMAN = {"I": 1, "II": 2, "III": 3, "IV": 4}
 ROLE_RE = re.compile(r"^(Chairman|Vice\s*-?\s*Chairman)$", re.I)

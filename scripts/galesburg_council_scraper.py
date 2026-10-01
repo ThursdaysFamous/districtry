@@ -45,7 +45,8 @@ import sys
 import requests
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
+from scraper_common import (UA_HEADERS_ROSTER_BOT,  # noqa: E402  (shared machinery)
+                            require_robots_once)
 
 SITE = "https://www.ci.galesburg.il.us"
 OFFICIALS_PAGE = (SITE + "/government/elected_officials___election_offices/"
@@ -73,9 +74,14 @@ MIN_PHONES = 6
 ORDINALS = {"first": 1, "second": 2, "third": 3, "fourth": 4,
             "fifth": 5, "sixth": 6, "seventh": 7}
 
-HEADERS = {"User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                          "AppleWebKit/537.36 (KHTML, like Gecko) "
-                          "Chrome/126.0 Safari/537.36")}
+# OUR OWN IDENTITY, MEASURED RATHER THAN ASSUMED (2026-10-01). This file
+# used to send a Chrome string. Every page it fetches was re-read with
+# scraper_common's districtry token on this file's own HTTP stack and
+# answered in full, so the browser string was claiming a client this
+# project does not run for no measured gain. A site that measurably
+# refuses the token gets the browser rung back, per host, with the
+# measurement written here.
+HEADERS = dict(UA_HEADERS_ROSTER_BOT)
 TIMEOUT = 60
 
 # A name token is capitalised AND not one of the page's own layout words. The

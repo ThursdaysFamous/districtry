@@ -101,7 +101,9 @@ import time
 from datetime import datetime, timezone
 
 import requests
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    require_robots_once, UA_CHROME_WIN_126,
+)
 
 SOURCE_URL = "https://dekalbcounty.org/government/county-board/county-board-members/"
 CHAIR_URL = "https://dekalbcounty.org/government/county-board/past-county-board-chairpersons/"
@@ -275,7 +277,15 @@ def fetch_playwright(url, settle_ms=PW_SETTLE_MS, polls=PW_POLLS):
 
 
 def fetch_wayback(url):
-    """Rung 3: the Internet Archive's newest snapshot, refused if it is stale."""
+    """Rung 3: the Internet Archive's newest snapshot, refused if it is stale.
+
+    THE ARCHIVE IS ITS OWN HOST and is asked separately. It is recorded in
+    scraper_common.ROBOTS_DEFERRED_HOSTS because its robots.txt resets the
+    connection from this project's sandbox, so the seam prints NOT READ with
+    that reason rather than passing silently.
+    """
+    require_robots_once(WAYBACK_API % url, HEADERS["User-Agent"],
+                        headers=HEADERS, label="dekalb-scraper-archive")
     resp = requests.get(WAYBACK_API % url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     resp.raise_for_status()
     snapshot = ((resp.json() or {}).get("archived_snapshots") or {}).get("closest")
@@ -294,7 +304,19 @@ def fetch_wayback(url):
 
 
 def fetch(url, engine="auto"):
-    """Walk the ladder, naming the rung that carried the fetch (or failed)."""
+    """Walk the ladder, naming the rung that carried the fetch (or failed).
+
+    THE COUNTY'S RULES ARE READ BEFORE ANY RUNG, with the identity every rung
+    sends, so a refusal stops the ladder rather than being met by the next rung
+    down. dekalbcounty.org had been recorded as answering every client with a
+    managed challenge; re-measured from a GitHub runner on 2026-10-01, the
+    vantage the weekly job crawls from, it serves a 37-byte policy whose binding
+    group matches none of the paths read here, on all three reads of a
+    deliberate re-measurement fifteen seconds apart. The challenge is on the
+    PAGE and not on the policy, which is why the ladder below still exists.
+    """
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="dekalb-scraper")
     rungs = {"requests": [fetch_requests], "playwright": [fetch_playwright],
              "wayback": [fetch_wayback]}.get(
                  engine, [fetch_requests, fetch_playwright, fetch_wayback])
