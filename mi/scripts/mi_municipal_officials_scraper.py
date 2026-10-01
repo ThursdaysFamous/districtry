@@ -12,14 +12,19 @@ page naming its council, commission or board; the units here are the ones
 whose own page names every seat. The rest are recorded, unit by unit, in the
 `mi-municipal-officeholders` and `mi-township-officers` gap records.
 
-THE UNITS AND THEIR PARSERS LIVE IN THREE SIBLING MODULES, described in
+THE UNITS AND THEIR PARSERS LIVE IN FOUR SIBLING MODULES, described in
 mi_municipal_common.py, so a batch can be fixed without touching the others.
+The fourth, mi_municipal_parsers_browser.py, holds the two townships whose
+sites serve only a browser-class client, with the measurement that licenses it.
 Detroit, Grand Rapids, Jackson and Battle Creek are not in them: each already
 has its own weekly roster, read for the City Council District card.
 
 FETCH RULES. Every URL is asked of its host's robots.txt first, with the same
-client that then fetches it (the fleet's roster token on one `requests`
-session), and a stated Crawl-delay is honoured per host. A refusal, a 403 or a
+client that then fetches it, and a stated Crawl-delay is honoured per host. For
+almost every unit that client is the fleet's roster token on one `requests`
+session. A unit that carries `headers` is read, robots.txt included, with
+exactly those headers on the stdlib client instead, because that is the only
+client its host was measured to serve. A refusal, a 403 or a
 managed challenge is recorded as what it is and the host is left alone; a
 captcha is never worked around and no other client is tried.
 
@@ -39,6 +44,8 @@ import json
 import os
 import sys
 import time
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 
 try:
@@ -56,6 +63,7 @@ from mi_municipal_common import (UA_ROSTER_BOT, strip_comments,  # noqa: E402
 import mi_municipal_parsers_cities_a  # noqa: E402
 import mi_municipal_parsers_cities_b  # noqa: E402
 import mi_municipal_parsers_townships  # noqa: E402
+import mi_municipal_parsers_browser  # noqa: E402
 
 CACHE = os.path.join(HERE, ".cache", "mi_municipal_officials.json")
 TIMEOUT = 60
@@ -65,7 +73,8 @@ LABEL = "mi-municipal-officials-scraper"
 def all_units():
     units = (mi_municipal_parsers_cities_a.UNITS
              + mi_municipal_parsers_cities_b.UNITS
-             + mi_municipal_parsers_townships.UNITS)
+             + mi_municipal_parsers_townships.UNITS
+             + mi_municipal_parsers_browser.UNITS)
     seen = set()
     for u in units:
         for key in ("geoid", "name", "kind", "body", "url", "seats", "parse"):
@@ -132,14 +141,62 @@ def read_page(url, session, gate, pacer):
     return resp, None, None, gate, pacer
 
 
-def scrape(unit, session, gate, pacer):
+class _Page(object):
+    """The two attributes scrape() reads, for a page read on the stdlib client."""
+
+    def __init__(self, text, url):
+        self.text, self.url = text, url
+
+
+def read_page_stdlib(url, headers, gate):
+    """(page, why, kind) for a unit carrying its own `headers`: robots.txt is
+    read with those headers on the stdlib client (the gate was built with
+    them), then the page with the same. One attempt per page, the shape
+    scraper_common.fetch_stdlib takes: a refusal is an answer, and nothing
+    thinner is tried after one."""
+    ua = headers["User-Agent"]
+    ok, why = gate.allows(url)
+    if not ok:
+        return None, "robots %s" % why, "robots"
+    req = urllib.request.Request(url, headers=dict(headers))
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+            body, final = resp.read().decode("utf-8", "replace"), resp.geturl()
+    except urllib.error.HTTPError as exc:
+        marker = exc.headers.get("Cf-Mitigated") if exc.headers else None
+        how = (" — Cloudflare managed challenge (%s), an access control" % marker
+               if marker else "")
+        return (None, "HTTP %s on the stdlib client%s" % (exc.code, how),
+                "challenge" if marker else "fetch")
+    except Exception as exc:                                  # noqa: BLE001
+        return None, "FETCH FAILED — %s" % exc, "fetch"
+    if final != url:
+        ok2, why2 = gate.verdict(final).allows(ua, final)
+        if not ok2:
+            return None, "robots on redirect target %s: %s" % (final, why2), "robots"
+    return _Page(body, final), None, None
+
+
+def scrape(unit, session, gate, pacer, header_gates):
     """(roster, why, kind, gate, pacer)."""
-    resp, why, kind, gate, pacer = read_page(unit["url"], session, gate, pacer)
+    if unit.get("headers"):
+        headers = unit["headers"]
+        key = tuple(sorted(headers.items()))
+        if key not in header_gates:
+            header_gates[key] = RobotsGate(None, headers["User-Agent"], headers=headers)
+        hgate = header_gates[key]
+
+        def read(u, g, p):
+            page, why_, kind_ = read_page_stdlib(u, headers, hgate)
+            return page, why_, kind_, g, p
+    else:
+        read = lambda u, g, p: read_page(u, session, g, p)  # noqa: E731
+    resp, why, kind, gate, pacer = read(unit["url"], gate, pacer)
     if resp is None:
         return None, why, kind, gate, pacer
     also = []
     for extra in unit.get("also") or []:
-        r2, why2, kind2, gate, pacer = read_page(extra, session, gate, pacer)
+        r2, why2, kind2, gate, pacer = read(extra, gate, pacer)
         if r2 is None:
             return (None, "second page %s not read — %s" % (extra, why2), kind2,
                     gate, pacer)
@@ -174,9 +231,9 @@ def main():
     gate = RobotsGate(session, UA_ROSTER_BOT)
     pacer = HostPacer(gate)
     read_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entries, unread = {}, []
+    entries, unread, header_gates = {}, [], {}
     for u in wanted:
-        roster, why, kind, gate, pacer = scrape(u, session, gate, pacer)
+        roster, why, kind, gate, pacer = scrape(u, session, gate, pacer, header_gates)
         if roster is None:
             unread.append({"geoid": u["geoid"], "name": u["name"], "why": why, "kind": kind})
             print("  %-22s %s" % (u["name"], why))
