@@ -99,6 +99,12 @@
       "Phone: 515.281.3371"
     ]
   },
+  "11": {
+    "vacant": true,
+    "asOf": "2026-10-01",
+    "sourceUrl": "https://www.legis.iowa.gov/legislators/senate",
+    "vacantWhy": "The Iowa Senate's own roster ends this member's service on 8 June 2026 and names nobody after them, while every other district on that page names a sitting member."
+  },
   "12": {
     "name": "Amy Sinclair",
     "party": "Republican",
