@@ -175,3 +175,58 @@ state line and no Minnesota ground is enclosed. The 0.139 km² this thread had
 measured was a SIMPLIFIED state outline measured against a full-precision
 reservation, which is an artefact of two different detail levels rather than
 ground. Minnesota's tribal subdivisions are 17.
+
+## Judicial elections — MEASURED 2026-10-01 for the Covered test
+
+**MINNESOTA ELECTS ITS TRIAL JUDGES BY DISTRICT. YES.** `docs/DONE_STANDARD.md`
+leaves this to each thread for Michigan, Minnesota and Kentucky and asserts it
+of none of the three; this is Minnesota's answer, from the state's own published
+law, read with this instance's own user agent after a robots check through
+`scripts/robots_policy.py` (`www.revisor.mn.gov` serves a 342-byte policy whose
+one binding group matches none of these paths).
+
+Three provisions settle it together:
+
+- **Minn. Const. art. VI § 7** — "The term of office of all judges shall be six
+  years and until their successors are qualified. They shall be elected by the
+  voters **from the area which they are to serve** in the manner provided by
+  law." Art. VI § 4 puts the number and boundaries of the judicial districts in
+  statute.
+- **Minn. Stat. § 2.722 subd. 1** — the state "is divided into ten judicial
+  districts composed of the following named counties, respectively, **in each of
+  which districts judges shall be chosen** as hereinafter specified", then lists
+  each district's counties and its judge count.
+- **Minn. Stat. § 204B.36 subd. 4** — the ballot. "Each seat for an associate
+  justice, associate judge, or judge of the district court must be numbered. The
+  words 'Supreme Court,' 'Court of Appeals,' and **'(number) District Court'**
+  must be printed above the respective judicial office groups." So a voter is
+  handed their own district's numbered seats, which is the by-district election
+  the test asks about.
+
+**THE COURT OF APPEALS IS THE COUNTER-EXAMPLE AND IT IS WHY THE ANSWER NEEDED
+READING RATHER THAN INFERRING.** § 480A.02 subd. 3 designates one seat on that
+court for each congressional district and requires a year's residence in it —
+which reads exactly like a districted court — while **subd. 4 says all judges
+are subject to STATEWIDE election, "whether they serve in at-large or
+congressional district seats."** That is the residency-district-with-countywide-
+election shape this project already handles in Iowa: the district is real, the
+election is not held in it, and nobody is elected by it. A seat designation is
+not an electorate. The Supreme Court is statewide outright.
+
+**WHAT THAT MAKES BUILDABLE, AND WHAT IS NOT MEASURED HERE.** § 2.722's ten
+county lists are a PARTITION of the state: parsed from the statute they name
+**87 counties with no county in two districts and none missing**, against the 87
+features `mn/data/app/state-counties.json` already ships, and 287 judgeships in
+all. So the geometry is a dissolve of a fabric this instance already carries,
+with the statute as the composition and the county count as its own gate — no
+new boundary publisher is needed. NOT measured, and not claimed: whether any
+Minnesota publisher offers the ten districts as a layer of their own, and
+whether a machine-readable roster of sitting judges exists. `www.mncourts.gov`
+answers a robots request **403 — no readable policy, which RFC 9309 files with a
+404 and therefore allows** — and nothing here has fetched a page from it. A
+roster route is the next question, not an answered one, and a layer that draws
+ten districts and names none of 287 judges is the faked depth this project
+refuses.
+
+Nothing in this entry ships. It is the Covered test's question answered, and the
+judicial layer is its own change.
