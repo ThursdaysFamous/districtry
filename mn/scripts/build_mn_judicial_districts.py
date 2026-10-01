@@ -75,12 +75,12 @@ Run:  python3 mn/scripts/build_mn_judicial_districts.py
 """
 
 import json
-import math
 import os
 import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 INSTANCE = os.path.dirname(HERE)
 FLEET_SCRIPTS = os.path.join(os.path.dirname(INSTANCE), "scripts")
 
@@ -275,167 +275,25 @@ def fetch_precinct_districts():
 
 
 # --------------------------------------------------------------------------
-# geometry
+# geometry — ONE COPY, in mn_vtd_dissolve
 # --------------------------------------------------------------------------
-
-def rings_of(feature):
-    geom = feature.get("geometry") or {}
-    if geom.get("type") == "Polygon":
-        return list(geom.get("coordinates") or [])
-    if geom.get("type") == "MultiPolygon":
-        return [ring for poly in (geom.get("coordinates") or []) for ring in poly]
-    return []
-
-
-def dissolve(features):
-    """Drop every segment walked more than once (an interior county line) and
-    chain the survivors into closed rings — the same algorithm
-    build_metro_outline.py runs once for the whole state, run here once per
-    district. It is exact rather than approximate because every county in the
-    group came out of one topology-aware simplification, so a shared border is
-    the same vertex sequence on both sides."""
-    counts, seg_pts = {}, {}
-    for feature in features:
-        for ring in rings_of(feature):
-            for i in range(len(ring) - 1):
-                a, b = tuple(ring[i][:2]), tuple(ring[i + 1][:2])
-                if a == b:
-                    continue
-                key = (a, b) if a < b else (b, a)
-                counts[key] = counts.get(key, 0) + 1
-                seg_pts[key] = (a, b)
-
-    adj, exterior = {}, 0
-    for key, n in counts.items():
-        if n != 1:
-            continue
-        exterior += 1
-        a, b = seg_pts[key]
-        adj.setdefault(a, []).append((key, b))
-        adj.setdefault(b, []).append((key, a))
-
-    used, rings, walked = set(), [], 0
-    for seed, n in counts.items():
-        if n != 1 or seed in used:
-            continue
-        start, cur = seg_pts[seed]
-        used.add(seed)
-        walked += 1
-        ring = [list(start), list(cur)]
-        while cur != start:
-            nxt = None
-            for key, pt in adj.get(cur, ()):
-                if key not in used:
-                    nxt = (key, pt)
-                    break
-            if nxt is None:
-                raise SystemExit("FATAL: open chain while dissolving a district — the "
-                                 "county file is no longer topologically consistent")
-            used.add(nxt[0])
-            walked += 1
-            cur = nxt[1]
-            ring.append(list(cur))
-        rings.append(ring)
-    if walked != exterior:
-        raise SystemExit("FATAL: dissolve dropped exterior segments (%d walked of %d)"
-                         % (walked, exterior))
-    return rings
-
-
-def point_in_ring(lng, lat, ring):
-    inside = False
-    j = len(ring) - 1
-    for i in range(len(ring)):
-        xi, yi = ring[i][0], ring[i][1]
-        xj, yj = ring[j][0], ring[j][1]
-        if (yi > lat) != (yj > lat):
-            if lng < (xj - xi) * (lat - yi) / (yj - yi) + xi:
-                inside = not inside
-        j = i
-    return inside
-
-
-def point_in_geom(lng, lat, geom):
-    polys = (geom["coordinates"] if geom["type"] == "MultiPolygon"
-             else [geom["coordinates"]])
-    for poly in polys:
-        if point_in_ring(lng, lat, poly[0]) and not any(
-                point_in_ring(lng, lat, hole) for hole in poly[1:]):
-            return True
-    return False
-
-
-def ring_area(ring):
-    total = 0.0
-    for i in range(len(ring) - 1):
-        total += ring[i][0] * ring[i + 1][1] - ring[i + 1][0] * ring[i][1]
-    return abs(total) / 2.0
-
-
-def group_rings(rings):
-    """Nest each hole under the outer ring that encloses it. Kept general
-    rather than assumed: a judicial district is a group of adjacent counties
-    and in practice simply connected, and a builder that assumed so would
-    write a hole as a second island the day one appeared."""
-    ordered = sorted(rings, key=ring_area, reverse=True)
-    polys = []
-    for ring in ordered:
-        lng, lat = ring[0][0], ring[0][1]
-        parent = None
-        for poly in polys:
-            if point_in_ring(lng, lat, poly[0]):
-                parent = poly
-        if parent is None:
-            polys.append([ring])
-        else:
-            parent.append(ring)
-    return polys
-
-
-def simplify(ring, tolerance_m=SIMPLIFY_TOLERANCE_M):
-    """Douglas-Peucker — the fleet's measured finding three times over, and
-    right here for the same reason: county lines are survey-grid straight
-    runs, and thresholding triangle area does not bound how far the drawn
-    line strays from them."""
-    if len(ring) < 4:
-        return ring
-    tol = tolerance_m / 111320.0
-    scale = math.cos(math.radians(46.0))
-
-    def perp(p, a, b):
-        ax, ay = a[0] * scale, a[1]
-        bx, by = b[0] * scale, b[1]
-        px, py = p[0] * scale, p[1]
-        dx, dy = bx - ax, by - ay
-        if dx == 0 and dy == 0:
-            return math.hypot(px - ax, py - ay)
-        t = max(0.0, min(1.0, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy)))
-        return math.hypot(px - (ax + t * dx), py - (ay + t * dy))
-
-    keep = {0, len(ring) - 1}
-    stack = [(0, len(ring) - 1)]
-    while stack:
-        lo, hi = stack.pop()
-        worst, idx = 0.0, None
-        for i in range(lo + 1, hi):
-            d = perp(ring[i], ring[lo], ring[hi])
-            if d > worst:
-                worst, idx = d, i
-        if idx is not None and worst > tol:
-            keep.add(idx)
-            stack.append((lo, idx))
-            stack.append((idx, hi))
-    out = [ring[i] for i in sorted(keep)]
-    if out[0] != out[-1]:
-        out.append(out[0])
-    return out if len(out) >= 4 else ring
-
-
-def round_coords(value, places=6):
-    if isinstance(value, list):
-        return [round_coords(v, places) for v in value]
-    return round(value, places)
-
+# These eight helpers used to be defined here and again in
+# build_mn_commissioner_districts.py, which is the two-readers-of-one-question
+# defect this repository keeps finding: the copies drifted the moment one was
+# fixed. group_rings is the one that proves it. Both copies decided whether one
+# ring lies inside another by testing the candidate's FIRST VERTEX, and a
+# point-in-polygon test on a boundary vertex has no answer — so an enclave whose
+# ring touches its neighbour's outer boundary at a single vertex was written as a
+# separate island rather than a hole, and the two districts then covered the same
+# ground. Otter Tail County's commissioner districts 2 and 5 do exactly that.
+# This layer's own shipped geometry was clean (checked ring by ring, zero missed
+# holes and zero overlaps across all ten districts), which is luck rather than
+# safety: a judicial district is a group of whole counties and a county enclave
+# touching at one vertex is rarer, not impossible.
+from mn_vtd_dissolve import (  # noqa: E402
+    dissolve, group_rings, point_in_geom, point_in_ring, ring_area, rings_of,
+    round_coords, simplify, SIMPLIFY_TOLERANCE_M,
+)
 
 # --------------------------------------------------------------------------
 # main

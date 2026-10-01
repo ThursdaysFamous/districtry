@@ -126,7 +126,7 @@ prose.
 | wi | 1 | 31 |
 | ia | 0 | 20 |
 | mi | 0 | 15 |
-| mn | 6 | 15 |
+| mn | 6 | 16 |
 | ky | 4 | 8 |
 
 ### Where each layer's shapes come from
@@ -266,9 +266,9 @@ measured until the next run describes it.
 | wi | 91 | 262 | 5 |
 | ia | 70 | 58 | 0 |
 | mi | 30 | 55 | 1 |
-| mn | 21 | 9 | 0 |
+| mn | 22 | 10 | 0 |
 | ky | 10 | 7 | 0 |
-| **total** | **407** | **823** | **12** |
+| **total** | **408** | **824** | **12** |
 
 **135 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

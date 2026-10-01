@@ -1485,7 +1485,15 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("mn-senate", "mn-house"),
         "county-boundaries": answers("county"),
-        "county-government": depth(),
+        # THE DISTRICTS SHIPPED 2026-10-01 AND THE LEVEL IS STILL OPEN, which is
+        # the point of scoring this one by depth. Minn. Stat. 375.025 makes every
+        # Minnesota county districted, so the app now draws all 447 commissioner
+        # districts in all 87 counties — and the level asks for the governing
+        # BODY, which means the people. No publisher pairs the 447 districts with
+        # the people holding them, so no county is counted here yet
+        # (gap mn-county-commissioner-roster, whose route is measured: five
+        # county GIS layers carry the commissioner's name).
+        "county-government": depth("county-commissioner"),
         "municipal-boundaries": answers("municipality"),
         "local-government": depth(),
         "school-district-boundaries": answers("school-district-unified", "school-district-elementary", "school-district-secondary"),

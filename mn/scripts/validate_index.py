@@ -88,7 +88,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 13
+MIN_REGISTER_LAYER = 14
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -96,10 +96,10 @@ MIN_REGISTER_LAYER = 13
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "mn-judicial-district", "mn-senate", "county", "mn-house",
-    "school-district-unified", "zip-code", "school-district-elementary",
-    "county-subdivision", "voting-precinct", "municipality",
-    "school-district-secondary", "police-station", "fire-station",
-    "post-office",
+    "school-district-unified", "county-commissioner", "zip-code",
+    "school-district-elementary", "county-subdivision", "voting-precinct",
+    "municipality", "school-district-secondary", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -110,6 +110,7 @@ GEOMETRY_FILES = {
     "mn-judicial-districts.json": (10, 10),  # The ten judicial districts, dissolved from state-counties.json by mn/scripts/build_mn_judicial_districts.py. The county membership is parsed out of Minn. Stat. 2.722 subd. 1 on every run rather than transcribed, and the write is gated three ways: the statute's lists must partition all 87 counties, the Secretary of State's judicial-district attribute on all 4,105 precincts must agree county by county, and every county's own interior anchor must land in exactly its own district.
     "mn-senate-districts.json": (67, 67),  # Minnesota Senate districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate, plus the 67-of-67 nesting gate against the House layer).
     "mn-house-districts.json": (134, 134),  # Minnesota House districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate; the A/B pair of each Senate district shares its every boundary vertex).
+    "mn-commissioner-districts.json": (447, 447),  # Every county commissioner district in Minnesota, pre-built by mn/scripts/build_mn_commissioner_districts.py: the Secretary of State's 4,105 precincts dissolved on the commissioner district each one carries, so no line is drawn that a precinct boundary does not already draw. Six gates must pass before it writes — Minn. Stat. 375.01 and 375.025 read live, giving a 447-district partition of all 87 counties with consecutive numbering and a board size the statute allows; seven county governments' own layers agreeing about every one of the 785 precincts they cover; the certified 2024 and 2022 per-precinct results agreeing as dated snapshots; no point inside one district inside a second; and all 87 county anchors landing in exactly their own county's district, Cook's declared outside the fabric because it sits in Lake Superior. Simplified at a 15 m Douglas-Peucker interval over ONE shared topology, taken from the fabric's own 16.09 m median segment, so neighbouring districts share their border exactly.
     "mn-precincts.json": (4105, 4105),  # Every Minnesota voting precinct, pre-built by mn/scripts/build_mn_precincts.py from the Secretary of State's own statewide service (paged at the service's 2,000-record cap; Douglas-Peucker at a 4 m interval; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 4,105 count floor on both the fetch and the simplified output). This instance's largest file at 1.67 MB gzipped, fetched only when a reader switches the layer on.
 }
 

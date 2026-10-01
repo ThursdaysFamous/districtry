@@ -208,6 +208,29 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "county-commissioner",
+        "app_file": "mn-commissioner-districts.json",
+        "source_url": (
+            "https://enterprise.gisdata.mn.gov/aghost/rest/services/"
+            "us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
+        ),
+        "note": (
+            "447 county commissioner districts across all 87 counties, dissolved "
+            "from the precinct row above on the ctycomdist each precinct carries. "
+            "SO IT SHARES THAT ROW'S FRESHNESS SIGNAL AND HAS ONE MORE OF ITS OWN: "
+            "a county that redistricts announces itself in the Service Modified "
+            "stamp, and a county that CHANGES ITS BOARD SIZE announces itself in "
+            "Minn. Stat. 375.01, which the builder parses on every run rather than "
+            "carrying a transcription of the four seven-member counties. Two more "
+            "witnesses are gated with it and neither is this service checking "
+            "itself: seven county governments' own commissioner-district layers, "
+            "and the Secretary of State's certified 2024 and 2022 per-precinct "
+            "results, which carry the same key as dated snapshots. The people are "
+            "not here -- no commissioner is named, gap "
+            "mn-county-commissioner-roster."
+        ),
+    },
+    {
         "layer": "mn-judicial-district",
         "app_file": "mn-judicial-districts.json",
         "source_url": "https://www.revisor.mn.gov/statutes/cite/2.722",
