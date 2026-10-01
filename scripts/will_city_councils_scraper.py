@@ -81,10 +81,10 @@ import sys
 from datetime import datetime, timezone
 
 import requests
-from scraper_common import require_robots_once, UA_CHROME_WIN_124, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
 
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_124,
+    "User-Agent": UA_ROSTER_BOT,
     "Accept": ("text/html,application/xhtml+xml,application/xml;q=0.9,"
                "image/avif,image/webp,*/*;q=0.8"),
     "Accept-Language": "en-US,en;q=0.9",

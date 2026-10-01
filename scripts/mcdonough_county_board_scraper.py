@@ -48,12 +48,12 @@ import re
 import sys
 
 import requests
-from scraper_common import require_robots_once, UA_CHROME_WIN_126, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
 
 SOURCE_URL = "http://mcg.mcdonough.il.us/members.html"
 COUNTY_PAGE = "http://mcg.mcdonough.il.us/"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 120
 

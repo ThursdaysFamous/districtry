@@ -55,13 +55,14 @@ import sys
 
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_WIN_126,
+    UA_ROSTER_BOT,
     require_robots_once,
+    output_path,
 )
 
 SOURCE_URL = "https://montgomerycountyil.gov/county-board/"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 60
 
@@ -139,7 +140,7 @@ def surname_mismatches(records):
 
 
 def main():
-    out_path = sys.argv[1] if len(sys.argv) > 1 else "montgomery_county_board_raw.json"
+    out_path = output_path("montgomery_county_board_raw.json")
     require_robots_once(SOURCE_URL, HEADERS["User-Agent"], headers=HEADERS,
                         label="il-montgomery-county-board-scraper")
     resp = requests.get(SOURCE_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT)

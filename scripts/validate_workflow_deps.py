@@ -151,8 +151,22 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # defect starts, and here it was not hypothetical: the Court of Appeals guard and
 # the roster-health report were free to disagree about the same runs of the same
 # workflow. Stdlib-only throughout — `re` and `sys`, nothing function-local.
+#
+# `validate_officeholder_names` (2026-10-01) is the sixth, and the bar it clears
+# is the one its own module docstring already states: it holds the fleet's single
+# list of the words a publisher writes where a person goes — `vacant`, `tbd`,
+# `none`, a party label — and that list has ONE reader on purpose, because the
+# scrapers that meet such a word CONVERT on `is_vacancy_marker` rather than each
+# carrying a copy. Two copies would be two answers to "is this a person", which
+# is the defect the gate itself exists to catch: this repo published a
+# schema.org Person named VACANT on an Illinois county page and two more named
+# Vacant on a police-district page, in both cases a source's own string carried
+# straight through. Iowa's township scraper and builder are the first INSTANCE
+# files to meet it (Jackson County prints "Vacant" in one trustee's name cell),
+# and a per-instance copy of that word list is exactly what this list refuses.
+# Stdlib-only at module scope — argparse, json, os, re, sys.
 FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error", "scraper_common",
-                "workflow_run_evidence"}
+                "workflow_run_evidence", "validate_officeholder_names"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")

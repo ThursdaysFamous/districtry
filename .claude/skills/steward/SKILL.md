@@ -107,8 +107,8 @@ python3 scripts/validate_workflow_deps.py
 python3 scripts/validate_workflow_checkout.py             # a workflow that commits sitemap.xml checks out full history and does not re-shallow it
 python3 scripts/undeliverable.py                         # the shipped e-mail domains still resolve MX; the recorded dead ones are still dead
 python3 scripts/validate_skills.py                       # every skill's pointers resolve
-python3 scripts/validate_python_hygiene.py --selftest     # proves both checks below catch their defect AND pass its near-miss
-python3 scripts/validate_python_hygiene.py                # a name imported nowhere (Logan's missing `import os` filed a robots decline as an outage) and a dict key set twice (Python keeps the LAST, as PyYAML does)
+python3 scripts/validate_python_hygiene.py --selftest     # proves all four checks below catch their defect AND pass its near-miss
+python3 scripts/validate_python_hygiene.py                # a name imported nowhere (Logan's missing `import os` filed a robots decline as an outage), a dict key set twice (Python keeps the LAST, as PyYAML does), a shared module shadowing an instance's own copy, and a bare sys.argv[1] opened for writing (a `--help` run wrote a file called `--help`)
 python3 scripts/validate_arcgis_format.py                # no app asks ArcGIS for f=geojson
 node scripts/esri_rings_test.mjs                          # ring nesting, on fixtures
 node scripts/build_og_image.mjs --check                    # every surface's social card is the one the renderer wrote, labelled with its metros.json tag (provenance, not pixels)
@@ -145,6 +145,9 @@ python3 wi/scripts/build_wi_municipal_executives.py --selftest      # the same, 
 python3 ia/scripts/build_ia_county_officers.py --selftest           # display_name strips a salutation and keeps a Jr./Sr. suffix and a published credential; and the party name-join, which ships no party when no ISAC row matches the officer or when two do
 python3 ia/scripts/ia_supervisor_district_scraper.py --selftest     # the supervisor scrape's robots gate, both halves: a refused URL never reaches requests.get, and two fetches of a delay-stating host are actually spaced
 python3 ia/scripts/ia_city_officials_scraper.py --selftest           # the bound on a council page's LAST member, whom no next member bounds: a footer's city-hall number never becomes their phone, and a real one at the page's own offset survives
+python3 ia/scripts/ia_city_council_scraper.py --selftest             # the fourteen 25k-plus cities' five parser shapes: `3rd Ward` is not a street address, a caps line can carry role and name together, and a staff title is dropped with its name printed
+python3 ia/scripts/build_ia_city_councils.py --check                 # the shipped city councils: every seat count exact, no home address in any field, and the two cities that name no mayor still naming none
+python3 ia/scripts/ia_county_board_page_scraper.py --selftest       # the four county board pages whose two outside publishers disagree: a role word at the end of a line is not a name, a committee line is not a supervisor, and a no-break space still separates `District 1` from the name
 python3 scripts/build_parcel_fabric_districts.py --selftest        # the geometry repair's three refusals and its drop count
 python3 scripts/validate_geometry_measure.py                      # the engine's area/overlap/point-weight block, held to shapely
 python3 scripts/validate_qr_code.py                               # the engine's QR block, every mask held to qrcode's matrix

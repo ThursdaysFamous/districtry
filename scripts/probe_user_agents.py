@@ -102,8 +102,8 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SCRIPT_DIR)
 sys.path.insert(0, SCRIPT_DIR)
 
-from scraper_common import (UA_CHROME_WIN_126, UA_HINTS_CHROME_126,  # noqa: E402
-                            UA_ROSTER_BOT)
+from scraper_common import (UA_CHROME_WIN_126, UA_HEADERS_ROSTER_BOT,  # noqa: E402
+                            UA_HINTS_CHROME_126, UA_ROSTER_BOT)
 
 ARTIFACT = os.path.join(ROOT, "user-agent-measurements.json")
 
@@ -130,15 +130,10 @@ from robots_policy import RobotsPolicy, resolve_template  # noqa: E402
 from robots_policy import classify as robots_verdict  # noqa: E402
 
 # --- what each rung sends.
-TOKEN_HEADERS = {
-    "User-Agent": UA_ROSTER_BOT,
-    "Accept": "text/html,application/xhtml+xml,application/pdf,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-    # identity, not gzip: the stdlib client does not decode for us, and a
-    # compressed body measured as-is is how validate_card_links.py called a real
-    # 1,705-byte page an 805-byte hollow one.
-    "Accept-Encoding": "identity",
-}
+# IMPORTED, NEVER RESTATED. The scrapers switched to our own token send
+# scraper_common.UA_HEADERS_ROSTER_BOT, and a probe measuring a slightly
+# different set would be answering about a client nothing crawls with.
+TOKEN_HEADERS = dict(UA_HEADERS_ROSTER_BOT)
 BROWSER_HEADERS = dict(UA_HINTS_CHROME_126)
 
 HARD_CHALLENGE_RE = re.compile(
@@ -217,7 +212,13 @@ URL_RE = re.compile(r"""https?://[^\s"'<>)\\]+""")
 # for. Both send only their own districtry token. The figure moves 105 -> 103.
 BROWSER_MARKERS = ("UA_CHROME_WIN_126_FULL", "UA_CHROME_WIN_126", "UA_CHROME_WIN_124",
                    "UA_CHROME_X11_128", "UA_CHROME_X11_120", "UA_HINTS_CHROME_126")
-SELF_MARKERS = ("UA_ROSTER_BOT", "UA_ROSTER_COMPACT", "UA_CIVIC_BOT")
+# UA_HEADERS_ROSTER_BOT joined this list on 2026-10-01, when 60 scrapers were
+# switched off a Chrome string onto our own token: a file sending
+# `dict(UA_HEADERS_ROSTER_BOT)` and naming no literal read as `unknown`,
+# so three of the switched files reported `browser -> unknown` — a switch
+# onto our own name looking like a file whose identity nothing can read.
+SELF_MARKERS = ("UA_ROSTER_BOT", "UA_HEADERS_ROSTER_BOT", "UA_ROSTER_COMPACT",
+                "UA_CIVIC_BOT")
 SELF_INLINE_RE = re.compile(r"districtry|chidistricts|DistrictExplorer", re.I)
 # A SELF-IDENTIFYING TOKEN IS EITHER VERSIONED OR CONTACT-ADDRESSED. The first
 # shape was `districtry[-suffix]/N` anywhere in a literal; it missed every

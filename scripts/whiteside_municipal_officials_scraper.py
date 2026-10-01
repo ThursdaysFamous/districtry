@@ -43,7 +43,7 @@ import re
 import sys
 
 import requests
-from scraper_common import require_robots_once, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pdfplumber
@@ -55,7 +55,7 @@ YEARBOOK_FALLBACK = ("https://www.whitesidecountyil.gov/DocumentCenter/View/236/
                      "County-Clerk-Year-Book-PDF")
 COUNTY_SITE = "https://www.whitesidecountyil.gov/"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 120
 

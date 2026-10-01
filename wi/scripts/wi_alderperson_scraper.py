@@ -96,6 +96,11 @@ import time
 import unicodedata
 import urllib.parse
 import urllib.request
+
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 import zipfile
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -335,6 +340,91 @@ BLACK_RIVER_FALLS_INDEX = ("https://blackriverfallswi.gov"
                            "/common-council-committee-of-the-whole")
 NEENAH_INDEX = "https://www.ci.neenah.wi.us/common-council/"
 
+# ---------------------------------------------------------------------------
+# THE TRANCHE OF 2026-10-01, which is the first aimed at the fourth test rather
+# than at whatever happened to be readable: the done standard asks whether every
+# general-purpose government above 25,000 people names its governing body, and
+# Wisconsin named 14 of 35. These four are what the 21 unnamed cities yielded,
+# each robots.txt read at the PAGE with the Chrome client this file crawls as
+# (2026-10-01): Franklin 47 bytes, no rule matching; Greenfield 816 bytes, no
+# rule matching, and that file is one CMS vendor's default shared byte for byte
+# with Brookfield, Oak Creek, Sun Prairie and Fitchburg — published at each
+# city's own host so it binds there, and never to be cited as something any of
+# those five chose; Muskego and West Bend serve no robots.txt at all (404).
+#
+# ALL FOUR SERVE THE DISTRICTRY TOKEN A FULL PAGE, measured across the four
+# client rungs on 2026-10-01 and recorded in `user-agent-measurements.json`
+# (75,642 / 97,686 / 82,128 / 101,259 bytes to `requests` plus the bare token).
+# So the browser string this file sends is not licensed by these four, and they
+# are named here rather than left implied: the string stays because 17 of the 35
+# hosts this one file reaches do refuse the token, and the User-Agent is set once
+# for all of them. Franklin's page carries a contact form's captcha widget and is
+# NOT a challenge -- HTTP 200 with the whole council on it -- which is the
+# false-positive class CLAUDE.md already records for keyword matching on a body.
+#
+# THE FIVE THAT ARE SHUT, measured the same day and worth as much as the four
+# that shipped. The heading over this block has now been wrong twice and both
+# errors are the same one: it read FIVE while the bullets below it named SIX
+# cities, because the middle bullet is four cities in one line, and the
+# correction that removed Oshkosh then wrote FOUR, subtracting one from the
+# wrong total. COUNT THE CITIES, NOT THE BULLETS. The 21 unnamed cities of
+# 2026-10-01 are 4 built here, 5 shut below, 1 Oshkosh (open, at large) and 11
+# readable behind a page that assembles itself in the browser:
+#   BELOIT publishes `User-agent: * / Disallow: /` under six named crawlers that
+#   get narrow rules. That is the city's own host and its own file, so it binds
+#   fully, and nothing here renames an agent to get past it.
+#   JANESVILLE, WAUSAU, WAUWATOSA and MEQUON answer HTTP 403 to this client at
+#   the HOME page, not merely on robots.txt — a site-wide block that enforces
+#   itself, which is #1271's own reading of why a robots 403 needed no strict
+#   treatment. Not probed with a second client: a host that refuses the first is
+#   not an invitation to try a richer one.
+#   OSHKOSH IS NOT SHUT AT ALL, and the line above read that it served an
+#   INCOMPLETE TLS CHAIN, the Coles pattern. Measured 2026-10-01 through
+#   `scripts/probe_incomplete_tls_chains.py`: `{"state": "ok", "code": "200"}`,
+#   0 of 1 hosts serving an incomplete chain. The claim was wrong, and it was
+#   wrong in the direction that keeps a readable city unread — the record this
+#   file already carries about Eau Claire, one city later. What is true is
+#   narrower and is a fact about THIS CLIENT rather than about the city: both
+#   Python stacks fail the handshake with `UNEXPECTED_EOF_WHILE_READING` where
+#   `curl` completes it, and the one setting that fixes it is
+#   `ssl.create_default_context()` plus `set_ciphers("DEFAULT@SECLEVEL=1")`,
+#   which relaxes OpenSSL's signature-and-key-size POLICY and leaves
+#   certificate verification fully intact — nothing here disables verification.
+#   Pinning the maximum version to TLS 1.2 does NOT fix it, and under SECLEVEL=1
+#   the connection negotiates TLSv1.3 with TLS_AES_256_GCM_SHA384.
+#   THE NEXT SENTENCE USED TO DRAW A CONCLUSION FROM THAT AND IT DOES NOT
+#   FOLLOW: it read that "the cause is something Debian's level 2 rejects in the
+#   CHAIN rather than anything weak about the transport", which is a claim about
+#   what OSHKOSH SERVES, and nothing measured here can support one. This
+#   sandbox's egress gateway intercepts and re-signs every outbound TLS
+#   connection -- `wi/WATCH.md`'s 2026-09-13 row already records every host
+#   measured here carrying the gateway's own issuer, and the app thread
+#   re-confirmed it on 2026-10-01 against Google and GitHub as controls -- so the
+#   chain inspected was the GATEWAY'S and not the city's, and the app thread
+#   could not reproduce the handshake failure at all. The symptom is real from
+#   here and is UNEXPLAINED; it is not evidence about the city's certificate.
+#   THE SAME DOUBT REACHES THE ROBOTS READ BELOW, which went through the
+#   SECLEVEL=1 context, so it was a read through a client this project does not
+#   crawl with and is held as provisional rather than as the policy measurement.
+#   So nothing in the shared reader changes and no per-site security setting is
+#   considered: the next step is `scripts/probe_robots_verdicts.py` from a GitHub
+#   runner, the vantage the scheduled scrapers crawl from and the one this fleet
+#   already uses for this class of sandbox-only TLS symptom. Provisionally, its
+#   robots.txt (331 bytes) disallows fourteen paths — Laserfiche, WebTrac, test directories —
+#   and PERMITS /CityCouncil/. And its council is AT LARGE: the page states
+#   "seven elected officials in the Common Council including the mayor, the
+#   deputy mayor, and five council members", so it has no district to draw and
+#   belongs in a municipal at-large roster rather than in this file, which is
+#   keyed by district. SO FIVE CITIES ARE SHUT -- Beloit, Janesville, Wausau,
+#   Wauwatosa and Mequon -- and Oshkosh is not one of them.
+FRANKLIN_INDEX = ("https://www.franklinwi.gov/Departments/Elected-Officials"
+                  "/Common-Council.htm")
+GREENFIELD_INDEX = "https://www.ci.greenfield.wi.us/334/Common-Council"
+MUSKEGO_INDEX = ("https://www.muskego.wi.gov/government/boards_commissions"
+                 "/common_council.php")
+WEST_BEND_INDEX = ("https://www.westbendwi.gov/government/elected_officials"
+                   "/west_bend_common_council/index.php")
+
 ALGOMA_INDEX = "https://www.algomacity.org/government/city_council.php"
 DODGEVILLE_INDEX = "https://www.cityofdodgeville.com/council"
 HORICON_INDEX = "https://www.horiconwi.gov/185/Elected-Officials"
@@ -398,6 +488,52 @@ KENOSHA_CANVASS_WINS = {}
 
 
 def fetch(url, binary=False, tries=3, timeout=60):
+    # EVERY HOST'S RULES ARE READ BEFORE ITS FIRST PAGE, through the shared seam
+    # rather than the hand-recorded readings in the comments above, and with the
+    # identity this fetch sends. This file follows each municipality's own site
+    # out of a list, so the hosts it reaches are not all in its own source and no
+    # fixed table could cover them; asking at the fetch is the only way to ask
+    # about every one.
+    #
+    # The three hosts whose recorded readings had shut this file out were all
+    # re-measured from a GitHub runner on 2026-10-01, the vantage the weekly job
+    # crawls from: viroqua-wisconsin.com and www.altoonawi.gov answer HTTP 404
+    # for robots.txt, so they publish no rules; www.portagewi.gov serves a
+    # 29-byte policy matching none of the paths read here, on all three of a
+    # deliberate re-measurement's reads fifteen seconds apart. Portage states
+    # `Crawl-delay: 5`, which is satisfied by construction for the reason
+    # Dodgeville's 15 already is above — one page per host per run.
+    #
+    # A ROBOTS VERDICT IS ISOLATED PER CITY AND DOES NOT END THE RUN, which is a
+    # deliberate reading of the block above `attempt()` rather than a hole in it.
+    # That block draws the line between "not today" (a timeout, a reset — caught
+    # per municipality, the city's last-good rows carried forward and named) and
+    # "a pinned reading has stopped being true" (a gate, which must stop
+    # everything). A robots verdict is always the first kind. An UNREACHABLE
+    # robots.txt is a fact about a route this minute — measured 2026-10-01, the
+    # first run after this seam was wired died at Stevens Point on a connection
+    # reset from this sandbox, taking 28 cities' refresh down with it. And a
+    # published REFUSAL is a standing fact about one host that says nothing about
+    # the other 34, and never unpublishes what we already fetched (Adam, 2026-09-19).
+    # So the decline is re-raised as an ordinary Exception: `attempt()` records it
+    # as that city's reason, the builder carries that city forward, and NOTHING
+    # IS FETCHED from the host either way, which is the whole of what a refusal
+    # asks for. The catch above is not widened by this and no gate becomes
+    # catchable.
+    try:
+        require_robots_once(url, UA["User-Agent"], headers=UA,
+                            label="wi-alderperson-scraper")
+    except SystemExit:
+        # `require_robots_allowed` prints the verdict and exits 1, so the
+        # exception itself carries only the status code — the first version of
+        # this recorded "RuntimeError: 1" as Horicon's reason, which tells the
+        # weekly PR's reviewer nothing about which host or why. The host and the
+        # verdict are named here instead, because the reason travels into
+        # `failures` and is the only thing a reviewer sees.
+        raise RuntimeError(
+            "robots.txt declined for %s — see the FAIL line above for the "
+            "verdict; nothing was fetched from it"
+            % (urllib.parse.urlsplit(url).hostname or url))
     last = None
     for i in range(tries):
         try:
@@ -2103,6 +2239,118 @@ def as_member_lists(members):
     return out
 
 
+# ------------------------------------------------------------------ Franklin
+def scrape_franklin():
+    """"NAME, Aldermanic District N", one line per seat, six districts.
+
+    The page states its own size — "comprised of the Mayor and 6 members
+    representing the 6 Aldermanic Districts" — and lists the six district
+    headings separately from the six name lines, so a parse that read the
+    headings would find six districts and nobody. The name comes from the line
+    that carries both.
+    """
+    page = fetch(FRANKLIN_INDEX)
+    flat = re.sub(r"<[^>]+>", "|", H.unescape(page))
+    members = {}
+    for m in re.finditer(r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})"
+                         r",\s*Aldermanic District\s+(\d{1,2})\b", flat):
+        _put("franklin", members, "%02d" % int(m.group(2)),
+             {"name": " ".join(m.group(1).split())})
+    return _seats_or_die("franklin", members, 6, page,
+                         ("Aldermanic District N",
+                          r"Aldermanic District\s+\d{1,2}\b")), FRANKLIN_INDEX
+
+
+# ----------------------------------------------------------------- Greenfield
+def scrape_greenfield():
+    """A table of cells, each "<a>NAME</a>, District N Alderperson".
+
+    THE ARIA-LABEL NAMES THE WRONG PERSON ON ONE OF THE FIVE and is never read.
+    District 1's cell links a directory entry whose `aria-label` is "Denise
+    Collins Opens in new window" while the link TEXT reads "Andrew Drzewiecki"
+    (measured 2026-10-01) — the city's own label left behind by a change of
+    member. The link text is what the city maintains and what a reader sees, so
+    that is what ships; an accessibility attribute is not a roster column.
+    The name also nests inside a `<strong>` on that one cell and not on the
+    others, so the tags are stripped rather than matched.
+    """
+    page = fetch(GREENFIELD_INDEX)
+    members = {}
+    # The separator between the link and the heading is not always plain text:
+    # District 1's name nests inside a `<strong>`, so a closing tag sits between
+    # them and a `[^<>]` gap read 4 of 5 (the count guard caught it). Closing
+    # tags, entities, commas and space are allowed through; an OPENING tag is
+    # not, because that would let the next cell's link pair with this heading.
+    for m in re.finditer(r"(?is)(<a\b[^>]*>.{0,160}?</a>)"
+                         r"(?:</[a-z][^>]*>|&nbsp;|[\s,]){0,6}"
+                         r"District\s+(\d{1,2})\s+Alderperson", page):
+        name = " ".join(re.sub(r"(?s)<[^>]+>", " ",
+                               H.unescape(m.group(1))).split())
+        if not name:
+            raise SystemExit("greenfield: district %s links no name"
+                             % m.group(2))
+        entry = {"name": name}
+        href = re.search(r'href="([^"]+)"', m.group(1))
+        if href:
+            entry["url"] = urllib.parse.urljoin(GREENFIELD_INDEX,
+                                                H.unescape(href.group(1)))
+        _put("greenfield", members, "%02d" % int(m.group(2)), entry)
+    return _seats_or_die("greenfield", members, 5, page,
+                         ("District N Alderperson",
+                          r"District\s+\d{1,2}\s+Alderperson")), GREENFIELD_INDEX
+
+
+# -------------------------------------------------------------------- Muskego
+def scrape_muskego():
+    """"District N Alderman - NAME", seven districts, one line each.
+
+    THE PAGE'S SIDEBAR NAMES FOUR OTHER DISTRICTS — Big Muskego Lake, Little
+    Muskego Lake and the Muskego Norway School District — so a parse keyed on
+    the word district alone would read lake districts as council seats. The
+    pattern requires the number and the word Alderman together.
+    """
+    page = fetch(MUSKEGO_INDEX)
+    flat = re.sub(r"<[^>]+>", "|", H.unescape(page))
+    members = {}
+    for m in re.finditer(r"District\s+(\d{1,2})\s+Alderman\s*[-\u2013]\s*"
+                         r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})",
+                         flat):
+        _put("muskego", members, "%02d" % int(m.group(1)),
+             {"name": " ".join(m.group(2).split())})
+    return _seats_or_die("muskego", members, 7, page,
+                         ("District N Alderman - NAME",
+                          r"District\s+\d{1,2}\s+Alderman")), MUSKEGO_INDEX
+
+
+# ------------------------------------------------------------------ West Bend
+def scrape_west_bend():
+    """"District N" heading, then "NAME, District N Alderman", then the seat
+    e-mail districtN@westbendwi.gov — eight districts.
+
+    The city writes Alderman, Alderwoman and "Council President, District 4
+    Alderman" on the same page, so the title is read loosely and the DISTRICT
+    number inside the name line is what keys the seat; the e-mail is matched on
+    its own district number rather than on position, which is what stops a
+    missing line sliding every address up one seat.
+    """
+    page = fetch(WEST_BEND_INDEX)
+    flat = re.sub(r"<[^>]+>", "|", H.unescape(page))
+    members, mails = {}, {}
+    for m in re.finditer(r"district(\d{1,2})@westbendwi\.gov", flat, re.I):
+        mails["%02d" % int(m.group(1))] = m.group(0).lower()
+    for m in re.finditer(r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})"
+                         r",\s*(?:[A-Za-z ]{0,24},\s*)?District\s+(\d{1,2})\s+"
+                         r"Alder(?:man|woman|person)", flat):
+        key = "%02d" % int(m.group(2))
+        entry = {"name": " ".join(m.group(1).split())}
+        if key in mails:
+            entry["email"] = mails[key]
+        _put("west bend", members, key, entry)
+    return _seats_or_die("west bend", members, 8, page,
+                         ("District N Alderman",
+                          r"District\s+\d{1,2}\s+Alder")), WEST_BEND_INDEX
+
+
 def main():
     argv = sys.argv[1:]
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT
@@ -2149,6 +2397,11 @@ def main():
             ("55750", "Neenah", 3, scrape_neenah),
             # the partially-filled district, 2026-09-25
             ("59250", "Oconomowoc", 4, scrape_oconomowoc),
+            # the tranche of 2026-10-01, aimed at the done standard's city tier
+            ("27300", "Franklin", 6, scrape_franklin),
+            ("31175", "Greenfield", 5, scrape_greenfield),
+            ("55275", "Muskego", 7, scrape_muskego),
+            ("85350", "West Bend", 8, scrape_west_bend),
     )
     for code, name, districts, fn in COVERED:
         result, reason = attempt(name, fn)

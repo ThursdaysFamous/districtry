@@ -38,14 +38,18 @@ import sys
 import time
 
 import requests
-from scraper_common import make_fail, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    make_fail,
+    UA_ROSTER_BOT,
+    output_path,
+)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
 
 SOURCE_URL = "https://hancockcounty-il.gov/county-board-members/"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 60
 MAX_RETRIES = 3
@@ -143,7 +147,7 @@ def parse(page):
 
 
 def main():
-    out_path = sys.argv[1] if len(sys.argv) > 1 else "hancock-board-raw.json"
+    out_path = output_path("hancock-board-raw.json")
     roster = parse(fetch(SOURCE_URL))
     total = sum(len(v) for v in roster.values())
     payload = {"sourceUrl": SOURCE_URL, "districts": roster}

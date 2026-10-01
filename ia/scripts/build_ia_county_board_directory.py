@@ -51,6 +51,7 @@ def main():
         geo = json.load(f)
     seats = {}
     plans = {}
+    drawn = {}
     fips_by_county = {}
     for feat in geo["features"]:
         p = feat["properties"]
@@ -73,7 +74,37 @@ def main():
                 % (county, seats[county], p["NUMDISTRICTS"])
             )
         seats[county] = p["NUMDISTRICTS"]
+        drawn.setdefault(county, set()).add(p["DISTRICT"])
         fips_by_county[county] = p["FIPS"]
+
+    # A SEAT COUNT TAKEN FROM A COLUMN WHEN THE FILE ITSELF DRAWS THE ANSWER.
+    # `seats` came from the state's `NUMDISTRICTS` attribute alone, and for one
+    # county that attribute contradicts its own file: WARREN draws five numbered
+    # district polygons and says NUMDISTRICTS 3. The figure is not cosmetic --
+    # `build_ia_county_officers.py` withholds a whole board when the ISAC
+    # directory's supervisor count disagrees with it, so Warren's five
+    # supervisors were withheld, with the reason naming the geometry, on the
+    # strength of a column the geometry's own polygons disprove.
+    #
+    # For a county that draws NUMBERED districts the polygon count IS the seat
+    # count and nothing has to be believed. For an at-large county the file
+    # draws one polygon covering the whole county and the attribute is the only
+    # statement of the board's size, so it is what is read -- which is why 42 of
+    # the 43 counties whose polygon count differs from their attribute are not
+    # disagreements at all.
+    #
+    # THE DISAGREEMENT IS PRINTED RATHER THAN SMOOTHED. A county whose two
+    # statements differ is a finding about the state's layer, and a build that
+    # quietly preferred one would hide the next one.
+    for county, labels in sorted(drawn.items()):
+        numbered = {d for d in labels if str(d).strip().isdigit()}
+        if not numbered:
+            continue
+        if len(numbered) != seats[county]:
+            print("  SEATS     %-15s draws %d numbered district(s) and says "
+                  "NUMDISTRICTS %d -- the polygons decide"
+                  % (county, len(numbered), seats[county]), file=sys.stderr)
+        seats[county] = len(numbered)
 
     try:
         with open(CACHE) as f:

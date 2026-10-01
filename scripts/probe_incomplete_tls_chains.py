@@ -19,6 +19,29 @@ reachable from this project's network". Gallatin shipped the same afternoon as
 the 76th county. A blocker recorded from a failed fetch is worth re-testing this
 way before anybody writes to a clerk about it.
 
+NOT GATED ON robots.txt, AND THE REASON IS THE HANDSHAKE RATHER THAN THE HOST,
+which is aia_bundle.py's argument and is carried here in full rather than by
+pointer so it cannot read as an exemption extended by analogy. What this
+MEASURES is whether a TLS chain completes. It asks each host for `/`, throws the
+body away (`-o /dev/null`) and keeps the status code and the certificate, so
+there is no content it takes and no link it follows; what it reports is the
+handshake and the leaf's own AIA url.
+
+And gating it would be circular in exactly the case it exists for. Its subject
+is the set of hosts whose chain cannot be completed by a plain client — so their
+robots.txt cannot be read either, by this reader or any other, until the
+intermediate is in hand, which is the thing this probe is run to discover. An
+unreachable robots.txt disallows under RFC 9309 2.3.1.4, so a gated version of
+this file would refuse every host it was pointed at and measure nothing. The one
+real class of unreadable policy has its own home per HOST in
+scraper_common.ROBOTS_DEFERRED_HOSTS, and this is not that class: these hosts
+publish a readable policy the moment their chain is completed, and every scraper
+that goes on to READ one of them is gated in full and passes the completed
+bundle to the robots read (il_county_commissioners_scraper.py, and the three
+hosts PINNED_CHAINS names in probe_robots_verdicts.py).
+
+THE TEST IS WHETHER SOMEBODY'S PAGES ARE BEING READ, never which host answers.
+
 WHAT IT NEVER DOES. It does not disable verification, and neither should
 anything that acts on its output. When the chain is broken it reads the leaf's
 own AIA caIssuers URI, downloads that certificate, appends it to the trust store

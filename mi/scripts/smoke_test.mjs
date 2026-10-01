@@ -49,11 +49,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "42.73370,-84.55530"; // the Michigan State Capitol, downtown Lansing (Ingham County)
-const OFFLINE = ["county", "us-house", "mi-senate", "mi-house", "county-commissioner"];
-const EXPECT_DISTRICT = { "county": "Ingham County", "us-house": "7", "mi-senate": "21", "mi-house": "77", "county-commissioner": "9" };
-const NEGATIVE_POINT = "41.65280,-83.53790"; // downtown Toledo, Ohio — south of the Michigan line and inside permalink_gate's minLat (41.55), so the point is still selectable; measured to miss all five ANCHOR layers (phase 3's four live TIGERweb fabric layers are deliberately not anchors — anchors are pre-built and election-stable)
+const OFFLINE = ["county", "us-house", "mi-senate", "mi-house", "county-commissioner", "mi-court-of-appeals", "mi-circuit-court", "mi-isd"];
+const EXPECT_DISTRICT = { "county": "Ingham County", "us-house": "7", "mi-senate": "21", "mi-house": "77", "county-commissioner": "9", "mi-court-of-appeals": "Court of Appeals District 4", "mi-circuit-court": "30th Circuit Court", "mi-isd": "Ingham ISD" };
+const NEGATIVE_POINT = "41.65280,-83.53790"; // downtown Toledo, Ohio — south of the Michigan line and inside permalink_gate's minLat (41.55), so the point is still selectable; measured to miss all eight ANCHOR layers (phase 3's four live TIGERweb fabric layers are deliberately not anchors — anchors are pre-built and election-stable)
 const APP_NAME = "districtry Michigan";
-const EXPECT_LAYERS = 15;
+const EXPECT_LAYERS = 18;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -780,45 +780,70 @@ try {
       await page.close();
     }
 
-    // WARREN, the third city on this dispatcher — one check, because the
-    // entry is deliberately thin: it names the ward and no member, since the
-    // city publishes no roster (gap `warren-council-roster`). What this proves
-    // is that a THIRD entry in the table still resolves to its own city rather
-    // than being shadowed by the two ahead of it in the OR.
+    // WARREN AND FLINT name their members from the city's own council page
+    // (mi-municipal-officials.json). Each point asserts its OWN seat's member
+    // is named and that no other seat's member is, because a card that named
+    // the whole council at every point would pass a check that only looked
+    // for the right name. Warren also elects two members at large, who are
+    // named on every Warren card under their own heading. The expected names
+    // come from the shipped roster, so a weekly refresh does not break this.
+    // Each city is also the check that a later entry in the dispatcher's OR
+    // still resolves to its own city rather than being shadowed.
     {
-      const page = await booted(context, `${BASE}#point=42.50057,-83.00112&layers=city-ward`);
-      const card = await cardText(page, "city-ward");
-      const pill = await page.evaluate(() => {
-        const el = document.getElementById("card-city-ward");
-        const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
-        return p ? p.textContent.trim() : null;
-      });
-      check("city-ward resolves a Warren point to its own ward",
-        pill === "Ward 3", `pill=${JSON.stringify(pill)}`);
-      check("Warren's card names no member and says why",
-        /publishes its ward map but no list/.test(card.text || "") &&
-        !/City Commissioner/.test(card.text || ""), (card.text || "").slice(0, 130));
-      await page.close();
-    }
+      const boards = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app",
+        "mi-municipal-officials.json"), "utf8"));
+      const CITY_POINTS = [
+        { city: "Warren", geoid: "2684000", pt: "42.50057,-83.00112", ward: "3", seat: "District 3" },
+        // Flint is the furthest down the dispatcher's OR, so this is also the
+        // check that the table has not started shadowing its tail. Its page
+        // carries an In Memoriam for a First Ward councilman who died in 2024,
+        // and the parser stops before it; the card must never name him.
+        { city: "Flint", geoid: "2629000", pt: "43.02123,-83.70302", ward: "5", seat: "Ward 5" },
+      ];
+      for (const c of CITY_POINTS) {
+        const board = boards[c.geoid];
+        const page = await booted(context, `${BASE}#point=${c.pt}&layers=city-ward`);
+        const card = await cardText(page, "city-ward");
+        const got = await page.evaluate(() => {
+          const el = document.getElementById("card-city-ward");
+          const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+          return {
+            pill: p ? p.textContent.trim() : null,
+            names: el ? [...el.querySelectorAll(".card-person-name")].map((n) => n.textContent) : [],
+          };
+        });
+        check(`city-ward resolves a ${c.city} point to its own ward`,
+          got.pill === `Ward ${c.ward}`, `pill=${JSON.stringify(got.pill)}`);
+        const mine = board ? board.members.filter((m) => m.seat === c.seat).map((m) => m.name) : [];
+        const atLarge = board ? board.members.filter((m) => m.seat === "At Large").map((m) => m.name) : [];
+        const others = board ? board.members.filter((m) => m.seat && m.seat !== c.seat && m.seat !== "At Large").map((m) => m.name) : [];
+        check(`${c.city} ${c.seat}'s own member is named, with the at-large members`,
+          mine.length > 0 && [...mine, ...atLarge].every((n) => got.names.includes(n)),
+          JSON.stringify(got.names));
+        check(`${c.city}'s card names no other seat's member`,
+          !others.some((n) => got.names.includes(n)) && !/Mays/.test(card.text || ""),
+          JSON.stringify(got.names));
+        await page.close();
+      }
 
-    // FLINT, the fourth entry — the one furthest down the dispatcher's OR, so
-    // this is also the check that the table has not started shadowing its tail.
-    {
-      const page = await booted(context, `${BASE}#point=43.02123,-83.70302&layers=city-ward`);
-      const card = await cardText(page, "city-ward");
-      const pill = await page.evaluate(() => {
-        const el = document.getElementById("card-city-ward");
-        const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
-        return p ? p.textContent.trim() : null;
+      // The City or Village card names the whole council for a city the
+      // roster carries, and keeps its "not named here" sentence for one it
+      // does not (Lansing, whose council page builds its list in the browser).
+      const page = await booted(context, `${BASE}#point=42.50057,-83.00112&layers=municipality`);
+      await cardText(page, "municipality");
+      const muni = await page.evaluate(() => {
+        const el = document.getElementById("card-municipality");
+        return el ? [...el.querySelectorAll(".card-person-name")].map((n) => n.textContent) : [];
       });
-      check("city-ward resolves a Flint point to its own ward",
-        pill === "Ward 5", `pill=${JSON.stringify(pill)}`);
-      // Flint's council page names exactly one person beside a ward and he died
-      // in 2024. Nobody is named on this card, deliberately.
-      check("Flint's card names nobody",
-        /no current list of who holds each seat/.test(card.text || "") &&
-        !/Mays/.test(card.text || ""), (card.text || "").slice(0, 130));
+      const warren = boards["2684000"].members.map((m) => m.name);
+      check("the City or Village card names Warren's whole council",
+        warren.every((n) => muni.includes(n)) && muni.length === warren.length, JSON.stringify(muni));
       await page.close();
+      const lansing = await booted(context, `${BASE}#point=42.73370,-84.55530&layers=municipality`);
+      const lcard = await cardText(lansing, "municipality");
+      check("a city the roster does not carry keeps its 'not named here' sentence",
+        /Not named here/.test(lcard.text || ""), (lcard.text || "").slice(0, 130));
+      await lansing.close();
     }
 
     // BATTLE CREEK, the fifth entry, and the one whose card is built to defeat
