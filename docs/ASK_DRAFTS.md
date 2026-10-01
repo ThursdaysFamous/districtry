@@ -410,6 +410,67 @@ and followed up on 2026-08-16, and Jasper (2026-08-17) and Hardin (2026-08-24) a
 - **Ask 12's follow-ups** to Ford, Christian and Knox counties are likewise recorded as
   held, and all three went on **2026-09-04**.
 
+### Six more replies landed on the afternoon of 2026-10-01, and two of them answer an ask outright
+
+Read at 18:00 UTC. Every one of these arrived **after** the letters recorded above went out, so
+this is the first pass over them.
+
+| Who answered | What they said | Whose question it was |
+|---|---|---|
+| Ozaukee County Clerk (WI), 17:33 | Port Washington Ward 9 is in aldermanic district 1 and county supervisor district 4 | the six-county ward-to-district ask |
+| Calumet County Clerk (WI), 16:56 | Brillion elects its council **at large**, and the two wards its filing omits are **bare land** rather than missing data | the same ask |
+| Kentucky AOC, 17:16 | the join **is** published, two ways: a page per county, and a directory search that returns a table | the Kentucky judges ask, answered |
+| Hardin County Clerk (IL), 16:15 | three commissioners, named, elected countywide | an eight-week-old thread, now closed |
+| Oklahoma State Election Board, 16:52 | the warehouse is downloadable, and permission and modification questions **belong to the OU Center for Spatial Analysis**, not to the board | the Oklahoma precinct ask, redirected |
+| NY Department of State, 17:26 | the Department takes its municipal contact information **from the Comptroller**, and is not sure the Comptroller can release it | the New York local-roster ask, redirected |
+
+**TWO OF THE SIX ARE REDIRECTIONS AND A REDIRECTION IS NOT A REFUSAL.** Both name the office
+that actually holds the thing, which is more than silence gives and more than a no gives. The
+Oklahoma board's answer also settles a question the fleet's own rule would otherwise have to
+argue: the mapping centre is the **state's contracted mapping provider** rather than an
+independent university dataset, which is why its warehouse is where the board's own maps page
+sends a reader.
+
+**AN ACKNOWLEDGEMENT IS NOT SENT WHERE A FOLLOW-UP MIGHT BE NEEDED IN THE SAME BREATH.**
+Ozaukee, Calumet and Hardin each answered completely, so each has a short reply drafted saying
+what will be published and crediting the office — which is a correction opportunity, and the
+reason these are worth sending at all. Kentucky and Oklahoma have none yet: until somebody
+reads the two pages the AOC named and confirms they carry the circuit **number** rather than
+only the county, a thank-you would be claiming an answer that has not been checked, and a
+second message a day later is a worse use of the correspondent than one message that waits.
+
+**NEW YORK'S REDIRECTION LEAVES A QUESTION ONLY THE PERSON WHO ANSWERED CAN SETTLE**, and it is
+drafted: does the information the Department holds **name the people in office**, or is it
+office contact details without names? Municipal contact information and a roster of
+officeholders are not the same thing, and the answer decides whether the Comptroller is worth
+writing to at all. Asking him costs one line; asking the Comptroller for the wrong dataset
+costs that office real work.
+
+### A DUPLICATE ACKNOWLEDGEMENT WAS DRAFTED AND WITHDRAWN, AND THE CAUSE IS A SWEEP THAT DID NOT READ THE DRAFT FOLDER FIRST
+
+Hardin County's reply already had an acknowledgement waiting in the mailbox, written half an
+hour earlier. A second one was drafted anyway, because the sweep read the **inbox** for new
+replies and did not check the **draft** folder for answers already written to them — so a reply
+that had been handled looked exactly like a reply that had not. The duplicate was deleted
+minutes after being created, which is a withdrawal of this session's own mistake rather than a
+judgement about a draft the operator was waiting on; those are still his to delete.
+
+**SWEEP THE INBOX AND THE DRAFT FOLDER IN THE SAME PASS.** A reply is outstanding only if
+nothing is drafted to it, and the draft folder is the only place that says so.
+
+### A COUNT CARRIES THE MINUTE IT WAS READ, OR IT CARRIES NO MINUTE AT ALL
+
+Twice on 2026-10-01 a draft-folder figure was reported with a reading time attached when it had
+been reached by adding to the previous figure instead. Both times the numbers happened to be
+right, which is the dangerous part: the figures survived and the method did not exist. The
+second instance was the worse one, because the first had already been corrected an hour before
+and the correction asserted a method that was then not used.
+
+**The folder at 18:00 UTC held 32 drafts, 28 of them addressed and 4 blank.** One of the 28 was
+then deleted as the duplicate described above, so 31 and 27 is arithmetic and is labelled as
+arithmetic — the mailbox was not re-read after the deletion, and no time is attached to those
+two numbers.
+
 ---
 
 ## Ask 1 — Iowa county officers — **WITHDRAWN 2026-09-03, never sent**
