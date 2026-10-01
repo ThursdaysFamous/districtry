@@ -61,83 +61,94 @@ citable yes or no at the end of it.
 
 ---
 
-## Which asks have a draft in the operator's mailbox
+## The mailbox record — what has been sent, what is drafted, what replied
 
-**39 drafts were created in the operator's Gmail on 2026-10-01, one per recipient.
-NONE WAS SENT, and no send date is recorded here or anywhere else as a result** — a
-draft in a mailbox is the same state as a draft in this file, one step closer to the
-operator's hand. Rule 1 above is unchanged: the operator sends. Rule 2 is unchanged
-too: the day a letter goes, its date is written in the gap record and here, and not
-before.
+**THE SENT FOLDER IS THE EVIDENCE OF WHAT WAS SENT. THIS FILE IS NOT.** That is the
+lesson of 2026-10-01 and it is the reason this section exists in this shape. Rule 2
+above — record the send date the day it goes — is a rule about writing the date down,
+and for months nobody checked it the other way round: eleven letters in this file said
+`NOT YET ASKED` or `DRAFTED … Not sent` about mail that had already gone, and two
+letters were sent that afternoon that introduced the project to clerks who had already
+been written to twice. **Before drafting to any office, search the sent folder for its
+address and its domain.** A ledger entry is a hypothesis about the mailbox.
 
-The drafts carry each letter's wording from this file verbatim, with `<YOUR NAME>` and
-`<YOUR E-MAIL>` filled in and the Markdown removed, because a mail client renders
-neither.
+Every project letter is drafted in the operator's Gmail as well as written here, on his
+instruction of 2026-10-01: *"All emails should be drafted in my mailbox along side the
+repo."* **The operator sends. No agent sends.** The table below is the record of which
+letters exist as drafts, which have gone, and what came back.
 
-| ask | recipients drafted |
-|---|---|
-| Ask 9 — Bureau County | 1 |
-| Ask 10 — Clark County | 1 |
-| Ask 14 — Jones County, Iowa | 1 |
-| Ask 15 — City of Marion, Iowa | 1 |
-| Ask 16 — four Illinois city clerks | 4 |
-| Ask 17 — League of Wisconsin Municipalities | 1 |
-| Ask 18 — Grundy County GIS | 1 |
-| Ask 19 — Whiteside County GIS | 1 |
-| Ask 20 — six Wisconsin county clerks | 6 |
-| Ask 21 — Knox County GIS | 1 |
-| Ask 23 — Logan County Clerk | 1 |
-| Ask 26 — Henderson County Clerk | 1 |
-| Ask 27 — Christian County Clerk | 1 |
-| Ask 28 — Will County Clerk | 1 |
-| Ask 29 — Clinton and Franklin County Clerks | 2 |
-| Ask 30 — twelve Iowa county auditors | 12 |
-| Ask 31 — Worth County Auditor | 1 |
-| Ask 32 — City of Milwaukee GIS | 1 |
-| Ask wi-town-boards — Wisconsin Towns Association | 1 |
+### Sent 2026-10-01
 
-**Ask 30's twelve addresses came from `ia/data/app/ia-county-auditors.json` and that is
-worth stating, because the ask's own note says Iowa auditor mailboxes "are patterned
-enough that one could be guessed, and guessing is what this file exists to prevent".**
-Nothing was guessed: that roster's addresses are scraped from the auditors' own
-association directory and from each county's card on `sos.iowa.gov`, which is a
-published source rather than a pattern. The same applies to Ask 23's Logan County
-address, taken from `il/data/app/il-county-clerks.json`, which the ask section itself
-omits.
+Thirty-six letters went out that afternoon. Counted from the sent folder, not from this
+file:
 
-### What was deliberately not drafted
+| recipient | letter | prior contact | reply |
+|---|---|---|---|
+| Worth County Auditor (IA) | city officials page | none | — |
+| Wisconsin Towns Association | town board members | none | — |
+| City of Milwaukee GIS | permission to read Map Milwaukee | none | — |
+| Palo Alto, Montgomery, Lee, Ida, Washington, Sioux county auditors (IA) | which supervisor represents which district | none | — |
+| Osceola County Auditor (IA) | the same | none | **ANSWERED same day**: all five districts paired with their supervisor |
+| Dickinson County Auditor (IA) | the same | none | **ANSWERED same day**: a bare "no", which the letter itself had offered as a complete answer. It settles that the office will not supply the pairing; it says NOTHING about whether the board is elected by district, and must not be read as if it did |
+| Black Hawk, Cass, Guthrie county auditors (IA) | the same | none | — |
+| Calhoun County Auditor (IA) | the same | none | — |
+| Pottawattamie, Tama, Wright county auditors (IA) | how many supervisors, and who | none | — |
+| Franklin County Clerk (IL) | which Public Square address the board meets at | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
+| Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
+| nine Michigan city and township clerks | may an automated reader see your board page | none | — |
+| Calumet (Brillion), Brown (Bellevue), Outagamie (New London), Pepin (Durand) county clerks (WI) | ward-to-district filing | none | Brown **ANSWERED same day**: Bellevue "appear to be at large", and pointed at the village clerk |
+| Chillicothe, West Peoria, Galva city clerks (IL) | ward boundaries | none | — |
+| Oklahoma State Election Board | precinct maps in the CSA Data Warehouse | none | — |
+| Cherokee Nation Election Commission | council district maps | none | — |
 
-| letter | why not |
-|---|---|
-| Ask 11 — CCGISC | No recipient address is recorded in this file. |
-| Asks 13, 25, 33, `wi-oshkosh-council`, `ia-pottawattamie-tama-wright-boards` | The section argues the ask and records its recipient, but no letter wording has been written yet. Drafting one would be writing the letter, which is its author's to do. |
-| Ask `wi-city-council-pages` — Beloit, Janesville, Wausau, Wauwatosa, Mequon | No e-mail address for any of the five clerks is recorded anywhere in the repository. `wi/data/app/wi-municipal-clerks.json` carries their names and telephone numbers and no mailbox. |
-| Ten Michigan clerks; Gurnee; Urbana; a New York local-officials letter | Named as outstanding in a coordinating session's notes, but **no letter for any of them exists in this repository**, so there was nothing to draft. |
-| Every ask this file marks `ASKED <date>` | Already sent. |
-| `docs/PRESS_LIST.md` | A separate discipline with its own send rules; left untouched. |
+**Four of those were sent twice**, six or seven minutes apart, because two sessions
+drafted the same letter from the same source and both copies went: Black Hawk, Cass,
+Dickinson and Guthrie county auditors. An apology to each is drafted. **Calhoun was sent
+once** and its second copy was caught as a draft before it went — the first write-up of
+this said five counties and that was an overcount, read off the draft folder rather than
+off the sent folder, which is the same error this section opens by naming.
 
-### Two places where this file and the mailbox disagreed
+**Follow-up clocks start from the dates above**: a first follow-up at about three weeks
+(2026-10-22) and a second about two weeks after that (2026-11-05), then `UNRESPONSIVE`,
+which is a claim about the ask and never about the source.
 
-Both are recorded rather than quietly worked around, and both are the failure the Scott
-rule in rule 2 above exists to prevent — a ledger saying "held" about a letter that has
-already gone.
+### Drafted and waiting in the mailbox
+
+| letter | prior contact | state of the draft |
+|---|---|---|
+| Bureau County GIS (Christine Anderson) | long thread; she sent a user agreement and a $150 invoice 2026-08-12 | correctly written as a reply on her own thread |
+| Clark County Clerk | asked 2026-08-05, followed up 08-16, **ANSWERED 08-18** ("The County Board is elected by districts. I do not have maps available") | correctly written as a follow-up |
+| Knox County GIS (Taiwo Agbaje) | long thread; he sent the precinct shapefile 2026-09-08 | correctly written as a continuation, opening with thanks for that file |
+| Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members |
+| Henderson County Clerk | **asked 2026-07-21 (seal), 2026-08-05 and 08-16, no reply** | REWRITTEN 2026-10-01: cites them and says the August questions are answered |
+| Logan County Clerk | **same mailbox written to 2026-07-21** about the county seal | REWRITTEN 2026-10-01: opens by naming that letter |
+| Will County Clerk | none | first contact, correct |
+| Grundy County GIS | the county CLERK was written 2026-07-21; this is a different mailbox | first contact to this office, correct |
+| Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
+| Colona, Marion (IA) city clerks; Jones County Auditor; League of Wisconsin Municipalities; Lafayette (Cuba City) and Ozaukee (Port Washington) county clerks; Kentucky Administrative Office of the Courts; Burton (MI) clerk; City of Beloit clerk; City of Oshkosh clerk; WinGIS | none for any | first contact, correct |
+| seven apologies — Clinton, Franklin, and the four double-sent Iowa auditors | see above | drafted 2026-10-01 |
+| Calhoun County Auditor | sent 2026-10-01 | **a duplicate of the sent letter**; the draft is marked do-not-send and awaits the operator's deletion |
+
+**Four Wisconsin city-clerk drafts were WITHDRAWN on 2026-10-01** — Janesville, Wausau,
+Wauwatosa and Mequon — because those sites turn out to permit this project's reader and
+no letter is owed. Withdrawn is not unanswered.
+
+### Still with no letter to draft
+
+A letter cannot be put in the mailbox until somebody writes it. These have a recipient
+and an argument here and no wording: Asks 13, 25, 33, `wi-oshkosh-council` and
+`ia-pottawattamie-tama-wright-boards`. Ask 11 (CCGISC) has wording and no recipient
+address. The thirteen Illinois county letters that exist only in state notes are being
+rewritten as follow-ups, because every one of them bar Scott was asked in early August
+and followed up on 2026-08-16, and Jasper (2026-08-17) and Hardin (2026-08-24) answered.
+
+### Two earlier disagreements, kept because they are the reason for this section
 
 - **Ask 8** reads `DRAFTED IN THE OPERATOR'S MAILBOX 2026-09-04 … Not sent`, and the
-  mailbox's sent folder carries *"Is there a statewide list of Iowa city clerks?"* to
+  sent folder carries *"Is there a statewide list of Iowa city clerks?"* to
   `elections@sos.iowa.gov` on **2026-09-04**.
 - **Ask 12's follow-ups** to Ford, Christian and Knox counties are likewise recorded as
   held, and all three went on **2026-09-04**.
-
-Neither was re-drafted. Whoever next touches those two asks should establish the real
-dates from the sent folder and write them in, here and in
-`docs/DATA_LAYER_GUIDEBOOK.md`.
-
-### A note on the eight Illinois drafts from 2026-09-04
-
-Asks 9 to 13 are recorded as having been "queued in Gmail" on 2026-09-04. No such
-drafts were in the mailbox on 2026-10-01 — the mailbox held one unrelated draft and
-nothing else — so those queued drafts no longer exist. Asks 9 and 10 were recreated in
-this batch; 11 and 13 are in the skip list above for their own reasons.
 
 ---
 

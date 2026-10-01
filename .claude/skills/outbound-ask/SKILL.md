@@ -24,8 +24,19 @@ The ledger is a hypothesis about the mailbox, not a record of it: Pope's
 record said NOT YET ASKED across three sends, and a near-duplicate fourth was
 drafted off it and caught only because the operator recognised the address.
 Grep `docs/DATA_LAYER_GUIDEBOOK.md`, `docs/ASK_DRAFTS.md` and the instance's
-`WATCH.md` for the office, and ask the operator to search the sent mail for
-its address. Write the real dates back before drafting anything.
+`WATCH.md` for the office, and write the real dates back before drafting
+anything.
+
+**SEARCH THE SENT FOLDER, BY ADDRESS AND BY DOMAIN, AND TRUST IT OVER THIS
+REPOSITORY.** Where the Gmail connector is available that is one query
+(`before:<today> in:anywhere {to:<domain> from:<domain>}`) and it is not
+optional: on 2026-10-01 eleven letters this repo called unsent had already
+gone, and two went out that afternoon introducing the project to clerks
+written to twice in August. Search by DOMAIN as well as by address — the same
+county answers at a clerk, a GIS and an assessor mailbox, and a letter to one
+should not read as a first approach to the county. Bare keywords match
+personal mail and tell you nothing; use `to:`/`from:`. The record of what has
+been sent, drafted and answered is `docs/ASK_DRAFTS.md` § "The mailbox record".
 
 ## 1. An ask is the residue of a probe, never a first move
 
