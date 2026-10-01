@@ -2754,3 +2754,65 @@ say the state does not publish it rather than that we did not find it.
 there is nothing yet to license. No individual is named. And no county or town is named,
 because this is a question about whether a statewide product exists, not a complaint about
 any local government's website.
+
+**The letter.**
+
+> Subject: Is there a published directory of local elected officials in New York?
+>
+> Dear Division of Local Government Services,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which civic
+> districts cover a given address and who represents them there. New York is one of eight
+> states it answers for, at districtry.com/ny/.
+>
+> Inside New York City it names the Council Member, the borough officials and the community
+> education council for a point. Outside the city it draws the county, the city, town or
+> village, the school district and the legislative districts, and for almost all of that
+> ground it can name nobody, so a reader is told which county and town they live in and not
+> who governs either.
+>
+> My question is simply whether the Department, or the Comptroller's office, holds a
+> directory of the people currently holding local elective office — county legislators and
+> supervisors, city council members, town board members and village trustees — in any form,
+> including one that is not on the open-data portal.
+>
+> I looked before writing, so this is not a question you could answer by pointing me at a
+> search. The state open-data catalogue returns code-enforcement officials, grant awards,
+> lobbying filings and four directories of local government WEBSITES, and no list of
+> officeholders. The Comptroller's local-government pages publish financial filings and a
+> guide for newly elected officials. I have read the website your own county table publishes
+> for each of the 57 counties outside the city, and 43 of them answered.
+>
+> A no is as useful to me as a yes, and I would rather have it than keep looking. It means
+> the route is each county and each town one at a time, which is the work this project is
+> already doing in Illinois, and it lets the notes that tell our readers what is missing say
+> that the state does not publish it rather than that we did not find it.
+>
+> If a directory exists but is not something you can share, that is an answer too and I will
+> record it as such and not ask again.
+>
+> I am not asking about reuse terms or licensing, because there is nothing yet to license. If
+> there is a directory, I will come back about that separately.
+>
+> Thank you,
+>
+> <YOUR NAME>
+> districtry.com
+> <YOUR E-MAIL>
+
+**What each answer means.**
+
+| answer | what it settles |
+|---|---|
+| "yes, here it is" | The statewide route opens and most of New York's county, local and sub-county tiers close from one file. The three gap records come down to whatever the file does not carry. |
+| "it exists and we cannot share it" | `REFUSED` in the ledger, which counts straight away: the three gap records stand with the state's own answer as the reason, and the route goes county by county. |
+| "no such directory exists" | The best possible no. The statewide route closes for good, the records say the state does not publish it rather than that we did not find it, and nobody re-asks this in a year. |
+| "ask the counties and towns" | The same as the above in practice, and it also tells us which desk each one is, which is worth having before 160 letters. |
+| no reply after the follow-up cadence | `UNRESPONSIVE` in the ledger, thirty days after one follow-up — a claim about the ask and never about the state. |
+
+**Three things deliberately left out.** No individual is named, at either office. No county or
+town is named, because this is a question about whether a statewide product exists and not a
+complaint about any local government's website. And nothing is asked about the fourteen county
+sites that would not answer this project: those readings were taken in a sandbox whose own
+network accounts for most of them, and the fleet's rule is to re-measure from the build machine
+before writing any publisher off.
