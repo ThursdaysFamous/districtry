@@ -3238,7 +3238,32 @@ may already publish would be asking them to do work this project should be doing
 
 ## Ask 33 — New York State: is there a directory of local elected officials?
 
-> **ASKED 2026-10-01**, to the address and cc below, and read off the sent folder rather
+> **ASKED 2026-10-01 at 16:09 UTC AND ANSWERED AT 17:26 THE SAME DAY — and the answer is a
+> REDIRECTION, which earns the three New York levels nothing.** John Fatato, Administrative
+> Specialist 2 in the Department's Local Government Services, replied in two sentences: "The
+> Department of State receives our municipal contact information from OSC. I'm not sure if
+> they're able to provide it to you for these purposes." That names the holder and settles
+> nothing else. It is not one of the five answers tabled below, so a sixth row is added for
+> it; and it is **not a refusal**, so it starts no clock and the levels stay as they are.
+>
+> **The operator asked the follow-up himself at 18:04**, on the same thread, and it is the
+> right one: does the contact information the Department holds NAME the people in office, or
+> is it office details without names? A dataset of town-hall telephone numbers closes none of
+> these levels, so that answer decides whether writing to the Comptroller is worth doing at
+> all. He also said in that message that he will write to the Comptroller directly.
+>
+> **A LETTER TO THE COMPTROLLER WOULD NOT BE A FIRST APPROACH, and that is easy to get wrong
+> here**: `localgov@osc.ny.gov` was copied in on the original at 16:09, so that office has
+> already had the question in full and has not answered it. Any letter there cites the cc and
+> reads as a follow-up, never as an opening. **Nothing goes to the Comptroller until Mr.
+> Fatato answers**, because his answer may make the letter unnecessary.
+>
+> **Prior contact: none, and that was measured rather than assumed.** All of the operator's
+> mail was searched on 2026-10-01 for both domains and for the two offices by name, not just
+> the sent folder, and this thread is the only one. So the letter was correctly written as a
+> first approach.
+>
+> Read off the sent folder rather
 > than off this file. This is the one ask that belongs to the STATE rather than to 57
 > county clerks and a hundred town clerks, which is why it went first: if the answer is
 > yes, a single file closes most of New York's county and local tiers, and a hundred and
@@ -3343,6 +3368,7 @@ above says what the sent version keeps and drops, and the sent folder carries it
 | "no such directory exists" | The best possible no. The statewide route closes for good, the records say the state does not publish it rather than that we did not find it, and nobody re-asks this in a year. |
 | "ask the counties and towns" | The same as the above in practice, and it also tells us which desk each one is, which is worth having before 160 letters. |
 | no reply after the follow-up cadence | `UNRESPONSIVE` in the ledger, thirty days after one follow-up — a claim about the ask and never about the state. |
+| "we get it from the Comptroller and may not be able to share it" | **What actually came back, at 17:26 on the day it was asked.** It names the holder and answers neither question: not whether a directory of PEOPLE exists, and not whether it can be released. It earns nothing, starts no clock, and what it waits on is the follow-up already sent — does the Department's data name the people in office, or is it office details without names? |
 
 **Three things deliberately left out.** No individual is named, at either office. No county or
 town is named, because this is a question about whether a statewide product exists and not a
