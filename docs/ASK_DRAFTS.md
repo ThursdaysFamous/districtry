@@ -86,8 +86,9 @@ file:
 |---|---|---|---|
 | Worth County Auditor (IA) | city officials page | none | — |
 | Wisconsin Towns Association | town board members | none | — |
-| City of Milwaukee GIS | permission to read Map Milwaukee | none | — |
-| Palo Alto, Montgomery, Lee, Ida, Washington, Sioux county auditors (IA) | which supervisor represents which district | none | — |
+| City of Milwaukee GIS | permission to read Map Milwaukee | none | automatic acknowledgement only, saying the team is reviewing it. **An acknowledgement is not a permission** and the three builders stay on hold |
+| Palo Alto, Montgomery, Lee, Washington, Sioux county auditors (IA) | which supervisor represents which district | none | — |
+| Ida County Auditor (IA) | the same | none | **ANSWERED same day**, in plain text: districts 1, 2 and 3 with their supervisors' names |
 | Osceola County Auditor (IA) | the same | none | **ANSWERED same day**: all five districts paired with their supervisor |
 | Dickinson County Auditor (IA) | the same | none | **ANSWERED same day**: a bare "no", which the letter itself had offered as a complete answer. It settles that the office will not supply the pairing; it says NOTHING about whether the board is elected by district, and must not be read as if it did |
 | Black Hawk and Guthrie county auditors (IA) | the same | none | — |
@@ -95,9 +96,11 @@ file:
 | Pottawattamie, Tama, Wright county auditors (IA) | how many supervisors, and who | none | — |
 | Franklin County Clerk (IL) | which Public Square address the board meets at | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
-| nine Michigan city and township clerks | may an automated reader see your board page | none | Ypsilanti Township **ANSWERED same day**: the clerk is passing the request to the township's technology staff |
-| Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day**: the district numbers with their supervisors' names, plus a district map |
-| Calumet (Brillion), Brown (Bellevue), Outagamie (New London), Pepin (Durand) county clerks (WI) | ward-to-district filing | none | Brown **ANSWERED same day**: Bellevue "appear to be at large", and pointed at the village clerk |
+| nine Michigan city and township clerks | may an automated reader see your board page | none | Ypsilanti Township **ANSWERED same day**: the clerk was passing the request to the township's technology staff, and the correction reached her at 15:23. Lansing acknowledged automatically, with no content |
+| Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day** and NOT YET USABLE: the Auditor says the office keeps the district numbers with names, and sent them as two inline images with a 2022 district map attached, so no name can ship until it is read off a picture and confirmed |
+| Calumet (Brillion), Pepin (Durand) county clerks (WI) | ward-to-district filing | none | — |
+| Outagamie County Clerk (WI) | the New London filing | none | **ANSWERED same day**, settled: New London wards 10, 11 and 12 are all in Aldermanic District 5 |
+| Brown County Clerk (WI) | how Bellevue elects its board | none | **ANSWERED same day, HEDGED**: "They appear to be at large", with the village clerk's address and a question back about whether the village had been asked. A hedge is not a statement the village has made, so it settles nothing by itself |
 | Chillicothe, West Peoria, Galva city clerks (IL) | ward boundaries | none | — |
 | Oklahoma State Election Board | precinct maps in the CSA Data Warehouse | none | — |
 | Cherokee Nation Election Commission | council district maps | none | — |
@@ -142,12 +145,32 @@ which is a claim about the ask and never about the source.
 | Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
 | Colona, Marion (IA) city clerks; Jones County Auditor; League of Wisconsin Municipalities; Lafayette (Cuba City) and Ozaukee (Port Washington) county clerks; Kentucky Administrative Office of the Courts; Burton (MI) clerk; City of Beloit clerk; City of Oshkosh clerk; WinGIS | none for any | first contact, correct |
 | seven apologies — Clinton, Franklin, and the four double-sent Iowa auditors | see above | drafted 2026-10-01; Dickinson's and Cass's already sent |
-| three Michigan corrections — Shelby, Northville and Ypsilanti townships | written to earlier the same day | drafted 2026-10-01 as replies on their own threads |
+| three Michigan corrections — Shelby, Northville and Ypsilanti townships | written to earlier the same day | drafted 2026-10-01 as replies on their own threads; Ypsilanti's sent 15:23 |
+| five replies to offices that answered — Osceola, Ida, Cass, Outagamie, Brown | answered 2026-10-01 | drafted 2026-10-01 as replies on their own threads. Cass's asks for the pairing as text; Brown's answers the Clerk's own question and says the village will be asked to confirm |
 | Calhoun County Auditor | sent 2026-10-01 | **a duplicate of the sent letter**; the draft is marked do-not-send and awaits the operator's deletion |
 
 **Four Wisconsin city-clerk drafts were WITHDRAWN on 2026-10-01** — Janesville, Wausau,
 Wauwatosa and Mequon — because those sites turn out to permit this project's reader and
 no letter is owed. Withdrawn is not unanswered.
+
+### Replies are read for what they refuse, not for what they seem to settle
+
+Three of 2026-10-01's answers had to be read twice, and each one would have been
+mis-recorded on a first reading.
+
+- **Dickinson County's whole reply is the word "no".** The letter it answers had offered
+  a one-line no as a complete answer and had already said the map draws the county's
+  supervisor districts, so the refusal is of the district-to-supervisor pairing and says
+  NOTHING about whether the board is elected by district. A bare no takes its meaning
+  from the question.
+- **Cass County's answer arrived as a picture.** The Auditor states the office keeps the
+  pairing, which is the substantive answer, but the list itself is two inline images with
+  a 2022 map attached, so nothing can ship until a person reads the names off it. An
+  answer in hand is not a fact in the file.
+- **Brown County's answer is hedged.** "They appear to be at large" is a county officer's
+  impression of a village's own arrangement, offered with the village clerk's address and
+  a question back about whether we had asked her. Recording it as settled would publish an
+  inference as a statement.
 
 ### Eight Illinois counties owe no board-membership letter
 
