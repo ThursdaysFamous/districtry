@@ -290,7 +290,6 @@ UNWIRED_AT_SWEEP = frozenset("""
     scripts/probe_incomplete_tls_chains.py
     wi/scripts/build_rusd_school_board_districts.py
     wi/scripts/validate_sources.py
-    wi/scripts/wi_alderperson_scraper.py
     wi/scripts/wi_bluebook_municipal_scraper.py
     wi/scripts/wi_circuit_judges_scraper.py
     wi/scripts/wi_coa_scraper.py

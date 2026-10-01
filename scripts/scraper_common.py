@@ -34,7 +34,7 @@ UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
 caller, 66 of them measured or re-measured since — 61 on 2026-09-13 at the page a
 scraper reads rather than the directory above it, four county GIS services on
 2026-09-15, and www.cpsboe.org on 2026-09-23, when the Chicago school board roster
-began reading it: 226 serve UA_ROSTER_BOT a full page, 18 refuse it and answer the
+began reading it: 230 serve UA_ROSTER_BOT a full page, 18 refuse it and answer the
 browser string, and 7 refuse the `requests` STACK while serving the same token
 on the stdlib client, so on those a browser string is credited with a fix the
 stack made. (The first sweep read 203: 37 hosts had been probed at the first
@@ -44,8 +44,8 @@ page sat under; not one re-probe moved a host INTO a refusal.) Per file
 and the artifact rather than remembered): 101 files send a browser string; 62
 of them reach only hosts that serve the token a full page, 22 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 17 reach at least one host that refuses it -- and 263 of
-the 296 measured hosts are still reached by such a caller. `fetch_stdlib` came
+`requests` stack), and 17 reach at least one host that refuses it -- and 267 of
+the 300 measured hosts are still reached by such a caller. `fetch_stdlib` came
 OFF the browser-marker list on 2026-09-25, which is what moved these four: it is
 the CLIENT for two of the four rungs and sends whatever headers its caller
 passes, so naming it says nothing about the User-Agent. Two files were
