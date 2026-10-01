@@ -1,17 +1,17 @@
-name: Update six Illinois counties' board rosters
+name: Update eight Illinois counties' board rosters
 
-# Weekly refresh of Bond, Bureau, Cumberland, Jasper, Lawrence and Piatt from
+# Weekly refresh of Bond, Bureau, Cumberland, Fayette, Jasper, Jersey, Lawrence and Piatt from
 # each county's own board page.
 #
-# WHY SIX COUNTIES IN ONE JOB. They are one finding rather than six sources.
+# WHY EIGHT COUNTIES IN ONE JOB. They are one finding rather than eight sources.
 # Each was recorded as a county that had been written to about its board and had
 # not replied, and each had its members on its own website the whole time: the
 # ask was for a MAP FILE, and nobody went back to the site to ask who sits on
 # the board. `scripts/il_county_board_pages_scraper.py` records the measurement.
 #
-# WHY data/SOURCE. None of the six has county-board geometry, so no card reads
+# WHY data/SOURCE. None of the eight has county-board geometry, so no card reads
 # these rosters and `validate_index.py` would rightly refuse a file in data/app
-# that index.html does not reference. What they are for is the six
+# that index.html does not reference. What they are for is the eight
 # il/county-board/<county>.html pages, which name the members for a reader and a
 # crawler.
 
@@ -43,7 +43,7 @@ jobs:
           python-version: "3.x"
       - name: Install dependencies
         run: pip install -c scripts/requirements.txt requests
-      - name: Fetch the six counties' board pages
+      - name: Fetch the eight counties' board pages
         run: python3 scripts/il_county_board_pages_scraper.py --out il_boards.json
       - name: Rebuild rosters
         # The scraper refuses to emit a county that falls short of its own
@@ -75,7 +75,7 @@ jobs:
           git checkout -B "$branch" FETCH_HEAD
           python3 scripts/il_county_board_pages_scraper.py --out il_boards.json
           python3 scripts/build_il_county_board_pages.py il_boards.json
-          # The six per-county pages are GENERATED from the rosters this job just
+          # The eight per-county pages are GENERATED from the rosters this job just
           # rewrote, so regenerate them here or the smoke gate's
           # `build_county_pages.py --check` fails on this PR with pages naming
           # last week's members. The sitemap follows, because those pages are in
@@ -88,10 +88,10 @@ jobs:
           # `build_eam_status.py --check` fails on this PR.
           python3 scripts/build_eam_status.py
           git add il/data/source il/county-board il/county-board.html about.html sitemap.xml docs/EAM_STATUS.md
-          git commit -m "Update six Illinois counties' board rosters from their own board pages"
+          git commit -m "Update eight Illinois counties' board rosters from their own board pages"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
-            gh pr create --title "Update six Illinois counties' board rosters" \
-              --body "Automated weekly refresh of the Bond, Bureau, Cumberland, Jasper, Lawrence and Piatt county boards from each county's own board page (\`scripts/il_county_board_pages_scraper.py\` + \`build_il_county_board_pages.py\`), with the six \`il/county-board/<county>.html\` pages regenerated from them. None of these counties has board-district geometry, so no map card is affected. Review before merging." \
+            gh pr create --title "Update eight Illinois counties' board rosters" \
+              --body "Automated weekly refresh of the Bond, Bureau, Cumberland, Fayette, Jasper, Jersey, Lawrence and Piatt county boards from each county's own board page (\`scripts/il_county_board_pages_scraper.py\` + \`build_il_county_board_pages.py\`), with the eight \`il/county-board/<county>.html\` pages regenerated from them. None of these counties has board-district geometry, so no map card is affected. Review before merging." \
               --base main --head "$branch"
           fi

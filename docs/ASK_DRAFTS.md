@@ -3195,6 +3195,19 @@ different question.
 | Macoupin | 9 | readable district maps with no data behind them, and the precinct data does not say which district each precinct is in |
 | Marion | 5 | no district map, and Centralia and Salem are each split across three districts |
 
+**TWO OF THESE LETTERS WERE ABOUT TO TELL A CLERK SOMETHING UNTRUE, AND CHECKING THEM IS WHAT
+FOUND IT.** The Fayette letter opened "Fayette County's fourteen board members are named on the
+site" and the Jersey letter "Jersey County's twelve board members are named on the site, each
+with their district". Neither was true when written: both counties sat among the thirteen
+Illinois counties naming nobody. Reading each county's own board page on the afternoon of
+2026-10-01 showed that both publish every member with a district — Fayette with party and term
+besides — so the two sentences are true now, and the honest fix was to make the claim true
+rather than to soften it (`scripts/il_county_board_pages_scraper.py`). **THE CAUSE IS THE SAME
+ONE THIS WHOLE PASS TURNED UP**: these counties had been written to about their GEOMETRY, and
+nobody went back to ask whether they publish their MEMBERS, so what the site named and what the
+counties published had drifted apart with every check green. Read a letter's claims about what
+the site already has against the site, not against the record.
+
 **What was measured first, on 2026-10-01**, so none of these reads as a question somebody
 could have answered by searching: each county was asked of the ArcGIS Online catalogue under
 six terms — board district, county board, voting precinct, precinct, supervisor district,

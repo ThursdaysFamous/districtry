@@ -1064,6 +1064,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/il/county-board/fayette.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/il/county-board/franklin.html</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -1132,6 +1138,12 @@
   <url>
     <loc>https://districtry.com/il/county-board/jefferson.html</loc>
     <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/county-board/jersey.html</loc>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
