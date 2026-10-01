@@ -47,7 +47,7 @@ import re
 import sys
 
 import requests
-from scraper_common import require_robots_once, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pdfplumber
@@ -60,7 +60,7 @@ COUNTY_SITE = "https://co.cass.il.us/"
 DIRECTORY_FALLBACK = ("https://co.cass.il.us/download_file/view/"
                       "6b66614e-1d1e-4422-a9b6-6f528b7fa689/1")
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 120
 

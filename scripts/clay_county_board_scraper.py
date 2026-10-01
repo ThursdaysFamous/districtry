@@ -43,7 +43,9 @@ import re
 import sys
 
 import requests
-from scraper_common import make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    make_fail, require_robots_once, UA_ROSTER_BOT,
+)
 
 MEMBERS_URL = "https://claycounty.illinois.gov/county-board/members/"
 BOARD_URL = "https://claycounty.illinois.gov/county-board/"
@@ -67,6 +69,14 @@ fail = make_fail("clay-board-scraper")
 
 
 def get(url):
+    # THE COUNTY'S RULES ARE READ BEFORE ITS FIRST PAGE, with the identity this
+    # fetch sends. claycounty.illinois.gov had been recorded as answering every
+    # client with a managed challenge; re-measured from a GitHub runner on
+    # 2026-10-01, the vantage the weekly job crawls from, it serves a 181-byte
+    # policy whose binding group matches none of the paths read here, on all
+    # three reads of a deliberate re-measurement fifteen seconds apart.
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="clay-board-scraper")
     resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
     resp.raise_for_status()
     return resp.text

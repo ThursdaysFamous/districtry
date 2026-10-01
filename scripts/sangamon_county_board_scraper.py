@@ -68,7 +68,7 @@ import sys
 import time
 
 import requests
-from scraper_common import require_robots_once, UA_CHROME_X11_120  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://sangamonil.gov/departments/a-c/county-board/districts/members/district-%d"
 SOURCE_URL = "https://sangamonil.gov/departments/a-c/county-board/districts"
@@ -76,7 +76,7 @@ MEMBERS_URL = SOURCE_URL + "/members"
 DISTRICTS = range(1, 30)  # 29 single-member districts
 
 HEADERS = {
-    "User-Agent": UA_CHROME_X11_120,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 45
 PAUSE_SECONDS = 0.6  # 29 sequential fetches; be a polite guest on a county server

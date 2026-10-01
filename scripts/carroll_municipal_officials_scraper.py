@@ -89,7 +89,7 @@ import urllib.parse
 
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
-    UA_CHROME_WIN_126,
+    UA_ROSTER_BOT,
     fetch as fetch_with_retry,
     require_robots_once,
 )
@@ -105,7 +105,7 @@ CLERK_PAGE = ("https://www.carrollcountyil.gov/county_departments/"
 # discovered link is relative and this is the only form that actually serves.
 CDN_ROOT = "https://cms9files.revize.com/carrollil/"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 120
 
