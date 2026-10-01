@@ -38,14 +38,14 @@ import sys
 
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_X11_120,
+    UA_ROSTER_BOT,
     require_robots_once,
 )
 
 SOURCE_URL = "https://www.livingstoncountyil.gov/government/county_board_members.php"
 # The county site 202s a bare client; a browser UA is enough (no challenge).
 HEADERS = {
-    "User-Agent": UA_CHROME_X11_120,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 60
 

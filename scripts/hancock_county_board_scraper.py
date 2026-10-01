@@ -38,14 +38,14 @@ import sys
 import time
 
 import requests
-from scraper_common import make_fail, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from scraper_common import require_robots_once  # noqa: E402  (shared machinery)
 
 SOURCE_URL = "https://hancockcounty-il.gov/county-board-members/"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 60
 MAX_RETRIES = 3

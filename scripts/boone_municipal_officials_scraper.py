@@ -197,7 +197,7 @@ import urllib.parse
 
 import requests
 from arcgis_error import raise_for_arcgis_error
-from scraper_common import require_robots_once, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pdfplumber
@@ -217,7 +217,7 @@ BELVIDERE_WARD_SERVICE = ("https://maps.boonecountyil.org/arcgis/rest/services/"
                           "Clerk_and_Recorder/Belvidere_Wards/MapServer/0")
 
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 120
 

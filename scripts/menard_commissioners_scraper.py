@@ -52,13 +52,13 @@ import sys
 
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_WIN_126,
+    UA_ROSTER_BOT,
     require_robots_once,
 )
 
 SOURCE_URL = "https://www.menardcountyil.gov/elected-officials/board-commissioners/"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 60
 

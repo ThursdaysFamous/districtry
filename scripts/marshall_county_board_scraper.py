@@ -42,7 +42,7 @@ import re
 import sys
 import time
 
-from scraper_common import UA_CHROME_X11_128, fetch  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import UA_ROSTER_BOT, fetch  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pdfplumber
@@ -52,7 +52,7 @@ except ImportError:                                    # pragma: no cover
 SOURCE_URL = ("https://marshallcountyillinois.gov/wp-content/uploads/2026/01/"
               "2026-New-County-Board-Roster-.pdf")
 ROSTER_PAGE = "https://marshallcountyillinois.gov/directory/county-board/"
-UA = {"User-Agent": UA_CHROME_X11_128}
+UA = {"User-Agent": UA_ROSTER_BOT}
 
 # Column left edges in PDF points, measured against the 2026 revision's header
 # row (Official 24 / Title 142 / Address 213 / City 294 / Phone 328 /

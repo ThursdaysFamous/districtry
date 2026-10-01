@@ -52,7 +52,8 @@ import urllib.request
 _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
-from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+from scraper_common import (UA_HEADERS_ROSTER_BOT,  # noqa: E402  (FLEET_SHARED)
+                            require_robots_once)
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_OUT = os.path.join(SCRIPT_DIR, ".cache", "ia_legislature_offices.json")
@@ -61,10 +62,14 @@ PROFILE_URL = "https://www.legis.iowa.gov/legislators/legislator?personID=%s"
 
 CHAMBERS = {"upper": 45, "lower": 93}  # floor: min profile pages successfully parsed per chamber
 
-UA = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/124.0 Safari/537.36",
-}
+# OUR OWN IDENTITY, MEASURED RATHER THAN ASSUMED (2026-10-01). This file
+# used to send a Chrome string. Every page it fetches was re-read with
+# scraper_common's districtry token on this file's own HTTP stack and
+# answered in full, so the browser string was claiming a client this
+# project does not run for no measured gain. A site that measurably
+# refuses the token gets the browser rung back, per host, with the
+# measurement written here.
+UA = dict(UA_HEADERS_ROSTER_BOT)
 
 ROW_RE = re.compile(
     r"<tr><td class=\"col_1\"><label>([^<]+)</label></td><td>(.*?)</td></tr>", re.S
