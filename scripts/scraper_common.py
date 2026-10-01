@@ -30,11 +30,11 @@ STRING. The sentence above said "several sites in this fleet" for ten days
 (it landed 2026-09-02) without naming one. scripts/probe_user_agents.py asks each host the same page
 four ways — each stack with UA_ROSTER_BOT and with UA_CHROME_WIN_126 plus
 UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
-2026-09-12 across 314 hosts, of which 224 are reached by a browser-string
+2026-09-12 across 316 hosts, of which 226 are reached by a browser-string
 caller, 85 of them measured or re-measured since — 61 on 2026-09-13 at the page a
 scraper reads rather than the directory above it, four county GIS services on
 2026-09-15, and www.cpsboe.org on 2026-09-23, when the Chicago school board roster
-began reading it: 241 serve UA_ROSTER_BOT a full page, 21 refuse it and answer the
+began reading it: 241 serve UA_ROSTER_BOT a full page, 23 refuse it and answer the
 browser string, and 7 refuse the `requests` STACK while serving the same token
 on the stdlib client, so on those a browser string is credited with a fix the
 stack made. (The first sweep read 203: 37 hosts had been probed at the first
@@ -42,10 +42,10 @@ half of a URL split across two string literals, and 23 more at a directory a
 page sat under; not one re-probe moved a host INTO a refusal.) Per file
 (`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
 and the artifact rather than remembered): 42 files send a browser string; 2
-of them reach only hosts that serve the token a full page, 22 more reach no
+of them reach only hosts that serve the token a full page, 21 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 18 reach at least one host that refuses it -- and 224 of
-the 314 measured hosts are still reached by such a caller. The pair 101/62 that
+`requests` stack), and 19 reach at least one host that refuses it -- and 226 of
+the 316 measured hosts are still reached by such a caller. The pair 101/62 that
 stood here until 2026-10-01 was the state before SIXTY scrapers were switched
 off a Chrome string onto our own token in one change: every page each of them
 fetches was re-read with the token on that file's own HTTP stack and answered in
