@@ -8558,8 +8558,10 @@ function initNycExplorer() {
     "county",            // 62 counties statewide. Inside the city a county IS a borough, which the borough layer already answers with the city's own names.
     "nys-central-hs-district", // 3 central high school districts, each drawn OVER its own component districts — larger than the districts inside it, so it restacks beneath them and heads them in the hover list
     "nys-school-district", // 716 school districts statewide; the city's own 32 Community School Districts are a different concept and stay on their own layer
+    "library-district",  // 2 library districts in Sullivan County today, each larger than an average New York town, so this sits above the cities-and-towns layer. Most Sullivan towns have no library district and the layer says so rather than covering the county.
     "municipality",      // 995 cities and towns, which tile the state; villages sit inside towns and are their own layer
     "county-legislature", // 16 districts in Tompkins County today, each about half the area of an average New York town, so this sits between the cities-and-towns layer and the villages. The table grows one county at a time and only over counties that ELECT a legislature from districts: a board-of-supervisors county has no district to draw, because its seat is the town.
+    "fire-district",     // 45 fire districts in Sullivan County today, averaging about half the area of a New York town, so this sits between the county-legislature districts and the villages. The table grows one county at a time.
     "village",           // 532 villages, nested inside towns rather than beside them, so a point can be in both a village and its town
     // borough / judicial-district / BP / DA are the same 5 county polygons —
     // later = drawn on top (§7).
@@ -12727,6 +12729,119 @@ function initNycExplorer() {
         }
       }
     ]
+  });
+
+  /* ---------- Fire District and Library District (Sullivan County today) ----
+   * NEW YORK'S SPECIAL-DISTRICT TIER, and the first county in it. The STATE's
+   * own map server publishes no statutory special district at all, so this tier
+   * cannot be reached statewide; Sullivan County's GIS host publishes fourteen
+   * district layers in one service and serves no robots.txt, while the county
+   * WEBSITE refuses this project — a county is not blocked because its website
+   * is (ny/scripts/build_sullivan_special_districts.py records the whole
+   * measurement, and the guidebook carries the Knox precedent).
+   *
+   * TWO LAYERS AND NOT ONE, because the two concepts are CONCURRENT: a point
+   * can be in a fire district and a library district at once, and a layer
+   * answers with one district, so one toggle could only ever report one of
+   * them. The other twelve layers in that service are tax-map assessment
+   * districts — a town improvement district governed by the town board, with no
+   * body of its own — so they are not governments and are not drawn.
+   *
+   * THE CARD NAMES NOBODY, and that is measured rather than unfinished.
+   * Nothing published names a Sullivan fire commissioner or library trustee
+   * (coverage-gaps.json carries ny-special-district-officials). So each card
+   * states the general rule New York law sets and leaves the people to the gap
+   * record, which is this project's honesty rule rather than a placeholder.
+   *
+   * THE TYPE IS NOT DERIVED FROM THE NAME. The register's own Subtype column
+   * calls all 58 fire rows "Fire District", including the five whose own name
+   * reads "Fire Protection District" — and in New York those are different
+   * things, one electing five commissioners and the other a town contract area
+   * with no board. The card prints the name the county publishes and asserts
+   * nothing about which kind any one district is. */
+  var loadSullivanFireDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sullivan-fire-districts.json", {}, 2);
+  });
+  var loadSullivanLibraryDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sullivan-library-districts.json", {}, 2);
+  });
+  var loadSullivanCountyOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sullivan-county-outline.json", {}, 2);
+  });
+  // Sliced from the same ny-counties.json the county card answers from, so a
+  // point the card calls Sullivan is a point these layers are asked about.
+  function sullivanCountyCoverage(point) {
+    return loadSullivanCountyOutline().then(function (geojson) {
+      return (geojson.features || []).some(function (f) {
+        return f.geometry && pointInGeometry(point, f.geometry);
+      });
+    });
+  }
+  var SULLIVAN_CREDIT = "Boundary: Sullivan County Real Property Services and Sullivan County "
+    + "ITS: GIS Program.";
+  function sullivanDistrictEntry(opts) {
+    return {
+      key: "sullivan",
+      coverage: sullivanCountyCoverage,
+      loadGeometry: opts.loader,
+      hoverName: function (feature) {
+        var name = (feature.properties || {}).name;
+        return name ? String(name) : null;
+      },
+      query: function (point, seq) {
+        return queryFeatureAt(opts.loader, point).then(function (feature) {
+          if (!feature) return null;
+          return { seq: seq, name: (feature.properties || {}).name };
+        });
+      },
+      render: function (result) {
+        var wrap = cardEl("div", "card-flush");
+        // No title: `cardIdentifier` below already puts the district's name in
+        // the card header, and a body heading repeating it printed the name
+        // twice (the smoke check caught it on the Monticello card).
+        wrap.appendChild(renderBodyIntro({ note: opts.governed }));
+        wrap.appendChild(renderFieldStack([{ label: "Who holds the seats", value: opts.people }]));
+        wrap.appendChild(renderBodyIntro({ note: SULLIVAN_CREDIT }));
+        return wrap;
+      },
+      cardIdentifier: function (result) { return result.name || null; },
+      emptyNote: opts.emptyNote
+    };
+  }
+  registerCountyLayer({
+    id: "fire-district",
+    group: "safety",
+    label: "Fire District",
+    style: { color: "#B5462F", weight: 2, fillColor: "#D8613F", fillOpacity: 0.05, dashArray: "6 3" },
+    counties: [sullivanDistrictEntry({
+      loader: loadSullivanFireDistricts,
+      governed: "A New York fire district is a district corporation governed by its own board of "
+        + "five fire commissioners, elected by the voters of the district. A fire protection "
+        + "district is different: it is an area a town contracts to have protected, and the town "
+        + "board governs it.",
+      people: "Not named. Nothing Sullivan County or the state publishes names the commissioners "
+        + "of a Sullivan fire district, so this card names none rather than guessing.",
+      emptyNote: "Sullivan County's fire districts cover the whole county, so a point here with no "
+        + "district is on the boundary, where the state's drawing of the county and the county's "
+        + "own drawing disagree by a few metres."
+    })]
+  });
+  registerCountyLayer({
+    id: "library-district",
+    group: "geography",
+    label: "Library District",
+    style: { color: "#2F6E6B", weight: 2, fillColor: "#3F918D", fillOpacity: 0.05, dashArray: "6 3" },
+    counties: [sullivanDistrictEntry({
+      loader: loadSullivanLibraryDistricts,
+      governed: "A New York library district is a district corporation whose trustees are elected "
+        + "by the voters of the district, which is why it has a boundary of its own rather than "
+        + "following a town or a village.",
+      people: "Not named. Nothing Sullivan County or the state publishes names the trustees of a "
+        + "Sullivan library district, so this card names none rather than guessing.",
+      emptyNote: "Most Sullivan County towns have no library district, so a point in the county is "
+        + "more often outside one than inside. Only two are published, covering about a fifth of "
+        + "the county."
+    })]
   });
 
   /* ---------- NY Supreme Court Judicial District (statewide, computed) ------
@@ -17052,14 +17167,15 @@ function initNycExplorer() {
   var DST_DARK_MAP_COLORS = { "#0A4D5C": "#53A0B5", "#0B5394": "#4CA1FB", "#0B7285": "#49BED8",
     "#14181C": "#696F76", "#14532D": "#5AA872", "#155C4B": "#58AE96", "#1D3557": "#6689BA",
     "#1E7A8C": "#53C4DD", "#1F5C3A": "#60AF7F", "#1F6F5C": "#5ABEA3", "#1F6FB2": "#6EB7FD",
-    "#2E7D5B": "#63C99B", "#3A0CA3": "#8178FE", "#3B8FD4": "#98CDFE", "#4361EE": "#9BB4FD",
-    "#457B9D": "#7AC1EF", "#4B2E83": "#9C79EF", "#4CA98F": "#70EAC8", "#4E6E9C": "#89B4F3",
-    "#5A6B7C": "#9BB2CA", "#5B2A86": "#B172F0", "#5FB49C": "#81F2D2", "#6A3FA0": "#B886FE",
-    "#6B4E8C": "#B992E7", "#6B7280": "#ADB6C9", "#7048E8": "#B0A7FE", "#7A0A1C": "#E8595F",
-    "#7A1E5C": "#E063B2", "#7A5901": "#CDA040", "#7A6A55": "#C4AF92", "#7C2D12": "#E27451",
-    "#7CC49B": "#9EFDC7", "#8A5A00": "#E09E3C", "#8C6A2E": "#DBAD5E", "#8C6D3F": "#D9AF72",
-    "#A15C00": "#F99B38", "#B3261E": "#FE8171", "#B5179E": "#FE79E3", "#B8860B": "#FEC141",
-    "#C2410C": "#FF9776", "#C8102E": "#FE8B89", "#E4572E": "#FDB5A0", "#F72585": "#FDB1C7"};
+    "#2E7D5B": "#63C99B", "#2F6E6B": "#69BBB6", "#3A0CA3": "#8178FE", "#3B8FD4": "#98CDFE",
+    "#3F918D": "#6BD7D1", "#4361EE": "#9BB4FD", "#457B9D": "#7AC1EF", "#4B2E83": "#9C79EF",
+    "#4CA98F": "#70EAC8", "#4E6E9C": "#89B4F3", "#5A6B7C": "#9BB2CA", "#5B2A86": "#B172F0",
+    "#5FB49C": "#81F2D2", "#6A3FA0": "#B886FE", "#6B4E8C": "#B992E7", "#6B7280": "#ADB6C9",
+    "#7048E8": "#B0A7FE", "#7A0A1C": "#E8595F", "#7A1E5C": "#E063B2", "#7A5901": "#CDA040",
+    "#7A6A55": "#C4AF92", "#7C2D12": "#E27451", "#7CC49B": "#9EFDC7", "#8A5A00": "#E09E3C",
+    "#8C6A2E": "#DBAD5E", "#8C6D3F": "#D9AF72", "#A15C00": "#F99B38", "#B3261E": "#FE8171",
+    "#B5179E": "#FE79E3", "#B5462F": "#FD927A", "#B8860B": "#FEC141", "#C2410C": "#FF9776",
+    "#C8102E": "#FE8B89", "#D8613F": "#FEB39E", "#E4572E": "#FDB5A0", "#F72585": "#FDB1C7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
