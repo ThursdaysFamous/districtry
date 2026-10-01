@@ -106,9 +106,9 @@ All 83 counties: commissioner districts, compiled by the state from the plan eac
 
 ## Minnesota
 
-All 87 counties: townships and cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Minnesota Senate, House and U.S. House districts, and who holds the U.S. House seats.
+All 87 counties: county board districts in every one of them, judicial districts, townships and cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Minnesota Senate, House and U.S. House districts, and who holds the U.S. House seats. Nobody is named yet on the county boards, the judges' benches or the two state chambers, and the Data gaps panel says why.
 
-- [Minnesota district lookup](https://districtry.com/mn/): 14 layers, all 87 counties.
+- [Minnesota district lookup](https://districtry.com/mn/): 16 layers, all 87 counties.
 - [Who is my U.S. representative?](https://districtry.com/mn/congress.html)
 - [Sources & data layers](https://districtry.com/mn/sources.html)
 

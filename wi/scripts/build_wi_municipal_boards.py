@@ -53,6 +53,10 @@ OUT = os.path.join(REPO_ROOT, "data", "app", "wi-municipal-boards.json")
 FLOORS = {
     "Caledonia": ("Caledonia", 7, 7, 7),
     "Oshkosh": ("Oshkosh", 7, 7, 6),
+    # Janesville's seven all carry a city e-mail and a direct city line. The
+    # city also publishes a Cell Phone column and the scraper does not emit it,
+    # so this phone floor counts city lines only and 7 is every member.
+    "Janesville": ("Janesville", 7, 7, 7),
 }
 
 

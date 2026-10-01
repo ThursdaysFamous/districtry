@@ -101,6 +101,7 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
 from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+import scraper_common as sc  # noqa: E402  (FLEET_SHARED)
 import zipfile
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -109,6 +110,37 @@ DEFAULT_OUT = os.path.join(CACHE_DIR, "wi_alderpersons_raw.json")
 
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                     "(KHTML, like Gecko) Chrome/124.0 Safari/537.36"}
+
+# THE AKAMAI TRIO, measured 2026-10-01. www.wausauwi.gov, www.wauwatosa.net and
+# www.janesvillewi.gov sit behind an Akamai edge that answers 403 to the header
+# set above -- ROBOTS.TXT INCLUDED, so the policy cannot be read at all -- and
+# 200 to the same kind of Chrome string sent with Accept, Accept-Language,
+# Accept-Encoding: identity, Connection: close and the three sec-ch-ua client
+# hints. Three reads fifteen seconds apart, all three hosts stable both ways;
+# 403 on every thinner rung tried (urllib and requests, bare districtry token
+# and Chrome alike, and curl), 200 with the full set. All three then serve one
+# BYTE-IDENTICAL policy, md5 16e66653dfbe3d2bee5636483dea61df, 6,641 bytes of
+# one CMS vendor's own admin and asset paths -- which is published at each
+# city's own host and so binds here, and must never be cited as something any
+# of these three cities decided.
+#
+# IT IS THE SET wi_municipal_executive_scraper.py ALREADY MEASURED on
+# www.wauwatosa.net on 2026-09-29, and the hints are IMPORTED rather than typed,
+# for the reason that file records: a hand-typed sec-ch-ua is a plausible string
+# that is not the one the measurement used.
+#
+# THIS IS NOT AN ESCALATION TO GET A BETTER ROBOTS VERDICT. The thinner client
+# gets no verdict at all, not a worse one, and the policy these hosts serve is
+# read with the exact client that then fetches their pages -- which is the whole
+# of the consistency requirement.
+UA_AKAMAI = dict(UA, **{
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "identity",
+    "Connection": "close",
+})
+UA_AKAMAI.update({k: v for k, v in sc.UA_HINTS_CHROME_126.items()
+                  if k.lower().startswith("sec-ch-ua")})
 
 # REMOVED 2026-09-05: milwaukeemaps.milwaukee.gov/arcgis/rest/services/election
 # /alderman/... was this file's primary Milwaukee source, and that host publishes
@@ -370,6 +402,12 @@ NEENAH_INDEX = "https://www.ci.neenah.wi.us/common-council/"
 # wrong total. COUNT THE CITIES, NOT THE BULLETS. The 21 unnamed cities of
 # 2026-10-01 are 4 built here, 5 shut below, 1 Oshkosh (open, at large) and 11
 # readable behind a page that assembles itself in the browser:
+#   THAT BREAKDOWN IS THE 2026-10-01 MORNING STATE AND THREE OF ITS ENTRIES HAVE
+#   MOVED SINCE; the corrected block below, headed THAT SWEEP SAID FIVE CITIES
+#   WERE SHUT, is the authority. Wausau and Wauwatosa ship from this file, and
+#   Janesville ships from `wi_municipal_board_scraper.py`, its council being
+#   elected at large. No total is restated here, because the two errors this
+#   heading has already made were both arithmetic on a figure nobody recounted.
 #   BELOIT publishes `User-agent: * / Disallow: /` under six named crawlers that
 #   get narrow rules. That is the city's own host and its own file, so it binds
 #   fully, and nothing here renames an agent to get past it.
@@ -415,8 +453,37 @@ NEENAH_INDEX = "https://www.ci.neenah.wi.us/common-council/"
 #   "seven elected officials in the Common Council including the mayor, the
 #   deputy mayor, and five council members", so it has no district to draw and
 #   belongs in a municipal at-large roster rather than in this file, which is
-#   keyed by district. SO FIVE CITIES ARE SHUT -- Beloit, Janesville, Wausau,
-#   Wauwatosa and Mequon -- and Oshkosh is not one of them.
+#   keyed by district.
+#
+# THAT SWEEP SAID FIVE CITIES WERE SHUT AND THREE OF THE FIVE WERE NEVER SHUT
+# (corrected 2026-10-01). Wausau and Wauwatosa ship below, and Janesville's
+# roster reads fine; all three sit behind an Akamai edge that answers 403 to
+# every client this file had tried -- ROBOTS.TXT INCLUDED, which is why the
+# reading came out as a block rather than as a policy -- and 200 to the fuller
+# header set in UA_AKAMAI above, which a SIBLING SCRAPER IN THIS SAME DIRECTORY
+# had already measured on one of these very hosts two days earlier. The evidence
+# was in the repository before the record was written.
+#
+# A NO ANSWER AND A NO ARE DIFFERENT THINGS, and reading the first as the second
+# is what kept three councils out for weeks: a refusal is a host telling you not
+# to read it, while 403 to every rung you happened to try is a measurement of
+# your own client. Janesville is at large (its own page: "seven members, who are
+# elected on a nonpartisan basis and represent the city as a whole") so it has no
+# district to draw and belongs in the at-large roster, not here. Beloit is the one
+# of the five that genuinely refuses: its robots.txt answers the districtry token
+# with `Disallow: /`, and that is obeyed.
+#
+# JANESVILLE SHIPPED ON 2026-10-01, from `wi_municipal_board_scraper.py` rather
+# than from this file, because its seven councilmembers are elected at large and
+# a row keyed by a seat number here would tell a reader they were elected in a
+# way they were not. Its edge wants BOTH a non-urllib3 stack AND Chrome's client
+# hints — the Kendall shape — and the policy it then serves is BYTE-IDENTICAL to
+# Kendall County's own, one CMS vendor's default, which binds at the city's host
+# and is never to be cited as Janesville's choice. Mequon cannot be read from a Claude Code
+# sandbox at all -- every spelling of its host fails at the egress gateway with
+# `Tunnel connection failed: 502`, which is a fact about this route and says
+# nothing about the city -- so it waits on a measurement from a GitHub runner
+# (wi/WATCH.md).
 FRANKLIN_INDEX = ("https://www.franklinwi.gov/Departments/Elected-Officials"
                   "/Common-Council.htm")
 GREENFIELD_INDEX = "https://www.ci.greenfield.wi.us/334/Common-Council"
@@ -440,6 +507,12 @@ WAUTOMA_INDEX = "http://www.cityofwautoma.com/common-council"
 OCONOMOWOC_INDEX = "https://oconomowoc-wi.gov/225/Common-Council"
 
 APPLETON_INDEX = "https://www.appletonwi.gov/government/common_council.php"
+
+# The two districted councils of 2026-10-01, both behind the Akamai edge above.
+WAUSAU_INDEX = ("https://www.wausauwi.gov/your-government/city-council"
+                "/alderpersons")
+WAUWATOSA_INDEX = ("https://www.wauwatosa.net/government/common-council"
+                   "/contact-the-common-council")
 
 # Cardinal number words, for a page that STATES the size of its own council.
 # Oconomowoc's "eight Aldermen representing each of the City's four
@@ -487,7 +560,7 @@ KENOSHA_CANVASS_WINS = {}
 # lives once, as COVERED in main().
 
 
-def fetch(url, binary=False, tries=3, timeout=60):
+def fetch(url, binary=False, tries=3, timeout=60, headers=None):
     # EVERY HOST'S RULES ARE READ BEFORE ITS FIRST PAGE, through the shared seam
     # rather than the hand-recorded readings in the comments above, and with the
     # identity this fetch sends. This file follows each municipality's own site
@@ -521,7 +594,12 @@ def fetch(url, binary=False, tries=3, timeout=60):
     # asks for. The catch above is not widened by this and no gate becomes
     # catchable.
     try:
-        require_robots_once(url, UA["User-Agent"], headers=UA,
+        # ONE header set for both halves. A page fetched with headers the
+        # robots read did not send is the inconsistency #1271 forbids, and on
+        # the three Akamai hosts it is also the difference between a policy and
+        # a 403, so the two cannot be allowed to drift apart here.
+        hdrs = headers or UA
+        require_robots_once(url, hdrs["User-Agent"], headers=hdrs,
                             label="wi-alderperson-scraper")
     except SystemExit:
         # `require_robots_allowed` prints the verdict and exits 1, so the
@@ -537,7 +615,7 @@ def fetch(url, binary=False, tries=3, timeout=60):
     last = None
     for i in range(tries):
         try:
-            req = urllib.request.Request(url, headers=UA)
+            req = urllib.request.Request(url, headers=headers or UA)
             # NO EXPLICIT SSL CONTEXT. This call used to pass
             # `context=ssl.create_default_context()`, which reads like a restatement
             # of the default and is not one: `http.client` applies
@@ -808,6 +886,36 @@ def scrape_green_bay():
         members[key] = entry
     if len(members) != 12:
         raise SystemExit("green bay names %d of 12 districts" % len(members))
+    # THE ADDRESSES WENT BEHIND CLOUDFLARE'S OBFUSCATION ON OR BEFORE
+    # 2026-10-01. The page served twelve `mailto:` links and now serves none —
+    # zero in 673 KB — with `data-cfemail` in their place. That is an access
+    # control and is not worked around, which is the ruling this file already
+    # applies at New Lisbon.
+    #
+    # IT IS A RuntimeError AND NOT A GATE, deliberately, and the difference is
+    # the whole point: a SystemExit here would end the run for every other city,
+    # while a recorded failure makes the builder carry Green Bay's last shipped
+    # block forward with a dated reason — which PRESERVES the twelve addresses
+    # this project already fetched (Adam, 2026-09-19) instead of deleting them
+    # because the city stopped printing them. Measured the same day, the carry
+    # costs nothing else: every name, profile link and phone this scrape now
+    # reads is byte-identical to what ships, so the only thing being preserved
+    # is the contact that vanished.
+    #
+    # THE COST IS NAMED RATHER THAN HIDDEN. While the carry stands, a CHANGE of
+    # alderperson in Green Bay would not reach the file either, because this
+    # builder carries whole cities and not single fields. The weekly run prints
+    # the carry's age on every pass, so that cost becomes more visible the
+    # longer it lasts, and the proper fix — carrying the e-mail alone, under the
+    # name-agreement guard build_wi_county_officer_roster.py already uses for
+    # exactly this — is recorded in wi/WATCH.md rather than rushed here.
+    if not any("email" in m for m in members.values()):
+        raise RuntimeError(
+            "green bay publishes no address in the clear any more: 0 mailto "
+            "links on the page and %d data-cfemail in their place, which is an "
+            "access control. Names, profile links and phones still read; the "
+            "city is carried so the addresses already fetched are preserved"
+            % len(re.findall(r"data-cfemail", page)))
     return members, GREEN_BAY_DIR
 
 
@@ -2351,6 +2459,123 @@ def scrape_west_bend():
                           r"District\s+\d{1,2}\s+Alder")), WEST_BEND_INDEX
 
 
+# ------------------------------------------------------------------- Wausau
+def scrape_wausau():
+    """One table row per alderperson: photo, "NAME<br>District N Alderperson",
+    phone, e-mail, and a link to that district's map.
+
+    THE ROW IS THE UNIT, NEVER THE FLAT PAGE. Each cell is read inside its own
+    <tr>, because the table's first row is a header whose only mailto is the
+    page's own social-share link -- a flat read of the page would pair it with
+    whatever name came next.
+
+    DISTRICT 9'S DISPLAY NAME AND MAILBOX DISAGREE AND THE DISPLAY NAME SHIPS:
+    the city prints "Vicki Tierney" and gives her Victoria.Tierney@wausauwi.gov.
+    That is the Green Bay nickname split, decided the same way -- the city's own
+    rendering of a person's name is what a reader should see, and the mailbox is
+    a mailbox.
+
+    THE ADDRESSES ARE PRINTED IN THE CLEAR and are read from the visible cell,
+    not out of the mailto, whose characters the page writes as HTML entities.
+    Nothing is decoded that the page does not already show a reader.
+    """
+    page = fetch(WAUSAU_INDEX, headers=UA_AKAMAI)
+    members = {}
+    for row in re.split(r"<tr[^>]*>", page)[1:]:
+        cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
+        flat = [" ".join(re.sub(r"<[^>]+>", " ", H.unescape(c)).split())
+                for c in cells]
+        hit = None
+        for i, text in enumerate(flat):
+            m = re.search(r"^(.*?)\s*District\s+(\d{1,2})\s+Alderperson$", text)
+            if m:
+                hit = (i, m)
+                break
+        if not hit:
+            continue
+        i, m = hit
+        name = " ".join(m.group(1).split())
+        if not name:
+            raise SystemExit("wausau: a District %s row names nobody"
+                             % m.group(2))
+        entry = {"name": name}
+        rest = flat[i + 1:]
+        for text in rest:
+            if re.fullmatch(r"\(?\d{3}\)?[-. ]\d{3}-\d{4}", text):
+                entry["phone"] = text
+            elif re.fullmatch(r"[^@\s]+@[^@\s]+\.[A-Za-z]{2,}", text):
+                entry["email"] = text
+        _put("wausau", members, "%02d" % int(m.group(2)), entry)
+    return _seats_or_die("wausau", members, 11, page,
+                         ("District N Alderperson",
+                          r"District\s+\d{1,2}\s+Alderperson")), WAUSAU_INDEX
+
+
+# ---------------------------------------------------------------- Wauwatosa
+def scrape_wauwatosa():
+    """The city's elected-officials directory table: a name anchor carrying the
+    member's own profile link, then "Alderperson - District N", then "Elected
+    Official", then a phone cell that may be empty, then an e-mail button.
+
+    THE PHONE BELONGS TO THE ROW ABOVE ON A FLAT READ. District 12's phone cell
+    is empty, so flattening the table shifts every number up one seat from there
+    on and the mayor's own number lands on a member. Each cell is therefore read
+    inside its own <tr> and the phone is taken from the cells AFTER the title.
+
+    NAMES ARE SURNAME-FIRST and are flipped, with the flip PRINTED every run:
+    "Small, Scott", "Franzen, Ernst (Ernie)", "Stluka, Michael Indy". The comma
+    is the only thing the flip trusts -- a row published without one fails the
+    city rather than shipping a name in an order the city did not use.
+
+    NO E-MAIL SHIPS. The directory's Email button is a javascript:void(0) that
+    carries only a numeric staff id; the addresses are not in the page. That is
+    an obfuscation, and it is not worked around.
+    """
+    page = fetch(WAUWATOSA_INDEX, headers=UA_AKAMAI)
+    members, flipped = {}, []
+    for row in re.split(r"<tr[^>]*>", page)[1:]:
+        cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
+        if len(cells) < 2:
+            continue
+        flat = [" ".join(re.sub(r"<[^>]+>", " ", H.unescape(c)).split())
+                for c in cells]
+        d = None
+        for i, text in enumerate(flat[1:], start=1):
+            m = re.fullmatch(r"Alderperson\s*-\s*District\s+(\d{1,2})", text)
+            if m:
+                d = (i, int(m.group(1)))
+                break
+        if d is None:
+            continue
+        i, number = d
+        raw = flat[0]
+        if "," not in raw:
+            raise SystemExit("wauwatosa: District %d names %r with no comma — "
+                             "the page has stopped printing surname first and "
+                             "the flip can no longer be trusted" % (number, raw))
+        surname, given = (part.strip() for part in raw.split(",", 1))
+        if not surname or not given:
+            raise SystemExit("wauwatosa: District %d names %r, which does not "
+                             "split into a surname and a given name"
+                             % (number, raw))
+        name = "%s %s" % (given, surname)
+        flipped.append("%s -> %s" % (raw, name))
+        entry = {"name": name}
+        href = re.search(r'<a[^>]+href="([^"]+)"', cells[0])
+        if href:
+            entry["url"] = urllib.parse.urljoin(WAUWATOSA_INDEX, href.group(1))
+        for text in flat[i + 1:]:
+            if re.fullmatch(r"\(\d{3}\)\s*\d{3}-\d{4}", text):
+                entry["phone"] = text
+                break
+        _put("wauwatosa", members, "%02d" % number, entry)
+    for line in flipped:
+        print("  wauwatosa name flipped: %s" % line)
+    return _seats_or_die("wauwatosa", members, 12, page,
+                         ("Alderperson - District N",
+                          r"Alderperson\s*-\s*District\s+\d{1,2}")), WAUWATOSA_INDEX
+
+
 def main():
     argv = sys.argv[1:]
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT
@@ -2402,6 +2627,10 @@ def main():
             ("31175", "Greenfield", 5, scrape_greenfield),
             ("55275", "Muskego", 7, scrape_muskego),
             ("85350", "West Bend", 8, scrape_west_bend),
+            # the two Akamai-fronted councils of 2026-10-01, whose sites were
+            # recorded here as blocking automated readers and do not
+            ("84475", "Wausau", 11, scrape_wausau),
+            ("84675", "Wauwatosa", 12, scrape_wauwatosa),
     )
     for code, name, districts, fn in COVERED:
         result, reason = attempt(name, fn)

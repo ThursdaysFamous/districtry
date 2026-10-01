@@ -1504,12 +1504,26 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("mn-senate", "mn-house"),
         "county-boundaries": answers("county"),
-        "county-government": depth(),
+        # THE DISTRICTS SHIPPED 2026-10-01 AND THE LEVEL IS STILL OPEN, which is
+        # the point of scoring this one by depth. Minn. Stat. 375.025 makes every
+        # Minnesota county districted, so the app now draws all 447 commissioner
+        # districts in all 87 counties — and the level asks for the governing
+        # BODY, which means the people. No publisher pairs the 447 districts with
+        # the people holding them, so no county is counted here yet
+        # (gap mn-county-commissioner-roster, whose route is measured: five
+        # county GIS layers carry the commissioner's name).
+        "county-government": depth("county-commissioner"),
         "municipal-boundaries": answers("municipality"),
         "local-government": depth(),
         "school-district-boundaries": answers("school-district-unified", "school-district-elementary", "school-district-secondary"),
-        # Minnesota's own thread has confirmed it elects judges by district.
-        "courts-by-district": OPEN,
+        # SETTLED 2026-10-01: Minn. Stat. 2.722 subd. 1 divides the state into
+        # ten judicial districts by naming the counties in each, and Minnesota
+        # elects its district court judges on a nonpartisan ballot within the
+        # district they serve — so this is a district a reader votes in, and
+        # the app draws all ten. It names no judge: www.mncourts.gov serves a
+        # Cloudflare managed challenge to every client, which is an access
+        # control (gap mn-judicial-roster).
+        "courts-by-district": answers("mn-judicial-district"),
         "sub-county-government": OPEN,
         # SETTLED 2026-10-01 by this instance's own thread, and the answer is
         # that the level exists but only where a district has opted into it:

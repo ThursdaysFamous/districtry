@@ -214,6 +214,59 @@ def suffix_key(name):
     return (parts[-1], parts[0])
 
 
+def name_parts(name):
+    """(given token, frozenset of meaningful tokens) with hyphens SPLIT.
+
+    THE RUNG THIS SERVES, AND WHY THE EXISTING FOUR CANNOT REACH IT. Milwaukee's
+    two pages name two of its 47 judges differently in a way that is not a
+    spelling difference at all: the bench table writes `Ana Berrios-Schroeder`
+    where the contact page writes `Ana Berrios` (Br 13), and `Kristy Yang` where
+    the contact page writes `K. Kristy Yang Thao` (Br 47). One page carries a
+    surname part the other does not. Both judges shipped with no branch and no
+    phone while both pages named them, which is the Bugenhagen shape with a
+    different cause.
+
+    `fold()` DROPS A HYPHEN WITHOUT PUTTING A SPACE IN ITS PLACE, so
+    `Berrios-Schroeder` arrives as the single token `berriosschroeder` and
+    `berrios` is not equal to it under any of the four existing keys. The split
+    is done HERE and not in `fold()` on purpose: `fold()` feeds match_key,
+    solid_key and initial_key, so splitting there would move every hyphenated
+    name in the state through three other rungs at once for the sake of two
+    judges.
+
+    WHAT IS DROPPED AND WHY EACH ONE IS SAFE. `hon`, which both pages print as a
+    courtesy and neither means as a name. Generational suffixes, which the
+    suffix rung already treats as not part of a name. And SINGLE LETTERS, which
+    are initials — that is what lets `K. Kristy Yang Thao` be compared with
+    `Kristy Yang` at all. Dropping an initial is the one liberty here, which is
+    why the rung that uses this also requires the GIVEN token to match in full:
+    ignore the initial and the given name together and this becomes the Melvin
+    rung, which is the join this builder exists to refuse.
+    """
+    parts = []
+    for token in fold(name.replace("-", " ")):
+        if token == "hon" or token in SUFFIXES or len(token) == 1:
+            continue
+        parts.append(token)
+    if len(parts) < 2:
+        return None, None
+    return parts[0], frozenset(parts)
+
+
+def _one_name_contains_the_other(bench_name, row_name):
+    """True when two names differ only by a surname part one page omits.
+
+    The GIVEN token must match in full and one token set must contain the other.
+    Containment ALONE is not enough and containment plus a loose given name is
+    the Melvin join; both halves are required together.
+    """
+    bg, bp = name_parts(bench_name)
+    rg, rp = name_parts(row_name)
+    if not bp or not rp or bg != rg:
+        return False
+    return bp <= rp or rp <= bp
+
+
 def join_circuit(bench, rows):
     """(entries, fallback joins) for one circuit's judges against its contact rows.
 
@@ -274,6 +327,19 @@ def join_circuit(bench, rows):
             if len(cand) == 1 and bench_initial.get(ik) == 1:
                 row = cand[0]
                 fallbacks.append((j["name"], row["name"], "given name"))
+        if row is None:
+            # The LAST rung, because it is the least certain: it bridges a
+            # surname part one page omits. Unique on BOTH sides like every other
+            # fallback — the candidate rows are counted, and then the bench
+            # judges that same row would answer for, so two judges of one bench
+            # cannot both claim it.
+            cand = [r for r in rows if _one_name_contains_the_other(j["name"], r["name"])]
+            if len(cand) == 1:
+                rivals = [b for b in bench
+                          if _one_name_contains_the_other(b["name"], cand[0]["name"])]
+                if len(rivals) == 1:
+                    row = cand[0]
+                    fallbacks.append((j["name"], row["name"], "surname part"))
         entry = {"name": j["name"]}
         if j.get("role"):
             entry["role"] = j["role"]
@@ -360,7 +426,58 @@ def _selftest():
     got, joins = one(["Zach Wittchow"], [row("Zachary Wittchow", "6", "(262) 548-7584")])
     check("given-name rung intact", joins.get("Zach Wittchow") == "given name")
 
-    # 8. A judge the contact page does not list at all ships name-only rather
+    # 8a. THE SURNAME-PART RUNG, both real pairs, from Milwaukee's own two
+    #     pages: the compound surname on the BENCH side (Br 13) and the extra
+    #     surname plus a leading initial on the CONTACT side (Br 47).
+    got, joins = one(["Ana Berrios-Schroeder"],
+                     [row("Ana Berrios", "13", "(414) 278-5316")])
+    check("berrios joins", got["Ana Berrios-Schroeder"].get("branch") == "13")
+    check("berrios phone", got["Ana Berrios-Schroeder"].get("phone") == "(414) 278-5316")
+    check("berrios reported", joins.get("Ana Berrios-Schroeder") == "surname part")
+    check("berrios keeps the bench spelling",
+          "Ana Berrios-Schroeder" in got and "Ana Berrios" not in got)
+
+    got, joins = one(["Kristy Yang"],
+                     [row("K. Kristy Yang Thao", "47", "(414) 278-4486")])
+    check("yang joins", got["Kristy Yang"].get("branch") == "47")
+    check("yang reported", joins.get("Kristy Yang") == "surname part")
+    check("yang keeps the bench spelling", "K. Kristy Yang Thao" not in got)
+
+    # 8b. THE CASE THIS RUNG MUST NOT REACH EITHER, which is why the given token
+    #     has to match in full. Drop Melvin's initial and his suffix and the two
+    #     token sets are {arthur, melvin} and {jack, melvin} — neither contains
+    #     the other, and the given names differ, so it fails on both halves.
+    got, joins = one(["J. Arthur Melvin III"], [row("Jack A. Melvin", "5", "(262) 548-7543")])
+    check("melvin still withheld at the last rung", "branch" not in got["J. Arthur Melvin III"])
+
+    # 8c. A SHARED GIVEN NAME AND A CONTAINED SURNAME IS NOT A PERSON. Two
+    #     judges of one bench where one name contains the other would each
+    #     answer for the single row, so neither may have it. This is the Ann
+    #     Reed guard at the new rung, which drops suffixes and so needs its own.
+    got, joins = one(["Ana Berrios-Schroeder", "Ana Berrios"],
+                     [row("Ana Berrios", "13", "(414) 278-5316")])
+    check("contained surnames collide and are withheld",
+          "branch" not in got["Ana Berrios-Schroeder"])
+
+    # 8d. A judge whose given name alone matches keeps nothing: containment of
+    #     the token set is required, not merely a shared given name.
+    got, joins = one(["Ana Delgado"], [row("Ana Berrios", "13", "(414) 278-5316")])
+    check("shared given name alone is not a join", "branch" not in got["Ana Delgado"])
+
+    # 8e. THE CASE THAT ACTUALLY EXERCISES THE GIVEN-NAME HALF, and it is here
+    #     because 8b does not: Melvin is refused by containment alone, so
+    #     deleting the given-name check leaves the whole suite green. Measured,
+    #     by deleting it. This pair is contained — {arthur, melvin} inside
+    #     {jack, arthur, melvin} — and differs in the given token, which is the
+    #     shape of a name whose first word on one page is a middle name on the
+    #     other. It may be one person and it may be two, and nothing published
+    #     says which, so it is refused: the Melvin posture, at the rung where
+    #     containment would otherwise carry it.
+    got, joins = one(["Arthur Melvin"], [row("Jack Arthur Melvin", "5", "(262) 548-7543")])
+    check("a contained name with a different given token is withheld",
+          "branch" not in got["Arthur Melvin"])
+
+    # 9. A judge the contact page does not list at all ships name-only rather
     #    than dropping — Portage's Br 2 is absent from the contact page.
     got, joins = one(["Louis J. Molepske Jr."], [row("Michael D Zell", "1", "(715) 346-1364")])
     check("absent judge still ships", got["Louis J. Molepske Jr."] == {"name": "Louis J. Molepske Jr."})

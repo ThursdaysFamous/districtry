@@ -120,9 +120,62 @@ EXPECT_TOTAL_KEYS = 888        # 867 filed + 21 the state does not file:
 # supply the assignment either. The ask to the county clerk stands
 # (docs/ASK_DRAFTS.md). Recorded so the next pass does not re-probe a host
 # that answers, or expect a reopened door to close this gap.
+# NEW LONDON'S THREE UNCODED WARDS WERE NAMED BY THE COUNTY CLERK ON 2026-10-01
+# AND THE CITY IS STILL EXCLUDED, deliberately. Outagamie County Clerk Kelly
+# Gerrits wrote that City of New London wards 10, 11 and 12 are ALL IN NEW LONDON
+# ALDERMANIC DISTRICT 5 — which is exactly the three wards counted below, so the
+# city's composition is now completely known. It is recorded here rather than
+# built because LOCAL_COMPOSITION takes a city's own full statement of its own
+# composition, and this would be the county's coded wards plus three sentences
+# from the Clerk: a different shape, wanting its own gate and its own operator
+# rebuild rather than a row squeezed into a table that means something else.
+# The statement is written down now because an emailed fact that lives only in an
+# inbox is a fact this project loses. See wi/WATCH.md.
+# BELLEVUE'S BOARD FORM HAS BEEN ASKED AND IS NOT RECORDED FROM A HEDGE.
+# Brown County Clerk Patrick Moynihan replied on 2026-10-01 that the village board
+# "appear to be at large" and pointed at the village clerk, who was written to the
+# same day — ASKED 2026-10-01, sent 16:10:19 UTC, no reply yet
+# (docs/ASK_DRAFTS.md, ask wi-bellevue-board-form). If the board is
+# elected at large this entry is the correct and complete answer — eleven wards
+# with no district code because there are no districts — and the trustees belong
+# on the village's own card. "Appear to be" is not the village saying so, and a
+# card stating how a governing body is elected is not written on a guess.
+# PORT WASHINGTON'S COMPOSITION WAS COMPLETED BY ITS COUNTY CLERK ON 2026-10-01
+# AND THE CITY IS STILL EXCLUDED, for New London's reason exactly. Ozaukee
+# County Clerk Kellie Kretlow wrote that the city's ward 9 is in ALDERMANIC
+# DISTRICT 1 and county supervisor district 4. The city's other eight wards
+# carry 01-07 (wards 4 and 8 share 04), so ward 9 joining 01 completes a
+# seven-district plan with nothing left over.
+# THE SUPERVISOR HALF IS A CONTROL AND NOT A SECOND FACT: the state's own ward
+# file already carries SUPERID 04 on that ward, read 2026-10-01, so the half of
+# her answer that can be checked against a published source agrees with it
+# exactly. That is what makes the unpublished half worth acting on.
+# Built the day somebody writes the gate this shape wants — the county's coded
+# wards plus a clerk's sentence — rather than squeezed into LOCAL_COMPOSITION,
+# which means a city publishing its own composition.
+#
+# BRILLION'S BOARD FORM IS SETTLED AND ITS TWO UNCODED WARDS ARE ANSWERED.
+# Calumet County Clerk Beth Leary wrote on 2026-10-01 that the City of Brillion
+# elects its council AT LARGE, not by district, and that wards 5 and 6 — the two
+# its filing leaves uncoded — are bare land with no residents, accounted for at
+# elections. The county files districts 01-04 on wards 1-4 and the city's own
+# council page lists a Mayor and At-Large Representatives, so this record carried
+# two publishers disagreeing about the form of the body; THE OFFICE THAT FILES
+# THOSE CODES NOW SAYS THE COUNCIL IS NOT ELECTED FROM THEM, which is not a
+# preference between publishers but one of them answering for its own filing.
+# So the entry below is the correct and complete answer — nothing to draw — and
+# Brillion's council members are an at-large municipality-card fact.
+# THE NO-RESIDENTS HALF WAS CHECKED AND IS CONSISTENT RATHER THAN PROVEN: LTSB's
+# 2024 election-data layer reports PERSONS 822, 820, 798 and 822 for wards 1-4
+# and NULL for 5 and 6 (read 2026-10-01). It is not a proof, because the same
+# field is NULL on Port Washington's ward 8, which carries a district code, while
+# it reports 248 for Cuba City's uncoded ward 5 and 624 for Durand's uncoded
+# ward 3 — the two figures this project's own ask quoted. A NULL there means the
+# ward is absent from the 2024 data, which bare land would be and so would a new
+# annexation. The clerk is the source; this is the control, with its limit.
 EXCLUDED = {
     "06350": ("Bellevue", 11, 0.999),
-    "09725": ("Brillion", 2, 0.094),
+    "09725": ("Brillion", 2, 0.094),   # at large — see above; nothing to draw
     "17950": ("Cuba City", 1, 0.158),
     "21225": ("Durand", 1, 0.274),
     "56925": ("New London", 3, 0.429),
@@ -287,6 +340,33 @@ LOCAL_COMPOSITION = {
         # problem — its page numbers 1-5 where LTSB keys 41-45, with nothing
         # witnessing the correspondence. Berlin has an anchor that agrees;
         # Waupaca has a visible mismatch.
+        #
+        # THAT MISMATCH WAS MEASURED ON 2026-10-01 AND IS NOT WAUPACA'S ALONE.
+        # Four of the state's 159 built municipalities key their districts
+        # somewhere other than 01 upward — Manawa 11-13, Waupaca 41-45,
+        # Weyauwega 51-53, Marion 01/21/22/23 — and every other one, including
+        # Clintonville in the same county, runs 01 upward with no gap. Three of
+        # the four were read and all three number from one: Waupaca's council
+        # page lists District 1 to District 5 with their wards, Manawa's names
+        # 1st/2nd/3rd Ward alderpersons, Weyauwega's names Aldermanic District
+        # One/Two/Three. Marion's site refuses this client (robots.txt
+        # `Disallow: /`), so its council size is unread, and its `01` is the
+        # SHAWANO COUNTY part of the city — measured against TIGERweb, not
+        # inferred: `01` lies in Shawano, `21`-`23` in Waupaca, and `01` sits
+        # north of all three and overlaps none. So the two counties file one
+        # city's wards in two schemes and the dissolve reads that as a fourth
+        # district. Nothing is relabelled here yet: the card prints
+        # parseInt(ALDERID), so a change is reader-visible. See wi/WATCH.md.
+#
+# RELABELLED FOR THE READER ON 2026-10-01, IN THE APP AND NOT HERE.
+# index.html's ALDER_DISTRICT_LABELS maps the filed ids of those three
+# cities to the numbers their own councils use, and ALDERID and KEY keep
+# the filed values — so the dissolve key, the roster join and the
+# vector-tile key are all untouched and this builder's output does not
+# move. Marion is still as filed, because nothing published says what it
+# calls its four. wi/scripts/validate_index.py holds that table to this
+# builder's own output: a refiling that moves one of those ids fails the
+# gate rather than quietly putting the filed number back on the card.
         "balance": 12.55,
     },
     "22575": {
