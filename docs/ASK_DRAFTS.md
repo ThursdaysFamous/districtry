@@ -2866,7 +2866,44 @@ next step rather than a mailing.
 
 ---
 
-## Ask wi-city-council-pages — five Wisconsin cities: may we read your council page?
+## Ask wi-city-council-pages — Beloit: may we read your council page?
+
+> **WITHDRAWN FOR FOUR OF THE FIVE CITIES, 2026-10-01, later the same day. JANESVILLE,
+> WAUSAU, WAUWATOSA AND MEQUON DO NOT BLOCK THIS PROJECT AND NEVER NEEDED A LETTER.** All four
+> serve their robots.txt with HTTP 200 and PERMIT `/`, and all four serve their home and council
+> pages — 146,771, 96,666, 111,716 and 57,621 bytes, Mequon's through Cloudflare. Their Gmail
+> drafts were deleted rather than held, because a letter telling a city it turns us away when it
+> does not is worse than no letter.
+>
+> **THE CAUSE WAS READING THE POLICY WITH A THINNER CLIENT THAN THE ONE THAT CRAWLS**, which is
+> the one defect CLAUDE.md names for this exact pair of hosts and which this ask reproduced
+> anyway. The measurement above was taken with `UA_HEADERS_ROSTER_BOT`, which carries no
+> `sec-ch-ua` client hints. `wi/scripts/wi_municipal_executive_scraper.py` had already settled
+> on 2026-09-29, leave-one-out and two reads per rung, that **those three headers are the whole
+> difference** on `www.milwaukee.gov` and `www.wauwatosa.net` — 403 without them, a policy that
+> permits us with them. Asked with `UA_HINTS_CHROME_126`, the client the Wisconsin scrapers
+> actually send, all four answer 200.
+>
+> **THIS IS NOT AN ESCALATION AND THE DISTINCTION IS THE WHOLE RULE.** The fleet does not try a
+> richer client to get a better verdict; it reads the policy with the client that will crawl.
+> For a Wisconsin municipal host that client is Chrome plus the pinned hints, so the token read
+> was the WRONG measurement rather than the cautious one. Beloit was deliberately **not**
+> re-probed: its robots.txt is served to the token and says `Disallow: /`, which is a published
+> refusal, and re-asking a host that already answered in order to get a different answer is
+> exactly the escalation the rule forbids.
+>
+> **WHAT REPLACES THE FOUR LETTERS IS WORK, NOT AN ASK.** Four readable councils now want a
+> scraper and a builder. Wausau's alderpersons page already shows 11 districts and 29
+> alderperson mentions in its served bytes; Janesville says "council member" rather than
+> "alderperson" and Mequon's list is not linked from its home page, so each needs its own look.
+> That is Wisconsin's level 6 moving from waiting-on-a-reply to buildable.
+>
+> **AND THE GENERAL LESSON IS THE ONE THAT KEEPS COSTING THIS PROJECT.** A refusal is a dated
+> measurement taken with a named client. Re-measure it with the client that crawls before
+> writing to anyone about it, and above all before recording it as the reason a city names
+> nobody — because a wrong refusal reads exactly like a right one, and it stops the work rather
+> than prompting it.
+
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** Five near-identical letters, one per city. Each asks
 > permission to read a page the city already publishes to the public. Nothing is blocked that
