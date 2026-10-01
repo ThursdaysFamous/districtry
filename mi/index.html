@@ -8365,8 +8365,11 @@ function initMichiganExplorer() {
   // geometry library in this codebase to compute polygon area from data.
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
+    "mi-court-of-appeals", // Four appellate districts — the broadest boundary this instance draws below the state itself, above the 13 congressional districts
     "us-house",          // 13 congressional districts — the largest districts Michigan carries below the state itself
     "mi-senate",         // 38 Senate districts — larger on average than a county, smaller than a congressional district
+    "mi-circuit-court",  // 57 circuits — 37 single counties and 20 statutory unions of two to four counties, so broader than the county fabric
+    "mi-isd",            // 56 intermediate school districts — each a group of local school districts, so broader than the 541 school districts under them
     "county",            // 83 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "mi-house",          // 110 House districts — the finest political tiling this instance ships today
     "school-district-unified", // 514 unified (K-12) districts covering all but 27 pockets of the state, live from TIGERweb (no data/app file) — 469 km2 mean feature area, the largest of the four fabric layers this phase adds
@@ -12963,6 +12966,104 @@ function initMichiganExplorer() {
   });
 
 
+  /* ---------- 10a. Court of Appeals and Circuit Court — county unions ----------
+   * Michigan elects its judges by district (Const. 1963 art. 6): Court of
+   * Appeals judges by appellate district, circuit judges by circuit, both on a
+   * nonpartisan ballot for six-year terms. No agency publishes either boundary
+   * as geometry (an ArcGIS Online catalogue search answered ten queries with no
+   * government court layer, 2026-10-01), so the shipped files draw NO NEW LINE:
+   * every district and circuit is a union of whole counties from the same
+   * county file the County layer ships, composed as the statute lists them —
+   * MCL 600.302 for the four appellate districts, MCL 600.502-600.549i for the
+   * 57 circuits — and witnessed county for county by the Michigan Manual
+   * 2025-2026. mi/scripts/build_mi_courts.py carries both lists and the gates.
+   *
+   * NEITHER CARD NAMES A JUDGE, and each says why. The court system's own site
+   * (www.courts.michigan.gov) publishes `User-agent: *` / `Disallow: /`, so it
+   * is linked for a reader and never read by this project; the only statewide
+   * list that can be read is the Michigan Manual, a December 2025 snapshot
+   * printed every two years. Gap mi-judge-roster. ---------- */
+  var loadMiCoaDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-court-of-appeals-districts.json", {}, 2);
+  });
+  var loadMiCircuitCourts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-circuit-courts.json", {}, 2);
+  });
+  var MI_COURTS_LINK = { label: "Michigan courts", url: "https://www.courts.michigan.gov/" };
+
+  registerPolygonLayer({
+    id: "mi-court-of-appeals",
+    group: "political",
+    label: "Court of Appeals District",
+    loader: loadMiCoaDistricts,
+    // plum, long-dashed — the broadest political boundary this app draws
+    style: { color: "#5B2A86", weight: 2, fillColor: "#5B2A86", fillOpacity: 0.04, dashArray: "10 4" },
+    fields: [
+      { name: "name", label: "District", keys: ["name"], primary: true },
+      { name: "countyCount", label: "Counties in this district", keys: ["county_count"] },
+      { label: "Judges",
+        value: "Elected by the voters of this district on a nonpartisan " +
+               "ballot, for six-year terms. This app does not name them yet: " +
+               "the state court system's website asks automated tools not to " +
+               "read it." }
+    ],
+    primaryLink: function () { return MI_COURTS_LINK; }
+  });
+
+  registerPolygonLayer({
+    id: "mi-circuit-court",
+    group: "political",
+    label: "Circuit Court",
+    loader: loadMiCircuitCourts,
+    // deep violet, the fleet's judicial hue
+    style: { color: "#4A2E8C", weight: 1.5, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "6 3" },
+    fields: [
+      { name: "name", label: "Circuit", keys: ["name"], primary: true },
+      { name: "counties", label: "Covers", keys: ["counties"] },
+      { label: "Judges",
+        value: "Elected by the voters of this circuit on a nonpartisan " +
+               "ballot, for six-year terms. This app does not name them yet: " +
+               "the state court system's website asks automated tools not to " +
+               "read it." }
+    ],
+    primaryLink: function () { return MI_COURTS_LINK; }
+  });
+
+  /* ---------- 10b. Intermediate School District — the state's own map ----------
+   * 56 ISDs (also called RESAs, ESAs and ESDs), the regional school districts
+   * the Revised School Code creates (MCL 380.601 et seq.), from the state's
+   * Michigan Geographic Framework layer, pre-built by
+   * mi/scripts/build_mi_isd_districts.py. A special district rather than an
+   * elected one: its board is normally elected by one representative of each
+   * local school board (MCL 380.614), or by voters where they approved that
+   * (MCL 380.615-617). No statewide roster of those boards was found, so the
+   * card says how the board is chosen and names nobody. The framework is
+   * land-only, so the card's empty state says what being outside every ISD
+   * means rather than reading as a failed lookup. ---------- */
+  var loadMiIsdDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-isd-districts.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "mi-isd",
+    group: "schools",
+    label: "Intermediate School District",
+    loader: loadMiIsdDistricts,
+    emptyNote: "This point is not in a Michigan intermediate school district. " +
+      "The state's map of them covers land only, so a point on one of the " +
+      "Great Lakes, or outside Michigan, is in none.",
+    style: { color: "#1F6F78", weight: 1.5, fillColor: "#2A8C96", fillOpacity: 0.04, dashArray: "4 4" },
+    fields: [
+      { name: "name", label: "District", keys: ["name"], primary: true },
+      { label: "How its board is chosen",
+        value: "Most intermediate school district boards are elected by one " +
+               "representative from each local school board in the district, " +
+               "not by voters. Where voters approved it, the board is elected " +
+               "on the ballot instead. This app does not name the members." }
+    ]
+  });
+
+
   /* ---------- 11. ZIP Code — live TIGERweb ZCTAs ----------
    * ZCTAs carry no STATE field (they cross state lines), so unlike every
    * other TIGERweb layer here this one cannot use the STATE='26' filter and
@@ -15916,7 +16017,10 @@ function initMichiganExplorer() {
     // draws (Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle
     // Creek and Jackson), so for most readers this slot is not there.
     "city-ward",
-    "school-district-unified", "school-district-elementary",
+    // Courts follow the elected bodies: judges are elected by district too,
+    // but a reader asks first who represents them.
+    "mi-circuit-court", "mi-court-of-appeals",
+    "school-district-unified", "school-district-elementary", "mi-isd",
     "county", "county-subdivision", "municipality", "zip-code", "precinct", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -16378,12 +16482,12 @@ function initMichiganExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#0F5C8C": "#52ADF0", "#14181C": "#696F76",
-    "#1B4F8C": "#5CA0F5", "#1B7A3D": "#58CD7A", "#2E8FC4": "#92D3FD", "#2E9E6B": "#5BEAA5",
-    "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#5C4B8C": "#AB95EF", "#6B7280": "#B1BBCE",
-    "#7A5C3E": "#CFA57D", "#8C2E4A": "#F47294", "#8F7BC4": "#D1C2FF", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B26A00": "#FFB15F", "#D06A9C": "#FFBDDA",
-    "#D19133": "#FED7A7"};
+    "#1B4F8C": "#5CA0F5", "#1B7A3D": "#58CD7A", "#1F6F78": "#5CC0CC", "#2A8C96": "#5CD8E5",
+    "#2E8FC4": "#92D3FD", "#2E9E6B": "#5BEAA5", "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93",
+    "#5B2A86": "#B375F2", "#5C4B8C": "#AB95EF", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
+    "#8C2E4A": "#F47294", "#8F7BC4": "#D1C2FF", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
+    "#B0316E": "#FD88B8", "#B26A00": "#FFB15F", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

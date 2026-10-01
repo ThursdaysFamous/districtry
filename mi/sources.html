@@ -1069,7 +1069,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">15 layers — 6 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">18 layers — 8 political and legislative, 2 public safety, 3 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1078,7 +1078,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">8 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1086,6 +1086,17 @@ table.matrix code {
               <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
             </thead>
             <tbody>
+              <tr id="layer-mi-court-of-appeals">
+                <th scope="row"><span class="layer-name">Court of Appeals District</span><code>mi-court-of-appeals</code></th>
+                <td data-label="What it answers">The Court of Appeals district covering the point, how many counties it spans, and how its judges are chosen. It names no judge yet, and says why.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-302" target="_blank" rel="noopener">Derived county unions — no agency publishes Michigan's appellate districts as geometry (an ArcGIS Online catalogue search answered ten queries with no government court layer, measured 2026-10-01), so no new line is drawn: each district is a union of whole counties from the app's own TIGERweb county file, as MCL 600.302 lists them, witnessed county for county by the Michigan Manual 2025-2026 (pp. 453-454). Built by mi/scripts/build_mi_courts.py.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO JUDGE IS NAMED, and that is a measurement. The state court system's own site, www.courts.michigan.gov, publishes `User-agent: *` / `Disallow: /`, so this project does not read it; the one statewide list this project can read is the Michigan Manual 2025-2026, a December 2025 snapshot printed every two years, and a list that old cannot say who sits today. Recorded as gap mi-judge-roster.</td>
+                <td data-label="Where it applies">Michigan — statewide, all 83 counties across 4 districts.</td>
+              </tr>
               <tr id="layer-us-house">
                 <th scope="row"><span class="layer-name">U.S. House</span><code>us-house</code></th>
                 <td data-label="What it answers">The U.S. House district covering the point, and the representative holding it.</td>
@@ -1107,6 +1118,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">mi-senate-members.json, rebuilt weekly by CI — the Open States current-people export (name, party, e-mail, personal site) merged with the Michigan Senate's own all-senators directory, which publishes a Capitol phone, e-mail, office building and contact page for all 38 seats. Open States carries no capitol address or phone for any Michigan legislator (measured 0 of 148), so that contact block comes entirely from the Senate's own directory.</td>
                 <td data-label="Where it applies">Michigan — statewide, all 38 districts.</td>
+              </tr>
+              <tr id="layer-mi-circuit-court">
+                <th scope="row"><span class="layer-name">Circuit Court</span><code>mi-circuit-court</code></th>
+                <td data-label="What it answers">The circuit court whose judges serve the point — Michigan's trial court for serious criminal cases, larger civil cases and family matters — the counties it covers, and how its judges are chosen. It names no judge yet, and says why.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-502" target="_blank" rel="noopener">Derived county unions — no agency publishes circuit geometry (measured 2026-10-01), so no new line is drawn: each circuit is a union of whole counties from the app's own TIGERweb county file, as MCL 600.502-600.549i list them (one section per circuit), witnessed by the Michigan Manual 2025-2026 (pp. 468-469 and 471-472). Five sections are written conditionally (5th/56th, 33rd/57th, 40th/54th); the Manual shows the split form in force, with a judge seated in each, and that is what is drawn. Built by mi/scripts/build_mi_courts.py.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO JUDGE IS NAMED, for the reason the Court of Appeals row gives: the court system's own site asks automated tools not to read it, and the Michigan Manual's December 2025 list is a dated snapshot. Recorded as gap mi-judge-roster.</td>
+                <td data-label="Where it applies">Michigan — statewide, all 83 counties across 57 circuits.</td>
               </tr>
               <tr id="layer-mi-house">
                 <th scope="row"><span class="layer-name">Michigan House District</span><code>mi-house</code></th>
@@ -1200,7 +1222,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="schools">
-        <h2>Schools <span class="matrix-count">2 layers</span></h2>
+        <h2>Schools <span class="matrix-count">3 layers</span></h2>
         <p class="matrix-blurb">The district, the attendance zone, and the schools nearest the point.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1208,6 +1230,17 @@ table.matrix code {
               <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
             </thead>
             <tbody>
+              <tr id="layer-mi-isd">
+                <th scope="row"><span class="layer-name">Intermediate School District</span><code>mi-isd</code></th>
+                <td data-label="What it answers">The intermediate school district (ISD, RESA, ESA or ESD) covering the point — the regional school district that serves the local districts inside it — and how its board is chosen.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://services3.arcgis.com/dxRQUfTDNtfqZ301/arcgis/rest/services/IntermediateSchoolDistrict/FeatureServer/0" target="_blank" rel="noopener">State of Michigan, DTMB Center for Shared Solutions — Michigan Geographic Framework &quot;Intermediate School Districts&quot; (version V26, 56 features, last edited 2026-03-03), on the state's open-data hub; its licence reads &quot;This dataset is a public record and ... there are no restrictions on the use, reproduction, or distribution of this dataset.&quot; Pre-built by mi/scripts/build_mi_isd_districts.py (Douglas-Peucker, 50 m, 2,000-point agreement gate at 100.00%). The framework is land-only, so a point out on a Great Lake is in no ISD.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO BOARD MEMBER IS NAMED. An ISD board is normally elected by one representative from each local school board (MCL 380.614), not by voters; a district whose voters approved it elects its board at the ballot instead (MCL 380.615-617). No statewide roster of ISD board members was found, and the layer carries no people, so the card says how the board is chosen and links the district.</td>
+                <td data-label="Where it applies">Michigan — statewide, every part of the state's land, 56 districts.</td>
+              </tr>
               <tr id="layer-school-district-unified">
                 <th scope="row"><span class="layer-name">School District (Unified)</span><code>school-district-unified</code></th>
                 <td data-label="What it answers">The unified (K-12) school district covering the point.</td>
@@ -1320,6 +1353,28 @@ table.matrix code {
   "dataset": [
     {
       "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-mi-court-of-appeals",
+      "identifier": "mi-court-of-appeals",
+      "name": "Court of Appeals District",
+      "description": "The Court of Appeals district covering the point, how many counties it spans, and how its judges are chosen. It names no judge yet, and says why. NO JUDGE IS NAMED, and that is a measurement. The state court system's own site, www.courts.michigan.gov, publishes `User-agent: *` / `Disallow: /`, so this project does not read it; the one statewide list this project can read is the Michigan Manual 2025-2026, a December 2025 snapshot printed every two years, and a list that old cannot say who sits today. Recorded as gap mi-judge-roster.",
+      "url": "https://districtry.com/mi/sources.html#layer-mi-court-of-appeals",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Derived county unions — no agency publishes Michigan's appellate districts as geometry (an ArcGIS Online catalogue search answered ten queries with no government court layer, measured 2026-10-01), so no new line is drawn: each district is a union of whole counties from the app's own TIGERweb county file, as MCL 600.302 lists them, witnessed county for county by the Michigan Manual 2025-2026 (pp. 453-454). Built by mi/scripts/build_mi_courts.py.",
+          "url": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-302"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, all 83 counties across 4 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
       "@id": "https://districtry.com/mi/sources.html#dataset-us-house",
       "identifier": "us-house",
       "name": "U.S. House",
@@ -1360,6 +1415,50 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Michigan — statewide, all 38 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-mi-circuit-court",
+      "identifier": "mi-circuit-court",
+      "name": "Circuit Court",
+      "description": "The circuit court whose judges serve the point — Michigan's trial court for serious criminal cases, larger civil cases and family matters — the counties it covers, and how its judges are chosen. It names no judge yet, and says why. NO JUDGE IS NAMED, for the reason the Court of Appeals row gives: the court system's own site asks automated tools not to read it, and the Michigan Manual's December 2025 list is a dated snapshot. Recorded as gap mi-judge-roster.",
+      "url": "https://districtry.com/mi/sources.html#layer-mi-circuit-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Derived county unions — no agency publishes circuit geometry (measured 2026-10-01), so no new line is drawn: each circuit is a union of whole counties from the app's own TIGERweb county file, as MCL 600.502-600.549i list them (one section per circuit), witnessed by the Michigan Manual 2025-2026 (pp. 468-469 and 471-472). Five sections are written conditionally (5th/56th, 33rd/57th, 40th/54th); the Manual shows the split form in force, with a judge seated in each, and that is what is drawn. Built by mi/scripts/build_mi_courts.py.",
+          "url": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-502"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, all 83 counties across 57 circuits"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-mi-isd",
+      "identifier": "mi-isd",
+      "name": "Intermediate School District",
+      "description": "The intermediate school district (ISD, RESA, ESA or ESD) covering the point — the regional school district that serves the local districts inside it — and how its board is chosen. NO BOARD MEMBER IS NAMED. An ISD board is normally elected by one representative from each local school board (MCL 380.614), not by voters; a district whose voters approved it elects its board at the ballot instead (MCL 380.615-617). No statewide roster of ISD board members was found, and the layer carries no people, so the card says how the board is chosen and links the district.",
+      "url": "https://districtry.com/mi/sources.html#layer-mi-isd",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "State of Michigan, DTMB Center for Shared Solutions — Michigan Geographic Framework \"Intermediate School Districts\" (version V26, 56 features, last edited 2026-03-03), on the state's open-data hub; its licence reads \"This dataset is a public record and ... there are no restrictions on the use, reproduction, or distribution of this dataset.\" Pre-built by mi/scripts/build_mi_isd_districts.py (Douglas-Peucker, 50 m, 2,000-point agreement gate at 100.00%). The framework is land-only, so a point out on a Great Lake is in no ISD.",
+          "url": "https://services3.arcgis.com/dxRQUfTDNtfqZ301/arcgis/rest/services/IntermediateSchoolDistrict/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, every part of the state's land, 56 districts"
       }
     },
     {

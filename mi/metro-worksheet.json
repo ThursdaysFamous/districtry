@@ -80,7 +80,7 @@
       "id": "us-house",
       "label": "U.S. House",
       "group": "political",
-      "area_rank": 1,
+      "area_rank": 2,
       "rank_note": "13 congressional districts — the largest districts Michigan carries below the state itself",
       "source": {
         "answers": "The U.S. House district covering the point, and the representative holding it.",
@@ -98,7 +98,7 @@
       "id": "mi-senate",
       "label": "Michigan Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "38 Senate districts — larger on average than a county, smaller than a congressional district",
       "source": {
         "answers": "The Michigan Senate district covering the point, and the senator holding it.",
@@ -116,7 +116,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 6,
       "rank_note": "83 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point.",
@@ -134,7 +134,7 @@
       "id": "mi-house",
       "label": "Michigan House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 7,
       "rank_note": "110 House districts — the finest political tiling this instance ships today",
       "source": {
         "answers": "The Michigan House district covering the point, and the representative holding it.",
@@ -152,7 +152,7 @@
       "id": "school-district-unified",
       "label": "School District (Unified)",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 8,
       "rank_note": "514 unified (K-12) districts covering all but 27 pockets of the state, live from TIGERweb (no data/app file) — 469 km2 mean feature area, the largest of the four fabric layers this phase adds",
       "source": {
         "answers": "The unified (K-12) school district covering the point.",
@@ -170,7 +170,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 6,
+      "area_rank": 9,
       "rank_note": "27 districts that operate no high school of their own, live from TIGERweb (no data/app file) — 350 km2 mean feature area, though the mean is pulled well above the 45 km2 median by Bois Blanc Pines, whose district takes in a large area of Lake Huron",
       "source": {
         "answers": "The elementary school district covering the point, in the 27 places Michigan runs one.",
@@ -192,7 +192,7 @@
       },
       "label": "County Commissioner District",
       "group": "political",
-      "area_rank": 7,
+      "area_rank": 10,
       "rank_note": "619 districts across all 83 counties — the finest tiling this instance ships, smaller than a state House district",
       "source": {
         "answers": "The county commissioner district covering the point, its county, the population it was apportioned on, and — where the county publishes a district-keyed roster — the commissioner who holds it.",
@@ -210,7 +210,7 @@
       "id": "county-subdivision",
       "label": "Township or City",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 11,
       "rank_note": "1,581 records tiling the state, live from TIGERweb (no data/app file) — 1,122 general-law townships, 118 charter townships, 301 city placeholder records for 281 distinct cities (18 of which cross a county line), and 40 'not defined' records that are pure Great Lakes water",
       "source": {
         "answers": "The township covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is.",
@@ -228,7 +228,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 12,
       "rank_note": "1,010 ZIP Code Tabulation Areas covering Michigan, live from TIGERweb (no data/app file) — 139.7 km2 mean feature area, between a township and a precinct",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -246,7 +246,7 @@
       "id": "city-ward",
       "label": "City Council District",
       "group": "political",
-      "area_rank": 10,
+      "area_rank": 13,
       "rank_note": "Seven cities: Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson. Their districts run from Detroit's seven over 139 sq mi (about 20 each) down to Jackson's six wards over 11 (about 2 each), measured 2026-10-01 — all smaller than a typical Michigan ZCTA; ranked on Detroit's, the largest",
       "source": {
         "answers": "Which city council or commission district you live in, in the Michigan cities whose council boundaries this app can draw — Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson — and who represents you in it where the city publishes that.",
@@ -288,7 +288,7 @@
       "id": "precinct",
       "label": "Precinct",
       "group": "political",
-      "area_rank": 11,
+      "area_rank": 14,
       "rank_note": "3,895 voting precincts across all 83 counties, pre-built from the state's own 2026-cycle layer — 38.8 km2 mean feature area against a 6.4 km2 median, a six-fold skew because a rural township precinct and a city precinct are barely the same kind of object; the finest tiling this instance ships",
       "source": {
         "answers": "The voting precinct covering the point, its county, and how many voters were registered in it for the 2026 cycle.",
@@ -306,7 +306,7 @@
       "id": "municipality",
       "label": "City or Village",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 15,
       "rank_note": "533 incorporated places, live from TIGERweb (no data/app file) — 281 cities and 252 villages, small dense pockets inside the township fabric, so the smallest layer this instance ships at a 12 km2 mean",
       "source": {
         "answers": "The incorporated city or village covering the point, if any — and which of the two it is, because in Michigan that changes what else governs the point.",
@@ -324,7 +324,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 16,
       "rank_note": "1,290 police-station points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -342,7 +342,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 17,
       "rank_note": "2,838 fire and EMS station points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest fire and EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -360,7 +360,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 18,
       "rank_note": "1,799 post-office points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -372,6 +372,60 @@
         ],
         "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a federal facility, not an elected district. The card answers where the nearest ones are, not who runs them.",
         "applies": "Michigan — plus the border strip its envelope necessarily includes. Of the 1,799 points, 900 are in Michigan and the rest are in Wisconsin (535), Illinois (334) and a handful in Iowa, Ohio, Indiana and Minnesota. THAT IS DELIBERATE, NOT SPILL: nearest-3 is a proximity fact rather than a jurisdictional claim, so for a reader in Menominee the nearest post office really is across the river in Wisconsin, and the card's intro says these are straight-line distances."
+      }
+    },
+    {
+      "id": "mi-court-of-appeals",
+      "label": "Court of Appeals District",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "Four appellate districts — the broadest boundary this instance draws below the state itself, above the 13 congressional districts",
+      "source": {
+        "answers": "The Court of Appeals district covering the point, how many counties it spans, and how its judges are chosen. It names no judge yet, and says why.",
+        "boundary": [
+          {
+            "label": "Derived county unions — no agency publishes Michigan's appellate districts as geometry (an ArcGIS Online catalogue search answered ten queries with no government court layer, measured 2026-10-01), so no new line is drawn: each district is a union of whole counties from the app's own TIGERweb county file, as MCL 600.302 lists them, witnessed county for county by the Michigan Manual 2025-2026 (pp. 453-454). Built by mi/scripts/build_mi_courts.py.",
+            "url": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-302"
+          }
+        ],
+        "people": "NO JUDGE IS NAMED, and that is a measurement. The state court system's own site, www.courts.michigan.gov, publishes `User-agent: *` / `Disallow: /`, so this project does not read it; the one statewide list this project can read is the Michigan Manual 2025-2026, a December 2025 snapshot printed every two years, and a list that old cannot say who sits today. Recorded as gap mi-judge-roster.",
+        "applies": "Michigan — statewide, all 83 counties across 4 districts."
+      }
+    },
+    {
+      "id": "mi-circuit-court",
+      "label": "Circuit Court",
+      "group": "political",
+      "area_rank": 4,
+      "rank_note": "57 circuits — 37 single counties and 20 statutory unions of two to four counties, so broader than the county fabric",
+      "source": {
+        "answers": "The circuit court whose judges serve the point — Michigan's trial court for serious criminal cases, larger civil cases and family matters — the counties it covers, and how its judges are chosen. It names no judge yet, and says why.",
+        "boundary": [
+          {
+            "label": "Derived county unions — no agency publishes circuit geometry (measured 2026-10-01), so no new line is drawn: each circuit is a union of whole counties from the app's own TIGERweb county file, as MCL 600.502-600.549i list them (one section per circuit), witnessed by the Michigan Manual 2025-2026 (pp. 468-469 and 471-472). Five sections are written conditionally (5th/56th, 33rd/57th, 40th/54th); the Manual shows the split form in force, with a judge seated in each, and that is what is drawn. Built by mi/scripts/build_mi_courts.py.",
+            "url": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-502"
+          }
+        ],
+        "people": "NO JUDGE IS NAMED, for the reason the Court of Appeals row gives: the court system's own site asks automated tools not to read it, and the Michigan Manual's December 2025 list is a dated snapshot. Recorded as gap mi-judge-roster.",
+        "applies": "Michigan — statewide, all 83 counties across 57 circuits."
+      }
+    },
+    {
+      "id": "mi-isd",
+      "label": "Intermediate School District",
+      "group": "schools",
+      "area_rank": 5,
+      "rank_note": "56 intermediate school districts — each a group of local school districts, so broader than the 541 school districts under them",
+      "source": {
+        "answers": "The intermediate school district (ISD, RESA, ESA or ESD) covering the point — the regional school district that serves the local districts inside it — and how its board is chosen.",
+        "boundary": [
+          {
+            "label": "State of Michigan, DTMB Center for Shared Solutions — Michigan Geographic Framework \"Intermediate School Districts\" (version V26, 56 features, last edited 2026-03-03), on the state's open-data hub; its licence reads \"This dataset is a public record and ... there are no restrictions on the use, reproduction, or distribution of this dataset.\" Pre-built by mi/scripts/build_mi_isd_districts.py (Douglas-Peucker, 50 m, 2,000-point agreement gate at 100.00%). The framework is land-only, so a point out on a Great Lake is in no ISD.",
+            "url": "https://services3.arcgis.com/dxRQUfTDNtfqZ301/arcgis/rest/services/IntermediateSchoolDistrict/FeatureServer/0"
+          }
+        ],
+        "people": "NO BOARD MEMBER IS NAMED. An ISD board is normally elected by one representative from each local school board (MCL 380.614), not by voters; a district whose voters approved it elects its board at the ballot instead (MCL 380.615-617). No statewide roster of ISD board members was found, and the layer carries no people, so the card says how the board is chosen and links the district.",
+        "applies": "Michigan — statewide, every part of the state's land, 56 districts."
       }
     }
   ],
@@ -401,12 +455,24 @@
     {
       "layer": "county-commissioner",
       "expected": "9"
+    },
+    {
+      "layer": "mi-court-of-appeals",
+      "expected": "Court of Appeals District 4"
+    },
+    {
+      "layer": "mi-circuit-court",
+      "expected": "30th Circuit Court"
+    },
+    {
+      "layer": "mi-isd",
+      "expected": "Ingham ISD"
     }
   ],
   "negative_point": {
     "lat": 41.6528,
     "lng": -83.5379,
-    "note": "downtown Toledo, Ohio — south of the Michigan line and inside permalink_gate's minLat (41.55), so the point is still selectable; measured to miss all five ANCHOR layers (phase 3's four live TIGERweb fabric layers are deliberately not anchors — anchors are pre-built and election-stable)"
+    "note": "downtown Toledo, Ohio — south of the Michigan line and inside permalink_gate's minLat (41.55), so the point is still selectable; measured to miss all eight ANCHOR layers (phase 3's four live TIGERweb fabric layers are deliberately not anchors — anchors are pre-built and election-stable)"
   },
   "coverage_key": {
     "outside": "Outside Michigan"
@@ -713,6 +779,24 @@
         "max_features": 1,
         "note": "Wexford County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Wexford County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
         "dynamic_reference": true
+      },
+      {
+        "file": "mi-court-of-appeals-districts.json",
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Michigan's four Court of Appeals districts, dissolved from the app's own county file by mi/scripts/build_mi_courts.py as MCL 600.302 lists them (witnessed by the Michigan Manual 2025-2026). Exact band: the statute fixes four districts."
+      },
+      {
+        "file": "mi-circuit-courts.json",
+        "min_features": 57,
+        "max_features": 57,
+        "note": "Michigan's 57 circuit courts, dissolved from the app's own county file by mi/scripts/build_mi_courts.py as MCL 600.502-600.549i list them (witnessed by the Michigan Manual 2025-2026). Exact band: a change in the number of circuits is an act of the Legislature, so the builder and this count both move only when the statute does."
+      },
+      {
+        "file": "mi-isd-districts.json",
+        "min_features": 56,
+        "max_features": 56,
+        "note": "Michigan's 56 intermediate school districts, from the state's own Michigan Geographic Framework layer (V26), mi/scripts/build_mi_isd_districts.py. Exact band: ISDs merge rarely and by vote, and a merger is real information rather than drift."
       }
     ],
     "rosters": [
@@ -769,7 +853,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mi-shell-v16",
+    "cache_name": "districtry-mi-shell-v17",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",

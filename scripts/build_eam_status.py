@@ -1375,6 +1375,15 @@ SF_SCHOOL_BOARDS_AT_LARGE = (
     "at-large precedent is that naming the members is the whole answer, and "
     "both bodies are the city-wide school tier the app already covers.")
 
+# Measured 2026-10-01 by Michigan's own thread; the working is in mi/WATCH.md.
+MI_NO_SCHOOL_BOARD_DISTRICTS = (
+    "Michigan elects no school board by district. Ordinary boards are elected "
+    "at large under the Revised School Code; its one by-district scheme is for "
+    "a first-class district, and no district is first-class; and the Detroit "
+    "Public Schools Community District's board is elected districtwide under "
+    "MCL 380.384(3). Every board contest on the Wayne and Macomb 2024 "
+    "canvasses is districtwide.")
+
 # Per instance, what answers each expected function. A tuple names the layer
 # ids; `depth(...)` is measured; OPEN is nothing yet; UNSETTLED is a question the
 # standard leaves to that state's thread.
@@ -1443,18 +1452,19 @@ ANSWERS = {
         "municipal-boundaries": answers("municipality"),
         "local-government": depth("city-ward"),
         "school-district-boundaries": answers("school-district-unified", "school-district-elementary"),
-        # Michigan's own thread has confirmed it elects judges by district, so
-        # the entry is owed rather than open to question.
-        "courts-by-district": OPEN,
+        # Built 2026-10-01 from statute as unions of whole counties; the judges
+        # are not named (gap mi-judge-roster: the court system's site refuses
+        # every client).
+        "courts-by-district": answers("mi-court-of-appeals", "mi-circuit-court"),
         # A Michigan township governs everyone outside a village or city, so
         # the 34 that clear 25,000 are already owed under the city tier; the
         # rest are owed here. The app draws them and names no township board.
         "sub-county-government": OPEN,
-        # Still the Michigan thread's to confirm: its courts question is settled
-        # and whether it elects any school board by district is not.
-        "school-boards-by-district": UNSETTLED,
+        "school-boards-by-district": na(MI_NO_SCHOOL_BOARD_DISTRICTS),
         "precincts": answers("precinct"),
-        "special-districts": OPEN,
+        # Intermediate school districts: special districts the Revised School
+        # Code creates (MCL 380.601 et seq.), each with its own levy.
+        "special-districts": answers("mi-isd"),
         "tribal-government": OPEN,
     },
     "mn": {
@@ -1574,7 +1584,8 @@ CITY_FILES = {
     "ia": {"1912000": "ia/data/app/cedar-rapids-council-members.json",
            "1921000": "ia/data/app/dsm-council-members.json",
            "1982425": "ia/data/app/waterloo-council-members.json"},
-    "mi": {"2622000": "mi/data/app/mi-detroit-council-members.json",
+    "mi": {"2605920": "mi/data/app/mi-battle-creek-commission-members.json",
+           "2622000": "mi/data/app/mi-detroit-council-members.json",
            "2634000": "mi/data/app/mi-grand-rapids-council-members.json",
            "2641420": "mi/data/app/mi-jackson-council-members.json"},
     "ny": {"3651000": "ny/data/app/council-members.json"},
