@@ -3864,9 +3864,11 @@ work out how. A yes costs the city nothing it has not already published.
 > have passed from the follow-up) when it is true. A reply that sends the list is `answered`,
 > and the work is then to read it, not to record the level.
 >
-> **The nine records carry the send as a dated `ASKED 2026-10-01` line and no `ask` field yet**,
-> because `scripts/build_coverage_gaps.py` accepts an `ask` only with an `outcome`, and none of
-> the nine has one. The field goes on with its outcome, carrying `asked: 2026-10-01`.
+> **The six letters still waiting carry an `ask` field with `outcome: "pending"`** (Rochester
+> Hills, Norton Shores, West Bloomfield, Bedford, Lansing, Wyoming), `asked: 2026-10-01` and
+> the clerk's name; the send times stay in the table above. The other three records were
+> retired when their boards shipped. Lansing's 14:51 reply was an automatic acknowledgement,
+> which is not an answer, so its ask stays pending.
 
 **Why these letters exist.** The done standard asks that a reader in any Michigan city or
 township over 25,000 people be told who governs it. Of the 82 such units, most publish their
