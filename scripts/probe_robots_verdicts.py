@@ -223,11 +223,16 @@ ALWAYS_ASKED = {
 # second, quieter list of hosts to measure. `--check` fails on an entry the
 # inventory now carries, naming it, which is the `ACCEPTED_DROPS` property.
 CANDIDATE_HOSTS = {
+    # Measured 2026-10-01 from both addresses, and the answer was NOT a sandbox
+    # artefact: a connection reset here, a timeout on three runner reads
+    # fifteen seconds apart. The candidacy stands because the row has to live
+    # somewhere a subject includes, and because the finding is worth keeping
+    # measured — but nothing is fetched from the host, since an unreadable
+    # robots.txt disallows.
     "www.urbanaillinois.us":
         "the only route to Urbana's council — Champaign County publishes no "
-        "municipal officials — and it resets every connection from a Claude "
-        "Code sandbox, robots.txt included, which is a reading of that address "
-        "rather than of the city (gap `urbana-city-council-names`)",
+        "municipal officials — and its robots.txt answers neither a sandbox "
+        "nor a runner (gap `urbana-city-council-names`)",
 }
 
 

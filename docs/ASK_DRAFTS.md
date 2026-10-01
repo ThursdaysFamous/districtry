@@ -2792,6 +2792,87 @@ a question we would be asking of ourselves. That one waits on a reading from a b
 ---
 
 
+## Ask 35 — City of Urbana: your website does not answer us from anywhere
+
+> **THE NUMBER IS PROVISIONAL**, for the reason Ask 34 above gives: check main's last ask
+> number immediately before merging.
+
+> **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the City Clerk. On send, change
+> `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `urbana-city-council-names` blocker in
+> `docs/DATA_LAYER_GUIDEBOOK.md`.
+
+**This ask waited on a measurement and the measurement came back.** Until 2026-10-01 the only
+reading of urbanaillinois.us was from a Claude Code sandbox, where every connection is reset —
+and this project's own record says reachability moves with the address it is measured from, so
+writing to a city on the strength of that would have been reporting our own network as their
+problem. `scripts/probe_robots_verdicts.py` was dispatched on a GitHub runner the same day, which
+is the vantage the weekly jobs actually crawl from, and read the host's robots.txt THREE times
+fifteen seconds apart: every one timed out.
+
+**So the two addresses fail differently — a reset from one, a timeout from the other — and
+neither gets a byte.** That is the shape of a host that does not serve automated clients rather
+than one that is merely slow. It is worth saying plainly what this does NOT establish: nobody
+here has seen a single page of the city's site, so this project cannot say whether Urbana
+publishes its council or not, and the ask must not imply otherwise.
+
+**Urbana is the last Illinois city above 25,000 people whose governing body this site cannot
+name**, and it is the only one of the eleven read this week that could not be reached at all.
+Champaign, next door, was read from its own site on the same day without difficulty.
+
+### Recipient
+
+The Urbana City Clerk. The address must be confirmed before sending, and confirming it is itself
+the problem: the city's own contact page cannot be read from here. Find it from a source that
+does answer — a printed directory, the county clerk, or simply a browser — and record where it
+came from, rather than composing an address from the city's domain.
+
+### The draft
+
+> Subject: Your website does not respond to automated requests
+>
+> Hello,
+>
+> I run districtry, a free, non-commercial civic map that shows people which districts they live
+> in and who represents them there. It covers Illinois, and it names the mayor and council for
+> every city of Urbana's size in the state except Urbana.
+>
+> The reason is unusual and I thought you would want to know. When my software tries to read
+> anything from urbanaillinois.us, including the small rules file that tells visiting software
+> what it may and may not read, the connection is refused or times out. I have now tried from two
+> completely different networks, several days apart, and neither gets a response of any kind.
+> Your site presumably loads normally in a browser; something in front of it appears to be
+> turning away everything else.
+>
+> I am not asking anyone to compile anything. I would only like to know whether that is
+> deliberate. If the city blocks automated visitors on purpose, that is a complete answer and I
+> will record it and stop. If it is not deliberate, whoever runs the site would probably want to
+> know, because search engines and screen readers reach a site the same way my software does.
+>
+> If it is easier, a link to wherever the council members are listed would also settle it, and I
+> will check that address instead.
+>
+> Thank you for your time.
+>
+> Adam Overberg
+> districtry.com
+
+### What each answer means
+
+| answer | what it settles |
+|---|---|
+| "it is deliberate" | A refusal, which counts at once towards the done standard's fourth test. Record it with the date and tag the gap record. The city's own choice, and nothing here works around it. |
+| "it is not deliberate" and it is fixed | The city joins on the next weekly run once a scraper is written, and the candidate host becomes an ordinary one. |
+| a link to the council page | Read that address and nothing else; it may well be on a host that answers. |
+| no reply after the follow-up cadence | `UNRESPONSIVE` after one follow-up and thirty days, recorded with both dates, and the record is tagged then and not before. |
+
+**Why this is not phrased as a data request.** Every other ask in this file asks a government for
+something it has. This one asks whether a door is locked on purpose, because until that is
+answered there is no way to find out what is behind it — and a note asking for a roster the city
+may already publish would be asking them to do work this project should be doing itself.
+
+---
+
+
 ## Ask 33 — New York State: is there a directory of local elected officials?
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** This is the one ask that belongs to the STATE
