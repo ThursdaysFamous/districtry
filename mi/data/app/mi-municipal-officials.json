@@ -716,6 +716,52 @@
   "sourceUrl": "https://www.macomb-mi.gov/148/Board-of-Trustees",
   "readAt": "2026-10-01"
  },
+ "2609972820": {
+  "name": "Shelby",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Rick Stathakis",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Stanley T. Grot",
+    "role": "Clerk",
+    "phone": "586-731-5102"
+   },
+   {
+    "name": "James Carabelli",
+    "role": "Treasurer",
+    "phone": "586-731-5145"
+   },
+   {
+    "name": "Lisa Casali",
+    "role": "Trustee",
+    "phone": "586-243-1314"
+   },
+   {
+    "name": "Lucia Di Cicco",
+    "role": "Trustee"
+   },
+   {
+    "name": "John Vermeulen",
+    "role": "Trustee",
+    "phone": "586-747-1140"
+   },
+   {
+    "name": "Vince Viviano",
+    "role": "Trustee",
+    "phone": "586-747-1144"
+   }
+  ],
+  "sourceUrl": "https://www.shelbytwp.org/government/board-of-trustees",
+  "office": {
+   "phone": "586-731-5154"
+  },
+  "readAt": "2026-10-01"
+ },
  "2609984120": {
   "name": "Washington",
   "kind": "township",
@@ -1241,6 +1287,47 @@
   "sourceUrl": "https://www.pittsfield-mi.gov/118/Board-of-Trustees",
   "readAt": "2026-10-01"
  },
+ "2616189160": {
+  "name": "Ypsilanti",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Brenda Stumbo",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Debbie Swanson",
+    "role": "Clerk"
+   },
+   {
+    "name": "Stan Eldridge",
+    "role": "Treasurer"
+   },
+   {
+    "name": "John P. Newman II",
+    "role": "Trustee"
+   },
+   {
+    "name": "LaResha Thornton",
+    "role": "Trustee"
+   },
+   {
+    "name": "Gloria Peterson",
+    "role": "Trustee"
+   },
+   {
+    "name": "Karen Lovejoy Roe",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://ypsitownship.org/government/boards___commissions/board_of_trustees/index.php",
+  "office": {
+   "email": "trustees.info@ypsitownship.org"
+  },
+  "readAt": "2026-10-01"
+ },
  "2616311220": {
   "name": "Brownstown",
   "kind": "township",
@@ -1315,6 +1402,44 @@
    }
   ],
   "sourceUrl": "https://www.cantonmi.gov/206",
+  "readAt": "2026-10-01"
+ },
+ "2616359000": {
+  "name": "Northville",
+  "kind": "township",
+  "body": "Board of Trustees",
+  "seats": 7,
+  "members": [
+   {
+    "name": "Mark J. Abbo",
+    "role": "Supervisor"
+   },
+   {
+    "name": "Cynthia L. Jankowski",
+    "role": "Clerk"
+   },
+   {
+    "name": "Jason Rhines",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Roger Lundberg",
+    "role": "Trustee"
+   },
+   {
+    "name": "Roland Hwang",
+    "role": "Trustee"
+   },
+   {
+    "name": "Mindy Herrmann",
+    "role": "Trustee"
+   },
+   {
+    "name": "Chris Roosen",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.twp.northville.mi.us/your-government/board-of-trustees",
   "readAt": "2026-10-01"
  },
  "2616365080": {

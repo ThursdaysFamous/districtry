@@ -410,6 +410,67 @@ and followed up on 2026-08-16, and Jasper (2026-08-17) and Hardin (2026-08-24) a
 - **Ask 12's follow-ups** to Ford, Christian and Knox counties are likewise recorded as
   held, and all three went on **2026-09-04**.
 
+### Six more replies landed on the afternoon of 2026-10-01, and two of them answer an ask outright
+
+Read at 18:00 UTC. Every one of these arrived **after** the letters recorded above went out, so
+this is the first pass over them.
+
+| Who answered | What they said | Whose question it was |
+|---|---|---|
+| Ozaukee County Clerk (WI), 17:33 | Port Washington Ward 9 is in aldermanic district 1 and county supervisor district 4 | the six-county ward-to-district ask |
+| Calumet County Clerk (WI), 16:56 | Brillion elects its council **at large**, and the two wards its filing omits are **bare land** rather than missing data | the same ask |
+| Kentucky AOC, 17:16 | the join **is** published, two ways: a page per county, and a directory search that returns a table | the Kentucky judges ask, answered |
+| Hardin County Clerk (IL), 16:15 | three commissioners, named, elected countywide | an eight-week-old thread, now closed |
+| Oklahoma State Election Board, 16:52 | the warehouse is downloadable, and permission and modification questions **belong to the OU Center for Spatial Analysis**, not to the board | the Oklahoma precinct ask, redirected |
+| NY Department of State, 17:26 | the Department takes its municipal contact information **from the Comptroller**, and is not sure the Comptroller can release it | the New York local-roster ask, redirected |
+
+**TWO OF THE SIX ARE REDIRECTIONS AND A REDIRECTION IS NOT A REFUSAL.** Both name the office
+that actually holds the thing, which is more than silence gives and more than a no gives. The
+Oklahoma board's answer also settles a question the fleet's own rule would otherwise have to
+argue: the mapping centre is the **state's contracted mapping provider** rather than an
+independent university dataset, which is why its warehouse is where the board's own maps page
+sends a reader.
+
+**AN ACKNOWLEDGEMENT IS NOT SENT WHERE A FOLLOW-UP MIGHT BE NEEDED IN THE SAME BREATH.**
+Ozaukee, Calumet and Hardin each answered completely, so each has a short reply drafted saying
+what will be published and crediting the office — which is a correction opportunity, and the
+reason these are worth sending at all. Kentucky and Oklahoma have none yet: until somebody
+reads the two pages the AOC named and confirms they carry the circuit **number** rather than
+only the county, a thank-you would be claiming an answer that has not been checked, and a
+second message a day later is a worse use of the correspondent than one message that waits.
+
+**NEW YORK'S REDIRECTION LEAVES A QUESTION ONLY THE PERSON WHO ANSWERED CAN SETTLE**, and it is
+drafted: does the information the Department holds **name the people in office**, or is it
+office contact details without names? Municipal contact information and a roster of
+officeholders are not the same thing, and the answer decides whether the Comptroller is worth
+writing to at all. Asking him costs one line; asking the Comptroller for the wrong dataset
+costs that office real work.
+
+### A DUPLICATE ACKNOWLEDGEMENT WAS DRAFTED AND WITHDRAWN, AND THE CAUSE IS A SWEEP THAT DID NOT READ THE DRAFT FOLDER FIRST
+
+Hardin County's reply already had an acknowledgement waiting in the mailbox, written half an
+hour earlier. A second one was drafted anyway, because the sweep read the **inbox** for new
+replies and did not check the **draft** folder for answers already written to them — so a reply
+that had been handled looked exactly like a reply that had not. The duplicate was deleted
+minutes after being created, which is a withdrawal of this session's own mistake rather than a
+judgement about a draft the operator was waiting on; those are still his to delete.
+
+**SWEEP THE INBOX AND THE DRAFT FOLDER IN THE SAME PASS.** A reply is outstanding only if
+nothing is drafted to it, and the draft folder is the only place that says so.
+
+### A COUNT CARRIES THE MINUTE IT WAS READ, OR IT CARRIES NO MINUTE AT ALL
+
+Twice on 2026-10-01 a draft-folder figure was reported with a reading time attached when it had
+been reached by adding to the previous figure instead. Both times the numbers happened to be
+right, which is the dangerous part: the figures survived and the method did not exist. The
+second instance was the worse one, because the first had already been corrected an hour before
+and the correction asserted a method that was then not used.
+
+**The folder at 18:00 UTC held 32 drafts, 28 of them addressed and 4 blank.** One of the 28 was
+then deleted as the duplicate described above, so 31 and 27 is arithmetic and is labelled as
+arithmetic — the mailbox was not re-read after the deletion, and no time is attached to those
+two numbers.
+
 ---
 
 ## Ask 1 — Iowa county officers — **WITHDRAWN 2026-09-03, never sent**
@@ -1952,10 +2013,52 @@ unaffected sources; the three district files are not in the tree.
 
 ## Ask 20 — six Wisconsin county clerks: the city wards your filing leaves without a district
 
-> **NOT YET ASKED — DRAFTED 2026-09-08.** Six separate notes, one per county clerk. Four
-> ask the same question about a different city; two ask a different question. They are not
-> a batch: each note names one county's own filing, and one that named the wrong city or
-> the wrong ward would be worse than not writing.
+> **ASKED 2026-10-01 — ALL SIX SENT, FOUR ANSWERED THE SAME DAY.** Six separate notes, one per
+> county clerk. Four ask the same question about a different city; two ask a different question.
+> They are not a batch: each note names one county's own filing, and one that named the wrong
+> city or the wrong ward would be worse than not writing.
+>
+> Send times, read off the sent folder (`/mnt/project-files/letters/sent-2026-10-01.md`, which is
+> the only record of what actually went, as against what a thread drafted): Calumet 14:52:02,
+> Brown 14:52:11, Outagamie 14:52:19, Pepin 14:52:38, Lafayette 16:14:29, Ozaukee 16:14:42 UTC.
+>
+> **OUTAGAMIE ANSWERED AND SETTLED NEW LONDON.** Clerk Kelly Gerrits wrote that City of New
+> London wards 10, 11 and 12 are all in New London Aldermanic District 5 — exactly the three
+> uncoded wards this note asked about, so that city's composition is now completely known. It is
+> written down in `wi/scripts/build_wi_aldermanic_districts.py`'s `EXCLUDED` table and in
+> `wi/WATCH.md` and is not yet built, because composing a city from the county's coded wards plus
+> three sentences from a clerk is a different shape from the city-publishes-its-own-composition
+> route `LOCAL_COMPOSITION` holds, and wants its own gate and its own operator rebuild.
+>
+> **BROWN HEDGED AND THEN POINTED SOMEWHERE BETTER.** Clerk Patrick Moynihan wrote that the
+> Village of Bellevue's board "appear to be at large", which is a qualified guess and not the
+> village's own statement, and then endorsed asking the village itself. That is why ask
+> `wi-bellevue-board-form` exists and went the same day; see the "Why the county clerk and not
+> the city clerk" section below, whose rule this does not break — the village clerk's address
+> came from the county clerk in writing, so none had to be sourced against the clerks' own
+> withholding.
+>
+> **CALUMET ANSWERED AND SETTLED BRILLION, WHICH RETIRES IT FROM THE GAP RATHER THAN FILLING IT
+> IN.** Clerk Beth Leary wrote that the City of Brillion elects its council AT LARGE, not by
+> district, and that wards 5 and 6 — the two her county's filing leaves with no district code —
+> are bare land with nobody living on them. So the uncoded wards are not missing data: there is no
+> district for them to be in. Brillion therefore leaves the `aldermanic-incomplete-filings` gap
+> record, which goes from six municipalities to five, and `calumet` leaves its county list. The
+> city's council members are a separate, still-open question and want the at-large municipality
+> card rather than this layer. A second reading is consistent with her answer and is not proof of
+> it: the state's own 2024 election file carries a population for Brillion's wards 1-4 and leaves
+> wards 5 and 6 empty.
+>
+> **OZAUKEE ANSWERED AND COMPLETED PORT WASHINGTON.** Clerk Kellie Kretlow wrote that City of Port
+> Washington ward 9 — the one ward her county's filing leaves uncoded — is in aldermanic district 1
+> and county supervisor district 4. The supervisor half is independently corroborated: the state's
+> own ward file already codes that ward into supervisor district 4, so the one claim that could be
+> checked against another publisher checks out, which is what makes the aldermanic half worth
+> relying on. That city's composition is now completely known and, like New London's, is written
+> down and not yet built, because it is the same county-coded-wards-plus-a-clerk's-sentence shape
+> that wants its own gate and an operator rebuild.
+>
+> Pepin and Lafayette have not replied. Follow up once at about 2026-10-21.
 
 **What this is about.** Wisconsin's aldermanic districts are drawn as groups of wards, and
 the ward file the Legislative Technology Services Bureau publishes is the only statewide
@@ -3238,8 +3341,50 @@ may already publish would be asking them to do work this project should be doing
 
 ## Ask 33 — New York State: is there a directory of local elected officials?
 
-> **ASKED 2026-10-01**, to the address and cc below, and read off the sent folder rather
-> than off this file. This is the one ask that belongs to the STATE rather than to 57
+> **ASKED 2026-10-01 at 16:09 UTC AND ANSWERED AT 17:26 THE SAME DAY — and the answer is a
+> REDIRECTION, which earns the three New York levels nothing.** John Fatato, Administrative
+> Specialist 2 in the Department's Local Government Services, replied in two sentences: "The
+> Department of State receives our municipal contact information from OSC. I'm not sure if
+> they're able to provide it to you for these purposes." That names the holder and settles
+> nothing else. It is not one of the five answers tabled below, so a sixth row is added for
+> it; and it is **not a refusal**, so it starts no clock and the levels stay as they are.
+>
+> **The operator asked the follow-up himself at 18:04**, on the same thread, and it is the
+> right one: does the contact information the Department holds NAME the people in office, or
+> is it office details without names? A dataset of town-hall telephone numbers closes none of
+> these levels, so that answer decides whether writing to the Comptroller is worth doing at
+> all. He also said in that message that he will write to the Comptroller directly.
+>
+> **A LETTER TO THE COMPTROLLER WOULD NOT BE A FIRST APPROACH, and that is easy to get wrong
+> here**: `localgov@osc.ny.gov` was copied in on the original at 16:09, so that office has
+> already had the question in full and has not answered it. Any letter there cites the cc and
+> reads as a follow-up, never as an opening. **Nothing goes to the Comptroller until Mr.
+> Fatato answers**, because his answer may make the letter unnecessary.
+>
+> **ANSWERED AGAIN AT 18:20, AND THIS ONE IS SUBSTANTIVE: THE NAMES EXIST.** Mr. Fatato:
+> "We do receive names, but as I understand it the municipalities are responsible for
+> updating their own information so the information may not be as up-to-date as you're
+> looking for." So a statewide collection naming the people in local office DOES exist, held
+> by the Comptroller, and its currency is each municipality's own to maintain. **That settles
+> the question this ask was written to answer** — the state does hold such a thing — and it
+> does NOT close any level, because nothing has been obtained and nothing is dated.
+>
+> It also changes what is worth asking the Comptroller, which is why the letter was not
+> written before this reply came: the question is no longer whether names exist but whether
+> each record carries a DATE. This project's honesty rule is that a card never presents a
+> name as current without a verifiable source, so an undated self-reported roster cannot ship
+> as a roster. It would still be worth having as a STARTING LIST to check against each
+> municipality's own page, which is how this project works everywhere else. That letter is
+> `Ask ny-comptroller-local-officials` below.
+>
+> **Prior contact: none, and that was measured rather than assumed.** All of the operator's
+> mail was searched on 2026-10-01 for both domains and for the two offices by name, not just
+> the sent folder, and this thread is the only one. So the letter was correctly written as a
+> first approach.
+>
+> **Every date and address above is read off the sent folder, not off this file.**
+>
+> This is the one ask that belongs to the STATE rather than to 57
 > county clerks and a hundred town clerks, which is why it went first: if the answer is
 > yes, a single file closes most of New York's county and local tiers, and a hundred and
 > sixty separate asks were never the right opening move. It is also the cheapest possible
@@ -3343,6 +3488,7 @@ above says what the sent version keeps and drops, and the sent folder carries it
 | "no such directory exists" | The best possible no. The statewide route closes for good, the records say the state does not publish it rather than that we did not find it, and nobody re-asks this in a year. |
 | "ask the counties and towns" | The same as the above in practice, and it also tells us which desk each one is, which is worth having before 160 letters. |
 | no reply after the follow-up cadence | `UNRESPONSIVE` in the ledger, thirty days after one follow-up — a claim about the ask and never about the state. |
+| "we get it from the Comptroller and may not be able to share it" | **What actually came back, at 17:26 on the day it was asked.** It names the holder and answers neither question: not whether a directory of PEOPLE exists, and not whether it can be released. It earns nothing, starts no clock, and what it waits on is the follow-up already sent — does the Department's data name the people in office, or is it office details without names? |
 
 **Three things deliberately left out.** No individual is named, at either office. No county or
 town is named, because this is a question about whether a statewide product exists and not a
@@ -3350,6 +3496,82 @@ complaint about any local government's website. And nothing is asked about the f
 sites that would not answer this project: those readings were taken in a sandbox whose own
 network accounts for most of them, and the fleet's rule is to re-measure from the build machine
 before writing any publisher off.
+
+## Ask ny-comptroller-local-officials — New York's Comptroller: how current are the names, and are they dated?
+
+**Status: NOT YET ASKED — DRAFTED 2026-10-01.** Named rather than numbered. **This is a
+FOLLOW-UP, not an opening**: `localgov@osc.ny.gov` was copied in on Ask 33 at 16:09 on
+2026-10-01 and has not replied, so the letter cites that message rather than introducing the
+project from scratch.
+
+Gaps `ny-county-governing-body`, `ny-local-governing-body`.
+
+**What is already settled, and why this is a narrow letter.** Ask 33 went to the Department
+of State with the Comptroller copied in. The Department answered twice the same day: it gets
+its municipal contact information from the Comptroller, and that information **does include
+names**, with each municipality responsible for keeping its own entry up to date. So the
+existence question is closed and only two things are left to ask — whether the collection can
+be shared, and whether each record carries a date.
+
+**The date is the whole question, and that is this project's own rule rather than
+fussiness.** A card here never shows a person's name as current without a source that can be
+checked. A self-reported list with no date per record cannot be published as a roster, because
+there would be no way to tell a name that is right from one that is four years stale. The same
+list WITH a date per record can be published, each row carrying its own date exactly as the
+county cards already do. And even undated it is worth having, as a starting list to check
+against each municipality's own page — which is how every other state in this project is
+built.
+
+**It is kept short deliberately.** The operator shortened Ask 33 before sending it, which is
+the clearest signal available that these drafts run long. This one asks three things and
+stops.
+
+> Subject: Re: Is there a published directory of local elected officials in New York?
+>
+> Dear Division of Local Government and School Accountability,
+>
+> You were copied last week on a question I sent to the Department of State, asking whether
+> anyone at the state holds a directory of local elected officials. Mr. Fatato there has since
+> told me the Department gets its municipal contact information from your office, that it does
+> include names, and that each municipality is responsible for keeping its own entry current.
+>
+> I run districtry.com, a free, non-commercial map that shows anyone which civic districts
+> cover their address and who represents them there. Outside New York City it can draw every
+> county, city, town and village in the state and name almost nobody.
+>
+> Three questions, and I expect the answer to the first may settle the others:
+>
+> 1. Can that information be shared with me, in any form?
+> 2. Does each record carry a date — when the municipality last updated it?
+> 3. If not, is there anything in it that indicates how current an entry is?
+>
+> The date matters more than it might sound. I never show someone's name as current unless I
+> can point to a source for it, so an undated list is not something I could publish as a
+> roster. The same list with a date on each row I could publish, showing that date beside each
+> name. And even without dates it would be valuable to me as a starting point to check against
+> each municipality's own website, which is how I build this everywhere else.
+>
+> If it is not something you can share, that is a complete answer and I will record it as such
+> and not ask again. Whatever you are able to send, your office would be credited and linked on
+> every page that used it.
+>
+> Thank you,
+>
+> Adam Overberg
+> adam@overberg.co
+> districtry.com
+
+**What each answer means.**
+
+| answer | what it settles |
+|---|---|
+| shared, with a date per record | The strongest possible outcome: New York's county, local and sub-county levels close from one file, each row publishable with its own date. |
+| shared, undated | Not publishable as a roster on its own, and still a large gain: a starting list of names to check against each municipality's own page, which turns an open-ended search into a verification pass. |
+| cannot be shared | `REFUSED`, which counts immediately. The three gap records stand with the state's own answer as the reason, and the route is each county and town one at a time. |
+| no reply | `UNRESPONSIVE` thirty days after one follow-up — a claim about the ask and never about the office. |
+
+**One thing deliberately not asked.** Nothing about reuse terms or licensing, for the reason
+Ask 33 gives: there is nothing yet to license. If a file arrives, that is a separate letter.
 
 ## Ask il-five-counties-commissioner-roster — five Illinois county clerks: who holds the commissioner seats?
 
@@ -4014,7 +4236,44 @@ next step rather than a mailing.
 
 ---
 
-## Ask wi-city-council-pages — five Wisconsin cities: may we read your council page?
+## Ask wi-city-council-pages — Beloit: may we read your council page?
+
+> **WITHDRAWN FOR FOUR OF THE FIVE CITIES, 2026-10-01, later the same day. JANESVILLE,
+> WAUSAU, WAUWATOSA AND MEQUON DO NOT BLOCK THIS PROJECT AND NEVER NEEDED A LETTER.** All four
+> serve their robots.txt with HTTP 200 and PERMIT `/`, and all four serve their home and council
+> pages — 146,771, 96,666, 111,716 and 57,621 bytes, Mequon's through Cloudflare. Their Gmail
+> drafts were deleted rather than held, because a letter telling a city it turns us away when it
+> does not is worse than no letter.
+>
+> **THE CAUSE WAS READING THE POLICY WITH A THINNER CLIENT THAN THE ONE THAT CRAWLS**, which is
+> the one defect CLAUDE.md names for this exact pair of hosts and which this ask reproduced
+> anyway. The measurement above was taken with `UA_HEADERS_ROSTER_BOT`, which carries no
+> `sec-ch-ua` client hints. `wi/scripts/wi_municipal_executive_scraper.py` had already settled
+> on 2026-09-29, leave-one-out and two reads per rung, that **those three headers are the whole
+> difference** on `www.milwaukee.gov` and `www.wauwatosa.net` — 403 without them, a policy that
+> permits us with them. Asked with `UA_HINTS_CHROME_126`, the client the Wisconsin scrapers
+> actually send, all four answer 200.
+>
+> **THIS IS NOT AN ESCALATION AND THE DISTINCTION IS THE WHOLE RULE.** The fleet does not try a
+> richer client to get a better verdict; it reads the policy with the client that will crawl.
+> For a Wisconsin municipal host that client is Chrome plus the pinned hints, so the token read
+> was the WRONG measurement rather than the cautious one. Beloit was deliberately **not**
+> re-probed: its robots.txt is served to the token and says `Disallow: /`, which is a published
+> refusal, and re-asking a host that already answered in order to get a different answer is
+> exactly the escalation the rule forbids.
+>
+> **WHAT REPLACES THE FOUR LETTERS IS WORK, NOT AN ASK.** Four readable councils now want a
+> scraper and a builder. Wausau's alderpersons page already shows 11 districts and 29
+> alderperson mentions in its served bytes; Janesville says "council member" rather than
+> "alderperson" and Mequon's list is not linked from its home page, so each needs its own look.
+> That is Wisconsin's level 6 moving from waiting-on-a-reply to buildable.
+>
+> **AND THE GENERAL LESSON IS THE ONE THAT KEEPS COSTING THIS PROJECT.** A refusal is a dated
+> measurement taken with a named client. Re-measure it with the client that crawls before
+> writing to anyone about it, and above all before recording it as the reason a city names
+> nobody — because a wrong refusal reads exactly like a right one, and it stops the work rather
+> than prompting it.
+
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** Five near-identical letters, one per city. Each asks
 > permission to read a page the city already publishes to the public. Nothing is blocked that
@@ -4034,10 +4293,23 @@ after an ask has been refused, or sent with one follow-up and thirty days' silen
 | city | 2020 population | what it answers |
 |---|---|---|
 | Beloit | 36,657 | `robots.txt` publishes `User-agent: * / Disallow: /` under six named crawlers that get narrow rules. The city's own file on the city's own host, so it binds fully. |
-| Janesville | 65,615 | HTTP 403 at the HOME page, not merely on `robots.txt` |
-| Wausau | 39,994 | HTTP 403 at the HOME page |
-| Wauwatosa | 48,387 | HTTP 403 at the HOME page |
-| Mequon | 25,129 | HTTP 403 at the HOME page |
+| Janesville | 65,615 | HTTP 403 at the HOME page, not merely on `robots.txt`. **AkamaiGHost** answers it, with an `Access Denied` body |
+| Wausau | 39,994 | HTTP 403 at the HOME page, **AkamaiGHost**, same body |
+| Wauwatosa | 48,387 | HTTP 403 at the HOME page, **AkamaiGHost**, same body |
+| Mequon | 25,129 | **CORRECTED 2026-10-01, later the same day.** `robots.txt` is SERVED — HTTP 200, 2,005 bytes, deterministic over three reads fifteen seconds apart — and no rule in its one binding group matches `/`, so Mequon's published policy PERMITS this project. What stops the read is a **Cloudflare managed challenge** on the content pages: the home page's 403 carries the `Just a moment...` interstitial, which is an access control and is never solved or worked around |
+
+**WHO ANSWERED THE 403 WAS CHECKED, AND THAT IS NOT A FORMALITY.** CLAUDE.md records that a 403
+from an egress proxy is not a 403 from a site — in this sandbox `github.com` itself 403s with the
+proxy's own JSON body — so a refusal recorded without reading the responder is a guess. All four
+came from the cities' own edge (`Server: AkamaiGHost` on three, `Server: cloudflare` on Mequon),
+so the measurement holds.
+
+**THE MEQUON CORRECTION DID NOT CHANGE WHAT WE MAY DO AND DID CHANGE WHAT WE MAY SAY.** A city
+whose rules file turns us away has decided something; a city whose rules file welcomes us while a
+security product turns us away probably has not, and its letter says so and asks for the hand-off
+on that basis. It is also NOT a `CHALLENGE_FRONTED_HOSTS` entry: that table is for a host whose
+answers are non-deterministic, and Mequon's are not — the robots read is stable and the page
+challenge is consistent.
 
 **The four 403s are a site-wide block that enforces itself**, which is #1271's own reading of why
 a 403 on `robots.txt` needed no strict treatment: a server refusing every path needs no policy
@@ -4056,10 +4328,28 @@ which this project already ships — so no refused site was read to find them:
 | Wausau | Rachel Brown | 715-261-6622 |
 | Wauwatosa | Deyanira Nevarez | 414-479-8917 |
 
-**The Commission's directory carries no e-mail address for any of the five**, and the cities'
-own contact pages are behind the very block this ask is about, so each address has to be taken
-from the city's own site by the operator — who browses as a person, which all five sites serve
-perfectly well. That is a two-minute lookup and it is deliberately not automated here.
+**THERE IS NO E-MAIL ADDRESS TO FIND, AND THAT IS A WITHHOLDING BY THE PEOPLE NAMED RATHER THAN
+A GAP IN OUR READING** (settled 2026-10-01, when the six letters were drafted into the operator's
+mailbox). The Commission's directory carries no e-mail address for any of the five — 0 of 1,848
+records in the shipped file contain an `@`, the source PDF's own `/Subject` metadata reads
+`WI Municipal Clerks PDF - no emails:`, and the Commission said why: *"that was at their
+request"*. `wi/scripts/build_wi_municipal_clerks.py` already rules on what follows from that, and
+the rule covers this ask exactly: **nothing here goes looking for those addresses elsewhere to
+backfill them.** The cities' own contact pages are behind the very block this ask is about, so
+there was nowhere permitted to look even if the rule allowed it.
+
+**SO FIVE OF THE SIX DRAFTS CARRY NO RECIPIENT**, and the empty address field is the safeguard —
+a mail client will not send without one. Each opens with a bracketed note naming the clerk and
+their telephone number, saying why the address is blank, and asking the operator to supply it. The
+operator browses as a person, which all five sites serve perfectly well; that lookup is
+deliberately not automated, and it is the operator's to make rather than ours to route around.
+
+**WAUWATOSA IS THE ONE EXCEPTION AND IT IS A PUBLISHED OFFICE ADDRESS, NOT A PERSON'S.**
+`wi/data/app/wi-municipal-executives.json` already ships `mayor@wauwatosa.net`, from Milwaukee
+County GIS — a government publisher, fetched legitimately, and an address belonging to an office
+rather than to anyone the Commission's withholding protects. That draft is addressed to the Clerk
+and routed through the Mayor's office, and it says in its first line that it is being routed and
+why, so nobody is left guessing how the letter arrived.
 
 Draft (one per city; `<CITY>`, `<CLERK>` and the bracketed clause are the only parts that change):
 
@@ -4135,6 +4425,14 @@ round.
 **To:** City of Oshkosh, City Clerk's Office — Darla Salinas, City Clerk; (920) 236-5013
 **Subject:** Our automated reader cannot reach https://www.ci.oshkosh.wi.us/robots.txt
 
+> **NO E-MAIL ADDRESS, FOR THE SAME REASON AS THE FIVE ABOVE** (2026-10-01). The Elections
+> Commission's clerk directory withholds every municipal clerk's address at the clerks' own
+> request, and this project's standing rule is not to go looking for those addresses elsewhere
+> to backfill them. Oshkosh's own site cannot be reached by this client at all, so there was
+> nowhere permitted to look in any case. The draft sits in the operator's mailbox with the
+> address field empty — which is what stops it being sent by accident — and opens with a
+> bracketed note naming the clerk, her telephone number and the reason.
+
 **Why this ask exists.** Oshkosh publishes its Common Council on a public page and we would
 like to name those seven officials on a free, non-commercial map. Before reading any page on a
 site, this project reads that site's `robots.txt` and obeys it, and where that file cannot be
@@ -4187,13 +4485,23 @@ work out how. A yes costs the city nothing it has not already published.
 
 ## Ask mi-city-township-boards — Michigan cities and townships whose board pages this app cannot read
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** One message per unit, to its clerk. Each unit has its
+> **ASKED 2026-10-01 FOR NINE OF THE TEN — the operator sent them from his own mailbox between
+> 14:48 and 14:51 UTC. BURTON IS NOT YET ASKED**, because its clerk's address has not been read
+> (see the recipients table). THREE OF THE NINE GAVE A WRONG REASON and the operator sent a
+> correction to each, in the same thread, at 15:21-15:23 UTC; see "Three letters went out on a
+> wrong reason" below. One message per unit, to its clerk. Each unit has its
 > own gap record in `docs/DATA_LAYER_GUIDEBOOK.md` (named in the table below), already carrying
 > `"covers": ["local-government:<its geoid>"]`. On send, add `"ask": {"who": "<clerk, by name>", "asked":
 > "<date>"}` to that unit's record and change its `NOT YET ASKED — DRAFTED` to `ASKED <date>`;
 > add `followedUp` on the follow-up, and `outcome` (`refused`, or `unresponsive` once thirty days
 > have passed from the follow-up) when it is true. A reply that sends the list is `answered`,
 > and the work is then to read it, not to record the level.
+>
+> **The six letters still waiting carry an `ask` field with `outcome: "pending"`** (Rochester
+> Hills, Norton Shores, West Bloomfield, Bedford, Lansing, Wyoming), `asked: 2026-10-01` and
+> the clerk's name; the send times stay in the table above. The other three records were
+> retired when their boards shipped. Lansing's 14:51 reply was an automatic acknowledgement,
+> which is not an answer, so its ask stays pending.
 
 **Why these letters exist.** The done standard asks that a reader in any Michigan city or
 township over 25,000 people be told who governs it. Of the 82 such units, most publish their
@@ -4207,16 +4515,66 @@ has said no, or has been asked, followed up once and given 30 days.
 | Norton Shores (city) | `norton-shores-council-roster` | its robots.txt asks every automated client to stay out | 2026-10-01 |
 | West Bloomfield (charter township) | `west-bloomfield-township-board` | its website vendor's robots.txt, served for the township's own address, asks every automated client to stay out | 2026-10-01 |
 | Bedford (township) | `bedford-township-board` | the same vendor default as West Bloomfield | 2026-10-01 |
-| Shelby (charter township) | `shelby-township-board` | the site answers this client "Access Denied" | 2026-10-01 |
-| Northville (township) | `northville-township-board` | the site answers this client "Access Denied" | 2026-10-01 |
-| Ypsilanti (charter township) | `ypsilanti-township-board` | a Cloudflare challenge page, which is an access control and is never worked around | 2026-10-01 |
+| Shelby (charter township) | `shelby-township-board` | ~~the site answers this client "Access Denied"~~ **wrong: one client was tried; the fleet's browser-class client is served the page** | 2026-10-01 |
+| Northville (township) | `northville-township-board` | ~~the site answers this client "Access Denied"~~ **wrong: one client was tried; the fleet's browser-class client is served the page** | 2026-10-01 |
+| Ypsilanti (charter township) | `ypsilanti-township-board` | ~~a Cloudflare challenge page, which is an access control and is never worked around~~ **no longer true: re-read the same day, the page is served to our own token** | 2026-10-01 |
 | Burton (city) | `burton-council-roster` | a Cloudflare challenge page | 2026-10-01 |
 | Lansing (city) | `lansing-council-roster` | the page answers, but the names are loaded by a script after the page arrives, so the page itself carries none | 2026-10-01 |
 | Wyoming (city) | `wyoming-mi-council-roster` | **the operator's own ruling keeps this project off the city's site entirely.** Whether to write at all is Adam's decision; the draft is here so the decision is the only thing left. | ruling |
 
-**Recipients are compiled at send, deliberately not here.** Most of these sites refuse this
-client, so the clerk's address is read off each unit's own site by a person in a browser, which
-takes a minute each. Guessing a municipal address is how a letter reaches the wrong office.
+**Recipients, recorded 2026-10-01 on the operator's instruction that every letter also goes
+into his mailbox.** This section used to say the addresses would be read off each unit's own
+site at send, because most of these sites refuse this client. They were found instead through a
+web search engine's listings of each unit's own clerk page, without fetching any of the ten
+sites: reading a site that asks us not to, or that challenges us, would be the thing these
+letters are asking permission for. A search listing is one step removed from the page, so
+**open each unit's clerk page in a browser before sending and check the address and the name**.
+Two are known to need it: the search listings name two different people as Ypsilanti
+Township's clerk, so that letter is addressed to the office; and Burton's clerk page hides its
+e-mail addresses from automated readers, so its draft has no recipient yet.
+
+| unit | addressed to | address | where the address came from |
+|---|---|---|---|
+| Rochester Hills | Leanne Scott, City Clerk | `clerksoffice@rochesterhills.org` | the Clerk's Office address the city publishes on its clerk and election pages |
+| Norton Shores | Rachel Pavlich, City Clerk | `rpavlich@nortonshores.org` | the city's clerk page |
+| West Bloomfield Township | Debbie Binder, Township Clerk | `dbinder@wbtownship.org` | the township clerk's directory page |
+| Bedford Township | Trudy L. Hershberger, Township Clerk | `thershberger@bedfordmi.org` | the township clerk's page |
+| Shelby Township | Stanley Grot, Township Clerk | `sgrot@shelbytwp.org` | the township clerk's office page |
+| Northville Township | Cynthia L. Jankowski, Township Clerk | `cjankowski@twp.northville.mi.us` | the township clerk's office page (the office's shared address is Clerk@twp.northville.mi.us) |
+| Ypsilanti Township | the Township Clerk's office | `clerk@ypsitownship.org` | the township clerk's office page; the clerk is named differently by two search listings, so the letter is addressed to the office. Township Clerk Debbie Swanson (`dswanson@ypsitownship.org`) answered it herself |
+| Burton | Racheal Boggs, City Clerk | **none recorded** | NOT FOUND: the city's clerk page hides its e-mail addresses from automated readers, so the address must be read in a browser |
+| Lansing | Chris Swope, City Clerk | `city.clerk@lansingmi.gov` | the Clerk's Office address printed on the city's own published notices |
+| Wyoming | Kelli VandenBerg, City Clerk | `clerk_info@wyomingmi.gov` | a search listing of the city's clerk page; this project does not read the city's site |
+
+**Three letters went out on a wrong reason, and the check that would have caught it ran after
+they were sent.** Before the operator sent anything, each unit's site was meant to be re-read
+with exactly the client that would crawl it; that re-read happened at 15:09 UTC, after the
+send. It held for six (Rochester Hills, Norton Shores, West Bloomfield and Bedford refuse us in
+robots.txt; Burton serves a Cloudflare challenge; Lansing's page names nobody without its
+scripts) and Wyoming was not fetched, by ruling. It failed for three:
+
+- **Shelby and Northville** were recorded "Access Denied, no other client tried", and the letter
+  repeated it. Through the fleet's four-rung probe both serve the board page to the browser
+  string with Chrome client hints on the stdlib stack, the Kendall and McHenry shape. A site
+  that needs a browser-class client has not refused automation, and this project's rule allows
+  that client where the token is measurably refused, so these two need a reader, not a letter.
+- **Ypsilanti** answered with a Cloudflare challenge in the morning and served the scraper's own
+  token in the afternoon. The clerk replied at 15:13 UTC that she has forwarded the request to
+  the township's technology staff.
+
+Each of the three got a short correction, as a reply in the same thread, saying the site can be
+read after all and nothing needs changing; Ypsilanti's also thanks the clerk. The operator sent
+them at 15:21 (Northville), 15:22 (Shelby) and 15:23 UTC (Ypsilanti). **Ypsilanti's office had
+already done work on a request we then withdrew**: the clerk passed it to the township's
+technology staff at 15:13, ten minutes before the correction reached her. That is the cost of
+the wrong order, and it fell on somebody else. The three gap records now say the page is readable and the
+reader is not yet written. **Later the same day the readers were written** and the three
+records retired: Shelby and Northville are read with the browser string their sites serve
+(the measurement is in `mi/scripts/mi_municipal_parsers_browser.py`), Ypsilanti with the roster
+token. The rows below for those three are kept as the record of what the letters said.
+**The order is the lesson: re-read the premise with the crawling
+client before a letter is drafted, not after it is sent.** A record that says "no other client
+was tried" is a record that has not yet been measured.
 
 **Two versions of one letter**, because the ask differs: the robots.txt units are asked for
 permission; the other units are asked whether the refusal is meant for a site like this one.
@@ -4282,6 +4640,253 @@ For **Lansing**, replace the second paragraph's reason with: "because the counci
 its list of members in the browser after the page loads, so the page an automated reader
 receives has no names in it", and ask whether the same list is published anywhere as plain text
 or a file.
+
+### The ten letters, as drafted in the operator's mailbox
+
+Draft A and Draft B above are the templates. These are the filled letters, word for word as
+they sit in Gmail, so the mailbox and this file cannot drift. Lansing takes the variant noted
+above, and Wyoming has its own second paragraph because this project does not read its site
+at all. **Whether to send Wyoming's is still the operator's decision.**
+
+#### Rochester Hills
+
+To: clerksoffice@rochesterhills.org  
+Subject: Rochester Hills City Council members on districtry.com: may an automated reader see your council page?
+
+> Dear Ms. Scott,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Rochester Hills it names nobody, because your website's robots.txt file asks automated tools not to read any of it, and this project follows that request.
+>
+> Three answers would each settle it, and a plain "no" is a useful one:
+>
+> 1. If one automated read of your council members page a week is acceptable, a short note saying so is all I need.
+> 2. If you would rather send the list yourself whenever it changes, that works too, and the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site instead.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Norton Shores
+
+To: rpavlich@nortonshores.org  
+Subject: Norton Shores City Council members on districtry.com: may an automated reader see your council page?
+
+> Dear Ms. Pavlich,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Norton Shores it names nobody, because your website's robots.txt file asks automated tools not to read any of it, and this project follows that request.
+>
+> Three answers would each settle it, and a plain "no" is a useful one:
+>
+> 1. If one automated read of your council members page a week is acceptable, a short note saying so is all I need.
+> 2. If you would rather send the list yourself whenever it changes, that works too, and the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site instead.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### West Bloomfield Township
+
+To: dbinder@wbtownship.org  
+Subject: West Bloomfield Township board members on districtry.com: may an automated reader see your board page?
+
+> Dear Ms. Binder,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For West Bloomfield Township it names nobody, because your website's robots.txt file asks automated tools not to read any of it, and this project follows that request.
+>
+> Three answers would each settle it, and a plain "no" is a useful one:
+>
+> 1. If one automated read of your board members page a week is acceptable, a short note saying so is all I need.
+> 2. If you would rather send the list yourself whenever it changes, that works too, and the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site instead.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Bedford Township
+
+To: thershberger@bedfordmi.org  
+Subject: Bedford Township board members on districtry.com: may an automated reader see your board page?
+
+> Dear Ms. Hershberger,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Bedford Township it names nobody, because your website's robots.txt file asks automated tools not to read any of it, and this project follows that request.
+>
+> Three answers would each settle it, and a plain "no" is a useful one:
+>
+> 1. If one automated read of your board members page a week is acceptable, a short note saying so is all I need.
+> 2. If you would rather send the list yourself whenever it changes, that works too, and the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site instead.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Shelby Township
+
+To: sgrot@shelbytwp.org  
+Subject: Shelby Township board members on districtry.com: your website blocks our weekly reader
+
+> Dear Mr. Grot,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Shelby Township it names nobody, because your website turns away our reader before any page loads. That is very likely a general security setting rather than a decision about us, and I do not try to get around it.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If whoever runs the site can let one automated read of the board page a week through, it identifies itself as "districtry.com roster bot".
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Northville Township
+
+To: cjankowski@twp.northville.mi.us  
+Subject: Northville Township board members on districtry.com: your website blocks our weekly reader
+
+> Dear Ms. Jankowski,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Northville Township it names nobody, because your website turns away our reader before any page loads. That is very likely a general security setting rather than a decision about us, and I do not try to get around it.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If whoever runs the site can let one automated read of the board page a week through, it identifies itself as "districtry.com roster bot".
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Ypsilanti Township
+
+To: clerk@ypsitownship.org  
+Subject: Ypsilanti Township board members on districtry.com: your website blocks our weekly reader
+
+> Dear Township Clerk,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Ypsilanti Township it names nobody, because your website turns away our reader before any page loads. That is very likely a general security setting rather than a decision about us, and I do not try to get around it.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If whoever runs the site can let one automated read of the board page a week through, it identifies itself as "districtry.com roster bot".
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Burton
+
+To: (no address yet: read it off the city clerk page in a browser)  
+Subject: Burton City Council members on districtry.com: your website blocks our weekly reader
+
+> Dear Ms. Boggs,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Burton it names nobody, because your website turns away our reader before any page loads. That is very likely a general security setting rather than a decision about us, and I do not try to get around it.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If whoever runs the site can let one automated read of the council page a week through, it identifies itself as "districtry.com roster bot".
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Lansing
+
+To: city.clerk@lansingmi.gov  
+Subject: Lansing City Council members on districtry.com: is the member list published as plain text?
+
+> Dear Mr. Swope,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Lansing it names nobody, because the council page builds its list of members in the browser after the page loads, so the page an automated reader receives has no names in it.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If the same list of council members is published anywhere as plain text or as a file, a link to it is all I need.
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Wyoming
+
+To: clerk_info@wyomingmi.gov  
+Subject: Wyoming City Council members on districtry.com: how would you like them listed?
+
+> Dear Ms. VandenBerg,
+>
+> I run districtry.com, a free, non-commercial public map that shows anyone which governments cover their address and who represents them there. Michigan's map is at https://districtry.com/mi/.
+>
+> For most large Michigan cities and townships, the map names the council or board, read once a week from the government's own website so it stays current. For Wyoming it names nobody, because this project has chosen not to read your city's website at all, out of respect for the limits the site sets on automated tools.
+>
+> Any one of these would settle it, and a plain "no" is a useful answer too:
+>
+> 1. If you would be glad for an automated reader to look at the council members page once a week, a short note saying so is all I need.
+> 2. If you would rather send the list yourself whenever it changes, the map will say the list came from your office and when.
+> 3. If you would rather the map named nobody, say so and it will keep linking to your own site.
+>
+> There is no cost or obligation of any kind.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
 
 ### What each answer means
 
@@ -4351,16 +4956,123 @@ what the county itself reports.
 the record that tells our readers what is missing say that the county was asked, which is the
 difference between a gap we have measured and a gap we have merely noticed.
 
+
+---
+
+## Ask wi-bellevue-board-form — Village of Bellevue Clerk: is the village board elected at large?
+
+> **ASKED 2026-10-01**, sent 16:10:19 UTC to mseidl@villageofbellevuewi.gov. One message, to
+> the Village Clerk. Recorded from `/mnt/project-files/letters/sent-2026-10-01.md`, which is read
+> off the sent folder — the only record of what actually went, as against what a thread drafted.
+> The matching Bellevue note in `wi/scripts/build_wi_aldermanic_districts.py`'s `EXCLUDED` table
+> and the `aldermanic-incomplete-filings` gap blocker were updated the same day. Follow up once
+> at about 2026-10-21; thirty days of silence after that follow-up is what would let a gap record
+> say the village was asked.
+>
+> **NO `ask` BLOCK GOES WITH IT, AND THAT IS THE STANDARD RATHER THAN AN OMISSION.** An `ask`
+> block can only ever matter on a record that declares `covers`, and
+> `aldermanic-incomplete-filings` declares none — Bellevue is a village of about 15,000 people,
+> under the 25,000 the local tier counts, so no level is waiting on this answer. The reply is
+> wanted for the map, not for the scorecard.
+>
+> **AND `pending` WOULD EARN NOTHING EVEN THERE, WHICH IS WORTH SAYING SO NOBODY READS IT AS A
+> HALF-CREDIT.** `pending` records only that a letter went; it earns nothing however old it gets.
+> Credit comes two ways and neither is automatic: a refusal counts straight away, and silence
+> counts only after a follow-up and thirty days, and only once a person reads the silence and
+> writes the outcome as `unresponsive`. The clock is printed on stdout and no committed byte
+> depends on it, so no record ever starts counting on its own.
+>
+> **NO PRIOR CONTACT, CHECKED RATHER THAN ASSUMED.** Searched Adam's mail on 2026-10-01 for
+> Bellevue, `bellevuewi.gov` and Seidl across every folder including trash: the only thread is
+> the Brown County one below, and nobody has written to the village. So this is a first letter
+> and is written as one.
+>
+> **WHY IT IS BEING SENT AT ALL, WHEN A COUNTY CLERK HAS ALREADY ANSWERED.** Brown County
+> Clerk Patrick Moynihan replied on 2026-10-01: "They appear to be at large. Have you contacted
+> Bellevue for any clarifying statements? The Municipal Clerk Michelle Seidl's email is
+> mseidl@villageofbellevuewi.gov". **"Appear to be" is a hedge and not the village's own
+> statement**, and the thing being decided is whether a card tells a reader their village board
+> is elected by the whole village. This project does not print a governing body's form on
+> somebody's qualified guess, however well informed — so Bellevue is not recorded as at-large on
+> that reply, and the county clerk himself pointed at the person who can say. He also gave the
+> address, which is why no address had to be hunted for.
+>
+> **WHAT IS AT STAKE IS WHICH CARD BELLEVUE'S BOARD RIDES.** Brown County files all eleven of
+> Bellevue's wards with no aldermanic district code, which is why the village has no district
+> geometry in the shipped map. If the board is elected at large that is the correct and complete
+> answer and the trustees belong on the village's own card beside its clerk; if it is elected by
+> district, the eleven wards need an assignment and the county's filing is incomplete. One
+> sentence from the clerk settles which of those two pieces of work is the right one.
+
+**Subject:** One question about how the Village of Bellevue elects its board
+
+Dear Clerk Seidl,
+
+I maintain districtry.com/wi/, a free, non-commercial website that helps people in Wisconsin
+find out which civic districts they live in and who represents them there. It is not funded by
+anyone and carries no advertising.
+
+I have one question about the Village of Bellevue.
+
+Are the members of the Village Board elected at large, by the whole village, or does each
+trustee represent a district or ward?
+
+I ask because Brown County files all eleven of Bellevue's wards without an aldermanic district
+code, which is what the county does for a municipality that has no districts to report. Clerk
+Patrick Moynihan at the county kindly suggested I check with you directly, and gave me your
+address.
+
+If the board is elected at large, I will list Bellevue's trustees on the village's own page
+alongside the village clerk, and the site will say plainly that every seat is elected by the
+whole village. If each trustee does represent a ward or a group of wards, I would be grateful
+to know which wards go with which seat, and I will draw it that way instead.
+
+Either answer is useful, and a one-line reply is plenty. If the answer is already on a page of
+the village's website, a link to it is just as good and I will not trouble you further.
+
+Thank you for your time.
+
+Adam Overberg
+districtry.com/wi/
+
+**What is deliberately not asked.** Nothing about reuse terms, because the names of elected
+village officers are public record. No request to change the village's website or the county's
+filing. And no suggestion that the county got anything wrong — the county clerk's reply is what
+prompted this letter and said so.
+
+**Why a no is still useful.** If the village does not answer, the record that tells our readers
+what is missing can say Bellevue was asked, which is the difference between a gap this project
+has measured and one it has merely noticed.
+
 ---
 
 ## Ask ky-judge-district-join — Kentucky Administrative Office of the Courts: which district was each judge elected from?
 
-> **SENT 2026-10-01 16:24:34 UTC by the operator, from his own address, to the one desk
-> below. AWAITING A REPLY.** Verified in his sent folder rather than taken from a report:
-> one message, subject as drafted, salutation `Dear Mr. Sturtevant`, so the sender's own
-> name and address went out filled rather than as the placeholders this public file keeps.
-> The thirty-day silence clock starts 2026-10-01; one follow-up only, and the mailbox
-> thread owns both. Nothing was re-asked and no second copy was sent.
+> **ANSWERED 2026-10-01.** Sent 16:24:34 UTC by the operator from his own address; Daniel
+> Sturtevant replied at 17:16:25 UTC, 52 minutes later, naming two published surfaces. Both
+> were read the same day, and the measurement is in the `ky-judges` record in
+> `docs/DATA_LAYER_GUIDEBOOK.md`. In short: **he answered the question.** The Court of
+> Justice does print the numbered unit beside each judge, not only a county. The directory
+> search he named second (`kcoj.kycourts.net`) is **not a route for this project** — its
+> robots.txt is 25 bytes refusing every client, so nothing is fetched from it. The first,
+> `kycourts.gov`, answers in full: the Supreme Court's own page names all seven justices
+> against their districts, the Court of Appeals' own page all fourteen judges against the
+> seven appellate districts, and 119 of the 120 county pages name each trial judge's
+> judicial circuit or judicial district number — 818 numbered rows in all.
+>
+> **The one follow-up, and it is one line.** Jefferson County's page ships its judge list
+> commented out in its own HTML, and Jefferson is the only county in circuit 30 and in
+> district 30, so Louisville's circuit and district judges are named on no page of that
+> source while every other county's are. Follow-up to send, to the same desk, on the same
+> thread: *"Jefferson County's page at kycourts.gov/Courts/County-Information/Pages/Jefferson.aspx
+> shows no judges where every other county's page lists them — is there another page that
+> names Jefferson's circuit and district judges with their circuit or district number?"* The
+> appellate half needs nothing: both appellate pages are statewide and already cover
+> Jefferson. NOT YET SENT — DRAFTED 2026-10-01; the mailbox thread owns the send and the
+> thank-you.
+>
+> The thirty-day silence clock is retired with the answer. Nothing was re-asked and no
+> second copy of the original was sent.
 >
 > **This ask exists because the geometry arrived without the people.** Kentucky's four court
 > maps shipped on 2026-10-01, dissolved offline from statute — no publisher was asked for any
@@ -4409,3 +5121,293 @@ the AOC was asked — which is a different and more honest claim than that nobod
 
 **Nothing about reuse terms is asked**, because who holds an elected office is public record,
 and nothing is asked of any named judge personally.
+
+## Ask marion-wi-council-districts — two county clerks: how many districts does the City of Marion elect, and which of you files which?
+
+> **ONE SENT AND BOUNCED, ONE NOT SENT.** Written 2026-10-01. Two letters, one to each of the two
+> county clerks who file the City of Marion's wards. The Waupaca letter went that day and was
+> refused as a permanent failure by the county's own mail server, so it reached nobody and
+> **Waupaca is not awaiting a reply and no follow-up clock has started** — the bounce note below
+> gives the measurement and the two addresses the county itself publishes for the same office. The
+> Shawano letter has not been sent. **NO PRIOR-CONTACT SEARCH HAS BEEN RUN FOR THESE TWO ADDRESSES**,
+> and that is the Letters thread's step rather than this one's: this thread writes the text, the
+> Letters thread searches Adam's sent folder and inbox, turns anything it finds into a follow-up
+> rather than a first letter, and creates the Gmail drafts. Nothing here is sent by anybody but
+> Adam.
+>
+> **WHY THE CITY ITSELF IS NOT THE RECIPIENT, THOUGH IT IS THE AUTHORITY.** Marion's own site
+> asks automated clients to stay out — `cityofmarionwi.gov`'s robots.txt is `Disallow: /`, which
+> this project obeys without exception, so nothing has been read from it. That refusal governs
+> what we fetch and not who we may write to, so a letter to the city would be entirely proper;
+> what is missing is an address. The Wisconsin Elections Commission's clerk directory names
+> Clerk Mary S Rogers and Deputy Clerk Jodilyn Zillmer with the telephone 715-754-2124 and no
+> e-mail address, and municipal clerks' e-mail addresses are deliberately not published
+> statewide in Wisconsin. So a city letter is a telephone call or a posted letter, which is
+> Adam's to make if he would rather go straight to the source; the two county clerks both
+> publish an address and both hold part of the answer.
+>
+> **WHAT IS ACTUALLY UNKNOWN, AND WHAT IS NOT.** The shipped map draws four aldermanic districts
+> for Marion, keyed `01`, `21`, `22` and `23`. Measured against the Census Bureau's own county
+> boundaries on 2026-10-01, `01` lies in Shawano County and `21`-`23` lie in Waupaca County,
+> and `01` sits north of the other three and overlaps none of them — Marion straddles the county
+> line, and the two counties file its wards under two different numbering schemes. So the city's
+> four drawn districts may be three districts plus a second county's copy of one of them, which
+> would mean the map draws a district that does not exist. **The council size is deliberately
+> not inferred from the key count, because the key count is the thing in question.**
+>
+> **AND THIS IS THE ONE OF FOUR CITIES STILL OPEN.** Manawa, Waupaca and Weyauwega were in the
+> same position — the state's filing keys their districts somewhere other than 1 upward — and all
+> three were settled on 2026-10-01 by reading each city's own council page, which numbers its
+> districts from one. Those three are relabelled accordingly. Marion could not be read, which is
+> why it takes a letter.
+
+> **THE WAUPACA LETTER BOUNCED AND THE ADDRESS WAS NOT GUESSED — THE COUNTY PUBLISHES IT IN THREE
+> PLACES.** Sent 2026-10-01, it was refused at 18:09 as a permanent failure by the county's own
+> mail server. Measured the same day, reading each page with the client that crawls and after
+> reading each host's robots.txt (`www.co.waupaca.wi.us` and `www.waupacacounty-wi.gov` both answer
+> 404 for robots.txt, which permits):
+>
+> | the county's own page | what it publishes for the clerk |
+> |---|---|
+> | County Clerk department page (both domains, byte-identical) | `Kristy.Opperman@co.waupaca.wi.us`, telephone (715) 258-6200, fax (715) 258-6212 |
+> | County staff directory | `kristy.opperman@co.waupaca.wi.us` — character for character the address that bounced |
+> | Directory of Public Officials, updated 5 August 2026, compiled by the Clerk's own office | County Clerk Kristy K. Opperman, 811 Harding St., Waupaca 54981, telephone (715) 258-6200 — **no e-mail address at all** |
+>
+> **AND THE REJECTION SAYS WHICH KIND OF REFUSAL IT IS, WHICH CHANGES WHAT A SECOND ADDRESS CAN
+> FIX.** The server answered `550 permanent failure ... blocked`, not *unknown user*. So the
+> clerk's mailbox probably exists and the county's mail server is refusing the SENDER rather than
+> the recipient — and if that is what happened, every address at the county will refuse the same
+> sender, so trying a third one is not a measurement, it is the same failure again. **If the
+> redraft to the Chief Deputy also comes back blocked, do not look for another address**: the
+> office's own telephone, (715) 258-6200, is the next step, and that is a person's to make rather
+> than this project's. The first reading written here said only that a published mailbox was
+> refusing mail, which was true of the address and said nothing about the cause.
+>
+> So a published mailbox is refusing mail, which is the same shape as the Grundy County bounce
+> the same day, and **no replacement is invented here.** Two addresses the county publishes on the
+> clerk's own department page are the alternatives, in this order, and both are the county's own
+> words rather than a pattern guessed from a name:
+>
+> 1. **Chief Deputy County Clerk Ellen Radies — `Ellen.Radies@co.waupaca.wi.us`**, same office, same
+>    telephone. A deputy clerk answers for the office, so this asks the same office the same question.
+> 2. **Deputy County Clerk Nicole Houdek — `Nicole.Houdek@co.waupaca.wi.us`**, likewise.
+>
+> The redraft went to Ellen Radies on 2026-10-01. **If that also comes back blocked, stop**: the
+> office's own telephone and postal address above are what is left, and both are a person's job
+> rather than this project's. The second deputy is listed only in case the first address fails for
+> a reason specific to it, and a sender-level block is not that reason. **Nothing has been sent to either
+> address and Waupaca is not awaiting a reply**, so no follow-up clock has started. The letter text
+> below is unchanged and still correct: only the recipient line moves. The Shawano County letter in
+> this same ask is unaffected.
+>
+> One thing deliberately not concluded: the Clerk's own Directory links the elections page on
+> `www.waupacacounty-wi.gov`, a newer domain for the same site, which could suggest the county's
+> mail has moved too. Both domains serve the identical page naming `@co.waupaca.wi.us` addresses,
+> and nothing published here names a mailbox on the new domain, so **no address on it is guessed.**
+
+### Waupaca County Clerk's office — address line to be redrawn, see the bounce note above
+
+**Subject:** Two questions about the City of Marion's aldermanic districts
+
+Dear Clerk Opperman,
+
+I maintain districtry.com/wi/, a free, non-commercial website that helps people in Wisconsin
+find out which civic districts they live in and who represents them there. It is not funded by
+anyone and carries no advertising.
+
+I have two questions about the City of Marion, which as I understand it lies partly in Waupaca
+County and partly in Shawano County.
+
+First, how many aldermanic districts does the Common Council have?
+
+Second, the state's current ward file lists Marion's wards under district numbers 21, 22 and 23
+in your county, and under district number 1 in Shawano County. Are those four numbers four
+different districts, or are they the two counties' own ways of labelling the same council's
+districts?
+
+I ask because our map draws one district for each distinct number it finds, so if Marion's
+council has three districts and the two counties label them differently, our map is currently
+drawing a fourth district that does not exist, and telling anyone who clicks there that they
+live in it.
+
+A one-line answer to each is plenty, and if the City of Marion is the right office to ask
+instead, I would be glad to be pointed there.
+
+Thank you for your time.
+
+Adam Overberg
+districtry.com/wi/
+
+### Shawano County Clerk — `raymond.rigsby@shawanocountywi.gov`
+
+**Subject:** One question about the City of Marion's aldermanic districts
+
+Dear Clerk Rigsby,
+
+I maintain districtry.com/wi/, a free, non-commercial website that helps people in Wisconsin
+find out which civic districts they live in and who represents them there. It is not funded by
+anyone and carries no advertising.
+
+I have one question about the part of the City of Marion that lies in Shawano County.
+
+The state's current ward file lists Marion's ward or wards in your county under aldermanic
+district number 1, while Waupaca County lists the rest of the city under district numbers 21, 22
+and 23. Is the district you file as number 1 a district of its own, or is it the same council
+district that Waupaca County files under one of its own numbers?
+
+I ask because our map draws one district for each distinct number it finds, so if those are
+labels for the same districts rather than four separate ones, our map is drawing a district that
+does not exist and telling anyone who clicks there that they live in it.
+
+A one-line answer is plenty, and if the City of Marion or Waupaca County is the better office to
+ask, I would be glad to be pointed there.
+
+Thank you for your time.
+
+Adam Overberg
+districtry.com/wi/
+
+### What each answer means
+
+- **A council size and a mapping.** If either clerk says how many districts the council has and
+  which filed numbers correspond, the map draws that many districts with the city's own numbers,
+  the same way Manawa, Waupaca and Weyauwega now do.
+- **"Four separate districts."** Then the map is already right about the count, and only the
+  numbering question is left — which `ALDER_DISTRICT_LABELS` in `wi/index.html` can carry as soon
+  as somebody states what the city calls them.
+- **A refusal, or silence.** Either lets the gap record say the two counties were asked, which is
+  the difference between a gap this project has measured and one it has merely noticed. Neither
+  changes the shipped map: Marion stays exactly as filed.
+
+**What is deliberately not asked.** Nothing about reuse terms, because ward filings and the
+names of elected officers are public record. No request to change either county's filing or the
+city's website. And nothing about Marion's robots.txt, which is the city's own choice about
+automated clients and is being respected rather than negotiated.
+---
+
+---
+
+## Ask ok-csa-precinct-terms — OU Center for Spatial Analysis: the terms on the maps the State Election Board pays it to make
+
+**The board answered, and the answer was a redirection rather than a refusal.** Ask sent to
+`info@elections.ok.gov` on 2026-09-30 asked whether districtry may download, simplify and publish
+the statewide precinct boundaries from the data warehouse the board's own maps page links. The
+board replied that the warehouse is downloadable, and that questions about permission and about
+changes belong to the **OU Center for Spatial Analysis**, its contracted mapping provider. That is
+why the board's page sends readers there in the first place.
+
+**That settles the provenance question in the project's favour rather than against it.** The
+government-publishers-first rule asks who is accountable for a file, not which domain serves it.
+The board states the contract on its own page, and now states in writing that permission is the
+centre's to give. So the centre is the board's **agent for mapping**, not an independent academic
+publisher, and asking it is asking the board's own mapping office. Oklahoma's precinct layer is not
+blocked on a policy question; it is blocked on one address.
+
+**The same conclusion reaches the county commissioner districts, and corrects a reading in
+Oklahoma's launch plan.** The plan recorded two copies of the 231 commissioner districts: the
+Oklahoma Department of Transportation's, and a second, more recently edited copy whose
+organisation endpoint returns a null name to an anonymous caller. The plan called that second copy
+anonymous, "an organisation that will not say who it is". Measured 2026-10-01, the **item's owner is
+`thom0780_uok`**, an enterprise-provider account in the University of Oklahoma's own ArcGIS
+organisation — the same channel as the precincts. So it is the centre's copy, not an unattributed
+one, and the ruling's outcome is unchanged (ship the transport department's copy, credit the state,
+name the centre as where the file came from) while the reason for it is different. **An
+organisation that returns no name to an unauthenticated caller is not an organisation with no
+name**, which is the Knox shape at the level of a metadata field.
+
+### Recipient — VERIFIED 2026-10-01, and the blocker was an address that had moved
+
+**The letter goes to Chengbin Deng, PhD, the centre's Director (`cdeng@ou.edu`), copying Todd
+Fagin, PhD, its Executive Associate Director (`tfagin@ou.edu`)**, both read off the centre's own
+Faculty & Staff page at `www.ou.edu/ags/csa/csa-team/csa-faculty-staff`.
+
+**THIS ENTRY SAID THE ADDRESS HAD TO BE READ IN A BROWSER, AND THAT WAS WRONG ABOUT THE CENTRE.**
+It recorded that `csa.ou.edu` does not resolve from this project's network and concluded that the
+centre's contact page was reachable only in a browser. `csa.ou.edu` still does not resolve, and
+that is because **the centre's site is not there any more**: it is at `www.ou.edu/ags/csa`, which
+answers normally from here under a robots policy that permits every path read. So a host that had
+MOVED was recorded as a network limit on this agent, which is the shape this project keeps finding
+— a measurement that was accurate about the thing measured and wrong about the thing it was taken
+to describe. **When a host does not resolve, look for the site before recording a blocker.**
+
+The centre publishes no office mailbox that can be relied on — its Contact Us page offers only a
+web form in a frame, and the one general address it prints (`contact.us@csa.ou.edu`, in the footer
+byline) sits on a domain with no address record — so a policy question about the centre's own data
+goes to the Director with the Executive Associate Director copied, rather than to an address that
+might quietly fail. The centre's Senior GIS Analyst is named on the warehouse page for help
+navigating the site, which is a different question from what may be done with the files, and is
+deliberately not the recipient. What else is known:
+
+| known | value |
+|---|---|
+| the centre's own site | `www.ou.edu/ags/csa` (the old `csa.ou.edu` no longer resolves) |
+| its open-data portal | `csagis-uok.opendata.arcgis.com` |
+| the precinct layer | `State_Wide_2020_Precincts`, 1,984 features |
+| the commissioner copy | `services.arcgis.com/3xOwF6p0r7IHIjfn`, owner `thom0780_uok` |
+| the board's statement | its district-and-precinct-maps page, which names the contract and links the portal |
+
+### Draft
+
+> Subject: Permission question about the Oklahoma precinct maps in your data warehouse
+>
+> Dear Dr Deng,
+>
+> I run districtry.com, a free public website that answers one question: you click a point on a
+> map and it tells you every district you are in and who represents you there. It covers Illinois,
+> Wisconsin, Iowa, Michigan, Minnesota, Kentucky, New York City and San Francisco today, and I am
+> preparing to add Oklahoma.
+>
+> I wrote to the State Election Board asking whether I may use the statewide precinct boundaries
+> from your data warehouse. They told me the files are downloadable and that questions about
+> permission and about changes belong to you, as the board's contracted mapping provider.
+>
+> So, the question. May I download the statewide precinct boundaries, simplify them for use on a
+> web map, and publish them on a free public site? I would credit the Oklahoma State Election
+> Board as the authority and name the OU Center for Spatial Analysis as the mapping office, unless
+> you would rather it were worded differently — and I would be glad to word it however you prefer.
+>
+> If there are conditions, I will follow them. If the answer is no, that is a complete answer and I
+> will respect it: the site will say that Oklahoma's precincts exist and that we are not able to
+> draw them, rather than drawing them from somewhere else.
+>
+> Two smaller things, if they are easy.
+>
+> First, one of your organisation's files is a copy of the 231 county commissioner districts. I am
+> planning to use the Oklahoma Department of Transportation's copy instead, because it comes from a
+> state agency, and to say in the credit that the file originated with your centre. If that is
+> wrong — if yours is the current one and the transport department's is stale — I would rather know
+> now.
+>
+> Second, the two copies disagree about one district in Beaver County, by just over one per cent of
+> its area. If you happen to know which of the two is right, that would save me asking the county.
+>
+> One thing about how we work, which may matter to you: we never invent an officeholder's name.
+> Where we cannot verify who holds a seat from the body's own publication, the site says so and
+> links to that body rather than guessing.
+>
+> Thank you for your time.
+>
+> Adam Overberg
+> districtry.com
+
+### What each answer means
+
+| answer | what it settles |
+|---|---|
+| yes, with or without conditions | The precinct layer ships, credited to the board with the centre named as its mapping office. Conditions are followed as written. |
+| yes, and "ours is the current commissioner file" | The commissioner layer's source changes, and the plan's currency reading is wrong in the other direction. Re-measure before switching: the transport department is still a state agency, so this would be a documented exception rather than a default. |
+| an answer on Beaver County | Closes the one measured disagreement between the two copies without asking the county. The permanent test point inside that district stays either way. |
+| no | A clean, citable no. The precinct layer does not ship, Oklahoma records the gap, and the question is closed rather than re-probed. |
+| no reply after the follow-up cadence | `UNRESPONSIVE`, and the precinct gap records that the board redirected us to the centre and the centre did not answer — which is a different claim from "nobody publishes Oklahoma's precincts". |
+
+### The roster question is NOT in this letter, deliberately
+
+The 2026-09-30 ask to the board carried a second question: whether a 2026 edition of the biennial
+County Officer Roster is expected after the November election. **The board did not answer it, and it
+does not belong here** — the roster is the board's own publication and the centre makes maps, so
+putting it to the centre asks the wrong office a question it has no reason to know. It is also the
+one open question this project can answer without anybody's help: Oklahoma's launch plan already
+calls for a weekly check for the next edition's filename, which turns the answer into a measurement
+instead of a favour. **So it is dropped rather than re-asked.** If the tripwire is still finding
+nothing well after the election, that is the moment to put it back to the board — by then it is a
+real question about a missing document rather than a request for a schedule.

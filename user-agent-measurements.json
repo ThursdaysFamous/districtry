@@ -14,12 +14,12 @@
   "path-answers-nothing": 7,
   "proxy-denied": 1,
   "robots-disallows-this-path": 11,
-  "robots-unreadable": 4,
+  "robots-unreadable": 5,
   "stack-not-token": 7,
   "tls-chain": 1,
-  "token-ok": 241,
+  "token-ok": 242,
   "token-refused": 3,
-  "token-refused-and-stack": 18
+  "token-refused-and-stack": 23
  },
  "hosts": {
   "api.us.socrata.com": {
@@ -3904,6 +3904,25 @@
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
+  "www.caledonia-wi.gov": {
+   "host": "www.caledonia-wi.gov",
+   "url": "https://www.caledonia-wi.gov/board",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 152215 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 152215 bytes",
+   "callers": {
+    "wi/scripts/wi_municipal_board_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
+  },
   "www.calhouncountyil.gov": {
    "host": "www.calhouncountyil.gov",
    "url": "https://www.calhouncountyil.gov/government/county-board/members/",
@@ -4070,6 +4089,41 @@
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
+  },
+  "www.ci.oshkosh.wi.us": {
+   "host": "www.ci.oshkosh.wi.us",
+   "url": "https://www.ci.oshkosh.wi.us/CityCouncil/",
+   "cells": {
+    "requests+token": {
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
+    },
+    "stdlib+token": {
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
+    },
+    "requests+chrome": {
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
+    },
+    "stdlib+chrome": {
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
+    }
+   },
+   "robots": {
+    "requests+token": "unreadable (SSLError)",
+    "stdlib+token": "unreadable (URLError)",
+    "requests+chrome": "unreadable (SSLError)",
+    "stdlib+chrome": "unreadable (URLError)",
+    "policy": "unreadable to every client on the ladder"
+   },
+   "verdict": "robots-unreadable",
+   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
+   "callers": {
+    "wi/scripts/wi_municipal_board_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
   },
   "www.cityofames.org": {
    "host": "www.cityofames.org",
@@ -5427,6 +5481,41 @@
     "ia/scripts/validate_sources.py": "self"
    }
   },
+  "www.janesvillewi.gov": {
+   "host": "www.janesvillewi.gov",
+   "url": "https://www.janesvillewi.gov/government/city-council/city-councilmembers",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 119328 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 119328 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "wi/scripts/wi_municipal_board_scraper.py": "both"
+   },
+   "measured": "2026-10-01"
+  },
   "www.jeffersoncountywi.gov": {
    "host": "www.jeffersoncountywi.gov",
    "url": "https://www.jeffersoncountywi.gov/administration/index.php",
@@ -6497,6 +6586,41 @@
     "scripts/shelby_county_board_scraper.py": "self"
    }
   },
+  "www.shelbytwp.org": {
+   "host": "www.shelbytwp.org",
+   "url": "https://www.shelbytwp.org/government/board-of-trustees",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 148379 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 148379 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "mi/scripts/mi_municipal_parsers_browser.py": "browser"
+   },
+   "measured": "2026-10-01"
+  },
   "www.sioux-city.org": {
    "host": "www.sioux-city.org",
    "url": "https://www.sioux-city.org/247/City-Council",
@@ -6585,6 +6709,41 @@
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
+  },
+  "www.twp.northville.mi.us": {
+   "host": "www.twp.northville.mi.us",
+   "url": "https://www.twp.northville.mi.us/your-government/board-of-trustees",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 139795 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 139795 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "mi/scripts/mi_municipal_parsers_browser.py": "browser"
+   },
+   "measured": "2026-10-01"
   },
   "www.urbandale.org": {
    "host": "www.urbandale.org",
@@ -6816,6 +6975,41 @@
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
+  "www.wausauwi.gov": {
+   "host": "www.wausauwi.gov",
+   "url": "https://www.wausauwi.gov/your-government/city-council/alderpersons",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 116342 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 116342 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "browser"
+   },
+   "measured": "2026-10-01"
+  },
   "www.wausharacountywi.gov": {
    "host": "www.wausharacountywi.gov",
    "url": "https://www.wausharacountywi.gov/12730/treasurer",
@@ -6843,6 +7037,41 @@
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
+  },
+  "www.wauwatosa.net": {
+   "host": "www.wauwatosa.net",
+   "url": "https://www.wauwatosa.net/government/common-council/contact-the-common-council",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 140038 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 140038 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "browser"
+   },
+   "measured": "2026-10-01"
   },
   "www.wcgl.org": {
    "host": "www.wcgl.org",
