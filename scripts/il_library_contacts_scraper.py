@@ -171,6 +171,19 @@ def place_key(name):
 
 def session():
     import requests
+    # THE DIRECTORY'S RULES ARE READ BEFORE THE FIRST PAGE, with the identity
+    # this session sends, through the shared seam rather than the hand reading
+    # recorded in the docstring above. The two agree: librarylearning.org serves
+    # a 2,128-byte policy whose `*` group allows /directory and disallows
+    # /restapi/*, which nothing here fetches.
+    #
+    # ITS RECORDED REFUSAL WAS A RUNNER MOMENT. The 2026-10-01 runner sweep read
+    # this host as unreachable after three attempts, which RFC 9309 files as
+    # disallow-all; re-read the same day with this file's own token it answers in
+    # half a second, with the bytes the docstring already describes. An
+    # unreachable robots.txt is not a policy, and a timeout is not a refusal.
+    from scraper_common import require_robots_once  # noqa: PLC0415
+    require_robots_once(DIRECTORY, UA, label="il-library-contacts")
     s = requests.Session()
     s.headers.update({"User-Agent": UA})
     return s
