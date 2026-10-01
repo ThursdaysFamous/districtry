@@ -95,6 +95,7 @@ neither.
 | Ask 31 — Worth County Auditor | 1 |
 | Ask 32 — City of Milwaukee GIS | 1 |
 | Ask wi-town-boards — Wisconsin Towns Association | 1 |
+| Ask mi-city-township-boards — ten Michigan city and township clerks (drafted later the same day, by the Michigan thread; Burton's has no recipient yet) | 10 |
 
 **Ask 30's twelve addresses came from `ia/data/app/ia-county-auditors.json` and that is
 worth stating, because the ask's own note says Iowa auditor mailboxes "are patterned
@@ -112,7 +113,7 @@ omits.
 | Ask 11 — CCGISC | No recipient address is recorded in this file. |
 | Asks 13, 25, 33, `wi-oshkosh-council`, `ia-pottawattamie-tama-wright-boards` | The section argues the ask and records its recipient, but no letter wording has been written yet. Drafting one would be writing the letter, which is its author's to do. |
 | Ask `wi-city-council-pages` — Beloit, Janesville, Wausau, Wauwatosa, Mequon | No e-mail address for any of the five clerks is recorded anywhere in the repository. `wi/data/app/wi-municipal-clerks.json` carries their names and telephone numbers and no mailbox. |
-| Ten Michigan clerks; Gurnee; Urbana; a New York local-officials letter | Named as outstanding in a coordinating session's notes, but **no letter for any of them exists in this repository**, so there was nothing to draft. |
+| Gurnee; Urbana; a New York local-officials letter | Named as outstanding in a coordinating session's notes, but **no letter for any of them exists in this repository**, so there was nothing to draft. (The ten Michigan clerks were on this line too; their letters were written later the same day and are in the table above.) |
 | Every ask this file marks `ASKED <date>` | Already sent. |
 | `docs/PRESS_LIST.md` | A separate discipline with its own send rules; left untouched. |
 
