@@ -361,6 +361,7 @@ metro-worksheet.json and hand-edits fail `--check`.
 | ERSB school board | IL statute (SB15) | ilsenateredistricting.com / city | 10 districts (20 subdistricts) for the 2024 election; full 21-member elected board seated Jan 2027 |
 | Chicago police districts (22) | CPD | chicagopolice.org | Administrative; changes rarely, not census-tied |
 | CPS attendance boundaries | CPS | Chicago data portal (SYxxyy dataset id) | New dataset every school year (e.g. SY2526) |
+| Tribal land (1 — Prairie Band Potawatomi trust land) | the United States, on the nation's application — a trust acquisition, not a redistricting | Census TIGERweb/AIANNHA, whose vintage rolls annually | AIANNH 2980 is ABSENT from the Census 2020 vintage and present in the current one, so the parcel entered the map between 2020 and 2026; no enactment date is published |
 
 ### NYC — layer → authority → next-map source → last enactment/effective
 

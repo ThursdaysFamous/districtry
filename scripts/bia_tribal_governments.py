@@ -62,7 +62,22 @@ USER_AGENT = "districtry/1.0 (+https://districtry.com/)"
 
 # The government-identifying columns. Everything else the directory carries is
 # about a PERSON and is not written -- see the docstring.
-KEEP = ("tribefullname", "tribealternatename", "tribalcomponent", "biaregion", "state")
+#
+# `website` and `city` JOINED THE LIST ON 2026-10-01, for Illinois's tribal card,
+# and they are government columns rather than the personal ones above them: a
+# nation's own site is how a reader reaches the government that answers for the
+# land they clicked, and the city is where that government's office is. The
+# directory's `physicaladdress`, `phone`, `fax` and `email` stay out, for the
+# reason the docstring gives -- a street address and a direct line belong to the
+# one person per row, and no reader here is served by them.
+#
+# WHY THEY COME FROM HERE RATHER THAN FROM THE CARD'S OWN BUILDER. The seat and
+# the site are what a card says ABOUT A GOVERNMENT, and `scripts/tribal_areas.py`
+# already records why eight instances read one publisher through one module. A
+# builder that fetched these two columns itself would be a second reader of this
+# directory, which is where this fleet's recurring defect starts.
+KEEP = ("tribefullname", "tribealternatename", "tribalcomponent", "biaregion",
+        "state", "website", "city")
 
 # A floor, not an assertion. 587 was measured 2026-09-30; a directory that has
 # lost a third of its rows is a failed read rather than a change in federal
@@ -134,6 +149,13 @@ def shape(rows):
             "component": (row.get("tribalcomponent") or "").strip() or None,
             "biaRegion": (row.get("biaregion") or "").strip() or None,
             "state": (row.get("state") or "").strip() or None,
+            # The office city, which for a government is where it sits. Paired
+            # with `state` it is the seat a card names.
+            "city": (row.get("city") or "").strip() or None,
+            # The government's own site, exactly as the Bureau publishes it --
+            # http and all. It is LINKED and not fetched, and a scheme this
+            # project would prefer is not this project's to rewrite.
+            "website": (row.get("website") or "").strip() or None,
         }
         # A government listed twice keeps its first row; the directory is one row
         # per government, so a duplicate is worth printing rather than merging.
@@ -153,8 +175,9 @@ def write(records, rows_read):
     payload = {
         "source": SERVICE,
         "note": (
-            "Government names only. The directory's leader, address, telephone and "
-            "e-mail columns are deliberately not carried; see "
+            "Government names, seats and own websites. The directory's leader, "
+            "street address, telephone, fax and e-mail columns are deliberately "
+            "not carried; see "
             "scripts/bia_tribal_governments.py."
         ),
         "governments": records,
@@ -192,14 +215,28 @@ def check():
         raise SystemExit("governments are not sorted by name, or one has no name")
     if len(set(names)) != len(names):
         raise SystemExit("a government name appears twice")
-    leaked = sorted({
-        k for g in govs for k in g
-        if k in ("firstname", "lastname", "email", "phone", "physicaladdress", "jobtitle")
-    })
+    personal = ("firstname", "middlename", "lastname", "salutation", "suffix",
+                "aka", "jobtitle", "email", "phone", "fax", "physicaladdress",
+                "mailingaddress", "dateelected", "nextelection")
+    leaked = sorted({k for g in govs for k in g if k in personal})
     if leaked:
         raise SystemExit(
             "this file carries columns about a person, which it must not: %s" % ", ".join(leaked)
         )
+    # THE KEY SET IS ASSERTED, not only the absence of the personal columns.
+    # Checking for a leak catches a column added under the directory's own name
+    # and says nothing about a field this module stopped writing -- so a reader
+    # of `city` or `website` would go quiet rather than fail the day one of them
+    # left `shape()`. The expected set is derived from that function's own
+    # output so the two cannot drift apart.
+    expected = set(shape([{k: "x" for k in KEEP}])[0])
+    for g in govs:
+        if set(g) != expected:
+            raise SystemExit(
+                "a government carries keys %s where this module writes %s — "
+                "refetch the file rather than editing it"
+                % (sorted(set(g)), sorted(expected))
+            )
     print("OK %s: %d governments, no personal columns" % (os.path.relpath(OUT, REPO_ROOT), len(govs)))
     return 0
 
