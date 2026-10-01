@@ -24,6 +24,16 @@ the wording unreviewable and the batch uncountable. This file is the drafts.
    as much as a yes. Say so in the ask, so declining is easy.
 5. Replace `<YOUR NAME>` / `<YOUR E-MAIL>` with the sender's own. They are deliberately
    not written into this file, which is public.
+6. **A new ask takes an id that names its subject, not the next number** —
+   `## Ask il-ford-board-map`, `## Ask wi-oshkosh-wards`. The numbered asks below keep
+   their numbers: several have been sent and cited in letters, and renumbering a letter
+   somebody has already received would be worse than the inconsistency. But the sequence
+   cannot be extended safely. On 2026-10-01 three branches each drafted "the next ask"
+   and two of them wrote **Ask 33**; git merges that without a conflict, because both
+   headings land, and whoever renumbers one afterwards moves it out from under every gap
+   record citing it. A subject id cannot collide and cannot be renumbered.
+   `scripts/build_coverage_gaps.py` fails on a duplicate id and on a gap record citing an
+   ask this file does not have.
 
 ## What is NOT here, and why
 
