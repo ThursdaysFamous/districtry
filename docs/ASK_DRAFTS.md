@@ -3503,6 +3503,95 @@ individual board member is named in any of the eight letters, because the questi
 boundaries.
 ---
 
+## Ask il-ford-board-members — Ford County Clerk: who sits on the board?
+
+**Status: NOT YET ASKED — DRAFTED 2026-10-01.** Named rather than numbered, for the reason
+`il-gurnee-board-names` above gives.
+
+Gap `ford-county-board-vintage`.
+
+**This is a SECOND letter to a clerk who has already had two, and it opens by saying so.** Ford
+County was written to on 3 August 2026 and followed up on 16 August, both times about its
+district MAP — which plan is in force, and how the Patton 3 precinct divides between districts
+1 and 3. Neither has been answered. This letter does not re-ask either question and does not
+start over; it asks a different and smaller one, and it says in its first line that we have
+written before.
+
+**Why it is needed when the county publishes the answer.** Ford's own board page lists its
+members with their districts, and that page's record in this project has said so since
+2 August. It says it of a person with a browser, which is true, and it was read as saying it
+of this project, which is not. Measured 2026-10-01: `fordcounty.illinois.gov` serves its
+robots.txt cleanly and permits every path, its front page answers HTTP 200 at 124 KB, and its
+two board paths answer NON-DETERMINISTICALLY — six reads of `/ford-county-board/` and
+`/county-board/`, spaced sixteen seconds apart, returned the page three times and an HTTP 307
+to a "Javascript is required. Please enable javascript before you are allowed to see this
+page." interstitial three times, with BOTH paths giving both answers. That is an access control
+stating its condition, so nothing here satisfies it another way: taking the readings where the
+control happens to be off is working around it.
+
+**So the ask is for the list in any form that is not that page**, which is the smallest thing
+that would close it. A county that has not answered two letters about a map may well answer one
+that asks for a page it already maintains.
+
+**What the letter must NOT say**, and this is the reason it is drafted separately rather than
+added to one of the two asks above. It must not imply the county is hiding anything or that its
+site is broken: the interstitial is a bot protection that a human visitor never sees, the
+county is publishing the list perfectly well, and the problem is on our side of the exchange.
+And it must not ask about the map again, because that question is already outstanding and
+asking it a third time in a letter whose subject is something else is how a clerk stops reading.
+
+**Recipient**, the Clerk's own office address already held in
+`il/data/app/il-county-clerks.json` and not guessed.
+
+### Ford County Clerk — `clerk@fordcounty.illinois.gov`
+
+> Subject: Ford County Board members — a list I can read automatically
+>
+> Dear County Clerk Vaughn,
+>
+> I wrote to you in August about Ford County's board district map and have not heard back,
+> which is no trouble — this is a different and much smaller question, and I am not asking
+> about the map again here.
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows anyone
+> which civic districts cover a point they click on, and who represents them there. It carries
+> no advertising and is not a campaign or a commercial product.
+>
+> Ford County's board page lists every member with their district, and it reads perfectly well
+> in a browser. My difficulty is that the page is protected against automated visitors, so the
+> program that keeps my site's pages current cannot read it — it is turned away about half the
+> time with a notice asking it to enable JavaScript. That protection is doing its job and I
+> have no wish to get around it.
+>
+> So: is there any other form of that same list I could read — a PDF, a spreadsheet, a plain
+> page, or simply the names and districts pasted into a reply? Anything would do. I would
+> refresh it from whatever you point me at and cite the county as the source.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will record
+> it and stop asking.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### What each answer means
+
+- **A readable copy, in any form** — Ford's eleven or twelve members are named on the site and
+  on its own county page, and Illinois reaches 92 of its 102 counties.
+- **The names pasted into a reply** — just as good, and the reply itself becomes the source,
+  cited and dated, the way Wabash County's roster already ships.
+- **A refusal** — the gap record gains an ask about MEMBERS rather than about geometry, which
+  is the ask the fourth test actually wants, and the county is covered by record.
+- **No reply** — record it against this ask after one follow-up and thirty days. The two
+  outstanding map letters are a separate ledger entry and are not closed by this one.
+
+**What is deliberately not asked.** Nothing about the map, nothing about reuse terms, and no
+fee. And the letter does not ask the county to change its site, which would be asking a
+government to weaken a protection for one visitor's convenience.
+---
+
 ## Ask wi-town-boards — Wisconsin Towns Association: is there a list of town board members?
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** A first approach to this organisation. It asks
