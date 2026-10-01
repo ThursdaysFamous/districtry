@@ -2582,3 +2582,117 @@ worth their knowing about.
 
 **Worth is the only county in the sweep with this shape**, so this ask does not generalise to a
 tranche. If a later sweep finds more, they can go together.
+
+---
+
+## Ask 32 — OU Center for Spatial Analysis: the terms on the maps the State Election Board pays it to make
+
+**The board answered, and the answer was a redirection rather than a refusal.** Ask sent to
+`info@elections.ok.gov` on 2026-09-30 asked whether districtry may download, simplify and publish
+the statewide precinct boundaries from the data warehouse the board's own maps page links. The
+board replied that the warehouse is downloadable, and that questions about permission and about
+changes belong to the **OU Center for Spatial Analysis**, its contracted mapping provider. That is
+why the board's page sends readers there in the first place.
+
+**That settles the provenance question in the project's favour rather than against it.** The
+government-publishers-first rule asks who is accountable for a file, not which domain serves it.
+The board states the contract on its own page, and now states in writing that permission is the
+centre's to give. So the centre is the board's **agent for mapping**, not an independent academic
+publisher, and asking it is asking the board's own mapping office. Oklahoma's precinct layer is not
+blocked on a policy question; it is blocked on one address.
+
+**The same conclusion reaches the county commissioner districts, and corrects a reading in
+Oklahoma's launch plan.** The plan recorded two copies of the 231 commissioner districts: the
+Oklahoma Department of Transportation's, and a second, more recently edited copy whose
+organisation endpoint returns a null name to an anonymous caller. The plan called that second copy
+anonymous, "an organisation that will not say who it is". Measured 2026-10-01, the **item's owner is
+`thom0780_uok`**, an enterprise-provider account in the University of Oklahoma's own ArcGIS
+organisation — the same channel as the precincts. So it is the centre's copy, not an unattributed
+one, and the ruling's outcome is unchanged (ship the transport department's copy, credit the state,
+name the centre as where the file came from) while the reason for it is different. **An
+organisation that returns no name to an unauthenticated caller is not an organisation with no
+name**, which is the Knox shape at the level of a metadata field.
+
+### Recipient — NOT YET VERIFIED, and that is this ask's one blocker
+
+`csa.ou.edu` **does not resolve from this project's network** — measured again 2026-10-01, no
+response on the bare host or the `www` name, while `ou.edu` itself answers 200 and its robots.txt
+allows us outside `/content`. That is a limit of where this agent sits, not a refusal by the
+centre: its hosted map services and its open-data portal
+(`csagis-uok.opendata.arcgis.com`, which asks for 60 seconds between requests) were reachable
+throughout. **So the address must be read off the centre's own contact page in a browser before this
+goes out**, not guessed and not derived from the `thom0780_uok` account name. What is known:
+
+| known | value |
+|---|---|
+| the centre's own site | `csa.ou.edu` (unreachable from here; reachable in a browser) |
+| its open-data portal | `csagis-uok.opendata.arcgis.com` |
+| the precinct layer | `State_Wide_2020_Precincts`, 1,984 features |
+| the commissioner copy | `services.arcgis.com/3xOwF6p0r7IHIjfn`, owner `thom0780_uok` |
+| the board's statement | its district-and-precinct-maps page, which names the contract and links the portal |
+
+### Draft
+
+> Subject: Permission question about the Oklahoma precinct maps in your data warehouse
+>
+> Hello,
+>
+> I run districtry.com, a free public website that answers one question: you click a point on a
+> map and it tells you every district you are in and who represents you there. It covers Illinois,
+> Wisconsin, Iowa, Michigan, New York City and San Francisco today, and I am preparing to add
+> Oklahoma.
+>
+> I wrote to the State Election Board asking whether I may use the statewide precinct boundaries
+> from your data warehouse. They told me the files are downloadable and that questions about
+> permission and about changes belong to you, as the board's contracted mapping provider.
+>
+> So, the question. May I download the statewide precinct boundaries, simplify them for use on a
+> web map, and publish them on a free public site? I would credit the Oklahoma State Election
+> Board as the authority and name the OU Center for Spatial Analysis as the mapping office, unless
+> you would rather it were worded differently — and I would be glad to word it however you prefer.
+>
+> If there are conditions, I will follow them. If the answer is no, that is a complete answer and I
+> will respect it: the site will say that Oklahoma's precincts exist and that we are not able to
+> draw them, rather than drawing them from somewhere else.
+>
+> Two smaller things, if they are easy.
+>
+> First, one of your organisation's files is a copy of the 231 county commissioner districts. I am
+> planning to use the Oklahoma Department of Transportation's copy instead, because it comes from a
+> state agency, and to say in the credit that the file originated with your centre. If that is
+> wrong — if yours is the current one and the transport department's is stale — I would rather know
+> now.
+>
+> Second, the two copies disagree about one district in Beaver County, by just over one per cent of
+> its area. If you happen to know which of the two is right, that would save me asking the county.
+>
+> One thing about how we work, which may matter to you: we never invent an officeholder's name.
+> Where we cannot verify who holds a seat from the body's own publication, the site says so and
+> links to that body rather than guessing.
+>
+> Thank you for your time.
+>
+> Adam Overberg
+> districtry.com
+
+### What each answer means
+
+| answer | what it settles |
+|---|---|
+| yes, with or without conditions | The precinct layer ships, credited to the board with the centre named as its mapping office. Conditions are followed as written. |
+| yes, and "ours is the current commissioner file" | The commissioner layer's source changes, and the plan's currency reading is wrong in the other direction. Re-measure before switching: the transport department is still a state agency, so this would be a documented exception rather than a default. |
+| an answer on Beaver County | Closes the one measured disagreement between the two copies without asking the county. The permanent test point inside that district stays either way. |
+| no | A clean, citable no. The precinct layer does not ship, Oklahoma records the gap, and the question is closed rather than re-probed. |
+| no reply after the follow-up cadence | `UNRESPONSIVE`, and the precinct gap records that the board redirected us to the centre and the centre did not answer — which is a different claim from "nobody publishes Oklahoma's precincts". |
+
+### The roster question is NOT in this letter, deliberately
+
+The 2026-09-30 ask to the board carried a second question: whether a 2026 edition of the biennial
+County Officer Roster is expected after the November election. **The board did not answer it, and it
+does not belong here** — the roster is the board's own publication and the centre makes maps, so
+putting it to the centre asks the wrong office a question it has no reason to know. It is also the
+one open question this project can answer without anybody's help: Oklahoma's launch plan already
+calls for a weekly check for the next edition's filename, which turns the answer into a measurement
+instead of a favour. **So it is dropped rather than re-asked.** If the tripwire is still finding
+nothing well after the election, that is the moment to put it back to the board — by then it is a
+real question about a missing document rather than a request for a schedule.
