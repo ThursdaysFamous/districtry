@@ -2963,3 +2963,64 @@ Draft (one per city; `<CITY>`, `<CLERK>` and the bracketed clause are the only p
 reason above. And no third-party copy was sought — an archived or mirrored council page would
 answer the data question and sidestep the permission question entirely, which is the wrong way
 round.
+
+---
+
+## Ask 36 — City of Oshkosh Clerk: our reader cannot reach your robots.txt
+
+> **NOT YET ASKED — DRAFTED 2026-10-01.** The only one of the 21 unnamed Wisconsin cities where
+> the obstacle is neither a refusal nor a page that needs a browser, but a connection this
+> project cannot complete and cannot explain. It asks one question and offers the city
+> something useful in return: the symptom, from two independent addresses, which a city's own
+> IT staff can act on and nobody outside the city can.
+
+**To:** City of Oshkosh, City Clerk's Office — Darla Salinas, City Clerk; (920) 236-5013
+**Subject:** Our automated reader cannot reach https://www.ci.oshkosh.wi.us/robots.txt
+
+**Why this ask exists.** Oshkosh publishes its Common Council on a public page and we would
+like to name those seven officials on a free, non-commercial map. Before reading any page on a
+site, this project reads that site's `robots.txt` and obeys it, and where that file cannot be
+read at all the rule we follow (RFC 9309 §2.3.1.4) says to treat the site as closed. So
+Oshkosh is the one city of the 21 that is not shut by anybody's decision and is not shipped
+either — and the ask is simply whether the city intends that, and whether it is something the
+city can see from its side.
+
+**What was measured first, and is stated in the ask so it does not read as a question somebody
+could have answered by searching.** Measured 2026-10-01 from two independent addresses with
+the same client that would do the reading:
+
+| Where | What happened |
+| --- | --- |
+| A sandboxed build environment | the TLS handshake fails with `UNEXPECTED_EOF_WHILE_READING`, unchanged over three attempts |
+| A GitHub Actions runner, which is where our weekly jobs run | `Connection reset by peer`, three reads fifteen seconds apart, every one |
+| `curl` from the same sandbox | completes, and returns the file |
+
+**The two symptoms are different and we do not claim to know what they share.** One fails
+inside the TLS handshake and the other at the socket; both sit below HTTP. What makes it worth
+writing about is the third row: a plain `curl` reaches the same server from the same address
+that the Python client cannot, so the server is not down and something about the connection is
+the variable. That is a difference the city's own staff or its hosting provider can see in a
+log and we cannot.
+
+**What is deliberately NOT asked and not done.** We do not ask for a rule to be changed in our
+favour, and we are not asking to be allowed past anything: if Oshkosh intends automated readers
+to be turned away, that is a complete answer and the city tells us so in one line. We did not
+try a different client, a browser user-agent, or a lowered TLS security level to get through —
+the first is not what this project does, and the last would be reading a site's permissions
+with a client we do not crawl with, which defeats the point of reading them. We did not take
+the council names from an archived or mirrored copy, which would answer the data question while
+sidestepping the permission question. And no named official is asked for anything personally;
+this is a question for whoever looks after the city's website.
+
+**Why even a no is useful and is said so plainly.** A no closes this for good and lets the
+record we show readers say that the city asked not to be read, rather than that we could not
+work out how. A yes costs the city nothing it has not already published.
+
+**What each answer means**
+
+| Answer | What happens |
+| --- | --- |
+| "Yes, read it" plus a fix or an explanation of the connection failure | the council page is read weekly and the seven officials are named on the card, exactly as five other Wisconsin municipalities already are |
+| "We do not want automated readers" | the city is recorded as having declined, with the date, and nothing is fetched from it again; under the fourth test that record stands in for the layer |
+| "We do not know why" | the symptom is recorded as measured from both addresses and unexplained, which is the honest state, and the city is not asked again |
+| No reply | followed up once after about three weeks, and once more after another two; thirty days' silence after that is recorded as the answer |
