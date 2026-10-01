@@ -361,7 +361,8 @@ NEENAH_INDEX = "https://www.ci.neenah.wi.us/common-council/"
 # NOT a challenge -- HTTP 200 with the whole council on it -- which is the
 # false-positive class CLAUDE.md already records for keyword matching on a body.
 #
-# THE FIVE THAT ARE SHUT, measured the same day and worth as much as the four:
+# THE FOUR THAT ARE SHUT, measured the same day and worth as much as the four
+# that shipped (a fifth was written down here as shut and is not — see Oshkosh):
 #   BELOIT publishes `User-agent: * / Disallow: /` under six named crawlers that
 #   get narrow rules. That is the city's own host and its own file, so it binds
 #   fully, and nothing here renames an agent to get past it.
@@ -370,10 +371,28 @@ NEENAH_INDEX = "https://www.ci.neenah.wi.us/common-council/"
 #   itself, which is #1271's own reading of why a robots 403 needed no strict
 #   treatment. Not probed with a second client: a host that refuses the first is
 #   not an invitation to try a richer one.
-#   OSHKOSH is a fifth kind — an INCOMPLETE TLS CHAIN, the Coles pattern, so
-#   every automated client reports a failure no browser would notice. That is a
-#   misconfiguration rather than a refusal and is the one of the five worth
-#   re-measuring, through `scripts/probe_incomplete_tls_chains.py`.
+#   OSHKOSH IS NOT SHUT AT ALL, and the line above read that it served an
+#   INCOMPLETE TLS CHAIN, the Coles pattern. Measured 2026-10-01 through
+#   `scripts/probe_incomplete_tls_chains.py`: `{"state": "ok", "code": "200"}`,
+#   0 of 1 hosts serving an incomplete chain. The claim was wrong, and it was
+#   wrong in the direction that keeps a readable city unread — the record this
+#   file already carries about Eau Claire, one city later. What is true is
+#   narrower and is a fact about THIS CLIENT rather than about the city: both
+#   Python stacks fail the handshake with `UNEXPECTED_EOF_WHILE_READING` where
+#   `curl` completes it, and the one setting that fixes it is
+#   `ssl.create_default_context()` plus `set_ciphers("DEFAULT@SECLEVEL=1")`,
+#   which relaxes OpenSSL's signature-and-key-size POLICY and leaves
+#   certificate verification fully intact — nothing here disables verification.
+#   Pinning the maximum version to TLS 1.2 does NOT fix it, and under SECLEVEL=1
+#   the connection negotiates TLSv1.3 with TLS_AES_256_GCM_SHA384, so the cause
+#   is something Debian's level 2 rejects in the CHAIN rather than anything weak
+#   about the transport. Its robots.txt (331 bytes, read with the crawling
+#   client) disallows fourteen paths — Laserfiche, WebTrac, test directories —
+#   and PERMITS /CityCouncil/. And its council is AT LARGE: the page states
+#   "seven elected officials in the Common Council including the mayor, the
+#   deputy mayor, and five council members", so it has no district to draw and
+#   belongs in a municipal at-large roster rather than in this file, which is
+#   keyed by district. SO FOUR ARE SHUT, NOT FIVE.
 FRANKLIN_INDEX = ("https://www.franklinwi.gov/Departments/Elected-Officials"
                   "/Common-Council.htm")
 GREENFIELD_INDEX = "https://www.ci.greenfield.wi.us/334/Common-Council"
