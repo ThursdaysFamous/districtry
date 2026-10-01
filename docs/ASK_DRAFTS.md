@@ -2714,6 +2714,79 @@ on at least one City surface, so the question is purely about how it may be read
 
 ---
 
+## Ask 34 — Village of Gurnee: your board page names nobody
+
+> **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the Village Clerk. On send, change
+> `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `gurnee-village-board-names` blocker in
+> `docs/DATA_LAYER_GUIDEBOOK.md` — Illinois has no `WATCH.md`, so that blocker is the whole
+> ledger.
+
+**This is the Worth County shape rather than the usual ask**, and the difference matters the
+same way: this is not a request that a village compile anything. Gurnee has built the page. Its
+board page describes the body in full — "The Village President, also known as the Mayor, and six
+Village Trustees are elected to four-year terms" — and then says "Current Village Board members
+are listed below:" with nothing below it. Measured 2026-10-01: 189,943 bytes of served HTML
+containing the word Trustee exactly once, in that sentence about the terms. So the question is
+about the page, not about the village's records, and the answer may be one line.
+
+**Nothing about Gurnee is blocking us.** The site serves this project's own client a full page
+and publishes no robots.txt at all, so there is no refusal anywhere in this; the names simply are
+not in what a visitor is sent. Its six neighbours above 25,000 people in Lake County — Highland
+Park, Mundelein, North Chicago, Round Lake Beach, Vernon Hills and Waukegan — were all read from
+their own pages on the same day, which is why Gurnee stands out rather than fitting a pattern.
+
+### Recipient
+
+The Village Clerk, through the village's own published board mailbox,
+`villageboard@village.gurnee.il.us`. Confirm against the village's contact page before sending;
+that address and `Mayor@village.gurnee.il.us` are the only two the board page publishes, and
+neither names a person.
+
+### The draft
+
+> Subject: Your Village Board page
+>
+> Hello,
+>
+> I run districtry, a free, non-commercial civic map that shows people which districts they live
+> in and who represents them there. It covers Illinois, and it already shows Gurnee's village
+> hall address and telephone.
+>
+> I wanted to ask about one thing rather than assume. Your Village Board page explains that the
+> Village President and six Trustees are elected to four-year terms, and then says "Current
+> Village Board members are listed below:" — and when I load the page, nothing appears below it.
+> I see the same empty result every time, and I have not been able to find the names anywhere
+> else on the site.
+>
+> Is that list meant to be there? If it is, the empty result is probably something you would want
+> to know about. If the page is being rebuilt, that is a complete answer and I will leave it
+> alone and check again later.
+>
+> I am not asking anyone to compile anything for me. If the names are published somewhere else on
+> the site and I have simply missed them, a link is all I need.
+>
+> Thank you for your time.
+>
+> Adam Overberg
+> districtry.com
+
+### What each answer means
+
+| answer | what it settles |
+|---|---|
+| a link, or the names | Gurnee joins the six siblings on the next weekly run and the gap record closes. |
+| "the page is being rebuilt" | The route stays open. Record it and re-read the page on a later sweep rather than asking again. |
+| "we do not publish them" | A refusal, which counts at once towards the done standard's fourth test. Record it with the date and tag the gap record. |
+| no reply after the follow-up cadence | `UNRESPONSIVE` after one follow-up and thirty days, recorded with both dates, and the record is tagged then and not before. |
+
+**Urbana is deliberately NOT here.** It is the other Illinois city above 25,000 that names
+nobody, and its site resets every connection from this project's sandbox — which is a measurement
+of this vantage and not of the city. Writing to a city to ask for data it may already publish is
+a question we would be asking of ourselves. That one waits on a reading from a build machine.
+
+---
+
+
 ## Ask 33 — New York State: is there a directory of local elected officials?
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** This is the one ask that belongs to the STATE
