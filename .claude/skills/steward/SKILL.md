@@ -162,6 +162,8 @@ python3 scripts/scraper_common.py --selftest                # the nine AFR build
 python3 scripts/arcgis_error.py --selftest                   # a rate limit told apart from a shape error, both measured wordings and a 429; the 5/15/45 ladder taken then raised, never waited on a 404
 python3 scripts/comptroller_afr.py --selftest                # the AFR parser eight scrapers import: LOCALITY_CORRECTIONS all three ways, and the middle initial's comma corrected, printed, suffix left alone
 python3 scripts/validate_officeholder_names.py              # absolute: a shipped name that is a phone number, a party label or a page-footer fragment
+python3 scripts/validate_chamber_rosters.py --selftest       # the seat-record rules, both ways
+python3 scripts/validate_chamber_rosters.py                 # every district a chamber elects has a record; a nameless one says which kind of empty it is
 python3 scripts/check_roster_retention.py --base origin/main
 python3 scripts/check_cache_version.py --base origin/main       # cache-first data vs CACHE_NAME
 
