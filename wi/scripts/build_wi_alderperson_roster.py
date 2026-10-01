@@ -614,6 +614,14 @@ def main():
     for feat in geo:
         p = feat["properties"]
         geo_keys.setdefault(p["COUSUBFP"], set()).add(p["ALDERID"])
+    # A DISTRICT KEY IS THE FILED ALDERID AND NEVER THE NUMBER THE CITY PRINTS.
+    # Three cities' councils number their districts from one where the state's
+    # ward filing keys them elsewhere (Manawa 11-13, Waupaca 41-45, Weyauwega
+    # 51-53); index.html renames them for the reader through
+    # ALDER_DISTRICT_LABELS and leaves ALDERID alone, so a scraper that keys
+    # members by the city's own "District 1" would join to nothing. check_city
+    # below already catches it against this geo_keys set — this comment is here
+    # so the failure reads as intended rather than as a scrape that went wrong.
 
     if set(cities) != set(FLOORS):
         raise SystemExit("scraper covered %s, floors expect %s"

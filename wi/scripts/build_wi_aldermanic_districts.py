@@ -324,6 +324,16 @@ LOCAL_COMPOSITION = {
         # city's wards in two schemes and the dissolve reads that as a fourth
         # district. Nothing is relabelled here yet: the card prints
         # parseInt(ALDERID), so a change is reader-visible. See wi/WATCH.md.
+#
+# RELABELLED FOR THE READER ON 2026-10-01, IN THE APP AND NOT HERE.
+# index.html's ALDER_DISTRICT_LABELS maps the filed ids of those three
+# cities to the numbers their own councils use, and ALDERID and KEY keep
+# the filed values — so the dissolve key, the roster join and the
+# vector-tile key are all untouched and this builder's output does not
+# move. Marion is still as filed, because nothing published says what it
+# calls its four. wi/scripts/validate_index.py holds that table to this
+# builder's own output: a refiling that moves one of those ids fails the
+# gate rather than quietly putting the filed number back on the card.
         "balance": 12.55,
     },
     "22575": {

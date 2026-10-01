@@ -4256,3 +4256,117 @@ the AOC was asked — which is a different and more honest claim than that nobod
 
 **Nothing about reuse terms is asked**, because who holds an elected office is public record,
 and nothing is asked of any named judge personally.
+
+## Ask marion-wi-council-districts — two county clerks: how many districts does the City of Marion elect, and which of you files which?
+
+> **NOT SENT.** Written 2026-10-01. Two letters, one to each of the two county clerks who file
+> the City of Marion's wards. **NO PRIOR-CONTACT SEARCH HAS BEEN RUN FOR THESE TWO ADDRESSES**,
+> and that is the Letters thread's step rather than this one's: this thread writes the text, the
+> Letters thread searches Adam's sent folder and inbox, turns anything it finds into a follow-up
+> rather than a first letter, and creates the Gmail drafts. Nothing here is sent by anybody but
+> Adam.
+>
+> **WHY THE CITY ITSELF IS NOT THE RECIPIENT, THOUGH IT IS THE AUTHORITY.** Marion's own site
+> asks automated clients to stay out — `cityofmarionwi.gov`'s robots.txt is `Disallow: /`, which
+> this project obeys without exception, so nothing has been read from it. That refusal governs
+> what we fetch and not who we may write to, so a letter to the city would be entirely proper;
+> what is missing is an address. The Wisconsin Elections Commission's clerk directory names
+> Clerk Mary S Rogers and Deputy Clerk Jodilyn Zillmer with the telephone 715-754-2124 and no
+> e-mail address, and municipal clerks' e-mail addresses are deliberately not published
+> statewide in Wisconsin. So a city letter is a telephone call or a posted letter, which is
+> Adam's to make if he would rather go straight to the source; the two county clerks both
+> publish an address and both hold part of the answer.
+>
+> **WHAT IS ACTUALLY UNKNOWN, AND WHAT IS NOT.** The shipped map draws four aldermanic districts
+> for Marion, keyed `01`, `21`, `22` and `23`. Measured against the Census Bureau's own county
+> boundaries on 2026-10-01, `01` lies in Shawano County and `21`-`23` lie in Waupaca County,
+> and `01` sits north of the other three and overlaps none of them — Marion straddles the county
+> line, and the two counties file its wards under two different numbering schemes. So the city's
+> four drawn districts may be three districts plus a second county's copy of one of them, which
+> would mean the map draws a district that does not exist. **The council size is deliberately
+> not inferred from the key count, because the key count is the thing in question.**
+>
+> **AND THIS IS THE ONE OF FOUR CITIES STILL OPEN.** Manawa, Waupaca and Weyauwega were in the
+> same position — the state's filing keys their districts somewhere other than 1 upward — and all
+> three were settled on 2026-10-01 by reading each city's own council page, which numbers its
+> districts from one. Those three are relabelled accordingly. Marion could not be read, which is
+> why it takes a letter.
+
+### Waupaca County Clerk — `kristy.opperman@co.waupaca.wi.us`
+
+**Subject:** Two questions about the City of Marion's aldermanic districts
+
+Dear Clerk Opperman,
+
+I maintain districtry.com/wi/, a free, non-commercial website that helps people in Wisconsin
+find out which civic districts they live in and who represents them there. It is not funded by
+anyone and carries no advertising.
+
+I have two questions about the City of Marion, which as I understand it lies partly in Waupaca
+County and partly in Shawano County.
+
+First, how many aldermanic districts does the Common Council have?
+
+Second, the state's current ward file lists Marion's wards under district numbers 21, 22 and 23
+in your county, and under district number 1 in Shawano County. Are those four numbers four
+different districts, or are they the two counties' own ways of labelling the same council's
+districts?
+
+I ask because our map draws one district for each distinct number it finds, so if Marion's
+council has three districts and the two counties label them differently, our map is currently
+drawing a fourth district that does not exist, and telling anyone who clicks there that they
+live in it.
+
+A one-line answer to each is plenty, and if the City of Marion is the right office to ask
+instead, I would be glad to be pointed there.
+
+Thank you for your time.
+
+Adam Overberg
+districtry.com/wi/
+
+### Shawano County Clerk — `raymond.rigsby@shawanocountywi.gov`
+
+**Subject:** One question about the City of Marion's aldermanic districts
+
+Dear Clerk Rigsby,
+
+I maintain districtry.com/wi/, a free, non-commercial website that helps people in Wisconsin
+find out which civic districts they live in and who represents them there. It is not funded by
+anyone and carries no advertising.
+
+I have one question about the part of the City of Marion that lies in Shawano County.
+
+The state's current ward file lists Marion's ward or wards in your county under aldermanic
+district number 1, while Waupaca County lists the rest of the city under district numbers 21, 22
+and 23. Is the district you file as number 1 a district of its own, or is it the same council
+district that Waupaca County files under one of its own numbers?
+
+I ask because our map draws one district for each distinct number it finds, so if those are
+labels for the same districts rather than four separate ones, our map is drawing a district that
+does not exist and telling anyone who clicks there that they live in it.
+
+A one-line answer is plenty, and if the City of Marion or Waupaca County is the better office to
+ask, I would be glad to be pointed there.
+
+Thank you for your time.
+
+Adam Overberg
+districtry.com/wi/
+
+### What each answer means
+
+- **A council size and a mapping.** If either clerk says how many districts the council has and
+  which filed numbers correspond, the map draws that many districts with the city's own numbers,
+  the same way Manawa, Waupaca and Weyauwega now do.
+- **"Four separate districts."** Then the map is already right about the count, and only the
+  numbering question is left — which `ALDER_DISTRICT_LABELS` in `wi/index.html` can carry as soon
+  as somebody states what the city calls them.
+- **A refusal, or silence.** Either lets the gap record say the two counties were asked, which is
+  the difference between a gap this project has measured and one it has merely noticed. Neither
+  changes the shipped map: Marion stays exactly as filed.
+
+**What is deliberately not asked.** Nothing about reuse terms, because ward filings and the
+names of elected officers are public record. No request to change either county's filing or the
+city's website. And nothing about Marion's robots.txt, which is the city's own choice about
+automated clients and is being respected rather than negotiated.
