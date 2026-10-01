@@ -17,7 +17,7 @@
   "robots-unreadable": 4,
   "stack-not-token": 7,
   "tls-chain": 1,
-  "token-ok": 237,
+  "token-ok": 241,
   "token-refused": 3,
   "token-refused-and-stack": 18
  },
@@ -4034,6 +4034,25 @@
     "scripts/galesburg_council_scraper.py": "self"
    }
   },
+  "www.ci.greenfield.wi.us": {
+   "host": "www.ci.greenfield.wi.us",
+   "url": "https://www.ci.greenfield.wi.us/334/Common-Council",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 97686 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 97686 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "browser"
+   },
+   "measured": "2026-10-01"
+  },
   "www.ci.neenah.wi.us": {
    "host": "www.ci.neenah.wi.us",
    "url": "https://www.ci.neenah.wi.us/common-council/",
@@ -5021,6 +5040,25 @@
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
+  },
+  "www.franklinwi.gov": {
+   "host": "www.franklinwi.gov",
+   "url": "https://www.franklinwi.gov/Departments/Elected-Officials/Common-Council.htm",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 75642 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 1 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 75642 bytes (page carries a captcha widget)",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "browser"
+   },
+   "measured": "2026-10-01"
   },
   "www.germantownwi.gov": {
    "host": "www.germantownwi.gov",
@@ -6096,6 +6134,25 @@
     "scripts/il_county_commissioners_scraper.py": "browser"
    }
   },
+  "www.muskego.wi.gov": {
+   "host": "www.muskego.wi.gov",
+   "url": "https://www.muskego.wi.gov/government/boards_commissions/common_council.php",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 82128 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 82128 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "browser"
+   },
+   "measured": "2026-10-01"
+  },
   "www.newberlinwi.gov": {
    "host": "www.newberlinwi.gov",
    "url": "https://www.newberlinwi.gov/",
@@ -6859,6 +6916,25 @@
     "ia/scripts/ia_county_auditor_scraper.py": "self"
    },
    "measured": "2026-09-13"
+  },
+  "www.westbendwi.gov": {
+   "host": "www.westbendwi.gov",
+   "url": "https://www.westbendwi.gov/government/elected_officials/west_bend_common_council/index.php",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 101259 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 101259 bytes",
+   "callers": {
+    "wi/scripts/wi_alderperson_scraper.py": "browser"
+   },
+   "measured": "2026-10-01"
   },
   "www.whitecounty-il.gov": {
    "host": "www.whitecounty-il.gov",
