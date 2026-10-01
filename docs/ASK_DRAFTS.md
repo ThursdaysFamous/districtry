@@ -471,6 +471,53 @@ then deleted as the duplicate described above, so 31 and 27 is arithmetic and is
 arithmetic — the mailbox was not re-read after the deletion, and no time is attached to those
 two numbers.
 
+### A FOURTH LETTER ANSWERED IN THIRTY-NINE MINUTES, AFTER THREE WENT UNANSWERED
+
+Three letters went to the Ford County Clerk and none was answered — 3 August,
+16 August and 4 September — and the status table above records that run. A fourth
+went at 18:12 UTC on 2026-10-01 and Clerk Kelsie Vaughn replied at 18:51 with the
+whole board: twelve members under three numbered districts, four to a district,
+with Chase McCall named Chairman and Carson Vaughn Vice Chairman, over the Clerk &
+Recorder's own office address and telephone number.
+
+**Three letters unanswered is not a closed door**, and reading it as one would have
+cost this roster. Nothing about the county changed between September and tonight;
+the fourth letter arrived on a day somebody read it. That is the case for sending
+the fourth letter rather than recording the county as unresponsive and moving on —
+and it is the counterpart to the correction above, which says silence earns a
+project nothing. Silence earns nothing AND proves nothing.
+
+What it answers is bounded and the thank-you says so to the Clerk rather than
+leaving her to guess: it names the twelve PEOPLE, from the office that maintains
+them, and says nothing about the three district BOUNDARIES, which are Ford's actual
+blocker, its maps being scans with no map file behind them. No geometry ask was
+reopened with her in the same breath.
+
+Two traps for whoever ships it. The Clerk and the Vice Chairman are both named
+Vaughn, so a surname is not a key here. And the roster arrived by letter rather
+than off a page, so nothing re-reads it weekly — it is a dated snapshot from the
+county and has to be labelled as one, the way the two document-sourced rosters
+already are.
+
+### AN ANSWERED REFUSAL IS NOT SILENCE, AND MUST NOT BE LEFT READING LIKE IT
+
+Ypsilanti Township's Clerk answered three times on 2026-10-01 and the third answer
+was no. At 15:13 UTC Debbie Swanson referred the request to the township's
+technical staff; at 15:23 this project corrected its own claim, having rechecked
+and found the board page readable after all; at 18:23 she wrote, in full: "Our
+system will not allow this request at this time."
+
+So the outcome is **asked-and-refused**, which is a different thing from
+asked-and-waiting and wants recording as its own state. No thirty-day clock
+applies to it, there is nothing to follow up, and a record that left it looking
+like an unanswered letter would misdescribe a correspondent who answered promptly
+three times. Under the project's coverage standard a published record substitutes
+for a source that has been asked and has refused, which is exactly what this is.
+
+The reply this thread drafted to that refusal was removed from the draft folder
+unsent. **Deleting a draft is the operator's call**, so it has not been recreated,
+and the removal is recorded here rather than quietly undone.
+
 ### THE AFTERNOON'S SENDS, AND WHAT A FIRST LETTER DOES NOT EARN
 
 Between 18:02 and 18:15 UTC on 2026-10-01 the operator sent fifteen letters: five replies this
