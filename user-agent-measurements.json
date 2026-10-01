@@ -3396,7 +3396,7 @@
     "ia/scripts/build_cedar_rapids_wards.py": "self",
     "ia/scripts/build_ia_city_contact.py": "both",
     "ia/scripts/build_ia_school_districts.py": "self",
-    "ia/scripts/build_ia_township_officers.py": "browser",
+    "ia/scripts/build_ia_township_officers.py": "self",
     "ia/scripts/build_legislative_boundaries.py": "unknown",
     "ia/scripts/build_metro_outline.py": "self",
     "ia/scripts/build_state_counties.py": "unknown",

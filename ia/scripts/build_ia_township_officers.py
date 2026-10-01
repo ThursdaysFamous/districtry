@@ -84,6 +84,10 @@ import urllib.parse
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # ia/
 FLEET_ROOT = os.path.dirname(REPO_ROOT)
+
+# THE DISTRICTRY TOKEN, the same one this instance's scrapers send.
+TIGER_HEADERS = {"User-Agent": "districtry/1.0 (+https://districtry.com/ia/)",
+                 "Accept": "application/json"}
 sys.path.insert(0, os.path.join(FLEET_ROOT, "scripts"))
 from validate_officeholder_names import is_vacancy_marker  # noqa: E402  (one reader for the word)
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
@@ -174,7 +178,15 @@ def fetch_subdivisions(fips):
              "outFields": "GEOID,NAME,BASENAME", "returnGeometry": "false",
              "f": "json"}
     url = TIGER_COUSUB + "?" + urllib.parse.urlencode(query)
-    payload = json.loads(SC.fetch_stdlib(url, headers=dict(SC.UA_HINTS_CHROME_126)))
+    # THE DISTRICTRY TOKEN, NOT A BROWSER STRING. A browser string is for a
+    # host that refuses the token by client fingerprint, and TIGERweb does not:
+    # it is recorded `token-ok` in user-agent-measurements.json, and this exact
+    # query URL was read three times with the token on 2026-10-01 (HTTP 200,
+    # 1,946 bytes, 18 features, no `error` member). A browser string reached
+    # this line by being copied from a sibling rather than by being measured,
+    # which is how the fleet comes to send one to seventy hosts that never
+    # asked for it.
+    payload = json.loads(SC.fetch_stdlib(url, headers=TIGER_HEADERS))
     # AN API ERROR IS NOT AN EMPTY ANSWER. `.get("features", [])` on an error
     # object reads as "this county has no subdivisions", which is a confident
     # wrong answer assembled out of a failure -- the reading this repository

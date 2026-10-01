@@ -4059,8 +4059,8 @@ updated in that commit: and a host ARRIVING moves them the same way — 295 sinc
 **THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
 
 **21 HOSTS REFUSE THE TOKEN AND 237 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
---inventory` prints it on this tree: 103 files send a browser string; 18 reach at least one
-host that genuinely refuses the token, **63 reach only hosts that serve the token a full
+--inventory` prints it on this tree: 102 files send a browser string; 18 reach at least one
+host that genuinely refuses the token, **62 reach only hosts that serve the token a full
 page, and 22 more reach no host that refuses it** (one or more answered nothing or refused
 the `requests` stack); 277 of the 310 measured hosts are still reached by such a caller.
 **FIVE OF THOSE FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THE SWEEP** and the per-file
