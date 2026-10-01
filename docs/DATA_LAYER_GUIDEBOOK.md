@@ -1845,6 +1845,10 @@ trusted.
     "concept": "County governing body",
     "area": "New York State outside New York City",
     "counties": [],
+    "everyCounty": true,
+    "covers": [
+      "county-government"
+    ],
     "kind": "no-source",
     "layer": "county-legislature",
     "summary": "The County card names nobody. One county's legislature is drawn and its members named; in the other 56 outside the city the card tells you which county you are in and not who governs it.",
@@ -1857,6 +1861,9 @@ trusted.
     "concept": "City, town or village governing body",
     "area": "New York State outside New York City",
     "counties": [],
+    "covers": [
+      "local-government"
+    ],
     "kind": "no-source",
     "layer": "municipality",
     "summary": "Outside New York City the City or Town card names nobody. It tells you which city, town or village you are in, and not who sits on its board or council.",
