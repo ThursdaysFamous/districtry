@@ -515,6 +515,16 @@ def main():
             skipped.append((county, "the county's own district numbering has "
                                     "not been checked against this layer's"))
             continue
+        # The remap, plus its INVERSE: the card must print the number the
+        # county itself uses, not the one the layer happens to carry. Where the
+        # two disagree -- five of the six counties measured -- the layer's
+        # number names nothing a reader can check against a ballot, so it
+        # becomes an internal key and the county's own number is what ships.
+        # The remap, plus its INVERSE. The inverse ships beside the members
+        # rather than on them: the number the county itself uses is a property
+        # of the DISTRICT and not of the person, so it has no business inside a
+        # record the structural guard below keeps to a name and a party.
+        own = {checked["map"][d]: d for d in checked["map"]}
         keyed = {checked["map"][d]: n for d, n in keyed.items()}
 
         members = {}
@@ -567,6 +577,11 @@ def main():
         rec = {
             "county": county,
             "districts": members,
+            # THE NUMBER THE COUNTY ITSELF USES, keyed by the number this
+            # instance's layer carries. The layer's number is the join key and
+            # the file's key; the county's is what a reader can check against
+            # their own ballot, so it is what the card prints.
+            "countyNumbers": own,
             # The date the SCRAPE read this page, never this process's clock.
             # It is present on every county, read or preserved, because a
             # field that appears only on successfully-read counties is one
