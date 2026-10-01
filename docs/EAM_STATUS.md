@@ -46,7 +46,7 @@ different thing from one it failed.
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 13 levels |
 | ia | **EAM·** | 99 | 99/99 | 81 | 81 | all | 57 | all | 9 of 13 levels |
 | il | **EAM·** | 102 | 102/102 | 572 | 996 | all | 398 | all | 10 of 13 levels |
-| ky | **EAM·** | 120 | 120/120 § | 0 | 0 | by record | 7 | all | 3 of 13 levels |
+| ky | **EAM·** | 120 | 120/120 § | 0 | 0 | by record | 7 | all | 7 of 13 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 615 | all | 59 | all | 11 of 13 levels |
 | mn | **EAM·** | 87 | 87/87 § | 0 | 0 | by record | 7 | all | 5 of 13 levels |
 | ny | **EAM·** | 62 | 62/62 § | 16 | 16 | all | 29 | all | 8 of 13 levels |
@@ -98,20 +98,19 @@ this instance is in maintenance.
 
 ### ky — EAM·
 
-- **Examined by a statewide record:** `ky-county-officers`, `ky-fiscal-court` account for every county in the state, which is what Examined rests on here: 0 of 120 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Examined by a statewide record:** `ky-county-officers`, `ky-fiscal-court`, `ky-municipal-officeholders`, `ky-school-board-members` account for every county in the state, which is what Examined rests on here: 0 of 120 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ky-house-districts.json`, `ky-senate-districts.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 10 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 6 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 120 counties name a governing body
-  - **5. Municipal boundaries** — open
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 17 units at 25,000+ name a governing body; unanswered: Bowling Green city, Covington city, Elizabethtown city, Florence city, Frankfort city, Georgetown city, Henderson city, Hopkinsville city and 9 more
-  - **7. School district boundaries** — open
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
-  - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
+- **Does not apply here (2):** each one below is counted towards Covered by a stated fact rather than by work.
+  - **9. Townships or other general-purpose sub-county governments** — Kentucky has no sub-county general-purpose government — outside a city limit the county governs. The 493 sub-county units the Census publishes for Kentucky are Census County Divisions: statistical areas, not governments.
+  - **13. Tribal governments** — Kentucky has no tribal land. The Census publishes no federal or state reservation, no off-reservation trust land and no tribal statistical area anywhere in the state, measured 2026-10-01 with controls in North Carolina and Wisconsin.
 
 ### mi — EAM·
 

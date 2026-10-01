@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **232 distinct hosts** those files
-name, **43 are fetched by the browser**; the other 189 are links.
+makes from a link a reader clicks. Of **233 distinct hosts** those files
+name, **43 are fetched by the browser**; the other 190 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -127,7 +127,7 @@ prose.
 | ia | 0 | 20 |
 | mi | 0 | 18 |
 | mn | 6 | 13 |
-| ky | 0 | 4 |
+| ky | 4 | 8 |
 
 ### Where each layer's shapes come from
 

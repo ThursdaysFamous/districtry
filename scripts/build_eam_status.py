@@ -1516,19 +1516,34 @@ ANSWERS = {
         "state-legislature": answers("ky-senate", "ky-house"),
         "county-boundaries": answers("county"),
         "county-government": depth(),
-        "municipal-boundaries": OPEN,
+        "municipal-boundaries": answers("municipality"),
         "local-government": depth(),
-        "school-district-boundaries": OPEN,
+        # All three Census tilings, because Kentucky needs all three: measured
+        # 2026-10-01, 170 unified districts plus 4 elementary ones partition the
+        # state's land exactly (102,228.8 + 39.0 = 102,267.8 km2, which is the
+        # 120-county total from the same service), and 4 secondary districts run
+        # grades 9-12 over the same 39 km2. Shipping unified alone would answer
+        # "no school district" to every reader inside those four areas.
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary",
+            "school-district-secondary"),
         # Kentucky's own thread has confirmed that all four of its court levels
         # elect by district — Supreme Court, Court of Appeals, 57 circuits and 59
         # district-court districts — and that every one of those districts is a
         # set of whole counties written into statute, so the lines are buildable
         # from statute text and the county boundaries this app already ships.
         "courts-by-district": OPEN,
-        # Kentucky has no township tier at all, which is the standard's "the
-        # state does not have the level" case — but that is covered by a RECORD
-        # stating the fact, and no record states it yet.
-        "sub-county-government": OPEN,
+        # KENTUCKY HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT, which is the
+        # standard's "the state does not have the level" case. Measured
+        # 2026-10-01: the only sub-county units the Census publishes for
+        # Kentucky are 493 Census County Divisions, which are statistical areas
+        # drawn for tabulation and govern nobody, so there is no elected
+        # sub-county body to draw. Recorded in ky/CLAUDE.md with the method.
+        "sub-county-government": na(
+            "Kentucky has no sub-county general-purpose government — outside a "
+            "city limit the county governs. The 493 sub-county units the Census "
+            "publishes for Kentucky are Census County Divisions: statistical "
+            "areas, not governments."),
         # Kentucky owes these: its thread has confirmed every county school board
         # is elected by division, five per county from whole precincts, while its
         # independent school boards are elected at large and so are named rather
@@ -1536,14 +1551,23 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        # KENTUCKY'S OWN CHANGE CARRIES THIS LEVEL, not this one. Both threads
-        # measured the same fact on 2026-10-01 and reached the same answer, and
-        # Kentucky's measurement is the stronger of the two — six Census tribal
-        # classes against three, and controls in two states against one — so it
-        # is the record that ships, in the change where the rest of Kentucky's
-        # levels are settled. Leaving it out here also means neither change has
-        # to be resolved against the other over one line.
-        "tribal-government": OPEN,
+        # NO TRIBAL LAND IN KENTUCKY, measured 2026-10-01 against the Census
+        # AIANNHA service over an envelope covering the whole state: zero
+        # features in federal reservations, off-reservation trust lands, state
+        # reservations, tribal subdivisions, and the state- and
+        # tribal-designated statistical areas — six layers, all empty. RUN WITH
+        # CONTROLS, because a zero from a query is also what an error looks
+        # like: the same two layers return the Qualla Boundary over western
+        # North Carolina and eleven reservations over northern Wisconsin. So
+        # there is no tribal land here to draw, and this is the standard's
+        # "the state does not have the level" case rather than work not done.
+        # The fleet-wide tribal layer and its mandate stay the tribal thread's;
+        # this entry only records Kentucky's own measurement.
+        "tribal-government": na(
+            "Kentucky has no tribal land. The Census publishes no federal or "
+            "state reservation, no off-reservation trust land and no tribal "
+            "statistical area anywhere in the state, measured 2026-10-01 with "
+            "controls in North Carolina and Wisconsin."),
     },
     "ny": {
         "us-house": answers("congress"),

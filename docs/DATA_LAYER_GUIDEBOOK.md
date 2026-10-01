@@ -3101,44 +3101,70 @@ trusted.
     }
   ],
   "kentucky": [
-    {
-      "id": "ky-fiscal-court",
-      "concept": "County governing body",
-      "area": "Kentucky — all 120 counties",
-      "counties": [],
-      "everyCounty": true,
-      "kind": "no-source",
-      "layer": null,
-      "summary": "The districts your county's magistrates or commissioners are elected from are not on the map, and no card names them.",
-      "why": "Most Kentucky counties do not publish their district boundaries as map data, and the one statewide list of county officials does not say which district each person holds.",
-      "blocker": "MEASURED 2026-09-30, before this instance shipped, and the two halves are shut for different reasons. THE FORM IS SETTLED. Every county's governing body was censused from two certified elections apiece — the Secretary of State's own general and primary recap canvasses — and the two agreed in every county with no conflicts: 105 counties elect magistrates from magisterial districts (KRS 67.045), 13 elect three commissioners, and the two remaining are Jefferson, governed by the Louisville Metro Council under KRS 67C, and Fayette, by the Lexington-Fayette Urban County Council under KRS 67A. One county is unresolved and is the single open question: Pike's certified 2026 primary runs five numbered magisterial contests while the Department for Local Government lists three commissioners, so its own clerk is the person to ask. THE GEOMETRY IS THE BLOCKER. 27 counties publish magisterial district boundaries this project can read, each confirmed geometrically against TIGERweb, and that is a FLOOR rather than a total — no census of the remaining counties' GIS has been completed. The rest would have to be composed from whole precincts county by county, which is the shape Illinois's frontier work takes and is not a research question so much as bounded work. THE ROSTER IS PUBLISHED AND CARRIES NO DISTRICT. The Department for Local Government's county directory covers all 120 counties with 1,526 officials, 563 of them board members, 98% with a telephone number and 90% with an e-mail address — and no district number anywhere in it, so the join between a person and a district has to come from certified returns or from a county layer that carries its own roster. A COMMISSIONER COUNTY WILL SHIP DRAWN AND UNNAMED when its geometry arrives: KRS 67.060(1) elects each commissioner by the voters of the entire county, one from each district, so the district is a residence requirement rather than an electorate, which is the shape Iowa already handles by drawing the district, saying it is drawn for residence, and naming nobody on it.",
-      "wanted": "A magisterial or commissioner district boundary file for a county that does not publish one, or any source pairing a Kentucky county board member with the district they hold."
-    },
-    {
-      "id": "ky-legislature-roster",
-      "concept": "State legislators",
-      "area": "Kentucky — statewide",
-      "counties": [],
-      "kind": "no-source",
-      "layer": "ky-senate",
-      "summary": "Your Kentucky Senate and House cards name the district you are in and nobody who holds it.",
-      "why": "The General Assembly publishes both rosters and this app has not built them yet. The cards link each chamber's own member directory instead of naming a member it has not verified.",
-      "blocker": "NOT A REFUSAL AND NOT AN ABSENCE — UNBUILT, recorded so the silence on those two cards is legible rather than read as nobody publishing this. The General Assembly publishes a current member directory for the Senate and one for the House, both read cleanly by this project's own client, and robots.txt on that host allows it. What is missing is this instance's scraper and builder pair and its weekly workflow, which is the next roster change rather than a research question. Until it lands, both chamber cards enter the engine chamber factory's roster-miss path deliberately: district identity plus the chamber's official directory, never an invented name.",
-      "wanted": "Nothing from a reader — this one is ours to build."
-    },
-    {
-      "id": "ky-county-officers",
-      "concept": "County officers",
-      "area": "Kentucky — all 120 counties",
-      "counties": [],
-      "everyCounty": true,
-      "kind": "no-source",
-      "layer": "county",
-      "summary": "Your County card names the county and nobody who runs it — no judge-executive, no sheriff, no clerk, no attorney.",
-      "why": "The state does publish a list of every county's elected officials, and this app has not built it into a card yet.",
-      "blocker": "MEASURED 2026-09-30. This one is UNBUILT rather than unpublished, which makes it different from the same record in several sibling instances. The Department for Local Government publishes a page per county naming the judge-executive, the county attorney, the clerk, the sheriff, the jailer, the coroner, the surveyor and the board members, for all 120 counties — 1,526 officials, most with a telephone number and an e-mail address — and robots.txt on that host allows the pages this project would read. So the County card ships as identity only and links that directory, and the work is a scraper, a builder and a weekly workflow. The one thing the directory does not carry is a district number per board member, which is why the districts are a separate record (ky-fiscal-court) rather than part of this one.",
-      "wanted": "Nothing from a reader — this one is ours to build."
-    }
+      {
+          "id": "ky-fiscal-court",
+          "concept": "County governing body",
+          "area": "Kentucky — all 120 counties",
+          "counties": [],
+          "everyCounty": true,
+          "kind": "no-source",
+          "layer": null,
+          "summary": "The districts your county's magistrates or commissioners are elected from are not on the map, and no card names them.",
+          "why": "Most Kentucky counties do not publish their district boundaries as map data, and the one statewide list of county officials does not say which district each person holds.",
+          "blocker": "MEASURED 2026-09-30, before this instance shipped, and the two halves are shut for different reasons. THE FORM IS SETTLED. Every county's governing body was censused from two certified elections apiece — the Secretary of State's own general and primary recap canvasses — and the two agreed in every county with no conflicts: 105 counties elect magistrates from magisterial districts (KRS 67.045), 13 elect three commissioners, and the two remaining are Jefferson, governed by the Louisville Metro Council under KRS 67C, and Fayette, by the Lexington-Fayette Urban County Council under KRS 67A. One county is unresolved and is the single open question: Pike's certified 2026 primary runs five numbered magisterial contests while the Department for Local Government lists three commissioners, so its own clerk is the person to ask. THE GEOMETRY IS THE BLOCKER. 27 counties publish magisterial district boundaries this project can read, each confirmed geometrically against TIGERweb, and that is a FLOOR rather than a total — no census of the remaining counties' GIS has been completed. The rest would have to be composed from whole precincts county by county, which is the shape Illinois's frontier work takes and is not a research question so much as bounded work. THE ROSTER IS PUBLISHED AND CARRIES NO DISTRICT. The Department for Local Government's county directory covers all 120 counties with 1,526 officials, 563 of them board members, 98% with a telephone number and 90% with an e-mail address — and no district number anywhere in it, so the join between a person and a district has to come from certified returns or from a county layer that carries its own roster. A COMMISSIONER COUNTY WILL SHIP DRAWN AND UNNAMED when its geometry arrives: KRS 67.060(1) elects each commissioner by the voters of the entire county, one from each district, so the district is a residence requirement rather than an electorate, which is the shape Iowa already handles by drawing the district, saying it is drawn for residence, and naming nobody on it.",
+          "wanted": "A magisterial or commissioner district boundary file for a county that does not publish one, or any source pairing a Kentucky county board member with the district they hold."
+      },
+      {
+          "id": "ky-legislature-roster",
+          "concept": "State legislators",
+          "area": "Kentucky — statewide",
+          "counties": [],
+          "kind": "no-source",
+          "layer": "ky-senate",
+          "summary": "Your Kentucky Senate and House cards name the district you are in and nobody who holds it.",
+          "why": "The General Assembly publishes both rosters and this app has not built them yet. The cards link each chamber's own member directory instead of naming a member it has not verified.",
+          "blocker": "NOT A REFUSAL AND NOT AN ABSENCE — UNBUILT, recorded so the silence on those two cards is legible rather than read as nobody publishing this. The General Assembly publishes a current member directory for the Senate and one for the House, both read cleanly by this project's own client, and robots.txt on that host allows it. What is missing is this instance's scraper and builder pair and its weekly workflow, which is the next roster change rather than a research question. Until it lands, both chamber cards enter the engine chamber factory's roster-miss path deliberately: district identity plus the chamber's official directory, never an invented name.",
+          "wanted": "Nothing from a reader — this one is ours to build."
+      },
+      {
+          "id": "ky-county-officers",
+          "concept": "County officers",
+          "area": "Kentucky — all 120 counties",
+          "counties": [],
+          "everyCounty": true,
+          "kind": "no-source",
+          "layer": "county",
+          "summary": "Your County card names the county and nobody who runs it — no judge-executive, no sheriff, no clerk, no attorney.",
+          "why": "The state does publish a list of every county's elected officials, and this app has not built it into a card yet.",
+          "blocker": "MEASURED 2026-09-30. This one is UNBUILT rather than unpublished, which makes it different from the same record in several sibling instances. The Department for Local Government publishes a page per county naming the judge-executive, the county attorney, the clerk, the sheriff, the jailer, the coroner, the surveyor and the board members, for all 120 counties — 1,526 officials, most with a telephone number and an e-mail address — and robots.txt on that host allows the pages this project would read. So the County card ships as identity only and links that directory, and the work is a scraper, a builder and a weekly workflow. The one thing the directory does not carry is a district number per board member, which is why the districts are a separate record (ky-fiscal-court) rather than part of this one.",
+          "wanted": "Nothing from a reader — this one is ours to build."
+      },
+      {
+          "id": "ky-school-board-members",
+          "concept": "School board members",
+          "area": "Kentucky — statewide",
+          "counties": [],
+          "everyCounty": true,
+          "kind": "no-source",
+          "layer": "school-district-unified",
+          "summary": "Your school district cards name the district and nobody on its board.",
+          "why": "Kentucky elects county school boards by division and independent boards at large, and this app has built neither roster. The cards link the state's own district directory instead of naming anyone.",
+          "blocker": "MEASURED 2026-10-01, and the two halves of this are shut for different reasons. THE FORM IS SETTLED FROM PRIMARY LAW. KRS 160.210(1), effective 2026-04-14, reads: \"In independent school districts, the members of the school board shall be elected from the district at large. In county school districts, members shall be elected from divisions.\" Subsection (2) gives each county district five divisions built from \"integral voting precincts\" and (6) says flatly that no precinct may be redrawn or divided to accommodate a division line, so every division is a union of whole precincts — the composition route this project already used in Clark, Hancock and Gallatin, against a published precinct fabric of 3,193 precincts. KRS 160.211 goes further for the largest board in the state: it enumerates Jefferson County's five divisions as 643 distinct precinct codes, keyed to the Jefferson County Clerk's own codes as of 2026-03-19, which is a complete description with no map to read. Its one measured limit is in §(2) — a precinct the list omits is added by the county board of elections to a contiguous division, so the list is not guaranteed exhaustive. THE ROSTER HAS NO PUBLISHER FOUND. The Kentucky Department of Education publishes a district directory, read 2026-10-01, and nothing found there or elsewhere names a board member against the division they hold. NO DIVISION GEOMETRY PUBLISHER HAS BEEN FOUND EITHER: KRS 160.210(6) files a division change with the county board of education and the county board of elections under KRS Chapter 424 and names no central publisher. NOT YET ASKED and no ask is drafted — the Department of Education is the office to write to for the roster, and a county board of education for its own divisions. WHAT DOES SHIP from this measurement is the three school district BOUNDARY layers, which are the Census's and need nobody's permission; this record is about the people and the divisions, not the district outlines.",
+          "wanted": "Any source naming a Kentucky school board member against the division they were elected from, or a county's own division boundaries as map data."
+      },
+      {
+          "id": "ky-municipal-officeholders",
+          "concept": "City mayors and councils",
+          "area": "Kentucky — all 415 incorporated cities",
+          "counties": [],
+          "everyCounty": true,
+          "kind": "no-source",
+          "layer": "municipality",
+          "summary": "Your City card names the city and nobody who governs it — no mayor, no council member.",
+          "why": "The state's municipal directory answers one city at a time rather than publishing a list, and this app has not built a roster from it. The card links that directory instead of naming anyone.",
+          "blocker": "MEASURED 2026-10-01. THE DIRECTORY EXISTS AND IS NOT A ROSTER. The Department for Local Government publishes a municipal home page at kydlgweb.ky.gov/Cities/16_CityHome.cfm with a search by city name and by county; its robots.txt was read with this project's own client on 2026-10-01 and no rule in the one binding group matches that path, so the host permits it. What it does not offer is a downloadable list, so a roster here means a per-city read across 415 cities rather than one fetch, and whether every city's officials are carried, and how current each page is, has NOT been measured. THE BOUNDARIES ARE NOT THE PROBLEM: the 415 city outlines ship from the Census in the same change as this record. HOW EACH CITY IS GOVERNED IS ALSO NOT MEASURED — Kentucky cities run under statutory plans of government and which plan applies to a given city was not established here, so no card claims it. NOT YET ASKED and no ask is drafted; the Department for Local Government is the office to write to for a machine-readable list, and the Kentucky League of Cities is the obvious second place to try. The 17 cities above 25,000 people are the part of this that the fleet's own done standard requires first, and they are a bounded piece of work rather than a research question.",
+          "wanted": "A machine-readable list of Kentucky's city mayors and council members, from the state or from a city that publishes its own."
+      }
   ]
 }
 ```
