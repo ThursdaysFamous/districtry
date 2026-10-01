@@ -1383,6 +1383,23 @@ NO_TRIBAL_LAND_SF = (
     "return no feature intersecting the city's own shipped outline's extent, "
     "with a box over North Carolina's Qualla Boundary as the positive control.")
 
+# Measured 2026-10-01 by this app's own thread; the working is in ca/WATCH.md.
+SF_NO_COURT_DISTRICTS = (
+    "No court-district line falls inside San Francisco. California elects its "
+    "Supreme Court at large statewide, its Court of Appeal by appellate "
+    "district, and — Cal. Const. art. VI sec. 16 — its superior court judges "
+    "\"in their counties\". San Francisco is one consolidated city and county, "
+    "and it sits whole inside the twelve-county First Appellate District, so "
+    "both lines are the city's own edge.")
+
+SF_SCHOOL_BOARDS_AT_LARGE = (
+    "Neither San Francisco school board is elected by district. The San "
+    "Francisco Unified School District's seven commissioners and City College "
+    "of San Francisco's seven trustees are each elected by all of the "
+    "district's voters, so there is no district to draw; the standard's "
+    "at-large precedent is that naming the members is the whole answer, and "
+    "both bodies are the city-wide school tier the app already covers.")
+
 # Per instance, what answers each expected function. A tuple names the layer
 # ids; `depth(...)` is measured; OPEN is nothing yet; UNSETTLED is a question the
 # standard leaves to that state's thread.
@@ -1539,12 +1556,14 @@ ANSWERS = {
         # drawn by district and named, so there is no size to measure.
         "local-government": answers("supervisor-district"),
         "school-district-boundaries": na(CITY_INSTANCE),
-        # The standard places neither of these for San Francisco, and nothing
-        # here measured whether California elects its superior court judges by
-        # district or whether the city's school board is elected by district.
-        "courts-by-district": UNSETTLED,
+        # Both of these were left to this app's own thread and both are
+        # settled now, measured 2026-10-01 and written up in ca/WATCH.md.
+        # Neither is an absence anybody has to ask a publisher about: the
+        # level does not exist inside this city, which is the standard's
+        # "a state genuinely lacks a level" case.
+        "courts-by-district": na(SF_NO_COURT_DISTRICTS),
         "sub-county-government": na(CITY_INSTANCE),
-        "school-boards-by-district": UNSETTLED,
+        "school-boards-by-district": na(SF_SCHOOL_BOARDS_AT_LARGE),
         "precincts": answers("election-precinct"),
         "special-districts": answers("bart-director"),
         "tribal-government": na(NO_TRIBAL_LAND_SF),
@@ -2239,7 +2258,11 @@ def render(rows):
     out.append("")
     for r in rows:
         done = is_done(r)
-        out.append("### %s — %s" % (r["tag"], "**E.A.M.**" if done else letters(r)))
+        # The mark is four tests since 2026-10-01, and this heading is the one
+        # place it was still spelled with three. San Francisco is the first
+        # instance to pass all four, so it is the first run where the stale
+        # literal would have been read by anybody.
+        out.append("### %s — %s" % (r["tag"], "**E.A.M.C.**" if done else letters(r)))
         out.append("")
         if not r["scored"]:
             out.append("- **E and A do not apply.** %s" % NO_COUNTY_TIER[r["tag"]])
