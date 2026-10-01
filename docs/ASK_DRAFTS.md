@@ -152,6 +152,7 @@ which is a claim about the ask and never about the source.
 | Will County Clerk | none | first contact, correct |
 | Grundy County GIS | the county CLERK was written 2026-07-21; this is a different mailbox | first contact to this office, correct |
 | Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
+| Village of Bellevue Clerk (WI) | is the village board elected at large | none, checked rather than assumed | drafted 2026-10-01 from Wisconsin's own wording, after the county clerk endorsed asking the village ("Indeed. That's the place to start") |
 | Colona, Marion (IA) city clerks; Jones County Auditor; League of Wisconsin Municipalities; Lafayette (Cuba City) and Ozaukee (Port Washington) county clerks; Kentucky Administrative Office of the Courts; Burton (MI) clerk; City of Beloit clerk; City of Oshkosh clerk; WinGIS | none for any | first contact, correct |
 | seven apologies — Clinton, Franklin, and the four double-sent Iowa auditors | see above | drafted 2026-10-01; Dickinson's and Cass's already sent |
 | three Michigan corrections — Shelby, Northville and Ypsilanti townships | written to earlier the same day | drafted 2026-10-01 as replies on their own threads; Ypsilanti's sent 15:23 |
