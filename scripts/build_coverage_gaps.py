@@ -140,9 +140,27 @@ EVERY_COUNTY = "everyCounty"
 # it is true, and this gate refuses the claim while the dates do not support it.
 # The verdict can then only ever become true, and the arithmetic is still
 # measured rather than trusted.
+#
+# `pending` IS AN OUTCOME BECAUSE A SENT ASK HAS A STATE, and until 2026-10-01
+# it had nowhere to live: `outcome` was required and its three values were all
+# terminal, so a letter that had gone out and was waiting could not be written
+# down at all. The advice this gate printed — "leave the outcome off until it is
+# true" — described a record the gate itself refused. Michigan put its send
+# dates in `blocker` prose instead, which is the free-text state these fields
+# exist to end, and the day Adam sent about forty letters that became the
+# ordinary case rather than one state's workaround.
+#
+# A PENDING ASK NEVER FAILS BY THE CALENDAR AND NEVER EARNS CREDIT. The two are
+# the same rule read from either side: nothing about a pending ask may change
+# what a generated file says, because a document that moves by the date fails
+# `--check` on a morning nobody touched the tree. So the clock is computed and
+# PRINTED — days since the ask, days since the follow-up, whether either is ripe
+# — on this gate's own stdout, where a reader of the run sees it and no
+# committed byte depends on it. Turning `pending` into `unresponsive` stays a
+# thread's edit, which the dates below still have to support.
 COVERS = "covers"
 ASK = "ask"
-ASK_OUTCOMES = ("refused", "unresponsive", "answered")
+ASK_OUTCOMES = ("pending", "refused", "unresponsive", "answered")
 ASK_SILENCE_DAYS = 30
 
 # The three fields a voter reads, and the budget each gets. 240 characters is
@@ -386,8 +404,8 @@ def ask_problems(where, e):
         elif (today - followed).days < ASK_SILENCE_DAYS:
             problems.append(
                 "%s: %s claims `unresponsive` %d day(s) after its follow-up of "
-                "%s, and the standard asks for %d. Leave the outcome off until "
-                "it is true; this gate exists so the claim cannot be made early"
+                "%s, and the standard asks for %d. Record `pending` until it is "
+                "true; this gate exists so the claim cannot be made early"
                 % (where, ASK, (today - followed).days, followed,
                    ASK_SILENCE_DAYS))
     if outcome == "answered" and covers:
@@ -397,6 +415,49 @@ def ask_problems(where, e):
             "record the level as covered"
             % (where, ASK, COVERS, ", ".join(covers)))
     return problems
+
+
+def pending_ask_lines(entries):
+    """One line per ask that has been sent and is waiting, with its own clock.
+
+    PRINTED, NEVER WRITTEN. Everything here is derived from today's date, so it
+    cannot reach a committed file without making that file's drift check fail on
+    a morning nobody edited the tree — the trap `dropped_rings.py` records for a
+    ceiling recomputed every run, pointing the other way. Keeping the clock on
+    stdout gives a thread the arithmetic it would otherwise do by hand while
+    leaving every verdict where a person put it.
+
+    `ripe` says only that the dates now support the next step. It is an
+    invitation to go and look, not a verdict: the standard counts silence, and
+    an inbox nobody has checked is not silence.
+    """
+    today = datetime.date.today()
+    lines = []
+    for i, e in enumerate(entries):
+        ask = e.get(ASK)
+        if not isinstance(ask, dict) or ask.get("outcome") != "pending":
+            continue
+        where = e.get("id") or "entry %d" % i
+        asked = _iso(ask.get("asked"))
+        followed = _iso(ask.get("followedUp"))
+        if followed is not None:
+            days = (today - followed).days
+            left = ASK_SILENCE_DAYS - days
+            state = ("ripe for `unresponsive`" if left <= 0
+                     else "%d day(s) to go before `unresponsive`" % left)
+            lines.append(
+                "  ASK   %s: %s, followed up %s (%d day(s) ago) — %s"
+                % (where, ask.get("who"), followed, days, state))
+        elif asked is not None:
+            days = (today - asked).days
+            state = ("ripe for a follow-up" if days >= ASK_SILENCE_DAYS
+                     else "no follow-up sent yet")
+            lines.append("  ASK   %s: %s, asked %s (%d day(s) ago) — %s"
+                         % (where, ask.get("who"), asked, days, state))
+        else:
+            lines.append("  ASK   %s: %s, pending with no readable date"
+                         % (where, ask.get("who")))
+    return lines
 
 
 ASK_DRAFTS = os.path.join(REPO_ROOT, "docs", "ASK_DRAFTS.md")
@@ -690,6 +751,8 @@ def main():
                  % (len(shipped), len(payload)))
         for line in token_budgets(authored, entries):
             print(line)
+        for line in pending_ask_lines(entries):
+            print(line)
         print("build-coverage-gaps: OK — shipped file matches the guidebook "
               "(%s: %d gaps, %s; %d mapped to counties)"
               % (metro, len(entries), summary, mappable))
@@ -698,6 +761,8 @@ def main():
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(payload)
     for line in token_budgets(authored, entries):
+        print(line)
+    for line in pending_ask_lines(entries):
         print(line)
     print("build-coverage-gaps: wrote %s — %s: %d gaps (%s), %d mapped to "
           "counties, %d bytes"

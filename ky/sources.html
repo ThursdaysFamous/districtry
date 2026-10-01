@@ -1073,7 +1073,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">8 layers — 3 political and legislative, 3 schools, 2 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">12 layers — 7 political and legislative, 3 schools, 2 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#schools">Schools</a>
@@ -1081,7 +1081,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">7 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1100,6 +1100,28 @@ table.matrix code {
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">Kentucky — statewide.</td>
               </tr>
+              <tr id="layer-ky-supreme-court">
+                <th scope="row"><span class="layer-name">Supreme Court district</span><code>ky-supreme-court</code></th>
+                <td data-label="What it answers">The Supreme Court district covering the point. One justice is elected from each.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ky/scripts/build_ky_court_districts.py, following the county lists in KRS 21A.010 — no map is read and no publisher is asked, because the statute names the counties.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.</td>
+                <td data-label="Where it applies">Kentucky — statewide.</td>
+              </tr>
+              <tr id="layer-ky-court-of-appeals">
+                <th scope="row"><span class="layer-name">Court of Appeals district</span><code>ky-court-of-appeals</code></th>
+                <td data-label="What it answers">The Court of Appeals district covering the point. Two judges are elected from each.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">The Supreme Court district file, which this court shares by statute: KRS 22A.010(2) requires its districts to &quot;correspond in geographical dimensions to the districts of the Supreme Court&quot;. Built by ky/scripts/build_ky_court_districts.py.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.</td>
+                <td data-label="Where it applies">Kentucky — statewide.</td>
+              </tr>
               <tr id="layer-ky-senate">
                 <th scope="row"><span class="layer-name">Kentucky Senate District</span><code>ky-senate</code></th>
                 <td data-label="What it answers">The Kentucky Senate district covering the point.</td>
@@ -1109,6 +1131,28 @@ table.matrix code {
                   </ul>
                 </td>
                 <td data-label="Who it names">Not yet shipped. The card names the district and links the Kentucky Senate's own member directory; nobody is named rather than guessed. Recorded as the coverage gap ky-legislature-roster.</td>
+                <td data-label="Where it applies">Kentucky — statewide.</td>
+              </tr>
+              <tr id="layer-ky-circuit-court">
+                <th scope="row"><span class="layer-name">Circuit Court</span><code>ky-circuit-court</code></th>
+                <td data-label="What it answers">The judicial circuit covering the point. Kentucky's trial court of general jurisdiction.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">Dissolved from the shipped county fabric by ky/scripts/build_ky_court_districts.py, following the county lists in KRS 23A.020.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.</td>
+                <td data-label="Where it applies">Kentucky — statewide.</td>
+              </tr>
+              <tr id="layer-ky-district-court">
+                <th scope="row"><span class="layer-name">District Court</span><code>ky-district-court</code></th>
+                <td data-label="What it answers">The judicial district covering the point. Kentucky's limited-jurisdiction trial court.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">Dissolved from the shipped county fabric by ky/scripts/build_ky_court_districts.py, following the county lists in KRS 24A.030.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.</td>
                 <td data-label="Where it applies">Kentucky — statewide.</td>
               </tr>
               <tr id="layer-ky-house">
@@ -1248,6 +1292,50 @@ table.matrix code {
     },
     {
       "@type": "Dataset",
+      "@id": "https://districtry.com/ky/sources.html#dataset-ky-supreme-court",
+      "identifier": "ky-supreme-court",
+      "name": "Supreme Court district",
+      "description": "The Supreme Court district covering the point. One justice is elected from each. Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+      "url": "https://districtry.com/ky/sources.html#layer-ky-supreme-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/ky/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ky/scripts/build_ky_court_districts.py, following the county lists in KRS 21A.010 — no map is read and no publisher is asked, because the statute names the counties.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Kentucky — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ky/sources.html#dataset-ky-court-of-appeals",
+      "identifier": "ky-court-of-appeals",
+      "name": "Court of Appeals district",
+      "description": "The Court of Appeals district covering the point. Two judges are elected from each. Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+      "url": "https://districtry.com/ky/sources.html#layer-ky-court-of-appeals",
+      "isPartOf": {
+        "@id": "https://districtry.com/ky/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "The Supreme Court district file, which this court shares by statute: KRS 22A.010(2) requires its districts to \"correspond in geographical dimensions to the districts of the Supreme Court\". Built by ky/scripts/build_ky_court_districts.py.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Kentucky — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
       "@id": "https://districtry.com/ky/sources.html#dataset-ky-senate",
       "identifier": "ky-senate",
       "name": "Kentucky Senate District",
@@ -1261,6 +1349,50 @@ table.matrix code {
           "@type": "Dataset",
           "name": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Kentucky — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ky/sources.html#dataset-ky-circuit-court",
+      "identifier": "ky-circuit-court",
+      "name": "Circuit Court",
+      "description": "The judicial circuit covering the point. Kentucky's trial court of general jurisdiction. Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+      "url": "https://districtry.com/ky/sources.html#layer-ky-circuit-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/ky/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric by ky/scripts/build_ky_court_districts.py, following the county lists in KRS 23A.020.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Kentucky — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ky/sources.html#dataset-ky-district-court",
+      "identifier": "ky-district-court",
+      "name": "District Court",
+      "description": "The judicial district covering the point. Kentucky's limited-jurisdiction trial court. Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+      "url": "https://districtry.com/ky/sources.html#layer-ky-district-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/ky/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric by ky/scripts/build_ky_court_districts.py, following the county lists in KRS 24A.030.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
         }
       ],
       "spatialCoverage": {

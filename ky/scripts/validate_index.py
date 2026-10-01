@@ -95,8 +95,10 @@ MIN_REGISTER_LAYER = 4
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "ky-senate", "ky-house", "county", "school-district-unified",
-    "municipality", "school-district-elementary", "school-district-secondary",
+    "us-house", "ky-supreme-court", "ky-court-of-appeals", "ky-senate",
+    "ky-circuit-court", "ky-district-court", "ky-house", "county",
+    "school-district-unified", "municipality", "school-district-elementary",
+    "school-district-secondary",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -106,6 +108,9 @@ GEOMETRY_FILES = {
     "congress-districts.json": (6, 6),  # U.S. House districts, pre-built from TIGERweb Legislative layer 0.
     "ky-senate-districts.json": (38, 38),  # Kentucky Senate districts, pre-built by ky/scripts/build_legislative_boundaries.py (2,000-point agreement gate, plus the shared-outline gate against the other two chambers).
     "ky-house-districts.json": (100, 100),  # Kentucky House districts, pre-built by ky/scripts/build_legislative_boundaries.py. They do NOT nest inside the Senate districts, so there is no nesting gate here; the cross-layer gate is the shared state outline.
+    "ky-supreme-court-districts.json": (7, 7),  # The 7 Supreme Court districts of KRS 21A.010, dissolved from the county fabric. The Court of Appeals layer draws this same file: KRS 22A.010(2) gives it the Supreme Court's districts.
+    "ky-circuit-court-districts.json": (57, 57),  # The 57 judicial circuits of KRS 23A.020, dissolved from the county fabric.
+    "ky-district-court-districts.json": (59, 59),  # The 59 judicial districts of KRS 24A.030, dissolved from the county fabric. A second version is already enacted for 2031-01-01, taking it to 58; WATCH.md carries the row.
 }
 
 # file -> minimum key count (officeholder rosters).

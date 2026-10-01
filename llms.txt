@@ -40,7 +40,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 
 Counties, towns and villages, school and judicial districts across the state, plus the city's boroughs, Council and community districts, NYPD precincts and school zones.
 
-- [New York district lookup](https://districtry.com/ny/): 35 layers, statewide, 5 boroughs in depth.
+- [New York district lookup](https://districtry.com/ny/): 37 layers, statewide, 5 boroughs in depth.
 - [Who is my borough president?](https://districtry.com/ny/borough.html)
 - [What community board am I in?](https://districtry.com/ny/community-board.html)
 - [Who is my U.S. representative?](https://districtry.com/ny/congress.html)
@@ -115,7 +115,7 @@ All 87 counties: townships and cities, school districts, ZIP codes, and the near
 
 All 120 counties: the county a point sits in, and the Kentucky Senate, House and U.S. House districts — with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the fiscal courts, and the Data gaps panel says why.
 
-- [Kentucky district lookup](https://districtry.com/ky/): 8 layers, all 120 counties.
+- [Kentucky district lookup](https://districtry.com/ky/): 12 layers, all 120 counties.
 - [Who is my U.S. representative?](https://districtry.com/ky/congress.html)
 - [Sources & data layers](https://districtry.com/ky/sources.html)
 - [Kentucky district questions](https://districtry.com/ky/faq.html)

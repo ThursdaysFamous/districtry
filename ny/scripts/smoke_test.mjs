@@ -58,7 +58,7 @@ const OFFLINE = ["judicial-district", "county", "nys-school-district", "municipa
 const EXPECT_DISTRICT = { "judicial-district": "3", "county": "Albany", "nys-school-district": "ALBANY", "municipality": "Albany" };
 const NEGATIVE_POINT = "41.76370,-72.68510"; // Downtown Hartford, Connecticut — outside New York State and 66 km from the nearest geometry this instance ships. NOT a water point: the county, school-district, cities-towns, villages and three legislative files are all water-inclusive off Long Island and in Lake Ontario, so a mid-Sound or mid-lake click is positive, not negative
 const APP_NAME = "districtry New York";
-const EXPECT_LAYERS = 35; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
+const EXPECT_LAYERS = 37; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
 // ==== GENERATED:END smoke-config ====
 const POINT2 = "40.69354,-73.98963"; // Brooklyn Borough Hall (Brooklyn) — the re-classify hop stays fork test code
 // THE CITY GROUND TRUTH SURVIVES THE GO-LIVE AS FORK TEST CODE. The worksheet's
@@ -448,6 +448,69 @@ try {
       check(`county-legislature stays hidden at ${where}`,
         !shown.card && !shown.toggle, JSON.stringify(shown));
       await context.close();
+    }
+  }
+
+  // 2d. THE SPECIAL-DISTRICT TIER'S FIRST COUNTY. fire-district and
+  //     library-district are two dispatched concepts with one entry each, and
+  //     they make the same two claims the county tier does: each ANSWERS inside
+  //     Sullivan and each is coverage-HIDDEN everywhere else. The hidden half is
+  //     again the one worth having, because a broken county test would show a
+  //     "Fire District" toggle to a reader in Albany whose fire district this app
+  //     cannot answer for at all.
+  //
+  //     THE DISTRICT NAMES ARE COMPARED AGAINST THE SHIPPED FILES rather than
+  //     pinned as literals, for the Tompkins reason one step further on: a town
+  //     can alter or dissolve a fire district at any time on petition, so a
+  //     pinned name would go red on a real change that is not a regression,
+  //     while pinning nothing would let a broken card pass. The POINT is a
+  //     literal, because it is in the middle of Monticello.
+  //
+  //     IT ALSO ASSERTS THE CARD NAMES NOBODY, which is a claim about honesty
+  //     rather than about plumbing: nothing published names a Sullivan fire
+  //     commissioner or library trustee, so the card has to say so. A card that
+  //     started naming people would mean a roster had been joined from
+  //     somewhere, which is exactly the change a person should read first.
+  {
+    const MONTICELLO = "41.6553,-74.6896";       // the middle of Monticello, Sullivan County
+    for (const [layer, file, label] of [
+      ["fire-district", "data/app/sullivan-fire-districts.json", "fire"],
+      ["library-district", "data/app/sullivan-library-districts.json", "library"]]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${MONTICELLO}&layers=${layer}`);
+      const card = await cardText(page, layer);
+      const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, file), "utf8"));
+      const named = shipped.features
+        .map((f) => f.properties.name)
+        .filter((name) => card.text.includes(name));
+      check(`${layer} answers inside Sullivan County and names a district the shipped file carries`,
+        !card.error && named.length === 1, `${named.join(", ") || "none"} | ${card.text.slice(0, 70)}`);
+      check(`the ${label}-district card names nobody, because nothing published names them`,
+        /names none rather than guessing/.test(card.text), card.text.slice(-80));
+      check(`the ${label}-district card credits the county's own GIS`,
+        /Sullivan County Real Property Services/.test(card.text), card.text.slice(-70));
+      await context.close();
+    }
+  }
+  {
+    // hidden where no county in either table covers the point: the upstate
+    // anchor, which is in Albany County, and inside the city.
+    for (const layer of ["fire-district", "library-district"]) {
+      for (const [where, pt] of [["the upstate anchor, outside Sullivan", POINT],
+                                 ["New York City", NYC_POINT]]) {
+        const context = await browser.newContext({ serviceWorkers: "block" });
+        const page = await booted(context, `${BASE}#point=${pt}&layers=${layer}`);
+        const shown = await page.evaluate((id) => {
+          const card = document.getElementById("card-" + id);
+          const block = card && card.closest(".layer-block");
+          const toggle = document.querySelector('[data-layer="' + id + '"]');
+          const visible = (el) => !!el && !el.hidden && el.offsetParent !== null;
+          return { card: visible(block), toggle: visible(toggle) };
+        }, layer);
+        check(`${layer} stays hidden at ${where}`,
+          !shown.card && !shown.toggle, JSON.stringify(shown));
+        await context.close();
+      }
     }
   }
 
