@@ -93,7 +93,7 @@ the member, and this instance names none.
 - Metro: Kentucky (`kentucky`) — https://districtry.com/ky/
 - Geocoders: address Photon (Kentucky-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Kentucky-bounded, serial >=1s queue)
 - Ground truth: 38.25270,-85.75850 (downtown Louisville, Jefferson County) → county Jefferson County; us-house 3; ky-senate 33; ky-house 43. Negative point 36.40000,-86.50000 (inside Sumner County, TENNESSEE, about 15 km south of the Kentucky line and north-east of Nashville — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (minLat 36.35) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-09-30: TIGERweb's county layer names Sumner County STATE 47 (control: the anchor returns Jefferson County STATE 21), and no outline in fleet-outlines.json contains it (control: the Louisville anchor is likewise in none of them, so the file genuinely has no Kentucky coverage rather than the test passing vacuously). TENNESSEE RATHER THAN ONE OF THE OTHER SIX NEIGHBOURS, deliberately. Illinois is live and borders Kentucky across the Ohio, so a point over there would sit inside an instance's own outline and the browser would hand the selection off to districtry.com/il/ and navigate away — which is how Minnesota's first candidate failed, silently, as a smoke-test timeout on a blank document rather than as a wrong answer. Indiana and North Carolina are in build as dark instances and will become live outlines, so they were avoided for the same reason one step ahead. Tennessee is in no instance and in no launch plan. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.).
-- Layers: 8 registered (political 3, schools 3, geography 2); `registerLayer(` floor 4. Debug namespace `window.KentuckyExplorer`.
+- Layers: 12 registered (political 7, schools 3, geography 2); `registerLayer(` floor 4. Debug namespace `window.KentuckyExplorer`.
 - Scheduled workflows: `update-ky-congress-roster.yml` (Mon 13:55 UTC).
 - Source registry: `ky/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -317,15 +317,18 @@ Boundary over western North Carolina and eleven reservations over northern Wisco
 fleet-wide tribal layer and the 2026-09-29 mandate behind it remain the tribal thread's; this
 records Kentucky's own measurement and nothing else.
 
-**WHAT IS STILL OPEN, AND WHICH IS CHEAPEST.** Six levels: the county governing body, the 17
-cities above 25,000 people, courts by district, school boards by division, election precincts
-and special districts. **The court districts are the one that needs no publisher at all** —
-every judicial district in Kentucky is a list of whole counties written into statute and this
-instance already ships a 120-feature county fabric, so all four tiers dissolve offline from
-text. `ky/data/source/statutes/` holds the sections, with the one limitation that the exact PDF
-route they were fetched from was not recorded and was not recovered afterwards.
+**WHAT WAS STILL OPEN AT THAT POINT, AND WHICH WAS CHEAPEST.** Six levels: the county
+governing body, the 17 cities above 25,000 people, courts by district, school boards by
+division, election precincts and special districts. **The court districts were the one that
+needed no publisher at all** — every judicial district in Kentucky is a list of whole counties
+written into statute and this instance already ships a 120-feature county fabric, so all four
+tiers dissolve offline from text. `ky/data/source/statutes/` holds the sections, with the one
+limitation that the exact PDF route they were fetched from was not recorded and was not
+recovered afterwards. **That level is closed** — the four court layers shipped the same day, in
+the section below — so five remain: the county governing body, the 17 cities, school boards by
+division, election precincts and special districts.
 
-## Two concepts measured 2026-10-01, both from primary law, neither built
+## Two concepts measured 2026-10-01 from primary law — the courts were then built, the school divisions were not
 
 Asked for by the fleet's fourth done-standard test. Each was read out of the statute or the
 constitution itself, through `scraper_common.require_robots_once` with the client that fetched
@@ -394,6 +397,68 @@ answer — the `web.archive.org` pattern — and it wants a runner measurement. 
 division GEOMETRY has been found for any county**, which is an open question and not a measured
 refusal: KRS 160.210(6) requires changes to be filed with the county board of education and the
 county board of elections and published under KRS Chapter 424, and names no central publisher.
+
+## The four court layers, dissolved from statute 2026-10-01
+
+Kentucky's eighth Covered level closed with no publisher asked and no map traced.
+`ky/scripts/build_ky_court_districts.py` reads the three statutory county lists out of
+`ky/data/source/statutes/` and dissolves this instance's own shipped 120-county fabric into
+**7 Supreme Court districts** (KRS 21A.010), **57 judicial circuits** (KRS 23A.020) and **59
+judicial districts** (KRS 24A.030). The **Court of Appeals** layer is the fourth registration
+and ships no file of its own, because KRS 22A.010(2) says its districts "correspond in
+geographical dimensions to the districts of the Supreme Court" — so it reads the Supreme Court
+loader rather than carrying a second copy of one geometry.
+
+**EACH TILING PARTITIONS THE 120 COUNTIES EXACTLY ONCE, AND THAT IS THE GATE RATHER THAN A
+NOTE.** `check_partition()` fails on a county name the fabric does not carry, a county claimed
+by two units, or a county claimed by none; the dissolve then gates its own arithmetic, the
+merged area against the sum of its parts, at 1e-9 relative. Measured on the full state the
+drift is at most 2.23e-15, each tiling reproduces the whole-state county footprint, and each
+comes out in **2 parts** — which is the Kentucky Bend arriving independently for a third time,
+after `build_metro_outline.py` and the outline itself. Nothing was simplified after dissolving:
+`state-counties.json` is already simplified, so cancelling interior borders adds no vertex and
+re-simplifying would have moved lines the statute does not move.
+
+**`--check` IS STDLIB-ONLY SO IT CAN RUN IN AN ORDINARY CI STEP**, where the build path needs
+shapely. It re-derives each unit's area spherically from the shipped rings and fails above 1e-6
+against the counties it names, then asserts the already-enacted 2031 text separately:
+`check_2031()` requires 58 units and exactly the four county moves the statute makes — Edmonson
+38 → 8, Marshall 58 → 42, Cumberland and Monroe into the 58th. **It was negative-tested two
+ways** (a county moved in a shipped file, and two units' geometries swapped) and caught both,
+so the gate is not vacuous. What it CANNOT see is an amendment: it reads snapshotted statute
+text, so a regular session that redraws a circuit leaves every gate green. That is why
+`ky/WATCH.md` carries a session-cadence row for these three files rather than relying on the
+gate.
+
+**TWO SILENT PARSING TRAPS ARE RECORDED IN THE BUILDER BECAUSE BOTH REPORTED A PLAUSIBLE
+ANSWER.** The district-court statute's own TITLE line reads "(Effective until January 1,
+2031)", so cutting the history block at the first occurrence of the word "Effective" threw the
+entire body away and returned ZERO units without raising — the cut is by LINE now, and the
+builder fails loudly on zero paragraphs. And a round ten is spelled one word by two different
+rules, Twentieth and Thirtieth keeping the tens stem where Fortieth and Fiftieth drop a letter,
+so the ordinals are a table rather than a derivation; every paragraph's ordinal WORD is checked
+against its own number.
+
+**NO JUDGE IS NAMED, AND THAT SILENCE IS ITS OWN RECORD** (gap `ky-judges`). The geometry is
+settled and the JOIN is missing: nothing published pairs a sitting judge with the district they
+were elected from. Unlike Illinois, where a judge is elected from a subcircuit and then sits
+circuit-wide so no judge belongs to the subcircuit, a Kentucky judge is elected from the
+circuit they sit in — so Kentucky CAN name judges once that join exists. The record names the
+Administrative Office of the Courts as the body to ask and says plainly that it has NOT YET
+been asked.
+
+**SEAT COUNTS ARE STATED ONLY WHERE THEY WERE MEASURED.** The Supreme Court card says one
+justice per district (KRS 21A.020 elects per district) and the Court of Appeals card says two
+judges per district (KRS 22A.010(1), verbatim). The circuit and district cards state NO number,
+because judges-per-circuit was not extracted — an absent number is honest where a guessed one
+is not.
+
+**THE COURT LAYERS SEND NOTHING ABOUT A READER'S POINT.** They are same-origin files answered
+in the browser, so `point-transmission.json` re-run on 2026-10-01 still measures Kentucky at
+four point-first layers — the city and the three school tilings — with the four court layers
+holding no hook and every other instance's figures byte-identical to the committed artifact.
+Adding them still forced the probe to re-run, because the privacy page refuses to publish once
+an app's layer id list has moved.
 
 ## Growing this instance
 

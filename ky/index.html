@@ -8370,7 +8370,11 @@ function initKentuckyExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 6 congressional districts — the largest districts Kentucky carries below the state itself
+    "ky-supreme-court",  // 7 districts of whole counties — the largest districts Kentucky carries below its congressional map
+    "ky-court-of-appeals", // the same 7 districts as the Supreme Court, which KRS 22A.010(2) requires, so this layer draws that file
     "ky-senate",         // 38 Senate districts; they do not nest with the House, so the two chambers are independent tilings of the state
+    "ky-circuit-court",  // 57 circuits of whole counties, so smaller than a State Senate district and larger than a district court
+    "ky-district-court", // 59 districts of whole counties, Kentucky's smallest court tiling
     "ky-house",          // 100 House districts, drawn independently of the 38 Senate districts
     "county",            // 120 counties, pre-built from TIGERweb; this instance's offline anchor layer, and smaller on average than a House district
     "school-district-unified", // 170 districts covering all but 39 km2 of Kentucky, live from TIGERweb (no data/app file) — 601 km2 mean feature area, just under a county
@@ -12650,6 +12654,208 @@ function initKentuckyExplorer() {
     }
   });
 
+  /* ---------- 7. The four courts — three dissolved county tilings ----------
+   * EVERY KENTUCKY JUDGE IS ELECTED FROM A DISTRICT MADE OF WHOLE COUNTIES,
+   * and the statute names the counties, so these four layers need no publisher
+   * and no map read: ky/scripts/build_ky_court_districts.py parses the text
+   * retained in data/source/statutes/ and dissolves the county fabric this
+   * instance already ships. Const. §117 is the rule — justices and judges of
+   * the Supreme Court, Court of Appeals, Circuit and District Court "shall be
+   * elected from their respective districts or circuits on a nonpartisan
+   * basis."
+   *
+   * THREE FILES ANSWER FOUR COURTS, by statute rather than to save bytes:
+   * KRS 22A.010(2) gives the Court of Appeals the Supreme Court's own
+   * districts, so its layer draws that same file. Measured 2026-10-01, each
+   * tiling partitions all 120 counties exactly once — no county in two courts,
+   * none left out — which the builder gates on every run and its offline
+   * --check re-derives from the shipped bytes.
+   *
+   * MEAN AREAS, measured, which is what put these four where they sit in the
+   * area rank: Supreme Court and Court of Appeals 14,943 km2, circuit 1,835,
+   * district 1,773 — so the appellate pair sits under the U.S. House and above
+   * the State Senate, and the two trial tilings between the Senate and the
+   * State House.
+   *
+   * NO JUDGE IS NAMED. The Court of Justice publishes its judges, and nothing
+   * this project has found pairs a sitting judge with the district or circuit
+   * the judge was elected from, so every one of these cards names nobody and
+   * links the court's own directory. Recorded as the coverage gap ky-judges.
+   *
+   * KENTUCKY IS NOT ILLINOIS HERE, and the difference is why these cards can
+   * one day name a judge where Illinois's subcircuit card never will: a
+   * Kentucky judge sits in the circuit they were elected from, while an
+   * Illinois judge is elected from a subcircuit and then serves the whole
+   * circuit, so no judge belongs to the subcircuit at all.
+   *
+   * A DIVISION IS NOT A PLACE. A multi-judge circuit's numbered divisions (KRS
+   * 23A.040 and the sections after it) are SEATS elected by the whole circuit,
+   * with no geometry of their own, so nothing here draws one. The word means
+   * real geography only on a school board.
+   * ---------- */
+  var loadSupremeCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-supreme-court-districts.json", {}, 2);
+  });
+  var loadCircuitCourts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-circuit-court-districts.json", {}, 2);
+  });
+  var loadDistrictCourts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-district-court-districts.json", {}, 2);
+  });
+
+  var KY_COURT_DIRECTORY = "https://www.kycourts.gov/Courts/Pages/default.aspx";
+
+  // "Ballard, Carlisle, Fulton and Hickman Counties" — the county list a card
+  // prints under its own unit number, so a reader can see what the statute
+  // grouped without opening it.
+  function kyCountyPhrase(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  function kyCourtUnit(feature) {
+    var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+    return unit == null ? null : String(unit);
+  }
+
+  function kyCourtHover(word) {
+    return function (feature) {
+      var unit = kyCourtUnit(feature);
+      return unit == null ? null : word + " " + unit;
+    };
+  }
+
+  function kyCourtQuery(load) {
+    return function (point, seq) {
+      return queryFeatureAt(load, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          unit: kyCourtUnit(feature),
+          counties: findPropCI(props, ["counties"]),
+          authority: findPropCI(props, ["authority"])
+        };
+      });
+    };
+  }
+
+  // opts: { word, seats, bench } — `word` names one unit, `seats` says how many
+  // judges that unit elects (omitted where this project has not measured it),
+  // and `bench` is the one-line description of what the court does.
+  function kyCourtCard(opts) {
+    return function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null
+          ? opts.word + " " + result.unit
+          : "Unknown " + opts.word.toLowerCase(),
+        note: kyCountyPhrase(result.counties)
+      }));
+      var rows = [{
+        label: opts.seats ? "Judges" : "Judge",
+        value: "Not named here. " + (opts.seats ? opts.seats + " " : "") +
+          "This app does not yet carry a roster of Kentucky's judges, and no " +
+          "source it has found says which district or circuit a sitting judge " +
+          "was elected from, so it names nobody rather than guessing."
+      }, {
+        label: "The court",
+        value: opts.bench
+      }];
+      if (result.authority != null) {
+        rows.push({ label: "Drawn by", value: String(result.authority) });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    };
+  }
+
+  function kyCourtLink() {
+    return { label: "Kentucky Court of Justice", url: KY_COURT_DIRECTORY };
+  }
+
+  registerLayer({
+    id: "ky-supreme-court",
+    group: "political",
+    label: "Supreme Court District",
+    overlay: {
+      load: loadSupremeCourtDistricts,
+      style: { color: "#5B3A8E", weight: 2, fillColor: "#7C5CB8", fillOpacity: 0.05 }
+    },
+    hoverName: kyCourtHover("Supreme Court District"),
+    query: kyCourtQuery(loadSupremeCourtDistricts),
+    render: kyCourtCard({
+      word: "Supreme Court District",
+      seats: "One justice is elected from each district, for an eight-year term.",
+      bench: "Kentucky's highest court. Seven justices, one from each of these districts."
+    }),
+    primaryLink: kyCourtLink
+  });
+
+  registerLayer({
+    id: "ky-court-of-appeals",
+    group: "political",
+    label: "Court of Appeals District",
+    overlay: {
+      // The same ground as the Supreme Court, which is the statute's own
+      // instruction, so the two overlays coincide on purpose.
+      load: loadSupremeCourtDistricts,
+      style: { color: "#2F5D8A", weight: 1.5, fillColor: "#4A80B5", fillOpacity: 0.05, dashArray: "4 3" }
+    },
+    hoverName: kyCourtHover("Court of Appeals District"),
+    query: kyCourtQuery(loadSupremeCourtDistricts),
+    render: kyCourtCard({
+      word: "Court of Appeals District",
+      seats: "Two judges are elected from each district.",
+      bench: "Kentucky's intermediate appellate court. Fourteen judges, two " +
+        "from each district, and its districts are the Supreme Court's by " +
+        "statute rather than a map of its own."
+    }),
+    primaryLink: kyCourtLink
+  });
+
+  registerLayer({
+    id: "ky-circuit-court",
+    group: "political",
+    label: "Circuit Court",
+    overlay: {
+      load: loadCircuitCourts,
+      style: { color: "#8A5A2F", weight: 1.5, fillColor: "#B5834A", fillOpacity: 0.05 }
+    },
+    hoverName: kyCourtHover("Circuit"),
+    query: kyCourtQuery(loadCircuitCourts),
+    render: kyCourtCard({
+      word: "Judicial Circuit",
+      // How many judges a given circuit elects is set elsewhere in KRS 23A and
+      // was not measured here, so no number is claimed.
+      bench: "Kentucky's trial court of general jurisdiction — felonies, " +
+        "larger civil cases, divorce and adoption."
+    }),
+    primaryLink: kyCourtLink
+  });
+
+  registerLayer({
+    id: "ky-district-court",
+    group: "political",
+    label: "District Court",
+    overlay: {
+      load: loadDistrictCourts,
+      style: { color: "#2F7A6A", weight: 1.5, fillColor: "#4AA893", fillOpacity: 0.05, dashArray: "3 3" }
+    },
+    hoverName: kyCourtHover("District"),
+    query: kyCourtQuery(loadDistrictCourts),
+    render: kyCourtCard({
+      word: "Judicial District",
+      bench: "Kentucky's limited-jurisdiction trial court — misdemeanours, " +
+        "traffic, small claims, juvenile and probate."
+    }),
+    primaryLink: kyCourtLink
+  });
+
   /* =========================================================================
    * GROWING THIS INSTANCE — docs/EXPANSION_GUIDE.md Part 3 (deepening a
    * state) and Part 4 (a new concept). Next: the fiscal court's magisterial
@@ -14145,7 +14351,12 @@ function initKentuckyExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
+  // The four courts sit after the two legislatures and before the services:
+  // representation first, and a judge elected from a district is
+  // representation, highest court first.
   var LAYER_SIDEBAR_RANK = ["us-house", "ky-senate", "ky-house",
+    "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
+    "ky-district-court",
     "school-district-unified", "school-district-elementary",
     "school-district-secondary", "county", "municipality"];
   (function applySidebarRank() {
@@ -14610,9 +14821,11 @@ function initKentuckyExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#14503A": "#5AA485", "#1F6F4A": "#5ABE8B",
-    "#2E7D5B": "#63C99A", "#3E9E72": "#65E3A8", "#41B6E6": "#B3E6FF", "#444B54": "#8F99A6",
-    "#4A2E8C": "#9879FA", "#6B7280": "#ACB6C9", "#7FC4A3": "#A0FBD0", "#8C2E4A": "#F06F91",
-    "#B0316E": "#FE80B4", "#D06A9C": "#FEB3D4"};
+    "#2E7D5B": "#63C99A", "#2F5D8A": "#6BA9E7", "#2F7A6A": "#64C5AF", "#3E9E72": "#65E3A8",
+    "#41B6E6": "#B3E6FF", "#444B54": "#8F99A6", "#4A2E8C": "#9879FA", "#4A80B5": "#87C3FE",
+    "#4AA893": "#6DE9CD", "#5B3A8E": "#AB81F4", "#6B7280": "#ACB6C9", "#7C5CB8": "#BFA2FE",
+    "#7FC4A3": "#A0FBD0", "#8A5A2F": "#DF9D64", "#8C2E4A": "#F06F91", "#B0316E": "#FE80B4",
+    "#B5834A": "#FEBC70", "#D06A9C": "#FEB3D4"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
