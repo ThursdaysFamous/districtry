@@ -37,7 +37,7 @@ import sys
 
 import requests
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
-    UA_CHROME_WIN_126,
+    UA_ROSTER_BOT,
     require_robots_once,
 )
 
@@ -49,7 +49,7 @@ MAP_HREF_RE = re.compile(
     r"%20%26%20precincts%20map\.pdf)\"", re.I)
 
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 60
 

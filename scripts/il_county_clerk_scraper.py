@@ -54,11 +54,11 @@ from datetime import datetime, timezone
 
 import requests
 from bs4 import BeautifulSoup
-from scraper_common import UA_CHROME_WIN_124, require_robots_allowed  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import UA_ROSTER_BOT, require_robots_allowed  # noqa: E402  (shared machinery — do not fork)
 
 URL = "https://www.elections.il.gov/ElectionOperations/ElectionAuthorities.aspx"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_124,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 40
 

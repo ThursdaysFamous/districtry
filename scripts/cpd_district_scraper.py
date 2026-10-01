@@ -60,12 +60,12 @@ from datetime import datetime, timezone
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from scraper_common import require_robots_once, UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://www.chicagopolice.org"
 FINDER_PATH = "/police-districts/find-your-district/"
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_124,
+    "User-Agent": UA_ROSTER_BOT,
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
 }

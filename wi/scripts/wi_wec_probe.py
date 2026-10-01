@@ -75,6 +75,11 @@ import os
 import re
 import sys
 import time
+
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
+                                "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
 from datetime import datetime, timezone
 from urllib.parse import urljoin
 
@@ -149,7 +154,16 @@ def page_title(html):
 
 
 def plain_fetch(session, url):
-    """Rung 1: the plain-HTTP client. Returns (record, html_when_cleared)."""
+    """Rung 1: the plain-HTTP client. Returns (record, html_when_cleared).
+
+    THE HOST'S RULES ARE READ FIRST, with the identity this probe sends.
+    Measured from a GitHub runner on 2026-10-01, three of this file's four hosts
+    publish a policy permitting the paths it reads. The fourth,
+    badgersheriffs.com, has NO DNS RECORD AT ALL, so its robots.txt is
+    unreachable and RFC 9309 2.3.1.4 disallows — which is the right answer for a
+    domain that no longer exists, and the seam stops this probe at it.
+    """
+    require_robots_once(url, UA, headers=HEADERS, label="wi-wec-probe")
     rec = {"engine": "requests"}
     try:
         resp = session.get(url, headers=HEADERS, timeout=30)
