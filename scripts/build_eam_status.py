@@ -1611,7 +1611,15 @@ ANSWERS = {
         "us-house": answers("congress"),
         "state-legislature": answers("state-senate", "state-assembly"),
         "county-boundaries": answers("county", "borough"),
-        "county-government": depth("county-legislature"),
+        # TWO LAYERS, ONE LEVEL, because New York's counties are governed in
+        # two forms and the app answers both: a county that elects a legislature
+        # from districts, and a county governed by a board of supervisors, where
+        # the county board seat IS the town or city and the supervisor who runs
+        # your town is the one who votes for you at the county. Measuring the
+        # depth over both is what keeps the figure honest either way — a county
+        # of either form counts once when it is answered and not at all when it
+        # is not.
+        "county-government": depth("county-legislature", "county-supervisor"),
         "municipal-boundaries": answers("municipality", "village"),
         "local-government": depth("council"),
         "school-district-boundaries": answers("nys-school-district", "nys-central-hs-district"),
