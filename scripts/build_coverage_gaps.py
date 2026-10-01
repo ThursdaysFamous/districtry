@@ -57,6 +57,7 @@ Usage:
 """
 
 import argparse
+import datetime
 import json
 import os
 import re
@@ -108,6 +109,41 @@ FIELD_ORDER = ("id", "kind", "concept", "area", "layer", "counties",
 # each run, and reports per-county coverage separately, so a statewide
 # declaration cannot quietly stand in for county-by-county work.
 EVERY_COUNTY = "everyCounty"
+
+# `covers` AND `ask` ARE HOW A RECORD EARNS CREDIT UNDER THE FOURTH TEST, and
+# both are maintainer fields: neither is in FIELD_ORDER, so neither ships to a
+# reader. `docs/DONE_STANDARD.md` lets a written record stand in for a level the
+# app cannot answer, but only once somebody was actually asked — and until these
+# fields existed nothing in a record said WHICH level it covered or WHICH ask it
+# rested on, so `build_eam_status.py` credited none of them and every count it
+# published was a floor.
+#
+# `covers` names the expected levels, by the key `build_eam_status.FUNCTIONS`
+# uses. THE KEYS ARE NOT CHECKED HERE and that is deliberate: that tuple is the
+# standard's thirteen entries and it has one owner, so a second copy of the list
+# in this file is the two-readers defect this repository keeps paying for.
+# `build_eam_status.py` refuses a key it does not know, by name, in CI.
+#
+# `ask` is the ledger entry, on the record itself, because THE RECORD IS THE
+# LEDGER: docs/ASK_DRAFTS.md step 2 says the send date is written "in the
+# relevant gap record in docs/DATA_LAYER_GUIDEBOOK.md", and that prose is all
+# there has ever been. These fields do not replace it; they make the part a
+# program has to agree with machine-readable.
+#
+# THE THIRTY DAYS ARE CHECKED AGAINST A STATED OUTCOME, NEVER COMPUTED INTO ONE.
+# The standard counts silence once we have asked, followed up once and waited
+# thirty days from the follow-up. A reader of the clock would flip this record
+# from "no credit" to "credit" on day thirty with nothing edited, which moves a
+# generated document by the calendar and fails `--check` on a morning nobody
+# touched the tree — the shape `dropped_rings.py` records as a ceiling that can
+# never fail, pointing the other way. So the thread WRITES `unresponsive` once
+# it is true, and this gate refuses the claim while the dates do not support it.
+# The verdict can then only ever become true, and the arithmetic is still
+# measured rather than trusted.
+COVERS = "covers"
+ASK = "ask"
+ASK_OUTCOMES = ("refused", "unresponsive", "answered")
+ASK_SILENCE_DAYS = 30
 
 # The three fields a voter reads, and the budget each gets. 240 characters is
 # about two lines in the panel — enough for a plain sentence and not enough for
@@ -258,6 +294,95 @@ def token_budgets(authored, resolved):
     return lines
 
 
+def _iso(value):
+    """A real ISO date, or None. `datetime` is stdlib, which this script stays in."""
+    if not isinstance(value, str):
+        return None
+    try:
+        return datetime.date(*(int(p) for p in value.split("-")))
+    except (ValueError, TypeError):
+        return None
+
+
+def ask_problems(where, e):
+    """Problems with this record's `covers`/`ask` pair.
+
+    A record may carry `covers` with no `ask`: that is the ordinary state of a
+    gap nobody has written to yet, it is legal, and `build_eam_status.py`
+    reports it as earning nothing rather than passing it — which is what
+    `docs/DONE_STANDARD.md` asks for in as many words.
+
+    What is refused is a claim the dates do not support, in either direction.
+    """
+    problems = []
+    covers, ask = e.get(COVERS), e.get(ASK)
+    if covers is not None:
+        if (not isinstance(covers, list) or not covers
+                or not all(isinstance(c, str) and c.strip() for c in covers)):
+            problems.append(
+                "%s: %s must be a non-empty list of expected-level keys, never %r"
+                % (where, COVERS, covers))
+        elif len(set(covers)) != len(covers):
+            problems.append("%s: %s names the same level twice: %r"
+                            % (where, COVERS, covers))
+    if ask is None:
+        return problems
+    if not isinstance(ask, dict):
+        problems.append("%s: %s must be an object, never %r" % (where, ASK, ask))
+        return problems
+    extra = sorted(set(ask) - {"who", "asked", "followedUp", "outcome"})
+    if extra:
+        problems.append("%s: %s has no field(s) %s" % (where, ASK, ", ".join(extra)))
+    if not str(ask.get("who") or "").strip():
+        problems.append(
+            "%s: %s needs `who` — the standard counts an ask made BY NAME, and "
+            "'the county' is not a desk anybody wrote to" % (where, ASK))
+    asked = _iso(ask.get("asked"))
+    if asked is None:
+        problems.append("%s: %s needs `asked` as a YYYY-MM-DD date, not %r"
+                        % (where, ASK, ask.get("asked")))
+    outcome = ask.get("outcome")
+    if outcome not in ASK_OUTCOMES:
+        problems.append("%s: %s outcome %r is not one of %s"
+                        % (where, ASK, outcome, list(ASK_OUTCOMES)))
+    followed = None
+    if ask.get("followedUp") is not None:
+        followed = _iso(ask.get("followedUp"))
+        if followed is None:
+            problems.append("%s: %s `followedUp` is not a YYYY-MM-DD date: %r"
+                            % (where, ASK, ask.get("followedUp")))
+    today = datetime.date.today()
+    for field, value in (("asked", asked), ("followedUp", followed)):
+        if value is not None and value > today:
+            problems.append("%s: %s `%s` is %s, which is in the future"
+                            % (where, ASK, field, value))
+    if asked and followed and followed < asked:
+        problems.append(
+            "%s: %s was followed up on %s and asked on %s — a follow-up comes "
+            "after the ask" % (where, ASK, followed, asked))
+    if outcome == "unresponsive":
+        if followed is None:
+            problems.append(
+                "%s: %s claims `unresponsive` and records no follow-up. The "
+                "standard counts silence only after one follow-up, because a "
+                "follow-up is a recovery mechanism and not a nudge — one Clerk "
+                "answered on the third attempt" % (where, ASK))
+        elif (today - followed).days < ASK_SILENCE_DAYS:
+            problems.append(
+                "%s: %s claims `unresponsive` %d day(s) after its follow-up of "
+                "%s, and the standard asks for %d. Leave the outcome off until "
+                "it is true; this gate exists so the claim cannot be made early"
+                % (where, ASK, (today - followed).days, followed,
+                   ASK_SILENCE_DAYS))
+    if outcome == "answered" and covers:
+        problems.append(
+            "%s: %s was answered and %s still claims %s. An answered ask means "
+            "the data is obtainable, so the work is to use it rather than to "
+            "record the level as covered"
+            % (where, ASK, COVERS, ", ".join(covers)))
+    return problems
+
+
 def validate(entries, layer_ids, outlines):
     problems, seen = [], set()
     for i, e in enumerate(entries):
@@ -321,6 +446,7 @@ def validate(entries, layer_ids, outlines):
                     "claims: drop the tags if the record is statewide, or drop "
                     "%s if it covers only the counties it lists"
                     % (where, EVERY_COUNTY, len(e["counties"]), EVERY_COUNTY))
+        problems.extend(ask_problems(where, e))
         problems.extend(counted_prose_problems(where, e))
     return problems
 
