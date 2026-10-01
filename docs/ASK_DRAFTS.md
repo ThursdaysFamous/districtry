@@ -2714,7 +2714,50 @@ on at least one City surface, so the question is purely about how it may be read
 
 ---
 
-## Ask 33 — Wisconsin Towns Association: is there a list of town board members?
+## Ask 33 — New York State: is there a directory of local elected officials?
+
+> **NOT YET ASKED — DRAFTED 2026-10-01.** This is the one ask that belongs to the STATE
+> rather than to 57 county clerks and a hundred town clerks, and it is drafted first for
+> that reason: if the answer is yes, a single file closes most of New York's county and
+> local tiers, and a hundred and sixty separate asks were never the right opening move.
+> It is also the cheapest possible ask — one question, one reply, and a clean no is worth
+> as much as a yes because it settles the route for good.
+
+**To:** New York State Department of State, Division of Local Government Services —
+`localgov@dos.ny.gov`
+**Cc:** Office of the State Comptroller, Division of Local Government and School
+Accountability — `localgov@osc.ny.gov`
+**Subject:** Is there a published directory of local elected officials in New York?
+
+**What the ask says.** We publish a free, non-commercial map that tells a reader which
+civic districts cover a point and who represents them there, and New York is one of eight
+states it answers for. The state's own open-data portal publishes the official website of
+every county, city, town and village, which is how this project reaches them, and we can
+find no published list of the PEOPLE holding local elective office — county legislators
+and supervisors, town and village board members, city council members. The question is
+simply whether such a directory exists anywhere in the Department's or the Comptroller's
+hands, in any form, including one not on the open-data portal.
+
+**What was measured first, and is said in the ask so it does not read as a question
+somebody could have answered by searching.** The open-data catalogue was searched five
+ways on 2026-10-01 and returns code-enforcement officials, grant awards, lobbying filings
+and four website directories, and no roster of officeholders. The Comptroller's
+local-government pages publish financial filings and a guide for new officials. All 57
+county websites outside the city were read, and 43 answered.
+
+**Why a no is useful and is said so plainly.** A no closes the statewide route for good and
+sends this project to the counties and towns one at a time, which is the work it is already
+doing in Illinois; it also means the gap records that tell our readers what is missing can
+say the state does not publish it rather than that we did not find it.
+
+**What is deliberately not asked.** Nothing is asked about reuse terms or licensing, because
+there is nothing yet to license. No individual is named. And no county or town is named,
+because this is a question about whether a statewide product exists, not a complaint about
+any local government's website.
+
+---
+
+## Ask 34 — Wisconsin Towns Association: is there a list of town board members?
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** A first approach to this organisation. It asks
 > whether a list exists and on what terms, not for anything free: the association is a
@@ -2813,7 +2856,7 @@ next step rather than a mailing.
 
 ---
 
-## Ask 34 — five Wisconsin cities: may we read your council page?
+## Ask 35 — five Wisconsin cities: may we read your council page?
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** Five near-identical letters, one per city. Each asks
 > permission to read a page the city already publishes to the public. Nothing is blocked that

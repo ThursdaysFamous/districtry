@@ -82,15 +82,31 @@ THE TWO CITIES, each with its route and its measured trap:
                     recorded as that run's failure while Caledonia ships. On a
                     GitHub runner — the vantage the weekly job actually crawls
                     from, and the one `scripts/probe_robots_verdicts.py` exists
-                    to measure — the read is expected to succeed, and the
-                    weekly run is itself the witness either way.
+                    to measure — the read FAILED THERE TOO, measured
+                    2026-10-01: three reads fifteen seconds apart, every one
+                    `Connection reset by peer`. So the policy cannot be read
+                    from either vantage with the client that crawls, and under
+                    RFC 9309 2.3.1.4 an unreadable robots.txt disallows — which
+                    is why this city does not ship.
+                    THE TWO SYMPTOMS ARE NOT THE SAME AND ARE NOT CLAIMED TO BE.
+                    The sandbox fails during the TLS handshake and the runner
+                    fails with a reset at the socket; both sit below HTTP and
+                    both read as unreachable, and what they have in common is
+                    not established. A LOWERED SECURITY LEVEL IS NOT THE ANSWER:
+                    it would be an operator's decision rather than a per-site
+                    setting, and it cannot touch a connection reset in any case.
+                    The server is not simply down — `curl` completes a request to
+                    it — so the difference between the clients is real and
+                    unexplained, and asking the city is the honest next step
+                    rather than tuning a client until one gets through.
                     A PROVISIONAL READING IS RECORDED AND NOT RELIED ON: read
                     from here through a lowered-security context on 2026-10-01,
                     its robots.txt is 331 bytes disallowing fourteen paths
                     (Laserfiche, WebTrac, test directories) and permitting
                     `/CityCouncil/`. That read used a client this project does
-                    not crawl with, so it is written down as a reason to expect
-                    a clean runner verdict and never as the verdict.
+                    not crawl with, so it is written down as what one
+                    lowered-security read returned and never as the verdict.
+                    THE RUNNER DID NOT CONFIRM IT; see above.
 
 BOTH HOSTS SERVE THE DISTRICTRY TOKEN and that is why this file sends one. The
 sibling alderperson scraper sends a pinned Chrome string because 17 of the 35
