@@ -4127,10 +4127,17 @@ difference between a gap we have measured and a gap we have merely noticed.
 > say the village was asked.
 >
 > **NO `ask` BLOCK GOES WITH IT, AND THAT IS THE STANDARD RATHER THAN AN OMISSION.** An `ask`
-> block earns Covered credit on a record that declares `covers`, and
+> block can only ever matter on a record that declares `covers`, and
 > `aldermanic-incomplete-filings` declares none — Bellevue is a village of about 15,000 people,
 > under the 25,000 the local tier counts, so no level is waiting on this answer. The reply is
 > wanted for the map, not for the scorecard.
+>
+> **AND `pending` WOULD EARN NOTHING EVEN THERE, WHICH IS WORTH SAYING SO NOBODY READS IT AS A
+> HALF-CREDIT.** `pending` records only that a letter went; it earns nothing however old it gets.
+> Credit comes two ways and neither is automatic: a refusal counts straight away, and silence
+> counts only after a follow-up and thirty days, and only once a person reads the silence and
+> writes the outcome as `unresponsive`. The clock is printed on stdout and no committed byte
+> depends on it, so no record ever starts counting on its own.
 >
 > **NO PRIOR CONTACT, CHECKED RATHER THAN ASSUMED.** Searched Adam's mail on 2026-10-01 for
 > Bellevue, `bellevuewi.gov` and Seidl across every folder including trash: the only thread is
