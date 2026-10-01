@@ -320,6 +320,20 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "mi-isd",
+        "app_file": "mi-isd-districts.json",
+        "source_url": ("https://services3.arcgis.com/dxRQUfTDNtfqZ301/arcgis/rest/"
+                       "services/IntermediateSchoolDistrict/FeatureServer/0"),
+        "note": (
+            "The state's own Michigan Geographic Framework layer of the 56 intermediate "
+            "school districts (version V26, last edited 2026-03-03 when read on "
+            "2026-10-01), pre-built by mi/scripts/build_mi_isd_districts.py. ISDs merge "
+            "rarely and by vote, so the builder holds the count at exactly 56; the "
+            "signal to rebuild is the layer's editingInfo.lastEditDate or its "
+            "MGFVersion moving past V26."
+        ),
+    },
+    {
         "layer": "county-commissioner",
         "app_file": "mi-commissioner-returns.json",
         "source_url": ("https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/"

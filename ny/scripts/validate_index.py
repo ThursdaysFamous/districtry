@@ -82,13 +82,14 @@ MIN_REGISTER_LAYER = 5
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "judicial-district", "county", "nys-central-hs-district",
-    "nys-school-district", "municipality", "county-legislature", "village",
-    "borough", "borough-president", "district-attorney", "congress",
-    "municipal-court", "state-senate", "school-district", "cec",
-    "fire-battalion", "council", "community-district", "election-district",
-    "state-assembly", "police-sector", "police-precinct", "nys-zip-code",
-    "zip-code", "neighborhood", "hs-zone", "ms-zone", "es-zone",
-    "school-site", "police-station", "fire-station", "post-office", "library",
+    "nys-school-district", "library-district", "municipality",
+    "county-legislature", "fire-district", "village", "borough",
+    "borough-president", "district-attorney", "congress", "municipal-court",
+    "state-senate", "school-district", "cec", "fire-battalion", "council",
+    "community-district", "election-district", "state-assembly",
+    "police-sector", "police-precinct", "nys-zip-code", "zip-code",
+    "neighborhood", "hs-zone", "ms-zone", "es-zone", "school-site",
+    "police-station", "fire-station", "post-office", "library",
     "early-voting", "polling-place",
 ]
 
@@ -114,6 +115,9 @@ GEOMETRY_FILES = {
     "state-assembly-districts.json": (150, 150),  # 150 NY State Assembly districts; pre-built from TIGERweb layer 2
     "tompkins-legislature-districts.json": (16, 16),  # Tompkins County's 16 county-legislature districts (ny/scripts/build_tompkins_legislature.py), the county's own GIS simplified with Douglas-Peucker at a 25 m interval — the same interval the county fabric ships at, because the districts' outer edge is the county line. The bounds are EXACT rather than a floor: the county elects one legislator per district and that count cannot move between censuses.
     "tompkins-county-outline.json": (1, 1),  # Tompkins County sliced verbatim from ny-counties.json, so the county-legislature layer's coverage test and the county card cannot disagree about where Tompkins is — and what a Data gaps record needs in order to name this county.
+    "sullivan-fire-districts.json": (45, 45),  # Sullivan County's 45 fire districts (ny/scripts/build_sullivan_special_districts.py), the county's own register unioned from its 58 per-municipality rows and simplified with Douglas-Peucker at a 10 m interval — about one step of the source's own median. The bounds are EXACT rather than a floor: a change in the count means the county has created or dissolved a district, which a person reads.
+    "sullivan-library-districts.json": (2, 2),  # Sullivan County's 2 library districts (same builder, same interval, simplified together with the fire districts so the two layers' shared edges are simplified once). Exact bounds for the same reason.
+    "sullivan-county-outline.json": (1, 1),  # Sullivan County sliced verbatim from ny-counties.json, so the fire-district and library-district layers' coverage test and the county card cannot disagree about where Sullivan is.
 }
 
 # file -> minimum key count (officeholder rosters).

@@ -81,6 +81,17 @@ this file that has no exception. A new draft is a new `## Ask N —` section
 there, or a `### <Unit> — <Recipient> <address>` block under a tranche
 heading.
 
+**And put it in the operator's mailbox as well as in the file** — his
+instruction of 2026-10-01: *"All emails should be drafted in my mailbox along
+side the repo."* One Gmail draft per recipient, created with the Gmail
+connector's `create_draft`, never `send_message`; the wording copied from
+`docs/ASK_DRAFTS.md` verbatim with `<YOUR NAME>` and `<YOUR E-MAIL>` filled in
+and the Markdown taken out, because a mail client renders none of it. A draft
+in the mailbox is the same state as a draft in the file — one step closer to
+his hand, and no send date anywhere. Skip any letter whose recipient address
+the repo does not record, and say which. `docs/ASK_DRAFTS.md` § "Which asks
+have a draft in the operator's mailbox" is the record of which already do.
+
 ## 5. Record DRAFTED where the gap lives — and know where "there" is
 
 The unit's gap record in `docs/DATA_LAYER_GUIDEBOOK.md` carries the state in

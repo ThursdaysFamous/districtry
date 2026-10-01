@@ -1399,6 +1399,15 @@ SF_SCHOOL_BOARDS_AT_LARGE = (
     "at-large precedent is that naming the members is the whole answer, and "
     "both bodies are the city-wide school tier the app already covers.")
 
+# Measured 2026-10-01 by Michigan's own thread; the working is in mi/WATCH.md.
+MI_NO_SCHOOL_BOARD_DISTRICTS = (
+    "Michigan elects no school board by district. Ordinary boards are elected "
+    "at large under the Revised School Code; its one by-district scheme is for "
+    "a first-class district, and no district is first-class; and the Detroit "
+    "Public Schools Community District's board is elected districtwide under "
+    "MCL 380.384(3). Every board contest on the Wayne and Macomb 2024 "
+    "canvasses is districtwide.")
+
 # Per instance, what answers each expected function. A tuple names the layer
 # ids; `depth(...)` is measured; OPEN is nothing yet; UNSETTLED is a question the
 # standard leaves to that state's thread.
@@ -1473,18 +1482,22 @@ ANSWERS = {
         "municipal-boundaries": answers("municipality"),
         "local-government": depth("city-ward"),
         "school-district-boundaries": answers("school-district-unified", "school-district-elementary"),
-        # Michigan's own thread has confirmed it elects judges by district, so
-        # the entry is owed rather than open to question.
-        "courts-by-district": OPEN,
+        # Built 2026-10-01 from statute as unions of whole counties; the judges
+        # are not named (gap mi-judge-roster: the court system's site refuses
+        # every client).
+        "courts-by-district": answers("mi-court-of-appeals", "mi-circuit-court"),
         # A Michigan township governs everyone outside a village or city, so
         # the 34 that clear 25,000 are already owed under the city tier; the
-        # rest are owed here. The app draws them and names no township board.
-        "sub-county-government": OPEN,
-        # Still the Michigan thread's to confirm: its courts question is settled
-        # and whether it elects any school board by district is not.
-        "school-boards-by-district": UNSETTLED,
+        # rest are owed here. The app draws all 1,240 and names the board of
+        # each large township whose own page names every seat — the Illinois
+        # precedent above, which answers this level by drawing every township
+        # and naming Cook's 29 boards.
+        "sub-county-government": answers("county-subdivision"),
+        "school-boards-by-district": na(MI_NO_SCHOOL_BOARD_DISTRICTS),
         "precincts": answers("precinct"),
-        "special-districts": OPEN,
+        # Intermediate school districts: special districts the Revised School
+        # Code creates (MCL 380.601 et seq.), each with its own levy.
+        "special-districts": answers("mi-isd"),
         "tribal-government": OPEN,
     },
     "mn": {
@@ -1530,12 +1543,20 @@ ANSWERS = {
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary",
             "school-district-secondary"),
-        # Kentucky's own thread has confirmed that all four of its court levels
-        # elect by district — Supreme Court, Court of Appeals, 57 circuits and 59
-        # district-court districts — and that every one of those districts is a
-        # set of whole counties written into statute, so the lines are buildable
-        # from statute text and the county boundaries this app already ships.
-        "courts-by-district": OPEN,
+        # ALL FOUR COURTS ANSWER, from statute text alone. Every Kentucky
+        # judge is elected from a district or circuit made of WHOLE COUNTIES
+        # named in the statute (KRS 21A.010, 22A.010(2), 23A.020, 24A.030), so
+        # the three tilings dissolve offline from the county fabric this app
+        # already ships — no publisher asked and no map read. Measured
+        # 2026-10-01, each one partitions all 120 counties exactly once. Three
+        # files answer four courts because KRS 22A.010(2) gives the Court of
+        # Appeals the Supreme Court's own districts. No judge is NAMED on any of
+        # the four cards, and that is the coverage gap ky-judges rather than a
+        # hole in this level: the standard asks whether the app answers the
+        # level, and the county tier is where it asks for people by name.
+        "courts-by-district": answers(
+            "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
+            "ky-district-court"),
         # KENTUCKY HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT, which is the
         # standard's "the state does not have the level" case. Measured
         # 2026-10-01: the only sub-county units the Census publishes for
@@ -1587,7 +1608,12 @@ ANSWERS = {
         "sub-county-government": OPEN,
         "school-boards-by-district": answers("cec"),
         "precincts": answers("election-district"),
-        "special-districts": OPEN,
+        # Sullivan County's own register, the first county in this tier. New
+        # York State's map server publishes not one statutory special district,
+        # so this level is reached county by county; the twelve other layers in
+        # Sullivan's service are tax-map assessment districts a town board
+        # governs, with no body of their own, so they are not governments.
+        "special-districts": answers("fire-district", "library-district"),
         "tribal-government": OPEN,
     },
     "ca": {
@@ -1641,6 +1667,10 @@ CITY_ROSTERS = {
     "ia": [("ia/data/app/ia-city-officials.json", "geoid7"),
            ("ia/data/app/ia-city-councils.json", "geoid7"),
            ("ia/data/app/ia-county-city-officials.json", "geoid7")],
+    # Keyed by the Census id as written: 7 digits for a city, 10 for a
+    # township (a county subdivision), which is the id the expected-units
+    # measurement carries for each.
+    "mi": [("mi/data/app/mi-municipal-officials.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is
@@ -2056,6 +2086,13 @@ ASK_CREDIT_CASES = (
      "an answered ask means the data is obtainable, so the work is to use it"),
     ({"who": "County Clerk", "asked": "2026-06-01"}, False,
      "an ask with no outcome has not reached one of the standard's two states"),
+    ({"who": "County Clerk", "asked": "2026-06-01",
+      "outcome": "pending"}, False,
+     "a letter that is out and waiting earns nothing, whatever its date"),
+    ({"who": "County Clerk", "asked": "2026-01-01",
+      "followedUp": "2026-01-20", "outcome": "pending"}, False,
+     "and still nothing once the thirty days are long past: only the thread "
+     "writing `unresponsive` moves it, never the calendar"),
 )
 
 
@@ -2101,6 +2138,16 @@ def ask_credit(ask):
     if outcome == "answered":
         return False, ("the ask was answered, so this level is work to do "
                        "rather than a level to record")
+    if outcome == "pending":
+        # SENT AND WAITING, WHICH IS NOT ONE OF THE STANDARD'S TWO STATES. It
+        # earns nothing however old it is, and deliberately says so without
+        # arithmetic: reading the clock here would flip this record the morning
+        # the thirtieth day passed, with nothing edited. The clock is printed by
+        # `build_coverage_gaps.pending_ask_lines`, on stdout, where no committed
+        # byte depends on it.
+        return False, ("%s was asked on %s and has not answered; the record "
+                       "earns nothing until a thread writes the outcome"
+                       % (ask.get("who"), ask.get("asked")))
     return False, "ask outcome %r earns nothing" % outcome
 
 
