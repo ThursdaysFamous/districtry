@@ -203,8 +203,12 @@
       "atpoint_hooks_fired": 1,
       "layer_ids": [
         "county",
+        "ky-circuit-court",
+        "ky-court-of-appeals",
+        "ky-district-court",
         "ky-house",
         "ky-senate",
+        "ky-supreme-court",
         "municipality",
         "school-district-elementary",
         "school-district-secondary",

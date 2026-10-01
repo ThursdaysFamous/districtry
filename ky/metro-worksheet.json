@@ -95,10 +95,46 @@
       }
     },
     {
+      "id": "ky-supreme-court",
+      "label": "Supreme Court district",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "7 districts of whole counties — the largest districts Kentucky carries below its congressional map",
+      "source": {
+        "answers": "The Supreme Court district covering the point. One justice is elected from each.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ky/scripts/build_ky_court_districts.py, following the county lists in KRS 21A.010 — no map is read and no publisher is asked, because the statute names the counties.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+          }
+        ],
+        "people": "Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+        "applies": "Kentucky — statewide."
+      }
+    },
+    {
+      "id": "ky-court-of-appeals",
+      "label": "Court of Appeals district",
+      "group": "political",
+      "area_rank": 3,
+      "rank_note": "the same 7 districts as the Supreme Court, which KRS 22A.010(2) requires, so this layer draws that file",
+      "source": {
+        "answers": "The Court of Appeals district covering the point. Two judges are elected from each.",
+        "boundary": [
+          {
+            "label": "The Supreme Court district file, which this court shares by statute: KRS 22A.010(2) requires its districts to \"correspond in geographical dimensions to the districts of the Supreme Court\". Built by ky/scripts/build_ky_court_districts.py.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+          }
+        ],
+        "people": "Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+        "applies": "Kentucky — statewide."
+      }
+    },
+    {
       "id": "ky-senate",
       "label": "Kentucky Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 4,
       "rank_note": "38 Senate districts; they do not nest with the House, so the two chambers are independent tilings of the state",
       "source": {
         "answers": "The Kentucky Senate district covering the point.",
@@ -113,10 +149,46 @@
       }
     },
     {
+      "id": "ky-circuit-court",
+      "label": "Circuit Court",
+      "group": "political",
+      "area_rank": 5,
+      "rank_note": "57 circuits of whole counties, so smaller than a State Senate district and larger than a district court",
+      "source": {
+        "answers": "The judicial circuit covering the point. Kentucky's trial court of general jurisdiction.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric by ky/scripts/build_ky_court_districts.py, following the county lists in KRS 23A.020.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+          }
+        ],
+        "people": "Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+        "applies": "Kentucky — statewide."
+      }
+    },
+    {
+      "id": "ky-district-court",
+      "label": "District Court",
+      "group": "political",
+      "area_rank": 6,
+      "rank_note": "59 districts of whole counties, Kentucky's smallest court tiling",
+      "source": {
+        "answers": "The judicial district covering the point. Kentucky's limited-jurisdiction trial court.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric by ky/scripts/build_ky_court_districts.py, following the county lists in KRS 24A.030.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+          }
+        ],
+        "people": "Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+        "applies": "Kentucky — statewide."
+      }
+    },
+    {
       "id": "ky-house",
       "label": "Kentucky House District",
       "group": "political",
-      "area_rank": 3,
+      "area_rank": 7,
       "rank_note": "100 House districts, drawn independently of the 38 Senate districts",
       "source": {
         "answers": "The Kentucky House district covering the point.",
@@ -134,7 +206,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 4,
+      "area_rank": 8,
       "rank_note": "120 counties, pre-built from TIGERweb; this instance's offline anchor layer, and smaller on average than a House district",
       "source": {
         "answers": "Which county contains the point.",
@@ -152,7 +224,7 @@
       "id": "school-district-unified",
       "label": "School District (Unified)",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 9,
       "rank_note": "170 districts covering all but 39 km2 of Kentucky, live from TIGERweb (no data/app file) — 601 km2 mean feature area, just under a county",
       "source": {
         "answers": "The unified (every-grade) school district covering the point.",
@@ -170,7 +242,7 @@
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 10,
       "rank_note": "415 incorporated places, live from TIGERweb (no data/app file) — 12.00 km2 mean feature area over 4,978.5 km2, under 5% of the state's land",
       "source": {
         "answers": "The city covering the point, if any. Kentucky has no township tier, so a point outside every city is governed by its county and the card is correctly empty.",
@@ -188,7 +260,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 7,
+      "area_rank": 11,
       "rank_note": "4 independent districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area; they are gap-fills in the unified fabric, measured at all 4 interior points",
       "source": {
         "answers": "The elementary-only school district covering the point, in the four places Kentucky has one.",
@@ -206,7 +278,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 8,
+      "area_rank": 12,
       "rank_note": "4 county districts serving grades 9-12 over the four elementary districts, live from TIGERweb (no data/app file) — 9.75 km2 mean feature area, the same ground as the elementary tiling",
       "source": {
         "answers": "The school district that runs the high school for the point, in the four places Kentucky separates it from the elementary district.",
@@ -284,6 +356,24 @@
         "min_features": 100,
         "max_features": 100,
         "note": "Kentucky House districts, pre-built by ky/scripts/build_legislative_boundaries.py. They do NOT nest inside the Senate districts, so there is no nesting gate here; the cross-layer gate is the shared state outline."
+      },
+      {
+        "file": "ky-supreme-court-districts.json",
+        "min_features": 7,
+        "max_features": 7,
+        "note": "The 7 Supreme Court districts of KRS 21A.010, dissolved from the county fabric. The Court of Appeals layer draws this same file: KRS 22A.010(2) gives it the Supreme Court's districts."
+      },
+      {
+        "file": "ky-circuit-court-districts.json",
+        "min_features": 57,
+        "max_features": 57,
+        "note": "The 57 judicial circuits of KRS 23A.020, dissolved from the county fabric."
+      },
+      {
+        "file": "ky-district-court-districts.json",
+        "min_features": 59,
+        "max_features": 59,
+        "note": "The 59 judicial districts of KRS 24A.030, dissolved from the county fabric. A second version is already enacted for 2031-01-01, taking it to 58; WATCH.md carries the row."
       }
     ],
     "rosters": [
@@ -300,7 +390,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ky-shell-v1",
+    "cache_name": "districtry-ky-shell-v2",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
