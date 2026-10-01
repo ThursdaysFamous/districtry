@@ -152,7 +152,7 @@ which is a claim about the ask and never about the source.
 | Will County Clerk | none | first contact, correct |
 | Grundy County GIS | the county CLERK was written 2026-07-21; this is a different mailbox | first contact to this office, correct |
 | Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
-| Hardin County Clerk (IL) | who holds the commissioner seats | **seal 2026-07-21; board 08-05, 08-16, 08-21; ANSWERED 08-24** — countywide board, and NO county website | drafted 2026-10-01 as a reply on her own thread. Illinois's wording said the county's web address "leads to a parked page"; the Clerk had already said there is no website, so that claim is gone |
+| Hardin County Clerk (IL) | who holds the commissioner seats | **seal 2026-07-21; board 08-05, 08-16, 08-21; ANSWERED 08-24** — countywide board, and NO county website | **SENT 2026-10-01**, as a reply on her own thread. Illinois's wording said the county's web address "leads to a parked page"; the Clerk had already said there is no website, so that claim is gone |
 | Johnson County Clerk (IL) | the same | **seal 07-21, ANSWERED twice that day** ("We don't have a website to point back to"); board 08-05 and 08-16, no reply | drafted 2026-10-01. Illinois's wording said the county's website "declines automated visits"; the Clerk had already said there is none |
 | Perry County Clerk (IL) | the same | seal 07-20; two questions 08-05; follow-up 08-16; no reply | drafted 2026-10-01 with an opening citing all three |
 | Pope County Clerk (IL) | the board's form, then the names | seal 07-20; board 08-05; third note 08-16; no reply | drafted 2026-10-01, opening "This is my fourth note" |
@@ -160,14 +160,47 @@ which is a claim about the ask and never about the source.
 | Ford County Clerk (IL) | a readable copy of the board list | **three letters: 08-03, 08-16 and 09-04**, none answered | drafted 2026-10-01. Illinois's note said two and the letter said "in August"; corrected to name September as well |
 | Village of Bellevue Clerk (WI) | is the village board elected at large | none, checked rather than assumed | drafted 2026-10-01 from Wisconsin's own wording, after the county clerk endorsed asking the village ("Indeed. That's the place to start") |
 | Colona, Marion (IA) city clerks; Jones County Auditor; League of Wisconsin Municipalities; Lafayette (Cuba City) and Ozaukee (Port Washington) county clerks; Kentucky Administrative Office of the Courts; Burton (MI) clerk; City of Beloit clerk; City of Oshkosh clerk; WinGIS | none for any | first contact, correct |
-| seven apologies — Clinton, Franklin, and the four double-sent Iowa auditors | see above | drafted 2026-10-01; Dickinson's and Cass's already sent |
-| three Michigan corrections — Shelby, Northville and Ypsilanti townships | written to earlier the same day | drafted 2026-10-01 as replies on their own threads; Ypsilanti's sent 15:23 |
-| nine replies to offices that answered — Osceola, Ida, Cass, Sioux, Tama, Washington, Palo Alto (IA), Outagamie, Brown (WI) | answered 2026-10-01 | drafted 2026-10-01 as replies on their own threads. Four ask something back rather than only thanking: Cass for the pairing as text, Palo Alto whether the 2020 names still stand, Tama which telephone numbers are county lines, Brown answering the Clerk's own question |
+| *(the seven apologies, the three Michigan corrections, the nine replies and Hardin's follow-up were all SENT the same afternoon — see the section below)* | | |
 | Calhoun County Auditor | sent 2026-10-01 | **was a duplicate of the sent letter**, marked do-not-send, and the operator deleted it on 2026-10-01. Nothing is waiting |
 
 **Four Wisconsin city-clerk drafts were WITHDRAWN on 2026-10-01** — Janesville, Wausau,
 Wauwatosa and Mequon — because those sites turn out to permit this project's reader and
 no letter is owed. Withdrawn is not unanswered.
+
+### Sent later on 2026-10-01 — every reply, apology and correction went the same afternoon
+
+Read off the sent folder at 16:15, not off this file. **Twenty more letters went between
+14:46 and 16:08**, which closes the whole morning's correspondence: the nine replies to
+offices that had answered, the seven apologies, the three Michigan corrections and
+Hardin's follow-up. Nothing that was owed to an office that wrote to us is still sitting
+as a draft.
+
+**Only five letters are now waiting on the operator's hand**: the Johnson, Perry, Pope,
+Scott and Ford county clerks in Illinois. Everything else in the table above either went
+or has no address to go to.
+
+**Four of the Iowa answers are complete, in plain text, and are buildable work rather
+than a wait** — Ida (three districts), Osceola, Sioux and Tama (five each) each name
+which supervisor holds which district, in prose an editor can read and cite. Washington
+answered better than a list by naming the county's own supervisors page, which a weekly
+reader can return to; an emailed list ages and a maintained page does not, so that is the
+source to read. Three are still not usable and each for its own stated reason: Cass's
+pairing arrived as pictures, Palo Alto's two documents are dated 2020, and Tama's
+District 1 contact details look personal rather than official. Those three are waiting on
+answers to questions already asked, not on anything further to draft.
+
+**Brown County answered a second time and it is the answer that matters**: asked whether
+the village had been written to, the Clerk replied "Indeed. That's the place to start."
+So the Village of Bellevue letter is not merely allowed but endorsed by the county officer
+who hedged, which is why it sits in the mailbox rather than being withdrawn. **A hedge
+plus a pointer is a route, not a fact** — the village still has to say it.
+
+**The duplicate sends are closed out.** All four double-sent Iowa auditors have their
+apology, and so do Clinton and Franklin, whose letters had ignored two earlier ones.
+Counted at 16:15: six apologies sent, none waiting. What is NOT closed is the cause — two
+sessions drafting the same letter from the same source is what produced the duplicates,
+and no amount of apologising prevents the next one. **One thread creates the Gmail
+drafts; the state threads write the wording.**
 
 ### A prior-contact check is a FACT check on the letter, not a politeness check
 
