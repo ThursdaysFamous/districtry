@@ -1,0 +1,5279 @@
+{
+ "1900390471": {
+  "asOf": "2026-10-01",
+  "county": "Adams",
+  "countyFips": "19003",
+  "officials": [
+   {
+    "name": "Joyce James",
+    "role": "Clerk"
+   },
+   {
+    "name": "Jeff Crill",
+    "role": "Trustee"
+   },
+   {
+    "name": "Tyler Edwards",
+    "role": "Trustee"
+   },
+   {
+    "name": "Dave Schrader",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://adamscounty.iowa.gov/about/elected_officials/township/",
+  "township": "Carl township"
+ },
+ "1900390780": {
+  "asOf": "2026-10-01",
+  "county": "Adams",
+  "countyFips": "19003",
+  "officials": [
+   {
+    "name": "Roseanne Sychra",
+    "role": "Clerk"
+   },
+   {
+    "name": "Jason Green",
+    "role": "Trustee"
+   },
+   {
+    "name": "Mike Haynes",
+    "role": "Trustee"
+   },
+   {
+    "name": "Doug Wallace",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://adamscounty.iowa.gov/about/elected_officials/township/",
+  "township": "Colony township"
+ },
+ "1900391020": {
+  "asOf": "2026-10-01",
+  "county": "Adams",
+  "countyFips": "19003",
+  "officials": [
+   {
+    "name": "Ivan Wolf",
+    "role": "Clerk"
+   },
+   {
+    "name": "Clyde Hoyt",
+    "role": "Trustee"
+   },
+   {
+    "name": "Tom Roberts",
+    "role": "Trustee"
+   },
+   {
+    "name": "Dan Steeve",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://adamscounty.iowa.gov/about/elected_officials/township/",
+  "township": "Douglas township"
+ },
+ "1900391626": {
+  "asOf": "2026-10-01",
+  "county": "Adams",
+  "countyFips": "19003",
+  "officials": [
+   {
+    "name": "Michelle Draper",
+    "role": "Clerk"
+   },
+   {
+    "name": "Kurtis Brown",
+    "role": "Trustee"
+   },
+   {
+    "name": "Roland G. Miller",
+    "role": "Trustee"
+   },
+   {
+    "name": "Richard Notz",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://adamscounty.iowa.gov/about/elected_officials/township/",
+  "township": "Grant township"
+ },
+ "1900392193": {
+  "asOf": "2026-10-01",
+  "county": "Adams",
+  "countyFips": "19003",
+  "officials": [
+   {
+    "name": "Jayne Templeton",
+    "role": "Clerk"
+   },
+   {
+    "name": "David H Fuller",
+    "role": "Trustee"
+   },
+   {
+    "name": "Arnold Maynes",
+    "role": "Trustee"
+   },
+   {
+    "name": "Doug Olive",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://adamscounty.iowa.gov/about/elected_officials/township/",
+  "township": "Jasper township"
+ },
+ "1900392517": {
+  "asOf": "2026-10-01",
+  "county": "Adams",
+  "countyFips": "19003",
+  "officials": [
+   {
+    "name": "Elaine Calkins",
+    "role": "Clerk"
+   },
+   {
+    "name": "Lowell Evans",
+    "role": "Trustee"
+   },
+   {
+    "name": "Kathy Morgan",
+    "role": "Trustee"
+   },
+   {
+    "name": "Steve Zinke",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://adamscounty.iowa.gov/about/elected_officials/township/",
+  "township": "Lincoln township"
+ },
+ "1900392916": {
+  "asOf": "2026-10-01",
+  "county": "Adams",
+  "countyFips": "19003",
+  "officials": [
+   {
+    "name": "Bree Brandt",
+    "role": "Clerk"
+   },
+   {
+    "name": "Jamie Hogan",
+    "role": "Trustee"
+   },
+   {
+    "name": "Jared Robinson",
+    "role": "Trustee"
+   },
+   {
+    "name": "Kurt Stoaks",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://adamscounty.iowa.gov/about/elected_officials/township/",
+  "township": "Mercer township"
+ },
+ "1900393120": {
+  "asOf": "2026-10-01",
+  "county": "Adams",
+  "countyFips": "19003",
+  "officials": [
+   {
+    "name": "Blaine Sunderman",
+    "role": "Clerk"
+   },
+   {
+    "name": "Dave Agnew",
+    "role": "Trustee"
+   },
+   {
+    "name": "Howard W. Anderson",
+    "role": "Trustee"
+   },
+   {
+    "name": "Bill Forsythe",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://adamscounty.iowa.gov/about/elected_officials/township/",
+  "township": "Nodaway township"
+ },
+ "1900393504": {
+  "asOf": "2026-10-01",
+  "county": "Adams",
+  "countyFips": "19003",
+  "officials": [
+   {
+    "name": "Kathy West",
+    "role": "Clerk"
+   },
+   {
+    "name": "Bill Birt",
+    "role": "Trustee"
+   },
+   {
+    "name": "R. Blake Cooper",
+    "role": "Trustee"
+   },
+   {
+    "name": "LuAnn Kaufman",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://adamscounty.iowa.gov/about/elected_officials/township/",
+  "township": "Prescott township"
+ },
+ "1900393531": {
+  "asOf": "2026-10-01",
+  "county": "Adams",
+  "countyFips": "19003",
+  "officials": [
+   {
+    "name": "Mike Travis",
+    "role": "Clerk"
+   },
+   {
+    "name": "Rick Bissell",
+    "role": "Trustee"
+   },
+   {
+    "name": "Dale Carmichael",
+    "role": "Trustee"
+   },
+   {
+    "name": "Tony Mullen",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://adamscounty.iowa.gov/about/elected_officials/township/",
+  "township": "Quincy township"
+ },
+ "1900394164": {
+  "asOf": "2026-10-01",
+  "county": "Adams",
+  "countyFips": "19003",
+  "officials": [
+   {
+    "name": "Shelly West",
+    "role": "Clerk"
+   },
+   {
+    "name": "Alice Reed",
+    "role": "Trustee"
+   },
+   {
+    "name": "Chris Standley",
+    "role": "Trustee"
+   },
+   {
+    "name": "Greg Weis",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://adamscounty.iowa.gov/about/elected_officials/township/",
+  "township": "Union township"
+ },
+ "1900394446": {
+  "asOf": "2026-10-01",
+  "county": "Adams",
+  "countyFips": "19003",
+  "officials": [
+   {
+    "name": "Delores Ramsey",
+    "role": "Clerk"
+   },
+   {
+    "name": "Ron Helvie",
+    "role": "Trustee"
+   },
+   {
+    "name": "Paul Maeder",
+    "role": "Trustee"
+   },
+   {
+    "name": "Kenneth Romer",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://adamscounty.iowa.gov/about/elected_officials/township/",
+  "township": "Washington township"
+ },
+ "1901590057": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Craig Heineman",
+    "phone": "(515) 275-2303",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "John Hunter",
+    "phone": "(515) 275-4383",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Dwight Muench",
+    "phone": "(515) 351-1652",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Amaqua township"
+ },
+ "1901590150": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Shelly Schall",
+    "phone": "(515) 275-2468",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Alan Lamm",
+    "phone": "(515) 275-2446",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Paul Savits",
+    "phone": "(515) 230-0911",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Beaver township"
+ },
+ "1901590489": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Brittany Wilkening",
+    "phone": "(515) 291-3474",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jeff Polich",
+    "phone": "(515) 438-2410",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Melvin James Tieman",
+    "phone": "(515) 490-1630",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Cass township"
+ },
+ "1901590756": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Penny Elsner Davis",
+    "phone": "(515) 291-4296",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Bill Bassett",
+    "phone": "(515) 290-7128",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Cory Doerder",
+    "phone": "(515) 314-6768",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Colfax township"
+ },
+ "1901590969": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Veronica Nystrom",
+    "phone": "(515) 298-1712",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Donald Gregory",
+    "phone": "(515) 230-4536",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Gary Hudson",
+    "phone": "(515) 230-0892",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Des Moines township"
+ },
+ "1901591002": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Laura Sundine",
+    "phone": "(515) 230-3534",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Kris Kline",
+    "phone": "(515) 298-4369",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Dale Pfrimmer",
+    "phone": "(515) 230-5958",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Dodge township"
+ },
+ "1901591029": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Lyn Harris",
+    "phone": "(515) 795-2023",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Steve Galetich",
+    "phone": "(515) 795-2363",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Ronald Harris",
+    "phone": "(515) 795-2023",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Douglas township"
+ },
+ "1901591503": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Vicki Carlson",
+    "phone": "(515) 238-4940",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Bill Harleen",
+    "phone": "(515) 685-4441",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Donald Jagerson",
+    "phone": "(515) 795-3557",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Garden township"
+ },
+ "1901591629": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Emily Clausen",
+    "phone": "(515) 230-6277",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Mark Clausen",
+    "phone": "(515) 846-6301",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Thomas Kauffman",
+    "phone": "(515) 846-6396",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Grant township"
+ },
+ "1901591860": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Mary A. Pepper",
+    "phone": "(515) 230-1283",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "James W. Beyer",
+    "phone": "(515) 433-0194",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Shannon Bryan",
+    "phone": "(515) 835-2397",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Harrison township"
+ },
+ "1901592094": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Kenton Brown",
+    "phone": "(515) 432-5431",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Justin Lindgren",
+    "phone": "(515) 370-1973",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tim McGlynn",
+    "phone": "(515) 505-5231",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Jackson township"
+ },
+ "1901592832": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Erick E. Johnson",
+    "phone": "(515) 230-5524",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "David Aves",
+    "phone": "(515) 290-9074",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "David Keithley",
+    "phone": "(515) 432-2001",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Marcy township"
+ },
+ "1901593291": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Robin L. Frantum",
+    "phone": "(515) 438-4088",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Rodney Bice",
+    "phone": "(515) 438-2231",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Keli Meier",
+    "phone": "(515) 669-1578",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Peoples township"
+ },
+ "1901593330": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Tabitha Nelson",
+    "phone": "(515) 298-1003",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Alan Lingren",
+    "phone": "(515) 460-4792",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Stan Lingren",
+    "phone": "(515) 353-4433",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Pilot Mound township"
+ },
+ "1901594176": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Scott Grubbs",
+    "phone": "(515) 491-5138",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Michael Mace",
+    "phone": "(515) 465-4957",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Union township"
+ },
+ "1901594782": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Ronald Kilstrom",
+    "phone": "(515) 795-3208",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jeff Erb",
+    "phone": "(515) 298-0237",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "William Martin",
+    "phone": "(515) 298-0849",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Worth township"
+ },
+ "1901594797": {
+  "asOf": "2026-10-01",
+  "county": "Boone",
+  "countyFips": "19015",
+  "officials": [
+   {
+    "name": "Chet Hollingshead",
+    "phone": "(515) 230-7697",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Scott Foster",
+    "phone": "(515) 230-4237",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Kriss Haglud",
+    "phone": "(515) 230-1973",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://boonecounty.iowa.gov/about/elected_officials/township/",
+  "township": "Yell township"
+ },
+ "1903390135": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Steve Sturges",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tim Ditsworth",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Tim Nuehring",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jim Thomas",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Appointed",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Bath township"
+ },
+ "1903390721": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Kent Thoe",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Marsha Doebel",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Anne Jones",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Paul A Menke",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Elected",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Clear Lake township"
+ },
+ "1903391017": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Becky Litterer",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Ross Hanig",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Joel Rooney",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Mark Staudt",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Appointed",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Dougherty township"
+ },
+ "1903391308": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Judi Gordon",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tennis Gordon",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Elected",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Falls township"
+ },
+ "1903391551": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Patti Petersen",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jenny Akins",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Andy Bills",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Candace Karsjens",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Appointed",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Geneseo township"
+ },
+ "1903391641": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Kenneth Asbe",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Craig Kennedy",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Mark Kragel",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Jake Whitehurst",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Elected",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Grant township"
+ },
+ "1903391773": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Dale McBridge",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Scott Engebretson",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Kevin Jurgens",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Brad Willman",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Appointed",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Grimes township"
+ },
+ "1903392346": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Charles Grove",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Steve McGrath",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Joe McGrath",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jon Tofte",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Appointed",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Lake township"
+ },
+ "1903392508": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Karl Benjegerdes",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Mike Brown",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Adam Pope",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Kevin Pope",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Appointed",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Lime Creek township"
+ },
+ "1903392538": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Jim Barkema",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Todd Cash",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Austin Pitkin",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Elected",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Lincoln township"
+ },
+ "1903392886": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Richard Schurtz",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "John Anderegg",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Jon Schurtz",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Gary Sutcliffe",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Appointed",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Mason township"
+ },
+ "1903393042": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Joye Petersen",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Michael Bartlett",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Debra Newman",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Dave Newman",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Appointed",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Mount Vernon township"
+ },
+ "1903393246": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Timothy Cahalan",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Thomas Bahnsen",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Stephen Schlader",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Mark Taylor",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Appointed",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Owen township"
+ },
+ "1903393408": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "David Just",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Matthew Rasmuson",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Curt Stille",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Lyle Watt",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Appointed",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Pleasant Valley township"
+ },
+ "1903393456": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "David Luett",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Mark Mathre",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Dale Mills",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Craig Wood",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Elected",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Portland township"
+ },
+ "1903394188": {
+  "asOf": "2026-10-01",
+  "county": "Cerro Gordo",
+  "countyFips": "19033",
+  "officials": [
+   {
+    "name": "Kathy Hinrichs",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Gene Hinrichs",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Scott Lorenzen",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "selection": "Elected",
+  "sourceUrl": "https://cerrogordo.gov/about/elected_officials/township/",
+  "township": "Union township"
+ },
+ "1904790315": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Ken L. Dunham",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Bob Buresh",
+    "phone": "(712) 643-1294",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Zachary Dunham",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Boyer township"
+ },
+ "1904790648": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Bethany Linkenhoker",
+    "role": "Clerk"
+   },
+   {
+    "name": "Karla Dorale",
+    "role": "Trustee"
+   },
+   {
+    "name": "Peggy Sue Henschen",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Charter Oak township"
+ },
+ "1904790960": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Lance Nelson",
+    "phone": "(712) 263-4416",
+    "role": "Clerk"
+   },
+   {
+    "name": "Tim Baughman",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Denison township"
+ },
+ "1904791107": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Rhonda Steuk",
+    "role": "Clerk"
+   },
+   {
+    "name": "Charles Boeck",
+    "role": "Trustee"
+   },
+   {
+    "name": "Dale Schneider",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "East Boyer township"
+ },
+ "1904791587": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Dan Grill",
+    "role": "Clerk"
+   },
+   {
+    "name": "Dennis Bergstadt",
+    "role": "Trustee"
+   },
+   {
+    "name": "Daryl A. Pedersen",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Goodrich township"
+ },
+ "1904791827": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Dan Jepsen",
+    "role": "Clerk"
+   },
+   {
+    "name": "Dean Bohlmann",
+    "role": "Trustee"
+   },
+   {
+    "name": "Chris Graeve",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Hanover township"
+ },
+ "1904791890": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Steve Riesselman",
+    "role": "Clerk"
+   },
+   {
+    "name": "Jerry Backhaus",
+    "role": "Trustee"
+   },
+   {
+    "name": "Gary Schulte",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Hayes township"
+ },
+ "1904792058": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Gary Witt",
+    "phone": "(712) 653-3308",
+    "role": "Clerk"
+   },
+   {
+    "name": "Denny Kasparbauer",
+    "role": "Trustee"
+   },
+   {
+    "name": "Jeff Wanninger",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Iowa township"
+ },
+ "1904792109": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Matt Brotherson",
+    "phone": "(712) 790-0606",
+    "role": "Clerk"
+   },
+   {
+    "name": "Mitchell Dettbarn",
+    "phone": "(712) 210-1383",
+    "role": "Trustee"
+   },
+   {
+    "name": "Chris Gehling",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Jackson township"
+ },
+ "1904792928": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Christopher Thelen",
+    "role": "Clerk"
+   },
+   {
+    "name": "Donald Healy",
+    "phone": "(712) 677-2431",
+    "role": "Trustee"
+   },
+   {
+    "name": "Bill Kral",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Milford township"
+ },
+ "1904793003": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Rachel Jacobson",
+    "role": "Clerk"
+   },
+   {
+    "name": "Neil Kragel",
+    "phone": "(712) 676-3767",
+    "role": "Trustee"
+   },
+   {
+    "name": "Harry Reissen",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Morgan township"
+ },
+ "1904793114": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Pat Wuestewald",
+    "role": "Clerk"
+   },
+   {
+    "name": "Nick Dammann",
+    "role": "Trustee"
+   },
+   {
+    "name": "Tony Lile",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Nishnabotny township"
+ },
+ "1904793231": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Steven Winquist",
+    "role": "Clerk"
+   },
+   {
+    "name": "Kay Blunk",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Otter Creek township"
+ },
+ "1904793270": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Ryan Boettger",
+    "role": "Clerk"
+   },
+   {
+    "name": "Brian Muff",
+    "phone": "(712) 674-3846",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Paradise township"
+ },
+ "1904793936": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Kevin Clausen",
+    "phone": "(402) 490-4280",
+    "role": "Clerk"
+   },
+   {
+    "name": "Steve Garrett",
+    "phone": "(712) 265-1558",
+    "role": "Trustee"
+   },
+   {
+    "name": "Leon Maas",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Soldier township"
+ },
+ "1904794017": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Fred Coltrain",
+    "phone": "(712) 675-4382",
+    "role": "Clerk"
+   },
+   {
+    "name": "Rick Crampton",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Stockholm township"
+ },
+ "1904794191": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "James Biefeldt",
+    "role": "Trustee"
+   },
+   {
+    "name": "Ron Kenkel",
+    "phone": "(712) 269-4259",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Union township"
+ },
+ "1904794482": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Les Outhouse",
+    "phone": "(712) 748-7111",
+    "role": "Clerk"
+   },
+   {
+    "name": "Dale Collins",
+    "role": "Trustee"
+   },
+   {
+    "name": "Donald Kahl",
+    "phone": "(712) 263-5926",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Washington township"
+ },
+ "1904794701": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Kenny Crawford",
+    "phone": "(712) 269-0661",
+    "role": "Clerk"
+   },
+   {
+    "name": "Allan Kock",
+    "role": "Trustee"
+   },
+   {
+    "name": "Craig Ragaller",
+    "phone": "(712) 677-2430",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "West Side township"
+ },
+ "1904794743": {
+  "asOf": "2026-10-01",
+  "county": "Crawford",
+  "countyFips": "19047",
+  "officials": [
+   {
+    "name": "Nolan Staley",
+    "role": "Clerk"
+   },
+   {
+    "name": "Tom Staley",
+    "role": "Trustee"
+   },
+   {
+    "name": "Byron Weiss",
+    "phone": "(712) 263-1280",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://www.crawfordcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Willow township"
+ },
+ "1909590912": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Dana Shaull",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Kristine Burck",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Scott Grimm",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Dayton township"
+ },
+ "1909591227": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Heather Humphrey",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Alan Husband",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Kevin Koehn",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "English township"
+ },
+ "1909591341": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Justin Parsons",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jim Lower",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Cindy Lower",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Fillmore township"
+ },
+ "1909591752": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Gene Stolzfus",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Connie Cook",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Steven Gringerich",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Greene township"
+ },
+ "1909591878": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "A.J. Schnebbe",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Lee Border",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Larry Hollopeter",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Hartford township"
+ },
+ "1909591962": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Matt Wardenburg",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Kenton Doehrman",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Aaron Meyer",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Hilton township"
+ },
+ "1909591983": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Deb Chekal",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Leanne Brecht",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Rod Cronbaugh",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Honey Creek township"
+ },
+ "1909592064": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "David Heitshusen",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jim Baack",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Matt Pundt",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Iowa township"
+ },
+ "1909592415": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Margaret Trumpold",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "TJ Croco",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Rick Hergert",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Lenox township"
+ },
+ "1909592559": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Stephanie Thys",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Roger Kuesel",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Gary Read",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Lincoln township"
+ },
+ "1909592835": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Chris Zieser",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Troy Cronbaugh",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Justin Sayers",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Marengo township"
+ },
+ "1909593324": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Sherry Sinn",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Kyle Heitmann",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Raymond Sinn",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Pilot township"
+ },
+ "1909594050": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Jessica Stohlmann",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Andy Heitman",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jim Hocker",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Sumner township"
+ },
+ "1909594137": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Gary Boland",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Doug Blythe",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Doug Boland",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Troy township"
+ },
+ "1909594506": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Becky Berstler",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tyler Shepard",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Cody Vogt",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "Washington township"
+ },
+ "1909594806": {
+  "asOf": "2026-10-01",
+  "county": "Iowa",
+  "countyFips": "19095",
+  "officials": [
+   {
+    "name": "Sandy Miller",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Duane Martinson",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Kurt Meyer",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://iowacounty.iowa.gov/about/elected_officials/township/",
+  "township": "York township"
+ },
+ "1909790180": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Troy Patzner",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Bill Bevan",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Charles Medinger",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Hunter Zeimet",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Bellevue township"
+ },
+ "1909790327": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Jerry Schau",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "David Burmahl",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Scott Flagel",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Terry Frahm",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Brandon township"
+ },
+ "1909790426": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Mike Burke",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jeff Lynch",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Robert Noonan",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Michael Weber",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Butler township"
+ },
+ "1909791284": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Mary Lou Johnson",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "David Franzen",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Matt Franzen",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Ronald Regenwether",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Fairfield township"
+ },
+ "1909791314": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Sandra Gerlach",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jeff Nelson",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Pat Veach",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "David Veach",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Farmers Creek township"
+ },
+ "1909792067": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Melanie Macy",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4",
+    "vacant": true
+   },
+   {
+    "name": "Emmett Machande",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Dean Papke",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Iowa township"
+ },
+ "1909792130": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Lester Johnson",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tom Heiar",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Chris Homan",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Kevin Lundin",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Jackson township"
+ },
+ "1909792826": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "William Deppe",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jeff Holtz",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Brandon Moore",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Allan Till",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Maquoketa township"
+ },
+ "1909792958": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Deb DeVore",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Codey Current",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "John C. Stender",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Andy Thordsen",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Monmouth township"
+ },
+ "1909793234": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Mary Gansen",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tom Bergfeld",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "John Gansen",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Duane Meyer",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Otter Creek township"
+ },
+ "1909793300": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Dennis Hankemeier",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Kevin D. Kilburg",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Kaleb Marshall",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Perry township"
+ },
+ "1909793501": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Kathleen Reiss",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Joe Kies",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Dave Niensteadt",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Anthony Reiss",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Prairie Springs township"
+ },
+ "1909793594": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Mary Ann Kunde",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Erin Barsema",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Ronald Manders",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Timothy Manders",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Richland township"
+ },
+ "1909793948": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Craig Schnoor",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Scott T Bowman",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Joshua Dostal",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Benjamin Shearer",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "South Fork township"
+ },
+ "1909794107": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Larry Herrig",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Erwin Jr. Felderman",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Reese Frohling",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Roger Mueller",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Tete Des Morts township"
+ },
+ "1909794221": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Terri McCulley",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Cy Sandholdt",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Travis Woodhurst",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Union township"
+ },
+ "1909794314": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Carolyn Grant",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tracy Frahm",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Mark Lane",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Warren Moeller",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Van Buren township"
+ },
+ "1909794509": {
+  "asOf": "2026-10-01",
+  "county": "Jackson",
+  "countyFips": "19097",
+  "officials": [
+   {
+    "name": "Brenda Tebbe",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Mark Banowetz",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tom Meier",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Terry Roling",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://jacksoncounty.iowa.gov/about/elected_officials/township/",
+  "township": "Washington township"
+ },
+ "1910790009": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Josh Annis",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Chris Dietrich",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Derek Hall",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Colt Mather",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Adams township"
+ },
+ "1910790213": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Linda Abel",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Rick Abel",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Donald Millikin",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Ivan Roquet",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Benton township"
+ },
+ "1910790717": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Alan Berg",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Ryan Baker",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Christopher Berg",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Jaris Horning",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Clear Creek township"
+ },
+ "1910791113": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Carla A. Dumont",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Allen R. Dobbins",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "John Dumont",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "David B. Klein",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "East Lancaster township"
+ },
+ "1910791233": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Connie Brubaker",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tom Baird",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Justin Render",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Carol Trier",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "English River township"
+ },
+ "1910792136": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Julie Swanson",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Allen Chapman",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Scott Swanson",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Robert Wonderlich",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Jackson township"
+ },
+ "1910792337": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Kevin Luers",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Thomas Adam",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Denny Lyle",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Mitch Sieren",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Lafayette township"
+ },
+ "1910792466": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Amy Kerr",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Matt Clarahan",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Bryan Coffman",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Ben Mast",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Liberty township"
+ },
+ "1910793342": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Holly Martin",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Steve Heisdorffer",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Bob Klett",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "David Linder",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Plank township"
+ },
+ "1910793489": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Judith Christner",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Gary Bates",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Kelvin Gale",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Steve Van Zee",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Prairie township"
+ },
+ "1910793603": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Jim Krier",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Andrew Adam",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Eric Hackert",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Brett Slaubaugh",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Richland township"
+ },
+ "1910793888": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Irene Cassens",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tom Neece",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Terry L. Steinhart",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Ronald A. Waechter",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Sigourney township"
+ },
+ "1910794014": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Pamela J. Perkins",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Donald J. Brain",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "David Jones",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Andrew Long",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Steady Run township"
+ },
+ "1910794317": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Dan Kitzman",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jarred Gann",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Gary L. Waechter",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Leo Wehr",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Van Buren township"
+ },
+ "1910794428": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "June Rice",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Doyle Abrams",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Justin Boender",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Steve Buehneman",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Warren township"
+ },
+ "1910794521": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "James L, Striegel",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Raymond Adams",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Kirk E. Beasley",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Michael Striegel",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "Washington township"
+ },
+ "1910794680": {
+  "asOf": "2026-10-01",
+  "county": "Keokuk",
+  "countyFips": "19107",
+  "officials": [
+   {
+    "name": "Janet D. Martin",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Gary L. Martin",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Ed Webb",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Richard Wilkening",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://keokukcounty.iowa.gov/about/elected_officials/township/",
+  "township": "West Lancaster township"
+ },
+ "1912590687": {
+  "asOf": "2026-10-01",
+  "county": "Marion",
+  "countyFips": "19125",
+  "officials": [
+   {
+    "name": "Paulette Dee Alexander",
+    "phone": "(641) 891-0438",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Mike Crozier",
+    "phone": "(515) 865-6389",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.marioncountyiowa.gov/about/elected_officials/township/",
+  "township": "Clay township"
+ },
+ "1912590882": {
+  "asOf": "2026-10-01",
+  "county": "Marion",
+  "countyFips": "19125",
+  "officials": [
+   {
+    "name": "Steve Putz",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Josh Schneider",
+    "phone": "(641) 534-3073",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.marioncountyiowa.gov/about/elected_officials/township/",
+  "township": "Dallas township"
+ },
+ "1912591413": {
+  "asOf": "2026-10-01",
+  "county": "Marion",
+  "countyFips": "19125",
+  "officials": [
+   {
+    "name": "David Van Rheenen",
+    "phone": "(641) 891-0660",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Steve Becker",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Susan Phillips",
+    "phone": "(515) 848-3208",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.marioncountyiowa.gov/about/elected_officials/township/",
+  "township": "Franklin township"
+ },
+ "1912592028": {
+  "asOf": "2026-10-01",
+  "county": "Marion",
+  "countyFips": "19125",
+  "officials": [
+   {
+    "name": "Karl Kloster",
+    "phone": "(641) 891-5559",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Curtis Lambirth",
+    "phone": "(641) 943-2551",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.marioncountyiowa.gov/about/elected_officials/township/",
+  "township": "Indiana township"
+ },
+ "1912592328": {
+  "asOf": "2026-10-01",
+  "county": "Marion",
+  "countyFips": "19125",
+  "officials": [
+   {
+    "name": "Lisa Seddon",
+    "phone": "(641) 891-4524",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Leo Cowman",
+    "phone": "(641) 891-0912",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Tom Ramaeker",
+    "phone": "(641) 820-1186",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.marioncountyiowa.gov/about/elected_officials/township/",
+  "township": "Knoxville township"
+ },
+ "1912592376": {
+  "asOf": "2026-10-01",
+  "county": "Marion",
+  "countyFips": "19125",
+  "officials": [
+   {
+    "name": "Fred Van Ee",
+    "phone": "(641) 780-1901",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Dennis Fogle",
+    "phone": "(641) 780-5385",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Bradley J Rietveld",
+    "phone": "(641) 628-8851",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.marioncountyiowa.gov/about/elected_officials/township/",
+  "township": "Lake Prairie township"
+ },
+ "1912592472": {
+  "asOf": "2026-10-01",
+  "county": "Marion",
+  "countyFips": "19125",
+  "officials": [
+   {
+    "name": "Angela Bacus",
+    "phone": "(641) 891-5545",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Cliff De Jong",
+    "phone": "(641) 944-5209",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.marioncountyiowa.gov/about/elected_officials/township/",
+  "township": "Liberty township"
+ },
+ "1912593399": {
+  "asOf": "2026-10-01",
+  "county": "Marion",
+  "countyFips": "19125",
+  "officials": [
+   {
+    "name": "Aaron De Moss",
+    "phone": "(515) 681-8760",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.marioncountyiowa.gov/about/elected_officials/township/",
+  "township": "Pleasant Grove township"
+ },
+ "1912593558": {
+  "asOf": "2026-10-01",
+  "county": "Marion",
+  "countyFips": "19125",
+  "officials": [
+   {
+    "name": "Angela Clark",
+    "phone": "(515) 669-7901",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Leonard Gosselink",
+    "phone": "(641) 780-7714",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Michael Hotovec",
+    "phone": "(515) 669-6905",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.marioncountyiowa.gov/about/elected_officials/township/",
+  "township": "Red Rock township"
+ },
+ "1912594041": {
+  "asOf": "2026-10-01",
+  "county": "Marion",
+  "countyFips": "19125",
+  "officials": [
+   {
+    "name": "Jo Ann Van Wyk",
+    "phone": "(641) 660-0940",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Doug De Haan",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Stanley E Van Den Berg",
+    "phone": "(641) 627-5221",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.marioncountyiowa.gov/about/elected_officials/township/",
+  "township": "Summit township"
+ },
+ "1912594242": {
+  "asOf": "2026-10-01",
+  "county": "Marion",
+  "countyFips": "19125",
+  "officials": [
+   {
+    "name": "Robert Clark",
+    "phone": "(515) 848-3336",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Marion Friday",
+    "phone": "(641) 891-5696",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.marioncountyiowa.gov/about/elected_officials/township/",
+  "township": "Union township"
+ },
+ "1912594533": {
+  "asOf": "2026-10-01",
+  "county": "Marion",
+  "countyFips": "19125",
+  "officials": [
+   {
+    "name": "John G Pierce",
+    "phone": "(641) 344-1344",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.marioncountyiowa.gov/about/elected_officials/township/",
+  "township": "Washington township"
+ },
+ "1913990279": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Jerry Timm",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Scott Carver",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "John Flake",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Gerald Rieke",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Bloomington township"
+ },
+ "1913990561": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Dana Pittman",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Charles Snyder",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Bob Sywassink",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Cedar township"
+ },
+ "1913991491": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Donald Briggs",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Kerry Keller",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Mark Yerington",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Fruitland township"
+ },
+ "1913991494": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Rick Riessen",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tony Brus",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Keith Martz",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Dennis Price",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Fulton township"
+ },
+ "1913991590": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Annie Deshazo",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Richard Brand",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Mark Madsen",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Mike Smock",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Goshen township"
+ },
+ "1913992358": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Randall Eichelberger",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Ralph Danner Jr.",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Donald Eichelberger",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Clarence Finchum",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Lake township"
+ },
+ "1913992997": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Jim Bina",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Mark Fenner",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Martin Paul",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Maurice Strong",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Montpelier township"
+ },
+ "1913993027": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Kortney Denkman",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Dennis Anderson",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Robert Beatty",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Moscow township"
+ },
+ "1913993204": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Susan O'Donnell",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Don McCullough Sr.",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jerry Murphy",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Orono township"
+ },
+ "1913993318": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Jeff Chown",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Andy Carter",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Gene Hammons",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Casey Hudson",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Pike township"
+ },
+ "1913993816": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Scott Eichelberger",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Seventy-Six township"
+ },
+ "1913994074": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Daniel Dipple",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Richard Leach",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Sweetland township"
+ },
+ "1913994419": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Jerry Anderson",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Brent Daufeldt",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Bill Frauenholtz",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Austin Maas",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Wapsinonoc township"
+ },
+ "1913994758": {
+  "asOf": "2026-10-01",
+  "county": "Muscatine",
+  "countyFips": "19139",
+  "officials": [
+   {
+    "name": "Holly Barrett",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Trent Barrett",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Roger Johnson",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Daniel Oien",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://muscatinecountyiowa.gov/about/elected_officials/township/",
+  "township": "Wilton township"
+ },
+ "1916190321": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "James Schelle",
+    "phone": "712-661-9175",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Steve Determan",
+    "phone": "712-273-5399",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "D. Richard Hartsell",
+    "phone": "712-273-5278",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Boyer Valley township"
+ },
+ "1916190567": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Tim Huser",
+    "phone": "712-660-0794",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Dennis Degner",
+    "phone": "712-466-2615",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Doug Kolbe",
+    "phone": "712-662-4308",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Cedar township"
+ },
+ "1916190744": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Mark Bettin",
+    "phone": "712-668-4864",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tyler Bettin",
+    "phone": "712-668-4390",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Dick LaGrange",
+    "phone": "712-668-4361",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Clinton township"
+ },
+ "1916190819": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Rich Malcom",
+    "phone": "712-275-4428",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Eugene Diersen",
+    "phone": "712-668-4198",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Keith Mentzer",
+    "phone": "712-369-0090",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Cook township"
+ },
+ "1916190825": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Dale Kreft",
+    "phone": "712-466-2488",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Laverne Arndt",
+    "phone": "712-662-4896",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Joe Jacobsen",
+    "phone": "712-662-4178",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Coon Valley township"
+ },
+ "1916190954": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Geri Ringgenberg",
+    "phone": "712-636-4508",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jim Hamm",
+    "phone": "712-636-4578",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Seth Smith",
+    "phone": "712-636-4486",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Delaware township"
+ },
+ "1916191059": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Reggie Voyles",
+    "phone": "712-662-4685",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Nancy Bellcock",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jesse Hanson",
+    "phone": "712-662-3310",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Douglas township"
+ },
+ "1916191149": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Laura Foell",
+    "phone": "712-275-4339",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "LaDon Grotjohn",
+    "phone": "712-275-9950",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Alan Movall",
+    "phone": "712-660-1643",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Eden township"
+ },
+ "1916191251": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Pamela Currie",
+    "phone": "712-251-0040",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jarid Currie",
+    "phone": "712-898-1559",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Nick Currie",
+    "phone": "712-898-9502",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Eureka township"
+ },
+ "1916192157": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Ann Colvin",
+    "phone": "712-660-1563",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Loren Burbach",
+    "phone": "712-660-3027",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Danny King",
+    "phone": "712-830-9549",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Jackson township"
+ },
+ "1916192430": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Kaitlin Geake",
+    "phone": "712-269-6129",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Josh Blair",
+    "phone": "712-269-6129",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tom Geake",
+    "phone": "712-664-2184",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Levey township"
+ },
+ "1916193612": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Tiffany Mohr",
+    "phone": "712-269-6316",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Brian Buehler",
+    "phone": "712-797-0089",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Bruce Raasch",
+    "phone": "712-830-5647",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Richland township"
+ },
+ "1916193723": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Judy Buse",
+    "phone": "712-657-3366",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Melvin Buse",
+    "phone": "712-657-3366",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Rob Kent",
+    "phone": "712-830-4254",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Sac township"
+ },
+ "1916194368": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Lauren Mohrhauser",
+    "phone": "605-695-7325",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Eric McCullough",
+    "phone": "712-292-9051",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Sean O\u2019Neill",
+    "phone": "712-660-8353",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Viola township"
+ },
+ "1916194383": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Sherrie Wilson",
+    "phone": "712-657-2186",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Lon Buse",
+    "phone": "712-660-0906",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Rich Clinesmith",
+    "phone": "712-650-2275",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Wall Lake township"
+ },
+ "1916194710": {
+  "asOf": "2026-10-01",
+  "county": "Sac",
+  "countyFips": "19161",
+  "officials": [
+   {
+    "name": "Brett Lindskoog",
+    "phone": "712-275-4344",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Larry Berg",
+    "phone": "712-675-4242",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Pat Scanlan",
+    "phone": "712-675-4240",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://www.saccountyiowa.gov/about/elected_officials/township/",
+  "township": "Wheeler township"
+ },
+ "1916590513": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Kenneth Stein",
+    "phone": "712-743-3582",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Richard Ohlinger",
+    "phone": "712-743-3706",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "James Voge Jr.",
+    "phone": "712-743-3344",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Cass township"
+ },
+ "1916590627": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Keith Burchett",
+    "phone": "712-744-3606",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Scott Burchet",
+    "phone": "712-755-5237",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Steve Ineson",
+    "phone": "712-744-3626",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Center township"
+ },
+ "1916590693": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Steve Jacobs",
+    "phone": "712-764-7398",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Gerry Greve",
+    "phone": "712-764-5752",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Gene Mardesen",
+    "phone": "712-764-7453",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Clay township"
+ },
+ "1916591062": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Suzanne Rasmussen",
+    "phone": "712-766-3231",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Danny Mickelson",
+    "phone": "712-782-3263",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Jay Nielsen (Hans)",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Douglas township"
+ },
+ "1916591305": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Ronald Lee",
+    "phone": "712-744-3394",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jeff Lee",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Neil Ohms",
+    "phone": "712-744-3351",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Fairview township"
+ },
+ "1916591731": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Patty Saunders",
+    "phone": "712-654-4445",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Roger Ahrenholtz",
+    "phone": "712-654-3881",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Norman Campbell",
+    "phone": "712-782-3436",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Greeley township"
+ },
+ "1916591791": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Brad Gross",
+    "phone": "712-747-2592",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Gaylord \u201cJoe\u201d Gross",
+    "phone": "712-747-9891",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Joseph Jonathan Klein",
+    "phone": "712-579-0159",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Grove township"
+ },
+ "1916592160": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Dan Buman",
+    "phone": "712-773-3252",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "David L. Christensen",
+    "phone": "712-799-4231",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Troy Doonan",
+    "phone": "712-773-4567",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Jackson township"
+ },
+ "1916592256": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Cathy Clark",
+    "phone": "402-202-7198",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Lyle Campbell",
+    "phone": "712-782-3106",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jim Clark",
+    "phone": "712-782-3164",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Jefferson township"
+ },
+ "1916592610": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Matthew Schmitz",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Duane Errett",
+    "phone": "712-744-3241",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Jamie Fahn",
+    "phone": "712-744-3603",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Lincoln township"
+ },
+ "1916592991": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Bryan Greve",
+    "phone": "712-764-2237",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "John Clayton",
+    "phone": "712-784-3340",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Gaige Knudson",
+    "phone": "712-744-3355",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Monroe township"
+ },
+ "1916593447": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Matt Bartelson",
+    "phone": "402-871-4202",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Greg Gaskill",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   },
+   {
+    "name": "Karl Hanson",
+    "phone": "712-766-3339",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Polk township"
+ },
+ "1916593834": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Chris Evans",
+    "phone": "712-207-2080",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Robert Hall",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Mel Hursey",
+    "phone": "712-544-2341",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Shelby township"
+ },
+ "1916594266": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Jim Scheuring",
+    "phone": "712-748-7601",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Neal Gaul",
+    "phone": "712-747-3561",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Gerald Kohles",
+    "phone": "712-747-3391",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Union township"
+ },
+ "1916594560": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Connie Klein",
+    "phone": "712-489-2946",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tyler Schwery",
+    "phone": "712-489-2106",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tom Schwery",
+    "phone": "712-489-2106",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Washington township"
+ },
+ "1916594689": {
+  "asOf": "2026-10-01",
+  "county": "Shelby",
+  "countyFips": "19165",
+  "officials": [
+   {
+    "name": "Ed Goetzinger",
+    "phone": "712-579-1311",
+    "role": "Clerk",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Tony Goetz",
+    "phone": "712-627-4661",
+    "role": "Trustee",
+    "termEnds": "2026",
+    "termLength": "4"
+   },
+   {
+    "name": "Bill Hastert",
+    "phone": "712-747-2566",
+    "role": "Trustee",
+    "termEnds": "2028",
+    "termLength": "4"
+   }
+  ],
+  "sourceUrl": "https://shelbycounty.iowa.gov/about/elected_officials/township/",
+  "township": "Westphalia township"
+ },
+ "1918990396": {
+  "asOf": "2026-10-01",
+  "county": "Winnebago",
+  "countyFips": "19189",
+  "officials": [
+   {
+    "name": "Harley Hassebroek",
+    "role": "Clerk"
+   },
+   {
+    "name": "Mike Baumann",
+    "role": "Trustee"
+   },
+   {
+    "name": "Mark Beenken",
+    "role": "Trustee"
+   },
+   {
+    "name": "Keith A Frerichs",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://winnebagocountyiowa.gov/about/elected_officials/township/",
+  "township": "Buffalo township"
+ },
+ "1918990636": {
+  "asOf": "2026-10-01",
+  "county": "Winnebago",
+  "countyFips": "19189",
+  "officials": [
+   {
+    "name": "Mark Enderson",
+    "role": "Clerk"
+   },
+   {
+    "name": "Paul Abele",
+    "role": "Trustee"
+   },
+   {
+    "name": "Jill Flugum",
+    "role": "Trustee"
+   },
+   {
+    "name": "Al Hagen",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://winnebagocountyiowa.gov/about/elected_officials/township/",
+  "township": "Center township"
+ },
+ "1918991152": {
+  "asOf": "2026-10-01",
+  "county": "Winnebago",
+  "countyFips": "19189",
+  "officials": [
+   {
+    "name": "Allan VanHove",
+    "role": "Clerk"
+   },
+   {
+    "name": "Jeffery Chose",
+    "role": "Trustee"
+   },
+   {
+    "name": "Bruce Hovland",
+    "role": "Trustee"
+   },
+   {
+    "name": "Thomas O Rygh",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://winnebagocountyiowa.gov/about/elected_officials/township/",
+  "township": "Eden township"
+ },
+ "1918991365": {
+  "asOf": "2026-10-01",
+  "county": "Winnebago",
+  "countyFips": "19189",
+  "officials": [
+   {
+    "name": "Riley Lewis",
+    "role": "Clerk"
+   },
+   {
+    "name": "Caroll G Carson",
+    "role": "Trustee"
+   },
+   {
+    "name": "Jan Faulkner",
+    "role": "Trustee"
+   },
+   {
+    "name": "Curt Schleuger",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://winnebagocountyiowa.gov/about/elected_officials/township/",
+  "township": "Forest township"
+ },
+ "1918991716": {
+  "asOf": "2026-10-01",
+  "county": "Winnebago",
+  "countyFips": "19189",
+  "officials": [
+   {
+    "name": "Karen Meyering",
+    "role": "Clerk"
+   },
+   {
+    "name": "David Milbrandt",
+    "role": "Trustee"
+   },
+   {
+    "name": "Allen Post",
+    "role": "Trustee"
+   },
+   {
+    "name": "Doug Swingen",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://winnebagocountyiowa.gov/about/elected_officials/township/",
+  "township": "Grant township"
+ },
+ "1918992316": {
+  "asOf": "2026-10-01",
+  "county": "Winnebago",
+  "countyFips": "19189",
+  "officials": [
+   {
+    "name": "Darla Thompson",
+    "role": "Clerk"
+   },
+   {
+    "name": "Dan Arnevik",
+    "role": "Trustee"
+   },
+   {
+    "name": "Mark Krull",
+    "role": "Trustee"
+   },
+   {
+    "name": "Jon Ostrander",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://winnebagocountyiowa.gov/about/elected_officials/township/",
+  "township": "King township"
+ },
+ "1918992628": {
+  "asOf": "2026-10-01",
+  "county": "Winnebago",
+  "countyFips": "19189",
+  "officials": [
+   {
+    "name": "Melissa Duve",
+    "role": "Clerk"
+   },
+   {
+    "name": "Harlan Asmus",
+    "role": "Trustee"
+   },
+   {
+    "name": "Tom Balvance",
+    "role": "Trustee"
+   },
+   {
+    "name": "Cordell Satre",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://winnebagocountyiowa.gov/about/elected_officials/township/",
+  "township": "Lincoln township"
+ },
+ "1918992640": {
+  "asOf": "2026-10-01",
+  "county": "Winnebago",
+  "countyFips": "19189",
+  "officials": [
+   {
+    "name": "Gary Graber",
+    "role": "Clerk"
+   },
+   {
+    "name": "Tim Retland",
+    "role": "Trustee"
+   },
+   {
+    "name": "David Thorland",
+    "role": "Trustee"
+   },
+   {
+    "name": "Lynn J Wooge",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://winnebagocountyiowa.gov/about/elected_officials/township/",
+  "township": "Linden township"
+ },
+ "1918992706": {
+  "asOf": "2026-10-01",
+  "county": "Winnebago",
+  "countyFips": "19189",
+  "officials": [
+   {
+    "name": "Fred Engebretson",
+    "role": "Clerk"
+   },
+   {
+    "name": "Roger Olien",
+    "role": "Trustee"
+   },
+   {
+    "name": "Ron Penning",
+    "role": "Trustee"
+   },
+   {
+    "name": "Darris Peterson",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://winnebagocountyiowa.gov/about/elected_officials/township/",
+  "township": "Logan township"
+ },
+ "1918993038": {
+  "asOf": "2026-10-01",
+  "county": "Winnebago",
+  "countyFips": "19189",
+  "officials": [
+   {
+    "name": "Steven C Knudtson",
+    "role": "Clerk"
+   },
+   {
+    "name": "James Benson",
+    "role": "Trustee"
+   },
+   {
+    "name": "Lindsay Langfald",
+    "role": "Trustee"
+   },
+   {
+    "name": "Douglas Tweeten",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://winnebagocountyiowa.gov/about/elected_officials/township/",
+  "township": "Mount Valley township"
+ },
+ "1918993105": {
+  "asOf": "2026-10-01",
+  "county": "Winnebago",
+  "countyFips": "19189",
+  "officials": [
+   {
+    "name": "James Thorson",
+    "role": "Clerk"
+   },
+   {
+    "name": "Brian Abele",
+    "role": "Trustee"
+   },
+   {
+    "name": "Bill Schutter",
+    "role": "Trustee"
+   },
+   {
+    "name": "Roger Solomonson",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://winnebagocountyiowa.gov/about/elected_officials/township/",
+  "township": "Newton township"
+ },
+ "1918993141": {
+  "asOf": "2026-10-01",
+  "county": "Winnebago",
+  "countyFips": "19189",
+  "officials": [
+   {
+    "name": "Matt Helgeson",
+    "role": "Clerk"
+   },
+   {
+    "name": "Homer Peterson",
+    "role": "Trustee"
+   },
+   {
+    "name": "James Rygh",
+    "role": "Trustee"
+   },
+   {
+    "name": "Andy Stene",
+    "role": "Trustee"
+   }
+  ],
+  "sourceUrl": "https://winnebagocountyiowa.gov/about/elected_officials/township/",
+  "township": "Norway township"
+ }
+}

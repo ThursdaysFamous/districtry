@@ -97,8 +97,8 @@ MIN_REGISTER_LAYER = 13
 EXPECT_LAYER_IDS = [
     "us-house", "mn-senate", "county", "mn-house", "school-district-unified",
     "zip-code", "school-district-elementary", "county-subdivision",
-    "municipality", "school-district-secondary", "police-station",
-    "fire-station", "post-office",
+    "voting-precinct", "municipality", "school-district-secondary",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -108,6 +108,7 @@ GEOMETRY_FILES = {
     "congress-districts.json": (8, 8),  # U.S. House districts, pre-built from TIGERweb Legislative layer 0.
     "mn-senate-districts.json": (67, 67),  # Minnesota Senate districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate, plus the 67-of-67 nesting gate against the House layer).
     "mn-house-districts.json": (134, 134),  # Minnesota House districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate; the A/B pair of each Senate district shares its every boundary vertex).
+    "mn-precincts.json": (4105, 4105),  # Every Minnesota voting precinct, pre-built by mn/scripts/build_mn_precincts.py from the Secretary of State's own statewide service (paged at the service's 2,000-record cap; Douglas-Peucker at a 4 m interval; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 4,105 count floor on both the fetch and the simplified output). This instance's largest file at 1.67 MB gzipped, fetched only when a reader switches the layer on.
 }
 
 # file -> minimum key count (officeholder rosters).

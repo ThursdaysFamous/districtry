@@ -30,22 +30,22 @@ STRING. The sentence above said "several sites in this fleet" for ten days
 (it landed 2026-09-02) without naming one. scripts/probe_user_agents.py asks each host the same page
 four ways — each stack with UA_ROSTER_BOT and with UA_CHROME_WIN_126 plus
 UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
-2026-09-12 across 296 hosts, of which 283 are reached by a browser-string
-caller, 66 of them measured or re-measured since — 61 on 2026-09-13 at the page a
+2026-09-12 across 310 hosts, of which 277 are reached by a browser-string
+caller, 81 of them measured or re-measured since — 61 on 2026-09-13 at the page a
 scraper reads rather than the directory above it, four county GIS services on
 2026-09-15, and www.cpsboe.org on 2026-09-23, when the Chicago school board roster
-began reading it: 226 serve UA_ROSTER_BOT a full page, 18 refuse it and answer the
+began reading it: 237 serve UA_ROSTER_BOT a full page, 21 refuse it and answer the
 browser string, and 7 refuse the `requests` STACK while serving the same token
 on the stdlib client, so on those a browser string is credited with a fix the
 stack made. (The first sweep read 203: 37 hosts had been probed at the first
 half of a URL split across two string literals, and 23 more at a directory a
 page sat under; not one re-probe moved a host INTO a refusal.) Per file
 (`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
-and the artifact rather than remembered): 41 files send a browser string; 2
+and the artifact rather than remembered): 42 files send a browser string; 2
 of them reach only hosts that serve the token a full page, 22 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 17 reach at least one host that refuses it -- and 206 of
-the 296 measured hosts are still reached by such a caller. The pair 101/62 that
+`requests` stack), and 18 reach at least one host that refuses it -- and 220 of
+the 310 measured hosts are still reached by such a caller. The pair 101/62 that
 stood here until 2026-10-01 was the state before SIXTY scrapers were switched
 off a Chrome string onto our own token in one change: every page each of them
 fetches was re-read with the token on that file's own HTTP stack and answered in
@@ -406,6 +406,37 @@ def require_robots_once(url, user_agent, headers=None, label=None, out=None,
     print("robots.txt %s: %s" % (host, why), file=stream)
     _ROBOTS_ASKED.add(key)
     return why
+
+
+def output_path(default, usage=None):
+    """The output path a scraper was told to write, or `default`.
+
+    WHY THIS EXISTS, MEASURED. Seventeen scrapers read their output path as a
+    bare `sys.argv[1]`, so a FLAG in that position was taken as a filename and
+    the payload was written to a file named after the flag. On 2026-10-01 two
+    such files were found committed at the top of this repository, `--help` and
+    `--out`, byte-identical copies of Macon County's board payload: somebody
+    asked a scraper for its usage and it answered by writing a file, and
+    somebody spelled the path as an option and it believed them. Neither run
+    failed, so nothing said anything was wrong.
+
+    A leading `-` is never a path a caller meant, so it is refused rather than
+    written to, and `-h`/`--help` prints the usage it was asking for. Exit 2 is
+    the shell's own convention for a usage error, which keeps it distinct from
+    the exit 1 a scrape failure uses.
+    """
+    args = sys.argv[1:]
+    if args and args[0] in ("-h", "--help"):
+        print(usage or ("usage: %s [OUTPUT.json]   (default: %s)"
+                        % (os.path.basename(sys.argv[0]),
+                           default if default else "stdout only, no file")))
+        sys.exit(0)
+    if args and args[0].startswith("-"):
+        print("%s: %r is not an output path. This script takes the path as a "
+              "bare argument, with no option name; pass --help for usage."
+              % (os.path.basename(sys.argv[0]), args[0]), file=sys.stderr)
+        sys.exit(2)
+    return args[0] if args else default
 
 
 def make_fail(label):
@@ -784,6 +815,64 @@ def _selftest():
         require_robots_allowed = real_seam
         _ROBOTS_ASKED.clear()
 
+    # --- output_path: a flag is never a filename -----------------------------
+    # The defect this guards WROTE FILES, so every case asserts what the helper
+    # does with a flag rather than only that it complains. A plain path must
+    # still pass through untouched, or seventeen scrapers lose their argument.
+    real_argv = sys.argv
+    try:
+        for flag in ("-h", "--help"):
+            sys.argv = ["scrape.py", flag]
+            buf, real_out = io.StringIO(), sys.stdout
+            sys.stdout = buf
+            try:
+                output_path("default.json")
+                fails.append("%s must exit, not return a path" % flag)
+            except SystemExit as exc:
+                if exc.code != 0:
+                    fails.append("%s is a request, not an error: expected "
+                                 "exit 0, got %r" % (flag, exc.code))
+            finally:
+                sys.stdout = real_out
+            if "usage" not in buf.getvalue():
+                fails.append("%s must print the usage it asked for" % flag)
+            if "default.json" not in buf.getvalue():
+                fails.append("%s should name the default output" % flag)
+
+        # THE CASE THAT ACTUALLY HAPPENED: `--out somewhere.json`, where the
+        # option name itself became the filename.
+        for argv in (["scrape.py", "--out", "real.json"],
+                     ["scrape.py", "-o"],
+                     ["scrape.py", "--outfile=real.json"]):
+            sys.argv = argv
+            buf, real_err = io.StringIO(), sys.stderr
+            sys.stderr = buf
+            try:
+                got = output_path("default.json")
+                fails.append("%r must be refused, not written to; got %r"
+                             % (argv[1], got))
+            except SystemExit as exc:
+                if exc.code != 2:
+                    fails.append("a usage error is exit 2, distinct from a "
+                                 "scrape failure's 1; got %r" % (exc.code,))
+            finally:
+                sys.stderr = real_err
+            if argv[1] not in buf.getvalue():
+                fails.append("the refusal must name the argument it refused")
+
+        sys.argv = ["scrape.py", "out/real.json"]
+        if output_path("default.json") != "out/real.json":
+            fails.append("a plain path must pass through unchanged")
+        sys.argv = ["scrape.py"]
+        if output_path("default.json") != "default.json":
+            fails.append("no argument must give the default")
+        # A SCRAPER THAT WRITES NOTHING BY DEFAULT (Will County) passes None,
+        # and None must survive rather than becoming the string "None".
+        if output_path(None) is not None:
+            fails.append("a None default must stay None")
+    finally:
+        sys.argv = real_argv
+
     if fails:
         print("scraper-common selftest: FAIL", file=sys.stderr)
         for f in fails:
@@ -793,7 +882,8 @@ def _selftest():
           "ways (quiet week, changed record, add/remove, payload field, depth 3) "
           "too deep refuses, too shallow stays correct but vaguer; "
           "robots is asked once per host per client, a deferral reads as "
-          "unread, a refusal stops the process")
+          "unread, a refusal stops the process; a flag in the output-path "
+          "position is refused rather than written to, and --help prints")
     return 0
 
 

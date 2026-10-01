@@ -1,12 +1,7 @@
 {
  "19001": {
   "county": "Adair",
-  "countyAttorney": {
-   "email": "attorney@adaircountyiowa.org",
-   "name": "Melissa Larson",
-   "party": "Democratic",
-   "phone": "641-743-6390"
-  },
+  "countyAttorneyWithheld": "the county directory names Melissa Larson and the county attorney's own statewide directory names RYAN BENN",
   "recorder": {
    "email": "recorder@adaircountyiowa.org",
    "name": "Kelly Mitchell",
@@ -19,7 +14,26 @@
    "party": "Republican",
    "phone": "(641) 743-2148"
   },
-  "supervisorsWithheld": "the county directory lists 4, and Iowa Code 331.201 allows only 3 or 5",
+  "supervisorPlan": "PLAN 3",
+  "supervisorSeats": 5,
+  "supervisorSource": "https://www.adaircounty.iowa.gov/supervisors/",
+  "supervisors": [
+   {
+    "name": "Nathan Baier"
+   },
+   {
+    "name": "Michael Christoffersen"
+   },
+   {
+    "name": "Jodie Hoadley"
+   },
+   {
+    "name": "Jerry Walker"
+   },
+   {
+    "name": "Matt Wedemeyer"
+   }
+  ],
   "treasurer": {
    "email": "treas@adaircountyiowa.org",
    "name": "Brenda Wallace",
@@ -1519,7 +1533,23 @@
    "party": "No party",
    "phone": "(641) 228-1821"
   },
-  "supervisorsWithheld": "the county directory lists 2, and Iowa Code 331.201 allows only 3 or 5",
+  "supervisorPlan": "PLAN 3",
+  "supervisorSeats": 3,
+  "supervisorSource": "https://floydco.iowa.gov/m/directory/department?did=21",
+  "supervisors": [
+   {
+    "name": "Boyd Campbell",
+    "phone": "319-240-9746"
+   },
+   {
+    "name": "Gloria Carr",
+    "phone": "641-330-0989"
+   },
+   {
+    "name": "Frank Rottinghaus",
+    "phone": "641-426-0156"
+   }
+  ],
   "treasurer": {
    "name": "Jessie Holm",
    "party": "Republican",
@@ -1718,12 +1748,7 @@
  "19077": {
   "boardPhone": "(641) 747-3512",
   "county": "Guthrie",
-  "countyAttorney": {
-   "email": "d.minteer@guthriecounty.gov",
-   "name": "Dana R. Minteer",
-   "party": "Republican",
-   "phone": "641-747-3765"
-  },
+  "countyAttorneyWithheld": "the county directory names Dana Minteer and the county attorney's own statewide directory names CHARLES J. ABEL",
   "recorder": {
    "email": "recorder@guthriecounty.gov",
    "name": "Tristen Richard",
@@ -2039,7 +2064,31 @@
    "party": "Republican",
    "phone": "(515) 332-2471"
   },
-  "supervisorsWithheld": "the county directory lists 6, and Iowa Code 331.201 allows only 3 or 5",
+  "supervisorPlan": "PLAN 3",
+  "supervisorSeats": 5,
+  "supervisorSource": "https://www.humboldtcounty.iowa.gov/offices/administrative/board_of_supervisors/index.php",
+  "supervisors": [
+   {
+    "name": "Mike Carpenter",
+    "phone": "515 332-0596"
+   },
+   {
+    "name": "Rick Pedersen",
+    "phone": "515 779-4591"
+   },
+   {
+    "name": "Bob Rasmussen",
+    "phone": "515 770-0014"
+   },
+   {
+    "name": "Bruce Reimers",
+    "phone": "515 770-1067"
+   },
+   {
+    "name": "Dennis Thompson",
+    "phone": "515 332-0597"
+   }
+  ],
   "treasurer": {
    "email": "jpettinger@humboldtcountyia.org",
    "name": "Jana Pettinger",
@@ -2607,7 +2656,20 @@
    "party": "Republican",
    "phone": "(641) 774-5083"
   },
-  "supervisorsWithheld": "the county directory lists 2, and Iowa Code 331.201 allows only 3 or 5",
+  "supervisorPlan": "PLAN 1",
+  "supervisorSeats": 3,
+  "supervisorSource": "https://lucascounty.iowa.gov/board_of_supervisors/",
+  "supervisors": [
+   {
+    "name": "Larry Davis"
+   },
+   {
+    "name": "Cathy Reece"
+   },
+   {
+    "name": "Dennis Smith"
+   }
+  ],
   "treasurer": {
    "email": "gwinnh@lucasco.org",
    "name": "Hanna Gwinn",
@@ -4008,6 +4070,7 @@
   }
  },
  "19181": {
+  "boardPhone": "(515) 690-9101",
   "county": "Warren",
   "countyAttorney": {
    "email": "douge@warrencountyia.org",
@@ -4027,7 +4090,30 @@
    "party": "Republican",
    "phone": "(515) 961-1122"
   },
-  "supervisorsWithheld": "the county directory lists 5, and the supervisor-district geometry seats 3",
+  "supervisorPlan": "PLAN 3",
+  "supervisorSeats": 5,
+  "supervisors": [
+   {
+    "name": "Brian Arnold",
+    "party": "Republican"
+   },
+   {
+    "name": "Aaron Dekock",
+    "party": "Republican"
+   },
+   {
+    "name": "Travis DeWitt",
+    "party": "Republican"
+   },
+   {
+    "name": "Stephanie Erickson",
+    "party": "Republican"
+   },
+   {
+    "name": "Crystal McIntyre",
+    "party": "Republican"
+   }
+  ],
   "treasurer": {
    "email": "treasurer@warrencountyia.org",
    "name": "Andrea Semple",

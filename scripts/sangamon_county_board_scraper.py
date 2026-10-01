@@ -68,7 +68,11 @@ import sys
 import time
 
 import requests
-from scraper_common import require_robots_once, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    require_robots_once,
+    UA_ROSTER_BOT,
+    output_path,
+)
 
 BASE = "https://sangamonil.gov/departments/a-c/county-board/districts/members/district-%d"
 SOURCE_URL = "https://sangamonil.gov/departments/a-c/county-board/districts"
@@ -230,7 +234,7 @@ def _run_parse_selftest():
 
 def main():
     _run_parse_selftest()
-    out_path = sys.argv[1] if len(sys.argv) > 1 else "sangamon_county_board_raw.json"
+    out_path = output_path("sangamon_county_board_raw.json")
     session = requests.Session()
 
     # One extra fetch, read only to tell an empty seat from a broken parse.
