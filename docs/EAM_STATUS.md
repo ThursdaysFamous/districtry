@@ -19,11 +19,11 @@ whether the data exists** — a level no publisher offers, that we
 asked about and were refused, counts as covered — so a county
 publisher cannot fail an app on it.
 
-**No gap record claims a level yet, so every count here is a
-floor.** A record can say which levels it covers and who was
-asked, when, and what came back; none does, so a level this
-report calls open may already have a record behind it. The
-report understates an app rather than passing one.
+**2 gap-record claims name a level, 0 of which carry a
+dated ask that counts.** A level this report calls open and
+that no record claims is still a floor. A claim that earns
+nothing is printed under its level with the reason, rather
+than passed.
 
 A level measured over every county, or every local government
 above the standard's floor, is credited **unit by unit**: a record

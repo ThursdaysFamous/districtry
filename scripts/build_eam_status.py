@@ -2119,14 +2119,22 @@ def score_covered(tag, counties_named, total_counties, expected, records,
         # such a level therefore names the unit it is about, and the level
         # closes only when EVERY unanswered unit has one.
         if short_units is not None:
-            for gid, _q, _n, unit in claimed:
-                if unit is None:
-                    fail("%s: gap record `%s` claims the whole of `%s`, which "
-                         "is measured %s by %s. Name the %s it is about, as "
-                         "`%s:<%s id>` — one record cannot speak for the units "
-                         "nobody has asked about."
+            # A WHOLE-LEVEL CLAIM WITH NO QUALIFYING ASK IS LEGAL AND EARNS
+            # NOTHING, which is the ordinary state of a level nobody has written
+            # to yet — New York's two are exactly that, and a first version of
+            # this refused them on SHAPE alone, failing the build over records
+            # that could never have been credited. The fault Michigan found is
+            # about CREDITING, so that is where the refusal belongs: a claim
+            # carrying an ask that counts must name its units, because that is
+            # the one that would otherwise pass a tier on one letter.
+            for gid, qualifies, _n, unit in claimed:
+                if unit is None and qualifies:
+                    fail("%s: gap record `%s` carries an ask that counts and "
+                         "claims the whole of `%s`, which is measured %s by %s. "
+                         "Name the %s it is about, as `%s:<%s id>` — one letter "
+                         "cannot speak for the %s nobody has asked about."
                          % (tag, gid, key, unit_word, unit_word, unit_word,
-                            key, unit_word))
+                            key, unit_word, unit_plural))
         else:
             for gid, _q, _n, unit in claimed:
                 if unit is not None:
@@ -2188,6 +2196,9 @@ def score_covered(tag, counties_named, total_counties, expected, records,
             verdict = "recorded"
             detail = "; ".join("`%s` — %s" % (gid, note)
                                for gid, _q, note, _u in credited)
+        # A whole-level claim on a per-unit level cannot be credited, so it is
+        # never in `credited` and falls through to the earns-nothing line below
+        # with its own reason.
         if verdict == "open" and claimed and not credited:
             unearned = "; ".join(
                 "`%s`%s — %s" % (gid, " (%s)" % u if u else "", note)

@@ -125,9 +125,13 @@ credited none of them and every count it published was a floor.
   7-digit GEOID the city tier is keyed by. The level closes only when **every** unanswered
   unit is either answered or has its own credited record. Without that, one city's refusal
   would carry a whole state's local tier while the other units were unasked, which is what
-  the first version of this did; a whole-level claim on one of those two levels now fails
-  by name. The other eleven levels are answered for a whole state at once and take a bare
-  key — a unit on one of them fails too.
+  the first version of this did. The other eleven levels are answered for a whole state at
+  once and take a bare key — a unit on one of them fails.
+- **A whole-level claim on one of those two levels is legal while it earns nothing**, and
+  that is the ordinary state of a level nobody has written to yet: New York's two read
+  exactly that way. It fails only once it carries an ask that COUNTS, because that is the
+  claim that would otherwise pass a whole tier on one letter. A first version refused it on
+  shape alone and took the build red over two records that could never have been credited.
 - **`ask`** is the ledger entry, on the record itself, because **the record is the
   ledger**: `docs/ASK_DRAFTS.md` step 2 says the send date is written "in the relevant gap
   record in `docs/DATA_LAYER_GUIDEBOOK.md`", and that prose is all there has ever been.
