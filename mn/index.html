@@ -8374,6 +8374,7 @@ function initMinnesotaExplorer() {
     "zip-code",          // 1,385 ZIP Code Tabulation Areas intersecting Minnesota's envelope, live from TIGERweb (no data/app file) — 250 km2 mean feature area, between a school district and a township
     "school-district-elementary", // 8 districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points
     "county-subdivision", // 2,762 records tiling the state, live from TIGERweb (no data/app file) — 1,797 townships, 901 city placeholder records for 851 distinct cities (50 of which cross a county line), 59 unorganized territories, 2 unorganized survey townships, and 3 'not defined' records that are Lake Superior water
+    "voting-precinct",   // 4,105 precincts tiling the state at a 55 km2 mean feature area, pre-built from the Secretary of State's own statewide service — the finest tiling on this map, and the only layer here published by the office that maintains it rather than by the Census
     "municipality",      // 856 incorporated places, live from TIGERweb (no data/app file) — every one a city, with no village among them, at a 14.7 km2 mean feature area
     "school-district-secondary", // 1 district, live from TIGERweb (no data/app file) — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota
     "police-station",    // 694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
@@ -12256,6 +12257,102 @@ function initMinnesotaExplorer() {
     }
   });
 
+  /* ---------- 1b. Voting precinct — the Secretary of State's own layer ----------
+   * Minnesota publishes its 4,105 precincts ONCE, statewide, from the office
+   * that maintains them, so this layer ships whole rather than county by
+   * county (mn/scripts/build_mn_precincts.py; data/app/mn-precincts.json,
+   * served same-origin and service-worker cached).
+   *
+   * A PRECINCT ELECTS NOBODY, so this card has no officeholder row to be
+   * missing. It is an election-administration unit: where a reader votes and
+   * how their ballots are reported. The card says that rather than leaving a
+   * reader to wonder which representative is absent.
+   *
+   * THE PUBLISHER'S OWN CAVEAT IS ON THE CARD. The Secretary of State states
+   * it cannot assure the data is 100% accurate and directs anyone needing a
+   * definitive line to the city, township, or county itself. That is a fact a
+   * reader needs at the moment they read a precinct, not a note in a builder.
+   *
+   * The source service also carries each precinct's county commissioner,
+   * judicial, soil-and-water, hospital and park district and its city ward.
+   * None of that is in this file: they are other bodies with other cards, and
+   * this card answers for the precinct only.
+   * ---------- */
+  var loadMnPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-precincts.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "voting-precinct",
+    group: "geography",
+    label: "Voting Precinct",
+    overlay: {
+      load: loadMnPrecincts,
+      // the finest tiling on this map — light stroke so it reads under the
+      // broader boundaries rather than competing with them
+      style: { color: "#7C5CBF", weight: 1, fillColor: "#A78BFA", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["pctname"]);
+      return name != null ? String(name) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadMnPrecincts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          name: findPropCI(props, ["pctname"]),
+          county: findPropCI(props, ["countyname"]),
+          place: findPropCI(props, ["mcdname"]),
+          placeType: findPropCI(props, ["ctu_type"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      // The service's blank is a single space, not an empty string, so every
+      // value is trimmed before it is treated as present.
+      function text(value) {
+        var s = value == null ? "" : String(value).trim();
+        return s ? s : null;
+      }
+      var place = text(result.place);
+      var placeType = text(result.placeType);
+      var county = text(result.county);
+      wrap.appendChild(renderBodyIntro({
+        title: text(result.name) || "Unknown precinct",
+        note: county ? county + " County" : null
+      }));
+      var rows = [];
+      if (place) {
+        rows.push({
+          label: placeType === "city" ? "City" : (placeType === "township" ? "Township" : "Town or city"),
+          value: place
+        });
+      }
+      rows.push({
+        label: "Who it elects",
+        value: "Nobody. A precinct is where you vote and how your ballots are " +
+          "reported, not a district with a representative of its own."
+      });
+      rows.push({
+        label: "How exact this line is",
+        value: "The Secretary of State maintains these boundaries but does not " +
+          "assure they are exact. For a definitive line, ask the city, " +
+          "township, or county itself."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Find your polling place",
+        url: "https://pollfinder.sos.mn.gov"
+      };
+    }
+  });
+
   /* ---------- 2. U.S. House — boundary + roster join ----------
    * Pre-built TIGERweb Legislative layer 0 geometry
    * (data/app/congress-districts.json, this state only) joined by district
@@ -14443,7 +14540,7 @@ function initMinnesotaExplorer() {
     "school-district-unified", "school-district-elementary", "school-district-secondary",
     // Then geography, broadest first, and the three proximity layers last
     // because they name buildings rather than districts.
-    "county", "county-subdivision", "municipality", "zip-code",
+    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -14910,8 +15007,8 @@ function initMinnesotaExplorer() {
     "#1F7A6B": "#5ACBB6", "#2E8C7C": "#61D9C3", "#2F6B4F": "#6FBD96", "#3FA898": "#67F0DA",
     "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
     "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
-    "#8C2E4A": "#F47294", "#8D7BB5": "#D1BFFE", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
-    "#B23A1E": "#FD9177", "#D06A9C": "#FFBDDA"};
+    "#7C5CBF": "#C2ABFF", "#8C2E4A": "#F47294", "#8D7BB5": "#D1BFFE", "#A78BFA": "#E0DAFF",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B23A1E": "#FD9177", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

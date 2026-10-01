@@ -12264,6 +12264,21 @@ function initWisconsinExplorer() {
   var loadWiMunicipalClerks = makeCached(function () {
     return fetchJSONWithRetry("data/app/wi-municipal-clerks.json", {}, 2);
   });
+  // The governing BODY, in the municipalities that elect their whole board AT
+  // LARGE. A separate roster from wi-alderpersons.json for one reason: that file
+  // is keyed by DISTRICT, and a council elected citywide has none, so seating
+  // these members under numbers would tell a reader they were elected in a way
+  // they were not.
+  //
+  // THE SEAT LABEL IS NOT A DISTRICT and the card never prints it as one.
+  // Caledonia's village board labels its members Trustee 1 to Trustee 6, which
+  // reads exactly like a district number, while the village's own board page
+  // states that "The Trustees and President represent the entire Village". So
+  // the label rides each person as their ROLE and the block says in words that
+  // the whole board is elected by the whole municipality.
+  var loadWiMunicipalBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wi-municipal-boards.json", {}, 2);
+  });
   // Three facts from the Wisconsin Blue Book 2025-26 section 190, used by
   // written permission from the Legislative Reference Bureau (LICENSE-DATA.md
   // section 4). The permission is narrow and so is this: the year a city or
@@ -13291,7 +13306,8 @@ function initWisconsinExplorer() {
         queryFeatureAt(loadPlaces, point),
         loadWiMunicipalExecutives().catch(function () { return null; }),
         loadWiMunicipalClerks().catch(function () { return null; }),
-        loadWiMunicipalFacts().catch(function () { return null; })
+        loadWiMunicipalFacts().catch(function () { return null; }),
+        loadWiMunicipalBoards().catch(function () { return null; })
       ]).then(function (parts) {
         var feature = parts[0];
         if (!feature) return null; // unincorporated — the engine renders this layer's own emptyNote
@@ -13301,6 +13317,7 @@ function initWisconsinExplorer() {
         var exec = (parts[1] && key) ? parts[1][key] : null;
         var clerk = (parts[2] && key) ? parts[2][key] : null;
         var facts = (parts[3] && key) ? parts[3][key] : null;
+        var board = (parts[4] && key) ? parts[4][key] : null;
         return {
           seq: seq,
           name: findPropCI(props, ["name"]),
@@ -13308,6 +13325,7 @@ function initWisconsinExplorer() {
           executive: exec || null,
           clerk: clerk || null,
           facts: facts || null,
+          board: board || null,
           factsEdition: (parts[3] && parts[3]._meta) ? parts[3]._meta.asOf : null,
           factsLoaded: !!parts[3]
         };
@@ -13408,6 +13426,52 @@ function initWisconsinExplorer() {
           });
           wrap.appendChild(renderFieldStack(stack));
         }
+      }
+      // THE GOVERNING BODY, where the whole of it is elected at large. Its own
+      // labelled block, between the executive and the clerk, because the three
+      // are three different things and an unlabelled run of names would read as
+      // one body.
+      //
+      // THE BLOCK SAYS HOW THEY WERE ELECTED, in words, for the reason the seat
+      // labels exist: Caledonia's are Trustee 1 to Trustee 6 and a reader seeing
+      // a number beside a name will read it as a district unless told otherwise.
+      // The sentence is what makes the number safe to print at all.
+      var board = result.board;
+      if (board && board.board && board.board.length) {
+        wrap.appendChild(renderSectionLabel(
+          board.board.length + " members, elected at large"));
+        wrap.appendChild(renderPersonRows(board.board.map(function (m) {
+          var person = { name: String(m.name) };
+          if (m.role) person.badge = String(m.role);
+          if (m.phone) person.phone = String(m.phone);
+          if (m.email) person.email = String(m.email);
+          return person;
+        })));
+        var boardRows = [{
+          label: "How they are elected",
+          value: "Every seat on this body is elected by the whole " +
+            "municipality, so the numbers beside these names are seats rather " +
+            "than districts and there is no district to draw."
+        }];
+        // A CARRIED ROSTER SAYS SO, the same posture as the executive above: the
+        // whole value of a weekly re-read is that a shown name was corroborated
+        // this week, and without this row a carried one reads identically.
+        if (board.carriedFrom) {
+          boardRows.push({
+            label: "Last re-read",
+            value: "The municipality's own source could not be read since " +
+              String(board.carriedFrom) + "; these names are carried from the " +
+              "last refresh that could read it" +
+              (board.carriedWhy ? " (" + String(board.carriedWhy) + ")" : "") + "."
+          });
+        } else if (board.asOf) {
+          boardRows.push({
+            label: "As of",
+            value: "Read from the municipality's own source on " +
+              String(board.asOf) + "."
+          });
+        }
+        wrap.appendChild(renderFieldStack(boardRows));
       }
       // THE CLERK — statewide, and the one officer this card can name
       // everywhere. Kept in its own labelled block below the executive so the
