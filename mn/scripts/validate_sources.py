@@ -207,6 +207,24 @@ PROVENANCE = [
             "out of it."
         ),
     },
+    {
+        "layer": "mn-judicial-district",
+        "app_file": "mn-judicial-districts.json",
+        "source_url": "https://www.revisor.mn.gov/statutes/cite/2.722",
+        "note": (
+            "The ten judicial districts. THE SOURCE IS A STATUTE RATHER THAN A "
+            "DATASET, which is why this row's url is the Revisor's: Minn. Stat. "
+            "2.722 subd. 1 names the counties in each district, and the lines are "
+            "those counties' own, dissolved from state-counties.json. So what can "
+            "go stale here is the TEXT -- an amendment to subd. 1, or an alteration "
+            "the supreme court makes under subd. 2 -- and the builder parses the "
+            "county lists off this page on every run rather than carrying a "
+            "transcription. A second, independent witness is gated with it: the "
+            "Secretary of State's precinct service (the row above) carries a "
+            "judicial district on every one of the 4,105 precincts, and all 87 "
+            "counties must agree with the statute before anything is written."
+        ),
+    },
 ]
 
 ENDPOINTS = [

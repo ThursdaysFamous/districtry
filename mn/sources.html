@@ -1073,7 +1073,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">14 layers — 3 political and legislative, 2 public safety, 3 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">15 layers — 4 political and legislative, 2 public safety, 3 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1082,7 +1082,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1100,6 +1100,18 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">Minnesota — statewide.</td>
+              </tr>
+              <tr id="layer-mn-judicial-district">
+                <th scope="row"><span class="layer-name">Judicial District</span><code>mn-judicial-district</code></th>
+                <td data-label="What it answers">The judicial district covering the point: the district whose trial-court judges the reader votes on, the counties in it, the number of judgeships state law authorizes for it, and where it maintains permanent chambers.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.revisor.mn.gov/statutes/cite/2.722" target="_blank" rel="noopener">Minn. Stat. 2.722 subd. 1 — the statute names the counties in each of the ten districts; the lines are those counties' own, dissolved from the county fabric this app ships, and no new boundary is drawn</a></li>
+                    <li><a href="https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0" target="_blank" rel="noopener">Minnesota Secretary of State, voting districts — the judicial district on each of the state's 4,105 precincts, read as an independent second witness that every county sits where the statute says</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO JUDGE IS NAMED, and the reason is measured rather than assumed: www.mncourts.gov refuses all four client rungs this project has with HTTP 403 (measured 2026-10-01), so the 287 authorized judgeships have no reachable publisher here. The card states the authorized count from the statute, says plainly that it names nobody, and links the court. Gap mn-judicial-roster.</td>
+                <td data-label="Where it applies">Minnesota — statewide, all 87 counties.</td>
               </tr>
               <tr id="layer-mn-senate">
                 <th scope="row"><span class="layer-name">Minnesota Senate District</span><code>mn-senate</code></th>
@@ -1325,6 +1337,33 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Minnesota — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mn/sources.html#dataset-mn-judicial-district",
+      "identifier": "mn-judicial-district",
+      "name": "Judicial District",
+      "description": "The judicial district covering the point: the district whose trial-court judges the reader votes on, the counties in it, the number of judgeships state law authorizes for it, and where it maintains permanent chambers. NO JUDGE IS NAMED, and the reason is measured rather than assumed: www.mncourts.gov refuses all four client rungs this project has with HTTP 403 (measured 2026-10-01), so the 287 authorized judgeships have no reachable publisher here. The card states the authorized count from the statute, says plainly that it names nobody, and links the court. Gap mn-judicial-roster.",
+      "url": "https://districtry.com/mn/sources.html#layer-mn-judicial-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/mn/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Minn. Stat. 2.722 subd. 1 — the statute names the counties in each of the ten districts; the lines are those counties' own, dissolved from the county fabric this app ships, and no new boundary is drawn",
+          "url": "https://www.revisor.mn.gov/statutes/cite/2.722"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Minnesota Secretary of State, voting districts — the judicial district on each of the state's 4,105 precincts, read as an independent second witness that every county sits where the statute says",
+          "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Minnesota — statewide, all 87 counties"
       }
     },
     {

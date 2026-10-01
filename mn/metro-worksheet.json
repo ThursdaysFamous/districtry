@@ -95,10 +95,32 @@
       }
     },
     {
+      "id": "mn-judicial-district",
+      "label": "Judicial District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "Ten districts of whole counties, a mean 22,000 km2 each — larger than a Senate district and smaller than a congressional one",
+      "source": {
+        "answers": "The judicial district covering the point: the district whose trial-court judges the reader votes on, the counties in it, the number of judgeships state law authorizes for it, and where it maintains permanent chambers.",
+        "boundary": [
+          {
+            "label": "Minn. Stat. 2.722 subd. 1 — the statute names the counties in each of the ten districts; the lines are those counties' own, dissolved from the county fabric this app ships, and no new boundary is drawn",
+            "url": "https://www.revisor.mn.gov/statutes/cite/2.722"
+          },
+          {
+            "label": "Minnesota Secretary of State, voting districts — the judicial district on each of the state's 4,105 precincts, read as an independent second witness that every county sits where the statute says",
+            "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
+          }
+        ],
+        "people": "NO JUDGE IS NAMED, and the reason is measured rather than assumed: www.mncourts.gov refuses all four client rungs this project has with HTTP 403 (measured 2026-10-01), so the 287 authorized judgeships have no reachable publisher here. The card states the authorized count from the statute, says plainly that it names nobody, and links the court. Gap mn-judicial-roster.",
+        "applies": "Minnesota — statewide, all 87 counties."
+      }
+    },
+    {
       "id": "mn-senate",
       "label": "Minnesota Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "67 Senate districts, each divided into two whole House districts",
       "source": {
         "answers": "The Minnesota Senate district covering the point.",
@@ -116,7 +138,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "87 counties, pre-built from TIGERweb; this instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point.",
@@ -134,7 +156,7 @@
       "id": "mn-house",
       "label": "Minnesota House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "134 House districts; two nest exactly inside each Senate district, lettered A and B",
       "source": {
         "answers": "The Minnesota House district covering the point.",
@@ -152,7 +174,7 @@
       "id": "school-district-unified",
       "label": "School District (Unified)",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "322 districts covering almost all of Minnesota, live from TIGERweb (no data/app file) — 693 km2 mean feature area, the largest of the three school tilings",
       "source": {
         "answers": "The unified (every-grade) school district covering the point.",
@@ -170,7 +192,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "1,385 ZIP Code Tabulation Areas intersecting Minnesota's envelope, live from TIGERweb (no data/app file) — 250 km2 mean feature area, between a school district and a township",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the delivery routes sharing a ZIP code, not a postal boundary.",
@@ -188,7 +210,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "8 districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points",
       "source": {
         "answers": "The elementary-tiling school district covering the point, in the eight places Minnesota has one.",
@@ -206,7 +228,7 @@
       "id": "county-subdivision",
       "label": "Township or City",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "2,762 records tiling the state, live from TIGERweb (no data/app file) — 1,797 townships, 901 city placeholder records for 851 distinct cities (50 of which cross a county line), 59 unorganized territories, 2 unorganized survey townships, and 3 'not defined' records that are Lake Superior water",
       "source": {
         "answers": "The organized town covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is.",
@@ -224,7 +246,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "4,105 precincts tiling the state at a 55 km2 mean feature area, pre-built from the Secretary of State's own statewide service — the finest tiling on this map, and the only layer here published by the office that maintains it rather than by the Census",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -242,7 +264,7 @@
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "856 incorporated places, live from TIGERweb (no data/app file) — every one a city, with no village among them, at a 14.7 km2 mean feature area",
       "source": {
         "answers": "The city covering the point, if any. Most of Minnesota's land is township or unorganized territory, where the card is correctly empty.",
@@ -260,7 +282,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "1 district, live from TIGERweb (no data/app file) — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota",
       "source": {
         "answers": "The secondary school district covering the point, in the one place Minnesota has one.",
@@ -278,7 +300,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -296,7 +318,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "1,484 fire and EMS station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest fire and EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -314,7 +336,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "1,199 post-office points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -353,6 +375,10 @@
       "expected": "61A"
     },
     {
+      "layer": "mn-judicial-district",
+      "expected": "Fourth Judicial District"
+    },
+    {
       "layer": "voting-precinct",
       "expected": "Minneapolis W-7 P-6"
     }
@@ -384,6 +410,12 @@
         "min_features": 8,
         "max_features": 8,
         "note": "U.S. House districts, pre-built from TIGERweb Legislative layer 0."
+      },
+      {
+        "file": "mn-judicial-districts.json",
+        "min_features": 10,
+        "max_features": 10,
+        "note": "The ten judicial districts, dissolved from state-counties.json by mn/scripts/build_mn_judicial_districts.py. The county membership is parsed out of Minn. Stat. 2.722 subd. 1 on every run rather than transcribed, and the write is gated three ways: the statute's lists must partition all 87 counties, the Secretary of State's judicial-district attribute on all 4,105 precincts must agree county by county, and every county's own interior anchor must land in exactly its own district."
       },
       {
         "file": "mn-senate-districts.json",
@@ -418,7 +450,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mn-shell-v2",
+    "cache_name": "districtry-mn-shell-v3",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",

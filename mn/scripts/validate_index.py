@@ -95,10 +95,11 @@ MIN_REGISTER_LAYER = 13
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "mn-senate", "county", "mn-house", "school-district-unified",
-    "zip-code", "school-district-elementary", "county-subdivision",
-    "voting-precinct", "municipality", "school-district-secondary",
-    "police-station", "fire-station", "post-office",
+    "us-house", "mn-judicial-district", "mn-senate", "county", "mn-house",
+    "school-district-unified", "zip-code", "school-district-elementary",
+    "county-subdivision", "voting-precinct", "municipality",
+    "school-district-secondary", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -106,6 +107,7 @@ GEOMETRY_FILES = {
     "metro-outline.json": (1, 1),  # The whole-Minnesota-state outline for the coverage wash (loadMetroOutline), dissolved from all 87 counties' TIGERweb State_County layer-1 geometry by mn/scripts/build_metro_outline.py (METRO_COUNTY_FIPS = every county; DISPATCH_COUNTY_FIPS empty — no layer is county-keyed yet). Minnesota is 2-band coverage: its county tier and its statewide tier coincide, so there is no second, wider region file and coverage_key declares no region.
     "state-counties.json": (87, 87),  # Every county, pre-built from TIGERweb State_County layer 1.
     "congress-districts.json": (8, 8),  # U.S. House districts, pre-built from TIGERweb Legislative layer 0.
+    "mn-judicial-districts.json": (10, 10),  # The ten judicial districts, dissolved from state-counties.json by mn/scripts/build_mn_judicial_districts.py. The county membership is parsed out of Minn. Stat. 2.722 subd. 1 on every run rather than transcribed, and the write is gated three ways: the statute's lists must partition all 87 counties, the Secretary of State's judicial-district attribute on all 4,105 precincts must agree county by county, and every county's own interior anchor must land in exactly its own district.
     "mn-senate-districts.json": (67, 67),  # Minnesota Senate districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate, plus the 67-of-67 nesting gate against the House layer).
     "mn-house-districts.json": (134, 134),  # Minnesota House districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate; the A/B pair of each Senate district shares its every boundary vertex).
     "mn-precincts.json": (4105, 4105),  # Every Minnesota voting precinct, pre-built by mn/scripts/build_mn_precincts.py from the Secretary of State's own statewide service (paged at the service's 2,000-record cap; Douglas-Peucker at a 4 m interval; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 4,105 count floor on both the fetch and the simplified output). This instance's largest file at 1.67 MB gzipped, fetched only when a reader switches the layer on.

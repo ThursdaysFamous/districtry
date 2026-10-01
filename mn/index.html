@@ -8367,6 +8367,7 @@ function initMinnesotaExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // Congressional districts — the largest districts a state carries below the state itself
+    "mn-judicial-district", // Ten districts of whole counties, a mean 22,000 km2 each — larger than a Senate district and smaller than a congressional one
     "mn-senate",         // 67 Senate districts, each divided into two whole House districts
     "county",            // 87 counties, pre-built from TIGERweb; this instance's offline anchor layer
     "mn-house",          // 134 House districts; two nest exactly inside each Senate district, lettered A and B
@@ -12353,6 +12354,113 @@ function initMinnesotaExplorer() {
     }
   });
 
+  /* ---------- 1c. Judicial district — the counties state law names ----------
+   * Minn. Stat. 2.722 subd. 1 divides Minnesota into ten judicial districts
+   * and names the counties in each, so this boundary needed no publisher: it
+   * is the county fabric this app already ships, grouped by a list written
+   * into law and dissolved at build time
+   * (mn/scripts/build_mn_judicial_districts.py;
+   * data/app/mn-judicial-districts.json).
+   *
+   * MINNESOTA'S TRIAL JUDGES ARE ELECTED, AND IN THIS DISTRICT, which is why
+   * the layer exists at all — a reader's judicial district is a district they
+   * vote in, unlike Illinois, where a judge is elected from a subcircuit and
+   * then sits circuit-wide.
+   *
+   * NO JUDGE IS NAMED AND THE CARD SAYS SO. The statute authorizes 287
+   * judgeships across the ten districts and the card prints that district's
+   * own authorized count, which is a number of POSITIONS rather than of
+   * people: subd. 4 lets the supreme court abolish or transfer a vacant one.
+   * The only publisher of the people found is www.mncourts.gov, which serves
+   * a Cloudflare managed challenge to every client this project has — an
+   * access control, never worked around (measured 2026-10-01; gap
+   * mn-judicial-roster). The card links the court so a reader's own browser,
+   * which clears the challenge as any person's does, can go and look.
+   * ---------- */
+  var loadMnJudicialDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-judicial-districts.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "mn-judicial-district",
+    group: "political",
+    label: "Judicial District",
+    overlay: {
+      load: loadMnJudicialDistricts,
+      // the broadest political tiling after Congress — a heavier stroke than
+      // the precinct layer and a dash, so ten big shapes read as a frame
+      // rather than as fill competing with the legislative layers
+      style: { color: "#1F6F5C", weight: 2, fillColor: "#3FA98C", fillOpacity: 0.05, dashArray: "6 4" }
+    },
+    hoverName: function (feature) {
+      var props = feature.properties || {};
+      return props.name != null ? String(props.name) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadMnJudicialDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          number: props.district,
+          name: props.name,
+          counties: props.counties || [],
+          judges: props.authorizedJudges,
+          chambers: props.chambers || []
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var counties = result.counties.slice();
+      wrap.appendChild(renderBodyIntro({
+        title: result.name ? String(result.name) : "Judicial District",
+        note: counties.length === 1
+          ? counties[0] + " County"
+          : counties.length + " counties"
+      }));
+      var rows = [];
+      rows.push({
+        label: "Who you elect here",
+        value: "The district court judges who serve this district. They are " +
+          "elected on a nonpartisan ballot by the voters of the district, so " +
+          "this is a district you vote in."
+      });
+      rows.push({
+        label: "Judges this district is allowed",
+        value: result.judges + " judgeships, set by state law. That is the " +
+          "number of positions, not a count of people sitting today — the " +
+          "supreme court may hold a vacant one open, abolish it, or move it " +
+          "to another district."
+      });
+      rows.push({
+        label: "Who holds them",
+        value: "Not listed here. Minnesota's court system publishes its judges, " +
+          "but its website turns away every automated request this project " +
+          "makes, so no name can be shown without a person reading it off the " +
+          "page. Open the link below and the court will answer your own browser."
+      });
+      if (result.chambers.length) {
+        rows.push({
+          label: result.chambers.length === 1 ? "Permanent chambers" : "Permanent chambers",
+          value: result.chambers.join(", ") + " — the places state law requires " +
+            "this district to keep chambers. It sits in other county seats too."
+        });
+      }
+      if (counties.length > 1) {
+        rows.push({ label: "Counties in it", value: counties.join(", ") });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Minnesota Judicial Branch",
+        url: "https://www.mncourts.gov/"
+      };
+    }
+  });
+
   /* ---------- 2. U.S. House — boundary + roster join ----------
    * Pre-built TIGERweb Legislative layer 0 geometry
    * (data/app/congress-districts.json, this state only) joined by district
@@ -14534,6 +14642,10 @@ function initMinnesotaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "mn-senate", "mn-house",
+    // The judicial district comes after the three chambers: a reader looking
+    // for who represents them wants the legislators first, and this is ten
+    // shapes where those are 8, 67 and 134.
+    "mn-judicial-district",
     // Schools next, largest tiling first. The elementary and secondary slots
     // answer in eight places and one place respectively, so for almost every
     // reader they render as empty cards rather than as absent ones.
@@ -15004,11 +15116,12 @@ function initMinnesotaExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#155E52": "#5AB3A1", "#1F4E79": "#62A0DD",
-    "#1F7A6B": "#5ACBB6", "#2E8C7C": "#61D9C3", "#2F6B4F": "#6FBD96", "#3FA898": "#67F0DA",
-    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
-    "#7C5CBF": "#C2ABFF", "#8C2E4A": "#F47294", "#8D7BB5": "#D1BFFE", "#A78BFA": "#E0DAFF",
-    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B23A1E": "#FD9177", "#D06A9C": "#FFBDDA"};
+    "#1F6F5C": "#5EC1A7", "#1F7A6B": "#5ACBB6", "#2E8C7C": "#61D9C3", "#2F6B4F": "#6FBD96",
+    "#3FA898": "#67F0DA", "#3FA98C": "#67F1CA", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2",
+    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#7C5CBF": "#C2ABFF", "#8C2E4A": "#F47294",
+    "#8D7BB5": "#D1BFFE", "#A78BFA": "#E0DAFF", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
+    "#B23A1E": "#FD9177", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
