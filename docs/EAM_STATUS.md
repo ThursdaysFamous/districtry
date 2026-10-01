@@ -15,276 +15,87 @@ Holding a state open until every county ships hands the definition
 to county publishers; a county that will never publish a map would
 keep a state open forever while telling a reader nothing.
 
+Every instance the deploy publishes is scored, and a state joins
+this table on the commit that publishes it: the fleet is read from
+the tree and the deploy's own excludes, never from a list here. A
+`-` is a test that does not apply to an instance, which is a
+different thing from one it failed.
+
 | state | E.A.M. | counties | examined | districts | named | answered | files | maintained |
 |---|---|---|---|---|---|---|---|---|
-| il | **EAM** | 102 | 102/102 | 572 | 996 | all | 398 | all |
-| wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 262 | 240 without a job |
+| ca | **--M** | — | — | 0 | 0 | — | 14 | all |
 | ia | **EAM** | 99 | 99/99 | 81 | 81 | all | 57 | all |
+| il | **EAM** | 102 | 102/102 | 572 | 996 | all | 398 | all |
+| ky | **EAM** | 120 | 120/120 § | 0 | 0 | by record | 7 | all |
 | mi | **EAM** | 83 | 83/83 | 619 | 615 | all | 55 | all |
+| mn | **EAM** | 87 | 87/87 § | 0 | 0 | by record | 7 | all |
+| ny | **--M** | — | — | 16 | 16 | — | 29 | all |
+| wi | **EAM** | 72 | 72/72 | 1590 | 1,574 | all | 262 | all |
 
-- **ca** — no county tier, so E does not apply. San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
-- **ny** — no county tier, so E does not apply. New York City — the instance serves five boroughs, not a county frontier, so there is no county to examine.
+§ Examined in part by a record covering the whole state rather
+than county by county. That is a weaker statement than a record
+per county, so each one is named under its state below.
+
+- **ca** — no county frontier, so E and A do not apply. San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
+- **ny** — no county frontier, so E and A do not apply. New York City — the instance's subject is the city, not the state's 62-county frontier. It does ship one county's legislature (Tompkins), which is reported below and not scored.
 
 ## What each state still needs
 
+### ca — **E.A.M.**
+
+- **E and A do not apply.** San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
+  The mark therefore rests on Maintained alone.
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
+### ia — **E.A.M.**
+
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
 ### il — **E.A.M.**
 
-Examined, Answered and Maintained. Expansion is finished;
+
+Every test that applies is met. Expansion is finished;
 this instance is in maintenance.
 
 - **Watched, not rewritten:** `il/data/app/mason-county-board-members.json` is refreshed by no job because it cannot safely be — `.github/workflows/watch-mason-roster-source.yml` checks its source weekly and opens an issue when it moves. That is a weaker guarantee than a rewrite: it tells you the source changed and a person still has to act.
 
-### wi — EA·
+### ky — **E.A.M.**
 
-- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `aldermanic-districts.json`, `county-supervisory-districts.json`, `madison-outline.json`, `metro-outline.json`, `rusd-school-board-districts.json`, `school-districts-unified.json`, `state-counties.json`, `wi-county-facts.json`, `wi-municipal-facts.json`
-- **Maintained: no.** 240 file(s) under no scheduled job at all, neither rewriting nor watching — 92 boundary, 0 census, 148 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
-  - `wi/data/app/adams-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/adams-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/ashland-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/ashland-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/barron-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/barron-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/bayfield-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/bayfield-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/brown-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/brown-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/buffalo-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/buffalo-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/burnett-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/burnett-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/calumet-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/calumet-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/chippewa-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/chippewa-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/clark-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/clark-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/columbia-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/columbia-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/congress-districts.json` — **8** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/county-board-directory.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/crawford-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/crawford-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/dane-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/dane-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/dodge-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/dodge-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/door-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/door-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/douglas-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/douglas-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/dunn-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/dunn-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/eau-claire-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/eau-claire-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/ems-service-areas.json` — **580** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/fire-service-areas.json` — **1046** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/florence-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/florence-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/fond-du-lac-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/fond-du-lac-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/forest-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/forest-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/grant-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/grant-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/green-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/green-lake-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/green-lake-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/green-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/iowa-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/iowa-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/iron-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/iron-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/jackson-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/jackson-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/jefferson-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/jefferson-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/juneau-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/juneau-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/kenosha-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/kenosha-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/kewaunee-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/kewaunee-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/la-crosse-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/la-crosse-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/lafayette-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/lafayette-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/langlade-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/langlade-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/law-service-areas.json` — **680** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/library-sites.json` — **482** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/lincoln-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/lincoln-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/madison-neighborhood-assocs.json` — **116** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/madison-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/madison-tid-districts.json` — **14** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/manitowoc-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/manitowoc-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/marathon-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/marathon-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/marinette-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/marinette-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/marquette-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/marquette-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/menominee-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/menominee-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/milwaukee-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/milwaukee-neighborhoods.json` — **190** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/milwaukee-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/mke-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/monroe-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/monroe-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/mpd-districts.json` — **7** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/mpd-squad-areas.json` — **25** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/mps-school-board-districts.json` — **8** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/oconto-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/oconto-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/oneida-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/oneida-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/outagamie-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/outagamie-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/ozaukee-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/ozaukee-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/pepin-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/pepin-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/pierce-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/pierce-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/polk-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/polk-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/portage-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/portage-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/price-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/price-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/psap-areas.json` — **95** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/racine-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/racine-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/richland-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/richland-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/rock-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/rock-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/rusk-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/rusk-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/sauk-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/sauk-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/sawyer-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/sawyer-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/school-sites.json` — **2966** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/shawano-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/shawano-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/sheboygan-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/sheboygan-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/st-croix-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/st-croix-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/taylor-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/taylor-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/tid-districts.json` — **79** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/town-clerks-001.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-003.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-005.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-007.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-009.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-011.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-013.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-015.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-017.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-019.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-021.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-023.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-025.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-027.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-029.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-031.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-033.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-035.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-037.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-039.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-041.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-043.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-045.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-047.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-049.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-051.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-053.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-055.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-057.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-059.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-061.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-063.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-065.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-067.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-069.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-071.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-073.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-075.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-077.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-078.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-081.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-083.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-085.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-087.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-089.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-091.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-093.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-095.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-097.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-099.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-101.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-103.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-105.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-107.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-109.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-111.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-113.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-115.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-117.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-119.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-121.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-123.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-125.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-127.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-129.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-131.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-133.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-135.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-137.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-139.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/town-clerks-141.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/trempealeau-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/trempealeau-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/vernon-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/vernon-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/vilas-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/vilas-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/walworth-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/walworth-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/washburn-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/washburn-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/washington-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/washington-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/waukesha-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/waukesha-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/waupaca-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/waupaca-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/waushara-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/waushara-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/wi-assembly-districts.json` — **100** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/wi-circuit-courts.json` — **69** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/wi-court-of-appeals-districts.json` — **4** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/wi-municipal-clerks.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/wi-senate-districts.json` — **34** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/wi-state-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/winnebago-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/winnebago-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/wood-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `wi/data/app/wood-polling-places.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/wtcs-districts.json` — **16** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
+- **Examined by a statewide record:** `ky-county-officers`, `ky-fiscal-court` account for every county in the state, which is what Examined rests on here: 0 of 120 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 
-### ia — **E.A.M.**
-
-Examined, Answered and Maintained. Expansion is finished;
+Every test that applies is met. Expansion is finished;
 this instance is in maintenance.
 
 ### mi — **E.A.M.**
 
-Examined, Answered and Maintained. Expansion is finished;
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
+### mn — **E.A.M.**
+
+- **Examined by a statewide record:** `mn-county-commissioner-roster`, `mn-county-officers` account for every county in the state, which is what Examined rests on here: 0 of 87 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
+### ny — **E.A.M.**
+
+- **E and A do not apply.** New York City — the instance's subject is the city, not the state's 62-county frontier. It does ship one county's legislature (Tompkins), which is reported below and not scored.
+  The county roster it does ship is reported and not gated: 16 district(s), 16 people named.
+  The mark therefore rests on Maintained alone.
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
+### wi — **E.A.M.**
+
+
+Every test that applies is met. Expansion is finished;
 this instance is in maintenance.
