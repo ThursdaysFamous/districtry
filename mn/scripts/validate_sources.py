@@ -187,6 +187,26 @@ PROVENANCE = [
             "its --check re-runs offline in CI."
         ),
     },
+    {
+        "layer": "voting-precinct",
+        "app_file": "mn-precincts.json",
+        "source_url": (
+            "https://enterprise.gisdata.mn.gov/aghost/rest/services/"
+            "us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
+        ),
+        "note": (
+            "4,105 voting precincts from the Secretary of State's own statewide "
+            "service -- the first layer this instance ships from a Minnesota "
+            "publisher rather than from the Census. THE FRESHNESS SIGNAL IS THE "
+            "SERVICE'S OWN Service Modified STAMP, not a vintage roll: precincts "
+            "are redrawn by cities, townships and counties between elections, so "
+            "a moved stamp is the only announcement there is. The same service "
+            "carries each precinct's county commissioner, judicial, soil-and-water, "
+            "hospital and park district and its city ward, none of which this file "
+            "takes -- mn/WATCH.md records them as the seven layers that dissolve "
+            "out of it."
+        ),
+    },
 ]
 
 ENDPOINTS = [

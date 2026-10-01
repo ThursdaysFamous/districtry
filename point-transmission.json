@@ -268,6 +268,7 @@
         "school-district-secondary",
         "school-district-unified",
         "us-house",
+        "voting-precinct",
         "zip-code"
       ]
     },
