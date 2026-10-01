@@ -480,6 +480,29 @@ PRESERVABLE = {
     # the only source that names Plano's council at all — and its four wards
     # are already drawn, which is what made a card that named nobody visible.
     "plano": {"kind": "enrich", "places": ["City of Plano"]},
+    # The five large cities added 2026-10-01 for the done standard's fourth
+    # test, which asks that every general-purpose local government above
+    # 25,000 people name a governing body. Each of these is the ONLY unit above
+    # that line in a county this project has no municipal directory for —
+    # Champaign, Macon, Adams and Vermilion publish none at all, and McLean's
+    # names three villages and omits the town of Normal wholesale. That is the
+    # Galesburg and Freeport shape, not a sweep: the places are named here, and
+    # a sixth city cannot join without an edit to this list.
+    "champaign-city": {"kind": "enrich", "places": ["City of Champaign"]},
+    "decatur": {"kind": "enrich", "places": ["City of Decatur"]},
+    "normal": {"kind": "enrich", "places": ["Town of Normal"]},
+    "quincy": {"kind": "enrich", "places": ["City of Quincy"]},
+    "danville": {"kind": "enrich", "places": ["City of Danville"]},
+    # Lake County's six readable cities above 25,000. The county source is at
+    # the contact-only rung — a hall address for all 41 municipalities and not
+    # one official — so each of these arrives with an address and nobody in it.
+    "highland-park": {"kind": "enrich", "places": ["City of Highland Park"]},
+    "mundelein": {"kind": "enrich", "places": ["Village of Mundelein"]},
+    "north-chicago": {"kind": "enrich", "places": ["City of North Chicago"]},
+    "round-lake-beach": {"kind": "enrich",
+                         "places": ["Village of Round Lake Beach"]},
+    "vernon-hills": {"kind": "enrich", "places": ["Village of Vernon Hills"]},
+    "waukegan": {"kind": "enrich", "places": ["City of Waukegan"]},
 }
 
 # Tie-break for a municipality claimed by two counties, applied only AFTER
@@ -978,11 +1001,21 @@ def merge_contact(existing, addition, warnings):
     found this: Kendall's yearbook stops at the mayor and clerk for every
     municipality, its four wards are drawn, and the card named nobody in them.
 
-    The HEAD and the OFFICERS are never adopted this way, only the board. Plano
-    is also why: the same city page that names the council says its mayor was
-    "Elected in 2021" while the county clerk has him last elected 2025, so the
-    page is maintained and still carries a stale adjacent field. The county's
-    head stays the county's.
+    THE OFFICERS are never adopted this way, and the HEAD only where the county
+    published none. Plano is why the default is no: the same city page that
+    names the council says its mayor was "Elected in 2021" while the county
+    clerk has him last elected 2025, so the page is maintained and still
+    carries a stale adjacent field. Where the county DOES name a head, the
+    county's head stays the county's, whatever the city site says.
+
+    But the Lake County shape has no head to prefer. That county sits at the
+    contact-only rung — its portal publishes a hall address for all 41 of its
+    municipalities and names nobody at all — so refusing the city's own mayor
+    there is not preferring the clerk over the city, it is shipping a council
+    with an empty chair while the city publishes who sits in it. The head is
+    therefore adopted on exactly the board's condition, and is inert the moment
+    a county names one. Measured 2026-10-01: this fires for six Lake cities and
+    for nothing else in the roster.
 
     Measured 2026-09-11 before this was written: all seven municipalities the
     other five city payloads cover already carry a board, so this branch is
@@ -996,6 +1029,13 @@ def merge_contact(existing, addition, warnings):
         warnings.append("%s: the county directory publishes no council, so all "
                         "%d seat(s) come from the municipality's own site"
                         % (existing.get("name"), len(addition_board)))
+    addition_head = addition.get("head")
+    if addition_head and not existing.get("head"):
+        existing["head"] = dict(addition_head)
+        warnings.append("%s: the county directory names no head of government, "
+                        "so %s comes from the municipality's own site"
+                        % (existing.get("name"),
+                           addition_head.get("name") or "the head"))
     for person in people_of(addition):
         matches = [c for c in people_of(existing)
                    if same_person(c.get("name"), person.get("name"))]
