@@ -2757,7 +2757,7 @@ any local government's website.
 
 ---
 
-## Ask 34 — Wisconsin Towns Association: is there a list of town board members?
+## Ask wi-town-boards — Wisconsin Towns Association: is there a list of town board members?
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** A first approach to this organisation. It asks
 > whether a list exists and on what terms, not for anything free: the association is a
@@ -2856,7 +2856,7 @@ next step rather than a mailing.
 
 ---
 
-## Ask 35 — five Wisconsin cities: may we read your council page?
+## Ask wi-city-council-pages — five Wisconsin cities: may we read your council page?
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** Five near-identical letters, one per city. Each asks
 > permission to read a page the city already publishes to the public. Nothing is blocked that
@@ -2966,7 +2966,7 @@ round.
 
 ---
 
-## Ask 36 — City of Oshkosh Clerk: our reader cannot reach your robots.txt
+## Ask wi-oshkosh-council — City of Oshkosh Clerk: our reader cannot reach your robots.txt
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** The only one of the 21 unnamed Wisconsin cities where
 > the obstacle is neither a refusal nor a page that needs a browser, but a connection this
