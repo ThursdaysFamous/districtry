@@ -1842,8 +1842,16 @@
    },
    {
     "county": "Marion",
-    "name": "Amber Dykstra",
+    "name": "Vacant Position",
     "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Marion",
+    "name": "Zachary Schmitter",
+    "role": "City Council",
+    "status": "Appointed to Fill Vacancy until Election",
     "termEnds": "2027",
     "termLength": "2 Years"
    }
