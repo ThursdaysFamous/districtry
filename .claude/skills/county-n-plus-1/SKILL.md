@@ -6,8 +6,8 @@ description: Take ONE county from unserved to in-the-ring, or repair one that is
 # One more county
 
 This file exists for the moment an agent starts on a county. `CLAUDE.md`
-carries the county-by-county narrative and every gate's name and is loaded on
-every turn; `docs/EXPANSION_GUIDE.md` §3.5 is the checklist and §3.5.1 the
+carries every gate's name and is loaded on every turn, and
+`docs/IL_COUNTY_RECORD.md` the county-by-county narrative; `docs/EXPANSION_GUIDE.md` §3.5 is the checklist and §3.5.1 the
 rules the counties taught, and both are pointed at below rather than
 restated — two documents stating one rule is how `ENGINE_SYNC.md` drifted 164
 lines. What neither gives an agent at the moment it starts is the **order**,
