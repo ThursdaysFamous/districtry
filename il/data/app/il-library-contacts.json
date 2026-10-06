@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-28T19:00:14Z",
+  "generated": "2026-10-05T19:58:36Z",
   "libraries": {
     "A. Herr Smith & E.E. Smith Loda Township Library": {
       "address": "105 East Adams Street",
@@ -1468,6 +1468,10 @@
     },
     "Jonesboro Public Library": {
       "address": "412 South Main Street",
+      "admin": {
+        "name": "Jasper Rohlfing",
+        "role": "Librarian"
+      },
       "city": "Jonesboro",
       "phone": "(618) 833-8121"
     },
