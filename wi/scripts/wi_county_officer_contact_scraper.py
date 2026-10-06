@@ -703,10 +703,35 @@ WINDOW_SPAN = {
 }
 
 
-def witness_window(text, book_name, span=350):
+# READ FROM THE NAME FORWARD, per office, for a page that prints third-party
+# contacts in the 350 characters BEFORE the officer's own block. Measured
+# 2026-10-06: Marquette's Register of Deeds page was reshaped so that a list of
+# five e-recording vendors (Simplifile, CSC, ePN, Indecomm, Hopdox) sits just
+# above "Nicole Ziebell / Register of Deeds / nziebell@marquettecountywi.gov /
+# (608) 297-3025", so the centred window took the LAST vendor's support line
+# and address — 385-501-5103 and support@hopdox.com — and bot PR #1378 would
+# have shipped a records vendor as a county officer's contact. The officer's
+# own block follows the name, so this office reads forward only.
+#
+# PER OFFICE, NOT FLEET-WIDE, and that is measured: the same day, reading
+# every page-mode office forward-first instead of first-in-window changes 13
+# other (county, office) pairs (Washington coroner and clerk of circuit court,
+# Jefferson and Clark and Florence clerks of circuit court, Marquette sheriff's
+# e-mail, Washburn executive and district attorney, Langlade district attorney
+# and treasurer, Marinette sheriff, Trempealeau treasurer's e-mail). Several
+# look like improvements (a statewide 800 line giving way to a local number),
+# but each is a different number for a real office and needs its own reading in
+# context, which is the rule WINDOW_SPAN above already states.
+READ_FORWARD = {
+    ("Marquette", "registerOfDeeds"),
+}
+
+
+def witness_window(text, book_name, span=350, forward=False):
     """Find the shipped officer on the page: the surname as a whole word,
     with a capitalized word sharing the first name's initial nearby.
-    Returns the text window around the accepted hit, or None."""
+    Returns the text window around the accepted hit, or None. With
+    `forward`, the window starts at the hit (see READ_FORWARD)."""
     first, sur = name_parts(book_name)
     if not sur:
         return None
@@ -714,7 +739,8 @@ def witness_window(text, book_name, span=350):
         lo, hi = max(0, m.start() - 120), m.start() + 120
         near = text[lo:hi]
         if re.search(r"\b%s[a-z]" % re.escape(first[0]), near):
-            lo2, hi2 = max(0, m.start() - span), m.start() + span
+            lo2 = m.start() if forward else max(0, m.start() - span)
+            hi2 = m.start() + span
             return text[lo2:hi2]
     return None
 
@@ -783,7 +809,8 @@ def scrape_pages(county, cfg, book):
                   file=sys.stderr)
             continue
         window = witness_window(
-            text, book_name, span=WINDOW_SPAN.get((county, office), 350))
+            text, book_name, span=WINDOW_SPAN.get((county, office), 350),
+            forward=(county, office) in READ_FORWARD)
         if window is None:
             # COUNTED, NOT JUST PRINTED: see the caller. A page that answered
             # 200 and witnesses nobody is a fact about the FETCH at least as
