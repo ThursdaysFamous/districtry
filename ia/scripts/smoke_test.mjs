@@ -686,14 +686,41 @@ try {
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     for (const [lat, lng, county, want, absent, why] of [
-      [42.5816991, -94.8455189, "Pocahontas County", "Louis Stauter",
-       "Brent Aden",
-       "Pocahontas district 4 names the county's District 5 supervisor"],
-      [42.847502, -94.8479386, "Pocahontas County", "Clarence J. Siepker",
-       "Peter Seehusen",
-       "Pocahontas district 1 names the county's District 2 supervisor"],
-      [43.3717458, -92.1162868, "Howard County", "Pat Murray", null,
+      // EACH CASE ASSERTS THE NUMBER AND THE PERSON TOGETHER, as one string,
+      // because they are one claim: the card heads itself with the number the
+      // COUNTY uses and names the supervisor who holds that district. Asserted
+      // apart, a card could pass with the right person under the layer's own
+      // number, which is the state this check exists to refuse. The `absent`
+      // string is the same pairing under the layer's number.
+      [42.5816991, -94.8455189, "Pocahontas County",
+       "District 5 Louis Stauter", "District 4 Louis Stauter",
+       "Pocahontas, whose District 5 is this layer's 4"],
+      [42.847502, -94.8479386, "Pocahontas County",
+       "District 2 Clarence J. Siepker", "District 1 Clarence J. Siepker",
+       "Pocahontas, whose District 2 is this layer's 1"],
+      [43.3717458, -92.1162868, "Howard County", "District 1 Pat Murray", null,
        "Howard, whose own numbering matches this layer's"],
+      // Monona, measured off its own map's TEXT rather than its drawing: the
+      // county's District 1 is this layer's 2, so Ashton township is District 1
+      // and Bo Fox, and Maple township is District 2 and Tom Brouillette. The
+      // numbers were the other way round, with the names swapped, until
+      // 2026-10-01.
+      [42.0889412, -96.0903664, "Monona County",
+       "District 1 Bo Fox", "District 2 Bo Fox",
+       "Monona, whose District 1 is this layer's 2"],
+      [42.1682353, -95.8542875, "Monona County",
+       "District 2 Tom Brouillette", "District 1 Tom Brouillette",
+       "Monona, whose District 2 is this layer's 1"],
+      // Lyon, measured off the county's own precinct numbers against this
+      // instance's own precinct layer: NOT ONE of its five numbers agrees. The
+      // town of Lester is the county's District 1 and Douglas Bosch; this
+      // layer calls that ground district 5.
+      [43.4402929, -96.3314163, "Lyon County",
+       "District 1 Douglas Bosch", "District 5 Douglas Bosch",
+       "Lyon, whose District 1 is this layer's 5"],
+      [43.3418726, -96.0032567, "Lyon County",
+       "District 3 Cory Altena", "District 1 Cory Altena",
+       "Lyon, whose District 3 is this layer's 1"],
       // THE WITHHELD BRANCH. Washington County's numbering has not been
       // measured, so its district card names nobody at all -- not its chair,
       // not anyone. Its supervisors are still on the County card.

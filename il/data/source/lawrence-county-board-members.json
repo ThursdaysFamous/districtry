@@ -1,0 +1,60 @@
+{
+  "1": {
+    "members": [
+      {
+        "name": "Tom Robinson",
+        "role": "Vice Chairman"
+      }
+    ],
+    "sourceUrl": "https://lawrencecounty.illinois.gov/boards/county-board"
+  },
+  "2": {
+    "members": [
+      {
+        "name": "David Burgett"
+      }
+    ],
+    "sourceUrl": "https://lawrencecounty.illinois.gov/boards/county-board"
+  },
+  "3": {
+    "members": [
+      {
+        "name": "Jordan Feutz"
+      }
+    ],
+    "sourceUrl": "https://lawrencecounty.illinois.gov/boards/county-board"
+  },
+  "4": {
+    "members": [
+      {
+        "name": "Judy Phipps"
+      }
+    ],
+    "sourceUrl": "https://lawrencecounty.illinois.gov/boards/county-board"
+  },
+  "5": {
+    "members": [
+      {
+        "name": "James Brewer",
+        "role": "Chairman"
+      }
+    ],
+    "sourceUrl": "https://lawrencecounty.illinois.gov/boards/county-board"
+  },
+  "6": {
+    "members": [
+      {
+        "name": "Grant McDonald"
+      }
+    ],
+    "sourceUrl": "https://lawrencecounty.illinois.gov/boards/county-board"
+  },
+  "7": {
+    "members": [
+      {
+        "name": "Mark Jones"
+      }
+    ],
+    "sourceUrl": "https://lawrencecounty.illinois.gov/boards/county-board"
+  }
+}

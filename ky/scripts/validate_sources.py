@@ -174,6 +174,26 @@ PROVENANCE = [
             "border, edge for edge, which its --check re-runs offline in CI."
         ),
     },
+    {
+        "layer": "ky-supreme-court",
+        "app_file": "ky-judge-roster.json",
+        "source_url": "https://www.kycourts.gov/Courts/County-Information/Pages/Adair.aspx",
+        "note": (
+            "Kentucky's judges for all four courts, keyed by the numbered "
+            "district or circuit the Court of Justice itself prints beside each "
+            "one — the join Ask ky-judge-district-join asked for and got on "
+            "2026-10-01. The two appellate tiers come from the Supreme Court's "
+            "and the Court of Appeals' own statewide pages; the two trial tiers "
+            "are assembled from the 120 county pages, of which this url is the "
+            "first, because neither trial tier has a statewide page. Refreshed "
+            "weekly by update-ky-judges-roster.yml as a reviewed pull request. "
+            "ONE UNIT NAMES NOBODY and is recorded as gap ky-judges: Jefferson's "
+            "page leaves its judges out, and it is the sole county of circuit 30 "
+            "and district 30. The directory search the same reply named, "
+            "kcoj.kycourts.net, is NOT read — its robots.txt refuses every "
+            "client, and that refusal is obeyed rather than worked around."
+        ),
+    },
 ]
 
 ENDPOINTS = [
