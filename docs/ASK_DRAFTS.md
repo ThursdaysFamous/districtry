@@ -5187,6 +5187,36 @@ Subject: Lansing City Council members on districtry.com: is the member list publ
 > adam@overberg.co
 > districtry: https://districtry.com/mi/
 
+#### Lansing, reply of 2026-10-06
+
+The Clerk answered on 2026-10-03, asking whether https://www.lansingmi.gov/council-members
+meets our needs. It was re-read on 2026-10-06 with the client the weekly reader uses: the page
+and its robots.txt permit us, and the page as served still names nobody. The names are added
+afterwards by the website vendor's script, from the vendor's content service, which turns away
+any request without a sign-in, and getting past a sign-in is not something this project does.
+The measurement is in the `lansing-council-roster` record. The ask stays `pending`: a reply
+that points at a page is not yet an answer the map can use.
+
+To: city.clerk@lansingmi.gov  
+Subject: Re: Lansing City Council members on districtry.com
+
+> Dear Mr. Swope,
+>
+> Thank you for writing back, and for pointing me to the council members page. I checked it again today. The page loads, and the city's site settings allow it to be read. But the members' names are not in the page as it arrives. They are added a moment later by a program that runs in the visitor's browser and fetches them from your website company's content service, and that service turns away any request that has not signed in. So a reader that collects the page once a week receives the heading "Council Members" and no names.
+>
+> Any one of these would let the map name your council:
+>
+> 1. The members' names, with the ward or at-large seat each holds, typed into the text of that page or another city page, the way most Michigan cities publish theirs.
+> 2. The same list as a file on the city's site, such as a PDF your office already keeps.
+> 3. If it is easier, a reply listing the eight members and their seats. The map will say the list came from your office and on what date.
+>
+> If none of these suits the city, that is a fine answer, and the map will keep linking to your council page.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
 #### Wyoming
 
 To: clerk_info@wyomingmi.gov  
