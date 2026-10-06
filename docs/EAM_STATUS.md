@@ -45,7 +45,7 @@ different thing from one it failed.
 |---|---|---|---|---|---|---|---|---|---|
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 13 levels |
 | ia | **EAM·** | 99 | 99/99 | 16 | 16 | all | 75 | all | 10 of 13 levels |
-| il | **EAM·** | 102 | 102/102 | 628 | 1,072 | all | 407 | all | 11 of 13 levels |
+| il | **EAM·** | 102 | 102/102 | 628 | 1,073 | all | 407 | all | 11 of 13 levels |
 | ky | **EAM·** | 120 | 120/120 § | 0 | 0 | by record | 11 | all | 8 of 13 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 615 | all | 60 | all | 12 of 13 levels |
 | mn | **EAM·** | 87 | 87/87 § | 0 | 0 | by record | 10 | all | 7 of 13 levels |
