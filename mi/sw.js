@@ -96,6 +96,7 @@ const GEOMETRY_URLS = [
   "./data/app/mi-court-of-appeals-districts.json",
   "./data/app/mi-circuit-courts.json",
   "./data/app/mi-isd-districts.json",
+  "./data/app/tribal-areas.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI

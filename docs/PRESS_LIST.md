@@ -561,7 +561,7 @@ The plan's rule stands: **send to the desk, name the reporter in the first line.
 | WNIJ / Northern Public Radio | Jenna Dooley | News Director — runs the WNIJ newsroom; a public-affairs-reporting graduate and former Illinois AP "Newsfinder of the Year". The decision-maker on whe… |
 | WSIU Public Broadcasting | Brian Sapp | WSIU News local reporter — the closest fit by far. His recent bylines are the government/civic ones: "Legislators hear from Choate employees and commu… |
 | WSIU Public Broadcasting | Brad Palmer | All Things Considered host and WSIU Radio news producer — anchors the daily recap of top local and state news. |
-| Leader-Telegram | Matt Baughman | City/County Government Reporter — the closest beat fit at this outlet. Districtry's Wisconsin instance covers all 72 counties with 31 layers (county b… |
+| Leader-Telegram | Matt Baughman | City/County Government Reporter — the closest beat fit at this outlet. Districtry's Wisconsin instance covers all 72 counties with 32 layers (county b… |
 | Leader-Telegram | Matt Milner | Editor (top of the newsroom) |
 | Milwaukee Journal Sentinel | Molly Beck | Wisconsin state politics and elections (Madison bureau) — bylined on Milwaukee election-administration coverage |
 | Milwaukee Journal Sentinel | David Clarey | Milwaukee city government / City Hall accountability |

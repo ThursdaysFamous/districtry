@@ -120,12 +120,12 @@ prose.
 
 | instance | layers that send the point | registered layers |
 |---|---|---|
-| il | 5 | 40 |
+| il | 5 | 41 |
 | ny | 0 | 38 |
 | ca | 0 | 16 |
-| wi | 1 | 31 |
+| wi | 1 | 32 |
 | ia | 0 | 20 |
-| mi | 0 | 18 |
+| mi | 0 | 19 |
 | mn | 6 | 16 |
 | ky | 4 | 12 |
 
@@ -142,7 +142,7 @@ opens a pull request when a result changes, but **nothing fails when this
 is stale**, so a layer added since that date is named below as not
 measured until the next run describes it.
 
-#### il — 29 of 40 layers fetch their shapes
+#### il — 29 of 41 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -178,6 +178,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `il-supreme-court`, `congress`, `il-senate`, `il-house`, `ccbr`, `school-board`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`, `library`, `early-voting`.
+- **Not measured** — declared since the probe ran: `tribal-government`.
 - Fetched by the app itself with no layer on, for its coverage tests: `data.cityofchicago.org`, `tigerweb.geo.census.gov`.
 
 #### ny — 14 of 38 layers fetch their shapes
@@ -215,7 +216,7 @@ measured until the next run describes it.
 - Drawn from this site's own files: `congress`, `ca-senate`, `ca-assembly`, `supervisor-district`, `police-district`, `neighborhood`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `post-office`, `library`, `early-voting`.
 
-#### wi — 6 of 31 layers fetch their shapes
+#### wi — 6 of 32 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -228,6 +229,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `wi-court-of-appeals`, `us-house`, `wtcs-district`, `wi-senate`, `wi-assembly`, `wi-circuit-court`, `county`, `psap-area`, `school-district-unified`, `ems-service`, `law-service`, `fire-service`, `county-board`, `mpd-district`, `mps-school-board`, `mpd-squad-area`, `aldermanic-district`, `milwaukee-neighborhoods`, `tid-district`, `madison-neighborhood-assoc`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `library`, `post-office`.
+- **Not measured** — declared since the probe ran: `tribal-government`.
 
 #### ia — 3 of 20 layers fetch their shapes
 
@@ -240,7 +242,7 @@ measured until the next run describes it.
 - Drawn from this site's own files: `us-house`, `ia-judicial-district`, `iowa-aea`, `ia-senate`, `county`, `ia-house`, `county-supervisor`, `school-district-unified`, `school-director-district`, `community-college`, `cc-director-district`, `city-ward`, `precinct`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `post-office`.
 
-#### mi — 5 of 18 layers fetch their shapes
+#### mi — 5 of 19 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -252,7 +254,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `mi-senate`, `county`, `mi-house`, `county-commissioner`, `city-ward`, `precinct`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `mi-court-of-appeals`, `mi-circuit-court`, `mi-isd`.
+- **Not measured** — declared since the probe ran: `tribal-government`, `mi-court-of-appeals`, `mi-circuit-court`, `mi-isd`.
 
 #### mn — not measured
 
@@ -262,15 +264,15 @@ measured until the next run describes it.
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 130 | 389 | 6 |
+| il | 131 | 390 | 6 |
 | ny | 38 | 33 | 0 |
 | ca | 17 | 14 | 0 |
-| wi | 91 | 263 | 5 |
+| wi | 92 | 264 | 5 |
 | ia | 70 | 77 | 0 |
-| mi | 31 | 59 | 1 |
+| mi | 32 | 60 | 1 |
 | mn | 22 | 10 | 0 |
 | ky | 10 | 10 | 0 |
-| **total** | **409** | **855** | **12** |
+| **total** | **412** | **858** | **12** |
 
 **135 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

@@ -1429,7 +1429,18 @@ ANSWERS = {
         "school-boards-by-district": answers("school-board"),
         "precincts": answers("county-precinct", "ward-precinct"),
         "special-districts": answers("fire-district", "park-district", "library-district", "mwrd", "ssa"),
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-01. Illinois holds exactly ONE governed tribal area —
+        # the Prairie Band Potawatomi Nation's off-reservation trust land near
+        # Shabbona — and the card names the NATION and the Kansas town it is
+        # governed from, which is what this level asks for: a reader on that
+        # ground is told which government answers for it. It names NO COUNCIL
+        # MEMBER, and that is a narrower gap recorded as
+        # `il-tribal-government` rather than a level unanswered: the nation's
+        # own published list is the only authority for a council, and its site
+        # answers this project with a Cloudflare managed challenge. The Census
+        # draws no tribal subdivision on this land either, measured against a
+        # positive control, so there is no district here for a seat to belong to.
+        "tribal-government": answers("tribal-government"),
     },
     "wi": {
         "us-house": answers("us-house"),
@@ -1449,7 +1460,16 @@ ANSWERS = {
         "school-boards-by-district": answers("mps-school-board"),
         "precincts": answers("ward"),
         "special-districts": answers("wtcs-district", "tid-district"),
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-01. The app draws all 21 pieces of tribal land in
+        # Wisconsin -- 11 reservations and 10 of off-reservation trust land --
+        # and names the nation that governs each and the town its government
+        # sits in, which is what this level asks for: a reader on that ground
+        # is told which government answers for it. It names NO COUNCIL MEMBER
+        # for any of the 12 nations, and that is the narrower gap recorded as
+        # `wi-tribal-government` rather than a level unanswered -- each
+        # nation's own published list is the only authority for a council, and
+        # the card states per nation which of the two reasons applies.
+        "tribal-government": answers("tribal-government"),
     },
     "ia": {
         "us-house": answers("us-house"),
@@ -1498,7 +1518,15 @@ ANSWERS = {
         # Intermediate school districts: special districts the Revised School
         # Code creates (MCL 380.601 et seq.), each with its own levy.
         "special-districts": answers("mi-isd"),
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-01, on the same builder and the same join as
+        # Wisconsin's: 24 areas, 13 reservations and 11 of off-reservation
+        # trust land, carrying 12 nations, each named with the town its
+        # government sits in. The Ontonagon Reservation is the fleet's one
+        # area the Census names and no BIA-listed government is filed under,
+        # and it is answered from two measurements by one publisher rather
+        # than inferred -- see `mi-tribal-government`, which is also where the
+        # council absence is recorded, per nation.
+        "tribal-government": answers("tribal-government"),
     },
     "mn": {
         "us-house": answers("us-house"),
