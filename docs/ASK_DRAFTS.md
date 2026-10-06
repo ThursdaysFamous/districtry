@@ -125,7 +125,7 @@ with, working as intended.
 | Franklin County Clerk (IL) | which Public Square address the board meets at | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | nine Michigan city and township clerks | may an automated reader see your board page | none | Ypsilanti Township **ANSWERED same day**: the clerk was passing the request to the township's technology staff, and the correction reached her at 15:23. Lansing acknowledged automatically, with no content |
-| Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day** and NOT YET USABLE: the Auditor says the office keeps the district numbers with names, and sent them as two inline images with a 2022 district map attached, so no name can ship until it is read off a picture and confirmed |
+| Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day** and NOT YET USABLE: the Auditor says the office keeps the district numbers with names, and sent them as two inline images with a 2022 district map attached, so no name can ship until it is read off a picture and confirmed. **The reply asking her to type it stands, re-checked 2026-10-06**: the county's board page lists the five supervisors with no district beside any, and nothing else on the site pairs them. The site does publish the plan itself — Resolution 2022-12 adopts the statewide agency's plan and names the townships in each district, and districts 1, 4 and 5 agree with our map township by township — so only the pairing is missing, and districts 2 and 3 (Atlantic's wards) are not yet checked |
 | Calumet (Brillion), Pepin (Durand) county clerks (WI) | ward-to-district filing | none | — |
 | Outagamie County Clerk (WI) | the New London filing | none | **ANSWERED same day**, settled: New London wards 10, 11 and 12 are all in Aldermanic District 5 |
 | Brown County Clerk (WI) | how Bellevue elects its board | none | **ANSWERED same day, HEDGED**: "They appear to be at large", with the village clerk's address and a question back about whether the village had been asked. A hedge is not a statement the village has made, so it settles nothing by itself |
@@ -5943,7 +5943,9 @@ it lets the record that tells our readers what is missing say the county was ask
 > that day: Worth's, sent at 14:42 UTC, was about its city officials page — a different batch on
 > a different subject — and Dickinson, which looked like one county with two letters, genuinely
 > received the supervisor letter at two addresses. Worth is not among the nineteen either way.
-> Exactly four of the sixteen are in this tranche — **Ida, Osceola,
+> **CORRECTED 2026-10-06: Ida and Washington are WITHDRAWN before sending** (see their rows
+> below — each county already publishes the answer), so this tranche is SEVENTEEN letters, and two
+> of them are replies. As first drafted: exactly four of the sixteen were in this tranche — **Ida, Osceola,
 > Sioux and Washington** — and for those four the question goes as a **REPLY ON THIS
 > AFTERNOON'S THREAD**, opening by acknowledging that letter, never as a separate message. The
 > other fifteen are first contacts. **Dickinson is deliberately not on this list**: it has had
@@ -5989,15 +5991,15 @@ numbering being checked.
 | Franklin | Katy Flint | 3 | |
 | Grundy | Alan Tscherter | 5 | |
 | Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. |
-| Ida | Kristy Gilbert | 3 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 with the three pairings. |
+| Ida | Kristy Gilbert | 3 | **WITHDRAWN 2026-10-06, NEVER SENT — THE COUNTY ALREADY PUBLISHES THE ANSWER.** Re-checked before send: the county's own site carries Ordinance 31 (`idacounty.iowa.gov/wp-content/uploads/2021/12/Ordinance-31-Est-Co-Supervisor-Precincts-2021.pdf`, effective 15 January 2022, drawn to the 2020 census), whose text names the townships in each district. Ten townships lie wholly inside one district (Galva and Griggs in 1; Battle, Blaine, Garfield, Hayes, Logan, Maple and Silver Creek in 2; Corwin in 3), and every one of their TIGERweb interior points lands in the same-numbered district of the statewide layer, so the two numberings agree in all three districts. It was found through the site's own search feed, which the September sweep did not read; a letter asking for it would have asked the county for a document it publishes. |
 | Madison | Michele Brant | 3 | |
 | Mitchell | Rachel Foster | 5 | |
-| Osceola | Rochelle Van Tilburg | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 with the five pairings. |
+| Osceola | Rochelle Van Tilburg | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 with the five pairings. **Re-checked 2026-10-06 and it stands**: the county's site still answers its robots.txt with HTTP 202, the captcha shape, so nothing on it can be read and the letter is the only route. |
 | Polk | Jamie Fitzgerald | 5 | The address the roster carries is the elections desk rather than a person; the letter goes there as published. |
 | Sac | Renee Roland | 3 | |
-| Sioux | Joe Van Tol | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01. The county's own site fronts every page with a managed challenge, so a letter is the only route there will ever be. |
+| Sioux | Joe Van Tol | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01. The county's own site fronts every page with a managed challenge, so a letter is the only route there will ever be. **Re-checked 2026-10-06 and it stands**: robots.txt still answers HTTP 202. |
 | Taylor | Judy Henry | 3 | |
-| Washington | Tamera Stewart | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 by naming the county's own board page. |
+| Washington | Tamera Stewart | 5 | **WITHDRAWN 2026-10-06, NEVER SENT — THE AUDITOR HAD ALREADY SENT THE ANSWER.** Her 2026-10-01 reply linked the county's own district map (`washingtoncounty.iowa.gov/DocumentCenter/View/2095/Map-of-Supervisor-Districts---Final`, county GIS, 2022, drawn to the 2020 census). It is a vector PDF with the townships drawn and labelled inside each district. Ten townships lie wholly inside one district (Brighton, Clay, Dutch Creek, Lime Creek and Seventy-Six in 1; English River in 2; Crawford, Highland, Iowa and Oregon in 3), and every interior point lands in the same-numbered district of the statewide layer. Districts 4 and 5 hold no whole township, so they are settled by the split ones: Franklin township's interior point lands in the layer's 4 and the county's map puts Franklin only in 1 and 4, while Jackson's lands in the layer's 5 and the map puts Jackson only in 2 and 5, so the layer's 4 and 5 cannot be swapped. The two numberings agree in all five districts. |
 | Webster | Krystal Lloyd | 5 | |
 | Winnebago | Karla Weiss | 3 | |
 | Winneshiek | Benjamin D. Steines | 5 | |
