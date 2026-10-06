@@ -1583,6 +1583,16 @@ follows here is outside it. Same rule either way: the operator sends, and the
 > on 2020 blocks would match to the person, so this is an earlier plan and nothing ships from
 > it. The follow-up below is **NOT YET SENT — DRAFTED 2026-10-06**; the Letters thread puts it
 > in Adam's mailbox as a reply on the same thread, and Adam sends.
+>
+> **ANSWERED AGAIN 2026-10-06, 17:01 UTC, WITH THE PLAN IN FORCE — THE ASK IS CLOSED.** Ms
+> Aitchison replied on the same thread ("This SHOULD work better!") with `BOS.zip`, holding a
+> shapefile named `BOS_2022` (five districts `DIST_ID` 1-5, plus one empty record labelled
+> `Unassigned` carrying no shape). Run through the same gate: the county's 1,460 Census 2020
+> blocks, assigned by each block's internal point, sum to **4,128 / 4,120 / 4,137 / 4,132 /
+> 4,129 — every district equal to the county's published figure to the person**, 20,646 in
+> all, with no block outside every district and none inside two. That is the plan in force, and
+> it lets Jones carry a supervisor-district card for the first time; that is a reader-visible
+> change and goes in its own pull request.
 
 **This is the narrowest ask in this file, and the only one whose answer is a file the office
 already has.** Jones County is the ONE Iowa county carrying no supervisor-district card at all:
@@ -5421,7 +5431,25 @@ it lets the record that tells our readers what is missing say the county was ask
 
 ### Follow-up, drafted 2026-10-06 — the county's current precinct list (send about 8 October)
 
-**NOT YET SENT — IN ADAM'S MAILBOX AS A DRAFT, 2026-10-06.** A reply on Auditor Rohrs's own
+**SENT 2026-10-06 16:39 UTC AND ANSWERED THE SAME DAY, 17:55 UTC — CLOSED.** Auditor Rohrs
+sent two files: the county's precinct list with each precinct's polling place and supervisor
+district (an `.xls`, 12 precincts) and the 2025 general-precinct map (an ArcMap PDF, 12
+precincts). Read against the five-district map she sent on 1 October, every district line
+follows a precinct line, so each district is a whole set of current precincts: **District 1 =
+Lincoln, Dysart and Clutier; 2 = Tama; 3 = Traer and Gladbrook; 4 = Garwin and Toledo; 5 =
+Montour, Elberon, Chelsea and Indian Settlement.** The spreadsheet agrees on eleven of the
+twelve and puts **Lincoln in District 3**, which is the earlier plan: it carries a note dated
+April 2013, and her 2024 district map draws Lincoln and Grant townships in District 1.
+**MEASURED, NOT READ OFF THE PICTURE**: the district map's five districts are each ONE filled
+vector shape in the PDF, and placed on the ground by fitting the drawing's extent to the
+county's Census outline (98.9% overlap), the county's Census 2020 blocks sum to 3,407 / 3,446
+/ 3,395 / 3,420 / 3,449 against an ideal of 3,427 — every district within 1%, which a stale
+or misread plan would not be. That fit is a check and not shipping geometry: the build places
+the lines with proper control points before anything ships. Two side findings: this project's
+shipped Tama precincts are the 13 Census 2020 voting districts, where the county now runs 12;
+and the build for Tama's five-district card is reader-visible and goes in its own pull request.
+
+**As drafted (kept for the record):** A reply on Auditor Rohrs's own
 thread, after the thank-you for the map. The text below matches the mailbox draft, including the
 sentence the Letters thread added: the thank-you had told her the map resolved everything, so
 this letter says plainly that one more thing turned up. Adam sends.
