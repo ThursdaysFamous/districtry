@@ -5580,6 +5580,26 @@ and nothing is asked of any named judge personally.
 > directory as a roster source for the six seats. That changes what readers see, so it waits for
 > Adam's word. The text below is kept as the record of what was going to be asked.
 
+> **THE SHAWANO LETTER WAS SENT ON 2026-10-01 AND HAS NO REPLY, SO IT GETS A SHORT CLOSING NOTE**
+> (decided 2026-10-06). It asks a question the neighbouring county's own publications now answer,
+> so a clerk who has not got to it yet should not spend time on it. The note goes as a reply in the
+> same thread, so it reads as part of that conversation, and it asks nothing. No follow-up clock
+> applies to this ask any more.
+>
+> **Subject:** Re: One question about the City of Marion's aldermanic districts
+>
+> > Dear Clerk Rigsby,
+> >
+> > A quick note so your office doesn't spend time on my question of 1 October about the City of
+> > Marion's aldermanic districts: I have found the answer. Waupaca County's sample ballot for the
+> > April 2026 election lists Marion's wards 1 and 4 together as Aldermanic District 1, so the
+> > ward you file as district 1 is part of that same district rather than a fourth one.
+> >
+> > No reply is needed. Thank you, and sorry for the extra e-mail.
+> >
+> > Adam Overberg
+> > districtry.com/wi/
+
 > **ONE SENT AND BOUNCED, ONE NOT SENT.** Written 2026-10-01. Two letters, one to each of the two
 > county clerks who file the City of Marion's wards. The Waupaca letter went that day and was
 > refused as a permanent failure by the county's own mail server, so it reached nobody and
