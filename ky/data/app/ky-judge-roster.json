@@ -1,0 +1,2044 @@
+{
+ "askedAbout": {
+  "circuit-30": {
+   "note": "Not named here. The Kentucky Court of Justice lists the judges for every other circuit and district in the state, and lists none for this one \u2014 Jefferson County's own page on its site leaves them out. We asked the court system about it on 1 October 2026 and are waiting for an answer. Until one comes, this card names nobody rather than guessing.",
+   "reason": "jefferson-page-empty"
+  },
+  "district-30": {
+   "note": "Not named here. The Kentucky Court of Justice lists the judges for every other circuit and district in the state, and lists none for this one \u2014 Jefferson County's own page on its site leaves them out. We asked the court system about it on 1 October 2026 and are waiting for an answer. Until one comes, this card names nobody rather than guessing.",
+   "reason": "jefferson-page-empty"
+  }
+ },
+ "readOn": "2026-10-01",
+ "source": {
+  "countyPages": "https://www.kycourts.gov/Courts/County-Information/Pages/<County>.aspx",
+  "courtOfAppeals": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/default.aspx",
+  "note": "Named in the Administrative Office of the Courts' reply to Ask ky-judge-district-join, 2026-10-01. The directory search the same reply named is not read: its robots.txt refuses every client.",
+  "publisher": "Kentucky Court of Justice",
+  "supremeCourt": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/default.aspx"
+ },
+ "tiers": {
+  "appeals": {
+   "1": {
+    "members": [
+     {
+      "court": "Court of Appeals",
+      "division": 1,
+      "name": "J. Christopher McNeill",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/1st-Appellate-District-Division-1.aspx",
+      "role": "Deputy Chief Judge"
+     },
+     {
+      "court": "Court of Appeals",
+      "division": 2,
+      "name": "Lisa P. Jones",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/1st-Appellate-District-Division-2.aspx",
+      "role": "Judge"
+     }
+    ]
+   },
+   "2": {
+    "members": [
+     {
+      "court": "Court of Appeals",
+      "division": 1,
+      "name": "Jeff S. Taylor",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/2nd-Appellate-District-Division-1.aspx",
+      "role": "Judge"
+     },
+     {
+      "court": "Court of Appeals",
+      "division": 2,
+      "name": "Kelly Mark Easton",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/2nd-Appellate-District-Division-2.aspx",
+      "role": "Judge"
+     }
+    ]
+   },
+   "3": {
+    "members": [
+     {
+      "court": "Court of Appeals",
+      "division": 1,
+      "name": "Jacqueline M. Caldwell",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/3rd-Appellate-District-Division-1.aspx",
+      "role": "Judge"
+     },
+     {
+      "court": "Court of Appeals",
+      "division": 2,
+      "role": "Judge",
+      "vacant": true
+     }
+    ]
+   },
+   "4": {
+    "members": [
+     {
+      "court": "Court of Appeals",
+      "division": 1,
+      "name": "Audra Jean Eckerle",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/4th-Appellate-District-Division-1.aspx",
+      "role": "Judge"
+     },
+     {
+      "court": "Court of Appeals",
+      "division": 2,
+      "name": "Annette C. Karem",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/4th-Appellate-District-Division-2.aspx",
+      "role": "Judge"
+     }
+    ]
+   },
+   "5": {
+    "members": [
+     {
+      "court": "Court of Appeals",
+      "division": 1,
+      "name": "Will Moynahan",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/5th-Appellate-District-Division-1.aspx",
+      "role": "Judge"
+     },
+     {
+      "court": "Court of Appeals",
+      "division": 2,
+      "name": "Glenn E. Acree",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/5th-Appellate-District-Division-2.aspx",
+      "role": "Judge"
+     }
+    ]
+   },
+   "6": {
+    "members": [
+     {
+      "court": "Court of Appeals",
+      "division": 1,
+      "name": "Allison Jones",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/6th-Appellate-District-Division-1.aspx",
+      "role": "Judge"
+     },
+     {
+      "court": "Court of Appeals",
+      "division": 2,
+      "name": "Susanne M. Cetrulo",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/6th-Appellate-District-Division-2.aspx",
+      "role": "Judge"
+     }
+    ]
+   },
+   "7": {
+    "members": [
+     {
+      "court": "Court of Appeals",
+      "division": 1,
+      "name": "Sara Walter Combs",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/7th-Appellate-District-Division-1.aspx",
+      "role": "Judge"
+     },
+     {
+      "court": "Court of Appeals",
+      "division": 2,
+      "name": "Larry E. Thompson",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/7th-Appellate-District-Division-2.aspx",
+      "role": "Chief Judge"
+     }
+    ]
+   }
+  },
+  "circuit": {
+   "1": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Timothy A. Langford",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "10": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Charles C. Simms III",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "Joe G. Ballard",
+      "role": "Judge"
+     }
+    ]
+   },
+   "11": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Samuel Todd Spalding",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "Kaelin G. Reed",
+      "role": "Judge"
+     }
+    ]
+   },
+   "12": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Jerry D. Crosby II",
+      "role": "Vice Chief Regional Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Doreen S. Goodwin",
+      "role": "Judge"
+     }
+    ]
+   },
+   "13": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Hunter Daugherty",
+      "role": "Chief Regional Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Jeff Moss",
+      "role": "Judge"
+     }
+    ]
+   },
+   "14": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Jeremy M. Mattox",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "Kathryn H. Gabhart",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Lisa H. Morgan",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 4,
+      "name": "William J. Fooks",
+      "role": "Judge"
+     }
+    ]
+   },
+   "15": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Leslie R. Knight",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Casey Cheesman",
+      "role": "Judge"
+     }
+    ]
+   },
+   "16": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Kathy Lape",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Terri King Schoborg",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 3,
+      "name": "Kate Molloy",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 4,
+      "name": "Patricia M. Summe",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 5,
+      "name": "Acena J. Beck",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 6,
+      "name": "Thomas A. Rauf",
+      "role": "Judge"
+     }
+    ]
+   },
+   "17": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Julie Reinhardt Ward",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "Daniel J. Zalla",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Abigail E. Voelker",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "18": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "William J. Verax IV",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Heather Fryman",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "19": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Jeffrey L. Schumacher",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "2": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Joseph Roark",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "W. A. Kitchen",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Deanna Wise Henschel",
+      "role": "Judge"
+     }
+    ]
+   },
+   "20": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Brian C. McCloud",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Jeffrey L. Preston",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "21": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Elizabeth Davis",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "David Barber",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "22": {
+    "members": [
+     {
+      "court": "Family Court",
+      "division": 1,
+      "name": "Libby G. Messer",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Traci Brislin",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 3,
+      "name": "Lucy A. VanMeter",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 4,
+      "name": "Julie Muth Goodman",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 5,
+      "name": "Ross Ewing",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 6,
+      "name": "Tiffany Yahr",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 7,
+      "name": "Diane Minnifield",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 8,
+      "name": "Thomas L. Travis",
+      "role": "Vice Chief Regional Circuit Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 9,
+      "name": "Kimberly Nell Bunnell",
+      "role": "Chief Regional Circuit Judge"
+     }
+    ]
+   },
+   "23": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Michael Dean",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "24": {
+    "members": [
+     {
+      "court": "Family Court",
+      "division": 1,
+      "name": "Adam Scott O'Bryan",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "John Kevin Holbrook",
+      "role": "Judge"
+     }
+    ]
+   },
+   "25": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "David M. Ward",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "Cole Adams Maier",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Nora J. Shepherd",
+      "role": "Vice Chief Regional Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 4,
+      "name": "Kimberly Blair Walson",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 5,
+      "name": "Kristin J. Clouse",
+      "role": "Judge"
+     }
+    ]
+   },
+   "26": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Kent Hendrickson",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "27": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Gregory A. Lay",
+      "role": "Chief Regional Circuit Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "Michael O. Caperton",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Stephen M. Jones",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 4,
+      "name": "Lucas M. Joyner",
+      "role": "Judge"
+     }
+    ]
+   },
+   "28": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Teresa Whitaker",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "Eddy Montgomery",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Marcus L. Vanover",
+      "role": "Chief Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 4,
+      "name": "Jane Adams Venters",
+      "role": "Judge"
+     }
+    ]
+   },
+   "29": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Judy Vance Murphy",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "3": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Andrew C. Self",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "John L. Atkins",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Jason Shea Fleming",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 4,
+      "name": "Katherine Demps",
+      "role": "Judge"
+     }
+    ]
+   },
+   "31": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Johnny Ray Harris",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Dwight S. Marshall",
+      "role": "Judge"
+     }
+    ]
+   },
+   "32": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "George W. Davis III",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "John F. Vincent",
+      "role": "Judge"
+     }
+    ]
+   },
+   "33": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Alison C. Wells",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "34": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Daniel Ballou",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "Paul K. Winchester",
+      "role": "Judge"
+     }
+    ]
+   },
+   "35": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Eddy Coleman",
+      "role": "Chief Regional Circuit Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "Howard Keith Hall",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Kent Varney",
+      "role": "Judge"
+     }
+    ]
+   },
+   "36": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Kim Cornett Childers",
+      "role": "Vice Chief Regional Circuit Judge"
+     }
+    ]
+   },
+   "37": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Rebecca K. Phillips",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Jeniffer Barker Neice",
+      "role": "Judge"
+     }
+    ]
+   },
+   "38": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Timothy R. Coleman",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Benjamin D. McKown",
+      "role": "Judge"
+     }
+    ]
+   },
+   "39": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Lisa Hayden Whisman",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Monica S. Lacy",
+      "role": "Judge"
+     }
+    ]
+   },
+   "4": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Christopher B. Oglesby",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Susan Wesley McClure",
+      "role": "Vice Chief Regional Circuit Judge"
+     }
+    ]
+   },
+   "40": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "David L. Williams",
+      "role": "Vice Chief Regional Circuit Judge"
+     }
+    ]
+   },
+   "41": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Oscar Gayle House",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Clint J. Harris",
+      "role": "Judge"
+     }
+    ]
+   },
+   "42": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Andrea L. Moore",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Stephanie J. Perlow",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "43": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "John T. Alexander",
+      "role": "Chief Regional Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Mica Wood Pence",
+      "role": "Judge"
+     }
+    ]
+   },
+   "44": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Keith Nagle",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "45": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Brian W. Wiggins",
+      "role": "Chief Regional Circuit Judge"
+     }
+    ]
+   },
+   "46": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Bruce T. Butler",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "Kenneth Harold Goff II",
+      "role": "Judge"
+     }
+    ]
+   },
+   "47": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "James W. Craft II",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "48": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Phillip Shepherd",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "Thomas D. Wingate",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Squire N. Williams III",
+      "role": "Judge"
+     }
+    ]
+   },
+   "49": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Mark A. Thurmond",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Ashley Douglas",
+      "role": "Judge"
+     }
+    ]
+   },
+   "5": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Daniel M. Heady",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Brandi H. Rogers",
+      "role": "Judge"
+     }
+    ]
+   },
+   "50": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Whitney Z. Johns",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Bruce Petrie",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "51": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Karen L. Wilson",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "David Curlin",
+      "role": "Judge"
+     }
+    ]
+   },
+   "52": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Kevin D. Bishop",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "53": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Melanie Brummer",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "S. Marie Hellard",
+      "role": "Judge"
+     }
+    ]
+   },
+   "54": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Richard A. Brueggemann",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Kendra L. McCardle",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 3,
+      "name": "James R. Schrand",
+      "role": "Chief Regional Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 4,
+      "name": "Jennifer R. Dusing",
+      "role": "Judge"
+     }
+    ]
+   },
+   "55": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Rodney D. Burress",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Elis\u00e8 Givhan Spainhour",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Monica K. Meredith",
+      "role": "Judge"
+     }
+    ]
+   },
+   "56": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "James R. Redd III",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "Natalie White",
+      "role": "Judge"
+     }
+    ]
+   },
+   "57": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Sara Beth Gregory",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Jennifer Upchurch Edwards",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "6": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Bryce Lowry Caldwell",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "David C. Payne",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Jennifer Hendricks",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 4,
+      "name": "Angela Thompson",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "7": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Joe W. Hendricks Jr.",
+      "role": "Chief Circuit Judge"
+     }
+    ]
+   },
+   "8": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "division": 1,
+      "name": "Christopher T. Cohron",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "John R. Grise",
+      "role": "Vice Chief Regional Circuit Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Rebecca Simpson",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 4,
+      "name": "Catherine Rice Holderfield",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 5,
+      "name": "J.B. Hines",
+      "role": "Judge"
+     }
+    ]
+   },
+   "9": {
+    "members": [
+     {
+      "court": "Family Court",
+      "division": 1,
+      "name": "Dawn Lonneman Blair",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 2,
+      "name": "John David Simcoe",
+      "role": "Chief Circuit Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "division": 3,
+      "name": "Larry Ashlock",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 4,
+      "name": "Brent Hall",
+      "role": "Judge"
+     }
+    ]
+   }
+  },
+  "district": {
+   "1": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Mark Stephen Medlin",
+      "role": "Chief District Judge"
+     }
+    ]
+   },
+   "10": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Teresa McMahan",
+      "role": "Judge"
+     }
+    ]
+   },
+   "11": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Amy S. Anderson",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Mike Hall Jr.",
+      "role": "Judge"
+     }
+    ]
+   },
+   "12": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Daniel Fendley",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "role": "Judge",
+      "vacant": true
+     }
+    ]
+   },
+   "13": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Bill Oliver",
+      "role": "Chief District Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Janet C. Booth",
+      "role": "Chief Regional District Judge"
+     }
+    ]
+   },
+   "14": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Bolton Bevins",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Sarah Hays Spedding",
+      "role": "Judge"
+     }
+    ]
+   },
+   "15": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Elizabeth A. Chandler",
+      "role": "Chief Regional District Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Thomas M. Funk",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Elizabeth A. Chandler",
+      "role": "Chief Regional District Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Thomas M. Funk",
+      "role": "Judge"
+     }
+    ]
+   },
+   "16": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Ann Ruttle",
+      "role": "Chief District Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Kenneth L. Easterling",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 3,
+      "name": "Douglas J. Grothaus",
+      "role": "Vice-Chief District Judge"
+     }
+    ]
+   },
+   "17": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Cameron J. Blau",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Erin Matthews Sizemore",
+      "role": "Vice-Chief Regional District Judge"
+     }
+    ]
+   },
+   "18": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Gregory Coulson",
+      "role": "Judge"
+     }
+    ]
+   },
+   "19": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Kim Razor",
+      "role": "Judge"
+     }
+    ]
+   },
+   "2": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Todd S. Jones",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Jenny Hines",
+      "role": "Judge"
+     }
+    ]
+   },
+   "20": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Paul E. Craft",
+      "role": "Judge"
+     }
+    ]
+   },
+   "21": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "William W. Roberts",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Don Blair",
+      "role": "Chief District Judge"
+     }
+    ]
+   },
+   "22": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Denotra Ann Spruill Gunther",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Bruce T. Bell",
+      "role": "Chief Regional District Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 3,
+      "name": "Lindsay Hughes Thurston",
+      "role": "Vice-Chief Regional District Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 4,
+      "name": "Melissa Moore Murphy",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 5,
+      "name": "John Lindsay Tackett",
+      "role": "Judge"
+     }
+    ]
+   },
+   "23": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "William \"Bo\" Leach",
+      "role": "Judge"
+     }
+    ]
+   },
+   "24": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "John T. Chafin",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "D. Brett Butcher",
+      "role": "Judge"
+     }
+    ]
+   },
+   "25": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Tyler Frazier",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Robert V. Jennings",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 3,
+      "name": "Earl-Ray Neal",
+      "role": "Judge"
+     }
+    ]
+   },
+   "26": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Timothy Jason Jackson",
+      "role": "Judge"
+     }
+    ]
+   },
+   "27": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Wendell Lewis \"Skip\" Hammons Jr.",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "John Paul Chappell",
+      "role": "Chief District Judge"
+     }
+    ]
+   },
+   "28": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Benjamin R. Hardy",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Kathryn G. Slone",
+      "role": "Judge"
+     }
+    ]
+   },
+   "29": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Michael Loy",
+      "role": "Chief Regional District Judge"
+     }
+    ]
+   },
+   "3": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "John Lindsey Adams",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "J. Foster Cotthoff",
+      "role": "Chief Regional District Judge"
+     }
+    ]
+   },
+   "31": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Jimmy R. Marcum",
+      "role": "Chief District Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Tyler Green",
+      "role": "Judge"
+     }
+    ]
+   },
+   "32": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Scott T. Reese",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Devon E. Reams",
+      "role": "Judge"
+     }
+    ]
+   },
+   "33": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Cody Goehring",
+      "role": "Judge"
+     }
+    ]
+   },
+   "34": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Cathy E. Prewitt",
+      "role": "Chief District Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Fred F. White",
+      "role": "Judge"
+     }
+    ]
+   },
+   "35": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Robert F. Wright",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Tommy R. May",
+      "role": "Judge"
+     }
+    ]
+   },
+   "36": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Dennis B. Prater",
+      "role": "Vice-Chief Regional District Judge"
+     }
+    ]
+   },
+   "37": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "H. Rupert Wilhoit III",
+      "role": "Chief Regional District Judge"
+     }
+    ]
+   },
+   "38": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Gregory Vincent",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Daniel Boling",
+      "role": "Judge"
+     }
+    ]
+   },
+   "39": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Gary Salyers",
+      "role": "Judge"
+     }
+    ]
+   },
+   "4": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "David G. Massamore",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Kim Poe Gilliam",
+      "role": "Judge"
+     }
+    ]
+   },
+   "40": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Scarlett B. Latham",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "James M. Lawson",
+      "role": "Chief District Judge"
+     }
+    ]
+   },
+   "41": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Allen B. Roberts",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Henria Bailey-Lewis",
+      "role": "Vice-Chief Regional District Judge"
+     }
+    ]
+   },
+   "42": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Randall A. Hutchens",
+      "role": "Chief District Judge"
+     }
+    ]
+   },
+   "43": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "J. Gabriel Pendleton",
+      "role": "Chief Regional District Judge"
+     }
+    ]
+   },
+   "44": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Robert T. Yoakum",
+      "role": "Judge"
+     }
+    ]
+   },
+   "45": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Eric S. Stovall",
+      "role": "Judge"
+     }
+    ]
+   },
+   "46": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Bradley S. Butler",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Steven R. Crebessa",
+      "role": "Judge"
+     }
+    ]
+   },
+   "47": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Nick Whitaker",
+      "role": "Judge"
+     }
+    ]
+   },
+   "48": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Kathy R. Mangeot",
+      "role": "Vice-Chief Regional District Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Chris Olds",
+      "role": "Judge"
+     }
+    ]
+   },
+   "49": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Martha Blair Harrison",
+      "role": "Judge"
+     }
+    ]
+   },
+   "5": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Ben Leonard",
+      "role": "Judge"
+     }
+    ]
+   },
+   "50": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Patrick Barsotti",
+      "role": "Judge"
+     }
+    ]
+   },
+   "51": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Jill Brady",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Leslie M. Newman",
+      "role": "Judge"
+     }
+    ]
+   },
+   "52": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Scott R. Robbins",
+      "role": "Judge"
+     }
+    ]
+   },
+   "53": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Laura Witt",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Donna G. Dutton",
+      "role": "Judge"
+     }
+    ]
+   },
+   "54": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Jeffrey S. Smith",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Marcia L. Thomas",
+      "role": "Judge"
+     }
+    ]
+   },
+   "55": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Jennifer E. Porter",
+      "role": "Judge"
+     }
+    ]
+   },
+   "56": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Roger Brandon Knoth",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Matt Schalk",
+      "role": "Judge"
+     }
+    ]
+   },
+   "57": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "John S. \"Jack\" Kelley V",
+      "role": "Judge"
+     }
+    ]
+   },
+   "58": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Jack M. Telle",
+      "role": "Vice-Chief Regional District Judge"
+     }
+    ]
+   },
+   "59": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Kristi Renee Castillo",
+      "role": "Chief District Judge"
+     }
+    ]
+   },
+   "6": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Misty L. Miller",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Brian L. Quattrocchi",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 3,
+      "name": "Shannon L. Meyer",
+      "role": "Judge"
+     }
+    ]
+   },
+   "7": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Kenneth R. Williams Jr.",
+      "role": "Judge"
+     }
+    ]
+   },
+   "8": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Kimberly Geoghegan",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Brent J. Potter",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 3,
+      "name": "John B. Brown",
+      "role": "Judge"
+     }
+    ]
+   },
+   "9": {
+    "members": [
+     {
+      "court": "District Court",
+      "division": 1,
+      "name": "Deborah Lewis Shaw",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "division": 2,
+      "name": "Kimberly W. Shumate",
+      "role": "Vice-Chief Regional District Judge"
+     }
+    ]
+   }
+  },
+  "supreme": {
+   "1": {
+    "members": [
+     {
+      "court": "Supreme Court",
+      "name": "C. Shea Nickell",
+      "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/1st-Supreme-Court-District.aspx",
+      "role": "Justice"
+     }
+    ]
+   },
+   "2": {
+    "members": [
+     {
+      "court": "Supreme Court",
+      "name": "Kelly Thompson",
+      "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/2nd-Supreme-Court-District.aspx",
+      "role": "Justice"
+     }
+    ]
+   },
+   "3": {
+    "members": [
+     {
+      "court": "Supreme Court",
+      "name": "Debra Hembree Lambert",
+      "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/3rd-Supreme-Court-District.aspx",
+      "role": "Chief Justice of Kentucky"
+     }
+    ]
+   },
+   "4": {
+    "members": [
+     {
+      "court": "Supreme Court",
+      "name": "Angela McCormick Bisig",
+      "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/4th-Supreme-Court-District.aspx",
+      "role": "Justice"
+     }
+    ]
+   },
+   "5": {
+    "members": [
+     {
+      "court": "Supreme Court",
+      "name": "Pamela R. Goodwine",
+      "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/5th-Supreme-Court-District.aspx",
+      "role": "Justice"
+     }
+    ]
+   },
+   "6": {
+    "members": [
+     {
+      "court": "Supreme Court",
+      "name": "Michelle M. Keller",
+      "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/6th-Supreme-Court-District.aspx",
+      "role": "Justice"
+     }
+    ]
+   },
+   "7": {
+    "members": [
+     {
+      "court": "Supreme Court",
+      "name": "Robert B. Conley",
+      "profileUrl": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/7th-Supreme-Court-District.aspx",
+      "role": "Deputy Chief Justice"
+     }
+    ]
+   }
+  }
+ }
+}
