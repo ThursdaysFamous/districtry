@@ -213,11 +213,41 @@ INSTANCES = [
          app_name="districtry New York", app_url="https://districtry.com/ny/",
          district_word="District", member_word="Legislator",
          adapters=("ny_legislature",)),
+    # THE SECOND NEW YORK ENTRY, and the first time one state holds two. A
+    # county legislature and a board of supervisors are two bodies with two
+    # names and two kinds of seat, so neither entry's wording can describe the
+    # other. `district_word` is empty because the seat here is a town or a
+    # city, not a district, and the label says which.
+    dict(tag="ny", state="New York", concept="county-supervisor",
+         index_page="county-supervisor.html",
+         heading="%(county)s County Board of Supervisors",
+         # Shorter than the <h1> for the Michigan reason: "Cattaraugus County
+         # Board of Supervisors — districtry New York" is 65 characters against
+         # validate_serp_lengths.py's 60, so a search result would cut the end
+         # of it. "County Supervisors" is what the members are called.
+         page_title="%(county)s County Supervisors",
+         phrase="board of supervisors", index_label="Boards of supervisors",
+         all_label="All New York boards of supervisors",
+         app_name="districtry New York", app_url="https://districtry.com/ny/",
+         district_word="", member_word="Supervisor",
+         adapters=("ny_supervisors",)),
 ]
 
 
 def heading_of(inst, county):
     return inst["heading"] % {"county": county}
+
+
+def inst_key(inst):
+    """The registry key for one entry.
+
+    IT IS NOT THE TAG, because a state can elect its county boards in more
+    than one FORM and each form needs its own wording, concept path and index
+    page. New York is the first: a county that elects a legislature from
+    districts and a county governed by a board of supervisors are two bodies
+    with two names, so New York holds two entries. Keying the per-run tables on
+    the tag made the second silently replace the first."""
+    return "%s/%s" % (inst["tag"], inst["concept"])
 
 
 INDEX_REGION = "county-index"
@@ -260,6 +290,20 @@ def district_sort_key(key):
 def _read(path):
     with open(path, encoding="utf-8") as f:
         return json.load(f)
+
+
+def seat_heading(inst, label):
+    """The words over one seat's section.
+
+    MOST SEATS ARE CALLED DISTRICTS AND ONE FORM IS NOT. A New York county
+    governed by a board of supervisors seats the towns and cities themselves,
+    so the seat's name IS "Town of Ballston" and prefixing it with a district
+    word would print "District Town of Ballston". Such an entry sets
+    `district_word` to the empty string and the label carries the whole of it.
+    Every other instance is unchanged, because a non-empty word still joins the
+    label exactly as it did."""
+    word = inst["district_word"]
+    return "%s %s" % (word, label) if word else label
 
 
 def district(label, members=(), vacancies=0, note=None):
@@ -1094,6 +1138,97 @@ def ny_legislature(inst):
 
 
 
+NY_SUPERVISOR_FILE = "ny-supervisor-members.json"
+
+
+def ny_supervisors(inst):
+    """New York: the counties governed by a BOARD OF SUPERVISORS, where the
+    county board seat is a town or a city rather than a district.
+
+    IT IS A SECOND REGISTRY ENTRY FOR ONE STATE, not a second adapter on the
+    legislature entry, because the two forms are two bodies with two names. A
+    county legislature's page is headed "Tompkins County Legislature" and its
+    seats are districts; a board of supervisors' page is headed "Saratoga
+    County Board of Supervisors" and its seats are towns. One heading cannot
+    say both, so New York holds two entries and `inst_key` keeps them apart.
+
+    ONE FILE FOR EVERY COUNTY, keyed by county slug, where the legislature tier
+    is one file per county. The shape is the roster's rather than a choice here:
+    a board of supervisors publishes a single table of towns and the file holds
+    one county's table per key, so the slug is in the data and nothing has to be
+    read off a filename.
+
+    THE SEAT NAMES THE TOWN OR CITY AND SAYS WHICH, because New York has towns
+    and cities of the same name — a page headed just "Clifton Park" would not
+    say whether the row is the town's seat. `district_word` is empty for this
+    entry and the label carries "Town of" or "City of" itself.
+
+    MORE THAN ONE SUPERVISOR PER SEAT IS NORMAL rather than an error to
+    reconcile: New York County Law lets a town or city elect more than one, and
+    Saratoga seats two for the town of Clifton Park and two for the city of
+    Saratoga Springs. So the seat count on a page is the SEATS the county states
+    and never the number of towns.
+
+    NOTHING HERE SAYS ELECTED COUNTYWIDE. Each supervisor is elected by the one
+    town or city their section is headed with, which is what the page states in
+    words; the Iowa tier already draws this distinction for its own plan-2
+    counties, and getting it wrong would claim a countywide mandate for
+    somebody who has none."""
+    name_by_slug, names_path = _ny_name_by_slug()
+    path = os.path.join(app_data(inst["tag"]), NY_SUPERVISOR_FILE)
+    if not os.path.exists(path):
+        return {}, [], set(), [], "ny   no board-of-supervisors roster ships yet"
+    data = _read(path)
+    out, problems, nameless = {}, [], set()
+    for slug in sorted(data):
+        rec = data[slug]
+        name = name_by_slug.get(slug)
+        if name is None:
+            problems.append(
+                "%s names county slug %r, which %s does not carry — either the "
+                "roster is wrong or the two have diverged"
+                % (os.path.relpath(path, REPO_ROOT), slug,
+                   os.path.relpath(names_path, REPO_ROOT)))
+            continue
+        units = rec.get("units") or {}
+        districts = []
+        for unit in sorted(units):
+            entry = units[unit] or {}
+            kind = "City of" if entry.get("type") == "city" else "Town of"
+            districts.append(district("%s %s" % (kind, unit),
+                                      entry.get("members") or []))
+        # THE COUNTY'S OWN STATED SEAT COUNT IS THE GATE, and it is checked
+        # here as well as in the builder: this generator can ship a page
+        # claiming a board size, so it must not be the one reader that takes
+        # the number on trust.
+        seated = sum(len(d["members"]) for d in districts)
+        if rec.get("seats") and rec["seats"] != seated:
+            problems.append(
+                "%s seats %d supervisor(s) for %s and the county's own page "
+                "states %d — the page would state a board size the county "
+                "contradicts"
+                % (os.path.relpath(path, REPO_ROOT), seated, name,
+                   rec["seats"]))
+            continue
+        if not _count_named(districts, []):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append(
+                    "%s names nobody for %s — either the roster regressed, or "
+                    "this county belongs in NAMES_NOBODY with a reason"
+                    % (os.path.relpath(path, REPO_ROOT), name))
+            nameless.add(name)
+            continue
+        out[name] = {"districts": districts, "sourceUrl": rec.get("sourceUrl"),
+                     "extras": [], "skipped": [], "slug": slug,
+                     "at_large": False, "source_file": path}
+    note = ("ny   %d board(s) of supervisors read, %d seat(s) over %d town(s) "
+            "and city(ies)"
+            % (len(out),
+               sum(len(d["members"]) for r in out.values() for d in r["districts"]),
+               sum(len(r["districts"]) for r in out.values())))
+    return out, problems, nameless, [path, names_path], note
+
+
 def _count_named(districts, extras):
     n = sum(1 for d in districts for m in d["members"]
             if (m.get("name") or "").strip())
@@ -1113,6 +1248,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "ia_at_large": ia_at_large,
             "wi_seats": wi_seats, "ia_supervisors": ia_supervisors,
             "mi_commissioners": mi_commissioners,
+            "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
 
@@ -1205,7 +1341,7 @@ def board_graph(rec, inst, canonical, head, name):
     for d in rec.get("districts") or []:
         position += 1
         label = d["label"]
-        seat = "%s %s" % (inst["district_word"], label)
+        seat = seat_heading(inst, label)
         ids = []
         for n, m in enumerate(d["members"], 1):
             if not (m.get("name") or "").strip():
@@ -1431,7 +1567,7 @@ def districted_body(inst, name, rec):
         label = d["label"]
         anchor = "district-%s" % re.sub(r"[^A-Za-z0-9]+", "-", label).lower()
         out.append('<section class="district" id="%s">' % esc(anchor))
-        out.append('<h2>%s %s</h2>' % (esc(inst["district_word"]), esc(label)))
+        out.append('<h2>%s</h2>' % esc(seat_heading(inst, label)))
         rows = [h for h in (member_html(m) for m in d["members"]) if h]
         if rows:
             out.append('<ul class="members">%s</ul>' % "".join(rows))
@@ -1977,8 +2113,8 @@ def verify_page(inst, name, rec, at_large, html):
     # reader as a board one seat smaller than it is.
     if not at_large:
         for d in rec["districts"]:
-            if ("<h2>%s %s</h2>"
-                    % (esc(inst["district_word"]), esc(d["label"]))) not in html:
+            if ("<h2>%s</h2>"
+                    % esc(seat_heading(inst, d["label"]))) not in html:
                 problems.append("%s: district %s has no section on its page"
                                 % (name, d["label"]))
     return problems
@@ -2037,7 +2173,7 @@ def check_workflows(read_by_instance):
             continue                      # a watcher: reads, commits nothing
         rel = os.path.relpath(path, REPO_ROOT)
         for inst in INSTANCES:
-            hits = [r for r in read_by_instance.get(inst["tag"], ())
+            hits = [r for r in read_by_instance.get(inst_key(inst), ())
                     if "%s/data/app/%s" % (inst["tag"], r) in text]
             if not hits:
                 continue
@@ -2463,11 +2599,11 @@ def main():
     nameless_keys = set()
     for inst in INSTANCES:
         counties, probs, nameless, paths, notes = load_instance(inst)
-        loaded[inst["tag"]] = (inst, counties, notes)
+        loaded[inst_key(inst)] = (inst, counties, notes)
         problems += probs
         all_paths += paths
         nameless_keys |= {_nobody_key(inst, c) for c in nameless}
-        read_by_instance[inst["tag"]] = {os.path.basename(p) for p in paths}
+        read_by_instance[inst_key(inst)] = {os.path.basename(p) for p in paths}
     problems += check_workflows(read_by_instance)
     reg_problems, candidates = check_registration(all_paths)
     problems += reg_problems
@@ -2491,7 +2627,7 @@ def main():
     shell = shell_for_pages()
     stale, orphans, totals, wrong = [], [], [], []
     for inst in INSTANCES:
-        _i, counties, notes = loaded[inst["tag"]]
+        _i, counties, notes = loaded[inst_key(inst)]
         # WHO TO ASK, from the file the app already reads for the same county.
         # An instance with no source names none — Michigan publishes no county
         # clerk roster, so its pages carry no contact rather than a blank one.

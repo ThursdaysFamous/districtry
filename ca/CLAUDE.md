@@ -80,10 +80,8 @@ All inside `index.html`, wrapped in one IIFE. The full contract and per-thread b
 
 ## Cross-metro engine parity
 
-This app is one of several sibling metro forks (Chicago at `ThursdaysFamous/DistrictExplorer-CHI` / chidistricts.com; NYC at `ThursdaysFamous/DistrictExplorer-NYC` / nyc.chidistricts.com); **Chicago is the reference implementation**. The metro-agnostic engine inside `index.html` is fenced with `/* ==== ENGINE:BEGIN <name> ==== */ … ENGINE:END` markers and must stay **byte-identical across forks**; everything city-specific those blocks reference lives in the `METRO:BEGIN config` block near the top of the script. When editing:
+This app is one instance folder in the districtry repo, served at `districtry.com/ca/`; **Illinois (`il/`) is the reference implementation**. The metro-agnostic engine inside `index.html` is fenced with `/* ==== ENGINE:BEGIN <name> ==== */ … ENGINE:END` markers and must stay **byte-identical across forks**; everything city-specific those blocks reference lives in the `METRO:BEGIN config` block near the top of the script. When editing:
 
-- Don't edit inside an ENGINE fence unless the change will be ported to every sibling fork — and port it as the **actual git diff**, never by re-describing the feature in a prompt (same prompt ≠ same code; that's exactly how the forks drifted before the fences existed).
-- Region-agnostic changes land in this repo first; siblings apply the diff verbatim.
 - Never inline a city-specific value in an ENGINE block — add a variable to the METRO config block instead.
 - Parity is maintained **by construction**: there is ONE copy of every block under the root `engine/`, `python3 scripts/compose_app.py` splices it into this folder's `index.html` and `sw.js`, and its `--check` is the CI gate (`python3 scripts/check_engine_parity.py ca/index.html` is the fence lint). The release channel this bullet used to describe — `engine.lock.json`, `apply_engine.py`, `engine-bump.yml`, `engine-parity.yml` — was retired at R2.1 and none of those files exists (corrected 2026-09-02).
 - Full protocol + the known reconciliation backlog: `docs/ENGINE_SYNC.md`.

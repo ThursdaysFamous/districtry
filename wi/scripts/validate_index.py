@@ -75,6 +75,7 @@ CAPABILITIES = [
     "negative-point-ground-truth",  # 4b: worksheet negative point misses every anchor geometry (born in NYC; back-ported per the ENGINE_SYNC DoD)
     "county-coverage-ring",     # 8: dispatched counties are all inside the scope mask
     "sources-page-coverage",    # 6: the public sources page covers every layer and the app links it
+    "alder-label-table",        # 7: the per-city district renaming table still describes the shipped filing
 ]
 
 # The constants below are GENERATED from metro-worksheet.json (Conversion 2 —
@@ -859,15 +860,21 @@ def main():
     # every layer and is still reachable from the app.
     n_sourced = check_sources_page(html, repo_root)
 
+    # 7. the per-city aldermanic label table still describes the filing
+    n_relabelled = check_alder_label_table(html, app_dir)
+
     print(
         "validate_index: OK — inline script parses, %d registerLayer( calls, "
         "LAYER_AREA_RANK + LAYER_SIDEBAR_RANK cover all %d ids, no inline datasets, %d well-formed "
         "METRO_EXPLORERS entries, all data/app files present and cached in "
         "exactly one sw.js list, %d dispatched counties all inside the coverage "
         "ring whose %d counties match the shipped roster exactly%s"
+        "%s"
         % (n, len(EXPECT_LAYER_IDS), n_metros, n_counties, n_ring,
            "" if n_sourced is None else
-           ", sources page linked and covering all %d layers" % n_sourced)
+           ", sources page linked and covering all %d layers" % n_sourced,
+           ", %d municipalities relabelled to their own district numbers"
+           % n_relabelled)
     )
 
 
@@ -1234,6 +1241,97 @@ def check_coverage_ring_tracks_roster(repo_root, app_dir):
              % ("ies are" if len(promised) > 1 else "y is",
                 ", ".join("%s (%s)" % (name_by_fips.get(f, "?"), f) for f in promised)))
     return len(in_ring)
+
+
+ALDER_FILE = "aldermanic-districts.json"
+ALDER_TABLE_RE = re.compile(
+    r"var ALDER_DISTRICT_LABELS = \{(.*?)\n  \};", re.DOTALL)
+
+
+def check_alder_label_table(html, app_dir):
+    """7: ALDER_DISTRICT_LABELS still describes the shipped boundary file.
+
+    The aldermanic card, its hover name and the ward card's cross-reference
+    print a district number, and for three cities that number is the city's own
+    rather than the one in the state's ward filing (index.html's own comment
+    records which, and where each was read). The filing moves — Wis. Stat.
+    5.15(4)(br) submissions land twice a year — so a renaming table keyed on
+    filed values can stop describing anything, and a table that matches nothing
+    fails SILENTLY: every card simply goes back to printing the filed number,
+    which is the defect this table exists to fix. The `ACCEPTED_DROPS` property,
+    applied to a label table.
+
+    Four ways it fails. An entry naming a municipality the layer no longer
+    ships, or a district that municipality no longer files, is orphaned. A
+    municipality whose filed districts the table covers only in PART is worse
+    than no entry at all, because one card would print the city's number beside
+    a sibling printing the state's. And the renamed numbers must be 1..n with
+    no repeat, since that is the whole claim being made — that this council
+    numbers its districts from one.
+
+    What it cannot check is whether a renaming is CORRECT: that rests on the
+    city's own page, read on the date index.html records beside each entry, and
+    nothing here re-fetches those. A city that renumbers its council is a
+    measurement, not a gate.
+    """
+    m = ALDER_TABLE_RE.search(html)
+    if not m:
+        fail("ALDER_DISTRICT_LABELS table not found in index.html — the "
+             "aldermanic card prints a district number and three cities' "
+             "numbers come from this table")
+    table = {}
+    for line in m.group(1).split("\n"):
+        entry = re.match(r'\s*"(\d+)":\s*\{(.*?)\}', line)
+        if not entry:
+            if line.strip():
+                fail("ALDER_DISTRICT_LABELS: cannot read the line %r" % line.strip())
+            continue
+        pairs = re.findall(r'"([^"]+)":\s*"([^"]+)"', entry.group(2))
+        if not pairs:
+            fail("ALDER_DISTRICT_LABELS: %s names no districts" % entry.group(1))
+        table[entry.group(1)] = dict(pairs)
+    if not table:
+        fail("ALDER_DISTRICT_LABELS is empty — remove the table and the "
+             "alderDistrictNumber indirection with it, or say why it is here")
+
+    fpath = os.path.join(app_dir, ALDER_FILE)
+    if not os.path.exists(fpath):
+        fail("data/app/%s is missing — ALDER_DISTRICT_LABELS keys its "
+             "municipalities and districts" % ALDER_FILE)
+    try:
+        shipped = json.load(open(fpath))
+    except Exception as e:
+        fail("data/app/%s does not parse as JSON: %s" % (ALDER_FILE, e))
+    filed = {}
+    for f in shipped.get("features", []):
+        props = f.get("properties") or {}
+        cousub = str(props.get("COUSUBFP", ""))
+        alderid = str(props.get("ALDERID", "")).strip()
+        if cousub and alderid:
+            filed.setdefault(cousub, set()).add(alderid)
+
+    for cousub in sorted(table):
+        if cousub not in filed:
+            fail("ALDER_DISTRICT_LABELS names municipality %s, which "
+                 "data/app/%s no longer ships — drop the entry or follow the "
+                 "filing" % (cousub, ALDER_FILE))
+        listed = set(table[cousub])
+        theirs = filed[cousub]
+        if listed != theirs:
+            fail("ALDER_DISTRICT_LABELS covers municipality %s's districts %s "
+                 "where the shipped filing has %s. A partial table prints one "
+                 "card with the city's own number and its sibling with the "
+                 "state's — re-read the city's council page and cover every "
+                 "filed district or none."
+                 % (cousub, ", ".join(sorted(listed)), ", ".join(sorted(theirs))))
+        shown = [table[cousub][k] for k in sorted(theirs)]
+        want = [str(i + 1) for i in range(len(shown))]
+        if sorted(shown) != sorted(want):
+            fail("ALDER_DISTRICT_LABELS renames municipality %s's districts to "
+                 "%s, which is not 1..%d — the claim this table makes is that "
+                 "the council numbers its districts from one"
+                 % (cousub, ", ".join(shown), len(shown)))
+    return len(table)
 
 
 if __name__ == "__main__":
