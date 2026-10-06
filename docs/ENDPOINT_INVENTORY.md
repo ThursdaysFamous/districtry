@@ -267,12 +267,12 @@ measured until the next run describes it.
 | il | 131 | 390 | 6 |
 | ny | 38 | 33 | 0 |
 | ca | 17 | 14 | 0 |
-| wi | 92 | 264 | 5 |
+| wi | 92 | 265 | 5 |
 | ia | 70 | 77 | 0 |
-| mi | 32 | 60 | 1 |
+| mi | 32 | 61 | 1 |
 | mn | 22 | 10 | 0 |
 | ky | 10 | 10 | 0 |
-| **total** | **412** | **858** | **12** |
+| **total** | **412** | **860** | **12** |
 
 **135 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

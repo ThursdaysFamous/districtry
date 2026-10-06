@@ -12082,7 +12082,9 @@ function initChiExplorer() {
    * Promise.all query() doesn't fit this shape.
    *
    * opts: { id, group, label, loader, style, pointOfInterest?, coverage?,
-   *         subOf?, emptyNote?, onToggle?, fields: [...] }
+   *         subOf?, emptyNote?, onToggle?, people?, fields: [...] }
+   * people(result) => Node|null, when present, appends a person block (built
+   * with renderBodyIntro / renderPersonRows) after the field rows.
    * Each field is one of:
    *   { name, label, keys:[...], primary:true } — always shown; findPropCI(keys)
    *        with an "Unknown" fallback. Conventionally the first field (headline).
@@ -12138,7 +12140,13 @@ function initChiExplorer() {
             rows.push({ label: f.label, value: f.value });
           }
         });
-        return renderFieldStack(rows);
+        var card = renderFieldStack(rows);
+        // optional: a block of people the feature itself carries (a council
+        // stamped onto each boundary by its builder), built by the layer from
+        // the card helpers and placed after the identity fields
+        var people = opts.people ? opts.people(result) : null;
+        if (people) card.appendChild(people);
+        return card;
       },
       pointOfInterest: opts.pointOfInterest,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)

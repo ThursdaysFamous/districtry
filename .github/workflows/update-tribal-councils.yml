@@ -1,0 +1,94 @@
+name: Update tribal councils (WI + MI)
+
+# Weekly refresh of the councils on the Tribal Government cards in Wisconsin
+# and Michigan. scripts/tribal_council_scraper.py reads each nation's own
+# council page (and, for the two Wisconsin nations that publish no council
+# page, the Wisconsin Department of Administration's list of tribal officials)
+# into data/tribal-councils.json; scripts/build_tribal_areas.py --rosters then
+# writes each instance's own data/app/tribal-councils.json from it. A nation
+# whose page cannot be read this week keeps its last-read council, marked with
+# the date it was last read (the preserve rule, 2026-09-19). If anything
+# changed it opens a PR rather than committing to main — officeholder data gets
+# a look before it ships.
+#
+# The land itself (tribal-areas.json) is NOT rebuilt here: it is served
+# cache-first and changes only when the Census redraws it, while these names
+# live in a separate network-first file so a new council reaches a returning
+# reader at once.
+
+on:
+  schedule:
+    - cron: "23 12 * * 2" # Tuesday 12:23 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-councils:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR runs CI; see
+      # update-wi-congress-roster.yml for why, and for fetch-depth: 0.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # requests for the pages, pymupdf for the state's PDF list.
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests pymupdf
+
+      - name: Re-read the councils
+        run: python3 scripts/tribal_council_scraper.py
+
+      - name: Write each instance's councils file
+        run: python3 scripts/build_tribal_areas.py --rosters
+
+      # Gate the regenerated data before it can reach a PR.
+      - name: Validate app + data files
+        run: |
+          python3 scripts/build_tribal_areas.py --check
+          python3 wi/scripts/validate_index.py wi/index.html
+          python3 mi/scripts/validate_index.py mi/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- data/tribal-councils.json '*/data/app/tribal-councils.json' '*/data/app/tribal-areas.json'; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch, cut from main's current tip; see
+          # update-wi-congress-roster.yml for why both.
+          branch="bot/tribal-councils-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add data/tribal-councils.json wi/data/app/tribal-councils.json \
+                  mi/data/app/tribal-councils.json \
+                  wi/data/app/tribal-areas.json mi/data/app/tribal-areas.json
+          git commit -m "Update tribal councils from each nation's own page"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update tribal councils from each nation's own page" \
+              --body "Automated weekly refresh of the councils on the Wisconsin and Michigan Tribal Government cards, read by \`scripts/tribal_council_scraper.py\` from each nation's own council page (two Wisconsin nations from the state's list, because they publish none). A nation whose page could not be read keeps its last-read council with that date. Please review the diff before merging — this changes data about real officeholders. If tribal-areas.json changed too, a nation's council started or stopped being carried, and the cache gate will ask for a cache-name bump." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

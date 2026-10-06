@@ -158,6 +158,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "tribal-councils.json": 9,  # The council of every Michigan nation whose council is carried, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "congress-roster.json": 13,  # U.S. House roster, refreshed weekly by update-mi-congress-roster.yml.
     "mi-senate-members.json": 34,  # Senate roster from Open States mi.csv enriched by the Michigan Senate's own all-senators directory, refreshed weekly by update-mi-legislature-roster.yml; floor tolerates transient vacancies (38 seats).
     "mi-house-members.json": 99,  # House roster from Open States mi.csv, refreshed weekly by update-mi-legislature-roster.yml; floor tolerates transient vacancies (110 seats). No capitol contact block — see the layer's source note.

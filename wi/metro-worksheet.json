@@ -464,7 +464,7 @@
       "label": "Tribal Government",
       "group": "political",
       "area_rank": 21,
-      "rank_note": "Tribal land — Wisconsin has 21 pieces across 12 nations, from the Menominee Reservation's 934.539 km² down to a 1.339 km² Oneida trust parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 8.969 km² MEDIAN, which sits just above the Milwaukee squad areas' measured 8.852 and well above the aldermanic fabric's 3.064, and below the county-board fabric's 47.147 — medians rather than means, because one reservation is a hundred times the size of a trust parcel and a mean would rank this layer by Menominee alone. The rank governs draw order only. Partial coverage: most of Wisconsin is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 2 of them in Wisconsin and both Menominee's — the 2020 population, and NOBODY: the authority for a council is each nation's own published list. Ten of the twelve publish one that answers this project and is not carried yet, and the card gives that page and the date it answered; two cannot be read at all, one behind a managed challenge and one publishing no council page, and the card says which. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "rank_note": "Tribal land — Wisconsin has 21 pieces across 12 nations, from the Menominee Reservation's 934.539 km² down to a 1.339 km² Oneida trust parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 8.969 km² MEDIAN, which sits just above the Milwaukee squad areas' measured 8.852 and well above the aldermanic fabric's 3.064, and below the county-board fabric's 47.147 — medians rather than means, because one reservation is a hundred times the size of a trust parcel and a mean would rank this layer by Menominee alone. The rank governs draw order only. Partial coverage: most of Wisconsin is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 2 of them in Wisconsin and both Menominee's — the 2020 population, and the council: the authority for who sits on it is each nation's own published list. Ten of the twelve publish one this project reads weekly, and the card names that council with the date it was read and a link to the page; the other two (Lac du Flambeau and Sokaogon) publish no council page at all, and for those the card names the council the Wisconsin Department of Administration lists and says so, with that list's own date. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Wisconsin has 21 such areas across 12 nations.",
         "boundary": [
@@ -473,7 +473,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
           }
         ],
-        "people": "Nobody is named. Each nation's own published council is the authority. Ten of the twelve publish one that answers this project and whose names are not carried yet, and the card gives that page and the date it answered; two cannot be read at all and the card says why. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.",
+        "people": "The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card. Ten of the twelve nations publish one; the other two publish no council page, and for those the card names the council the Wisconsin Department of Administration's list of tribal officials gives, says so, and gives that list's own date. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.",
         "applies": "Wisconsin — 21 areas across 12 nations. Most points in the state are on no tribal land."
       }
     },
@@ -1442,6 +1442,11 @@
     ],
     "rosters": [
       {
+        "file": "tribal-councils.json",
+        "min_keys": 12,
+        "note": "The council of every Wisconsin nation whose council is carried, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml). Twelve codes: ten nations from their own pages and two from the state's list. Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "adams-polling-places.json",
         "min_keys": 35,
         "note": "Adams County ward → polling place pairing for the 2026 General Election — wi/scripts/build_wi_polling_places.py, from the workbook the Wisconsin Elections Commission sent 2026-08-27 (wi/data/source/wec/). PROVISIONAL until the Commission publishes its November edition; 39 of the county's LTSB wards are paired, and the card names the election, the provisional status and MyVote as the confirmation route.",
@@ -2407,7 +2412,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-wi-shell-v46",
+    "cache_name": "districtry-wi-shell-v47",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
@@ -2425,6 +2430,11 @@
     "note": "The machine-checked source manifest lives in the freshness gate; the template ships it scaffolded with the five starter layers' endpoints, and the fork grows it with every layer it adds."
   },
   "workflows": [
+    {
+      "file": "update-tribal-councils.yml",
+      "purpose": "Tribal councils for Wisconsin's and Michigan's nations, from each nation's own page (two Wisconsin nations from the state's list)",
+      "schedule": "Tue 12:23 UTC"
+    },
     {
       "file": "update-wi-congress-roster.yml",
       "purpose": "U.S. House (WI) roster (unitedstates/congress-legislators)",

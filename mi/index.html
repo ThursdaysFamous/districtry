@@ -8379,7 +8379,7 @@ function initMichiganExplorer() {
     "zip-code",          // 1,010 ZIP Code Tabulation Areas covering Michigan, live from TIGERweb (no data/app file) — 139.7 km2 mean feature area, between a township and a precinct
     "city-ward",         // Seven cities: Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek and Jackson. Their districts run from Detroit's seven over 139 sq mi (about 20 each) down to Jackson's six wards over 11 (about 2 each), measured 2026-10-01 — all smaller than a typical Michigan ZCTA; ranked on Detroit's, the largest
     "precinct",          // 3,895 voting precincts across all 83 counties, pre-built from the state's own 2026-cycle layer — 38.8 km2 mean feature area against a 6.4 km2 median, a six-fold skew because a rural township precinct and a city precinct are barely the same kind of object; the finest tiling this instance ships
-    "tribal-government", // Tribal land — Michigan has 24 pieces across 12 nations, from the Isabella Reservation's 564.926 km² down to a 0.074 km² Grand Traverse parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 3.021 km² MEDIAN, below the precinct fabric's measured 6.400 — medians rather than means, because this layer's own mean of 39.8 km² is Isabella and L'Anse and describes none of the other 22 parcels. The places layer below it is live and publishes a mean rather than a median, so no claim is made here about which of the two is smaller; the rank governs draw order only. Partial coverage: most of Michigan is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 1 of them in Michigan and it is Lac Vieux Desert's — the 2020 population, and NOBODY: the authority for a council is each nation's own published list. Ten of the twelve publish one that answers this project and is not carried yet, and the card gives that page and the date it answered; two cannot be read at all, one behind a managed challenge and one publishing its council to members only, and the card says which. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
+    "tribal-government", // Tribal land — Michigan has 24 pieces across 12 nations, from the Isabella Reservation's 564.926 km² down to a 0.074 km² Grand Traverse parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 3.021 km² MEDIAN, below the precinct fabric's measured 6.400 — medians rather than means, because this layer's own mean of 39.8 km² is Isabella and L'Anse and describes none of the other 22 parcels. The places layer below it is live and publishes a mean rather than a median, so no claim is made here about which of the two is smaller; the rank governs draw order only. Partial coverage: most of Michigan is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 1 of them in Michigan and it is Lac Vieux Desert's — the 2020 population, and the council: the authority for who sits on it is each nation's own published list. Nine of the twelve publish one this project reads weekly, and the card names that council with the date it was read and a link to the page; three cannot be read, two behind a managed challenge and one publishing its council to its members only, and the card says which. Michigan has no current state list of tribal officials to fall back on. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "municipality",      // 533 incorporated places, live from TIGERweb (no data/app file) — 281 cities and 252 villages, small dense pockets inside the township fabric, so the smallest layer this instance ships at a 12 km2 mean
     "police-station",    // 1,290 police-station points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
     "fire-station",      // 2,838 fire and EMS station points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
@@ -11447,7 +11447,9 @@ function initMichiganExplorer() {
    * Promise.all query() doesn't fit this shape.
    *
    * opts: { id, group, label, loader, style, pointOfInterest?, coverage?,
-   *         subOf?, emptyNote?, onToggle?, fields: [...] }
+   *         subOf?, emptyNote?, onToggle?, people?, fields: [...] }
+   * people(result) => Node|null, when present, appends a person block (built
+   * with renderBodyIntro / renderPersonRows) after the field rows.
    * Each field is one of:
    *   { name, label, keys:[...], primary:true } — always shown; findPropCI(keys)
    *        with an "Unknown" fallback. Conventionally the first field (headline).
@@ -11503,7 +11505,13 @@ function initMichiganExplorer() {
             rows.push({ label: f.label, value: f.value });
           }
         });
-        return renderFieldStack(rows);
+        var card = renderFieldStack(rows);
+        // optional: a block of people the feature itself carries (a council
+        // stamped onto each boundary by its builder), built by the layer from
+        // the card helpers and placed after the identity fields
+        var people = opts.people ? opts.people(result) : null;
+        if (people) card.appendChild(people);
+        return card;
       },
       pointOfInterest: opts.pointOfInterest,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
@@ -13132,19 +13140,22 @@ function initMichiganExplorer() {
    * draws one tribal subdivision, Lac Vieux Desert's, on Michigan's tribal land, measured against the 484 it
    * draws nationwide.
    *
-   * WHY THE CARD NAMES NOBODY. The authority for who sits on a nation's
-   * council is that nation's own published list, and this app does not carry
-   * those names yet. Ten of the twelve nations publish a council page that
-   * answers this project, measured 2026-10-01, and the card gives that page
-   * and that date so a reader is sent somewhere rather than told an absence
-   * with no remedy. The other two cannot be read at all: one host answers some
-   * requests with a managed challenge, which is an access control and is
-   * never worked around, and one nation publishes its council list to its
-   * own members only, which is its own decision about its own roll. The reason is carried on the feature
-   * (rosterWhy) rather than written here, so the card states a measurement
-   * rather than a sentence somebody typed, and the two tables behind it —
-   * ROSTER_BLOCKED and ROSTER_NOT_READ in scripts/build_tribal_areas.py —
-   * are re-audited on every run.
+   * WHO THE CARD NAMES. The authority for who sits on a nation's council is
+   * that nation's own published list. Nine of Michigan's twelve nations
+   * publish one this project can read, and the card names that council with
+   * the date it was read and a link to the page. The other three cannot be
+   * read: two hosts answer some requests with a managed challenge, which is an
+   * access control and is never worked around, and one nation publishes its
+   * council list to its own members only, which is its own decision about its
+   * own roll. For those the card says why it names nobody and links the
+   * nation. Michigan has no current state list of tribal officials to fall
+   * back on (the state's own directory is dated January 2017). The names and
+   * the reasons are read from files rather than written here, so the card
+   * states a measurement rather than a sentence somebody typed:
+   * scripts/tribal_council_scraper.py reads the councils weekly into
+   * data/app/tribal-councils.json, which the loader merges onto the land, and
+   * ROSTER_BLOCKED in scripts/build_tribal_areas.py, which writes the reasons
+   * onto the land itself, is re-audited every run.
    *
    * PARTIAL COVERAGE, like the neighbourhood and district layers: most points
    * in Michigan are on no tribal land, so the layer declares its own emptyNote
@@ -13157,8 +13168,29 @@ function initMichiganExplorer() {
    * Affairs' list of governments — one reader per publisher, so eight
    * instances cannot come to disagree.
    * ======================================================================= */
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // Each council is merged onto its nation's land here, once, so the card,
+  // the hover and the relationship outlines all read one set of properties.
+  // A councils file that cannot be read leaves the land answering on its own
+  // rather than failing the layer.
   var loadMiTribalAreas = makeCached(function () {
-    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = (both[1] && both[1].councils) || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
   });
 
   registerPolygonLayer({
@@ -13187,6 +13219,10 @@ function initMichiganExplorer() {
       // builder recorded, so the card cannot drift from it.
       { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
       { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      // where the council's names came from and when, and the page they were
+      // read from: the builder writes both, and the people block below shows them
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
       // extracted for primaryLink only — the hidden-column shape the other
       // link-carrying layers in this app use for the same purpose
       { name: "url", label: "", keys: ["url"], when: function () { return false; } },
@@ -13201,6 +13237,40 @@ function initMichiganExplorer() {
                  url: String(result.url) };
       }
       return null;
+    },
+    // THE COUNCIL, where the nation's own page names it (or, for two
+    // Wisconsin nations that publish no council at all, the state's list of
+    // tribal officials, which the note says). Read weekly by
+    // scripts/tribal_council_scraper.py and written by build_tribal_areas.py
+    // --rosters to tribal-councils.json, which the loader above merges onto
+    // each piece of land, so the card makes no request of its own. Each row is the person and their office
+    // as the nation prints them; a district, where a nation elects by
+    // district, is its own membership district and not a shape on this map.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" \u00b7 ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from \u2197",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
     },
     emptyNote: "This point is not on tribal land. Michigan has 24 tribal areas across 12 nations \u2014 thirteen reservations and eleven pieces of off-reservation trust land \u2014 and this point is on none of them."
   });
