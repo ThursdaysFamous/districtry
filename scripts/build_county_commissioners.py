@@ -128,6 +128,18 @@ EXPECT_MEMBERS = {
                                      # second time: gallatinco.illinois.gov omits its TLS
                                      # intermediate, so every automated client called the
                                      # county dark while the site answered 200 all along.
+    "HARDIN": 3,                     # 2026-10-01; the THIRD no-website county
+                                     # (DOCUMENT_ROSTERS). At-large was already proven
+                                     # from certified returns before anyone replied —
+                                     # its 2026 primary prints a committeeperson contest
+                                     # per precinct per party and no district-suffixed
+                                     # board contest anywhere — and Clerk Cowsert
+                                     # confirmed both halves in writing: "Our county
+                                     # board is elected countywide. And we do not have a
+                                     # website in Hardin County." (2026-08-24). The three
+                                     # names came by her reply of 2026-10-01. No e-mail
+                                     # and no office ships: she assigns neither and the
+                                     # county publishes no page to carry one.
     "WABASH": 3,                     # 2026-08-16; commission form stated in writing by
                                      # Clerk Will 2026-08-05, the three names sent by her
                                      # e-mail 2026-08-16. The SECOND no-website county

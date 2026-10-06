@@ -143,7 +143,7 @@ Hoffmann v. NYIRC forced a redraw and the legislature's new congressional map wa
 SF's per-date calendar lives in the SF fork's `WATCH.md` (per-metro file); this master runbook
 holds the response procedure.
 
-### WI (12 layers)
+### WI (13 layers)
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
@@ -156,6 +156,7 @@ holds the response procedure.
 | Aldermanic districts (WI, 838) | **SEMIANNUAL** — the districts are unions of the wards above, so every filing window can move them | each city or village council, carried as ward `ALDERID` coding in its county's LTSB filing | re-run `wi/scripts/build_wi_aldermanic_districts.py` per its WATCH.md row (pre-built — the dissolve, its pinned exclusion list, the BAS witness and the point-agreement gate all re-run); bump the sw cache with the file |
 | County / CouSub / Municipality | TIGER-rolling | Census Bureau vintage | pre-built `state-counties.json` on rebuild; live layers self-update |
 | School districts (3 tilings) | Annual-ish TIGER updates | WI DPI consolidations → TIGER | pre-built unified file; live layers self-update; a consolidation moves the unified/paired seam |
+| Tribal government (WI, 21 areas) | **NOT A REDISTRICTING AT ALL** — land enters the map when the United States takes it into trust on a nation's application, published by no calendar | the United States, on a nation's trust application; drawn by the Census Bureau's AIANNHA service | geometry (`scripts/build_tribal_areas.py --state Wisconsin` re-run against the live service). `--check` is OFFLINE: it re-derives the shipped file from `data/tribal-government-join.json` and the BIA directory, so it proves the join and NEVER that the Census has not added or removed an area — only a rebuild sees that. A NEW AREA ALSO NEEDS A JOIN ROW, and the builder refuses to write without one rather than shipping a nation it cannot name. The council side moves on its own clock and is recorded per nation in `ROSTER_BLOCKED` / `ROSTER_NOT_READ` |
 | ZIP codes | USPS-driven, not census | USPS | occasional |
 | Post offices | Facility churn | USPS → USGS structures | occasional |
 
@@ -164,7 +165,7 @@ legislative maps have moved off the census cycle before, so a court-ordered rema
 here in a way it is not in most states.
 
 
-### MI (11 layers)
+### MI (12 layers)
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
@@ -176,6 +177,7 @@ here in a way it is not in most states.
 | School District (Unified / Elementary) | TIGER-rolling; district consolidations are continuous and local | Census Bureau vintage, over districts created and merged under the Revised School Code (MCL 380) | **NOTHING TO REBUILD — both are LIVE TIGERweb.** The exposure here is the PAIR's completeness, not either layer's geometry: the two tile Michigan only because layer 1 (secondary) is empty and the 27 elementary districts fill exactly the gaps the 514 unified ones leave. A roll that introduces a secondary district, or that moves a district between tiers, would leave a hole no gate catches — the smoke test classifies pre-built anchors only, and both of these are live. Re-run the disjointness probe (each layer's features at the other's `INTPT*` interior points; `CENT*` reports false overlaps) and, if layer 1 stops measuring zero, the recorded drop in `docs/DATA_LAYER_GUIDEBOOK.md` becomes a layer to ship |
 | Precinct | **Per election cycle, and the newest map moves HOSTS** | local election officials -> county/local GIS -> Bureau of Elections | geometry (`mi/scripts/build_mi_precincts.py` rebuild — exact 3,895/83 count guard, unique-key guard, the 1,530-key MCD join, a registered-voter sanity band, and an agreement gate that judges overlaps AGAINST THE SOURCE). **THE TRAP IS WHERE YOU LOOK, NOT WHAT YOU READ**: the `OpenData/boundaries` MapServer that carries the commissioner layer publishes a precinct layer per cycle and its newest is 2024, while the 2026 map lives on the state's ArcGIS Online org on a different host — and Michigan consolidated 4,340 precincts into 3,895 between them, so building from the MapServer yields a complete-looking file that is 445 precincts wrong. Run the org query (`arcgis.com/sharing/rest/search?q=owner:michigan_admin AND precinct`) BEFORE any MapServer layer list. Four items serve the 2026 map; the builder pins the curated one and gates on the one the state's own Election District Viewer wires reporting the same count |
 | ZIP Code | TIGER-rolling; ZCTAs are redrawn each decennial census | Census Bureau (an areal approximation of USPS delivery routes, not a postal boundary) | **NOTHING TO REBUILD — live TIGERweb**, no builder and no `data/app` file, so a vintage roll reaches it on its own and no cache bump applies. The one thing a roll CAN break silently is the ENVELOPE contract: this layer is fetched by `MI_BBOX_ENVELOPE` (Esri's `{xmin,ymin,xmax,ymax}`) rather than `STATE='26'`, because ZCTAs carry no STATE field, and passing the instance's `{minLng,...}` `METRO_BBOX` instead yields HTTP 200 with a JSON error envelope and zero features rather than an error — `mi/scripts/validate_sources.py` watches the count so that failure surfaces |
+| Tribal government (MI, 24 areas) | **NOT A REDISTRICTING AT ALL** — land enters the map when the United States takes it into trust on a nation's application, published by no calendar | the United States, on a nation's trust application; drawn by the Census Bureau's AIANNHA service | geometry (`scripts/build_tribal_areas.py --state Michigan` re-run against the live service). `--check` is OFFLINE: it re-derives the shipped file from `data/tribal-government-join.json` and the BIA directory, so it proves the join and NEVER that the Census has not added or removed an area — only a rebuild sees that. A NEW AREA ALSO NEEDS A JOIN ROW, and the builder refuses to write without one rather than shipping a nation it cannot name. The council side moves on its own clock and is recorded per nation in `ROSTER_BLOCKED` / `ROSTER_NOT_READ` |
 
 MI's per-date calendar lives in `mi/WATCH.md`. Note the roster axis moves on a DIFFERENT clock from
 the geometry here: commissioner terms went to FOUR years under PA 121-122 of 2021, so the boards
@@ -361,6 +363,7 @@ metro-worksheet.json and hand-edits fail `--check`.
 | ERSB school board | IL statute (SB15) | ilsenateredistricting.com / city | 10 districts (20 subdistricts) for the 2024 election; full 21-member elected board seated Jan 2027 |
 | Chicago police districts (22) | CPD | chicagopolice.org | Administrative; changes rarely, not census-tied |
 | CPS attendance boundaries | CPS | Chicago data portal (SYxxyy dataset id) | New dataset every school year (e.g. SY2526) |
+| Tribal land (1 — Prairie Band Potawatomi trust land) | the United States, on the nation's application — a trust acquisition, not a redistricting | Census TIGERweb/AIANNHA, whose vintage rolls annually | AIANNH 2980 is ABSENT from the Census 2020 vintage and present in the current one, so the parcel entered the map between 2020 and 2026; no enactment date is published |
 
 ### NYC — layer → authority → next-map source → last enactment/effective
 

@@ -18,6 +18,10 @@ Each exports `UNITS`, a list of dicts:
       "body": "City Council",        # the body's own name for itself
       "url": "https://...",          # the page the roster is read from
       "also": ["https://..."],       # optional further pages, same host rules
+      "hcms": {"schema": "employee"}, # optional: members drawn from the
+                                     # CivicPlus content service (see
+                                     # read_hcms in the scraper); its items
+                                     # reach the parser as also_htmls[0]
       "seats": 7,                    # the members the page publishes, counted
       "parse": fn,                   # fn(html, also_htmls) -> Roster
     }

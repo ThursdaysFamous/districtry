@@ -114,6 +114,23 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro nyc --out ny/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro sf --out ca/data/app/coverage-gaps.json
 
+      # The tribal-government layer (il, wi, mi). --selftest exercises the join
+      # and population logic on fixtures; --check re-derives the shipped boundary
+      # files' properties OFFLINE from data/tribal-government-join.json and the
+      # BIA directory, so a government renamed in one place and not the other
+      # fails here, and holds each instance's tribal-councils.json to
+      # data/tribal-councils.json. It proves the JOIN and never that the Census
+      # still publishes the same areas — only a rebuild does that, and WATCH.md
+      # carries its clock. The council scraper's --selftest holds its page
+      # reader and its name checks to fixtures, offline: a seat count alone let
+      # a menu pass as a council on the first draft.
+      - name: Tribal areas match their join table
+        if: ${{ !cancelled() }}
+        run: |
+          python3 scripts/build_tribal_areas.py --selftest
+          python3 scripts/build_tribal_areas.py --check
+          python3 scripts/tribal_council_scraper.py --selftest
+
       # A number a gap record STATES must equal the file it describes.
       # ia-board-chair told readers "43 of Iowa's 99 counties" for eleven days
       # while the file held 38, and #1034 fixed the number without adding a
