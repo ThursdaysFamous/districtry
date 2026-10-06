@@ -1,0 +1,43 @@
+{
+  "1": {
+    "members": [
+      {
+        "email": "j.edwards@piattcounty.org",
+        "name": "Jerry Edwards",
+        "role": "Vice-Chair"
+      },
+      {
+        "email": "w.chambers@piatt.gov",
+        "name": "William Chambers"
+      }
+    ],
+    "sourceUrl": "https://piatt.gov/government/county_board/index.php"
+  },
+  "2": {
+    "members": [
+      {
+        "email": "g.jones@piattcounty.org",
+        "name": "Gail Jones"
+      },
+      {
+        "email": "m.beem@piatt.gov",
+        "name": "Michael Beem"
+      }
+    ],
+    "sourceUrl": "https://piatt.gov/government/county_board/index.php"
+  },
+  "3": {
+    "members": [
+      {
+        "email": "t.henricks@piattcounty.org",
+        "name": "Todd Henricks",
+        "role": "Chair"
+      },
+      {
+        "email": "p.foran@piatt.gov",
+        "name": "Paul Foran"
+      }
+    ],
+    "sourceUrl": "https://piatt.gov/government/county_board/index.php"
+  }
+}
