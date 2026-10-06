@@ -6215,3 +6215,41 @@ through Jersey 7 is the 2016 line, and the 2016 map is published on the Clerk's 
 to ask where it runs before reading that map would ask her to repeat something the county already
 publishes. The next step is ours: read the 2016 map at Jersey 7. Only if that map is not legible
 there does a letter go, and then it asks one narrow question about one precinct.
+
+## Ask il-scott-commissioners-reply — Scott County Clerk: say she is right, and confirm the three names
+
+> **NOT YET SENT, drafted 2026-10-06.** It goes as a reply in Clerk Brooke Smith's thread "RE:
+> Scott County commissioners — your members page comes back empty". She wrote back that the page
+> is not blank for her.
+
+**She is right, and our letter was wrong.** Re-checked 2026-10-06: the page loads its member list
+from the county's own data feed, using settings written into the page itself. Asked that way, the
+feed answers in full and names three commissioners — Robert Schafer (County Chair), John Simmons
+and Tom Peterson — with the office at 35 E. Market St., Winchester, and 217-742-5532. In August we
+asked the feed without those settings, got an error, and found the Internet Archive's copy just as
+empty; from that we told her a visitor would see an empty list. That was our reading, not her
+page. One thing is still unexplained: a headless browser here showed the list's heading with no
+names under it. The cause is not known, so the letter does not claim any fault on her side.
+
+**What it costs nothing to ask.** The three names agree with what the county's certified election
+results imply (Schafer won in 2020, Simmons in 2022, Peterson in 2024), so the letter asks only to
+be told if any of it is wrong. Shipping the roster from her page is a separate change and waits on
+Adam's word.
+
+> Subject: Re: Scott County commissioners — your members page comes back empty
+>
+> Dear Clerk Smith,
+>
+> Thank you for checking, and you are right: the page is fine. The fault was in how I read it.
+> When I looked in August the list's data came back with an error to my program, and I wrongly
+> took that to mean visitors saw an empty list. I am sorry for the trouble.
+>
+> Read correctly, the page names Robert Schafer as County Chair, with John Simmons and Tom
+> Peterson, at the office at 35 E. Market St. in Winchester. Unless you tell me any of that is
+> wrong, that is what the site will show, credited to the county's page.
+>
+> Nothing more is needed from you. Thank you again.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
