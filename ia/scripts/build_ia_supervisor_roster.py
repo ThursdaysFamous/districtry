@@ -188,6 +188,42 @@ NUMBERING_CHECKED = {
                    "with six towns' census centroids independently agreeing on "
                    "every pairing they can speak to",
     },
+    "Ida": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-06",
+        "witness": "the county's own Ordinance 31 (effective 15 January 2022, "
+                   "drawn to the 2020 census) names the townships in each "
+                   "district; the ten that lie wholly inside one district "
+                   "(Galva and Griggs in 1; Battle, Blaine, Garfield, Hayes, "
+                   "Logan, Maple and Silver Creek in 2; Corwin in 3) each have "
+                   "a census interior point in the same-numbered district of "
+                   "this layer",
+    },
+    "Washington": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-06",
+        "witness": "the county's own district map (county GIS, 2022, drawn to "
+                   "the 2020 census, linked by the auditor on 2026-10-01) draws "
+                   "and labels the townships in each district; the ten that lie "
+                   "wholly inside one (Brighton, Clay, Dutch Creek, Lime Creek "
+                   "and Seventy-Six in 1; English River in 2; Crawford, "
+                   "Highland, Iowa and Oregon in 3) land in the same-numbered "
+                   "district, and the split townships settle 4 and 5: Franklin, "
+                   "which the map puts only in 1 and 4, lands in this layer's "
+                   "4, and Jackson, only in 2 and 5, lands in its 5",
+    },
+    "Polk": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-06",
+        "witness": "the county's own map server (Elections/Board_of_Supervisors "
+                   "on gis4.polkcountyiowa.gov, to which the elections office "
+                   "pointed this project on 2026-10-06) publishes the five "
+                   "district polygons with each supervisor's name; on a "
+                   "160x160 grid over the county, 22,799 of 22,860 sampled "
+                   "points (99.7%) get the same number from those polygons "
+                   "and this layer, the rest being slivers along shared edges, "
+                   "and no number is swapped",
+    },
 }
 
 # WHAT A COUNTY TOLD US IN WRITING.
