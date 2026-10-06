@@ -1,0 +1,47 @@
+{
+  "1": {
+    "members": [
+      {
+        "email": "chris.timmermann@bondcountyil.gov",
+        "name": "Chris Timmerman"
+      }
+    ],
+    "sourceUrl": "https://bondcountyil.gov/bond-county-board/"
+  },
+  "2": {
+    "members": [
+      {
+        "email": "bernard.myers@bondcountyil.gov",
+        "name": "Bernard Myers"
+      }
+    ],
+    "sourceUrl": "https://bondcountyil.gov/bond-county-board/"
+  },
+  "3": {
+    "members": [
+      {
+        "email": "jacob.rayl@bondcountyil.gov",
+        "name": "Jacob Rayl"
+      }
+    ],
+    "sourceUrl": "https://bondcountyil.gov/bond-county-board/"
+  },
+  "4": {
+    "members": [
+      {
+        "email": "wes.pourchot@bondcountyil.gov",
+        "name": "Wesley L. Pourchot"
+      }
+    ],
+    "sourceUrl": "https://bondcountyil.gov/bond-county-board/"
+  },
+  "5": {
+    "members": [
+      {
+        "email": "jeff.rehkemper@bondcountyil.gov",
+        "name": "Jeff Rehkemper"
+      }
+    ],
+    "sourceUrl": "https://bondcountyil.gov/bond-county-board/"
+  }
+}

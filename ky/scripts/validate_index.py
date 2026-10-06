@@ -117,6 +117,7 @@ GEOMETRY_FILES = {
 ROSTER_FILES = {
     "congress-roster.json": 6,  # U.S. House roster, refreshed weekly by update-ky-congress-roster.yml.
     "coverage-gaps.json": 0,  # The Data gaps panel's content, emitted from docs/DATA_LAYER_GUIDEBOOK.md's gaps block: the fiscal courts, the two legislature rosters, and the county officers.
+    "ky-judge-roster.json": 3,  # Kentucky's judges, keyed by the numbered district or circuit each was elected from, from the Court of Justice's own pages; refreshed weekly by update-ky-judges-roster.yml. Jefferson's circuit 30 and district 30 are recorded as asked about rather than left silent.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

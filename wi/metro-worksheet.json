@@ -460,10 +460,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 21,
+      "rank_note": "Tribal land — Wisconsin has 21 pieces across 12 nations, from the Menominee Reservation's 934.539 km² down to a 1.339 km² Oneida trust parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 8.969 km² MEDIAN, which sits just above the Milwaukee squad areas' measured 8.852 and well above the aldermanic fabric's 3.064, and below the county-board fabric's 47.147 — medians rather than means, because one reservation is a hundred times the size of a trust parcel and a mean would rank this layer by Menominee alone. The rank governs draw order only. Partial coverage: most of Wisconsin is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 2 of them in Wisconsin and both Menominee's — the 2020 population, and NOBODY: the authority for a council is each nation's own published list. Ten of the twelve publish one that answers this project and is not carried yet, and the card gives that page and the date it answered; two cannot be read at all, one behind a managed challenge and one publishing no council page, and the card says which. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Wisconsin has 21 such areas across 12 nations.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust lands, clipped to Wisconsin and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "Nobody is named. Each nation's own published council is the authority. Ten of the twelve publish one that answers this project and whose names are not carried yet, and the card gives that page and the date it answered; two cannot be read at all and the card says why. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.",
+        "applies": "Wisconsin — 21 areas across 12 nations. Most points in the state are on no tribal land."
+      }
+    },
+    {
       "id": "mpd-squad-area",
       "label": "Milwaukee Police Squad Area",
       "group": "safety",
-      "area_rank": 21,
+      "area_rank": 22,
       "rank_note": "The 25 MPD patrol squad areas — a twenty-fifth of the city each, nested inside the seven police districts (subOf), between the MPS board's eighths and the aldermanic fabric",
       "source": {
         "answers": "The Milwaukee Police Department squad area — the patrol/beat subdivision — covering the point, with its parent district. A squad's NUMBER encodes its district (the hundreds digit), and the builder verifies that against the shipped district layer rather than asserting it. No officeholder: a patrol area elects no one. Outside Milwaukee the layer hides, and its toggle nests under the district layer exactly as the reference instance's police beats do.",
@@ -485,7 +503,7 @@
       "id": "aldermanic-district",
       "label": "Aldermanic District",
       "group": "political",
-      "area_rank": 22,
+      "area_rank": 23,
       "rank_note": "866 city and village council districts — each a union of wards, smaller than a ZCTA, above the ward layer they dissolve from",
       "source": {
         "answers": "The aldermanic district (in the nine villages that elect trustees by district, the trustee district) covering the point, in the 159 cities and villages whose districts can be composed completely — and, in 31 of them, the alderperson or trustee holding the seat.",
@@ -507,7 +525,7 @@
       "id": "ward",
       "label": "Municipal Ward",
       "group": "geography",
-      "area_rank": 23,
+      "area_rank": 24,
       "rank_note": "7,161 municipal wards — the ballot sub-unit every district is built from; smaller than a ZCTA on average, above the amenity points",
       "source": {
         "answers": "The municipal ward containing the point — the unit Wisconsin elections are administered by and every supervisory and aldermanic district is composed from — plus which county board district and, in cities that elect alders by district, which aldermanic district it belongs to.",
@@ -525,7 +543,7 @@
       "id": "milwaukee-neighborhoods",
       "label": "Milwaukee Neighborhood",
       "group": "geography",
-      "area_rank": 24,
+      "area_rank": 25,
       "rank_note": "The city's 190 named neighborhoods — an identity fabric, not an electing body; below the ward layer's statewide average, above the amenity points",
       "source": {
         "answers": "The named Milwaukee neighborhood containing the point — the city's own neighborhood fabric, an identity answer with no officeholder because a neighborhood elects no one. Outside Milwaukee the layer hides; no statewide neighborhood publisher exists.",
@@ -547,7 +565,7 @@
       "id": "tid-district",
       "label": "Tax Incremental District (TID)",
       "group": "geography",
-      "area_rank": 26,
+      "area_rank": 27,
       "rank_note": "93 active tax incremental districts across two cities (Milwaukee 79, Madison 14) — small finance-overlay slices, below the neighborhood fabrics' averages and above the amenity points; the one city layer that does not tile its cities",
       "source": {
         "answers": "The active Tax Incremental District (Wis. Stat. 66.1105) containing the point, with its number and creation year — a municipal finance overlay that elects no one, the reference instance's tif-district concept under Wisconsin's own name. Two cities share the toggle, each with its own builder witness. Most of Milwaukee and Madison is in no TID, and the card's standard empty state says exactly that; outside the two cities the layer hides.",
@@ -581,7 +599,7 @@
       "id": "madison-neighborhood-assoc",
       "label": "Neighborhood Association (Madison)",
       "group": "geography",
-      "area_rank": 25,
+      "area_rank": 26,
       "rank_note": "116 active city-registered association boundaries averaging 1.1 km² — just below Milwaukee's neighborhood fabric (1.3 km²) and above the TID slices; they nest and overlap by design, so the card collects every association at the point",
       "source": {
         "answers": "Every city-registered association whose boundary covers the point — Madison's official neighborhood fabric IS its registry, which also records condominium, resident, homeowners, business and property-owners associations in the same layer, so each row states its classification. Registrations genuinely nest (five condo/resident polygons sit wholly inside a neighborhood association's), which is why the card lists all of them rather than the first.",
@@ -599,7 +617,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 27,
+      "area_rank": 28,
       "rank_note": "Nearest-3 point layer (807 stations in the state envelope) — not a containment boundary; ranked with the amenity points",
       "source": {
         "answers": "The three nearest police stations by straight-line distance — a proximity fact, never a jurisdictional claim about which agency serves the point.",
@@ -617,7 +635,7 @@
       "id": "fire-station",
       "label": "Fire Station",
       "group": "safety",
-      "area_rank": 28,
+      "area_rank": 29,
       "rank_note": "Nearest-3 point layer (1,743 stations in the state envelope) — denser than the police set, so ranked after it",
       "source": {
         "answers": "The three nearest fire stations by straight-line distance — a proximity fact, never a claim about which department responds to the point.",
@@ -635,7 +653,7 @@
       "id": "school-site",
       "label": "School Location, incl. private",
       "group": "schools",
-      "area_rank": 29,
+      "area_rank": 30,
       "rank_note": "Nearest-3 point layer (2,966 public + private school sites, pre-built) — not a containment boundary; ranked with the amenity points",
       "source": {
         "answers": "The three schools nearest the point — public and private, each labeled with its kind and grade range — by straight-line distance. A proximity fact, never an enrollment claim: which school a child attends is the district's call (and the state's open-enrollment law reaches across districts), and no statewide attendance-zone publisher exists.",
@@ -657,7 +675,7 @@
       "id": "library",
       "label": "Library",
       "group": "geography",
-      "area_rank": 30,
+      "area_rank": 31,
       "rank_note": "Nearest-3 point layer (482 public library outlets, pre-built) — not a containment boundary; ranked with the amenity points",
       "source": {
         "answers": "The three public library locations nearest the point — main libraries and branches both — by straight-line distance, with each outlet's address and phone. Statewide, where the fleet's reference instance answers this for one city only.",
@@ -675,7 +693,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 31,
+      "area_rank": 32,
       "rank_note": "Nearest-3 point layer, straight-line distance — ranked last; not a containment boundary",
       "source": {
         "answers": "The three post offices nearest the point, by straight-line distance.",
@@ -1414,6 +1432,12 @@
         "min_features": 79,
         "max_features": 79,
         "note": "Milwaukee's 79 active Tax Incremental Districts — the city's own CC-BY layer server-reprojected, dissolved TIDs dropped by date, witnessed against the CKAN shapefile's area shares scoped to the city's own STATUS flag (wi/scripts/build_milwaukee_city_layers.py). An operator rebuild; the monthly source report watches both endpoints."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 21,
+        "max_features": 21,
+        "note": "Wisconsin's tribal land (scripts/build_tribal_areas.py) — 21 areas across 12 nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-01; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [

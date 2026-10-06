@@ -163,6 +163,47 @@ INSTANCE_NAMES = {
 # Entries: {"path", "name", "count", "reason", "recorded"}. See the docstring —
 # empty is the measured state, not an unfinished table.
 HISTORICAL_COUNTS = [
+    # 2026-10-01, when the tribal-government layer took Wisconsin 31 -> 32 and
+    # Michigan 18 -> 19. All six entries below are PAST-TENSE records of a
+    # finished thing: Wisconsin's four-phase bring-up ended at 31 layers and
+    # Michigan went live with 18, and renumbering either would describe a
+    # history that did not happen. Two are quotations rather than claims of
+    # their own -- CLAUDE.md quotes the Iowa plan's own sentence to show why
+    # this gate attributes a count to the NEAREST instance name, and the
+    # guidebook quotes a draft it then corrected -- so changing the digits
+    # would misquote the documents they cite.
+    {"path": "docs/EXPANSION_GUIDE.md", "name": "Wisconsin", "count": 31,
+     "reason": "Past-tense record of a finished bring-up: Wisconsin reached 31 "
+               "layers across its four phases, which is what Part 5 is about. "
+               "Later layers are not part of that history",
+     "recorded": "2026-10-01"},
+    {"path": "docs/IA_EXPANSION_PLAN.md", "name": "Wisconsin", "count": 31,
+     "reason": "Past-tense record of what Wisconsin had when the Iowa plan was "
+               "written: 31 layers across four phases, arrived in place "
+               "2026-08-25. The plan's context is the state before Iowa, not today",
+     "recorded": "2026-10-01"},
+    {"path": "docs/WHY_WISCONSIN_WAS_FASTER.md", "name": "Wisconsin", "count": 31,
+     "reason": "Past-tense comparison of the three-day bring-up, 2026-08-25 to "
+               "2026-08-27, which ended at 31 layers. The whole sentence is about "
+               "that window",
+     "recorded": "2026-10-01"},
+    {"path": "docs/MI_EXPANSION_PLAN.md", "name": "Michigan", "count": 18,
+     "reason": "Dated go-live record: Michigan went live on 2026-09-03 with 18 "
+               "layers, in three pull requests on one day. The running count is "
+               "the Status table and the worksheet, which that same summary points at",
+     "recorded": "2026-10-01"},
+    {"path": "CLAUDE.md", "name": "Wisconsin", "count": 31,
+     "reason": "A QUOTATION, not a claim: this gate's own paragraph quotes the "
+               "Iowa plan's sentence \"NYC, SF, and Wisconsin (31 layers...)\" to "
+               "show why a count takes the nearest instance name. Editing the "
+               "digits would misquote the document being cited",
+     "recorded": "2026-10-01"},
+    {"path": "docs/DATA_LAYER_GUIDEBOOK.md", "name": "Wisconsin", "count": 31,
+     "reason": "A QUOTATION of a draft the record then corrected: the entry says "
+               "its first draft claimed Wisconsin had shipped 31 layers without "
+               "a line saying the municipality card names nobody. The correction "
+               "is the point of the entry and the quoted figure is part of it",
+     "recorded": "2026-10-01"},
     # 2026-10-01, when Illinois shipped its tribal-government layer as its 41st.
     # This is a MEASUREMENT of the longest permalink an app can hand out — 663
     # bytes, version 18 at level L — taken with every layer then registered
