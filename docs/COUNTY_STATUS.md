@@ -53,7 +53,7 @@
 | Grundy | 17063 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `grundy-special-district-boards` (data-quality); `morris-ward-geometry` (no-source); `municipal-website-dead-ends` (data-quality) |
 | Hamilton | 17065 | dispatch | at-large — County card | `county-precinct`, `fire-district`, `library-district` | 3 — `fire-park-district-officers` (no-source); `hamilton-municipal-officials` (no-source); `statewide-library-officials` (no-source) |
 | Hancock | 17067 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
-| Hardin | 17069 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 1 — `hardin-county-board` (no-source) |
+| Hardin | 17069 | dispatch | at-large — County card | `county-precinct`, `library-district` | none |
 | Henderson | 17071 | dispatch | no board layer — see gaps | `county-precinct` | 1 — `henderson-county-website` (no-source) |
 | Henry | 17073 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `pass9-ward-seats-without-maps` (no-source); `statewide-library-officials` (no-source) |
 | Iroquois | 17075 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 2 — `fire-park-district-officers` (no-source); `statewide-library-officials` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 107 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 106 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.

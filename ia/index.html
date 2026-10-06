@@ -11448,7 +11448,9 @@ function initIowaExplorer() {
    * Promise.all query() doesn't fit this shape.
    *
    * opts: { id, group, label, loader, style, pointOfInterest?, coverage?,
-   *         subOf?, emptyNote?, onToggle?, fields: [...] }
+   *         subOf?, emptyNote?, onToggle?, people?, fields: [...] }
+   * people(result) => Node|null, when present, appends a person block (built
+   * with renderBodyIntro / renderPersonRows) after the field rows.
    * Each field is one of:
    *   { name, label, keys:[...], primary:true } — always shown; findPropCI(keys)
    *        with an "Unknown" fallback. Conventionally the first field (headline).
@@ -11504,7 +11506,13 @@ function initIowaExplorer() {
             rows.push({ label: f.label, value: f.value });
           }
         });
-        return renderFieldStack(rows);
+        var card = renderFieldStack(rows);
+        // optional: a block of people the feature itself carries (a council
+        // stamped onto each boundary by its builder), built by the layer from
+        // the card helpers and placed after the identity fields
+        var people = opts.people ? opts.people(result) : null;
+        if (people) card.appendChild(people);
+        return card;
       },
       pointOfInterest: opts.pointOfInterest,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
@@ -12394,6 +12402,10 @@ function initIowaExplorer() {
           auditor: auditor || null,
           officers: officers || null,
           supervisorDistricts: (keyed && keyed.districts) || null,
+          // The number the COUNTY uses for each of this layer's districts.
+          // The layer's number is the join key and nothing a reader can check
+          // against a ballot, so the badge prints the county's.
+          supervisorCountyNumbers: (keyed && keyed.countyNumbers) || null,
           boardChair: ((parts[4] && geoid != null) ? parts[4][String(geoid)] : null) || null
         };
       });
@@ -12456,10 +12468,13 @@ function initIowaExplorer() {
           // instead of reading five names and guessing.
           var byName = {};
           var keyedDistricts = result.supervisorDistricts;
+          var countyNumbers = result.supervisorCountyNumbers;
           if (keyedDistricts) {
             Object.keys(keyedDistricts).forEach(function (d) {
               var rec = keyedDistricts[d];
-              if (rec && rec.name) byName[String(rec.name)] = d;
+              // d is this layer's number; the county's own is what shows.
+              var shown = (countyNumbers && countyNumbers[d]) || d;
+              if (rec && rec.name) byName[String(rec.name)] = shown;
             });
           }
           // computed BEFORE the note, because what is worth telling a plan-3
@@ -12671,6 +12686,40 @@ function initIowaExplorer() {
     return fetchJSONWithRetry("data/app/ia-supervisor-members.json", {}, 2);
   });
 
+  /* WHICH NUMBER A READER IS SHOWN FOR A SUPERVISOR DISTRICT.
+   *
+   * The boundary layer carries the Legislative Services Agency's own district
+   * number, and measured on six counties FIVE of them number their districts
+   * differently -- the LINES are the same plan in each (every one of Monona's
+   * twenty county subdivisions and all ten of Lyon's precincts lies wholly
+   * inside one of this layer's districts), and only the labels differ. So the
+   * layer's number is a join key, not a name: printing it heads a card
+   * "District 2" over ground the county and its ballot both call District 1.
+   *
+   * Where the county's numbering has been measured, `countyNumbers` in
+   * ia-supervisor-members.json carries the county's own number for each of
+   * this layer's districts, and that is what every reader-facing surface
+   * prints -- this hover label, the card's pill and the County card's badges.
+   * Where it has NOT been measured the layer's number still shows, which is
+   * the state this instance has always been in; it is recorded in ia/WATCH.md
+   * rather than silently accepted, because nothing yet says what those
+   * counties call their own districts.
+   *
+   * THE HOVER LABEL IS SYNCHRONOUS, so it reads the roster's resolved value
+   * and falls back to the layer's number while that file is still in flight.
+   * The window is one small same-origin fetch that the layer's own query
+   * starts, and the fallback is the old label rather than a wrong new one. */
+  function iaSupervisorShownNumber(props) {
+    var district = findPropCI(props, ["district"]);
+    if (district == null) return district;
+    var roster = loadIaSupervisorMembers.cached();
+    var fips = findPropCI(props, ["fips"]);
+    var keyed = (roster && fips != null) ? roster[String(fips)] : null;
+    var own = (keyed && keyed.countyNumbers)
+      ? keyed.countyNumbers[String(district)] : null;
+    return own || district;
+  }
+
   registerLayer({
     id: "county-supervisor",
     tiles: "data/app/tiles/county-supervisor.pmtiles", // vector tiles (engine tile-overlay block)
@@ -12689,7 +12738,7 @@ function initIowaExplorer() {
       if (county == null) return null;
       var plantype = findPropCI(props, ["plantype"]);
       if (plantype === "PLAN 1") return String(county) + " (at-large)";
-      var district = findPropCI(props, ["district"]);
+      var district = iaSupervisorShownNumber(props);
       // A transitioning county ships EITHER a real numbered district whose
       // first election is still ahead of it (Story) or a single county-shaped
       // placeholder that cannot answer at all (Johnson, DISTRICT "PENDING").
@@ -12733,6 +12782,11 @@ function initIowaExplorer() {
           asOfWhy: keyed ? keyed.asOfWhy : null,
           county: findPropCI(props, ["county"]),
           district: district,
+          // The number the COUNTY uses for this district, where its numbering
+          // has been measured against this layer's. Null everywhere else,
+          // which is what keeps the card from claiming one.
+          countyNumber: (keyed && keyed.countyNumbers && district != null)
+            ? (keyed.countyNumbers[String(district)] || null) : null,
           plantype: findPropCI(props, ["plantype"]),
           numDistricts: findPropCI(props, ["numdistricts"]),
           population: findPropCI(props, ["population"]),
@@ -12748,7 +12802,12 @@ function initIowaExplorer() {
       if (result.plantype === "TRANSITIONING" && String(result.district) === "PENDING") {
         return "Districts pending";
       }
-      return result.district != null ? "District " + String(result.district) : "Unknown district";
+      // The county's own number where it is known, and never the layer's
+      // where the two disagree -- a pill reading District 2 over ground the
+      // county and its ballot both call District 1 is a wrong label even with
+      // the right supervisor beneath it.
+      var shown = result.countyNumber != null ? result.countyNumber : result.district;
+      return shown != null ? "District " + String(shown) : "Unknown district";
     },
     render: function (result) {
       var wrap = cardEl("div", "card-flush");

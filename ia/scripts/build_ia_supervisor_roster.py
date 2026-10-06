@@ -106,8 +106,8 @@ TODAY = dt.date.today().isoformat()
 # numbering has been CHECKED, which is a different quantity with its own floor,
 # and the two figures must never be confused: a run that keys twenty counties on
 # trust would clear the old floor and would be exactly the defect.
-MIN_COUNTIES = 2
-MIN_DISTRICTS = 8
+MIN_COUNTIES = 4
+MIN_DISTRICTS = 16
 
 # WHETHER A COUNTY'S OWN DISTRICT NUMBER IS THIS INSTANCE'S DISTRICT NUMBER.
 #
@@ -163,6 +163,30 @@ NUMBERING_CHECKED = {
                    "8 city centroids agree on this pairing with no "
                    "contradiction, Laurens settling district 2 and the city of "
                    "Pocahontas district 3",
+    },
+    "Monona": {
+        "map": {"1": "2", "2": "1", "3": "3"},
+        "checked": "2026-10-01",
+        "witness": "the county's own supervisor-district map states in TEXT, "
+                   "per district, every township and city that district "
+                   "contains -- nothing on the drawing is read -- and those "
+                   "twenty places are exactly the twenty county subdivisions "
+                   "the census publishes for the county, so the statement "
+                   "partitions the county with nothing left over; all twenty "
+                   "interior points agree on this pairing, and the map's own "
+                   "legend names the same three supervisors in the same three "
+                   "districts as this roster",
+    },
+    "Lyon": {
+        "map": {"1": "5", "2": "4", "3": "1", "4": "3", "5": "2"},
+        "checked": "2026-10-01",
+        "witness": "the county writes its own PRECINCT numbers into each "
+                   "member's title (District 1 - Precinct 9,10, and so on "
+                   "through all ten), and this instance's own precinct layer "
+                   "names those precincts; each of the ten lies wholly inside "
+                   "one of this layer's districts and all five are spoken for, "
+                   "with six towns' census centroids independently agreeing on "
+                   "every pairing they can speak to",
     },
 }
 
@@ -491,6 +515,16 @@ def main():
             skipped.append((county, "the county's own district numbering has "
                                     "not been checked against this layer's"))
             continue
+        # The remap, plus its INVERSE: the card must print the number the
+        # county itself uses, not the one the layer happens to carry. Where the
+        # two disagree -- five of the six counties measured -- the layer's
+        # number names nothing a reader can check against a ballot, so it
+        # becomes an internal key and the county's own number is what ships.
+        # The remap, plus its INVERSE. The inverse ships beside the members
+        # rather than on them: the number the county itself uses is a property
+        # of the DISTRICT and not of the person, so it has no business inside a
+        # record the structural guard below keeps to a name and a party.
+        own = {checked["map"][d]: d for d in checked["map"]}
         keyed = {checked["map"][d]: n for d, n in keyed.items()}
 
         members = {}
@@ -543,6 +577,11 @@ def main():
         rec = {
             "county": county,
             "districts": members,
+            # THE NUMBER THE COUNTY ITSELF USES, keyed by the number this
+            # instance's layer carries. The layer's number is the join key and
+            # the file's key; the county's is what a reader can check against
+            # their own ballot, so it is what the card prints.
+            "countyNumbers": own,
             # The date the SCRAPE read this page, never this process's clock.
             # It is present on every county, read or preserved, because a
             # field that appears only on successfully-read counties is one

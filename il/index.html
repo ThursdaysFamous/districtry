@@ -8967,6 +8967,7 @@ function initChiExplorer() {
     // (smallest-on-top); turning it on drops both to outline-only, framing the
     // precinct fills from underneath.
     "county-precinct",   // Consolidated voting-precinct layer — suburban Cook current map (1,430, the Clerk's precinctHistorical L0; covers Cook-outside-Chicago only — city precincts are the BOE's ward-precinct layer) + Will current 2022 map (310) + DuPage current 2024 consolidated map (600) + Lake current map (431) + Kane current map (292, board district carried on the features, township named from the clerk's own prefix pairing, election-day polling place joined on the precinct code 292/292 and labelled with the election it was published for) + McHenry current map (223) + Kendall current map (78, township names derived from the county's own layers + per-precinct polling place joined by GlobalID) + LaSalle current map (119, township-compound names, per-precinct polling place joined on the precinct name — 119/119 exact) + Kankakee current map (59, name only; the county publishes no polling-place assignment to join) + Boone current 2022 map (37, township-compound names with the polling place carried ON the precinct feature — no join needed) + Grundy current map (40, polling place joined on POLLINGID, and its points carry a phone) + Macoupin current map (45, polling place joined 45/45 from the clerk's own Socrata polling dataset by deterministic label expansion) + McLean current map (141, polling place joined 141/141 by POLLINGID on the clerk's own MapServer) + Logan current map (29, township-named; the clerk's HTML polling table ships as a same-origin file and joins 29/29) + Sangamon approved fabric (166, polling place joined 165/166 by POLLID) + Carroll (22 — the county did not re-precinct, so TIGERweb's Census 2020 voting districts ARE the current fabric; the clerk's polling notice ships as a same-origin file, 22/22) + Woodford current map (37 via TCRPC's election service, polling joined 37/37 on the numeric polling reference with the precinct's own name cross-checked in the polling row's grouped label), county-dispatched; subOf township
+    "tribal-government", // Tribal land — Illinois has one area, 0.5213 km² of land held in trust for the Prairie Band Potawatomi Nation near Shabbona, DeKalb County, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked between county-precinct (~2.5 km² for a suburban Cook precinct) and ssa (0.359 km² median, itself ranked against tif's 0.268 on a named projection). The rank governs draw order only and nothing overlaps this parcel in practice — SSA, TIF and the CPS zones are all in or around Chicago — so it is placed on the measurement rather than on a conflict. Partial coverage: almost every Illinois point is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn here — measured against the Census's 484 tribal subdivisions nationwide, 0 in Illinois — and NOBODY: the authority for a council is the nation's own published list, which answers this project with a Cloudflare challenge (measured 2026-10-01, recorded in robots_policy.CHALLENGE_FRONTED_HOSTS and never worked around). Drawn although no district sits on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "ssa",               // Chicago Special Service Areas — the city's current ACTIVE tiling (58, Data Portal cmr6-dn8c). Ranked between county-precinct and tif-district on MEASURED median polygon area, geodesic WGS84: SSA 0.359 km² against TIF's 0.268 km² (both fetched 2026-09-12). TIF was first recorded as 0.269, which no projection gives; it is 0.268 in geodesic, EPSG:3435, UTM 16N and Albers alike. The projection is NAMED because SSA's last digit depends on it — 0.359 geodesic/3435/Albers, 0.358 UTM 16N — and because EPSG:3435 is in FEET, so an area divided by 1e6 there reads 0.36 as 3.86 and looks like a different measurement. The rank moves under none of them. SSA is also far under a suburban Cook precinct (1,430 over ~3,600 km²). Card shows the corridor name + the SSA number + the wards the city's own ward_2023 column lists (labelled as the city's list, because it disagrees with the ward geometry on 2 of 58) + status, and links the city's SSA program page; the dataset's comm_area column is deliberately not shown — bare community-area numbers, up to eight per SSA, that the Community Area layer already answers by name for the point; partial coverage (most points in the city are in no SSA), Chicago-gated. The portal carries FIVE deprecated editions behind this id, so it goes into validate_sources.py's manifest on day one. Dedicated Chicago layer per the consolidation rule until a second municipality ships SSAs — Cook's clerkTaxDistricts L13 carries 286 county-wide special-service tax districts, 63 of them Chicago's, recorded as the next entry
     "tif-district",      // Cook TIF districts — the Clerk's current tax-increment-financing agency tiling (418, county GIS clerkTaxDistricts L18: the un-yeared layer the Clerk refreshes in place, retired year editions archived in the year-versioned service); card shows name + Clerk agency number + the Clerk's TIF-reports link; partial coverage (most points are in no TIF), Cook-gated. Dedicated Cook layer per the consolidation rule until a second county ships TIFs (Kendall's server carries a TIF_Districts service — recorded as the next entry)
     "cps-elementary",    // Elementary School attendance zone — smallest polygon layer
@@ -12081,7 +12082,9 @@ function initChiExplorer() {
    * Promise.all query() doesn't fit this shape.
    *
    * opts: { id, group, label, loader, style, pointOfInterest?, coverage?,
-   *         subOf?, emptyNote?, onToggle?, fields: [...] }
+   *         subOf?, emptyNote?, onToggle?, people?, fields: [...] }
+   * people(result) => Node|null, when present, appends a person block (built
+   * with renderBodyIntro / renderPersonRows) after the field rows.
    * Each field is one of:
    *   { name, label, keys:[...], primary:true } — always shown; findPropCI(keys)
    *        with an "Unknown" fallback. Conventionally the first field (headline).
@@ -12137,7 +12140,13 @@ function initChiExplorer() {
             rows.push({ label: f.label, value: f.value });
           }
         });
-        return renderFieldStack(rows);
+        var card = renderFieldStack(rows);
+        // optional: a block of people the feature itself carries (a council
+        // stamped onto each boundary by its builder), built by the layer from
+        // the card helpers and placed after the identity fields
+        var people = opts.people ? opts.people(result) : null;
+        if (people) card.appendChild(people);
+        return card;
       },
       pointOfInterest: opts.pointOfInterest,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
@@ -22697,6 +22706,92 @@ function initChiExplorer() {
       });
   });
   var loadMwrdBoundary = makeCached(function () { return loadCookCountyLayerGeoJSON(21); });
+
+  /* =========================================================================
+   * TRIBAL GOVERNMENT — the one piece of tribal land in Illinois.
+   *
+   * A nation's land is answered WHERE THE LAND IS even though its government
+   * sits in another state, with the seat named on the card (Adam's ruling,
+   * 2026-09-30). Illinois has exactly one such area: half a square kilometre
+   * of land held in trust for the Prairie Band Potawatomi Nation, near
+   * Shabbona in DeKalb County, which is governed from Mayetta, Kansas.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND. The ordinary rule
+   * is that a body elected at large gets roster rows on an identity card and
+   * never a shape of its own. This one is drawn anyway, by the same ruling: a
+   * government answers for that ground, so a reader who clicks it should be
+   * told which one. A layer that drew only land with a district on it would
+   * answer "no government here" over land a nation governs.
+   *
+   * WHY THE CARD NAMES NOBODY. The authority for who sits on a nation's
+   * council is that nation's own published list, and this one answers every
+   * request from this project with a Cloudflare challenge — robots.txt and
+   * front page alike, measured 2026-10-01. A managed challenge is an access
+   * control and is never worked around, so the card links the nation instead,
+   * which is the honesty rule's own remedy. The reason is carried on the
+   * feature (rosterWhy) rather than written here, so the card states a
+   * measurement rather than a sentence somebody typed.
+   *
+   * PARTIAL COVERAGE, like ssa and tif-district below: almost every point in
+   * Illinois is on no tribal land, so the layer declares its own emptyNote
+   * rather than letting the generic "not inside any district" stand — that
+   * wording reads as a gap in the data where the truth is that Illinois has
+   * one such area and this point is not on it.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments — one reader per publisher, so eight
+   * instances cannot come to disagree.
+   * ======================================================================= */
+  var loadIlTribalAreas = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadIlTribalAreas,
+    style: { color: "#1F6F6B", weight: 2, fillColor: "#3E9A95", fillOpacity: 0.12, dashArray: "6 3" },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, which is NOT the
+      // Census's own text for the parcel: the Census writes "Prairie Band of
+      // Potawatomi Nation Off-Reservation Trust Land", a description of a
+      // piece of land rather than the name of a government.
+      // findPropCI LOWERCASES THE PROPERTY KEY AND COMPARES IT TO THE CANDIDATE AS
+      // GIVEN, so every `keys` entry below is lowercase while the shipped property
+      // is camelCase. A camelCase candidate matches NOTHING and the row simply does
+      // not render -- which is how the first build of this layer shipped four silent
+      // absences, the "Why no names" row among them, with every static gate green.
+      // The two smoke checks in each instance are what caught it and what keep it.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      // Why this card names no council member. It is the measurement the
+      // builder recorded, so the card cannot drift from it.
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      // extracted for primaryLink only — the hidden-column shape the SSA
+      // layer below uses for the same purpose
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it. It
+    // is LINKED and never fetched: robots.txt governs what this project
+    // crawls, not what it cites.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    emptyNote: "This point is not on tribal land. Illinois has one tribal area — "
+             + "land held in trust for the Prairie Band Potawatomi Nation near "
+             + "Shabbona, in DeKalb County."
+  });
 
   registerPolygonLayer({
     id: "ssa",
@@ -35257,6 +35352,13 @@ function initChiExplorer() {
     "congress", "il-house", "il-senate", "ward", "ward-precinct",
     "early-voting", "county-board", "ccbr", "school-board",
     "il-supreme-court", "judicial-subcircuit",
+    // Last in the political group, and placed rather than ranked: the basis
+    // for this group's order is a demand proxy, and no demand figure exists
+    // for a concept the app has never answered, so a position derived from
+    // one would be invented. Last is where a layer that answers one parcel in
+    // one county belongs until there is real data to move it; the comment
+    // above is the rule for moving it.
+    "tribal-government",
     // safety — service boundaries before amenity points; the elected
     // oversight council sits beside the district it oversees
     "police-district", "police-beat", "ccpsa-district-council",
@@ -35725,19 +35827,19 @@ function initChiExplorer() {
   var DST_DARK_MAP_COLORS = { "#00695C": "#4DBDAA", "#06375E": "#528DC6", "#0B5394": "#4FA4FE",
     "#0B7A6B": "#4DCBB6", "#0E7C86": "#4DCBD9", "#0F6F6F": "#52C1C0", "#14181C": "#696F76",
     "#14B8A6": "#30FFE7", "#19A0AD": "#43E9FA", "#1B7A3D": "#58CD7A", "#1E7A8C": "#57C9E1",
-    "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2E7D46": "#68CE83", "#2E8C6A": "#62DAAC",
-    "#2F6B3A": "#6FBE7B", "#3949AB": "#849CFE", "#3B8FD4": "#A5D2FD", "#3D3D7A": "#898CE2",
-    "#3D6B49": "#7EBC8D", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#4DB6AC": "#70FAED", "#4FA06A": "#7FEAA1",
-    "#5C6BC0": "#A7B7FD", "#5C8F6B": "#95D9A9", "#5E3A8C": "#B283F5", "#6A3FA0": "#BA8BFE",
-    "#6A4A93": "#BC91F6", "#6B4FA0": "#B998FE", "#6B7280": "#B1BBCE", "#7A0A1C": "#EB5B61",
-    "#7A0B1E": "#EA5C63", "#7A1E5C": "#E266B5", "#7A2D3D": "#E17587", "#7A5C3E": "#CFA57D",
-    "#8163AE": "#CAAAFF", "#8A5A00": "#E4A241", "#8A6D3B": "#DBB471", "#8A6FBF": "#CEB8FF",
-    "#8C2E4A": "#F47294", "#8C6A2E": "#DFB163", "#8E6BB8": "#D3B3FE", "#9C0B24": "#FE6B6E",
-    "#A15C00": "#FD9F3D", "#A34A2A": "#FE916B", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
-    "#B0342A": "#FF8B7C", "#B26A00": "#FFB15F", "#C0A060": "#FFDE9D", "#C2744E": "#FFBD9E",
-    "#C8102E": "#FE928F", "#D0564C": "#FEB1A7", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7",
-    "#E4572E": "#FFBCA9"};
+    "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2E7D46": "#68CE83",
+    "#2E8C6A": "#62DAAC", "#2F6B3A": "#6FBE7B", "#3949AB": "#849CFE", "#3B8FD4": "#A5D2FD",
+    "#3D3D7A": "#898CE2", "#3D6B49": "#7EBC8D", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93",
+    "#4DB6AC": "#70FAED", "#4FA06A": "#7FEAA1", "#5C6BC0": "#A7B7FD", "#5C8F6B": "#95D9A9",
+    "#5E3A8C": "#B283F5", "#6A3FA0": "#BA8BFE", "#6A4A93": "#BC91F6", "#6B4FA0": "#B998FE",
+    "#6B7280": "#B1BBCE", "#7A0A1C": "#EB5B61", "#7A0B1E": "#EA5C63", "#7A1E5C": "#E266B5",
+    "#7A2D3D": "#E17587", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#8A5A00": "#E4A241",
+    "#8A6D3B": "#DBB471", "#8A6FBF": "#CEB8FF", "#8C2E4A": "#F47294", "#8C6A2E": "#DFB163",
+    "#8E6BB8": "#D3B3FE", "#9C0B24": "#FE6B6E", "#A15C00": "#FD9F3D", "#A34A2A": "#FE916B",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B0342A": "#FF8B7C", "#B26A00": "#FFB15F",
+    "#C0A060": "#FFDE9D", "#C2744E": "#FFBD9E", "#C8102E": "#FE928F", "#D0564C": "#FEB1A7",
+    "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7", "#E4572E": "#FFBCA9"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

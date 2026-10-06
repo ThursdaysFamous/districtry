@@ -776,10 +776,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 32,
+      "rank_note": "Tribal land \u2014 Illinois has one area, 0.5213 km\u00b2 of land held in trust for the Prairie Band Potawatomi Nation near Shabbona, DeKalb County, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked between county-precinct (~2.5 km\u00b2 for a suburban Cook precinct) and ssa (0.359 km\u00b2 median, itself ranked against tif's 0.268 on a named projection). The rank governs draw order only and nothing overlaps this parcel in practice \u2014 SSA, TIF and the CPS zones are all in or around Chicago \u2014 so it is placed on the measurement rather than on a conflict. Partial coverage: almost every Illinois point is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn here \u2014 measured against the Census's 484 tribal subdivisions nationwide, 0 in Illinois \u2014 and NOBODY: the authority for a council is the nation's own published list, which answers this project with a Cloudflare challenge (measured 2026-10-01, recorded in robots_policy.CHALLENGE_FRONTED_HOSTS and never worked around). Drawn although no district sits on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it \u2014 Illinois has one such area, near Shabbona in DeKalb County.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage \u2014 off-reservation trust lands, clipped to Illinois and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "Nobody is named. The nation's own published council is the authority and this project cannot read it, so the card names the government, says where it sits, and links the nation. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Illinois \u2014 one area, in DeKalb County. Almost every point in the state is on no tribal land."
+      }
+    },
+    {
       "id": "ssa",
       "label": "Special Service Area",
       "group": "geography",
-      "area_rank": 32,
+      "area_rank": 33,
       "rank_note": "Chicago Special Service Areas — the city's current ACTIVE tiling (58, Data Portal cmr6-dn8c). Ranked between county-precinct and tif-district on MEASURED median polygon area, geodesic WGS84: SSA 0.359 km² against TIF's 0.268 km² (both fetched 2026-09-12). TIF was first recorded as 0.269, which no projection gives; it is 0.268 in geodesic, EPSG:3435, UTM 16N and Albers alike. The projection is NAMED because SSA's last digit depends on it — 0.359 geodesic/3435/Albers, 0.358 UTM 16N — and because EPSG:3435 is in FEET, so an area divided by 1e6 there reads 0.36 as 3.86 and looks like a different measurement. The rank moves under none of them. SSA is also far under a suburban Cook precinct (1,430 over ~3,600 km²). Card shows the corridor name + the SSA number + the wards the city's own ward_2023 column lists (labelled as the city's list, because it disagrees with the ward geometry on 2 of 58) + status, and links the city's SSA program page; the dataset's comm_area column is deliberately not shown — bare community-area numbers, up to eight per SSA, that the Community Area layer already answers by name for the point; partial coverage (most points in the city are in no SSA), Chicago-gated. The portal carries FIVE deprecated editions behind this id, so it goes into validate_sources.py's manifest on day one. Dedicated Chicago layer per the consolidation rule until a second municipality ships SSAs — Cook's clerkTaxDistricts L13 carries 286 county-wide special-service tax districts, 63 of them Chicago's, recorded as the next entry",
       "source": {
         "answers": "Whether the point sits inside a Special Service Area — a local property-tax district funding street cleaning, landscaping, security, marketing and façade programs beyond the city's baseline service — and which one.",
@@ -797,7 +815,7 @@
       "id": "tif-district",
       "label": "TIF District",
       "group": "geography",
-      "area_rank": 33,
+      "area_rank": 34,
       "rank_note": "Cook TIF districts — the Clerk's current tax-increment-financing agency tiling (418, county GIS clerkTaxDistricts L18: the un-yeared layer the Clerk refreshes in place, retired year editions archived in the year-versioned service); card shows name + Clerk agency number + the Clerk's TIF-reports link; partial coverage (most points are in no TIF), Cook-gated. Dedicated Cook layer per the consolidation rule until a second county ships TIFs (Kendall's server carries a TIF_Districts service — recorded as the next entry)",
       "source": {
         "answers": "Whether the point sits inside a tax increment financing district, and which one.",
@@ -815,7 +833,7 @@
       "id": "cps-elementary",
       "label": "CPS Elementary School Zone",
       "group": "schools",
-      "area_rank": 34,
+      "area_rank": 35,
       "rank_note": "Elementary School attendance zone — smallest polygon layer",
       "source": {
         "answers": "The CPS elementary school this address is zoned to.",
@@ -833,7 +851,7 @@
       "id": "school-site",
       "label": "School Location (all, incl. private, nearest N)",
       "group": "schools",
-      "area_rank": 35,
+      "area_rank": 36,
       "rank_note": "individual school-campus footprints — smallest polygons, above the zones",
       "source": {
         "answers": "The school campuses nearest the point, filterable by type — not a zone, a proximity list.",
@@ -851,7 +869,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 36,
+      "area_rank": 37,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three police stations nearest the point, by straight-line distance.",
@@ -869,7 +887,7 @@
       "id": "fire-station",
       "label": "Fire Station",
       "group": "safety",
-      "area_rank": 37,
+      "area_rank": 38,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three fire stations nearest the point, by straight-line distance.",
@@ -887,7 +905,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 38,
+      "area_rank": 39,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three post offices nearest the point, by straight-line distance.",
@@ -905,7 +923,7 @@
       "id": "library",
       "label": "Library",
       "group": "geography",
-      "area_rank": 39,
+      "area_rank": 40,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three Chicago Public Library branches nearest the point.",
@@ -923,7 +941,7 @@
       "id": "early-voting",
       "label": "Early Voting Site",
       "group": "political",
-      "area_rank": 40,
+      "area_rank": 41,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The early voting sites nearest the point — which double as the secured ballot drop boxes.",
@@ -1077,6 +1095,12 @@
         "min_features": 28,
         "max_features": 28,
         "note": "Saline County's twenty-eight voting precincts. Six renames, and the only ones in this tranche whose base names differ: the county writes EAST ELDORADO #1 to #6 where the census writes ELDORADO 1 to 6. East Eldorado is the county's ONLY Eldorado township (Census 2020 county subdivisions list thirteen townships for Saline), those six are the only unmatched names on either side, and the census's ordinal is demonstrably the county's own within-township number everywhere else in the county (CARRIER MILLS 1-2, HARRISBURG 1-10). The geometry is the Census 2020 voting-district fabric, which sums to the county's exact 2020 population; the names are the county's own, taken from its certified returns and identical in the 2024 General and the 2026 General Primary (ISBE elections 66 and 69). Bounds are an EQUALITY because that is the county's whole precinct list. No polling place ships and no roster (scripts/build_vtd_precincts.py). Saline elects its thirteen board members county-wide, so no board district is carried."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Illinois's tribal land (scripts/build_tribal_areas.py) \u2014 exactly one area, the Prairie Band Potawatomi Nation's trust land near Shabbona. The floor and the ceiling are both 1 because that is what the Census publishes inside Illinois: a second area appearing is a real change worth a look, not a number to raise."
       },
       {
         "file": "union-precincts.json",
@@ -3122,8 +3146,8 @@
       },
       {
         "file": "il-county-commissioners.json",
-        "min_keys": 19,
-        "note": "At-large county boards, keyed like il-county-clerks.json. Counties that elect their board COUNTYWIDE have no district geometry, so their members ride the COUNTY card rather than a county-board dispatch entry (EXPANSION_GUIDE §1.5). Nineteen counties, 100 members, from THREE kinds of source. Scraped from a county page: Monroe, Randolph and MORGAN (commission form, 3 each), MASSAC 3, Pike 9, MOULTRIE 9, Brown 7, Schuyler 7, GREENE 7, SALINE 13, Calhoun 5, Putnam 5, Hamilton 5, GALLATIN 5 and ALEXANDER 2. Carried from a document because the county has no readable website: EDWARDS 3 and WABASH 3. Read from certified returns because the county site is behind a captcha: UNION 5 and WILLIAMSON 3 (RETURNS_ROSTERS; each row names the election that seated it, since a canvass cannot show a mid-term appointment). ALEXANDER, added 2026-08-23, is the one county here whose board is BIGGER than its roster — three seats, two published, nobody naming the third — so its block carries `seats` beside its members and the County card prints the shortfall in the same words the districted counties use. It is also the reason MIN_MEMBERS stopped applying to counties that have an EXPECT_MEMBERS row: an exact count is a better guard than a range, and the range would have rejected a correct two-member read. Read the count from the builder's EXPECT_MEMBERS table, never from this sentence. Greene, added 2026-08-08, is the first of these that was ALREADY SERVED before its board arrived (a 7th-Circuit subcircuit answered there), so it moved tier without changing the coverage ring or any anchor. Edwards has no website at all (its Clerk said so on 2026-08-06, and the domain answers NOERROR with no A record), so its three commissioners come from a document she sent. Wabash, added 2026-08-17, is the second such county — wabashcounty.illinois.gov carries mail and serves no web page (port 80 answers 503, measured 5 Aug and re-checked 9 Aug) — and its three come from Clerk Will's e-mail of 2026-08-16; her e-mail lists only HOME addresses, which do not ship, so each Wabash row is a name alone, and nobody is marked Chairman until she answers which of the three chairs. The scraper carries both counties in DOCUMENT_ROSTERS and prints a NOT RE-READ line naming each document and its age on every run, because a weekly job that refreshes a hand-carried roster refreshes nothing. Each shipped county carries EITHER a sourceUrl or a sourceDocument+verified pair; the builder fails on a county with neither. MORGAN, added 2026-08-08, is the cautionary one: the county has TWO sites and this project read the wrong one for a day — morgancounty-il.GOV is a content-free React shell, while morgancounty-il.COM publishes all three with role, party, term dates and a personal e-mail apiece. GALLATIN, added 2026-08-21, is the only one of the nineteen that also carries a dispatch entry of its own for precincts alone, and the only one whose site had to be repaired to be read at all: gallatinco.illinois.gov omits its TLS intermediate, so the scraper chases the issuer the certificate itself names and pins its hash (AIA_INTERMEDIATES) rather than disabling verification. Its board page publishes a phone for two of the five and an e-mail for none, and nothing is invented for the other three."
+        "min_keys": 20,
+        "note": "At-large county boards, keyed like il-county-clerks.json. Counties that elect their board COUNTYWIDE have no district geometry, so their members ride the COUNTY card rather than a county-board dispatch entry (EXPANSION_GUIDE §1.5). Twenty-one counties, 107 members, from THREE kinds of source. Scraped from a county page: Monroe, Randolph and MORGAN (commission form, 3 each), MASSAC 3, Pike 9, MOULTRIE 9, Brown 7, Schuyler 7, GREENE 7, SALINE 13, Calhoun 5, Putnam 5, Hamilton 5, GALLATIN 5, PULASKI 3 and ALEXANDER 3. Carried from a document because the county has no readable website: EDWARDS 3, WABASH 3 and HARDIN 3. Read from certified returns because the county site is behind a captcha: UNION 5 and WILLIAMSON 3 (RETURNS_ROSTERS; each row names the election that seated it, since a canvass cannot show a mid-term appointment). ALEXANDER, added 2026-08-23, is the one county here whose board is BIGGER than its roster — three seats, two published, nobody naming the third — so its block carries `seats` beside its members and the County card prints the shortfall in the same words the districted counties use. It is also the reason MIN_MEMBERS stopped applying to counties that have an EXPECT_MEMBERS row: an exact count is a better guard than a range, and the range would have rejected a correct two-member read. Read the count from the builder's EXPECT_MEMBERS table, never from this sentence. Greene, added 2026-08-08, is the first of these that was ALREADY SERVED before its board arrived (a 7th-Circuit subcircuit answered there), so it moved tier without changing the coverage ring or any anchor. Edwards has no website at all (its Clerk said so on 2026-08-06, and the domain answers NOERROR with no A record), so its three commissioners come from a document she sent. Wabash, added 2026-08-17, is the second such county — wabashcounty.illinois.gov carries mail and serves no web page (port 80 answers 503, measured 5 Aug and re-checked 9 Aug) — and its three come from Clerk Will's e-mail of 2026-08-16; her e-mail lists only HOME addresses, which do not ship, so each Wabash row is a name alone, and nobody is marked Chairman until she answers which of the three chairs. The scraper carries both counties in DOCUMENT_ROSTERS and prints a NOT RE-READ line naming each document and its age on every run, because a weekly job that refreshes a hand-carried roster refreshes nothing. Each shipped county carries EITHER a sourceUrl or a sourceDocument+verified pair; the builder fails on a county with neither. MORGAN, added 2026-08-08, is the cautionary one: the county has TWO sites and this project read the wrong one for a day — morgancounty-il.GOV is a content-free React shell, while morgancounty-il.COM publishes all three with role, party, term dates and a personal e-mail apiece. GALLATIN, added 2026-08-21, is the only one of the nineteen that also carries a dispatch entry of its own for precincts alone, and the only one whose site had to be repaired to be read at all: gallatinco.illinois.gov omits its TLS intermediate, so the scraper chases the issuer the certificate itself names and pins its hash (AIA_INTERMEDIATES) rather than disabling verification. Its board page publishes a phone for two of the five and an e-mail for none, and nothing is invented for the other three. HARDIN, added 2026-10-01, is the THIRD county here with no website at all, and its own Clerk is the source for that: asked whether the county published a board list anywhere, Clerk & Recorder Jill Cowsert answered on 2026-08-24 \u2014 \"Our county board is elected countywide. And we do not have a website in Hardin County.\" \u2014 and named all three commissioners on 2026-10-01. The gap record it closes had been reading the county's PUBLISHED web address as evidence about the county; that address is a parked page and the county is not behind it. No e-mail and no office ships, because she assigns neither and there is no county page to carry one."
       },
       {
         "file": "dewitt-county-board-members.json",
