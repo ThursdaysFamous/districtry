@@ -940,7 +940,7 @@ direction from the edge, which put many of them on it; that read as a
   and every rebuild adds a full copy to history. (Measured on the whole fleet
   in phase 3: 5.3 times, 3.5-10 times by app. See below.)
 - **Live sources cannot become tiles without being mirrored.** In Illinois,
-  29 of the 40 layers fetch their shapes live (`layer-sources.json`). The ones that change
+  29 of the 41 layers fetch their shapes live (`layer-sources.json`, whose weekly run has not yet measured `tribal-government`; that layer draws from a committed file, so the live count is unchanged). The ones that change
   about once a year (TIGERweb) can be mirrored into shipped tiles by a scheduled
   build; the county services stay live and get zoom-dependent requests instead
   (ArcGIS `maxAllowableOffset` and an envelope per tile, Socrata

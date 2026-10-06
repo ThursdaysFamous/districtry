@@ -87,6 +87,7 @@ const GEOMETRY_URLS = [
   "./data/app/massac-precincts.json",
   "./data/app/pike-precincts.json",
   "./data/app/saline-precincts.json",
+  "./data/app/tribal-areas.json",
   "./data/app/union-precincts.json",
   "./data/app/wabash-precincts.json",
   "./data/app/woodford-fire-districts.json",
