@@ -38,6 +38,13 @@ Only gaps a READER COULD HELP CLOSE — a missing or blocked source, or a shippe
 layer's known hole. Not a concept that structurally does not apply (that is a
 matrix cell), not a live outage (the card reports it), not a parity debt.
 
+A record that says a page's names are missing, load by script, or sit behind a
+sign-in belongs only after the page's own feed was read the way the page reads
+it — the address, parameters and any visitor key found in the page, fetched with
+the scraper's identity, compared with a browser. Say in `why` that it was. Two
+records were wrong on exactly this (`scott-county-commissioners`,
+`lansing-council-roster`, 2026-10-06).
+
 ## 4. The shape — two audiences, five refusals
 
 `REQUIRED` in the builder is eight keys: `id`, `concept`, `area`, `kind`,

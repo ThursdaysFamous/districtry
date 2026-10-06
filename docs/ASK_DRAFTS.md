@@ -43,6 +43,14 @@ the wording unreviewable and the batch uncountable. This file is the drafts.
    record citing it. A subject id cannot collide and cannot be renumbered.
    `scripts/build_coverage_gaps.py` fails on a duplicate id and on a gap record citing an
    ask this file does not have.
+7. **Before a letter says we cannot read a page, read the page's own feed.** A page
+   that arrives empty and fills in its names from a feed carries that feed's address,
+   its parameters and any key it gives every visitor; fetch it that way, with our own
+   reader identity, and compare with what a browser shows. Two letters on 2026-10-06
+   (Scott County, Illinois; Lansing, Michigan) told a clerk their page was unreadable
+   when it was not. A real sign-in or a managed challenge is still never worked
+   around. The full check is in `docs/DATA_LAYER_GUIDEBOOK.md` under "A page that
+   fills itself in is read through its own feed".
 
 ## What is NOT here, and why
 
