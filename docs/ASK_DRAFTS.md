@@ -6228,8 +6228,11 @@ feed answers in full and names three commissioners — Robert Schafer (County Ch
 and Tom Peterson — with the office at 35 E. Market St., Winchester, and 217-742-5532. In August we
 asked the feed without those settings, got an error, and found the Internet Archive's copy just as
 empty; from that we told her a visitor would see an empty list. That was our reading, not her
-page. One thing is still unexplained: a headless browser here showed the list's heading with no
-names under it. The cause is not known, so the letter does not claim any fault on her side.
+page. A headless browser here first seemed to show the list's heading with no names under it;
+re-run the same afternoon with a screenshot, it shows the names exactly as her screenshot does, and
+the empty reading was our script slicing the page text at the wrong "People". Adam sees the same as
+she does in his own browser. So nothing on her side fails: the names arrive a moment after the page,
+from the county's feed, and our August check asked that feed the wrong way.
 
 **What it costs nothing to ask.** The three names agree with what the county's certified election
 results imply (Schafer won in 2020, Simmons in 2022, Peterson in 2024), so the letter asks only to
