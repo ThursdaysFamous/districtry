@@ -108,7 +108,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+        "people": "The seven justices, one per district, from the Supreme Court's own page at kycourts.gov, which prints the district each was elected from. Refreshed weekly.",
         "applies": "Kentucky — statewide."
       }
     },
@@ -126,7 +126,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+        "people": "All fourteen judges, two per district, from the Court of Appeals' own page at kycourts.gov, which prints the district and division each was elected to. Refreshed weekly.",
         "applies": "Kentucky — statewide."
       }
     },
@@ -162,7 +162,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+        "people": "The circuit and family-court judges of each circuit, from the Court of Justice's own county pages, which print the judicial circuit each was elected from. Family Court is a division of Circuit Court under Ky. Const. 112(6) and its judges are elected from the circuit, so they appear here. Jefferson's 30th circuit names nobody: its county page publishes no judge list, which was asked about on 2026-10-01 and is recorded as coverage gap ky-judges.",
         "applies": "Kentucky — statewide."
       }
     },
@@ -180,7 +180,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+        "people": "The district judges of each district, from the Court of Justice's own county pages, which print the judicial district each was elected from. Jefferson's 30th district names nobody: its county page publishes no judge list, asked about on 2026-10-01 and recorded as coverage gap ky-judges.",
         "applies": "Kentucky — statewide."
       }
     },
@@ -386,11 +386,16 @@
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The Data gaps panel's content, emitted from docs/DATA_LAYER_GUIDEBOOK.md's gaps block: the fiscal courts, the two legislature rosters, and the county officers."
+      },
+      {
+        "file": "ky-judge-roster.json",
+        "min_keys": 3,
+        "note": "Kentucky's judges, keyed by the numbered district or circuit each was elected from, from the Court of Justice's own pages; refreshed weekly by update-ky-judges-roster.yml. Jefferson's circuit 30 and district 30 are recorded as asked about rather than left silent."
       }
     ]
   },
   "sw": {
-    "cache_name": "districtry-ky-shell-v2",
+    "cache_name": "districtry-ky-shell-v3",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
@@ -411,6 +416,11 @@
       "file": "update-ky-congress-roster.yml",
       "purpose": "U.S. House (KY) roster (unitedstates/congress-legislators)",
       "schedule": "Mon 13:55 UTC"
+    },
+    {
+      "file": "update-ky-judges-roster.yml",
+      "purpose": "Kentucky judges, keyed by the district or circuit each was elected from (Kentucky Court of Justice)",
+      "schedule": "Tue 14:40 UTC"
     }
   ],
   "geocoder": {

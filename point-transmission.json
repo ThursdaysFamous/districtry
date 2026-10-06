@@ -151,6 +151,7 @@
         "ssa",
         "tif-district",
         "township",
+        "tribal-government",
         "ward",
         "ward-precinct",
         "zip-code"
@@ -250,6 +251,7 @@
         "precinct",
         "school-district-elementary",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -288,6 +290,7 @@
         "school-district-unified",
         "us-house",
         "voting-precinct",
+        "watershed-district",
         "zip-code"
       ]
     },
@@ -426,6 +429,7 @@
         "school-district-unified",
         "school-site",
         "tid-district",
+        "tribal-government",
         "us-house",
         "ward",
         "wi-assembly",

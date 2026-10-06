@@ -196,10 +196,6 @@ ACCEPTED_DROPS = {
         "Linn withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
         "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:119":
-        "Lyon withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (5 district(s) at the base); its "
-        "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:121":
         "Madison withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
@@ -207,10 +203,6 @@ ACCEPTED_DROPS = {
     "ia/data/app/ia-supervisor-members.json:131":
         "Mitchell withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (5 district(s) at the base); its "
-        "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:133":
-        "Monona withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (3 district(s) at the base); its "
         "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:153":
         "Polk withheld 2026-10-01 -- its own district numbering has not been "

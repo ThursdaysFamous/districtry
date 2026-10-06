@@ -239,6 +239,26 @@
   "sourceUrl": "https://www.hamiltoncountyil.gov/departments/county-board/",
   "structure": "5 members elected countywide — no districts"
  },
+ "HARDIN": {
+  "county": "Hardin County",
+  "members": [
+   {
+    "name": "Darrick Armstrong",
+    "role": "Chairman"
+   },
+   {
+    "name": "Ricky Williams",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Michael Belford",
+    "role": "Commissioner"
+   }
+  ],
+  "sourceDocument": "e-mail from County Clerk & Recorder Jill Cowsert, 2026-10-01, with her correction of the third name the same day",
+  "structure": "Commission form — 3 commissioners elected countywide",
+  "verified": "2026-10-01"
+ },
  "MASSAC": {
   "county": "Massac County",
   "members": [
