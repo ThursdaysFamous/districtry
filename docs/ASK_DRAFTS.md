@@ -6157,3 +6157,61 @@ the question is only which order the county itself uses.
 **Why a no is still useful.** If the county cannot say, saying so closes the question and lets
 the record that tells our readers what is missing say the county was asked — which is a
 different and more honest claim than that nobody looked.
+
+## Ask il-cumberland-500e — Cumberland County Clerk: does the Western–Central line run along 500E?
+
+> **NOT YET ASKED — DRAFTED 2026-10-06**, to Clerk Bev Howard at `bhoward@cumberlandcoil.gov`, as a
+> REPLY in the thread where she sent the map on 2026-10-01 — never as a fresh letter. Prior contact:
+> letters 5 August and 16 August, a third on 1 October at 18:11 UTC, her answer at 18:32 UTC with a
+> photograph of the county's coloured district map ("Yellow is western district, blue is central
+> and green is eastern"), and a thank-you from us at 18:49 UTC. On send, record `ASKED <date>` and
+> an `ask` block reading `pending` on the `cumberland-board-districts` record.
+
+**Why this is asked.** Her photograph settles everything but one detail. Read colour by colour
+inside each of the county's twelve precincts, it puts Spring Point in Western, the Greenup
+precincts, Union and Crooked Creek in Eastern, the rest in Central, and Neoga 1 and Neoga 2 divided
+between Western and Central by one straight north-south line. That gives 3, 6 and 5 precincts per
+district, which matches the county's own certified returns exactly, and those returns could not
+have picked this answer on their own (37 different pairs of divided precincts fit the arithmetic).
+What a phone photo cannot settle is the ROAD the line follows. It measures as straight, about five
+miles east of the county's west edge, which is the road the county numbers 500E. One yes makes the
+county drawable.
+
+> Subject: Re: Cumberland County's three board districts
+>
+> Dear Clerk Howard,
+>
+> Thank you again for the map you sent on 1 October. It answered nearly everything: I can now see
+> which precincts belong to each of the three districts, and the counts agree with your office's
+> certified election results.
+>
+> One detail I cannot read with confidence from a photograph, and I would rather ask than guess.
+> The line between the Western and Central districts runs through the Neoga precincts. Does it run
+> north and south along 500E, from the north county line down to the township line at the south
+> edge of Neoga 2?
+>
+> A one-word yes or no is all I need. If the line follows a different road, its name would settle
+> it.
+>
+> With thanks,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+**A no is still useful.** It stops a wrong line being drawn, and a road name in its place draws the
+right one.
+
+## Ask il-jersey-7 — Jersey County Clerk: HELD, because the county's own 2016 map may already answer it
+
+> **NOT DRAFTED, ON PURPOSE (2026-10-06).** Clerk Pam Warford answered on 2026-10-01 at 19:06 UTC:
+> "No changes were made to county board districts in 2021, so the 2016 map is still correct.
+> There were some changes to precincts however, which resulted in one precinct being split between
+> two county board districts." Her attached table puts Jersey 7's reporting sub-units 0407-03 and
+> 0407-04 in District 1 and 0407-01 in District 2. Every other precinct is whole.
+
+**Why no letter yet.** She says the DISTRICT lines did not move; the precinct lines did. So the line
+through Jersey 7 is the 2016 line, and the 2016 map is published on the Clerk's own site. Writing
+to ask where it runs before reading that map would ask her to repeat something the county already
+publishes. The next step is ours: read the 2016 map at Jersey 7. Only if that map is not legible
+there does a letter go, and then it asks one narrow question about one precinct.
