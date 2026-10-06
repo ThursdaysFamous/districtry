@@ -828,7 +828,11 @@ try {
 
       // The City or Village card names the whole council for a city the
       // roster carries, and keeps its "not named here" sentence for one it
-      // does not (Lansing, whose council page builds its list in the browser).
+      // does not (Norton Shores, whose robots.txt refuses this client; the
+      // point is inside GEOID 2659140 per TIGERweb, 2026-10-06). Lansing was
+      // the example until 2026-10-06, when its council joined the roster
+      // through the content service its page reads, so it is now the second
+      // positive case: the one roster entry not read from a page's own HTML.
       const page = await booted(context, `${BASE}#point=42.50057,-83.00112&layers=municipality`);
       await cardText(page, "municipality");
       const muni = await page.evaluate(() => {
@@ -840,10 +844,21 @@ try {
         warren.every((n) => muni.includes(n)) && muni.length === warren.length, JSON.stringify(muni));
       await page.close();
       const lansing = await booted(context, `${BASE}#point=42.73370,-84.55530&layers=municipality`);
-      const lcard = await cardText(lansing, "municipality");
-      check("a city the roster does not carry keeps its 'not named here' sentence",
-        /Not named here/.test(lcard.text || ""), (lcard.text || "").slice(0, 130));
+      await cardText(lansing, "municipality");
+      const lnames = await lansing.evaluate(() => {
+        const el = document.getElementById("card-municipality");
+        return el ? [...el.querySelectorAll(".card-person-name")].map((n) => n.textContent) : [];
+      });
+      const lroster = boards["2646000"].members.map((m) => m.name);
+      check("the City or Village card names Lansing's whole council",
+        lroster.length === 8 && lroster.every((n) => lnames.includes(n)) && lnames.length === 8,
+        JSON.stringify(lnames));
       await lansing.close();
+      const norton = await booted(context, `${BASE}#point=43.16890,-86.26390&layers=municipality`);
+      const ncard = await cardText(norton, "municipality");
+      check("a city the roster does not carry keeps its 'not named here' sentence",
+        /Not named here/.test(ncard.text || ""), (ncard.text || "").slice(0, 130));
+      await norton.close();
     }
 
     // BATTLE CREEK, the fifth entry, and the one whose card is built to defeat

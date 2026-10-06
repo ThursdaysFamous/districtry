@@ -2101,6 +2101,72 @@
   "sourceUrl": "https://www.kentwood.us/city_services/committees_and_boards/city_commission/index.php",
   "readAt": "2026-10-01"
  },
+ "2646000": {
+  "name": "Lansing",
+  "kind": "city",
+  "body": "City Council",
+  "seats": 8,
+  "members": [
+   {
+    "name": "Ryan Kost",
+    "role": "Council Member",
+    "seat": "Ward 1",
+    "phone": "517-483-4181",
+    "email": "ryan.c.kost@lansingmi.gov"
+   },
+   {
+    "name": "Deyanira Nevarez Martinez",
+    "role": "Council Member",
+    "seat": "Ward 2",
+    "phone": "517-483-4190",
+    "email": "deyanira.n.martinez@lansingmi.gov"
+   },
+   {
+    "name": "Adam Hussain",
+    "role": "Council Member",
+    "seat": "Ward 3",
+    "phone": "517-483-4191",
+    "email": "adam.hussain@lansingmi.gov"
+   },
+   {
+    "name": "Peter Spadafore",
+    "role": "Council President",
+    "seat": "Ward 4",
+    "phone": "517-483-4180",
+    "email": "peter.spadafore@lansingmi.gov"
+   },
+   {
+    "name": "Clara Martinez",
+    "role": "Council Member",
+    "seat": "At Large",
+    "phone": "517-483-4171",
+    "email": "clara.martinez@lansingmi.gov"
+   },
+   {
+    "name": "Jeremy A. Garza",
+    "role": "Council Member",
+    "seat": "At Large",
+    "phone": "517-483-4184",
+    "email": "jeremy.garza@lansingmi.gov"
+   },
+   {
+    "name": "Tamera Carter",
+    "role": "Council Member",
+    "seat": "At Large",
+    "phone": "517-483-4170",
+    "email": "tamera.carter@lansingmi.gov"
+   },
+   {
+    "name": "Trini Pehlivanoglu",
+    "role": "Council Vice President",
+    "seat": "At Large",
+    "phone": "517-483-4188",
+    "email": "trini.pehlivanoglu@lansingmi.gov"
+   }
+  ],
+  "sourceUrl": "https://www.lansingmi.gov/council-members",
+  "readAt": "2026-10-06"
+ },
  "2647800": {
   "name": "Lincoln Park",
   "kind": "city",
