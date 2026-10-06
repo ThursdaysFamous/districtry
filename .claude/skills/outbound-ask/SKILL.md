@@ -70,7 +70,9 @@ read.** A page that arrives empty and fills in its members a moment later gets
 them from a feed whose address, parameters and visitor key are in the page
 itself. Find them in the HTML and scripts, fetch the feed that way with the
 scraper's own identity after the robots.txt read for that host, and compare with
-a browser. Scott County (Illinois) and Lansing (Michigan) were both told their
+a browser. Open the PDFs and files the page links to as well, and render a
+scanned PDF with no text layer and read it as an image (Clark County, Illinois
+publishes its board contacts that way). Scott County (Illinois) and Lansing (Michigan) were both told their
 pages were unreadable on 2026-10-06, and both were readable. A key every visitor
 receives is page configuration; a sign-in or a managed challenge is never worked
 around. `docs/DATA_LAYER_GUIDEBOOK.md`, "A page that fills itself in is read

@@ -4290,6 +4290,10 @@ page unreadable** (Adam, 2026-10-06):
    the robots.txt read for the feed's own host.
 3. Compare the result with what a person sees in a browser. Only a feed that still
    refuses, read the page's own way, is a finding.
+4. Open the documents the page links to — PDFs, spreadsheets, scanned notices. A PDF
+   with no text layer is not empty: render it and read it as an image. Clark County,
+   Illinois publishes its board's contacts as a scanned PDF linked from the board
+   page, and an earlier pass recorded them as unpublished (found 2026-10-06).
 
 **The line between configuration and a credential is who receives it.** A key the
 page gives every visitor is part of what the page publishes, and using it reads the

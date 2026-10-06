@@ -76,7 +76,8 @@ If the page arrives without its names and fills them in from a feed, read the
 feed: its address, parameters and any key the page gives every visitor are in the
 page's HTML or scripts. Re-read those from the page each run rather than pinning
 them, since a key can rotate. Read robots.txt for the feed's host too. A sign-in
-or managed challenge stays shut.
+or managed challenge stays shut. A linked scanned PDF is a source too: render it
+and read it as an image before calling the data unpublished.
 
 ## 4. The builder
 
