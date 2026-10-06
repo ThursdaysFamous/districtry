@@ -6293,6 +6293,19 @@ in the page the way Scott's carried one.
   as an image. The first question now asks whether those numbers are still right and whether
   the county is content to see them on the cards. The list also carries members' home
   addresses, which never ship whatever the answer. The precinct polling-place question stands.
+- **Knox** (Ask 21, re-checked the same afternoon) — stands. Its only claim about what is
+  published is that nothing records where Knox Seven went. The county's public map server
+  (`gis.knoxcountyil.gov`, Public folder) carries no precinct layer; the only precinct layer
+  in Knox's published ArcGIS services is the City of Galesburg's own 20 city precincts, from the
+  Galesburg Board of Election Commissioners, which is a different election authority and does
+  not cover Knox Township's county precincts. The county's main site now shows a Cloudflare
+  "Just a moment" check to every request, so it cannot be read and is not worked around.
+- **Bureau** (Ask 9, re-checked the same afternoon) — stands. The letter's claims are about the
+  licence Ms. Anderson sent, which is a document we hold. The county's site (robots.txt allows
+  everything) publishes no board-district map or precinct list on its board, clerk or
+  assessments pages or in its linked files, and the public parcel viewer it links (Sidwell
+  Portico) carries parcels, townships and roads but no board districts. The site's map link is
+  a barn-quilt map. Nothing published makes the letter's question unnecessary.
 - **WinGIS outage report** — withdraw. The Winnebago map server answers normally today
   (`maps.wingis.org`, the elected-officials layer returns its metadata). There is no outage to
   report.
