@@ -110,6 +110,7 @@ All 87 counties: county board districts in every one of them, judicial districts
 
 - [Minnesota district lookup](https://districtry.com/mn/): 17 layers, all 87 counties.
 - [Who is my U.S. representative?](https://districtry.com/mn/congress.html)
+- [County commissioner district lookup](https://districtry.com/mn/county-commissioner.html): links a page per county, 87 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/mn/sources.html)
 
 ## Kentucky

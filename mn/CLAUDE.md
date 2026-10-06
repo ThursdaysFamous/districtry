@@ -89,13 +89,21 @@ layer Illinois assembled county by county). **A single upstream service serving 
 is also a single point of failure for seven layers**, which is why `mn/WATCH.md` watches its
 Service Modified stamp and its field names rather than only its endpoint.
 
-**WHAT IS SHUT IS THE ROSTER, NOT THE GEOMETRY.** The SoS's companion results service
-`bdry_electionresults_2022_2030` carries federal and state contests only — no commissioner
-column — so composing a roster out of certified returns is closed there. Its
-`LocalRacesInCounty` pages are UNPROVEN rather than closed: one county at one election id was
-read and no commissioner contest was found, which is one reading and not a finding. The
-operator ruled on 2026-09-29 that Minnesota launches without commissioner names rather than
-waiting for them.
+**THE ROSTER WAS NOT SHUT, AND THE ROUTE THAT OPENED IT IS A PLAIN TEXT FILE** (2026-10-06).
+The record here said the SoS's results service carries federal and state contests only, which
+is true of that ArcGIS service and was read as true of the Secretary of State. The results
+SITE publishes a `cntyRaces.txt` per election day on `electionresultsfiles.sos.mn.gov`, every
+county commissioner contest in it, and `mn/scripts/build_mn_commissioner_roster.py` names
+445 of 447 seats from the 2022 and 2024 generals plus seven specials, each dated to the
+election that seated it (the Michigan certified-returns posture: a winner is not a sitting
+commissioner, and the card, the 87 county pages and the index all say so). **A general carries
+a WRITE-IN line and a primary does not** — the office name does not say which, the date does
+not either (specials run on primary day), and a first draft that guessed from the candidate
+count had to hold two August 2026 specials as undecidable. Five counties publish a name on
+their own district map; the builder compares them weekly and a seat they name differently is
+printed on its card beside the winner (Ramsey District 3 today). **Never read the results
+site's own pages (`electionresults.sos.mn.gov`)**: they load a Radware bot manager, so the
+builder finds election days by asking each Tuesday's directory on the files host instead.
 
 **`watershed-district` (2026-10-06) IS THE FIRST LAYER HERE FROM A SECOND STATE OFFICE**, the Board of Water and Soil Resources: 45 watershed districts, 16 metro watershed management organizations and three county-run areas, the bodies that manage water by watershed and can levy for it — the done standard's special-district level. Its builder (`mn/scripts/build_mn_watershed_districts.py`) reads BWSR's feature service on the same enterprise host, because the Geospatial Commons download host refuses this client in robots.txt. **THE PUBLISHER'S POLYGONS OVERLAP AND SHIP AS DRAWN**, so its card reads every body the map puts the point in rather than the first; nobody is named because every one of these boards is appointed. It declares the same state-outline `coverage` test as ZIP Code, because its empty card states a fact about Minnesota, and it is both an offline anchor and a negative-point hide in the smoke test.
 
@@ -135,7 +143,7 @@ generate nothing for an instance that does not ask.
 - Geocoders: address Photon (Minnesota-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Minnesota-bounded, serial >=1s queue)
 - Ground truth: 44.97440,-93.26550 (downtown Minneapolis, Hennepin County) → county Hennepin County; us-house 5; mn-senate 61; mn-house 61A; mn-judicial-district Fourth Judicial District; voting-precinct Minneapolis W-7 P-6; county-commissioner Hennepin County Commissioner District 3; watershed-district Mississippi Watershed Management Organization. Negative point 46.87720,-97.05000 (inside Cass County, NORTH DAKOTA, about 20 km west of Fargo — outside Minnesota and outside every other instance in the fleet, and inside permalink_gate (minLng -97.40) so the app answers the click and every shipped layer correctly returns nothing. Measured: 0 hits in every shipped geometry file, TIGERweb's county layer names Cass County STATE 38 (control: the anchor returns Hennepin County STATE 27), and no outline in fleet-outlines.json contains it. TWO POINTS WERE TRIED FIRST AND BOTH FAILED FOR REASONS WORTH RECORDING, because each looked obvious. LAKE SUPERIOR: Minnesota's TIGER county fabric is WATER-INCLUSIVE out to the international boundary, so a point in open Lake Superior at 47.6, -90.0 is named Lk Superior by TIGERweb's hydrography and is still INSIDE Cook County, and a point offshore of Duluth is inside the city of Duluth. Water is not outside the state here. WORTH COUNTY, IOWA (43.45, -93.37): correct on every static test — 0 hits in every shipped geometry file, TIGERweb naming Worth County STATE 19 — and it MADE THE BROWSER LEAVE. fleet-outlines.json puts it inside Iowa, so placeOwner hands the selection off to districtry.com/ia/ and the page navigates away; the smoke test's coverage-band probe then timed out looking for a button on a blank document. A NEGATIVE POINT MUST BE OUTSIDE EVERY LIVE INSTANCE, not only outside this one. Iowa's own negative point (43.65, -93.37) sits inside Minnesota and will start handing off the day this instance goes live — recorded in mn/WATCH.md as a go-live item on ia/, not a defect in this change.).
 - Layers: 17 registered (political 5, safety 2, schools 3, geography 7); `registerLayer(` floor 15. Debug namespace `window.MinnesotaExplorer`.
-- Scheduled workflows: `update-mn-congress-roster.yml` (Mon 13:40 UTC).
+- Scheduled workflows: `update-mn-congress-roster.yml` (Mon 13:40 UTC); `update-mn-commissioner-roster.yml` (Tue 13:40 UTC).
 - Source registry: `mn/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 

@@ -64,6 +64,7 @@ const GEOMETRY_URLS = [
 // as an offline fallback. Same freshness rule as the shell.
 const ROSTER_URLS = [
   "./data/app/congress-roster.json",
+  "./data/app/mn-county-commissioners.json",
   "./data/app/coverage-gaps.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */

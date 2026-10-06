@@ -12671,16 +12671,33 @@ function initMinnesotaExplorer() {
    * every one of the 785 precincts they cover. Two more counties publish one
    * on a host whose robots.txt refuses this client, which is obeyed.
    *
-   * NO COMMISSIONER IS NAMED AND THE CARD SAYS SO. The Secretary of State's
-   * certified-results service carries federal and state contests only, so no
-   * commissioner can be composed from returns, and no statewide roster of the
-   * people was found (gap mn-county-commissioner-roster). The card names the
-   * district, says how many seats the board holds, says plainly that it names
-   * nobody, and links the county directory.
+   * THE NAMES ARE ELECTION WINNERS AND THE CARD SAYS SO. The Secretary of
+   * State publishes every county commissioner contest it runs as a results
+   * file per election day, and the newest general for each seat names 445 of
+   * the 447 (mn/scripts/build_mn_commissioner_roster.py;
+   * data/app/mn-county-commissioners.json). A winner is dated to the election
+   * that seated them and is not a claim about who sits today, so the card
+   * says that in words and points at the county's own board page. Where a
+   * county's own district map names somebody else (Ramsey District 3 today)
+   * the card prints both, each saying whose it is.
    * ---------- */
   var loadMnCommissionerDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/mn-commissioner-districts.json", {}, 2);
   });
+  // The winners of the most recent election for each seat, from the Secretary
+  // of State's own results (mn/scripts/build_mn_commissioner_roster.py), keyed
+  // "<county FIPS>-<district>". Every record names the election that seated
+  // it, because a winner is not the same claim as a sitting commissioner.
+  var loadMnCommissionerRoster = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-county-commissioners.json", {}, 2);
+  });
+  var MN_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  function mnElectionDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return MN_MONTHS[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1];
+  }
 
   registerLayer({
     id: "county-commissioner",
@@ -12696,29 +12713,85 @@ function initMinnesotaExplorer() {
       var props = feature.properties || {};
       return props.name != null ? String(props.name) : null;
     },
+    // the hover names the seat's most recent winner from the prefetched
+    // roster, and nobody where the card names nobody
+    hoverOfficial: {
+      load: loadMnCommissionerRoster,
+      name: function (feature, roster) {
+        var props = feature.properties || {};
+        var rec = roster ? roster[String(props.countyFips) + "-" + String(props.district)] : null;
+        return rec && rec.name ? String(rec.name) : null;
+      }
+    },
     query: function (point, seq) {
       return queryFeatureAt(loadMnCommissionerDistricts, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: props.name,
           number: props.district,
           county: props.county,
           seats: props.seats,
-          precincts: props.precincts
+          precincts: props.precincts,
+          winner: null
         };
+        // A roster that fails to load leaves the district card standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadMnCommissionerRoster().then(function (roster) {
+          result.winner = roster[String(props.countyFips) + "-" + String(props.district)] || null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
       // Card convention: identity -> officeholder -> office -> contact -> link.
-      // It stops after the officeholder row, and that row says why.
+      // The officeholder is the seat's most recent election winner, dated, and
+      // the card stops there: no office or contact is published with it.
       var wrap = cardEl("div", "card-flush");
       wrap.appendChild(renderBodyIntro({
         title: result.name ? String(result.name) : "County Commissioner District",
         note: result.county ? String(result.county) + " County" : null
       }));
       var rows = [];
+      var winner = result.winner;
+      if (winner && winner.name) {
+        var when = mnElectionDate(winner.election);
+        wrap.appendChild(renderPersonRows([{
+          name: String(winner.name),
+          note: when ? (winner.special ? "won a special election, " : "elected ") + when : null
+        }]));
+        rows.push({
+          label: "What this name is",
+          value: "The winner of the most recent election for this seat in the " +
+            "Minnesota Secretary of State's results. It is not a list the " +
+            "county keeps up to date, so if the seat has changed hands since " +
+            "(a resignation or an appointment) this still shows who won. " +
+            "The county's own board page says who holds it today."
+        });
+        if (winner.countySays && winner.countySays.name) {
+          rows.push({
+            label: "The county's own map names someone else",
+            value: String(winner.countySays.publisher || "The county") +
+              "'s own district map names " + String(winner.countySays.name) +
+              " for this seat. The two sources disagree, and the county's " +
+              "board page will say who holds it now."
+          });
+        }
+      } else {
+        rows.push({
+          label: "Who holds this seat",
+          value: result.rosterFailed
+            ? "The list of election winners did not load, so no name is shown. " +
+              "Your county publishes its own board, and the link below reaches it."
+            : "Not named here: " + String((winner && winner.unnamed) ||
+              "no result for this seat was found") + ". Your county publishes " +
+              "its own board, and the link below reaches it."
+        });
+      }
       rows.push({
         label: "Who you elect here",
         value: "One county commissioner, chosen by the voters of this district " +
@@ -12734,13 +12807,6 @@ function initMinnesotaExplorer() {
             "Hennepin, Ramsey and St. Louis; a county may ask to change that."
         });
       }
-      rows.push({
-        label: "Who holds this seat",
-        value: "Not listed here. Minnesota publishes the district lines " +
-          "statewide but not the people, and no list of all 447 commissioners " +
-          "was found, so naming one would mean guessing. Your county publishes " +
-          "its own board — the link below reaches it."
-      });
       if (result.precincts != null) {
         rows.push({
           label: "How the line is drawn",

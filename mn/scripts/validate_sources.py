@@ -266,6 +266,19 @@ PROVENANCE = [
             "read."
         ),
     },
+    {
+        "layer": "county-commissioner",
+        "app_file": "mn-county-commissioners.json",
+        "source_url": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+        "note": (
+            "The 447 commissioner seats' most recent winners, from the "
+            "Secretary of State's county races results file for each election "
+            "day (this URL is the 2024 general's). Refreshed weekly by "
+            "update-mn-commissioner-roster.yml, which asks every Tuesday's "
+            "directory since the 2022 general; a new general reaches the file "
+            "21 days after election day."
+        ),
+    },
 ]
 
 ENDPOINTS = [
