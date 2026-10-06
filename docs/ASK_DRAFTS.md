@@ -2250,7 +2250,7 @@ unaffected sources; the three district files are not in the tree.
 
 ## Ask 20 — six Wisconsin county clerks: the city wards your filing leaves without a district
 
-> **ASKED 2026-10-01 — ALL SIX SENT, FOUR ANSWERED THE SAME DAY.** Six separate notes, one per
+> **ASKED 2026-10-01 — ALL SIX SENT, FIVE ANSWERED THE SAME DAY.** Six separate notes, one per
 > county clerk. Four ask the same question about a different city; two ask a different question.
 > They are not a batch: each note names one county's own filing, and one that named the wrong
 > city or the wrong ward would be worse than not writing.
@@ -2295,7 +2295,16 @@ unaffected sources; the three district files are not in the tree.
 > down and not yet built, because it is the same county-coded-wards-plus-a-clerk's-sentence shape
 > that wants its own gate and an operator rebuild.
 >
-> Pepin and Lafayette have not replied. Follow up once at about 2026-10-21.
+> **LAFAYETTE ANSWERED AND COMPLETED CUBA CITY, AND THE CITY CONFIRMED IT.** Clerk Carla
+> Jacobson wrote that City of Cuba City ward 5, the one ward her county files with no district
+> code, is in Aldermanic District 3, and City Clerk-Treasurer Jill Hill confirmed the same that
+> evening (replies 19:12 and 19:49 UTC, read off the Letters thread's ledger in
+> `/mnt/project-files/letters/sent-2026-10-01.md`). The county files the city's other four wards
+> 01-04, so ward 5 joining 03 completes a four-district plan with nothing left over. Like New
+> London and Port Washington it is written down and not yet built, waiting on the same gate. No
+> reply is owed; a thank-you note is optional and the Letters thread drafts it.
+>
+> Pepin has not replied. Follow up once at about 2026-10-21.
 
 **What this is about.** Wisconsin's aldermanic districts are drawn as groups of wards, and
 the ward file the Legislative Technology Services Bureau publishes is the only statewide
@@ -4779,6 +4788,23 @@ next step rather than a mailing.
 
 ## Ask wi-city-council-pages — Beloit: may we read your council page?
 
+> **RE-CHECKED 2026-10-06 UNDER THE READ-THE-PAGE-FIRST RULE. THE REFUSAL STANDS AND ONE
+> SENTENCE OF THE LETTER WAS FALSE FOR BELOIT, NOW CORRECTED.** The rule asks whether a page we
+> called unreadable actually loads its names from a feed we could read. For Beloit that question
+> cannot be asked: `www.beloitwi.gov/robots.txt` was re-read with the same token as before and is
+> unchanged (HTTP 200, 573 bytes, six named crawlers with narrow rules, then `User-agent: *` /
+> `Disallow: /`). That refuses the council page AND everything a feed hunt would need, the page
+> source included, so nothing on that host was fetched. The file names the same six crawlers as
+> the seven Wisconsin county hosts `validate_card_links.py` records as one CMS vendor's default,
+> though it is not byte-identical to them (Beloit's Googlebot and bingbot groups carry two extra
+> rules); the letter already allows that the block may be a default rather than a decision.
+> **THE FALSE SENTENCE:** the shared template says the map "draws every aldermanic district in
+> <CITY> and names nobody in them". The state's ward file (`WI_Municipal_Wards_Current`, read
+> 2026-10-06) codes all 32 of Beloit's city wards `ALDERID 00`, so the map draws no Beloit
+> district at all. Beloit may elect its council at large, which would explain it, but that is not
+> measured here and the letter does not claim it. Its paragraph now reads as the Beloit variant
+> below.
+
 > **WITHDRAWN FOR FOUR OF THE FIVE CITIES, 2026-10-01, later the same day. JANESVILLE,
 > WAUSAU, WAUWATOSA AND MEQUON DO NOT BLOCK THIS PROJECT AND NEVER NEEDED A LETTER.** All four
 > serve their robots.txt with HTTP 200 and PERMIT `/`, and all four serve their home and council
@@ -4903,6 +4929,11 @@ Draft (one per city; `<CITY>`, `<CLERK>` and the bracketed clause are the only p
 > districtry.com/wi/. It draws every aldermanic district in <CITY> and, at the moment, names
 > nobody in them, which is the thing I am writing about.
 >
+> [For Beloit, in place of the sentence above: It shows which city covers an address in Beloit
+> but, at the moment, names nobody on your City Council, which is the thing I am writing about.
+> And in the next paragraph, "the one that lists each alderperson and their district" becomes
+> "the one that lists each council member".]
+>
 > [For Beloit: Your website's robots.txt asks automated readers to stay off the whole site, and
 > I am following that request — this letter is not a complaint about it and I have not tried to
 > get around it.]
@@ -4956,6 +4987,16 @@ round.
 ---
 
 ## Ask wi-oshkosh-council — City of Oshkosh Clerk: our reader cannot reach your robots.txt
+
+> **RE-CHECKED 2026-10-06 UNDER THE READ-THE-PAGE-FIRST RULE. THE LETTER STANDS AS WRITTEN.**
+> The rule asks whether names we called unreadable sit in a feed we could read. Oshkosh's do
+> not need one: its council page carries the seven names in its own HTML, which is why the
+> scraper is already written. What stops it is the robots read, and that is unchanged from both
+> places that matter. From this sandbox, the scraper's own client fails the handshake
+> (`UNEXPECTED_EOF_WHILE_READING`) while `curl` gets the 331-byte file. From a GitHub runner, the
+> weekly Oshkosh job on 2026-10-01 at 23:04 UTC failed with `Connection reset by peer`, three
+> attempts, and fetched nothing (run 36938706422). The next weekly run is 2026-10-08. No other
+> client was tried.
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** The only one of the 21 unnamed Wisconsin cities where
 > the obstacle is neither a refusal nor a page that needs a browser, but a connection this
@@ -5757,6 +5798,55 @@ the AOC was asked — which is a different and more honest claim than that nobod
 and nothing is asked of any named judge personally.
 
 ## Ask marion-wi-council-districts — two county clerks: how many districts does the City of Marion elect, and which of you files which?
+
+> **WITHDRAW BOTH LETTERS (re-checked 2026-10-06 under the read-the-page-first rule). WAUPACA
+> COUNTY ALREADY PUBLISHES THE ANSWER TO BOTH QUESTIONS, in two documents its Clerk's office
+> compiles, so the letter would ask a clerk to repeat what her office has printed.** Both hosts
+> answer 404 for robots.txt, which permits, and both were read with the county board scraper's own
+> token.
+>
+> 1. **How many districts: three.** The Clerk's Directory of Public Officials
+>    (`public4.co.waupaca.wi.us/CountyDirectory`, the page the county board scraper already reads,
+>    section `city-officials`) lists the City of Marion's council as Aldermanic District 1, 2 and 3,
+>    two alderpersons each: District 1 Wanda Tucker and Neal Westemeier, District 2 David Mattes
+>    and one seat printed "Vacant", District 3 Harry Faehling and Joe Larson. It also prints home
+>    addresses, which never ship.
+> 2. **Which filed number is which: the four filed numbers are three districts.** The Clerk's
+>    notice and sample ballot for 7 April 2026 (`April 7, 2026 Combined Insert.pdf`, linked from
+>    the county's past-election-results page; text layer, not a scan) lists the City of Marion,
+>    wards 1 to 4, with "Alderperson, District 1 & 4", "Alderperson, District 2" and
+>    "Alderperson, District 3", and names ward 4 as the part in Shawano County. The state's ward file
+>    (read the same day) codes ward 1 `21`, ward 2 `22`, ward 3 `23` (Waupaca) and ward 4 `01`
+>    (Shawano). So Shawano's `01` and Waupaca's `21` are one district, District 1, and the map's
+>    fourth district does not exist. **One step is inferred, not printed:** that ward 2 is District 2
+>    and ward 3 is District 3. Nothing in either document says otherwise, and it is the only
+>    reading in which the directory's three districts and the ballot's labels agree.
+>
+> Marion's own site still refuses us (`www.cityofmarionwi.gov/robots.txt`, re-read 2026-10-06:
+> `User-agent: *` / `Disallow: /`), so nothing was read there. The fix is now map work rather than
+> a letter: merge `01` into District 1, relabel `21`-`23` as Districts 1-3, and consider the
+> directory as a roster source for the six seats. That changes what readers see, so it waits for
+> Adam's word. The text below is kept as the record of what was going to be asked.
+
+> **THE SHAWANO LETTER WAS SENT ON 2026-10-01 AND HAS NO REPLY, SO IT GETS A SHORT CLOSING NOTE**
+> (decided 2026-10-06). It asks a question the neighbouring county's own publications now answer,
+> so a clerk who has not got to it yet should not spend time on it. The note goes as a reply in the
+> same thread, so it reads as part of that conversation, and it asks nothing. No follow-up clock
+> applies to this ask any more.
+>
+> **Subject:** Re: One question about the City of Marion's aldermanic districts
+>
+> > Dear Clerk Rigsby,
+> >
+> > A quick note so your office doesn't spend time on my question of 1 October about the City of
+> > Marion's aldermanic districts: I have found the answer. Waupaca County's sample ballot for the
+> > April 2026 election lists Marion's wards 1 and 4 together as Aldermanic District 1, so the
+> > ward you file as district 1 is part of that same district rather than a fourth one.
+> >
+> > No reply is needed. Thank you, and sorry for the extra e-mail.
+> >
+> > Adam Overberg
+> > districtry.com/wi/
 
 > **ONE SENT AND BOUNCED, ONE NOT SENT.** Written 2026-10-01. Two letters, one to each of the two
 > county clerks who file the City of Marion's wards. The Waupaca letter went that day and was
