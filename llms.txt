@@ -67,7 +67,7 @@ Supervisor districts, neighborhoods, police districts, school attendance areas, 
 
 County boards, circuit courts, wards and aldermanic districts across all 72 counties — clerk to Court of Appeals — plus school districts, cities, villages and towns, and the Assembly, Senate and U.S. House seats, and who holds those.
 
-- [Wisconsin district lookup](https://districtry.com/wi/): 31 layers, all 72 counties.
+- [Wisconsin district lookup](https://districtry.com/wi/): 32 layers, all 72 counties.
 - [Who is my circuit court judge?](https://districtry.com/wi/circuit-court.html)
 - [Who is my U.S. representative?](https://districtry.com/wi/congress.html)
 - [Who is my county supervisor?](https://districtry.com/wi/county-board.html): links a page per county, 72 of them, each naming every member with whatever contact details that county publishes.
@@ -95,7 +95,7 @@ All 99 counties: supervisor districts with each county's own election plan, town
 
 All 83 counties: commissioner districts, compiled by the state from the plan each county's apportionment commission files — plus townships and charter townships, cities and villages, school districts and intermediate school districts, circuit courts and Court of Appeals districts, and the Michigan Senate, House and U.S. House seats, and who holds those.
 
-- [Michigan district lookup](https://districtry.com/mi/): 18 layers, all 83 counties.
+- [Michigan district lookup](https://districtry.com/mi/): 19 layers, all 83 counties.
 - [Who is on my city council?](https://districtry.com/mi/city-council.html)
 - [Who is my U.S. representative?](https://districtry.com/mi/congress.html)
 - [County commissioner district lookup](https://districtry.com/mi/county-commissioner.html): links a page per county, 83 of them, each naming every member with whatever contact details that county publishes.

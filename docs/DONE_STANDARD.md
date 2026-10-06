@@ -88,7 +88,7 @@ which entries apply does.
 12. Special districts the state's own law creates — fire, park, library,
     sanitary, technical college and the rest — wherever a publisher offers them.
 13. Tribal governments. In scope in every state by the mandate of 2026-09-29.
-    Illinois answers it; the rest of the fleet is to come.
+    Illinois, Wisconsin and Michigan answer it; the rest of the fleet is to come.
 
 A level in the second group is covered when either the app answers it or a
 record states that the state does not have it. Where a state genuinely lacks a
