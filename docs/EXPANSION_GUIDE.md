@@ -2873,7 +2873,7 @@ already statewide · ENTRY = counties join as dispatch entries · ROSTER = count
 as roster rows · GATED = honest instance of a general concept, generalized through a
 different concept/card · UNIQUE = recorded Chicago/Cook-only.
 
-### Political (11)
+### Political (12)
 
 | id | Answers | Level | Elected by | Statewide story |
 |---|---|---|---|---|
@@ -2886,6 +2886,7 @@ different concept/card · UNIQUE = recorded Chicago/Cook-only.
 | `school-board` | your ERSB district + member | School district | district — IL's only districted school board | UNIQUE as polygon · elsewhere Pattern A (§1.5) |
 | `ward` | your alderperson / council member | Municipal | ward or council district | ENTRY — the consolidated municipal-ward concept, dispatch keyed by municipality (Chicago + suburban Cook + Evanston + Will cities + Aurora shipped 2026-07); new ward-publishing sources join as entries |
 | `ward-precinct` | your Chicago precinct | Election administration | n/a | GATED — authority-dispatched concept (§1.3) |
+| `tribal-government` | which tribal nation's land you are on, and the government that answers for it | Tribal (sovereign, federally recognised) | each nation's own constitution — NOT measurable from any federal publisher, and no card claims it | ENTRY — the land is one national Census service, so a state joins by measuring its own areas; the GOVERNMENT is per nation and there is no federal shortcut to a council |
 | `early-voting` | nearest early-voting/drop-box sites | Election administration | n/a | GATED — per-authority files (§1.3) |
 
 ### Safety (7)
