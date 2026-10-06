@@ -94,7 +94,7 @@ the member, and this instance names none.
 - Geocoders: address Photon (Kentucky-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Kentucky-bounded, serial >=1s queue)
 - Ground truth: 38.25270,-85.75850 (downtown Louisville, Jefferson County) → county Jefferson County; us-house 3; ky-senate 33; ky-house 43. Negative point 36.40000,-86.50000 (inside Sumner County, TENNESSEE, about 15 km south of the Kentucky line and north-east of Nashville — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (minLat 36.35) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-09-30: TIGERweb's county layer names Sumner County STATE 47 (control: the anchor returns Jefferson County STATE 21), and no outline in fleet-outlines.json contains it (control: the Louisville anchor is likewise in none of them, so the file genuinely has no Kentucky coverage rather than the test passing vacuously). TENNESSEE RATHER THAN ONE OF THE OTHER SIX NEIGHBOURS, deliberately. Illinois is live and borders Kentucky across the Ohio, so a point over there would sit inside an instance's own outline and the browser would hand the selection off to districtry.com/il/ and navigate away — which is how Minnesota's first candidate failed, silently, as a smoke-test timeout on a blank document rather than as a wrong answer. Indiana and North Carolina are in build as dark instances and will become live outlines, so they were avoided for the same reason one step ahead. Tennessee is in no instance and in no launch plan. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.).
 - Layers: 12 registered (political 7, schools 3, geography 2); `registerLayer(` floor 4. Debug namespace `window.KentuckyExplorer`.
-- Scheduled workflows: `update-ky-congress-roster.yml` (Mon 13:55 UTC).
+- Scheduled workflows: `update-ky-congress-roster.yml` (Mon 13:55 UTC); `update-ky-judges-roster.yml` (Tue 14:40 UTC).
 - Source registry: `ky/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 
@@ -439,13 +439,12 @@ rules, Twentieth and Thirtieth keeping the tens stem where Fortieth and Fiftieth
 so the ordinals are a table rather than a derivation; every paragraph's ordinal WORD is checked
 against its own number.
 
-**NO JUDGE IS NAMED, AND THAT SILENCE IS ITS OWN RECORD** (gap `ky-judges`). The geometry is
-settled and the JOIN is missing: nothing published pairs a sitting judge with the district they
-were elected from. Unlike Illinois, where a judge is elected from a subcircuit and then sits
-circuit-wide so no judge belongs to the subcircuit, a Kentucky judge is elected from the
-circuit they sit in — so Kentucky CAN name judges once that join exists. The record names the
-Administrative Office of the Courts as the body to ask and says plainly that it has NOT YET
-been asked.
+**THE JUDGES ARE NAMED NOW, AND THE JOIN CAME FROM ASKING** (the section below). The paragraph
+that stood here said no judge was named and that nothing published pairs a sitting judge with
+the district they were elected from; that was true when written and stopped being true the same
+day. Unlike Illinois, where a judge is elected from a subcircuit and then sits circuit-wide so
+no judge belongs to the subcircuit, a Kentucky judge is elected from the circuit they sit in —
+which is why Kentucky could name judges at all once the join existed.
 
 **SEAT COUNTS ARE STATED ONLY WHERE THEY WERE MEASURED.** The Supreme Court card says one
 justice per district (KRS 21A.020 elects per district) and the Court of Appeals card says two
@@ -459,6 +458,67 @@ four point-first layers — the city and the three school tilings — with the f
 holding no hook and every other instance's figures byte-identical to the committed artifact.
 Adding them still forced the probe to re-run, because the privacy page refuses to publish once
 an app's layer id list has moved.
+
+## The judges, named 2026-10-01 — the ask that was answered in an hour
+
+**THE JOIN WAS PUBLISHED ALL ALONG AND ONE E-MAIL FOUND IT.** The four court layers shipped
+naming nobody, on a measurement that said nothing published pairs a sitting judge with the
+district they were elected from. Ask `ky-judge-district-join` went to the Administrative Office
+of the Courts' Data Officer at 16:24 UTC and was answered at 17:16 — 52 minutes — naming two
+surfaces. **THEY ARE NOT EQUIVALENT AND ONE IS NOT READ.** `kcoj.kycourts.net/ContactList/Search`
+is the Court of Justice's directory search in a tabular format, and its robots.txt is 25 bytes of
+`User-agent: *` / `Disallow: /`, which binds every client this repo sends: nothing is fetched
+from it, and a refusal is obeyed rather than routed around however convenient the format. The
+other, `www.kycourts.gov`, answers the ask — it prints the numbered district or circuit beside
+each judge, which is exactly the fact a county of residence is not.
+
+**THREE SURFACES, BECAUSE THE TIERS ARE PUBLISHED DIFFERENTLY**, measured 2026-10-01 across every
+page that site serves. The Supreme Court's own page names all 7 justices against their 7
+districts and the Court of Appeals' own page all 14 judges against the 7 appellate districts and
+two divisions each, so one fetch answers each appellate tier statewide. **THE TRIAL TIERS HAVE NO
+STATEWIDE PAGE AT ALL** — the Circuit, Family and District court landing pages carry no judge
+rows, which was checked rather than assumed — so they are assembled from the 120 county pages,
+which carry 818 numbered judge rows between them. The roster is 255 judges: 7 Supreme Court, 14
+Court of Appeals, 135 across 56 of 57 circuits and 99 across 58 of 59 district courts, with 2
+seats the court itself reports vacant.
+
+**FAMILY COURT JOINS THE CIRCUIT TIER RATHER THAN BECOMING A FIFTH ONE.** It is a division of
+Circuit Court under Ky. Const. 112(6) and its judges are elected from the circuit, so its cards
+print a circuit number — 51 of the 135 circuit-tier judges are family-court judges, and a circuit
+card prints each judge's own court where it differs from the card's. Filing them as their own tier
+would have invented a tiling no statute draws. **AND A DIVISION IS STILL A SEAT, NOT A PLACE**:
+the division rides as a note on the person and is never a key, because keying on one would invent
+sub-circuit boundaries that do not exist.
+
+**JEFFERSON IS THE ONE HOLE AND IT IS THE EXPENSIVE ONE.** Its county page ships the judge list
+commented out in its own HTML, and Jefferson is the sole county of circuit 30 AND district 30, so
+Louisville's trial judges are named on no page of this source while every other county's are —
+and Louisville is where this instance's ground-truth anchor sits, so it is the first thing a
+reader of the anchor sees. Its appellate judges are unaffected: both appellate pages are
+statewide, and the anchor's Supreme Court and Court of Appeals cards name their judges. **BOTH
+HALVES ARE ASSERTED AT THAT ONE POINT** by smoke check 2d, which is why no second point was
+added: a card naming a judge and a card saying why it cannot are the two states this roster can
+be in, and a check asserting only the first would pass a roster that had gone quietly empty for
+the other. The card's wording is the roster's own `askedAbout` note, read at runtime, so the card
+cannot drift from the record.
+
+**A FIXED SOURCE TURNS THE BUILD RED RATHER THAN SLIPPING PAST.** Both the scraper and the
+builder FAIL if Jefferson's page starts publishing judges, naming what to re-read — the
+`ACCEPTED_DROPS` property, applied to an absence rather than a drop. The scraper also fails if any
+OTHER county's page comes back empty, and if a county page cannot be fetched at all, because a
+page this project cannot read is not a county with no judges. **THE UNIT COUNT IS AN IDENTITY
+RATHER THAN A FLOOR**, and that is the gate worth copying: every unit the shipped boundary files
+carry must either have a judge or be recorded as unpublished, and a missing one is NAMED. A floor
+would have passed a run that quietly lost a circuit, which is how the first draft of this builder
+read — its floors were guesses, and the measured circuit count of 135 was below the 150 one of
+them invented.
+
+**THE ROSTER IS NETWORK-FIRST AND THE CARDS DEGRADE HONESTLY.** `ky-judge-roster.json` is 41 KB
+and sits in the worksheet's roster list, so a returning reader gets a new judge at once rather
+than on a cache bump. A roster that fails to load does NOT take the district answer down with it:
+the card still names the court and says the judge list could not be loaded, because the boundary
+is a same-origin file that has already answered. Three silences, three different sentences, and a
+guessed name is never one of them.
 
 ## Growing this instance
 

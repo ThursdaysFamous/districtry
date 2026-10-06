@@ -12770,6 +12770,36 @@ function initKentuckyExplorer() {
     return fetchJSONWithRetry("data/app/ky-district-court-districts.json", {}, 2);
   });
 
+  /* ---------- the judge roster, and where it comes from ----------
+   * Each judge is keyed by the numbered unit they were ELECTED FROM, which the
+   * Court of Justice prints beside them — the join Ask ky-judge-district-join
+   * went looking for and got on 2026-10-01. Nothing here is inferred from a
+   * judge's county of residence, which is a different fact.
+   *
+   * A roster that fails to load does NOT take the district answer down with it:
+   * the card still names the court and says the judge list could not be loaded,
+   * because the boundary is same-origin and already answered.
+   * ---------- */
+  var loadJudgeRoster = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-judge-roster.json", {}, 2);
+  });
+  function judgesFor(tier, unit) {
+    return loadJudgeRoster().then(function (roster) {
+      var tiers = (roster || {}).tiers || {};
+      var seat = (tiers[tier] || {})[String(unit)];
+      var askedKey = tier + "-" + unit;
+      var asked = ((roster || {}).askedAbout || {})[askedKey];
+      return {
+        members: seat && seat.members ? seat.members : [],
+        asked: asked ? asked.note : null,
+        readOn: (roster || {}).readOn || null,
+        failed: false
+      };
+    }, function () {
+      return { members: [], asked: null, readOn: null, failed: true };
+    });
+  }
+
   var KY_COURT_DIRECTORY = "https://www.kycourts.gov/Courts/Pages/default.aspx";
 
   // "Ballard, Carlisle, Fulton and Hickman Counties" — the county list a card
@@ -12796,24 +12826,58 @@ function initKentuckyExplorer() {
     };
   }
 
-  function kyCourtQuery(load) {
+  function kyCourtQuery(load, tier) {
     return function (point, seq) {
       return queryFeatureAt(load, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var unit = kyCourtUnit(feature);
+        var base = {
           seq: seq,
-          unit: kyCourtUnit(feature),
+          unit: unit,
           counties: findPropCI(props, ["counties"]),
           authority: findPropCI(props, ["authority"])
         };
+        if (unit == null) return base;
+        return judgesFor(tier, unit).then(function (bench) {
+          base.judges = bench.members;
+          base.askedAbout = bench.asked;
+          base.rosterReadOn = bench.readOn;
+          base.rosterFailed = bench.failed;
+          return base;
+        });
       });
     };
   }
 
-  // opts: { word, seats, bench } — `word` names one unit, `seats` says how many
-  // judges that unit elects (omitted where this project has not measured it),
-  // and `bench` is the one-line description of what the court does.
+  // One judge row. The DIVISION is a seat elected by the whole circuit (KRS
+  // 23A.040 and after), so it rides as a note on the person and never reads as
+  // a place; the court name is shown where it differs from the layer's own, so
+  // a Family Court judge on a circuit card says which bench they sit on.
+  function kyJudgeRow(member, ownCourt) {
+    var notes = [];
+    if (member.court && member.court !== ownCourt) notes.push(member.court);
+    if (member.division != null) notes.push("Division " + member.division);
+    var row = {
+      name: member.vacant ? "Vacant" : String(member.name),
+      note: notes.length ? notes.join(" · ") : null
+    };
+    if (member.vacant) {
+      row.badge = "Seat vacant";
+    } else if (member.role) {
+      row.badge = String(member.role);
+    }
+    if (member.profileUrl) {
+      row.links = [{ label: "Profile", url: String(member.profileUrl) }];
+    }
+    return row;
+  }
+
+  // opts: { word, seats, bench, tier, court } — `word` names one unit, `seats`
+  // says how many judges that unit elects (omitted where this project has not
+  // measured it), `bench` describes what the court does, and `court` is the
+  // court name this card is already about, so a judge's own court is printed
+  // only when it differs.
   function kyCourtCard(opts) {
     return function (result) {
       var wrap = cardEl("div", "card-flush");
@@ -12823,18 +12887,48 @@ function initKentuckyExplorer() {
           : "Unknown " + opts.word.toLowerCase(),
         note: kyCountyPhrase(result.counties)
       }));
-      var rows = [{
-        label: opts.seats ? "Judges" : "Judge",
-        value: "Not named here. " + (opts.seats ? opts.seats + " " : "") +
-          "This app does not yet carry a roster of Kentucky's judges, and no " +
-          "source it has found says which district or circuit a sitting judge " +
-          "was elected from, so it names nobody rather than guessing."
-      }, {
-        label: "The court",
-        value: opts.bench
-      }];
+
+      var judges = result.judges || [];
+      if (judges.length) {
+        wrap.appendChild(renderSectionLabel(
+          judges.length === 1 ? "Elected from this " + opts.word.toLowerCase()
+            : judges.length + " judges elected from this " + opts.word.toLowerCase()));
+        wrap.appendChild(renderPersonRows(judges.map(function (member) {
+          return kyJudgeRow(member, opts.court);
+        })));
+      }
+
+      var rows = [];
+      if (!judges.length) {
+        // Three different silences, and the card says which one it is. A
+        // guessed name is never one of the options.
+        rows.push({
+          label: opts.seats ? "Judges" : "Judge",
+          value: result.rosterFailed
+            ? "The judge list could not be loaded just now. The court above is " +
+              "still the right answer for this point — it comes from a file " +
+              "already in your browser."
+            : result.askedAbout
+              ? String(result.askedAbout)
+              : "Not named here. " + (opts.seats ? opts.seats + " " : "") +
+                "The Court of Justice names a judge for every other " +
+                opts.word.toLowerCase() + ", and not for this one, so this app " +
+                "names nobody rather than guessing."
+        });
+      } else if (opts.seats) {
+        rows.push({ label: "How the seats are filled", value: opts.seats });
+      }
+      rows.push({ label: "The court", value: opts.bench });
       if (result.authority != null) {
         rows.push({ label: "Drawn by", value: String(result.authority) });
+      }
+      if (judges.length && result.rosterReadOn) {
+        rows.push({
+          label: "Judges read",
+          value: String(result.rosterReadOn) +
+            ", from the Kentucky Court of Justice's own pages, which print the " +
+            "district or circuit each judge was elected from."
+        });
       }
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
@@ -12854,9 +12948,11 @@ function initKentuckyExplorer() {
       style: { color: "#5B3A8E", weight: 2, fillColor: "#7C5CB8", fillOpacity: 0.05 }
     },
     hoverName: kyCourtHover("Supreme Court District"),
-    query: kyCourtQuery(loadSupremeCourtDistricts),
+    query: kyCourtQuery(loadSupremeCourtDistricts, "supreme"),
     render: kyCourtCard({
       word: "Supreme Court District",
+      tier: "supreme",
+      court: "Supreme Court",
       seats: "One justice is elected from each district, for an eight-year term.",
       bench: "Kentucky's highest court. Seven justices, one from each of these districts."
     }),
@@ -12874,9 +12970,11 @@ function initKentuckyExplorer() {
       style: { color: "#2F5D8A", weight: 1.5, fillColor: "#4A80B5", fillOpacity: 0.05, dashArray: "4 3" }
     },
     hoverName: kyCourtHover("Court of Appeals District"),
-    query: kyCourtQuery(loadSupremeCourtDistricts),
+    query: kyCourtQuery(loadSupremeCourtDistricts, "appeals"),
     render: kyCourtCard({
       word: "Court of Appeals District",
+      tier: "appeals",
+      court: "Court of Appeals",
       seats: "Two judges are elected from each district.",
       bench: "Kentucky's intermediate appellate court. Fourteen judges, two " +
         "from each district, and its districts are the Supreme Court's by " +
@@ -12894,9 +12992,11 @@ function initKentuckyExplorer() {
       style: { color: "#8A5A2F", weight: 1.5, fillColor: "#B5834A", fillOpacity: 0.05 }
     },
     hoverName: kyCourtHover("Circuit"),
-    query: kyCourtQuery(loadCircuitCourts),
+    query: kyCourtQuery(loadCircuitCourts, "circuit"),
     render: kyCourtCard({
       word: "Judicial Circuit",
+      tier: "circuit",
+      court: "Circuit Court",
       // How many judges a given circuit elects is set elsewhere in KRS 23A and
       // was not measured here, so no number is claimed.
       bench: "Kentucky's trial court of general jurisdiction — felonies, " +
@@ -12914,9 +13014,11 @@ function initKentuckyExplorer() {
       style: { color: "#2F7A6A", weight: 1.5, fillColor: "#4AA893", fillOpacity: 0.05, dashArray: "3 3" }
     },
     hoverName: kyCourtHover("District"),
-    query: kyCourtQuery(loadDistrictCourts),
+    query: kyCourtQuery(loadDistrictCourts, "district"),
     render: kyCourtCard({
       word: "Judicial District",
+      tier: "district",
+      court: "District Court",
       bench: "Kentucky's limited-jurisdiction trial court — misdemeanours, " +
         "traffic, small claims, juvenile and probate."
     }),
