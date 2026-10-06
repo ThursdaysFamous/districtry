@@ -65,6 +65,19 @@ on got built (it did, and the batch was never needed), and one 15-county tranche
 WITHDRAWN unsent once a person began reading those sites by hand. Neither is the
 same as unanswered; keep the three apart in the ledger.
 
+**Never write "we cannot read your page" until the page's own feed has been
+read.** A page that arrives empty and fills in its members a moment later gets
+them from a feed whose address, parameters and visitor key are in the page
+itself. Find them in the HTML and scripts, fetch the feed that way with the
+scraper's own identity after the robots.txt read for that host, and compare with
+a browser. Open the PDFs and files the page links to as well, and render a
+scanned PDF with no text layer and read it as an image (Clark County, Illinois
+publishes its board contacts that way). Scott County (Illinois) and Lansing (Michigan) were both told their
+pages were unreadable on 2026-10-06, and both were readable. A key every visitor
+receives is page configuration; a sign-in or a managed challenge is never worked
+around. `docs/DATA_LAYER_GUIDEBOOK.md`, "A page that fills itself in is read
+through its own feed".
+
 ## 2. Pick the recipient by who owns the record
 
 In Iowa that is the county auditor, never a guessed treasurer@ or sheriff@.
