@@ -15160,7 +15160,7 @@ function initWisconsinExplorer() {
       fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
       fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
     ]).then(function (both) {
-      var councils = (both[1] && both[1].councils) || {};
+      var councils = both[1] || {};
       both[0].features.forEach(function (f) {
         var c = councils[f.properties.aiannh];
         if (!c) return;

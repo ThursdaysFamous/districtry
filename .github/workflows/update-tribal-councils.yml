@@ -78,9 +78,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add data/tribal-councils.json wi/data/app/tribal-councils.json \
-                  mi/data/app/tribal-councils.json \
-                  wi/data/app/tribal-areas.json mi/data/app/tribal-areas.json
+          git add data/tribal-councils.json wi/data/app/tribal-councils.json mi/data/app/tribal-councils.json wi/data/app/tribal-areas.json mi/data/app/tribal-areas.json
           git commit -m "Update tribal councils from each nation's own page"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

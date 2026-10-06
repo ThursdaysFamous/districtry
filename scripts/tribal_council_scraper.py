@@ -310,7 +310,15 @@ def _state_list(pdf_bytes, heading, count):
     """One nation's block of the Wisconsin Department of Administration's list:
     officer lines read "Name, Role", then "Council Members:" and a comma-run of
     names that wraps across lines."""
-    import pymupdf
+    # Only the weekly read of the state's PDF needs pymupdf, and
+    # update-tribal-councils.yml installs it; --selftest, which the smoke job
+    # runs, never reaches this line, so the import is declared optional rather
+    # than paid for by every pull request.
+    try:
+        import pymupdf
+    except ImportError:
+        raise RuntimeError("reading the state's list needs pymupdf: "
+                           "pip install -c scripts/requirements.txt pymupdf")
     doc = pymupdf.open(stream=pdf_bytes, filetype="pdf")
     text = "\n".join(p.get_text() for p in doc)
     m = re.search(r"Updated:\s*([A-Z][a-z]+ \d{1,2}, \d{4})", text)
