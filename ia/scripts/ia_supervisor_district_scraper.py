@@ -444,6 +444,123 @@ def rank_link(url, label):
             1 if urllib.parse.urlparse(url).query else 0)
 
 
+# ------------------------------------------------- the site's own index
+# WHY A SITEMAP AT ALL. Discovery reads the home page and takes the
+# best-ranked link whose href or label names a supervisor. Measured
+# 2026-10-01 across all 40 plan 3 counties, that finds a link in 29 of the
+# 32 whose home page this client can read -- and the three it misses do not
+# publish a worse page, they publish a NAV THIS CLIENT NEVER SEES. Washington
+# County's home page is 96,054 bytes and the string "supervisor" occurs in it
+# ZERO times, because its menu is built by script after the document loads,
+# while the page the menu points at -- /148/Board-of-Supervisors -- answers
+# 200 and names all five supervisors with their districts. So the county was
+# recorded as publishing no district while it was publishing exactly what this
+# file looks for.
+#
+# THE ROUTE IS THE HOST'S OWN DECLARATION, NOT A GUESS. RFC 9309 §2.2.3 puts a
+# `Sitemap:` field in robots.txt, and this file already reads every county's
+# robots.txt before its first fetch, so the address costs no extra request to
+# learn: Washington's declares `/sitemap.xml`, whose 181 urls contain exactly
+# one naming a supervisor, and it is the board's page. A county that declares
+# none gets the conventional /sitemap.xml tried once. NOTHING IS PINNED PER
+# COUNTY, which is the rule this file's discovery is built on -- a per-county
+# path would heal nothing when a site reorganises.
+#
+# AN INDEX IS THE COMMON SHAPE AND IS WHY THERE IS A SECOND LEVEL. Of the four
+# link-less counties measured that day, THREE declare a sitemap INDEX rather
+# than a list of pages (Cass, Ida and Kossuth; only Washington's is flat), and
+# an index names no page at all, so stopping at it would have won one county of
+# four. One level down, Kossuth's `wp-sitemap-posts-page-1.xml` holds 56 urls
+# of which exactly one names a supervisor -- /board-of-supervisors/ -- and
+# Cass's holds 63 with the same single hit. Both are the SECOND child of their
+# index.
+#
+# THE CHILD COUNT IS A BOUND AND IS STATED AS ONE. Kossuth's index names 21
+# children and its host states a 10-second crawl-delay that this file honours,
+# so reading every child costs that county over three minutes of waiting for a
+# page it may not hold. Four are read, best-ranked first, which reaches all
+# three measured counties' page lists; A COUNTY WHOSE PAGE LIST SITS DEEPER
+# THAN THAT IS NOT REACHED, and the skip reason will say the index was read
+# rather than that the county publishes nothing.
+#
+# RANKING THE CHILDREN IS WHAT MAKES THE BOUND MEAN SOMETHING. The partition
+# names are a convention rather than one vendor's: a sitemap is split into the
+# site's own pages and into ARCHIVES over them -- taxonomies, categories,
+# tags, authors, users, images. An archive holds term and attachment urls, not
+# the board's page, so those sort last. On Kossuth that moves ten taxonomy
+# children and a users child behind the ten `posts-*` ones; on Ida it puts
+# `sitemap-1.xml` ahead of `image-sitemap-1.xml`.
+SITEMAP_ARCHIVE_RE = re.compile(
+    r"taxonom|categor|\btags?\b|\busers?\b|\bauthors?\b|image|video", re.I)
+MAX_SITEMAP_CHILDREN = 4
+LOC_RE = re.compile(r"<loc>\s*([^<]+?)\s*</loc>", re.I)
+SITEMAP_INDEX_RE = re.compile(r"<sitemapindex", re.I)
+# The conventional address, tried only where the host declares none itself.
+DEFAULT_SITEMAP_PATH = "/sitemap.xml"
+
+
+def sitemap_slug(url):
+    """What a sitemap says a page is: its last path segment, hyphens opened out.
+
+    A SITEMAP CARRIES NO LABEL, which is the one key rank_link found decisive --
+    the label is what the county says a page IS, where the href is a path that
+    may merely sit under a section. There is no label here, so the slug is all
+    there is, and it is read with NOT_THE_ROSTER_RE rather than with rank_link,
+    so that finding is not quietly reinterpreted. It works unchanged on a slug
+    because a hyphen is not a word character: Ida's
+    `august-23rd-board-of-supervisors-meeting-canceled` matches `\\bmeetings?\\b`
+    exactly as a label reading "Board of Supervisors Meeting" would.
+    """
+    path = urllib.parse.urlsplit(url).path.rstrip("/")
+    return path.rsplit("/", 1)[-1].replace("-", " ").replace("_", " ")
+
+
+def rank_sitemap_child(url):
+    """Sort key for one child of a sitemap index. Lower is better."""
+    return 1 if SITEMAP_ARCHIVE_RE.search(url) else 0
+
+
+def rank_sitemap_page(url):
+    """Sort key for one page url out of a sitemap. Lower is better.
+
+    Ties keep the sitemap's own order, which is what document order was for the
+    home page's links.
+    """
+    return 1 if NOT_THE_ROSTER_RE.search(sitemap_slug(url)) else 0
+
+
+def sitemap_pages(home):
+    """Urls naming a supervisor, out of the site's own sitemap, best first.
+
+    Returns [] for a host that declares no sitemap and serves none, which is
+    every county whose home page already links its board.
+    """
+    verdict = _robots_verdict(home)
+    declared = list(verdict.policy.sitemaps) if verdict.policy else []
+    roots = [urllib.parse.urljoin(home, sm) for sm in declared[:1]]
+    if not roots:
+        roots = [urllib.parse.urljoin(home, DEFAULT_SITEMAP_PATH)]
+
+    found = []
+    for root in roots:
+        body = fetch(root)
+        if not body:
+            continue
+        locs = LOC_RE.findall(body)
+        if SITEMAP_INDEX_RE.search(body):
+            for child in sorted(locs, key=rank_sitemap_child)[:MAX_SITEMAP_CHILDREN]:
+                child_body = fetch(child)
+                if not child_body:
+                    continue
+                found += [u for u in LOC_RE.findall(child_body)
+                          if re.search(r"supervisor", u, re.I)]
+                if found:
+                    break
+        else:
+            found += [u for u in locs if re.search(r"supervisor", u, re.I)]
+    return sorted(found, key=rank_sitemap_page)
+
+
 def candidate_pages(home):
     """The county's own supervisors page: a link off the home page first, then
     the observed path shapes. Nothing is pinned per county, so a site that
@@ -451,6 +568,12 @@ def candidate_pages(home):
 
     ONE link is carried, as before -- the budget is three pages and the fallback
     paths need what is left. What changed is WHICH one: see rank_link.
+
+    A HOME PAGE THAT NAMES NO SUPERVISOR falls through to the site's own
+    sitemap before the observed paths, because a county whose nav is built by
+    script publishes nothing this client can see on the home page while
+    publishing the board's page normally. That route is still not a per-county
+    pin: the address comes from the host's own robots.txt. See sitemap_pages.
     """
     urls, body, links = [], fetch(home), []
     if body:
@@ -465,6 +588,13 @@ def candidate_pages(home):
         # which is what the old first-match rule was when nothing else separates
         # two links -- Winnebago labels two of its five "Board of Supervisors".
         urls.append(min(links, key=lambda pair: rank_link(*pair))[0])
+    else:
+        # ONLY WHERE THE HOME PAGE NAMES NO SUPERVISOR AT ALL, so this can never
+        # displace a county that is already keying from a link. See
+        # sitemap_pages: three of the four counties in that state on 2026-10-01
+        # publish their board's page and link it from a nav this client cannot
+        # see.
+        urls += sitemap_pages(home)
     urls += [urllib.parse.urljoin(home, p) for p in FALLBACK_PATHS]
     seen, out = set(), []
     for u in urls:
@@ -524,6 +654,32 @@ def serves_one_document(home):
             == hashlib.sha256(probe.encode("utf-8", "replace")).hexdigest())
 
 
+# A GENERATIONAL SUFFIX IS NOT A SURNAME, and reading it as one makes this
+# file state something false about a county. Measured 2026-10-01: Washington
+# County's roster carries "Jack Seward Jr.", whose last token is "Jr.", so the
+# surname search became `\bJr\.\b` -- a pattern that cannot match at all,
+# since the character after the full stop on the county's own page is a comma
+# and two non-word characters have no boundary between them. The county was
+# therefore skipped with "no district within 80 chars of Jr.", a sentence about
+# what the COUNTY publishes, while its page was naming Seward beside District 1
+# the whole time. The Mitchell shape again: a defect here wearing a reason
+# about them.
+#
+# A ROMAN NUMERAL IS THE SAME DEFECT WITH A DIFFERENT EXIT. "Ray Mullins II"
+# gives a two-character token, which the length guard below rejects as "no
+# usable surname" -- at least that reason names the roster rather than the
+# county, but it still loses the county. Three more Iowa rosters carry the
+# shape today (Cherokee, Clinton and Woodbury, none of them plan 3 yet), so
+# this is a name reader that was wrong for every board with a junior on it
+# rather than one county's exception.
+NAME_SUFFIX_RE = re.compile(r"[\s,]+(?:jr|sr|ii|iii|iv|v)\.?$", re.I)
+
+
+def surname_of(name):
+    """The name a page will print, with any generational suffix taken off."""
+    return NAME_SUFFIX_RE.sub("", name.strip()).split()[-1]
+
+
 def key_page(text, names):
     """Match each known supervisor to the nearest district number.
 
@@ -535,7 +691,7 @@ def key_page(text, names):
         return None, "the page names no district"
     keyed, widest = {}, 0
     for name in names:
-        surname = name.split()[-1]
+        surname = surname_of(name)
         if len(surname) < 3:
             return None, "supervisor %r has no usable surname" % name
         best = None
@@ -576,6 +732,76 @@ def _selftest():
         if not cond:
             failures.append(msg)
         print("  %s %s" % ("ok  " if cond else "FAIL", msg), file=sys.stderr)
+
+    # ---------------------------------------------- the name reader, offline
+    # A SUFFIX READ AS A SURNAME, and the witness is the OLD reading rather
+    # than only the new one: `\bJr\.\b` is a pattern that cannot match any
+    # text at all, so the assertion that it finds nothing in the county's own
+    # sentence is what shows the county was skipped by this file rather than
+    # by anything it published. See NAME_SUFFIX_RE.
+    for written, want in (("Jack Seward Jr.", "Seward"),
+                          ("Jack Seward, Jr.", "Seward"),
+                          ("Ray Mullins II", "Mullins"),
+                          ("Daniel Bittinger II", "Bittinger"),
+                          ("Jim Irwin Jr.", "Irwin"),
+                          ("Marcus Fedler", "Fedler"),
+                          ("Carl L. Vande Weerd", "Weerd")):
+        got = surname_of(written)
+        check(got == want,
+              "surname_of(%r) -> %r (the page prints this, not the suffix)"
+              % (written, got))
+
+    # Washington County's own board page, as strip_tags renders the five rows.
+    WASHINGTON_ROWS = (
+        "Jack Seward, Jr., Chair, District 1 - ISAC Certified - December 31, "
+        "2028 Bob Yoder, District 2 - December 31, 2028 Marcus Fedler, "
+        "Vice-Chair, District 3 - ISAC Certified - December 31, 2026 Stan "
+        "Stoops, District 4 - ISAC Certified - December 31, 2028 Richard "
+        "Young, District 5 - ISAC Certified - December 31, 2026")
+    old_surname = "Jack Seward Jr.".split()[-1]
+    check(not re.search(r"\b" + re.escape(old_surname) + r"\b",
+                        WASHINGTON_ROWS, re.I),
+          "the old reading searched for %r, which matches nowhere in the "
+          "county's own sentence -- the skip reason was about this file"
+          % old_surname)
+    result, why = key_page(WASHINGTON_ROWS,
+                           ["Jack Seward Jr.", "Bob Yoder", "Marcus Fedler",
+                            "Stan Stoops", "Richard Young"])
+    check(result is not None and result[0] == {
+              "Jack Seward Jr.": 1, "Bob Yoder": 2, "Marcus Fedler": 3,
+              "Stan Stoops": 4, "Richard Young": 5},
+          "and all five key off that one sentence (%s)"
+          % (why or "widest gap %d" % result[1]))
+
+    # ------------------------------------------- the site's own index, offline
+    # An index names no page, so its children are ranked and a bounded few
+    # read; the archive partitions hold term and attachment urls and sort last.
+    # These are Kossuth's own 21 children, abbreviated to one of each shape.
+    # BARE PATHS, NO HOST -- both rankings read the url as text and the slug
+    # reads its last segment, so neither needs one, and this file's fixtures
+    # must not spell a host out: probe_user_agents.py reads this file's TEXT
+    # for the hosts it fetches, and a fixture url written in full enters the
+    # fleet's user-agent artifact as a host that must carry a measurement. The
+    # robots fixtures below assemble theirs for the same reason.
+    children = ["/wp-sitemap-taxonomies-category-1.xml",
+                "/wp-sitemap-users-1.xml",
+                "/wp-sitemap-posts-post-1.xml",
+                "/image-sitemap-1.xml",
+                "/wp-sitemap-posts-page-1.xml"]
+    ordered = sorted(children, key=rank_sitemap_child)
+    check(ordered[:2] == ["/wp-sitemap-posts-post-1.xml",
+                          "/wp-sitemap-posts-page-1.xml"],
+          "a sitemap index reads its page partitions before its archives")
+
+    # A sitemap carries no label, so the slug is read with the same vocabulary
+    # a label would be: Ida's index names three news items and one map page
+    # beside no board page at all.
+    check(sitemap_slug("/148/Board-of-Supervisors") == "Board of Supervisors",
+          "a sitemap url's slug is what the county says the page is")
+    check(rank_sitemap_page("/board-of-supervisors/")
+          < rank_sitemap_page(
+              "/august-23rd-board-of-supervisors-meeting-canceled/"),
+          "and a meeting notice sorts behind the board's own page")
 
     calls = []
     real_get = requests.get
