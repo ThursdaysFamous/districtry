@@ -1564,11 +1564,15 @@ follows here is outside it. Same rule either way: the operator sends, and the
 
 ## Ask 14 — Jones County, Iowa: the GIS file behind a map the county already publishes
 
-> **NOT YET ASKED — DRAFTED 2026-09-04.** Not queued in Gmail; there is no existing thread
-> with this office, so it is a fresh message to the County Auditor. On send, change
-> `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `jones-county-supervisor` blocker in
-> `docs/DATA_LAYER_GUIDEBOOK.md` AND in the Jones row of `ia/WATCH.md` — Iowa keeps the
-> ledger in both, unlike Illinois.
+> **ASKED 2026-10-01** (sent 16:23:59 UTC to auditor@jonescountyiowa.gov, per
+> `/mnt/project-files/letters/sent-2026-10-01.md`). **ANSWERED 2026-10-05 WITH A FILE THAT IS
+> NOT THE PLAN IN FORCE**: GIS Coordinator Kristi Aitchison, via Auditor Whitney Hein, sent a
+> shapefile named `JonesCo_IA_BOS_2012`. Measured 2026-10-06 against the gate below, its five
+> districts sum the county's Census 2020 blocks to 3,945 / 4,388 / 3,988 / 4,105 / 4,220 where
+> the county's own adopted plan publishes 4,128 / 4,120 / 4,137 / 4,132 / 4,129 — a plan drawn
+> on 2020 blocks would match to the person, so this is an earlier plan and nothing ships from
+> it. The follow-up below is **NOT YET SENT — DRAFTED 2026-10-06**; the Letters thread puts it
+> in Adam's mailbox as a reply on the same thread, and Adam sends.
 
 **This is the narrowest ask in this file, and the only one whose answer is a file the office
 already has.** Jones County is the ONE Iowa county carrying no supervisor-district card at all:
@@ -1646,6 +1650,37 @@ office whose page publishes the district map).
   outcome; it retires a route rather than leaving it open forever.
 * **No reply** → follow up once at ~3 weeks and once at ~2 more, then `UNRESPONSIVE` — which is a
   claim about the ask, never about the county.
+
+### Follow-up, drafted 2026-10-06 — a reply on Ms Aitchison's own message
+
+**To:** Kristi Aitchison, at the address her 2026-10-05 message came from, copying the Auditor's
+office mailbox it was forwarded through. The Letters thread reads both addresses off that
+message; none is written here, because a guessed address on an outbound ask is worse than none.
+
+> **Subject:** Re: Jones County supervisor district boundaries — GIS file request
+>
+> Dear Ms Aitchison,
+>
+> Thank you for sending the supervisor district shapefile, and to Ms Hein for passing my
+> request along.
+>
+> Before using it I checked it against the population figures on the county's current
+> district map, the one adopted after the 2020 census. The file's districts come out
+> noticeably different from those figures (one district by about 270 people), and its name
+> includes 2012, so I think it may be the plan from the previous redistricting.
+>
+> Is there a version of the file for the current plan, the one shown on the county's
+> Board of Supervisors district map? If the current lines exist only on the printed map,
+> that is a useful answer too, and I will record it rather than ask again.
+>
+> With thanks,
+>
+> `<YOUR NAME>`
+> districtry.com
+
+**What each answer means.** A file → gate it against the five published populations again, and
+build only if it matches. "Only the printed map" → `ANSWERED`, and the record says the county's
+file route is closed. No reply → one follow-up at about three weeks.
 
 ---
 
@@ -5296,12 +5331,13 @@ difference between a gap we have measured and a gap we have merely noticed.
 
 ## Ask ia-tama-supervisor-map — Tama County Auditor: your county's current five-district map
 
-> **NOT YET ASKED — DRAFTED 2026-10-01**, to Tama County Auditor Karen Rohrs at the address
-> `ia/data/app/ia-county-auditors.json` carries for the county, which is the same address that
-> answered this project the same afternoon. One message. On send, change `NOT YET ASKED —
-> DRAFTED` to `ASKED <date>` in the `ia-tama-supervisor-map` blocker in
-> `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in both — and add
-> an `ask` block to that record reading `pending`.
+> **ASKED 2026-10-01** (sent 18:07:32 UTC as a reply on the existing thread, per
+> `/mnt/project-files/letters/sent-2026-10-01.md`) and **ANSWERED 2026-10-01 18:24 UTC**:
+> Auditor Rohrs attached the county's own five-district map, a vector PDF. Its measurement is
+> in the numbering row of `ia/WATCH.md`. Building it needs the county's current precinct list,
+> which is the follow-up at the end of this section, drafted 2026-10-06 and due about
+> 8 October. It is a separate letter on purpose: the thank-you told her nothing more was being
+> asked that day.
 >
 > **THIS IS A FOLLOW-UP TO AN ANSWER, NOT TO SILENCE.** Auditor Rohrs answered
 > `ia-pottawattamie-tama-wright-boards` within the hour, in plain text, naming five supervisors
@@ -5342,6 +5378,47 @@ what the lines are today.
 **Why a no is still useful.** If the county has no map of its own, saying so closes the
 question: it tells us the repair belongs with the state agency rather than with the county, and
 it lets the record that tells our readers what is missing say the county was asked.
+
+### Follow-up, drafted 2026-10-06 — the county's current precinct list (send about 8 October)
+
+**NOT YET SENT.** A reply on Auditor Rohrs's own thread, after the thank-you for the map. The
+Letters thread puts it in Adam's mailbox; Adam sends.
+
+**Why this question.** Her map gives five districts. To tell a reader at a given address which
+of them they live in, the lines have to be placed on the ground exactly. Two of the districts
+are drawn tightly around the cities of Tama and Toledo and cut through townships, so the
+township lines this project already has cannot place them. The precinct list this project
+holds is older than her plan and has a precinct (Buckingham/Perry) that her map puts in two
+districts, so the county has probably re-drawn precincts since. Her current list, with the
+district each precinct votes in, would settle most of the lines; where a district line runs
+through a city, a sentence saying which streets it follows would settle the rest.
+
+> **Subject:** Re: Tama County supervisor districts — one more question
+>
+> Dear Ms Rohrs,
+>
+> Thank you again for the district map. I have been working through it, and it shows the five
+> districts clearly.
+>
+> To place each address in the right district I need to know where the lines run on the
+> ground, and the precinct list I have is older than your current plan. Could you send the
+> county's current list of precincts, with the supervisor district each one votes in? A
+> list in an e-mail, a spreadsheet or a PDF would all be fine.
+>
+> If any precinct is split between two districts, a note saying where the line runs through
+> it, for example which streets it follows in Tama or Toledo, would be very helpful too.
+>
+> If this is more work than it is worth, please say so and I will not ask again.
+>
+> With thanks,
+>
+> `<YOUR NAME>`
+> districtry.com
+
+**What each answer means.** A precinct list → compose the districts from it and check each
+against the map's own district shapes before anything ships. A split described in words →
+resolve it to whole census blocks, as was done for Jackson County, Illinois. No reply → nothing
+changes; the Tama card keeps naming the county and no supervisors.
 
 ---
 
