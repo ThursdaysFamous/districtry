@@ -2239,7 +2239,7 @@ unaffected sources; the three district files are not in the tree.
 
 ## Ask 20 — six Wisconsin county clerks: the city wards your filing leaves without a district
 
-> **ASKED 2026-10-01 — ALL SIX SENT, FOUR ANSWERED THE SAME DAY.** Six separate notes, one per
+> **ASKED 2026-10-01 — ALL SIX SENT, FIVE ANSWERED THE SAME DAY.** Six separate notes, one per
 > county clerk. Four ask the same question about a different city; two ask a different question.
 > They are not a batch: each note names one county's own filing, and one that named the wrong
 > city or the wrong ward would be worse than not writing.
@@ -2284,7 +2284,16 @@ unaffected sources; the three district files are not in the tree.
 > down and not yet built, because it is the same county-coded-wards-plus-a-clerk's-sentence shape
 > that wants its own gate and an operator rebuild.
 >
-> Pepin and Lafayette have not replied. Follow up once at about 2026-10-21.
+> **LAFAYETTE ANSWERED AND COMPLETED CUBA CITY, AND THE CITY CONFIRMED IT.** Clerk Carla
+> Jacobson wrote that City of Cuba City ward 5, the one ward her county files with no district
+> code, is in Aldermanic District 3, and City Clerk-Treasurer Jill Hill confirmed the same that
+> evening (replies 19:12 and 19:49 UTC, read off the Letters thread's ledger in
+> `/mnt/project-files/letters/sent-2026-10-01.md`). The county files the city's other four wards
+> 01-04, so ward 5 joining 03 completes a four-district plan with nothing left over. Like New
+> London and Port Washington it is written down and not yet built, waiting on the same gate. No
+> reply is owed; a thank-you note is optional and the Letters thread drafts it.
+>
+> Pepin has not replied. Follow up once at about 2026-10-21.
 
 **What this is about.** Wisconsin's aldermanic districts are drawn as groups of wards, and
 the ward file the Legislative Technology Services Bureau publishes is the only statewide
