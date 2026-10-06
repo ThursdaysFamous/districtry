@@ -459,6 +459,7 @@
   "sourceUrl": "https://www.germantownwi.gov/299/Village-Board"
  },
  "31000": {
+  "carriedFrom": "2026-10-01",
   "districts": 12,
   "members": {
    "01": [
@@ -2149,6 +2150,91 @@
   "seats": 15,
   "sourceUrl": "https://www.waukesha-wi.gov/about_the_common_council/index.php"
  },
+ "84475": {
+  "districts": 11,
+  "members": {
+   "01": [
+    {
+     "email": "Carol.Lukens@wausauwi.gov",
+     "name": "Carol Lukens",
+     "phone": "715-261-6831"
+    }
+   ],
+   "02": [
+    {
+     "email": "Michael.Martens@wausauwi.gov",
+     "name": "Michael Martens",
+     "phone": "715-845-4218"
+    }
+   ],
+   "03": [
+    {
+     "email": "Terry.Kilian@wausauwi.gov",
+     "name": "Terry Kilian",
+     "phone": "715-574-3777"
+    }
+   ],
+   "04": [
+    {
+     "email": "Tom.Neal@wausauwi.gov",
+     "name": "Tom Neal",
+     "phone": "715-261-6837"
+    }
+   ],
+   "05": [
+    {
+     "email": "Andrew.Wiskowski@wausauwi.gov",
+     "name": "Andrew Wiskowski",
+     "phone": "715-261-6839"
+    }
+   ],
+   "06": [
+    {
+     "email": "Kristin.Slonski@wausauwi.gov",
+     "name": "Kristin Slonski",
+     "phone": "715-261-6838"
+    }
+   ],
+   "07": [
+    {
+     "email": "Matt.Hoenecke@wausauwi.gov",
+     "name": "Matt Hoenecke",
+     "phone": "715-544-8961"
+    }
+   ],
+   "08": [
+    {
+     "email": "Sarah.Watson@wausauwi.gov",
+     "name": "Sarah Watson",
+     "phone": "715-261-6833"
+    }
+   ],
+   "09": [
+    {
+     "email": "Victoria.Tierney@wausauwi.gov",
+     "name": "Vicki Tierney",
+     "phone": "715-261-6834"
+    }
+   ],
+   "10": [
+    {
+     "email": "Lou.Larson@wausauwi.gov",
+     "name": "Lou Larson",
+     "phone": "715-574-7099"
+    }
+   ],
+   "11": [
+    {
+     "email": "Bruce.Trueblood@wausauwi.gov",
+     "name": "Bruce Trueblood",
+     "phone": "715-261-6841"
+    }
+   ]
+  },
+  "municipality": "Wausau",
+  "seats": 11,
+  "sourceUrl": "https://www.wausauwi.gov/your-government/city-council/alderpersons"
+ },
  "84625": {
   "districts": 3,
   "members": {
@@ -2186,6 +2272,96 @@
   "municipality": "Wautoma",
   "seats": 6,
   "sourceUrl": "http://www.cityofwautoma.com/common-council"
+ },
+ "84675": {
+  "districts": 12,
+  "members": {
+   "01": [
+    {
+     "name": "Brad Foley",
+     "phone": "(414) 477-9132",
+     "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/63/221"
+    }
+   ],
+   "02": [
+    {
+     "name": "Derek Collins",
+     "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/530/221"
+    }
+   ],
+   "03": [
+    {
+     "name": "Ernst (Ernie) Franzen",
+     "phone": "(414) 510-5575",
+     "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/60/221"
+    }
+   ],
+   "04": [
+    {
+     "name": "Amanda Saso",
+     "phone": "(414) 312-1159",
+     "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/532/221"
+    }
+   ],
+   "05": [
+    {
+     "name": "Rob Gustafson",
+     "phone": "(414) 522-1238",
+     "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/57/221"
+    }
+   ],
+   "06": [
+    {
+     "name": "John Myers",
+     "phone": "(414) 436-4672",
+     "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/806/221"
+    }
+   ],
+   "07": [
+    {
+     "name": "Joe Phillips",
+     "phone": "(414) 215-9191",
+     "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/55/221"
+    }
+   ],
+   "08": [
+    {
+     "name": "Michael Indy Stluka",
+     "phone": "(414) 295-9922",
+     "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/534/221"
+    }
+   ],
+   "09": [
+    {
+     "name": "Robin Brannin",
+     "phone": "(262) 853-2680",
+     "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/422/221"
+    }
+   ],
+   "10": [
+    {
+     "name": "Amanda Fuerst",
+     "phone": "(262) 372-1060",
+     "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/53/221"
+    }
+   ],
+   "11": [
+    {
+     "name": "Melissa Dolan",
+     "phone": "(414) 704-5610",
+     "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/51/221"
+    }
+   ],
+   "12": [
+    {
+     "name": "Scott Small",
+     "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/536/221"
+    }
+   ]
+  },
+  "municipality": "Wauwatosa",
+  "seats": 12,
+  "sourceUrl": "https://www.wauwatosa.net/government/common-council/contact-the-common-council"
  },
  "85350": {
   "districts": 8,

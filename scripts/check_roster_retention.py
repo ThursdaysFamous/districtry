@@ -139,6 +139,103 @@ MIN_FILES_COMPARED = 40
 # watching, which is exactly what it exists to prevent.
 # ---------------------------------------------------------------------------
 ACCEPTED_DROPS = {
+    # WITHHELD ON PURPOSE, 2026-10-01, on the operator's own decision. These 19
+    # counties left ia-supervisor-members.json because the thing that put them
+    # there was never checked: this file joins a person to a district by NUMBER,
+    # and a county's own district number turned out not to be the number the
+    # Legislative Services Agency's statewide layer uses. Measured that day on
+    # four counties, THREE DISAGREED -- Butler and Pocahontas were live on the
+    # site naming supervisors in the wrong districts, and Palo Alto's own
+    # auditor confirmed her map current when asked, which ruled out the
+    # stale-document explanation. Howard agreed.
+    #
+    # SO THE DROP IS THE CORRECTION AND NOT THE DEFECT. A county is keyed now
+    # only where its numbering has been measured against the layer
+    # (NUMBERING_CHECKED in ia/scripts/build_ia_supervisor_roster.py, which
+    # carries the county's number -> the layer's with its date and witness).
+    # Every county below keeps its supervisors on the County card, unkeyed,
+    # which is true whichever way the numbering runs.
+    #
+    # EACH ENTRY RETIRES BY BEING MEASURED, one county at a time, and the audit
+    # is what makes that happen: an entry whose county is back in the file FAILS
+    # as stale, so clearing a county's numbering deletes its entry in the same
+    # change. This list shrinking is the work finishing.
+    "ia/data/app/ia-supervisor-members.json:003":
+        "Adams withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (5 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:017":
+        "Bremer withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (3 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:023":
+        "Butler withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (3 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:033":
+        "Cerro Gordo withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (3 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:037":
+        "Chickasaw withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (5 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:069":
+        "Franklin withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (3 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:075":
+        "Grundy withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (5 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:079":
+        "Hamilton withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (3 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:113":
+        "Linn withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (3 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:119":
+        "Lyon withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (5 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:121":
+        "Madison withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (3 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:131":
+        "Mitchell withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (5 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:133":
+        "Monona withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (3 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:153":
+        "Polk withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (5 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:161":
+        "Sac withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (3 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:173":
+        "Taylor withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (3 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:187":
+        "Webster withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (5 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:189":
+        "Winnebago withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (3 district(s) at the base); its "
+        "supervisors still appear on the County card",
+    "ia/data/app/ia-supervisor-members.json:191":
+        "Winneshiek withheld 2026-10-01 -- its own district numbering has not been "
+        "measured against this layer's (5 district(s) at the base); its "
+        "supervisors still appear on the County card",
     # MOVED, NOT DROPPED, 2026-09-24. These four Michigan counties left
     # mi-commissioner-returns.json because they arrived in
     # mi-commissioner-members.json, which is a BETTER source for the same
@@ -664,7 +761,21 @@ def excused_group_drops(name, old_groups, new_groups):
     for label, old_sub in old_groups.items():
         new_sub = new_groups.get(label)
         if new_sub is None:
-            continue                      # a whole source leaving is its own finding
+            # A WHOLE SOURCE LEAVING IS ITS OWN FINDING, and once that finding
+            # is ACCEPTED its records must not be charged to the file-wide field
+            # pass as well -- the same "one event at both grains" rule the rest
+            # of this function exists for, one level out. Measured on
+            # 2026-10-01, when Iowa withheld 19 counties in one change: all 19
+            # vanish findings were accepted by their own `<file>:<group>` keys
+            # and `name` and `party` then failed file-wide on exactly those
+            # records. Without the group key the drop is NOT excused, so an
+            # unexplained source disappearing still takes its fields with it.
+            if ACCEPTED_DROPS.get("%s:%s" % (name, label)):
+                sub_old, sub_old_recs = coverage(old_sub)
+                if sub_old_recs >= MIN_GROUP_RECORDS:
+                    for field, was in sub_old.items():
+                        excused[(label, field)] = was
+            continue
         sub_old, sub_old_recs = coverage(old_sub)
         sub_new, _ = coverage(new_sub)
         if sub_old_recs < MIN_GROUP_RECORDS:
@@ -684,18 +795,42 @@ def compare(name, old, new):
     old_counts, old_recs = coverage(old)
     new_counts, new_recs = coverage(new)
 
-    if old_recs >= MIN_ABSOLUTE_DROP and new_recs < old_recs * RECORD_COLLAPSE_RATIO:
-        out.append(("FAIL", "record count fell %d -> %d (more than half). The "
-                            "builder's own count guard should have caught this — "
-                            "check that it ran." % (old_recs, new_recs)))
-
-    # Grouped FIRST, because the file-wide pass has to know what the per-source
-    # pass already excuses — see excused_group_drops.
+    # Grouped FIRST, because BOTH file-wide passes have to know what the
+    # per-source pass already excuses — see excused_group_drops.
     old_groups, new_groups = groups_of(old, name), groups_of(new, name)
     excused = excused_group_drops(name, old_groups, new_groups)
     excused_recs = {}
     for (_, field), n in excused.items():
         excused_recs[field] = excused_recs.get(field, 0) + n
+
+    # THE RECORD COUNT READS THE REDUCED NUMBER TOO, which is the "one entry
+    # covers one event at both grains" rule the fields already follow. A mass
+    # withholding is accepted ONE SOURCE AT A TIME, each with its own reason and
+    # date, and a file whose every departed source is accepted that way must not
+    # then fail again on the sum of them -- the only key that pass offers is the
+    # file itself, which would stop watching the record count for good.
+    # Measured on 2026-10-01, when Iowa withheld 19 counties' supervisor keying
+    # in one change because their district numbering had never been checked: 19
+    # accepted entries, and a twentieth finding with nothing to attach to.
+    # AN UNEXPLAINED HALVING STILL FAILS, because a source nobody accepted
+    # contributes its records to this number exactly as before.
+    gone_recs = 0
+    for label, old_sub in sorted(old_groups.items()):
+        if label in new_groups:
+            continue
+        if not ACCEPTED_DROPS.get("%s:%s" % (name, label)):
+            continue
+        _, lost = coverage(old_sub)
+        gone_recs += lost
+    if old_recs >= MIN_ABSOLUTE_DROP \
+            and (new_recs + gone_recs) < old_recs * RECORD_COLLAPSE_RATIO:
+        out.append(("FAIL", "record count fell %d -> %d (more than half%s). The "
+                            "builder's own count guard should have caught this — "
+                            "check that it ran."
+                    % (old_recs, new_recs,
+                       "" if not gone_recs else
+                       ", and %d record(s) of that are in accepted source drops"
+                       % gone_recs)))
 
     for field, was in sorted(old_counts.items()):
         now = new_counts.get(field, 0)

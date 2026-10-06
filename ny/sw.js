@@ -86,6 +86,7 @@ const ROSTER_URLS = [
   "./data/app/cec-members.json",
   "./data/app/borough-officials.json",
   "./data/app/tompkins-legislature-members.json",
+  "./data/app/ny-supervisor-members.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

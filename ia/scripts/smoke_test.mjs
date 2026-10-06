@@ -654,6 +654,73 @@ try {
   }
 
 
+  // 2a6. WHOSE NUMBERING HAS BEEN CHECKED, AND WHOSE HAS NOT.
+  //      This instance joins a supervisor to a district by NUMBER, and on
+  //      2026-10-01 that number turned out not to be the same number: the
+  //      Legislative Services Agency's statewide layer orders each county's
+  //      districts its own way, and of the first four counties measured THREE
+  //      disagreed with their own county's page. Butler and Pocahontas were
+  //      live naming supervisors in the wrong districts. So a county's board is
+  //      keyed only where somebody has measured the pairing
+  //      (NUMBERING_CHECKED in ia/scripts/build_ia_supervisor_roster.py), and
+  //      every other county keeps its supervisors on the County card, unkeyed.
+  //
+  //      POCAHONTAS IS THE ROW THAT MATTERS, because its map is a real
+  //      permutation rather than the identity: the county's District 5 is this
+  //      layer's district 4. A point in Fonda is in this layer's district 4 and
+  //      must name Louis Stauter, whom the county calls its District 5
+  //      supervisor -- and must NOT name Brent Aden, who is the county's
+  //      District 4 and is exactly who a regression dropping the remap would
+  //      print. Both branches are asserted, because a card naming a real
+  //      supervisor of the right county reads perfectly either way.
+  //
+  //      HOWARD IS THE IDENTITY CASE and Washington is the withheld one. A
+  //      county whose numbering is unchecked must name NOBODY here: its card
+  //      answers the district and leaves the person to the County card. That
+  //      is the half that keeps the first two honest -- a regression that
+  //      simply keyed every county again would pass the Pocahontas row only by
+  //      accident and would fail this one outright.
+  //
+  //      Every point is a published place centroid and every layer answers
+  //      from committed files, so none of this needs a government server.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    for (const [lat, lng, county, want, absent, why] of [
+      [42.5816991, -94.8455189, "Pocahontas County", "Louis Stauter",
+       "Brent Aden",
+       "Pocahontas district 4 names the county's District 5 supervisor"],
+      [42.847502, -94.8479386, "Pocahontas County", "Clarence J. Siepker",
+       "Peter Seehusen",
+       "Pocahontas district 1 names the county's District 2 supervisor"],
+      [43.3717458, -92.1162868, "Howard County", "Pat Murray", null,
+       "Howard, whose own numbering matches this layer's"],
+      // THE WITHHELD BRANCH. Washington County's numbering has not been
+      // measured, so its district card names nobody at all -- not its chair,
+      // not anyone. Its supervisors are still on the County card.
+      [41.3294124, -91.7250385, "Washington County", "District",
+       "Jack Seward Jr.",
+       "Washington, unchecked, names nobody on a district card"]
+    ]) {
+      const page = await booted(context,
+        `${BASE}#point=${lat},${lng}&layers=county-supervisor`);
+      const info = await cardText(page, "county-supervisor");
+      if (info.error || !info.text.includes(county)) {
+        console.log(`  SKIP  supervisor district, ${why} — card did not name ${county}`);
+        await page.close();
+        continue;
+      }
+      check(`supervisor district, ${why}`,
+        info.text.includes(want), info.text.slice(0, 200));
+      if (absent) {
+        check(`supervisor district, ${why} — the other county's number`,
+          !info.text.includes(absent), info.text.slice(0, 200));
+      }
+      await page.close();
+    }
+    await context.close();
+  }
+
+
   // 2b. The negative ground-truth point (from the worksheet: a point outside
   //     every anchor layer). Anchors that declare a location-relevance test
   //     (mod.coverage — see NEGATIVE_HIDDEN above) HIDE there: the toggle

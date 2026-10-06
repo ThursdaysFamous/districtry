@@ -726,6 +726,51 @@ try {
     await context.close();
   }
 
+  // ---- 8b. A CITY'S OWN DISTRICT NUMBER, AND ONLY WHERE A CITY HAS STATED IT ----
+  // The state's ward filing keys three cities' districts somewhere other than 1
+  // upward — Waupaca 41-45, Manawa 11-13, Weyauwega 51-53 — and the card printed
+  // the filed number, so a reader in Waupaca was told they live in Aldermanic
+  // District 41 when their council calls it District 1. index.html's
+  // ALDER_DISTRICT_LABELS renames those three and leaves ALDERID alone, which is
+  // a label change no static gate can see: validate_index.py holds the table to
+  // the shipped filing in both directions, and what a reader is actually told is
+  // assembled in the browser from that table plus the feature under the point.
+  //
+  // THE CONTROL IS THE SECOND HALF AND IS WHAT MAKES THE FIRST MEAN ANYTHING.
+  // Marion is in the same position and was NOT read — its site asks automated
+  // clients to stay out — so its districts must still print as filed. A relabel
+  // that quietly spread to every city would pass the Waupaca half alone.
+  //
+  // Both points are interior points of the shipped polygons, each confirmed to
+  // lie inside exactly one district of the whole layer (2026-10-01). Neither
+  // city publishes a roster, so both cards are identity-only and the assertion
+  // is the district identifier itself.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context, `${BASE}#point=44.34511,-89.13521&layers=aldermanic-district`);
+    // THE PILL HANGS ON THE .layer-block, NOT INSIDE THE CARD, which is why
+    // this reads cardText's own text: it prepends the pill exactly as a reader
+    // sees it, and a $eval scoped to #card-... returns an empty string.
+    const waupaca = (await cardText(page, "aldermanic-district")).text;
+    const pill = waupaca;
+    const relabelled = /Aldermanic District 1\b/.test(pill) &&
+                       pill.indexOf("41") === -1 &&
+                       /Waupaca/.test(pill);
+    await context.close();
+
+    const context2 = await browser.newContext({ serviceWorkers: "block" });
+    const page2 = await booted(
+      context2, `${BASE}#point=44.67229,-88.88770&layers=aldermanic-district`);
+    const pill2 = (await cardText(page2, "aldermanic-district")).text;
+    const asFiled = /Aldermanic District 21\b/.test(pill2) && /Marion/.test(pill2);
+    await context2.close();
+
+    check("a city's own district number is printed where the city stated it, and the filed number where it did not",
+          relabelled && asFiled,
+          `waupaca=${JSON.stringify(pill.slice(0, 60))} marion=${JSON.stringify(pill2.slice(0, 60))}`);
+  }
+
   // ---- 9. A DISTRICT THAT IS A SEAT SHORT SAYS SO ----
   // Oconomowoc seats two alderpersons per district, names seven people and its
   // own directory prints `Vacanct` for District 1's other seat, so the roster
