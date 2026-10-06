@@ -49,5 +49,56 @@
     "county": "Racine",
     "name": "Caledonia",
     "sourceUrl": "https://www.caledonia-wi.gov/board"
+  },
+  "5537825": {
+    "asOf": "2026-10-01",
+    "atLarge": true,
+    "board": [
+      {
+        "email": "squirel@janesvillewi.gov",
+        "name": "Larry Squire",
+        "phone": "(608) 373-6012",
+        "role": "Council President"
+      },
+      {
+        "email": "cassm@janesvillewi.gov",
+        "name": "Michael Cass",
+        "phone": "(608) 373-6015",
+        "role": "Council Vice President"
+      },
+      {
+        "email": "erdmanj@janesvillewi.gov",
+        "name": "Joshua Erdman",
+        "phone": "(608) 373-6017",
+        "role": "Councilmember"
+      },
+      {
+        "email": "millerh@ci.janesville.wi.us",
+        "name": "Heather Miller",
+        "phone": "(608) 373-6013",
+        "role": "Councilmember"
+      },
+      {
+        "email": "neenor@ci.janesville.wi.us",
+        "name": "Richard Neeno",
+        "phone": "(608) 373-6016",
+        "role": "Councilmember"
+      },
+      {
+        "email": "popec@janesvillewi.gov",
+        "name": "Cassandra Pope",
+        "phone": "(608) 373-6011",
+        "role": "Councilmember"
+      },
+      {
+        "email": "seemans@janesvillewi.gov",
+        "name": "Shane Seeman",
+        "phone": "(608) 373-6014",
+        "role": "Councilmember"
+      }
+    ],
+    "county": "Rock",
+    "name": "Janesville",
+    "sourceUrl": "https://www.janesvillewi.gov/government/city-council/contact-the-city-council"
   }
 }

@@ -1,0 +1,103 @@
+name: Update New York county supervisor rosters
+
+# Weekly refresh of ny/data/app/ny-supervisor-members.json from each county's
+# own board of supervisors page. Opens a PR, never commits to main.
+#
+# THE `ny-` PREFIX IS LOAD-BEARING. GitHub Actions reads workflows only from the
+# repository ROOT's .github/workflows, so this file has to live here to run at
+# all — and at the root it shares a namespace with every other instance. Every
+# path below is instance-scoped for the same reason, and the bot branch is
+# `bot/ny-…` so it cannot clash with another instance's PR branch.
+#
+# WHAT THIS RUN CHECKS BESIDES THE NAMES. The builder refuses to write a county
+# whose seat count does not match the number its own page states, and refuses
+# one where any town or city of the county is unseated. Both are gates rather
+# than warnings: a board with a town missing from it reads to a reader as a
+# board one seat smaller than it is.
+
+on:
+  schedule:
+    - cron: "0 14 * * 5" # Friday 14:00 UTC, an hour after the Tompkins job
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI: a PR opened with the default GITHUB_TOKEN fires no workflows, which
+      # left every bot PR with zero checks. Falls back to github.token when the
+      # secret is absent, so the refresh still runs — it just goes back to
+      # opening unchecked PRs.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because the PR step regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit; under a depth-1 checkout every entry takes today's date.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+      - name: Scrape each county's board of supervisors page
+        run: python3 ny/scripts/ny_supervisor_scraper.py --out /tmp/ny-supervisors.json
+      - name: Rebuild roster
+        run: python3 ny/scripts/build_ny_supervisor_roster.py --in /tmp/ny-supervisors.json
+      - name: Validate app + data files
+        run: python3 ny/scripts/validate_index.py ny/index.html
+      # The absolute gate on every shipped officeholder name, run here as well
+      # as in the smoke job: this is the run that WRITES the names, so catching
+      # a non-name here costs one red job instead of one reviewed PR.
+      - name: Validate officeholder names
+        run: python3 scripts/validate_officeholder_names.py
+      - name: Check for changes
+        id: diff
+        run: git diff --quiet -- ny/data/app/ && echo "changed=false" >> "$GITHUB_OUTPUT" || echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/ny-supervisor-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip rather than from the checkout
+          # this run started with: these runs take minutes, and a branch that
+          # also differs from main in .github/workflows/ reads to GitHub as the
+          # push updating a workflow and is refused for a token without
+          # `workflow` scope. Full history, for the same reason as fetch-depth: 0
+          # above — `git fetch --depth=1` RE-SHALLOWS a complete clone.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 ny/scripts/build_ny_supervisor_roster.py --in /tmp/ny-supervisors.json
+          # THE PER-COUNTY PAGES ARE WHERE THESE NAMES REACH A CRAWLER, so they
+          # are regenerated in the same run that rewrites them and staged with
+          # them. build_county_pages.py FAILS a workflow that rewrites a roster
+          # its adapters read and does not do this, because the alternative is a
+          # bot PR shipping a page that names the members it just replaced — and
+          # that failure would land on the bot's own PR rather than here.
+          python3 scripts/build_county_pages.py
+          # docs/EAM_STATUS.md counts the counties this roster answers for, so a
+          # county entering or leaving it moves the report and the smoke gate's
+          # `build_eam_status.py --check` would fail on this PR.
+          python3 scripts/build_eam_status.py
+          # about.html reads every roster the fleet's own table generator knows,
+          # and the sitemap and llms.txt follow any page set this run changes.
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          python3 scripts/build_llms_txt.py
+          git add ny/data/app/ny-supervisor-members.json ny/county-supervisor ny/county-supervisor.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
+          git commit -m "Update New York county supervisor rosters from the counties' own pages"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create --title "Update New York county supervisor rosters" \
+              --body "Automated weekly refresh of the New York counties governed by a board of supervisors (\`ny/scripts/ny_supervisor_scraper.py\` + \`build_ny_supervisor_roster.py\`). No geometry is touched: the county board seat is the town or city, so the shapes are the state's own cities-and-towns map the app already draws. People come from each county's own board page, joined to the town or city they are the supervisor of. The builder refuses to write a county whose seat count disagrees with the count its own page states, or one where any town or city is unseated. Review before merging." \
+              --base main --head "$branch"
+          fi

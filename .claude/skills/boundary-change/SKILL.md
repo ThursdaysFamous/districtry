@@ -55,7 +55,7 @@ mapshaper ran).
 ## 3. Acquire in this order, and never trace (runbook 3–4)
 
 The enacting body's own shapefile or service → the portal's new dataset id →
-the TIGER/Line vintage. `CLAUDE.md` carries the catalogue-then-org order for
+the TIGER/Line vintage. `docs/IL_COUNTY_RECORD.md` (Vermilion, Douglas) carries the catalogue-then-org order for
 finding a publisher's service. Never scrape or trace a rendered map; the
 county builders enforce the same.
 

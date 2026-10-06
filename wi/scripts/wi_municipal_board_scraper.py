@@ -128,7 +128,8 @@ import urllib.request
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 "..", "..", "scripts"))
-from scraper_common import UA_ROSTER_BOT, require_robots_once  # noqa: E402
+from scraper_common import (UA_CHROME_WIN_126, UA_HINTS_CHROME_126,  # noqa: E402
+                            UA_ROSTER_BOT, require_robots_once)
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 CACHE_DIR = os.path.join(SCRIPT_DIR, ".cache")
@@ -139,20 +140,55 @@ UA = {"User-Agent": UA_ROSTER_BOT}
 CALEDONIA_BOARD = "https://www.caledonia-wi.gov/board"
 CALEDONIA_FEED_HOST = "https://www.caledonia-wi.gov/"
 OSHKOSH_COUNCIL = "https://www.ci.oshkosh.wi.us/CityCouncil/"
+JANESVILLE_CONTACT = ("https://www.janesvillewi.gov/government/city-council"
+                      "/contact-the-city-council")
+JANESVILLE_MEMBERS = ("https://www.janesvillewi.gov/government/city-council"
+                      "/city-councilmembers")
+
+# JANESVILLE'S EDGE REFUSES THE TOKEN AND IT REFUSES IT ON ROBOTS.TXT FIRST,
+# which is what licenses a browser string here and is measured rather than
+# assumed (2026-10-01, this file's own stdlib client, the rung it crawls on):
+#   www.janesvillewi.gov/robots.txt  token  HTTP 403
+#   www.janesvillewi.gov/robots.txt  below  HTTP 200, 6641 bytes
+# The token was asked FIRST and refused, so nothing here escalates past a host
+# that was serving us — the rule this project states in both directions.
+# THE POLICY IS NOT JANESVILLE'S OWN CHOICE AND MUST NEVER BE CITED AS ONE.
+# Those 6,641 bytes are BYTE-IDENTICAL to www.kendallcountyil.gov's, md5
+# 16e66653dfbe3d2bee5636483dea61df, re-fetched side by side the same minute:
+# 226 Disallow rules aimed at one CMS platform's own admin and asset paths. It
+# is published at the city's own host so it binds fully, and it permits the two
+# pages below. www.joliet.gov, which CLAUDE.md records serving the same bytes,
+# answered 404 to the same client on 2026-10-01 — no policy, allow all — so
+# that record was right when written and one of its three hosts has moved.
+UA_AKAMAI = dict(UA, **{
+    "User-Agent": UA_CHROME_WIN_126,
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "identity",
+    "Connection": "close",
+})
+UA_AKAMAI.update({k: v for k, v in UA_HINTS_CHROME_126.items()
+                  if k.lower().startswith("sec-ch-ua")})
 
 
-def fetch(url, tries=3, timeout=60):
+def fetch(url, tries=3, timeout=60, headers=None):
     """Read the host's robots.txt before the first fetch of it, then fetch.
 
-    The seam is asked with UA — the SAME client this function then crawls as —
-    because which client crawls decides which robots group binds. A refusal or an
-    unreadable policy raises, and `attempt()` turns that into ONE city's recorded
-    failure rather than the run's: a robots verdict is always a fact about one
-    host and never a pinned reading that has stopped being true, which is the
-    line the sibling scraper already draws between the two.
+    The seam is asked with the SAME header set this function then crawls with,
+    because which client crawls decides which robots group binds — so `headers`
+    governs both calls or neither, and a caller cannot read a policy as one
+    client and fetch as another. That is a consistency rule and not a licence to
+    reach for the richer client: the default is this project's own token, and
+    `UA_AKAMAI` is passed by the one city whose edge was measured refusing the
+    token on robots.txt itself. A refusal or an unreadable policy raises, and
+    `attempt()` turns that into ONE city's recorded failure rather than the
+    run's: a robots verdict is always a fact about one host and never a pinned
+    reading that has stopped being true, which is the line the sibling scraper
+    already draws between the two.
     """
+    headers = headers or UA
     try:
-        require_robots_once(url, UA["User-Agent"], headers=UA,
+        require_robots_once(url, headers["User-Agent"], headers=headers,
                             label="wi_municipal_board_scraper")
     except SystemExit:
         raise RuntimeError(
@@ -162,7 +198,7 @@ def fetch(url, tries=3, timeout=60):
     last = None
     for _ in range(tries):
         try:
-            req = urllib.request.Request(url, headers=UA)
+            req = urllib.request.Request(url, headers=headers)
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 return r.read().decode("utf-8", "replace")
         except Exception as exc:          # noqa: BLE001 — retried, then reported
@@ -275,7 +311,129 @@ def scrape_oshkosh():
             "atLarge": True, "board": members, "sourceUrl": OSHKOSH_COUNCIL}
 
 
-CITIES = (("Caledonia", scrape_caledonia), ("Oshkosh", scrape_oshkosh))
+def scrape_janesville():
+    """Janesville's seven, from the city's own contact table.
+
+    TWO PAGES, AND THE SECOND ONE IS A WITNESS RATHER THAN A SOURCE. The contact
+    table carries everything a card needs — name, role, city phone, e-mail and
+    term — and the councilmembers page carries the biographies and the same seven
+    names. Both are read and the names must agree, because a table is the easiest
+    surface on a city site to leave a departed member in.
+
+    THE AT-LARGE GATE IS THE CITY'S OWN SENTENCE, as at Caledonia and Oshkosh,
+    and both pages state it: "Councilmembers are elected at large, thus
+    representing residents in the whole city" on the contact page, and "seven
+    members who are elected on a nonpartisan basis and represent the city as a
+    whole" on the members page. Either leaving the site is a shape change.
+
+    THE TRAP IS AN EMPTY LINK CARRYING THE PREVIOUS MEMBER'S ADDRESS, and it is
+    the reason this reads cell TEXT and never an href. Measured 2026-10-01, two of
+    the seven e-mail cells hold TWO anchors: an empty one — no link text,
+    `tabindex="-1"` — whose href is the person who used to hold that seat, then
+    the real one. Michael Cass's cell links `marshickd@ci.janesville.wi.us` and
+    Shane Seeman's links `wolfet@ci.janesville.wi.us`, neither of whom is on this
+    council. **A reader taking the first mailto in the cell ships the wrong
+    person's address for two of seven members, and it looks completely right** —
+    the Manitowoc `title=` trap one step worse, because there the stale name was
+    in an attribute nobody renders and here it is the link's own destination.
+    Reading the text the city prints avoids it, and avoids a second trap for
+    free: Cassandra Pope's and Richard Neeno's anchors have no `mailto:` scheme
+    at all (`href="popec@janesvillewi.gov"`), so a scheme-anchored pattern misses
+    two more.
+
+    THE CELL POSITIONS ARE NOT RELIABLE EITHER and are not used as a fallback.
+    Two of the seven have no cell-phone number, and some term cells carry
+    `colspan="2"`, so a column index drifts; the HEADER ROW names the columns and
+    is what this maps on, failing if the five headings ever change.
+
+    THE CELL-PHONE COLUMN IS READ AND NOT SHIPPED. The city publishes a City
+    Phone and a Cell Phone for each member, and only the first is emitted: a
+    direct city line is the number a resident is meant to use, while the other is
+    a personal handset, published on five of seven records so a column built from
+    it would be partly blank anyway. Nothing filters it later because nothing
+    emits it.
+
+    NO ADDRESS SHIPS. The page gives one mailing address for the whole council
+    (City Hall, PO Box 5005) and no member's own, so there is none to exclude.
+    """
+    contact = fetch(JANESVILLE_CONTACT, headers=UA_AKAMAI)
+    if "elected at large" not in clean(contact).lower():
+        raise RuntimeError("Janesville's contact page no longer says the "
+                           "council is elected at large — the at-large claim "
+                           "has lost its source")
+
+    table = None
+    for block in re.findall(r"(?is)<table[^>]*>.*?</table>", contact):
+        if re.search(r"(?i)>\s*City Phone\s*<", block):
+            table = block
+            break
+    if table is None:
+        raise RuntimeError("Janesville's contact page has no table with a City "
+                           "Phone column; the roster cannot be read by heading")
+
+    rows = re.findall(r"(?is)<tr[^>]*>(.*?)</tr>", table)
+    cells = [[clean(re.sub(r"(?is)<[^>]+>", " ", c))
+              for c in re.findall(r"(?is)<t[dh][^>]*>(.*?)</t[dh]>", r)]
+             for r in rows]
+    cells = [row for row in cells if row]
+    if not cells:
+        raise RuntimeError("Janesville's contact table has no rows")
+
+    # THE HEADING ROW IS THE AUTHORITY for which column is which, never a
+    # position: two members have no cell number and some term cells span two
+    # columns, so an index taken from the first data row drifts.
+    head = [h.lower() for h in cells[0]]
+    want = ["name", "city phone", "cell phone", "email address", "term(s)"]
+    if head != want:
+        raise RuntimeError("Janesville's contact table heads its columns %r, "
+                           "not %r — the mapping is by heading and cannot be "
+                           "guessed" % (cells[0], want))
+    ix = {k: i for i, k in enumerate(head)}
+
+    members = []
+    for row in cells[1:]:
+        if len(row) != len(head):
+            raise RuntimeError("Janesville: a council row has %d cells against "
+                               "%d headings; %r" % (len(row), len(head), row))
+        who = row[ix["name"]]
+        if not who:
+            continue
+        # The name cell is "<name>" or "<name>, <role>" — the city's own two
+        # officers are the only rows carrying a role, and the rest are plain
+        # councilmembers, which is what the page calls them in its own prose.
+        name, _, role = (p.strip() for p in who.partition(","))
+        member = {"name": name, "role": role or "Councilmember"}
+        email = row[ix["email address"]]
+        if email:
+            member["email"] = email
+        phone = row[ix["city phone"]]
+        if phone:
+            member["phone"] = phone
+        term = row[ix["term(s)"]]
+        if term:
+            member["term"] = term
+        members.append(member)
+
+    # THE SECOND PAGE IS THE WITNESS. It must name the same seven people, and a
+    # table that has kept a departed member or dropped a new one fails here
+    # rather than shipping.
+    bios = clean(re.sub(r"(?is)<(script|style|nav)[^>]*>.*?</\1>", " ",
+                        fetch(JANESVILLE_MEMBERS, headers=UA_AKAMAI)))
+    if "represent the city as a whole" not in bios.lower():
+        raise RuntimeError("Janesville's councilmembers page no longer says the "
+                           "council represents the city as a whole")
+    missing = [m["name"] for m in members if m["name"] not in bios]
+    if missing:
+        raise RuntimeError("Janesville: %s in the contact table but not on the "
+                           "councilmembers page" % ", ".join(missing))
+
+    return {"geoid": "5537825", "name": "Janesville", "county": "Rock",
+            "atLarge": True, "board": members,
+            "sourceUrl": JANESVILLE_CONTACT}
+
+
+CITIES = (("Caledonia", scrape_caledonia), ("Oshkosh", scrape_oshkosh),
+          ("Janesville", scrape_janesville))
 
 
 def attempt(label, fn, got, failures):

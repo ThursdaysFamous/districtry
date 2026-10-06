@@ -8367,10 +8367,12 @@ function initMinnesotaExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // Congressional districts — the largest districts a state carries below the state itself
+    "mn-judicial-district", // Ten districts of whole counties, a mean 22,000 km2 each — larger than a Senate district and smaller than a congressional one
     "mn-senate",         // 67 Senate districts, each divided into two whole House districts
     "county",            // 87 counties, pre-built from TIGERweb; this instance's offline anchor layer
     "mn-house",          // 134 House districts; two nest exactly inside each Senate district, lettered A and B
     "school-district-unified", // 322 districts covering almost all of Minnesota, live from TIGERweb (no data/app file) — 693 km2 mean feature area, the largest of the three school tilings
+    "county-commissioner", // 447 districts tiling all 87 counties, 488 km2 mean feature area (median 299, from 1.8 in Ramsey to 11,154 in St. Louis) — smaller than a unified school district and larger than a ZIP code
     "zip-code",          // 1,385 ZIP Code Tabulation Areas intersecting Minnesota's envelope, live from TIGERweb (no data/app file) — 250 km2 mean feature area, between a school district and a township
     "school-district-elementary", // 8 districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points
     "county-subdivision", // 2,762 records tiling the state, live from TIGERweb (no data/app file) — 1,797 townships, 901 city placeholder records for 851 distinct cities (50 of which cross a county line), 59 unorganized territories, 2 unorganized survey townships, and 3 'not defined' records that are Lake Superior water
@@ -12307,7 +12309,8 @@ function initMinnesotaExplorer() {
         label: "County board",
         value: "Not shown — no statewide source names Minnesota's county " +
           "commissioners. The Association of Minnesota Counties' directory " +
-          "links each county's own board."
+          "links each county's own board. The County Commissioner District " +
+          "layer shows which seat on that board you vote for."
       }]));
       return wrap;
     },
@@ -12409,6 +12412,225 @@ function initMinnesotaExplorer() {
         label: "Find your polling place",
         url: "https://pollfinder.sos.mn.gov"
       };
+    }
+  });
+
+  /* ---------- 1c. Judicial district — the counties state law names ----------
+   * Minn. Stat. 2.722 subd. 1 divides Minnesota into ten judicial districts
+   * and names the counties in each, so this boundary needed no publisher: it
+   * is the county fabric this app already ships, grouped by a list written
+   * into law and dissolved at build time
+   * (mn/scripts/build_mn_judicial_districts.py;
+   * data/app/mn-judicial-districts.json).
+   *
+   * MINNESOTA'S TRIAL JUDGES ARE ELECTED, AND IN THIS DISTRICT, which is why
+   * the layer exists at all — a reader's judicial district is a district they
+   * vote in, unlike Illinois, where a judge is elected from a subcircuit and
+   * then sits circuit-wide.
+   *
+   * NO JUDGE IS NAMED AND THE CARD SAYS SO. The statute authorizes 287
+   * judgeships across the ten districts and the card prints that district's
+   * own authorized count, which is a number of POSITIONS rather than of
+   * people: subd. 4 lets the supreme court abolish or transfer a vacant one.
+   * The only publisher of the people found is www.mncourts.gov, which serves
+   * a Cloudflare managed challenge to every client this project has — an
+   * access control, never worked around (measured 2026-10-01; gap
+   * mn-judicial-roster). The card links the court so a reader's own browser,
+   * which clears the challenge as any person's does, can go and look.
+   * ---------- */
+  var loadMnJudicialDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-judicial-districts.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "mn-judicial-district",
+    group: "political",
+    label: "Judicial District",
+    overlay: {
+      load: loadMnJudicialDistricts,
+      // the broadest political tiling after Congress — a heavier stroke than
+      // the precinct layer and a dash, so ten big shapes read as a frame
+      // rather than as fill competing with the legislative layers
+      style: { color: "#1F6F5C", weight: 2, fillColor: "#3FA98C", fillOpacity: 0.05, dashArray: "6 4" }
+    },
+    hoverName: function (feature) {
+      var props = feature.properties || {};
+      return props.name != null ? String(props.name) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadMnJudicialDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          number: props.district,
+          name: props.name,
+          counties: props.counties || [],
+          judges: props.authorizedJudges,
+          chambers: props.chambers || []
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var counties = result.counties.slice();
+      wrap.appendChild(renderBodyIntro({
+        title: result.name ? String(result.name) : "Judicial District",
+        note: counties.length === 1
+          ? counties[0] + " County"
+          : counties.length + " counties"
+      }));
+      var rows = [];
+      rows.push({
+        label: "Who you elect here",
+        value: "The district court judges who serve this district. They are " +
+          "elected on a nonpartisan ballot by the voters of the district, so " +
+          "this is a district you vote in."
+      });
+      rows.push({
+        label: "Judges this district is allowed",
+        value: result.judges + " judgeships, set by state law. That is the " +
+          "number of positions, not a count of people sitting today — the " +
+          "supreme court may hold a vacant one open, abolish it, or move it " +
+          "to another district."
+      });
+      rows.push({
+        label: "Who holds them",
+        value: "Not listed here. Minnesota's court system publishes its judges, " +
+          "but its website turns away every automated request this project " +
+          "makes, so no name can be shown without a person reading it off the " +
+          "page. Open the link below and the court will answer your own browser."
+      });
+      if (result.chambers.length) {
+        rows.push({
+          label: result.chambers.length === 1 ? "Permanent chambers" : "Permanent chambers",
+          value: result.chambers.join(", ") + " — the places state law requires " +
+            "this district to keep chambers. It sits in other county seats too."
+        });
+      }
+      if (counties.length > 1) {
+        rows.push({ label: "Counties in it", value: counties.join(", ") });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Minnesota Judicial Branch",
+        url: "https://www.mncourts.gov/"
+      };
+    }
+  });
+
+  /* ---------- 1d. County commissioner district — dissolved from the precincts ----------
+   * Minnesota's county boards are the one local tier the state itself draws.
+   * Minn. Stat. 375.025 subd. 1 divides EVERY county into as many
+   * consecutively numbered districts as its board has members, bounded by
+   * town, municipal, ward or precinct lines — so there is no at-large county
+   * board in Minnesota, and the composition is already published: each of the
+   * Secretary of State's 4,105 precincts carries the commissioner district it
+   * sits in. The 447 districts are those precincts dissolved
+   * (mn/scripts/build_mn_commissioner_districts.py;
+   * data/app/mn-commissioner-districts.json), so this layer draws no line a
+   * precinct boundary does not already draw.
+   *
+   * THE RECORD THAT KEPT THIS LAYER OUT WAS LOOKING FOR THE WRONG THING. It
+   * said no statewide commissioner layer is published, which is true and
+   * beside the point: the state publishes the MEMBERSHIP, one column over
+   * from the precincts, and a dissolve needs nothing else.
+   *
+   * SEVEN COUNTY GOVERNMENTS AGREE, AND THAT IS A DIFFERENT PUBLISHER rather
+   * than the source checking itself: Anoka, Dakota, Isanti, Olmsted, Ramsey,
+   * St. Louis and Scott each publish their own commissioner-district layer,
+   * and all seven agree with the Secretary of State about the district of
+   * every one of the 785 precincts they cover. Two more counties publish one
+   * on a host whose robots.txt refuses this client, which is obeyed.
+   *
+   * NO COMMISSIONER IS NAMED AND THE CARD SAYS SO. The Secretary of State's
+   * certified-results service carries federal and state contests only, so no
+   * commissioner can be composed from returns, and no statewide roster of the
+   * people was found (gap mn-county-commissioner-roster). The card names the
+   * district, says how many seats the board holds, says plainly that it names
+   * nobody, and links the county directory.
+   * ---------- */
+  var loadMnCommissionerDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-commissioner-districts.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "county-commissioner",
+    group: "political",
+    label: "County Commissioner District",
+    overlay: {
+      load: loadMnCommissionerDistricts,
+      // a warm hue no other layer uses, so a county board reads apart from the
+      // three green judicial/school tilings and the purple legislative ones
+      style: { color: "#9C4A14", weight: 1.5, fillColor: "#D9792E", fillOpacity: 0.05, dashArray: "4 3" }
+    },
+    hoverName: function (feature) {
+      var props = feature.properties || {};
+      return props.name != null ? String(props.name) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadMnCommissionerDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          name: props.name,
+          number: props.district,
+          county: props.county,
+          seats: props.seats,
+          precincts: props.precincts
+        };
+      });
+    },
+    render: function (result) {
+      // Card convention: identity -> officeholder -> office -> contact -> link.
+      // It stops after the officeholder row, and that row says why.
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name ? String(result.name) : "County Commissioner District",
+        note: result.county ? String(result.county) + " County" : null
+      }));
+      var rows = [];
+      rows.push({
+        label: "Who you elect here",
+        value: "One county commissioner, chosen by the voters of this district " +
+          "alone. The county board runs the county: its roads, its sheriff's " +
+          "budget, its health and social services, and the county share of " +
+          "your property tax."
+      });
+      if (result.seats != null) {
+        rows.push({
+          label: "Seats on the board",
+          value: String(result.seats) + ", one for each district. State law gives " +
+            "every Minnesota county five commissioners, and seven in Anoka, " +
+            "Hennepin, Ramsey and St. Louis; a county may ask to change that."
+        });
+      }
+      rows.push({
+        label: "Who holds this seat",
+        value: "Not listed here. Minnesota publishes the district lines " +
+          "statewide but not the people, and no list of all 447 commissioners " +
+          "was found, so naming one would mean guessing. Your county publishes " +
+          "its own board — the link below reaches it."
+      });
+      if (result.precincts != null) {
+        rows.push({
+          label: "How the line is drawn",
+          value: "This district is " + String(result.precincts) +
+            (result.precincts === 1 ? " voting precinct" : " whole voting precincts") +
+            ". State law requires the boundary to follow town, city, ward or " +
+            "precinct lines, so the map is those precincts joined together " +
+            "rather than a line drawn anew."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Minnesota county directory", url: "https://www.mncounties.org/counties" };
     }
   });
 
@@ -14593,6 +14815,14 @@ function initMinnesotaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "mn-senate", "mn-house",
+    // The county board sits with the chambers rather than down in geography:
+    // like them it is one person elected by this district alone, where the
+    // judicial district below elects a whole bench.
+    "county-commissioner",
+    // The judicial district comes after the three chambers: a reader looking
+    // for who represents them wants the legislators first, and this is ten
+    // shapes where those are 8, 67 and 134.
+    "mn-judicial-district",
     // Schools next, largest tiling first. The elementary and secondary slots
     // answer in eight places and one place respectively, so for almost every
     // reader they render as empty cards rather than as absent ones.
@@ -15063,11 +15293,12 @@ function initMinnesotaExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#155E52": "#5AB3A1", "#1F4E79": "#62A0DD",
-    "#1F7A6B": "#5ACBB6", "#2E8C7C": "#61D9C3", "#2F6B4F": "#6FBD96", "#3FA898": "#67F0DA",
-    "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
-    "#7C5CBF": "#C2ABFF", "#8C2E4A": "#F47294", "#8D7BB5": "#D1BFFE", "#A78BFA": "#E0DAFF",
-    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B23A1E": "#FD9177", "#D06A9C": "#FFBDDA"};
+    "#1F6F5C": "#5EC1A7", "#1F7A6B": "#5ACBB6", "#2E8C7C": "#61D9C3", "#2F6B4F": "#6FBD96",
+    "#3FA898": "#67F0DA", "#3FA98C": "#67F1CA", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2",
+    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#7C5CBF": "#C2ABFF", "#8C2E4A": "#F47294",
+    "#8D7BB5": "#D1BFFE", "#9C4A14": "#FE8E4D", "#A78BFA": "#E0DAFF", "#A98B6C": "#F3CBA1",
+    "#B0316E": "#FD88B8", "#B23A1E": "#FD9177", "#D06A9C": "#FFBDDA", "#D9792E": "#FECAA8"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
