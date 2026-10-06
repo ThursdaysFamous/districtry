@@ -5381,8 +5381,10 @@ it lets the record that tells our readers what is missing say the county was ask
 
 ### Follow-up, drafted 2026-10-06 — the county's current precinct list (send about 8 October)
 
-**NOT YET SENT.** A reply on Auditor Rohrs's own thread, after the thank-you for the map. The
-Letters thread puts it in Adam's mailbox; Adam sends.
+**NOT YET SENT — IN ADAM'S MAILBOX AS A DRAFT, 2026-10-06.** A reply on Auditor Rohrs's own
+thread, after the thank-you for the map. The text below matches the mailbox draft, including the
+sentence the Letters thread added: the thank-you had told her the map resolved everything, so
+this letter says plainly that one more thing turned up. Adam sends.
 
 **Why this question.** Her map gives five districts. To tell a reader at a given address which
 of them they live in, the lines have to be placed on the ground exactly. Two of the districts
@@ -5397,8 +5399,8 @@ through a city, a sentence saying which streets it follows would settle the rest
 >
 > Dear Ms Rohrs,
 >
-> Thank you again for the district map. I have been working through it, and it shows the five
-> districts clearly.
+> Thank you again for the district map. I said last week that it resolved everything, but
+> working through it I found one more thing I need. The map shows the five districts clearly.
 >
 > To place each address in the right district I need to know where the lines run on the
 > ground, and the precinct list I have is older than your current plan. Could you send the
