@@ -13482,7 +13482,11 @@ function initIowaExplorer() {
         // makes no claim about how the rest are elected.
         wrap.appendChild(renderSectionLabel("CITY OFFICIALS"));
         wrap.appendChild(renderPersonRows(result.countyOfficials.members.map(function (rec) {
-          var row = { name: String(rec.name) };
+          // AN EMPTY SEAT IS NOT A PERSON. The builder turns a row the county
+          // fills with a placeholder ("Vacant Position") into `vacant: true`
+          // with no name, so the card says the seat is empty rather than
+          // printing the placeholder where a name belongs.
+          var row = { name: rec.vacant ? "Vacant seat" : String(rec.name) };
           var marks = [];
           if (rec.role) marks.push(String(rec.role));
           if (rec.seat) marks.push(String(rec.seat));
@@ -13500,6 +13504,7 @@ function initIowaExplorer() {
           // stays dialable. A reader wanting a city clerk wants exactly this
           // number.
           if (rec.phoneIsOffice) notes.push("City office number");
+          if (rec.vacant) notes.push("The county lists this seat as vacant");
           if (rec.status) notes.push(String(rec.status));
           if (rec.termEnds) notes.push("Term ends " + String(rec.termEnds));
           if (notes.length) row.note = notes.join(" \u00b7 ");
