@@ -1344,11 +1344,12 @@ official's name wrong is the cheapest possible way to lose a reader.
 >
 > Two small things would finish it, and a one-line answer to either is plenty.
 >
-> First, the board members' cards currently show the courthouse switchboard, because that
-> is the only number published. If the county has a direct phone number or e-mail for
-> individual board members that it is content to see listed publicly, I would list it. If
-> the switchboard genuinely is the route to a board member, that is a fine answer too and
-> I will say so on the card instead of leaving it ambiguous.
+> First, the county's board page links a "County Board Member 2022-2024" list that gives a
+> phone number and e-mail for each member, and all seven names on it are still the members
+> your certified canvasses show today. Are those numbers and addresses still right, and is
+> the county content for them to appear on each member's card? If you would rather residents
+> used the courthouse number, that is a fine answer too and I will leave the cards as they
+> are.
 >
 > Second, the precinct cards name a resident's precinct but not where they vote. If your
 > office has a list of polling places by precinct — a page, a PDF, a spreadsheet, anything
@@ -6283,6 +6284,15 @@ in the page the way Scott's carried one.
   template. `popeco.illinois.gov` has no website at all, and `popecountyil.com` cannot be reached
   from here (connection reset, redirect loop), which says nothing about what a person sees. The
   sentence describing the site is removed; the letter's questions do not depend on it.
+- **Clark** (Ask 10, re-checked the same afternoon) — wording corrected. The letter said the
+  courthouse switchboard is the only number published. It is not: the county's own board page
+  (`clarkcountyil.org/board`) links "County Board Member 2022-2024", a scanned one-page list
+  with a phone number and e-mail for each of the seven members, and all seven names still match
+  the certified canvasses the roster is built from. It was missed because the list is a scanned
+  image with no text layer, so a text reader sees an empty page; it had to be rendered and read
+  as an image. The first question now asks whether those numbers are still right and whether
+  the county is content to see them on the cards. The list also carries members' home
+  addresses, which never ship whatever the answer. The precinct polling-place question stands.
 - **WinGIS outage report** — withdraw. The Winnebago map server answers normally today
   (`maps.wingis.org`, the elected-officials layer returns its metadata). There is no outage to
   report.
