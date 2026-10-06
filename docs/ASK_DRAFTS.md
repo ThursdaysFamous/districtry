@@ -2881,9 +2881,10 @@ nobody.
 > office publishes for the 2022 and 2024 General Elections and the 2026 General Primary.
 > Both are credited to the county on the page that shows them.
 >
-> The one thing I have not been able to find is a list of the board's sixteen members. The
-> county's board page names the Chairman and the Vice Chairman, and I could find no page
-> that names the other members or says which district each represents.
+> The one thing I have not been able to find is a list of the board's sixteen members. When
+> I was last able to read the county's board page, it named the Chairman and the Vice
+> Chairman, and I could find no page that named the other members or said which district
+> each represents.
 >
 > Is there a current list of the sixteen members with their districts that I could link to
 > or be sent? If the district is not attached to each name, the names alone are useful.
@@ -4103,9 +4104,8 @@ documented pattern among Illinois clerks and is why no site could be read.
 >    list of which precincts make up each district would all work. If county-wide, could you
 >    send the names of the commissioners now serving and which of them chairs the board?
 >
-> I have found no county source that answers either. The web address I have for the county
-> serves a template page with no county information on it, and I can find no board district
-> or precinct map for Pope anywhere public.
+> I have found no county source that answers either, and I can find no board district or
+> precinct map for Pope anywhere public.
 >
 > **A reply saying the county would rather not is a genuinely useful answer** — I will
 > record it and stop asking.
@@ -6256,3 +6256,33 @@ Adam's word.
 > <YOUR NAME>
 > <YOUR E-MAIL>
 > https://districtry.com/il/
+
+## Re-check of the Illinois "we couldn't read your page" letters, 2026-10-06
+
+Adam asked (6 Oct) that every waiting letter saying we could not read a county's page be
+re-checked before he sends it, after Scott County's Clerk showed us her page was fine. Each was
+read today with this project's own roster client, robots.txt first, looking for a feed address
+in the page the way Scott's carried one.
+
+- **Perry** — kept. The site answers every request, robots.txt included, with SiteGround's
+  security check (HTTP 202, `sg-captcha: challenge`). That is an access control and is not worked
+  around, so nothing behind it can be read, feed or not; "turns away automated visits" is still
+  true.
+- **Johnson** — kept. `johnsonco.illinois.gov` points at a hosting company's shared server that
+  carries no site for it (its certificate names the server, and plain HTTP answers that host's
+  default page). That agrees with the Clerk's own statement of 21 July that there is no website.
+- **Henderson** — kept. `hendersoncountyil.gov` serves a domain-parking page (a script sends the
+  browser to `/lander`, which loads GoDaddy's parking template). Its robots.txt allows everything,
+  so this is what a person sees too.
+- **Christian** — wording corrected. The site still shows Cloudflare's "Just a moment" check to
+  every request, robots.txt included, so it cannot be read and is not worked around. The letter
+  said in the present tense that the board page names only the Chairman and Vice Chairman; we
+  cannot know what it shows a person today, so it now says that is what it showed when we could
+  last read it.
+- **Pope** — wording corrected. The letter said the county's web address serves an empty
+  template. `popeco.illinois.gov` has no website at all, and `popecountyil.com` cannot be reached
+  from here (connection reset, redirect loop), which says nothing about what a person sees. The
+  sentence describing the site is removed; the letter's questions do not depend on it.
+- **WinGIS outage report** — withdraw. The Winnebago map server answers normally today
+  (`maps.wingis.org`, the elected-officials layer returns its metadata). There is no outage to
+  report.
