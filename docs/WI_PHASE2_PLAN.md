@@ -3,7 +3,7 @@
 Delivered in full 2026-08-26 (nine planned PRs, merged from #524 onward:
 hygiene, ward, station points, both court tiers, county clerks, the
 legislature office upgrade, the county-board roster's Milwaukee/Racine
-growth, and the school + library points). Wisconsin ships 31 layers; the shipped state — `wi/metro-worksheet.json`,
+growth, and the school + library points). Wisconsin ships 32 layers; the shipped state — `wi/metro-worksheet.json`,
 `wi/CLAUDE.md`, `docs/DATA_LAYER_GUIDEBOOK.md`'s Wisconsin column and
 inventory — now supersedes this plan, exactly as the SF worksheet precedent
 prescribes.

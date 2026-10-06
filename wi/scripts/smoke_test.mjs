@@ -53,7 +53,7 @@ const OFFLINE = ["county", "wi-circuit-court", "wi-court-of-appeals", "us-house"
 const EXPECT_DISTRICT = { "county": "Marathon County", "wi-circuit-court": "Marathon County Circuit Court", "wi-court-of-appeals": "Court of Appeals District III", "us-house": "7", "school-district-unified": "Marathon City School District", "wi-senate": "29", "wi-assembly": "86", "county-board": "35", "wtcs-district": "Northcentral Technical College District" };
 const NEGATIVE_POINT = "47.39000,-92.97000"; // off the northwest corner of Wisconsin — outside the state and every starter layer. IT IS INSIDE MINNESOTA, AND IT CANNOT BE MOVED SOMEWHERE THAT IS NOBODY'S: sampling permalink_gate every 0.25 degrees and naming each point's state off TIGERweb, all 609 points land in a state and the 300 outside Wisconsin are Michigan (163), Minnesota (76), Iowa (47) and Illinois (14) — three of those are live instances today, so moving the point into one would break this test now rather than at Minnesota's go-live, and the Great Lakes are no refuge either (a control in open Lake Michigan returns Michigan). So the point stays and the checks that select it refuse ../fleet-outlines.json, which is the only thing the hand-off reads; Wisconsin asserts nothing about fleet routing.
 const APP_NAME = "districtry Wisconsin";
-const EXPECT_LAYERS = 31;
+const EXPECT_LAYERS = 32;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -853,6 +853,56 @@ try {
     check("an at-large village board is named and the card says it has no districts",
           ok, `heading=${JSON.stringify(heading || null)} seatBadge=${seatBadge} ` +
               `president=${presBadge} how=${JSON.stringify((how || {}).value || null)}`);
+    await context.close();
+  }
+  // ---- 1x. The Tribal Government card names the nation, its seat and why it
+  // names no council member. The LAST ROW is what this check exists for: the
+  // card's "Why no names" field renders `rosterWhy`, a field this layer
+  // introduced, and nothing static can prove a reader is told WHICH of the two
+  // reasons applies — a nation whose council page this project has not read
+  // yet, or one it is measurably shut out of. Menominee is the
+  // ROSTER_NOT_READ case; Michigan's own check covers the blocked case. The
+  // point is shapely's representative point for the shipped reservation,
+  // verified interior against the file's own even-odd reading (2026-10-01),
+  // and the assertions are on the WORDING and on the nation/land distinction,
+  // so a council election changes nothing here.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context, `${BASE}#point=44.98686,-88.73481&layers=tribal-government`);
+    const card = await cardText(page, "tribal-government");
+    const fields = await page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const by = (l) => (fields.find((f) => f.label === l) || {}).value || "";
+    const nation = card.text.indexOf("Menominee Indian Tribe of Wisconsin") !== -1;
+    const land = by("Land") === "Menominee Reservation";
+    const seat = by("Seat of government") === "Keshena, WI";
+    const why = by("Why no names");
+    // the sentence must carry the page and the date the builder measured, so a
+    // reader is sent somewhere rather than told only that we do not know
+    const whyOk = /menominee-nsn\.gov/.test(why) && /\d{4}-\d{2}-\d{2}/.test(why) &&
+                  why.indexOf("not in this app yet") !== -1;
+    // nothing on this card may read as a named council member
+    const noRoster = card.text.indexOf("Council member") === -1;
+    const ok = nation && land && seat && whyOk && noRoster;
+    check("the Tribal Government card names the nation, its seat and why no council member",
+          ok, `nation=${nation} land=${JSON.stringify(by("Land"))} ` +
+              `seat=${JSON.stringify(by("Seat of government"))} ` +
+              `why=${JSON.stringify(why.slice(0, 90))}`);
+
+    // and a point off tribal land says so in the layer's own words rather than
+    // the generic "not inside any district", which would read as a lookup that
+    // failed instead of a fact about the place
+    const page2 = await booted(
+      context, `${BASE}#point=${POINT}&layers=tribal-government`);
+    const off = await cardText(page2, "tribal-government");
+    const offOk = off.text.indexOf("not on tribal land") !== -1 &&
+                  off.text.indexOf("21 tribal areas") !== -1;
+    check("a point off tribal land is told so in the layer's own words",
+          offOk, JSON.stringify(off.text.slice(0, 120)));
     await context.close();
   }
 } finally {

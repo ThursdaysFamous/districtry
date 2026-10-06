@@ -806,7 +806,7 @@ footer.site-footer a { color: var(--accent-deep); }
   "use strict";
   // Hands the typed address to the app as a HASH — never a query string, which
   // count.js would send to the analytics host. The app geocodes; this does not.
-  var LAYERS = "ward";
+  var LAYERS = "ward,ward-precinct,county-precinct";
   var form = document.getElementById("lookup");
   var input = document.getElementById("lookup-q");
   var status = document.getElementById("lookup-status");
@@ -838,9 +838,9 @@ footer.site-footer a { color: var(--accent-deep); }
 })();
 </script>
 <!-- ==== GENERATED:END question-lookup ==== -->
-    <a class="cta" href="./#layers=ward">Find your ward and alderperson →</a>
-    <p class="cta-note">Opens the map with the ward layer on. Search your address or ZIP, or tap
-      your location.</p>
+    <a class="cta" href="./#layers=ward,ward-precinct,county-precinct">Find your ward and alderperson →</a>
+    <p class="cta-note">Opens the map with the ward and voting-precinct layers on. Search your
+      address or ZIP, or tap your location.</p>
   </section>
 
   <section>
