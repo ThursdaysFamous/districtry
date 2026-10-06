@@ -46,7 +46,7 @@ const OFFLINE = ["school-board", "il-supreme-court", "ccbr"];
 const EXPECT_DISTRICT = { "school-board": "District 6b", "il-supreme-court": "1", "ccbr": "3" };
 const NEGATIVE_POINT = "41.70000,-87.10000"; // Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Three of those are live instances, Indiana is published dark, and Kentucky and Missouri are both on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays and the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; check 1i is where Illinois asserts fleet routing, on its own points.
 const APP_NAME = "districtry Illinois";
-const EXPECT_LAYERS = 40; // 17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) = 40 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07
+const EXPECT_LAYERS = 41; // 17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) = 40 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07
 // ==== GENERATED:END smoke-config ====
 // ==== TEMPLATE:BEGIN smoke-fork-constants ====
 // Fork constants: every Chicago/Illinois literal the checks below use. Layer
@@ -2501,6 +2501,52 @@ try {
     await context.close();
   }
 }
+  // ---- 1x. The Tribal Government card names the nation, where its government
+  // sits and why it names no council member. THIS CHECK EXISTS BECAUSE THE
+  // FIRST BUILD OF THIS LAYER SHIPPED FOUR SILENT ABSENCES and every static
+  // gate passed: `findPropCI` lowercases the property key and compares it to
+  // the candidate exactly as given, so the camelCase `keys` this layer was
+  // registered with matched nothing and the Land, Districts, Population and
+  // "Why no names" rows rendered as nothing at all. The last of those is the
+  // card's whole honesty claim, so it is asserted in a browser. The point is
+  // shapely's representative point for the shipped parcel, verified interior
+  // against the file's own even-odd reading (2026-10-01), and the assertions
+  // are on the WORDING and on the nation/land distinction — the Census's text
+  // for this parcel describes a piece of land, not the name of a government.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context, `${BASE}#point=41.75560,-88.84957&layers=tribal-government`);
+    const card = await cardText(page, "tribal-government");
+    const fields = await page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const by = (l) => (fields.find((f) => f.label === l) || {}).value || "";
+    const nation = by("Tribal government") === "Prairie Band Potawatomi Nation";
+    const land = by("Land").indexOf("Off-Reservation Trust Land") !== -1;
+    const seat = by("Seat of government") === "Mayetta, KS";
+    const why = by("Why no names");
+    const whyOk = why.indexOf("Cloudflare") !== -1 && why.indexOf("not worked around") !== -1;
+    const noRoster = card.text.indexOf("Council member") === -1;
+    const ok = nation && land && seat && whyOk && noRoster;
+    check("the Tribal Government card names the nation, its Kansas seat and why no council member",
+          ok, `nation=${JSON.stringify(by("Tribal government"))} land=${land} ` +
+              `seat=${JSON.stringify(by("Seat of government"))} ` +
+              `why=${JSON.stringify(why.slice(0, 90))}`);
+
+    // and a point off tribal land says so in the layer's own words rather than
+    // the generic "not inside any district", which reads as a lookup that
+    // failed instead of a fact about the place
+    const page2 = await booted(
+      context, `${BASE}#point=${POINT}&layers=tribal-government`);
+    const off = await cardText(page2, "tribal-government");
+    const offOk = off.text.indexOf("not on tribal land") !== -1;
+    check("a point off tribal land is told so in the layer's own words",
+          offOk, JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
+  }
 } finally {
   await browser.close();
 }

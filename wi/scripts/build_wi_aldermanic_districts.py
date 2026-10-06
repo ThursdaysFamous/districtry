@@ -153,6 +153,14 @@ EXPECT_TOTAL_KEYS = 888        # 867 filed + 21 the state does not file:
 # Built the day somebody writes the gate this shape wants — the county's coded
 # wards plus a clerk's sentence — rather than squeezed into LOCAL_COMPOSITION,
 # which means a city publishing its own composition.
+# CUBA CITY'S COMPOSITION WAS COMPLETED THE SAME DAY, and for the same reason the
+# city is still excluded. Lafayette County Clerk Carla Jacobson wrote that the
+# city's ward 5 — the one ward her county files uncoded — is in ALDERMANIC
+# DISTRICT 3, and City Clerk-Treasurer Jill Hill confirmed it that evening, so
+# the county that files the ward and the city that holds the election agree.
+# The city's other four wards carry 01-04, so ward 5 joining 03 completes a
+# four-district plan with nothing left over. Three cities (New London, Port
+# Washington, Cuba City) now wait on that one gate rather than on a source.
 #
 # BRILLION'S BOARD FORM IS SETTLED AND ITS TWO UNCODED WARDS ARE ANSWERED.
 # Calumet County Clerk Beth Leary wrote on 2026-10-01 that the City of Brillion

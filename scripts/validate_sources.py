@@ -161,6 +161,25 @@ PROVENANCE = [
              "machine-readable roster is published for this board, and had "
              "drifted two seats — so this manifest watches the page and the "
              "weekly run watches the names."},
+    {"layer": "Tribal government areas (Prairie Band Potawatomi trust land)",
+     "app_file": "tribal-areas.json",
+     "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+                   "AIANNHA/MapServer",
+     "note": "The Census's American Indian / Alaska Native areas service, "
+             "current vintage, reservation + off-reservation trust land + state "
+             "reservation (layers 2/3/4 — ALWAYS NAME THE SERVICE BESIDE A LAYER "
+             "ID, since those ids mean other classes in tigerWMS_Current). "
+             "Illinois holds exactly ONE governed area, 0.52 km2 near Shabbona. "
+             "THE SET MOVES AND NOT ON A REDISTRICTING CALENDAR: land enters the "
+             "map when the United States takes it into trust, and this very "
+             "parcel's AIANNH code 2980 is ABSENT from the Census 2020 vintage "
+             "and present in the current one. build_tribal_areas.py --check is "
+             "OFFLINE and proves the land-to-government join, never that the "
+             "Census has not added an area, so this manifest is what watches the "
+             "service. The nation's own council is NOT watched here: "
+             "pbpindiantribe.com answers a Cloudflare managed challenge "
+             "(measured 2026-10-01, recorded in "
+             "robots_policy.CHALLENGE_FRONTED_HOSTS) and is never worked around."},
     {"layer": "IL Supreme Court districts",
      "app_file": "il-supreme-court-districts.json",
      "source_url": "https://www.illinoiscourts.gov/",

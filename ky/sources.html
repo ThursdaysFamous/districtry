@@ -1108,7 +1108,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ky/scripts/build_ky_court_districts.py, following the county lists in KRS 21A.010 — no map is read and no publisher is asked, because the statute names the counties.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.</td>
+                <td data-label="Who it names">The seven justices, one per district, from the Supreme Court's own page at kycourts.gov, which prints the district each was elected from. Refreshed weekly.</td>
                 <td data-label="Where it applies">Kentucky — statewide.</td>
               </tr>
               <tr id="layer-ky-court-of-appeals">
@@ -1119,7 +1119,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">The Supreme Court district file, which this court shares by statute: KRS 22A.010(2) requires its districts to &quot;correspond in geographical dimensions to the districts of the Supreme Court&quot;. Built by ky/scripts/build_ky_court_districts.py.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.</td>
+                <td data-label="Who it names">All fourteen judges, two per district, from the Court of Appeals' own page at kycourts.gov, which prints the district and division each was elected to. Refreshed weekly.</td>
                 <td data-label="Where it applies">Kentucky — statewide.</td>
               </tr>
               <tr id="layer-ky-senate">
@@ -1141,7 +1141,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">Dissolved from the shipped county fabric by ky/scripts/build_ky_court_districts.py, following the county lists in KRS 23A.020.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.</td>
+                <td data-label="Who it names">The circuit and family-court judges of each circuit, from the Court of Justice's own county pages, which print the judicial circuit each was elected from. Family Court is a division of Circuit Court under Ky. Const. 112(6) and its judges are elected from the circuit, so they appear here. Jefferson's 30th circuit names nobody: its county page publishes no judge list, which was asked about on 2026-10-01 and is recorded as coverage gap ky-judges.</td>
                 <td data-label="Where it applies">Kentucky — statewide.</td>
               </tr>
               <tr id="layer-ky-district-court">
@@ -1152,7 +1152,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">Dissolved from the shipped county fabric by ky/scripts/build_ky_court_districts.py, following the county lists in KRS 24A.030.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.</td>
+                <td data-label="Who it names">The district judges of each district, from the Court of Justice's own county pages, which print the judicial district each was elected from. Jefferson's 30th district names nobody: its county page publishes no judge list, asked about on 2026-10-01 and recorded as coverage gap ky-judges.</td>
                 <td data-label="Where it applies">Kentucky — statewide.</td>
               </tr>
               <tr id="layer-ky-house">
@@ -1295,7 +1295,7 @@ table.matrix code {
       "@id": "https://districtry.com/ky/sources.html#dataset-ky-supreme-court",
       "identifier": "ky-supreme-court",
       "name": "Supreme Court district",
-      "description": "The Supreme Court district covering the point. One justice is elected from each. Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+      "description": "The Supreme Court district covering the point. One justice is elected from each. The seven justices, one per district, from the Supreme Court's own page at kycourts.gov, which prints the district each was elected from. Refreshed weekly.",
       "url": "https://districtry.com/ky/sources.html#layer-ky-supreme-court",
       "isPartOf": {
         "@id": "https://districtry.com/ky/sources.html#catalog"
@@ -1317,7 +1317,7 @@ table.matrix code {
       "@id": "https://districtry.com/ky/sources.html#dataset-ky-court-of-appeals",
       "identifier": "ky-court-of-appeals",
       "name": "Court of Appeals district",
-      "description": "The Court of Appeals district covering the point. Two judges are elected from each. Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+      "description": "The Court of Appeals district covering the point. Two judges are elected from each. All fourteen judges, two per district, from the Court of Appeals' own page at kycourts.gov, which prints the district and division each was elected to. Refreshed weekly.",
       "url": "https://districtry.com/ky/sources.html#layer-ky-court-of-appeals",
       "isPartOf": {
         "@id": "https://districtry.com/ky/sources.html#catalog"
@@ -1361,7 +1361,7 @@ table.matrix code {
       "@id": "https://districtry.com/ky/sources.html#dataset-ky-circuit-court",
       "identifier": "ky-circuit-court",
       "name": "Circuit Court",
-      "description": "The judicial circuit covering the point. Kentucky's trial court of general jurisdiction. Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+      "description": "The judicial circuit covering the point. Kentucky's trial court of general jurisdiction. The circuit and family-court judges of each circuit, from the Court of Justice's own county pages, which print the judicial circuit each was elected from. Family Court is a division of Circuit Court under Ky. Const. 112(6) and its judges are elected from the circuit, so they appear here. Jefferson's 30th circuit names nobody: its county page publishes no judge list, which was asked about on 2026-10-01 and is recorded as coverage gap ky-judges.",
       "url": "https://districtry.com/ky/sources.html#layer-ky-circuit-court",
       "isPartOf": {
         "@id": "https://districtry.com/ky/sources.html#catalog"
@@ -1383,7 +1383,7 @@ table.matrix code {
       "@id": "https://districtry.com/ky/sources.html#dataset-ky-district-court",
       "identifier": "ky-district-court",
       "name": "District Court",
-      "description": "The judicial district covering the point. Kentucky's limited-jurisdiction trial court. Not shipped. Kentucky's Court of Justice publishes its judges, and no source this project has found pairs a sitting judge with the district or circuit the judge was elected from, so the card names none. Recorded as the coverage gap ky-judges.",
+      "description": "The judicial district covering the point. Kentucky's limited-jurisdiction trial court. The district judges of each district, from the Court of Justice's own county pages, which print the judicial district each was elected from. Jefferson's 30th district names nobody: its county page publishes no judge list, asked about on 2026-10-01 and recorded as coverage gap ky-judges.",
       "url": "https://districtry.com/ky/sources.html#layer-ky-district-court",
       "isPartOf": {
         "@id": "https://districtry.com/ky/sources.html#catalog"

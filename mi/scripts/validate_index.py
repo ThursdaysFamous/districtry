@@ -99,8 +99,8 @@ EXPECT_LAYER_IDS = [
     "mi-court-of-appeals", "us-house", "mi-senate", "mi-circuit-court",
     "mi-isd", "county", "mi-house", "school-district-unified",
     "school-district-elementary", "county-commissioner", "county-subdivision",
-    "zip-code", "city-ward", "precinct", "municipality", "police-station",
-    "fire-station", "post-office",
+    "zip-code", "city-ward", "precinct", "tribal-government", "municipality",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -153,10 +153,12 @@ GEOMETRY_FILES = {
     "mi-court-of-appeals-districts.json": (4, 4),  # Michigan's four Court of Appeals districts, dissolved from the app's own county file by mi/scripts/build_mi_courts.py as MCL 600.302 lists them (witnessed by the Michigan Manual 2025-2026). Exact band: the statute fixes four districts.
     "mi-circuit-courts.json": (57, 57),  # Michigan's 57 circuit courts, dissolved from the app's own county file by mi/scripts/build_mi_courts.py as MCL 600.502-600.549i list them (witnessed by the Michigan Manual 2025-2026). Exact band: a change in the number of circuits is an act of the Legislature, so the builder and this count both move only when the statute does.
     "mi-isd-districts.json": (56, 56),  # Michigan's 56 intermediate school districts, from the state's own Michigan Geographic Framework layer (V26), mi/scripts/build_mi_isd_districts.py. Exact band: ISDs merge rarely and by vote, and a merger is real information rather than drift.
+    "tribal-areas.json": (24, 24),  # Michigan's tribal land (scripts/build_tribal_areas.py) — 24 areas across 12 nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-01; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "tribal-councils.json": 9,  # The council of every Michigan nation whose council is carried, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "congress-roster.json": 13,  # U.S. House roster, refreshed weekly by update-mi-congress-roster.yml.
     "mi-senate-members.json": 34,  # Senate roster from Open States mi.csv enriched by the Michigan Senate's own all-senators directory, refreshed weekly by update-mi-legislature-roster.yml; floor tolerates transient vacancies (38 seats).
     "mi-house-members.json": 99,  # House roster from Open States mi.csv, refreshed weekly by update-mi-legislature-roster.yml; floor tolerates transient vacancies (110 seats). No capitol contact block — see the layer's source note.

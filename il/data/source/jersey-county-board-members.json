@@ -1,0 +1,60 @@
+{
+  "1": {
+    "members": [
+      {
+        "name": "David Crone"
+      },
+      {
+        "name": "Kenneth Grizzle"
+      },
+      {
+        "name": "Jarrod Hayes"
+      }
+    ],
+    "sourceUrl": "https://jerseycounty-il.gov/county-board/"
+  },
+  "2": {
+    "members": [
+      {
+        "name": "Ben Heitzig"
+      },
+      {
+        "name": "Jared Mills"
+      },
+      {
+        "name": "Martin \u201cMarty\u201d Ward"
+      }
+    ],
+    "sourceUrl": "https://jerseycounty-il.gov/county-board/"
+  },
+  "3": {
+    "members": [
+      {
+        "name": "Mark Wagner",
+        "role": "County Board Chairman"
+      },
+      {
+        "name": "Jeremy Beasley"
+      },
+      {
+        "name": "Kara Ontis",
+        "role": "Vice Chair"
+      }
+    ],
+    "sourceUrl": "https://jerseycounty-il.gov/county-board/"
+  },
+  "4": {
+    "members": [
+      {
+        "name": "Brian Figge"
+      },
+      {
+        "name": "Sheila Beers"
+      },
+      {
+        "name": "Edward E. Keonig"
+      }
+    ],
+    "sourceUrl": "https://jerseycounty-il.gov/county-board/"
+  }
+}
