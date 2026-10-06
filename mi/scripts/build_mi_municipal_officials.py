@@ -37,12 +37,13 @@ OUT = os.path.join(INSTANCE, "data", "app", "mi-municipal-officials.json")
 LABEL = "mi-municipal-officials"
 
 # FLOORS. Measured on the first full run (2026-10-01: 67 units, 472 members)
-# and set a few below it;
+# and set a few below it, then raised by Lansing's 1 unit and 8 members when it
+# was added (2026-10-06);
 # raise them when units are added, never lower one to get past a failure. A
 # global count cannot protect a named unit, which is what the per-unit
 # carry-forward below is for; the floor catches a run where most parsers broke.
-MIN_UNITS = 62
-MIN_MEMBERS = 440
+MIN_UNITS = 63
+MIN_MEMBERS = 448
 
 PRESERVE_MAX_AGE_DAYS = 45
 
