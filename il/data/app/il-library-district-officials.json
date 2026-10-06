@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-27T17:47:33Z",
+  "generated": "2026-10-04T16:55:34Z",
   "libraries": {
     "Alpha Park Public Library District": {
       "comptrollerCode": "072/010/10",
@@ -2770,14 +2770,10 @@
         {
           "name": "Kristie Elder",
           "role": "Treasurer"
-        },
-        {
-          "name": "Susan Lockhart",
-          "role": "President"
         }
       ],
       "comptrollerCode": "017/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Crawford",
       "heads": [
         {
@@ -2786,6 +2782,8 @@
         }
       ],
       "office": {
+        "address": "201 South Washington",
+        "city": "Palestine IL 62451",
         "email": "palestinelibrary@outlook.com",
         "phone": "(618) 586-5317"
       }

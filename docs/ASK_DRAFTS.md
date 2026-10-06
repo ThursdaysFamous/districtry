@@ -5146,7 +5146,7 @@ has said no, or has been asked, followed up once and given 30 days.
 | Northville (township) | `northville-township-board` | ~~the site answers this client "Access Denied"~~ **wrong: one client was tried; the fleet's browser-class client is served the page** | 2026-10-01 |
 | Ypsilanti (charter township) | `ypsilanti-township-board` | ~~a Cloudflare challenge page, which is an access control and is never worked around~~ **no longer true: re-read the same day, the page is served to our own token** | 2026-10-01 |
 | Burton (city) | `burton-council-roster` | a Cloudflare challenge page | 2026-10-01 |
-| Lansing (city) | `lansing-council-roster` | the page answers, but the names are loaded by a script after the page arrives, so the page itself carries none | 2026-10-01 |
+| Lansing (city) | `lansing-council-roster` (retired 2026-10-06) | ~~the page answers, but the names are loaded by a script after the page arrives, so the page itself carries none~~ **closed: the page hands every visitor a read-only key for the service the names come from, and the weekly reader now reads them the way the page does** | 2026-10-01 |
 | Wyoming (city) | `wyoming-mi-council-roster` | **the operator's own ruling keeps this project off the city's site entirely.** Whether to write at all is Adam's decision; the draft is here so the decision is the only thing left. | ruling |
 
 **Recipients, recorded 2026-10-01 on the operator's instruction that every letter also goes
@@ -5491,7 +5491,17 @@ Subject: Lansing City Council members on districtry.com: is the member list publ
 > adam@overberg.co
 > districtry: https://districtry.com/mi/
 
-#### Lansing, reply of 2026-10-06
+#### Lansing, reply of 2026-10-06 (WITHDRAWN, NOT SENT)
+
+**Withdrawn the same day, before it went.** The paragraph and the letter below rest on a wrong
+reading. The page that names nobody also carries, for every visitor who has not signed in, the
+content service's address and a read-only key for it (client `mi-lansing:default`, read scopes
+only); the 401 came from calling the service without the settings the page supplies, the
+mistake already made with Scott County, Illinois. Read with that key, on the operator's word of
+2026-10-06, the service returns all eight members, so the page the Clerk pointed at does meet
+the need. The weekly reader now reads Lansing that way, the `lansing-council-roster` record is
+retired, and the ask closes `answered`. The thank-you below replaces this letter. The withdrawn
+letter is kept under this note so that the mistake can be found later.
 
 The Clerk answered on 2026-10-03, asking whether https://www.lansingmi.gov/council-members
 meets our needs. It was re-read on 2026-10-06 with the client the weekly reader uses: the page
@@ -5515,6 +5525,25 @@ Subject: Re: Lansing City Council members on districtry.com
 > 3. If it is easier, a reply listing the eight members and their seats. The map will say the list came from your office and on what date.
 >
 > If none of these suits the city, that is a fine answer, and the map will keep linking to your council page.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Lansing, thank-you of 2026-10-06
+
+Replaces the withdrawn reply above. It says the map names the council, so it should go only once
+the change that adds Lansing's council to the map has been published.
+
+To: city.clerk@lansingmi.gov  
+Subject: Re: Lansing City Council members on districtry.com
+
+> Dear Mr. Swope,
+>
+> Thank you for pointing me to the council members page. It does meet our needs. The names are loaded onto the page a moment after it opens, and once I read the page the same way a visitor's browser does, all eight members came through, with their seats, phone numbers and e-mail addresses.
+>
+> The map now names Lansing's City Council, says the list comes from the city's own council page, and reads that page again each week, so changes there will reach the map on their own. There is nothing more you need to do.
 >
 > With thanks,
 > Adam Overberg

@@ -88,6 +88,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -174,16 +175,6 @@ ROSTER_BLOCKED = {
                "access control is not worked around, so no name is carried and "
                "the card links the nation.",
     },
-    "3885": {
-        "host": "sokaogonchippewa.com",
-        "measured": "2026-10-01",
-        "why": "The nation's own site publishes no council page. Its navigation "
-               "names its history, news, events, twenty departments, its casino "
-               "and its contact details and no governing body, and "
-               "/tribal-council/, /tribal-government/ and the sitemap all answer "
-               "404 (measured 2026-10-01). There is nothing published to read, "
-               "so the card links the nation.",
-    },
     "2980": {
         "host": "pbpindiantribe.com",
         "measured": "2026-10-01",
@@ -209,106 +200,9 @@ ROSTER_BLOCKED = {
 # between them would be making a claim about this project rather than reporting
 # a measurement.
 ROSTER_NOT_READ = {
-    "0140": {
-        "host": "badriver-nsn.gov",
-        "measured": "2026-10-01",
-        "page": "https://www.badriver-nsn.gov/government/",
-    },
-    "0170": {
-        "host": "baymills.org",
-        "measured": "2026-10-01",
-        "page": "https://www.baymills.org/executive-council",
-    },
-    "1125": {
-        "host": "fdlband.org",
-        "measured": "2026-10-01",
-        "page": "https://www.fdlband.org/government/tribal_council.php",
-    },
-    "1135": {
-        "host": "fcpotawatomi.com",
-        "measured": "2026-10-01",
-        "page": "https://www.fcpotawatomi.com/government/executive-council/",
-    },
-    "1370": {
-        "host": "gtbindians.org",
-        "measured": "2026-10-01",
-        "page": "https://www.gtbindians.org/council_members.asp",
-    },
-    "1450": {
-        "host": "ho-chunknation.com",
-        "measured": "2026-10-01",
-        "page": "https://ho-chunknation.com/government/",
-    },
-    "1550": {
-        "host": "nhbp-nsn.gov",
-        "measured": "2026-10-01",
-        "page": "https://nhbp-nsn.gov/tribal-council/",
-    },
-    "1610": {
-        "host": "sagchip.org",
-        "measured": "2026-10-01",
-        "page": "https://www.sagchip.org/council/index.htm",
-    },
-    "1815": {
-        "host": "lco-nsn.gov",
-        "measured": "2026-10-01",
-        "page": "https://lco-nsn.gov/tribal-governing-board/",
-    },
-    "1825": {
-        "host": "ldftribe.com",
-        "measured": "2026-10-01",
-        "page": "https://www.ldftribe.com/pages/16/tribal-council/",
-    },
-    "1830": {
-        "host": "lvd-nsn.gov",
-        "measured": "2026-10-01",
-        "page": "https://lvd-nsn.gov/Content/Tribal-Council.cfm",
-    },
-    "1963": {
-        "host": "ltbbodawa-nsn.gov",
-        "measured": "2026-10-01",
-        "page": "https://ltbbodawa-nsn.gov/tribal-council-and-legislative-office/",
-    },
-    "2150": {
-        "host": "gunlaketribe-nsn.gov",
-        "measured": "2026-10-01",
-        "page": "https://gunlaketribe-nsn.gov/about/tribal-council/",
-    },
-    "2175": {
-        "host": "menominee-nsn.gov",
-        "measured": "2026-10-01",
-        "page": "https://www.menominee-nsn.gov/GovernmentPages/Legislature",
-    },
-    "2560": {
-        "host": "oneida-nsn.gov",
-        "measured": "2026-10-01",
-        "page": "https://oneida-nsn.gov/government/business-committee/",
-    },
-    "2890": {
-        "host": "www.pokagonband-nsn.gov",
-        "measured": "2026-10-01",
-        "page": "https://www.pokagonband-nsn.gov/government/tribal-council/",
-    },
-    "3085": {
-        "host": "redcliff-nsn.gov",
-        "measured": "2026-10-01",
-        "page": "https://www.redcliff-nsn.gov/government/tribal_government/index.php",
-    },
-    "3305": {
-        "host": "stcroixojibwe-nsn.gov",
-        "measured": "2026-10-01",
-        "page": "https://stcroixojibwe-nsn.gov/tribal-council/",
-    },
-    "3635": {
-        "host": "saulttribe.com",
-        "measured": "2026-10-01",
-        "page": "https://www.saulttribe.com/government/board-of-directors",
-    },
-    "4015": {
-        "host": "mohican-nsn.gov",
-        "measured": "2026-10-01",
-        "page": "https://mohican-nsn.gov/tribal-council/",
-    },
+    # Empty since 2026-10-06, when all nineteen nations that were here had their
+    # councils read by scripts/tribal_council_scraper.py. The table stays for
+    # the next state whose nations publish a council nobody has read yet.
 }
 
 
@@ -318,6 +212,67 @@ def _not_read_why(entry):
             "answered this project on %s; these names are not in this app yet, "
             "so the card links the nation instead of naming anybody."
             % (entry["page"], entry["measured"]))
+
+
+COUNCILS = os.path.join(REPO, "data", "tribal-councils.json")
+
+# The order a council is listed in on the card: the head of the government,
+# then the deputy, then the other officers, then everyone else, each group in
+# the order the nation's own page gives. Two pages list their council in
+# PHOTO order (Menominee's and Forest County Potawatomi's captions read left to
+# right), which is no order a reader can use.
+_OFFICE_RANK = [
+    (r"^(?:tribal )?(?:chair(?:man|woman|person)?|president|chief)$", 0),
+    (r"^vice[- ]|^sub-chief$", 1),
+    (r"legislative leader", 2),
+    (r"secretary|treasurer", 3),
+    (r"sergeant|chaplain|elder", 4),
+]
+
+
+def _office_rank(role):
+    low = role.lower()
+    for pat, rank in _OFFICE_RANK:
+        if re.search(pat, low):
+            return rank
+    return 5
+
+
+def load_councils():
+    if not os.path.exists(COUNCILS):
+        return {}
+    return json.load(open(COUNCILS))["councils"]
+
+
+def _roster_note(rec):
+    """The card's own sentence for where the names came from and when."""
+    when = rec.get("carriedFrom") or rec["read"]
+    if rec["source"] == "state-list":
+        return ("Named by the %s's list of Wisconsin tribal officials, updated %s, "
+                "because the nation publishes no council of its own. Read %s."
+                % (rec["publisher"], rec["listUpdated"], when))
+    if rec.get("carriedFrom"):
+        return ("From the nation's own council page, last read %s; the page could "
+                "not be read on the most recent weekly run." % when)
+    return "From the nation's own council page, read %s." % when
+
+
+def roster_props(code, councils):
+    """The roster fields a feature carries, or None when no council is carried."""
+    rec = councils.get(code)
+    if rec is None:
+        return None
+    members = sorted(rec["members"], key=lambda m: _office_rank(m["role"]))
+    return {
+        "roster": members,
+        "rosterWhy": None,
+        "rosterNote": _roster_note(rec),
+        "rosterSource": rec["source"],
+        "rosterPage": rec["page"],
+        "rosterRead": rec.get("carriedFrom") or rec["read"],
+        "rosterHost": None,
+        "rosterMeasured": None,
+    }
 
 
 def load_join():
@@ -472,12 +427,10 @@ def _districts_note(district_names):
     return ", ".join(sorted(district_names))
 
 
-def _record(cls, feat, clip, entry, gov, district_names, counts, known):
+def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils=None):
     props = feat["properties"]
     code = str(props.get("AIANNH"))
-    blocked = ROSTER_BLOCKED.get(code)
-    not_read = ROSTER_NOT_READ.get(code)
-    return {
+    rec = {
         "type": "Feature",
         "geometry": feat["geometry"],
         "properties": {
@@ -512,18 +465,105 @@ def _record(cls, feat, clip, entry, gov, district_names, counts, known):
             "areaKm2": round(clip["inside_km2"], 4),
             "wholeAreaKm2": round(clip["whole_km2"], 4),
             "shareInState": round(clip["share"], 6),
-            "roster": None,
-            # Why this card names nobody, from whichever of the two tables
-            # above describes this nation: a measured refusal, or a page that
-            # answers and has not been read yet. Never both, which `check`
-            # enforces, because a nation cannot be blocked and readable at once.
-            "rosterWhy": (blocked["why"] if blocked
-                          else _not_read_why(not_read) if not_read else None),
-            "rosterHost": (blocked or not_read or {}).get("host"),
-            "rosterMeasured": (blocked or not_read or {}).get("measured"),
-            "rosterPage": not_read["page"] if not_read else None,
         },
     }
+    return stamp(rec, councils or {})
+
+
+def _no_roster_props(code, councils):
+    """The roster fields the GEOMETRY file carries. For a nation whose council
+    is carried they are all empty, because the names live in the instance's
+    own tribal-councils.json: the geometry is served cache-first and changes
+    about once a decade, while a council changes whenever an election or an
+    appointment does, and a name written into a cache-first file would reach a
+    returning reader only after the next cache bump. For any other nation they
+    say why the card names nobody, from whichever of the two tables above
+    describes it: a measured refusal, or a page that answers and has not been
+    read yet. Never both, which `check` enforces."""
+    if code in councils:
+        return {"roster": None, "rosterWhy": None, "rosterHost": None,
+                "rosterMeasured": None}
+    blocked = ROSTER_BLOCKED.get(code)
+    not_read = ROSTER_NOT_READ.get(code)
+    out = {
+        "roster": None,
+        "rosterWhy": (blocked["why"] if blocked
+                      else _not_read_why(not_read) if not_read else None),
+        "rosterHost": (blocked or not_read or {}).get("host"),
+        "rosterMeasured": (blocked or not_read or {}).get("measured"),
+    }
+    # Only a page that answers and has not been read has an address to give.
+    if not_read:
+        out["rosterPage"] = not_read["page"]
+    return out
+
+
+def stamp(feature, councils):
+    """Set a geometry feature's roster fields. The one place they are written,
+    so a rebuild of the land and a weekly re-read of the councils cannot write
+    them two ways."""
+    p = feature["properties"]
+    for k in [k for k in p if k.startswith("roster")]:
+        del p[k]
+    p.update(_no_roster_props(p["aiannh"], councils))
+    return feature
+
+
+def _councils_path(tag):
+    return os.path.join(REPO, tag, "data", "app", "tribal-councils.json")
+
+
+def instance_councils(doc, councils):
+    """What one instance's tribal-councils.json holds: the council of every
+    nation it ships whose council is carried, already in card order."""
+    out = {}
+    for f in doc["features"]:
+        want = roster_props(f["properties"]["aiannh"], councils)
+        if want is not None:
+            out[f["properties"]["aiannh"]] = want
+    # Keyed by code at the TOP level, with no wrapper, because
+    # validate_index.py's `min_keys` counts top-level keys: a wrapper object
+    # would read as two councils however many it held.
+    return dict(sorted(out.items()))
+
+
+def _write_json(path, doc):
+    with open(path, "w") as fh:
+        json.dump(doc, fh, indent=1, ensure_ascii=False)
+        fh.write("\n")
+
+
+def stamp_rosters():
+    """Offline: write each instance's tribal-councils.json from the councils
+    file, and re-stamp its geometry's roster fields. The geometry moves only
+    when a nation's council starts or stops being carried; a weekly re-read
+    that changes a name changes the councils file alone."""
+    councils = load_councils()
+    n = 0
+    for tag in sorted(os.listdir(REPO)):
+        path = os.path.join(REPO, tag, "data", "app", "tribal-areas.json")
+        if not os.path.exists(path):
+            continue
+        doc = json.load(open(path))
+        for f in doc["features"]:
+            stamp(f, councils)
+        with open(path, "w") as fh:
+            json.dump(doc, fh)
+            fh.write("\n")
+        mine = instance_councils(doc, councils)
+        cpath = _councils_path(tag)
+        if mine:
+            _write_json(cpath, mine)
+        elif os.path.exists(cpath):
+            os.remove(cpath)
+        for f in doc["features"]:
+            p = f["properties"]
+            c = mine.get(p["aiannh"])
+            print("build-tribal-areas --rosters: %s %s %s — %s"
+                  % (tag, p["aiannh"], p["nation"],
+                     "%d named" % len(c["roster"]) if c else "nobody named"))
+        n += 1
+    print("build-tribal-areas --rosters: OK — %d instance file(s) stamped" % n)
 
 
 def build(state_name, tag, out_path=None):
@@ -537,7 +577,7 @@ def build(state_name, tag, out_path=None):
         code = str(feat["properties"].get("AIANNH"))
         entry = join["areas"][code]
         feats.append(_record(cls, feat, clip, entry, bia[entry["government"]],
-                             here.get(code, []), counts, known))
+                             here.get(code, []), counts, known, load_councils()))
     feats.sort(key=lambda f: (f["properties"]["nation"], f["properties"]["aiannh"]))
     doc = {
         "type": "FeatureCollection",
@@ -551,21 +591,27 @@ def build(state_name, tag, out_path=None):
     with open(path, "w") as fh:
         json.dump(doc, fh)
         fh.write("\n")
+    if out_path is None:
+        mine = instance_councils(doc, load_councils())
+        if mine:
+            _write_json(_councils_path(tag), mine)
     for f in feats:
         p = f["properties"]
         print("build-tribal-areas: %s — %s, seat %s, %s, %.4f km2, %s resident(s), "
-              "%d district(s) drawn, roster %s"
+              "%d district(s) drawn, council %s"
               % (tag, p["nation"], p["seat"], p["landClass"], p["areaKm2"],
                  p["population"], len(p["districts"]),
-                 "named" if p["roster"] else "not named"))
+                 "carried" if p["aiannh"] in load_councils() else "not carried"))
     print("build-tribal-areas: OK — %s wrote %d area(s) in %s (state code %s)"
           % (tag, len(feats), state_name, state_code))
     return doc
 
 
 def check():
-    """Offline: every shipped file against the join, the Bureau's list and itself."""
+    """Offline: every shipped file against the join, the Bureau's list, the
+    councils file and itself."""
     join, bia = load_join(), load_bia()
+    councils = load_councils()
     seen = areas = 0
     for tag in sorted(os.listdir(REPO)):
         path = os.path.join(REPO, tag, "data", "app", "tribal-areas.json")
@@ -573,6 +619,21 @@ def check():
             continue
         seen += 1
         doc = json.load(open(path))
+        cpath = _councils_path(tag)
+        shipped_councils = (json.load(open(cpath)) if os.path.exists(cpath)
+                            else None)
+        want_councils = instance_councils(doc, councils)
+        if want_councils:
+            if shipped_councils != want_councils:
+                raise RuntimeError(
+                    "%s/data/app/tribal-councils.json differs from what "
+                    "data/tribal-councils.json gives it — run "
+                    "build_tribal_areas.py --rosters" % tag)
+        elif shipped_councils is not None:
+            raise RuntimeError(
+                "%s ships tribal-councils.json and carries no council — remove "
+                "it, or the app fetches a file that names nobody" % tag)
+        carried = want_councils
         if doc["state"] not in join["statesCovered"]:
             raise RuntimeError(
                 "%s ships tribal areas for %s and the join does not list it as "
@@ -580,7 +641,18 @@ def check():
                 % (tag, doc["state"]))
         for feat in doc["features"]:
             areas += 1
-            p = feat["properties"]
+            # The geometry's own roster fields must be what `stamp` writes,
+            # and the card reads them with the councils file merged over them,
+            # so every check below is made on that merged view.
+            geo = feat["properties"]
+            stamped = _no_roster_props(geo["aiannh"], councils)
+            if {k: v for k, v in geo.items() if k.startswith("roster")} != stamped:
+                raise RuntimeError(
+                    "%s: AIANNH %s's geometry carries roster fields `stamp` "
+                    "would not write — run build_tribal_areas.py --rosters"
+                    % (tag, geo["aiannh"]))
+            p = dict(geo)
+            p.update(carried.get(geo["aiannh"], {}))
             entry = join["areas"].get(p["aiannh"])
             if entry is None:
                 raise RuntimeError("%s ships AIANNH %s, which the join does not "
@@ -602,6 +674,24 @@ def check():
                 raise RuntimeError("%s links %r for %r where the Bureau publishes "
                                    "%r" % (tag, p["url"], p["nation"],
                                            gov.get("website")))
+            # A carried council must be exactly what the councils file says,
+            # stamped by the one function that stamps it, so a weekly re-read
+            # that forgot to re-stamp, or a hand edit, fails here.
+            want = roster_props(p["aiannh"], councils)
+            if want is not None:
+                got = {k: p.get(k) for k in want}
+                if got != want:
+                    raise RuntimeError(
+                        "%s: AIANNH %s carries a council that differs from "
+                        "data/tribal-councils.json — run build_tribal_areas.py "
+                        "--rosters" % (tag, p["aiannh"]))
+                if p["aiannh"] in ROSTER_BLOCKED or p["aiannh"] in ROSTER_NOT_READ:
+                    raise RuntimeError(
+                        "%s: AIANNH %s names its council AND is recorded as unread "
+                        "or blocked — retire the stale entry" % (tag, p["aiannh"]))
+            elif p["roster"] is not None:
+                raise RuntimeError("%s: AIANNH %s names people the councils file "
+                                   "does not carry" % (tag, p["aiannh"]))
             # The one thing a card may never render is an unexplained absence.
             if p["roster"] is None and not p["rosterWhy"]:
                 raise RuntimeError(
@@ -623,22 +713,24 @@ def check():
             "AIANNH %s is recorded as blocked AND as readable-but-not-read — a "
             "nation cannot be both, so one of the two measurements is stale"
             % ", ".join(both))
-    orphans = sorted((set(ROSTER_BLOCKED) | set(ROSTER_NOT_READ)) - {
+    shipped = {
         f["properties"]["aiannh"]
         for tag in os.listdir(REPO)
         for f in (json.load(open(os.path.join(REPO, tag, "data", "app",
                                               "tribal-areas.json")))["features"]
                   if os.path.exists(os.path.join(REPO, tag, "data", "app",
-                                                 "tribal-areas.json")) else [])})
+                                                 "tribal-areas.json")) else [])}
+    orphans = sorted((set(ROSTER_BLOCKED) | set(ROSTER_NOT_READ) | set(councils))
+                     - shipped)
     if orphans:
         raise RuntimeError(
-            "a roster record names AIANNH %s and no instance ships it — a "
+            "a roster record or a council names AIANNH %s and no instance ships it — a "
             "measurement nothing reads is the shape this project keeps finding "
             "wrong" % ", ".join(orphans))
     print("build-tribal-areas --check: OK — %d instance(s), %d area(s); every "
           "government named by the join and listed by the Bureau, every seat and "
-          "link theirs, and every unnamed roster explained"
-          % (seen, areas))
+          "link theirs, %d council(s) carried as read, and every unnamed roster "
+          "explained" % (seen, areas, len(councils)))
     return True
 
 
@@ -699,8 +791,29 @@ def selftest():
     assert not (set(ROSTER_BLOCKED) & set(ROSTER_NOT_READ))
     # The not-read sentence names the page and the date, so a reader is sent
     # somewhere rather than told an absence with no remedy.
-    one = _not_read_why(ROSTER_NOT_READ["0170"])
-    assert "https://www.baymills.org/executive-council" in one and "2026-10-01" in one
+    one = _not_read_why({"host": "example.invalid", "measured": "2026-10-01",
+                         "page": "https://example.invalid/council"})
+    assert "https://example.invalid/council" in one and "2026-10-01" in one
+
+    # The card lists the head of government first whatever order a page used,
+    # and keeps the page's order within each group.
+    assert [_office_rank(r) for r in ("Chairwoman", "Tribal Chairperson", "Chief",
+                                      "President", "Vice-Chairman", "Sub-Chief",
+                                      "Secretary/Treasurer", "Sergeant-at-Arms",
+                                      "Council Member", "Director")] == [0, 0, 0, 0, 1, 1, 3, 4, 5, 5]
+    members = [{"name": "A B", "role": "Treasurer"}, {"name": "C D", "role": "Council Member"},
+               {"name": "E F", "role": "Chairman"}, {"name": "G H", "role": "Council Member"}]
+    rec = {"source": "nation", "page": "https://example.invalid/council", "read": "2026-10-06",
+           "members": members}
+    got = roster_props("0001", {"0001": rec})
+    assert [m["name"] for m in got["roster"]] == ["E F", "A B", "C D", "G H"], got
+    assert got["rosterWhy"] is None and got["rosterNote"].endswith("read 2026-10-06.")
+    carried = roster_props("0001", {"0001": dict(rec, carriedFrom="2026-09-29")})
+    assert "last read 2026-09-29" in carried["rosterNote"] and carried["rosterRead"] == "2026-09-29"
+    state = roster_props("0001", {"0001": dict(rec, source="state-list", listUpdated="2026-07-08",
+                                               publisher="Wisconsin Department of Administration")})
+    assert "updated 2026-07-08" in state["rosterNote"] and "no council of its own" in state["rosterNote"]
+    assert roster_props("0002", {"0001": rec}) is None
 
     print("build-tribal-areas --selftest: OK — the join check fails three ways, "
           "the seat never invents a city, all %d blocked roster(s) name a host "
@@ -716,7 +829,12 @@ def main():
     ap.add_argument("--out")
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--rosters", action="store_true",
+                    help="offline: re-stamp the shipped files from data/tribal-councils.json")
     args = ap.parse_args()
+    if args.rosters:
+        stamp_rosters()
+        return 0
     if args.selftest:
         return 0 if selftest() else 1
     if args.check:
