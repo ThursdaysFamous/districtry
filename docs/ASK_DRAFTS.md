@@ -5551,6 +5551,35 @@ and nothing is asked of any named judge personally.
 
 ## Ask marion-wi-council-districts — two county clerks: how many districts does the City of Marion elect, and which of you files which?
 
+> **WITHDRAW BOTH LETTERS (re-checked 2026-10-06 under the read-the-page-first rule). WAUPACA
+> COUNTY ALREADY PUBLISHES THE ANSWER TO BOTH QUESTIONS, in two documents its Clerk's office
+> compiles, so the letter would ask a clerk to repeat what her office has printed.** Both hosts
+> answer 404 for robots.txt, which permits, and both were read with the county board scraper's own
+> token.
+>
+> 1. **How many districts: three.** The Clerk's Directory of Public Officials
+>    (`public4.co.waupaca.wi.us/CountyDirectory`, the page the county board scraper already reads,
+>    section `city-officials`) lists the City of Marion's council as Aldermanic District 1, 2 and 3,
+>    two alderpersons each: District 1 Wanda Tucker and Neal Westemeier, District 2 David Mattes
+>    and one seat printed "Vacant", District 3 Harry Faehling and Joe Larson. It also prints home
+>    addresses, which never ship.
+> 2. **Which filed number is which: the four filed numbers are three districts.** The Clerk's
+>    notice and sample ballot for 7 April 2026 (`April 7, 2026 Combined Insert.pdf`, linked from
+>    the county's past-election-results page; text layer, not a scan) lists the City of Marion,
+>    wards 1 to 4, with "Alderperson, District 1 & 4", "Alderperson, District 2" and
+>    "Alderperson, District 3", and names ward 4 as the part in Shawano County. The state's ward file
+>    (read the same day) codes ward 1 `21`, ward 2 `22`, ward 3 `23` (Waupaca) and ward 4 `01`
+>    (Shawano). So Shawano's `01` and Waupaca's `21` are one district, District 1, and the map's
+>    fourth district does not exist. **One step is inferred, not printed:** that ward 2 is District 2
+>    and ward 3 is District 3. Nothing in either document says otherwise, and it is the only
+>    reading in which the directory's three districts and the ballot's labels agree.
+>
+> Marion's own site still refuses us (`www.cityofmarionwi.gov/robots.txt`, re-read 2026-10-06:
+> `User-agent: *` / `Disallow: /`), so nothing was read there. The fix is now map work rather than
+> a letter: merge `01` into District 1, relabel `21`-`23` as Districts 1-3, and consider the
+> directory as a roster source for the six seats. That changes what readers see, so it waits for
+> Adam's word. The text below is kept as the record of what was going to be asked.
+
 > **ONE SENT AND BOUNCED, ONE NOT SENT.** Written 2026-10-01. Two letters, one to each of the two
 > county clerks who file the City of Marion's wards. The Waupaca letter went that day and was
 > refused as a permanent failure by the county's own mail server, so it reached nobody and
