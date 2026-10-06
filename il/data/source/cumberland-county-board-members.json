@@ -1,0 +1,54 @@
+{
+  "Central": {
+    "members": [
+      {
+        "email": "sandycroft13@hotmail.com",
+        "name": "Sandy Croft",
+        "party": "Republican",
+        "phone": "217-821-1778"
+      },
+      {
+        "email": "official_jtoddlayton@yahoo.com",
+        "name": "J Todd Layton",
+        "party": "Republican",
+        "phone": "(217) 273-3688",
+        "role": "Vice-Chairman"
+      }
+    ],
+    "sourceUrl": "https://cumberlandcoil.gov/county-board-members-committees/"
+  },
+  "Eastern": {
+    "members": [
+      {
+        "name": "Michael W Brandenburg",
+        "party": "Republican",
+        "phone": "217-232-7193"
+      },
+      {
+        "email": "jreblade@gmail.com",
+        "name": "Janet Blade",
+        "party": "Republican",
+        "phone": "(217) 232-5176"
+      }
+    ],
+    "sourceUrl": "https://cumberlandcoil.gov/county-board-members-committees/"
+  },
+  "Western": {
+    "members": [
+      {
+        "email": "timothywente@gmail.com",
+        "name": "Timothy J Wente",
+        "party": "Republican",
+        "phone": "217-663-8738"
+      },
+      {
+        "email": "fdholkenbrink@gmail.com",
+        "name": "Floyd Holkenbrink",
+        "party": "Republican",
+        "phone": "(217) 844-3666",
+        "role": "Chairman"
+      }
+    ],
+    "sourceUrl": "https://cumberlandcoil.gov/county-board-members-committees/"
+  }
+}

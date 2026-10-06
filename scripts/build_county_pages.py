@@ -461,7 +461,8 @@ def il_districted(inst):
             source = source or entry.get("sourceUrl")
             if isinstance(entry.get("members"), list):
                 districts.append(district(key, entry["members"],
-                                          entry.get("vacancies") or 0))
+                                          entry.get("vacancies") or 0,
+                                          entry.get("note")))
             elif not (entry.get("name") or "").strip():
                 skipped.append(key)          # a per-county extra, not a district
             elif key == "chair":

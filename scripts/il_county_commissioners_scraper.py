@@ -818,6 +818,44 @@ DOCUMENT_ROSTERS = {
             "address": "50 East Main Street, Albion, IL 62806",
         },
     },
+    "HARDIN": {
+        "name": "Hardin County",
+        "structure": "Commission form — 3 commissioners elected countywide",
+        "document": "e-mail from County Clerk & Recorder Jill Cowsert, 2026-10-01, "
+                    "with her correction of the third name the same day",
+        "verified": "2026-10-01",
+        "expect": 3,
+        # THE THIRD COUNTY WITH NO WEBSITE AT ALL, and the Clerk is the one who
+        # settled it: asked on 2026-08-21 whether the county published a board
+        # list anywhere, she replied on 2026-08-24, in full — "Our county board
+        # is elected countywide. And we do not have a website in Hardin County."
+        # So this is a document roster permanently rather than a scrape waiting
+        # for a site to appear, and the gap record it closes had been reading
+        # the county's PUBLISHED web address (hardincountyil.gov) as evidence
+        # about the county: that address is a parked page and the county is not
+        # behind it.
+        #
+        # The form was already proven twice from certified returns before she
+        # wrote — the 2026 General Primary prints a committeeperson contest per
+        # precinct per party and no district-suffixed board contest anywhere,
+        # and an older canvass on a second vendor agrees — so her sentence
+        # confirms the form rather than being the only source for it. The NAMES
+        # are hers alone, from her reply of 2026-10-01: "We have three
+        # commissioners. Darrick Armstrong is our chairman, Ricky Williams is
+        # our vice-chairman, and Michael Belfor is the third commissioner."
+        # She corrected the third name herself at 19:27 UTC the same day: "The
+        # third member is Michael Belford. I left the d off." Her correction is
+        # what ships; a name is the source's to correct, never ours.
+        # Ordered as she orders them. She assigns no per-seat e-mail and the
+        # county publishes no page to carry one, so each row is a name alone,
+        # and no office address is asserted — the courthouse address this
+        # project holds is the CLERK's office and is not claimed as theirs.
+        "members": [
+            {"name": "Darrick Armstrong", "role": "Chairman"},
+            {"name": "Ricky Williams", "role": "Vice Chairman"},
+            {"name": "Michael Belford", "role": "Commissioner"},
+        ],
+    },
     "WABASH": {
         "name": "Wabash County",
         "structure": "Commission form — 3 commissioners elected countywide",

@@ -1,0 +1,112 @@
+name: Update Kentucky judges roster
+
+# Weekly refresh of the four Kentucky court cards' judges
+# (ky/data/app/ky-judge-roster.json, read by ky/index.html). Re-reads the
+# Kentucky Court of Justice's own pages — the Supreme Court's page, the Court of
+# Appeals' page and the 120 county pages — and, if anything changed, opens a PR
+# rather than committing to main: these are real officeholders and they get a
+# human look before they ship.
+#
+# THE SOURCE IS WHAT THE COURT'S OWN DATA OFFICER POINTED AT. Ask
+# ky-judge-district-join went to the Administrative Office of the Courts on
+# 2026-10-01 and was answered the same hour; kycourts.gov prints the numbered
+# district or circuit beside each judge, which is the join that lets these cards
+# name anybody at all. The other surface that reply named, the directory search
+# at kcoj.kycourts.net, refuses every client in its robots.txt and is not read.
+#
+# TWO THINGS MAKE THIS SAFE TO RUN UNATTENDED, both in the scraper and the
+# builder rather than here. The scraper FAILS if any county page outside its
+# recorded exception comes back with no judges, and fails if the one recorded
+# exception (Jefferson, whose page leaves its judges out) starts publishing —
+# so a source that changes shape, in either direction, turns the run red instead
+# of shipping a roster quietly short of a county. The builder then requires
+# every unit the shipped boundary files carry to have a judge or a recorded
+# reason, which is an identity rather than a floor and names the missing circuit.
+#
+# IT RUNS ONE REQUEST A SECOND over 122 pages, so the fetch takes about two
+# minutes. kycourts.gov states no Crawl-delay; the pace is politeness.
+
+on:
+  schedule:
+    - cron: "40 14 * * 2" # Tuesday 14:40 UTC — a free slot in the fleet's roster schedule
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; a PR opened with the default GITHUB_TOKEN fires no workflows. Falls
+      # back to github.token when the secret is absent, so the refresh still
+      # runs rather than breaking.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # No third-party deps: the scraper reads with stdlib urllib through the
+      # fleet's shared robots gate, which asks kycourts.gov's robots.txt once
+      # with the exact client that then crawls.
+      - name: Read the Court of Justice's pages
+        run: python3 ky/scripts/ky_judge_scraper.py
+
+      - name: Rebuild the judge roster
+        run: python3 ky/scripts/build_ky_judges.py
+
+      # Gate the regenerated data before it can reach a PR: the roster must
+      # match what the builder writes from the retained read, and the app must
+      # still parse and carry every layer with every data file present.
+      - name: Validate roster + app
+        run: |
+          python3 ky/scripts/build_ky_judges.py --check
+          python3 ky/scripts/validate_index.py ky/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- ky/data/app/ky-judge-roster.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR
+          # every week.
+          branch="bot/ky-judges-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with, so the branch differs from main in its data file
+          # alone and a push cannot read as updating a workflow.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 ky/scripts/ky_judge_scraper.py
+          python3 ky/scripts/build_ky_judges.py
+          git add ky/data/app/ky-judge-roster.json ky/data/source/ky-judges-scrape.json
+          git commit -m "Update Kentucky judges roster from the Court of Justice"
+          git push -u origin "$branch" --force
+          # Only open a PR if one isn't already open for this branch; if it is,
+          # the force-push above already updated it.
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Kentucky judges roster from the Court of Justice" \
+              --body "Automated weekly refresh of the four Kentucky court cards' judges, read from the Kentucky Court of Justice's own pages by \`ky/scripts/ky_judge_scraper.py\` and written by \`ky/scripts/build_ky_judges.py\`. Each judge is keyed by the numbered district or circuit the court itself prints beside them — nothing is inferred from a judge's county of residence. Please review the diff before merging: this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

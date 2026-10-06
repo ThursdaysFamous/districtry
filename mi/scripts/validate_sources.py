@@ -448,6 +448,25 @@ PROVENANCE = [
             "twice in eight requests from the sandbox on 2026-09-29, so fetches retry."
         ),
     },
+    {
+        "layer": "Tribal government areas (Michigan)",
+        "app_file": "tribal-areas.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
+        "note": (
+            "The Census's American Indian / Alaska Native areas service, "
+            "current vintage, reservation + off-reservation trust land "
+            "(layers 2/3 -- ALWAYS NAME THE SERVICE BESIDE A LAYER ID, since "
+            "those ids mean other classes in tigerWMS_Current). Michigan holds 24 "
+            "areas, 13 reservations and 11 pieces of trust land over 952.0 km2, "
+            "carrying 12 nations. THE SET MOVES AND NOT ON A REDISTRICTING "
+            "CALENDAR: land enters the map when the United States takes it "
+            "into trust, so a vintage comparison is the only thing that sees "
+            "a new parcel. scripts/build_tribal_areas.py --check is OFFLINE "
+            "and proves the land-to-government join and the shipped "
+            "properties, never that the Census has not added an area, so this "
+            "manifest is what watches the service. No nation's own council page is watched here: 9 of the 12 sit in build_tribal_areas.ROSTER_NOT_READ, and the other three are in ROSTER_BLOCKED -- two challenge-fronted, one members-only -- which are access controls and are never worked around."
+        ),
+    },
 ]
 
 ENDPOINTS = [
