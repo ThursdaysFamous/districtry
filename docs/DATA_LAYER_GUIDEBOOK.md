@@ -4267,6 +4267,49 @@ already publishes nine times over as a per-district `officeAddress` — a second
 one. **A gate that only ever passes has not been tested; this one failed three times before
 it was right.**
 
+## A page that fills itself in is read through its own feed (2026-10-06)
+
+**TWO LETTERS TOLD A CLERK WE COULD NOT READ THEIR PAGE, AND BOTH PAGES WERE READABLE.**
+Scott County, Illinois (`scott-county-commissioners`) and Lansing, Michigan
+(`lansing-council-roster`) both publish their members on pages that arrive empty
+and fill in a moment later from a feed. Scott's is a Munibit "People" widget whose
+`/api/public/mwjsPeople` endpoint answered HTTP 500 when called bare; Lansing's is
+CivicPlus content at `content.civicplus.com` that answered 401 without a token.
+Both were recorded as shut — an empty shell, and "getting past a sign-in" — and
+both were wrong for the same reason: **the page itself carries the feed's address,
+the parameters it sends, and in Lansing's case a read-only key it hands to every
+visitor.** A person loading the page in a browser saw the names. Our check asked
+the feed a question the page never asks.
+
+**The standing check, for every new reader and before any record or letter calls a
+page unreadable** (Adam, 2026-10-06):
+
+1. Read the page's HTML and the scripts it loads for the feed address, the
+   parameters, and any key or settings it gives every anonymous visitor.
+2. Fetch the feed that way, with the reader identity the scraper will use and after
+   the robots.txt read for the feed's own host.
+3. Compare the result with what a person sees in a browser. Only a feed that still
+   refuses, read the page's own way, is a finding.
+4. Open the documents the page links to — PDFs, spreadsheets, scanned notices. A PDF
+   with no text layer is not empty: render it and read it as an image. Clark County,
+   Illinois publishes its board's contacts as a scanned PDF linked from the board
+   page, and an earlier pass recorded them as unpublished (found 2026-10-06).
+
+**The line between configuration and a credential is who receives it.** A key the
+page gives every visitor is part of what the page publishes, and using it reads the
+page as published. A key that arrives only after someone signs in, a session, or a
+managed challenge is an access control, and is never worked around. Robots.txt binds
+the feed's host on its own terms, and a browser identity is used only where a site
+measurably refuses ours — neither changes here.
+
+**Why this is a checklist and not a gate.** A gap record states its cause in prose,
+and matching that prose does not separate the cases: on 2026-10-06 a pattern for
+script, widget, sign-in, 401, token and "returns nothing" matched 52 records across
+the fleet, most of them through "token" meaning this project's own user-agent token.
+So the steps sit where the work starts — `.claude/skills/outbound-ask/SKILL.md` §1,
+`.claude/skills/gap-record/SKILL.md` §3, `.claude/skills/roster-pipeline/SKILL.md` §3
+— and the two records above are corrected by the threads that own them.
+
 ## Which hosts actually refuse the districtry user-agent (2026-09-12)
 
 **THE RULE HAD NO NUMBERS BEHIND IT.** CLAUDE.md's browser-user-agent section (settled
