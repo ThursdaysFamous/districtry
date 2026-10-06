@@ -4570,6 +4570,23 @@ next step rather than a mailing.
 
 ## Ask wi-city-council-pages — Beloit: may we read your council page?
 
+> **RE-CHECKED 2026-10-06 UNDER THE READ-THE-PAGE-FIRST RULE. THE REFUSAL STANDS AND ONE
+> SENTENCE OF THE LETTER WAS FALSE FOR BELOIT, NOW CORRECTED.** The rule asks whether a page we
+> called unreadable actually loads its names from a feed we could read. For Beloit that question
+> cannot be asked: `www.beloitwi.gov/robots.txt` was re-read with the same token as before and is
+> unchanged (HTTP 200, 573 bytes, six named crawlers with narrow rules, then `User-agent: *` /
+> `Disallow: /`). That refuses the council page AND everything a feed hunt would need, the page
+> source included, so nothing on that host was fetched. The file names the same six crawlers as
+> the seven Wisconsin county hosts `validate_card_links.py` records as one CMS vendor's default,
+> though it is not byte-identical to them (Beloit's Googlebot and bingbot groups carry two extra
+> rules); the letter already allows that the block may be a default rather than a decision.
+> **THE FALSE SENTENCE:** the shared template says the map "draws every aldermanic district in
+> <CITY> and names nobody in them". The state's ward file (`WI_Municipal_Wards_Current`, read
+> 2026-10-06) codes all 32 of Beloit's city wards `ALDERID 00`, so the map draws no Beloit
+> district at all. Beloit may elect its council at large, which would explain it, but that is not
+> measured here and the letter does not claim it. Its paragraph now reads as the Beloit variant
+> below.
+
 > **WITHDRAWN FOR FOUR OF THE FIVE CITIES, 2026-10-01, later the same day. JANESVILLE,
 > WAUSAU, WAUWATOSA AND MEQUON DO NOT BLOCK THIS PROJECT AND NEVER NEEDED A LETTER.** All four
 > serve their robots.txt with HTTP 200 and PERMIT `/`, and all four serve their home and council
@@ -4694,6 +4711,11 @@ Draft (one per city; `<CITY>`, `<CLERK>` and the bracketed clause are the only p
 > districtry.com/wi/. It draws every aldermanic district in <CITY> and, at the moment, names
 > nobody in them, which is the thing I am writing about.
 >
+> [For Beloit, in place of the sentence above: It shows which city covers an address in Beloit
+> but, at the moment, names nobody on your City Council, which is the thing I am writing about.
+> And in the next paragraph, "the one that lists each alderperson and their district" becomes
+> "the one that lists each council member".]
+>
 > [For Beloit: Your website's robots.txt asks automated readers to stay off the whole site, and
 > I am following that request — this letter is not a complaint about it and I have not tried to
 > get around it.]
@@ -4747,6 +4769,16 @@ round.
 ---
 
 ## Ask wi-oshkosh-council — City of Oshkosh Clerk: our reader cannot reach your robots.txt
+
+> **RE-CHECKED 2026-10-06 UNDER THE READ-THE-PAGE-FIRST RULE. THE LETTER STANDS AS WRITTEN.**
+> The rule asks whether names we called unreadable sit in a feed we could read. Oshkosh's do
+> not need one: its council page carries the seven names in its own HTML, which is why the
+> scraper is already written. What stops it is the robots read, and that is unchanged from both
+> places that matter. From this sandbox, the scraper's own client fails the handshake
+> (`UNEXPECTED_EOF_WHILE_READING`) while `curl` gets the 331-byte file. From a GitHub runner, the
+> weekly Oshkosh job on 2026-10-01 at 23:04 UTC failed with `Connection reset by peer`, three
+> attempts, and fetched nothing (run 36938706422). The next weekly run is 2026-10-08. No other
+> client was tried.
 
 > **NOT YET ASKED — DRAFTED 2026-10-01.** The only one of the 21 unnamed Wisconsin cities where
 > the obstacle is neither a refusal nor a page that needs a browser, but a connection this
