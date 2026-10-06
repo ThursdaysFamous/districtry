@@ -1,0 +1,1037 @@
+{
+ "note": "Who sits on each Wisconsin and Michigan nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
+ "councils": {
+  "0140": {
+   "source": "nation",
+   "page": "https://www.badriver-nsn.gov/government/",
+   "pages": [
+    "https://www.badriver-nsn.gov/government/"
+   ],
+   "members": [
+    {
+     "name": "Liz Arbuckle",
+     "role": "Tribal Chairman"
+    },
+    {
+     "name": "Aurora Conley",
+     "role": "Senior Member"
+    },
+    {
+     "name": "Peter Powless",
+     "role": "Senior Member"
+    },
+    {
+     "name": "Peter Bigboy",
+     "role": "Junior Member"
+    },
+    {
+     "name": "Patrick Bigboy",
+     "role": "Vice-Chairman"
+    },
+    {
+     "name": "Laura Miranda",
+     "role": "Secretary"
+    },
+    {
+     "name": "Michelle Conners",
+     "role": "Treasurer",
+     "note": "the same page also spells it Connors"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "0170": {
+   "source": "nation",
+   "page": "https://www.baymills.org/executive-council",
+   "pages": [
+    "https://www.baymills.org/executive-council"
+   ],
+   "members": [
+    {
+     "name": "Andy LeBlanc",
+     "role": "Vice President"
+    },
+    {
+     "name": "Whitney Gravelle",
+     "role": "President"
+    },
+    {
+     "name": "Beverly Carrick",
+     "role": "Secretary"
+    },
+    {
+     "name": "Stephanie Walden",
+     "role": "Council Person"
+    },
+    {
+     "name": "Audrey Breakie",
+     "role": "Treasurer"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "1125": {
+   "source": "nation",
+   "page": "https://www.fdlband.org/government/tribal_council.php",
+   "pages": [
+    "https://www.fdlband.org/government/tribal_council.php"
+   ],
+   "members": [
+    {
+     "name": "Bruce Savage",
+     "role": "Tribal Chairman"
+    },
+    {
+     "name": "Wayne Dupuis",
+     "role": "Secretary/Treasurer"
+    },
+    {
+     "name": "Wally Dupuis",
+     "role": "Vice Chairman",
+     "district": "District I"
+    },
+    {
+     "name": "Earl Otis",
+     "role": "District Representative",
+     "district": "District III"
+    },
+    {
+     "name": "Michael Murray Jr",
+     "role": "District Representative",
+     "district": "District II"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "1135": {
+   "source": "nation",
+   "page": "https://www.fcpotawatomi.com/government/executive-council/",
+   "pages": [
+    "https://www.fcpotawatomi.com/government/executive-council/"
+   ],
+   "members": [
+    {
+     "name": "Joseph Daniels Sr.",
+     "role": "Treasurer"
+    },
+    {
+     "name": "Alexandria McCorkle",
+     "role": "Secretary"
+    },
+    {
+     "name": "Brooks Boyd",
+     "role": "Chairman"
+    },
+    {
+     "name": "Ken George Jr.",
+     "role": "Vice Chairman"
+    },
+    {
+     "name": "Destinee Alloway",
+     "role": "Council Member"
+    },
+    {
+     "name": "Herb Daniels Jr.",
+     "role": "Council Member"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "1370": {
+   "source": "nation",
+   "page": "https://www.gtbindians.org/council_members.asp",
+   "pages": [
+    "https://www.gtbindians.org/council_members.asp"
+   ],
+   "members": [
+    {
+     "name": "Sandra Witherspoon",
+     "role": "Chairwoman"
+    },
+    {
+     "name": "Angelina M. Raphael",
+     "role": "Vice Chairwoman"
+    },
+    {
+     "name": "David Wonegeshik",
+     "role": "Treasurer"
+    },
+    {
+     "name": "Anna Miller",
+     "role": "Secretary"
+    },
+    {
+     "name": "Francis Carew",
+     "role": "Councilor"
+    },
+    {
+     "name": "Ryan Memberto",
+     "role": "Councilor"
+    },
+    {
+     "name": "Donna M. Swallows",
+     "role": "Councilor"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "1450": {
+   "source": "nation",
+   "page": "https://ho-chunknation.com/government/legislative-branch/",
+   "pages": [
+    "https://ho-chunknation.com/government/executive-branch/office-of-the-president/",
+    "https://ho-chunknation.com/government/legislative-branch/"
+   ],
+   "members": [
+    {
+     "name": "Jon Greendeer",
+     "role": "President"
+    },
+    {
+     "name": "Paul Fox",
+     "role": "Representative",
+     "district": "District 1",
+     "email": "Paul.Fox@ho-chunk.com"
+    },
+    {
+     "name": "Phyllis Smoke",
+     "role": "Representative",
+     "district": "District 1",
+     "email": "Phyllis.Smoke@ho-chunk.com"
+    },
+    {
+     "name": "Tracy Thundercloud",
+     "role": "Representative",
+     "district": "District 1",
+     "email": "TracyThundercloud@ho-chunk.com"
+    },
+    {
+     "name": "Stephanie Begay",
+     "role": "Representative",
+     "district": "District 2",
+     "email": "Stephanie.Begay@ho-chunk.com"
+    },
+    {
+     "name": "Damian Thundercloud",
+     "role": "Representative",
+     "district": "District 2",
+     "email": "DamianThundercloud@ho-chunk.com"
+    },
+    {
+     "name": "Kyle White Eagle",
+     "role": "Representative",
+     "district": "District 2",
+     "email": "Kyle.WhiteEagle@ho-chunk.com"
+    },
+    {
+     "name": "Lambert Cleveland, Jr.",
+     "role": "Vice President",
+     "district": "District 3",
+     "email": "LambertCleveland@ho-chunk.com"
+    },
+    {
+     "name": "Sarah Lemieux - White Eagle",
+     "role": "Representative",
+     "district": "District 3",
+     "email": "Sarah.Lemieux@ho-chunk.com"
+    },
+    {
+     "name": "Shelby Visintin",
+     "role": "Representative",
+     "district": "District 3",
+     "email": "Shelby.Visintin@ho-chunk.com"
+    },
+    {
+     "name": "Sandra Whitewing",
+     "role": "Representative",
+     "district": "District 4",
+     "email": "Sandra.Whitewing@ho-chunk.com"
+    },
+    {
+     "name": "Ed Mullen",
+     "role": "Representative",
+     "district": "District 4",
+     "email": "Edward.Mullen@ho-chunk.com"
+    },
+    {
+     "name": "David Greendeer",
+     "role": "Representative",
+     "district": "District 4",
+     "email": "David.Greendeer@ho-chunk.com"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "1550": {
+   "source": "nation",
+   "page": "https://nhbp-nsn.gov/tribal-council/",
+   "pages": [
+    "https://nhbp-nsn.gov/tribal-council/"
+   ],
+   "members": [
+    {
+     "name": "Homer A. Mandoka",
+     "role": "Chairperson"
+    },
+    {
+     "name": "Ariel Boonstra",
+     "role": "Vice Chairperson"
+    },
+    {
+     "name": "Jessica Blain",
+     "role": "Secretary"
+    },
+    {
+     "name": "Robert Larson",
+     "role": "Treasurer"
+    },
+    {
+     "name": "Dorie Rios",
+     "role": "Sergeant-at-Arms"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "1610": {
+   "source": "nation",
+   "page": "https://www.sagchip.org/council/councilprofiles.aspx",
+   "pages": [
+    "https://www.sagchip.org/council/councilprofiles.aspx"
+   ],
+   "members": [
+    {
+     "name": "Lucas Sprague",
+     "role": "Chief"
+    },
+    {
+     "name": "Craig Graveratte",
+     "role": "Sub-Chief"
+    },
+    {
+     "name": "Alice Jo Ricketts",
+     "role": "Treasurer"
+    },
+    {
+     "name": "Jennifer Wassegijig",
+     "role": "Chaplain"
+    },
+    {
+     "name": "Frank J. Cloutier",
+     "role": "Sergeant-At-Arms"
+    },
+    {
+     "name": "Christina Otto",
+     "role": "Secretary"
+    },
+    {
+     "name": "Brad Bennett",
+     "role": "Council Member"
+    },
+    {
+     "name": "Tim Davis",
+     "role": "Council Member"
+    },
+    {
+     "name": "Ron Ekdahl",
+     "role": "Council Member"
+    },
+    {
+     "name": "Mary Quigno",
+     "role": "Council Member"
+    },
+    {
+     "name": "Gayle Ruhl",
+     "role": "Council Member"
+    },
+    {
+     "name": "Shirley Houle",
+     "role": "Council Member"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "1815": {
+   "source": "nation",
+   "page": "https://lco-nsn.gov/tribal-governing-board/",
+   "pages": [
+    "https://lco-nsn.gov/tribal-governing-board/"
+   ],
+   "members": [
+    {
+     "name": "Gary “Little Guy” Clause",
+     "role": "Chair"
+    },
+    {
+     "name": "William Trepanier",
+     "role": "Vice Chair"
+    },
+    {
+     "name": "Michelle Beaudin",
+     "role": "Secretary/Treasurer"
+    },
+    {
+     "name": "Jordan St. Germaine",
+     "role": "Member"
+    },
+    {
+     "name": "Lorraine Gouge",
+     "role": "Member"
+    },
+    {
+     "name": "Janet Quaderer",
+     "role": "Member"
+    },
+    {
+     "name": "Don Carley",
+     "role": "Member"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "1825": {
+   "source": "state-list",
+   "publisher": "Wisconsin Department of Administration",
+   "page": "https://doa.wi.gov/DIR/Tribal-Leaders.pdf",
+   "listUpdated": "2026-07-08",
+   "members": [
+    {
+     "name": "John (Goober) Johnson",
+     "role": "President"
+    },
+    {
+     "name": "George Thompson",
+     "role": "Vice-President"
+    },
+    {
+     "name": "Jamie-Ann Allen",
+     "role": "Secretary"
+    },
+    {
+     "name": "Nadine Poupart",
+     "role": "Treasurer"
+    },
+    {
+     "name": "Zachary Allen",
+     "role": "Council Member"
+    },
+    {
+     "name": "Dr Katrina (Chapman) Mares",
+     "role": "Council Member"
+    },
+    {
+     "name": "Shane Mitchell",
+     "role": "Council Member"
+    },
+    {
+     "name": "Stephanie Thompson",
+     "role": "Council Member"
+    },
+    {
+     "name": "Sedwick Armstrong",
+     "role": "Council Member"
+    },
+    {
+     "name": "William \"Billy\" Mitchell Sr.",
+     "role": "Council Member"
+    },
+    {
+     "name": "Gloria Cobb",
+     "role": "Council Member"
+    },
+    {
+     "name": "Betty Lou Wayman",
+     "role": "Council Member"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "1830": {
+   "source": "nation",
+   "page": "https://lvd-nsn.gov/Content/Tribal-Council.cfm",
+   "pages": [
+    "https://lvd-nsn.gov/Content/Tribal-Council.cfm"
+   ],
+   "members": [
+    {
+     "name": "James Williams Jr.",
+     "role": "Chairman"
+    },
+    {
+     "name": "Samuel Klingman",
+     "role": "Vice Chairman"
+    },
+    {
+     "name": "Patrick Garrison",
+     "role": "Treasurer"
+    },
+    {
+     "name": "Roxann McGeshick",
+     "role": "Secretary"
+    },
+    {
+     "name": "Jeffery McGeshick Sr.",
+     "role": "Council Member"
+    },
+    {
+     "name": "Keith Williams",
+     "role": "Council Member"
+    },
+    {
+     "name": "Henry Smith",
+     "role": "Council Member"
+    },
+    {
+     "name": "Tyrone McGeshick",
+     "role": "Council Member"
+    },
+    {
+     "name": "Patrick Hazen II",
+     "role": "Council Member"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "1963": {
+   "source": "nation",
+   "page": "https://ltbbodawa-nsn.gov/tribal-council-and-legislative-office/",
+   "pages": [
+    "https://ltbbodawa-nsn.gov/government/executive/tribal-chairman-tribal-vice-chairperson/",
+    "https://ltbbodawa-nsn.gov/tribal-council-and-legislative-office/"
+   ],
+   "members": [
+    {
+     "name": "Winnay Wemigwase",
+     "role": "Tribal Chairperson"
+    },
+    {
+     "name": "Eva Oldman",
+     "role": "Vice Chairperson"
+    },
+    {
+     "name": "Linda Gokee",
+     "role": "Legislative Leader",
+     "phone": "231-268-2688",
+     "email": "lgokee@ltbbodawa-nsn.gov",
+     "termEnds": "2029"
+    },
+    {
+     "name": "Annette VanDeCar",
+     "role": "Tribal Secretary",
+     "phone": "231-268-2689",
+     "email": "AMVanDeCar@ltbbodawa-nsn.gov",
+     "termEnds": "2029"
+    },
+    {
+     "name": "Melissa Pamp",
+     "role": "Tribal Treasurer",
+     "phone": "231-445-0874",
+     "email": "mpamp@ltbbodawa-nsn.gov",
+     "termEnds": "2027"
+    },
+    {
+     "name": "Fred Harrington",
+     "role": "Council Member",
+     "phone": "231-838-2874",
+     "email": "fharrington@ltbbodawa-nsn.gov",
+     "termEnds": "2029"
+    },
+    {
+     "name": "Tammy Okuly-Shananaquet",
+     "role": "Council Member",
+     "phone": "231-268-2677",
+     "email": "TShananaquet@ltbbodawa-nsn.gov",
+     "termEnds": "2029"
+    },
+    {
+     "name": "Emily Proctor",
+     "role": "Council Member",
+     "phone": "231-330-2934",
+     "email": "eproctor@ltbbodawa-nsn.gov",
+     "termEnds": "2027"
+    },
+    {
+     "name": "Kelly Wesaw",
+     "role": "Council Member",
+     "phone": "616-450-1420",
+     "email": "kwesaw@ltbbodawa-nsn.gov",
+     "termEnds": "2029"
+    },
+    {
+     "name": "Fred Kiogima",
+     "role": "Council Member",
+     "phone": "231-373-6104",
+     "email": "fpkiogima@ltbbodawa-nsn.gov",
+     "termEnds": "2027"
+    },
+    {
+     "name": "Jordan Shananaquet",
+     "role": "Council Member",
+     "phone": "231-373-3994",
+     "email": "jshananaquet@ltbbodawa-nsn.gov",
+     "termEnds": "2027"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "2150": {
+   "source": "nation",
+   "page": "https://gunlaketribe-nsn.gov/about/tribal-council/",
+   "pages": [
+    "https://gunlaketribe-nsn.gov/about/tribal-council/"
+   ],
+   "members": [
+    {
+     "name": "Jodie Palmer",
+     "role": "Chairwoman",
+     "district": "At-Large District"
+    },
+    {
+     "name": "Eric Sprague",
+     "role": "Vice Chairman",
+     "district": "Bradley District"
+    },
+    {
+     "name": "Ben Brenner",
+     "role": "Secretary",
+     "district": "Salem District"
+    },
+    {
+     "name": "Ed Pigeon",
+     "role": "Treasurer",
+     "district": "Salem District"
+    },
+    {
+     "name": "Brian Trevan",
+     "role": "Councilor",
+     "district": "At-Large District"
+    },
+    {
+     "name": "Amy Austin",
+     "role": "Councilor",
+     "district": "Bradley District"
+    },
+    {
+     "name": "Hunter Levandoski",
+     "role": "Councilor",
+     "district": "Bradley District"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "2175": {
+   "source": "nation",
+   "page": "https://www.menominee-nsn.gov/GovernmentPages/Legislature",
+   "pages": [
+    "https://www.menominee-nsn.gov/GovernmentPages/Legislature"
+   ],
+   "members": [
+    {
+     "name": "Michael Fish Jr",
+     "role": "Legislator"
+    },
+    {
+     "name": "Joan Delabreau",
+     "role": "Legislator"
+    },
+    {
+     "name": "Daynell Grignon",
+     "role": "Secretary"
+    },
+    {
+     "name": "Marcus Grignon",
+     "role": "Legislator"
+    },
+    {
+     "name": "Joey Awonohopay",
+     "role": "Chairman"
+    },
+    {
+     "name": "Dana Waubanascum",
+     "role": "Vice-Chairwoman"
+    },
+    {
+     "name": "Randal Chevalier",
+     "role": "Legislator"
+    },
+    {
+     "name": "Kaycee Frechette",
+     "role": "Legislator"
+    },
+    {
+     "name": "Samantha Grignon",
+     "role": "Legislator"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "2560": {
+   "source": "nation",
+   "page": "https://oneida-nsn.gov/government/business-committee/members/",
+   "pages": [
+    "https://oneida-nsn.gov/government/business-committee/members/"
+   ],
+   "members": [
+    {
+     "name": "Tehassi Hill",
+     "role": "Chairperson",
+     "phone": "920-869-4420",
+     "email": "thill7@oneidanation.org"
+    },
+    {
+     "name": "Jameson Wilson",
+     "role": "Vice-Chairperson",
+     "phone": "920-869-4385",
+     "email": "jwilson@oneidanation.org"
+    },
+    {
+     "name": "Lisa Liggins",
+     "role": "Tribal Secretary",
+     "phone": "920-869-4421",
+     "email": "lliggins@oneidanation.org"
+    },
+    {
+     "name": "Larry Barton",
+     "role": "Treasurer",
+     "phone": "920-869-4394",
+     "email": "lbarton2@oneidanation.org"
+    },
+    {
+     "name": "Aliskwet Ellis",
+     "role": "Council Member",
+     "phone": "920-869-4455",
+     "email": "cellis1@oneidanation.org"
+    },
+    {
+     "name": "Jennifer Webster",
+     "role": "Council Member",
+     "phone": "920-869-4457",
+     "email": "jwebste1@oneidanation.org"
+    },
+    {
+     "name": "Jonas Hill",
+     "role": "Council Member",
+     "phone": "920-869-4461",
+     "email": "jhill1@oneidanation.org"
+    },
+    {
+     "name": "Lora Danforth",
+     "role": "Council Member",
+     "phone": "920-869-4424",
+     "email": "ldanfor4@oneidanation.org"
+    },
+    {
+     "name": "Kristal Hill",
+     "role": "Council Member",
+     "phone": "920-869-4434",
+     "email": "khill@oneidanation.org"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "2890": {
+   "source": "nation",
+   "page": "https://www.pokagonband-nsn.gov/government/tribal-council/",
+   "pages": [
+    "https://www.pokagonband-nsn.gov/government/tribal-council/"
+   ],
+   "members": [
+    {
+     "name": "Matthew J. Wesaw",
+     "role": "Chair"
+    },
+    {
+     "name": "Gary Morseau",
+     "role": "Vice Chair"
+    },
+    {
+     "name": "Sam Morseau",
+     "role": "Secretary"
+    },
+    {
+     "name": "John Morseau",
+     "role": "Treasurer"
+    },
+    {
+     "name": "Erin Burggraf",
+     "role": "Member At Large"
+    },
+    {
+     "name": "Jim Gideon",
+     "role": "Member At Large"
+    },
+    {
+     "name": "Anita Morales",
+     "role": "Member At Large"
+    },
+    {
+     "name": "Mark Topash",
+     "role": "Member At Large"
+    },
+    {
+     "name": "John P Warren",
+     "role": "Elder's Representative"
+    },
+    {
+     "name": "Alex Wesaw",
+     "role": "Member At Large"
+    },
+    {
+     "name": "Steve Winchester",
+     "role": "Member At Large"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "3085": {
+   "source": "nation",
+   "page": "https://www.redcliff-nsn.gov/government/tribal_government/index.php",
+   "pages": [
+    "https://www.redcliff-nsn.gov/government/tribal_government/index.php"
+   ],
+   "members": [
+    {
+     "name": "Nicole Boyd",
+     "role": "Chair",
+     "email": "nicole.boyd@redcliff-nsn.gov",
+     "termEnds": "July 2027"
+    },
+    {
+     "name": "Misty Nordin",
+     "role": "Vice Chair",
+     "email": "misty.nordin@redcliff-nsn.gov",
+     "termEnds": "July 2028"
+    },
+    {
+     "name": "Laura Gordon",
+     "role": "Treasurer",
+     "email": "treasurer@redcliff-nsn.gov",
+     "termEnds": "July 2027"
+    },
+    {
+     "name": "Stephanie Haskins",
+     "role": "Secretary",
+     "email": "secretary@redcliff-nsn.gov",
+     "termEnds": "July 2028"
+    },
+    {
+     "name": "David Curran",
+     "role": "At Large Member",
+     "email": "david.curran@redcliff-nsn.gov",
+     "termEnds": "July 2027"
+    },
+    {
+     "name": "Nicole Gurnoe",
+     "role": "At Large Member",
+     "email": "Nicole.Gurnoe-Council@redcliff-nsn.gov",
+     "termEnds": "July 2027"
+    },
+    {
+     "name": "Shania Nordby (Leask)",
+     "role": "At Large Member",
+     "email": "Shania.Nordby-Council@redcliff-nsn.gov",
+     "termEnds": "July 2028"
+    },
+    {
+     "name": "Dawn \"Digger\" Peterson",
+     "role": "At Large Member",
+     "termEnds": "July 2028"
+    },
+    {
+     "name": "Vincent \"Butch\" Bresette",
+     "role": "At Large Member",
+     "email": "butch.bresette@redcliff-nsn.gov",
+     "termEnds": "July 2027"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "3305": {
+   "source": "nation",
+   "page": "https://stcroixojibwe-nsn.gov/tribal-council/",
+   "pages": [
+    "https://stcroixojibwe-nsn.gov/tribal-council/"
+   ],
+   "members": [
+    {
+     "name": "Conrad St. John",
+     "role": "Chairman"
+    },
+    {
+     "name": "Richard Benjamin",
+     "role": "Vice Chairman"
+    },
+    {
+     "name": "Leslie Billy",
+     "role": "Secretary/Treasurer"
+    },
+    {
+     "name": "Thomas Fowler",
+     "role": "Representative"
+    },
+    {
+     "name": "Lester Merrill",
+     "role": "Representative"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "3635": {
+   "source": "nation",
+   "page": "https://www.saulttribe.com/government/board-of-directors/29-government/board-of-directors/109-board-members-and-reports",
+   "pages": [
+    "https://www.saulttribe.com/government/board-of-directors/29-government/board-of-directors/109-board-members-and-reports"
+   ],
+   "members": [
+    {
+     "name": "Austin Lowes",
+     "role": "Chairman",
+     "phone": "906-632-6453"
+    },
+    {
+     "name": "Ashley Gravelle",
+     "role": "Secretary",
+     "district": "Unit I",
+     "phone": "906-203-5160"
+    },
+    {
+     "name": "Kimberle Gravelle",
+     "role": "Director",
+     "district": "Unit I",
+     "phone": "906-259-3742"
+    },
+    {
+     "name": "Michael McKerchie",
+     "role": "Treasurer",
+     "district": "Unit I",
+     "phone": "906-440-7768"
+    },
+    {
+     "name": "Robert McRorie",
+     "role": "Director",
+     "district": "Unit I",
+     "phone": "906-379-8068"
+    },
+    {
+     "name": "Aaron Payment",
+     "role": "Director",
+     "district": "Unit I",
+     "phone": "906-440-8946"
+    },
+    {
+     "name": "Lana Causley",
+     "role": "Director",
+     "district": "Unit II",
+     "phone": "906-484-2954"
+    },
+    {
+     "name": "Kimberly Lee",
+     "role": "Director",
+     "district": "Unit II",
+     "phone": "906-379-8965"
+    },
+    {
+     "name": "Bridgett Sorenson",
+     "role": "Director",
+     "district": "Unit III",
+     "phone": "906-430-0536"
+    },
+    {
+     "name": "Sue St. Onge",
+     "role": "Director",
+     "district": "Unit III",
+     "phone": "906-203-5654"
+    },
+    {
+     "name": "Larry Barbeau",
+     "role": "Director",
+     "district": "Unit IV",
+     "phone": "906-259-3040"
+    },
+    {
+     "name": "Cole Goudreau",
+     "role": "Director",
+     "district": "Unit IV",
+     "phone": "906-286-2966"
+    },
+    {
+     "name": "Tyler LaPlaunt",
+     "role": "Vice-Chairman",
+     "district": "Unit V",
+     "phone": "906-440-8294"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "3885": {
+   "source": "state-list",
+   "publisher": "Wisconsin Department of Administration",
+   "page": "https://doa.wi.gov/DIR/Tribal-Leaders.pdf",
+   "listUpdated": "2026-07-08",
+   "members": [
+    {
+     "name": "Robert VanZile Jr.",
+     "role": "Tribal Chair"
+    },
+    {
+     "name": "Roger McGeshick Jr.",
+     "role": "Vice Chair"
+    },
+    {
+     "name": "Sonya Smith",
+     "role": "Treasurer"
+    },
+    {
+     "name": "Maia Kegley",
+     "role": "Secretary"
+    },
+    {
+     "name": "Leelyn VanZile",
+     "role": "Council Member I"
+    },
+    {
+     "name": "Caleb McGeshick",
+     "role": "Council Member II"
+    }
+   ],
+   "read": "2026-10-06"
+  },
+  "4015": {
+   "source": "nation",
+   "page": "https://mohican-nsn.gov/tribal-council/",
+   "pages": [
+    "https://mohican-nsn.gov/tribal-council/"
+   ],
+   "members": [
+    {
+     "name": "Shannon Holsey",
+     "role": "President"
+    },
+    {
+     "name": "Willy Miller",
+     "role": "Vice-President"
+    },
+    {
+     "name": "Crystal L. Malone",
+     "role": "Treasurer"
+    },
+    {
+     "name": "Rainer Shooter",
+     "role": "Council Member"
+    },
+    {
+     "name": "Terrance Miller",
+     "role": "Council Member"
+    },
+    {
+     "name": "Terrie Terrio",
+     "role": "Council Member"
+    },
+    {
+     "name": "JOE Miller",
+     "role": "Council Member"
+    }
+   ],
+   "read": "2026-10-06"
+  }
+ }
+}

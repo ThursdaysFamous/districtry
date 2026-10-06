@@ -72,6 +72,13 @@ Emit ONLY what the page publishes — no party, term, phone or e-mail invented
 tripwire input lives on the same page or on the county's GIS, re-read it into
 the payload every run.
 
+If the page arrives without its names and fills them in from a feed, read the
+feed: its address, parameters and any key the page gives every visitor are in the
+page's HTML or scripts. Re-read those from the page each run rather than pinning
+them, since a key can rotate. Read robots.txt for the feed's host too. A sign-in
+or managed challenge stays shut. A linked scanned PDF is a source too: render it
+and read it as an image before calling the data unpublished.
+
 ## 4. The builder
 
 `sys.argv[1]` is the raw JSON, optional `sys.argv[2]` the out dir,

@@ -42,6 +42,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -94,7 +95,7 @@ def ua_session():
     return s
 
 
-def read_page(url, session, gate, pacer):
+def read_page(url, session, gate, pacer, headers=None):
     """(response, why, kind, gate, pacer). Same shape and the same retry rules
     as mi_commissioner_scraper.read_page: only an unreachable robots.txt and a
     transport failure are retried; a refusal, an HTTP status and a challenge
@@ -115,7 +116,7 @@ def read_page(url, session, gate, pacer):
     for attempt in range(3):
         try:
             with pacer.hold(url):
-                resp = session.get(url, timeout=TIMEOUT)
+                resp = session.get(url, timeout=TIMEOUT, headers=headers)
             break
         except Exception as exc:                              # noqa: BLE001
             last = exc
@@ -177,6 +178,58 @@ def read_page_stdlib(url, headers, gate):
     return _Page(body, final), None, None
 
 
+HCMS_CONF = re.compile(r'hcmsReadOnlyConfiguration:\{baseUrl:"([a-z0-9.-]+)",appName:"([a-z0-9-]+)"')
+HCMS_TOKEN = re.compile(r'hcmsClientToken="(Bearer [A-Za-z0-9._-]+)"')
+HCMS_PAGE = 200
+HCMS_MAX_PAGES = 10
+
+
+def read_hcms(unit, page_html, read, gate, pacer):
+    """(json_text, why, kind, gate, pacer) for a unit whose page draws its
+    members from the CivicPlus content service rather than its own HTML.
+
+    The service's address, the site's app name and a read-only key are all
+    written into the page every visitor is served. Measured on Lansing's page
+    on 2026-10-06: the key is issued to the client "<app>:default" with read
+    scopes only, to a visitor the page itself records as not logged in, and is
+    reissued with each page. It is the access every browser opening the page
+    is given, not a sign-in, so it is read from the page on each run and
+    never stored. Each request still asks the service host's robots.txt first,
+    with the same client, through the same `read` as every other page.
+
+    The whole schema is read, paged, and the parser picks the council out of
+    it, because that is the filter the page applies and the service's own
+    query language for categories was not measured."""
+    conf, tok = HCMS_CONF.search(page_html), HCMS_TOKEN.search(page_html)
+    if not conf or not tok:
+        return (None, "the page no longer carries its content-service address and key",
+                "parse", gate, pacer)
+    base, app = conf.group(1), conf.group(2)
+    headers = {"Authorization": tok.group(1), "Accept": "application/json"}
+    items, total = [], None
+    for n in range(HCMS_MAX_PAGES):
+        url = "https://%s/api/content/%s/%s?$top=%d&$skip=%d" % (
+            base, app, unit["hcms"]["schema"], HCMS_PAGE, n * HCMS_PAGE)
+        resp, why, kind, gate, pacer = read(url, gate, pacer, headers)
+        if resp is None:
+            return None, "content service %s — %s" % (url, why), kind, gate, pacer
+        try:
+            body = json.loads(resp.text)
+        except ValueError:
+            return None, "content service answered something not JSON", "parse", gate, pacer
+        items += body.get("items") or []
+        total = body.get("total")
+        if not body.get("items") or total is None or len(items) >= total:
+            break
+    else:
+        return (None, "content service still paging after %d pages" % HCMS_MAX_PAGES,
+                "parse", gate, pacer)
+    if total is None or len(items) != total:
+        return (None, "content service gave %d items of %r" % (len(items), total),
+                "parse", gate, pacer)
+    return json.dumps({"items": items}), None, None, gate, pacer
+
+
 def scrape(unit, session, gate, pacer, header_gates):
     """(roster, why, kind, gate, pacer)."""
     if unit.get("headers"):
@@ -190,11 +243,19 @@ def scrape(unit, session, gate, pacer, header_gates):
             page, why_, kind_ = read_page_stdlib(u, headers, hgate)
             return page, why_, kind_, g, p
     else:
-        read = lambda u, g, p: read_page(u, session, g, p)  # noqa: E731
+        read = lambda u, g, p, h=None: read_page(u, session, g, p, h)  # noqa: E731
     resp, why, kind, gate, pacer = read(unit["url"], gate, pacer)
     if resp is None:
         return None, why, kind, gate, pacer
     also = []
+    if unit.get("hcms"):
+        if unit.get("headers"):
+            raise SystemExit("%s: FAIL — %s: hcms on the stdlib client is not built"
+                             % (LABEL, unit["name"]))
+        data, why, kind, gate, pacer = read_hcms(unit, resp.text, read, gate, pacer)
+        if data is None:
+            return None, why, kind, gate, pacer
+        also.append(data)
     for extra in unit.get("also") or []:
         r2, why2, kind2, gate, pacer = read(extra, gate, pacer)
         if r2 is None:

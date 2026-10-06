@@ -1,0 +1,123 @@
+{
+  "1": {
+    "members": [
+      {
+        "name": "Joe Wills",
+        "party": "Republican",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-joe-wills/",
+        "term": "Term Exp. 2028"
+      },
+      {
+        "name": "Jacob Harris",
+        "party": "Republican",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-jacob-harris/",
+        "role": "Chairperson",
+        "term": "Term Exp. 2026"
+      }
+    ],
+    "sourceUrl": "https://www.fayettecountyillinois.gov/county-offices/county-board/"
+  },
+  "2": {
+    "members": [
+      {
+        "name": "Mack Payne",
+        "party": "Republican",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-mack-payne/",
+        "term": "Term 2022 - 2026"
+      },
+      {
+        "name": "Dan Lutz",
+        "party": "Republican",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-dan-lutz/",
+        "term": "Term 2026-2028"
+      }
+    ],
+    "sourceUrl": "https://www.fayettecountyillinois.gov/county-offices/county-board/"
+  },
+  "3": {
+    "members": [
+      {
+        "name": "Sean Hannagan",
+        "party": "Republican",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-casey-cameron/",
+        "term": "Term 2024 - 2028"
+      },
+      {
+        "name": "Michael L. Butts",
+        "party": "Republican",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-michael-butts/",
+        "term": "Term 2022 - 2026"
+      }
+    ],
+    "sourceUrl": "https://www.fayettecountyillinois.gov/county-offices/county-board/"
+  },
+  "4": {
+    "members": [
+      {
+        "name": "Ryan Tompkins",
+        "party": "Republican",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-ryan-tompkins/",
+        "term": "Term 2024- 2028"
+      },
+      {
+        "name": "Patrick Click",
+        "party": "Republican",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-patrick-click/",
+        "role": "Vice-Chairperson",
+        "term": "Term 2022 - 2026"
+      }
+    ],
+    "sourceUrl": "https://www.fayettecountyillinois.gov/county-offices/county-board/"
+  },
+  "5": {
+    "members": [
+      {
+        "name": "Ashley Towler",
+        "party": "Democratic",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-ashley-towler/",
+        "term": "Term 2022 - 2026"
+      },
+      {
+        "name": "Michael Black",
+        "party": "Republican",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-michael-black/",
+        "term": "Term 2024 - 2028"
+      }
+    ],
+    "sourceUrl": "https://www.fayettecountyillinois.gov/county-offices/county-board/"
+  },
+  "6": {
+    "members": [
+      {
+        "name": "James Wehrle",
+        "party": "Republican",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-james-wehrle/",
+        "term": "Term 2024 - 2028"
+      },
+      {
+        "name": "Scott Workman",
+        "party": "Republican",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/scott-workman/",
+        "term": "Term 2025-2026"
+      }
+    ],
+    "sourceUrl": "https://www.fayettecountyillinois.gov/county-offices/county-board/"
+  },
+  "7": {
+    "members": [
+      {
+        "name": "Scott L. Ray",
+        "party": "Democratic",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-scott-l-ray/",
+        "term": "Term 2022 - 2026"
+      },
+      {
+        "name": "Jacquelene Durr",
+        "party": "Republican",
+        "profileUrl": "https://www.fayettecountyillinois.gov/directory-listing/honorable-jacquelene-durr/",
+        "term": "Term 2024 - 2026"
+      }
+    ],
+    "sourceUrl": "https://www.fayettecountyillinois.gov/county-offices/county-board/"
+  }
+}

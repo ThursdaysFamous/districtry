@@ -196,7 +196,34 @@ INSTANCES = [
          all_label="All Michigan boards of commissioners",
          app_name="districtry Michigan", app_url="https://districtry.com/mi/",
          district_word="District", member_word="Commissioner",
-         adapters=("mi_commissioners",)),
+         adapters=("mi_commissioners",),
+         # a third of these counties name certified 2024 winners, so "each
+         # name published by the county itself" was false of them
+         index_provenance="each name from the county's own board page or, "
+                          "where that county's page says so, from the state's "
+                          "certified results of the November 2024 election"),
+    # MINNESOTA NAMES ELECTION WINNERS, NOT A COUNTY'S OWN LIST. Every county
+    # board here is elected by district (Minn. Stat. 375.025), and the names
+    # are each seat's most recent winner in the Secretary of State's results,
+    # so the pages carry the Michigan certified-returns wording rather than
+    # "the county's own published roster", and the index says so too.
+    dict(tag="mn", state="Minnesota", concept="county-commissioner",
+         index_page="county-commissioner.html",
+         heading="%(county)s County Board of Commissioners",
+         page_title="%(county)s County Commissioners",
+         # "Lake of the Woods County Commissioners — districtry Minnesota"
+         # is 61 characters against validate_serp_lengths.py's 60, so a
+         # title that would overrun drops the word "County" instead, and
+         # only that one county's does.
+         page_title_short="%(county)s commissioners",
+         phrase="board of commissioners", index_label="Boards of commissioners",
+         all_label="All Minnesota boards of commissioners",
+         app_name="districtry Minnesota", app_url="https://districtry.com/mn/",
+         district_word="District", member_word="Commissioner",
+         adapters=("mn_commissioners",),
+         index_provenance="each name the winner of that seat's most recent "
+                          "election in the Minnesota Secretary of State's "
+                          "results, dated to it"),
     # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
     # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
     # rather than the county tier: a county legislature is elected from
@@ -461,7 +488,8 @@ def il_districted(inst):
             source = source or entry.get("sourceUrl")
             if isinstance(entry.get("members"), list):
                 districts.append(district(key, entry["members"],
-                                          entry.get("vacancies") or 0))
+                                          entry.get("vacancies") or 0,
+                                          entry.get("note")))
             elif not (entry.get("name") or "").strip():
                 skipped.append(key)          # a per-county extra, not a district
             elif key == "chair":
@@ -1007,7 +1035,9 @@ def mi_commissioners(inst):
                  "at_large": False, "source_file": returns_path,
                  "lede": rec["lede"], "cta_note": rec.get("cta_note"),
                  "desc": rec.get("desc"), "standfirst": rec.get("standfirst"),
-                 "disclaimer": rec.get("disclaimer")}
+                 "disclaimer": rec.get("disclaimer"),
+                 # the source line names the state's results, not the county
+                 "source_label": "the State of Michigan's certified election results"}
         if rec.get("betterSource"):
             entry["better_source"] = rec["betterSource"]
         out[name] = entry
@@ -1016,6 +1046,100 @@ def mi_commissioners(inst):
             "November 2024 returns with every row saying so"
             % (len(out), scraped, len(out) - scraped))
     return out, problems, nameless, [path, returns_path], note
+
+
+MN_LEDE = ("These are the people who won each seat on %(county)s County's "
+           "Board of Commissioners at its most recent election in the Minnesota "
+           "Secretary of State's results, each dated to that election. They are "
+           "election winners, not a list the county keeps up to date, so a seat "
+           "that has changed hands since, by a resignation or an appointment, "
+           "still shows the person who won it.")
+MN_STANDFIRST = ("Who won each seat on the %(heading)s at its most recent "
+                 "election, from the Minnesota Secretary of State's results.")
+MN_DESC = ("Who won each of the %(districts)d seats on %(county)s County's "
+           "Board of Commissioners at its most recent election, and which "
+           "district each one represents.")
+MN_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above won an "
+                 "election the Minnesota Secretary of State published results for,\n"
+                 "and this page dates each name to that election rather than "
+                 "claiming the seat is still held.")
+MN_CTA_NOTE = ("Opens the map with the commissioner-district layer on. The "
+               "district lines come from the Secretary of State's precinct map; "
+               "the names come from its election results and are dated to them.")
+
+
+def mn_commissioners(inst):
+    """Minnesota: ONE file keyed "<county FIPS>-<district>", every record
+    carrying its county, its district and either a `name` with the `election`
+    that seated it or an `unnamed` reason (mn/scripts/build_mn_commissioner_roster.py).
+
+    EVERY COUNTY GETS A PAGE because the file covers all 447 seats, and a seat
+    the results do not name is drawn as the third state `district()` already
+    knows: "Not named", with the record's own reason. Where a county's own
+    district map names somebody else (`countySays`), the member row says so
+    beside the election date, because the two publishers disagreeing is the
+    thing a reader of that seat should see."""
+    data_dir = app_data(inst["tag"])
+    path = os.path.join(data_dir, "mn-county-commissioners.json")
+    by_county, problems, nameless = {}, [], set()
+    for key, rec in sorted(_read(path).items()):
+        name = (rec.get("county") or "").strip()
+        if not name or rec.get("district") is None:
+            problems.append("mn-county-commissioners.json %r carries no county "
+                            "or district" % key)
+            continue
+        by_county.setdefault(name, []).append(rec)
+    out = {}
+    for name, recs in sorted(by_county.items()):
+        districts = []
+        for rec in sorted(recs, key=lambda r: int(r["district"])):
+            label = str(rec["district"])
+            if (rec.get("name") or "").strip():
+                when = _mn_date(rec.get("election"))
+                if not when:
+                    problems.append("mn %s County District %s names somebody "
+                                    "with no election date" % (name, label))
+                    continue
+                note = ("Won a special election on %s." if rec.get("special")
+                        else "Elected %s.") % when
+                says = rec.get("countySays") or {}
+                if (says.get("name") or "").strip():
+                    note += (" %s's own district map names %s for this seat."
+                             % (says.get("publisher") or "The county",
+                                says["name"].strip()))
+                districts.append(district(label, [{"name": rec["name"].strip(),
+                                                   "elected": note}]))
+            else:
+                districts.append(district(label, note=(rec.get("unnamed") or
+                                                       "the results name nobody")))
+        if not _count_named(districts, []):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("mn %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        out[name] = {"districts": districts,
+                     "sourceUrl": "https://electionresults.sos.mn.gov/",
+                     "source_label": "the Minnesota Secretary of State's election results",
+                     "extras": [], "skipped": [], "slug": county_slug(name),
+                     "at_large": False, "source_file": path,
+                     "lede": MN_LEDE, "standfirst": MN_STANDFIRST,
+                     "desc": MN_DESC, "disclaimer": MN_DISCLAIMER,
+                     "cta_note": MN_CTA_NOTE}
+    note = ("%d of Minnesota's 87 counties, every seat named from the Secretary "
+            "of State's election results or marked with why not" % len(out))
+    return out, problems, nameless, [path], note
+
+
+_MN_MONTHS = ("January", "February", "March", "April", "May", "June", "July",
+              "August", "September", "October", "November", "December")
+
+
+def _mn_date(iso):
+    m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", str(iso or ""))
+    if not m:
+        return None
+    return "%s %d, %s" % (_MN_MONTHS[int(m.group(2)) - 1], int(m.group(3)), m.group(1))
 
 
 def _nobody_key(inst, county):
@@ -1248,6 +1372,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "ia_at_large": ia_at_large,
             "wi_seats": wi_seats, "ia_supervisors": ia_supervisors,
             "mi_commissioners": mi_commissioners,
+            "mn_commissioners": mn_commissioners,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
@@ -1456,6 +1581,11 @@ def freshness(m):
     same 27-word sentence 29 times in 1,312 words, so 60% of that page was one
     repeated sentence. Seven pages did it, 134 repetitions between them.
     """
+    elected = (m.get("elected") or "").strip()
+    if elected:
+        # An election winner's own date, written whole by the adapter
+        # (Minnesota): the date IS the claim, so it carries no explanation.
+        return elected, ""
     as_of = (m.get("asOf") or "").strip()
     if as_of:
         return ("From %s." % as_of,
@@ -1687,6 +1817,14 @@ def source_note(rec, at_large):
                     "longer re-read. %s These names will go out of date."
                     % (esc(rec["sourceUrl"]), esc(rec["asOf"]),
                        esc(rec.get("asOfWhy") or "").strip()))
+    elif rec.get("sourceUrl") and rec.get("source_label"):
+        # A ROSTER THAT IS NOT THE COUNTY'S says whose it is. The sentence
+        # below is false of a certified-returns route: the names are election
+        # results, and calling them "the county's own published roster" is the
+        # provenance claim the lede, standfirst and disclaimer already refuse.
+        bits.append('Source: <a href="%s" rel="noopener" target="_blank">%s</a>, '
+                    "re-read on a schedule and landed as a reviewed pull "
+                    "request." % (esc(rec["sourceUrl"]), esc(rec["source_label"])))
     elif rec.get("sourceUrl"):
         bits.append('Source: <a href="%s" rel="noopener" target="_blank">the '
                     "county's own published roster</a>, re-read on a schedule "
@@ -1856,8 +1994,7 @@ h1 {
 <a href="../%(index_page)s">%(all_label)s</a>
 <a href="../">Back to the map</a>
 <a href="../sources.html">Sources &amp; data layers</a>
-<a href="../faq.html">Common questions</a>
-<a href="../../privacy.html">Privacy</a>
+%(faq_link)s<a href="../../privacy.html">Privacy</a>
 <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
 </p>
 %(byline)s
@@ -1899,6 +2036,9 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
         body = body + "\n" + block
     head = heading_of(inst, name)
     title = "%s — %s" % (inst["page_title"] % {"county": name}, inst["app_name"])
+    if len(title) > 60 and inst.get("page_title_short"):
+        title = "%s — %s" % (inst["page_title_short"] % {"county": name},
+                             inst["app_name"])
     if at_large:
         # A FLAT ROSTER IS NOT A CLAIM ABOUT HOW THE COUNTY ELECTS. The default
         # clause below is true of a board elected at large and false of Iowa's
@@ -2019,6 +2159,11 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
         # than in shell_for_pages(), which is built once and shared by all of
         # them and so cannot know which instance it is rendering.
         instance_word=esc(inst["state"].lower()),
+        # Only where the instance ships one: Minnesota publishes no faq.html,
+        # and a link to it would be a 404 on every one of its pages.
+        faq_link=('<a href="../faq.html">Common questions</a>\n'
+                  if os.path.exists(os.path.join(REPO_ROOT, inst["tag"], "faq.html"))
+                  else ""),
     )
 
 
@@ -2039,9 +2184,10 @@ def render_index(inst, rows):
     """
     at_large = sum(1 for r in rows if r[4] == "at-large")
     out = ['    <p class="matrix-lede">Every %s county whose roster this '
-           'project has: <b>%d counties</b>, <b>%d people</b>, each name published '
-           'by the county itself.%s</p>'
+           'project has: <b>%d counties</b>, <b>%d people</b>, %s.%s</p>'
            % (esc(inst["state"]), len(rows), sum(r[2] for r in rows),
+              esc(inst.get("index_provenance")
+                  or "each name published by the county itself"),
               (" %d elect at large, with no districts." % at_large)
               if at_large else ""),
            '    <ul class="county-index">']

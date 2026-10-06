@@ -303,10 +303,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 15,
+      "rank_note": "Tribal land — Michigan has 24 pieces across 12 nations, from the Isabella Reservation's 564.926 km² down to a 0.074 km² Grand Traverse parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 3.021 km² MEDIAN, below the precinct fabric's measured 6.400 — medians rather than means, because this layer's own mean of 39.8 km² is Isabella and L'Anse and describes none of the other 22 parcels. The places layer below it is live and publishes a mean rather than a median, so no claim is made here about which of the two is smaller; the rank governs draw order only. Partial coverage: most of Michigan is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 1 of them in Michigan and it is Lac Vieux Desert's — the 2020 population, and the council: the authority for who sits on it is each nation's own published list. Nine of the twelve publish one this project reads weekly, and the card names that council with the date it was read and a link to the page; three cannot be read, two behind a managed challenge and one publishing its council to its members only, and the card says which. Michigan has no current state list of tribal officials to fall back on. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Michigan has 24 such areas across 12 nations.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust lands, clipped to Michigan and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card. Nine of the twelve nations publish one this project can read; for the other three the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.",
+        "applies": "Michigan — 24 areas across 12 nations. Most points in the state are on no tribal land."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City or Village",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "533 incorporated places, live from TIGERweb (no data/app file) — 281 cities and 252 villages, small dense pockets inside the township fabric, so the smallest layer this instance ships at a 12 km2 mean",
       "source": {
         "answers": "The incorporated city or village covering the point, if any — and which of the two it is, because in Michigan that changes what else governs the point.",
@@ -324,7 +342,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "1,290 police-station points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -342,7 +360,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 17,
+      "area_rank": 18,
       "rank_note": "2,838 fire and EMS station points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest fire and EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -360,7 +378,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 18,
+      "area_rank": 19,
       "rank_note": "1,799 post-office points in Michigan's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -797,9 +815,20 @@
         "min_features": 56,
         "max_features": 56,
         "note": "Michigan's 56 intermediate school districts, from the state's own Michigan Geographic Framework layer (V26), mi/scripts/build_mi_isd_districts.py. Exact band: ISDs merge rarely and by vote, and a merger is real information rather than drift."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 24,
+        "max_features": 24,
+        "note": "Michigan's tribal land (scripts/build_tribal_areas.py) — 24 areas across 12 nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-01; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
+      {
+        "file": "tribal-councils.json",
+        "min_keys": 9,
+        "note": "The council of every Michigan nation whose council is carried, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
       {
         "file": "congress-roster.json",
         "min_keys": 13,
@@ -858,7 +887,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mi-shell-v18",
+    "cache_name": "districtry-mi-shell-v19",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",

@@ -8,7 +8,9 @@ the only statement of the vacancy is a time-limited News Flash (2026-09-22,
 appointment vote 2026-10-13), so the page cannot be read as a whole council.
 """
 
+import json
 import re
+from datetime import datetime, timezone
 
 from mi_municipal_common import txt, emails_in, phones_in, phone, member
 
@@ -555,6 +557,67 @@ def parse_east_lansing(h, also):
     return roster
 
 
+LANSING_SEAT = re.compile(r"^(?:([1-4])(?:st|nd|rd|th) Ward|(At[- ]Large))\s+Council\s*[Mm]ember$")
+
+
+def parse_lansing(h, also):
+    """Lansing's council page names nobody in its own HTML: the member cards
+    are drawn afterwards by the website vendor's script from the vendor's
+    content service (CivicPlus HCMS, app mi-lansing). The scraper reads that
+    service the way the page does, with the read-only key the page hands every
+    signed-out visitor (see the unit's `hcms` entry and
+    mi_municipal_officials_scraper.read_hcms), and passes the Employee items
+    here as `also[0]`.
+
+    Each council member is one Employee item in the "City Council" category
+    whose title is "<N>th Ward Council Member" or "At-Large Council Member";
+    the biography opens "Term Expires: ...", and the year's officers add
+    "<year> Council President" or "<year> Council Vice President". An officer
+    line naming a year other than the year of the read is not used, so a
+    biography nobody updated in January cannot carry last year's President
+    into this year. The phone is the member's own line ("Phone: 517-483-41xx")
+    and the e-mail a mailto in its own field. TRAP: the category also holds
+    whatever else the city files there, so only a title of that exact shape
+    is a seat, and anything else in the category raises."""
+    if "Council Members" not in txt(h):
+        raise ValueError("Lansing: the council page no longer carries its title")
+    if not also:
+        raise ValueError("Lansing: no content-service items were read")
+    items = json.loads(also[0]).get("items") or []
+    year = datetime.now(timezone.utc).strftime("%Y")
+
+    def en(it, k):
+        v = (it.get("data") or {}).get(k) or {}
+        return v.get("en") if isinstance(v, dict) else None
+
+    members = []
+    for it in items:
+        if not any(c.get("name") == "City Council" for c in it.get("categories") or []):
+            continue
+        if it.get("status") != "Published":
+            continue
+        title = txt(en(it, "title") or "")
+        m = LANSING_SEAT.match(title)
+        if not m:
+            raise ValueError("Lansing: City Council item %r titled %r" % (it.get("slug"), title))
+        seat = "Ward %s" % m.group(1) if m.group(1) else "At Large"
+        bio = txt(en(it, "biography") or "")
+        role = "Council Member"
+        o = re.search(r"\b(20\d\d) Council (Vice President|President)\b", bio)
+        if o and o.group(1) == year:
+            role = "Council " + o.group(2)
+        name = "%s %s" % (txt(en(it, "firstname") or ""), txt(en(it, "lastname") or ""))
+        ph = phones_in(en(it, "phonenumber") or "")
+        em = emails_in(en(it, "emailaddress") or "")
+        members.append(member(name, role, seat, ph[0] if ph else None, em[0] if em else None))
+    wards = sorted(x["seat"] for x in members if x["seat"] != "At Large")
+    if wards != ["Ward 1", "Ward 2", "Ward 3", "Ward 4"]:
+        raise ValueError("Lansing: ward seats read as %r" % wards)
+    members.sort(key=lambda x: (x["seat"] == "At Large", x["seat"], x["name"]))
+    _expect("Lansing", members, 8)
+    return {"members": members}
+
+
 UNITS = [
     {"geoid": "2684000", "name": "Warren", "kind": "city", "body": "City Council",
      "url": "https://www.cityofwarren.org/government/city-council/city-council-members/",
@@ -613,4 +676,11 @@ UNITS = [
     {"geoid": "2624120", "name": "East Lansing", "kind": "city", "body": "City Council",
      "url": "https://www.cityofeastlansing.com/996/Meet-the-Council",
      "seats": 5, "parse": parse_east_lansing},
+    # The page's own HTML names nobody; the members come from the vendor's
+    # content service, read with the key the page gives every visitor.
+    # Measured 2026-10-06 and read on the operator's word that day.
+    {"geoid": "2646000", "name": "Lansing", "kind": "city", "body": "City Council",
+     "url": "https://www.lansingmi.gov/council-members",
+     "hcms": {"schema": "employee"},
+     "seats": 8, "parse": parse_lansing},
 ]
