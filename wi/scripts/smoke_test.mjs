@@ -53,7 +53,7 @@ const OFFLINE = ["county", "wi-circuit-court", "wi-court-of-appeals", "us-house"
 const EXPECT_DISTRICT = { "county": "Marathon County", "wi-circuit-court": "Marathon County Circuit Court", "wi-court-of-appeals": "Court of Appeals District III", "us-house": "7", "school-district-unified": "Marathon City School District", "wi-senate": "29", "wi-assembly": "86", "county-board": "35", "wtcs-district": "Northcentral Technical College District" };
 const NEGATIVE_POINT = "47.39000,-92.97000"; // off the northwest corner of Wisconsin — outside the state and every starter layer. IT IS INSIDE MINNESOTA, AND IT CANNOT BE MOVED SOMEWHERE THAT IS NOBODY'S: sampling permalink_gate every 0.25 degrees and naming each point's state off TIGERweb, all 609 points land in a state and the 300 outside Wisconsin are Michigan (163), Minnesota (76), Iowa (47) and Illinois (14) — three of those are live instances today, so moving the point into one would break this test now rather than at Minnesota's go-live, and the Great Lakes are no refuge either (a control in open Lake Michigan returns Michigan). So the point stays and the checks that select it refuse ../fleet-outlines.json, which is the only thing the hand-off reads; Wisconsin asserts nothing about fleet routing.
 const APP_NAME = "districtry Wisconsin";
-const EXPECT_LAYERS = 31;
+const EXPECT_LAYERS = 32;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -853,6 +853,71 @@ try {
     check("an at-large village board is named and the card says it has no districts",
           ok, `heading=${JSON.stringify(heading || null)} seatBadge=${seatBadge} ` +
               `president=${presBadge} how=${JSON.stringify((how || {}).value || null)}`);
+    await context.close();
+  }
+  // ---- 1x. The Tribal Government card names the nation, its seat and its
+  // council. The council is what this check exists for: it lives in a SEPARATE
+  // file (data/app/tribal-councils.json, network-first) that the layer's loader
+  // merges onto the cache-first land, so nothing static can prove the merge
+  // happened and the people block rendered — a loader that dropped the merge
+  // would leave a correct-looking card naming nobody. Menominee is read from
+  // the nation's own page; the assertions are on the SHAPE (a "Council" block,
+  // a dated note, the head of the government listed first, a link to the
+  // nation's page) and never on a name, so a council election changes nothing
+  // here. The point is shapely's representative point for the shipped
+  // reservation, verified interior against the file's own even-odd reading
+  // (2026-10-01). Michigan's own check covers the blocked case.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context, `${BASE}#point=44.98686,-88.73481&layers=tribal-government`);
+    const card = await cardText(page, "tribal-government");
+    const fields = await page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const by = (l) => (fields.find((f) => f.label === l) || {}).value || "";
+    const nation = card.text.indexOf("Menominee Indian Tribe of Wisconsin") !== -1;
+    const land = by("Land") === "Menominee Reservation";
+    const seat = by("Seat of government") === "Keshena, WI";
+    const council = await page.$$eval("#card-tribal-government .card-intro, " +
+      "#card-tribal-government .card-person-line, #card-tribal-government .card-linkrow a",
+      (els) => els.map((e) => ({
+        cls: e.className,
+        name: ((e.querySelector(".card-person-name") || {}).textContent || "").trim(),
+        badge: ((e.querySelector(".card-badge") || {}).textContent || "").trim(),
+        title: ((e.querySelector(".card-intro-title") || {}).textContent || "").trim(),
+        note: ((e.querySelector(".card-intro-note") || {}).textContent || "").trim(),
+        href: e.getAttribute("href") || ""
+      })));
+    const intro = council.find((c) => c.title === "Council") || {};
+    const people = council.filter((c) => /card-person-line/.test(c.cls) && c.name);
+    const link = council.find((c) => /menominee-nsn\.gov/.test(c.href));
+    const noteOk = /own council page/.test(intro.note || "") &&
+                   /\d{4}-\d{2}-\d{2}/.test(intro.note || "");
+    // the head of the government first, whatever order the page lists it in
+    const headFirst = people.length > 0 && /^chair/i.test(people[0].badge);
+    const noWhy = by("Why no names") === "";
+    const ok = nation && land && seat && noteOk && people.length >= 5 &&
+               headFirst && !!link && noWhy;
+    check("the Tribal Government card names the nation, its seat and its council",
+          ok, `nation=${nation} land=${JSON.stringify(by("Land"))} ` +
+              `seat=${JSON.stringify(by("Seat of government"))} ` +
+              `note=${JSON.stringify((intro.note || "").slice(0, 80))} ` +
+              `people=${people.length} first=${JSON.stringify((people[0] || {}).badge)} ` +
+              `link=${!!link} why=${JSON.stringify(by("Why no names").slice(0, 60))}`);
+
+    // and a point off tribal land says so in the layer's own words rather than
+    // the generic "not inside any district", which would read as a lookup that
+    // failed instead of a fact about the place
+    const page2 = await booted(
+      context, `${BASE}#point=${POINT}&layers=tribal-government`);
+    const off = await cardText(page2, "tribal-government");
+    const offOk = off.text.indexOf("not on tribal land") !== -1 &&
+                  off.text.indexOf("21 tribal areas") !== -1;
+    check("a point off tribal land is told so in the layer's own words",
+          offOk, JSON.stringify(off.text.slice(0, 120)));
     await context.close();
   }
 } finally {

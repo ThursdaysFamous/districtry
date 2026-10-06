@@ -8371,6 +8371,7 @@ function initMinnesotaExplorer() {
     "mn-senate",         // 67 Senate districts, each divided into two whole House districts
     "county",            // 87 counties, pre-built from TIGERweb; this instance's offline anchor layer
     "mn-house",          // 134 House districts; two nest exactly inside each Senate district, lettered A and B
+    "watershed-district", // 64 bodies covering about 67,000 km2 of the state's 225,000 at a mean 1,050 km2 (median 316, from 20 in Richfield-Bloomington to 15,700 in Red Lake) — smaller on average than a House district and larger than a unified school district
     "school-district-unified", // 322 districts covering almost all of Minnesota, live from TIGERweb (no data/app file) — 693 km2 mean feature area, the largest of the three school tilings
     "county-commissioner", // 447 districts tiling all 87 counties, 488 km2 mean feature area (median 299, from 1.8 in Ramsey to 11,154 in St. Louis) — smaller than a unified school district and larger than a ZIP code
     "zip-code",          // 1,385 ZIP Code Tabulation Areas intersecting Minnesota's envelope, live from TIGERweb (no data/app file) — 250 km2 mean feature area, between a school district and a township
@@ -11445,7 +11446,9 @@ function initMinnesotaExplorer() {
    * Promise.all query() doesn't fit this shape.
    *
    * opts: { id, group, label, loader, style, pointOfInterest?, coverage?,
-   *         subOf?, emptyNote?, onToggle?, fields: [...] }
+   *         subOf?, emptyNote?, onToggle?, people?, fields: [...] }
+   * people(result) => Node|null, when present, appends a person block (built
+   * with renderBodyIntro / renderPersonRows) after the field rows.
    * Each field is one of:
    *   { name, label, keys:[...], primary:true } — always shown; findPropCI(keys)
    *        with an "Unknown" fallback. Conventionally the first field (headline).
@@ -11501,7 +11504,13 @@ function initMinnesotaExplorer() {
             rows.push({ label: f.label, value: f.value });
           }
         });
-        return renderFieldStack(rows);
+        var card = renderFieldStack(rows);
+        // optional: a block of people the feature itself carries (a council
+        // stamped onto each boundary by its builder), built by the layer from
+        // the card helpers and placed after the identity fields
+        var people = opts.people ? opts.people(result) : null;
+        if (people) card.appendChild(people);
+        return card;
       },
       pointOfInterest: opts.pointOfInterest,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
@@ -12522,6 +12531,130 @@ function initMinnesotaExplorer() {
     }
   });
 
+  /* ---------- 1e. Watershed district — the state's water boards ----------
+   * Minnesota law creates two kinds of body that manage water by watershed
+   * rather than by county line, and both can levy a property tax: a watershed
+   * district (Minn. Stat. ch. 103D), whose managers the county boards
+   * appoint, and the Twin Cities metro area's watershed management
+   * organization (103B.211, 103B.231), a joint-powers board of the cities and
+   * towns inside it. In three places the county does that job itself. This
+   * is the "special districts the state's own law creates" level of the
+   * fleet's done standard (docs/DONE_STANDARD.md, entry 12).
+   *
+   * The polygons are the Board of Water and Soil Resources' own statewide
+   * layer (mn/scripts/build_mn_watershed_districts.py;
+   * data/app/mn-watershed-districts.json), shipped as the state draws them.
+   * THEY OVERLAP IN PLACES, mostly as slivers along a shared edge and in a
+   * few places by square kilometres, so this card reads EVERY body the map
+   * puts the point in rather than the first one, and says so when there are
+   * two. Nothing here decides which is right.
+   *
+   * NO MANAGER IS NAMED, because nobody on these boards is elected: the card
+   * says who appoints the board and links the body's own website as the
+   * state publishes it.
+   * ---------- */
+  var loadMnWatershedDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-watershed-districts.json", {}, 2);
+  });
+
+  var WATERSHED_KINDS = {
+    WD: {
+      what: "Watershed district",
+      law: "Minnesota Statutes chapter 103D",
+      board: "A board of managers appointed by the county boards of the " +
+        "counties the district lies in. Nobody on it is elected, so there is " +
+        "no seat here to vote for."
+    },
+    WMO: {
+      what: "Watershed management organization",
+      law: "Minnesota Statutes section 103B.211, the Twin Cities metro area's " +
+        "surface water management law",
+      board: "A joint board of the cities and towns inside it, each appointing " +
+        "its own member. Nobody on it is elected directly."
+    },
+    COU: {
+      what: "Watershed management run by the county",
+      law: "Minnesota Statutes section 103B.231, which lets a metro county do " +
+        "this job itself",
+      board: "The county board — the county commissioners you elect — or a " +
+        "joint board of the counties involved."
+    }
+  };
+
+  registerLayer({
+    id: "watershed-district",
+    group: "geography",
+    label: "Watershed District",
+    coverage: insideMinnesota,
+    emptyNote: "No watershed district or watershed management organization " +
+      "covers this point. Every part of the Twin Cities area has one; " +
+      "elsewhere in Minnesota a watershed district exists only where one was " +
+      "petitioned for, so most of the state has none.",
+    overlay: {
+      load: loadMnWatershedDistricts,
+      // a water blue no other layer here uses, solid so it reads apart from
+      // the dashed political tilings drawn over the same ground
+      style: { color: "#1C6E9C", weight: 1.5, fillColor: "#4BA3D3", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var props = feature.properties || {};
+      return props.name != null ? String(props.name) : null;
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadMnWatershedDistricts, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hits = [];
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hits.push(feats[i].properties || {});
+          }
+        }
+        if (!hits.length) return null;
+        return { seq: seq, bodies: hits };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var bodies = result.bodies;
+      if (bodies.length > 1) {
+        wrap.appendChild(renderFieldStack([{
+          value: "The state's map puts this point inside " + bodies.length +
+            " of these bodies, and the map alone cannot say which one covers " +
+            "this property. Either office can."
+        }]));
+      }
+      bodies.forEach(function (props) {
+        var kind = WATERSHED_KINDS[props.kind] || null;
+        // the body's name, what kind it is, and its own website as the state
+        // publishes it, on one row
+        wrap.appendChild(renderLinkRow({
+          title: props.name ? String(props.name) : "Watershed District",
+          note: kind ? kind.what : null,
+          links: props.url ? [{ label: "Website", url: String(props.url) }] : []
+        }));
+        var rows = [];
+        rows.push({
+          label: "What it does",
+          value: "Manages lakes, streams, flooding and drainage across a " +
+            "watershed rather than within one city or county, and can put a " +
+            "charge for that on your property tax."
+        });
+        if (kind) {
+          rows.push({ label: "Who runs it", value: kind.board });
+          rows.push({ label: "Set up under", value: kind.law });
+        }
+        wrap.appendChild(renderFieldStack(rows));
+      });
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Minnesota Board of Water and Soil Resources",
+        url: "https://bwsr.state.mn.us/"
+      };
+    }
+  });
+
   /* ---------- 1d. County commissioner district — dissolved from the precincts ----------
    * Minnesota's county boards are the one local tier the state itself draws.
    * Minn. Stat. 375.025 subd. 1 divides EVERY county into as many
@@ -12546,16 +12679,33 @@ function initMinnesotaExplorer() {
    * every one of the 785 precincts they cover. Two more counties publish one
    * on a host whose robots.txt refuses this client, which is obeyed.
    *
-   * NO COMMISSIONER IS NAMED AND THE CARD SAYS SO. The Secretary of State's
-   * certified-results service carries federal and state contests only, so no
-   * commissioner can be composed from returns, and no statewide roster of the
-   * people was found (gap mn-county-commissioner-roster). The card names the
-   * district, says how many seats the board holds, says plainly that it names
-   * nobody, and links the county directory.
+   * THE NAMES ARE ELECTION WINNERS AND THE CARD SAYS SO. The Secretary of
+   * State publishes every county commissioner contest it runs as a results
+   * file per election day, and the newest general for each seat names 445 of
+   * the 447 (mn/scripts/build_mn_commissioner_roster.py;
+   * data/app/mn-county-commissioners.json). A winner is dated to the election
+   * that seated them and is not a claim about who sits today, so the card
+   * says that in words and points at the county's own board page. Where a
+   * county's own district map names somebody else (Ramsey District 3 today)
+   * the card prints both, each saying whose it is.
    * ---------- */
   var loadMnCommissionerDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/mn-commissioner-districts.json", {}, 2);
   });
+  // The winners of the most recent election for each seat, from the Secretary
+  // of State's own results (mn/scripts/build_mn_commissioner_roster.py), keyed
+  // "<county FIPS>-<district>". Every record names the election that seated
+  // it, because a winner is not the same claim as a sitting commissioner.
+  var loadMnCommissionerRoster = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-county-commissioners.json", {}, 2);
+  });
+  var MN_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  function mnElectionDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return MN_MONTHS[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1];
+  }
 
   registerLayer({
     id: "county-commissioner",
@@ -12571,29 +12721,85 @@ function initMinnesotaExplorer() {
       var props = feature.properties || {};
       return props.name != null ? String(props.name) : null;
     },
+    // the hover names the seat's most recent winner from the prefetched
+    // roster, and nobody where the card names nobody
+    hoverOfficial: {
+      load: loadMnCommissionerRoster,
+      name: function (feature, roster) {
+        var props = feature.properties || {};
+        var rec = roster ? roster[String(props.countyFips) + "-" + String(props.district)] : null;
+        return rec && rec.name ? String(rec.name) : null;
+      }
+    },
     query: function (point, seq) {
       return queryFeatureAt(loadMnCommissionerDistricts, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: props.name,
           number: props.district,
           county: props.county,
           seats: props.seats,
-          precincts: props.precincts
+          precincts: props.precincts,
+          winner: null
         };
+        // A roster that fails to load leaves the district card standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadMnCommissionerRoster().then(function (roster) {
+          result.winner = roster[String(props.countyFips) + "-" + String(props.district)] || null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
       // Card convention: identity -> officeholder -> office -> contact -> link.
-      // It stops after the officeholder row, and that row says why.
+      // The officeholder is the seat's most recent election winner, dated, and
+      // the card stops there: no office or contact is published with it.
       var wrap = cardEl("div", "card-flush");
       wrap.appendChild(renderBodyIntro({
         title: result.name ? String(result.name) : "County Commissioner District",
         note: result.county ? String(result.county) + " County" : null
       }));
       var rows = [];
+      var winner = result.winner;
+      if (winner && winner.name) {
+        var when = mnElectionDate(winner.election);
+        wrap.appendChild(renderPersonRows([{
+          name: String(winner.name),
+          note: when ? (winner.special ? "won a special election, " : "elected ") + when : null
+        }]));
+        rows.push({
+          label: "What this name is",
+          value: "The winner of the most recent election for this seat in the " +
+            "Minnesota Secretary of State's results. It is not a list the " +
+            "county keeps up to date, so if the seat has changed hands since " +
+            "(a resignation or an appointment) this still shows who won. " +
+            "The county's own board page says who holds it today."
+        });
+        if (winner.countySays && winner.countySays.name) {
+          rows.push({
+            label: "The county's own map names someone else",
+            value: String(winner.countySays.publisher || "The county") +
+              "'s own district map names " + String(winner.countySays.name) +
+              " for this seat. The two sources disagree, and the county's " +
+              "board page will say who holds it now."
+          });
+        }
+      } else {
+        rows.push({
+          label: "Who holds this seat",
+          value: result.rosterFailed
+            ? "The list of election winners did not load, so no name is shown. " +
+              "Your county publishes its own board, and the link below reaches it."
+            : "Not named here: " + String((winner && winner.unnamed) ||
+              "no result for this seat was found") + ". Your county publishes " +
+              "its own board, and the link below reaches it."
+        });
+      }
       rows.push({
         label: "Who you elect here",
         value: "One county commissioner, chosen by the voters of this district " +
@@ -12609,13 +12815,6 @@ function initMinnesotaExplorer() {
             "Hennepin, Ramsey and St. Louis; a county may ask to change that."
         });
       }
-      rows.push({
-        label: "Who holds this seat",
-        value: "Not listed here. Minnesota publishes the district lines " +
-          "statewide but not the people, and no list of all 447 commissioners " +
-          "was found, so naming one would mean guessing. Your county publishes " +
-          "its own board — the link below reaches it."
-      });
       if (result.precincts != null) {
         rows.push({
           label: "How the line is drawn",
@@ -14829,7 +15028,10 @@ function initMinnesotaExplorer() {
     "school-district-unified", "school-district-elementary", "school-district-secondary",
     // Then geography, broadest first, and the three proximity layers last
     // because they name buildings rather than districts.
-    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
+    // The watershed district sits after the city: a taxing overlay on top of
+    // the governments a reader lives in, and appointed rather than elected.
+    "county", "county-subdivision", "municipality", "watershed-district",
+    "voting-precinct", "zip-code",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -15292,13 +15494,14 @@ function initMinnesotaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#155E52": "#5AB3A1", "#1F4E79": "#62A0DD",
-    "#1F6F5C": "#5EC1A7", "#1F7A6B": "#5ACBB6", "#2E8C7C": "#61D9C3", "#2F6B4F": "#6FBD96",
-    "#3FA898": "#67F0DA", "#3FA98C": "#67F1CA", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2",
-    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#7C5CBF": "#C2ABFF", "#8C2E4A": "#F47294",
-    "#8D7BB5": "#D1BFFE", "#9C4A14": "#FE8E4D", "#A78BFA": "#E0DAFF", "#A98B6C": "#F3CBA1",
-    "#B0316E": "#FD88B8", "#B23A1E": "#FD9177", "#D06A9C": "#FFBDDA", "#D9792E": "#FECAA8"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#155E52": "#5AB3A1", "#1C6E9C": "#57BCFB",
+    "#1F4E79": "#62A0DD", "#1F6F5C": "#5EC1A7", "#1F7A6B": "#5ACBB6", "#2E8C7C": "#61D9C3",
+    "#2F6B4F": "#6FBD96", "#3FA898": "#67F0DA", "#3FA98C": "#67F1CA", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4BA3D3": "#B0E0FE",
+    "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
+    "#7C5CBF": "#C2ABFF", "#8C2E4A": "#F47294", "#8D7BB5": "#D1BFFE", "#9C4A14": "#FE8E4D",
+    "#A78BFA": "#E0DAFF", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B23A1E": "#FD9177",
+    "#D06A9C": "#FFBDDA", "#D9792E": "#FECAA8"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
