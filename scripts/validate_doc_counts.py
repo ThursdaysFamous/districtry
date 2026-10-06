@@ -163,6 +163,19 @@ INSTANCE_NAMES = {
 # Entries: {"path", "name", "count", "reason", "recorded"}. See the docstring —
 # empty is the measured state, not an unfinished table.
 HISTORICAL_COUNTS = [
+    # 2026-10-01, when Illinois shipped its tribal-government layer as its 41st.
+    # This is a MEASUREMENT of the longest permalink an app can hand out — 663
+    # bytes, version 18 at level L — taken with every layer then registered
+    # switched on. Changing the 40 to a 41 would claim a measurement nobody
+    # took, and re-measuring to keep a byte count current is not what that
+    # sentence is for: it exists to bound the QR encoder's sizing, and one more
+    # layer id moves the payload by a few bytes inside a version that has room.
+    {"path": "CLAUDE.md", "name": "Illinois", "count": 40,
+     "reason": "Dated measurement of the longest share permalink (663 bytes, QR "
+               "version 18 at L), taken with the then-40 Illinois layers all on. "
+               "The figure is the reading it is; re-measuring it is a change to "
+               "the QR sizing note, not to this count",
+     "recorded": "2026-10-01"},
     # 2026-09-21, when patterns D and E made two long-invisible claims readable.
     # The plan's Context section records the state of `ny/` BEFORE the plan ran
     # and says so in its own heading. It was TRUE when written: the worksheet
