@@ -24,6 +24,32 @@
   "readOn": "2026-10-01",
   "sourceUrl": "https://howardcounty.iowa.gov/board-of-supervisors/"
  },
+ "093": {
+  "asOf": "2026-10-01",
+  "asOfWhy": "Ida County's auditor gave this pairing by e-mail on 1 October 2026; the county publishes no page that names a district, so this app has no page to re-read.",
+  "boardPhone": "(712) 364-2632",
+  "county": "Ida",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3"
+  },
+  "districts": {
+   "1": {
+    "name": "Creston Schubert",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Kyle Rohlk",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Devlun P. Whiteing",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-01"
+ },
  "119": {
   "boardPhone": "(712) 472-8517",
   "county": "Lyon",
@@ -118,5 +144,75 @@
   },
   "readOn": "2026-10-01",
   "sourceUrl": "https://pocahontascounty.iowa.gov/board-of-supervisors/"
+ },
+ "153": {
+  "boardPhone": "(515) 286-3120",
+  "county": "Polk",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Matt McCoy",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Jill Altringer",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Mark Holm",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Tom Hockensmith",
+    "party": "Democratic"
+   },
+   "5": {
+    "name": "Angela Connolly",
+    "party": "Democratic"
+   }
+  },
+  "readOn": "2026-10-01",
+  "sourceUrl": "https://www.polkcountyiowa.gov/board-of-supervisors/"
+ },
+ "183": {
+  "boardPhone": "(319) 653-7711",
+  "county": "Washington",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Jack Seward Jr.",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Bob Yoder",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Marcus Fedler",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Stan Stoops",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Richard Young",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-01",
+  "sourceUrl": "https://washingtoncounty.iowa.gov/148/Board-of-Supervisors"
  }
 }
