@@ -135,7 +135,7 @@ with, working as intended.
 | Franklin County Clerk (IL) | which Public Square address the board meets at | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | nine Michigan city and township clerks | may an automated reader see your board page | none | Ypsilanti Township **ANSWERED same day**: the clerk was passing the request to the township's technology staff, and the correction reached her at 15:23. Lansing acknowledged automatically, with no content |
-| Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day** and NOT YET USABLE: the Auditor says the office keeps the district numbers with names, and sent them as two inline images with a 2022 district map attached, so no name can ship until it is read off a picture and confirmed |
+| Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day** and NOT YET USABLE: the Auditor says the office keeps the district numbers with names, and sent them as two inline images with a 2022 district map attached, so no name can ship until it is read off a picture and confirmed. **The reply asking her to type it stands, re-checked 2026-10-06**: the county's board page lists the five supervisors with no district beside any, and nothing else on the site pairs them. The site does publish the plan itself — Resolution 2022-12 adopts the statewide agency's plan and names the townships in each district, and districts 1, 4 and 5 agree with our map township by township — so only the pairing is missing, and districts 2 and 3 (Atlantic's wards) are not yet checked |
 | Calumet (Brillion), Pepin (Durand) county clerks (WI) | ward-to-district filing | none | — |
 | Outagamie County Clerk (WI) | the New London filing | none | **ANSWERED same day**, settled: New London wards 10, 11 and 12 are all in Aldermanic District 5 |
 | Brown County Clerk (WI) | how Bellevue elects its board | none | **ANSWERED same day, HEDGED**: "They appear to be at large", with the village clerk's address and a question back about whether the village had been asked. A hedge is not a statement the village has made, so it settles nothing by itself |
@@ -1575,11 +1575,25 @@ follows here is outside it. Same rule either way: the operator sends, and the
 
 ## Ask 14 — Jones County, Iowa: the GIS file behind a map the county already publishes
 
-> **NOT YET ASKED — DRAFTED 2026-09-04.** Not queued in Gmail; there is no existing thread
-> with this office, so it is a fresh message to the County Auditor. On send, change
-> `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `jones-county-supervisor` blocker in
-> `docs/DATA_LAYER_GUIDEBOOK.md` AND in the Jones row of `ia/WATCH.md` — Iowa keeps the
-> ledger in both, unlike Illinois.
+> **ASKED 2026-10-01** (sent 16:23:59 UTC to auditor@jonescountyiowa.gov, per
+> `/mnt/project-files/letters/sent-2026-10-01.md`). **ANSWERED 2026-10-05 WITH A FILE THAT IS
+> NOT THE PLAN IN FORCE**: GIS Coordinator Kristi Aitchison, via Auditor Whitney Hein, sent a
+> shapefile named `JonesCo_IA_BOS_2012`. Measured 2026-10-06 against the gate below, its five
+> districts sum the county's Census 2020 blocks to 3,945 / 4,388 / 3,988 / 4,105 / 4,220 where
+> the county's own adopted plan publishes 4,128 / 4,120 / 4,137 / 4,132 / 4,129 — a plan drawn
+> on 2020 blocks would match to the person, so this is an earlier plan and nothing ships from
+> it. The follow-up below is **NOT YET SENT — DRAFTED 2026-10-06**; the Letters thread puts it
+> in Adam's mailbox as a reply on the same thread, and Adam sends.
+>
+> **ANSWERED AGAIN 2026-10-06, 17:01 UTC, WITH THE PLAN IN FORCE — THE ASK IS CLOSED.** Ms
+> Aitchison replied on the same thread ("This SHOULD work better!") with `BOS.zip`, holding a
+> shapefile named `BOS_2022` (five districts `DIST_ID` 1-5, plus one empty record labelled
+> `Unassigned` carrying no shape). Run through the same gate: the county's 1,460 Census 2020
+> blocks, assigned by each block's internal point, sum to **4,128 / 4,120 / 4,137 / 4,132 /
+> 4,129 — every district equal to the county's published figure to the person**, 20,646 in
+> all, with no block outside every district and none inside two. That is the plan in force, and
+> it lets Jones carry a supervisor-district card for the first time; that is a reader-visible
+> change and goes in its own pull request.
 
 **This is the narrowest ask in this file, and the only one whose answer is a file the office
 already has.** Jones County is the ONE Iowa county carrying no supervisor-district card at all:
@@ -1657,6 +1671,37 @@ office whose page publishes the district map).
   outcome; it retires a route rather than leaving it open forever.
 * **No reply** → follow up once at ~3 weeks and once at ~2 more, then `UNRESPONSIVE` — which is a
   claim about the ask, never about the county.
+
+### Follow-up, drafted 2026-10-06 — a reply on Ms Aitchison's own message
+
+**To:** Kristi Aitchison, at the address her 2026-10-05 message came from, copying the Auditor's
+office mailbox it was forwarded through. The Letters thread reads both addresses off that
+message; none is written here, because a guessed address on an outbound ask is worse than none.
+
+> **Subject:** Re: Jones County supervisor district boundaries — GIS file request
+>
+> Dear Ms Aitchison,
+>
+> Thank you for sending the supervisor district shapefile, and to Ms Hein for passing my
+> request along.
+>
+> Before using it I checked it against the population figures on the county's current
+> district map, the one adopted after the 2020 census. The file's districts come out
+> noticeably different from those figures (one district by about 270 people), and its name
+> includes 2012, so I think it may be the plan from the previous redistricting.
+>
+> Is there a version of the file for the current plan, the one shown on the county's
+> Board of Supervisors district map? If the current lines exist only on the printed map,
+> that is a useful answer too, and I will record it rather than ask again.
+>
+> With thanks,
+>
+> `<YOUR NAME>`
+> districtry.com
+
+**What each answer means.** A file → gate it against the five published populations again, and
+build only if it matches. "Only the printed map" → `ANSWERED`, and the record says the county's
+file route is closed. No reply → one follow-up at about three weeks.
 
 ---
 
@@ -5585,12 +5630,13 @@ difference between a gap we have measured and a gap we have merely noticed.
 
 ## Ask ia-tama-supervisor-map — Tama County Auditor: your county's current five-district map
 
-> **NOT YET ASKED — DRAFTED 2026-10-01**, to Tama County Auditor Karen Rohrs at the address
-> `ia/data/app/ia-county-auditors.json` carries for the county, which is the same address that
-> answered this project the same afternoon. One message. On send, change `NOT YET ASKED —
-> DRAFTED` to `ASKED <date>` in the `ia-tama-supervisor-map` blocker in
-> `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in both — and add
-> an `ask` block to that record reading `pending`.
+> **ASKED 2026-10-01** (sent 18:07:32 UTC as a reply on the existing thread, per
+> `/mnt/project-files/letters/sent-2026-10-01.md`) and **ANSWERED 2026-10-01 18:24 UTC**:
+> Auditor Rohrs attached the county's own five-district map, a vector PDF. Its measurement is
+> in the numbering row of `ia/WATCH.md`. Building it needs the county's current precinct list,
+> which is the follow-up at the end of this section, drafted 2026-10-06 and due about
+> 8 October. It is a separate letter on purpose: the thank-you told her nothing more was being
+> asked that day.
 >
 > **THIS IS A FOLLOW-UP TO AN ANSWER, NOT TO SILENCE.** Auditor Rohrs answered
 > `ia-pottawattamie-tama-wright-boards` within the hour, in plain text, naming five supervisors
@@ -5631,6 +5677,67 @@ what the lines are today.
 **Why a no is still useful.** If the county has no map of its own, saying so closes the
 question: it tells us the repair belongs with the state agency rather than with the county, and
 it lets the record that tells our readers what is missing say the county was asked.
+
+### Follow-up, drafted 2026-10-06 — the county's current precinct list (send about 8 October)
+
+**SENT 2026-10-06 16:39 UTC AND ANSWERED THE SAME DAY, 17:55 UTC — CLOSED.** Auditor Rohrs
+sent two files: the county's precinct list with each precinct's polling place and supervisor
+district (an `.xls`, 12 precincts) and the 2025 general-precinct map (an ArcMap PDF, 12
+precincts). Read against the five-district map she sent on 1 October, every district line
+follows a precinct line, so each district is a whole set of current precincts: **District 1 =
+Lincoln, Dysart and Clutier; 2 = Tama; 3 = Traer and Gladbrook; 4 = Garwin and Toledo; 5 =
+Montour, Elberon, Chelsea and Indian Settlement.** The spreadsheet agrees on eleven of the
+twelve and puts **Lincoln in District 3**, which is the earlier plan: it carries a note dated
+April 2013, and her 2024 district map draws Lincoln and Grant townships in District 1.
+**MEASURED, NOT READ OFF THE PICTURE**: the district map's five districts are each ONE filled
+vector shape in the PDF, and placed on the ground by fitting the drawing's extent to the
+county's Census outline (98.9% overlap), the county's Census 2020 blocks sum to 3,407 / 3,446
+/ 3,395 / 3,420 / 3,449 against an ideal of 3,427 — every district within 1%, which a stale
+or misread plan would not be. That fit is a check and not shipping geometry: the build places
+the lines with proper control points before anything ships. Two side findings: this project's
+shipped Tama precincts are the 13 Census 2020 voting districts, where the county now runs 12;
+and the build for Tama's five-district card is reader-visible and goes in its own pull request.
+
+**As drafted (kept for the record):** A reply on Auditor Rohrs's own
+thread, after the thank-you for the map. The text below matches the mailbox draft, including the
+sentence the Letters thread added: the thank-you had told her the map resolved everything, so
+this letter says plainly that one more thing turned up. Adam sends.
+
+**Why this question.** Her map gives five districts. To tell a reader at a given address which
+of them they live in, the lines have to be placed on the ground exactly. Two of the districts
+are drawn tightly around the cities of Tama and Toledo and cut through townships, so the
+township lines this project already has cannot place them. The precinct list this project
+holds is older than her plan and has a precinct (Buckingham/Perry) that her map puts in two
+districts, so the county has probably re-drawn precincts since. Her current list, with the
+district each precinct votes in, would settle most of the lines; where a district line runs
+through a city, a sentence saying which streets it follows would settle the rest.
+
+> **Subject:** Re: Tama County supervisor districts — one more question
+>
+> Dear Ms Rohrs,
+>
+> Thank you again for the district map. I said last week that it resolved everything, but
+> working through it I found one more thing I need. The map shows the five districts clearly.
+>
+> To place each address in the right district I need to know where the lines run on the
+> ground, and the precinct list I have is older than your current plan. Could you send the
+> county's current list of precincts, with the supervisor district each one votes in? A
+> list in an e-mail, a spreadsheet or a PDF would all be fine.
+>
+> If any precinct is split between two districts, a note saying where the line runs through
+> it, for example which streets it follows in Tama or Toledo, would be very helpful too.
+>
+> If this is more work than it is worth, please say so and I will not ask again.
+>
+> With thanks,
+>
+> `<YOUR NAME>`
+> districtry.com
+
+**What each answer means.** A precinct list → compose the districts from it and check each
+against the map's own district shapes before anything ships. A split described in words →
+resolve it to whole census blocks, as was done for Jackson County, Illinois. No reply → nothing
+changes; the Tama card keeps naming the county and no supervisors.
 
 ---
 
@@ -6202,7 +6309,9 @@ it lets the record that tells our readers what is missing say the county was ask
 > that day: Worth's, sent at 14:42 UTC, was about its city officials page — a different batch on
 > a different subject — and Dickinson, which looked like one county with two letters, genuinely
 > received the supervisor letter at two addresses. Worth is not among the nineteen either way.
-> Exactly four of the sixteen are in this tranche — **Ida, Osceola,
+> **CORRECTED 2026-10-06: Ida and Washington are WITHDRAWN before sending** (see their rows
+> below — each county already publishes the answer), so this tranche is SEVENTEEN letters, and two
+> of them are replies. As first drafted: exactly four of the sixteen were in this tranche — **Ida, Osceola,
 > Sioux and Washington** — and for those four the question goes as a **REPLY ON THIS
 > AFTERNOON'S THREAD**, opening by acknowledging that letter, never as a separate message. The
 > other fifteen are first contacts. **Dickinson is deliberately not on this list**: it has had
@@ -6248,15 +6357,15 @@ numbering being checked.
 | Franklin | Katy Flint | 3 | |
 | Grundy | Alan Tscherter | 5 | |
 | Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. |
-| Ida | Kristy Gilbert | 3 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 with the three pairings. |
+| Ida | Kristy Gilbert | 3 | **WITHDRAWN 2026-10-06, NEVER SENT — THE COUNTY ALREADY PUBLISHES THE ANSWER.** Re-checked before send: the county's own site carries Ordinance 31 (`idacounty.iowa.gov/wp-content/uploads/2021/12/Ordinance-31-Est-Co-Supervisor-Precincts-2021.pdf`, effective 15 January 2022, drawn to the 2020 census), whose text names the townships in each district. Ten townships lie wholly inside one district (Galva and Griggs in 1; Battle, Blaine, Garfield, Hayes, Logan, Maple and Silver Creek in 2; Corwin in 3), and every one of their TIGERweb interior points lands in the same-numbered district of the statewide layer, so the two numberings agree in all three districts. It was found through the site's own search feed, which the September sweep did not read; a letter asking for it would have asked the county for a document it publishes. |
 | Madison | Michele Brant | 3 | |
 | Mitchell | Rachel Foster | 5 | |
-| Osceola | Rochelle Van Tilburg | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 with the five pairings. |
-| Polk | Jamie Fitzgerald | 5 | The address the roster carries is the elections desk rather than a person; the letter goes there as published. |
+| Osceola | Rochelle Van Tilburg | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 with the five pairings. **Re-checked 2026-10-06 and it stands**: the county's site still answers its robots.txt with HTTP 202, the captcha shape, so nothing on it can be read and the letter is the only route. |
+| Polk | Jamie Fitzgerald | 5 | The address the roster carries is the elections desk rather than a person; the letter goes there as published. **ANSWERED 2026-10-06 (sent 16:48, reply 16:57) — THE COUNTY PUBLISHES THE ANSWER AND OUR NUMBERING MATCHES IT.** The elections office pointed to the county's own web map. It draws from the county's own ArcGIS Server (`gis4.polkcountyiowa.gov/server/rest/services/Elections/Board_of_Supervisors/FeatureServer/0`, owner `portadmin` on the county's portal, copyright "Polk County, Iowa"), whose five district polygons each carry the supervisor's name, term and contact. Compared on a 160x160 grid over the county, 22,799 of the 22,860 sampled points inside either map get the SAME district number from the county's polygons and ours (99.7%); the 61 that differ are slivers along shared edges, and no district number is swapped. Fetch note: the county's Akamai edge answers our token with 403 on robots.txt and every page of both `maps.` and `gis4.`, and serves Chrome with client hints — the same measurement `ia_county_minutes_chair_scraper.py` records for `www.` — so both were read with that client; `maps.` then has no robots.txt (it serves its HTML at that path) and `gis4.` answers 404, allow all. So Polk can be keyed to its own district numbers in a later change. |
 | Sac | Renee Roland | 3 | |
-| Sioux | Joe Van Tol | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01. The county's own site fronts every page with a managed challenge, so a letter is the only route there will ever be. |
+| Sioux | Joe Van Tol | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01. The county's own site fronts every page with a managed challenge, so a letter is the only route there will ever be. **Re-checked 2026-10-06 and it stands**: robots.txt still answers HTTP 202. |
 | Taylor | Judy Henry | 3 | |
-| Washington | Tamera Stewart | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 by naming the county's own board page. |
+| Washington | Tamera Stewart | 5 | **WITHDRAWN 2026-10-06, NEVER SENT — THE AUDITOR HAD ALREADY SENT THE ANSWER.** Her 2026-10-01 reply linked the county's own district map (`washingtoncounty.iowa.gov/DocumentCenter/View/2095/Map-of-Supervisor-Districts---Final`, county GIS, 2022, drawn to the 2020 census). It is a vector PDF with the townships drawn and labelled inside each district. Ten townships lie wholly inside one district (Brighton, Clay, Dutch Creek, Lime Creek and Seventy-Six in 1; English River in 2; Crawford, Highland, Iowa and Oregon in 3), and every interior point lands in the same-numbered district of the statewide layer. Districts 4 and 5 hold no whole township, so they are settled by the split ones: Franklin township's interior point lands in the layer's 4 and the county's map puts Franklin only in 1 and 4, while Jackson's lands in the layer's 5 and the map puts Jackson only in 2 and 5, so the layer's 4 and 5 cannot be swapped. The two numberings agree in all five districts. |
 | Webster | Krystal Lloyd | 5 | |
 | Winnebago | Karla Weiss | 3 | |
 | Winneshiek | Benjamin D. Steines | 5 | |
