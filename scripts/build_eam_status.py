@@ -1566,7 +1566,15 @@ ANSWERS = {
         # The Secretary of State publishes all 4,105 precincts statewide, from
         # the office that maintains them, and the app draws them.
         "precincts": answers("voting-precinct"),
-        "special-districts": OPEN,
+        # Watershed districts (Minn. Stat. ch. 103D) and the metro area's
+        # watershed management organizations (103B.211), from the Board of
+        # Water and Soil Resources' own statewide layer, 2026-10-06. Both can
+        # levy a property tax, and the state's own law creates both — the
+        # Wisconsin and Michigan precedent of one statewide family answering
+        # this level. Not the only family Minnesota has: the Secretary of
+        # State's precinct service also carries soil-and-water, hospital and
+        # park districts, which are further layers rather than a gap here.
+        "special-districts": answers("watershed-district"),
         "tribal-government": OPEN,
     },
     "ky": {
