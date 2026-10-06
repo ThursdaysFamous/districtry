@@ -1039,6 +1039,25 @@ PROVENANCE = [
             "county domains); absences are gap ng911-ems-filings."
         ),
     },
+    {
+        "layer": "Tribal government areas (Wisconsin)",
+        "app_file": "tribal-areas.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
+        "note": (
+            "The Census's American Indian / Alaska Native areas service, "
+            "current vintage, reservation + off-reservation trust land "
+            "(layers 2/3 -- ALWAYS NAME THE SERVICE BESIDE A LAYER ID, since "
+            "those ids mean other classes in tigerWMS_Current). Wisconsin holds 21 "
+            "areas, 11 reservations and 10 pieces of trust land over 2,645.8 km2, "
+            "carrying 12 nations. THE SET MOVES AND NOT ON A REDISTRICTING "
+            "CALENDAR: land enters the map when the United States takes it "
+            "into trust, so a vintage comparison is the only thing that sees "
+            "a new parcel. scripts/build_tribal_areas.py --check is OFFLINE "
+            "and proves the land-to-government join and the shipped "
+            "properties, never that the Census has not added an area, so this "
+            "manifest is what watches the service. No nation's own council page is watched here: 11 of the 12 sit in build_tribal_areas.ROSTER_NOT_READ with a dated page this project has not read yet, and the twelfth publishes none at all."
+        ),
+    },
 ]
 
 # Live endpoints the app queries at runtime.

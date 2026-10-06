@@ -4187,7 +4187,7 @@
    "bylines": [
     {
      "name": "Matt Baughman",
-     "beat": "City/County Government Reporter — the closest beat fit at this outlet. Districtry's Wisconsin instance covers all 72 counties with 31 layers (county b…",
+     "beat": "City/County Government Reporter — the closest beat fit at this outlet. Districtry's Wisconsin instance covers all 72 counties with 32 layers (county b…",
      "address": "matthew.baughman@ecpc.com",
      "source_url": "https://www.leadertelegram.com/site/contact.html"
     },
@@ -4746,7 +4746,7 @@
    "beat": "Madison daily news, local government, city living",
    "tier": 2,
    "why": "VERIFIED ADDRESS: madison@citycast.fm. Source URL fetched: https://madison.citycast.fm/contact — verbatim: \"For editorial inquiries and pitches email madison@citycast.fm\" and \"For questions, concerns, and comments on the show or newsletter email madison@citycast.fm\". CLASSIFICATION: editorial pitches.",
-   "angle": "Wisconsin coverage is all 72 counties and 31 layers, and Madison is where the state-government audience lives. The show wants a guest with one concrete idea and the newsletter wants a link; both are satisfied by the same pitch.",
+   "angle": "Wisconsin coverage is all 72 counties and 32 layers, and Madison is where the state-government audience lives. The show wants a guest with one concrete idea and the newsletter wants a link; both are satisfied by the same pitch.",
    "extra_angles": [],
    "send_to": {
     "value": "madison@citycast.fm",
