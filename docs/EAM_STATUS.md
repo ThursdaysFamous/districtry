@@ -48,7 +48,7 @@ different thing from one it failed.
 | il | **EAM·** | 102 | 102/102 | 572 | 996 | all | 398 | all | 10 of 13 levels |
 | ky | **EAM·** | 120 | 120/120 § | 0 | 0 | by record | 10 | all | 8 of 13 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 615 | all | 59 | all | 11 of 13 levels |
-| mn | **EAM·** | 87 | 87/87 § | 0 | 0 | by record | 10 | all | 7 of 13 levels |
+| mn | **EAM·** | 87 | 87/87 § | 0 | 0 | by record | 11 | all | 8 of 13 levels |
 | ny | **EAM·** | 62 | 62/62 § | 68 | 78 | all | 33 | all | 9 of 13 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,574 | all | 263 | all | 10 of 13 levels |
 
@@ -123,13 +123,12 @@ this instance is in maintenance.
 
 - **Examined by a statewide record:** `mn-county-commissioner-roster`, `mn-county-officers` account for every county in the state, which is what Examined rests on here: 0 of 87 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mn-commissioner-districts.json`, `mn-house-districts.json`, `mn-judicial-districts.json`, `mn-precincts.json`, `mn-senate-districts.json`, `state-counties.json`
-- **Covered: no.** 6 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mn-commissioner-districts.json`, `mn-house-districts.json`, `mn-judicial-districts.json`, `mn-precincts.json`, `mn-senate-districts.json`, `mn-watershed-districts.json`, `state-counties.json`
+- **Covered: no.** 5 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 87 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 43 units at 25,000+ name a governing body; unanswered: Andover city, Apple Valley city, Austin city, Blaine city, Bloomington city, Brooklyn Center city, Brooklyn Park city, Burnsville city and 35 more
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
-  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
   - **13. Tribal governments** — open (required only where the state has the level)
 
 ### ny — EAM·

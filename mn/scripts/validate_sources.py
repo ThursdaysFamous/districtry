@@ -248,6 +248,24 @@ PROVENANCE = [
             "counties must agree with the statute before anything is written."
         ),
     },
+    {
+        "layer": "watershed-district",
+        "app_file": "mn-watershed-districts.json",
+        "source_url": (
+            "https://enterprise.gisdata.mn.gov/aghost/rest/services/"
+            "us_mn_state_bwsr/bdry_watershed_mgmt_dist_orgs/FeatureServer/0"
+        ),
+        "note": (
+            "64 watershed districts and watershed management organizations from "
+            "the Board of Water and Soil Resources' own statewide service. The "
+            "freshness signal is the service's Service Modified stamp: a district "
+            "is formed, enlarged or dissolved by an order of BWSR, and a metro "
+            "organization's members can change by joint-powers agreement, so "
+            "neither waits for a census. The Geospatial Commons download host "
+            "for the same layer answers robots.txt with Disallow: / and is not "
+            "read."
+        ),
+    },
 ]
 
 ENDPOINTS = [

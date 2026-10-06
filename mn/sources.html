@@ -1073,7 +1073,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">16 layers — 5 political and legislative, 2 public safety, 3 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">17 layers — 5 political and legislative, 2 public safety, 3 schools, 7 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1238,7 +1238,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">6 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">7 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1256,6 +1256,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">Not yet shipped. Minnesota's 87 county boards are elected by district (447 districts), and the districts and their members arrive together in a later change; the card names no officeholder rather than guessing one. Recorded as the coverage gap mn-county-commissioner.</td>
                 <td data-label="Where it applies">Minnesota — statewide.</td>
+              </tr>
+              <tr id="layer-watershed-district">
+                <th scope="row"><span class="layer-name">Watershed District</span><code>watershed-district</code></th>
+                <td data-label="What it answers">The watershed district or watershed management organization covering the point: what kind of body it is, the state law that creates it, who appoints its board, and its own website. Where the state's map puts the point in two, both are listed.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_bwsr/bdry_watershed_mgmt_dist_orgs/FeatureServer/0" target="_blank" rel="noopener">Minnesota Board of Water and Soil Resources (BWSR), Watershed Management Districts and Organizations — 45 watershed districts, 16 watershed management organizations and three county-run areas, read from the state's feature service and simplified by mn/scripts/build_mn_watershed_districts.py (Douglas-Peucker at 10 m, gated on 4,000 sampled points getting the same bodies as the source). The Geospatial Commons download host refuses this client in robots.txt and is not read</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO MANAGER IS NAMED, because no board here is elected: a watershed district's managers are appointed by the county boards of the counties it lies in (Minn. Stat. 103D.311), a metro organization's board by its member cities and towns (103B.211), and a county-run area is the county board itself. The card says who appoints the board and links the body's own website as BWSR publishes it.</td>
+                <td data-label="Where it applies">Minnesota — the parts of the state inside a watershed district or organization, 30% of its area: 99.7-99.9% of each of the seven Twin Cities counties (measured 2026-10-06 against the shipped county outlines), and wherever a district was petitioned for elsewhere.</td>
               </tr>
               <tr id="layer-zip-code">
                 <th scope="row"><span class="layer-name">ZIP Code</span><code>zip-code</code></th>
@@ -1444,6 +1455,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Minnesota — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mn/sources.html#dataset-watershed-district",
+      "identifier": "watershed-district",
+      "name": "Watershed District",
+      "description": "The watershed district or watershed management organization covering the point: what kind of body it is, the state law that creates it, who appoints its board, and its own website. Where the state's map puts the point in two, both are listed. NO MANAGER IS NAMED, because no board here is elected: a watershed district's managers are appointed by the county boards of the counties it lies in (Minn. Stat. 103D.311), a metro organization's board by its member cities and towns (103B.211), and a county-run area is the county board itself. The card says who appoints the board and links the body's own website as BWSR publishes it.",
+      "url": "https://districtry.com/mn/sources.html#layer-watershed-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/mn/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Minnesota Board of Water and Soil Resources (BWSR), Watershed Management Districts and Organizations — 45 watershed districts, 16 watershed management organizations and three county-run areas, read from the state's feature service and simplified by mn/scripts/build_mn_watershed_districts.py (Douglas-Peucker at 10 m, gated on 4,000 sampled points getting the same bodies as the source). The Geospatial Commons download host refuses this client in robots.txt and is not read",
+          "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_bwsr/bdry_watershed_mgmt_dist_orgs/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Minnesota — the parts of the state inside a watershed district or organization, 30% of its area: 99.7-99.9% of each of the seven Twin Cities counties (measured 2026-10-06 against the shipped county outlines), and wherever a district was petitioned for elsewhere"
       }
     },
     {
