@@ -111,7 +111,7 @@ this instance is in maintenance.
 
 ### ky — EAM·
 
-- **Examined by a statewide record:** `ky-county-officers`, `ky-fiscal-court`, `ky-judges`, `ky-municipal-officeholders`, `ky-school-board-members` account for every county in the state, which is what Examined rests on here: 0 of 120 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Examined by a statewide record:** `ky-county-officers`, `ky-fiscal-court`, `ky-municipal-officeholders`, `ky-school-board-members` account for every county in the state, which is what Examined rests on here: 0 of 120 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ky-circuit-court-districts.json`, `ky-district-court-districts.json`, `ky-house-districts.json`, `ky-senate-districts.json`, `ky-supreme-court-districts.json`, `metro-outline.json`, `state-counties.json`
 - **Covered: no.** 5 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
