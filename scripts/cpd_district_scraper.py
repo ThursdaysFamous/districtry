@@ -249,6 +249,10 @@ def clean(text):
 # real reason — its Playwright navigation clears the Cloudflare challenge so the
 # cf_clearance cookie warms the whole context before we pull the sitemaps.
 EXPECTED_DISTRICTS = 22
+# The builder's MIN_DISTRICTS (scripts/build_cpd_roster.py). Fewer than this
+# and the builder refuses the file, so the scrape exits non-zero first and the
+# workflow records a blocked source instead of a red rebuild.
+MIN_DISTRICTS_RESOLVED = 20
 WP_SITEMAP = BASE + "/wp-sitemap.xml"
 FINDER_READY_JS = (
     r"(document.documentElement.innerHTML.match(/\d(?:st|nd|rd|th)-district-/gi) || []).length >= 1"
@@ -543,6 +547,19 @@ def main():
     coverage = "  ".join(f"{f}={sum(1 for r in ok if r.get(f))}/{len(ok)}" for f in fields)
     print(f"Wrote {len(results)} records to {args.out} ({len(ok)} without error)", file=sys.stderr)
     print(f"field coverage: {coverage}", file=sys.stderr)
+
+    if ok and len(ok) < MIN_DISTRICTS_RESOLVED:
+        # A SCRAPE THAT RESOLVED ONLY SOME DISTRICTS IS ALSO A BLOCKED SCRAPE,
+        # and the branch below did not cover it. On 2026-10-06 the sitemap came
+        # back with no district links and one page got through, so this wrote
+        # one record, exited 0, and the builder refused it with "resolved only
+        # 1/20+ expected districts" — the same misleading red the branch below
+        # was written to end. The floor is the builder's MIN_DISTRICTS, so a
+        # scrape the builder would refuse never reaches it.
+        print("FATAL: only %d of %d district pages yielded data — the rest were "
+              "refused or never discovered, so this is a blocked scrape, not a "
+              "smaller roster" % (len(ok), EXPECTED_DISTRICTS), file=sys.stderr)
+        sys.exit(1)
 
     if not ok:
         # A SCRAPE THAT RESOLVED NOTHING IS A FAILED SCRAPE, and exiting 0 here

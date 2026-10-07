@@ -494,6 +494,13 @@ WEST_BEND_INDEX = ("https://www.westbendwi.gov/government/elected_officials"
 
 ALGOMA_INDEX = "https://www.algomacity.org/government/city_council.php"
 DODGEVILLE_INDEX = "https://www.cityofdodgeville.com/council"
+# MARION is read from its COUNTY, not its own site: cityofmarionwi.gov publishes
+# `User-agent: * / Disallow: /` (re-read 2026-10-06), which is obeyed. The
+# Waupaca County Clerk's Directory of Public Officials carries the council in
+# its city-officials section, and that host serves no robots.txt (HTTP 404) and
+# serves the districtry token a full page (user-agent-measurements.json), so it
+# is fetched with the token rather than this file's browser string.
+MARION_INDEX = "https://public4.co.waupaca.wi.us/CountyDirectory"
 HORICON_INDEX = "https://www.horiconwi.gov/185/Elected-Officials"
 WAUTOMA_INDEX = "http://www.cityofwautoma.com/common-council"
 
@@ -2117,6 +2124,77 @@ def scrape_dodgeville():
 
 
 
+def scrape_marion():
+    """Waupaca County's Directory of Public Officials, CITY OF MARION section:
+    one card per seat, `Aldermanic District N` / name / home address / phones /
+    mailbox. Two seats per district over three districts; one is printed
+    `Vacant`, so five people hold six seats and `vacantSeats` carries the sixth.
+
+    THE KEY IS THE STATE'S FILED ALDERID, NOT THE DIRECTORY'S NUMBER. Waupaca
+    files Marion's wards 1-3 as 21-23 and the aldermanic builder's LOCAL_RECODE
+    joins the Shawano ward to 21, so directory District N is key 2N. That rests
+    on the county's April 2026 sample ballot ("Alderperson, District 1 & 4",
+    "District 2", "District 3") and on one named inference — that ward 2 is
+    District 2 and ward 3 is District 3 — recorded in that builder.
+
+    A NUMBER PRINTED UNDER TWO SEATS IS NOT EITHER MEMBER'S. Districts 1 and 3
+    each print one number under both of their alderpersons, the Waupaca
+    supervisor rule (wi_county_board_scraper.drop_shared_phones), so it is
+    dropped from both and the first number left ships. Home addresses are
+    stepped over and never stored.
+    """
+    page = fetch(MARION_INDEX, headers=sc.UA_HEADERS_ROSTER_BOT)
+    start = page.find('<h3 class="block-heading-1">CITY OF MARION</h3>')
+    if start < 0:
+        raise SystemExit("marion: the directory has no CITY OF MARION heading [%s]"
+                         % body_note(page))
+    end = page.find("<h3", start + 10)
+    section = page[start:end if end > 0 else len(page)]
+    cards = []
+    for art in re.findall(r'<article class="card">(.*?)</article>', section, re.S):
+        title = re.search(r'card__title">([^<]*)<', art)
+        m = re.match(r"Aldermanic District\s+(\d)$", _clean(title.group(1)) if title else "")
+        if not m:
+            continue
+        nm = re.search(r'card__name">([^<]*)<', art)
+        name = _clean(nm.group(1)) if nm else ""
+        phones = ["(%s) %s-%s" % ph.groups() for ph in
+                  re.finditer(r'href="tel:\+?1?(\d{3})(\d{3})(\d{4})"',
+                              H.unescape(art))]
+        em = re.search(r'href="mailto:([^"?]+@cityofmarionwi\.gov)"', art)
+        cards.append((int(m.group(1)), name, phones,
+                      em.group(1).strip().lower() if em else None))
+    counts = {}
+    for _, _, phones, _ in cards:
+        for ph in set(phones):
+            counts[ph] = counts.get(ph, 0) + 1
+    members, vacant = {}, {}
+    for district, name, phones, email in cards:
+        key = "2%d" % district
+        if name.lower() == "vacant":
+            vacant[key] = vacant.get(key, 0) + 1
+            continue
+        entry = {"name": name}
+        own = [ph for ph in phones if counts[ph] == 1]
+        if own:
+            entry["phone"] = own[0]
+        if email:
+            entry["email"] = email
+        _put("marion", members, key, entry)
+    orphan = sorted(set(vacant) - set(members))
+    if orphan:
+        raise SystemExit("marion district(s) %s are listed vacant with nobody "
+                         "named — that is vacantDistricts, not vacantSeats" % orphan)
+    _seats_or_die("marion", members, 3, page,
+                  ("Aldermanic District N", r"Aldermanic District\s+\d"))
+    if _people(members) + sum(vacant.values()) != 6:
+        raise SystemExit("marion names %d alderperson(s) and %d vacant seat(s); "
+                         "the directory has listed six seats, two per district"
+                         % (_people(members), sum(vacant.values())))
+    extra = {"vacantSeats": vacant} if vacant else {}
+    return members, MARION_INDEX, extra
+
+
 def scrape_black_river_falls():
     """`WARD N` headings, two alderpersons under each, eight over four.
 
@@ -2631,6 +2709,9 @@ def main():
             # recorded here as blocking automated readers and do not
             ("84475", "Wausau", 11, scrape_wausau),
             ("84675", "Wauwatosa", 12, scrape_wauwatosa),
+            # read from Waupaca County's directory, 2026-10-07, once the
+            # aldermanic builder could draw its three districts (LOCAL_RECODE)
+            ("49400", "Marion", 3, scrape_marion),
     )
     for code, name, districts, fn in COVERED:
         result, reason = attempt(name, fn)

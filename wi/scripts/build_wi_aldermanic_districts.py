@@ -84,6 +84,8 @@ OUT_NAME = "aldermanic-districts.json"
 
 BAS_ALDERS = ("https://mapservices.legis.wisconsin.gov/arcgis/rest/services"
               "/BAS_Collection/BAS_Live_Collection_Alderpersons/FeatureServer/0")
+BAS_WARDS = ("https://mapservices.legis.wisconsin.gov/arcgis/rest/services"
+             "/BAS_Collection/BAS_Live_Collection_Wards/FeatureServer/0")
 
 EXPECT_CODED_WARDS = 2580      # all coded wards, towns included
 EXPECT_TOWN_CODED = 4          # the Town of Mercer anomaly, Iron County
@@ -92,8 +94,11 @@ EXPECT_MUNICIPALITIES = 165    # C/V municipalities with any coded ward
 EXPECT_COMPOSED_WARDS = 78     # uncoded wards the four compositions assign:
                                # Appleton 50, Kaukauna 16, Berlin 6, Edgerton 6
                                # (each city's one county-coded ward is not one)
-EXPECT_TOTAL_KEYS = 888        # 867 filed + 21 the state does not file:
-                               # Appleton 11, Berlin 5, Kaukauna 3, Edgerton 2
+EXPECT_TOTAL_KEYS = 887        # 867 filed + 21 the state does not file:
+                               # Appleton 11, Berlin 5, Kaukauna 3, Edgerton 2;
+                               # less 1 for Marion, whose Shawano ward joins
+                               # its Waupaca district (LOCAL_RECODE)
+EXPECT_RECODED_WARDS = 1       # Marion ward 4
 
 # The NINE measurably incomplete submissions: COUSUBFP -> (name, uncoded
 # wards, uncoded share of the municipality's ward area). Computed fresh from
@@ -365,14 +370,16 @@ LOCAL_COMPOSITION = {
         # city's wards in two schemes and the dissolve reads that as a fourth
         # district. Nothing is relabelled here yet: the card prints
         # parseInt(ALDERID), so a change is reader-visible. See wi/WATCH.md.
+        # MARION WAS SETTLED 2026-10-07 from Waupaca County's own directory and
+        # sample ballot, and is handled by LOCAL_RECODE below rather than here.
 #
 # RELABELLED FOR THE READER ON 2026-10-01, IN THE APP AND NOT HERE.
 # index.html's ALDER_DISTRICT_LABELS maps the filed ids of those three
 # cities to the numbers their own councils use, and ALDERID and KEY keep
 # the filed values — so the dissolve key, the roster join and the
 # vector-tile key are all untouched and this builder's output does not
-# move. Marion is still as filed, because nothing published says what it
-# calls its four. wi/scripts/validate_index.py holds that table to this
+# move. Marion joined that table on 2026-10-07, once LOCAL_RECODE below had
+# merged its Shawano ward into the district its county's ballot puts it in. wi/scripts/validate_index.py holds that table to this
 # builder's own output: a refiling that moves one of those ids fails the
 # gate rather than quietly putting the filed number back on the card.
         "balance": 12.55,
@@ -449,6 +456,53 @@ LOCAL_COMPOSITION = {
         # while Outagamie files all seventeen of its own uncoded (the Appleton
         # county, again) — and the map puts ward 12 in DIST. #4.
         "balance": 6.38,
+    },
+}
+
+# ---------------------------------------------------------------------------
+# LOCAL RECODE — a municipality whose wards the counties DO code, under a key
+# that splits one district in two. The opposite case from LOCAL_COMPOSITION,
+# which fills in wards a county left uncoded: here every ward carries a code
+# and one of them is the wrong one to dissolve on.
+#
+# MARION (Waupaca and Shawano counties) IS THE ONE CASE, settled 2026-10-06 and
+# built 2026-10-07 on Adam's word. The city straddles the county line, and the
+# two counties file its wards under two schemes: Waupaca codes wards 1, 2 and 3
+# as 21, 22 and 23, and Shawano codes ward 4 as 01. Dissolving on those keys
+# drew FOUR districts for a council of three. Two documents the Waupaca County
+# Clerk's office compiles say so, both read with the roster token after the
+# host's robots.txt (HTTP 404, which permits):
+#   * the Directory of Public Officials (public4.co.waupaca.wi.us/
+#     CountyDirectory, section city-officials) lists Marion's council as
+#     Aldermanic District 1, 2 and 3, two alderpersons each;
+#   * the notice and sample ballot for 7 April 2026 (April 7, 2026 Combined
+#     Insert.pdf, linked from the county's past-election-results page; a text
+#     layer, not a scan) lists Marion wards 1 to 4 under "Alderperson, District
+#     1 & 4", "Alderperson, District 2" and "Alderperson, District 3", and names
+#     ward 4 as the part in Shawano County.
+# So ward 4 votes with ward 1, and Shawano's 01 is the same district as
+# Waupaca's 21. The recode moves ward 4 onto 21 and leaves the other three as
+# filed, so the dissolve key, the roster join and the vector-tile key keep the
+# county's own numbers and index.html's ALDER_DISTRICT_LABELS prints 1, 2, 3.
+#
+# ONE STEP IS INFERRED AND IS NAMED HERE RATHER THAN LEFT IMPLICIT: that ward 2
+# is District 2 and ward 3 is District 3. The ballot's "District 1 & 4" is
+# ward-numbered, and nothing in either document says otherwise; it is the only
+# reading in which the directory's three districts and the ballot's labels
+# agree.
+#
+# THE FILING IS PINNED, NOT ASSUMED. `filed` is every Marion ward and the code
+# the state files it under; apply_local_recode refuses to run if the ward set
+# or any code has moved, because a refiling is exactly the event that would make
+# this table describe a plan the city no longer has.
+LOCAL_RECODE = {
+    "49400": {
+        "name": "Marion",
+        "seats_districts": 3,
+        "filed": {1: "21", 2: "22", 3: "23", 4: "01"},
+        "recode": {4: "21"},
+        "source_url": "https://public4.co.waupaca.wi.us/CountyDirectory",
+        "read_on": "2026-10-07",
     },
 }
 
@@ -844,6 +898,44 @@ def apply_local_composition(attr_feats):
     return composed, shipped
 
 
+def apply_local_recode(attr_feats):
+    """Move each LOCAL_RECODE ward onto the district its election authority
+    puts it in, after checking the state still files the municipality exactly
+    as pinned. Returns the number of wards recoded."""
+    by_mun = {}
+    for f in attr_feats:
+        p = f["properties"]
+        if p.get("COUSUBFP") in LOCAL_RECODE and p.get("CTV") in ("C", "V"):
+            by_mun.setdefault(p["COUSUBFP"], []).append(f)
+    if set(by_mun) != set(LOCAL_RECODE):
+        raise RuntimeError("LOCAL_RECODE names %s; the ward layer carries %s"
+                           % (sorted(LOCAL_RECODE), sorted(by_mun)))
+    moved = 0
+    for cousub, spec in sorted(LOCAL_RECODE.items()):
+        filed = {}
+        for f in by_mun[cousub]:
+            p = f["properties"]
+            filed[int(p["WARDID"])] = (p.get("ALDERID") or "").strip()
+        if filed != spec["filed"]:
+            raise RuntimeError(
+                "%s: the state now files %s where LOCAL_RECODE pins %s. A refiling "
+                "has happened; re-read the county's directory and ballot before "
+                "recoding anything." % (spec["name"], filed, spec["filed"]))
+        after = dict(filed)
+        after.update(spec["recode"])
+        if len(set(after.values())) != spec["seats_districts"]:
+            raise RuntimeError("%s: the recode leaves %d districts, the source "
+                               "names %d" % (spec["name"], len(set(after.values())),
+                                             spec["seats_districts"]))
+        for f in by_mun[cousub]:
+            p = f["properties"]
+            w = int(p["WARDID"])
+            if w in spec["recode"]:
+                p["ALDERID"] = spec["recode"][w]
+                moved += 1
+    return moved
+
+
 def _polling_witness(spec, feats, have, ward_to_dist):
     """The Elections Commission's ward-to-place file must partition the wards
     exactly the way the composition does. Appleton only — see gate 3."""
@@ -1055,7 +1147,25 @@ def bas_witness(ltsb_keys):
     step further — Appleton's fifteen districts are the CITY's statement and BAS
     has never carried eleven of them, so comparing against the shipped set would
     fail a witness that is working perfectly."""
-    feats = fetch_layer(BAS_ALDERS, "COUSUBFP,CTV,ALDERID", geometry=False)
+    try:
+        feats = fetch_layer(BAS_ALDERS, "COUSUBFP,CTV,ALDERID", geometry=False)
+        used = "alderperson"
+    except RuntimeError as e:
+        if "no object-id field" not in str(e) and "not started" not in str(e):
+            raise
+        # THE ALDERPERSON LAYER IS SWITCHED OFF BETWEEN COLLECTIONS. Measured
+        # 2026-10-07 it answers "Service BAS_Collection/BAS_Live_Collection_
+        # Alderpersons/MapServer not started", while the same collection's
+        # WARD layer serves every ward with its ALDERID. The keys are taken
+        # from that layer instead, and the run says which one it read. It is
+        # the July 2026 session (PERIOD 2), the same edition as the ward layer,
+        # so on such a run this is a cross-SERVICE check rather than a
+        # two-edition one, and the printed line says so.
+        print("BAS alderperson layer unavailable (%s); reading the keys from "
+              "BAS_Live_Collection_Wards instead — same collection, ward level"
+              % str(e)[:120], file=sys.stderr)
+        feats = fetch_layer(BAS_WARDS, "COUSUBFP,CTV,ALDERID", geometry=False)
+        used = "ward"
     bas = set()
     for f in feats:
         p = f["properties"]
@@ -1068,6 +1178,7 @@ def bas_witness(ltsb_keys):
             "a filing edition moved; re-measure and move the EXPECT constants deliberately"
             % (len(bas - ours), sorted(bas - ours)[:4],
                len(ours - bas), sorted(ours - bas)[:4]))
+    print("BAS witness read the %s layer" % used, file=sys.stderr)
     return len(bas)
 
 
@@ -1124,6 +1235,10 @@ def main():
         raise RuntimeError("local composition assigned %d uncoded wards, expected %d — "
                            "a county has started (or stopped) filing them"
                            % (composed_wards, EXPECT_COMPOSED_WARDS))
+    recoded_wards = apply_local_recode(attrs)
+    if recoded_wards != EXPECT_RECODED_WARDS:
+        raise RuntimeError("local recode moved %d wards, expected %d"
+                           % (recoded_wards, EXPECT_RECODED_WARDS))
     coded_mun, excluded, slivers, town_coded = classify(attrs)
     if town_coded != EXPECT_TOWN_CODED:
         raise RuntimeError("%d coded TOWN wards (expected %d — the Mercer anomaly); "
@@ -1178,6 +1293,7 @@ def main():
     wards = fetch_layer(WARDS, "WARDID,COUSUBFP,MCD_NAME,CTV,ALDERID,Shape__Area",
                         where=where)
     apply_local_composition(wards)
+    apply_local_recode(wards)
     wards = [w for w in wards if w["properties"]["COUSUBFP"] in shipped_mun
              and is_coded(w["properties"].get("ALDERID"))]
     expect_ward_n = sum(m["coded"] for m in shipped_mun.values())
