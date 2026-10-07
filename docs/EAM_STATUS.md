@@ -46,7 +46,7 @@ different thing from one it failed.
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 13 levels |
 | ia | **EAM·** | 99 | 99/99 | 52 | 52 | all | 68 | all | 10 of 13 levels |
 | il | **EAM·** | 102 | 102/102 | 632 | 1,089 | all | 408 | all | 11 of 13 levels |
-| in | **····** | 92 | 0/92 | 0 | 0 | nothing recorded | 7 | 6 without a job | 6 of 13 levels |
+| in | **EAM·** | 92 | 92/92 § | 0 | 0 | by record | 7 | all | 6 of 13 levels |
 | ky | **EAM·** | 120 | 120/120 § | 0 | 0 | by record | 11 | all | 8 of 13 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 61 | all | 12 of 13 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 12 | all | 9 of 13 levels |
@@ -95,17 +95,11 @@ this instance is in maintenance.
   - **4. The county governing body, in every county of the state** — open. 94 of 102 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 87 of 89 units at 25,000+ name a governing body; unanswered: Gurnee village, Urbana city
 
-### in — ····
+### in — EAM·
 
-- **Examined: no.** 92 of 92 counties have neither a roster nor a gap record naming them. They are not blocked — they are unlooked-at, which is the one state this bar refuses.
-- **Answered: no.** The app's county tier draws no district and records no absence, so a reader is told neither a name nor a reason.
-- **Maintained: no.** 6 file(s) under no scheduled job at all, neither rewriting nor watching — 5 boundary, 0 census, 1 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
-  - `in/data/app/congress-districts.json` — **9** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `in/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `in/data/app/in-house-districts.json` — **100** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `in/data/app/in-senate-districts.json` — **50** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `in/data/app/metro-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `in/data/app/state-counties.json` — **92** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
+- **Examined by a statewide record:** `in-county-government` accounts for every county in the state, which is what Examined rests on here: 0 of 92 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
+- **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `in-house-districts.json`, `in-senate-districts.json`, `metro-outline.json`, `state-counties.json`
 - **Covered: no.** 7 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 92 counties name a governing body
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)

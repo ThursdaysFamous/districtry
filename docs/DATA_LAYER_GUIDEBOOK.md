@@ -3022,6 +3022,7 @@ trusted.
           "concept": "County council and commissioners",
           "area": "Indiana — all 92 counties",
           "counties": [],
+          "everyCounty": true,
           "kind": "no-source",
           "layer": "county",
           "summary": "The County card names your county and nobody who governs it.",
