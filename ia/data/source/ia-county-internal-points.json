@@ -1,6 +1,6 @@
 {
- "measured": "2026-10-01",
- "note": "The Census's own internal point per county — guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
+ "measured": "2026-10-07",
+ "note": "The Census's own internal point per county \u2014 guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
  "points": {
   "adair": {
    "fips": "001",
@@ -114,26 +114,12 @@
    "name": "Humboldt County",
    "slug": "humboldt"
   },
-  "ida": {
-   "fips": "093",
-   "lat": 42.3918601,
-   "lng": -95.5074206,
-   "name": "Ida County",
-   "slug": "ida"
-  },
   "johnson": {
    "fips": "103",
    "lat": 41.670668,
    "lng": -91.5905458,
    "name": "Johnson County",
    "slug": "johnson"
-  },
-  "jones": {
-   "fips": "105",
-   "lat": 42.1251174,
-   "lng": -91.1169136,
-   "name": "Jones County",
-   "slug": "jones"
   },
   "kossuth": {
    "fips": "109",
@@ -191,13 +177,6 @@
    "name": "Palo Alto County",
    "slug": "palo-alto"
   },
-  "polk": {
-   "fips": "153",
-   "lat": 41.6842756,
-   "lng": -93.5682448,
-   "name": "Polk County",
-   "slug": "polk"
-  },
   "pottawattamie": {
    "fips": "155",
    "lat": 41.3401835,
@@ -239,13 +218,6 @@
    "lng": -93.5687512,
    "name": "Warren County",
    "slug": "warren"
-  },
-  "washington": {
-   "fips": "183",
-   "lat": 41.3294124,
-   "lng": -91.7250385,
-   "name": "Washington County",
-   "slug": "washington"
   },
   "webster": {
    "fips": "187",

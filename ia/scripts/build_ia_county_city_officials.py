@@ -189,6 +189,18 @@ CITY_SUFFIX = re.compile(
     r"|gov|town|info|mail)?$", re.I)
 
 
+# A ROW WHOSE NAME IS A PLACEHOLDER IS AN EMPTY SEAT, NOT A PERSON. Marion
+# County's page lists Hamilton's council as four names and a fifth row whose
+# name cell reads "Vacant Position" (first published 2026-10-02), and copied
+# verbatim it rendered on the City card as a council member called "Vacant
+# Position". The seat is real and so is the vacancy, so the row is kept with
+# `vacant: true` and no name, and the card says the county lists the seat as
+# vacant. Only whole-cell placeholders match: a person's name never does.
+VACANT_NAME = re.compile(
+    r"^\s*(vacant|vacancy)(\s+(position|seat|office))?\s*$|"
+    r"^\s*(open|unfilled)\s+(position|seat)\s*$", re.I)
+
+
 def norm(s):
     return re.sub(r"[^a-z]", "", (s or "").lower())
 
@@ -271,6 +283,7 @@ def main():
 
     out, unmatched, no_head, shadowed = {}, [], [], []
     dropped_emails = []
+    vacant = []
     for fips, rec in sorted(kept.items()):
         for city in rec["cities"]:
             name = city["city"].strip()
@@ -292,6 +305,15 @@ def main():
             if city.get("cityPhone") and not entry.get("officePhone"):
                 entry["officePhone"] = city["cityPhone"]
             for off in city["officials"]:
+                if VACANT_NAME.match(off["name"] or ""):
+                    vacant.append((name, off["name"]))
+                    member = {"vacant": True, "role": off["role"],
+                              "county": rec["county"]}
+                    for key in ("seat", "termEnds", "termLength"):
+                        if off.get(key):
+                            member[key] = off[key]
+                    entry["members"].append(member)
+                    continue
                 member = {"name": off["name"], "role": off["role"],
                           "county": rec["county"]}
                 for key in ("seat", "status", "termEnds", "termLength",
@@ -371,7 +393,7 @@ def main():
             if bool(m.get("phoneIsOffice")) != is_office:
                 fail("%s / %s: phoneIsOffice is %r and the number %s the city "
                      "office number -- the flag and the comparison have come "
-                     "apart" % (entry["city"], m["name"],
+                     "apart" % (entry["city"], m.get("name"),
                                 m.get("phoneIsOffice"),
                                 "equals" if is_office else "does not equal"))
 
@@ -392,6 +414,8 @@ def main():
                   if any("clerk" in (m.get("role") or "").lower()
                          for m in e["members"])), seats, emails, phones,
               office_phones))
+    for city, text in vacant:
+        print("  VACANT seat (the county lists %r): %s" % (text, city))
     if shadowed:
         print("  %d city/cities already named from their OWN page, so the "
               "county's copy is not used: %s"

@@ -844,11 +844,11 @@ def ia_at_large(inst):
         if page is None and not plan and county_slug(name) in recorded_gaps:
             # A COUNTY WITH NO PLAN AND A GAP RECORD IS EXPLAINED, NOT
             # UNHANDLED, and the difference is derived from the tree rather
-            # than from a second hand-kept list. Jones is the one today: the
-            # state's own supervisor-district layer does not carry the county
-            # at all (ia/scripts/build_ia_supervisor_districts.py records it as
-            # EXPECTED_MISSING, and jones-county-supervisor says so to a
-            # reader), so nothing published here establishes how its board is
+            # than from a second hand-kept list. No county takes this branch
+            # since 2026-10-07: Jones was the one, absent from the state's own
+            # supervisor-district layer until the county sent its own district
+            # file, and a county the state layer omits again would have no
+            # plan to print, so nothing here would establish how its board is
             # elected. The page still names the supervisors, because they are
             # real and published; it just does not invent an election method
             # for them. A county that loses its plan WITHOUT a gap record

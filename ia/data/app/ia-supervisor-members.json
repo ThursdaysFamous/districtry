@@ -21,8 +21,68 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-03",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://howardcounty.iowa.gov/board-of-supervisors/"
+ },
+ "093": {
+  "asOf": "2026-10-01",
+  "asOfWhy": "Ida County's auditor gave this pairing by e-mail on 1 October 2026; the county publishes no page that names a district, so this app has no page to re-read.",
+  "boardPhone": "(712) 364-2632",
+  "county": "Ida",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3"
+  },
+  "districts": {
+   "1": {
+    "name": "Creston Schubert",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Kyle Rohlk",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Devlun P. Whiteing",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-01"
+ },
+ "105": {
+  "boardPhone": "(319) 462-2378",
+  "county": "Jones",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "John Schlarmann",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Joe Oswald",
+    "party": "Democratic"
+   },
+   "3": {
+    "name": "Jon Zirkelbach",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Darrick Hall"
+   },
+   "5": {
+    "name": "Jeff Swisher",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://www.jonescountyiowa.gov/board_of_supervisors/"
  },
  "119": {
   "boardPhone": "(712) 472-8517",
@@ -56,7 +116,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-01",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://lyoncounty.iowa.gov/supervisors/"
  },
  "133": {
@@ -81,7 +141,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-01",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://www.mononacountyiowa.gov/supervisors/"
  },
  "151": {
@@ -116,7 +176,106 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-03",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://pocahontascounty.iowa.gov/board-of-supervisors/"
+ },
+ "153": {
+  "boardPhone": "(515) 286-3120",
+  "county": "Polk",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Matt McCoy",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Jill Altringer",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Mark Holm",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Tom Hockensmith",
+    "party": "Democratic"
+   },
+   "5": {
+    "name": "Angela Connolly",
+    "party": "Democratic"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://www.polkcountyiowa.gov/board-of-supervisors/"
+ },
+ "171": {
+  "county": "Tama",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Curt Hilmer"
+   },
+   "2": {
+    "name": "David Turner"
+   },
+   "3": {
+    "name": "Heather Knebel"
+   },
+   "4": {
+    "name": "Mark Doland"
+   },
+   "5": {
+    "name": "Curt Kupka"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://www.tamacounty.iowa.gov/supervisors/"
+ },
+ "183": {
+  "boardPhone": "(319) 653-7711",
+  "county": "Washington",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Jack Seward Jr.",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Bob Yoder",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Marcus Fedler",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Stan Stoops",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Richard Young",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://washingtoncounty.iowa.gov/148/Board-of-Supervisors"
  }
 }

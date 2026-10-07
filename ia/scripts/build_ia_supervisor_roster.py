@@ -188,6 +188,67 @@ NUMBERING_CHECKED = {
                    "with six towns' census centroids independently agreeing on "
                    "every pairing they can speak to",
     },
+    "Ida": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-06",
+        "witness": "the county's own Ordinance 31 (effective 15 January 2022, "
+                   "drawn to the 2020 census) names the townships in each "
+                   "district; the ten that lie wholly inside one district "
+                   "(Galva and Griggs in 1; Battle, Blaine, Garfield, Hayes, "
+                   "Logan, Maple and Silver Creek in 2; Corwin in 3) each have "
+                   "a census interior point in the same-numbered district of "
+                   "this layer",
+    },
+    "Washington": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-06",
+        "witness": "the county's own district map (county GIS, 2022, drawn to "
+                   "the 2020 census, linked by the auditor on 2026-10-01) draws "
+                   "and labels the townships in each district; the ten that lie "
+                   "wholly inside one (Brighton, Clay, Dutch Creek, Lime Creek "
+                   "and Seventy-Six in 1; English River in 2; Crawford, "
+                   "Highland, Iowa and Oregon in 3) land in the same-numbered "
+                   "district, and the split townships settle 4 and 5: Franklin, "
+                   "which the map puts only in 1 and 4, lands in this layer's "
+                   "4, and Jackson, only in 2 and 5, lands in its 5",
+    },
+    "Polk": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-06",
+        "witness": "the county's own map server (Elections/Board_of_Supervisors "
+                   "on gis4.polkcountyiowa.gov, to which the elections office "
+                   "pointed this project on 2026-10-06) publishes the five "
+                   "district polygons with each supervisor's name; on a "
+                   "160x160 grid over the county, 22,799 of 22,860 sampled "
+                   "points (99.7%) get the same number from those polygons "
+                   "and this layer, the rest being slivers along shared edges, "
+                   "and no number is swapped",
+    },
+    # JONES AND TAMA ARE IDENTITY BY CONSTRUCTION, and the witness says why
+    # rather than claiming a measurement that was not made: this layer's
+    # districts for both counties ARE the county's own drawing, numbered by the
+    # county (build_county_supplied_supervisor_districts.py), so the number on
+    # the drawing and the number on the county's board page are one county's
+    # two statements about one plan.
+    "Jones": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "this layer's Jones districts are the county's own "
+                   "supervisor-district file (county GIS, BOS_2022, sent by "
+                   "the county on 2026-10-06), each polygon carrying the "
+                   "county's own DIST_ID, and the county's board page numbers "
+                   "its supervisors in that same plan",
+    },
+    "Tama": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "this layer's Tama districts are drawn from the county's "
+                   "own 2025 supervisor-district map (sent by the auditor on "
+                   "2026-10-06), each district taking the number the map's "
+                   "own legend gives its colour, and four of the five match "
+                   "the Legislative Services Agency's published population "
+                   "for the same-numbered district exactly",
+    },
 }
 
 # WHAT A COUNTY TOLD US IN WRITING.
