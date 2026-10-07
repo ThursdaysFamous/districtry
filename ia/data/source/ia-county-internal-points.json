@@ -44,13 +44,6 @@
    "name": "Calhoun County",
    "slug": "calhoun"
   },
-  "cass": {
-   "fips": "029",
-   "lat": 41.3338233,
-   "lng": -94.9333006,
-   "name": "Cass County",
-   "slug": "cass"
-  },
   "cerro-gordo": {
    "fips": "033",
    "lat": 43.0749751,

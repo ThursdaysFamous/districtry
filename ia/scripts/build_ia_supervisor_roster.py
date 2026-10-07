@@ -264,6 +264,20 @@ NUMBERING_CHECKED = {
                    "Melvin in 5, Ashton in 4, and the core of each district) "
                    "all land in the same-numbered district of this layer",
     },
+    "Cass": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own Resolution 2022-12 (posted on "
+                   "casscountyia.gov, read 2026-10-07) names the precincts "
+                   "in each district: 1 Atlantic Ward 1 and precinct 8 "
+                   "(Brighton, Grove, Pymosa, Washington, Marne), 2 Atlantic "
+                   "Wards 2 and 3, 3 Atlantic Wards 4 and 5, 4 Bear "
+                   "Grove/Cass/Lewis, Noble/Pleasant/Griswold and East "
+                   "Massena, 5 Anita-Wiota, Union/Cumberland and West "
+                   "Massena; each of this instance's 12 Cass precincts lies "
+                   "inside the same-numbered district of this layer (each at "
+                   "least 99.3% of its area)",
+    },
     # JONES AND TAMA ARE IDENTITY BY CONSTRUCTION, and the witness says why
     # rather than claiming a measurement that was not made: this layer's
     # districts for both counties ARE the county's own drawing, numbered by the
@@ -331,6 +345,29 @@ CORRESPONDENCE_ROSTERS = {
             "October 2026 and corrected it on 6 October; the county "
             "publishes no page that names a district, so this app has no "
             "page to re-read."),
+    },
+    "Cass": {
+        "districts": {
+            "1": "Stephen Green",
+            "2": "Mark O'Brien",
+            "3": "Wendy Richter",
+            "4": "Steve Baier",
+            "5": "Bernard Pettinger",
+        },
+        "readOn": "2026-10-07",
+        "why": (
+            "Cass County Auditor Kathy Somers, by e-mail, 2026-10-01, "
+            "answering this project's ask: the pairing came as an inline "
+            "image headed 'Cass County Board of Supervisors', which this "
+            "project's tools could not open until the operator supplied the "
+            "image itself on 2026-10-07; it names one supervisor for each of "
+            "districts 1 to 5. The county's own "
+            "board page lists its five supervisors and attaches no district "
+            "to any of them, which is why it was asked."),
+        "cardNote": (
+            "Cass County's auditor gave this pairing by e-mail on 1 October "
+            "2026; the county publishes no page that names a district, so "
+            "this app has no page to re-read."),
     },
     "Ida": {
         # Transcribed from the reply exactly as the county wrote it, INCLUDING

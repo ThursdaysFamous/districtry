@@ -1,4 +1,40 @@
 {
+ "029": {
+  "asOf": "2026-10-07",
+  "asOfWhy": "Cass County's auditor gave this pairing by e-mail on 1 October 2026; the county publishes no page that names a district, so this app has no page to re-read.",
+  "boardPhone": "(712) 243-6661",
+  "county": "Cass",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Stephen Green",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Mark O'Brien",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Wendy Richter",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Steve Baier",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Bernard Pettinger",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07"
+ },
  "089": {
   "boardPhone": "(563) 547-3404",
   "county": "Howard",

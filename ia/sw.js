@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-ia-shell-v19";
+const CACHE_NAME = "districtry-ia-shell-v20";
 
 const SHELL_URLS = [
   "./",
@@ -75,7 +75,6 @@ const GEOMETRY_URLS = [
   "./data/app/wright-county-outline.json",
   "./data/app/black-hawk-county-outline.json",
   "./data/app/calhoun-county-outline.json",
-  "./data/app/cass-county-outline.json",
   "./data/app/dickinson-county-outline.json",
   "./data/app/guthrie-county-outline.json",
   "./data/app/kossuth-county-outline.json",

@@ -705,13 +705,6 @@
         "note": "Calhoun County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Calhoun County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
       },
       {
-        "file": "cass-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Cass County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Cass County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
         "file": "dickinson-county-outline.json",
         "min_features": 1,
         "max_features": 1,
@@ -899,7 +892,7 @@
       },
       {
         "file": "ia-supervisor-members.json",
-        "min_keys": 12,
+        "min_keys": 13,
         "note": "Which supervisor holds each county supervisor district, keyed by 3-digit county FIPS. PLAN 3 COUNTIES ONLY (Iowa Code 331.206): under plan 1 there are no districts and under plan 2 supervisors are elected countywide and merely reside in one, so only under plan 3 does naming a district's supervisor answer something the County card's list does not. No Iowa publisher attaches a district to a supervisor's name — four statewide routes are measured closed — so the district number is recovered from each county's own board page by PROXIMITY to names the shipped roster already carries, reading no markup at all. Gated: districts must be exactly 1..N with no repeats, the people placed must be exactly the people ia-county-officers.json names, and N must equal the shipped geometry's NUMDISTRICTS. A county failing any gate ships nothing and keeps its unkeyed County-card listing. THE FLOOR WAS 12 AND IS NOW 4, BECAUSE A COUNTY\u0027S OWN DISTRICT NUMBER TURNED OUT NOT TO BE THIS LAYER\u0027S. Measured 2026-10-01 on four counties, three of them disagreed: the Legislative Services Agency numbers each county\u0027s districts in its own order, this instance carries that number through, and the county\u0027s own page numbers them differently \u2014 so a reader was shown the wrong supervisor in Butler and Pocahontas, both live. A county is keyed now only if its numbering has been MEASURED against this layer (NUMBERING_CHECKED in the builder, which carries the county\u0027s number \u2192 this layer\u0027s with its date and witness); every other county keeps its supervisors on the County card, unkeyed, which is true whichever way the numbering runs. The floor therefore counts counties whose numbering is CHECKED, which is a different quantity from counties keyed on trust, and it rises again as each county is measured \u2014 Monona was the fifth measured and Lyon the sixth, both disagreeing. Monona's own map states its township composition in text, so it needed no drawing read, and Lyon writes its own PRECINCT numbers into each member's title, which this instance's own precinct layer can place without any fetch at all. Built by ia/scripts/ia_supervisor_district_scraper.py + build_ia_supervisor_roster.py, refreshed weekly by update-ia-supervisor-roster.yml."
       },
       {
@@ -960,7 +953,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ia-shell-v19",
+    "cache_name": "districtry-ia-shell-v20",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
