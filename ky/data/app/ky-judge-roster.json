@@ -1,19 +1,15 @@
 {
- "askedAbout": {
-  "circuit-30": {
-   "note": "Not named here. The Kentucky Court of Justice lists the judges for every other circuit and district in the state, and lists none for this one \u2014 Jefferson County's own page on its site leaves them out. We asked the court system about it on 1 October 2026 and are waiting for an answer. Until one comes, this card names nobody rather than guessing.",
-   "reason": "jefferson-page-empty"
-  },
-  "district-30": {
-   "note": "Not named here. The Kentucky Court of Justice lists the judges for every other circuit and district in the state, and lists none for this one \u2014 Jefferson County's own page on its site leaves them out. We asked the court system about it on 1 October 2026 and are waiting for an answer. Until one comes, this card names nobody rather than guessing.",
-   "reason": "jefferson-page-empty"
-  }
- },
- "readOn": "2026-10-01",
+ "askedAbout": {},
+ "readOn": "2026-10-07",
  "source": {
   "countyPages": "https://www.kycourts.gov/Courts/County-Information/Pages/<County>.aspx",
   "courtOfAppeals": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/default.aspx",
-  "note": "Named in the Administrative Office of the Courts' reply to Ask ky-judge-district-join, 2026-10-01. The directory search the same reply named is not read: its robots.txt refuses every client.",
+  "jeffersonSites": [
+   "https://www.jeffersoncircuitcourt.com/judges",
+   "https://www.jeffersonfamilycourt.com/",
+   "https://jeffersondistrictcourt.com/districtcourtjudges"
+  ],
+  "note": "Named in the Administrative Office of the Courts' reply to Ask ky-judge-district-join, 2026-10-01. The directory search the same reply named is not read: its robots.txt refuses every client. Jefferson's trial judges come from the three court sites its county page links.",
   "publisher": "Kentucky Court of Justice",
   "supremeCourt": "https://www.kycourts.gov/Courts/Supreme-Court/Pages/default.aspx"
  },
@@ -621,6 +617,142 @@
       "role": "Judge"
      }
     ]
+   },
+   "30": {
+    "members": [
+     {
+      "court": "Circuit Court",
+      "name": "Ann Bailey Smith",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "name": "Annie O'Connell",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "name": "Brian Edwards",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "name": "Eric J. Haner",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "name": "Jennifer Bryant Wilcox",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "name": "Jessica E. Green",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "name": "Julie Kaelin",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "name": "Melissa Logan Bellows",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "name": "Mitch Perry",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "name": "Patricia \"Tish\" Morris",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "name": "Sarah E. Clay",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "name": "Susan Schultz Gibson",
+      "role": "Judge"
+     },
+     {
+      "court": "Circuit Court",
+      "name": "Tracy E. Davis",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 1,
+      "name": "Angela J. Johnson",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 2,
+      "name": "Shelley Santry",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 3,
+      "name": "Lori N. Goodwin",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 4,
+      "name": "Lauren Adams Ogden",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 5,
+      "name": "Jessica Stone",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 6,
+      "name": "Christine Ward",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 7,
+      "name": "Denise Brown",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 8,
+      "name": "Bryan D. Gatewood",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 9,
+      "name": "Laura P. Russell",
+      "role": "Judge"
+     },
+     {
+      "court": "Family Court",
+      "division": 10,
+      "name": "Derwin L. Webb",
+      "role": "Chief Judge"
+     }
+    ],
+    "readFrom": {
+     "note": "from the Jefferson Circuit Court's and Jefferson Family Court's own websites, which the Kentucky Court of Justice's page for Jefferson County links to. That page lists no judges of its own.",
+     "urls": [
+      "https://www.jeffersoncircuitcourt.com/judges",
+      "https://www.jeffersonfamilycourt.com/"
+     ]
+    }
    },
    "31": {
     "members": [
@@ -1519,6 +1651,96 @@
       "role": "Chief Regional District Judge"
      }
     ]
+   },
+   "30": {
+    "members": [
+     {
+      "court": "District Court",
+      "name": "Amber Wolf",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Anne Delahanty",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Anthony Jones",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Jennifer H. Leibson",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Jessica A. Moore",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Josephine L. Buckner",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Karen Faulkner",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Katie King",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Kristina Garvey",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Lisa L. Langford",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Mary Jude Wolford",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Megan McDonald",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Sara Michael Nicholson",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Stephanie Pearce Burke",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Tanisha A. Hickerson",
+      "role": "Judge"
+     },
+     {
+      "court": "District Court",
+      "name": "Yvette De La Guardia",
+      "role": "Judge"
+     }
+    ],
+    "readFrom": {
+     "note": "from the Jefferson District Court's own website, which the Kentucky Court of Justice's page for Jefferson County links to. That page lists no judges of its own.",
+     "urls": [
+      "https://jeffersondistrictcourt.com/districtcourtjudges"
+     ]
+    }
    },
    "31": {
     "members": [

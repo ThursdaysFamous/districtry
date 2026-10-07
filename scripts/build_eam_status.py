@@ -1600,10 +1600,10 @@ ANSWERS = {
         # already ships — no publisher asked and no map read. Measured
         # 2026-10-01, each one partitions all 120 counties exactly once. Three
         # files answer four courts because KRS 22A.010(2) gives the Court of
-        # Appeals the Supreme Court's own districts. No judge is NAMED on any of
-        # the four cards, and that is the coverage gap ky-judges rather than a
-        # hole in this level: the standard asks whether the app answers the
-        # level, and the county tier is where it asks for people by name.
+        # Appeals the Supreme Court's own districts. Every unit's judges are
+        # named since 2026-10-07 (Louisville's from the three Jefferson court
+        # sites its Court of Justice page links), though the standard asks
+        # whether the app answers the level and would count it without them.
         "courts-by-district": answers(
             "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
             "ky-district-court"),

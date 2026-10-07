@@ -478,7 +478,7 @@ districts and the Court of Appeals' own page all 14 judges against the 7 appella
 two divisions each, so one fetch answers each appellate tier statewide. **THE TRIAL TIERS HAVE NO
 STATEWIDE PAGE AT ALL** — the Circuit, Family and District court landing pages carry no judge
 rows, which was checked rather than assumed — so they are assembled from the 120 county pages,
-which carry 818 numbered judge rows between them. The roster is 255 judges: 7 Supreme Court, 14
+which carry 818 numbered judge rows between them. On 2026-10-01 the roster was 255 judges: 7 Supreme Court, 14
 Court of Appeals, 135 across 56 of 57 circuits and 99 across 58 of 59 district courts, with 2
 seats the court itself reports vacant.
 
@@ -490,21 +490,30 @@ would have invented a tiling no statute draws. **AND A DIVISION IS STILL A SEAT,
 the division rides as a note on the person and is never a key, because keying on one would invent
 sub-circuit boundaries that do not exist.
 
-**JEFFERSON IS THE ONE HOLE AND IT IS THE EXPENSIVE ONE.** Its county page ships the judge list
-commented out in its own HTML, and Jefferson is the sole county of circuit 30 AND district 30, so
-Louisville's trial judges are named on no page of this source while every other county's are —
-and Louisville is where this instance's ground-truth anchor sits, so it is the first thing a
-reader of the anchor sees. Its appellate judges are unaffected: both appellate pages are
-statewide, and the anchor's Supreme Court and Court of Appeals cards name their judges. **BOTH
-HALVES ARE ASSERTED AT THAT ONE POINT** by smoke check 2d, which is why no second point was
-added: a card naming a judge and a card saying why it cannot are the two states this roster can
-be in, and a check asserting only the first would pass a roster that had gone quietly empty for
-the other. The card's wording is the roster's own `askedAbout` note, read at runtime, so the card
-cannot drift from the record.
+**JEFFERSON WAS THE ONE HOLE, AND THE ANSWER WAS LINKED FROM THE PAGE THAT HAD IT.** Its
+county page ships the judge list commented out in its own HTML, and Jefferson is the sole county
+of circuit 30 AND district 30, so for six days Louisville's two trial cards said the court named
+nobody there and that we had asked. The follow-up letter was WITHDRAWN UNSENT on 2026-10-06 when a
+re-read under the standing read-the-page-first rule found the same page linking "Websites for
+Jefferson Judges" — the Jefferson Circuit, Family and District Courts' own sites, each naming its
+bench in plain HTML, each serving robots.txt `Allow: /`. **SINCE 2026-10-07 THE ROSTER IS 294
+JUDGES**: Louisville adds 13 circuit, 10 Family Court (Divisions 1-10) and 16 district judges, and
+those two cards say in their "Judges read" row that the names come from those sites, in the
+roster's own `readFrom` wording. The district site numbers its judges 01-16 in ALPHABETICAL
+order, which are gallery positions and not divisions, so no division is recorded there. Smoke
+check 2d asserts all four cards name the roster's judges at the anchor, and the two trial cards
+the site sentence.
 
-**A FIXED SOURCE TURNS THE BUILD RED RATHER THAN SLIPPING PAST.** Both the scraper and the
-builder FAIL if Jefferson's page starts publishing judges, naming what to re-read — the
-`ACCEPTED_DROPS` property, applied to an absence rather than a drop. The scraper also fails if any
+**THE ROUTE IS AUDITED BOTH WAYS.** The scraper fails if the Court of Justice's Jefferson page
+stops linking a site (that link is the court system vouching for it), if that page starts listing
+judges of its own (two sources to compare by hand, not merge by script), or if a site falls below
+its floor. What no run can see is a site that is up and stale — these are hand-edited court
+websites with no date on them — which `ky/WATCH.md` records. `ASKED_ABOUT` in the builder is
+kept EMPTY for the next unit no source names, and gap `ky-judges` is retired.
+
+**A FIXED SOURCE TURNS THE BUILD RED RATHER THAN SLIPPING PAST.** The scraper FAILS if
+Jefferson's page starts publishing judges, naming what to re-read — the `ACCEPTED_DROPS`
+property, applied to an absence rather than a drop. It also fails if any
 OTHER county's page comes back empty, and if a county page cannot be fetched at all, because a
 page this project cannot read is not a county with no judges. **THE UNIT COUNT IS AN IDENTITY
 RATHER THAN A FLOOR**, and that is the gate worth copying: every unit the shipped boundary files

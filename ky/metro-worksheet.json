@@ -162,7 +162,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "The circuit and family-court judges of each circuit, from the Court of Justice's own county pages, which print the judicial circuit each was elected from. Family Court is a division of Circuit Court under Ky. Const. 112(6) and its judges are elected from the circuit, so they appear here. Jefferson's 30th circuit names nobody: its county page publishes no judge list, which was asked about on 2026-10-01 and is recorded as coverage gap ky-judges.",
+        "people": "The circuit and family-court judges of each circuit, from the Court of Justice's own county pages, which print the judicial circuit each was elected from. Family Court is a division of Circuit Court under Ky. Const. 112(6) and its judges are elected from the circuit, so they appear here. Jefferson's 30th circuit is read from the Jefferson Circuit Court's and Jefferson Family Court's own websites, because its county page lists no judges and links those two sites instead.",
         "applies": "Kentucky — statewide."
       }
     },
@@ -180,7 +180,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "The district judges of each district, from the Court of Justice's own county pages, which print the judicial district each was elected from. Jefferson's 30th district names nobody: its county page publishes no judge list, asked about on 2026-10-01 and recorded as coverage gap ky-judges.",
+        "people": "The district judges of each district, from the Court of Justice's own county pages, which print the judicial district each was elected from. Jefferson's 30th district is read from the Jefferson District Court's own website, because its county page lists no judges and links that site instead.",
         "applies": "Kentucky — statewide."
       }
     },
