@@ -224,6 +224,46 @@ NUMBERING_CHECKED = {
                    "and this layer, the rest being slivers along shared edges, "
                    "and no number is swapped",
     },
+    "Winnebago": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-07",
+        "witness": "the county Auditor's office (Lori Jacobs, by e-mail, "
+                   "2026-10-06, answering this project's ask) listed the "
+                   "precincts in each district: Forest City Wards 1, 2 and 4 "
+                   "and Newton Forest in 1; Center, Eden Logan Norway and Mt "
+                   "Valley in 2; Buffalo Grant Lincoln, FC3 Forest S3 and "
+                   "King Linden in 3; each of this instance's ten Winnebago "
+                   "precincts lies inside the same-numbered district of this "
+                   "layer (each at least 99.7% of its area)",
+    },
+    "Sioux": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own supervisor-district map (Sioux County "
+                   "GIS, as of 6 April 2022, sent by the county's GIS "
+                   "technician by e-mail on 2026-10-06) labels each district "
+                   "and draws its townships; each of this instance's 17 Sioux "
+                   "precincts, named for those townships and cities, lies "
+                   "inside the same-numbered district of this layer (each at "
+                   "least 99.7% of its area): the Settlers-Sioux-Rock-Plato "
+                   "and Rock Valley precincts in 4, Lincoln, Sheridan, Grant, "
+                   "Capel, Lynn, Floyd and East Orange in 5, the western and "
+                   "southern townships in 1, West Branch and Orange City in 2, "
+                   "and Sioux Center 2-4 in 3",
+    },
+    "Osceola": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own supervisor-district map (the "
+                   "Supervisor-Districts_Final document the Auditor linked on "
+                   "2026-10-06, posted August 2022) labels District 1 to 5 "
+                   "over the county's road grid; fitted to the county's own "
+                   "outline, each of this layer's five districts spans the "
+                   "same part of the drawing as the same-numbered label, and "
+                   "twelve check points (among them Ocheyedan, Harris and "
+                   "Melvin in 5, Ashton in 4, and the core of each district) "
+                   "all land in the same-numbered district of this layer",
+    },
     # JONES AND TAMA ARE IDENTITY BY CONSTRUCTION, and the witness says why
     # rather than claiming a measurement that was not made: this layer's
     # districts for both counties ARE the county's own drawing, numbered by the
@@ -271,20 +311,26 @@ CORRESPONDENCE_ROSTERS = {
             "1": "LeRoy DeBoer",
             "2": "Jayson Vande Hoef",
             "3": "Mike Schulte",
-            "4": "Jeff Loring",
-            "5": "Jerry Helmers",
+            "4": "Jerry Helmers",
+            "5": "Jeff Loring",
         },
-        "readOn": "2026-10-01",
+        "readOn": "2026-10-06",
         "why": (
             "Osceola County Auditor Rochelle Van Tilburg, by e-mail, "
             "2026-10-01, answering this project's ask: 'Following is the "
-            "supervisor by district' followed by all five pairings. The "
-            "county's own board page lists its five supervisors and attaches "
-            "no district to any of them, which is why it was asked."),
+            "supervisor by district' followed by all five pairings. On "
+            "2026-10-06 she corrected that list by e-mail: Jerry Helmers is "
+            "District 4 and Jeff Loring District 5, the first list having "
+            "the two swapped. Districts 1-3 are unchanged. The county's own "
+            "board page lists its five supervisors and attaches no district "
+            "to any of them, which is why it was asked. This entry was never "
+            "shown to a reader with the swap, because Osceola's numbering was "
+            "not yet in NUMBERING_CHECKED and its board shipped unkeyed."),
         "cardNote": (
             "Osceola County's auditor gave this pairing by e-mail on 1 "
-            "October 2026; the county publishes no page that names a "
-            "district, so this app has no page to re-read."),
+            "October 2026 and corrected it on 6 October; the county "
+            "publishes no page that names a district, so this app has no "
+            "page to re-read."),
     },
     "Ida": {
         # Transcribed from the reply exactly as the county wrote it, INCLUDING
