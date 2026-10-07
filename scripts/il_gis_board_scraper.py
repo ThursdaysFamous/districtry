@@ -139,15 +139,10 @@ COUNTIES = [
 ]
 
 # A county with a board card, no roster file, and no entry above needs a reason
-# here or build_il_gis_board_rosters.py fails. Both of these are measurements
-# rather than omissions, and both are re-audited on every run.
-NO_ROSTER = {
-    "Christian": "The county's board page listed only its Chairman and Vice "
-                 "Chairman when it was last readable, and christiancountyil.gov "
-                 "has answered every client with a Cloudflare managed challenge "
-                 "since 2026-09-15. No source names the sixteen members. "
-                 "(2026-09-15)",
-}
+# here or build_il_gis_board_rosters.py fails. Empty since 2026-10-07: Christian,
+# the one county recorded here, now ships a roster from its Clerk's letter
+# (build_christian_county_board.py), so no board card is left without one.
+NO_ROSTER = {}
 
 
 def fail(msg):

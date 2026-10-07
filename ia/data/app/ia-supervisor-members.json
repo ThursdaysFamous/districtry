@@ -144,6 +144,42 @@
   "readOn": "2026-10-07",
   "sourceUrl": "https://www.mononacountyiowa.gov/supervisors/"
  },
+ "143": {
+  "asOf": "2026-10-06",
+  "asOfWhy": "Osceola County's auditor gave this pairing by e-mail on 1 October 2026 and corrected it on 6 October; the county publishes no page that names a district, so this app has no page to re-read.",
+  "boardPhone": "(712) 754-2241",
+  "county": "Osceola",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "LeRoy DeBoer",
+    "party": "No party"
+   },
+   "2": {
+    "name": "Jayson Vande Hoef",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Mike Schulte",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Jerry Helmers",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Jeff Loring",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-06"
+ },
  "151": {
   "boardPhone": "(712) 335-3361",
   "county": "Pocahontas",
@@ -214,6 +250,42 @@
   "readOn": "2026-10-07",
   "sourceUrl": "https://www.polkcountyiowa.gov/board-of-supervisors/"
  },
+ "167": {
+  "asOf": "2026-10-01",
+  "asOfWhy": "Sioux County's auditor's office gave this pairing by e-mail on 1 October 2026; this app reads no page of the county's own site, so it has no page to re-read.",
+  "boardPhone": "(712) 737-2216",
+  "county": "Sioux",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "John Degen",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Jerry Muilenburg",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Dan Altena",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Carl L. Vande Weerd",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Craig Hoftyzer",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-01"
+ },
  "171": {
   "county": "Tama",
   "countyNumbers": {
@@ -277,5 +349,30 @@
   },
   "readOn": "2026-10-07",
   "sourceUrl": "https://washingtoncounty.iowa.gov/148/Board-of-Supervisors"
+ },
+ "189": {
+  "boardPhone": "(641) 585-3412",
+  "county": "Winnebago",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3"
+  },
+  "districts": {
+   "1": {
+    "name": "Terry Durby",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Susan Smith",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Bill Jensvold",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://www.winnebagocountyiowa.gov/board_of_supervisors/"
  }
 }

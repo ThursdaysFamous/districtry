@@ -856,6 +856,40 @@ DOCUMENT_ROSTERS = {
             {"name": "Michael Belford", "role": "Commissioner"},
         ],
     },
+    "JOHNSON": {
+        "name": "Johnson County",
+        "structure": "Commission form — 3 commissioners elected countywide",
+        "document": "e-mail from County Clerk Robin Harper-Whitehead, 2026-10-07",
+        "verified": "2026-10-07",
+        "expect": 3,
+        # THE FOURTH NO-WEBSITE COUNTY, after Edwards, Wabash and Hardin. The
+        # Clerk wrote on 2026-07-21, answering an unrelated question, "We don't
+        # have a website to point back to", so a letter was always the only
+        # route to these names. The at-large form was proven before she replied,
+        # from the county's own certified canvasses on results.gbsvote.com: the
+        # 2022 and 2024 generals and the 2026 primary each carry one "FOR COUNTY
+        # COMMISSIONER" contest reporting 16 of 16 precincts and no district
+        # contest anywhere. Those returns are relied on for the FORM only; the
+        # names and the chair and vice-chair are hers alone, from her reply of
+        # 2026-10-07, and ordered as she orders them.
+        #
+        # The office is the BOARD's, not any member's: she gave one e-mail for
+        # the board (commissioners@) and one telephone, which is her own office's
+        # line, so the label says whose line it is rather than implying the
+        # commissioners answer it themselves. No address ships — she gave none
+        # for the board, and the courthouse address this project holds is the
+        # Clerk's.
+        "members": [
+            {"name": "Jason Taylor", "role": "Chairman"},
+            {"name": "Matthew Hayden", "role": "Vice Chairman"},
+            {"name": "John McCuan", "role": "Commissioner"},
+        ],
+        "office": {
+            "label": "Board of Commissioners, through the County Clerk's office",
+            "phone": "618-658-3611",
+            "email": "commissioners@johnsonco.illinois.gov",
+        },
+    },
     "WABASH": {
         "name": "Wabash County",
         "structure": "Commission form — 3 commissioners elected countywide",

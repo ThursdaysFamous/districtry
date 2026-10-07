@@ -163,13 +163,6 @@
    "name": "Montgomery County",
    "slug": "montgomery"
   },
-  "osceola": {
-   "fips": "143",
-   "lat": 43.3784695,
-   "lng": -95.6338858,
-   "name": "Osceola County",
-   "slug": "osceola"
-  },
   "palo-alto": {
    "fips": "147",
    "lat": 43.0753374,
@@ -190,13 +183,6 @@
    "lng": -95.1052244,
    "name": "Sac County",
    "slug": "sac"
-  },
-  "sioux": {
-   "fips": "167",
-   "lat": 43.0826179,
-   "lng": -96.1779798,
-   "name": "Sioux County",
-   "slug": "sioux"
   },
   "tama": {
    "fips": "171",
@@ -225,13 +211,6 @@
    "lng": -94.1758309,
    "name": "Webster County",
    "slug": "webster"
-  },
-  "winnebago": {
-   "fips": "189",
-   "lat": 43.3781243,
-   "lng": -93.7434883,
-   "name": "Winnebago County",
-   "slug": "winnebago"
   },
   "winneshiek": {
    "fips": "191",

@@ -176,14 +176,14 @@ which is a claim about the ask and never about the source.
 | Bureau County GIS (Christine Anderson) | long thread; she sent a user agreement and a $150 invoice 2026-08-12 | correctly written as a reply on her own thread |
 | Clark County Clerk | asked 2026-08-05, followed up 08-16, **ANSWERED 08-18** ("The County Board is elected by districts. I do not have maps available") | correctly written as a follow-up |
 | Knox County GIS (Taiwo Agbaje) | long thread; he sent the precinct shapefile 2026-09-08 | correctly written as a continuation, opening with thanks for that file |
-| Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members |
+| Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members. **ANSWERED 2026-10-07**: Clerk Jodie L. Badman sent two screenshots of the county's own board member list naming all sixteen by district; they ship on the board card, and the `christian-county-board-roster` gap record is retired |
 | Henderson County Clerk | **asked 2026-07-21 (seal), 2026-08-05 and 08-16, no reply** | REWRITTEN 2026-10-01: cites them and says the August questions are answered |
 | Logan County Clerk | **same mailbox written to 2026-07-21** about the county seal | REWRITTEN 2026-10-01: opens by naming that letter |
 | Will County Clerk | none | first contact, correct |
 | Grundy County GIS | the county CLERK was written 2026-07-21; this is a different mailbox | first contact to this office, correct |
 | Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
 | Hardin County Clerk (IL) | who holds the commissioner seats | **seal 2026-07-21; board 08-05, 08-16, 08-21; ANSWERED 08-24** — countywide board, and NO county website | **SENT 2026-10-01 and ANSWERED IN SEVEN MINUTES**: three commissioners, with Darrick Armstrong as chairman, Ricky Williams as vice-chairman and Michael Belford the third (she first wrote "Belfor" and corrected it herself at 19:27 the same day: "I left the d off"). That closes the county's roster gap, and it is the clearest argument this file has for the prior-contact check — the question was answered at the fourth attempt, by a clerk who had already told us twice what the county does not have. Illinois's wording said the county's web address "leads to a parked page"; the Clerk had already said there is no website, so that claim is gone |
-| Johnson County Clerk (IL) | the same | **seal 07-21, ANSWERED twice that day** ("We don't have a website to point back to"); board 08-05 and 08-16, no reply | drafted 2026-10-01. Illinois's wording said the county's website "declines automated visits"; the Clerk had already said there is none |
+| Johnson County Clerk (IL) | the same | **seal 07-21, ANSWERED twice that day** ("We don't have a website to point back to"); board 08-05 and 08-16, no reply | drafted 2026-10-01. Illinois's wording said the county's website "declines automated visits"; the Clerk had already said there is none **ANSWERED 2026-10-07**: Clerk Robin Harper-Whitehead named all three commissioners — Jason Taylor (Chairman), Matthew Hayden (Vice Chairman) and John McCuan — with one e-mail for the board and her own office's telephone. They ship on the County card and the `johnson-county-board` gap record is retired |
 | Perry County Clerk (IL) | the same | seal 07-20; two questions 08-05; follow-up 08-16; no reply | drafted 2026-10-01 with an opening citing all three |
 | Pope County Clerk (IL) | the board's form, then the names | seal 07-20; board 08-05; third note 08-16; no reply | drafted 2026-10-01, opening "This is my fourth note" |
 | Scott County Clerk (IL) | the same | **NOT a first letter**: the Clerk was written to 07-19 about the seal and the State's Attorney's office answered 07-20 | drafted 2026-10-01 with both acknowledged. Illinois's note recorded Scott as having no prior contact |
@@ -2922,7 +2922,12 @@ https://districtry.com/il/
 
 ## Ask 27 — Christian County Clerk: who sits on the county board?
 
-**Status: NOT YET ASKED — DRAFTED.** Gap `christian-county-board-roster`.
+**Status: ANSWERED 2026-10-07.** Gap `christian-county-board-roster`, retired that day. Clerk
+Jodie L. Badman replied with two screenshots of the county's County Board Members list, which
+name all sixteen members by district, and they ship from
+`scripts/build_christian_county_board.py`. The Clerk's first name is settled as Jodie by her
+own reply. The list marks no chair, and it prints each member's home city and ZIP, which do
+not ship. The record below is kept as it was written.
 
 **Recipient:** Christian County Clerk & Recorder, `elections@christiancountyil.com` —
 the address the 5 August and 21 August 2026 inquiries used. **Two of this project's own
@@ -3972,14 +3977,18 @@ Ask 33 gives: there is nothing yet to license. If a file arrives, that is a sepa
 
 ## Ask il-five-counties-commissioner-roster — five Illinois county clerks: who holds the commissioner seats?
 
-**Status: HARDIN SENT 2026-10-01 AND ANSWERED THE SAME DAY; THE OTHER FOUR DRAFTED
-2026-10-01.** Named rather than numbered, for the reason `il-gurnee-board-names` above gives.
+**Status: HARDIN SENT 2026-10-01 AND ANSWERED THE SAME DAY; JOHNSON ANSWERED 2026-10-07;
+THE OTHER THREE DRAFTED 2026-10-01.** Named rather than numbered, for the reason `il-gurnee-board-names` above gives.
 
-Gaps `johnson-county-board`, `perry-county-website-blocked`, `pope-county-board`,
+Gaps `johnson-county-board` (retired 2026-10-07, below), `perry-county-website-blocked`, `pope-county-board`,
 `scott-county-commissioners`. **Hardin's gap record is gone**: Clerk Jill Cowsert answered
 within seven minutes of the letter, naming all three commissioners, and they ship — so the
 record that said they were unnamed no longer describes the county. This is the first of these
-five to close, and it closed on a reply rather than on anything found.
+five to close, and it closed on a reply rather than on anything found. **Johnson's is gone too**:
+Clerk Robin Harper-Whitehead replied on 7 October naming Jason Taylor (Chairman), Matthew
+Hayden (Vice Chairman) and John McCuan, with the board's e-mail and her office's telephone,
+and they ship the same way. Like Hardin it is a letter-only county for good, because its Clerk
+had already told us there is no website.
 
 **THREE OF THESE FIVE LETTERS WERE WRITTEN AS FIRST APPROACHES AND THREE OF THESE COUNTIES
 HAD ALREADY WRITTEN BACK.** Corrected 2026-10-01, after the operator asked whether we were
@@ -6404,21 +6413,21 @@ numbering being checked.
 | Adams | Betsy Stormer | 5 | |
 | Butler | Leslie Groen | 3 | **Measured: two different plans.** The letter should ask which of the county's two published surfaces is current. |
 | Cerro Gordo | Adam Wedmore | 3 | |
-| Chickasaw | Sheila Shekleton | 5 | |
+| Chickasaw | Sheila Shekleton | 5 | **ANSWERED 2026-10-06 by the elections specialist: the supervisors and their districts are listed on the county website.** Read on 2026-10-07: the board page does print a district beside each supervisor, but nothing there or on the county's election pages says which ground each district covers — the two maps the election site carries draw precincts only. So the county's numbering still cannot be checked against ours and the cards stay unkeyed. The question to send back, if the operator wants it, is the one Winnebago answered: which precincts make up each district. |
 | Franklin | Katy Flint | 3 | |
 | Grundy | Alan Tscherter | 5 | |
 | Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. |
 | Ida | Kristy Gilbert | 3 | **WITHDRAWN 2026-10-06, NEVER SENT — THE COUNTY ALREADY PUBLISHES THE ANSWER.** Re-checked before send: the county's own site carries Ordinance 31 (`idacounty.iowa.gov/wp-content/uploads/2021/12/Ordinance-31-Est-Co-Supervisor-Precincts-2021.pdf`, effective 15 January 2022, drawn to the 2020 census), whose text names the townships in each district. Ten townships lie wholly inside one district (Galva and Griggs in 1; Battle, Blaine, Garfield, Hayes, Logan, Maple and Silver Creek in 2; Corwin in 3), and every one of their TIGERweb interior points lands in the same-numbered district of the statewide layer, so the two numberings agree in all three districts. It was found through the site's own search feed, which the September sweep did not read; a letter asking for it would have asked the county for a document it publishes. |
 | Madison | Michele Brant | 3 | |
 | Mitchell | Rachel Foster | 5 | |
-| Osceola | Rochelle Van Tilburg | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 with the five pairings. **Re-checked 2026-10-06 and it stands**: the county's site still answers its robots.txt with HTTP 202, the captcha shape, so nothing on it can be read and the letter is the only route. |
+| Osceola | Rochelle Van Tilburg | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 with the five pairings. **Re-checked 2026-10-06 and it stands**: the county's site still answers its robots.txt with HTTP 202, the captcha shape, so nothing on it can be read and the letter is the only route. **ANSWERED 2026-10-06 (20:37 UTC) — AND SHE CORRECTED HER 1 OCTOBER LIST.** Jerry Helmers is District 4 and Jeff Loring District 5; the first list had them swapped. The held pairing in `build_ia_supervisor_roster.py` was corrected on 2026-10-07; it had never reached a reader, because Osceola's numbering is unchecked and its board ships unkeyed. She also linked the county's district maps (a Word document on osceolacountyia.gov), which this project cannot fetch: re-checked 2026-10-07 14:05 UTC, that host answers robots.txt with HTTP 202 and a SiteGround captcha. The operator saved the file and shared it on 2026-10-07; its map labels Districts 1-5 the same way our layer numbers them, so Osceola joined `NUMBERING_CHECKED` that day and its five cards name the supervisors from the corrected pairing. |
 | Polk | Jamie Fitzgerald | 5 | The address the roster carries is the elections desk rather than a person; the letter goes there as published. **ANSWERED 2026-10-06 (sent 16:48, reply 16:57) — THE COUNTY PUBLISHES THE ANSWER AND OUR NUMBERING MATCHES IT.** The elections office pointed to the county's own web map. It draws from the county's own ArcGIS Server (`gis4.polkcountyiowa.gov/server/rest/services/Elections/Board_of_Supervisors/FeatureServer/0`, owner `portadmin` on the county's portal, copyright "Polk County, Iowa"), whose five district polygons each carry the supervisor's name, term and contact. Compared on a 160x160 grid over the county, 22,799 of the 22,860 sampled points inside either map get the SAME district number from the county's polygons and ours (99.7%); the 61 that differ are slivers along shared edges, and no district number is swapped. Fetch note: the county's Akamai edge answers our token with 403 on robots.txt and every page of both `maps.` and `gis4.`, and serves Chrome with client hints — the same measurement `ia_county_minutes_chair_scraper.py` records for `www.` — so both were read with that client; `maps.` then has no robots.txt (it serves its HTML at that path) and `gis4.` answers 404, allow all. So Polk can be keyed to its own district numbers in a later change. |
 | Sac | Renee Roland | 3 | |
-| Sioux | Joe Van Tol | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01. The county's own site fronts every page with a managed challenge, so a letter is the only route there will ever be. **Re-checked 2026-10-06 and it stands**: robots.txt still answers HTTP 202. |
+| Sioux | Joe Van Tol | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01. The county's own site fronts every page with a managed challenge, so a letter is the only route there will ever be. **Re-checked 2026-10-06 and it stands**: robots.txt still answers HTTP 202. **ANSWERED 2026-10-06 — THE COUNTY'S GIS TECHNICIAN (Joey Reid) SENT THE DISTRICT MAP.** "Sioux County Supervisor Districts", county GIS, as of 6 April 2022, labelling each district and drawing its townships. All 17 of this instance's Sioux precincts lie inside the same-numbered district of our layer, so the numbering is the same and Sioux was added to `NUMBERING_CHECKED` on 2026-10-07; its five district cards now name the supervisors from the 1 October pairing. |
 | Taylor | Judy Henry | 3 | |
 | Washington | Tamera Stewart | 5 | **WITHDRAWN 2026-10-06, NEVER SENT — THE AUDITOR HAD ALREADY SENT THE ANSWER.** Her 2026-10-01 reply linked the county's own district map (`washingtoncounty.iowa.gov/DocumentCenter/View/2095/Map-of-Supervisor-Districts---Final`, county GIS, 2022, drawn to the 2020 census). It is a vector PDF with the townships drawn and labelled inside each district. Ten townships lie wholly inside one district (Brighton, Clay, Dutch Creek, Lime Creek and Seventy-Six in 1; English River in 2; Crawford, Highland, Iowa and Oregon in 3), and every interior point lands in the same-numbered district of the statewide layer. Districts 4 and 5 hold no whole township, so they are settled by the split ones: Franklin township's interior point lands in the layer's 4 and the county's map puts Franklin only in 1 and 4, while Jackson's lands in the layer's 5 and the map puts Jackson only in 2 and 5, so the layer's 4 and 5 cannot be swapped. The two numberings agree in all five districts. |
 | Webster | Krystal Lloyd | 5 | |
-| Winnebago | Karla Weiss | 3 | |
+| Winnebago | Karla Weiss | 3 | **ANSWERED 2026-10-06 (18:09 UTC) by Lori Jacobs of the Auditor's office**, listing the precincts in each of the three districts in the body of her e-mail. All ten of this instance's Winnebago precincts lie inside the same-numbered district of our layer (each at least 99.7% of its area), so Winnebago was added to `NUMBERING_CHECKED` on 2026-10-07 and its three cards name the supervisors from the county's own board page. An auto-reply also came on 2026-10-06 (auditor out); it needed nothing. |
 | Winneshiek | Benjamin D. Steines | 5 | |
 
 **What the ask says.** We publish a free map of civic districts, and for your county we draw the
