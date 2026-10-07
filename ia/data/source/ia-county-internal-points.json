@@ -72,13 +72,6 @@
    "name": "Franklin County",
    "slug": "franklin"
   },
-  "grundy": {
-   "fips": "075",
-   "lat": 42.4033387,
-   "lng": -92.7902437,
-   "name": "Grundy County",
-   "slug": "grundy"
-  },
   "guthrie": {
    "fips": "077",
    "lat": 41.6835728,

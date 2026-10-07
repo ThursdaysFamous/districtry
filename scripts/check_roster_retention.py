@@ -180,10 +180,6 @@ ACCEPTED_DROPS = {
         "Franklin withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
         "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:075":
-        "Grundy withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (5 district(s) at the base); its "
-        "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:079":
         "Hamilton withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "

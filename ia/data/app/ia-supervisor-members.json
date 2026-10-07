@@ -70,6 +70,41 @@
   "readOn": "2026-10-07",
   "sourceUrl": "https://chickasawcounty.iowa.gov/board_of_supervisors/"
  },
+ "075": {
+  "boardPhone": "(319) 824-5813",
+  "county": "Grundy",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "LJ Kopsa",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Heidi Nederhoff",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Vic Vandehaar",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Mark Schildroth",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Jeffrey Pabst",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://www.grundycountyiowa.gov/departments/supervisors"
+ },
  "089": {
   "boardPhone": "(563) 547-3404",
   "county": "Howard",

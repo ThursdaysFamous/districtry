@@ -282,6 +282,18 @@ NUMBERING_CHECKED = {
                    "the east, inside its District 4 -- where this instance's "
                    "precinct layer puts those wards and this layer's 3 and 4",
     },
+    "Grundy": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own precinct and supervisor-district map "
+                   "(Auditor Alan Tscherter, by e-mail 2026-10-07, map dated "
+                   "2026-02-03) draws each of its seven precincts wholly inside "
+                   "one district: 1 and 2 in District 1, 3 and 4 in District 2, "
+                   "5 in District 3, 6 in District 4 and 7 (Grundy Center) in "
+                   "District 5; this instance's precinct layer puts P1 and P2 "
+                   "in this layer's 1, P3 and P4 in 2, P5 in 3, P6 in 4 and P7 "
+                   "in 5, each at least 99.9% of its area",
+    },
     "Cass": {
         "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
         "checked": "2026-10-07",
