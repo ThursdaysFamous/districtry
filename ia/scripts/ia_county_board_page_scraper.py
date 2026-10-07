@@ -21,7 +21,7 @@ directories -- it is the body itself.
 
 WHAT THIS FILE READS, AND WHAT IT DELIBERATELY DOES NOT
 -------------------------------------------------------
-Four of the eight are here. The other four are measured and excluded, each for
+Five of the eight are here. The other three are measured and excluded, each for
 its own reason, because an exclusion stated with its measurement is worth more
 than a county quietly missing:
 
@@ -30,13 +30,17 @@ than a county quietly missing:
   district polygons. `build_ia_county_board_directory.py` now counts the
   polygons, the ISAC list of five agrees, and the gate passes on its own.
 
-  TAMA and WRIGHT are the counties this route CANNOT close, and that is a
-  finding rather than a gap. Both name five supervisors on their own page, in
-  districts 1 to 5, while the state's supervisor-district layer (vintage
-  2024-01-30) draws THREE districts for each. Shipping five names against a
-  three-district map would have the card naming a supervisor for a district the
-  map does not draw. The stale thing is the MAP, which is a different repair
-  from a roster, so both are recorded as a gap instead.
+  WRIGHT is the county this route CANNOT close, and that is a finding rather
+  than a gap. It names five supervisors on its own page, in districts 1 to 5,
+  while the state's supervisor-district layer (vintage 2024-01-30) draws THREE
+  districts for it. Shipping five names against a three-district map would have
+  the card naming a supervisor for a district the map does not draw. The stale
+  thing is the MAP, which is a different repair from a roster, so it is
+  recorded as a gap instead.
+
+  TAMA WAS THE SAME CASE UNTIL 2026-10-07, when the county's own five-district
+  map replaced the state's three (build_county_supplied_supervisor_districts.py)
+  and its page joined this file -- the fifth county here.
 
   POTTAWATTAMIE refuses this project at the page, with the districtry token and
   with a browser client alike, at `www.pottcounty-ia.gov` and at the apex, while
@@ -44,13 +48,13 @@ than a county quietly missing:
   allow). So it is a site-wide block rather than a policy, nothing here works
   around it, and its board stays withheld with the reason it already carries.
 
-THREE PAGE SHAPES FOR FOUR COUNTIES, EACH DECLARED
+THREE PAGE SHAPES FOR FIVE COUNTIES, EACH DECLARED
 ---------------------------------------------------
-  board_members   Adair, Lucas. A `Board Members` heading, then per supervisor
+  board_members   Adair, Lucas, Tama. A `Board Members` heading, then per supervisor
                   a NAME line followed by a role line -- Adair writes the role
                   INTO the name line (`Jerry Walker Chairperson - District 3SW
                   Supervisor`), Lucas puts a bare `Supervisor` on the line
-                  after. Each member is followed by a `Representative
+                  after, and Tama the seat alone (`1st District`). Each member is followed by a `Representative
                   Appointments` block naming committees, which is where a
                   careless parse finds its next "member".
 
@@ -112,6 +116,19 @@ COUNTIES = [
             "board_of_supervisors/index.php"},
     {"fips": "117", "name": "Lucas", "shape": "board_members",
      "url": "https://lucascounty.iowa.gov/board_of_supervisors/"},
+    # TAMA joined on 2026-10-07, when its five-district map did: the page has
+    # named five supervisors in districts 1st to 5th all along, and was
+    # excluded only because the shipped map drew three. robots.txt: HTTP 404
+    # (allow all), read 2026-10-07 with this file's own client.
+    #
+    # NO TELEPHONE FROM THIS PAGE. The page prints one number per supervisor
+    # and nothing says which are county lines; one is a 319 number for a
+    # supervisor whose listed e-mail is a personal address. The Auditor was
+    # asked on 2026-10-01 which numbers are county lines and has not said, so
+    # the county's own board office number (on the County card) is what a
+    # reader gets.
+    {"fips": "171", "name": "Tama", "shape": "board_members", "phones": False,
+     "url": "https://www.tamacounty.iowa.gov/supervisors/"},
 ]
 
 TAGS = re.compile(r"(?s)<(script|style|noscript)\b.*?</\1>")
@@ -123,6 +140,7 @@ NAME = re.compile(r"^[A-Z][\w.'’-]*(?:\s+[A-Z][\w.'’-]*){1,3}"
 # label and not noise to strip.
 DISTRICT = re.compile(r"(?i)\bDistrict\s+(\d+[A-Z]{0,3})\b")
 ORDINAL = re.compile(r"(?i)\b(\d+)(?:st|nd|rd|th)\s+District\b")
+SEAT_LINE = re.compile(r"(?i)^\s*(?:\d+(?:st|nd|rd|th)\s+District|District\s+\d+[A-Z]{0,3})\b")
 ROLE_WORD = re.compile(r"(?i)\b(supervisor|chair(?:man|person|woman)?|"
                        r"vice[-\s]?chair(?:man|person|woman)?|chairman\s+pro\s+tem)\b")
 NOT_A_PERSON = re.compile(
@@ -195,8 +213,12 @@ def split_role_name(line):
     # comes first: Adair writes `Matt Wedemeyer District 1NW Supervisor`, so
     # splitting on the role alone leaves `Matt Wedemeyer District 1NW` on the
     # left, and no name survives that.
+    # Tama writes the seat as an ordinal (`Curt Hilmer 1st District`), so a
+    # cut at `District` alone leaves `Curt Hilmer 1st` on the left; the
+    # ordinal's own start is a cut point too.
     cuts = [m.start() for m in (ROLE_WORD.search(line),
-                                re.search(r"(?i)\bDistrict\b", line)) if m]
+                                re.search(r"(?i)\bDistrict\b", line),
+                                ORDINAL.search(line)) if m]
     if not cuts or min(cuts) == 0:
         return None, None
     cut = min(cuts)
@@ -211,7 +233,7 @@ def split_role_name(line):
     # and passes every name test there is. The first live run shipped it as
     # Adair's sixth supervisor on a five-seat board. A role word on the right
     # is what tells a seat from a committee.
-    if not ROLE_WORD.search(right):
+    if not (ROLE_WORD.search(right) or SEAT_LINE.match(right)):
         return None, None
     return left, right
 
@@ -259,8 +281,13 @@ def parse_board_members(lines):
         # is how this shape invents people.
         if name_like(l):
             nxt = lines[i + 1] if i + 1 < len(lines) else ""
-            if (ROLE_WORD.search(nxt) and not name_like(nxt)
-                    and not split_role_name(nxt)[0]):
+            # Tama's role line is the SEAT alone (`1st District`, `3rd
+            # District - Vice Chair`), so a line that opens with a district
+            # number counts as a role line too. It must OPEN with it: a
+            # committee such as `6th Judicial District` puts a word between
+            # the number and `District` and is refused by SEAT_LINE.
+            if ((ROLE_WORD.search(nxt) or SEAT_LINE.match(nxt))
+                    and not name_like(nxt) and not split_role_name(nxt)[0]):
                 hits.append((i, l, nxt))
     return _from_hits(lines, hits)
 
@@ -379,6 +406,9 @@ def scrape(session, gate):
             continue
         members = dedupe(SHAPES[c["shape"]](text_lines(r.text)))
         refuse_addresses(members, c["name"])
+        if c.get("phones") is False:
+            for m in members:
+                m.pop("phone", None)
         out[c["fips"]] = {"county": c["name"], "url": c["url"],
                           "shape": c["shape"], "verdict": "ok",
                           "members": members}
@@ -447,6 +477,35 @@ HUMBOLDT_SPLIT_PAGE = """
 <div>Phone:      515 770-1067</div>
 <div><span>District 2</span><span>Dennis Thompson</span></div>
 <div>Phone:      515 332-0597</div>
+"""
+
+TAMA_PAGE = """
+<div>Supervisors</div>
+<div>Board Members</div>
+<div>Curt Hilmer</div><div>1st District</div><div>319-939-3291</div>
+<div>Term Expires: 2028</div>
+<div>Representative Appointments</div>
+<div>Curt Hilmer is also appointed to the following committees/boards:</div>
+<div>Board of Health Services</div>
+<div>6th Judicial District</div>
+<div>Heather Knebel</div><div>3rd District - Vice Chair</div>
+<div>641-481-2532</div><div>Term Expires: 2026</div>
+<div>Representative Appointments</div>
+<div>Mark Doland</div><div>4th District - Chair</div>
+"""
+
+# What the live page reads as: this reader breaks on <a> and <span> closes
+# only, and the name and its seat share one element, so they arrive joined.
+TAMA_JOINED_PAGE = """
+<div>Board Members</div>
+<div>Curt Hilmer 1st District</div><div>319-939-3291</div>
+<div>Representative Appointments</div>
+<div>6th Judicial District</div>
+<div>David Turner 2nd District</div><div>641-481-2456</div>
+<div>Representative Appointments</div>
+<div>Region VI Planning Commission</div>
+<div>Central Iowa Juvenile Detention</div>
+<div>Heather Knebel 3rd District - Vice Chair</div>
 """
 
 ADAIR_COMMITTEE_PAGE = """
@@ -526,6 +585,20 @@ def _selftest():
     ac = dedupe(parse_board_members(text_lines(ADAIR_COMMITTEE_PAGE)))
     ok("Adair: a committee with `District` in its name is not a supervisor",
        [m["name"] for m in ac], ["Jodie Hoadley", "Jerry Walker"])
+
+    t = dedupe(parse_board_members(text_lines(TAMA_PAGE)))
+    ok("Tama: a seat-only line after a name forms a member",
+       [m["name"] for m in t], ["Curt Hilmer", "Heather Knebel", "Mark Doland"])
+    ok("Tama: seats from the ordinal", [m.get("seat") for m in t], ["1", "3", "4"])
+    ok("Tama: a committee naming a judicial district is not a member",
+       any("Judicial" in m["name"] or m["name"] == "Board of Health Services"
+           for m in t), False)
+    tj = dedupe(parse_board_members(text_lines(TAMA_JOINED_PAGE)))
+    ok("Tama: a name and its ordinal seat on one line",
+       [(m["name"], m.get("seat")) for m in tj],
+       [("Curt Hilmer", "1"), ("David Turner", "2"), ("Heather Knebel", "3")])
+    ok("a seat line must open with its number",
+       bool(SEAT_LINE.match("6th Judicial District")), False)
 
     ok("a street address is refused outright",
        _raises(refuse_addresses, [{"name": "A B", "seat": "101 S Main Street"}], "X"),

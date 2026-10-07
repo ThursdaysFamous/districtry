@@ -21,7 +21,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-03",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://howardcounty.iowa.gov/board-of-supervisors/"
  },
  "093": {
@@ -49,6 +49,40 @@
    }
   },
   "readOn": "2026-10-01"
+ },
+ "105": {
+  "boardPhone": "(319) 462-2378",
+  "county": "Jones",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "John Schlarmann",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Joe Oswald",
+    "party": "Democratic"
+   },
+   "3": {
+    "name": "Jon Zirkelbach",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Darrick Hall"
+   },
+   "5": {
+    "name": "Jeff Swisher",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://www.jonescountyiowa.gov/board_of_supervisors/"
  },
  "119": {
   "boardPhone": "(712) 472-8517",
@@ -82,7 +116,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-01",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://lyoncounty.iowa.gov/supervisors/"
  },
  "133": {
@@ -107,7 +141,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-01",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://www.mononacountyiowa.gov/supervisors/"
  },
  "151": {
@@ -142,7 +176,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-03",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://pocahontascounty.iowa.gov/board-of-supervisors/"
  },
  "153": {
@@ -177,8 +211,37 @@
     "party": "Democratic"
    }
   },
-  "readOn": "2026-10-01",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://www.polkcountyiowa.gov/board-of-supervisors/"
+ },
+ "171": {
+  "county": "Tama",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Curt Hilmer"
+   },
+   "2": {
+    "name": "David Turner"
+   },
+   "3": {
+    "name": "Heather Knebel"
+   },
+   "4": {
+    "name": "Mark Doland"
+   },
+   "5": {
+    "name": "Curt Kupka"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://www.tamacounty.iowa.gov/supervisors/"
  },
  "183": {
   "boardPhone": "(319) 653-7711",
@@ -212,7 +275,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-01",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://washingtoncounty.iowa.gov/148/Board-of-Supervisors"
  }
 }

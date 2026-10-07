@@ -1674,6 +1674,14 @@ office whose page publishes the district map).
 
 ### Follow-up, drafted 2026-10-06 — a reply on Ms Aitchison's own message
 
+**SENT 2026-10-06 16:40:45 UTC AND ANSWERED THE SAME DAY — CLOSED, AND BUILT 2026-10-07.** Verified in
+the operator's sent folder. Ms Aitchison replied at 16:44 that she had sent the previous plan's
+file, and at 17:00:59 sent `BOS.zip`, the shapefile `BOS_2022`. Its five districts sum over Census
+2020 blocks to 4,128 / 4,120 / 4,137 / 4,132 / 4,129, the county's own published figures exactly,
+so the gate under *What each answer means* passed and `jones-county-supervisor` is closed (its
+history is a closed record in `docs/DATA_LAYER_GUIDEBOOK.md`). The county is credited in
+`docs/SOURCE_CREDITS.md`. No further letter is owed; a thank-you is the operator's choice.
+
 **To:** Kristi Aitchison, at the address her 2026-10-05 message came from, copying the Auditor's
 office mailbox it was forwarded through. The Letters thread reads both addresses off that
 message; none is written here, because a guessed address on an outbound ask is worse than none.
@@ -5658,6 +5666,16 @@ difference between a gap we have measured and a gap we have merely noticed.
 
 
 ## Ask ia-tama-supervisor-map — Tama County Auditor: your county's current five-district map
+
+> **BUILT 2026-10-07 — CLOSED.** The five districts ship, drawn from the 2025 map she sent and
+> gated on the Legislative Services Agency's published plan populations (four exact, one
+> seven-person block declared, because her map draws the detached parcel in District 2). The
+> county's own board page prints each supervisor's district, so the card now names all five,
+> which keeps the promise in the reply sent in the operator's name. The record's history is a
+> closed record in `docs/DATA_LAYER_GUIDEBOOK.md`; the county is credited in
+> `docs/SOURCE_CREDITS.md`. The one open question is unchanged: which of the five telephone
+> numbers are county lines, and until she says, none ships.
+>
 
 > **ASKED 2026-10-01** (sent 18:07:32 UTC as a reply on the existing thread, per
 > `/mnt/project-files/letters/sent-2026-10-01.md`) and **ANSWERED 2026-10-01 18:24 UTC**:

@@ -2385,6 +2385,8 @@
    "party": "Republican",
    "phone": "(319) 462-4371"
   },
+  "supervisorPlan": "PLAN 3",
+  "supervisorSeats": 5,
   "supervisors": [
    {
     "name": "Darrick Hall"
@@ -3889,7 +3891,26 @@
    "party": "Republican",
    "phone": "(641) 484-3760"
   },
-  "supervisorsWithheld": "the county directory lists 4, and Iowa Code 331.201 allows only 3 or 5",
+  "supervisorPlan": "PLAN 3",
+  "supervisorSeats": 5,
+  "supervisorSource": "https://www.tamacounty.iowa.gov/supervisors/",
+  "supervisors": [
+   {
+    "name": "Mark Doland"
+   },
+   {
+    "name": "Curt Hilmer"
+   },
+   {
+    "name": "Heather Knebel"
+   },
+   {
+    "name": "Curt Kupka"
+   },
+   {
+    "name": "David Turner"
+   }
+  ],
   "treasurer": {
    "email": "akriegel@tamacounty.org",
    "name": "Amanda Kriegel",

@@ -1,5 +1,5 @@
 {
- "measured": "2026-10-06",
+ "measured": "2026-10-07",
  "note": "The Census's own internal point per county \u2014 guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
  "points": {
   "adair": {
@@ -120,13 +120,6 @@
    "lng": -91.5905458,
    "name": "Johnson County",
    "slug": "johnson"
-  },
-  "jones": {
-   "fips": "105",
-   "lat": 42.1251174,
-   "lng": -91.1169136,
-   "name": "Jones County",
-   "slug": "jones"
   },
   "kossuth": {
    "fips": "109",
