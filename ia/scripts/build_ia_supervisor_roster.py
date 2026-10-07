@@ -264,6 +264,24 @@ NUMBERING_CHECKED = {
                    "Melvin in 5, Ashton in 4, and the core of each district) "
                    "all land in the same-numbered district of this layer",
     },
+    "Chickasaw": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own GIS map (its Beacon site's Supervisor "
+                   "Districts 2022 layer, labelled District 1 to 5), as the "
+                   "operator viewed it in a browser and supplied it on "
+                   "2026-10-07 -- that host answers this project's client with "
+                   "a managed challenge, so nothing there was fetched; each of "
+                   "the five rural precincts in this instance's precinct layer "
+                   "lies in the same-numbered district on that map and of this "
+                   "layer (Chickasaw North in 1, Bradford in 2, Dayton Richland "
+                   "in 3, New Hampton Rural in 4, Lawler-Fredericksburg in 5, "
+                   "each at least 99.9% of its area), and the same map's 2022 "
+                   "New Hampton ward layer puts Wards 2 and 3 on the west and "
+                   "south of town, inside its District 3, and Wards 1 and 4 on "
+                   "the east, inside its District 4 -- where this instance's "
+                   "precinct layer puts those wards and this layer's 3 and 4",
+    },
     "Cass": {
         "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
         "checked": "2026-10-07",

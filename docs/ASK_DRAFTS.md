@@ -6413,7 +6413,7 @@ numbering being checked.
 | Adams | Betsy Stormer | 5 | |
 | Butler | Leslie Groen | 3 | **Measured: two different plans.** The letter should ask which of the county's two published surfaces is current. |
 | Cerro Gordo | Adam Wedmore | 3 | |
-| Chickasaw | Sheila Shekleton | 5 | **ANSWERED 2026-10-06 by the elections specialist: the supervisors and their districts are listed on the county website.** Read on 2026-10-07: the board page does print a district beside each supervisor, but nothing there or on the county's election pages says which ground each district covers — the two maps the election site carries draw precincts only. So the county's numbering still cannot be checked against ours and the cards stay unkeyed. The question to send back is the one Winnebago answered: which precincts make up each district. **The operator asked for it on 2026-10-07; the follow-up is drafted below the table** (it lists the precincts our map puts in each district and asks her to confirm or correct them). |
+| Chickasaw | Sheila Shekleton | 5 | **ANSWERED 2026-10-06 by the elections specialist: the supervisors and their districts are listed on the county website.** Read on 2026-10-07: the board page does print a district beside each supervisor, but nothing there or on the county's election pages says which ground each district covers — the two maps the election site carries draw precincts only. So the county's numbering still cannot be checked against ours and the cards stay unkeyed. The question to send back is the one Winnebago answered: which precincts make up each district. The operator asked for it on 2026-10-07 and a follow-up was drafted below the table, then **WITHDRAWN UNSENT the same evening**: the county's own GIS map (its supervisor-district layer, supplied by the operator as a screenshot) numbers the five districts exactly as this instance does, so **the numbering is CHECKED and Chickasaw's supervisors SHIPPED keyed 2026-10-07**. |
 | Franklin | Katy Flint | 3 | |
 | Grundy | Alan Tscherter | 5 | |
 | Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. |
@@ -6459,6 +6459,8 @@ the record that tells our readers what is missing say the county was asked — w
 different and more honest claim than that nobody looked.
 
 ### Chickasaw follow-up, drafted 2026-10-07 — which precincts make up each district
+
+**WITHDRAWN 2026-10-07, NEVER SENT.** The county's own GIS map settled it the same evening: the operator opened its supervisor-district layer in a browser (the host answers this project's client with a managed challenge, so nothing there was fetched) and supplied a screenshot. Its Districts 1 to 5 cover the same ground as this instance's 1 to 5, with every rural precinct in the same-numbered district, so Chickasaw's supervisors were keyed without the county having to answer again. The draft below is kept as the record of what was written; the Gmail draft is to be deleted, not sent.
 
 **A reply on the existing thread**, "Chickasaw County supervisor districts — which precincts
 make up each one?": Adam's letter to Auditor Shekleton of 2026-10-06 16:49 UTC, and the reply

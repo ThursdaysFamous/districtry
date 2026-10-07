@@ -51,13 +51,6 @@
    "name": "Cerro Gordo County",
    "slug": "cerro-gordo"
   },
-  "chickasaw": {
-   "fips": "037",
-   "lat": 43.0597409,
-   "lng": -92.3172101,
-   "name": "Chickasaw County",
-   "slug": "chickasaw"
-  },
   "dickinson": {
    "fips": "059",
    "lat": 43.3896107,
