@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Eight instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota and Kentucky. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Nine instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky and Indiana. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -121,6 +121,15 @@ All 120 counties: the county a point sits in, and the Kentucky Senate, House and
 - [Who is my U.S. representative?](https://districtry.com/ky/congress.html)
 - [Sources & data layers](https://districtry.com/ky/sources.html)
 - [Kentucky district questions](https://districtry.com/ky/faq.html)
+
+## Indiana
+
+All 92 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the county governments, and the Data gaps panel says why.
+
+- [Indiana district lookup](https://districtry.com/in/): 11 layers, all 92 counties.
+- [Who is my U.S. representative?](https://districtry.com/in/congress.html)
+- [Sources & data layers](https://districtry.com/in/sources.html)
+- [Indiana district questions](https://districtry.com/in/faq.html)
 
 ## Where the answers come from
 
