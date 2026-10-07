@@ -55,7 +55,8 @@ card, because they are not the same statement to a reader:
   * the county's own row names no person (Monroe 2, a malformed directory row);
   * the county calls the seat VACANT in its own words (Ionia 3, Clinton 4 —
     Clinton carries its own Notice of Vacancy for that seat on the same page);
-  * the county contradicts itself about who holds it (Lenawee 5, CONTRADICTED).
+  * the county contradicts itself about who holds it (CONTRADICTED; Lenawee 5
+    was the case from 2026-09-15 until its appointee was listed, 2026-10-06).
 
 Usage:
     python3 mi/scripts/mi_commissioner_scraper.py      # refresh the cache
@@ -118,18 +119,17 @@ FIELDS = ("name", "role", "party", "phone", "email", "profileUrl")
 # whoever reads it to delete the entry. An entry naming a county that has left
 # the roster FAILS the build rather than sitting unread, the property
 # ACCEPTED_DROPS and EXPECTED_UNREACHABLE already have elsewhere in the fleet.
-CONTRADICTED = {
-    ("091", "5"): {
-        "name": "Jim Daly",
-        "why": "Lenawee's own News Flash of 10 September 2026 announces the "
-               "death of Commissioner James \u201cJim\u201d Daly and says he "
-               "represented District 5; the county's commissioner directory "
-               "still lists him here. The two county surfaces disagree, so this "
-               "app names nobody for this seat.",
-        "source": "https://www.lenawee.mi.us/CivicAlerts.aspx?AID=3012",
-        "recorded": "2026-09-15",
-    },
-}
+CONTRADICTED = {}
+# EMPTY SINCE 2026-10-06. Its one entry was Lenawee District 5, recorded
+# 2026-09-15: the directory still listed Jim Daly after the county's own News
+# Flash of 10 September 2026 (CivicAlerts AID=3012) announced his death. The
+# entry retired itself as designed when the directory changed to Gordon D.
+# Gauss, and the county's own record backs the new name: the agenda and packet
+# of its 28 September 2026 special board meeting (CivicClerk tenant
+# lenaweecomi, file 6645 and 6647) interview four applicants to fill District 5
+# by appointment under MCL 46.413 for the term ending 31 December 2028, and the
+# directory now lists Gauss in District 5, "Commissioner since 2026". The
+# meeting's minutes were not yet published when this was read.
 
 
 def fail(msg):

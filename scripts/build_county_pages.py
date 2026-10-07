@@ -926,12 +926,13 @@ def mi_commissioners(inst):
     A COUNTY CAN BE SHORT, AND `unnamedDistricts` SAYS SO, with `unnamedWhy`
     carrying a per-district reason where the shortfalls differ. TWO COUNTIES ARE
     SHORT AND FOR DIFFERENT REASONS, which is why one sentence cannot serve
-    both. Monroe's directory carries a row whose district field reads
+    both (the reasons in force move; the roster's `unnamedWhy` is the record). Monroe's directory carries a row whose district field reads
     "District 2" and whose name field reads "Commissioner Vensel", where Vensel
     is District 6's chairman: that row names no District 2 commissioner.
-    Lenawee District 5's row DOES name somebody, Jim Daly, and the same county's
-    own News Flash of 10 September 2026 announces his death — two surfaces of
-    one county disagreeing, so nothing here names that seat. Each district gets
+    Lenawee District 5's row named somebody, Jim Daly, while the same county's
+    own News Flash of 10 September 2026 announced his death — two surfaces of
+    one county disagreeing, so nothing named that seat from 2026-09-15 until
+    the county listed his appointed successor on 2026-10-06. Each district gets
     a `note`, printed as "Not named — ..." with its own reason, the third state
     the `district()` helper already draws.
 
@@ -961,9 +962,9 @@ def mi_commissioners(inst):
                 districts.append(district(label, [dict(named[label])]))
             else:
                 # The builder records a per-district reason where the two
-                # absences differ: Monroe's row carries no name, and Lenawee
-                # District 5's names a commissioner the same county has
-                # announced died. Without one, the row simply named nobody.
+                # absences differ: Monroe's row carries no name, and a row the
+                # same county contradicts elsewhere (Lenawee District 5, until
+                # 2026-10-06) names somebody it has announced died. Without one, the row simply named nobody.
                 districts.append(district(label, note=(rec.get("unnamedWhy") or {}).get(
                     label,
                     "the county's own directory row for this district carries "
