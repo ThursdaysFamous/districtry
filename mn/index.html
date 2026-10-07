@@ -13340,10 +13340,23 @@ function initMinnesotaExplorer() {
    * Minnesota's mayors and council members was found, so the card names
    * nobody. Recorded as gap mn-municipal-officeholders. The 274 city WARDS
    * the Secretary of State publishes are a later change, not a roster.
+   *
+   * THE 43 CITIES ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND COUNCIL, from the
+   * Secretary of State's own city results files, every name dated to the
+   * election that seated it (mn/scripts/build_mn_city_councils.py;
+   * data/app/mn-city-councils.json). A winner is not a claim about who sits
+   * today, so the card says that in words, the commissioner card's posture.
+   * Where a ranked-choice count decided a seat in later rounds, which the
+   * state's file does not carry, the seat names nobody and says why.
    * ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC", "incorporated places");
+  // The mayor and council of each city above 25,000 people, keyed by the
+  // city's Census id; every seat names the election that filled it.
+  var loadMnCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-city-councils.json", {}, 2);
+  });
 
   registerLayer({
     id: "municipality",
@@ -13364,11 +13377,22 @@ function initMinnesotaExplorer() {
       return queryFeatureAt(loadPlaces, point).then(function (feature) {
         if (!feature) return null; // not in a city — the engine renders emptyNote
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          council: null
         };
+        // A roster that fails to load leaves the city card standing and says
+        // so, rather than taking the boundary answer down with it.
+        return loadMnCityCouncils().then(function (roster) {
+          result.council = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -13377,12 +13401,66 @@ function initMinnesotaExplorer() {
         title: result.name != null ? String(result.name) : "Unknown city",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      wrap.appendChild(renderFieldStack([{
-        label: "Your mayor or council",
-        value: "Not named here. No statewide source names Minnesota's mayors " +
-          "and council members, and this app does not guess — the city's " +
-          "own website is the current source."
-      }]));
+      var council = result.council;
+      if (!council) {
+        wrap.appendChild(renderFieldStack([{
+          label: "Your mayor or council",
+          value: result.rosterFailed
+            ? "The list of election winners did not load, so no name is shown. " +
+              "The city's own website names its mayor and council."
+            : "Not named here. This app names the mayor and council of " +
+              "Minnesota's 43 cities above 25,000 people, from the state's " +
+              "election results, and this city is not one of them yet. The " +
+              "city's own website is the current source."
+        }]));
+        return wrap;
+      }
+      // Card convention: identity -> officeholders. Each seat is the winner
+      // of its most recent election, dated; no office or contact is
+      // published with them.
+      var people = [], rows = [];
+      (council.seats || []).forEach(function (seat) {
+        var label = seat.seat === "At Large" ? "Council, at large"
+          : seat.seat === "Mayor" ? "Mayor" : "Council, " + String(seat.seat);
+        if (seat.name) {
+          var when = mnElectionDate(seat.election);
+          people.push({
+            name: String(seat.name),
+            badge: label,
+            note: when ? (seat.special ? "won a special election, " : "elected ") + when : null
+          });
+          if (seat.citySays && seat.citySays.name) {
+            var read = mnElectionDate(seat.citySays.read);
+            rows.push({
+              label: label + ": the city's own page names someone else",
+              value: String(council.name) + "'s own council page named " +
+                String(seat.citySays.name) + " for this seat" +
+                (read ? " when read on " + read : "") + ". The seat has " +
+                "probably changed hands since " + String(seat.name) + " won it."
+            });
+          }
+        } else {
+          rows.push({ label: label + ": not named here", value: String(seat.unnamed || "") + "." });
+        }
+      });
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      rows.push({
+        label: "What these names are",
+        value: "The winner of the most recent election for each seat in the " +
+          "Minnesota Secretary of State's results. It is not a list the city " +
+          "keeps up to date, so if a seat has changed hands since (a " +
+          "resignation or an appointment) this still shows who won. The " +
+          "city's own website says who holds each seat today."
+      });
+      if (council.rankedChoice) {
+        rows.push({
+          label: "Ranked-choice voting",
+          value: "This city counts ranked ballots. The state's results carry " +
+            "first choices only, so a seat is named here only where first " +
+            "choices alone decided it."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
       return wrap;
     }
   });

@@ -1752,6 +1752,9 @@ CITY_ROSTERS = {
     # township (a county subdivision), which is the id the expected-units
     # measurement carries for each.
     "mi": [("mi/data/app/mi-municipal-officials.json", "geoid7")],
+    # Election winners from the Secretary of State's city results files, keyed
+    # by the city's Census id, each seat dated to the election that filled it.
+    "mn": [("mn/data/app/mn-city-councils.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is

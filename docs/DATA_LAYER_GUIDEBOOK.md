@@ -2994,14 +2994,14 @@ trusted.
     {
       "id": "mn-municipal-officeholders",
       "concept": "Mayors and city councils",
-      "area": "Minnesota \u2014 856 cities",
+      "area": "Minnesota \u2014 813 cities under 25,000 people",
       "counties": [],
       "kind": "no-source",
       "layer": "municipality",
-      "summary": "Your City card names the city and nobody who governs it \u2014 no mayor, no council member, no clerk.",
-      "why": "No statewide source names Minnesota's mayors and council members. Each city publishes its own, and this app has read none of them yet.",
-      "blocker": "MEASURED 2026-09-29. The FORM is from the state's own publisher: Minn. Stat. 412.02 subd. 1, read at revisor.mn.gov, elects a mayor in every statutory city plus council members, with a clerk and a treasurer or a combined clerk-treasurer depending on the city's plan; a home rule charter city's own charter governs instead, so the officers are not uniform across the 856. The COUNT is TIGERweb's incorporated-places layer for STATE='27': 856 features, EVERY one carrying the Census's city descriptor, with no village among them. The League of Minnesota Cities is the obvious statewide directory and has not been read; nothing here has tried a city page either. Bounded absence, the Illinois municipal ladder's shape, and not an ask.",
-      "wanted": "A statewide list pairing each city with its mayor and council members, or a per-city page set this app can read on a weekly schedule."
+      "summary": "In cities under 25,000 people, your City card names the city and nobody who governs it.",
+      "why": "The 43 larger cities name their mayor and council from the state's election results. The smaller cities are in the same results files and have not been read yet.",
+      "blocker": "MEASURED 2026-10-07. The Secretary of State's city results file (local.txt per election day on electionresultsfiles.sos.mn.gov) carries every city contest it reports, and mn/scripts/build_mn_city_councils.py reads it for the 43 cities above 25,000 people: 249 of 268 seats named, each dated to its election, and 194 of 197 agreeing with the 33 city council pages that could be read on 7 October 2026. What a smaller city lacks is the seat count: the file names an office and how many it elects that day, never how many seats share it, so each city's SEATS entry was measured against its own page, and that has not been done for the other 813. Bounded work this project can do, not an ask.",
+      "wanted": "Each smaller city's council size and seat structure, so the results the state already publishes can name its mayor and council."
     },
     {
       "id": "mn-tribal-government",
