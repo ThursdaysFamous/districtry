@@ -5981,6 +5981,10 @@ and nothing is asked of any named judge personally.
 > a letter: merge `01` into District 1, relabel `21`-`23` as Districts 1-3, and consider the
 > directory as a roster source for the six seats. That changes what readers see, so it waits for
 > Adam's word. The text below is kept as the record of what was going to be asked.
+>
+> **DONE 2026-10-07 on Adam's word ("fix marion").** The map draws three Marion districts and the
+> cards name the five members the directory lists, with District 2's second seat shown as vacant.
+> No letter goes to either county about this.
 
 > **THE SHAWANO LETTER WAS SENT ON 2026-10-01 AND HAS NO REPLY, SO IT GETS A SHORT CLOSING NOTE**
 > (decided 2026-10-06). It asks a question the neighbouring county's own publications now answer,
