@@ -96,7 +96,8 @@ The county's board page named only its Chairman and Vice Chairman when it was
 last readable, so no member roster existed to scrape even before the challenge.
 The cards name your district, its precincts and the board's office (from the state's
 County Officers Book, via the concept's own officeFallback), and link the board.
-Gap christian-county-board-roster.
+Gap christian-county-board-roster, retired 2026-10-07: the County Clerk's letter of that
+day named all sixteen members, and they ship from build_christian_county_board.py.
 """
 
 import argparse

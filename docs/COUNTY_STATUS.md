@@ -31,7 +31,7 @@
 | Calhoun | 17013 | dispatch | at-large — County card | `county-precinct`, `library-district` | none |
 | Carroll | 17015 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 4 — `carroll-special-districts` (no-source); `carroll-ward-geometry` (no-source); `library-governance-type` (data-quality); `statewide-library-officials` (no-source) |
 | Cass | 17017 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `pass9-ward-seats-without-maps` (no-source); `statewide-library-officials` (no-source) |
-| Christian | 17021 | dispatch | districted | `county-board` | 2 — `christian-county-board-roster` (no-source); `christian-precinct-geometry` (no-source) |
+| Christian | 17021 | dispatch | districted | `county-board` | 1 — `christian-precinct-geometry` (no-source) |
 | Clark | 17023 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `clark-board-contact` (data-quality); `clark-precinct-polling` (data-quality) |
 | Clay | 17025 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | none |
 | Clinton | 17027 | dispatch | districted | `county-board`, `library-district` | 3 — `clinton-precinct-geometry` (no-source); `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 105 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 104 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.

@@ -452,6 +452,7 @@ const ROSTER_URLS = [
   "./data/app/douglas-county-board-members.json",
   "./data/app/vermilion-county-board-members.json",
   "./data/app/wayne-county-board-members.json",
+  "./data/app/christian-county-board-members.json",
   "./data/app/clay-county-board-members.json",
   "./data/app/st-clair-precinct-polling.json",
   "./data/app/boone-district-officials.json",

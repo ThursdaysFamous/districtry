@@ -176,7 +176,7 @@ which is a claim about the ask and never about the source.
 | Bureau County GIS (Christine Anderson) | long thread; she sent a user agreement and a $150 invoice 2026-08-12 | correctly written as a reply on her own thread |
 | Clark County Clerk | asked 2026-08-05, followed up 08-16, **ANSWERED 08-18** ("The County Board is elected by districts. I do not have maps available") | correctly written as a follow-up |
 | Knox County GIS (Taiwo Agbaje) | long thread; he sent the precinct shapefile 2026-09-08 | correctly written as a continuation, opening with thanks for that file |
-| Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members |
+| Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members. **ANSWERED 2026-10-07**: Clerk Jodie L. Badman sent two screenshots of the county's own board member list naming all sixteen by district; they ship on the board card, and the `christian-county-board-roster` gap record is retired |
 | Henderson County Clerk | **asked 2026-07-21 (seal), 2026-08-05 and 08-16, no reply** | REWRITTEN 2026-10-01: cites them and says the August questions are answered |
 | Logan County Clerk | **same mailbox written to 2026-07-21** about the county seal | REWRITTEN 2026-10-01: opens by naming that letter |
 | Will County Clerk | none | first contact, correct |
@@ -2922,7 +2922,12 @@ https://districtry.com/il/
 
 ## Ask 27 — Christian County Clerk: who sits on the county board?
 
-**Status: NOT YET ASKED — DRAFTED.** Gap `christian-county-board-roster`.
+**Status: ANSWERED 2026-10-07.** Gap `christian-county-board-roster`, retired that day. Clerk
+Jodie L. Badman replied with two screenshots of the county's County Board Members list, which
+name all sixteen members by district, and they ship from
+`scripts/build_christian_county_board.py`. The Clerk's first name is settled as Jodie by her
+own reply. The list marks no chair, and it prints each member's home city and ZIP, which do
+not ship. The record below is kept as it was written.
 
 **Recipient:** Christian County Clerk & Recorder, `elections@christiancountyil.com` —
 the address the 5 August and 21 August 2026 inquiries used. **Two of this project's own
