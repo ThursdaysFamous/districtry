@@ -144,6 +144,24 @@
       "landing_name": "Kentucky",
       "blurb": "All 120 counties: the county a point sits in, and the Kentucky Senate, House and U.S. House districts \u2014 with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the fiscal courts, and the Data gaps panel says why.",
       "scope": "all 120 counties"
+    },
+    {
+      "id": "indiana",
+      "explorer_name": "districtry Indiana",
+      "label": "Indiana",
+      "url": "https://districtry.com/in/",
+      "emoji": "🏁",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -88.1,
+        "minLat": 37.83,
+        "maxLng": -84.78,
+        "maxLat": 41.77
+      },
+      "tag": "in",
+      "landing_name": "Indiana",
+      "blurb": "All 92 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the county governments, and the Data gaps panel says why.",
+      "scope": "all 92 counties"
     }
   ]
 }

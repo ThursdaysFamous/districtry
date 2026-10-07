@@ -71,6 +71,7 @@ IDS = {
     "Q62": "San Francisco",
     "Q1527": "Minnesota",
     "Q1603": "Kentucky",
+    "Q1415": "Indiana",
 }
 
 # metros.json tag -> the jurisdiction item that instance answers for. STATED,
@@ -113,9 +114,17 @@ IDS = {
 # to. Its English label is the bare string "Kentucky"; writing "Commonwealth of
 # Kentucky" — the state's own constitutional name, and the tempting one — would
 # fail --verify character for character.
+#
+# in was added at the 2026-10-07 go-live by the same route as ky and NOT
+# searched for: Q1415 is one of the six ids in Q1204's own P47, read again that
+# day (Q1537, Q1546, Q1581, Q1603, Q1415, Q1166). Identified by its own
+# properties: P31 = Q35657, P300 = "US-IN", P131 = Q30. The other five came
+# back matching this table's wi, ia, ky and mi entries plus Missouri, which no
+# instance answers for. Its English label is the bare string "Indiana".
 JURISDICTION = {
     "il": "Q1204", "wi": "Q1537", "ia": "Q1546", "mi": "Q1166",
     "ny": "Q1384", "ca": "Q62", "mn": "Q1527", "ky": "Q1603",
+    "in": "Q1415",
 }
 
 
