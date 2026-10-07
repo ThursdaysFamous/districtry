@@ -251,6 +251,19 @@ NUMBERING_CHECKED = {
                    "southern townships in 1, West Branch and Orange City in 2, "
                    "and Sioux Center 2-4 in 3",
     },
+    "Osceola": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own supervisor-district map (the "
+                   "Supervisor-Districts_Final document the Auditor linked on "
+                   "2026-10-06, posted August 2022) labels District 1 to 5 "
+                   "over the county's road grid; fitted to the county's own "
+                   "outline, each of this layer's five districts spans the "
+                   "same part of the drawing as the same-numbered label, and "
+                   "twelve check points (among them Ocheyedan, Harris and "
+                   "Melvin in 5, Ashton in 4, and the core of each district) "
+                   "all land in the same-numbered district of this layer",
+    },
     # JONES AND TAMA ARE IDENTITY BY CONSTRUCTION, and the witness says why
     # rather than claiming a measurement that was not made: this layer's
     # districts for both counties ARE the county's own drawing, numbered by the
@@ -311,8 +324,8 @@ CORRESPONDENCE_ROSTERS = {
             "the two swapped. Districts 1-3 are unchanged. The county's own "
             "board page lists its five supervisors and attaches no district "
             "to any of them, which is why it was asked. This entry was never "
-            "shown to a reader with the swap, because Osceola's numbering is "
-            "not in NUMBERING_CHECKED and so its board ships unkeyed."),
+            "shown to a reader with the swap, because Osceola's numbering was "
+            "not yet in NUMBERING_CHECKED and its board shipped unkeyed."),
         "cardNote": (
             "Osceola County's auditor gave this pairing by e-mail on 1 "
             "October 2026 and corrected it on 6 October; the county "
