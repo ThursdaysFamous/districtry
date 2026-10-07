@@ -176,14 +176,14 @@ which is a claim about the ask and never about the source.
 | Bureau County GIS (Christine Anderson) | long thread; she sent a user agreement and a $150 invoice 2026-08-12 | correctly written as a reply on her own thread |
 | Clark County Clerk | asked 2026-08-05, followed up 08-16, **ANSWERED 08-18** ("The County Board is elected by districts. I do not have maps available") | correctly written as a follow-up |
 | Knox County GIS (Taiwo Agbaje) | long thread; he sent the precinct shapefile 2026-09-08 | correctly written as a continuation, opening with thanks for that file |
-| Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members |
+| Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members. **ANSWERED 2026-10-07**: Clerk Jodie L. Badman sent two screenshots of the county's own board member list naming all sixteen by district; they ship on the board card, and the `christian-county-board-roster` gap record is retired |
 | Henderson County Clerk | **asked 2026-07-21 (seal), 2026-08-05 and 08-16, no reply** | REWRITTEN 2026-10-01: cites them and says the August questions are answered |
 | Logan County Clerk | **same mailbox written to 2026-07-21** about the county seal | REWRITTEN 2026-10-01: opens by naming that letter |
 | Will County Clerk | none | first contact, correct |
 | Grundy County GIS | the county CLERK was written 2026-07-21; this is a different mailbox | first contact to this office, correct |
 | Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
 | Hardin County Clerk (IL) | who holds the commissioner seats | **seal 2026-07-21; board 08-05, 08-16, 08-21; ANSWERED 08-24** — countywide board, and NO county website | **SENT 2026-10-01 and ANSWERED IN SEVEN MINUTES**: three commissioners, with Darrick Armstrong as chairman, Ricky Williams as vice-chairman and Michael Belford the third (she first wrote "Belfor" and corrected it herself at 19:27 the same day: "I left the d off"). That closes the county's roster gap, and it is the clearest argument this file has for the prior-contact check — the question was answered at the fourth attempt, by a clerk who had already told us twice what the county does not have. Illinois's wording said the county's web address "leads to a parked page"; the Clerk had already said there is no website, so that claim is gone |
-| Johnson County Clerk (IL) | the same | **seal 07-21, ANSWERED twice that day** ("We don't have a website to point back to"); board 08-05 and 08-16, no reply | drafted 2026-10-01. Illinois's wording said the county's website "declines automated visits"; the Clerk had already said there is none |
+| Johnson County Clerk (IL) | the same | **seal 07-21, ANSWERED twice that day** ("We don't have a website to point back to"); board 08-05 and 08-16, no reply | drafted 2026-10-01. Illinois's wording said the county's website "declines automated visits"; the Clerk had already said there is none **ANSWERED 2026-10-07**: Clerk Robin Harper-Whitehead named all three commissioners — Jason Taylor (Chairman), Matthew Hayden (Vice Chairman) and John McCuan — with one e-mail for the board and her own office's telephone. They ship on the County card and the `johnson-county-board` gap record is retired |
 | Perry County Clerk (IL) | the same | seal 07-20; two questions 08-05; follow-up 08-16; no reply | drafted 2026-10-01 with an opening citing all three |
 | Pope County Clerk (IL) | the board's form, then the names | seal 07-20; board 08-05; third note 08-16; no reply | drafted 2026-10-01, opening "This is my fourth note" |
 | Scott County Clerk (IL) | the same | **NOT a first letter**: the Clerk was written to 07-19 about the seal and the State's Attorney's office answered 07-20 | drafted 2026-10-01 with both acknowledged. Illinois's note recorded Scott as having no prior contact |
@@ -2922,7 +2922,12 @@ https://districtry.com/il/
 
 ## Ask 27 — Christian County Clerk: who sits on the county board?
 
-**Status: NOT YET ASKED — DRAFTED.** Gap `christian-county-board-roster`.
+**Status: ANSWERED 2026-10-07.** Gap `christian-county-board-roster`, retired that day. Clerk
+Jodie L. Badman replied with two screenshots of the county's County Board Members list, which
+name all sixteen members by district, and they ship from
+`scripts/build_christian_county_board.py`. The Clerk's first name is settled as Jodie by her
+own reply. The list marks no chair, and it prints each member's home city and ZIP, which do
+not ship. The record below is kept as it was written.
 
 **Recipient:** Christian County Clerk & Recorder, `elections@christiancountyil.com` —
 the address the 5 August and 21 August 2026 inquiries used. **Two of this project's own
@@ -3972,14 +3977,18 @@ Ask 33 gives: there is nothing yet to license. If a file arrives, that is a sepa
 
 ## Ask il-five-counties-commissioner-roster — five Illinois county clerks: who holds the commissioner seats?
 
-**Status: HARDIN SENT 2026-10-01 AND ANSWERED THE SAME DAY; THE OTHER FOUR DRAFTED
-2026-10-01.** Named rather than numbered, for the reason `il-gurnee-board-names` above gives.
+**Status: HARDIN SENT 2026-10-01 AND ANSWERED THE SAME DAY; JOHNSON ANSWERED 2026-10-07;
+THE OTHER THREE DRAFTED 2026-10-01.** Named rather than numbered, for the reason `il-gurnee-board-names` above gives.
 
-Gaps `johnson-county-board`, `perry-county-website-blocked`, `pope-county-board`,
+Gaps `johnson-county-board` (retired 2026-10-07, below), `perry-county-website-blocked`, `pope-county-board`,
 `scott-county-commissioners`. **Hardin's gap record is gone**: Clerk Jill Cowsert answered
 within seven minutes of the letter, naming all three commissioners, and they ship — so the
 record that said they were unnamed no longer describes the county. This is the first of these
-five to close, and it closed on a reply rather than on anything found.
+five to close, and it closed on a reply rather than on anything found. **Johnson's is gone too**:
+Clerk Robin Harper-Whitehead replied on 7 October naming Jason Taylor (Chairman), Matthew
+Hayden (Vice Chairman) and John McCuan, with the board's e-mail and her office's telephone,
+and they ship the same way. Like Hardin it is a letter-only county for good, because its Clerk
+had already told us there is no website.
 
 **THREE OF THESE FIVE LETTERS WERE WRITTEN AS FIRST APPROACHES AND THREE OF THESE COUNTIES
 HAD ALREADY WRITTEN BACK.** Corrected 2026-10-01, after the operator asked whether we were

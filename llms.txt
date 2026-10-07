@@ -20,7 +20,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 
 - [Illinois district lookup](https://districtry.com/il/): 41 layers, 93 counties.
 - [Who is my U.S. representative?](https://districtry.com/il/congress.html)
-- [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 92 of them, each naming every member with whatever contact details that county publishes.
+- [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 94 of them, each naming every member with whatever contact details that county publishes.
 - [Who runs my fire protection district?](https://districtry.com/il/fire-district.html)
 - [What judicial subcircuit am I in?](https://districtry.com/il/judicial-subcircuit.html)
 - [Who runs my library district?](https://districtry.com/il/library-district.html)
