@@ -205,6 +205,18 @@ INSTANCES = {
             layer="us-house", roster="congress-roster.json",
             state="Kentucky"),
     ),
+    # CONGRESS ONLY, the third instance of the Minnesota shape: Indiana's two
+    # chambers name nobody, so it is in NO_LEGISLATURE_PAGE and carries no
+    # `legislature` key. Its U.S. House roster is real — 9 members, refreshed
+    # weekly — so that page ships as the siblings' do.
+    "in": dict(
+        worksheet="in/metro-worksheet.json",
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Indiana"),
+    ),
 }
 
 
@@ -262,6 +274,14 @@ NO_LEGISLATURE_PAGE = {
         why="Kentucky names nobody in either chamber, so every claim this page "
             "makes about a member would be false. The page lands with the roster.",
         date="2026-09-30",
+    ),
+    "in": dict(
+        chambers=["in-senate", "in-house"],
+        rosters=["in-senate-members.json", "in-house-members.json"],
+        gap="in-general-assembly-roster",
+        why="Indiana names nobody in either chamber, so every claim this page "
+            "makes about a member would be false. The page lands with the roster.",
+        date="2026-10-07",
     ),
 }
 

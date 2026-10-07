@@ -10,6 +10,16 @@ search an address) and it reports every civic district containing that point. It
 Wisconsin/Iowa/Michigan shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
 root-scripts shape. It ships ELEVEN layers, every one of them from a national publisher.
 
+**LIVE SINCE THE GO-LIVE CHANGE OF 2026-10-07**, eight days after it arrived dark: it is in
+`metros.json`, `fleet-outlines.json`, the sitemap, the landing page and the coverage map, and
+the deploy excludes only `in/data/state`, `in/scripts` and raw geojson. Its fleet `bbox` in
+`metros.json` is CLIPPED to `minLat 37.83` rather than the state's own 37.77, and that is a
+measurement: Kentucky's `metro_center` is 37.82, -85.77, and `validate_index.py` refuses a
+sibling's hand-off box containing an instance's own centre. The clip leaves out 0.09% of the
+state (a riverfront strip in Posey, Vanderburgh and Spencer counties), and no selection is
+decided by the box any more — `fleet-outlines.json` decides — so the cost is confined to the
+search box's sibling rows when that file cannot be read.
+
 **The pre-built tier** — four TIGERweb layers shipped as same-origin files, which are what the
 smoke test anchors on: **County** (92, identity-only), **U.S. House** (9, joined to the
 public-domain unitedstates/congress-legislators roster and refreshed weekly), and **Indiana

@@ -67,6 +67,7 @@ STATE_OF_INSTANCE = {
     "mi": "Michigan",
     "mn": "Minnesota",
     "ky": "Kentucky",
+    "in": "Indiana",
 }
 
 
