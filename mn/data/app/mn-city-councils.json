@@ -1,0 +1,1875 @@
+{
+ "2701486": {
+  "name": "Andover",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Jamie Barthel",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott Schue",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jonathan Shafto",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt",
+    "unnamed": "Jamie Barthel, who won this seat on 2022-11-08, was elected mayor on 2024-11-05, and the results do not say who holds this seat now"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rick Engelhardt",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2701900": {
+  "name": "Apple Valley",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Clint Hooppaw",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Lisa Hiebert",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ruth Grendahl",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John Bergman",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tom Melander",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2702908": {
+  "name": "Austin",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Steve King",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeff Austin",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rebecca Waller",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Laura Helle",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Michael Postma",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jason Baskin",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Paul Fischer",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "citySays": {
+     "name": "Oballa Oballa",
+     "read": "2026-10-07",
+     "sourceUrl": "https://www.ci.austin.mn.us/city-council"
+    },
+    "election": "2022-11-08",
+    "name": "Joyce Poshusta",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2706382": {
+  "name": "Blaine",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Tim Sanders",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Chris Ford",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tom Newland",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Leslie Larson",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jess Robertson",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Chris Massoglia",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Terra Fleming",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2706616": {
+  "name": "Bloomington",
+  "rankedChoice": true,
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Tim Busse",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Danielle Robertson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jenna Carter",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt",
+    "unnamed": "no candidate won on first choices alone; the city's own ranked-choice count decides this seat and the state's results file carries first choices only"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Shawn Nelson",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Lona Dallessandro",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Victor Rivas",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   }
+  ]
+ },
+ "2707948": {
+  "name": "Brooklyn Center",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "April Graves",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Laurie Ann Moore",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kris Lawrence-Anderson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Teneshia Kragness",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dan Jerzak",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2707966": {
+  "name": "Brooklyn Park",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Hollies J. Winston",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Shelle Page",
+    "seat": "Ward C",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Nichole Klonowski",
+    "seat": "Ward C",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Amanda Cheng Xiong",
+    "seat": "Ward E",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Christian Eriksen",
+    "seat": "Ward E",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tony McGarvey",
+    "seat": "Ward W",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Maria Tran",
+    "seat": "Ward W",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2708794": {
+  "name": "Burnsville",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Elizabeth B. Kautz",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dan Gustafson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Cara Schulz",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dan Kealey",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Vince Workman",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2710918": {
+  "name": "Chanhassen",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Elise Ryan",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Josh Kimber",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Haley Pemrick Schubert",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mark von Oven",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jerry A. McDonald",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2710972": {
+  "name": "Chaska",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Taylor Hubbard",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jon Grau",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Joshua D. Benesh",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mckayla Hatfield",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Leah Sheveland",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   }
+  ]
+ },
+ "2713114": {
+  "name": "Coon Rapids",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jerry Koch",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Pat Carlson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brad Greskowiak",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Peter Butler",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Sean Novack",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Christopher Geisler",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brian Armstrong",
+    "seat": "Ward 5",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2713456": {
+  "name": "Cottage Grove",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Myron Bailey",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Justin Olsen",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "David Clausen",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Monique Garza",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt",
+    "special": true
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2022-11-08 election filled 2 of these seats and the results cannot say which of its winners still holds the 1 left"
+   }
+  ]
+ },
+ "2717000": {
+  "name": "Duluth",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Roger J Reinert",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Terese Tomanek",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Jordon Johnson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Arik Forsman",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Lynn Marie Nephew",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Wendy Durrwachter",
+    "seat": "District 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Diane Desotelle",
+    "seat": "District 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Roz Randorf",
+    "seat": "District 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "David A. Clanaugh",
+    "seat": "District 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Janet Kennedy",
+    "seat": "District 5",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   }
+  ]
+ },
+ "2717288": {
+  "name": "Eagan",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Mike Maguire",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Cyndee Fields",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Supina",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Paul Bakken",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Gary Hansen",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2718116": {
+  "name": "Eden Prairie",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Ron Case",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Lisa Toomey",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "PG Narayanan",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kathy Nelson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mark Freiberg",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2718188": {
+  "name": "Edina",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "James B. Hovland",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Carolyn Jackson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "James Pierce",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kate Agnew",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Julie Risser",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2718674": {
+  "name": "Elk River",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "John Dietz",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Cory Grupa",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "J. Brian Calva",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Beyer",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jennifer Wagner",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2722814": {
+  "name": "Fridley",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Dave Ostwald",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Patrick Vescio",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "citySays": {
+     "name": "Luke Cardona",
+     "read": "2026-10-07",
+     "sourceUrl": "https://www.fridleymn.gov/Your-Government/City-Council-Commissions/Meet-Your-City-Council"
+    },
+    "election": "2022-11-08",
+    "name": "Tom Tillberry",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ryan Evanson",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ann Bolkcom",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2731076": {
+  "name": "Inver Grove Heights",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Brenda Dietrich",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sue Gliva",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "John Murphy",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mary T'Kach",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tony Scales",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2735180": {
+  "name": "Lakeville",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Luke Hellier",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dan Wolter",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "John Bermel",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michelle Volk",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Joshua Lee",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2739878": {
+  "name": "Mankato",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Najwa Massad",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Laven",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michael McLaughlin",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dennis Dieken",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kevin Mettler",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jenn Melby-Kelley",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jessica Hatanpa",
+    "seat": "Ward 5",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2740166": {
+  "name": "Maple Grove",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Mark V. Steffenson",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Ostaffe",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jon McCullough",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kristy Janigo",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rachelle Johnson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2740382": {
+  "name": "Maplewood",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Marylee Abrams",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rebecca Cave",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nikki Villavicencio",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Chonburi Lee",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kathleen A. \"Kathy\" Juenemann",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2743000": {
+  "name": "Minneapolis",
+  "rankedChoice": true,
+  "seats": [
+   {
+    "election": "2025-11-04",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt",
+    "unnamed": "no candidate won on first choices alone; the city's own ranked-choice count decides this seat and the state's results file carries first choices only"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Elliott Payne",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Robin Wonsley",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Michael Rainville",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "LaTrisha M. Vetaw",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "seat": "Ward 5",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt",
+    "unnamed": "no candidate won on first choices alone; the city's own ranked-choice count decides this seat and the state's results file carries first choices only"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Jamal Osman",
+    "seat": "Ward 6",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Elizabeth Shaffer",
+    "seat": "Ward 7",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Soren Stevenson",
+    "seat": "Ward 8",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Jason Chavez",
+    "seat": "Ward 9",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Aisha Chughtai",
+    "seat": "Ward 10",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Jamison Whiting",
+    "seat": "Ward 11",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Aurin Chowdhury",
+    "seat": "Ward 12",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Linea Palmisano",
+    "seat": "Ward 13",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   }
+  ]
+ },
+ "2743252": {
+  "name": "Minnetonka",
+  "rankedChoice": true,
+  "seats": [
+   {
+    "election": "2025-11-04",
+    "name": "Rebecca Schack",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Deb Calvert",
+    "seat": "Seat A",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Kimberly Wilburn",
+    "seat": "Seat B",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt",
+    "unnamed": "no candidate won on first choices alone; the city's own ranked-choice count decides this seat and the state's results file carries first choices only"
+   },
+   {
+    "election": "2023-11-07",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt",
+    "unnamed": "Rebecca Schack, who won this seat on 2023-11-07, was elected mayor on 2025-11-04, and the results do not say who holds this seat now"
+   },
+   {
+    "election": "2023-11-07",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt",
+    "unnamed": "no candidate won on first choices alone; the city's own ranked-choice count decides this seat and the state's results file carries first choices only"
+   },
+   {
+    "election": "2023-11-07",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt",
+    "unnamed": "no candidate won on first choices alone; the city's own ranked-choice count decides this seat and the state's results file carries first choices only"
+   }
+  ]
+ },
+ "2743864": {
+  "name": "Moorhead",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Shelly Carlson",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nicole Mattson",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ryan Nelson",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Emily Moore",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Heather Nesemeier",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Lisa Borgen",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Deborah White",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sebastian McDougall",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Chuck Hendrickson",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2747680": {
+  "name": "Oakdale",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Kevin Zabel",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kari Moore",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gary Severson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Andy Morcomb",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "citySays": {
+     "name": "Katie Wrich",
+     "read": "2026-10-07",
+     "sourceUrl": "https://www.oakdalemn.gov/317/City-Council"
+    },
+    "election": "2022-11-08",
+    "name": "Susan Olson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2749300": {
+  "name": "Owatonna",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Matt Jessop",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Douglas D. Voss",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dan Boeke",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Nathan Dotson",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Don McCann",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "David C Burbank",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kevin Raney",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brent Svenby",
+    "seat": "Ward 5",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2751730": {
+  "name": "Plymouth",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jeff Wosje",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Joel Spoonheim",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Clark Gregor",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kim Nelson",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Julie Peterson",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott Aldrich",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Julie Pointner",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2752594": {
+  "name": "Prior Lake",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Kirt Briggs",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Zach Braid",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ethan Hellier",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kimberly Churchill",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Victor Lake",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2753026": {
+  "name": "Ramsey",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Ryan Heineman",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kirsten Buscher",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Chris Riley",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michael Olson",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Eric Peters",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dan Specht",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Shanna Stewart",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   }
+  ]
+ },
+ "2754214": {
+  "name": "Richfield",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Mary Supple",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Sharon Christensen",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Walter Burk",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sean Hayford Oleary",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rori Coleman-Woods",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   }
+  ]
+ },
+ "2754880": {
+  "name": "Rochester",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Kim Norton",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Randy Schubring",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Patrick Keane",
+    "seat": "District 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nick Miller",
+    "seat": "District 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Norman Wahl",
+    "seat": "District 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Andy Friederichs",
+    "seat": "District 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Shaun C Palmer",
+    "seat": "District 5",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dan Doering",
+    "seat": "District 6",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   }
+  ]
+ },
+ "2755726": {
+  "name": "Rosemount",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jeff Weisensel",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Paul Theisen",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Heidi Freske",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "a special election on 2023-11-07 filled one of these seats and the results cannot say which, nor whether a later regular election re-elected it"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "a special election on 2023-11-07 filled one of these seats and the results cannot say which, nor whether a later regular election re-elected it"
+   }
+  ]
+ },
+ "2755852": {
+  "name": "Roseville",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Dan Roe",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Julie Strahan",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Matt Bauer",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Wayne Groff",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Robin Schroeder",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2756896": {
+  "name": "St. Cloud",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Jake Anderson",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tami Calhoun",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mark Johnson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott Brodeen",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "seat": "Ward 1",
+    "unnamed": "a special election for this seat is under way (primary held 2026-08-11)"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Karen A. Larson",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt",
+    "unnamed": "Jake Anderson, who won this seat on 2022-11-08, was elected mayor on 2024-11-05, and the results do not say who holds this seat now"
+   },
+   {
+    "seat": "Ward 4",
+    "unnamed": "a special election for this seat is under way (primary held 2026-08-11)"
+   }
+  ]
+ },
+ "2757220": {
+  "name": "St. Louis Park",
+  "rankedChoice": true,
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Nadia Mohamed",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Yolanda Farris",
+    "seat": "Seat A",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Paul Baudhuin",
+    "seat": "Seat B",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt",
+    "unnamed": "no candidate won on first choices alone; the city's own ranked-choice count decides this seat and the state's results file carries first choices only"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Jim Engelking",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Sue Budd",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   },
+   {
+    "election": "2025-11-04",
+    "name": "Tim Brausen",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt"
+   }
+  ]
+ },
+ "2758000": {
+  "name": "St. Paul",
+  "rankedChoice": true,
+  "seats": [
+   {
+    "election": "2025-11-04",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/local.txt",
+    "unnamed": "no candidate won on first choices alone; the city's own ranked-choice count decides this seat and the state's results file carries first choices only"
+   },
+   {
+    "election": "2023-11-07",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt",
+    "unnamed": "no candidate won on first choices alone; the city's own ranked-choice count decides this seat and the state's results file carries first choices only"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Rebecca Noecker",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt",
+    "unnamed": "no candidate won on first choices alone; the city's own ranked-choice count decides this seat and the state's results file carries first choices only"
+   },
+   {
+    "election": "2025-08-12",
+    "name": "Molly Coleman",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20250812/local.txt",
+    "special": true
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Hwa Jeong Kim",
+    "seat": "Ward 5",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Nelsie Yang",
+    "seat": "Ward 6",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt"
+   },
+   {
+    "election": "2023-11-07",
+    "seat": "Ward 7",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/local.txt",
+    "unnamed": "no candidate won on first choices alone; the city's own ranked-choice count decides this seat and the state's results file carries first choices only"
+   }
+  ]
+ },
+ "2758738": {
+  "name": "Savage",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Christine Kelly",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Matthew Johnson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Megan G. Bergstrom",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Stacy Crakes",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bob Coughlen",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2759350": {
+  "name": "Shakopee",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Matt Lehman",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jesse Lara",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jay Whiting",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jim Dulaney",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Angelica Contreras",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2759998": {
+  "name": "Shoreview",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Sue Denkinger",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Paul Gardner",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Shelly Myrland",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John Doan",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Cory Springhorn",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2771032": {
+  "name": "Winona",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Scott Sherman",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jason David Dicus",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jerome Christenson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Steven Young",
+    "seat": "Ward 1",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeff Hyma",
+    "seat": "Ward 2",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Samantha \"Sam\" Zierden Shortridge",
+    "seat": "Ward 3",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "George Borzyskowski",
+    "seat": "Ward 4",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ },
+ "2771428": {
+  "name": "Woodbury",
+  "rankedChoice": false,
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Anne Burt",
+    "seat": "Mayor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kim Wilson",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Donna Stafford",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jennifer Santini",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Steve Morris",
+    "seat": "At Large",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/local.txt"
+   }
+  ]
+ }
+}

@@ -65,6 +65,7 @@ const GEOMETRY_URLS = [
 const ROSTER_URLS = [
   "./data/app/congress-roster.json",
   "./data/app/mn-county-commissioners.json",
+  "./data/app/mn-city-councils.json",
   "./data/app/coverage-gaps.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
