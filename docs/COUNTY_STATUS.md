@@ -61,7 +61,7 @@
 | Jefferson | 17081 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | none |
 | Jersey | 17083 | dispatch | no board layer — see gaps | `library-district` | 3 — `jersey-county-board-districts` (no-source); `jodaviess-jersey-precinct-geometry` (no-source); `statewide-library-officials` (no-source) |
 | Jo Daviess | 17085 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
-| Johnson | 17087 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 2 — `johnson-county-board` (no-source); `statewide-library-officials` (no-source) |
+| Johnson | 17087 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Kane | 17089 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 1 — `aurora-council-contact` (blocked) |
 | Kankakee | 17091 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 4 — `kankakee-city-wards` (no-source); `kankakee-municipal-officials` (no-source); `kankakee-special-districts` (data-quality); `momence-ward-geometry` (no-source) |
 | Kendall | 17093 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 5 — `aurora-council-contact` (blocked); `blocked-crawlers` (blocked); `county-source-library-officials` (no-source); `fire-park-district-officers` (no-source); `plano-ward-officials` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 106 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 105 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.

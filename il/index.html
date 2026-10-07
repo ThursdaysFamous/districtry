@@ -12491,14 +12491,23 @@ function initChiExplorer() {
         // switchboard (Calhoun prints the same number under all five members,
         // so it is the board's line, not theirs) still gets an office row —
         // one honest shared number beats five implied direct ones.
-        if (board.office && (board.office.address || board.office.phone)) {
-          wrap.appendChild(renderOfficeGroup({
+        // A board-wide e-mail (Johnson's commissioners@, Hamilton's board@) is
+        // the BOARD's address, so it rides the office block and never a member
+        // row, for the same reason a shared switchboard does.
+        if (board.office && (board.office.address || board.office.phone || board.office.email)) {
+          var boardOffice = renderOfficeGroup({
             offices: [{
               label: board.office.label ? String(board.office.label) : "Board Office",
               lines: (board.office.address ? [String(board.office.address)] : []).concat(
                 board.office.phone ? [String(board.office.phone)] : [])
             }]
-          }));
+          });
+          if (board.office.email) {
+            var boardMail = cardContactLine({ email: String(board.office.email) });
+            var boardBlock = boardOffice.querySelector(".card-office");
+            if (boardMail && boardBlock) boardBlock.appendChild(boardMail);
+          }
+          wrap.appendChild(boardOffice);
         }
       }
       return wrap;
