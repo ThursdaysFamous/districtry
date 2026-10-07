@@ -27,9 +27,13 @@ EVERY UNIT IS CHECKED AGAINST THE SHIPPED TILINGS, in both directions, because
 this file's only job is to be joinable: a unit the roster names that no boundary
 file carries would put a judge nowhere, and the per-tier counts below are what
 catch a source whose numbering has moved. Jefferson's circuit 30 and district 30
-are the one expected absence — its county page ships no judge rows, measured and
-recorded in the scraper — and they are named in the output as asked-about rather
-than left to read as an oversight, so the card can say which it is.
+were the one expected absence from 2026-10-01 to 2026-10-07 — the Court of
+Justice's county page ships no judge rows — and are now read from the three
+Jefferson court sites that page links (see the scraper). A unit whose judges
+came from such a site carries `readFrom` in the output, so its card says where
+they were read rather than repeating the statewide sentence. `ASKED_ABOUT` is
+kept, empty, for the next unit no source names: a card then says which silence
+it is rather than going quiet.
 
 A VACANCY IS THE COURT'S OWN WORD, AND IT ARRIVES ALREADY CONVERTED. A card
 whose name is one of the words a publisher writes for an empty seat is the Court
@@ -80,31 +84,43 @@ GEOMETRY = {
 # MEASURED 2026-10-01, which is where these floors come from: supreme 7 units /
 # 7 judges, appeals 7 / 14, circuit 56 / 135 (84 circuit-court judges and 51
 # family-court judges, Family Court being a division of Circuit Court elected
-# from the circuit), district 58 / 99. The floors sit about a tenth below the
-# measured figures, low enough not to fire on an ordinary vacancy and high
-# enough that a parse losing a page's worth of judges fails.
+# from the circuit), district 58 / 99. Jefferson added 23 circuit-tier judges
+# (13 circuit, 10 family) and 16 district judges on 2026-10-07, for 57 / 158
+# and 59 / 115. The floors sit about a tenth below the measured figures, low
+# enough not to fire on an ordinary vacancy and high enough that a parse losing
+# a page's worth of judges — or Louisville's whole bench — fails.
 EXPECT = {
     "supreme": {"members": 7, "exact": True},
     "appeals": {"members": 14, "exact": True},
-    "circuit": {"members": 120, "exact": False},
-    "district": {"members": 88, "exact": False},
+    "circuit": {"members": 142, "exact": False},
+    "district": {"members": 103, "exact": False},
+}
+
+# Where a unit's judges were read from somewhere other than the Court of
+# Justice's own pages, the sentence its card prints instead of the statewide
+# one. Keyed by the scrape row's `readFrom` label.
+READ_FROM_NOTE = {
+    "jefferson-circuit-court-site": (
+        "from the Jefferson Circuit Court's and Jefferson Family Court's own "
+        "websites, which the Kentucky Court of Justice's page for Jefferson "
+        "County links to. That page lists no judges of its own."),
+    "jefferson-family-court-site": None,  # folded into the circuit sentence
+    "jefferson-district-court-site": (
+        "from the Jefferson District Court's own website, which the Kentucky "
+        "Court of Justice's page for Jefferson County links to. That page lists "
+        "no judges of its own."),
 }
 
 # The units whose judges this source does not name, each with the reason. These
 # are carried INTO the output so a card can say "asked about" rather than go
 # quiet, and audited on every run: an entry that stops being absent FAILS, which
 # is how a fixed source gets noticed instead of a stale note surviving it.
-ASKED_ABOUT = {
-    ("circuit", 30): "jefferson-page-empty",
-    ("district", 30): "jefferson-page-empty",
-}
-ASKED_ABOUT_NOTE = (
-    "Not named here. The Kentucky Court of Justice lists the judges for every "
-    "other circuit and district in the state, and lists none for this one \u2014 "
-    "Jefferson County's own page on its site leaves them out. We asked the court "
-    "system about it on 1 October 2026 and are waiting for an answer. Until one "
-    "comes, this card names nobody rather than guessing."
-)
+#
+# EMPTY SINCE 2026-10-07, and that is a measurement: Jefferson's circuit 30 and
+# district 30 sat here from 2026-10-01 until its judges were found on the three
+# court sites its county page links. An entry carries its note beside it, as
+# {(tier, unit): (reason, note)}.
+ASKED_ABOUT = {}
 
 
 def fail(msg):
@@ -150,8 +166,10 @@ def sort_key(rec):
             rec.get("name") or "")
 
 
-def assemble(scrape, geometry_units):
+def assemble(scrape, geometry_units, asked_about=None):
+    asked_about = ASKED_ABOUT if asked_about is None else asked_about
     tiers = {t: {} for t in EXPECT}
+    read_from = {}
     seen = set()
     for row in scrape["rows"]:
         tier = row["tier"]
@@ -167,6 +185,13 @@ def assemble(scrape, geometry_units):
             continue
         seen.add(key)
         tiers[tier].setdefault(row["unit"], []).append(member(row))
+        label = row.get("readFrom")
+        if label in READ_FROM_NOTE:
+            entry = read_from.setdefault((tier, row["unit"]), {"note": None, "urls": []})
+            if READ_FROM_NOTE[label]:
+                entry["note"] = READ_FROM_NOTE[label]
+            if row.get("sourceUrl") and row["sourceUrl"] not in entry["urls"]:
+                entry["urls"].append(row["sourceUrl"])
 
     for tier, units in tiers.items():
         known = geometry_units[tier]
@@ -178,7 +203,7 @@ def assemble(scrape, geometry_units):
                  "shipping." % (tier, ", ".join(str(s) for s in stray)))
 
         # Every unit except the recorded absences, named when one goes missing.
-        absent = {u for (tr, u) in ASKED_ABOUT if tr == tier}
+        absent = {u for (tr, u) in asked_about if tr == tier}
         missing = sorted(known - absent - set(units))
         if missing:
             fail("%s tier names no judge for unit(s) %s. Every unit the boundary "
@@ -203,7 +228,7 @@ def assemble(scrape, geometry_units):
             units[unit].sort(key=sort_key)
 
     # The expected absences, audited in both directions.
-    for (tier, unit), reason in sorted(ASKED_ABOUT.items()):
+    for (tier, unit), (reason, _note) in sorted(asked_about.items()):
         if unit not in geometry_units[tier]:
             fail("ASKED_ABOUT names %s unit %d, which no boundary file carries — "
                  "the entry has outlived its unit" % (tier, unit))
@@ -213,15 +238,23 @@ def assemble(scrape, geometry_units):
                  "entry, re-read the note beside it, and re-run."
                  % (tier, unit, len(tiers[tier][unit])))
 
+    for key, entry in read_from.items():
+        if not entry["note"]:
+            fail("%s unit %d was read from a site with no READ_FROM_NOTE sentence "
+                 "of its own, so its card would not say where its judges came "
+                 "from" % key)
+
     payload = {
         "source": scrape["source"],
         "readOn": scrape["readOn"],
         "askedAbout": {
-            "%s-%d" % (tier, unit): {"reason": reason, "note": ASKED_ABOUT_NOTE}
-            for (tier, unit), reason in ASKED_ABOUT.items()
+            "%s-%d" % (tier, unit): {"reason": reason, "note": note}
+            for (tier, unit), (reason, note) in asked_about.items()
         },
         "tiers": {
-            tier: {str(unit): {"members": members}
+            tier: {str(unit): dict({"members": members},
+                                   **({"readFrom": read_from[(tier, unit)]}
+                                      if (tier, unit) in read_from else {}))
                    for unit, members in sorted(units.items())}
             for tier, units in tiers.items()
         },
@@ -289,7 +322,9 @@ def selftest():
                          "division": div, "profileUrl": None})
     scrape = {"source": {"publisher": "selftest"}, "readOn": "2026-10-01", "rows": rows}
 
-    payload = assemble(scrape, geometry_units)
+    asked = {("circuit", 30): ("selftest", "Not named here."),
+             ("district", 30): ("selftest", "Not named here.")}
+    payload = assemble(scrape, geometry_units, asked)
     assert len(payload["tiers"]["supreme"]) == 7
     assert sum(len(u["members"]) for u in payload["tiers"]["appeals"].values()) == 14
     assert "30" not in payload["tiers"]["circuit"]
@@ -297,7 +332,7 @@ def selftest():
 
     # The same judge printed on several county pages is one seat.
     dup = dict(scrape, rows=rows + [dict(rows[-1])])
-    assert assemble(dup, geometry_units)["tiers"] == payload["tiers"], \
+    assert assemble(dup, geometry_units, asked)["tiers"] == payload["tiers"], \
         "a judge repeated across county pages must de-duplicate to one record"
 
     # A vacancy the scraper already converted stays structural, and a record
@@ -305,7 +340,7 @@ def selftest():
     vac = [dict(r) for r in rows]
     vac[0] = {k: v for k, v in vac[0].items() if k != "name"}
     vac[0]["vacant"] = True
-    got = assemble(dict(scrape, rows=vac), geometry_units)["tiers"]["supreme"]
+    got = assemble(dict(scrape, rows=vac), geometry_units, asked)["tiers"]["supreme"]
     seat = [m for unit in got.values() for m in unit["members"] if m.get("vacant")]
     assert len(seat) == 1 and "name" not in seat[0], seat
 
@@ -313,7 +348,7 @@ def selftest():
     # floor could never do.
     short = [r for r in rows if not (r["tier"] == "circuit" and r["unit"] == 7)]
     try:
-        assemble(dict(scrape, rows=short), geometry_units)
+        assemble(dict(scrape, rows=short), geometry_units, asked)
     except SystemExit:
         pass
     else:
@@ -323,7 +358,7 @@ def selftest():
     stray = rows + [{"name": "Nowhere", "role": "Judge", "court": "Circuit Court",
                      "tier": "circuit", "unit": 99, "division": None, "profileUrl": None}]
     try:
-        assemble(dict(scrape, rows=stray), geometry_units)
+        assemble(dict(scrape, rows=stray), geometry_units, asked)
     except SystemExit:
         pass
     else:
@@ -334,11 +369,31 @@ def selftest():
                      "court": "Circuit Court", "tier": "circuit", "unit": 30,
                      "division": 1, "profileUrl": None}]
     try:
-        assemble(dict(scrape, rows=fixed), geometry_units)
+        assemble(dict(scrape, rows=fixed), geometry_units, asked)
     except SystemExit:
         pass
     else:
         raise AssertionError("a recorded absence that starts publishing must fail")
+
+    # A unit read from a linked court site says so, and keeps the site's
+    # address; with no absence recorded, every unit must have a judge.
+    sited = rows + [
+        {"name": "Circuit Site", "role": "Judge", "court": "Circuit Court",
+         "tier": "circuit", "unit": 30, "division": None,
+         "readFrom": "jefferson-circuit-court-site", "sourceUrl": "https://c.example/"},
+        {"name": "Family Site", "role": "Judge", "court": "Family Court",
+         "tier": "circuit", "unit": 30, "division": 1,
+         "readFrom": "jefferson-family-court-site", "sourceUrl": "https://f.example/"},
+        {"name": "District Site", "role": "Judge", "court": "District Court",
+         "tier": "district", "unit": 30, "division": None,
+         "readFrom": "jefferson-district-court-site", "sourceUrl": "https://d.example/"}]
+    got = assemble(dict(scrape, rows=sited), geometry_units, {})
+    c30 = got["tiers"]["circuit"]["30"]
+    assert len(c30["members"]) == 2 and c30["readFrom"]["urls"] == \
+        ["https://c.example/", "https://f.example/"], c30
+    assert "Family Court" in c30["readFrom"]["note"], c30
+    assert "readFrom" not in got["tiers"]["circuit"]["1"], "statewide units carry no readFrom"
+    assert got["askedAbout"] == {}
 
     print("build-ky-judges: selftest OK — tier counts, de-duplication, vacancy "
           "shape, unjoinable unit refused, and a fixed source failing loudly")
