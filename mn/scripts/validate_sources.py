@@ -292,6 +292,20 @@ PROVENANCE = [
             "general reaches the file 21 days after election day."
         ),
     },
+    {
+        "layer": "school-district-unified",
+        "app_file": "mn-school-boards.json",
+        "source_url": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt",
+        "note": (
+            "Every school board's most recent winners, from the Secretary of "
+            "State's school district results file for each election day (this "
+            "URL is the 2024 general's), joined to the Census districts by the "
+            "Department of Education's own district layer. Refreshed weekly by "
+            "update-mn-school-boards.yml, which asks every Tuesday's directory "
+            "since the 2022 general; a new general reaches the file 21 days "
+            "after election day."
+        ),
+    },
 ]
 
 ENDPOINTS = [

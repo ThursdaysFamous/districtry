@@ -12981,10 +12981,15 @@ function initMinnesotaExplorer() {
    * where its older pupils go. Recorded as gap mn-elementary-district-grades,
    * with mn/WATCH.md carrying the measurement.
    *
-   * NO OFFICEHOLDER ON ANY OF THE THREE. Minnesota school boards are elected
-   * and no statewide roster of their members was found, so each card names the
-   * district and links the state's own education department. Recorded as gap
-   * mn-school-board-members.
+   * THE BOARD IS NAMED FROM THE STATE'S ELECTION RESULTS. Minnesota school
+   * boards are elected and no statewide list of who sits on them exists, so
+   * the unified and elementary cards name the winners of each board's most
+   * recent elections in the Secretary of State's results, every name dated
+   * (mn/scripts/build_mn_school_boards.py; data/app/mn-school-boards.json,
+   * keyed by this layer's GEOID through the Department of Education's own
+   * district numbers). A winner is not a claim about who sits today, so the
+   * card says that in words. The secondary card names nobody: Pine Point's
+   * voters elect Pine Point's board, not Park Rapids's.
    * ---------- */
   var loadSchoolDistrictsUnified = tigerStatewideLoader(
     TIGERWEB_SERVICES + "School/MapServer", 0,
@@ -12998,33 +13003,94 @@ function initMinnesotaExplorer() {
 
   var MN_SCHOOL_DIRECTORY = "https://public.education.mn.gov/MDEAnalytics/DataAnalytics.jsp";
 
+  // The elected board of each district, keyed by the Census district id; every
+  // seat names the election that filled it (mn/scripts/build_mn_school_boards.py).
+  var loadMnSchoolBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-school-boards.json", {}, 2);
+  });
+
   function mnSchoolCard(result, tierNote) {
     var wrap = cardEl("div", "card-flush");
     wrap.appendChild(renderBodyIntro({
       title: result.name != null ? String(result.name) : "Unknown school district",
-      note: result.geoid != null ? "GEOID " + String(result.geoid) : null
+      note: result.board && result.board.district ? String(result.board.district)
+        : (result.geoid != null ? "GEOID " + String(result.geoid) : null)
     }));
+    var board = result.board;
     var rows = [];
+    if (board) {
+      // Card convention: identity -> officeholders. Each seat is the winner
+      // of its most recent election, dated; seats the results cannot settle
+      // are counted and say why, once per reason.
+      var people = [], unnamed = [], counts = {};
+      (board.seats || []).forEach(function (seat) {
+        var label = seat.seat === "At Large" ? "Board, at large" : "Board, " + String(seat.seat);
+        if (seat.name) {
+          var when = mnElectionDate(seat.election);
+          people.push({
+            name: String(seat.name),
+            badge: label,
+            note: when ? (seat.special ? "won a special election, " : "elected ") + when : null
+          });
+        } else {
+          var why = String(seat.unnamed || "");
+          if (!counts[why]) { counts[why] = 0; unnamed.push(why); }
+          counts[why] += 1;
+        }
+      });
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      unnamed.forEach(function (why) {
+        var n = counts[why];
+        rows.push({
+          label: (n === 1 ? "1 seat" : n + " seats") + " not named here",
+          value: why + "."
+        });
+      });
+      if (board.partial) {
+        rows.push({ label: "Seats not shown", value: "This board has more seats: " + String(board.partial) + "." });
+      }
+      rows.push({
+        label: "What these names are",
+        value: "The winner of the most recent election for each seat in the " +
+          "Minnesota Secretary of State's results. It is not a list the " +
+          "district keeps up to date: a member who resigned, and whoever the " +
+          "board appointed in their place, are not in those results. The " +
+          "district's own website says who sits on the board today."
+      });
+    } else if (result.noBoard) {
+      rows.push({
+        label: "Your school board",
+        value: "Not named on this card. The voters here are in the Pine " +
+          "Point district, which elects its own board; this district serves " +
+          "their high-school grades, and its board is elected by its own " +
+          "residents. The School District (Elementary) card is the one for " +
+          "Pine Point."
+      });
+    } else {
+      rows.push({
+        label: "Your school board",
+        value: result.rosterFailed
+          ? "The list of election winners did not load, so no name is shown. " +
+            "The district's own website names its board."
+          : "Not named here. No board election for this district appears in " +
+            "the Secretary of State's results since November 2022. The " +
+            "district's own website is the current source."
+      });
+    }
     // the grade span is TIGER's own LOGRADE–HIGRADE, printed as published and
     // never interpreted: see the block comment on the eight elementary
     // districts that record PK–12
     if (result.grades) rows.push({ label: "Grades, as the Census records them", value: result.grades });
     rows.push({ label: "Census tiling", value: tierNote });
-    rows.push({
-      label: "Your school board",
-      value: "Not named here. Minnesota school boards are elected, and no " +
-        "statewide roster of their members was found — so this app names " +
-        "nobody rather than guessing. The district's own website is the " +
-        "current source."
-    });
     wrap.appendChild(renderFieldStack(rows));
-    wrap.appendChild(renderLinkRow({
-      links: [{ label: "Minnesota Department of Education", url: MN_SCHOOL_DIRECTORY }]
-    }));
+    var links = [];
+    if (board && board.website) links.push({ label: "District website", url: String(board.website) });
+    links.push({ label: "Minnesota Department of Education", url: MN_SCHOOL_DIRECTORY });
+    wrap.appendChild(renderLinkRow({ links: links }));
     return wrap;
   }
 
-  function mnSchoolQuery(load) {
+  function mnSchoolQuery(load, noBoard) {
     return function (point, seq) {
       // point-first (queryFeatureAt): one district polygon instead of the
       // statewide download gating the first click
@@ -13033,14 +13099,27 @@ function initMinnesotaExplorer() {
         var props = feature.properties || {};
         var lo = findPropCI(props, ["lograde"]);
         var hi = findPropCI(props, ["higrade"]);
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"]),
           // the grade span TIGER itself carries, so the card can never
           // disagree with the tier printed under it
-          grades: (lo != null && hi != null) ? String(lo) + "–" + String(hi) : null
+          grades: (lo != null && hi != null) ? String(lo) + "–" + String(hi) : null,
+          board: null,
+          noBoard: !!noBoard
         };
+        if (noBoard) return result;
+        // A roster that fails to load leaves the district card standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadMnSchoolBoards().then(function (roster) {
+          result.board = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     };
   }
@@ -13085,10 +13164,11 @@ function initMinnesotaExplorer() {
     query: mnSchoolQuery(loadSchoolDistrictsElementary),
     render: function (result) {
       return mnSchoolCard(result,
-        "Elementary district — it runs no high school of its own. Minnesota " +
-        "has eight, and TIGER publishes a secondary district over only one of " +
-        "them, so for the other seven this app cannot say which high school " +
-        "district serves the point (gap mn-secondary-school-coverage).");
+        "Elementary district in the Census's tiling. Minnesota has eight, " +
+        "and the Census records seven of them as serving every grade and " +
+        "publishes a secondary district over only one, so this app does not " +
+        "say which grades this district runs or which district serves its " +
+        "older pupils (gap mn-elementary-district-grades).");
     }
   });
 
@@ -13109,7 +13189,7 @@ function initMinnesotaExplorer() {
       var name = findPropCI(feature.properties || {}, ["name"]);
       return name != null ? String(name) : null;
     },
-    query: mnSchoolQuery(loadSchoolDistrictsSecondary),
+    query: mnSchoolQuery(loadSchoolDistrictsSecondary, true),
     render: function (result) {
       return mnSchoolCard(result,
         "Secondary district — it runs the high-school grades over an " +
