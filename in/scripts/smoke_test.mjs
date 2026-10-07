@@ -411,10 +411,11 @@ try {
   //     sampling the whole gate on a 0.05-degree grid, so Ohio is uncovered
   //     ground this instance can reach rather than a lucky coordinate.
   //
-  //     Indiana is DARK, so it is not in fleet-outlines.json and its own half
-  //     of the decision comes from the coverage rings the wash retained. The
-  //     sibling apps are stubbed so a wrong route cannot leave for the real
-  //     site.
+  //     This app's own half of the decision comes from the coverage rings the
+  //     wash retained, before fleet-outlines.json is read at all; Indiana has
+  //     been in that file since its 2026-10-07 go-live, so a border point both
+  //     outlines draw stays here. The sibling apps are stubbed so a wrong route
+  //     cannot leave for the real site.
   {
     const cases = [
       { name: "Danville, Illinois", lat: 40.1245, lng: -87.6300, want: "https://districtry.com/il/" },

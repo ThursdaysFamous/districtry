@@ -44,7 +44,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "41.88250,-87.62850"; // downtown Loop — inside Cook County
 const OFFLINE = ["school-board", "il-supreme-court", "ccbr"];
 const EXPECT_DISTRICT = { "school-board": "District 6b", "il-supreme-court": "1", "ccbr": "3" };
-const NEGATIVE_POINT = "41.70000,-87.10000"; // Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Three of those are live instances, Indiana is published dark, and Kentucky and Missouri are both on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays and the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; check 1i is where Illinois asserts fleet routing, on its own points.
+const NEGATIVE_POINT = "41.70000,-87.10000"; // Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Five of those are live instances (Indiana went live on 2026-10-07, and its outline contains this point) and Missouri is on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays and the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; check 1i is where Illinois asserts fleet routing, on its own points.
 const APP_NAME = "districtry Illinois";
 const EXPECT_LAYERS = 41; // 17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) = 40 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07
 // ==== GENERATED:END smoke-config ====
@@ -815,16 +815,26 @@ try {
   //     outlines (ENGINE metro-portal + fleet-outlines.json), never by
   //     rectangles: Illinois's box reaches into Iowa, sibling boxes overlap
   //     over the Upper Peninsula, and the boxes claim states nobody serves.
-  //     One place for each of those, plus Gary, Indiana, which no instance
+  //     One place for each of those, plus St. Louis, which no instance
   //     answers for and which must be selected HERE (the app says so) rather
   //     than sent to an app with nothing to show. The sibling apps are stubbed:
   //     a wrong route would otherwise leave for the real site.
+  //
+  //     GARY MOVED FROM THE UNCOVERED CASE TO A ROUTING CASE ON 2026-10-07, when
+  //     Indiana went live: the same click now belongs to /in/. The uncovered
+  //     case moved to St. Louis, measured that day: inside no outline in
+  //     fleet-outlines.json (Illinois's is the nearest, about 1.6 km east across
+  //     the Mississippi) and inside this instance's permalink_gate, so it is
+  //     still selectable. The app routes by outline containment alone, so that
+  //     1.6 km is not inside any tolerance the APP applies; the landing page's
+  //     own ~1.5 km allowance is why its test uses a point farther west.
   {
     const cases = [
       { name: "Davenport, Iowa", lat: 41.52, lng: -90.58, want: "https://districtry.com/ia/" },
       { name: "Marquette, Michigan", lat: 46.54, lng: -87.40, want: "https://districtry.com/mi/" },
       { name: "Kenosha, Wisconsin", lat: 42.58, lng: -87.82, want: "https://districtry.com/wi/" },
-      { name: "Gary, Indiana", lat: 41.60, lng: -87.34, want: null },
+      { name: "Gary, Indiana", lat: 41.60, lng: -87.34, want: "https://districtry.com/in/" },
+      { name: "St. Louis, Missouri", lat: 38.627, lng: -90.199, want: null },
       { name: "the Loop", lat: 41.8825, lng: -87.6285, want: null },
     ];
     for (const c of cases) {
