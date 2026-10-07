@@ -5916,8 +5916,9 @@ has measured and one it has merely noticed.
 > Jefferson. **WITHDRAWN UNSENT 2026-10-06.** Re-read under the standing rule to read a page
 > and what it links before asking: the same Jefferson page links "Websites for Jefferson
 > Judges" — the Jefferson Circuit, Family and District Courts' own sites — and each names its
-> bench. The cards read them from 2026-10-07. The mailbox draft is the operator's to delete;
-> the thank-you for the original answer is unaffected.
+> bench. The cards read them from 2026-10-07. The Letters thread found no mailbox draft for it
+> on 2026-10-07, so there is nothing to delete; the thank-you for the original answer is
+> unaffected.
 >
 > The thirty-day silence clock is retired with the answer. Nothing was re-asked and no
 > second copy of the original was sent.
