@@ -163,13 +163,6 @@
    "name": "Montgomery County",
    "slug": "montgomery"
   },
-  "osceola": {
-   "fips": "143",
-   "lat": 43.3784695,
-   "lng": -95.6338858,
-   "name": "Osceola County",
-   "slug": "osceola"
-  },
   "palo-alto": {
    "fips": "147",
    "lat": 43.0753374,
