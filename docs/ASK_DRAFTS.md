@@ -6599,3 +6599,62 @@ in the page the way Scott's carried one.
 - **WinGIS outage report** — withdraw. The Winnebago map server answers normally today
   (`maps.wingis.org`, the elected-officials layer returns its metadata). There is no outage to
   report.
+
+## Ask il-cpd-district-commanders — City of Chicago, for the police department: a way to read the district commander list that our reader is allowed to use
+
+> **NOT YET SENT — DRAFTED 2026-10-07 AS A FOLLOW-UP, NOT A NEW ASK.** Adam asked the City for
+> this on 9 July, writing to Beth Rochford, Anna Mangahas and Nicole Garcia; Beth offered to pass
+> it to the City's tech team and nothing has come back since. So the Letters thread drafted this as
+> a reply in that 9 July thread to the same three City recipients, not to CPD's press office. Its
+> wording differs from the text below in four ways: it names the site's new name, says our reader
+> is now blocked, keeps the same three options, and asks them to point Adam to the right person at
+> CPD if this belongs elsewhere. The Gmail draft is the text that goes; the text below is the
+> original drafted here. On send, record `ASKED <date>` (follow-up to 9 July).
+
+**Why this is asked.** The police-district card names each district's commander, the station
+address and the district's community-policing (CAPS) e-mail, read weekly from the 22 district
+pages on the department's site. The weekly refresh of 6 October was turned away by the site's
+Cloudflare check: our reader identifies itself by name, and a managed challenge is an access
+control this project does not get around (the standing rule since 29 September). The refresh used
+to present a browser identity and stopped on 1 October (#1340), on a measurement of the site's
+FRONT page, which does serve our name; the district pages and the sitemap do not. That is the
+wrong-address reading `user-agent-measurements.json` still records for this host. Nothing else publishes
+the list in a form we can read: the city data portal has no commander dataset, and the
+department's own station map layer carries only each station's name, address, district and
+phone. So the cards keep last week's names, which stay correct until a commander changes, and
+this letter asks for a route that does not need the check to be defeated. Three answers all work:
+a page or file outside the check, permission for the weekly reader by name, or a clean no.
+
+> Subject: Reading the district commander list on chicagopolice.org
+>
+> Dear Office of Communications,  *(the sent version greets the three City recipients)*
+>
+> I run districtry (https://districtry.com/il/), a free public map where a Chicago resident can
+> click their address and see who represents them, including their police district, its
+> commander, the station address and the district's CAPS e-mail. Each card links back to the
+> district's own page on your site.
+>
+> Once a week a small program reads your 22 district pages so the commander names stay current.
+> It identifies itself by name and reads nothing else. Your site's security check now turns it
+> away, and I will not try to get around that check. Until it can read the pages again, the map
+> keeps showing the names from its last successful read.
+>
+> Is there a way for us to read the commander list that you are comfortable with? Any of these
+> would work:
+>
+> 1. a page or file with the district commanders that is not behind the security check;
+> 2. permission for our weekly program to read the 22 district pages (it can send whatever
+>    identifying name or header suits you); or
+> 3. a no, which is a perfectly good answer. We would then keep the list current by hand from
+>    your announcements.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+**What each answer means.** A page outside the check: the scraper reads it instead, after its
+robots.txt. Permission: recorded in `scripts/cpd_district_scraper.py` with its date and whatever
+identifier the department names, and the Playwright rung stays retired either way. A no: the
+roster becomes a hand-checked file like the early-voting list, and the gap is recorded.
