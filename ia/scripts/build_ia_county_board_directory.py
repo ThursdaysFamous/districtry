@@ -17,8 +17,8 @@ link — one verified URL per county, with the county's board size beside it.
 `seats` is read back from the SHIPPED geometry (ia-supervisor-districts.json)
 rather than restated here, so the two files can never disagree — the same
 invariant Wisconsin's build_wi_county_board_directory.py enforces. Jones
-County carries no row here because it carries no row in the geometry (a
-recorded gap, not an omission of this file's own).
+County carried no row here until 2026-10-07, because it carried no row in the
+geometry; it has both now, drawn from the county's own district file.
 
 WHERE THE URLS CAME FROM
 --------------------------

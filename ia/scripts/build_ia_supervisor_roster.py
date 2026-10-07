@@ -224,6 +224,31 @@ NUMBERING_CHECKED = {
                    "and this layer, the rest being slivers along shared edges, "
                    "and no number is swapped",
     },
+    # JONES AND TAMA ARE IDENTITY BY CONSTRUCTION, and the witness says why
+    # rather than claiming a measurement that was not made: this layer's
+    # districts for both counties ARE the county's own drawing, numbered by the
+    # county (build_county_supplied_supervisor_districts.py), so the number on
+    # the drawing and the number on the county's board page are one county's
+    # two statements about one plan.
+    "Jones": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "this layer's Jones districts are the county's own "
+                   "supervisor-district file (county GIS, BOS_2022, sent by "
+                   "the county on 2026-10-06), each polygon carrying the "
+                   "county's own DIST_ID, and the county's board page numbers "
+                   "its supervisors in that same plan",
+    },
+    "Tama": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "this layer's Tama districts are drawn from the county's "
+                   "own 2025 supervisor-district map (sent by the auditor on "
+                   "2026-10-06), each district taking the number the map's "
+                   "own legend gives its colour, and four of the five match "
+                   "the Legislative Services Agency's published population "
+                   "for the same-numbered district exactly",
+    },
 }
 
 # WHAT A COUNTY TOLD US IN WRITING.

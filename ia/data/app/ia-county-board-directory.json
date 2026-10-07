@@ -311,6 +311,12 @@
   "seats": 5,
   "url": "https://www.johnsoncountyiowa.gov/"
  },
+ "105": {
+  "county": "Jones",
+  "plan": "PLAN 3",
+  "seats": 5,
+  "url": "https://www.jonescountyiowa.gov/"
+ },
  "107": {
   "county": "Keokuk",
   "plan": "PLAN 1",
@@ -506,7 +512,7 @@
  "171": {
   "county": "Tama",
   "plan": "PLAN 3",
-  "seats": 3,
+  "seats": 5,
   "url": "https://www.tamacounty.iowa.gov/"
  },
  "173": {
