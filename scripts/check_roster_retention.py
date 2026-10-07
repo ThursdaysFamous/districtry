@@ -176,10 +176,6 @@ ACCEPTED_DROPS = {
         "Cerro Gordo withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
         "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:037":
-        "Chickasaw withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (5 district(s) at the base); its "
-        "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:069":
         "Franklin withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
