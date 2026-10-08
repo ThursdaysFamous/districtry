@@ -160,10 +160,6 @@ ACCEPTED_DROPS = {
     # is what makes that happen: an entry whose county is back in the file FAILS
     # as stale, so clearing a county's numbering deletes its entry in the same
     # change. This list shrinking is the work finishing.
-    "ia/data/app/ia-supervisor-members.json:003":
-        "Adams withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (5 district(s) at the base); its "
-        "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:017":
         "Bremer withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
