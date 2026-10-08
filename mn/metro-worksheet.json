@@ -207,10 +207,32 @@
       }
     },
     {
+      "id": "school-board-district",
+      "label": "School Board District",
+      "group": "schools",
+      "area_rank": 8,
+      "rank_note": "59 board election districts on 13 school boards, a mean 527 km2 (median 217, from 2 in Winona to 3,927 in St. Louis County) — smaller on average than a unified school district, which they divide, and larger than a commissioner district",
+      "source": {
+        "answers": "The election district of a school board that elects its members by district (Minn. Stat. 205A.12), and the member or members it elects. Where a precinct votes in two districts, both are named; where the results do not place a piece of a board's school district, the card says so.",
+        "boundary": [
+          {
+            "label": "Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt) for the 2022 to 2025 generals: each district is the precincts that voted in its seat's most recent contest, read in that election's own precincts (the Secretary of State's per-general precinct layers for 2022 and 2024, today's precincts for odd years), cut to the Census school district boundary. Built by mn/scripts/build_mn_school_board_districts.py; Minneapolis's six agree with the City of Minneapolis's own park commissioner districts at all 1,800 sampled points, measured 2026-10-08",
+            "url": "https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt"
+          },
+          {
+            "label": "Office of the Minnesota Secretary of State, General Election Results By Precinct layers (the precincts each general was held in)",
+            "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_electionresults_2022_2030/FeatureServer"
+          }
+        ],
+        "people": "The winners of each district's most recent election, from the same school board roster the School District card reads (mn/data/app/mn-school-boards.json), every name dated. A winner is not a claim about who sits today, and the card says so.",
+        "applies": "The 13 Minnesota school districts whose boards elect by district and whose results place those districts on precincts: Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Anoka-Hennepin elects by district and is not drawn (gap mn-school-board-election-districts)."
+      }
+    },
+    {
       "id": "county-commissioner",
       "label": "County Commissioner District",
       "group": "political",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "447 districts tiling all 87 counties, 488 km2 mean feature area (median 299, from 1.8 in Ramsey to 11,154 in St. Louis) — smaller than a unified school district and larger than a ZIP code",
       "source": {
         "answers": "The county commissioner district containing the point: the seat a reader votes on for their county board, which county it belongs to, and how many commissioners that board seats.",
@@ -240,7 +262,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "1,385 ZIP Code Tabulation Areas intersecting Minnesota's envelope, live from TIGERweb (no data/app file) — 250 km2 mean feature area, between a school district and a township",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the delivery routes sharing a ZIP code, not a postal boundary.",
@@ -258,7 +280,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "8 districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points",
       "source": {
         "answers": "The elementary-tiling school district covering the point, in the eight places Minnesota has one.",
@@ -276,7 +298,7 @@
       "id": "county-subdivision",
       "label": "Township or City",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "2,762 records tiling the state, live from TIGERweb (no data/app file) — 1,797 townships, 901 city placeholder records for 851 distinct cities (50 of which cross a county line), 59 unorganized territories, 2 unorganized survey townships, and 3 'not defined' records that are Lake Superior water",
       "source": {
         "answers": "The organized town covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is.",
@@ -294,7 +316,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "4,105 precincts tiling the state at a 55 km2 mean feature area, pre-built from the Secretary of State's own statewide service — the finest tiling on this map, and the only layer here published by the office that maintains it rather than by the Census",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -312,7 +334,7 @@
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "856 incorporated places, live from TIGERweb (no data/app file) — every one a city, with no village among them, at a 14.7 km2 mean feature area",
       "source": {
         "answers": "The city covering the point, if any. Most of Minnesota's land is township or unorganized territory, where the card is correctly empty.",
@@ -330,7 +352,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "1 district, live from TIGERweb (no data/app file) — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota",
       "source": {
         "answers": "The secondary school district covering the point, in the one place Minnesota has one.",
@@ -348,7 +370,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -366,7 +388,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "1,484 fire and EMS station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest fire and EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -384,7 +406,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 17,
+      "area_rank": 18,
       "rank_note": "1,199 post-office points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -437,6 +459,10 @@
     {
       "layer": "watershed-district",
       "expected": "Mississippi Watershed Management Organization"
+    },
+    {
+      "layer": "school-board-district",
+      "expected": "District 4"
     }
   ],
   "negative_point": {
@@ -502,6 +528,12 @@
         "min_features": 4105,
         "max_features": 4105,
         "note": "Every Minnesota voting precinct, pre-built by mn/scripts/build_mn_precincts.py from the Secretary of State's own statewide service (paged at the service's 2,000-record cap; Douglas-Peucker at a 4 m interval; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 4,105 count floor on both the fetch and the simplified output). This instance's largest file at 1.67 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "mn-school-board-districts.json",
+        "min_features": 60,
+        "max_features": 90,
+        "note": "Board election districts of the 13 Minnesota school boards that elect by district and whose results place them, drawn by mn/scripts/build_mn_school_board_districts.py from the Secretary of State's precinct-level results, read in each election's own precincts and cut to the Census school district. 59 districts, 4 split precincts shipped as their own features naming every district they vote in, and 5 pieces the results do not place (Duluth's combined polling places among them). Gated on the districts' precincts being disjoint, on no two features overlapping, on every seat being one the roster names, and on Minneapolis's six agreeing with the city's own park commissioner districts. Simplified at a 15 m Douglas-Peucker interval over one shared topology."
       }
     ],
     "rosters": [
@@ -533,7 +565,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mn-shell-v6",
+    "cache_name": "districtry-mn-shell-v7",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
