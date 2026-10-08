@@ -279,6 +279,19 @@ PROVENANCE = [
             "21 days after election day."
         ),
     },
+    {
+        "layer": "municipality",
+        "app_file": "mn-city-councils.json",
+        "source_url": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt",
+        "note": (
+            "The mayor and council seats of the 43 cities above 25,000 people, "
+            "each naming its most recent winner from the Secretary of State's "
+            "city results file for each election day (this URL is the 2024 "
+            "general's). Refreshed weekly by update-mn-city-councils.yml, which "
+            "asks every Tuesday's directory since the 2022 general; a new "
+            "general reaches the file 21 days after election day."
+        ),
+    },
 ]
 
 ENDPOINTS = [

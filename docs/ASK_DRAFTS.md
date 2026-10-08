@@ -630,6 +630,13 @@ in this project is about the crawler, not about a person, and a reply that impli
 otherwise would be overstating a policy in order to sound careful. What the reply
 claims instead is a standard this project actually holds itself to.
 
+**THAT REPLY WAS WITHDRAWN UNSENT ON 2026-10-06, BECAUSE THE PAGE HE COULD NOT FIND WAS
+LINKED FROM THE ONE HE WAS LOOKING AT.** Jefferson's county page names no judges and links
+"Websites for Jefferson Judges" — the Jefferson Circuit, Family and District Courts' own
+sites — and each names its bench in plain HTML with robots.txt permitting every agent. The
+cards read them weekly from 2026-10-07, so neither the static list nor the follow-up is
+needed, and the reply's argument about snapshots never had to be made.
+
 ### THE AFTERNOON'S SENDS, AND WHAT A FIRST LETTER DOES NOT EARN
 
 Between 18:02 and 18:15 UTC on 2026-10-01 the operator sent fifteen letters: five replies this
@@ -5906,8 +5913,12 @@ has measured and one it has merely noticed.
 > shows no judges where every other county's page lists them — is there another page that
 > names Jefferson's circuit and district judges with their circuit or district number?"* The
 > appellate half needs nothing: both appellate pages are statewide and already cover
-> Jefferson. NOT YET SENT — DRAFTED 2026-10-01; the mailbox thread owns the send and the
-> thank-you.
+> Jefferson. **WITHDRAWN UNSENT 2026-10-06.** Re-read under the standing rule to read a page
+> and what it links before asking: the same Jefferson page links "Websites for Jefferson
+> Judges" — the Jefferson Circuit, Family and District Courts' own sites — and each names its
+> bench. The cards read them from 2026-10-07. The Letters thread found no mailbox draft for it
+> on 2026-10-07, so there is nothing to delete; the thank-you for the original answer is
+> unaffected.
 >
 > The thirty-day silence clock is retired with the answer. Nothing was re-asked and no
 > second copy of the original was sent.

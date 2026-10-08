@@ -187,9 +187,10 @@ PROVENANCE = [
             "are assembled from the 120 county pages, of which this url is the "
             "first, because neither trial tier has a statewide page. Refreshed "
             "weekly by update-ky-judges-roster.yml as a reviewed pull request. "
-            "ONE UNIT NAMES NOBODY and is recorded as gap ky-judges: Jefferson's "
-            "page leaves its judges out, and it is the sole county of circuit 30 "
-            "and district 30. The directory search the same reply named, "
+            "Jefferson's county page leaves its judges out, and it is the sole "
+            "county of circuit 30 and district 30, so those two units are read "
+            "from the Jefferson Circuit, Family and District Courts' own sites, "
+            "which that page links (2026-10-07). The directory search the same reply named, "
             "kcoj.kycourts.net, is NOT read — its robots.txt refuses every "
             "client, and that refusal is obeyed rather than worked around."
         ),

@@ -514,53 +514,44 @@ try {
   }
 
 
-  // 2d. The four court cards name the judges elected from the unit they draw,
-  //     and say so differently where the Court of Justice names nobody. BOTH
-  //     BRANCHES ARE AT THIS ONE POINT, which is why no second point is needed:
-  //     the anchor sits in Jefferson, whose Supreme Court district and Court of
-  //     Appeals district the court names (both appellate pages being statewide)
-  //     and whose 30th circuit and 30th district it does not, because the
-  //     county's own page leaves its judges out. A card naming a judge and a
-  //     card saying why it cannot are the two states this roster can be in, and
-  //     a check asserting only the first would pass a roster that had quietly
-  //     gone empty for the other.
+  // 2d. The four court cards name the judges elected from the unit they draw.
+  //     The anchor sits in Jefferson, where the two appellate tiers come from
+  //     the Court of Justice's statewide pages and the two trial tiers from the
+  //     three Jefferson court sites its county page links (since 2026-10-07;
+  //     until then those two cards said the court named nobody). So this one
+  //     point asserts both routes, and the trial cards must also say where
+  //     their judges were read, in the roster's own words.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const courts = ["ky-supreme-court", "ky-court-of-appeals",
                     "ky-circuit-court", "ky-district-court"];
     const page = await booted(context, `${BASE}#point=${POINT}&layers=${courts.join(",")}`);
 
-    // The two appellate tiers name people here. The names are read from the
-    // shipped roster rather than written in, so a refresh that seats a new
-    // judge does not fail this check — what is asserted is that the card names
-    // whoever the roster says, and that it is not the "names nobody" wording.
+    // Names are read from the shipped roster rather than written in, so a
+    // refresh that seats a new judge does not fail this check — what is
+    // asserted is that the card names whoever the roster says, and that it is
+    // not the "names nobody" wording.
     const roster = await page.evaluate(() =>
       fetch("data/app/ky-judge-roster.json").then((r) => r.json()));
     for (const [id, tier, unit] of [["ky-supreme-court", "supreme", "4"],
-                                    ["ky-court-of-appeals", "appeals", "4"]]) {
+                                    ["ky-court-of-appeals", "appeals", "4"],
+                                    ["ky-circuit-court", "circuit", "30"],
+                                    ["ky-district-court", "district", "30"]]) {
       const seat = ((roster.tiers || {})[tier] || {})[unit] || { members: [] };
       const named = seat.members.filter((m) => m.name).map((m) => m.name);
       const info = await cardText(page, id);
-      check(`${id} names the judge(s) elected from district ${unit}`,
+      check(`${id} names the judge(s) elected from unit ${unit}`,
         !info.error && named.length > 0 && named.every((n) => info.text.includes(n)),
-        `roster names ${named.length}: ${named.join(", ")} | card: ${info.text.slice(0, 90)}`);
+        `roster names ${named.length}: ${named.slice(0, 4).join(", ")} | card: ${info.text.slice(0, 90)}`);
       check(`${id} does not say it names nobody`,
         !/names nobody/i.test(info.text), info.text.slice(0, 90));
-    }
-
-    // And the two trial tiers say why they name nobody, in the words the
-    // roster's own askedAbout note carries — so the card cannot drift from the
-    // record, and a silent empty card fails.
-    for (const [id, key] of [["ky-circuit-court", "circuit-30"],
-                             ["ky-district-court", "district-30"]]) {
-      const asked = (roster.askedAbout || {})[key];
-      const info = await cardText(page, id);
-      const sentence = asked ? asked.note.split("\u2014")[0].trim() : null;
-      check(`${id} explains the one unit the court names nobody for`,
-        !info.error && !!sentence && info.text.includes(sentence),
-        `${sentence ? sentence.slice(0, 60) : "no askedAbout note"} | card: ${info.text.slice(0, 90)}`);
-      check(`${id} invents no judge for it`,
-        !/\bJudge\s+[A-Z][a-z]+\s+[A-Z]/.test(info.text), info.text.slice(0, 90));
+      if (tier === "circuit" || tier === "district") {
+        const note = (seat.readFrom || {}).note;
+        const lead = note ? note.split(",")[0] : null;
+        check(`${id} says where Louisville's judges were read`,
+          !!lead && info.text.includes(lead),
+          `${lead || "no readFrom note in the roster"} | card: ${info.text.slice(-120)}`);
+      }
     }
     await context.close();
   }
