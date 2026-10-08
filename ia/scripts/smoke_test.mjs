@@ -721,12 +721,26 @@ try {
       [43.3418726, -96.0032567, "Lyon County",
        "District 3 Cory Altena", "District 1 Cory Altena",
        "Lyon, whose District 3 is this layer's 1"],
-      // THE WITHHELD BRANCH. Washington County's numbering has not been
-      // measured, so its district card names nobody at all -- not its chair,
-      // not anyone. Its supervisors are still on the County card.
-      [41.3294124, -91.7250385, "Washington County", "District",
-       "Jack Seward Jr.",
-       "Washington, unchecked, names nobody on a district card"]
+      // Three counties whose own numbering was measured on 2026-10-06 and
+      // AGREES with this layer's, so there is no wrong-number string to
+      // refuse. Each point is a census interior point (Ida's Galva and
+      // Washington's English River townships, each wholly inside one
+      // district) or, for Polk, a point inside the county's own published
+      // district polygon.
+      [42.5216338, -95.4369572, "Ida County", "District 1 Creston Schubert",
+       null, "Ida, whose numbering agrees with this layer's"],
+      [41.466843, -91.7090319, "Washington County", "District 2 Bob Yoder",
+       null, "Washington, whose numbering agrees with this layer's"],
+      [41.629118, -93.639423, "Polk County", "District 5 Angela Connolly",
+       null, "Polk, whose numbering agrees with this layer's"],
+      // THE WITHHELD BRANCH. Adams County's numbering has not been measured,
+      // so its district card names nobody at all -- not the supervisor its
+      // own page puts in the district of this number, not anyone. Its
+      // supervisors are still on the County card. (Washington was this case
+      // until its numbering was checked on 2026-10-06.)
+      [41.0216555, -94.6969059, "Adams County", "District",
+       "Tony Hardisty",
+       "Adams, unchecked, names nobody on a district card"]
     ]) {
       const page = await booted(context,
         `${BASE}#point=${lat},${lng}&layers=county-supervisor`);

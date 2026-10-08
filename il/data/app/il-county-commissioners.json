@@ -259,6 +259,31 @@
   "structure": "Commission form — 3 commissioners elected countywide",
   "verified": "2026-10-01"
  },
+ "JOHNSON": {
+  "county": "Johnson County",
+  "members": [
+   {
+    "name": "Jason Taylor",
+    "role": "Chairman"
+   },
+   {
+    "name": "Matthew Hayden",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "John McCuan",
+    "role": "Commissioner"
+   }
+  ],
+  "office": {
+   "email": "commissioners@johnsonco.illinois.gov",
+   "label": "Board of Commissioners, through the County Clerk's office",
+   "phone": "618-658-3611"
+  },
+  "sourceDocument": "e-mail from County Clerk Robin Harper-Whitehead, 2026-10-07",
+  "structure": "Commission form — 3 commissioners elected countywide",
+  "verified": "2026-10-07"
+ },
  "MASSAC": {
   "county": "Massac County",
   "members": [

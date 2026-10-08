@@ -29,6 +29,10 @@ Two more measured facts the aggregate does NOT explain on its own:
     publishes no GIS service — this build does not draw it and ships no
     ia-supervisor-districts feature for Jones. That is a recorded gap
     (docs/DATA_LAYER_GUIDEBOOK.md), not a silent county-count fudge.
+    CLOSED 2026-10-07: the county sent its own district file, and Jones now
+    ships from it through COUNTY_SUPPLIED below, as does Tama, whose three
+    aggregate rows trailed the five districts it elects from. main() raises
+    if the aggregate ever gains a Jones row, so the two cannot both ship.
   * NUMDISTRICTS is each row's county-wide BOARD SIZE (repeated on every row
     of that county); MEMBERS is 1 on every plan-2/plan-3 row and 0 on every
     plan-1 AT-LARGE row (verified across the whole service) — NUMDISTRICTS,
@@ -103,7 +107,11 @@ LSA_VINTAGE = "LSA-2024-01-30"
 LSA_LAST_EDIT_MS = 1706643533798  # gate: refuse silently if this ever moves without review
 
 KNOWN_TRANSITIONING = {"Black Hawk", "Story", "Johnson"}
-EXPECTED_MISSING = {"Jones"}
+# Counties whose LSA rows are replaced by lines the county itself supplied --
+# see COUNTY_SUPPLIED below. Jones has no LSA row to drop; Tama's three are the
+# pre-2024 plan.
+COUNTY_SUPPLIED_REPLACES = {"Jones", "Tama"}
+EXPECTED_MISSING = set()
 EXPECT_TOTAL_COUNTIES = 99
 KNOWN_PLANTYPES = {"PLAN 1", "PLAN 2", "PLAN 3"}
 
@@ -178,6 +186,46 @@ STORY = {
         "a supervisor of its own."
     ),
 }
+
+# Jones and Tama: real district lines, from files each county's own office
+# sent this project, resolved to whole Census 2020 blocks by
+# ia/scripts/build_county_supplied_supervisor_districts.py and committed in
+# data/source/ (deploy-excluded), the Story arrangement exactly. Both counties
+# elect one supervisor per district today, so both are PLAN 3.
+#
+#   * JONES was the one county with no row in the LSA layer at all (by name and
+#     by FIPS 105). Its GIS Coordinator sent the county's BOS_2022 shapefile on
+#     2026-10-06; its block populations equal the county's own published
+#     figures to the person.
+#   * TAMA's LSA rows draw three districts; the county has elected five since
+#     2022 and LSA drew the five on 2024-02-05, after the layer's vintage. The
+#     Auditor sent the county's own map on 2026-10-01; its block populations
+#     equal LSA's Plan I with one declared, county-witnessed parcel moved.
+#
+# The populations below are re-checked against the committed derivation, so a
+# re-derivation that moved a single block stops this build.
+COUNTY_SUPPLIED = [
+    {
+        "county": "Jones",
+        "fips": "105",
+        "path": os.path.join(REPO_ROOT, "data", "source",
+                             "jones-supervisor-districts.geojson"),
+        "populations": {"1": 4128, "2": 4120, "3": 4137, "4": 4132, "5": 4129},
+        "note": (
+            "Jones County's five supervisor districts, from the county's own "
+            "GIS file (BOS_2022) sent by its GIS Coordinator on 6 October 2026."),
+    },
+    {
+        "county": "Tama",
+        "fips": "171",
+        "path": os.path.join(REPO_ROOT, "data", "source",
+                             "tama-supervisor-districts.geojson"),
+        "populations": {"1": 3426, "2": 3453, "3": 3395, "4": 3420, "5": 3441},
+        "note": (
+            "Tama County's five supervisor districts, from the county "
+            "Auditor's own district map sent on 1 October 2026."),
+    },
+]
 
 # SIMPLIFY IS A SHARE OF THE WHOLE DATASET, NOT A PER-FEATURE TOLERANCE, so
 # ADDING ONE COUNTY RE-SIMPLIFIES EVERY OTHER COUNTY. #737 added Story's three
@@ -370,6 +418,48 @@ def story_features():
     return out
 
 
+def county_supplied_features():
+    """Jones's and Tama's districts, from their committed derivations."""
+    out = []
+    for rec in COUNTY_SUPPLIED:
+        try:
+            with open(rec["path"]) as f:
+                feats = json.load(f).get("features") or []
+        except OSError as e:
+            raise RuntimeError(
+                "%s is missing (%s). Build it first: python3 "
+                "ia/scripts/build_county_supplied_supervisor_districts.py"
+                % (os.path.relpath(rec["path"], REPO_ROOT), e))
+        got = {f["properties"]["DISTRICT"]: f["properties"]["POPULATION"]
+               for f in feats}
+        if got != rec["populations"]:
+            raise RuntimeError(
+                "%s's derived populations are %s, expected %s. Re-run "
+                "ia/scripts/build_county_supplied_supervisor_districts.py --check"
+                % (rec["county"], got, rec["populations"]))
+        for f in feats:
+            p = f["properties"]
+            out.append({
+                "type": "Feature",
+                "properties": {
+                    "COUNTY": rec["county"],
+                    "FIPS": rec["fips"],
+                    "DISTRICT": p["DISTRICT"],
+                    "PLANTYPE": "PLAN 3",
+                    "NUMDISTRICTS": len(feats),
+                    "POPULATION": p["POPULATION"],
+                    "SOURCE": p["SOURCE"],
+                    "SOURCE_URL": p["SOURCE_URL"],
+                    "SOURCE_NOTE": rec["note"],
+                },
+                "geometry": f["geometry"],
+            })
+        pops = list(rec["populations"].values())
+        print("%s: %d county-supplied districts, pop %d-%d"
+              % (rec["county"], len(feats), min(pops), max(pops)), file=sys.stderr)
+    return out
+
+
 def load_state_county_geometry():
     with open(STATE_COUNTIES_PATH) as f:
         sc = json.load(f)
@@ -546,17 +636,24 @@ def main():
     check_vintage()
     raw = fetch_layer(LSA_LAYER, "COUNTY,DISTRICT,PLANTYPE,NUMDISTRICTS,MEMBERS,FIPS")
     lsa = normalize_lsa(raw)
-    lsa_kept = [f for f in lsa if f["properties"]["COUNTY"] not in KNOWN_TRANSITIONING]
+    replaced = KNOWN_TRANSITIONING | COUNTY_SUPPLIED_REPLACES
+    lsa_kept = [f for f in lsa if f["properties"]["COUNTY"] not in replaced]
     dropped = len(lsa) - len(lsa_kept)
     print("LSA aggregate: %d features; dropping %d stale row(s) for %s"
-          % (len(lsa), dropped, sorted(KNOWN_TRANSITIONING)), file=sys.stderr)
+          % (len(lsa), dropped, sorted(replaced)), file=sys.stderr)
+    if any(f["properties"]["COUNTY"] == "Jones" for f in lsa):
+        raise RuntimeError(
+            "the LSA aggregate now carries Jones County -- compare it with the "
+            "county's own file before letting either one win")
 
     bh = black_hawk_features()
     story = story_features()
     county_geoms = load_state_county_geometry()
     pending = transitioning_pending_features(county_geoms)
 
-    feats = lsa_kept + bh + story + pending
+    supplied = county_supplied_features()
+
+    feats = lsa_kept + bh + story + supplied + pending
     by_county = gate_counties(feats, county_geoms)
     print("gates: %d counties represented (%s recorded missing); PLANTYPE values all known"
           % (len(by_county), sorted(EXPECTED_MISSING)), file=sys.stderr)

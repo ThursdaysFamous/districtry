@@ -464,7 +464,7 @@
       "label": "Tribal Government",
       "group": "political",
       "area_rank": 21,
-      "rank_note": "Tribal land — Wisconsin has 21 pieces across 12 nations, from the Menominee Reservation's 934.539 km² down to a 1.339 km² Oneida trust parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 8.969 km² MEDIAN, which sits just above the Milwaukee squad areas' measured 8.852 and well above the aldermanic fabric's 3.064, and below the county-board fabric's 47.147 — medians rather than means, because one reservation is a hundred times the size of a trust parcel and a mean would rank this layer by Menominee alone. The rank governs draw order only. Partial coverage: most of Wisconsin is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 2 of them in Wisconsin and both Menominee's — the 2020 population, and NOBODY: the authority for a council is each nation's own published list. Ten of the twelve publish one that answers this project and is not carried yet, and the card gives that page and the date it answered; two cannot be read at all, one behind a managed challenge and one publishing no council page, and the card says which. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "rank_note": "Tribal land — Wisconsin has 21 pieces across 12 nations, from the Menominee Reservation's 934.539 km² down to a 1.339 km² Oneida trust parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 8.969 km² MEDIAN, which sits just above the Milwaukee squad areas' measured 8.852 and well above the aldermanic fabric's 3.064, and below the county-board fabric's 47.147 — medians rather than means, because one reservation is a hundred times the size of a trust parcel and a mean would rank this layer by Menominee alone. The rank governs draw order only. Partial coverage: most of Wisconsin is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 2 of them in Wisconsin and both Menominee's — the 2020 population, and the council: the authority for who sits on it is each nation's own published list. Ten of the twelve publish one this project reads weekly, and the card names that council with the date it was read and a link to the page; the other two (Lac du Flambeau and Sokaogon) publish no council page at all, and for those the card names the council the Wisconsin Department of Administration lists and says so, with that list's own date. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Wisconsin has 21 such areas across 12 nations.",
         "boundary": [
@@ -473,7 +473,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
           }
         ],
-        "people": "Nobody is named. Each nation's own published council is the authority. Ten of the twelve publish one that answers this project and whose names are not carried yet, and the card gives that page and the date it answered; two cannot be read at all and the card says why. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.",
+        "people": "The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card. Ten of the twelve nations publish one; the other two publish no council page, and for those the card names the council the Wisconsin Department of Administration's list of tribal officials gives, says so, and gives that list's own date. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.",
         "applies": "Wisconsin — 21 areas across 12 nations. Most points in the state are on no tribal land."
       }
     },
@@ -1363,9 +1363,9 @@
       },
       {
         "file": "aldermanic-districts.json",
-        "min_features": 866,
-        "max_features": 866,
-        "note": "Every aldermanic (and village trustee) district the ward fabric composes completely — coded city/village wards dissolved on the statewide municipality key by wi/scripts/build_wi_aldermanic_districts.py under its completeness, BAS-witness and point-agreement gates (866 districts, 159 municipalities; six incomplete submissions still excluded on the record). FOUR CITIES ARE LOCALLY COMPOSED, because their counties file their wards uncoded and the cities themselves publish the assignment: Appleton 15 from its clerk's polling-locations page, Berlin 6 from its council page's prose, Kaukauna 4 from the TEXT LAYER of the city's own district map PDF, and Edgerton 3 DERIVED from the city's own Voting_Districts service and re-derived from it on every run. Every composition is gated against the wards its county does code, against a population balance on LTSB's own election-data layer, and — for Appleton alone, the only one of the four whose polling places are one per district — against the state's ward-to-place file. Rebuild after each Jan/Jul filing window; a count change is expected news."
+        "min_features": 865,
+        "max_features": 865,
+        "note": "Every aldermanic (and village trustee) district the ward fabric composes completely — coded city/village wards dissolved on the statewide municipality key by wi/scripts/build_wi_aldermanic_districts.py under its completeness, BAS-witness and point-agreement gates (865 districts, 159 municipalities; six incomplete submissions still excluded on the record). Marion's Shawano County ward is merged into the district its county's ballot puts it in (LOCAL_RECODE, 2026-10-07), which is why it draws three districts rather than four. FOUR CITIES ARE LOCALLY COMPOSED, because their counties file their wards uncoded and the cities themselves publish the assignment: Appleton 15 from its clerk's polling-locations page, Berlin 6 from its council page's prose, Kaukauna 4 from the TEXT LAYER of the city's own district map PDF, and Edgerton 3 DERIVED from the city's own Voting_Districts service and re-derived from it on every run. Every composition is gated against the wards its county does code, against a population balance on LTSB's own election-data layer, and — for Appleton alone, the only one of the four whose polling places are one per district — against the state's ward-to-place file. Rebuild after each Jan/Jul filing window; a count change is expected news."
       },
       {
         "file": "library-sites.json",
@@ -1441,6 +1441,11 @@
       }
     ],
     "rosters": [
+      {
+        "file": "tribal-councils.json",
+        "min_keys": 12,
+        "note": "The council of every Wisconsin nation whose council is carried, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml). Twelve codes: ten nations from their own pages and two from the state's list. Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
       {
         "file": "adams-polling-places.json",
         "min_keys": 35,
@@ -2407,7 +2412,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-wi-shell-v46",
+    "cache_name": "districtry-wi-shell-v48",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
@@ -2425,6 +2430,11 @@
     "note": "The machine-checked source manifest lives in the freshness gate; the template ships it scaffolded with the five starter layers' endpoints, and the fork grows it with every layer it adds."
   },
   "workflows": [
+    {
+      "file": "update-tribal-councils.yml",
+      "purpose": "Tribal councils for Wisconsin's and Michigan's nations, from each nation's own page (two Wisconsin nations from the state's list)",
+      "schedule": "Tue 12:23 UTC"
+    },
     {
       "file": "update-wi-congress-roster.yml",
       "purpose": "U.S. House (WI) roster (unitedstates/congress-legislators)",
@@ -2565,7 +2575,9 @@
     { "id": "minnesota", "label": "Minnesota", "url": "https://districtry.com/mn/", "emoji": "🛶", "explorer_name": "districtry Minnesota",
       "bbox": { "minLng": -97.3, "minLat": 43.44, "maxLng": -89.58, "maxLat": 49.44 } },
     { "id": "kentucky", "label": "Kentucky", "url": "https://districtry.com/ky/", "emoji": "🐎", "explorer_name": "districtry Kentucky",
-      "bbox": { "minLng": -89.62, "minLat": 36.45, "maxLng": -81.91, "maxLat": 39.2 } }
+      "bbox": { "minLng": -89.62, "minLat": 36.45, "maxLng": -81.91, "maxLat": 39.2 } },
+    { "id": "indiana", "label": "Indiana", "url": "https://districtry.com/in/", "emoji": "🏁", "explorer_name": "districtry Indiana",
+      "bbox": { "minLng": -88.1, "minLat": 37.83, "maxLng": -84.78, "maxLat": 41.77 } }
   ],
   "history_page": {
     "file": "history.html",

@@ -206,6 +206,15 @@ FLOORS = {
     #              is the New Lisbon case and is not worked around.
     "84475": ("Wausau", 11, 11, 11, 11, 0),
     "84675": ("Wauwatosa", 12, 12, 0, 10, 12),
+    # MARION, 2026-10-07 — read from Waupaca County's Directory of Public
+    # Officials because the city's own site refuses this client. Three
+    # districts, two seats each, one of them printed "Vacant", so the named
+    # floor is FIVE against six seats and `vacantSeats` carries the sixth
+    # (the Oconomowoc shape). All five carry a city mailbox; three keep a
+    # phone, because districts 1 and 3 each print one number under both their
+    # members and a shared number is dropped from both. Floors are those
+    # measured counts less one.
+    "49400": ("Marion", 3, 5, 4, 2, 0),
 }
 
 

@@ -12,16 +12,16 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **236 distinct hosts** those files
-name, **43 are fetched by the browser**; the other 193 are links.
+makes from a link a reader clicks. Of **239 distinct hosts** those files
+name, **43 are fetched by the browser**; the other 196 are links.
 
 ### Geocoder — 3 host(s)
 
 | host | instances |
 |---|---|
 | `geosearch.planninglabs.nyc` | ny |
-| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky |
-| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky |
+| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in |
+| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in |
 
 The most sensitive flow on the site: it is **the text a reader
 types**. `build_privacy_page.py` owns what each receives and links
@@ -32,9 +32,9 @@ per-app measurement, so the two cannot disagree.
 
 | host | instances |
 |---|---|
-| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky |
-| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky |
-| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky |
+| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in |
+| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in |
+| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in |
 
 One service. Several host spellings appear because the tile URL is a
 `{s}.` template and some are `preconnect` hints — one recipient, not
@@ -44,7 +44,7 @@ several.
 
 | host | instances |
 |---|---|
-| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky |
+| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in |
 
 Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
@@ -52,7 +52,7 @@ Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
 | host | instances |
 |---|---|
-| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky |
+| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in |
 | `www.googletagmanager.com` | il, ny |
 
 ### Webfonts — none
@@ -65,7 +65,7 @@ a font CDN would be a recipient the privacy page does not name.
 
 | host | instances |
 |---|---|
-| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky |
+| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in |
 
 ### Socrata — 7 host(s)
 
@@ -84,7 +84,7 @@ a font CDN would be a recipient the privacy page does not name.
 | host | instances |
 |---|---|
 | `arcgispublicmap.co.st-clair.il.us` | il |
-| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn |
+| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in |
 | `gis.aurora.il.us` | il |
 | `gis.cookcountyil.gov` | il |
 | `gis.fultoncountyil.gov` | il |
@@ -126,12 +126,13 @@ prose.
 | wi | 1 | 32 |
 | ia | 0 | 20 |
 | mi | 0 | 19 |
-| mn | 6 | 16 |
+| mn | 6 | 18 |
 | ky | 4 | 12 |
+| in | 4 | 11 |
 
 ### Where each layer's shapes come from
 
-Measured **2026-09-27** in a real browser by `scripts/probe_layer_sources.mjs`,
+Measured **2026-10-04** in a real browser by `scripts/probe_layer_sources.mjs`,
 which switches each layer on alone and reads every response the page
 fetches from another host. A layer **fetches** its shapes when a response
 carries polygon or line geometry: either the whole set, downloaded once
@@ -154,26 +155,26 @@ measured until the next run describes it.
 | Township / County Subdivision (`township`) | `tigerweb.geo.census.gov` | — |
 | Municipality (`municipality`) | `tigerweb.geo.census.gov` | — |
 | Judicial Subcircuit (`judicial-subcircuit`) | 4 of 9 county sources, from `gis.cookcountyil.gov`, `services.arcgis.com`, `services3.arcgis.com`; 5 shipped with the app | — |
-| County Board District (`county-board`) | 25 of 64 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.co.kendall.il.us`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`; 37 shipped with the app; 2 did not answer the probe (winnebago, boone) | `gis.cookcountyil.gov` |
+| County Board District (`county-board`) | 27 of 64 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`; 37 shipped with the app | `gis.cookcountyil.gov` |
 | Fire Protection District (`fire-district`) | 17 of 26 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.leecountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`; 9 shipped with the app | — |
 | DuPage Special Police District (`dupage-county-special-police`) | `services.arcgis.com` | — |
 | Park District (`park-district`) | 10 of 18 county sources, from `gis.cookcountyil.gov`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 8 shipped with the app | — |
 | Library District (`library-district`) | 12 of 91 county sources, from `gis.cookcountyil.gov`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 79 shipped with the app | — |
-| CPS Network (High School, admin office) (`cps-hs-network`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
-| CPS Network (K-8, admin office) (`cps-network`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
-| City Ward (`ward`) | 26 of 28 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.cityofchicago.org`, `gis.aurora.il.us`, `gis.cookcountyil.gov`, `gis.mcleancountyil.gov`, `gis.peoriacounty.gov`, `maps.cityofevanston.org`, `maps.co.kendall.il.us`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services8.arcgis.com`, `services9.arcgis.com`, `webapps.bataviail.gov`; 0 shipped with the app; 2 did not answer the probe (rockford, belvidere) | `data.cityofchicago.org` |
-| Ward Precinct (`ward-precinct`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
+| CPS Network (High School, admin office) (`cps-hs-network`) | `data.cityofchicago.org` | — |
+| CPS Network (K-8, admin office) (`cps-network`) | `data.cityofchicago.org` | — |
+| City Ward (`ward`) | 27 of 28 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.cityofchicago.org`, `gis.aurora.il.us`, `gis.cookcountyil.gov`, `gis.mcleancountyil.gov`, `gis.peoriacounty.gov`, `maps.boonecountyil.org`, `maps.cityofevanston.org`, `maps.co.kendall.il.us`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services8.arcgis.com`, `services9.arcgis.com`, `webapps.bataviail.gov`; 0 shipped with the app; 1 did not answer the probe (rockford) | `data.cityofchicago.org` |
+| Ward Precinct (`ward-precinct`) | `data.cityofchicago.org` | — |
 | Police District (`police-district`) | `services2.arcgis.com` | `services2.arcgis.com` |
 | Police Beat (`police-beat`) | `services2.arcgis.com` | `services2.arcgis.com` |
 | CCPSA District Council (`ccpsa-district-council`) | `services2.arcgis.com` | — |
 | Community Area (`community-area`) | `data.cityofchicago.org` | — |
 | ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
-| CPS High School Zone (`cps-high`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
+| CPS High School Zone (`cps-high`) | `data.cityofchicago.org` | — |
 | CPS Middle School Zone (`cps-middle`) | `data.cityofchicago.org` | — |
-| Voting Precinct (`county-precinct`) | 34 of 83 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.macoupincountyil.gov`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.lasallecounty.org`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.co.kendall.il.us`, `maps.grundyco.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`, `tigerweb.geo.census.gov`; 46 shipped with the app; 3 did not answer the probe (boone, winnebago, randolph) | — |
+| Voting Precinct (`county-precinct`) | 37 of 83 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.macoupincountyil.gov`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.lasallecounty.org`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.grundyco.org`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`, `tigerweb.geo.census.gov`; 46 shipped with the app | — |
 | Special Service Area (`ssa`) | `data.cityofchicago.org` | — |
 | TIF District (`tif-district`) | `gis.cookcountyil.gov` | — |
-| CPS Elementary School Zone (`cps-elementary`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
+| CPS Elementary School Zone (`cps-elementary`) | `data.cityofchicago.org` | — |
 | School Location (all, incl. private, nearest N) (`school-site`) | `services2.arcgis.com` | — |
 
 - Drawn from this site's own files: `il-supreme-court`, `congress`, `il-senate`, `il-house`, `ccbr`, `school-board`.
@@ -193,25 +194,24 @@ measured until the next run describes it.
 | Election District (`election-district`) | `services5.arcgis.com` | — |
 | NYPD Sector (`police-sector`) | `data.cityofnewyork.us` | — |
 | NYPD Precinct (`police-precinct`) | `data.cityofnewyork.us` | — |
-| ZIP Code (MODZCTA) (`zip-code`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
+| ZIP Code (MODZCTA) (`zip-code`) | `data.cityofnewyork.us` | — |
 | ZIP Code (`nys-zip-code`) | — | `tigerweb.geo.census.gov` |
 | Neighborhood (NTA) (`neighborhood`) | `data.cityofnewyork.us` | — |
 | High School Zone (`hs-zone`) | `data.cityofnewyork.us` | — |
 | Middle School Zone (`ms-zone`) | `data.cityofnewyork.us` | — |
-| Elementary School Zone (`es-zone`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
+| Elementary School Zone (`es-zone`) | `data.cityofnewyork.us` | — |
 
-- Drawn from this site's own files: `county`, `nys-central-hs-district`, `nys-school-district`, `municipality`, `village`, `borough`, `judicial-district`, `borough-president`, `district-attorney`, `congress`, `municipal-court`, `state-senate`, `state-assembly`, `county-legislature`.
+- Drawn from this site's own files: `county`, `nys-central-hs-district`, `nys-school-district`, `municipality`, `village`, `borough`, `judicial-district`, `borough-president`, `district-attorney`, `congress`, `municipal-court`, `state-senate`, `state-assembly`, `county-supervisor`, `county-legislature`, `fire-district`, `library-district`.
 - Point layers (locations, not shapes): `school-site`, `police-station`, `fire-station`, `post-office`, `library`, `early-voting`, `polling-place`.
-- **Not measured** — declared since the probe ran: `county-supervisor`, `fire-district`, `library-district`.
 
 #### ca — 4 of 16 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
 | BART Director District (`bart-director`) | `services.arcgis.com` | — |
-| Election Precinct (`election-precinct`) | `data.sfgov.org` | — |
+| Election Precinct (`election-precinct`) | `data.sf.gov` | — |
 | ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
-| Elementary Attendance Area (`elementary-attendance-area`) | `data.sfgov.org` | — |
+| Elementary Attendance Area (`elementary-attendance-area`) | `data.sf.gov` | — |
 
 - Drawn from this site's own files: `congress`, `ca-senate`, `ca-assembly`, `supervisor-district`, `police-district`, `neighborhood`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `post-office`, `library`, `early-voting`.
@@ -252,29 +252,64 @@ measured until the next run describes it.
 | ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
 | City or Village (`municipality`) | `tigerweb.geo.census.gov` | — |
 
-- Drawn from this site's own files: `us-house`, `mi-senate`, `county`, `mi-house`, `county-commissioner`, `city-ward`, `precinct`.
+- Drawn from this site's own files: `us-house`, `mi-senate`, `county`, `mi-house`, `county-commissioner`, `city-ward`, `precinct`, `mi-court-of-appeals`, `mi-circuit-court`, `mi-isd`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `tribal-government`, `mi-court-of-appeals`, `mi-circuit-court`, `mi-isd`.
+- **Not measured** — declared since the probe ran: `tribal-government`.
 
-#### mn — not measured
+#### mn — 6 of 18 layers fetch their shapes
 
-#### ky — not measured
+| layer | whole set from | at the selected point from |
+|---|---|---|
+| School District (Unified) (`school-district-unified`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
+| School District (Elementary) (`school-district-elementary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| Township or City (`county-subdivision`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| City (`municipality`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| School District (Secondary) (`school-district-secondary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+
+- Drawn from this site's own files: `us-house`, `mn-judicial-district`, `mn-senate`, `county`, `mn-house`, `county-commissioner`, `voting-precinct`.
+- Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+- **Not measured** — declared since the probe ran: `watershed-district`, `school-board-district`.
+
+#### ky — 4 of 12 layers fetch their shapes
+
+| layer | whole set from | at the selected point from |
+|---|---|---|
+| School District (Unified) (`school-district-unified`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| City (`municipality`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| School District (Elementary) (`school-district-elementary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| School District (Secondary) (`school-district-secondary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+
+- Drawn from this site's own files: `us-house`, `ky-supreme-court`, `ky-court-of-appeals`, `ky-senate`, `ky-circuit-court`, `ky-district-court`, `ky-house`, `county`.
+
+#### in — 4 of 11 layers fetch their shapes
+
+| layer | whole set from | at the selected point from |
+|---|---|---|
+| School District (`school-district-unified`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
+| Township (`county-subdivision`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| City or Town (`municipality`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+
+- Drawn from this site's own files: `us-house`, `in-senate`, `county`, `in-house`.
+- Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 
 ## 2. Build-time datasets
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 131 | 390 | 6 |
+| il | 131 | 391 | 6 |
 | ny | 38 | 33 | 0 |
 | ca | 17 | 14 | 0 |
-| wi | 92 | 264 | 5 |
-| ia | 70 | 75 | 0 |
-| mi | 32 | 60 | 1 |
-| mn | 22 | 10 | 0 |
+| wi | 92 | 265 | 5 |
+| ia | 70 | 65 | 0 |
+| mi | 32 | 61 | 1 |
+| mn | 27 | 15 | 0 |
 | ky | 11 | 11 | 0 |
-| **total** | **413** | **857** | **12** |
+| in | 13 | 7 | 0 |
+| **total** | **431** | **862** | **12** |
 
-**136 distinct source hosts** across the six manifests. Each instance's
+**137 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

@@ -351,9 +351,32 @@ try {
 
   // --- 1c-quater. an address a rectangle claims and nobody serves ----------
   //
-  // Gary, Indiana sits inside Illinois's bbox, so the rectangle pass sent it
-  // to an app with nothing to show there. It is about 15 km from Illinois's
+  // Clayton, Missouri sits inside Illinois's bbox, so the rectangle pass sent
+  // it to an app with nothing to show there. It is about 13 km from Illinois's
   // outline, well past the tolerance the page allows a simplified edge.
+  //
+  // THIS WAS GARY, INDIANA UNTIL 2026-10-07, when Indiana went live and Gary
+  // became an address the front door must OPEN /in/ for (asserted just below).
+  // Downtown St. Louis was not used: it is about 1.6 km from Illinois's
+  // simplified outline, close enough to the page's ~1.5 km allowance that the
+  // test would be deciding a rounding question rather than this one.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await page.route("**/photon.komoot.io/**", photonStub([photonFeature(38.6426, -90.3237)]));
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "Clayton, Missouri");
+    await page.click("#search-button");
+    await page.waitForTimeout(700);
+    check("Clayton, Missouri stays on the landing page though Illinois's bbox claims it",
+      new URL(page.url()).pathname === "/", page.url());
+    const msg = await textOrNull(page, "#search-status");
+    check("Clayton, Missouri is told it is outside every covered place", /outside/i.test(msg || ""), JSON.stringify(msg));
+    await ctx.close();
+  }
+  // ...and Gary, which Illinois's bbox ALSO claims, opens Indiana: the outline
+  // pass decides, so the rectangle that contains it is never consulted.
   {
     const ctx = await browser.newContext({ serviceWorkers: "block" });
     const page = await ctx.newPage();
@@ -363,10 +386,8 @@ try {
     await page.fill("#search-input", "Gary, Indiana");
     await page.click("#search-button");
     await page.waitForTimeout(700);
-    check("Gary, Indiana stays on the landing page though Illinois's bbox claims it",
-      new URL(page.url()).pathname === "/", page.url());
-    const msg = await textOrNull(page, "#search-status");
-    check("Gary, Indiana is told it is outside every covered place", /outside/i.test(msg || ""), JSON.stringify(msg));
+    check("Gary, Indiana opens /in/ though Illinois's bbox also claims it",
+      new URL(page.url()).pathname === "/in/", page.url());
     await ctx.close();
   }
 

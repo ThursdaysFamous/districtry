@@ -1,7 +1,14 @@
 {
+ "19001": {
+  "chair": "Jerry Walker",
+  "confirmedOn": "2026-10-02",
+  "county": "Adair",
+  "route": "page",
+  "sourceUrl": "https://www.adaircounty.iowa.gov/supervisors/"
+ },
  "19003": {
   "chair": "Chris Standley",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Adams",
   "match": "diminutive",
   "pageName": "Christopher Standley",
@@ -10,14 +17,14 @@
  },
  "19005": {
   "chair": "Tom Clark",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Allamakee",
   "route": "page",
   "sourceUrl": "https://allamakeecounty.iowa.gov/supervisors/"
  },
  "19007": {
   "chair": "Jeffery Kulmatycki",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Appanoose",
   "match": "prefix",
   "pageName": "Jeff Kulmatycki",
@@ -26,50 +33,50 @@
  },
  "19011": {
   "chair": "Tracy Seeman",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Benton",
   "route": "page",
   "sourceUrl": "https://www.bentoncountyia.gov/board_of_supervisors/"
  },
  "19013": {
   "chair": "Linda Laylin",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Black Hawk",
   "route": "page",
   "sourceUrl": "https://www.blackhawkcounty.iowa.gov/"
  },
  "19015": {
   "chair": "Erich Kretzinger",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Boone",
   "route": "page",
   "sourceUrl": "https://www.boonecounty.iowa.gov/board_of_supervisors/"
  },
  "19031": {
   "chair": "Jon Bell",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Cedar",
   "route": "page",
   "sourceUrl": "https://cedarcounty.iowa.gov/board_of_supervisors/"
  },
  "19033": {
   "chair": "Casey Callanan",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Cerro Gordo",
-  "meetingDate": "2026-09-21",
+  "meetingDate": "2026-09-28",
   "route": "minutes",
   "sourceUrl": "https://cerrogordo.gov/supervisors/meetings_minutes/"
  },
  "19039": {
   "chair": "Randy Dunbar",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Clarke",
   "route": "page",
   "sourceUrl": "https://clarkecounty.iowa.gov/departments/board-of-supervisors/"
  },
  "19041": {
   "chair": "Barry Anderson",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Clay",
   "route": "page",
   "sourceUrl": "https://claycounty.iowa.gov/board-of-supervisors/"
@@ -83,79 +90,87 @@
  },
  "19045": {
   "chair": "Dan Srp",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Clinton",
   "meetingDate": "2026-08-31",
   "route": "minutes",
   "sourceUrl": "https://www.clintoncounty-ia.gov/board_of_supervisors/meetings_minutes"
  },
+ "19049": {
+  "chair": "Julia Helm",
+  "confirmedOn": "2026-10-02",
+  "county": "Dallas",
+  "meetingDate": "2026-09-22",
+  "route": "minutes",
+  "sourceUrl": "https://www.dallascountyiowa.gov/AgendaCenter"
+ },
  "19051": {
   "chair": "Ron Bride",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Davis",
   "route": "page",
   "sourceUrl": "https://www.daviscountyiowa.gov/board-of-supervisors/"
  },
  "19057": {
   "chair": "Shane McCampbell",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Des Moines",
-  "meetingDate": "2026-09-15",
+  "meetingDate": "2026-09-22",
   "route": "minutes",
   "sourceUrl": "https://www.desmoinescounty.iowa.gov/board_of_supervisors/meetings_minutes/"
  },
  "19065": {
   "chair": "Alex Popenhagen",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Fayette",
   "route": "page",
   "sourceUrl": "https://fayettecounty.iowa.gov/departments/board-of-supervisors/"
  },
  "19071": {
   "chair": "Clint Blackburn",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Fremont",
   "route": "page",
   "sourceUrl": "https://www.fremontcountyia.gov/vnews/display.v/SEC/County%7CSupervisors"
  },
  "19075": {
   "chair": "Heidi Nederhoff",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Grundy",
   "route": "page",
   "sourceUrl": "https://www.grundycountyiowa.gov/departments/supervisors"
  },
  "19087": {
   "chair": "Chad White",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Henry",
   "route": "page",
   "sourceUrl": "https://henrycounty.iowa.gov/bos/"
  },
  "19095": {
   "chair": "Kevin Heitshusen",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Iowa",
   "route": "page",
   "sourceUrl": "https://iowacounty.iowa.gov/supervisors/"
  },
  "19097": {
   "chair": "Don Schwenker",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Jackson",
   "route": "page",
   "sourceUrl": "https://jacksoncounty.iowa.gov/supervisors/"
  },
  "19099": {
   "chair": "Thad Nearmyer",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Jasper",
   "route": "page",
   "sourceUrl": "https://www.jasperia.org/board_of_supervisors/"
  },
  "19107": {
   "chair": "Mike Hadley",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Keokuk",
   "match": "diminutive",
   "pageName": "Michael Hadley",
@@ -164,28 +179,28 @@
  },
  "19113": {
   "chair": "Kirsten Running-Marquardt",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Linn",
   "route": "page",
   "sourceUrl": "https://www.linncountyiowa.gov/123/Board-of-Supervisors"
  },
  "19115": {
   "chair": "Kevin Hardin",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Louisa",
   "route": "page",
   "sourceUrl": "https://louisacountyia.gov/government/departments-a-f/louisa-county-board-of-supervisors/"
  },
  "19121": {
   "chair": "Heather Stancil",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Madison",
   "route": "page",
   "sourceUrl": "https://madisoncounty.iowa.gov/offices/board-of-supervisors/"
  },
  "19123": {
   "chair": "Mark Groenendyk",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Mahaska",
   "meetingDate": "2026-08-03",
   "route": "minutes",
@@ -193,28 +208,28 @@
  },
  "19125": {
   "chair": "Kisha Jahner",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Marion",
   "route": "page",
   "sourceUrl": "https://www.marioncountyiowa.gov/board_of_supervisors/"
  },
  "19127": {
   "chair": "Jarret Heil",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Marshall",
   "route": "page",
   "sourceUrl": "https://www.marshallcountyia.gov/supervisors/"
  },
  "19133": {
   "chair": "Bo Fox",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Monona",
   "route": "page",
   "sourceUrl": "https://www.mononacountyiowa.gov/supervisors/"
  },
  "19139": {
   "chair": "Danny Chick",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Muscatine",
   "route": "page",
   "sourceUrl": "https://www.muscatinecountyiowa.gov/supervisors/"
@@ -249,56 +264,56 @@
  },
  "19157": {
   "chair": "Jason Roudabush",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Poweshiek",
   "route": "page",
   "sourceUrl": "https://poweshiekcountyiowa.gov/board_of_supervisors/"
  },
  "19163": {
   "chair": "John Maxwell",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Scott",
   "route": "page",
   "sourceUrl": "https://www.scottcountyiowa.gov/board"
  },
  "19165": {
   "chair": "Charles Parkhurst",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Shelby",
   "route": "page",
   "sourceUrl": "https://shelbycounty.iowa.gov/supervisors/"
  },
  "19173": {
   "chair": "Jack Beggs",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Taylor",
   "route": "page",
   "sourceUrl": "https://www.taylorcounty.iowa.gov/board-of-supervisors/"
  },
  "19175": {
   "chair": "Rick Friday",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Union",
   "route": "page",
   "sourceUrl": "https://unioncountyiowa.gov/departments/board-of-supervisors/"
  },
  "19179": {
   "chair": "Darren Batterson",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Wapello",
   "route": "page",
   "sourceUrl": "https://wapellocounty.org/board_of_supervisors/"
  },
  "19185": {
   "chair": "Chris Moore",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Wayne",
   "route": "page",
   "sourceUrl": "https://waynecounty.iowa.gov/board-of-supervisors/"
  },
  "19191": {
   "chair": "Daniel Langreck",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Winneshiek",
   "match": "diminutive",
   "pageName": "Dan Langreck",
@@ -307,7 +322,7 @@
  },
  "19193": {
   "chair": "Mark Nelson",
-  "confirmedOn": "2026-09-25",
+  "confirmedOn": "2026-10-02",
   "county": "Woodbury",
   "route": "page",
   "sourceUrl": "https://www.woodburycountyiowa.gov/supervisors/"

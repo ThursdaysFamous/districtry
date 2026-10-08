@@ -1,0 +1,577 @@
+{
+ "0140": {
+  "roster": [
+   {
+    "name": "Liz Arbuckle",
+    "role": "Tribal Chairman"
+   },
+   {
+    "name": "Patrick Bigboy",
+    "role": "Vice-Chairman"
+   },
+   {
+    "name": "Laura Miranda",
+    "role": "Secretary"
+   },
+   {
+    "name": "Michelle Conners",
+    "role": "Treasurer",
+    "note": "the same page also spells it Connors"
+   },
+   {
+    "name": "Aurora Conley",
+    "role": "Senior Member"
+   },
+   {
+    "name": "Peter Powless",
+    "role": "Senior Member"
+   },
+   {
+    "name": "Peter Bigboy",
+    "role": "Junior Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-06.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.badriver-nsn.gov/government/",
+  "rosterRead": "2026-10-06",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1125": {
+  "roster": [
+   {
+    "name": "Bruce Savage",
+    "role": "Tribal Chairman"
+   },
+   {
+    "name": "Wally Dupuis",
+    "role": "Vice Chairman",
+    "district": "District I"
+   },
+   {
+    "name": "Wayne Dupuis",
+    "role": "Secretary/Treasurer"
+   },
+   {
+    "name": "Earl Otis",
+    "role": "District Representative",
+    "district": "District III"
+   },
+   {
+    "name": "Michael Murray Jr",
+    "role": "District Representative",
+    "district": "District II"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-06.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.fdlband.org/government/tribal_council.php",
+  "rosterRead": "2026-10-06",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1135": {
+  "roster": [
+   {
+    "name": "Brooks Boyd",
+    "role": "Chairman"
+   },
+   {
+    "name": "Ken George Jr.",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Joseph Daniels Sr.",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Alexandria McCorkle",
+    "role": "Secretary"
+   },
+   {
+    "name": "Destinee Alloway",
+    "role": "Council Member"
+   },
+   {
+    "name": "Herb Daniels Jr.",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-06.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.fcpotawatomi.com/government/executive-council/",
+  "rosterRead": "2026-10-06",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1450": {
+  "roster": [
+   {
+    "name": "Jon Greendeer",
+    "role": "President"
+   },
+   {
+    "name": "Lambert Cleveland, Jr.",
+    "role": "Vice President",
+    "district": "District 3",
+    "email": "LambertCleveland@ho-chunk.com"
+   },
+   {
+    "name": "Paul Fox",
+    "role": "Representative",
+    "district": "District 1",
+    "email": "Paul.Fox@ho-chunk.com"
+   },
+   {
+    "name": "Phyllis Smoke",
+    "role": "Representative",
+    "district": "District 1",
+    "email": "Phyllis.Smoke@ho-chunk.com"
+   },
+   {
+    "name": "Tracy Thundercloud",
+    "role": "Representative",
+    "district": "District 1",
+    "email": "TracyThundercloud@ho-chunk.com"
+   },
+   {
+    "name": "Stephanie Begay",
+    "role": "Representative",
+    "district": "District 2",
+    "email": "Stephanie.Begay@ho-chunk.com"
+   },
+   {
+    "name": "Damian Thundercloud",
+    "role": "Representative",
+    "district": "District 2",
+    "email": "DamianThundercloud@ho-chunk.com"
+   },
+   {
+    "name": "Kyle White Eagle",
+    "role": "Representative",
+    "district": "District 2",
+    "email": "Kyle.WhiteEagle@ho-chunk.com"
+   },
+   {
+    "name": "Sarah Lemieux - White Eagle",
+    "role": "Representative",
+    "district": "District 3",
+    "email": "Sarah.Lemieux@ho-chunk.com"
+   },
+   {
+    "name": "Shelby Visintin",
+    "role": "Representative",
+    "district": "District 3",
+    "email": "Shelby.Visintin@ho-chunk.com"
+   },
+   {
+    "name": "Sandra Whitewing",
+    "role": "Representative",
+    "district": "District 4",
+    "email": "Sandra.Whitewing@ho-chunk.com"
+   },
+   {
+    "name": "Ed Mullen",
+    "role": "Representative",
+    "district": "District 4",
+    "email": "Edward.Mullen@ho-chunk.com"
+   },
+   {
+    "name": "David Greendeer",
+    "role": "Representative",
+    "district": "District 4",
+    "email": "David.Greendeer@ho-chunk.com"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-06.",
+  "rosterSource": "nation",
+  "rosterPage": "https://ho-chunknation.com/government/legislative-branch/",
+  "rosterRead": "2026-10-06",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1815": {
+  "roster": [
+   {
+    "name": "Gary “Little Guy” Clause",
+    "role": "Chair"
+   },
+   {
+    "name": "William Trepanier",
+    "role": "Vice Chair"
+   },
+   {
+    "name": "Michelle Beaudin",
+    "role": "Secretary/Treasurer"
+   },
+   {
+    "name": "Jordan St. Germaine",
+    "role": "Member"
+   },
+   {
+    "name": "Lorraine Gouge",
+    "role": "Member"
+   },
+   {
+    "name": "Janet Quaderer",
+    "role": "Member"
+   },
+   {
+    "name": "Don Carley",
+    "role": "Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-06.",
+  "rosterSource": "nation",
+  "rosterPage": "https://lco-nsn.gov/tribal-governing-board/",
+  "rosterRead": "2026-10-06",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1825": {
+  "roster": [
+   {
+    "name": "John (Goober) Johnson",
+    "role": "President"
+   },
+   {
+    "name": "George Thompson",
+    "role": "Vice-President"
+   },
+   {
+    "name": "Jamie-Ann Allen",
+    "role": "Secretary"
+   },
+   {
+    "name": "Nadine Poupart",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Zachary Allen",
+    "role": "Council Member"
+   },
+   {
+    "name": "Dr Katrina (Chapman) Mares",
+    "role": "Council Member"
+   },
+   {
+    "name": "Shane Mitchell",
+    "role": "Council Member"
+   },
+   {
+    "name": "Stephanie Thompson",
+    "role": "Council Member"
+   },
+   {
+    "name": "Sedwick Armstrong",
+    "role": "Council Member"
+   },
+   {
+    "name": "William \"Billy\" Mitchell Sr.",
+    "role": "Council Member"
+   },
+   {
+    "name": "Gloria Cobb",
+    "role": "Council Member"
+   },
+   {
+    "name": "Betty Lou Wayman",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "Named by the Wisconsin Department of Administration's list of Wisconsin tribal officials, updated 2026-07-08, because the nation publishes no council of its own. Read 2026-10-06.",
+  "rosterSource": "state-list",
+  "rosterPage": "https://doa.wi.gov/DIR/Tribal-Leaders.pdf",
+  "rosterRead": "2026-10-06",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2175": {
+  "roster": [
+   {
+    "name": "Joey Awonohopay",
+    "role": "Chairman"
+   },
+   {
+    "name": "Dana Waubanascum",
+    "role": "Vice-Chairwoman"
+   },
+   {
+    "name": "Daynell Grignon",
+    "role": "Secretary"
+   },
+   {
+    "name": "Michael Fish Jr",
+    "role": "Legislator"
+   },
+   {
+    "name": "Joan Delabreau",
+    "role": "Legislator"
+   },
+   {
+    "name": "Marcus Grignon",
+    "role": "Legislator"
+   },
+   {
+    "name": "Randal Chevalier",
+    "role": "Legislator"
+   },
+   {
+    "name": "Kaycee Frechette",
+    "role": "Legislator"
+   },
+   {
+    "name": "Samantha Grignon",
+    "role": "Legislator"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-06.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.menominee-nsn.gov/GovernmentPages/Legislature",
+  "rosterRead": "2026-10-06",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2560": {
+  "roster": [
+   {
+    "name": "Tehassi Hill",
+    "role": "Chairperson",
+    "phone": "920-869-4420",
+    "email": "thill7@oneidanation.org"
+   },
+   {
+    "name": "Jameson Wilson",
+    "role": "Vice-Chairperson",
+    "phone": "920-869-4385",
+    "email": "jwilson@oneidanation.org"
+   },
+   {
+    "name": "Lisa Liggins",
+    "role": "Tribal Secretary",
+    "phone": "920-869-4421",
+    "email": "lliggins@oneidanation.org"
+   },
+   {
+    "name": "Larry Barton",
+    "role": "Treasurer",
+    "phone": "920-869-4394",
+    "email": "lbarton2@oneidanation.org"
+   },
+   {
+    "name": "Aliskwet Ellis",
+    "role": "Council Member",
+    "phone": "920-869-4455",
+    "email": "cellis1@oneidanation.org"
+   },
+   {
+    "name": "Jennifer Webster",
+    "role": "Council Member",
+    "phone": "920-869-4457",
+    "email": "jwebste1@oneidanation.org"
+   },
+   {
+    "name": "Jonas Hill",
+    "role": "Council Member",
+    "phone": "920-869-4461",
+    "email": "jhill1@oneidanation.org"
+   },
+   {
+    "name": "Lora Danforth",
+    "role": "Council Member",
+    "phone": "920-869-4424",
+    "email": "ldanfor4@oneidanation.org"
+   },
+   {
+    "name": "Kristal Hill",
+    "role": "Council Member",
+    "phone": "920-869-4434",
+    "email": "khill@oneidanation.org"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-06.",
+  "rosterSource": "nation",
+  "rosterPage": "https://oneida-nsn.gov/government/business-committee/members/",
+  "rosterRead": "2026-10-06",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "3085": {
+  "roster": [
+   {
+    "name": "Nicole Boyd",
+    "role": "Chair",
+    "email": "nicole.boyd@redcliff-nsn.gov",
+    "termEnds": "July 2027"
+   },
+   {
+    "name": "Misty Nordin",
+    "role": "Vice Chair",
+    "email": "misty.nordin@redcliff-nsn.gov",
+    "termEnds": "July 2028"
+   },
+   {
+    "name": "Laura Gordon",
+    "role": "Treasurer",
+    "email": "treasurer@redcliff-nsn.gov",
+    "termEnds": "July 2027"
+   },
+   {
+    "name": "Stephanie Haskins",
+    "role": "Secretary",
+    "email": "secretary@redcliff-nsn.gov",
+    "termEnds": "July 2028"
+   },
+   {
+    "name": "David Curran",
+    "role": "At Large Member",
+    "email": "david.curran@redcliff-nsn.gov",
+    "termEnds": "July 2027"
+   },
+   {
+    "name": "Nicole Gurnoe",
+    "role": "At Large Member",
+    "email": "Nicole.Gurnoe-Council@redcliff-nsn.gov",
+    "termEnds": "July 2027"
+   },
+   {
+    "name": "Shania Nordby (Leask)",
+    "role": "At Large Member",
+    "email": "Shania.Nordby-Council@redcliff-nsn.gov",
+    "termEnds": "July 2028"
+   },
+   {
+    "name": "Dawn \"Digger\" Peterson",
+    "role": "At Large Member",
+    "termEnds": "July 2028"
+   },
+   {
+    "name": "Vincent \"Butch\" Bresette",
+    "role": "At Large Member",
+    "email": "butch.bresette@redcliff-nsn.gov",
+    "termEnds": "July 2027"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-06.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.redcliff-nsn.gov/government/tribal_government/index.php",
+  "rosterRead": "2026-10-06",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "3305": {
+  "roster": [
+   {
+    "name": "Conrad St. John",
+    "role": "Chairman"
+   },
+   {
+    "name": "Richard Benjamin",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Leslie Billy",
+    "role": "Secretary/Treasurer"
+   },
+   {
+    "name": "Thomas Fowler",
+    "role": "Representative"
+   },
+   {
+    "name": "Lester Merrill",
+    "role": "Representative"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-06.",
+  "rosterSource": "nation",
+  "rosterPage": "https://stcroixojibwe-nsn.gov/tribal-council/",
+  "rosterRead": "2026-10-06",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "3885": {
+  "roster": [
+   {
+    "name": "Robert VanZile Jr.",
+    "role": "Tribal Chair"
+   },
+   {
+    "name": "Roger McGeshick Jr.",
+    "role": "Vice Chair"
+   },
+   {
+    "name": "Sonya Smith",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Maia Kegley",
+    "role": "Secretary"
+   },
+   {
+    "name": "Leelyn VanZile",
+    "role": "Council Member I"
+   },
+   {
+    "name": "Caleb McGeshick",
+    "role": "Council Member II"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "Named by the Wisconsin Department of Administration's list of Wisconsin tribal officials, updated 2026-07-08, because the nation publishes no council of its own. Read 2026-10-06.",
+  "rosterSource": "state-list",
+  "rosterPage": "https://doa.wi.gov/DIR/Tribal-Leaders.pdf",
+  "rosterRead": "2026-10-06",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4015": {
+  "roster": [
+   {
+    "name": "Shannon Holsey",
+    "role": "President"
+   },
+   {
+    "name": "Willy Miller",
+    "role": "Vice-President"
+   },
+   {
+    "name": "Crystal L. Malone",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Rainer Shooter",
+    "role": "Council Member"
+   },
+   {
+    "name": "Terrance Miller",
+    "role": "Council Member"
+   },
+   {
+    "name": "Terrie Terrio",
+    "role": "Council Member"
+   },
+   {
+    "name": "JOE Miller",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-06.",
+  "rosterSource": "nation",
+  "rosterPage": "https://mohican-nsn.gov/tribal-council/",
+  "rosterRead": "2026-10-06",
+  "rosterHost": null,
+  "rosterMeasured": null
+ }
+}

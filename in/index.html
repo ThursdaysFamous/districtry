@@ -4106,7 +4106,7 @@ function initIndianaExplorer() {
     { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
       bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } },
     { id: "indiana", label: "Indiana", url: "https://districtry.com/in/", emoji: "🏁", explorerName: "districtry Indiana",
-      bbox: { minLng: -88.1, minLat: 37.77, maxLng: -84.78, maxLat: 41.77 } }
+      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -11440,7 +11440,9 @@ function initIndianaExplorer() {
    * Promise.all query() doesn't fit this shape.
    *
    * opts: { id, group, label, loader, style, pointOfInterest?, coverage?,
-   *         subOf?, emptyNote?, onToggle?, fields: [...] }
+   *         subOf?, emptyNote?, onToggle?, people?, fields: [...] }
+   * people(result) => Node|null, when present, appends a person block (built
+   * with renderBodyIntro / renderPersonRows) after the field rows.
    * Each field is one of:
    *   { name, label, keys:[...], primary:true } — always shown; findPropCI(keys)
    *        with an "Unknown" fallback. Conventionally the first field (headline).
@@ -11496,7 +11498,13 @@ function initIndianaExplorer() {
             rows.push({ label: f.label, value: f.value });
           }
         });
-        return renderFieldStack(rows);
+        var card = renderFieldStack(rows);
+        // optional: a block of people the feature itself carries (a council
+        // stamped onto each boundary by its builder), built by the layer from
+        // the card helpers and placed after the identity fields
+        var people = opts.people ? opts.people(result) : null;
+        if (people) card.appendChild(people);
+        return card;
       },
       pointOfInterest: opts.pointOfInterest,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)

@@ -11,7 +11,21 @@ ride the item text verbatim), a tel: phone link and a mailto: e-mail link.
 The Board Chairman is stated as his own list item ("County Board Chairman"
 on Drew Muffler's row) — read, never inferred.
 
-FETCH POSTURE: open. Plain server-rendered HTML.
+FETCH POSTURE: open from most places, REFUSED FROM GITHUB'S BUILD MACHINES
+since 2026-10-07. Plain server-rendered HTML.
+
+Measured 2026-10-07. The scheduled run at 21:40 UTC and a re-run at 21:53
+were both answered HTTP 403 by www.grundycountyil.gov, on robots.txt and on
+this page, with this file's own client (requests + UA_ROSTER_COMPACT). The
+municipal-officials workflow's Grundy scrape got the same 403 from the same
+host at 19:43 that day, on the clerk's directory booklet. The same client from
+the project's build sandbox the same evening got HTTP 200 and 167,180 bytes,
+and every weekly run here from 2026-09-04 to 2026-09-30 was green. So the
+county's host has started turning away the address range the scheduled runs
+come from, not this client everywhere. A refusal is obeyed: nothing here
+retries, switches client or routes around it. The rebuild step is skipped on
+a failed scrape, so the shipped roster keeps last week's eighteen members and
+the card stays as it was until the host serves the runner again.
 
 Usage:
     python3 grundy_county_board_scraper.py [output.json]   # default: stdout
@@ -54,6 +68,14 @@ def main():
     require_robots_once(LIST_URL, UA["User-Agent"], headers=UA,
                         label="il-grundy-county-board-scraper")
     r = requests.get(LIST_URL, headers=UA, timeout=60)
+    if r.status_code in (401, 403):
+        # Recorded above (2026-10-07): the host refuses the build machines.
+        # Obeyed, not worked around; the shipped roster is left as it is.
+        print("grundy-board-scraper: FAIL — %s answered HTTP %d to this client. "
+              "The county's host is refusing this request, so nothing is read "
+              "and the shipped roster keeps its last-good members. See this "
+              "file's FETCH POSTURE." % (LIST_URL, r.status_code), file=sys.stderr)
+        sys.exit(1)
     r.raise_for_status()
 
     records = []

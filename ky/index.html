@@ -4109,7 +4109,9 @@ function initKentuckyExplorer() {
     { id: "minnesota", label: "Minnesota", url: "https://districtry.com/mn/", emoji: "🛶", explorerName: "districtry Minnesota",
       bbox: { minLng: -97.3, minLat: 43.44, maxLng: -89.58, maxLat: 49.44 } },
     { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
-      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } }
+      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } },
+    { id: "indiana", label: "Indiana", url: "https://districtry.com/in/", emoji: "🏁", explorerName: "districtry Indiana",
+      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -11444,7 +11446,9 @@ function initKentuckyExplorer() {
    * Promise.all query() doesn't fit this shape.
    *
    * opts: { id, group, label, loader, style, pointOfInterest?, coverage?,
-   *         subOf?, emptyNote?, onToggle?, fields: [...] }
+   *         subOf?, emptyNote?, onToggle?, people?, fields: [...] }
+   * people(result) => Node|null, when present, appends a person block (built
+   * with renderBodyIntro / renderPersonRows) after the field rows.
    * Each field is one of:
    *   { name, label, keys:[...], primary:true } — always shown; findPropCI(keys)
    *        with an "Unknown" fallback. Conventionally the first field (headline).
@@ -11500,7 +11504,13 @@ function initKentuckyExplorer() {
             rows.push({ label: f.label, value: f.value });
           }
         });
-        return renderFieldStack(rows);
+        var card = renderFieldStack(rows);
+        // optional: a block of people the feature itself carries (a council
+        // stamped onto each boundary by its builder), built by the layer from
+        // the card helpers and placed after the identity fields
+        var people = opts.people ? opts.people(result) : null;
+        if (people) card.appendChild(people);
+        return card;
       },
       pointOfInterest: opts.pointOfInterest,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
@@ -12736,10 +12746,10 @@ function initKentuckyExplorer() {
    * the State Senate, and the two trial tilings between the Senate and the
    * State House.
    *
-   * NO JUDGE IS NAMED. The Court of Justice publishes its judges, and nothing
-   * this project has found pairs a sitting judge with the district or circuit
-   * the judge was elected from, so every one of these cards names nobody and
-   * links the court's own directory. Recorded as the coverage gap ky-judges.
+   * THE JUDGES ARE NAMED, keyed by the unit the Court of Justice prints beside
+   * each one (2026-10-01); Louisville's trial judges come from the three
+   * Jefferson court sites the court's own county page links (2026-10-07). This
+   * paragraph said no judge was named when the layers first shipped.
    *
    * KENTUCKY IS NOT ILLINOIS HERE, and the difference is why these cards can
    * one day name a judge where Illinois's subcircuit card never will: a
@@ -12783,12 +12793,13 @@ function initKentuckyExplorer() {
       var asked = ((roster || {}).askedAbout || {})[askedKey];
       return {
         members: seat && seat.members ? seat.members : [],
+        readFrom: seat && seat.readFrom ? seat.readFrom : null,
         asked: asked ? asked.note : null,
         readOn: (roster || {}).readOn || null,
         failed: false
       };
     }, function () {
-      return { members: [], asked: null, readOn: null, failed: true };
+      return { members: [], readFrom: null, asked: null, readOn: null, failed: true };
     });
   }
 
@@ -12833,6 +12844,7 @@ function initKentuckyExplorer() {
         if (unit == null) return base;
         return judgesFor(tier, unit).then(function (bench) {
           base.judges = bench.members;
+          base.judgesReadFrom = bench.readFrom;
           base.askedAbout = bench.asked;
           base.rosterReadOn = bench.readOn;
           base.rosterFailed = bench.failed;
@@ -12915,11 +12927,15 @@ function initKentuckyExplorer() {
         rows.push({ label: "Drawn by", value: String(result.authority) });
       }
       if (judges.length && result.rosterReadOn) {
+        // A unit whose judges came from a court's own site (Louisville's) says
+        // so in the roster's own words, so the card cannot drift from it.
+        var from = result.judgesReadFrom && result.judgesReadFrom.note;
         rows.push({
           label: "Judges read",
-          value: String(result.rosterReadOn) +
-            ", from the Kentucky Court of Justice's own pages, which print the " +
-            "district or circuit each judge was elected from."
+          value: String(result.rosterReadOn) + ", " + (from
+            ? String(from)
+            : "from the Kentucky Court of Justice's own pages, which print the " +
+              "district or circuit each judge was elected from.")
         });
       }
       wrap.appendChild(renderFieldStack(rows));

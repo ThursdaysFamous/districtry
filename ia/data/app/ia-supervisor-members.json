@@ -1,4 +1,110 @@
 {
+ "029": {
+  "asOf": "2026-10-07",
+  "asOfWhy": "Cass County's auditor gave this pairing by e-mail on 1 October 2026; the county publishes no page that names a district, so this app has no page to re-read.",
+  "boardPhone": "(712) 243-6661",
+  "county": "Cass",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Stephen Green",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Mark O'Brien",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Wendy Richter",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Steve Baier",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Bernard Pettinger",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07"
+ },
+ "037": {
+  "boardPhone": "(641) 394-2100",
+  "county": "Chickasaw",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Steve Breitbach",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Scott Cerwinske",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Jacob Hackman",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Issac Carter",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Travis Suckow",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://chickasawcounty.iowa.gov/board_of_supervisors/"
+ },
+ "075": {
+  "boardPhone": "(319) 824-5813",
+  "county": "Grundy",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "LJ Kopsa",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Heidi Nederhoff",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Vic Vandehaar",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Mark Schildroth",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Jeffrey Pabst",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://www.grundycountyiowa.gov/departments/supervisors"
+ },
  "089": {
   "boardPhone": "(563) 547-3404",
   "county": "Howard",
@@ -21,8 +127,68 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-01",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://howardcounty.iowa.gov/board-of-supervisors/"
+ },
+ "093": {
+  "asOf": "2026-10-01",
+  "asOfWhy": "Ida County's auditor gave this pairing by e-mail on 1 October 2026; the county publishes no page that names a district, so this app has no page to re-read.",
+  "boardPhone": "(712) 364-2632",
+  "county": "Ida",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3"
+  },
+  "districts": {
+   "1": {
+    "name": "Creston Schubert",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Kyle Rohlk",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Devlun P. Whiteing",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-01"
+ },
+ "105": {
+  "boardPhone": "(319) 462-2378",
+  "county": "Jones",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "John Schlarmann",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Joe Oswald",
+    "party": "Democratic"
+   },
+   "3": {
+    "name": "Jon Zirkelbach",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Darrick Hall"
+   },
+   "5": {
+    "name": "Jeff Swisher",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://www.jonescountyiowa.gov/board_of_supervisors/"
  },
  "119": {
   "boardPhone": "(712) 472-8517",
@@ -56,7 +222,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-01",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://lyoncounty.iowa.gov/supervisors/"
  },
  "133": {
@@ -81,8 +247,44 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-01",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://www.mononacountyiowa.gov/supervisors/"
+ },
+ "143": {
+  "asOf": "2026-10-06",
+  "asOfWhy": "Osceola County's auditor gave this pairing by e-mail on 1 October 2026 and corrected it on 6 October; the county publishes no page that names a district, so this app has no page to re-read.",
+  "boardPhone": "(712) 754-2241",
+  "county": "Osceola",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "LeRoy DeBoer",
+    "party": "No party"
+   },
+   "2": {
+    "name": "Jayson Vande Hoef",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Mike Schulte",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Jerry Helmers",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Jeff Loring",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-06"
  },
  "151": {
   "boardPhone": "(712) 335-3361",
@@ -116,7 +318,167 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-01",
+  "readOn": "2026-10-07",
   "sourceUrl": "https://pocahontascounty.iowa.gov/board-of-supervisors/"
+ },
+ "153": {
+  "boardPhone": "(515) 286-3120",
+  "county": "Polk",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Matt McCoy",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Jill Altringer",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Mark Holm",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Tom Hockensmith",
+    "party": "Democratic"
+   },
+   "5": {
+    "name": "Angela Connolly",
+    "party": "Democratic"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://www.polkcountyiowa.gov/board-of-supervisors/"
+ },
+ "167": {
+  "asOf": "2026-10-01",
+  "asOfWhy": "Sioux County's auditor's office gave this pairing by e-mail on 1 October 2026; this app reads no page of the county's own site, so it has no page to re-read.",
+  "boardPhone": "(712) 737-2216",
+  "county": "Sioux",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "John Degen",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Jerry Muilenburg",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Dan Altena",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Carl L. Vande Weerd",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Craig Hoftyzer",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-01"
+ },
+ "171": {
+  "county": "Tama",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Curt Hilmer"
+   },
+   "2": {
+    "name": "David Turner"
+   },
+   "3": {
+    "name": "Heather Knebel"
+   },
+   "4": {
+    "name": "Mark Doland"
+   },
+   "5": {
+    "name": "Curt Kupka"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://www.tamacounty.iowa.gov/supervisors/"
+ },
+ "183": {
+  "boardPhone": "(319) 653-7711",
+  "county": "Washington",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Jack Seward Jr.",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Bob Yoder",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Marcus Fedler",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Stan Stoops",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Richard Young",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://washingtoncounty.iowa.gov/148/Board-of-Supervisors"
+ },
+ "189": {
+  "boardPhone": "(641) 585-3412",
+  "county": "Winnebago",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3"
+  },
+  "districts": {
+   "1": {
+    "name": "Terry Durby",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Susan Smith",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Bill Jensvold",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://www.winnebagocountyiowa.gov/board_of_supervisors/"
  }
 }

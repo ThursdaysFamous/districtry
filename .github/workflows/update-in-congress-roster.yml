@@ -81,17 +81,18 @@ jobs:
           # is deliberately unshallowed too.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          # NOTHING ELSE IS REGENERATED HERE, and that is a measurement rather
-          # than an omission: Indiana is not in build_legislator_pages.INSTANCES
-          # or build_officeholder_tables', so no generated page carries these
-          # nine names, and it is in no sitemap while it is dark. THE DAY
-          # INDIANA GAINS A congress.html, this step must regenerate it and
-          # sitemap.xml with it — build_officeholder_tables.py --check FAILS a
-          # roster workflow that rewrites a roster its pages read without
-          # regenerating them, which is exactly the failure that would land on
-          # this bot's own PR.
+          # THE PAGES THAT READ THIS ROSTER ARE REGENERATED HERE since the
+          # go-live change (2026-10-07). Until then this step rebuilt the data
+          # file alone, because no page carried these names. in/congress.html
+          # now carries a GENERATED table of this roster, and about.html and
+          # sitemap.xml count it, so all three are regenerated and staged in the
+          # same `git add` — otherwise this workflow's own bot PR fails those
+          # pages' --check on numbers it is not about.
           python3 in/scripts/build_congress_roster.py
-          git add in/data/app/congress-roster.json
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add in/data/app/congress-roster.json in/congress.html about.html sitemap.xml
           git commit -m "Update U.S. House (IN) roster from congress-legislators"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

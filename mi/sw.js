@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-mi-shell-v18";
+const CACHE_NAME = "districtry-mi-shell-v19";
 
 const SHELL_URLS = [
   "./",
@@ -103,6 +103,7 @@ const GEOMETRY_URLS = [
 // and must never be served stale — network-first, with the cached copy only
 // as an offline fallback. Same freshness rule as the shell.
 const ROSTER_URLS = [
+  "./data/app/tribal-councils.json",
   "./data/app/congress-roster.json",
   "./data/app/mi-senate-members.json",
   "./data/app/mi-house-members.json",

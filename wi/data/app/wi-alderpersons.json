@@ -1008,6 +1008,46 @@
   "seats": 10,
   "sourceUrl": "https://www.manitowoc.org/78/Meet-Your-Alderperson"
  },
+ "49400": {
+  "districts": 3,
+  "members": {
+   "21": [
+    {
+     "email": "wtucker@cityofmarionwi.gov",
+     "name": "Wanda Tucker",
+     "phone": "(715) 851-9038"
+    },
+    {
+     "email": "nwestemeier@cityofmarionwi.gov",
+     "name": "Neal Westemeier"
+    }
+   ],
+   "22": [
+    {
+     "email": "alderpersonward2e@cityofmarionwi.gov",
+     "name": "David Mattes",
+     "phone": "(715) 754-2652"
+    }
+   ],
+   "23": [
+    {
+     "email": "hfaeling@cityofmarionwi.gov",
+     "name": "Harry Faehling",
+     "phone": "(715) 250-0253"
+    },
+    {
+     "email": "jlarson@cityofmarionwi.gov",
+     "name": "Joe Larson"
+    }
+   ]
+  },
+  "municipality": "Marion",
+  "seats": 6,
+  "sourceUrl": "https://public4.co.waupaca.wi.us/CountyDirectory",
+  "vacantSeats": {
+   "22": 1
+  }
+ },
  "50825": {
   "districts": 8,
   "members": {
@@ -2286,6 +2326,7 @@
    "02": [
     {
      "name": "Derek Collins",
+     "phone": "(414) 793-5733",
      "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/530/221"
     }
    ],
@@ -2355,6 +2396,7 @@
    "12": [
     {
      "name": "Scott Small",
+     "phone": "(920) 342-1128",
      "url": "https://www.wauwatosa.net/Home/Components/StaffDirectory/StaffDirectory/536/221"
     }
    ]

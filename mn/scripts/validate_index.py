@@ -88,7 +88,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 14
+MIN_REGISTER_LAYER = 15
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -96,10 +96,11 @@ MIN_REGISTER_LAYER = 14
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "mn-judicial-district", "mn-senate", "county", "mn-house",
-    "school-district-unified", "county-commissioner", "zip-code",
-    "school-district-elementary", "county-subdivision", "voting-precinct",
-    "municipality", "school-district-secondary", "police-station",
-    "fire-station", "post-office",
+    "watershed-district", "school-district-unified", "school-board-district",
+    "county-commissioner", "zip-code", "school-district-elementary",
+    "county-subdivision", "voting-precinct", "municipality",
+    "school-district-secondary", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -108,15 +109,20 @@ GEOMETRY_FILES = {
     "state-counties.json": (87, 87),  # Every county, pre-built from TIGERweb State_County layer 1.
     "congress-districts.json": (8, 8),  # U.S. House districts, pre-built from TIGERweb Legislative layer 0.
     "mn-judicial-districts.json": (10, 10),  # The ten judicial districts, dissolved from state-counties.json by mn/scripts/build_mn_judicial_districts.py. The county membership is parsed out of Minn. Stat. 2.722 subd. 1 on every run rather than transcribed, and the write is gated three ways: the statute's lists must partition all 87 counties, the Secretary of State's judicial-district attribute on all 4,105 precincts must agree county by county, and every county's own interior anchor must land in exactly its own district.
+    "mn-watershed-districts.json": (55, 80),  # Every watershed district and watershed management organization, from BWSR's statewide feature service by mn/scripts/build_mn_watershed_districts.py. Shipped as the state draws them, overlaps included (56 pairs touch by more than a square metre, mostly edge slivers), and gated on 2,000 statewide and 2,000 metro sample points getting the same set of bodies as the source.
     "mn-senate-districts.json": (67, 67),  # Minnesota Senate districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate, plus the 67-of-67 nesting gate against the House layer).
     "mn-house-districts.json": (134, 134),  # Minnesota House districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate; the A/B pair of each Senate district shares its every boundary vertex).
     "mn-commissioner-districts.json": (447, 447),  # Every county commissioner district in Minnesota, pre-built by mn/scripts/build_mn_commissioner_districts.py: the Secretary of State's 4,105 precincts dissolved on the commissioner district each one carries, so no line is drawn that a precinct boundary does not already draw. Six gates must pass before it writes — Minn. Stat. 375.01 and 375.025 read live, giving a 447-district partition of all 87 counties with consecutive numbering and a board size the statute allows; seven county governments' own layers agreeing about every one of the 785 precincts they cover; the certified 2024 and 2022 per-precinct results agreeing as dated snapshots; no point inside one district inside a second; and all 87 county anchors landing in exactly their own county's district, Cook's declared outside the fabric because it sits in Lake Superior. Simplified at a 15 m Douglas-Peucker interval over ONE shared topology, taken from the fabric's own 16.09 m median segment, so neighbouring districts share their border exactly.
     "mn-precincts.json": (4105, 4105),  # Every Minnesota voting precinct, pre-built by mn/scripts/build_mn_precincts.py from the Secretary of State's own statewide service (paged at the service's 2,000-record cap; Douglas-Peucker at a 4 m interval; a 6,000-point agreement gate, measured 99.98% with zero overlaps; an exact 4,105 count floor on both the fetch and the simplified output). This instance's largest file at 1.67 MB gzipped, fetched only when a reader switches the layer on.
+    "mn-school-board-districts.json": (60, 90),  # Board election districts of the 13 Minnesota school boards that elect by district and whose results place them, drawn by mn/scripts/build_mn_school_board_districts.py from the Secretary of State's precinct-level results, read in each election's own precincts and cut to the Census school district. 59 districts, 4 split precincts shipped as their own features naming every district they vote in, and 5 pieces the results do not place (Duluth's combined polling places among them). Gated on the districts' precincts being disjoint, on no two features overlapping, on every seat being one the roster names, and on Minneapolis's six agreeing with the city's own park commissioner districts. Simplified at a 15 m Douglas-Peucker interval over one shared topology.
 }
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
     "congress-roster.json": 8,  # U.S. House roster, refreshed weekly by update-mn-congress-roster.yml.
+    "mn-county-commissioners.json": 447,  # All 447 county commissioner districts, each naming the winner of its most recent election in the Secretary of State's results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_commissioner_roster.py (update-mn-commissioner-roster.yml).
+    "mn-city-councils.json": 43,  # The mayor and council of each of Minnesota's 43 cities above 25,000 people, each seat naming the winner of its most recent election in the Secretary of State's city results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_city_councils.py (update-mn-city-councils.yml).
+    "mn-school-boards.json": 310,  # The elected board of each Minnesota school district whose elections the Secretary of State reports, keyed by the Census district id, each seat naming the winner of its most recent election and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_school_boards.py (update-mn-school-boards.yml).
     "coverage-gaps.json": 0,  # The Data gaps panel's content, emitted from docs/DATA_LAYER_GUIDEBOOK.md's gaps block: the county commissioner roster, the two legislature rosters, and the county officers.
 }
 

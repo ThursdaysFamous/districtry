@@ -828,7 +828,11 @@ try {
 
       // The City or Village card names the whole council for a city the
       // roster carries, and keeps its "not named here" sentence for one it
-      // does not (Lansing, whose council page builds its list in the browser).
+      // does not (Norton Shores, whose robots.txt refuses this client; the
+      // point is inside GEOID 2659140 per TIGERweb, 2026-10-06). Lansing was
+      // the example until 2026-10-06, when its council joined the roster
+      // through the content service its page reads, so it is now the second
+      // positive case: the one roster entry not read from a page's own HTML.
       const page = await booted(context, `${BASE}#point=42.50057,-83.00112&layers=municipality`);
       await cardText(page, "municipality");
       const muni = await page.evaluate(() => {
@@ -840,10 +844,21 @@ try {
         warren.every((n) => muni.includes(n)) && muni.length === warren.length, JSON.stringify(muni));
       await page.close();
       const lansing = await booted(context, `${BASE}#point=42.73370,-84.55530&layers=municipality`);
-      const lcard = await cardText(lansing, "municipality");
-      check("a city the roster does not carry keeps its 'not named here' sentence",
-        /Not named here/.test(lcard.text || ""), (lcard.text || "").slice(0, 130));
+      await cardText(lansing, "municipality");
+      const lnames = await lansing.evaluate(() => {
+        const el = document.getElementById("card-municipality");
+        return el ? [...el.querySelectorAll(".card-person-name")].map((n) => n.textContent) : [];
+      });
+      const lroster = boards["2646000"].members.map((m) => m.name);
+      check("the City or Village card names Lansing's whole council",
+        lroster.length === 8 && lroster.every((n) => lnames.includes(n)) && lnames.length === 8,
+        JSON.stringify(lnames));
       await lansing.close();
+      const norton = await booted(context, `${BASE}#point=43.16890,-86.26390&layers=municipality`);
+      const ncard = await cardText(norton, "municipality");
+      check("a city the roster does not carry keeps its 'not named here' sentence",
+        /Not named here/.test(ncard.text || ""), (ncard.text || "").slice(0, 130));
+      await norton.close();
     }
 
     // BATTLE CREEK, the fifth entry, and the one whose card is built to defeat
@@ -1179,16 +1194,15 @@ try {
       await page.close();
     }
 
-    // A SEAT WITHHELD BECAUSE THE COUNTY CONTRADICTS ITSELF IS A FOURTH STATE,
-    // and it has to read differently from a named district, from a row that
-    // names nobody, and from a county the roster has not reached. Lenawee
-    // District 5 is the case: its directory lists Jim Daly while the same
-    // county's News Flash of 10 September 2026 announces his death and says he
-    // represented District 5. The card must (a) still be District 5, (b) name
-    // nobody, (c) NOT name Daly, which is what reading the directory alone
-    // would do, (d) state the contradiction rather than the generic
-    // names-nobody sentence, and (e) not read as a county the roster has
-    // not reached, since the other eight districts are named.
+    // A SEAT WITHHELD BECAUSE THE COUNTY CONTRADICTED ITSELF, AND THEN FILLED.
+    // Lenawee District 5 was withheld from 2026-09-15: the directory listed
+    // Jim Daly while the county's own News Flash of 10 September 2026
+    // announced his death. The board interviewed applicants to fill the seat
+    // by appointment on 28 September 2026 and the directory now lists Gordon
+    // D. Gauss, so the builder's hold-back retired itself and the seat ships
+    // named. The card must (a) still be District 5, (b) name Gauss, and
+    // (c) name Daly nowhere, which is what a stale hold-back or a stale
+    // directory would print.
     {
       const page = await booted(context,
         `${BASE}#point=41.89741,-84.02485&layers=county-commissioner`);
@@ -1200,31 +1214,17 @@ try {
       });
       const people = await page.evaluate(() => {
         const el = document.getElementById("card-county-commissioner");
-        return el ? el.querySelectorAll(".card-person").length : -1;
+        return el ? Array.from(el.querySelectorAll(".card-person-name"), (n) => n.textContent.trim()) : null;
       });
       const text = card.text || "";
       check("Lenawee District 5 still resolves to its own district",
         pill === "District 5", `pill=${JSON.stringify(pill)}`);
-      check("Lenawee District 5 names nobody",
-        people === 0, `personRows=${people} :: ${text.slice(0, 200)}`);
-      // The note NAMES Daly on purpose: a reader cannot check the county's own
-      // notice against its own directory without the name, and the sentence
-      // says he has died rather than presenting him as the sitting member. So
-      // the assertion is the one that matters — the shipped roster carries no
-      // name for this seat at all, which is what a card could otherwise read.
-      const rosterName = await page.evaluate(async () => {
-        const res = await fetch("data/app/mi-commissioner-members.json");
-        const all = await res.json();
-        const d = all["091"] && all["091"].districts;
-        return d && d["5"] ? (d["5"].name || null) : null;
-      });
-      check("the shipped roster carries no name for Lenawee District 5",
-        rosterName === null, `roster name=${JSON.stringify(rosterName)}`);
-      check("Lenawee District 5 states the contradiction, not the generic absence",
-        /News Flash of 10 September 2026/.test(text)
-          && !/carries no commissioner's name/.test(text), text.slice(0, 260));
-      check("Lenawee District 5 is not told the county is unreached",
-        !/this county is not done/.test(text), text.slice(0, 240));
+      check("Lenawee District 5 names its appointee, Gordon D. Gauss",
+        Array.isArray(people) && people.length === 1 && /Gauss/.test(people[0]),
+        `people=${JSON.stringify(people)} :: ${text.slice(0, 200)}`);
+      check("Lenawee District 5 no longer names or explains Jim Daly",
+        !/Daly/.test(text) && !/News Flash of 10 September 2026/.test(text),
+        text.slice(0, 260));
       await page.close();
     }
 

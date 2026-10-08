@@ -140,6 +140,14 @@ EXPECT_MEMBERS = {
                                      # names came by her reply of 2026-10-01. No e-mail
                                      # and no office ships: she assigns neither and the
                                      # county publishes no page to carry one.
+    "JOHNSON": 3,                    # 2026-10-07; the FOURTH no-website county
+                                     # (DOCUMENT_ROSTERS). At-large proven from the
+                                     # county's certified gbsvote canvasses — one "FOR
+                                     # COUNTY COMMISSIONER" contest at 16 of 16 precincts
+                                     # in the 2022 and 2024 generals and the 2026 primary.
+                                     # The Clerk had written on 2026-07-21 that the county
+                                     # has no website; the three names, with the chair and
+                                     # vice-chair, came by her reply of 2026-10-07.
     "WABASH": 3,                     # 2026-08-16; commission form stated in writing by
                                      # Clerk Will 2026-08-05, the three names sent by her
                                      # e-mail 2026-08-16. The SECOND no-website county

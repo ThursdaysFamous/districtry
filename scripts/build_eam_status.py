@@ -179,7 +179,7 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 # Counted from a coverage list instead, E would measure nothing: a state serves
 # every county it has listed, by construction.
 STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
-                  "ky": 120, "ny": 62}
+                  "ky": 120, "ny": 62, "in": 92}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -1553,20 +1553,30 @@ ANSWERS = {
         # control (gap mn-judicial-roster).
         "courts-by-district": answers("mn-judicial-district"),
         "sub-county-government": OPEN,
-        # SETTLED 2026-10-01 by this instance's own thread, and the answer is
-        # that the level exists but only where a district has opted into it:
-        # Minn. Stat. 205A.12 subds. 1-5 let a school district divide itself
-        # into from three to seven election districts by board resolution or
-        # by petition, and a district that has not done so elects its whole
-        # board at large. So this is OPEN rather than the standard's "the
-        # state does not have the level" case — and which districts have opted
-        # in is not published anywhere this project has found, which is the
-        # work the level is waiting on (mn/WATCH.md).
-        "school-boards-by-district": OPEN,
+        # SETTLED 2026-10-01 by this instance's own thread: the level exists
+        # only where a district has opted into it (Minn. Stat. 205A.12 subds.
+        # 1-5 — three to seven election districts by board resolution or
+        # petition; every other board is elected at large). ANSWERED
+        # 2026-10-08 (#1429): the Secretary of State's precinct results name
+        # which boards file district offices, and school-board-district draws
+        # the 59 districts of the 13 that elect by geography, each from the
+        # precincts that voted in its seat's latest contest. Anoka-Hennepin is
+        # the one not drawn — its odd-year results are by shared polling place
+        # — and carries gap mn-school-board-election-districts, the shape
+        # Wisconsin's mps-school-board answer already has.
+        "school-boards-by-district": answers("school-board-district"),
         # The Secretary of State publishes all 4,105 precincts statewide, from
         # the office that maintains them, and the app draws them.
         "precincts": answers("voting-precinct"),
-        "special-districts": OPEN,
+        # Watershed districts (Minn. Stat. ch. 103D) and the metro area's
+        # watershed management organizations (103B.211), from the Board of
+        # Water and Soil Resources' own statewide layer, 2026-10-06. Both can
+        # levy a property tax, and the state's own law creates both — the
+        # Wisconsin and Michigan precedent of one statewide family answering
+        # this level. Not the only family Minnesota has: the Secretary of
+        # State's precinct service also carries soil-and-water, hospital and
+        # park districts, which are further layers rather than a gap here.
+        "special-districts": answers("watershed-district"),
         "tribal-government": OPEN,
     },
     "ky": {
@@ -1592,10 +1602,10 @@ ANSWERS = {
         # already ships — no publisher asked and no map read. Measured
         # 2026-10-01, each one partitions all 120 counties exactly once. Three
         # files answer four courts because KRS 22A.010(2) gives the Court of
-        # Appeals the Supreme Court's own districts. No judge is NAMED on any of
-        # the four cards, and that is the coverage gap ky-judges rather than a
-        # hole in this level: the standard asks whether the app answers the
-        # level, and the county tier is where it asks for people by name.
+        # Appeals the Supreme Court's own districts. Every unit's judges are
+        # named since 2026-10-07 (Louisville's from the three Jefferson court
+        # sites its Court of Justice page links), though the standard asks
+        # whether the app answers the level and would count it without them.
         "courts-by-district": answers(
             "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
             "ky-district-court"),
@@ -1634,6 +1644,29 @@ ANSWERS = {
             "state reservation, no off-reservation trust land and no tribal "
             "statistical area anywhere in the state, measured 2026-10-01 with "
             "controls in North Carolina and Wisconsin."),
+    },
+    # Indiana, added at its 2026-10-07 go-live with the national tier only.
+    # Every level it does not draw is OPEN rather than na: Indiana has every
+    # one of them (two county bodies, 1,004 civil townships, elected school
+    # boards, circuit courts by county, precincts, and one piece of Pokagon
+    # trust land), and this app simply does not answer them yet.
+    "in": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("in-senate", "in-house"),
+        "county-boundaries": answers("county"),
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        # UNIFIED ALONE TILES THE STATE: TIGERweb's elementary and secondary
+        # school layers both answer zero features for STATE='18' (measured
+        # 2026-09-29), so there is no second tiling to ship.
+        "school-district-boundaries": answers("school-district-unified"),
+        "courts-by-district": OPEN,
+        "sub-county-government": OPEN,
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": OPEN,
     },
     "ny": {
         "us-house": answers("congress"),
@@ -1721,6 +1754,9 @@ CITY_ROSTERS = {
     # township (a county subdivision), which is the id the expected-units
     # measurement carries for each.
     "mi": [("mi/data/app/mi-municipal-officials.json", "geoid7")],
+    # Election winners from the Secretary of State's city results files, keyed
+    # by the city's Census id, each seat dated to the election that filled it.
+    "mn": [("mn/data/app/mn-city-councils.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is
@@ -1848,7 +1884,7 @@ def load_expected_units():
 # The state each statewide app answers for, for the one join that needs it: a
 # Wisconsin roster is keyed by the five-digit place code inside the state.
 STATE_FIPS_OF = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
-                 "mn": "27", "ky": "21", "ny": "36"}
+                 "mn": "27", "ky": "21", "ny": "36", "in": "18"}
 
 
 def _named_anywhere(record):

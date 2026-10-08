@@ -49,7 +49,9 @@
     { "id": "minnesota", "label": "Minnesota", "url": "https://districtry.com/mn/", "emoji": "🛶", "explorer_name": "districtry Minnesota",
       "bbox": { "minLng": -97.3, "minLat": 43.44, "maxLng": -89.58, "maxLat": 49.44 } },
     { "id": "kentucky", "label": "Kentucky", "url": "https://districtry.com/ky/", "emoji": "🐎", "explorer_name": "districtry Kentucky",
-      "bbox": { "minLng": -89.62, "minLat": 36.45, "maxLng": -81.91, "maxLat": 39.2 } }
+      "bbox": { "minLng": -89.62, "minLat": 36.45, "maxLng": -81.91, "maxLat": 39.2 } },
+    { "id": "indiana", "label": "Indiana", "url": "https://districtry.com/in/", "emoji": "🏁", "explorer_name": "districtry Indiana",
+      "bbox": { "minLng": -88.1, "minLat": 37.83, "maxLng": -84.78, "maxLat": 41.77 } }
   ],
   "hover_number_keys": [
     [
@@ -980,7 +982,7 @@
   "negative_point": {
     "lat": 41.7,
     "lng": -87.1,
-    "note": "Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Three of those are live instances, Indiana is published dark, and Kentucky and Missouri are both on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing \"where we serve\" bound to suit a test. So the point stays and the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; check 1i is where Illinois asserts fleet routing, on its own points."
+    "note": "Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Five of those are live instances (Indiana went live on 2026-10-07, and its outline contains this point) and Missouri is on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing \"where we serve\" bound to suit a test. So the point stays and the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; check 1i is where Illinois asserts fleet routing, on its own points."
   },
   "coverage_key": {
     "outside": "Outside Illinois",
@@ -3253,6 +3255,11 @@
         "file": "wayne-county-board-members.json",
         "min_keys": 7,
         "note": "Wayne County Board members keyed by district (7 districts x 2 members = 14 seats). Scraped weekly from the county's own board page — the SAME page the district composition was read from, so re-scraping it every week is this county's redistricting tripwire (the builder fails if a district's re-read precinct list stops matching the shipped composition; District 7 is checked as the known subset, since the page has never named Fairfield 1 or Fairfield 2). Each district's paragraph names two members with an optional Chairman or Vice Chairman title — Daryl Hargrave (D1) and Gene Kollak (D7) hold the two titles the page states. No e-mail, phone, party or term is published, so none ships."
+      },
+      {
+        "file": "christian-county-board-members.json",
+        "min_keys": 4,
+        "note": "Christian County Board members keyed by district (4 districts x 4 members = 16 seats). A DOCUMENT ROSTER, NOT A SCRAPE: christiancountyil.gov has answered every client with a Cloudflare managed challenge since 2026-09-15, an access control this project does not work around, so County Clerk Jodie L. Badman's e-mail of 2026-10-07 is the source — two screenshots of the county's own County Board Members list. Built by scripts/build_christian_county_board.py from a table in that script, which checks each district's count against the seats the shipped board districts carry and prints the document's age on every run. Each member's home city and ZIP, printed on the list, never ships. The list's term-length column and any chair or vice chair do not ship either: the first is a length rather than an end date, and the list marks no chair."
       },
       {
         "file": "clay-county-board-members.json",

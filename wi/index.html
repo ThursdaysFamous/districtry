@@ -4105,7 +4105,9 @@ function initWisconsinExplorer() {
     { id: "minnesota", label: "Minnesota", url: "https://districtry.com/mn/", emoji: "🛶", explorerName: "districtry Minnesota",
       bbox: { minLng: -97.3, minLat: 43.44, maxLng: -89.58, maxLat: 49.44 } },
     { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
-      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } }
+      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } },
+    { id: "indiana", label: "Indiana", url: "https://districtry.com/in/", emoji: "🏁", explorerName: "districtry Indiana",
+      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -8386,7 +8388,7 @@ function initWisconsinExplorer() {
     "zip-code",          // Census ZCTAs by Wisconsin envelope (the ZCTA layer has no STATE field); server-generalized
     "mpd-district",      // Milwaukee's seven police districts — a seventh of the city each, the largest of the city-scoped tier; the fleet's second city police-district layer
     "mps-school-board",  // the two school boards Wisconsin elects BY DISTRICT — Milwaukee's eight and Racine Unified's nine; every other board in the state is at large and has no geometry to draw
-    "tribal-government", // Tribal land — Wisconsin has 21 pieces across 12 nations, from the Menominee Reservation's 934.539 km² down to a 1.339 km² Oneida trust parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 8.969 km² MEDIAN, which sits just above the Milwaukee squad areas' measured 8.852 and well above the aldermanic fabric's 3.064, and below the county-board fabric's 47.147 — medians rather than means, because one reservation is a hundred times the size of a trust parcel and a mean would rank this layer by Menominee alone. The rank governs draw order only. Partial coverage: most of Wisconsin is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 2 of them in Wisconsin and both Menominee's — the 2020 population, and NOBODY: the authority for a council is each nation's own published list. Ten of the twelve publish one that answers this project and is not carried yet, and the card gives that page and the date it answered; two cannot be read at all, one behind a managed challenge and one publishing no council page, and the card says which. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
+    "tribal-government", // Tribal land — Wisconsin has 21 pieces across 12 nations, from the Menominee Reservation's 934.539 km² down to a 1.339 km² Oneida trust parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 8.969 km² MEDIAN, which sits just above the Milwaukee squad areas' measured 8.852 and well above the aldermanic fabric's 3.064, and below the county-board fabric's 47.147 — medians rather than means, because one reservation is a hundred times the size of a trust parcel and a mean would rank this layer by Menominee alone. The rank governs draw order only. Partial coverage: most of Wisconsin is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 2 of them in Wisconsin and both Menominee's — the 2020 population, and the council: the authority for who sits on it is each nation's own published list. Ten of the twelve publish one this project reads weekly, and the card names that council with the date it was read and a link to the page; the other two (Lac du Flambeau and Sokaogon) publish no council page at all, and for those the card names the council the Wisconsin Department of Administration lists and says so, with that list's own date. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "mpd-squad-area",    // The 25 MPD patrol squad areas — a twenty-fifth of the city each, nested inside the seven police districts (subOf), between the MPS board's eighths and the aldermanic fabric
     "aldermanic-district", // 866 city and village council districts — each a union of wards, smaller than a ZCTA, above the ward layer they dissolve from
     "ward",              // 7,161 municipal wards — the ballot sub-unit every district is built from; smaller than a ZCTA on average, above the amenity points
@@ -11461,7 +11463,9 @@ function initWisconsinExplorer() {
    * Promise.all query() doesn't fit this shape.
    *
    * opts: { id, group, label, loader, style, pointOfInterest?, coverage?,
-   *         subOf?, emptyNote?, onToggle?, fields: [...] }
+   *         subOf?, emptyNote?, onToggle?, people?, fields: [...] }
+   * people(result) => Node|null, when present, appends a person block (built
+   * with renderBodyIntro / renderPersonRows) after the field rows.
    * Each field is one of:
    *   { name, label, keys:[...], primary:true } — always shown; findPropCI(keys)
    *        with an "Unknown" fallback. Conventionally the first field (headline).
@@ -11517,7 +11521,13 @@ function initWisconsinExplorer() {
             rows.push({ label: f.label, value: f.value });
           }
         });
-        return renderFieldStack(rows);
+        var card = renderFieldStack(rows);
+        // optional: a block of people the feature itself carries (a council
+        // stamped onto each boundary by its builder), built by the layer from
+        // the card helpers and placed after the identity fields
+        var people = opts.people ? opts.people(result) : null;
+        if (people) card.appendChild(people);
+        return card;
       },
       pointOfInterest: opts.pointOfInterest,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
@@ -14136,12 +14146,15 @@ function initWisconsinExplorer() {
   //   Weyauwega  cityofweyauwega-wi.gov/mayor-and-common-council carries
   //              exactly three headings: Aldermanic District One, Two, Three.
   // The city is the publisher of its own district names, so this table renames
-  // those three. MARION IS DELIBERATELY ABSENT: its site refuses this client
-  // (robots.txt Disallow: /), so its council size is unread, and its `01` is
-  // the Shawano County part of a city that straddles two counties — measured
-  // against TIGERweb, not inferred — which the two counties file under two
-  // schemes. A guessed renumbering there would invent a district count. The
-  // ask for Marion's own wording is in docs/ASK_DRAFTS.md; see wi/WATCH.md.
+  // those three. MARION JOINED ON 2026-10-07, from its county rather than its
+  // own site, which refuses this client (robots.txt Disallow: /):
+  //   Marion     Waupaca County's Directory of Public Officials lists the
+  //              council as Aldermanic District 1, 2 and 3, and the county's
+  //              April 2026 sample ballot puts wards 1 and 4 together in
+  //              District 1. The state files ward 4 (the Shawano County part)
+  //              as 01 and wards 1-3 as 21-23, so the aldermanic builder's
+  //              LOCAL_RECODE moves ward 4 onto 21 and this table prints
+  //              21-23 as 1-3. See wi/scripts/build_wi_aldermanic_districts.py.
   // ALDERID AND KEY ARE UNTOUCHED, so the roster join, the vector-tile key and
   // the dissolve all still read the filed value and only the label moves.
   // wi/scripts/validate_index.py holds this table to the shipped boundary
@@ -14149,6 +14162,7 @@ function initWisconsinExplorer() {
   // does a municipality this table renames only part of.
   var ALDER_DISTRICT_LABELS = {
     "48350": { "11": "1", "12": "2", "13": "3" },                        // Manawa
+    "49400": { "21": "1", "22": "2", "23": "3" },                        // Marion
     "84375": { "41": "1", "42": "2", "43": "3", "44": "4", "45": "5" },   // Waupaca
     "86400": { "51": "1", "52": "2", "53": "3" }                          // Weyauwega
   };
@@ -15115,19 +15129,18 @@ function initWisconsinExplorer() {
    * draws two tribal subdivisions, both of them Menominee's, on Wisconsin's tribal land, measured against the 484 it
    * draws nationwide.
    *
-   * WHY THE CARD NAMES NOBODY. The authority for who sits on a nation's
-   * council is that nation's own published list, and this app does not carry
-   * those names yet. Ten of the twelve nations publish a council page that
-   * answers this project, measured 2026-10-01, and the card gives that page
-   * and that date so a reader is sent somewhere rather than told an absence
-   * with no remedy. The other two cannot be read at all: one host answers some
-   * requests with a managed challenge, which is an access control and is
-   * never worked around, and one nation publishes no council page at all,
-   * measured through its whole navigation. The reason is carried on the feature
-   * (rosterWhy) rather than written here, so the card states a measurement
-   * rather than a sentence somebody typed, and the two tables behind it —
-   * ROSTER_BLOCKED and ROSTER_NOT_READ in scripts/build_tribal_areas.py —
-   * are re-audited on every run.
+   * WHO THE CARD NAMES. The authority for who sits on a nation's council is
+   * that nation's own published list. Ten of Wisconsin's twelve nations
+   * publish one this project can read, and the card names that council with
+   * the date it was read and a link to the page. The other two publish no
+   * council at all, and for those the card names the council the Wisconsin
+   * Department of Administration lists, says so, and gives that list's own
+   * date — a state's list of another government's officials, used only where
+   * the nation publishes nothing, because on 2026-10-06 it was already behind
+   * four nations' own pages. The names are read from a file rather than
+   * written here: scripts/tribal_council_scraper.py reads the councils
+   * weekly and build_tribal_areas.py --rosters writes them to
+   * data/app/tribal-councils.json, which the loader merges onto the land.
    *
    * PARTIAL COVERAGE, like the neighbourhood and district layers: most points
    * in Wisconsin are on no tribal land, so the layer declares its own emptyNote
@@ -15140,8 +15153,29 @@ function initWisconsinExplorer() {
    * Affairs' list of governments — one reader per publisher, so eight
    * instances cannot come to disagree.
    * ======================================================================= */
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // Each council is merged onto its nation's land here, once, so the card,
+  // the hover and the relationship outlines all read one set of properties.
+  // A councils file that cannot be read leaves the land answering on its own
+  // rather than failing the layer.
   var loadWiTribalAreas = makeCached(function () {
-    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = both[1] || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
   });
 
   registerPolygonLayer({
@@ -15170,6 +15204,10 @@ function initWisconsinExplorer() {
       // builder recorded, so the card cannot drift from it.
       { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
       { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      // where the council's names came from and when, and the page they were
+      // read from: the builder writes both, and the people block below shows them
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
       // extracted for primaryLink only — the hidden-column shape the other
       // link-carrying layers in this app use for the same purpose
       { name: "url", label: "", keys: ["url"], when: function () { return false; } },
@@ -15184,6 +15222,40 @@ function initWisconsinExplorer() {
                  url: String(result.url) };
       }
       return null;
+    },
+    // THE COUNCIL, where the nation's own page names it (or, for two
+    // Wisconsin nations that publish no council at all, the state's list of
+    // tribal officials, which the note says). Read weekly by
+    // scripts/tribal_council_scraper.py and written by build_tribal_areas.py
+    // --rosters to tribal-councils.json, which the loader above merges onto
+    // each piece of land, so the card makes no request of its own. Each row is the person and their office
+    // as the nation prints them; a district, where a nation elects by
+    // district, is its own membership district and not a shape on this map.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" \u00b7 ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from \u2197",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
     },
     emptyNote: "This point is not on tribal land. Wisconsin has 21 tribal areas across 12 nations \u2014 eleven reservations and ten pieces of off-reservation trust land \u2014 and this point is on none of them."
   });

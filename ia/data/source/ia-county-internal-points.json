@@ -1,6 +1,6 @@
 {
- "measured": "2026-10-01",
- "note": "The Census's own internal point per county — guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
+ "measured": "2026-10-07",
+ "note": "The Census's own internal point per county \u2014 guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
  "points": {
   "adair": {
    "fips": "001",
@@ -44,26 +44,12 @@
    "name": "Calhoun County",
    "slug": "calhoun"
   },
-  "cass": {
-   "fips": "029",
-   "lat": 41.3338233,
-   "lng": -94.9333006,
-   "name": "Cass County",
-   "slug": "cass"
-  },
   "cerro-gordo": {
    "fips": "033",
    "lat": 43.0749751,
    "lng": -93.2509646,
    "name": "Cerro Gordo County",
    "slug": "cerro-gordo"
-  },
-  "chickasaw": {
-   "fips": "037",
-   "lat": 43.0597409,
-   "lng": -92.3172101,
-   "name": "Chickasaw County",
-   "slug": "chickasaw"
   },
   "dickinson": {
    "fips": "059",
@@ -86,13 +72,6 @@
    "name": "Franklin County",
    "slug": "franklin"
   },
-  "grundy": {
-   "fips": "075",
-   "lat": 42.4033387,
-   "lng": -92.7902437,
-   "name": "Grundy County",
-   "slug": "grundy"
-  },
   "guthrie": {
    "fips": "077",
    "lat": 41.6835728,
@@ -114,26 +93,12 @@
    "name": "Humboldt County",
    "slug": "humboldt"
   },
-  "ida": {
-   "fips": "093",
-   "lat": 42.3918601,
-   "lng": -95.5074206,
-   "name": "Ida County",
-   "slug": "ida"
-  },
   "johnson": {
    "fips": "103",
    "lat": 41.670668,
    "lng": -91.5905458,
    "name": "Johnson County",
    "slug": "johnson"
-  },
-  "jones": {
-   "fips": "105",
-   "lat": 42.1251174,
-   "lng": -91.1169136,
-   "name": "Jones County",
-   "slug": "jones"
   },
   "kossuth": {
    "fips": "109",
@@ -177,26 +142,12 @@
    "name": "Montgomery County",
    "slug": "montgomery"
   },
-  "osceola": {
-   "fips": "143",
-   "lat": 43.3784695,
-   "lng": -95.6338858,
-   "name": "Osceola County",
-   "slug": "osceola"
-  },
   "palo-alto": {
    "fips": "147",
    "lat": 43.0753374,
    "lng": -94.6690546,
    "name": "Palo Alto County",
    "slug": "palo-alto"
-  },
-  "polk": {
-   "fips": "153",
-   "lat": 41.6842756,
-   "lng": -93.5682448,
-   "name": "Polk County",
-   "slug": "polk"
   },
   "pottawattamie": {
    "fips": "155",
@@ -211,13 +162,6 @@
    "lng": -95.1052244,
    "name": "Sac County",
    "slug": "sac"
-  },
-  "sioux": {
-   "fips": "167",
-   "lat": 43.0826179,
-   "lng": -96.1779798,
-   "name": "Sioux County",
-   "slug": "sioux"
   },
   "tama": {
    "fips": "171",
@@ -240,26 +184,12 @@
    "name": "Warren County",
    "slug": "warren"
   },
-  "washington": {
-   "fips": "183",
-   "lat": 41.3294124,
-   "lng": -91.7250385,
-   "name": "Washington County",
-   "slug": "washington"
-  },
   "webster": {
    "fips": "187",
    "lat": 42.4335786,
    "lng": -94.1758309,
    "name": "Webster County",
    "slug": "webster"
-  },
-  "winnebago": {
-   "fips": "189",
-   "lat": 43.3781243,
-   "lng": -93.7434883,
-   "name": "Winnebago County",
-   "slug": "winnebago"
   },
   "winneshiek": {
    "fips": "191",

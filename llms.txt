@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Eight instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota and Kentucky. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Nine instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky and Indiana. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -20,7 +20,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 
 - [Illinois district lookup](https://districtry.com/il/): 41 layers, 93 counties.
 - [Who is my U.S. representative?](https://districtry.com/il/congress.html)
-- [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 92 of them, each naming every member with whatever contact details that county publishes.
+- [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 94 of them, each naming every member with whatever contact details that county publishes.
 - [Who runs my fire protection district?](https://districtry.com/il/fire-district.html)
 - [What judicial subcircuit am I in?](https://districtry.com/il/judicial-subcircuit.html)
 - [Who runs my library district?](https://districtry.com/il/library-district.html)
@@ -85,7 +85,7 @@ All 99 counties: supervisor districts with each county's own election plan, town
 - [Who is on my city council?](https://districtry.com/ia/city-council.html)
 - [Who is my U.S. representative?](https://districtry.com/ia/congress.html)
 - [Who is my county auditor?](https://districtry.com/ia/county-auditor.html)
-- [Who is my county supervisor?](https://districtry.com/ia/county-supervisor.html): links a page per county, 96 of them, each naming every member with whatever contact details that county publishes.
+- [Who is my county supervisor?](https://districtry.com/ia/county-supervisor.html): links a page per county, 97 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/ia/sources.html)
 - [Who is my Iowa legislator?](https://districtry.com/ia/state-legislature.html)
 - [Common questions about Iowa districts](https://districtry.com/ia/faq.html)
@@ -108,8 +108,9 @@ All 83 counties: commissioner districts, compiled by the state from the plan eac
 
 All 87 counties: county board districts in every one of them, judicial districts, townships and cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Minnesota Senate, House and U.S. House districts, and who holds the U.S. House seats. Nobody is named yet on the county boards, the judges' benches or the two state chambers, and the Data gaps panel says why.
 
-- [Minnesota district lookup](https://districtry.com/mn/): 16 layers, all 87 counties.
+- [Minnesota district lookup](https://districtry.com/mn/): 18 layers, all 87 counties.
 - [Who is my U.S. representative?](https://districtry.com/mn/congress.html)
+- [County commissioner district lookup](https://districtry.com/mn/county-commissioner.html): links a page per county, 87 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/mn/sources.html)
 
 ## Kentucky
@@ -120,6 +121,15 @@ All 120 counties: the county a point sits in, and the Kentucky Senate, House and
 - [Who is my U.S. representative?](https://districtry.com/ky/congress.html)
 - [Sources & data layers](https://districtry.com/ky/sources.html)
 - [Kentucky district questions](https://districtry.com/ky/faq.html)
+
+## Indiana
+
+All 92 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the county governments, and the Data gaps panel says why.
+
+- [Indiana district lookup](https://districtry.com/in/): 11 layers, all 92 counties.
+- [Who is my U.S. representative?](https://districtry.com/in/congress.html)
+- [Sources & data layers](https://districtry.com/in/sources.html)
+- [Indiana district questions](https://districtry.com/in/faq.html)
 
 ## Where the answers come from
 

@@ -176,17 +176,9 @@ ACCEPTED_DROPS = {
         "Cerro Gordo withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
         "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:037":
-        "Chickasaw withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (5 district(s) at the base); its "
-        "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:069":
         "Franklin withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
-        "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:075":
-        "Grundy withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (5 district(s) at the base); its "
         "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:079":
         "Hamilton withheld 2026-10-01 -- its own district numbering has not been "
@@ -204,10 +196,6 @@ ACCEPTED_DROPS = {
         "Mitchell withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (5 district(s) at the base); its "
         "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:153":
-        "Polk withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (5 district(s) at the base); its "
-        "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:161":
         "Sac withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
@@ -219,10 +207,6 @@ ACCEPTED_DROPS = {
     "ia/data/app/ia-supervisor-members.json:187":
         "Webster withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (5 district(s) at the base); its "
-        "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:189":
-        "Winnebago withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (3 district(s) at the base); its "
         "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:191":
         "Winneshiek withheld 2026-10-01 -- its own district numbering has not been "

@@ -135,7 +135,7 @@ with, working as intended.
 | Franklin County Clerk (IL) | which Public Square address the board meets at | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | nine Michigan city and township clerks | may an automated reader see your board page | none | Ypsilanti Township **ANSWERED same day**: the clerk was passing the request to the township's technology staff, and the correction reached her at 15:23. Lansing acknowledged automatically, with no content |
-| Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day** and NOT YET USABLE: the Auditor says the office keeps the district numbers with names, and sent them as two inline images with a 2022 district map attached, so no name can ship until it is read off a picture and confirmed. **The reply asking her to type it stands, re-checked 2026-10-06**: the county's board page lists the five supervisors with no district beside any, and nothing else on the site pairs them. The site does publish the plan itself — Resolution 2022-12 adopts the statewide agency's plan and names the townships in each district, and districts 1, 4 and 5 agree with our map township by township — so only the pairing is missing, and districts 2 and 3 (Atlantic's wards) are not yet checked |
+| Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day, USABLE 2026-10-07 and SHIPPED.** Her 2026-10-01 reply carried the pairing as an inline image that this project's mail tools could not open; the operator supplied the image on 2026-10-07 and it reads District 1 Stephen Green, 2 Mark O'Brien, 3 Wendy Richter, 4 Steve Baier, 5 Bernard Pettinger. The county's own Resolution 2022-12 names the precincts in each district, and every one of our twelve Cass precincts lies in the same-numbered district of our map, including Atlantic's five wards (1 in District 1, 2 and 3 in District 2, 4 and 5 in District 3), so the numbering is checked and the cards name the five. The reply asking her to type the list out is withdrawn and was never sent. |
 | Calumet (Brillion), Pepin (Durand) county clerks (WI) | ward-to-district filing | none | — |
 | Outagamie County Clerk (WI) | the New London filing | none | **ANSWERED same day**, settled: New London wards 10, 11 and 12 are all in Aldermanic District 5 |
 | Brown County Clerk (WI) | how Bellevue elects its board | none | **ANSWERED same day, HEDGED**: "They appear to be at large", with the village clerk's address and a question back about whether the village had been asked. A hedge is not a statement the village has made, so it settles nothing by itself |
@@ -176,14 +176,14 @@ which is a claim about the ask and never about the source.
 | Bureau County GIS (Christine Anderson) | long thread; she sent a user agreement and a $150 invoice 2026-08-12 | correctly written as a reply on her own thread |
 | Clark County Clerk | asked 2026-08-05, followed up 08-16, **ANSWERED 08-18** ("The County Board is elected by districts. I do not have maps available") | correctly written as a follow-up |
 | Knox County GIS (Taiwo Agbaje) | long thread; he sent the precinct shapefile 2026-09-08 | correctly written as a continuation, opening with thanks for that file |
-| Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members |
+| Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members. **ANSWERED 2026-10-07**: Clerk Jodie L. Badman sent two screenshots of the county's own board member list naming all sixteen by district; they ship on the board card, and the `christian-county-board-roster` gap record is retired |
 | Henderson County Clerk | **asked 2026-07-21 (seal), 2026-08-05 and 08-16, no reply** | REWRITTEN 2026-10-01: cites them and says the August questions are answered |
 | Logan County Clerk | **same mailbox written to 2026-07-21** about the county seal | REWRITTEN 2026-10-01: opens by naming that letter |
 | Will County Clerk | none | first contact, correct |
 | Grundy County GIS | the county CLERK was written 2026-07-21; this is a different mailbox | first contact to this office, correct |
 | Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
 | Hardin County Clerk (IL) | who holds the commissioner seats | **seal 2026-07-21; board 08-05, 08-16, 08-21; ANSWERED 08-24** — countywide board, and NO county website | **SENT 2026-10-01 and ANSWERED IN SEVEN MINUTES**: three commissioners, with Darrick Armstrong as chairman, Ricky Williams as vice-chairman and Michael Belford the third (she first wrote "Belfor" and corrected it herself at 19:27 the same day: "I left the d off"). That closes the county's roster gap, and it is the clearest argument this file has for the prior-contact check — the question was answered at the fourth attempt, by a clerk who had already told us twice what the county does not have. Illinois's wording said the county's web address "leads to a parked page"; the Clerk had already said there is no website, so that claim is gone |
-| Johnson County Clerk (IL) | the same | **seal 07-21, ANSWERED twice that day** ("We don't have a website to point back to"); board 08-05 and 08-16, no reply | drafted 2026-10-01. Illinois's wording said the county's website "declines automated visits"; the Clerk had already said there is none |
+| Johnson County Clerk (IL) | the same | **seal 07-21, ANSWERED twice that day** ("We don't have a website to point back to"); board 08-05 and 08-16, no reply | drafted 2026-10-01. Illinois's wording said the county's website "declines automated visits"; the Clerk had already said there is none **ANSWERED 2026-10-07**: Clerk Robin Harper-Whitehead named all three commissioners — Jason Taylor (Chairman), Matthew Hayden (Vice Chairman) and John McCuan — with one e-mail for the board and her own office's telephone. They ship on the County card and the `johnson-county-board` gap record is retired |
 | Perry County Clerk (IL) | the same | seal 07-20; two questions 08-05; follow-up 08-16; no reply | drafted 2026-10-01 with an opening citing all three |
 | Pope County Clerk (IL) | the board's form, then the names | seal 07-20; board 08-05; third note 08-16; no reply | drafted 2026-10-01, opening "This is my fourth note" |
 | Scott County Clerk (IL) | the same | **NOT a first letter**: the Clerk was written to 07-19 about the seal and the State's Attorney's office answered 07-20 | drafted 2026-10-01 with both acknowledged. Illinois's note recorded Scott as having no prior contact |
@@ -629,6 +629,13 @@ routine, and says that a no is an acceptable answer that will be recorded as one
 in this project is about the crawler, not about a person, and a reply that implied
 otherwise would be overstating a policy in order to sound careful. What the reply
 claims instead is a standard this project actually holds itself to.
+
+**THAT REPLY WAS WITHDRAWN UNSENT ON 2026-10-06, BECAUSE THE PAGE HE COULD NOT FIND WAS
+LINKED FROM THE ONE HE WAS LOOKING AT.** Jefferson's county page names no judges and links
+"Websites for Jefferson Judges" — the Jefferson Circuit, Family and District Courts' own
+sites — and each names its bench in plain HTML with robots.txt permitting every agent. The
+cards read them weekly from 2026-10-07, so neither the static list nor the follow-up is
+needed, and the reply's argument about snapshots never had to be made.
 
 ### THE AFTERNOON'S SENDS, AND WHAT A FIRST LETTER DOES NOT EARN
 
@@ -1673,6 +1680,14 @@ office whose page publishes the district map).
   claim about the ask, never about the county.
 
 ### Follow-up, drafted 2026-10-06 — a reply on Ms Aitchison's own message
+
+**SENT 2026-10-06 16:40:45 UTC AND ANSWERED THE SAME DAY — CLOSED, AND BUILT 2026-10-07.** Verified in
+the operator's sent folder. Ms Aitchison replied at 16:44 that she had sent the previous plan's
+file, and at 17:00:59 sent `BOS.zip`, the shapefile `BOS_2022`. Its five districts sum over Census
+2020 blocks to 4,128 / 4,120 / 4,137 / 4,132 / 4,129, the county's own published figures exactly,
+so the gate under *What each answer means* passed and `jones-county-supervisor` is closed (its
+history is a closed record in `docs/DATA_LAYER_GUIDEBOOK.md`). The county is credited in
+`docs/SOURCE_CREDITS.md`. No further letter is owed; a thank-you is the operator's choice.
 
 **To:** Kristi Aitchison, at the address her 2026-10-05 message came from, copying the Auditor's
 office mailbox it was forwarded through. The Letters thread reads both addresses off that
@@ -2914,7 +2929,12 @@ https://districtry.com/il/
 
 ## Ask 27 — Christian County Clerk: who sits on the county board?
 
-**Status: NOT YET ASKED — DRAFTED.** Gap `christian-county-board-roster`.
+**Status: ANSWERED 2026-10-07.** Gap `christian-county-board-roster`, retired that day. Clerk
+Jodie L. Badman replied with two screenshots of the county's County Board Members list, which
+name all sixteen members by district, and they ship from
+`scripts/build_christian_county_board.py`. The Clerk's first name is settled as Jodie by her
+own reply. The list marks no chair, and it prints each member's home city and ZIP, which do
+not ship. The record below is kept as it was written.
 
 **Recipient:** Christian County Clerk & Recorder, `elections@christiancountyil.com` —
 the address the 5 August and 21 August 2026 inquiries used. **Two of this project's own
@@ -3964,14 +3984,18 @@ Ask 33 gives: there is nothing yet to license. If a file arrives, that is a sepa
 
 ## Ask il-five-counties-commissioner-roster — five Illinois county clerks: who holds the commissioner seats?
 
-**Status: HARDIN SENT 2026-10-01 AND ANSWERED THE SAME DAY; THE OTHER FOUR DRAFTED
-2026-10-01.** Named rather than numbered, for the reason `il-gurnee-board-names` above gives.
+**Status: HARDIN SENT 2026-10-01 AND ANSWERED THE SAME DAY; JOHNSON ANSWERED 2026-10-07;
+THE OTHER THREE DRAFTED 2026-10-01.** Named rather than numbered, for the reason `il-gurnee-board-names` above gives.
 
-Gaps `johnson-county-board`, `perry-county-website-blocked`, `pope-county-board`,
+Gaps `johnson-county-board` (retired 2026-10-07, below), `perry-county-website-blocked`, `pope-county-board`,
 `scott-county-commissioners`. **Hardin's gap record is gone**: Clerk Jill Cowsert answered
 within seven minutes of the letter, naming all three commissioners, and they ship — so the
 record that said they were unnamed no longer describes the county. This is the first of these
-five to close, and it closed on a reply rather than on anything found.
+five to close, and it closed on a reply rather than on anything found. **Johnson's is gone too**:
+Clerk Robin Harper-Whitehead replied on 7 October naming Jason Taylor (Chairman), Matthew
+Hayden (Vice Chairman) and John McCuan, with the board's e-mail and her office's telephone,
+and they ship the same way. Like Hardin it is a letter-only county for good, because its Clerk
+had already told us there is no website.
 
 **THREE OF THESE FIVE LETTERS WERE WRITTEN AS FIRST APPROACHES AND THREE OF THESE COUNTIES
 HAD ALREADY WRITTEN BACK.** Corrected 2026-10-01, after the operator asked whether we were
@@ -5146,7 +5170,7 @@ has said no, or has been asked, followed up once and given 30 days.
 | Northville (township) | `northville-township-board` | ~~the site answers this client "Access Denied"~~ **wrong: one client was tried; the fleet's browser-class client is served the page** | 2026-10-01 |
 | Ypsilanti (charter township) | `ypsilanti-township-board` | ~~a Cloudflare challenge page, which is an access control and is never worked around~~ **no longer true: re-read the same day, the page is served to our own token** | 2026-10-01 |
 | Burton (city) | `burton-council-roster` | a Cloudflare challenge page | 2026-10-01 |
-| Lansing (city) | `lansing-council-roster` | the page answers, but the names are loaded by a script after the page arrives, so the page itself carries none | 2026-10-01 |
+| Lansing (city) | `lansing-council-roster` (retired 2026-10-06) | ~~the page answers, but the names are loaded by a script after the page arrives, so the page itself carries none~~ **closed: the page hands every visitor a read-only key for the service the names come from, and the weekly reader now reads them the way the page does** | 2026-10-01 |
 | Wyoming (city) | `wyoming-mi-council-roster` | **the operator's own ruling keeps this project off the city's site entirely.** Whether to write at all is Adam's decision; the draft is here so the decision is the only thing left. | ruling |
 
 **Recipients, recorded 2026-10-01 on the operator's instruction that every letter also goes
@@ -5491,7 +5515,17 @@ Subject: Lansing City Council members on districtry.com: is the member list publ
 > adam@overberg.co
 > districtry: https://districtry.com/mi/
 
-#### Lansing, reply of 2026-10-06
+#### Lansing, reply of 2026-10-06 (WITHDRAWN, NOT SENT)
+
+**Withdrawn the same day, before it went.** The paragraph and the letter below rest on a wrong
+reading. The page that names nobody also carries, for every visitor who has not signed in, the
+content service's address and a read-only key for it (client `mi-lansing:default`, read scopes
+only); the 401 came from calling the service without the settings the page supplies, the
+mistake already made with Scott County, Illinois. Read with that key, on the operator's word of
+2026-10-06, the service returns all eight members, so the page the Clerk pointed at does meet
+the need. The weekly reader now reads Lansing that way, the `lansing-council-roster` record is
+retired, and the ask closes `answered`. The thank-you below replaces this letter. The withdrawn
+letter is kept under this note so that the mistake can be found later.
 
 The Clerk answered on 2026-10-03, asking whether https://www.lansingmi.gov/council-members
 meets our needs. It was re-read on 2026-10-06 with the client the weekly reader uses: the page
@@ -5515,6 +5549,25 @@ Subject: Re: Lansing City Council members on districtry.com
 > 3. If it is easier, a reply listing the eight members and their seats. The map will say the list came from your office and on what date.
 >
 > If none of these suits the city, that is a fine answer, and the map will keep linking to your council page.
+>
+> With thanks,
+> Adam Overberg
+> adam@overberg.co
+> districtry: https://districtry.com/mi/
+
+#### Lansing, thank-you of 2026-10-06
+
+Replaces the withdrawn reply above. It says the map names the council, so it should go only once
+the change that adds Lansing's council to the map has been published.
+
+To: city.clerk@lansingmi.gov  
+Subject: Re: Lansing City Council members on districtry.com
+
+> Dear Mr. Swope,
+>
+> Thank you for pointing me to the council members page. It does meet our needs. The names are loaded onto the page a moment after it opens, and once I read the page the same way a visitor's browser does, all eight members came through, with their seats, phone numbers and e-mail addresses.
+>
+> The map now names Lansing's City Council, says the list comes from the city's own council page, and reads that page again each week, so changes there will reach the map on their own. There is nothing more you need to do.
 >
 > With thanks,
 > Adam Overberg
@@ -5629,6 +5682,16 @@ difference between a gap we have measured and a gap we have merely noticed.
 
 
 ## Ask ia-tama-supervisor-map — Tama County Auditor: your county's current five-district map
+
+> **BUILT 2026-10-07 — CLOSED.** The five districts ship, drawn from the 2025 map she sent and
+> gated on the Legislative Services Agency's published plan populations (four exact, one
+> seven-person block declared, because her map draws the detached parcel in District 2). The
+> county's own board page prints each supervisor's district, so the card now names all five,
+> which keeps the promise in the reply sent in the operator's name. The record's history is a
+> closed record in `docs/DATA_LAYER_GUIDEBOOK.md`; the county is credited in
+> `docs/SOURCE_CREDITS.md`. The one open question is unchanged: which of the five telephone
+> numbers are county lines, and until she says, none ships.
+>
 
 > **ASKED 2026-10-01** (sent 18:07:32 UTC as a reply on the existing thread, per
 > `/mnt/project-files/letters/sent-2026-10-01.md`) and **ANSWERED 2026-10-01 18:24 UTC**:
@@ -5850,8 +5913,12 @@ has measured and one it has merely noticed.
 > shows no judges where every other county's page lists them — is there another page that
 > names Jefferson's circuit and district judges with their circuit or district number?"* The
 > appellate half needs nothing: both appellate pages are statewide and already cover
-> Jefferson. NOT YET SENT — DRAFTED 2026-10-01; the mailbox thread owns the send and the
-> thank-you.
+> Jefferson. **WITHDRAWN UNSENT 2026-10-06.** Re-read under the standing rule to read a page
+> and what it links before asking: the same Jefferson page links "Websites for Jefferson
+> Judges" — the Jefferson Circuit, Family and District Courts' own sites — and each names its
+> bench. The cards read them from 2026-10-07. The Letters thread found no mailbox draft for it
+> on 2026-10-07, so there is nothing to delete; the thank-you for the original answer is
+> unaffected.
 >
 > The thirty-day silence clock is retired with the answer. Nothing was re-asked and no
 > second copy of the original was sent.
@@ -5934,6 +6001,10 @@ and nothing is asked of any named judge personally.
 > a letter: merge `01` into District 1, relabel `21`-`23` as Districts 1-3, and consider the
 > directory as a roster source for the six seats. That changes what readers see, so it waits for
 > Adam's word. The text below is kept as the record of what was going to be asked.
+>
+> **DONE 2026-10-07 on Adam's word ("fix marion").** The map draws three Marion districts and the
+> cards name the five members the directory lists, with District 2's second seat shown as vacant.
+> No letter goes to either county about this.
 
 > **THE SHAWANO LETTER WAS SENT ON 2026-10-01 AND HAS NO REPLY, SO IT GETS A SHORT CLOSING NOTE**
 > (decided 2026-10-06). It asks a question the neighbouring county's own publications now answer,
@@ -6353,21 +6424,21 @@ numbering being checked.
 | Adams | Betsy Stormer | 5 | |
 | Butler | Leslie Groen | 3 | **Measured: two different plans.** The letter should ask which of the county's two published surfaces is current. |
 | Cerro Gordo | Adam Wedmore | 3 | |
-| Chickasaw | Sheila Shekleton | 5 | |
+| Chickasaw | Sheila Shekleton | 5 | **ANSWERED 2026-10-06 by the elections specialist: the supervisors and their districts are listed on the county website.** Read on 2026-10-07: the board page does print a district beside each supervisor, but nothing there or on the county's election pages says which ground each district covers — the two maps the election site carries draw precincts only. So the county's numbering still cannot be checked against ours and the cards stay unkeyed. The question to send back is the one Winnebago answered: which precincts make up each district. The operator asked for it on 2026-10-07 and a follow-up was drafted below the table, then **WITHDRAWN UNSENT the same evening**: the county's own GIS map (its supervisor-district layer, supplied by the operator as a screenshot) numbers the five districts exactly as this instance does, so **the numbering is CHECKED and Chickasaw's supervisors SHIPPED keyed 2026-10-07**. |
 | Franklin | Katy Flint | 3 | |
-| Grundy | Alan Tscherter | 5 | |
+| Grundy | Alan Tscherter | 5 | **ANSWERED 2026-10-07, USABLE and SHIPPED the same day.** The auditor replied "Here is a map of the precincts and supervisor districts" with the county's own precinct map (PDF, dated 2026-02-03), which the operator put in Drive. It draws each of the county's seven precincts wholly inside one district, and those precincts sit in the same-numbered districts of this instance's layer, so the numbering is CHECKED (identity) and Grundy's supervisors are keyed. Nothing further is owed; a thank-you is optional. |
 | Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. |
 | Ida | Kristy Gilbert | 3 | **WITHDRAWN 2026-10-06, NEVER SENT — THE COUNTY ALREADY PUBLISHES THE ANSWER.** Re-checked before send: the county's own site carries Ordinance 31 (`idacounty.iowa.gov/wp-content/uploads/2021/12/Ordinance-31-Est-Co-Supervisor-Precincts-2021.pdf`, effective 15 January 2022, drawn to the 2020 census), whose text names the townships in each district. Ten townships lie wholly inside one district (Galva and Griggs in 1; Battle, Blaine, Garfield, Hayes, Logan, Maple and Silver Creek in 2; Corwin in 3), and every one of their TIGERweb interior points lands in the same-numbered district of the statewide layer, so the two numberings agree in all three districts. It was found through the site's own search feed, which the September sweep did not read; a letter asking for it would have asked the county for a document it publishes. |
 | Madison | Michele Brant | 3 | |
 | Mitchell | Rachel Foster | 5 | |
-| Osceola | Rochelle Van Tilburg | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 with the five pairings. **Re-checked 2026-10-06 and it stands**: the county's site still answers its robots.txt with HTTP 202, the captcha shape, so nothing on it can be read and the letter is the only route. |
+| Osceola | Rochelle Van Tilburg | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01 with the five pairings. **Re-checked 2026-10-06 and it stands**: the county's site still answers its robots.txt with HTTP 202, the captcha shape, so nothing on it can be read and the letter is the only route. **ANSWERED 2026-10-06 (20:37 UTC) — AND SHE CORRECTED HER 1 OCTOBER LIST.** Jerry Helmers is District 4 and Jeff Loring District 5; the first list had them swapped. The held pairing in `build_ia_supervisor_roster.py` was corrected on 2026-10-07; it had never reached a reader, because Osceola's numbering is unchecked and its board ships unkeyed. She also linked the county's district maps (a Word document on osceolacountyia.gov), which this project cannot fetch: re-checked 2026-10-07 14:05 UTC, that host answers robots.txt with HTTP 202 and a SiteGround captcha. The operator saved the file and shared it on 2026-10-07; its map labels Districts 1-5 the same way our layer numbers them, so Osceola joined `NUMBERING_CHECKED` that day and its five cards name the supervisors from the corrected pairing. |
 | Polk | Jamie Fitzgerald | 5 | The address the roster carries is the elections desk rather than a person; the letter goes there as published. **ANSWERED 2026-10-06 (sent 16:48, reply 16:57) — THE COUNTY PUBLISHES THE ANSWER AND OUR NUMBERING MATCHES IT.** The elections office pointed to the county's own web map. It draws from the county's own ArcGIS Server (`gis4.polkcountyiowa.gov/server/rest/services/Elections/Board_of_Supervisors/FeatureServer/0`, owner `portadmin` on the county's portal, copyright "Polk County, Iowa"), whose five district polygons each carry the supervisor's name, term and contact. Compared on a 160x160 grid over the county, 22,799 of the 22,860 sampled points inside either map get the SAME district number from the county's polygons and ours (99.7%); the 61 that differ are slivers along shared edges, and no district number is swapped. Fetch note: the county's Akamai edge answers our token with 403 on robots.txt and every page of both `maps.` and `gis4.`, and serves Chrome with client hints — the same measurement `ia_county_minutes_chair_scraper.py` records for `www.` — so both were read with that client; `maps.` then has no robots.txt (it serves its HTML at that path) and `gis4.` answers 404, allow all. So Polk can be keyed to its own district numbers in a later change. |
 | Sac | Renee Roland | 3 | |
-| Sioux | Joe Van Tol | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01. The county's own site fronts every page with a managed challenge, so a letter is the only route there will ever be. **Re-checked 2026-10-06 and it stands**: robots.txt still answers HTTP 202. |
+| Sioux | Joe Van Tol | 5 | **Goes as a reply on this afternoon's thread** — answered Ask 30 on 2026-10-01. The county's own site fronts every page with a managed challenge, so a letter is the only route there will ever be. **Re-checked 2026-10-06 and it stands**: robots.txt still answers HTTP 202. **ANSWERED 2026-10-06 — THE COUNTY'S GIS TECHNICIAN (Joey Reid) SENT THE DISTRICT MAP.** "Sioux County Supervisor Districts", county GIS, as of 6 April 2022, labelling each district and drawing its townships. All 17 of this instance's Sioux precincts lie inside the same-numbered district of our layer, so the numbering is the same and Sioux was added to `NUMBERING_CHECKED` on 2026-10-07; its five district cards now name the supervisors from the 1 October pairing. |
 | Taylor | Judy Henry | 3 | |
 | Washington | Tamera Stewart | 5 | **WITHDRAWN 2026-10-06, NEVER SENT — THE AUDITOR HAD ALREADY SENT THE ANSWER.** Her 2026-10-01 reply linked the county's own district map (`washingtoncounty.iowa.gov/DocumentCenter/View/2095/Map-of-Supervisor-Districts---Final`, county GIS, 2022, drawn to the 2020 census). It is a vector PDF with the townships drawn and labelled inside each district. Ten townships lie wholly inside one district (Brighton, Clay, Dutch Creek, Lime Creek and Seventy-Six in 1; English River in 2; Crawford, Highland, Iowa and Oregon in 3), and every interior point lands in the same-numbered district of the statewide layer. Districts 4 and 5 hold no whole township, so they are settled by the split ones: Franklin township's interior point lands in the layer's 4 and the county's map puts Franklin only in 1 and 4, while Jackson's lands in the layer's 5 and the map puts Jackson only in 2 and 5, so the layer's 4 and 5 cannot be swapped. The two numberings agree in all five districts. |
 | Webster | Krystal Lloyd | 5 | |
-| Winnebago | Karla Weiss | 3 | |
+| Winnebago | Karla Weiss | 3 | **ANSWERED 2026-10-06 (18:09 UTC) by Lori Jacobs of the Auditor's office**, listing the precincts in each of the three districts in the body of her e-mail. All ten of this instance's Winnebago precincts lie inside the same-numbered district of our layer (each at least 99.7% of its area), so Winnebago was added to `NUMBERING_CHECKED` on 2026-10-07 and its three cards name the supervisors from the county's own board page. An auto-reply also came on 2026-10-06 (auditor out); it needed nothing. |
 | Winneshiek | Benjamin D. Steines | 5 | |
 
 **What the ask says.** We publish a free map of civic districts, and for your county we draw the
@@ -6397,6 +6468,70 @@ the question is only which order the county itself uses.
 **Why a no is still useful.** If the county cannot say, saying so closes the question and lets
 the record that tells our readers what is missing say the county was asked — which is a
 different and more honest claim than that nobody looked.
+
+### Chickasaw follow-up, drafted 2026-10-07 — which precincts make up each district
+
+**WITHDRAWN 2026-10-07, NEVER SENT.** The county's own GIS map settled it the same evening: the operator opened its supervisor-district layer in a browser (the host answers this project's client with a managed challenge, so nothing there was fetched) and supplied a screenshot. Its Districts 1 to 5 cover the same ground as this instance's 1 to 5, with every rural precinct in the same-numbered district, so Chickasaw's supervisors were keyed without the county having to answer again. The draft below is kept as the record of what was written; the Gmail draft is to be deleted, not sent.
+
+**A reply on the existing thread**, "Chickasaw County supervisor districts — which precincts
+make up each one?": Adam's letter to Auditor Shekleton of 2026-10-06 16:49 UTC, and the reply
+from Gina Fangman, the county's elections specialist, at 18:58 UTC the same day, which pointed
+to the county website. The reply goes to Ms Fangman, copying the auditor's address as her reply
+did. Adam sends.
+
+**Why a second letter.** The board page she pointed to does print a district number beside each
+supervisor, and that part of the question is answered. What it cannot tell us is whether the
+county's District 1 is the same ground as the district our map calls 1, because nothing on the
+county's site says which precincts or townships each district covers — the two maps on its
+election pages draw precincts only. The first letter asked exactly that, so this one says why
+the website did not settle it and makes the answer as small as possible: our map already puts
+each precinct wholly inside one district, so she only has to say whether the list is right.
+
+**What our map shows**, measured 2026-10-07 from this instance's precinct and supervisor-district
+files (every precinct at least 99.9% inside one district): District 1 Chickasaw North; District 2
+Bradford; District 3 Dayton Richland and New Hampton Wards 2 and 3; District 4 New Hampton Wards
+1 and 4 and New Hampton Rural; District 5 Lawler-Fredericksburg. The precinct names are the
+Census 2020 voting districts, so the county may have renamed or redrawn some since; the letter
+says so.
+
+> **Subject:** Re: Chickasaw County supervisor districts — which precincts make up each one?
+>
+> Dear Ms Fangman,
+>
+> Thank you for pointing me to the county website. I found the board page, and it does list
+> each supervisor with their district number.
+>
+> What I still cannot find is which part of the county each district covers. Our map draws the
+> five districts from the state's January 2024 layer, and in several other Iowa counties that
+> layer numbers the districts in a different order from the county's own, so I want to be sure
+> your District 1 is the same area as ours before I put a supervisor's name on it.
+>
+> On our map the precincts fall like this:
+>
+> - District 1: Chickasaw North
+> - District 2: Bradford
+> - District 3: Dayton Richland, New Hampton Ward 2, New Hampton Ward 3
+> - District 4: New Hampton Ward 1, New Hampton Ward 4, New Hampton Rural
+> - District 5: Lawler-Fredericksburg
+>
+> Could you tell me whether that matches the county's districts? A simple yes is enough. If it
+> does not match, or the precincts have changed since 2020, a list of the precincts in each
+> district would let me correct it.
+>
+> Thank you for your help.
+>
+> Best regards,
+>
+> Adam Overberg
+> adam@overberg.co
+> http://districtry.com
+
+**What each answer means.** A yes → Chickasaw joins the counties whose numbering is checked, and
+its five district cards name their supervisors, in a pull request Adam approves. A list that
+differs → the numbering is mapped from the county's list, checked against the precinct file, and
+the same pull request ships. No reply → nothing changes: the County card keeps listing the five
+supervisors without placing them, which is true whichever way the numbering runs. A follow-up
+would fall due with the rest of this ask, around 22 October.
 
 ## Ask il-cumberland-500e — Cumberland County Clerk: does the Western–Central line run along 500E?
 
@@ -6548,3 +6683,62 @@ in the page the way Scott's carried one.
 - **WinGIS outage report** — withdraw. The Winnebago map server answers normally today
   (`maps.wingis.org`, the elected-officials layer returns its metadata). There is no outage to
   report.
+
+## Ask il-cpd-district-commanders — City of Chicago, for the police department: a way to read the district commander list that our reader is allowed to use
+
+> **NOT YET SENT — DRAFTED 2026-10-07 AS A FOLLOW-UP, NOT A NEW ASK.** Adam asked the City for
+> this on 9 July, writing to Beth Rochford, Anna Mangahas and Nicole Garcia; Beth offered to pass
+> it to the City's tech team and nothing has come back since. So the Letters thread drafted this as
+> a reply in that 9 July thread to the same three City recipients, not to CPD's press office. Its
+> wording differs from the text below in four ways: it names the site's new name, says our reader
+> is now blocked, keeps the same three options, and asks them to point Adam to the right person at
+> CPD if this belongs elsewhere. The Gmail draft is the text that goes; the text below is the
+> original drafted here. On send, record `ASKED <date>` (follow-up to 9 July).
+
+**Why this is asked.** The police-district card names each district's commander, the station
+address and the district's community-policing (CAPS) e-mail, read weekly from the 22 district
+pages on the department's site. The weekly refresh of 6 October was turned away by the site's
+Cloudflare check: our reader identifies itself by name, and a managed challenge is an access
+control this project does not get around (the standing rule since 29 September). The refresh used
+to present a browser identity and stopped on 1 October (#1340), on a measurement of the site's
+FRONT page, which does serve our name; the district pages and the sitemap do not. That is the
+wrong-address reading `user-agent-measurements.json` still records for this host. Nothing else publishes
+the list in a form we can read: the city data portal has no commander dataset, and the
+department's own station map layer carries only each station's name, address, district and
+phone. So the cards keep last week's names, which stay correct until a commander changes, and
+this letter asks for a route that does not need the check to be defeated. Three answers all work:
+a page or file outside the check, permission for the weekly reader by name, or a clean no.
+
+> Subject: Reading the district commander list on chicagopolice.org
+>
+> Dear Office of Communications,  *(the sent version greets the three City recipients)*
+>
+> I run districtry (https://districtry.com/il/), a free public map where a Chicago resident can
+> click their address and see who represents them, including their police district, its
+> commander, the station address and the district's CAPS e-mail. Each card links back to the
+> district's own page on your site.
+>
+> Once a week a small program reads your 22 district pages so the commander names stay current.
+> It identifies itself by name and reads nothing else. Your site's security check now turns it
+> away, and I will not try to get around that check. Until it can read the pages again, the map
+> keeps showing the names from its last successful read.
+>
+> Is there a way for us to read the commander list that you are comfortable with? Any of these
+> would work:
+>
+> 1. a page or file with the district commanders that is not behind the security check;
+> 2. permission for our weekly program to read the 22 district pages (it can send whatever
+>    identifying name or header suits you); or
+> 3. a no, which is a perfectly good answer. We would then keep the list current by hand from
+>    your announcements.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+**What each answer means.** A page outside the check: the scraper reads it instead, after its
+robots.txt. Permission: recorded in `scripts/cpd_district_scraper.py` with its date and whatever
+identifier the department names, and the Playwright rung stays retired either way. A no: the
+roster becomes a hand-checked file like the early-voting list, and the gap is recorded.

@@ -4106,7 +4106,9 @@ function initMinnesotaExplorer() {
     { id: "minnesota", label: "Minnesota", url: "https://districtry.com/mn/", emoji: "🛶", explorerName: "districtry Minnesota",
       bbox: { minLng: -97.3, minLat: 43.44, maxLng: -89.58, maxLat: 49.44 } },
     { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
-      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } }
+      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } },
+    { id: "indiana", label: "Indiana", url: "https://districtry.com/in/", emoji: "🏁", explorerName: "districtry Indiana",
+      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -8371,7 +8373,9 @@ function initMinnesotaExplorer() {
     "mn-senate",         // 67 Senate districts, each divided into two whole House districts
     "county",            // 87 counties, pre-built from TIGERweb; this instance's offline anchor layer
     "mn-house",          // 134 House districts; two nest exactly inside each Senate district, lettered A and B
+    "watershed-district", // 64 bodies covering about 67,000 km2 of the state's 225,000 at a mean 1,050 km2 (median 316, from 20 in Richfield-Bloomington to 15,700 in Red Lake) — smaller on average than a House district and larger than a unified school district
     "school-district-unified", // 322 districts covering almost all of Minnesota, live from TIGERweb (no data/app file) — 693 km2 mean feature area, the largest of the three school tilings
+    "school-board-district", // 59 board election districts on 13 school boards, a mean 527 km2 (median 217, from 2 in Winona to 3,927 in St. Louis County) — smaller on average than a unified school district, which they divide, and larger than a commissioner district
     "county-commissioner", // 447 districts tiling all 87 counties, 488 km2 mean feature area (median 299, from 1.8 in Ramsey to 11,154 in St. Louis) — smaller than a unified school district and larger than a ZIP code
     "zip-code",          // 1,385 ZIP Code Tabulation Areas intersecting Minnesota's envelope, live from TIGERweb (no data/app file) — 250 km2 mean feature area, between a school district and a township
     "school-district-elementary", // 8 districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points
@@ -11445,7 +11449,9 @@ function initMinnesotaExplorer() {
    * Promise.all query() doesn't fit this shape.
    *
    * opts: { id, group, label, loader, style, pointOfInterest?, coverage?,
-   *         subOf?, emptyNote?, onToggle?, fields: [...] }
+   *         subOf?, emptyNote?, onToggle?, people?, fields: [...] }
+   * people(result) => Node|null, when present, appends a person block (built
+   * with renderBodyIntro / renderPersonRows) after the field rows.
    * Each field is one of:
    *   { name, label, keys:[...], primary:true } — always shown; findPropCI(keys)
    *        with an "Unknown" fallback. Conventionally the first field (headline).
@@ -11501,7 +11507,13 @@ function initMinnesotaExplorer() {
             rows.push({ label: f.label, value: f.value });
           }
         });
-        return renderFieldStack(rows);
+        var card = renderFieldStack(rows);
+        // optional: a block of people the feature itself carries (a council
+        // stamped onto each boundary by its builder), built by the layer from
+        // the card helpers and placed after the identity fields
+        var people = opts.people ? opts.people(result) : null;
+        if (people) card.appendChild(people);
+        return card;
       },
       pointOfInterest: opts.pointOfInterest,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
@@ -12522,6 +12534,130 @@ function initMinnesotaExplorer() {
     }
   });
 
+  /* ---------- 1e. Watershed district — the state's water boards ----------
+   * Minnesota law creates two kinds of body that manage water by watershed
+   * rather than by county line, and both can levy a property tax: a watershed
+   * district (Minn. Stat. ch. 103D), whose managers the county boards
+   * appoint, and the Twin Cities metro area's watershed management
+   * organization (103B.211, 103B.231), a joint-powers board of the cities and
+   * towns inside it. In three places the county does that job itself. This
+   * is the "special districts the state's own law creates" level of the
+   * fleet's done standard (docs/DONE_STANDARD.md, entry 12).
+   *
+   * The polygons are the Board of Water and Soil Resources' own statewide
+   * layer (mn/scripts/build_mn_watershed_districts.py;
+   * data/app/mn-watershed-districts.json), shipped as the state draws them.
+   * THEY OVERLAP IN PLACES, mostly as slivers along a shared edge and in a
+   * few places by square kilometres, so this card reads EVERY body the map
+   * puts the point in rather than the first one, and says so when there are
+   * two. Nothing here decides which is right.
+   *
+   * NO MANAGER IS NAMED, because nobody on these boards is elected: the card
+   * says who appoints the board and links the body's own website as the
+   * state publishes it.
+   * ---------- */
+  var loadMnWatershedDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-watershed-districts.json", {}, 2);
+  });
+
+  var WATERSHED_KINDS = {
+    WD: {
+      what: "Watershed district",
+      law: "Minnesota Statutes chapter 103D",
+      board: "A board of managers appointed by the county boards of the " +
+        "counties the district lies in. Nobody on it is elected, so there is " +
+        "no seat here to vote for."
+    },
+    WMO: {
+      what: "Watershed management organization",
+      law: "Minnesota Statutes section 103B.211, the Twin Cities metro area's " +
+        "surface water management law",
+      board: "A joint board of the cities and towns inside it, each appointing " +
+        "its own member. Nobody on it is elected directly."
+    },
+    COU: {
+      what: "Watershed management run by the county",
+      law: "Minnesota Statutes section 103B.231, which lets a metro county do " +
+        "this job itself",
+      board: "The county board — the county commissioners you elect — or a " +
+        "joint board of the counties involved."
+    }
+  };
+
+  registerLayer({
+    id: "watershed-district",
+    group: "geography",
+    label: "Watershed District",
+    coverage: insideMinnesota,
+    emptyNote: "No watershed district or watershed management organization " +
+      "covers this point. Every part of the Twin Cities area has one; " +
+      "elsewhere in Minnesota a watershed district exists only where one was " +
+      "petitioned for, so most of the state has none.",
+    overlay: {
+      load: loadMnWatershedDistricts,
+      // a water blue no other layer here uses, solid so it reads apart from
+      // the dashed political tilings drawn over the same ground
+      style: { color: "#1C6E9C", weight: 1.5, fillColor: "#4BA3D3", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var props = feature.properties || {};
+      return props.name != null ? String(props.name) : null;
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadMnWatershedDistricts, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hits = [];
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hits.push(feats[i].properties || {});
+          }
+        }
+        if (!hits.length) return null;
+        return { seq: seq, bodies: hits };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var bodies = result.bodies;
+      if (bodies.length > 1) {
+        wrap.appendChild(renderFieldStack([{
+          value: "The state's map puts this point inside " + bodies.length +
+            " of these bodies, and the map alone cannot say which one covers " +
+            "this property. Either office can."
+        }]));
+      }
+      bodies.forEach(function (props) {
+        var kind = WATERSHED_KINDS[props.kind] || null;
+        // the body's name, what kind it is, and its own website as the state
+        // publishes it, on one row
+        wrap.appendChild(renderLinkRow({
+          title: props.name ? String(props.name) : "Watershed District",
+          note: kind ? kind.what : null,
+          links: props.url ? [{ label: "Website", url: String(props.url) }] : []
+        }));
+        var rows = [];
+        rows.push({
+          label: "What it does",
+          value: "Manages lakes, streams, flooding and drainage across a " +
+            "watershed rather than within one city or county, and can put a " +
+            "charge for that on your property tax."
+        });
+        if (kind) {
+          rows.push({ label: "Who runs it", value: kind.board });
+          rows.push({ label: "Set up under", value: kind.law });
+        }
+        wrap.appendChild(renderFieldStack(rows));
+      });
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Minnesota Board of Water and Soil Resources",
+        url: "https://bwsr.state.mn.us/"
+      };
+    }
+  });
+
   /* ---------- 1d. County commissioner district — dissolved from the precincts ----------
    * Minnesota's county boards are the one local tier the state itself draws.
    * Minn. Stat. 375.025 subd. 1 divides EVERY county into as many
@@ -12546,16 +12682,33 @@ function initMinnesotaExplorer() {
    * every one of the 785 precincts they cover. Two more counties publish one
    * on a host whose robots.txt refuses this client, which is obeyed.
    *
-   * NO COMMISSIONER IS NAMED AND THE CARD SAYS SO. The Secretary of State's
-   * certified-results service carries federal and state contests only, so no
-   * commissioner can be composed from returns, and no statewide roster of the
-   * people was found (gap mn-county-commissioner-roster). The card names the
-   * district, says how many seats the board holds, says plainly that it names
-   * nobody, and links the county directory.
+   * THE NAMES ARE ELECTION WINNERS AND THE CARD SAYS SO. The Secretary of
+   * State publishes every county commissioner contest it runs as a results
+   * file per election day, and the newest general for each seat names 445 of
+   * the 447 (mn/scripts/build_mn_commissioner_roster.py;
+   * data/app/mn-county-commissioners.json). A winner is dated to the election
+   * that seated them and is not a claim about who sits today, so the card
+   * says that in words and points at the county's own board page. Where a
+   * county's own district map names somebody else (Ramsey District 3 today)
+   * the card prints both, each saying whose it is.
    * ---------- */
   var loadMnCommissionerDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/mn-commissioner-districts.json", {}, 2);
   });
+  // The winners of the most recent election for each seat, from the Secretary
+  // of State's own results (mn/scripts/build_mn_commissioner_roster.py), keyed
+  // "<county FIPS>-<district>". Every record names the election that seated
+  // it, because a winner is not the same claim as a sitting commissioner.
+  var loadMnCommissionerRoster = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-county-commissioners.json", {}, 2);
+  });
+  var MN_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  function mnElectionDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return MN_MONTHS[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1];
+  }
 
   registerLayer({
     id: "county-commissioner",
@@ -12571,29 +12724,85 @@ function initMinnesotaExplorer() {
       var props = feature.properties || {};
       return props.name != null ? String(props.name) : null;
     },
+    // the hover names the seat's most recent winner from the prefetched
+    // roster, and nobody where the card names nobody
+    hoverOfficial: {
+      load: loadMnCommissionerRoster,
+      name: function (feature, roster) {
+        var props = feature.properties || {};
+        var rec = roster ? roster[String(props.countyFips) + "-" + String(props.district)] : null;
+        return rec && rec.name ? String(rec.name) : null;
+      }
+    },
     query: function (point, seq) {
       return queryFeatureAt(loadMnCommissionerDistricts, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: props.name,
           number: props.district,
           county: props.county,
           seats: props.seats,
-          precincts: props.precincts
+          precincts: props.precincts,
+          winner: null
         };
+        // A roster that fails to load leaves the district card standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadMnCommissionerRoster().then(function (roster) {
+          result.winner = roster[String(props.countyFips) + "-" + String(props.district)] || null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
       // Card convention: identity -> officeholder -> office -> contact -> link.
-      // It stops after the officeholder row, and that row says why.
+      // The officeholder is the seat's most recent election winner, dated, and
+      // the card stops there: no office or contact is published with it.
       var wrap = cardEl("div", "card-flush");
       wrap.appendChild(renderBodyIntro({
         title: result.name ? String(result.name) : "County Commissioner District",
         note: result.county ? String(result.county) + " County" : null
       }));
       var rows = [];
+      var winner = result.winner;
+      if (winner && winner.name) {
+        var when = mnElectionDate(winner.election);
+        wrap.appendChild(renderPersonRows([{
+          name: String(winner.name),
+          note: when ? (winner.special ? "won a special election, " : "elected ") + when : null
+        }]));
+        rows.push({
+          label: "What this name is",
+          value: "The winner of the most recent election for this seat in the " +
+            "Minnesota Secretary of State's results. It is not a list the " +
+            "county keeps up to date, so if the seat has changed hands since " +
+            "(a resignation or an appointment) this still shows who won. " +
+            "The county's own board page says who holds it today."
+        });
+        if (winner.countySays && winner.countySays.name) {
+          rows.push({
+            label: "The county's own map names someone else",
+            value: String(winner.countySays.publisher || "The county") +
+              "'s own district map names " + String(winner.countySays.name) +
+              " for this seat. The two sources disagree, and the county's " +
+              "board page will say who holds it now."
+          });
+        }
+      } else {
+        rows.push({
+          label: "Who holds this seat",
+          value: result.rosterFailed
+            ? "The list of election winners did not load, so no name is shown. " +
+              "Your county publishes its own board, and the link below reaches it."
+            : "Not named here: " + String((winner && winner.unnamed) ||
+              "no result for this seat was found") + ". Your county publishes " +
+              "its own board, and the link below reaches it."
+        });
+      }
       rows.push({
         label: "Who you elect here",
         value: "One county commissioner, chosen by the voters of this district " +
@@ -12609,13 +12818,6 @@ function initMinnesotaExplorer() {
             "Hennepin, Ramsey and St. Louis; a county may ask to change that."
         });
       }
-      rows.push({
-        label: "Who holds this seat",
-        value: "Not listed here. Minnesota publishes the district lines " +
-          "statewide but not the people, and no list of all 447 commissioners " +
-          "was found, so naming one would mean guessing. Your county publishes " +
-          "its own board — the link below reaches it."
-      });
       if (result.precincts != null) {
         rows.push({
           label: "How the line is drawn",
@@ -12780,10 +12982,15 @@ function initMinnesotaExplorer() {
    * where its older pupils go. Recorded as gap mn-elementary-district-grades,
    * with mn/WATCH.md carrying the measurement.
    *
-   * NO OFFICEHOLDER ON ANY OF THE THREE. Minnesota school boards are elected
-   * and no statewide roster of their members was found, so each card names the
-   * district and links the state's own education department. Recorded as gap
-   * mn-school-board-members.
+   * THE BOARD IS NAMED FROM THE STATE'S ELECTION RESULTS. Minnesota school
+   * boards are elected and no statewide list of who sits on them exists, so
+   * the unified and elementary cards name the winners of each board's most
+   * recent elections in the Secretary of State's results, every name dated
+   * (mn/scripts/build_mn_school_boards.py; data/app/mn-school-boards.json,
+   * keyed by this layer's GEOID through the Department of Education's own
+   * district numbers). A winner is not a claim about who sits today, so the
+   * card says that in words. The secondary card names nobody: Pine Point's
+   * voters elect Pine Point's board, not Park Rapids's.
    * ---------- */
   var loadSchoolDistrictsUnified = tigerStatewideLoader(
     TIGERWEB_SERVICES + "School/MapServer", 0,
@@ -12797,33 +13004,94 @@ function initMinnesotaExplorer() {
 
   var MN_SCHOOL_DIRECTORY = "https://public.education.mn.gov/MDEAnalytics/DataAnalytics.jsp";
 
+  // The elected board of each district, keyed by the Census district id; every
+  // seat names the election that filled it (mn/scripts/build_mn_school_boards.py).
+  var loadMnSchoolBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-school-boards.json", {}, 2);
+  });
+
   function mnSchoolCard(result, tierNote) {
     var wrap = cardEl("div", "card-flush");
     wrap.appendChild(renderBodyIntro({
       title: result.name != null ? String(result.name) : "Unknown school district",
-      note: result.geoid != null ? "GEOID " + String(result.geoid) : null
+      note: result.board && result.board.district ? String(result.board.district)
+        : (result.geoid != null ? "GEOID " + String(result.geoid) : null)
     }));
+    var board = result.board;
     var rows = [];
+    if (board) {
+      // Card convention: identity -> officeholders. Each seat is the winner
+      // of its most recent election, dated; seats the results cannot settle
+      // are counted and say why, once per reason.
+      var people = [], unnamed = [], counts = {};
+      (board.seats || []).forEach(function (seat) {
+        var label = seat.seat === "At Large" ? "Board, at large" : "Board, " + String(seat.seat);
+        if (seat.name) {
+          var when = mnElectionDate(seat.election);
+          people.push({
+            name: String(seat.name),
+            badge: label,
+            note: when ? (seat.special ? "won a special election, " : "elected ") + when : null
+          });
+        } else {
+          var why = String(seat.unnamed || "");
+          if (!counts[why]) { counts[why] = 0; unnamed.push(why); }
+          counts[why] += 1;
+        }
+      });
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      unnamed.forEach(function (why) {
+        var n = counts[why];
+        rows.push({
+          label: (n === 1 ? "1 seat" : n + " seats") + " not named here",
+          value: why + "."
+        });
+      });
+      if (board.partial) {
+        rows.push({ label: "Seats not shown", value: "This board has more seats: " + String(board.partial) + "." });
+      }
+      rows.push({
+        label: "What these names are",
+        value: "The winner of the most recent election for each seat in the " +
+          "Minnesota Secretary of State's results. It is not a list the " +
+          "district keeps up to date: a member who resigned, and whoever the " +
+          "board appointed in their place, are not in those results. The " +
+          "district's own website says who sits on the board today."
+      });
+    } else if (result.noBoard) {
+      rows.push({
+        label: "Your school board",
+        value: "Not named on this card. The voters here are in the Pine " +
+          "Point district, which elects its own board; this district serves " +
+          "their high-school grades, and its board is elected by its own " +
+          "residents. The School District (Elementary) card is the one for " +
+          "Pine Point."
+      });
+    } else {
+      rows.push({
+        label: "Your school board",
+        value: result.rosterFailed
+          ? "The list of election winners did not load, so no name is shown. " +
+            "The district's own website names its board."
+          : "Not named here. No board election for this district appears in " +
+            "the Secretary of State's results since November 2022. The " +
+            "district's own website is the current source."
+      });
+    }
     // the grade span is TIGER's own LOGRADE–HIGRADE, printed as published and
     // never interpreted: see the block comment on the eight elementary
     // districts that record PK–12
     if (result.grades) rows.push({ label: "Grades, as the Census records them", value: result.grades });
     rows.push({ label: "Census tiling", value: tierNote });
-    rows.push({
-      label: "Your school board",
-      value: "Not named here. Minnesota school boards are elected, and no " +
-        "statewide roster of their members was found — so this app names " +
-        "nobody rather than guessing. The district's own website is the " +
-        "current source."
-    });
     wrap.appendChild(renderFieldStack(rows));
-    wrap.appendChild(renderLinkRow({
-      links: [{ label: "Minnesota Department of Education", url: MN_SCHOOL_DIRECTORY }]
-    }));
+    var links = [];
+    if (board && board.website) links.push({ label: "District website", url: String(board.website) });
+    links.push({ label: "Minnesota Department of Education", url: MN_SCHOOL_DIRECTORY });
+    wrap.appendChild(renderLinkRow({ links: links }));
     return wrap;
   }
 
-  function mnSchoolQuery(load) {
+  function mnSchoolQuery(load, noBoard) {
     return function (point, seq) {
       // point-first (queryFeatureAt): one district polygon instead of the
       // statewide download gating the first click
@@ -12832,14 +13100,27 @@ function initMinnesotaExplorer() {
         var props = feature.properties || {};
         var lo = findPropCI(props, ["lograde"]);
         var hi = findPropCI(props, ["higrade"]);
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"]),
           // the grade span TIGER itself carries, so the card can never
           // disagree with the tier printed under it
-          grades: (lo != null && hi != null) ? String(lo) + "–" + String(hi) : null
+          grades: (lo != null && hi != null) ? String(lo) + "–" + String(hi) : null,
+          board: null,
+          noBoard: !!noBoard
         };
+        if (noBoard) return result;
+        // A roster that fails to load leaves the district card standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadMnSchoolBoards().then(function (roster) {
+          result.board = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     };
   }
@@ -12884,10 +13165,11 @@ function initMinnesotaExplorer() {
     query: mnSchoolQuery(loadSchoolDistrictsElementary),
     render: function (result) {
       return mnSchoolCard(result,
-        "Elementary district — it runs no high school of its own. Minnesota " +
-        "has eight, and TIGER publishes a secondary district over only one of " +
-        "them, so for the other seven this app cannot say which high school " +
-        "district serves the point (gap mn-secondary-school-coverage).");
+        "Elementary district in the Census's tiling. Minnesota has eight, " +
+        "and the Census records seven of them as serving every grade and " +
+        "publishes a secondary district over only one, so this app does not " +
+        "say which grades this district runs or which district serves its " +
+        "older pupils (gap mn-elementary-district-grades).");
     }
   });
 
@@ -12908,13 +13190,185 @@ function initMinnesotaExplorer() {
       var name = findPropCI(feature.properties || {}, ["name"]);
       return name != null ? String(name) : null;
     },
-    query: mnSchoolQuery(loadSchoolDistrictsSecondary),
+    query: mnSchoolQuery(loadSchoolDistrictsSecondary, true),
     render: function (result) {
       return mnSchoolCard(result,
         "Secondary district — it runs the high-school grades over an " +
         "elementary district that runs none. This is the only one TIGER " +
         "publishes for Minnesota, so the Elementary card names the district " +
         "that runs the lower grades at this point.");
+    }
+  });
+
+  /* ---------- 5b. School board district — drawn from the precinct results ----------
+   * Most Minnesota school boards are elected at large, and the School
+   * District card names them. A board may instead divide its district into
+   * election districts (Minn. Stat. 205A.12), and then a member is elected by
+   * one part of the district only. No state office publishes those districts
+   * as a map, so they are drawn here from the Secretary of State's own
+   * precinct-level results: a seat is voted on in exactly the precincts of its
+   * district, and those precincts, cut to the school district's boundary, are
+   * the district (mn/scripts/build_mn_school_board_districts.py;
+   * data/app/mn-school-board-districts.json). Thirteen boards, measured
+   * 2026-10-08; Minneapolis's six agree with the city's own map at every one
+   * of 1,800 sampled points.
+   *
+   * THREE KINDS OF FEATURE, AND THE CARD SAYS WHICH. A "district" is one
+   * seat's precincts. A "split" precinct voted in two or three districts, so
+   * the line runs through it and the results do not say where; the card names
+   * the districts and every member they elect rather than choosing. "Unplaced"
+   * ground is part of a board's school district that no district contest
+   * covers — Duluth's rural townships, which vote at combined polling places,
+   * and small pieces where no voter's ballot carried the contest.
+   *
+   * Anoka-Hennepin elects by district too and is NOT drawn: it reports every
+   * district contest on combined polling places, which the results do not
+   * place on precincts (gap mn-school-board-election-districts).
+   * ---------- */
+  var loadMnSchoolBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-school-board-districts.json", {}, 2);
+  });
+
+  // every member the roster names for one of these seats, newest first
+  function mnBoardMembers(board, seatLabel) {
+    var out = [];
+    ((board && board.seats) || []).forEach(function (seat) {
+      if (seat.seat !== seatLabel) return;
+      var when = mnElectionDate(seat.election);
+      if (seat.name) {
+        out.push({
+          name: String(seat.name),
+          badge: "Board, " + String(seat.seat),
+          note: when ? (seat.special ? "won a special election, " : "elected ") + when : null
+        });
+      } else {
+        out.push({ unnamed: String(seat.unnamed || "not named in the results") });
+      }
+    });
+    return out;
+  }
+
+  registerLayer({
+    id: "school-board-district",
+    group: "schools",
+    label: "School Board District",
+    coverage: insideMinnesota,
+    emptyNote: "This point is not in one of the school districts this map " +
+      "draws board election districts for. Most Minnesota school boards are " +
+      "elected at large, by the whole district, and the School District card " +
+      "names them.",
+    overlay: {
+      load: loadMnSchoolBoardDistricts,
+      // a plum no other layer here uses, dashed like the other school tilings
+      style: { color: "#7D2E68", weight: 1.5, fillColor: "#A8538F", fillOpacity: 0.06, dashArray: "5 3" }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      if (p.kind === "district" && p.seat) return String(p.school) + ", " + String(p.seat);
+      if (p.kind === "split" && p.seats) return String(p.school) + ", " + p.seats.join(" or ");
+      return p.school != null ? String(p.school) : null;
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadMnSchoolBoardDistricts, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hit = null;
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hit = feats[i].properties || {};
+            break;
+          }
+        }
+        if (!hit) return null;
+        var result = { seq: seq, props: hit, board: null };
+        return loadMnSchoolBoards().then(function (roster) {
+          result.board = roster ? roster[String(hit.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var p = result.props;
+      var board = result.board;
+      var wrap = cardEl("div", "card-flush");
+      var seats = p.kind === "district" ? [String(p.seat)]
+        : p.kind === "split" ? p.seats.map(String)
+        : [];
+      if (p.kind === "unplaced" && board) {
+        (board.seats || []).forEach(function (s) {
+          if (s.seat !== "At Large" && seats.indexOf(s.seat) < 0) seats.push(s.seat);
+        });
+      }
+      wrap.appendChild(renderBodyIntro({
+        title: p.kind === "district" ? String(p.seat)
+          : p.kind === "split" ? seats.join(" or ")
+          : "Board district not on this map here",
+        note: String(p.school) + " (" + String(p.board) + ")"
+      }));
+      var people = [], unnamed = 0;
+      seats.forEach(function (label) {
+        mnBoardMembers(board, label).forEach(function (m) {
+          if (m.name) people.push(m); else unnamed += 1;
+        });
+      });
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      var rows = [];
+      if (p.kind === "split") {
+        rows.push({
+          label: "Why two districts",
+          value: "The line between these board districts runs through the " +
+            String(p.precinct) + " precinct, and the election results do not " +
+            "say where. Your ballot names your district."
+        });
+      } else if (p.kind === "unplaced") {
+        rows.push({
+          label: "Why",
+          value: p.why === "combined"
+            ? "This board runs its own election in odd years and reports this " +
+              "area at combined polling places, which the state's results do " +
+              "not place on precincts. The district's own map shows which " +
+              "district this is."
+            : "No precinct here voted in one of this board's district " +
+              "contests in the results read since 2022, so they do not say " +
+              "which district this ground is in. Few or no voters may live here."
+        });
+      }
+      if (unnamed) {
+        rows.push({
+          label: (unnamed === 1 ? "1 seat" : unnamed + " seats") + " not named here",
+          value: "The results do not settle who holds it; the School District card says why."
+        });
+      }
+      if (result.rosterFailed) {
+        rows.push({ label: "Members", value: "The list of election winners did not load, so no name is shown." });
+      }
+      var atLarge = 0;
+      ((board && board.seats) || []).forEach(function (s) { if (s.seat === "At Large") atLarge += 1; });
+      if (atLarge) {
+        rows.push({
+          label: "Also on this board",
+          value: (atLarge === 1 ? "1 member" : atLarge + " members") +
+            " elected at large, by the whole district. The School District card names them."
+        });
+      }
+      rows.push({
+        label: "How this line is drawn",
+        value: "From the precincts that voted in each district's most recent " +
+          "election in the Minnesota Secretary of State's results, cut to the " +
+          "school district's boundary. The names are the winners of those " +
+          "elections, not a list the district keeps up to date."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      var links = [];
+      if (board && board.website) links.push({ label: "District website", url: String(board.website) });
+      if (p.sourceUrl) links.push({ label: "Results by precinct", url: String(p.sourceUrl) });
+      if (links.length) wrap.appendChild(renderLinkRow({ links: links }));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Minnesota Secretary of State election results", url: "https://www.sos.mn.gov/elections-voting/election-results/" };
     }
   });
 
@@ -13139,10 +13593,23 @@ function initMinnesotaExplorer() {
    * Minnesota's mayors and council members was found, so the card names
    * nobody. Recorded as gap mn-municipal-officeholders. The 274 city WARDS
    * the Secretary of State publishes are a later change, not a roster.
+   *
+   * THE 43 CITIES ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND COUNCIL, from the
+   * Secretary of State's own city results files, every name dated to the
+   * election that seated it (mn/scripts/build_mn_city_councils.py;
+   * data/app/mn-city-councils.json). A winner is not a claim about who sits
+   * today, so the card says that in words, the commissioner card's posture.
+   * Where a ranked-choice count decided a seat in later rounds, which the
+   * state's file does not carry, the seat names nobody and says why.
    * ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC", "incorporated places");
+  // The mayor and council of each city above 25,000 people, keyed by the
+  // city's Census id; every seat names the election that filled it.
+  var loadMnCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-city-councils.json", {}, 2);
+  });
 
   registerLayer({
     id: "municipality",
@@ -13163,11 +13630,22 @@ function initMinnesotaExplorer() {
       return queryFeatureAt(loadPlaces, point).then(function (feature) {
         if (!feature) return null; // not in a city — the engine renders emptyNote
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          council: null
         };
+        // A roster that fails to load leaves the city card standing and says
+        // so, rather than taking the boundary answer down with it.
+        return loadMnCityCouncils().then(function (roster) {
+          result.council = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -13176,12 +13654,66 @@ function initMinnesotaExplorer() {
         title: result.name != null ? String(result.name) : "Unknown city",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      wrap.appendChild(renderFieldStack([{
-        label: "Your mayor or council",
-        value: "Not named here. No statewide source names Minnesota's mayors " +
-          "and council members, and this app does not guess — the city's " +
-          "own website is the current source."
-      }]));
+      var council = result.council;
+      if (!council) {
+        wrap.appendChild(renderFieldStack([{
+          label: "Your mayor or council",
+          value: result.rosterFailed
+            ? "The list of election winners did not load, so no name is shown. " +
+              "The city's own website names its mayor and council."
+            : "Not named here. This app names the mayor and council of " +
+              "Minnesota's 43 cities above 25,000 people, from the state's " +
+              "election results, and this city is not one of them yet. The " +
+              "city's own website is the current source."
+        }]));
+        return wrap;
+      }
+      // Card convention: identity -> officeholders. Each seat is the winner
+      // of its most recent election, dated; no office or contact is
+      // published with them.
+      var people = [], rows = [];
+      (council.seats || []).forEach(function (seat) {
+        var label = seat.seat === "At Large" ? "Council, at large"
+          : seat.seat === "Mayor" ? "Mayor" : "Council, " + String(seat.seat);
+        if (seat.name) {
+          var when = mnElectionDate(seat.election);
+          people.push({
+            name: String(seat.name),
+            badge: label,
+            note: when ? (seat.special ? "won a special election, " : "elected ") + when : null
+          });
+          if (seat.citySays && seat.citySays.name) {
+            var read = mnElectionDate(seat.citySays.read);
+            rows.push({
+              label: label + ": the city's own page names someone else",
+              value: String(council.name) + "'s own council page named " +
+                String(seat.citySays.name) + " for this seat" +
+                (read ? " when read on " + read : "") + ". The seat has " +
+                "probably changed hands since " + String(seat.name) + " won it."
+            });
+          }
+        } else {
+          rows.push({ label: label + ": not named here", value: String(seat.unnamed || "") + "." });
+        }
+      });
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      rows.push({
+        label: "What these names are",
+        value: "The winner of the most recent election for each seat in the " +
+          "Minnesota Secretary of State's results. It is not a list the city " +
+          "keeps up to date, so if a seat has changed hands since (a " +
+          "resignation or an appointment) this still shows who won. The " +
+          "city's own website says who holds each seat today."
+      });
+      if (council.rankedChoice) {
+        rows.push({
+          label: "Ranked-choice voting",
+          value: "This city counts ranked ballots. The state's results carry " +
+            "first choices only, so a seat is named here only where first " +
+            "choices alone decided it."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
       return wrap;
     }
   });
@@ -14827,9 +15359,15 @@ function initMinnesotaExplorer() {
     // answer in eight places and one place respectively, so for almost every
     // reader they render as empty cards rather than as absent ones.
     "school-district-unified", "school-district-elementary", "school-district-secondary",
+    // The board district sits under the school tilings it divides, and
+    // answers only inside the thirteen districts that elect by district.
+    "school-board-district",
     // Then geography, broadest first, and the three proximity layers last
     // because they name buildings rather than districts.
-    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
+    // The watershed district sits after the city: a taxing overlay on top of
+    // the governments a reader lives in, and appointed rather than elected.
+    "county", "county-subdivision", "municipality", "watershed-district",
+    "voting-precinct", "zip-code",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -15292,12 +15830,13 @@ function initMinnesotaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#155E52": "#5AB3A1", "#1F4E79": "#62A0DD",
-    "#1F6F5C": "#5EC1A7", "#1F7A6B": "#5ACBB6", "#2E8C7C": "#61D9C3", "#2F6B4F": "#6FBD96",
-    "#3FA898": "#67F0DA", "#3FA98C": "#67F1CA", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2",
-    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#7C5CBF": "#C2ABFF", "#8C2E4A": "#F47294",
-    "#8D7BB5": "#D1BFFE", "#9C4A14": "#FE8E4D", "#A78BFA": "#E0DAFF", "#A98B6C": "#F3CBA1",
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#155E52": "#5AB3A1", "#1C6E9C": "#57BCFB",
+    "#1F4E79": "#62A0DD", "#1F6F5C": "#5EC1A7", "#1F7A6B": "#5ACBB6", "#2E8C7C": "#61D9C3",
+    "#2F6B4F": "#6FBD96", "#3FA898": "#67F0DA", "#3FA98C": "#67F1CA", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4BA3D3": "#B0E0FE",
+    "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
+    "#7C5CBF": "#C2ABFF", "#7D2E68": "#E073C1", "#8C2E4A": "#F47294", "#8D7BB5": "#D1BFFE",
+    "#9C4A14": "#FE8E4D", "#A78BFA": "#E0DAFF", "#A8538F": "#FF94DD", "#A98B6C": "#F3CBA1",
     "#B0316E": "#FD88B8", "#B23A1E": "#FD9177", "#D06A9C": "#FFBDDA", "#D9792E": "#FECAA8"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */

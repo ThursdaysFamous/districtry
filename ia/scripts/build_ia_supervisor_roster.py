@@ -188,6 +188,151 @@ NUMBERING_CHECKED = {
                    "with six towns' census centroids independently agreeing on "
                    "every pairing they can speak to",
     },
+    "Ida": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-06",
+        "witness": "the county's own Ordinance 31 (effective 15 January 2022, "
+                   "drawn to the 2020 census) names the townships in each "
+                   "district; the ten that lie wholly inside one district "
+                   "(Galva and Griggs in 1; Battle, Blaine, Garfield, Hayes, "
+                   "Logan, Maple and Silver Creek in 2; Corwin in 3) each have "
+                   "a census interior point in the same-numbered district of "
+                   "this layer",
+    },
+    "Washington": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-06",
+        "witness": "the county's own district map (county GIS, 2022, drawn to "
+                   "the 2020 census, linked by the auditor on 2026-10-01) draws "
+                   "and labels the townships in each district; the ten that lie "
+                   "wholly inside one (Brighton, Clay, Dutch Creek, Lime Creek "
+                   "and Seventy-Six in 1; English River in 2; Crawford, "
+                   "Highland, Iowa and Oregon in 3) land in the same-numbered "
+                   "district, and the split townships settle 4 and 5: Franklin, "
+                   "which the map puts only in 1 and 4, lands in this layer's "
+                   "4, and Jackson, only in 2 and 5, lands in its 5",
+    },
+    "Polk": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-06",
+        "witness": "the county's own map server (Elections/Board_of_Supervisors "
+                   "on gis4.polkcountyiowa.gov, to which the elections office "
+                   "pointed this project on 2026-10-06) publishes the five "
+                   "district polygons with each supervisor's name; on a "
+                   "160x160 grid over the county, 22,799 of 22,860 sampled "
+                   "points (99.7%) get the same number from those polygons "
+                   "and this layer, the rest being slivers along shared edges, "
+                   "and no number is swapped",
+    },
+    "Winnebago": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-07",
+        "witness": "the county Auditor's office (Lori Jacobs, by e-mail, "
+                   "2026-10-06, answering this project's ask) listed the "
+                   "precincts in each district: Forest City Wards 1, 2 and 4 "
+                   "and Newton Forest in 1; Center, Eden Logan Norway and Mt "
+                   "Valley in 2; Buffalo Grant Lincoln, FC3 Forest S3 and "
+                   "King Linden in 3; each of this instance's ten Winnebago "
+                   "precincts lies inside the same-numbered district of this "
+                   "layer (each at least 99.7% of its area)",
+    },
+    "Sioux": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own supervisor-district map (Sioux County "
+                   "GIS, as of 6 April 2022, sent by the county's GIS "
+                   "technician by e-mail on 2026-10-06) labels each district "
+                   "and draws its townships; each of this instance's 17 Sioux "
+                   "precincts, named for those townships and cities, lies "
+                   "inside the same-numbered district of this layer (each at "
+                   "least 99.7% of its area): the Settlers-Sioux-Rock-Plato "
+                   "and Rock Valley precincts in 4, Lincoln, Sheridan, Grant, "
+                   "Capel, Lynn, Floyd and East Orange in 5, the western and "
+                   "southern townships in 1, West Branch and Orange City in 2, "
+                   "and Sioux Center 2-4 in 3",
+    },
+    "Osceola": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own supervisor-district map (the "
+                   "Supervisor-Districts_Final document the Auditor linked on "
+                   "2026-10-06, posted August 2022) labels District 1 to 5 "
+                   "over the county's road grid; fitted to the county's own "
+                   "outline, each of this layer's five districts spans the "
+                   "same part of the drawing as the same-numbered label, and "
+                   "twelve check points (among them Ocheyedan, Harris and "
+                   "Melvin in 5, Ashton in 4, and the core of each district) "
+                   "all land in the same-numbered district of this layer",
+    },
+    "Chickasaw": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own GIS map (its Beacon site's Supervisor "
+                   "Districts 2022 layer, labelled District 1 to 5), as the "
+                   "operator viewed it in a browser and supplied it on "
+                   "2026-10-07 -- that host answers this project's client with "
+                   "a managed challenge, so nothing there was fetched; each of "
+                   "the five rural precincts in this instance's precinct layer "
+                   "lies in the same-numbered district on that map and of this "
+                   "layer (Chickasaw North in 1, Bradford in 2, Dayton Richland "
+                   "in 3, New Hampton Rural in 4, Lawler-Fredericksburg in 5, "
+                   "each at least 99.9% of its area), and the same map's 2022 "
+                   "New Hampton ward layer puts Wards 2 and 3 on the west and "
+                   "south of town, inside its District 3, and Wards 1 and 4 on "
+                   "the east, inside its District 4 -- where this instance's "
+                   "precinct layer puts those wards and this layer's 3 and 4",
+    },
+    "Grundy": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own precinct and supervisor-district map "
+                   "(Auditor Alan Tscherter, by e-mail 2026-10-07, map dated "
+                   "2026-02-03) draws each of its seven precincts wholly inside "
+                   "one district: 1 and 2 in District 1, 3 and 4 in District 2, "
+                   "5 in District 3, 6 in District 4 and 7 (Grundy Center) in "
+                   "District 5; this instance's precinct layer puts P1 and P2 "
+                   "in this layer's 1, P3 and P4 in 2, P5 in 3, P6 in 4 and P7 "
+                   "in 5, each at least 99.9% of its area",
+    },
+    "Cass": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own Resolution 2022-12 (posted on "
+                   "casscountyia.gov, read 2026-10-07) names the precincts "
+                   "in each district: 1 Atlantic Ward 1 and precinct 8 "
+                   "(Brighton, Grove, Pymosa, Washington, Marne), 2 Atlantic "
+                   "Wards 2 and 3, 3 Atlantic Wards 4 and 5, 4 Bear "
+                   "Grove/Cass/Lewis, Noble/Pleasant/Griswold and East "
+                   "Massena, 5 Anita-Wiota, Union/Cumberland and West "
+                   "Massena; each of this instance's 12 Cass precincts lies "
+                   "inside the same-numbered district of this layer (each at "
+                   "least 99.3% of its area)",
+    },
+    # JONES AND TAMA ARE IDENTITY BY CONSTRUCTION, and the witness says why
+    # rather than claiming a measurement that was not made: this layer's
+    # districts for both counties ARE the county's own drawing, numbered by the
+    # county (build_county_supplied_supervisor_districts.py), so the number on
+    # the drawing and the number on the county's board page are one county's
+    # two statements about one plan.
+    "Jones": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "this layer's Jones districts are the county's own "
+                   "supervisor-district file (county GIS, BOS_2022, sent by "
+                   "the county on 2026-10-06), each polygon carrying the "
+                   "county's own DIST_ID, and the county's board page numbers "
+                   "its supervisors in that same plan",
+    },
+    "Tama": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "this layer's Tama districts are drawn from the county's "
+                   "own 2025 supervisor-district map (sent by the auditor on "
+                   "2026-10-06), each district taking the number the map's "
+                   "own legend gives its colour, and four of the five match "
+                   "the Legislative Services Agency's published population "
+                   "for the same-numbered district exactly",
+    },
 }
 
 # WHAT A COUNTY TOLD US IN WRITING.
@@ -210,20 +355,49 @@ CORRESPONDENCE_ROSTERS = {
             "1": "LeRoy DeBoer",
             "2": "Jayson Vande Hoef",
             "3": "Mike Schulte",
-            "4": "Jeff Loring",
-            "5": "Jerry Helmers",
+            "4": "Jerry Helmers",
+            "5": "Jeff Loring",
         },
-        "readOn": "2026-10-01",
+        "readOn": "2026-10-06",
         "why": (
             "Osceola County Auditor Rochelle Van Tilburg, by e-mail, "
             "2026-10-01, answering this project's ask: 'Following is the "
-            "supervisor by district' followed by all five pairings. The "
-            "county's own board page lists its five supervisors and attaches "
-            "no district to any of them, which is why it was asked."),
+            "supervisor by district' followed by all five pairings. On "
+            "2026-10-06 she corrected that list by e-mail: Jerry Helmers is "
+            "District 4 and Jeff Loring District 5, the first list having "
+            "the two swapped. Districts 1-3 are unchanged. The county's own "
+            "board page lists its five supervisors and attaches no district "
+            "to any of them, which is why it was asked. This entry was never "
+            "shown to a reader with the swap, because Osceola's numbering was "
+            "not yet in NUMBERING_CHECKED and its board shipped unkeyed."),
         "cardNote": (
             "Osceola County's auditor gave this pairing by e-mail on 1 "
-            "October 2026; the county publishes no page that names a "
-            "district, so this app has no page to re-read."),
+            "October 2026 and corrected it on 6 October; the county "
+            "publishes no page that names a district, so this app has no "
+            "page to re-read."),
+    },
+    "Cass": {
+        "districts": {
+            "1": "Stephen Green",
+            "2": "Mark O'Brien",
+            "3": "Wendy Richter",
+            "4": "Steve Baier",
+            "5": "Bernard Pettinger",
+        },
+        "readOn": "2026-10-07",
+        "why": (
+            "Cass County Auditor Kathy Somers, by e-mail, 2026-10-01, "
+            "answering this project's ask: the pairing came as an inline "
+            "image headed 'Cass County Board of Supervisors', which this "
+            "project's tools could not open until the operator supplied the "
+            "image itself on 2026-10-07; it names one supervisor for each of "
+            "districts 1 to 5. The county's own "
+            "board page lists its five supervisors and attaches no district "
+            "to any of them, which is why it was asked."),
+        "cardNote": (
+            "Cass County's auditor gave this pairing by e-mail on 1 October "
+            "2026; the county publishes no page that names a district, so "
+            "this app has no page to re-read."),
     },
     "Ida": {
         # Transcribed from the reply exactly as the county wrote it, INCLUDING

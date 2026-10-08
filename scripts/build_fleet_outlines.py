@@ -75,6 +75,10 @@ SOURCES = {
     # a reader in Tiptonville's neighbouring bend is covered by a ring the main
     # body does not contain.
     "ky": "ky/data/app/metro-outline.json",
+    # Indiana's coverage ring IS its state outline: its eleven layers are the
+    # national tier and every one answers over the whole state, so the dissolve
+    # of its 92 counties is the widest ground it answers on.
+    "in": "in/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

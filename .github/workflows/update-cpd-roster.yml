@@ -66,7 +66,7 @@ jobs:
         run: |
           title="CPD district roster: Cloudflare challenge no longer clears from CI"
           run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          body="The weekly CPD scrape was refused on every rung: plain requests gets HTTP 403, and the headless-Chromium rung reports "Cloudflare challenge did not clear". The shipped il/data/app/cpd-district-info.json keeps its last good values and stays correct until CPD changes a commander or a CAPS contact.
+          body="The weekly CPD scrape was refused: plain requests gets HTTP 403, and the headless-Chromium rung either reports "Cloudflare challenge did not clear" or got through to fewer than 20 of the 22 district pages (the scrape log says which). The shipped il/data/app/cpd-district-info.json keeps its last good values and stays correct until CPD changes a commander or a CAPS contact.
 
           What is known: the challenge is a genuine managed (JS) one rather than a hard block, and Cloudflare hands a datacenter IP a harder challenge than a residential one. The per-attempt wait was raised 20s -> 60s on 2026-07-28, which held for about three weeks, and 60s -> 120s on 2026-08-19. **If runs still fail at 120s, the wait is not the problem — do not keep doubling it.** Override without editing code by setting CPD_CHALLENGE_WAIT_S on the scrape step.
 

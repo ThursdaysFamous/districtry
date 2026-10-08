@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-ia-shell-v16";
+const CACHE_NAME = "districtry-ia-shell-v22";
 
 const SHELL_URLS = [
   "./",
@@ -55,7 +55,6 @@ const GEOMETRY_URLS = [
   "./data/app/ia-house-districts.json",
   "./data/app/ia-supervisor-districts.json",
   "./data/app/johnson-county-outline.json",
-  "./data/app/jones-county-outline.json",
   "./data/app/ia-school-districts.json",
   "./data/app/ia-school-director-districts.json",
   "./data/app/ia-cc-director-districts.json",
@@ -76,7 +75,6 @@ const GEOMETRY_URLS = [
   "./data/app/wright-county-outline.json",
   "./data/app/black-hawk-county-outline.json",
   "./data/app/calhoun-county-outline.json",
-  "./data/app/cass-county-outline.json",
   "./data/app/dickinson-county-outline.json",
   "./data/app/guthrie-county-outline.json",
   "./data/app/kossuth-county-outline.json",
@@ -88,22 +86,14 @@ const GEOMETRY_URLS = [
   "./data/app/bremer-county-outline.json",
   "./data/app/butler-county-outline.json",
   "./data/app/cerro-gordo-county-outline.json",
-  "./data/app/chickasaw-county-outline.json",
   "./data/app/franklin-county-outline.json",
-  "./data/app/grundy-county-outline.json",
   "./data/app/hamilton-county-outline.json",
-  "./data/app/ida-county-outline.json",
   "./data/app/linn-county-outline.json",
   "./data/app/madison-county-outline.json",
   "./data/app/mitchell-county-outline.json",
-  "./data/app/osceola-county-outline.json",
-  "./data/app/polk-county-outline.json",
   "./data/app/sac-county-outline.json",
-  "./data/app/sioux-county-outline.json",
   "./data/app/taylor-county-outline.json",
-  "./data/app/washington-county-outline.json",
   "./data/app/webster-county-outline.json",
-  "./data/app/winnebago-county-outline.json",
   "./data/app/winneshiek-county-outline.json",
 ];
 

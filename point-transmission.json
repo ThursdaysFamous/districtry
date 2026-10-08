@@ -285,11 +285,13 @@
         "municipality",
         "police-station",
         "post-office",
+        "school-board-district",
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
         "us-house",
         "voting-precinct",
+        "watershed-district",
         "zip-code"
       ]
     },

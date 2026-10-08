@@ -4105,7 +4105,9 @@ function initIowaExplorer() {
     { id: "minnesota", label: "Minnesota", url: "https://districtry.com/mn/", emoji: "🛶", explorerName: "districtry Minnesota",
       bbox: { minLng: -97.3, minLat: 43.44, maxLng: -89.58, maxLat: 49.44 } },
     { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
-      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } }
+      bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } },
+    { id: "indiana", label: "Indiana", url: "https://districtry.com/in/", emoji: "🏁", explorerName: "districtry Indiana",
+      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -8371,7 +8373,7 @@ function initIowaExplorer() {
     "ia-senate",         // 50 Senate districts, each the union of two whole House districts
     "county",            // 99 counties, pre-built from TIGERweb; the fork's offline anchor layer
     "ia-house",          // 100 House districts; two nest exactly inside each Senate district
-    "county-supervisor", // The flagship layer: 272 features across 98 counties, PLANTYPE-aware (at-large / residence-district / single-member)
+    "county-supervisor", // The flagship layer: 279 features across all 99 counties, PLANTYPE-aware (at-large / residence-district / single-member)
     "school-district-unified", // 324 unified school districts, statewide — the only school-district tiling Iowa runs (TIGER's elementary/secondary layers measure zero)
     "school-director-district", // 716 director districts inside the 324 school districts — the sub-district fabric a board is elected from, where a district elects by district at all
     "community-college", // 15 merged areas, shipped as published (no dissolve) — larger on average than a school district, ranked beside it
@@ -11448,7 +11450,9 @@ function initIowaExplorer() {
    * Promise.all query() doesn't fit this shape.
    *
    * opts: { id, group, label, loader, style, pointOfInterest?, coverage?,
-   *         subOf?, emptyNote?, onToggle?, fields: [...] }
+   *         subOf?, emptyNote?, onToggle?, people?, fields: [...] }
+   * people(result) => Node|null, when present, appends a person block (built
+   * with renderBodyIntro / renderPersonRows) after the field rows.
    * Each field is one of:
    *   { name, label, keys:[...], primary:true } — always shown; findPropCI(keys)
    *        with an "Unknown" fallback. Conventionally the first field (headline).
@@ -11504,7 +11508,13 @@ function initIowaExplorer() {
             rows.push({ label: f.label, value: f.value });
           }
         });
-        return renderFieldStack(rows);
+        var card = renderFieldStack(rows);
+        // optional: a block of people the feature itself carries (a council
+        // stamped onto each boundary by its builder), built by the layer from
+        // the card helpers and placed after the identity fields
+        var people = opts.people ? opts.people(result) : null;
+        if (people) card.appendChild(people);
+        return card;
       },
       pointOfInterest: opts.pointOfInterest,
       coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
@@ -12288,8 +12298,8 @@ function initIowaExplorer() {
   // which is true under plans 1 and 2 and FALSE under plan 3 — the fleet rule
   // is docs/EXPANSION_GUIDE.md Part 5, "PROVE 'AT LARGE' FROM A CERTIFIED
   // ELECTION DOCUMENT": stating it wrong "tells a reader nine people represent
-  // them when one does". A county whose plan this app does not know (Jones,
-  // absent from the state's own district layer) claims NEITHER.
+  // them when one does". A county whose plan this app does not know (none
+  // since 2026-10-07, when Jones's own district file shipped) claims NEITHER.
   var IA_BOARD_PLAN_NOTE = {
     "PLAN 1": "Elected at large — every voter in the county votes on every seat.",
     "PLAN 2": "Elected countywide — every voter votes on every seat, though each " +
@@ -12661,9 +12671,9 @@ function initIowaExplorer() {
    * No statewide supervisor roster exists (measured, research pass) — the
    * card links to the county's own board page (ia-county-board-directory.json,
    * built from the Iowa State Association of Counties' member directory)
-   * rather than naming anyone. Jones County carries no feature here at all:
-   * it is entirely absent from the state's own aggregate (measured by name
-   * and by FIPS), a recorded gap rather than a guess. ---------- */
+   * rather than naming anyone. Jones and Tama ship districts drawn from
+   * files the counties sent (the state's aggregate omits Jones and trails
+   * Tama), so all 99 counties carry a feature. ---------- */
   var loadSupervisorDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ia-supervisor-districts.json", {}, 2);
   });
@@ -13474,7 +13484,11 @@ function initIowaExplorer() {
         // makes no claim about how the rest are elected.
         wrap.appendChild(renderSectionLabel("CITY OFFICIALS"));
         wrap.appendChild(renderPersonRows(result.countyOfficials.members.map(function (rec) {
-          var row = { name: String(rec.name) };
+          // AN EMPTY SEAT IS NOT A PERSON. The builder turns a row the county
+          // fills with a placeholder ("Vacant Position") into `vacant: true`
+          // with no name, so the card says the seat is empty rather than
+          // printing the placeholder where a name belongs.
+          var row = { name: rec.vacant ? "Vacant seat" : String(rec.name) };
           var marks = [];
           if (rec.role) marks.push(String(rec.role));
           if (rec.seat) marks.push(String(rec.seat));
@@ -13492,6 +13506,7 @@ function initIowaExplorer() {
           // stays dialable. A reader wanting a city clerk wants exactly this
           // number.
           if (rec.phoneIsOffice) notes.push("City office number");
+          if (rec.vacant) notes.push("The county lists this seat as vacant");
           if (rec.status) notes.push(String(rec.status));
           if (rec.termEnds) notes.push("Term ends " + String(rec.termEnds));
           if (notes.length) row.note = notes.join(" \u00b7 ");

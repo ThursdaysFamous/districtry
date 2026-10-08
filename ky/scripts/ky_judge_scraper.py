@@ -45,18 +45,31 @@ THREE SURFACES, BECAUSE THE TWO TIERS ARE PUBLISHED DIFFERENTLY:
     assembled from the 120 county pages, which carry 818 numbered judge rows
     between them.
 
-JEFFERSON IS THE ONE HOLE AND IT IS NOT SILENT HERE. Its county page ships the
-judge list commented out in its own HTML (`<!--<div id="judges"></div>-->` with
-no card row anywhere), and Jefferson is the SOLE county of circuit 30 and of
-district 30, so Louisville's trial judges are named on no page of this source
-while every other county's are. That is recorded as a known, asked-about
-absence rather than discovered fresh on every run: `KNOWN_EMPTY` below carries
-it with its date and reason, this scraper FAILS if any OTHER county's page comes
-back empty, and it also FAILS if Jefferson's page starts carrying judges — the
-`ACCEPTED_DROPS` property, so the day the Court of Justice fixes that page the
-build turns red and a person re-reads this note instead of the fix going
-unnoticed. The appellate tiers need nothing for Jefferson: both appellate pages
-are statewide and already name its justice and its two appellate judges.
+JEFFERSON'S TRIAL JUDGES COME FROM THE THREE COURT SITES ITS PAGE LINKS. The
+Court of Justice's own page for Jefferson ships its judge list commented out in
+its HTML (`<!--<div id="judges"></div>-->`, no card row anywhere), and Jefferson
+is the SOLE county of circuit 30 and of district 30, so Louisville's trial
+judges are named on no page of this source while every other county's are.
+That was recorded on 2026-10-01 as an asked-about absence, and the follow-up
+asking about it was WITHDRAWN UNSENT on 2026-10-06, because the same county
+page links "Websites for Jefferson Judges" — the Jefferson Circuit, Family and
+District Courts' own sites — and each of those names its bench in plain HTML.
+Measured 2026-10-07 with this file's own client: all three serve robots.txt
+with `Allow: /` for every agent, and they name 13 circuit judges, ten Family
+Court judges against Divisions 1-10, and 16 district judges. The lesson is the
+standing one in CLAUDE.md: read a page AND what it links before recording that
+nothing names the people.
+
+So `JEFFERSON_SITES` below reads those three, and two audits keep the route
+honest. The Court of Justice's Jefferson page must still LINK each site — that
+link is the court system vouching for it, and a site the county page stops
+linking is not one this file should go on reading — and the page must still
+carry no judge rows of its own, because the day it does, the two sources are
+there to be compared by a person rather than merged by a script
+(`KNOWN_EMPTY`, audited both ways). The district site numbers its judges 01-16
+in ALPHABETICAL order: those are slide positions in a gallery, not divisions,
+so no division is recorded for them. The circuit site prints no divisions at
+all. Only the Family Court site states a division beside each judge.
 
 A DIVISION IS A SEAT, NOT A PLACE. A multi-judge circuit's numbered divisions
 (KRS 23A.040 and after) are elected by the whole circuit and have no geometry,
@@ -116,12 +129,76 @@ KNOWN_EMPTY = {
     "Jefferson": (
         "MEASURED 2026-10-01: the page ships its judge list commented out in "
         "its own HTML and carries no card row. Jefferson is the sole county of "
-        "circuit 30 and of district 30, so Louisville's trial judges are named "
-        "on no page of this source. Asked about on 2026-10-01 in the follow-up "
-        "to Ask ky-judge-district-join; its appellate judges are unaffected, "
-        "the two appellate pages being statewide."
+        "circuit 30 and of district 30; its trial judges are read from the "
+        "three court sites the page links instead (JEFFERSON_SITES). Its "
+        "appellate judges are unaffected, the two appellate pages being "
+        "statewide."
     ),
 }
+
+# Jefferson's three court sites, each read for the bench it names. `kind` picks
+# the line shape: "plain" is one `Judge <Name>` per judge, "division" is
+# `Division <n> - [Chief ]Judge <Name>`. `floor` sits below what was measured
+# on 2026-10-07 (13, 10, 16) by roughly a vacancy or two, so an ordinary
+# vacancy does not fail the run and a page that has changed shape does.
+JEFFERSON_SITES = [
+    {"tier": "circuit", "unit": 30, "court": "Circuit Court", "kind": "plain",
+     "url": "https://www.jeffersoncircuitcourt.com/judges",
+     "linked": "https://www.jeffersoncircuitcourt.com/",
+     "label": "jefferson-circuit-court-site", "floor": 11},
+    {"tier": "circuit", "unit": 30, "court": "Family Court", "kind": "division",
+     "url": "https://www.jeffersonfamilycourt.com/",
+     "linked": "https://www.jeffersonfamilycourt.com/",
+     "label": "jefferson-family-court-site", "floor": 8},
+    {"tier": "district", "unit": 30, "court": "District Court", "kind": "plain",
+     "url": "https://jeffersondistrictcourt.com/districtcourtjudges",
+     "linked": "https://jeffersondistrictcourt.com/",
+     "label": "jefferson-district-court-site", "floor": 13},
+]
+PLAIN_JUDGE_RE = re.compile(r"^Judge\s+(\S.*)$")
+DIVISION_JUDGE_RE = re.compile(r"^Division\s+(\d+)\s*-\s*((?:Chief\s+)?Judge)\s+(\S.*)$", re.I)
+
+
+def text_lines(page):
+    """A page's visible text, one trimmed line per text node."""
+    page = re.sub(r"<script.*?</script>|<style.*?</style>", "", page, flags=re.S | re.I)
+    text = html.unescape(TAGS_RE.sub("\n", page))
+    return [re.sub(r"\s+", " ", line).strip() for line in text.split("\n") if line.strip()]
+
+
+def parse_jefferson_site(page, site):
+    """The judges one Jefferson court site names, as scrape rows, de-duplicated
+    in the order the page first prints them (each site repeats its list in a
+    gallery and again in a menu)."""
+    out, seen = [], set()
+    for line in text_lines(page):
+        division, role, name = None, "Judge", None
+        if site["kind"] == "division":
+            m = DIVISION_JUDGE_RE.match(line)
+            if not m:
+                continue
+            division, role, name = int(m.group(1)), m.group(2).title(), m.group(3)
+        else:
+            m = PLAIN_JUDGE_RE.match(line)
+            if not m:
+                continue
+            name = m.group(1)
+        name = name.strip()
+        if name in seen:
+            continue
+        seen.add(name)
+        record = {}
+        if is_vacancy_marker(name):
+            record["vacant"] = True
+        else:
+            record["name"] = name
+        record.update({"role": role, "court": site["court"], "tier": site["tier"],
+                       "unit": site["unit"], "division": division,
+                       "profileUrl": None, "readFrom": site["label"],
+                       "sourceUrl": site["url"]})
+        out.append(record)
+    return out
+
 
 # The four unit phrases this source prints, each mapped to the tier it belongs
 # to. The tier is what the app's layers are keyed by; Family Court is a
@@ -278,6 +355,7 @@ def scrape():
         time.sleep(PACE_SECONDS)
 
     empty = []
+    jefferson_page = None
     for county, page_name in counties():
         url = COUNTY_URL.format(page_name.replace(" ", "%20"))
         try:
@@ -288,6 +366,8 @@ def scrape():
                  "written rather than shipping a roster short of a whole county."
                  % (county, url, exc))
         found = [r for r in parse_cards(page, county) if r["tier"] in ("circuit", "district")]
+        if county == "Jefferson":
+            jefferson_page = page
         if not found:
             empty.append(county)
         else:
@@ -308,16 +388,40 @@ def scrape():
              "have genuinely stopped publishing; both want a person's eye before "
              "a roster ships missing them." % ", ".join(unexpected))
 
+    if jefferson_page is None:
+        fail("Jefferson's county page was not read, so its court sites cannot "
+             "be checked against the page that links them")
+    for site in JEFFERSON_SITES:
+        if site["linked"] not in html.unescape(jefferson_page):
+            fail("the Court of Justice's Jefferson page no longer links %s. That "
+                 "link is what vouches for the site, so it is not read without "
+                 "it: find where the county page sends a reader now, and re-read "
+                 "this file's docstring." % site["linked"])
+        sc.require_robots_once(site["url"], sc.UA_ROSTER_BOT,
+                               headers=sc.UA_HEADERS_ROSTER_BOT, label="ky-judges")
+        page = sc.fetch_stdlib(site["url"], headers=sc.UA_HEADERS_ROSTER_BOT)
+        found = parse_jefferson_site(page, site)
+        if len(found) < site["floor"]:
+            fail("%s named %d judge(s), below the floor of %d. The site has "
+                 "changed shape or lost most of its bench; either wants a "
+                 "person before a roster ships short of Louisville's judges."
+                 % (site["url"], len(found), site["floor"]))
+        rows.extend(found)
+        pages[site["label"]] = len(found)
+        time.sleep(PACE_SECONDS)
+
     payload = {
         "source": {
             "supremeCourt": SUPREME_URL,
             "courtOfAppeals": APPEALS_URL,
             "countyPages": COUNTY_URL.format("<County>"),
             "publisher": "Kentucky Court of Justice",
+            "jeffersonSites": [site["url"] for site in JEFFERSON_SITES],
             "note": "Named in the Administrative Office of the Courts' reply to "
                     "Ask ky-judge-district-join, 2026-10-01. The directory "
                     "search the same reply named is not read: its robots.txt "
-                    "refuses every client.",
+                    "refuses every client. Jefferson's trial judges come from "
+                    "the three court sites its county page links.",
         },
         "readOn": time.strftime("%Y-%m-%d", time.gmtime()),
         "pages": pages,
@@ -356,6 +460,19 @@ SELFTEST_PAGE = """
 <div class="card"><div class="media"><div class="media-body">
 <h3>John C. Middleton </h3><h4>Circuit Court Clerk</h4></div></div></div>
 </div></div>
+"""
+
+
+SELFTEST_FAMILY = """
+<p>Judges</p><p>Division 1 - Judge Angela J. Johnson</p>
+<p>Division 10 - Chief Judge Derwin L. Webb</p>
+<p>Division 1 - Judge Angela J. Johnson</p><p>DIV 1 Judge Angela Johnson</p>
+"""
+
+SELFTEST_DISTRICT = """
+<h2>DISTRICT COURT JUDGES</h2><span>01</span><h3>Judge Josephine L. Buckner</h3>
+<span>02</span><h3>Judge Stephanie Pearce Burke</h3>
+<p>Judge Josephine L. Buckner</p><p>Judge Stephanie Pearce Burke</p>
 """
 
 
@@ -400,6 +517,16 @@ def selftest():
     # And a unit phrase alone is not enough: a card with no name is not a person.
     nameless = SELFTEST_PAGE.replace("<h3>Vacant</h3>", "<h3> </h3>")
     assert len(parse_cards(nameless, "selftest")) == 3, "a card with no name at all"
+
+    family = parse_jefferson_site(SELFTEST_FAMILY, JEFFERSON_SITES[1])
+    assert [r["division"] for r in family] == [1, 10], family
+    assert family[1]["role"] == "Chief Judge" and family[1]["name"] == "Derwin L. Webb", family
+    assert all(r["tier"] == "circuit" and r["unit"] == 30 for r in family), family
+    district = parse_jefferson_site(SELFTEST_DISTRICT, JEFFERSON_SITES[2])
+    # The gallery's 01/02 are slide positions, never divisions, and the list
+    # printed twice is one bench.
+    assert [r["name"] for r in district] == ["Josephine L. Buckner", "Stephanie Pearce Burke"], district
+    assert all(r["division"] is None and r["tier"] == "district" for r in district), district
 
     print("ky-judge-scraper: selftest OK — 4 judge rows, clerk skipped, "
           "Family Court filed under its circuit, the vacancy structural and "

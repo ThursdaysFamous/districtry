@@ -736,15 +736,21 @@ try {
   // the shipped filing in both directions, and what a reader is actually told is
   // assembled in the browser from that table plus the feature under the point.
   //
-  // THE CONTROL IS THE SECOND HALF AND IS WHAT MAKES THE FIRST MEAN ANYTHING.
-  // Marion is in the same position and was NOT read — its site asks automated
-  // clients to stay out — so its districts must still print as filed. A relabel
-  // that quietly spread to every city would pass the Waupaca half alone.
+  // MARION IS THE SECOND HALF, and it tests the one thing the label table cannot
+  // do alone. The city straddles the Waupaca-Shawano line and the state files
+  // its Shawano ward as 01 and its Waupaca wards as 21-23; until 2026-10-07 the
+  // map drew that as four districts. Waupaca County's directory and April 2026
+  // sample ballot say three, with ward 4 (the Shawano part) in District 1, so
+  // the aldermanic builder's LOCAL_RECODE merges it into 21 and the table
+  // prints 21-23 as 1-3. So a point in the old Shawano piece and a point in the
+  // Waupaca part of District 1 must both say District 1, and neither may print
+  // the filed 21 — a rebuild that lost the merge would put the Shawano point in
+  // a district labelled 1 by parseInt with the right number and the wrong
+  // shape, which is why the District 2 point is asserted too.
   //
-  // Both points are interior points of the shipped polygons, each confirmed to
-  // lie inside exactly one district of the whole layer (2026-10-01). Neither
-  // city publishes a roster, so both cards are identity-only and the assertion
-  // is the district identifier itself.
+  // All four points are interior points of the shipped polygons, each confirmed
+  // to lie inside exactly one district of the whole layer (Waupaca 2026-10-01,
+  // Marion 2026-10-07).
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await booted(
@@ -759,16 +765,25 @@ try {
                        /Waupaca/.test(pill);
     await context.close();
 
-    const context2 = await browser.newContext({ serviceWorkers: "block" });
-    const page2 = await booted(
-      context2, `${BASE}#point=44.67229,-88.88770&layers=aldermanic-district`);
-    const pill2 = (await cardText(page2, "aldermanic-district")).text;
-    const asFiled = /Aldermanic District 21\b/.test(pill2) && /Marion/.test(pill2);
-    await context2.close();
+    const marion = {};
+    for (const [label, pt] of [["d1", "44.67229,-88.88770"],
+                               ["shawano", "44.68585,-88.90213"],
+                               ["d2", "44.67636,-88.90215"]]) {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const pg = await booted(ctx, `${BASE}#point=${pt}&layers=aldermanic-district`);
+      marion[label] = (await cardText(pg, "aldermanic-district")).text;
+      await ctx.close();
+    }
+    const marionOk =
+      /Marion/.test(marion.d1) && /Aldermanic District 1\b/.test(marion.d1) &&
+      /Aldermanic District 1\b/.test(marion.shawano) &&
+      /Aldermanic District 2\b/.test(marion.d2) &&
+      !/Aldermanic District (01|21|22|23)\b/.test(marion.d1 + marion.shawano + marion.d2);
 
-    check("a city's own district number is printed where the city stated it, and the filed number where it did not",
-          relabelled && asFiled,
-          `waupaca=${JSON.stringify(pill.slice(0, 60))} marion=${JSON.stringify(pill2.slice(0, 60))}`);
+    check("a city's own district number is printed where its publisher stated it, and Marion draws three districts",
+          relabelled && marionOk,
+          `waupaca=${JSON.stringify(pill.slice(0, 60))} ` +
+          `marion=${JSON.stringify([marion.d1, marion.shawano, marion.d2].map(t => t.slice(0, 50)))}`);
   }
 
   // ---- 9. A DISTRICT THAT IS A SEAT SHORT SAYS SO ----
@@ -855,17 +870,18 @@ try {
               `president=${presBadge} how=${JSON.stringify((how || {}).value || null)}`);
     await context.close();
   }
-  // ---- 1x. The Tribal Government card names the nation, its seat and why it
-  // names no council member. The LAST ROW is what this check exists for: the
-  // card's "Why no names" field renders `rosterWhy`, a field this layer
-  // introduced, and nothing static can prove a reader is told WHICH of the two
-  // reasons applies — a nation whose council page this project has not read
-  // yet, or one it is measurably shut out of. Menominee is the
-  // ROSTER_NOT_READ case; Michigan's own check covers the blocked case. The
-  // point is shapely's representative point for the shipped reservation,
-  // verified interior against the file's own even-odd reading (2026-10-01),
-  // and the assertions are on the WORDING and on the nation/land distinction,
-  // so a council election changes nothing here.
+  // ---- 1x. The Tribal Government card names the nation, its seat and its
+  // council. The council is what this check exists for: it lives in a SEPARATE
+  // file (data/app/tribal-councils.json, network-first) that the layer's loader
+  // merges onto the cache-first land, so nothing static can prove the merge
+  // happened and the people block rendered — a loader that dropped the merge
+  // would leave a correct-looking card naming nobody. Menominee is read from
+  // the nation's own page; the assertions are on the SHAPE (a "Council" block,
+  // a dated note, the head of the government listed first, a link to the
+  // nation's page) and never on a name, so a council election changes nothing
+  // here. The point is shapely's representative point for the shipped
+  // reservation, verified interior against the file's own even-odd reading
+  // (2026-10-01). Michigan's own check covers the blocked case.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await booted(
@@ -880,18 +896,32 @@ try {
     const nation = card.text.indexOf("Menominee Indian Tribe of Wisconsin") !== -1;
     const land = by("Land") === "Menominee Reservation";
     const seat = by("Seat of government") === "Keshena, WI";
-    const why = by("Why no names");
-    // the sentence must carry the page and the date the builder measured, so a
-    // reader is sent somewhere rather than told only that we do not know
-    const whyOk = /menominee-nsn\.gov/.test(why) && /\d{4}-\d{2}-\d{2}/.test(why) &&
-                  why.indexOf("not in this app yet") !== -1;
-    // nothing on this card may read as a named council member
-    const noRoster = card.text.indexOf("Council member") === -1;
-    const ok = nation && land && seat && whyOk && noRoster;
-    check("the Tribal Government card names the nation, its seat and why no council member",
+    const council = await page.$$eval("#card-tribal-government .card-intro, " +
+      "#card-tribal-government .card-person-line, #card-tribal-government .card-linkrow a",
+      (els) => els.map((e) => ({
+        cls: e.className,
+        name: ((e.querySelector(".card-person-name") || {}).textContent || "").trim(),
+        badge: ((e.querySelector(".card-badge") || {}).textContent || "").trim(),
+        title: ((e.querySelector(".card-intro-title") || {}).textContent || "").trim(),
+        note: ((e.querySelector(".card-intro-note") || {}).textContent || "").trim(),
+        href: e.getAttribute("href") || ""
+      })));
+    const intro = council.find((c) => c.title === "Council") || {};
+    const people = council.filter((c) => /card-person-line/.test(c.cls) && c.name);
+    const link = council.find((c) => /menominee-nsn\.gov/.test(c.href));
+    const noteOk = /own council page/.test(intro.note || "") &&
+                   /\d{4}-\d{2}-\d{2}/.test(intro.note || "");
+    // the head of the government first, whatever order the page lists it in
+    const headFirst = people.length > 0 && /^chair/i.test(people[0].badge);
+    const noWhy = by("Why no names") === "";
+    const ok = nation && land && seat && noteOk && people.length >= 5 &&
+               headFirst && !!link && noWhy;
+    check("the Tribal Government card names the nation, its seat and its council",
           ok, `nation=${nation} land=${JSON.stringify(by("Land"))} ` +
               `seat=${JSON.stringify(by("Seat of government"))} ` +
-              `why=${JSON.stringify(why.slice(0, 90))}`);
+              `note=${JSON.stringify((intro.note || "").slice(0, 80))} ` +
+              `people=${people.length} first=${JSON.stringify((people[0] || {}).badge)} ` +
+              `link=${!!link} why=${JSON.stringify(by("Why no names").slice(0, 60))}`);
 
     // and a point off tribal land says so in the layer's own words rather than
     // the generic "not inside any district", which would read as a lookup that
