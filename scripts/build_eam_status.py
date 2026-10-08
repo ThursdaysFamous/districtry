@@ -1553,16 +1553,18 @@ ANSWERS = {
         # control (gap mn-judicial-roster).
         "courts-by-district": answers("mn-judicial-district"),
         "sub-county-government": OPEN,
-        # SETTLED 2026-10-01 by this instance's own thread, and the answer is
-        # that the level exists but only where a district has opted into it:
-        # Minn. Stat. 205A.12 subds. 1-5 let a school district divide itself
-        # into from three to seven election districts by board resolution or
-        # by petition, and a district that has not done so elects its whole
-        # board at large. So this is OPEN rather than the standard's "the
-        # state does not have the level" case — and which districts have opted
-        # in is not published anywhere this project has found, which is the
-        # work the level is waiting on (mn/WATCH.md).
-        "school-boards-by-district": OPEN,
+        # SETTLED 2026-10-01 by this instance's own thread: the level exists
+        # only where a district has opted into it (Minn. Stat. 205A.12 subds.
+        # 1-5 — three to seven election districts by board resolution or
+        # petition; every other board is elected at large). ANSWERED
+        # 2026-10-08 (#1429): the Secretary of State's precinct results name
+        # which boards file district offices, and school-board-district draws
+        # the 59 districts of the 13 that elect by geography, each from the
+        # precincts that voted in its seat's latest contest. Anoka-Hennepin is
+        # the one not drawn — its odd-year results are by shared polling place
+        # — and carries gap mn-school-board-election-districts, the shape
+        # Wisconsin's mps-school-board answer already has.
+        "school-boards-by-district": answers("school-board-district"),
         # The Secretary of State publishes all 4,105 precincts statewide, from
         # the office that maintains them, and the app draws them.
         "precincts": answers("voting-precinct"),
