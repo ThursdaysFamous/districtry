@@ -120,6 +120,7 @@ ROSTER_FILES = {
     "congress-roster.json": 8,  # U.S. House roster, refreshed weekly by update-mn-congress-roster.yml.
     "mn-county-commissioners.json": 447,  # All 447 county commissioner districts, each naming the winner of its most recent election in the Secretary of State's results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_commissioner_roster.py (update-mn-commissioner-roster.yml).
     "mn-city-councils.json": 43,  # The mayor and council of each of Minnesota's 43 cities above 25,000 people, each seat naming the winner of its most recent election in the Secretary of State's city results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_city_councils.py (update-mn-city-councils.yml).
+    "mn-school-boards.json": 310,  # The elected board of each Minnesota school district whose elections the Secretary of State reports, keyed by the Census district id, each seat naming the winner of its most recent election and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_school_boards.py (update-mn-school-boards.yml).
     "coverage-gaps.json": 0,  # The Data gaps panel's content, emitted from docs/DATA_LAYER_GUIDEBOOK.md's gaps block: the county commissioner roster, the two legislature rosters, and the county officers.
 }
 

@@ -267,6 +267,40 @@ not "does not exist". What the catalogue does publish is school district
 BOUNDARIES statewide, which is the wrong geometry for this level — a district's
 own election districts are a sub-fabric, published if at all by the district.
 
+**THE MEASUREMENT IS TAKEN NOW, AND IT CAME FROM THE ELECTION RESULTS RATHER
+THAN FROM A MAP (2026-10-07).** The Secretary of State's school district results
+name each contest's office, and a board that elects by district files offices
+like "School Board Member District 3 (ISD #2180)". Across the 2022-2025 files,
+seventeen boards file anything other than a plain or at-large office, and the
+precinct-level results (`localPrct.txt`) say which of those are geography:
+a district elected by every precinct of the school district is an at-large seat
+with a residency rule or a numbered position, and one elected by a disjoint set
+of precincts is a real election district. **Fourteen are real election
+districts**: ISD 11 (Anoka-Hennepin), 166 (Cook County), 381 (Lake Superior),
+390 (Lake of the Woods), 709 (Duluth), 728 (Elk River), 861 (Winona), 2142 (St.
+Louis County), 2180 (MACCRAY), 2853 (Lac qui Parle Valley), 2884 (Red Rock
+Central), 2902 (RTR), 2909 (Rock Ridge) and SSD 1 (Minneapolis). Three are
+not: ISD 2365 (GFW) elects its Fairfax, Gibbon and Winthrop seats in all 23
+precincts alike, and ISD 206 (Alexandria) and 535 (Rochester) file numbered
+positions every precinct votes on. Elk River and Rock Ridge filed
+district offices in 2022 only, which is not yet explained. **THE GEOMETRY ROUTE
+IS THE PRECINCT RESULTS**: each election district is the precincts that voted in
+its contest, and the app already ships all 4,105 precincts — but 2180, 2853 and
+2909 each have one or two precincts voting in two districts (a split precinct),
+and the odd-year boards (11, 709) report on 9xxx combined precinct codes that
+are not in the precinct layer. Neither is solved here; both are the work this
+level waits on.
+
+**THE BOARD MEMBERS SHIP (2026-10-07)**, from those same results files, on the
+School District card (`build_mn_school_boards.py`): 1,882 of 2,099 seats on 326
+boards, every name dated. Fourteen boards show one of their two election years
+only, because that year's contest is not in the state's files — Edina, St. Paul,
+White Bear Lake and Winona among them; the state's files carry what a district
+reports, and a district that runs its own election need not. The results do
+not say whose seat a special election filled, and the statute (123B.09 subd.
+5b) settles it only for a special held the same day as a regular election, so
+the others name nobody and list who it could be.
+
 **LEVEL 4, COUNTY BOARDS, IS DISTRICTED IN EVERY COUNTY BY STATUTE — AND THE
 GEOMETRY IS PUBLISHED COUNTY BY COUNTY, NOT STATEWIDE.** Minn. Stat. § 375.025
 subd. 1: "Each county **shall** be divided into as many districts numbered
