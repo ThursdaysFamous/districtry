@@ -135,7 +135,7 @@ with, working as intended.
 | Franklin County Clerk (IL) | which Public Square address the board meets at | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | nine Michigan city and township clerks | may an automated reader see your board page | none | Ypsilanti Township **ANSWERED same day**: the clerk was passing the request to the township's technology staff, and the correction reached her at 15:23. Lansing acknowledged automatically, with no content |
-| Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day** and NOT YET USABLE: the Auditor says the office keeps the district numbers with names, and sent them as two inline images with a 2022 district map attached, so no name can ship until it is read off a picture and confirmed. **The reply asking her to type it stands, re-checked 2026-10-06**: the county's board page lists the five supervisors with no district beside any, and nothing else on the site pairs them. The site does publish the plan itself — Resolution 2022-12 adopts the statewide agency's plan and names the townships in each district, and districts 1, 4 and 5 agree with our map township by township — so only the pairing is missing, and districts 2 and 3 (Atlantic's wards) are not yet checked |
+| Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day, USABLE 2026-10-07 and SHIPPED.** Her 2026-10-01 reply carried the pairing as an inline image that this project's mail tools could not open; the operator supplied the image on 2026-10-07 and it reads District 1 Stephen Green, 2 Mark O'Brien, 3 Wendy Richter, 4 Steve Baier, 5 Bernard Pettinger. The county's own Resolution 2022-12 names the precincts in each district, and every one of our twelve Cass precincts lies in the same-numbered district of our map, including Atlantic's five wards (1 in District 1, 2 and 3 in District 2, 4 and 5 in District 3), so the numbering is checked and the cards name the five. The reply asking her to type the list out is withdrawn and was never sent. |
 | Calumet (Brillion), Pepin (Durand) county clerks (WI) | ward-to-district filing | none | — |
 | Outagamie County Clerk (WI) | the New London filing | none | **ANSWERED same day**, settled: New London wards 10, 11 and 12 are all in Aldermanic District 5 |
 | Brown County Clerk (WI) | how Bellevue elects its board | none | **ANSWERED same day, HEDGED**: "They appear to be at large", with the village clerk's address and a question back about whether the village had been asked. A hedge is not a statement the village has made, so it settles nothing by itself |
@@ -6424,9 +6424,9 @@ numbering being checked.
 | Adams | Betsy Stormer | 5 | |
 | Butler | Leslie Groen | 3 | **Measured: two different plans.** The letter should ask which of the county's two published surfaces is current. |
 | Cerro Gordo | Adam Wedmore | 3 | |
-| Chickasaw | Sheila Shekleton | 5 | **ANSWERED 2026-10-06 by the elections specialist: the supervisors and their districts are listed on the county website.** Read on 2026-10-07: the board page does print a district beside each supervisor, but nothing there or on the county's election pages says which ground each district covers — the two maps the election site carries draw precincts only. So the county's numbering still cannot be checked against ours and the cards stay unkeyed. The question to send back, if the operator wants it, is the one Winnebago answered: which precincts make up each district. |
+| Chickasaw | Sheila Shekleton | 5 | **ANSWERED 2026-10-06 by the elections specialist: the supervisors and their districts are listed on the county website.** Read on 2026-10-07: the board page does print a district beside each supervisor, but nothing there or on the county's election pages says which ground each district covers — the two maps the election site carries draw precincts only. So the county's numbering still cannot be checked against ours and the cards stay unkeyed. The question to send back is the one Winnebago answered: which precincts make up each district. The operator asked for it on 2026-10-07 and a follow-up was drafted below the table, then **WITHDRAWN UNSENT the same evening**: the county's own GIS map (its supervisor-district layer, supplied by the operator as a screenshot) numbers the five districts exactly as this instance does, so **the numbering is CHECKED and Chickasaw's supervisors SHIPPED keyed 2026-10-07**. |
 | Franklin | Katy Flint | 3 | |
-| Grundy | Alan Tscherter | 5 | |
+| Grundy | Alan Tscherter | 5 | **ANSWERED 2026-10-07, USABLE and SHIPPED the same day.** The auditor replied "Here is a map of the precincts and supervisor districts" with the county's own precinct map (PDF, dated 2026-02-03), which the operator put in Drive. It draws each of the county's seven precincts wholly inside one district, and those precincts sit in the same-numbered districts of this instance's layer, so the numbering is CHECKED (identity) and Grundy's supervisors are keyed. Nothing further is owed; a thank-you is optional. |
 | Humboldt | Trish Erickson | 5 | Also the county whose board page prints a telephone number per supervisor; this letter asks nothing about those. |
 | Ida | Kristy Gilbert | 3 | **WITHDRAWN 2026-10-06, NEVER SENT — THE COUNTY ALREADY PUBLISHES THE ANSWER.** Re-checked before send: the county's own site carries Ordinance 31 (`idacounty.iowa.gov/wp-content/uploads/2021/12/Ordinance-31-Est-Co-Supervisor-Precincts-2021.pdf`, effective 15 January 2022, drawn to the 2020 census), whose text names the townships in each district. Ten townships lie wholly inside one district (Galva and Griggs in 1; Battle, Blaine, Garfield, Hayes, Logan, Maple and Silver Creek in 2; Corwin in 3), and every one of their TIGERweb interior points lands in the same-numbered district of the statewide layer, so the two numberings agree in all three districts. It was found through the site's own search feed, which the September sweep did not read; a letter asking for it would have asked the county for a document it publishes. |
 | Madison | Michele Brant | 3 | |
@@ -6468,6 +6468,70 @@ the question is only which order the county itself uses.
 **Why a no is still useful.** If the county cannot say, saying so closes the question and lets
 the record that tells our readers what is missing say the county was asked — which is a
 different and more honest claim than that nobody looked.
+
+### Chickasaw follow-up, drafted 2026-10-07 — which precincts make up each district
+
+**WITHDRAWN 2026-10-07, NEVER SENT.** The county's own GIS map settled it the same evening: the operator opened its supervisor-district layer in a browser (the host answers this project's client with a managed challenge, so nothing there was fetched) and supplied a screenshot. Its Districts 1 to 5 cover the same ground as this instance's 1 to 5, with every rural precinct in the same-numbered district, so Chickasaw's supervisors were keyed without the county having to answer again. The draft below is kept as the record of what was written; the Gmail draft is to be deleted, not sent.
+
+**A reply on the existing thread**, "Chickasaw County supervisor districts — which precincts
+make up each one?": Adam's letter to Auditor Shekleton of 2026-10-06 16:49 UTC, and the reply
+from Gina Fangman, the county's elections specialist, at 18:58 UTC the same day, which pointed
+to the county website. The reply goes to Ms Fangman, copying the auditor's address as her reply
+did. Adam sends.
+
+**Why a second letter.** The board page she pointed to does print a district number beside each
+supervisor, and that part of the question is answered. What it cannot tell us is whether the
+county's District 1 is the same ground as the district our map calls 1, because nothing on the
+county's site says which precincts or townships each district covers — the two maps on its
+election pages draw precincts only. The first letter asked exactly that, so this one says why
+the website did not settle it and makes the answer as small as possible: our map already puts
+each precinct wholly inside one district, so she only has to say whether the list is right.
+
+**What our map shows**, measured 2026-10-07 from this instance's precinct and supervisor-district
+files (every precinct at least 99.9% inside one district): District 1 Chickasaw North; District 2
+Bradford; District 3 Dayton Richland and New Hampton Wards 2 and 3; District 4 New Hampton Wards
+1 and 4 and New Hampton Rural; District 5 Lawler-Fredericksburg. The precinct names are the
+Census 2020 voting districts, so the county may have renamed or redrawn some since; the letter
+says so.
+
+> **Subject:** Re: Chickasaw County supervisor districts — which precincts make up each one?
+>
+> Dear Ms Fangman,
+>
+> Thank you for pointing me to the county website. I found the board page, and it does list
+> each supervisor with their district number.
+>
+> What I still cannot find is which part of the county each district covers. Our map draws the
+> five districts from the state's January 2024 layer, and in several other Iowa counties that
+> layer numbers the districts in a different order from the county's own, so I want to be sure
+> your District 1 is the same area as ours before I put a supervisor's name on it.
+>
+> On our map the precincts fall like this:
+>
+> - District 1: Chickasaw North
+> - District 2: Bradford
+> - District 3: Dayton Richland, New Hampton Ward 2, New Hampton Ward 3
+> - District 4: New Hampton Ward 1, New Hampton Ward 4, New Hampton Rural
+> - District 5: Lawler-Fredericksburg
+>
+> Could you tell me whether that matches the county's districts? A simple yes is enough. If it
+> does not match, or the precincts have changed since 2020, a list of the precincts in each
+> district would let me correct it.
+>
+> Thank you for your help.
+>
+> Best regards,
+>
+> Adam Overberg
+> adam@overberg.co
+> http://districtry.com
+
+**What each answer means.** A yes → Chickasaw joins the counties whose numbering is checked, and
+its five district cards name their supervisors, in a pull request Adam approves. A list that
+differs → the numbering is mapped from the county's list, checked against the precinct file, and
+the same pull request ships. No reply → nothing changes: the County card keeps listing the five
+supervisors without placing them, which is true whichever way the numbering runs. A follow-up
+would fall due with the rest of this ask, around 22 October.
 
 ## Ask il-cumberland-500e — Cumberland County Clerk: does the Western–Central line run along 500E?
 
