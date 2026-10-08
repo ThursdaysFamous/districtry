@@ -44,26 +44,12 @@
    "name": "Calhoun County",
    "slug": "calhoun"
   },
-  "cass": {
-   "fips": "029",
-   "lat": 41.3338233,
-   "lng": -94.9333006,
-   "name": "Cass County",
-   "slug": "cass"
-  },
   "cerro-gordo": {
    "fips": "033",
    "lat": 43.0749751,
    "lng": -93.2509646,
    "name": "Cerro Gordo County",
    "slug": "cerro-gordo"
-  },
-  "chickasaw": {
-   "fips": "037",
-   "lat": 43.0597409,
-   "lng": -92.3172101,
-   "name": "Chickasaw County",
-   "slug": "chickasaw"
   },
   "dickinson": {
    "fips": "059",
@@ -85,13 +71,6 @@
    "lng": -93.2714152,
    "name": "Franklin County",
    "slug": "franklin"
-  },
-  "grundy": {
-   "fips": "075",
-   "lat": 42.4033387,
-   "lng": -92.7902437,
-   "name": "Grundy County",
-   "slug": "grundy"
   },
   "guthrie": {
    "fips": "077",

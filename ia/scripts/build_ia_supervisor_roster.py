@@ -264,6 +264,50 @@ NUMBERING_CHECKED = {
                    "Melvin in 5, Ashton in 4, and the core of each district) "
                    "all land in the same-numbered district of this layer",
     },
+    "Chickasaw": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own GIS map (its Beacon site's Supervisor "
+                   "Districts 2022 layer, labelled District 1 to 5), as the "
+                   "operator viewed it in a browser and supplied it on "
+                   "2026-10-07 -- that host answers this project's client with "
+                   "a managed challenge, so nothing there was fetched; each of "
+                   "the five rural precincts in this instance's precinct layer "
+                   "lies in the same-numbered district on that map and of this "
+                   "layer (Chickasaw North in 1, Bradford in 2, Dayton Richland "
+                   "in 3, New Hampton Rural in 4, Lawler-Fredericksburg in 5, "
+                   "each at least 99.9% of its area), and the same map's 2022 "
+                   "New Hampton ward layer puts Wards 2 and 3 on the west and "
+                   "south of town, inside its District 3, and Wards 1 and 4 on "
+                   "the east, inside its District 4 -- where this instance's "
+                   "precinct layer puts those wards and this layer's 3 and 4",
+    },
+    "Grundy": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own precinct and supervisor-district map "
+                   "(Auditor Alan Tscherter, by e-mail 2026-10-07, map dated "
+                   "2026-02-03) draws each of its seven precincts wholly inside "
+                   "one district: 1 and 2 in District 1, 3 and 4 in District 2, "
+                   "5 in District 3, 6 in District 4 and 7 (Grundy Center) in "
+                   "District 5; this instance's precinct layer puts P1 and P2 "
+                   "in this layer's 1, P3 and P4 in 2, P5 in 3, P6 in 4 and P7 "
+                   "in 5, each at least 99.9% of its area",
+    },
+    "Cass": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-07",
+        "witness": "the county's own Resolution 2022-12 (posted on "
+                   "casscountyia.gov, read 2026-10-07) names the precincts "
+                   "in each district: 1 Atlantic Ward 1 and precinct 8 "
+                   "(Brighton, Grove, Pymosa, Washington, Marne), 2 Atlantic "
+                   "Wards 2 and 3, 3 Atlantic Wards 4 and 5, 4 Bear "
+                   "Grove/Cass/Lewis, Noble/Pleasant/Griswold and East "
+                   "Massena, 5 Anita-Wiota, Union/Cumberland and West "
+                   "Massena; each of this instance's 12 Cass precincts lies "
+                   "inside the same-numbered district of this layer (each at "
+                   "least 99.3% of its area)",
+    },
     # JONES AND TAMA ARE IDENTITY BY CONSTRUCTION, and the witness says why
     # rather than claiming a measurement that was not made: this layer's
     # districts for both counties ARE the county's own drawing, numbered by the
@@ -331,6 +375,29 @@ CORRESPONDENCE_ROSTERS = {
             "October 2026 and corrected it on 6 October; the county "
             "publishes no page that names a district, so this app has no "
             "page to re-read."),
+    },
+    "Cass": {
+        "districts": {
+            "1": "Stephen Green",
+            "2": "Mark O'Brien",
+            "3": "Wendy Richter",
+            "4": "Steve Baier",
+            "5": "Bernard Pettinger",
+        },
+        "readOn": "2026-10-07",
+        "why": (
+            "Cass County Auditor Kathy Somers, by e-mail, 2026-10-01, "
+            "answering this project's ask: the pairing came as an inline "
+            "image headed 'Cass County Board of Supervisors', which this "
+            "project's tools could not open until the operator supplied the "
+            "image itself on 2026-10-07; it names one supervisor for each of "
+            "districts 1 to 5. The county's own "
+            "board page lists its five supervisors and attaches no district "
+            "to any of them, which is why it was asked."),
+        "cardNote": (
+            "Cass County's auditor gave this pairing by e-mail on 1 October "
+            "2026; the county publishes no page that names a district, so "
+            "this app has no page to re-read."),
     },
     "Ida": {
         # Transcribed from the reply exactly as the county wrote it, INCLUDING
