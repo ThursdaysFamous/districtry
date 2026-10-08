@@ -306,6 +306,24 @@ PROVENANCE = [
             "after election day."
         ),
     },
+    {
+        "layer": "school-board-district",
+        "app_file": "mn-school-board-districts.json",
+        "source_url": "https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt",
+        "note": (
+            "The 59 board districts of the 13 boards that elect by district. No "
+            "publisher draws these lines, so each is rebuilt from the Secretary "
+            "of State's precinct-level local results (this URL is the 2024 "
+            "general's): a district is the precincts that voted in its latest "
+            "regular contest, on that general's precinct map from "
+            "us_mn_state_sos/bdry_electionresults_2022_2030 on "
+            "enterprise.gisdata.mn.gov, clipped to the Census school district. "
+            "Rebuilt by hand with mn/scripts/build_mn_school_board_districts.py "
+            "after a general that elects one of these boards; a board that "
+            "redistricts after the 2030 census changes its precincts, not "
+            "this method."
+        ),
+    },
 ]
 
 ENDPOINTS = [

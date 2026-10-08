@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **238 distinct hosts** those files
-name, **43 are fetched by the browser**; the other 195 are links.
+makes from a link a reader clicks. Of **239 distinct hosts** those files
+name, **43 are fetched by the browser**; the other 196 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -126,7 +126,7 @@ prose.
 | wi | 1 | 32 |
 | ia | 0 | 20 |
 | mi | 0 | 19 |
-| mn | 6 | 17 |
+| mn | 6 | 18 |
 | ky | 4 | 12 |
 | in | 4 | 11 |
 
@@ -256,7 +256,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `tribal-government`.
 
-#### mn — 6 of 17 layers fetch their shapes
+#### mn — 6 of 18 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -269,7 +269,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `mn-judicial-district`, `mn-senate`, `county`, `mn-house`, `county-commissioner`, `voting-precinct`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `watershed-district`.
+- **Not measured** — declared since the probe ran: `watershed-district`, `school-board-district`.
 
 #### ky — 4 of 12 layers fetch their shapes
 
@@ -304,10 +304,10 @@ measured until the next run describes it.
 | wi | 92 | 265 | 5 |
 | ia | 70 | 65 | 0 |
 | mi | 32 | 61 | 1 |
-| mn | 26 | 14 | 0 |
+| mn | 27 | 15 | 0 |
 | ky | 11 | 11 | 0 |
 | in | 13 | 7 | 0 |
-| **total** | **430** | **861** | **12** |
+| **total** | **431** | **862** | **12** |
 
 **137 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

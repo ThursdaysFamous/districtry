@@ -1073,7 +1073,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">17 layers — 5 political and legislative, 2 public safety, 3 schools, 7 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">18 layers — 5 political and legislative, 2 public safety, 4 schools, 7 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1191,7 +1191,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="schools">
-        <h2>Schools <span class="matrix-count">3 layers</span></h2>
+        <h2>Schools <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">The district, the attendance zone, and the schools nearest the point.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1209,6 +1209,18 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">The winners of each board's most recent elections, from the Office of the Minnesota Secretary of State's school district results files (electionresultsfiles.sos.mn.gov), dated to each election and joined to the Census district through the Minnesota Department of Education's own district layer: 1,882 of 2,099 seats on 326 boards, measured 2026-10-07. A winner is not a claim about who sits today, and the card says so; a seat a special election leaves unsettled names nobody and says why. Built weekly by mn/scripts/build_mn_school_boards.py. Gap mn-school-board-members.</td>
                 <td data-label="Where it applies">Minnesota — statewide.</td>
+              </tr>
+              <tr id="layer-school-board-district">
+                <th scope="row"><span class="layer-name">School Board District</span><code>school-board-district</code></th>
+                <td data-label="What it answers">The election district of a school board that elects its members by district (Minn. Stat. 205A.12), and the member or members it elects. Where a precinct votes in two districts, both are named; where the results do not place a piece of a board's school district, the card says so.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt) for the 2022 to 2025 generals: each district is the precincts that voted in its seat's most recent contest, read in that election's own precincts (the Secretary of State's per-general precinct layers for 2022 and 2024, today's precincts for odd years), cut to the Census school district boundary. Built by mn/scripts/build_mn_school_board_districts.py; Minneapolis's six agree with the City of Minneapolis's own park commissioner districts at all 1,800 sampled points, measured 2026-10-08</a></li>
+                    <li><a href="https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_electionresults_2022_2030/FeatureServer" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, General Election Results By Precinct layers (the precincts each general was held in)</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The winners of each district's most recent election, from the same school board roster the School District card reads (mn/data/app/mn-school-boards.json), every name dated. A winner is not a claim about who sits today, and the card says so.</td>
+                <td data-label="Where it applies">The 13 Minnesota school districts whose boards elect by district and whose results place those districts on precincts: Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Anoka-Hennepin elects by district and is not drawn (gap mn-school-board-election-districts).</td>
               </tr>
               <tr id="layer-school-district-elementary">
                 <th scope="row"><span class="layer-name">School District (Elementary)</span><code>school-district-elementary</code></th>
@@ -1499,6 +1511,33 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Minnesota — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mn/sources.html#dataset-school-board-district",
+      "identifier": "school-board-district",
+      "name": "School Board District",
+      "description": "The election district of a school board that elects its members by district (Minn. Stat. 205A.12), and the member or members it elects. Where a precinct votes in two districts, both are named; where the results do not place a piece of a board's school district, the card says so. The winners of each district's most recent election, from the same school board roster the School District card reads (mn/data/app/mn-school-boards.json), every name dated. A winner is not a claim about who sits today, and the card says so.",
+      "url": "https://districtry.com/mn/sources.html#layer-school-board-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/mn/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt) for the 2022 to 2025 generals: each district is the precincts that voted in its seat's most recent contest, read in that election's own precincts (the Secretary of State's per-general precinct layers for 2022 and 2024, today's precincts for odd years), cut to the Census school district boundary. Built by mn/scripts/build_mn_school_board_districts.py; Minneapolis's six agree with the City of Minneapolis's own park commissioner districts at all 1,800 sampled points, measured 2026-10-08",
+          "url": "https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Office of the Minnesota Secretary of State, General Election Results By Precinct layers (the precincts each general was held in)",
+          "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_electionresults_2022_2030/FeatureServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The 13 Minnesota school districts whose boards elect by district and whose results place those districts on precincts: Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Anoka-Hennepin elects by district and is not drawn (gap mn-school-board-election-districts)"
       }
     },
     {
