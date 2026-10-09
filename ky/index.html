@@ -4111,7 +4111,9 @@ function initKentuckyExplorer() {
     { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
       bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } },
     { id: "indiana", label: "Indiana", url: "https://districtry.com/in/", emoji: "🏁", explorerName: "districtry Indiana",
-      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } }
+      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } },
+    { id: "northcarolina", label: "North Carolina", url: "https://districtry.com/nc/", emoji: "🌳", explorerName: "districtry North Carolina",
+      bbox: { minLng: -84.33, minLat: 33.74, maxLng: -75.39, maxLat: 36.6 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -12335,11 +12337,18 @@ function initKentuckyExplorer() {
       return queryFeatureAt(loadStateCounties, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var base = {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"])
         };
+        return loadKyCityOfficials().then(function (roster) {
+          base.officials = base.geoid != null ? (roster || {})[String(base.geoid)] || null : null;
+          return base;
+        }, function () {
+          base.rosterFailed = true;
+          return base;
+        });
       });
     },
     render: function (result) {
@@ -12665,14 +12674,30 @@ function initKentuckyExplorer() {
    * same empty card means "you are in a township", and it is why this note is
    * written for Kentucky rather than carried across.
    *
-   * NO OFFICEHOLDER. Kentucky cities elect a mayor and a city legislative body;
-   * no roster of their members is built here, so the card names nobody and
-   * links the Department for Local Government's municipal directory, which is a
-   * per-city search rather than a downloadable roster (read 2026-10-01; its
-   * robots.txt permits the path). Which statutory plan of government a given
-   * city runs under was not measured and is not claimed. Recorded as the
-   * coverage gap ky-municipal-officeholders.
+   * THE MAYOR AND COUNCIL ARE NAMED from the Department for Local
+   * Government's municipal directory (read 2026-10-09), which prints each
+   * city's elected body beside its staff. ky/scripts/build_ky_city_officials.py
+   * keeps the three elected titles (Mayor, City Council, City Commission), joins
+   * each entry to the Census place id this layer's feature carries, and checks
+   * the join against the county the directory names — 409 places, all 17 over
+   * 25,000. The directory dates nothing, so the card prints the day it was read
+   * and links the city's own directory entry. A seat the directory lists with
+   * no name is counted, never filled. Kentucky's two largest councils elect by
+   * district (Louisville Metro and Lexington-Fayette); their districts are not
+   * drawn yet, so those cards name the whole council.
+   *
+   * A roster that fails to load does not take the city answer down with it:
+   * the place came from TIGERweb and the card still names it.
    * ---------- */
+  var loadKyCityOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-city-officials.json", {}, 2);
+  });
+
+  var KY_SEAT_BADGE = {
+    "Mayor": "Mayor",
+    "City Council": "Council member",
+    "City Commission": "Commissioner"
+  };
   var loadKyPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC", "incorporated places");
@@ -12693,11 +12718,18 @@ function initKentuckyExplorer() {
       return queryFeatureAt(loadKyPlaces, point).then(function (feature) {
         if (!feature) return null; // not in a city — the engine renders emptyNote
         var props = feature.properties || {};
-        return {
+        var base = {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"])
         };
+        return loadKyCityOfficials().then(function (roster) {
+          base.officials = base.geoid != null ? (roster || {})[String(base.geoid)] || null : null;
+          return base;
+        }, function () {
+          base.rosterFailed = true;
+          return base;
+        });
       });
     },
     render: function (result) {
@@ -12706,19 +12738,69 @@ function initKentuckyExplorer() {
         title: result.name != null ? String(result.name) : "Unknown city",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      wrap.appendChild(renderFieldStack([{
-        label: "Your mayor and council",
-        value: "Not named here. No roster of Kentucky's mayors and city " +
-          "legislative bodies is built into this app yet, and it does not guess " +
-          "— the state's municipal directory and the city's own website " +
-          "are the current sources."
-      }]));
+      var city = result.officials;
+      var seats = city && city.seats ? city.seats : [];
+      if (seats.length) {
+        var commission = seats.some(function (s) { return s.title === "City Commission"; });
+        wrap.appendChild(renderSectionLabel(commission
+          ? "Mayor and city commission" : "Mayor and city council"));
+        wrap.appendChild(renderPersonRows(seats.map(function (s) {
+          var row = { name: String(s.name), badge: KY_SEAT_BADGE[s.title] || String(s.title) };
+          if (s.phone) row.phone = String(s.phone);
+          if (s.email) row.email = String(s.email);
+          return row;
+        })));
+      }
+      var rows = [];
+      if (!seats.length) {
+        rows.push({
+          label: "Your mayor and council",
+          value: result.rosterFailed
+            ? "The list of city officials could not be loaded just now. The " +
+              "city above is still the right answer for this point."
+            : "Not named here. The state's municipal directory has no entry " +
+              "for this city that names its mayor and council, and this app " +
+              "does not guess — the city's own website is the current source."
+        });
+      }
+      if (city && city.unnamedSeats) {
+        rows.push({
+          label: "Not listed",
+          value: "The state's directory lists " + city.unnamedSeats + " more " +
+            (city.unnamedSeats === 1 ? "seat" : "seats") + " on this body " +
+            "without a name. That does not say the seat is empty; the city's " +
+            "own website will name who holds it."
+        });
+      }
+      if (city && city.govType) {
+        rows.push({ label: "Plan of government", value: String(city.govType) });
+      }
+      if (seats.length && city.read) {
+        rows.push({
+          label: "Names read",
+          value: String(city.read) + ", from the Kentucky Department for Local " +
+            "Government's municipal directory. It does not say when each city " +
+            "last updated its entry, so the city's own website is the check."
+        });
+      }
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      if (city && city.hall && (city.hall.address || city.hall.phone)) {
+        wrap.appendChild(renderOfficeGroup({
+          label: "City hall",
+          offices: [{
+            label: "City hall",
+            lines: city.hall.address ? [String(city.hall.address)] : [],
+            phone: city.hall.phone ? String(city.hall.phone) : null
+          }]
+        }));
+      }
       return wrap;
     },
-    primaryLink: function () {
+    primaryLink: function (result) {
+      var city = result && result.officials;
       return {
         label: "Kentucky Department for Local Government — municipal directory",
-        url: KY_CITY_DIRECTORY
+        url: city && city.sourceUrl ? String(city.sourceUrl) : KY_CITY_DIRECTORY
       };
     }
   });

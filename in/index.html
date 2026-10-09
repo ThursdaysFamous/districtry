@@ -74,7 +74,7 @@
       "keywords": "Indiana district map, what district am I in, Indiana Senate district, Indiana House district, county lookup, civic districts, who represents me",
       "author": { "@id": "https://districtry.com/#author" },
       "isPartOf": { "@id": "https://districtry.com/in/#website" },
-      "dateModified": "2026-09-29",
+      "dateModified": "2026-10-09",
       "sameAs": "https://github.com/ThursdaysFamous/districtry"
     }
   ]
@@ -89,7 +89,7 @@
 <!-- ==== GENERATED:BEGIN head-theme ==== -->
 <meta name="theme-color" content="#6d3fd1">
 
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3EMI%3C/text%3E%3C/svg%3E" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3EIN%3C/text%3E%3C/svg%3E" />
 
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="districtry" />
@@ -3924,7 +3924,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="footer-meta" id="footer-meta">
         <span>Data last verified:
           <!-- ==== GENERATED:BEGIN verified-date ==== -->
-          <strong id="verified-date">September 29, 2026</strong>
+          <strong id="verified-date">October 9, 2026</strong>
           <!-- ==== GENERATED:END verified-date ==== -->
         </span>
       </div>
@@ -4106,7 +4106,9 @@ function initIndianaExplorer() {
     { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
       bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } },
     { id: "indiana", label: "Indiana", url: "https://districtry.com/in/", emoji: "🏁", explorerName: "districtry Indiana",
-      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } }
+      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } },
+    { id: "northcarolina", label: "North Carolina", url: "https://districtry.com/nc/", emoji: "🌳", explorerName: "districtry North Carolina",
+      bbox: { minLng: -84.33, minLat: 33.74, maxLng: -75.39, maxLat: 36.6 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -12280,18 +12282,52 @@ function initIndianaExplorer() {
    * service-worker cached, so this layer answers even when every
    * third-party host is down.
    *
-   * IDENTITY ONLY, ON PURPOSE. An Indiana county is run by TWO elected
-   * bodies — a three-member board of commissioners (IC 36-2-2) and a
-   * seven-member county council (IC 36-2-3) — and each is drawn on its own
-   * district lines, so neither can ride the other's geometry and neither can
-   * ride this card's. Both ship as their own change, with their own
-   * verification, rather than being half-joined onto this one. Until then
-   * the card names the county and claims nothing about who runs it, and
-   * says so in as many words rather than leaving a reader to wonder.
+   * THE CARD NAMES BOTH BODIES THAT RUN THE COUNTY, AS ELECTION WINNERS. An
+   * Indiana county outside Indianapolis is run by a three-member board of
+   * commissioners (IC 36-2-2) and a seven-member county council (IC 36-2-3),
+   * and the Indiana Election Division's certified 2022 and 2024 results name
+   * a winner for every seat on both in 91 counties
+   * (in/scripts/build_in_county_officials.py; data/app/in-county-commissioners.json
+   * and in-county-councils.json, keyed by county GEOID). A winner is dated to
+   * the election that seated them and is not a claim about who sits today:
+   * Indiana fills a vacancy by party caucus, which no result records, so the
+   * card says that in words. The card lists every seat in the county rather
+   * than yours, because neither body's district lines are drawn here yet
+   * (gap in-county-government). Marion County is in neither file: its
+   * legislative body is the Indianapolis City-County Council, and the card
+   * says so rather than naming nobody without a reason.
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
   });
+  var loadCountyCommissioners = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-county-commissioners.json", {}, 2);
+  });
+  var loadCountyCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-county-councils.json", {}, 2);
+  });
+  var IN_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  function inElectionDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return IN_MONTHS[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1];
+  }
+  // One body's seats as person rows: the seat is the badge, the election the
+  // note. A seat whose race title names no district says so in the note.
+  function inSeatRows(rec) {
+    var seats = (rec && rec.seats) || [];
+    return seats.map(function (seat) {
+      var when = inElectionDate(seat.election);
+      var note = when ? "elected " + when : null;
+      if (seat.party) note = String(seat.party) + (note ? " · " + note : "");
+      return {
+        name: String(seat.name),
+        badge: seat.seatNotStated ? "Seat not stated" : String(seat.seat),
+        note: note
+      };
+    });
+  }
 
   registerLayer({
     id: "county",
@@ -12310,11 +12346,26 @@ function initIndianaExplorer() {
       return queryFeatureAt(loadStateCounties, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          commissioners: null,
+          council: null
         };
+        // A roster that fails to load leaves the county answer standing and
+        // says so, rather than taking the boundary answer down with it.
+        var key = String(result.geoid);
+        return Promise.all([
+          loadCountyCommissioners().then(function (r) { return r[key] || null; },
+            function () { result.rosterFailed = true; return null; }),
+          loadCountyCouncils().then(function (r) { return r[key] || null; },
+            function () { result.rosterFailed = true; return null; })
+        ]).then(function (both) {
+          result.commissioners = both[0];
+          result.council = both[1];
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -12323,14 +12374,61 @@ function initIndianaExplorer() {
         title: result.name != null ? String(result.name) : "Unknown county",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      wrap.appendChild(renderFieldStack([{
-        label: "County government",
-        value: "Not shown yet — an Indiana county is run by TWO elected " +
-          "bodies, a three-member board of commissioners and a seven-member " +
-          "county council, and both are drawn on their own district lines. " +
-          "This instance has shipped neither yet, so it names no one here " +
-          "rather than guessing."
-      }]));
+      var rows = [];
+      if (result.commissioners || result.council) {
+        if (result.commissioners) {
+          wrap.appendChild(renderSectionLabel("Board of Commissioners"));
+          wrap.appendChild(renderPersonRows(inSeatRows(result.commissioners)));
+        }
+        if (result.council) {
+          wrap.appendChild(renderSectionLabel("County Council"));
+          wrap.appendChild(renderPersonRows(inSeatRows(result.council)));
+        }
+        rows.push({
+          label: "What these names are",
+          value: "The winner of the most recent election for each seat, from " +
+            "the Indiana Election Division's certified results. They are not " +
+            "a list the county keeps up to date: Indiana fills a vacancy by " +
+            "party caucus, so if a seat has changed hands since the election " +
+            "this still shows who won it. The county's own website says who " +
+            "holds each seat today."
+        });
+        rows.push({
+          label: "Which seat is yours",
+          value: "Every seat in the county is listed, because this app does not " +
+            "draw either body's district lines yet. The commissioners run the " +
+            "county and the council sets its budget and taxes; \"At large\" " +
+            "council seats are elected by the whole county."
+        });
+      } else if (result.name && /^Marion\b/.test(String(result.name))) {
+        rows.push({
+          label: "County government",
+          value: "Indianapolis and Marion County share one government. Its " +
+            "council is the 25-member Indianapolis City-County Council, which " +
+            "this app does not show yet."
+        });
+      } else {
+        rows.push({
+          label: "County government",
+          value: result.rosterFailed
+            ? "The list of commissioners and council members did not load, so " +
+              "no names are shown."
+            : "Not shown: the certified results this app reads name no " +
+              "commissioners or council members for this county."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      var seats = ((result.commissioners && result.commissioners.seats) || [])
+        .concat((result.council && result.council.seats) || []);
+      var newest = null;
+      seats.forEach(function (seat) {
+        if (seat.sourceUrl && (!newest || seat.election > newest.election)) newest = seat;
+      });
+      if (newest) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "Indiana Election Division results \u2197", url: String(newest.sourceUrl) }]
+        }));
+      }
       return wrap;
     }
   });

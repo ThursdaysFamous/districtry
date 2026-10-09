@@ -115,8 +115,9 @@ jobs:
       # Refuses to write below its floors (see the builder's MIN_* constants,
       # set to tolerate a county or two going dark on any given run) and checks
       # every county's seats against the district geometry actually shipped, so
-      # the two publishers have to agree before this lands, and refuses to drop
-      # a county that shipped last week.
+      # the two publishers have to agree before this lands. A county this run
+      # could not read keeps last week's rows, dated to its last real read, up
+      # to the builder's CARRY_MAX_DAYS.
       - name: Rebuild the county board roster
         run: python3 wi/scripts/build_wi_county_board_roster.py
 
@@ -127,16 +128,31 @@ jobs:
       # (--officers-only skips the association's 12-minute clerk crawl) and
       # rebuild the officer roster so a chair change on a county's board page
       # lands on the county card the same week.
+      #
+      # FORGIVEN, AND THE TWO OFFICER STEPS BELOW WAIT ON IT. On 2026-10-09 the
+      # Blue Book host's robots.txt timed out from the runner, the scraper
+      # correctly declined to fetch, and the step's exit code failed the whole
+      # job, so the county board roster that had just rebuilt never reached a
+      # PR. The officer roster cannot rebuild without the book's tables, so
+      # when this step fails both officer steps are skipped and
+      # wi-county-officers.json keeps what it has, while the board roster
+      # still opens its PR. The roster-health watchdog reads the first officer
+      # step as this run's witness, so a Blue Book outage that lasts past
+      # the cadence still shows up there rather than going quiet.
       - name: Re-parse the Blue Book officer tables
+        id: bluebook
+        continue-on-error: true
         run: python3 wi/scripts/wi_county_clerk_scraper.py --officers-only
 
       # phase 4 PR 2: the counties whose own officer pages measure open are
       # re-read weekly — office phone/e-mail/link, plus a name witness that
       # supersedes the book where a county has visibly moved past it
       - name: Scrape county officer contact pages
+        if: steps.bluebook.outcome == 'success'
         run: python3 wi/scripts/wi_county_officer_contact_scraper.py
 
       - name: Rebuild the county officer roster
+        if: steps.bluebook.outcome == 'success'
         run: python3 wi/scripts/build_wi_county_officer_roster.py
 
       - name: Validate app + data files
