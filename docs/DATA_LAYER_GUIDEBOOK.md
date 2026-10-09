@@ -3107,8 +3107,9 @@ trusted.
     {
       "id": "nc-commissioner-districts",
       "concept": "County commissioner district",
-      "area": "North Carolina",
+      "area": "North Carolina — all 100 counties",
       "counties": [],
+      "everyCounty": true,
       "kind": "no-source",
       "layer": "county",
       "summary": "Every North Carolina county is run by an elected board of commissioners, and this app does not show you which commissioner district you live in, or who holds it.",
