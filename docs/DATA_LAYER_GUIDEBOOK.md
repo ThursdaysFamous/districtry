@@ -3037,10 +3037,10 @@ trusted.
           "everyCounty": true,
           "kind": "no-source",
           "layer": "county",
-          "summary": "The County card names your county and nobody who governs it.",
-          "why": "An Indiana county is run by two elected bodies, a county council and a board of commissioners, and this app does not draw either yet, so it names neither rather than guessing which seat covers you.",
-          "wanted": "The council district and commissioner district covering the point, with the member holding each.",
-          "blocker": "NOT A MISSING SOURCE — UNBUILT WORK, and the sources are measured. The Indiana Geographic Information Office's Data Harvest publishes county council districts for 56 of the 92 counties on Administrative_Boundaries_of_Indiana_Current layer 4 (measured 2026-09-29), and the Indiana Election Division's certified results at enr.indianavoters.in.gov carry every county council and commissioner seat in the 2022 and 2024 generals, which is how the roster reaches all 92 whether or not a boundary does. Commissioner districts are RESIDENCY districts elected countywide in 90 counties (Lake and St. Joseph elect by district), so a commissioner card follows Iowa's shipped plan-2 pattern: draw the district, state the election, name nobody on the district itself. The 36 counties with no published council boundary are the catalogue-sweep route — Vigo County publishes both district layers on its own ArcGIS Online org, which is the shape to test county by county. Nothing here is asked of anybody; it is this instance's own next change."
+          "summary": "The County card lists every commissioner and council member in your county but not which district seat is yours, and names nobody for Marion County.",
+          "why": "Neither body's district lines are on this app's map yet, so the card lists every seat rather than yours. Marion County is governed by the Indianapolis City-County Council, which this app does not show yet.",
+          "wanted": "The commissioner and council district covering the point, and the Indianapolis City-County Council district and member for Marion County.",
+          "blocker": "NOT A MISSING SOURCE — UNBUILT WORK, and the sources are measured. The names shipped on 2026-10-09: every commissioner and council member in the other 91 counties, each the winner of that seat's most recent election in the Indiana Election Division's certified results (in/scripts/build_in_county_officials.py). The district lines are next: the Indiana Geographic Information Office's Data Harvest publishes commissioner districts for 58 counties and council districts for 56 on Administrative_Boundaries_of_Indiana_Current layers 3 and 4 (measured 2026-10-09), including Indianapolis's 25 City-County Council districts, whose 2023 winners are in the same results archive. Commissioner districts are residency districts elected countywide in 90 counties (Lake and St. Joseph elect by district), so in those 90 the list of every commissioner already answers who represents a reader. The counties with no published boundary are the catalogue-sweep route — Vigo County publishes both district layers on its own ArcGIS Online org, which is the shape to test county by county. Nothing here is asked of anybody; it is this instance's own next change."
       },
       {
           "id": "in-general-assembly-roster",
@@ -3207,17 +3207,16 @@ trusted.
           "wanted": "Any source naming a Kentucky school board member against the division they were elected from, or a county's own division boundaries as map data."
       },
       {
-          "id": "ky-municipal-officeholders",
-          "concept": "City mayors and councils",
-          "area": "Kentucky — all 415 incorporated cities",
+          "id": "ky-city-council-districts",
+          "concept": "City council districts",
+          "area": "Louisville and Lexington",
           "counties": [],
-          "everyCounty": true,
           "kind": "no-source",
           "layer": "municipality",
-          "summary": "Your City card names the city and nobody who governs it — no mayor, no council member.",
-          "why": "The state's municipal directory answers one city at a time rather than publishing a list, and this app has not built a roster from it. The card links that directory instead of naming anyone.",
-          "blocker": "MEASURED 2026-10-01. THE DIRECTORY EXISTS AND IS NOT A ROSTER. The Department for Local Government publishes a municipal home page at kydlgweb.ky.gov/Cities/16_CityHome.cfm with a search by city name and by county; its robots.txt was read with this project's own client on 2026-10-01 and no rule in the one binding group matches that path, so the host permits it. What it does not offer is a downloadable list, so a roster here means a per-city read across 415 cities rather than one fetch, and whether every city's officials are carried, and how current each page is, has NOT been measured. THE BOUNDARIES ARE NOT THE PROBLEM: the 415 city outlines ship from the Census in the same change as this record. HOW EACH CITY IS GOVERNED IS ALSO NOT MEASURED — Kentucky cities run under statutory plans of government and which plan applies to a given city was not established here, so no card claims it. NOT YET ASKED and no ask is drafted; the Department for Local Government is the office to write to for a machine-readable list, and the Kentucky League of Cities is the obvious second place to try. The 17 cities above 25,000 people are the part of this that the fleet's own done standard requires first, and they are a bounded piece of work rather than a research question.",
-          "wanted": "A machine-readable list of Kentucky's city mayors and council members, from the state or from a city that publishes its own."
+          "summary": "In Louisville and Lexington your City card names the whole council rather than the one member elected from your district.",
+          "why": "Both councils are elected by district, and this app has not drawn either city's council districts yet, so it cannot say which member is yours.",
+          "blocker": "MEASURED 2026-10-09. The mayors and councils of 409 Kentucky cities now ship, read from the Department for Local Government's municipal directory (this record replaced ky-municipal-officeholders that day). The directory lists each council as one body and says nothing about districts. Lexington-Fayette's own council page, read with this project's client that day, prints twelve numbered districts beside their members; Louisville Metro's council page refused this client (HTTP 403) and was not read another way. Neither city's district boundaries have been looked for yet — both are in Kentucky's two largest county GIS programmes and finding them is a bounded piece of work, not a question for either city. TWO CENSUS PLACES ARE NOT IN THE DIRECTORY AT ALL — Keene and St. Mary — so their City cards name nobody; that is recorded in ky/WATCH.md rather than here, because it is two small cities rather than the reader-facing gap in the two largest.",
+          "wanted": "Nothing from a reader — this one is ours to build."
       }
   ]
 }

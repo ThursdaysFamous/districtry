@@ -637,6 +637,33 @@ try {
   }
 
 
+  // 2f. The County card names both bodies that run a county, as election
+  //     winners, and says so; Marion names neither and says why. Fort Wayne
+  //     (Allen County) has three commissioners and seven council seats in the
+  //     shipped files, so the card must carry ten person rows and the sentence
+  //     saying they are winners rather than sitting members. Offline: both
+  //     files are same-origin, so no third party decides this check.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=41.0793,-85.1394&layers=county`);
+    const allen = await cardText(page, "county");
+    check("county card lists Allen County's commissioners and council as dated winners",
+      !allen.error && /Allen County/.test(allen.text) && /Board of Commissioners/i.test(allen.text) &&
+        /County Council/i.test(allen.text) && /At large/.test(allen.text) &&
+        /elected November \d+, 20\d\d/.test(allen.text) && /party caucus/.test(allen.text),
+      allen.text.slice(0, 160));
+    await context.close();
+    const ctx2 = await browser.newContext({ serviceWorkers: "block" });
+    const p2 = await booted(ctx2, `${BASE}#point=${POINT}&layers=county`);
+    const marion = await cardText(p2, "county");
+    check("county card at Marion names the City-County Council instead of a board",
+      !marion.error && /Marion County/.test(marion.text) && /City-County Council/.test(marion.text) &&
+        !/Board of Commissioners/i.test(marion.text),
+      marion.text.slice(0, 160));
+    await ctx2.close();
+  }
+
+
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged
   //     with its own source and pointed at the canonical deployment), and the

@@ -1,0 +1,2643 @@
+{
+ "18001": {
+  "county": "Adams",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Stan A Stoppenhagen",
+    "office": "Adams County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Steven R Bailey",
+    "office": "Adams County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Douglas L. Bauman",
+    "office": "Adams County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18003": {
+  "county": "Allen",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Ron Turpin",
+    "office": "Allen County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Therese M Brown",
+    "office": "Allen County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Richard Beck",
+    "office": "Allen County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18005": {
+  "county": "Bartholomew",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Larry S. Kleinhenz",
+    "office": "Bartholomew County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Carl H. Lienhoop",
+    "office": "Bartholomew County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tony London",
+    "office": "Bartholomew County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18007": {
+  "county": "Benton",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "John E. Fields",
+    "office": "Benton County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "John Phillip Gick",
+    "office": "Benton County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Phil Mcginnis",
+    "office": "Benton County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18009": {
+  "county": "Blackford",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Dan Borgenheimer",
+    "office": "Blackford County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Laura Pierce Coons",
+    "office": "Blackford County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "John A Lancaster",
+    "office": "Blackford County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18011": {
+  "county": "Boone",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Tim Beyer",
+    "office": "Boone County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Donald (Donnie) Lawson",
+    "office": "Boone County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott Pell",
+    "office": "Boone County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18013": {
+  "county": "Brown",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Kevin Patrick",
+    "office": "Brown County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ronald A Sanders",
+    "office": "Brown County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tim J Clark",
+    "office": "Brown County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18015": {
+  "county": "Carroll",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Loren T Hylton",
+    "office": "Carroll County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott W Ayres",
+    "office": "Carroll County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "William R Brown (Bill)",
+    "office": "Carroll County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18017": {
+  "county": "Cass",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Ruth E Baker",
+    "office": "Cass County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Michael W Stajduhar",
+    "office": "Cass County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michael W Deitrich",
+    "office": "Cass County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18019": {
+  "county": "Clark",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Connie Sellers",
+    "office": "Clark County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jack A Coffman Sr",
+    "office": "Clark County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bryan Glover",
+    "office": "Clark County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18021": {
+  "county": "Clay",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Bryan Allender",
+    "office": "Clay County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Marty A Heffner",
+    "office": "Clay County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Paul R Sinders",
+    "office": "Clay County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18023": {
+  "county": "Clinton",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Bert Weaver",
+    "office": "Clinton County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kevin Myers",
+    "office": "Clinton County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jordan Brewer",
+    "office": "County Commissioner",
+    "party": "Republican",
+    "seat": "Seat titled “County Commissioner”",
+    "seatNotStated": "the race's title names no district",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18025": {
+  "county": "Crawford",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "DANIEL G CRECELIUS",
+    "office": "Crawford County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "LARRY INGLE",
+    "office": "Crawford County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Morton M Dale",
+    "office": "Crawford County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18027": {
+  "county": "Daviess",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Tracy (TC) Cook",
+    "office": "Daviess County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Nathan Gabhart",
+    "office": "Daviess County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Michael M Keith",
+    "office": "Daviess County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18029": {
+  "county": "Dearborn",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Jim Thatcher",
+    "office": "Dearborn County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Duane Bischoff",
+    "office": "Dearborn County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rick Probst",
+    "office": "Dearborn County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18031": {
+  "county": "Decatur",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Brian Wenning",
+    "office": "Decatur County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeremy R Pasel",
+    "office": "Decatur County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gabriel Nobbe",
+    "office": "Decatur County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18033": {
+  "county": "DeKalb",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Kellen R Dooley",
+    "office": "Dekalb County Commissioner, District Central",
+    "party": "Republican",
+    "seat": "Central District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "James (Jim) Miller",
+    "office": "Dekalb County Commissioner, District East",
+    "party": "Republican",
+    "seat": "East District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "William (Bill) Hartman",
+    "office": "Dekalb County Commissioner, District West",
+    "party": "Republican",
+    "seat": "West District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18035": {
+  "county": "Delaware",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Stephen Brand",
+    "office": "Delaware County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sherry K Riggin",
+    "office": "Delaware County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Shannon Henry",
+    "office": "Delaware County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18037": {
+  "county": "Dubois",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Chad Blessinger",
+    "office": "Dubois County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Serice Stenftenagel",
+    "office": "Commissioner District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nick Hostetter",
+    "office": "Dubois County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18039": {
+  "county": "Elkhart",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Bob Barnes",
+    "office": "Elkhart County Commissioner District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bradley D Rogers",
+    "office": "Elkhart County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "SUZIE WEIRICK",
+    "office": "Elkhart County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18041": {
+  "county": "Fayette",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Dale L Strong",
+    "office": "Fayette County Commissioner, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dale Munson",
+    "office": "Fayette County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tracie Bever",
+    "office": "Fayette County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18043": {
+  "county": "Floyd",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Al Knable",
+    "office": "Floyd County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "FRANK A LOOP",
+    "office": "Floyd County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "JASON SHARP",
+    "office": "Floyd County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18045": {
+  "county": "Fountain",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Aaron Fruits",
+    "office": "Fountain County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kenneth KW Rice",
+    "office": "Fountain County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "TIMOTHY A. SHUMAKER",
+    "office": "Fountain County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18047": {
+  "county": "Franklin",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Gerald (Jerry) Wendel",
+    "office": "Franklin County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John J Heis",
+    "office": "Franklin County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Koch",
+    "office": "Franklin County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18049": {
+  "county": "Fulton",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "David Sommers",
+    "office": "Fulton County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bryan W Lewis",
+    "office": "Fulton County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Richard A Ranstead",
+    "office": "Fulton County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18051": {
+  "county": "Gibson",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Nick Burns",
+    "office": "Gibson County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ken Montgomery",
+    "office": "Gibson County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Chuck Lewis",
+    "office": "Gibson County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18053": {
+  "county": "Grant",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Shane E. Middlesworth",
+    "office": "Grant County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Charles (Chuck) Poling Jr",
+    "office": "Grant County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ronald D. Stewart Jr.",
+    "office": "Grant County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18055": {
+  "county": "Greene",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Edward L Michael",
+    "office": "Greene County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nathan L Abrams",
+    "office": "Greene County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rick Graves",
+    "office": "Greene County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18057": {
+  "county": "Hamilton",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Christine Altman",
+    "office": "Hamilton County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Steven C. Dillinger",
+    "office": "Hamilton County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mark E. Heirbrandt",
+    "office": "Hamilton County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18059": {
+  "county": "Hancock",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Jeannine Gray",
+    "office": "Hancock County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Gary Mcdaniel",
+    "office": "Hancock County Commssioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bill Spalding",
+    "office": "Hancock County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18061": {
+  "county": "Harrison",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Annissa Kellum-Reas",
+    "office": "Harrison County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nelson Stepro",
+    "office": "Harrison County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brad Wiseman",
+    "office": "Harrison County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18063": {
+  "county": "Hendricks",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Bob Gentry",
+    "office": "Hendricks County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dennis W Dawes",
+    "office": "Hendricks County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brad Whicker",
+    "office": "Hendricks County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18065": {
+  "county": "Henry",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Steve Dellinger",
+    "office": "County Commissioner, Middle District",
+    "party": "Republican",
+    "seat": "Middle District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Joe A Wiley",
+    "office": "Henry County Commissioner, District Northern",
+    "party": "Republican",
+    "seat": "Northern District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Susan Huhn",
+    "office": "County Commissioner, Southern District",
+    "party": "Republican",
+    "seat": "Southern District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18067": {
+  "county": "Howard",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jeffrey (Jeff) LipinskI",
+    "office": "Howard County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jackie W Dodd",
+    "office": "Howard County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Robert B Bray",
+    "office": "Howard County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18069": {
+  "county": "Huntington",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Rob Miller",
+    "office": "County Commissioner District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "TERRY STOFFEL",
+    "office": "Huntington County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "TOM WALL",
+    "office": "Huntington County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18071": {
+  "county": "Jackson",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "DREW MARKEL",
+    "office": "County Commisioner Of 1st District",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "DREW STOREY",
+    "office": "County Commisioner Of 2nd District",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Matt Reedy",
+    "office": "Jackson County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18073": {
+  "county": "Jasper",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Ryan T Hilton",
+    "office": "Jasper County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Craig A Standish",
+    "office": "Jasper County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rein Bontreger",
+    "office": "Jasper County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18075": {
+  "county": "Jay",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Chad Aker",
+    "office": "Jay County Commissioner, District Middle",
+    "party": "Republican",
+    "seat": "Middle District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Doug Horn",
+    "office": "Jay County Commissioner, District North",
+    "party": "Republican",
+    "seat": "North District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Duane Monroe",
+    "office": "Jay County Commissioner, District South",
+    "party": "Republican",
+    "seat": "South District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18077": {
+  "county": "Jefferson",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "David Bramer",
+    "office": "Jefferson County Commissioner, District Lower",
+    "party": "Republican",
+    "seat": "Lower District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Robert Little",
+    "office": "Jefferson County Commissioner, District Middle",
+    "party": "Republican",
+    "seat": "Middle District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "RON LEE",
+    "office": "Jefferson County Commissioner, District Upper",
+    "party": "Republican",
+    "seat": "Upper District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18079": {
+  "county": "Jennings",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Charlie St John",
+    "office": "Jennings County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Shane Boswell",
+    "office": "Jennings County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Matt Sporleder",
+    "office": "Jennings County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18081": {
+  "county": "Johnson",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Brian P. Baird",
+    "office": "Johnson County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kevin M Walls",
+    "office": "Johnson County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ronald H. (Ron) West",
+    "office": "Johnson County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18083": {
+  "county": "Knox",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Thomas (TJ) Brink",
+    "office": "Knox County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Timothy J Ellerman II",
+    "office": "Knox County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kellie E Streeter",
+    "office": "Knox County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18085": {
+  "county": "Kosciusko",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Cary P Groninger",
+    "office": "Kosciusko County Commissioner, District Middle",
+    "party": "Republican",
+    "seat": "Middle District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sue Ann Mitchell",
+    "office": "Kosciusko County Commissioner, District Northern",
+    "party": "Republican",
+    "seat": "Northern District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Robert M (Bob) Conley",
+    "office": "Kosciusko County Commissioner, District Southern",
+    "party": "Republican",
+    "seat": "Southern District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18087": {
+  "county": "LaGrange",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Terry A. Martin Jr.",
+    "office": "Lagrange County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kevin R Myers",
+    "office": "Lagrange County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Peter A Cook",
+    "office": "Lagrange County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18089": {
+  "county": "Lake",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Kyle W Allen Sr.",
+    "office": "Lake County Commissioner, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jerry Tippy",
+    "office": "Lake County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "MICHAEL C REPAY",
+    "office": "Lake County Commissioner, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18091": {
+  "county": "LaPorte",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Connie Gramarossa",
+    "office": "Laporte County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Steve Holifield",
+    "office": "Laporte County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Joe Haney",
+    "office": "Laporte County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18093": {
+  "county": "Lawrence",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Rodney G. Fish",
+    "office": "Lawrence County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff D Mcknight",
+    "office": "Lawrence County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Wallace M Branham",
+    "office": "Lawrence County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18095": {
+  "county": "Madison",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Olivia Pratt",
+    "office": "Madison County Commissioner District #1 Madison County",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rick Gardner",
+    "office": "Madison County Commissioner District #2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "John M Richwine",
+    "office": "Madison County Commissioner District #3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18099": {
+  "county": "Marshall",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Stan Klotz",
+    "office": "Marshall County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Adam Faulstich",
+    "office": "Marshall County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jesse Bohannon",
+    "office": "Marshall County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18101": {
+  "county": "Martin",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Retha Warner",
+    "office": "Martin County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "PAUL R GEORGE",
+    "office": "Martin County Commissioner, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Aaron Moose Summers",
+    "office": "Martin County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18103": {
+  "county": "Miami",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Mark Horner",
+    "office": "Miami County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brenda Meadows Weaver",
+    "office": "Miami County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Keith (Fred) Musselman",
+    "office": "Miami County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18105": {
+  "county": "Monroe",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Elizabeth (Lee) Jones",
+    "office": "Monroe County Commissioner, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Julie Thomas",
+    "office": "Monroe County Commissioner, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jody Madeira",
+    "office": "Monroe County Commissioner, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18107": {
+  "county": "Montgomery",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "JAKE BOHLANDER",
+    "office": "Montgomery County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jim Fulwider",
+    "office": "Montgomery County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "DAN GUARD",
+    "office": "Montgomery County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18109": {
+  "county": "Morgan",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Bryan Andrew Collier",
+    "office": "Morgan County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kenneth (Kenny) L. Hale",
+    "office": "Morgan County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Don Adams",
+    "office": "Morgan County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18111": {
+  "county": "Newton",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Steven Eilers",
+    "office": "Newton County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Abbey H Rossiter",
+    "office": "Newton County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rob Churchill",
+    "office": "Newton County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18113": {
+  "county": "Noble",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Dave Dolezal",
+    "office": "Noble County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gary D Leatherman",
+    "office": "Noble County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Anita F Hess",
+    "office": "Noble County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18115": {
+  "county": "Ohio",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Michael \"Bill\" Hoffman",
+    "office": "Ohio County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Connie J Brown",
+    "office": "Ohio County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Shane Koons",
+    "office": "County Commissioner",
+    "party": "Republican",
+    "seat": "Seat titled “County Commissioner”",
+    "seatNotStated": "the race's title names no district",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18117": {
+  "county": "Orange",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Marshall Noble",
+    "office": "Orange County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Steve Hopper",
+    "office": "Orange County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Richard W. Dixon",
+    "office": "Orange County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18119": {
+  "county": "Owen",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Gary Burton",
+    "office": "Owen County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sam Hobbs",
+    "office": "Owen County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "David Risk",
+    "office": "Owen County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18121": {
+  "county": "Parke",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Dan R Collom",
+    "office": "Parke County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bruce Hartman",
+    "office": "Parke County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jim Meece",
+    "office": "Parke County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18123": {
+  "county": "Perry",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Randy Cole",
+    "office": "Perry County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rebecca Thorn",
+    "office": "Perry County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Pam Jamniczky",
+    "office": "Perry County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18125": {
+  "county": "Pike",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Nelson",
+    "office": "Pike County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mark Flint",
+    "office": "Pike County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ryan Coleman",
+    "office": "Pike County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18127": {
+  "county": "Porter",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "EDWARD K. MORALES",
+    "office": "Porter County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "BARB REGNITZ",
+    "office": "Porter County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "JIM BIGGS",
+    "office": "Porter County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18129": {
+  "county": "Posey",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Bryan Schorr",
+    "office": "Posey County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Greg Newman",
+    "office": "Posey County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bill Collins",
+    "office": "Posey County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18131": {
+  "county": "Pulaski",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Jenny Halleck Knebel",
+    "office": "Pulaski County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Donald (Don) Street, Jr.",
+    "office": "Pulaski County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John Mike McClure",
+    "office": "Pulaski County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18133": {
+  "county": "Putnam",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Andy T Beck",
+    "office": "Putnam County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rick Woodall",
+    "office": "Putnam County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tom Helmer",
+    "office": "Putnam County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18135": {
+  "county": "Randolph",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Thomas (Tom) Kerns",
+    "office": "Randolph County Commissioner, District Eastern",
+    "party": "Republican",
+    "seat": "Eastern District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Melissa (Missy) Williams",
+    "office": "Randolph County Commissioner, District Middle",
+    "party": "Republican",
+    "seat": "Middle District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Gary D Friend Sr.",
+    "office": "Commissioner Western Dist",
+    "party": "Republican",
+    "seat": "Western District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18137": {
+  "county": "Ripley",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Mark A Horstman",
+    "office": "County Commissioner Of District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeffrey J Volz",
+    "office": "County Commissioner Of District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Roger Gullion",
+    "office": "County Commissioner Of 3rd District",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18139": {
+  "county": "Rush",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Ronald (Ron) Jarman",
+    "office": "Rush County Commissioner, Middle District",
+    "party": "Republican",
+    "seat": "Middle District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kenny Aulbach",
+    "office": "Rush County Commissioner, Northern District",
+    "party": "Republican",
+    "seat": "Northern District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeffery (Jeff) Wilson",
+    "office": "Rush County Commissioner, Southern District",
+    "party": "Republican",
+    "seat": "Southern District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18141": {
+  "county": "St. Joseph",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Carl H Baxmeyer",
+    "office": "St. Joseph County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "RAFAEL A MORTON",
+    "office": "St. Joseph County Commissioner, Dist. 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "ANTHONY (TONY) HAZEN",
+    "office": "St. Joseph County Commissioner, Dist.3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18143": {
+  "county": "Scott",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Randy Julian",
+    "office": "Scott County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Adam Bomar",
+    "office": "Scott County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Greg A. Prince",
+    "office": "Scott County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18145": {
+  "county": "Shelby",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "David L Lawson",
+    "office": "Shelby County Commissioner, District Center",
+    "party": "Republican",
+    "seat": "Center District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jason R Abel",
+    "office": "Shelby County Commissioner, District North",
+    "party": "Republican",
+    "seat": "North District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nathan Runnebohm",
+    "office": "Shelby County Commissioner, District South",
+    "party": "Republican",
+    "seat": "South District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18147": {
+  "county": "Spencer",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "JIM SEILER",
+    "office": "Spencer County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "HEATHER J GRIES",
+    "office": "Spencer County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "MALCOLM (MAC) WEBB",
+    "office": "Spencer County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18149": {
+  "county": "Starke",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Michael VanDeMark",
+    "office": "Starke County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Don Binkley",
+    "office": "Starke County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Charles R Chesak",
+    "office": "Starke County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18151": {
+  "county": "Steuben",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "RICHARD RICK SHIPE",
+    "office": "Steuben County Commissioner, District Middle",
+    "party": "Republican",
+    "seat": "Middle District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "ANDY LAUGHLIN",
+    "office": "Steuben County Commissioner, District North",
+    "party": "Republican",
+    "seat": "North District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "WIL HOWARD",
+    "office": "Steuben County Commissioner, District South",
+    "party": "Republican",
+    "seat": "South District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18153": {
+  "county": "Sullivan",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Robert A. (Bob) Davis",
+    "office": "Sullivan County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "BRANT FORD",
+    "office": "Sullivan County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "JOHN M. WATERMAN SR.",
+    "office": "Sullivan County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18155": {
+  "county": "Switzerland",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Ryan Harrison",
+    "office": "Switzerland County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Joseph L Bennett",
+    "office": "Switzerland County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "James (Jamie) Peters",
+    "office": "Switzerland County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18157": {
+  "county": "Tippecanoe",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Tracy Brown",
+    "office": "Tippecanoe County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "David S. Byers",
+    "office": "Tippecanoe County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tom Murtaugh",
+    "office": "Tippecanoe County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18159": {
+  "county": "Tipton",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Dennis Henderson",
+    "office": "Tipton County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tracey B. Powell",
+    "office": "Tipton County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nancy E. Cline",
+    "office": "Tipton County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18161": {
+  "county": "Union",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "HOWARD N CURRY",
+    "office": "Union County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tim M Williams",
+    "office": "Union County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dean VanWinkle",
+    "office": "Union County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18163": {
+  "county": "Vanderburgh",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "MIKE GOEBEL",
+    "office": "Vanderburgh County Commissioner, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Justin Elpers",
+    "office": "Vanderburgh County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "AMY T. CANTERBURY",
+    "office": "Vanderburgh County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18165": {
+  "county": "Vermillion",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Misty Lee Hess",
+    "office": "Dist. 1 Commissioner",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tim R. Yocum",
+    "office": "Dist. 2 Commissioner",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "RJ Dunavan",
+    "office": "Dist. 3 Commissioner",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18167": {
+  "county": "Vigo",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Mark Clinkenbeard",
+    "office": "Vigo County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "CHRIS SWITZER",
+    "office": "Vigo County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "MIKE MORRIS",
+    "office": "Vigo County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18169": {
+  "county": "Wabash",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Cheryl Ross",
+    "office": "Wabash County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeff Dawes",
+    "office": "Wabash County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tyler J Niccum",
+    "office": "Wabash County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18171": {
+  "county": "Warren",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "CRAIG GREENWOOD",
+    "office": "Warren County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Clay Andrews",
+    "office": "Warren County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John Comer",
+    "office": "Warren County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18173": {
+  "county": "Warrick",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Sarah Millis-Seaton",
+    "office": "Warrick County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Terry Phillippe",
+    "office": "Warrick County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Stacey Franz",
+    "office": "Warrick County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18175": {
+  "county": "Washington",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Phil Marshall",
+    "office": "Washington County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Todd M Ewen",
+    "office": "Washington County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tony Cardwell Jr.",
+    "office": "Washington County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18177": {
+  "county": "Wayne",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Brad Dwenger",
+    "office": "Wayne County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Aaron Roberts",
+    "office": "Wayne County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Plasterer",
+    "office": "Wayne County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18179": {
+  "county": "Wells",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Mike Vanover",
+    "office": "Wells County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Blake Gerber",
+    "office": "Wells County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Stringer",
+    "office": "Wells County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18181": {
+  "county": "White",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "David L. Davis",
+    "office": "White County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kaleb D. Pass",
+    "office": "White County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michael R Smolek",
+    "office": "White County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18183": {
+  "county": "Whitley",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Chad Banks",
+    "office": "Whitley County Commissioner, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rob Schuman",
+    "office": "Whitley County Commissioner, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Theresa (Green) Baysinger",
+    "office": "Whitley County Commissioner, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ }
+}

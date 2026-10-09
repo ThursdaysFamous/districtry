@@ -1783,6 +1783,11 @@ CITY_ROSTERS = {
     # Election winners from the Secretary of State's city results files, keyed
     # by the city's Census id, each seat dated to the election that filled it.
     "mn": [("mn/data/app/mn-city-councils.json", "geoid7")],
+    # The Department for Local Government's municipal directory, keyed by the
+    # Census place id the City card's feature carries. Louisville's one entry
+    # answers both of the Census's Louisville places, the consolidated metro
+    # (balance) and the pre-merger city inside it.
+    "ky": [("ky/data/app/ky-city-officials.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is

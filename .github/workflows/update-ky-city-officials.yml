@@ -1,0 +1,94 @@
+name: Update Kentucky city officials
+
+# Weekly refresh of the Kentucky City card's mayor and council
+# (ky/data/app/ky-city-officials.json, read by ky/index.html). Re-reads the
+# Department for Local Government's municipal directory — one search per county
+# and one page per city, about 535 requests half a second apart — and, if
+# anything changed, opens a PR rather than committing to main: these are real
+# officeholders and they get a look before they ship.
+#
+# WHAT MAKES IT SAFE TO RUN UNATTENDED is in the scraper and the builder. The
+# scraper fails below 120 counties or 400 cities. The builder fails on a
+# directory city that joins no Census place, on a title it does not classify,
+# on a spelling fix whose witness has gone, and if any of Kentucky's 17 units
+# over 25,000 stops naming a governing body.
+
+on:
+  schedule:
+    - cron: "50 14 * * 3" # Wednesday 14:50 UTC — a free slot in the fleet's roster schedule
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; a PR opened with the default GITHUB_TOKEN fires no workflows. Falls
+      # back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: pip install -c scripts/requirements.txt requests
+
+      # The scraper asks kydlgweb.ky.gov's robots.txt once, through the fleet's
+      # shared gate, with the exact client that then crawls.
+      - name: Read the Department for Local Government's directory
+        run: python3 ky/scripts/ky_city_officials_scraper.py
+
+      - name: Rebuild the city officials roster
+        run: python3 ky/scripts/build_ky_city_officials.py
+
+      - name: Validate roster + app
+        run: |
+          python3 ky/scripts/build_ky_city_officials.py --check
+          python3 ky/scripts/validate_index.py ky/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- ky/data/app/ky-city-officials.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch: an unmerged roster PR is refreshed in place by the
+          # force-push below instead of spawning a duplicate every week.
+          branch="bot/ky-city-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Carry the read to main's current tip, so the branch differs from
+          # main in its data files alone.
+          cp ky/data/source/ky-city-officials-scrape.json "$RUNNER_TEMP/scrape.json"
+          git stash --include-untracked
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          cp "$RUNNER_TEMP/scrape.json" ky/data/source/ky-city-officials-scrape.json
+          python3 ky/scripts/build_ky_city_officials.py
+          git add ky/data/app/ky-city-officials.json ky/data/source/ky-city-officials-scrape.json
+          git commit -m "Update Kentucky city officials from the Department for Local Government"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Kentucky city officials from the Department for Local Government" \
+              --body "Automated weekly refresh of the Kentucky City card's mayor and council, read from the Department for Local Government's municipal directory by \`ky/scripts/ky_city_officials_scraper.py\` and written by \`ky/scripts/build_ky_city_officials.py\`. Please review the diff before merging: this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

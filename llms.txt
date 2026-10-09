@@ -128,6 +128,7 @@ All 92 counties: townships, cities and towns, school districts, ZIP codes, and t
 
 - [Indiana district lookup](https://districtry.com/in/): 11 layers, all 92 counties.
 - [Who is my U.S. representative?](https://districtry.com/in/congress.html)
+- [Who are my county commissioners?](https://districtry.com/in/county-commissioner.html): links a page per county, 91 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/in/sources.html)
 - [Indiana district questions](https://districtry.com/in/faq.html)
 
@@ -147,7 +148,7 @@ Each instance's sources page carries one row per layer: what it answers, the pub
 
 Officeholder names are never guessed. Where no verifiable roster exists, a card links the official body instead of inventing a name, and what the project does not know is recorded rather than left blank — each instance ships a machine-readable list of its own gaps at `<instance>/data/app/coverage-gaps.json`.
 
-Sources last reverified between September 11, 2026 and September 30, 2026, per instance.
+Sources last reverified between October 9, 2026 and September 30, 2026, per instance.
 
 This is a civic reference tool and it disclaims legal precision. Confirm a district assignment with the government office that draws it before relying on it for anything official.
 
