@@ -175,6 +175,19 @@
       }
     },
     {
+      "id": "northcarolina",
+      "label": "North Carolina",
+      "url": "https://districtry.com/nc/",
+      "emoji": "🌳",
+      "explorer_name": "districtry North Carolina",
+      "bbox": {
+        "minLng": -84.33,
+        "minLat": 33.74,
+        "maxLng": -75.39,
+        "maxLat": 36.6
+      }
+    },
+    {
       "id": "oklahoma",
       "label": "Oklahoma",
       "url": "https://districtry.com/ok/",
