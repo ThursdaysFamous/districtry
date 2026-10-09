@@ -51,7 +51,7 @@ different thing from one it failed.
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 61 | all | 12 of 13 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 15 | all | 11 of 13 levels |
 | ny | **EAM·** | 62 | 62/62 § | 68 | 78 | all | 33 | all | 9 of 13 levels |
-| wi | **EAM·** | 72 | 72/72 | 1590 | 1,574 | all | 265 | all | 11 of 13 levels |
+| wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 265 | all | 11 of 13 levels |
 
 § Examined in part by a record covering the whole state rather
 than county by county. That is a weaker statement than a record
