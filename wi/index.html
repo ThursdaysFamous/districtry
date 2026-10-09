@@ -8729,7 +8729,15 @@ function initWisconsinExplorer() {
     };
   }
 
-  function fadedStyle(baseStyle) {
+  // Every other district in a layer fades while one is lit, which suits a
+  // layer that tiles its ground: the neighbours are everywhere and the lit one
+  // has to stand out from them. A layer whose districts are few and scattered
+  // across ground most of which is in none of them (tribal land) loses its
+  // others from sight that way, so its style can set keepOthersVisible and
+  // they keep their ordinary style; the lit one still takes the highlight.
+  function fadedStyle(baseStyle, mod) {
+    var style = mod && mod.overlay && mod.overlay.style;
+    if (style && style.keepOthersVisible) return Object.assign({ opacity: 1 }, baseStyle);
     return {
       color: baseStyle.color,
       weight: Math.max(1, (baseStyle.weight || 1.5) - 0.5),
@@ -8812,7 +8820,7 @@ function initWisconsinExplorer() {
     var feature = findFeatureContaining(rt.geojson, state.selectedPoint);
     if (!feature) { clearLayerHighlight(mod); return; }
 
-    var faded = fadedStyle(baseStyleFor(mod));
+    var faded = fadedStyle(baseStyleFor(mod), mod);
     var highlight = highlightStyleFor(mod);
 
     // Fast path (P7): the faded/base style of the non-matched paths depends only
@@ -9392,7 +9400,7 @@ function initWisconsinExplorer() {
     var rt = layerRuntime[mod.id];
     var base = baseStyleFor(mod) || {};
     var selected = rt.tileSelectedId != null || !!rt.tileLiveSelected;
-    var hl = highlightStyleFor(mod), faded = fadedStyle(base);
+    var hl = highlightStyleFor(mod), faded = fadedStyle(base, mod);
     var isSel = ["boolean", ["feature-state", "sel"], false];
     var baseOpacity = base.opacity == null ? 1 : base.opacity;
     return {
@@ -9604,7 +9612,7 @@ function initWisconsinExplorer() {
       var mod = this.mod, rt = layerRuntime[mod.id], sel = this.liveSelected;
       var anySelected = !!sel || rt.tileSelectedId != null;
       var base = baseStyleFor(mod) || {};
-      var faded = fadedStyle(base), lit = Object.assign({}, base, highlightStyleFor(mod));
+      var faded = fadedStyle(base, mod), lit = Object.assign({}, base, highlightStyleFor(mod));
       this.live.eachLayer(function (sub) {
         var on = !!sel && sub.feature === sel;
         if (sub.setStyle) sub.setStyle(on ? lit : anySelected ? faded : base);
@@ -15262,7 +15270,7 @@ function initWisconsinExplorer() {
     group: "political",
     label: "Tribal Government",
     loader: loadWiTribalAreas,
-    style: { color: "#1F6F6B", weight: 2, fillColor: "#3E9A95", fillOpacity: 0.12, dashArray: "6 3" },
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
     fields: [
       // The nation as the Bureau of Indian Affairs names it, which is NOT the
       // Census's own text for the parcel: the Census writes names like
