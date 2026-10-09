@@ -72,6 +72,7 @@ IDS = {
     "Q1527": "Minnesota",
     "Q1603": "Kentucky",
     "Q1415": "Indiana",
+    "Q1454": "North Carolina",
 }
 
 # metros.json tag -> the jurisdiction item that instance answers for. STATED,
@@ -121,10 +122,17 @@ IDS = {
 # properties: P31 = Q35657, P300 = "US-IN", P131 = Q30. The other five came
 # back matching this table's wi, ia, ky and mi entries plus Missouri, which no
 # instance answers for. Its English label is the bare string "Indiana".
+#
+# nc was added at the 2026-10-09 go-live. No fleet state borders North
+# Carolina, so the P47 route the last three used cannot reach it; Q1454 was
+# read directly from Special:EntityData (the one wikidata.org endpoint this
+# project's robots reading permits) and identified by its own properties, not
+# its label: P31 = Q35657 ("U.S. state"), P300 = "US-NC", P131 = Q30. Its
+# English label is the bare string "North Carolina".
 JURISDICTION = {
     "il": "Q1204", "wi": "Q1537", "ia": "Q1546", "mi": "Q1166",
     "ny": "Q1384", "ca": "Q62", "mn": "Q1527", "ky": "Q1603",
-    "in": "Q1415",
+    "in": "Q1415", "nc": "Q1454",
 }
 
 

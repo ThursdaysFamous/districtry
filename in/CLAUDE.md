@@ -49,11 +49,27 @@ TIGERweb's elementary (layer 1) and secondary (layer 2) school tilings both retu
 features for `STATE='18'` (measured 2026-09-29), so the state runs unified districts alone.
 Both are recorded drops rather than empty toggles.
 
-**NO COUNTY BODY IS DRAWN, AND IT IS THE LARGEST RECORDED GAP.** An Indiana county is run by
-TWO elected bodies — a three-member board of commissioners and a seven-member county council —
-and both are drawn on their own district lines, so neither can ride the other's geometry. The
-county card names the county and says plainly that it names nobody. Recorded as gap
-`in-county-government`.
+**THE COUNTY CARD NAMES BOTH COUNTY BODIES, AND THEIR DISTRICTS ARE NOT DRAWN YET** (2026-10-09).
+An Indiana county is run by TWO elected bodies — a three-member board of commissioners and a
+seven-member county council (nine in St. Joseph) — and each is elected on its own district lines.
+`in/scripts/build_in_county_officials.py` reads the Indiana Election Division's archived,
+CERTIFIED general-election results (`enr.indianavoters.in.gov`, robots.txt answers 400, which
+RFC 9309 files as no policy) and writes `in-county-commissioners.json` and
+`in-county-councils.json`: the newest certified winner for every seat, 91 counties, 273
+commissioners and 639 council members. **THEY ARE ELECTION WINNERS, NOT A ROSTER**, and the card
+says so: a vacancy in Indiana is filled by a party caucus, which no election file records, so a
+seat can name someone who has since left. A year counts only once it is certified and its
+winners have taken office on January 1. **NINE RACES ARE MISFILED IN THE STATE'S OWN FILES** — a
+district race published as electing several seats — and `MISFILED_SEAT_COUNTS` records each with
+the winner the file flags, refusing the build if any moves; a few races are titled with no
+district at all, and those seats print "Seat not stated" rather than a guessed number.
+**MARION IS NOT IN THESE FILES**: Indianapolis and Marion County are consolidated, its
+legislative body is the 25-member City-County Council elected in municipal years, and the card
+says this app does not show it yet. The council file is recorded in `build_county_pages.py`'s
+`NOT_COUNTY_BOARDS` (a county council is the FISCAL body, IC 36-1-2-6; commissioners are the
+legislative and executive body), so the 91 per-county pages under `in/county-commissioner/` carry
+the commissioners. Gap `in-county-government` now records only the missing district lines, which
+IGIO publishes for 58 counties (commissioners) and 56 (councils) — the next change.
 
 **NEITHER CHAMBER NAMES A PERSON.** This instance ships no General Assembly roster, so both
 chamber cards give the district number and the Assembly's own directory — the chamber factory's
@@ -81,7 +97,7 @@ every other instance via `scripts/compose_app.py`.
 - Geocoders: address Photon (Indiana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Indiana-bounded, serial >=1s queue)
 - Ground truth: 39.76860,-86.16260 (the Indiana Statehouse, downtown Indianapolis (Marion County)) → county Marion County; us-house 7; in-senate 46; in-house 97. Negative point 38.25270,-85.75850 (downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json, which is what the pan hand-off reads — the same fix Iowa, Illinois and Wisconsin each made rather than moving their own point. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.).
 - Layers: 11 registered (political 3, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.IndianaExplorer`.
-- Scheduled workflows: `update-in-congress-roster.yml` (Mon 15:45 UTC).
+- Scheduled workflows: `update-in-congress-roster.yml` (Mon 15:45 UTC); `update-in-county-officials.yml` (Wed 15:50 UTC).
 - Source registry: `in/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 
@@ -140,8 +156,9 @@ after every await) and **per-layer failure isolation** (a layer's failure shows 
 its own card, never breaks the others).
 
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
-roster source exists, cards link to the official body instead of inventing a name. Ten of this
-instance's eleven layers name nobody, and every one of their cards says so. External strings
+roster source exists, cards link to the official body instead of inventing a name. Nine of this
+instance's eleven layers name nobody (U.S. House and County name people), and every one of their
+cards says so. External strings
 always render through `sanitize()`/`textContent`. Roster refreshes always land as PRs for human
 review — never as direct commits to main.
 
@@ -153,9 +170,11 @@ operator script: `metro-outline.json` (the whole-state outline for the coverage 
 against that county's own rings), `state-counties.json` (`in/scripts/build_state_counties.py`),
 and `congress-districts.json`, `in-senate-districts.json`, `in-house-districts.json`
 (`in/scripts/build_legislative_boundaries.py` — statewide TIGERweb, mapshaper-simplified,
-refused unless the 2,000-random-point agreement gate passes). The one roster is
+refused unless the 2,000-random-point agreement gate passes). The rosters are
 `congress-roster.json` (`in/scripts/build_congress_roster.py`, from
-unitedstates/congress-legislators), count-guarded and refreshed weekly by CI as a reviewed PR.
+unitedstates/congress-legislators) and the two county files above
+(`in/scripts/build_in_county_officials.py`, `--check` offline), each count-guarded and refreshed
+weekly by CI as a reviewed PR (`update-in-congress-roster.yml`, `update-in-county-officials.yml`).
 
 ## Growing this instance
 

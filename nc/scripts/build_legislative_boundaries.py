@@ -78,7 +78,7 @@ NC_FIPS = "37"
 
 # The state envelope the app accepts a click in (the worksheet's
 # permalink_gate) — validation samples uniformly over it.
-STATE_BBOX = {"minLng": -90.50, "minLat": 41.60, "maxLng": -82.10, "maxLat": 48.40}
+STATE_BBOX = {"minLng": -84.5, "minLat": 33.6, "maxLng": -75.1, "maxLat": 36.75}
 
 # chamber -> how to build data/app/<out>.
 #   layer:    TIGERweb Legislative MapServer layer index (0 US House, 1 upper, 2 lower)
