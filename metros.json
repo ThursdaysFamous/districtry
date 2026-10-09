@@ -162,6 +162,24 @@
       "landing_name": "Indiana",
       "blurb": "All 92 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the county governments, and the Data gaps panel says why.",
       "scope": "all 92 counties"
+    },
+    {
+      "id": "northcarolina",
+      "explorer_name": "districtry North Carolina",
+      "label": "North Carolina",
+      "url": "https://districtry.com/nc/",
+      "emoji": "🌳",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -84.33,
+        "minLat": 33.74,
+        "maxLng": -75.39,
+        "maxLat": 36.6
+      },
+      "tag": "nc",
+      "landing_name": "North Carolina",
+      "blurb": "All 100 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. Nobody is named yet on the county boards or city councils, and the Data gaps panel says why.",
+      "scope": "all 100 counties"
     }
   ]
 }

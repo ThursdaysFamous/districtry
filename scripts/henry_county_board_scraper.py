@@ -64,6 +64,23 @@ NAME_RE = re.compile(
 MAILTO_RE = re.compile(
     r'href="mailto:([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})"')
 PHONE_RE = re.compile(r">\s*(\d{3}-\d{3}-\d{4})\s*<")
+# Cloudflare's Email Address Obfuscation, switched on for www.henrycty.com
+# between the 2026-09-24 run (20 of 20 members with a mailto) and the
+# 2026-10-01 run (0 of 20, which the builder's e-mail floor refused). The
+# page's own script decodes it for every visitor, so the addresses are
+# published exactly as before and only the wire format changed: a one-byte XOR
+# whose first hex byte is the key. The Brown County shape
+# (il_county_commissioners_scraper.py carries the history).
+# Two carriers, same encoding: a `data-cfemail` span where the link text was
+# the address, and the link's own `/cdn-cgi/l/email-protection#<hex>` href
+# where the text was "Email <name>" (eight of the twenty on 2026-10-09).
+CFEMAIL_RE = re.compile(
+    r'(?:data-cfemail="|/cdn-cgi/l/email-protection#)([0-9a-fA-F]{4,})')
+
+
+def cfemail(hexstr):
+    raw = bytes.fromhex(hexstr)
+    return bytes(b ^ raw[0] for b in raw[1:]).decode("utf-8", "replace")
 
 
 def tidy_name(name):
@@ -87,11 +104,18 @@ def main():
             if not nm:
                 continue
             em = MAILTO_RE.search(item)
+            email = em.group(1).lower() if em else None
+            if not email:
+                cf = CFEMAIL_RE.search(item)
+                if cf:
+                    decoded = cfemail(cf.group(1)).strip().lower()
+                    if re.fullmatch(r"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}", decoded):
+                        email = decoded
             ph = PHONE_RE.search(item)
             records.append({
                 "name": tidy_name(nm.group(1)),
                 "district": district,
-                "email": em.group(1).lower() if em else None,
+                "email": email,
                 "phone": ph.group(1) if ph else None,
             })
 
