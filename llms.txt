@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Nine instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky and Indiana. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Ten instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana and North Carolina. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -130,6 +130,16 @@ All 92 counties: townships, cities and towns, school districts, ZIP codes, and t
 - [Who is my U.S. representative?](https://districtry.com/in/congress.html)
 - [Sources & data layers](https://districtry.com/in/sources.html)
 - [Indiana district questions](https://districtry.com/in/faq.html)
+
+## North Carolina
+
+All 100 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. Nobody is named yet on the county boards or city councils, and the Data gaps panel says why.
+
+- [North Carolina district lookup](https://districtry.com/nc/): 11 layers, all 100 counties.
+- [Who is my U.S. representative?](https://districtry.com/nc/congress.html)
+- [Sources & data layers](https://districtry.com/nc/sources.html)
+- [Who is my NC legislator?](https://districtry.com/nc/state-legislature.html)
+- [District questions](https://districtry.com/nc/faq.html)
 
 ## Where the answers come from
 
