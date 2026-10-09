@@ -245,7 +245,15 @@
     };
   }
 
-  function fadedStyle(baseStyle) {
+  // Every other district in a layer fades while one is lit, which suits a
+  // layer that tiles its ground: the neighbours are everywhere and the lit one
+  // has to stand out from them. A layer whose districts are few and scattered
+  // across ground most of which is in none of them (tribal land) loses its
+  // others from sight that way, so its style can set keepOthersVisible and
+  // they keep their ordinary style; the lit one still takes the highlight.
+  function fadedStyle(baseStyle, mod) {
+    var style = mod && mod.overlay && mod.overlay.style;
+    if (style && style.keepOthersVisible) return Object.assign({ opacity: 1 }, baseStyle);
     return {
       color: baseStyle.color,
       weight: Math.max(1, (baseStyle.weight || 1.5) - 0.5),
@@ -328,7 +336,7 @@
     var feature = findFeatureContaining(rt.geojson, state.selectedPoint);
     if (!feature) { clearLayerHighlight(mod); return; }
 
-    var faded = fadedStyle(baseStyleFor(mod));
+    var faded = fadedStyle(baseStyleFor(mod), mod);
     var highlight = highlightStyleFor(mod);
 
     // Fast path (P7): the faded/base style of the non-matched paths depends only

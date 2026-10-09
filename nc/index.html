@@ -8705,7 +8705,15 @@ function initNorthCarolinaExplorer() {
     };
   }
 
-  function fadedStyle(baseStyle) {
+  // Every other district in a layer fades while one is lit, which suits a
+  // layer that tiles its ground: the neighbours are everywhere and the lit one
+  // has to stand out from them. A layer whose districts are few and scattered
+  // across ground most of which is in none of them (tribal land) loses its
+  // others from sight that way, so its style can set keepOthersVisible and
+  // they keep their ordinary style; the lit one still takes the highlight.
+  function fadedStyle(baseStyle, mod) {
+    var style = mod && mod.overlay && mod.overlay.style;
+    if (style && style.keepOthersVisible) return Object.assign({ opacity: 1 }, baseStyle);
     return {
       color: baseStyle.color,
       weight: Math.max(1, (baseStyle.weight || 1.5) - 0.5),
@@ -8788,7 +8796,7 @@ function initNorthCarolinaExplorer() {
     var feature = findFeatureContaining(rt.geojson, state.selectedPoint);
     if (!feature) { clearLayerHighlight(mod); return; }
 
-    var faded = fadedStyle(baseStyleFor(mod));
+    var faded = fadedStyle(baseStyleFor(mod), mod);
     var highlight = highlightStyleFor(mod);
 
     // Fast path (P7): the faded/base style of the non-matched paths depends only
@@ -9368,7 +9376,7 @@ function initNorthCarolinaExplorer() {
     var rt = layerRuntime[mod.id];
     var base = baseStyleFor(mod) || {};
     var selected = rt.tileSelectedId != null || !!rt.tileLiveSelected;
-    var hl = highlightStyleFor(mod), faded = fadedStyle(base);
+    var hl = highlightStyleFor(mod), faded = fadedStyle(base, mod);
     var isSel = ["boolean", ["feature-state", "sel"], false];
     var baseOpacity = base.opacity == null ? 1 : base.opacity;
     return {
@@ -9580,7 +9588,7 @@ function initNorthCarolinaExplorer() {
       var mod = this.mod, rt = layerRuntime[mod.id], sel = this.liveSelected;
       var anySelected = !!sel || rt.tileSelectedId != null;
       var base = baseStyleFor(mod) || {};
-      var faded = fadedStyle(base), lit = Object.assign({}, base, highlightStyleFor(mod));
+      var faded = fadedStyle(base, mod), lit = Object.assign({}, base, highlightStyleFor(mod));
       this.live.eachLayer(function (sub) {
         var on = !!sel && sub.feature === sel;
         if (sub.setStyle) sub.setStyle(on ? lit : anySelected ? faded : base);
@@ -12435,7 +12443,8 @@ function initNorthCarolinaExplorer() {
   });
 
   /* ---------- 2. U.S. House — boundary + roster join ----------
-   * Pre-built TIGERweb Legislative layer 0 geometry
+   * Pre-built TIGERweb Legislative layer 4 geometry — the 119th Congress's
+   * map, the one the serving members were elected from, until 3 January 2027
    * (data/app/congress-districts.json, this state only) joined by district
    * number to a same-origin roster (data/app/congress-roster.json — built
    * by nc/scripts/build_congress_roster.py from the public-domain
@@ -12451,12 +12460,11 @@ function initNorthCarolinaExplorer() {
   var loadCongressRoster = makeCached(function () {
     return fetchJSONWithRetry("data/app/congress-roster.json", {}, 2);
   });
-  // TIGERweb's numbered-district field renames each Congress — CD120 is the
-  // current one, and it is not a cosmetic rename: the retired CD119 field is
-  // gone from the layer, and a query naming it is rejected outright with HTTP
-  // 400 rather than degrading (measured 2026-09-03, and it is what the
-  // sibling instances' builders still ask for). Newest first;
-  // extractDistrictNumber adds a name-field regex fallback behind these.
+  // TIGERweb's numbered-district field renames each Congress. The shipped
+  // file carries CD119 (the 119th Congress's map, which the serving members
+  // were elected from) and will carry CD120 after 3 January 2027, so both
+  // are listed. Newest first; extractDistrictNumber adds a name-field regex
+  // fallback behind these.
   var CONGRESS_DISTRICT_FIELDS = ["cd120", "cd119", "cdfp", "cd"];
 
   registerIlgaChamber({
