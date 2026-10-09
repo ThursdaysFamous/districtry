@@ -73,13 +73,18 @@ the generic hover path needs a new property; a `<tag>/data/app` file goes in
 `data_files.geometry` (with `min_features` / `max_features`) or
 `data_files.rosters` (with `min_keys`), and a pre-built geometry file passes
 §2.5's 2,000-point / zero-double-classification check before it ships (the
-boundary-change skill carries the drill). Then one run:
+boundary-change skill carries the drill). Give the layer a link code in the
+root `layer-codes.json` — two or three lowercase letters or digits, starting
+with a letter, never a code already listed (retired ones included) and never
+another layer's id — because share links write layers by code and the code is
+permanent; the generator refuses a layer without one, and its `--check` fails
+on a code changed or removed against the base branch. Then one run:
 
 ```bash
 python3 scripts/generate_metro_files.py
 ```
 
-emits `LAYER_AREA_RANK`, `EXPECT_LAYER_IDS` and `MIN_REGISTER_LAYER`, the
+emits `LAYER_AREA_RANK`, `LAYER_CODES`, `EXPECT_LAYER_IDS` and `MIN_REGISTER_LAYER`, the
 `sw.js` URL lists, the smoke test's `EXPECT_LAYERS`, the `sources.html` matrix
 row and the instance `CLAUDE.md` layer count.
 

@@ -1,0 +1,5575 @@
+{
+ "18001": {
+  "county": "Adams",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Fred Velez",
+    "office": "Adams County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rex M Moore",
+    "office": "Adams County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Cory Sprunger",
+    "office": "Adams County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Robert E (Bob) Rhoades",
+    "office": "Adams County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dennis C. Bluhm",
+    "office": "Adams County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "John P. Summers",
+    "office": "Adams County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jim Voglewede",
+    "office": "Adams County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18003": {
+  "county": "Allen",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Josh Hale",
+    "office": "Allen County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Thomas A (Tom) Harris",
+    "office": "Allen County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Paul Lagemann",
+    "office": "Allen County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Don Wyss",
+    "office": "Allen County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ken Fries",
+    "office": "Allen County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Robert A Armstrong",
+    "office": "Allen County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Lindsey Hammond",
+    "office": "Allen County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18005": {
+  "county": "Bartholomew",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Greg Patterson",
+    "office": "Bartholomew County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Leah Beyer",
+    "office": "Bartholomew County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mark E. Gorbett",
+    "office": "Bartholomew County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jorge (George) Morales",
+    "office": "Bartholomew County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Michael R. Bell",
+    "office": "Bartholomew County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kim Bennett",
+    "office": "Bartholomew County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Marcus Daniel Speer",
+    "office": "Bartholomew County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18007": {
+  "county": "Benton",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Angela Glotzbach",
+    "office": "Benton County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Katrina M. Schutter",
+    "office": "Benton County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jacqueline Steinmetz",
+    "office": "Benton County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "James K Schoen",
+    "office": "Benton County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brent Cox",
+    "office": "Benton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Lori Cyr",
+    "office": "Benton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ron Shoup",
+    "office": "Benton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18009": {
+  "county": "Blackford",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Fred Tobey",
+    "office": "Blackford County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dan Borgenheimer",
+    "office": "Blackford County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Patrick Cale",
+    "office": "Blackford County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kyle Lechien",
+    "office": "Blackford County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jack D Beckley",
+    "office": "Blackford County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Casey Dick",
+    "office": "Blackford County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ryan C Goodspeed",
+    "office": "Blackford County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18011": {
+  "county": "Boone",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jennifer J Hostetter",
+    "office": "Boone County Council Dist 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John Riner",
+    "office": "Boone County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Aaron Williams",
+    "office": "Boone County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kevin Van Horn",
+    "office": "Boone County Council Dist 36",
+    "party": "Republican",
+    "seat": "Seat titled “Boone County Council Dist 36”",
+    "seatNotStated": "the title reads \"Dist 36\" and Boone County has four council districts",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dan Lamar",
+    "office": "Boone County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Shari A Richey",
+    "office": "Boone County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dustin C Plunkett",
+    "office": "Boone County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18013": {
+  "county": "Brown",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Gary J Huett",
+    "office": "Brown County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Darren M Byrd",
+    "office": "Brown County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Joel B Kirby",
+    "office": "Brown County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jim D Kemp",
+    "office": "Brown County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Patrick Nielander",
+    "office": "Brown County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott P Rudd",
+    "office": "Brown County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Judith (Judy) Swift-Powdrill",
+    "office": "Brown County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18015": {
+  "county": "Carroll",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Tracy Martin",
+    "office": "Carroll County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Scott W Ayres",
+    "office": "Carroll County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ethan H Brown",
+    "office": "Carroll County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Paul Rider",
+    "office": "Carroll County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Angela (Angie) C Brown",
+    "office": "Carroll County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Cody Martin",
+    "office": "Carroll County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sheri Johnson",
+    "office": "Carroll County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18017": {
+  "county": "Cass",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "David A Redweik",
+    "office": "Cass County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Shawn Shoemaker",
+    "office": "Cass County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Damon C Foreman",
+    "office": "Cass County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Derek D Pullen",
+    "office": "Cass County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Cheryl K Alcorn",
+    "office": "Cass County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dean E Davenport",
+    "office": "Cass County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tracy W Williamson",
+    "office": "Cass County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18019": {
+  "county": "Clark",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Barbara C Hollis",
+    "office": "Clark County Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Darci Schiller",
+    "office": "Clark County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brian Lenfert",
+    "office": "Clark County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Steve Doherty",
+    "office": "Clark County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ron Blevins Sr",
+    "office": "Clark County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Chris Fox",
+    "office": "Clark County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Richard E Snelling Jr.",
+    "office": "Clark County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18021": {
+  "county": "Clay",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jacqueline (Jackie) Mitchell",
+    "office": "Clay County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jason D Britton",
+    "office": "Clay County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jason C Thomas",
+    "office": "Clay County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Larry J Moss",
+    "office": "Clay County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Fritz",
+    "office": "Clay County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Michael Heaton",
+    "office": "Clay County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rick J James",
+    "office": "Clay County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18023": {
+  "county": "Clinton",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Carol J Price",
+    "office": "Clinton County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jake Myers",
+    "office": "Clinton County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Joseph Mink",
+    "office": "Clinton County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Alan Dunn",
+    "office": "Clinton County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "James M (Mike) Hensley",
+    "office": "Clinton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Chynoweth",
+    "office": "Clinton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mary E King",
+    "office": "Clinton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18025": {
+  "county": "Crawford",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "LUCAS STROUD",
+    "office": "Crawford County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "MARK R STEVENS",
+    "office": "Crawford County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Troy Mason",
+    "office": "Crawford County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "CHAD L RIDDLE",
+    "office": "Crawford County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "William E Breeding",
+    "office": "Crawford County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Shawn E Scott",
+    "office": "Crawford County Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Linda S Smith",
+    "office": "Crawford County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18027": {
+  "county": "Daviess",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Darin S Holder",
+    "office": "County Council Member",
+    "party": "Republican",
+    "seat": "Seat titled “County Council Member”",
+    "seatNotStated": "three of Daviess County's four 2022 council races carry this same title, none naming a district",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Matt Meredith",
+    "office": "County Council Member",
+    "party": "Republican",
+    "seat": "Seat titled “County Council Member”",
+    "seatNotStated": "three of Daviess County's four 2022 council races carry this same title, none naming a district",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michael R. Myers",
+    "office": "County Council Member",
+    "party": "Republican",
+    "seat": "Seat titled “County Council Member”",
+    "seatNotStated": "three of Daviess County's four 2022 council races carry this same title, none naming a district",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tony Duncheon",
+    "office": "County County Member",
+    "party": "Republican",
+    "seat": "Seat titled “County County Member”",
+    "seatNotStated": "the race's title names no district",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Marilyn J Mccullough",
+    "office": "Daviess County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Sprinkle",
+    "office": "Daviess County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Thomas E Schaffer",
+    "office": "Daviess County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18029": {
+  "county": "Dearborn",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Liz Morris",
+    "office": "Dearborn County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Daniel R Lansing",
+    "office": "Dearborn County Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kevin Turner",
+    "office": "Dearborn County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dennis A Kraus",
+    "office": "Dearborn County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tim Doll",
+    "office": "Dearborn County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mark G Dole",
+    "office": "Dearborn County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Glenn D. Wright",
+    "office": "Dearborn County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18031": {
+  "county": "Decatur",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Kenny Hooten",
+    "office": "Decatur County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Danny D Peters",
+    "office": "Decatur County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Deanna L Burkart",
+    "office": "Decatur County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ashley Emsweller Hungate",
+    "office": "Decatur County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rick J Nobbe",
+    "office": "Decatur County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bill Metz",
+    "office": "Decatur County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ernest J Gauck",
+    "office": "Decatur County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18033": {
+  "county": "DeKalb",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Rick Collins",
+    "office": "Dekalb County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "William (Bill) VanWye",
+    "office": "Dekalb County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Amy Demske",
+    "office": "Dekalb County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Richard (Rick) Ring",
+    "office": "Dekalb County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bob Krafft",
+    "office": "Dekalb County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Amy Prosser",
+    "office": "Dekalb County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dave Yarde",
+    "office": "Dekalb County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18035": {
+  "county": "Delaware",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Daniel Flanagan",
+    "office": "Delaware County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "William V. Hughes",
+    "office": "Delaware County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Matt Kantz",
+    "office": "Delaware County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jane Lasater",
+    "office": "Delaware County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bradley T. Bookout",
+    "office": "Delaware County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jessica Piper",
+    "office": "Delaware County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Eugene Whitehead",
+    "office": "Delaware County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18037": {
+  "county": "Dubois",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Craig M. Greulich",
+    "office": "Council District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ryan Craig",
+    "office": "Council District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Meredith Voegerl",
+    "office": "Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Alex Hohl",
+    "office": "Council District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Doug Uebelhor",
+    "office": "Dubois County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sonya Haas",
+    "office": "Dubois County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Kluesner",
+    "office": "Dubois County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18039": {
+  "county": "Elkhart",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Doug S Graham",
+    "office": "Elkhart County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Randall (Randy) D Yohn",
+    "office": "Elkhart County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Darryl J Riegsecker",
+    "office": "Elkhart County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "David L. Hess",
+    "office": "Elkhart County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Thomas W Stump",
+    "office": "Elkhart County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Adam M Bujalski",
+    "office": "Elkhart County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Steven E Clark",
+    "office": "Elkhart County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18041": {
+  "county": "Fayette",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Vivian I Himelick",
+    "office": "Fayette County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Robert Stewart",
+    "office": "Fayette County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Sharon Cranfill",
+    "office": "Fayette County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tim Patterson",
+    "office": "Fayette County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gabe Nobbe",
+    "office": "Fayette County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "T Scott Bevington",
+    "office": "Fayette County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kay Riker Peyton",
+    "office": "Fayette County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18043": {
+  "county": "Floyd",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Tony Toran",
+    "office": "Floyd County Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jim Freiberger",
+    "office": "Floyd County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Danny Short",
+    "office": "Floyd County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Denise Ann Konkle",
+    "office": "Floyd County Council District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "D M BAGSHAW",
+    "office": "Floyd County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "SAM SARKISIAN",
+    "office": "Floyd County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "MATT MILLIES",
+    "office": "Floyd County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18045": {
+  "county": "Fountain",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "JEFFREY L. FISHERO",
+    "office": "Fountain County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "DALE A. WHITE",
+    "office": "Fountain County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "DENISE A. CROWDER",
+    "office": "Fountain County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "JAMES S MCKEE",
+    "office": "Fountain County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeffrey C Carver",
+    "office": "Fountain County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kelly Carlson",
+    "office": "Fountain County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Todd Hegg",
+    "office": "Fountain County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18047": {
+  "county": "Franklin",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Mary Strong",
+    "office": "Franklin County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dean McQueen",
+    "office": "Franklin County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeff Koch",
+    "office": "Franklin County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bob Evans",
+    "office": "Franklin County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Glen R Bischoff",
+    "office": "Franklin County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Carroll W Lanning",
+    "office": "Franklin County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brian Patterson",
+    "office": "Franklin County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18049": {
+  "county": "Fulton",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Peter Karas",
+    "office": "Fulton County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ron Dittman",
+    "office": "Fulton County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Chayse A Thompson",
+    "office": "Fulton County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Randy J Gundrum",
+    "office": "Fulton County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Barry S Baldwin",
+    "office": "Fulton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Steven L (Fish) Fishburn",
+    "office": "Fulton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Patty Geier",
+    "office": "Fulton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18051": {
+  "county": "Gibson",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jay Riley",
+    "office": "Gibson County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Hannah Whitehead",
+    "office": "Gibson County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bob Schleter",
+    "office": "Gibson County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeremy Overton",
+    "office": "Gibson County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Derek McGraw",
+    "office": "Gibson County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Stilwell",
+    "office": "Gibson County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Craig Schafer",
+    "office": "Gibson County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18053": {
+  "county": "Grant",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Mike Scott",
+    "office": "Grant County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Frank Hix",
+    "office": "Grant County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mark A Leming",
+    "office": "Grant County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michael D. Conner",
+    "office": "Grant County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Greg Brankle",
+    "office": "Grant County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "James E. (Jim) McWhirt",
+    "office": "Grant County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gregory S. Kitts",
+    "office": "Grant County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18055": {
+  "county": "Greene",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Randall Brown",
+    "office": "Greene County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kelly Zimmerly",
+    "office": "Greene County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ron Lehman",
+    "office": "Greene County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brent A Murray",
+    "office": "Greene County Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bryan K Woodall",
+    "office": "Greene County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Karen S Abrams",
+    "office": "Greene County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jerry R Frye",
+    "office": "Greene County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18057": {
+  "county": "Hamilton",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Tim Griffin",
+    "office": "Hamilton County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Amy Elizabeth Massillamany",
+    "office": "Hamilton County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mark F. Hall",
+    "office": "Hamilton County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ken Alexander",
+    "office": "Hamilton County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sue MakI",
+    "office": "Hamilton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brandon (Brad) Beaver",
+    "office": "Hamilton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Steven R. Nation",
+    "office": "Hamilton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18059": {
+  "county": "Hancock",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jeannine Gray",
+    "office": "Hancock County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mary A Noe",
+    "office": "Hancock County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jim Shelby",
+    "office": "Hancock County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "J Scott Wooldridge",
+    "office": "Hancock County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kent Fisk",
+    "office": "Hancock County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Robin D Lowder",
+    "office": "Hancock County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "John D Jessup",
+    "office": "Hancock County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18061": {
+  "county": "Harrison",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Kyle S. Nix",
+    "office": "Harrison County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Joe Kellum",
+    "office": "Harrison County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Holli Baker Castetter",
+    "office": "Harrison County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jake Blackman",
+    "office": "Harrison County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sherry L. Brown",
+    "office": "Harrison County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Richard Gerdon",
+    "office": "Harrison County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Donald (Donnie) Hussung",
+    "office": "Harrison County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18063": {
+  "county": "Hendricks",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "David (Dave) Cox",
+    "office": "Hendricks County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Larry R Scott",
+    "office": "Hendricks County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brad Whicker",
+    "office": "Hendricks County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Eric L Wathen",
+    "office": "Hendricks County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Larry R Hesson",
+    "office": "Hendricks County Council, At-Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nancy Marsh",
+    "office": "Hendricks County Council, At-Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "David L (Dave) Wyeth",
+    "office": "Hendricks County Council, At-Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18065": {
+  "county": "Henry",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Kenon Gray",
+    "office": "Henry County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mike Regner",
+    "office": "Henry County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Shannon Thom",
+    "office": "Henry County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Susan Huhn",
+    "office": "Henry County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jay Davis",
+    "office": "County Council, At Large (3)",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott Koontz",
+    "office": "County Council, At Large (3)",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Chad Malicoat",
+    "office": "County Council, At Large (3)",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18067": {
+  "county": "Howard",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "John J Roberts",
+    "office": "Howard County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Frank R Faulkner",
+    "office": "Howard County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Timothy J Cuthbert",
+    "office": "Howard County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "George B Alexander",
+    "office": "Howard County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Martha J Lake",
+    "office": "Howard County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brett A Sanders",
+    "office": "Howard County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Daryl L Maple",
+    "office": "Howard County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18069": {
+  "county": "Huntington",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "John R. Stoeckley",
+    "office": "County Council Member District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kendall Mickley",
+    "office": "County Council Member District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Raymond (Keith) Eller",
+    "office": "County Council Member District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brian L. Warpup",
+    "office": "County Council Member District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "SHANE R. BICKEL",
+    "office": "Huntington County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "JAMES (JAMIE) W. HOTCHKISS",
+    "office": "Huntington County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "TERRY L. MILLER",
+    "office": "Huntington County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18071": {
+  "county": "Jackson",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Michael Davidson",
+    "office": "Jackson County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jake Brown",
+    "office": "Jackson County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brian H. Thompson",
+    "office": "County Council Of 3rd District",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Austin Edington",
+    "office": "County Council Of 4th District",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "AMANDA CUNNINGHAM LOWERY",
+    "office": "County Council At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "JOHN L NOLTING",
+    "office": "County Council At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "R BRETT TURNER",
+    "office": "County Council At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18073": {
+  "county": "Jasper",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Paul C. Norwine",
+    "office": "Jasper County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Gary Fritts",
+    "office": "Jasper County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Steve Jordan",
+    "office": "Jasper County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jason S. Armold",
+    "office": "Jasper County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jacob Misch",
+    "office": "Jasper County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott Walstra",
+    "office": "Jasper County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brian R. Moore",
+    "office": "Jasper County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18075": {
+  "county": "Jay",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Randy May",
+    "office": "Jay County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Harold A Towell",
+    "office": "Jay County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Faron D Parr",
+    "office": "Jay County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Cindy Gagle Bracy",
+    "office": "Jay County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Michael E Brewster",
+    "office": "Jay County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bryan Alexander",
+    "office": "Jay County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Matt Minnich",
+    "office": "Jay County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18077": {
+  "county": "Jefferson",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "RAY DENNING",
+    "office": "Jefferson County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "CHRIS SHELTON",
+    "office": "Jefferson County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "RAY BLACK, Jr.",
+    "office": "Jefferson County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dwayne May",
+    "office": "Jefferson County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gary Copeland",
+    "office": "Jefferson County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Heather Traylor Foy",
+    "office": "Jefferson County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Pam Crozier",
+    "office": "Jefferson County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18079": {
+  "county": "Jennings",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Michael V Gerth",
+    "office": "Jennings County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mandy Gauger Creech",
+    "office": "Jennings County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tina M Ellis",
+    "office": "Jennings County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Charles Weber",
+    "office": "Jennings County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Eugene (Gene) Rudicel",
+    "office": "Jennings County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "David Cheatham",
+    "office": "Jennings County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "David Woodall",
+    "office": "Jennings County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18081": {
+  "county": "Johnson",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Pamela J Burton",
+    "office": "Johnson County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Charlotte Sullivan",
+    "office": "Johnson County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jon Myers",
+    "office": "Johnson County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John Mallers",
+    "office": "Johnson County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ronald (Ron) Bates",
+    "office": "Johnson County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Michele Ann Graves",
+    "office": "Johnson County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Melinda Griesemer",
+    "office": "Johnson County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18083": {
+  "county": "Knox",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Mary Crismore",
+    "office": "Knox County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Micheal P Morris",
+    "office": "Knox County Council District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jay Yochum",
+    "office": "Knox County Council District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Richard Chattin",
+    "office": "Knox County Council District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jon Hillenbrand",
+    "office": "Knox County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kevin L Meyer",
+    "office": "Knox County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dan Reitmeyer",
+    "office": "Knox County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18085": {
+  "county": "Kosciusko",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Kimberly Cates",
+    "office": "Kosciusko County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michael Long",
+    "office": "Kosciusko County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Anthony W (Tony) Ciriello",
+    "office": "Kosciusko County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "David A Wolkins",
+    "office": "Kosciusko County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Delynn Geiger",
+    "office": "Kosciusko County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kathleen D Groninger",
+    "office": "Kosciusko County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rachael V Rhoades",
+    "office": "Kosciusko County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18087": {
+  "county": "LaGrange",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jeffrey A. Campos",
+    "office": "Lagrange County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ryan J. Riegsecker",
+    "office": "Lagrange County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Harold D. Gingerich",
+    "office": "Lagrange County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "James R. Young",
+    "office": "Lagrange County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeffrey L Brill",
+    "office": "Lagrange County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Karen S Eagleson",
+    "office": "Lagrange County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Michael G Strawser",
+    "office": "Lagrange County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18089": {
+  "county": "Lake",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "David Hamm",
+    "office": "Lake County Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Clorius L Lay",
+    "office": "Lake County Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Charlie Brown",
+    "office": "Lake County Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Pete Lindemulder",
+    "office": "Lake County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Christine Cid",
+    "office": "Lake County Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ted F Bilski",
+    "office": "Lake County Council, District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Randy Niemeyer",
+    "office": "Lake County Council, District 7",
+    "party": "Republican",
+    "seat": "District 7",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   }
+  ]
+ },
+ "18091": {
+  "county": "LaPorte",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Justin Kiel",
+    "office": "Laporte County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Randy Novak",
+    "office": "Laporte County Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mark YagelskI",
+    "office": "Laporte County Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mike Rosenbaum",
+    "office": "Laporte County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brett H. Kessler",
+    "office": "Laporte County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Mollenhauer",
+    "office": "Laporte County Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Adam Koronka",
+    "office": "Laporte County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18093": {
+  "county": "Lawrence",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Amy Redman",
+    "office": "Lawrence County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Phil Inman",
+    "office": "Lawrence County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Janie Craig Chenault",
+    "office": "Lawrence County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeffrey Lytton",
+    "office": "Lawrence County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rick Butterfield",
+    "office": "Lawrence County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Julie Johnson Hewetson",
+    "office": "Lawrence County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott Smith",
+    "office": "Lawrence County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18095": {
+  "county": "Madison",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Bethany Keller",
+    "office": "Madison County Council District 1, Madison County",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Diana Likens",
+    "office": "Madison County Council, District 2, Madison County",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jodi L Norrick",
+    "office": "Madison County Council, District 3, Madison County",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rob Steele",
+    "office": "Madison County Council, District 4, Madison County",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott Green",
+    "office": "Madison County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jonathan Culp",
+    "office": "Madison County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kristi A Grabowski",
+    "office": "Madison County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18099": {
+  "county": "Marshall",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Will Patterson",
+    "office": "Marshall County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Deborah M Johnson",
+    "office": "Marshall County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Nicole Cox",
+    "office": "Marshall County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Adam Faulstich",
+    "office": "Marshall County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jim Masterson",
+    "office": "Marshall County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tim Harman",
+    "office": "Marshall County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brandon S Schadek",
+    "office": "Marshall County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18101": {
+  "county": "Martin",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jordan Dant",
+    "office": "Martin County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jim Hamby",
+    "office": "Martin County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Monty Gregory",
+    "office": "Martin County Council,  District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Andrew Beaver",
+    "office": "Martin County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Warren D Albright",
+    "office": "Martin County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jim Woody",
+    "office": "Martin County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gerald D Montgomery",
+    "office": "Martin County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18103": {
+  "county": "Miami",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Bradley Fruth",
+    "office": "Miami Council Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John Allen",
+    "office": "Miami County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Richard (Dick) Wiles",
+    "office": "Miami County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bryan Nutt",
+    "office": "Miami County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sandy Chittum",
+    "office": "Miami County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "David L Sailors Sr.",
+    "office": "Miami County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Thomas Scott",
+    "office": "Miami County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18105": {
+  "county": "Monroe",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Peter J Iversen",
+    "office": "Monroe County Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kate Wiltz",
+    "office": "Monroe County Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Martha (Marty) Hawk",
+    "office": "Monroe County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jennifer Crossley",
+    "office": "Monroe County Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Trent Deckard",
+    "office": "Monroe County Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Cheryl Munson",
+    "office": "Monroe County Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "David G Henry",
+    "office": "Monroe County Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18107": {
+  "county": "Montgomery",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Joyce Grimble",
+    "office": "Montgomery County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Matt Nelson",
+    "office": "Montgomery County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Steve Loy",
+    "office": "Montgomery County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brett A Cating",
+    "office": "Montgomery County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "GARY D BOOTH",
+    "office": "Montgomery County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "MIKE WARREN",
+    "office": "Montgomery County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "DAVID HUNT",
+    "office": "Montgomery County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18109": {
+  "county": "Morgan",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Chip Keller",
+    "office": "Morgan County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Melissa Greene",
+    "office": "Morgan County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brian Culp",
+    "office": "Morgan County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Troy A. Sprinkle",
+    "office": "Morgan County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Joe Crone",
+    "office": "Morgan County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Vickie Kivett",
+    "office": "Morgan County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kim Merideth",
+    "office": "Morgan County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18111": {
+  "county": "Newton",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Thomas B Vanvleet",
+    "office": "Newton County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Scott Carlson",
+    "office": "Newton County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michael S Mark",
+    "office": "Newton County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "David A Atkinson",
+    "office": "Newton County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bob Gonczy",
+    "office": "Newton County Council, At-Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Heidi L Mccord",
+    "office": "Newton County Council, At-Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mick Vanderwall",
+    "office": "Newton County Council, At-Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18113": {
+  "county": "Noble",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Thomas E Janes",
+    "office": "Noble County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Trey Forbes",
+    "office": "Noble County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brandon Chordas",
+    "office": "Noble County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Max Franklin",
+    "office": "Noble County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Doug A Harp",
+    "office": "Noble County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mary M Wysong",
+    "office": "Noble County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Casey R Myers",
+    "office": "Noble County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18115": {
+  "county": "Ohio",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Deborah K Thomason",
+    "office": "Ohio County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Donald L Grace",
+    "office": "Ohio County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "MYRON G DENNIS",
+    "office": "Ohio County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Christopher D Flood",
+    "office": "Ohio County Council",
+    "party": "Republican",
+    "seat": "Seat titled “Ohio County Council”",
+    "seatNotStated": "the race's title names no district",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Yvonne Walton",
+    "office": "Ohio County Council",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Charles Ray Cleary Jr.",
+    "office": "Ohio County Council",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "stephen l foote",
+    "office": "Ohio County Council",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18117": {
+  "county": "Orange",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Chad Hager",
+    "office": "Orange County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Catherine McBride Henderson",
+    "office": "Orange County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jack Hinkle Jr.",
+    "office": "Orange County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Richard (Rick) England",
+    "office": "Orange County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Zachary D. Brown",
+    "office": "Orange County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Alan D. Waynick",
+    "office": "Orange County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "George Edward Key",
+    "office": "Orange County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18119": {
+  "county": "Owen",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Nick Robertson",
+    "office": "Owen County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Anton Karl Neff",
+    "office": "Owen County Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Steve Carrell",
+    "office": "Owen County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Verl Keith",
+    "office": "Owen County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Daniel Browning",
+    "office": "Owen County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Joe Frye",
+    "office": "Owen County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Polly Chesser",
+    "office": "Owen County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18121": {
+  "county": "Parke",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Thomas Rohr",
+    "office": "Parke County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rick Patton",
+    "office": "Parke County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jim Howard",
+    "office": "Parke County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Roy Wrightsman",
+    "office": "Parke County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "J. B. BUTLER",
+    "office": "Parke County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mary Alice Gregg",
+    "office": "Parke County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Matthew C Helderman",
+    "office": "Parke County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18123": {
+  "county": "Perry",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Kelli Harding",
+    "office": "Perry County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Stan Goffinet",
+    "office": "Perry County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Keith D. Huck",
+    "office": "Perry County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Earla Williams",
+    "office": "Perry County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "David A. Etienne",
+    "office": "Perry County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gale S. Garner",
+    "office": "Perry County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Cory Filley",
+    "office": "Perry County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18125": {
+  "county": "Pike",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Randy Harris",
+    "office": "County Council, Dist 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jon W Craig",
+    "office": "County Council, Dist 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Max D Elliott",
+    "office": "County Council, Dist 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Travis C Troutman",
+    "office": "Pike County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Eric J Smith",
+    "office": "Pike County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Harting",
+    "office": "Pike County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Greg K Willis",
+    "office": "Pike County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18127": {
+  "county": "Porter",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "RONALD \"RED\" STONE",
+    "office": "Porter County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "JEREMY RIVAS",
+    "office": "Porter County Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "GREG SIMMS",
+    "office": "Porter County Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "MICHAEL \"MIKE\" JESSEN",
+    "office": "Porter County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "ANDY BOZAK",
+    "office": "Porter County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "MICHELLE HARRIS",
+    "office": "Porter County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "MIKE BRICKNER",
+    "office": "Porter County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18129": {
+  "county": "Posey",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Tom R. Schneider",
+    "office": "Posey County Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jerry Chastain III",
+    "office": "Posey County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "B. David Dausman",
+    "office": "Posey County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Zack George",
+    "office": "Posey County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dave Pearce",
+    "office": "Posey County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Heather Allyn",
+    "office": "Posey County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rusty Jourdan",
+    "office": "Posey County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18131": {
+  "county": "Pulaski",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Bradley J Bonnell",
+    "office": "Pulaski County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeffery K Richwine",
+    "office": "Pulaski County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jerome C Locke",
+    "office": "Pulaski County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michael Troy \"Big Mike\" Tiede",
+    "office": "Pulaski County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Albert AJ Gutwein",
+    "office": "Pulaski County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tim Overmyer",
+    "office": "Pulaski County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sheila Hazemi Jimenez",
+    "office": "Pulaski County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18133": {
+  "county": "Putnam",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Wayne Huffman",
+    "office": "Putnam County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jay Alcorn",
+    "office": "Putnam County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Danny Wallace",
+    "office": "Putnam County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "H Keith Berry",
+    "office": "Putnam County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Amanda Brown",
+    "office": "Putnam County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Stephanie (Summitt) Campbell",
+    "office": "Putnam County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kerry L Williams",
+    "office": "Putnam County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18135": {
+  "county": "Randolph",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "THOMAS W KERNS",
+    "office": "Council Dist 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mike Stine",
+    "office": "Council Dist 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Todd A Holaday",
+    "office": "Council Dist 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Missy Williams",
+    "office": "Council Dist 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gregory (Greg) Cheesman",
+    "office": "Randolph County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Beverly J. Fields",
+    "office": "Randolph County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "K. Scott Fisher",
+    "office": "Randolph County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18137": {
+  "county": "Ripley",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Ronald J Decker",
+    "office": "County Council Of 1st District",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Stan Wiedeman",
+    "office": "County Council Of 2nd District",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Diane Macek",
+    "office": "County Council Of 3rd District",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "David Tebbing",
+    "office": "County Council Of 4th District",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Stephanie M. Back",
+    "office": "County Council At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Andrew Decker",
+    "office": "County Council At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Peggy Ann Ehlers",
+    "office": "County Council At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18139": {
+  "county": "Rush",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Amy Grocox",
+    "office": "Rush County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Carl Harcourt",
+    "office": "Rush County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Scott D Barnes",
+    "office": "Rush County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Janet D Kile",
+    "office": "Rush County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kyle Gardner",
+    "office": "Rush County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dennis O Corn",
+    "office": "Rush County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "CHARLES (CHARLIE) SMITH",
+    "office": "Rush County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18141": {
+  "county": "St. Joseph",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Joe Thomas",
+    "office": "St. Joseph County Council, District A",
+    "party": "Republican",
+    "seat": "District A",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Amy Drake",
+    "office": "St. Joseph County Council, District B",
+    "party": "Republican",
+    "seat": "District B",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dan Schaetzle",
+    "office": "St. Joseph County Council, District C",
+    "party": "Republican",
+    "seat": "District C",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "JENN SHABAZZ",
+    "office": "St. Joseph County Council, District D",
+    "party": "Democratic",
+    "seat": "District D",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Diana Hess",
+    "office": "St. Joseph County Council, District E",
+    "party": "Democratic",
+    "seat": "District E",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "RANDY FIGG",
+    "office": "St. Joseph County Council, District F",
+    "party": "Republican",
+    "seat": "District F",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "MARK CATANZARITE",
+    "office": "St. Joseph County Council, District G",
+    "party": "Democratic",
+    "seat": "District G",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bryan J Tanner",
+    "office": "St. Joseph County Council, District H",
+    "party": "Democratic",
+    "seat": "District H",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "ANDY RUTTEN",
+    "office": "St. Joseph County Council, District I",
+    "party": "Republican",
+    "seat": "District I",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18143": {
+  "county": "Scott",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jonathan L. White",
+    "office": "Scott County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John Miller Jr.",
+    "office": "Scott County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John M. Collins",
+    "office": "Scott County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "James (J.R.) Ward",
+    "office": "Scott County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "John C Lizenby",
+    "office": "Scott County Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "James Richey",
+    "office": "Scott County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Justin Cheatham",
+    "office": "Scott County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18145": {
+  "county": "Shelby",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Leigh J Langkabel",
+    "office": "Shelby County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kyle D Barlow",
+    "office": "Shelby County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brett Haacker",
+    "office": "Shelby County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Linda J Sanders",
+    "office": "Shelby County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Troy Merrick",
+    "office": "Shelby County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Charity Mohr",
+    "office": "Shelby County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeremy Ruble",
+    "office": "Shelby County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18147": {
+  "county": "Spencer",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "STEVE HAAFF",
+    "office": "Spencer County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "SUSAN KIRKPATRICK HARRIS",
+    "office": "Spencer County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "DAVID FROMME",
+    "office": "Spencer County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "JUSTIN GROSE",
+    "office": "Spencer County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "DAVID GOGEL",
+    "office": "Spencer County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "AARON PATRICK BENTON",
+    "office": "Spencer County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "BRIAN E GREULICH",
+    "office": "Spencer County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18149": {
+  "county": "Starke",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Norman Bruce Bennett",
+    "office": "Starke County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Howard A Bailey Jr",
+    "office": "Starke County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "David Dave Pearman",
+    "office": "Starke County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Cassandra Hine",
+    "office": "Starke County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bill R Crase Jr.",
+    "office": "Starke County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kay Gudeman",
+    "office": "Starke County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "E. Todd Leinbach",
+    "office": "Starke County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18151": {
+  "county": "Steuben",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "CHRISTINA CRESS",
+    "office": "Steuben County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "RICHARD (RICK) SHIPE",
+    "office": "Steuben County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "RUTH (HUGHES) BEER",
+    "office": "Steuben County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "TONY ISA",
+    "office": "Steuben County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "LISA ALDRICH",
+    "office": "Steuben County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "DAN CARUSO",
+    "office": "Steuben County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "WILLIAM (BILL) HARTER",
+    "office": "Steuben County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18153": {
+  "county": "Sullivan",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Logan Pearison",
+    "office": "Sullivan County Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeffrey (Jeff) Scales",
+    "office": "Sullivan County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mitchell K. Ferree",
+    "office": "Sullivan County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mark A. Hiatt Jr.",
+    "office": "Sullivan County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "MATT CHICKADAUNCE",
+    "office": "Sullivan County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "JACKIE ANN MONK",
+    "office": "Sullivan County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "WES SCARBROUGH",
+    "office": "Sullivan County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18155": {
+  "county": "Switzerland",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Mathew Dutkiewicz",
+    "office": "Switzerland County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mike Bear",
+    "office": "County Council Dist 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Lance M Collier",
+    "office": "Switzerland County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "TODD CHASE",
+    "office": "Switzerland County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott Crandell",
+    "office": "Switzerland County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kim Hutcherson-Janssen",
+    "office": "Switzerland County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Carrie Barwick",
+    "office": "Switzerland County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18157": {
+  "county": "Tippecanoe",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Ben Murray",
+    "office": "Tippecanoe County Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jody Hamilton",
+    "office": "Tippecanoe County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kathy Vernon",
+    "office": "Tippecanoe County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Lisa Dullum",
+    "office": "Tippecanoe County Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Barry Richard",
+    "office": "Tippecanoe County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ben Carson",
+    "office": "Tippecanoe County Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "John Basham",
+    "office": "Tippecanoe County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18159": {
+  "county": "Tipton",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Joe VanBibber",
+    "office": "Tipton County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jim Purvis",
+    "office": "Tipton County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Janice L. Smith",
+    "office": "Tipton County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michael Terry",
+    "office": "Tipton County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Korey D. Henderson",
+    "office": "Tipton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kirk D. Retherford",
+    "office": "Tipton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Doug Heron",
+    "office": "Tipton County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18161": {
+  "county": "Union",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Ravenna Gavin Brown",
+    "office": "Union County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tyler Clavell",
+    "office": "Union County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "NANCY WITTER",
+    "office": "Union County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Trisha Dearth Persinger",
+    "office": "Union County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Chris Rosenberger",
+    "office": "Union County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bonnie Adams",
+    "office": "Union County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Marilyn K Revalee",
+    "office": "Union County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18163": {
+  "county": "Vanderburgh",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "James Raben",
+    "office": "Vanderburgh County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tom Shetler, Jr",
+    "office": "Vanderburgh County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Stephanie Terry",
+    "office": "Vanderburgh County Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John Montrastelle",
+    "office": "Vanderburgh County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "ED BASSEMIER",
+    "office": "Vanderburgh County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "JOE KIEFER II",
+    "office": "Vanderburgh County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "JILL ANNE HAHN",
+    "office": "Vanderburgh County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18165": {
+  "county": "Vermillion",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Rick O. Weir",
+    "office": "Vermillion County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Neil David Costello",
+    "office": "Dist. 2 Council",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tammie Brown",
+    "office": "Dist. 3 County Council",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeffrey Lee Bose",
+    "office": "Dist. 4 County Council",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ashley Ave James",
+    "office": "County Council - At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Florinda A Pruitt",
+    "office": "County Council - At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kelly Summerville",
+    "office": "County Council - At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18167": {
+  "county": "Vigo",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "David M. Thompson",
+    "office": "Vigo County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Nancy S Allsup",
+    "office": "Vigo County Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Vicki Weger",
+    "office": "Vigo County Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Travis L Norris",
+    "office": "Vigo County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "BRAD A ANDERSON",
+    "office": "Vigo County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "STEVE (TOP GUNS) ELLIS",
+    "office": "Vigo County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "BRENDA WILSON",
+    "office": "Vigo County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18169": {
+  "county": "Wabash",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Matthew J Mize",
+    "office": "Wabash County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Barbara Pearson",
+    "office": "Wabash County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Sam Hann",
+    "office": "Wabash County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kyle M Bowman",
+    "office": "Wabash County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Matt Dillon",
+    "office": "Wabash County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nicholas Jay Kopkey",
+    "office": "Wabash County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "David W Terflinger",
+    "office": "Wabash County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18171": {
+  "county": "Warren",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Neil Ellis",
+    "office": "Warren County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Matt Commons",
+    "office": "Warren County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ben Dispennett",
+    "office": "Warren County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dwain Akers",
+    "office": "Warren County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ethan L. Foxworthy",
+    "office": "Warren County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brady Foster",
+    "office": "Warren County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "John Thomas Hetrick",
+    "office": "Warren County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18173": {
+  "county": "Warrick",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Chris Whetstine",
+    "office": "Warrick County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Richard A Reid",
+    "office": "Warrick County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Greg Richmond",
+    "office": "Warrick County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Robert Dimmett",
+    "office": "Warrick County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ron Bacon",
+    "office": "Warrick County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Patricia Pat (McIntyre) Brooks",
+    "office": "Warrick County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brad Overton",
+    "office": "Warrick County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18175": {
+  "county": "Washington",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Gerald Fleming Sr.",
+    "office": "Washington County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Forrest (Joe) Walker Jr.",
+    "office": "Washington County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Preston L Shell",
+    "office": "Washington County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Karen Wischmeier",
+    "office": "Washington County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mark E. (Bubba) Abbott",
+    "office": "Washington County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Todd Armstrong",
+    "office": "Washington County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bradley Gilbert",
+    "office": "Washington County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18177": {
+  "county": "Wayne",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Robert V (Bob) Chamness",
+    "office": "Wayne County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Barry Ritter",
+    "office": "Wayne County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Beth Leisure",
+    "office": "Wayne County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tony Gillam",
+    "office": "Wayne County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gerald (Gary) Saunders",
+    "office": "Wayne County Council,at-Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Cathy C Williams",
+    "office": "Wayne County Council,at-Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Max Smith",
+    "office": "Wayne County Council,at-Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18179": {
+  "county": "Wells",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Brian Lambert",
+    "office": "Wells County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Steven R Huggins",
+    "office": "Wells County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Todd J Mahnensmith",
+    "office": "Wells County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brandon Harnish",
+    "office": "Wells County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Vicki Andrews",
+    "office": "Wells County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott Elzey",
+    "office": "Wells County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "R. Seth Whicker",
+    "office": "Wells County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18181": {
+  "county": "White",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Steven Christopher",
+    "office": "White County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "James Annis",
+    "office": "White County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Raymond L. (Butch) Kramer Jr.",
+    "office": "White County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Janet Johnson Faker",
+    "office": "White County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Matthew A. Mckean",
+    "office": "White County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Joanne Mosher",
+    "office": "White County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Art Anderson JR",
+    "office": "White County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ },
+ "18183": {
+  "county": "Whitley",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "John M Barrett",
+    "office": "Whitley County Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kim Wheeler",
+    "office": "Whitley County Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Nick Brewer",
+    "office": "Whitley County Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Thomas L Warner",
+    "office": "Whitley County Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2022General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tim Longenbaugh",
+    "office": "Whitley County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Thor Allan Hodges",
+    "office": "Whitley County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Joan Western",
+    "office": "Whitley County Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2024General/index.html"
+   }
+  ]
+ }
+}

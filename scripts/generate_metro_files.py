@@ -14,7 +14,9 @@ regions, marked like the engine's fences but generator-owned:
     // ==== GENERATED:BEGIN <name> ====        (JS line style)
 
 Targets (region name -> file):
-    metro-config      -> index.html   (interior of the METRO config fence)
+    metro-config      -> index.html   (interior of the METRO config fence; it also
+                                       carries LAYER_CODES, read from the
+                                       fleet-wide layer-codes.json)
     layer-area-rank   -> index.html   (the LAYER_AREA_RANK array)
     sw-metro-config   -> sw.js        (CACHE_NAME + shell/geometry/roster lists)
     validator-config  -> scripts/validate_index.py (floors + expected ids)
@@ -66,6 +68,7 @@ import datetime
 import json
 import os
 import re
+import subprocess
 import sys
 
 try:
@@ -146,6 +149,7 @@ def render_metro_config(w):
     a("  var METRO_CENTER = [%s, %s];" % tuple(js_num(v) for v in w["metro_center"]))
     a("  // Permalink sanity gate: the *greater* metro area (wider than METRO_BBOX).")
     a("  var PERMALINK_GATE = %s;" % bbox_js(w["permalink_gate"], ["minLat", "maxLat", "minLng", "maxLng"]))
+    L.extend(render_layer_codes(w))
     # Emitted ONLY when the worksheet declares it. A fork whose layers are all
     # city-scoped keeps a byte-identical metro-config region, which is what
     # makes this safe to ship through the engine release: the bump workflow
@@ -275,6 +279,26 @@ def render_metro_config(w):
     L.extend(keyed_lines(w["hover_name_keys"], "    "))
     a("  ];")
     return "\n".join(L)
+
+
+def render_layer_codes(w):
+    """The LAYER_CODES table for one instance: its own layers, in layers[] order."""
+    pairs = w["_layer_codes"]
+    L = []
+    a = L.append
+    a("  // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),")
+    a("  // from the fleet-wide layer-codes.json. A code is permanent: links already")
+    a("  // shared carry it. ENGINE permalink reads both a code and a full id.")
+    line = "  var LAYER_CODES = {"
+    for i, (lid, code) in enumerate(pairs):
+        item = "%s: %s" % (js_str(lid), js_str(code)) + ("," if i != len(pairs) - 1 else "")
+        if len(line) + 1 + len(item) > 96:
+            a(line)
+            line = "    " + item
+        else:
+            line += " " + item
+    a(line + " };")
+    return L
 
 
 def render_layer_area_rank(w):
@@ -1299,6 +1323,81 @@ def check_serp_lengths(ws_path, worksheet):
              % (ws_path, app_name, title))
 
 
+LAYER_CODES_FILE = "layer-codes.json"
+LAYER_CODE_RE = re.compile(r"^[a-z][a-z0-9]{1,2}$")
+
+
+def _layer_code_problems(codes):
+    """What is wrong with a layer-codes.json `codes` table, as messages."""
+    problems = []
+    if not isinstance(codes, dict) or not codes:
+        return ["`codes` must be a non-empty object of layer id -> code"]
+    seen = {}
+    for lid, code in codes.items():
+        if not isinstance(code, str) or not LAYER_CODE_RE.match(code):
+            problems.append("%s: code %r is not a lowercase letter followed by one or two "
+                            "lowercase letters or digits" % (lid, code))
+            continue
+        if code in seen:
+            problems.append("code %r is given to both %s and %s — one code, one layer"
+                            % (code, seen[code], lid))
+        seen[code] = lid
+        # The app accepts a full id in the same list as the codes, so a code
+        # that spelled some layer's id would be read as two different layers.
+        if code in codes:
+            problems.append("code %r for %s is also a layer id" % (code, lid))
+    return problems
+
+
+def load_layer_codes(root):
+    """The fleet's layer id -> short code table, validated."""
+    path = os.path.join(root, LAYER_CODES_FILE)
+    try:
+        with open(path, encoding="utf-8") as f:
+            doc = json.load(f)
+    except (OSError, ValueError) as e:
+        fail("cannot read %s: %s" % (path, e))
+    codes = doc.get("codes") if isinstance(doc, dict) else None
+    problems = _layer_code_problems(codes)
+    if problems:
+        fail("%s:\n  %s" % (LAYER_CODES_FILE, "\n  ".join(problems)))
+    return codes
+
+
+def check_layer_code_history(root, codes):
+    """A code that has shipped is permanent: compare against the change's base.
+
+    The base is the merge-base with origin/main, so a branch behind main is not
+    blamed for codes main added since it forked. Returns problems, or None when
+    there is no base to compare against (no git, no origin/main, or the file
+    did not exist there) — said out loud by the caller, never silent.
+    """
+    def git(*args):
+        try:
+            return subprocess.run(("git",) + args, cwd=root, capture_output=True, text=True)
+        except OSError:
+            return None
+    mb = git("merge-base", "HEAD", "origin/main")
+    if mb is None or mb.returncode != 0 or not mb.stdout.strip():
+        return None
+    shown = git("show", "%s:%s" % (mb.stdout.strip(), LAYER_CODES_FILE))
+    if shown is None or shown.returncode != 0:
+        return None
+    try:
+        before = json.loads(shown.stdout).get("codes") or {}
+    except ValueError:
+        return None
+    problems = []
+    for lid, code in sorted(before.items()):
+        if lid not in codes:
+            problems.append("%s (code %r) was removed — a retired layer keeps its entry, "
+                            "because links already shared still carry the code" % (lid, code))
+        elif codes[lid] != code:
+            problems.append("%s changed code %r -> %r — links already shared carry %r"
+                            % (lid, code, codes[lid], code))
+    return problems
+
+
 def load_worksheet(ws_path, schema):
     """Read, schema-validate and sanity-check one instance's worksheet."""
     try:
@@ -1378,10 +1477,29 @@ def main():
             except (OSError, ValueError, KeyError) as e:
                 fail("fleet sync of %s from %s failed: %s" % (instance, src, e))
 
+    layer_codes = load_layer_codes(args.root)
+    if args.check:
+        history = check_layer_code_history(args.root, layer_codes)
+        if history is None:
+            print("generate-metro-files: note — no base %s to compare against (no "
+                  "origin/main, or the file is new there); layer codes checked for "
+                  "shape and uniqueness only" % LAYER_CODES_FILE)
+        elif history:
+            fail("%s — a shipped layer code changed or vanished:\n  %s"
+                 % (LAYER_CODES_FILE, "\n  ".join(history)))
+
     drift, processed = [], 0
     for instance in ids:
         inst = INSTANCES[instance]
         worksheet = load_worksheet(os.path.join(args.root, inst["worksheet"]), schema)
+        uncoded = [l["id"] for l in worksheet["layers"] if l["id"] not in layer_codes]
+        if uncoded:
+            fail("%s: %d layer(s) have no short link code in %s: %s — add one entry "
+                 "per layer there (see that file's header for the rules)"
+                 % (inst["worksheet"], len(uncoded), LAYER_CODES_FILE, ", ".join(uncoded)))
+        # Private key, added AFTER schema validation: render_metro_config reads
+        # it, and nothing writes the worksheet back.
+        worksheet["_layer_codes"] = [(l["id"], layer_codes[l["id"]]) for l in worksheet["layers"]]
         # The apple-touch-icon href is the one generated brand value naming a
         # file on disk rather than carrying its own bytes (the favicon is a
         # data: URI). A tag pointing at a missing PNG is invisible in every

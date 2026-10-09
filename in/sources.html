@@ -1032,7 +1032,7 @@ table.matrix code {
       with the relevant government office before relying on them for anything official.
     </div>
     <!-- ==== GENERATED:BEGIN sources-verified ==== -->
-        <p class="verified">Data last verified: <strong>September 29, 2026</strong></p>
+        <p class="verified">Data last verified: <strong>October 9, 2026</strong></p>
 <!-- ==== GENERATED:END sources-verified ==== -->
     <p class="lede">Where a source publishes nothing, the app says so rather than guessing — the
       <a href="./#gaps">missing-data panel</a> on the map is the standing list of what nobody publishes
@@ -1196,13 +1196,13 @@ table.matrix code {
             <tbody>
               <tr id="layer-county">
                 <th scope="row"><span class="layer-name">County</span><code>county</code></th>
-                <td data-label="What it answers">Which county contains the point.</td>
+                <td data-label="What it answers">Which county contains the point, and who won each seat on its board of commissioners and its county council.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 92 features, measured 2026-09-29.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">None yet — identity only. An Indiana county is governed by TWO elected bodies, a three-member board of commissioners (the executive) and a county council (the fiscal body, four districts plus three at large in most counties), and both are this instance's flagship work in a later change rather than being half-joined here. The card names the county and claims nothing about who runs it.</td>
+                <td data-label="Who it names">Every commissioner and county council member in 91 of the 92 counties, each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2022 and 2024 generals), dated to that election and rebuilt weekly by in/scripts/build_in_county_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, which no result records, and the card says so. Every seat in the county is listed because neither body's district lines are drawn yet. Marion County's legislative body is the Indianapolis City-County Council, which is not shown yet.</td>
                 <td data-label="Where it applies">Indiana — statewide, all 92 counties.</td>
               </tr>
               <tr id="layer-zip-code">
@@ -1317,7 +1317,7 @@ table.matrix code {
       "@id": "https://districtry.com/in/sources.html#dataset-county",
       "identifier": "county",
       "name": "County",
-      "description": "Which county contains the point. None yet — identity only. An Indiana county is governed by TWO elected bodies, a three-member board of commissioners (the executive) and a county council (the fiscal body, four districts plus three at large in most counties), and both are this instance's flagship work in a later change rather than being half-joined here. The card names the county and claims nothing about who runs it.",
+      "description": "Which county contains the point, and who won each seat on its board of commissioners and its county council. Every commissioner and county council member in 91 of the 92 counties, each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2022 and 2024 generals), dated to that election and rebuilt weekly by in/scripts/build_in_county_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, which no result records, and the card says so. Every seat in the county is listed because neither body's district lines are drawn yet. Marion County's legislative body is the Indianapolis City-County Council, which is not shown yet.",
       "url": "https://districtry.com/in/sources.html#layer-county",
       "isPartOf": {
         "@id": "https://districtry.com/in/sources.html#catalog"

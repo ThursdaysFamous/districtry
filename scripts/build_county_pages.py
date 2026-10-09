@@ -224,6 +224,25 @@ INSTANCES = [
          index_provenance="each name the winner of that seat's most recent "
                           "election in the Minnesota Secretary of State's "
                           "results, dated to it"),
+    # INDIANA NAMES ELECTION WINNERS TOO, from the Election Division's
+    # certified results, and its seats are not all numbered: 15 counties name
+    # theirs ("Middle District", "Western District"), so `district_word` is
+    # empty and every label is whole. There is no commissioner-district layer
+    # yet, so the map link opens the county layer, whose card lists the board.
+    dict(tag="in", state="Indiana", concept="county-commissioner",
+         index_page="county-commissioner.html",
+         heading="%(county)s County Board of Commissioners",
+         page_title="%(county)s County Commissioners",
+         page_title_short="%(county)s commissioners",
+         phrase="board of commissioners", index_label="Boards of commissioners",
+         all_label="All Indiana boards of commissioners",
+         app_name="districtry Indiana", app_url="https://districtry.com/in/",
+         district_word="", member_word="Commissioner",
+         cta_layers="county",
+         adapters=("in_commissioners",),
+         index_provenance="each name the winner of that seat's most recent "
+                          "election in the Indiana Election Division's "
+                          "certified results, dated to it"),
     # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
     # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
     # rather than the county tier: a county legislature is elected from
@@ -1132,6 +1151,88 @@ def mn_commissioners(inst):
     return out, problems, nameless, [path], note
 
 
+IN_LEDE = ("These are the people who won each seat on %(county)s County's "
+           "Board of Commissioners at its most recent election in the Indiana "
+           "Election Division's certified results, each dated to that election. "
+           "They are election winners, not a list the county keeps up to date: "
+           "Indiana fills a vacancy by party caucus, so a seat that has changed "
+           "hands since still shows the person who won it.")
+IN_STANDFIRST = ("Who won each seat on the %(heading)s at its most recent "
+                 "election, from the Indiana Election Division's certified results.")
+IN_DESC = ("Who won each of the %(districts)d seats on %(county)s County's "
+           "Board of Commissioners at its most recent election, and which "
+           "district each one holds.")
+IN_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above won an "
+                 "election the Indiana Election Division certified,\n"
+                 "and this page dates each name to that election rather than "
+                 "claiming the seat is still held.")
+IN_CTA_NOTE = ("Opens the map with the county layer on. Its card lists this "
+               "board and the county council, from the same certified results; "
+               "the commissioner district lines are not drawn yet.")
+
+
+def in_commissioners(inst):
+    """Indiana: ONE file keyed by county GEOID, each record carrying the
+    county's name and a `seats` list of {seat, name, party, election, office,
+    sourceUrl, seatNotStated?} (in/scripts/build_in_county_officials.py).
+
+    91 OF 92 COUNTIES, BY CONSTRUCTION. Marion County's legislative body is the
+    Indianapolis City-County Council, which the certified commissioner results
+    do not carry, so it has no record and no page here.
+
+    A SEAT WHOSE RACE TITLE NAMES NO DISTRICT is labelled with the title as
+    published (Clinton's and Ohio's "County Commissioner"), and the member row
+    says so beside the election date, rather than this page placing the seat in
+    a district the results do not name."""
+    data_dir = app_data(inst["tag"])
+    path = os.path.join(data_dir, "in-county-commissioners.json")
+    out, problems, nameless = {}, [], set()
+    for geoid, rec in sorted(_read(path).items()):
+        name = (rec.get("county") or "").strip()
+        seats = rec.get("seats") or []
+        if not name or not seats:
+            problems.append("in-county-commissioners.json %r carries no county "
+                            "or no seats" % geoid)
+            continue
+        labels = [s.get("seat") for s in seats]
+        if len(set(labels)) != len(labels):
+            problems.append("in %s County lists a seat twice: %r" % (name, labels))
+            continue
+        districts = []
+        for seat in seats:
+            when = _mn_date(seat.get("election"))
+            if not when or not (seat.get("name") or "").strip():
+                problems.append("in %s County %r names nobody or carries no "
+                                "election date" % (name, seat.get("seat")))
+                continue
+            note = "Elected %s." % when
+            if seat.get("seatNotStated"):
+                note += (" The results do not say which district this seat is: "
+                         "%s." % seat["seatNotStated"])
+            member = {"name": seat["name"].strip(), "elected": note}
+            if seat.get("party"):
+                member["party"] = seat["party"]
+            districts.append(district(seat["seat"], [member]))
+        if not _count_named(districts, []):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("in %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        out[name] = {"districts": districts,
+                     "sourceUrl": max(seats, key=lambda s: s.get("election") or "").get("sourceUrl"),
+                     "source_label": "the Indiana Election Division's certified results",
+                     "extras": [], "skipped": [], "slug": county_slug(name),
+                     "at_large": False, "source_file": path,
+                     "lede": IN_LEDE, "standfirst": IN_STANDFIRST,
+                     "desc": IN_DESC, "disclaimer": IN_DISCLAIMER,
+                     "cta_note": IN_CTA_NOTE}
+    note = ("%d of Indiana's 92 counties, every seat named from the Election "
+            "Division's certified results (Marion's City-County Council is not "
+            "in them)" % len(out))
+    return out, problems, nameless, [path], note
+
+
 _MN_MONTHS = ("January", "February", "March", "April", "May", "June", "July",
               "August", "September", "October", "November", "December")
 
@@ -1374,6 +1475,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "wi_seats": wi_seats, "ia_supervisors": ia_supervisors,
             "mi_commissioners": mi_commissioners,
             "mn_commissioners": mn_commissioners,
+            "in_commissioners": in_commissioners,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
@@ -1678,9 +1780,16 @@ def districted_body(inst, name, rec):
                "holds" if named == 1 else "hold",
                "published" if rec.get("not_read_since") and not app_reads
                else "publishes", same))
-    out.append('<a class="cta" href="../#layers=%s,county">'
-               'Find your %s County district on the map →</a>'
-               % (esc(inst["concept"]), esc(name)))
+    if inst.get("cta_layers"):
+        # An instance whose board has no district layer yet opens the layer
+        # whose card lists it, rather than a layer id its app does not register.
+        out.append('<a class="cta" href="../#layers=%s">'
+                   'See %s County on the map →</a>'
+                   % (esc(inst["cta_layers"]), esc(name)))
+    else:
+        out.append('<a class="cta" href="../#layers=%s,county">'
+                   'Find your %s County district on the map →</a>'
+                   % (esc(inst["concept"]), esc(name)))
     out.append('<p class="cta-note">%s</p>'
                % (esc(rec["cta_note"]) if rec.get("cta_note") else
                   "Opens the map with the county and %s layers on. Search your "
@@ -1696,7 +1805,10 @@ def districted_body(inst, name, rec):
         out.append('</section>')
     for d in rec["districts"]:
         label = d["label"]
-        anchor = "district-%s" % re.sub(r"[^A-Za-z0-9]+", "-", label).lower()
+        # A whole label ("District 2", Indiana's) anchors as #district-2, the
+        # same as a bare "2" does everywhere else.
+        anchor = "district-%s" % re.sub(r"[^A-Za-z0-9]+", "-",
+                                        re.sub(r"^District\s+", "", label)).lower()
         out.append('<section class="district" id="%s">' % esc(anchor))
         out.append('<h2>%s</h2>' % esc(seat_heading(inst, label)))
         rows = [h for h in (member_html(m) for m in d["members"]) if h]
@@ -2427,6 +2539,15 @@ NOT_COUNTY_BOARDS = {
                "it names appear in wi/data/app/county-board-members.json by "
                "name, 11 do not (measured 2026-09-13), so joining on it would "
                "have to settle eleven disagreements first.",
+    ),
+    "in/data/app/in-county-councils.json": dict(
+        date="2026-10-09",
+        reason="the Indiana COUNTY COUNCIL, which is the county's fiscal body "
+               "(IC 36-1-2-6) and not its legislative body — that is the board "
+               "of commissioners (IC 36-1-2-9), which these pages read from "
+               "in-county-commissioners.json. The council's members are named "
+               "on the app's County card from the same certified results; a "
+               "section for them on these pages is its own change.",
     ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",
