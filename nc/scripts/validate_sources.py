@@ -82,16 +82,17 @@ PROVENANCE = [
     {
         "layer": "us-house",
         "app_file": "congress-districts.json",
-        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4",
         "note": (
             "14 congressional districts pre-built from TIGERweb by "
-            "nc/scripts/build_legislative_boundaries.py. THE DISTRICT FIELD IS "
-            "VERSIONED AND THE OLD ONE IS REMOVED, NOT MERELY STALE: this layer "
-            "is now '120th Congressional Districts' and its field is CD120; a "
-            "query naming the retired CD119 is rejected outright with HTTP 400. "
-            "On the next roll the builder's field list and the app's "
-            "CONGRESS_DISTRICT_FIELDS both need the new name."
+            "nc/scripts/build_legislative_boundaries.py from layer 4, the 119th "
+            "Congress's map, because those are the districts the serving "
+            "members were elected from. Layer 0 is the 120th Congress's map, "
+            "redrawn in 2025, and it moves districts 1 and 3. On 3 January 2027 "
+            "the build switches to layer 0 and its CD120 field, and the app's "
+            "CONGRESS_DISTRICT_FIELDS already reads both."
         ),
+        "serving_until": "2027-01-03",
     },
     {
         "layer": "us-house",
@@ -461,6 +462,31 @@ def check_provenance(findings, offline):
                          % (res, p["source_url"], p["note"]))
 
 
+# ---- check 3b: the shipped U.S. House map is the one the members serve on ---
+def check_serving_map(findings, today=None):
+    """Offline. The U.S. House file ships the 119th Congress's map until the
+    members elected from it leave office, then must move to the 120th's.
+    Nothing else would notice the date pass, so this says so every month."""
+    import datetime
+    today = today or datetime.date.today().isoformat()
+    for p in PROVENANCE:
+        until = p.get("serving_until")
+        if not until or today < until:
+            continue
+        fpath = os.path.join(APP_DATA_DIR, p["app_file"])
+        try:
+            with open(fpath) as f:
+                props = (json.load(f).get("features") or [{}])[0].get("properties", {})
+        except (OSError, ValueError):
+            continue
+        if "CD119" in props:
+            findings.add(WARN, p["layer"],
+                         "data/app/%s still draws the 119th Congress's map and its "
+                         "members left office on %s. Rebuild from the 120th "
+                         "Congress's layer (see build_legislative_boundaries.py) "
+                         "and bump the cache name." % (p["app_file"], until))
+
+
 # ---- check 4: live endpoints reachable --------------------------------------
 def check_endpoints(findings, offline):
     if offline:
@@ -555,6 +581,7 @@ def main():
     check_manifest_matches_app(html, findings)
     check_socrata(findings, args.offline)
     check_provenance(findings, args.offline)
+    check_serving_map(findings)
     check_endpoints(findings, args.offline)
 
     report = render(findings)
