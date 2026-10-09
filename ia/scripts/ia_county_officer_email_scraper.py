@@ -77,6 +77,7 @@ import os
 import re
 import sys
 import time
+from urllib.parse import urlsplit
 
 import requests
 
@@ -201,10 +202,33 @@ def classify(email, person, office, county):
     return "rejected"
 
 
+# Hosts whose robots.txt refused this client this run, so they are not asked
+# again for every link on the page.
+_REFUSED_HOSTS = set()
+
+
 def get(url, timeout=25):
+    host = urlsplit(url).hostname or url
+    if host in _REFUSED_HOSTS:
+        return "robots-refused", ""
     try:
         require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
                             label="ia-ia-county-officer-email-scraper")
+    except SystemExit:
+        # ONE COUNTY'S REFUSAL STOPS THAT COUNTY, NOT THE OTHER 98. The seam
+        # prints the verdict and exits, which is right for a scraper that reads
+        # one host and wrong for this one, which reads a host per county: from
+        # the 2026-10-02 run, the first after this file was wired to read
+        # robots.txt, Dickinson's
+        # robots.txt answering HTTP 202 stopped every scheduled run at the
+        # D's, so no county after it was read and nothing was rebuilt. Nothing
+        # is fetched from the refused host -- which is the whole of what a
+        # refusal asks -- and the county is recorded `robots-refused`, the
+        # wi_alderperson_scraper.py shape. The catch covers the robots read
+        # only; the fetch below is outside it.
+        _REFUSED_HOSTS.add(host)
+        return "robots-refused", ""
+    try:
         r = requests.get(url, headers=HEADERS, timeout=timeout, allow_redirects=True)
         return str(r.status_code), (r.text if r.status_code == 200 else "")
     except Exception as e:
