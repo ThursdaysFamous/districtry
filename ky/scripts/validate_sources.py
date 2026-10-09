@@ -195,6 +195,18 @@ PROVENANCE = [
             "client, and that refusal is obeyed rather than worked around."
         ),
     },
+    {
+        "layer": "municipality",
+        "app_file": "ky-city-officials.json",
+        "source_url": "https://kydlgweb.ky.gov/Cities/16_CityHome.cfm",
+        "note": (
+            "Each city's mayor and council or commission, from the Department "
+            "for Local Government's municipal directory, read one county search "
+            "and one city page at a time (2026-10-09) and joined to the Census "
+            "place id by name. Refreshed weekly by update-ky-city-officials.yml "
+            "as a reviewed pull request."
+        ),
+    },
 ]
 
 ENDPOINTS = [

@@ -252,7 +252,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "NO OFFICEHOLDER. Kentucky cities elect a mayor and a city legislative body, and no roster of their members has been built here, so the card names nobody and links the Department for Local Government's municipal directory (kydlgweb.ky.gov/Cities/16_CityHome.cfm, read 2026-10-01, robots.txt permits it), which is a per-city search rather than a downloadable roster. Which statutory plan of government a given city runs under was not measured and is not claimed. Recorded as the coverage gap ky-municipal-officeholders.",
+        "people": "The mayor and the city council or commission of each city, from the Kentucky Department for Local Government's municipal directory (kydlgweb.ky.gov/Cities/), read county by county and joined to the Census place id by name and checked against the county the directory names; built by ky/scripts/build_ky_city_officials.py and refreshed weekly by update-ky-city-officials.yml. Staff the directory lists beside them (clerk, attorney, chiefs) are left out. The directory dates nothing, so the card prints the day it was read.",
         "applies": "Kentucky — statewide, answering only inside an incorporated city."
       }
     },
@@ -391,6 +391,11 @@
         "file": "ky-judge-roster.json",
         "min_keys": 3,
         "note": "Kentucky's judges, keyed by the numbered district or circuit each was elected from, from the Court of Justice's own pages; refreshed weekly by update-ky-judges-roster.yml. Jefferson's circuit 30 and district 30 are recorded as asked about rather than left silent."
+      },
+      {
+        "file": "ky-city-officials.json",
+        "min_keys": 400,
+        "note": "Each Kentucky city's mayor and council or commission, keyed by Census place id, from the Department for Local Government's municipal directory; refreshed weekly by update-ky-city-officials.yml."
       }
     ]
   },
@@ -421,6 +426,11 @@
       "file": "update-ky-judges-roster.yml",
       "purpose": "Kentucky judges, keyed by the district or circuit each was elected from (Kentucky Court of Justice)",
       "schedule": "Tue 14:40 UTC"
+    },
+    {
+      "file": "update-ky-city-officials.yml",
+      "purpose": "Kentucky city mayors and councils (Department for Local Government municipal directory)",
+      "schedule": "Wed 14:50 UTC"
     }
   ],
   "geocoder": {
@@ -458,7 +468,9 @@
     { "id": "kentucky", "label": "Kentucky", "url": "https://districtry.com/ky/", "emoji": "🐎", "explorer_name": "districtry Kentucky",
       "bbox": { "minLng": -89.62, "minLat": 36.45, "maxLng": -81.91, "maxLat": 39.2 } },
     { "id": "indiana", "label": "Indiana", "url": "https://districtry.com/in/", "emoji": "🏁", "explorer_name": "districtry Indiana",
-      "bbox": { "minLng": -88.1, "minLat": 37.83, "maxLng": -84.78, "maxLat": 41.77 } }
+      "bbox": { "minLng": -88.1, "minLat": 37.83, "maxLng": -84.78, "maxLat": 41.77 } },
+    { "id": "northcarolina", "label": "North Carolina", "url": "https://districtry.com/nc/", "emoji": "🌳", "explorer_name": "districtry North Carolina",
+      "bbox": { "minLng": -84.33, "minLat": 33.74, "maxLng": -75.39, "maxLat": 36.6 } }
   ],
   "sources_page": {
     "file": "ky/sources.html",

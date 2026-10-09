@@ -20,9 +20,13 @@ AND A COUNTY THAT SHIPPED LAST WEEK MAY NOT SIMPLY VANISH. The floors below are
 a fleet-sized net and one county falling out of a fifty-county file goes
 straight through it — a whole board quietly deleted, every count guard green,
 the diff looking like housekeeping. So the previous shipped file is read back
-and any county that resolved nothing this run fails the build by name. Dropping
-one deliberately takes `--allow-drop <County>`, which is a decision somebody
-makes rather than a silence.
+and any county that resolved nothing this run KEEPS ITS SHIPPED ROWS, verbatim
+and with their own `readOn`, and the log names it as carried (carried_counties).
+That replaced a hard failure on 2026-10-09: failing the build for one county's
+firewall also froze the other seventy-one, two weeks running, which deleted
+nothing and refreshed nothing either. A carry older than CARRY_MAX_DAYS still
+fails by name. Dropping one deliberately takes `--allow-drop <County>`, which is
+a decision somebody makes rather than a silence.
 
 NINE OF THE FIFTY-SEVEN ARE CARRIED FROM A DOCUMENT, NOT RE-READ WEEKLY, AND
 THE CARD HAS TO SAY SO — in two classes that must not be blurred. Taylor's host
@@ -73,6 +77,7 @@ Usage:
     python3 wi/scripts/build_wi_county_board_roster.py --allow-drop Rock
 """
 
+import datetime
 import json
 import os
 import re
@@ -125,11 +130,10 @@ def read_on_for(entry):
     which day it earned.
 
     A COUNTY THAT FAILED THIS RUN CANNOT REACH HERE. The scraper drops it into
-    `failures` and it never enters `counties`; main() then refuses the build by
-    name unless somebody passes --allow-drop. So there is no path by which a
-    stale row inherits a fresh date — but the guard is the drop check above,
-    not this function, and moving it would put two half-guards where one whole
-    one is.
+    `failures` and it never enters `counties`; main() then carries its SHIPPED
+    rows verbatim (carried_counties), whose `readOn` is the day it was last
+    actually read, and never passes them through this function. So there is no
+    path by which a stale row inherits a fresh date.
     """
     if entry.get("carried_from_document"):
         # The same value the `asOf` sentence is built from, so the machine-
@@ -160,16 +164,55 @@ def read_on_for(entry):
         "through to the live branch." % (entry.get("county", "?"), read_from))
 
 
-def shipped_counties():
-    """{county name: seats} as the file on disk has them, or {} if it is new."""
+# HOW LONG A COUNTY THIS RUN CANNOT READ MAY KEEP ITS LAST READ. Sixty days is
+# the ceiling wi/scripts/wi_coa_staleness.py already holds the Court of Appeals
+# roster to, so one instance does not keep two notions of "too old to carry".
+# Past it the run fails naming the county, which is the signal a person needs:
+# eight weekly misses is not a firewall having a bad week.
+CARRY_MAX_DAYS = 60
+
+
+def last_read(rows):
+    return max((r.get("readOn") or "") for r in rows.values()) or "never"
+
+
+def failure_for(county, raw):
+    for f in raw.get("failures") or []:
+        if f.startswith(county + " ("):
+            return f.split(": ", 1)[-1]
+    return "no failure recorded"
+
+
+def carried_counties(live, allowed_drops, today=None):
+    """{county: {key: row}} for every county the shipped file holds and this
+    run did not read, unless it was dropped on purpose with --allow-drop.
+
+    Refuses a carry older than CARRY_MAX_DAYS, and a shipped row with no
+    `readOn`, since a carry that cannot say when it was read cannot say how
+    old it is."""
     try:
         with open(OUT) as f:
             shipped = json.load(f)
     except (OSError, ValueError):
         return {}
+    today = today or datetime.date.today()
     out = {}
-    for row in shipped.values():
-        out[row["county"]] = out.get(row["county"], 0) + 1
+    for key, row in shipped.items():
+        county = row["county"]
+        if county in live or county in allowed_drops:
+            continue
+        out.setdefault(county, {})[key] = row
+    for county, rows in out.items():
+        stamp = last_read(rows)
+        if stamp == "never":
+            raise RuntimeError("%s cannot be carried: its shipped rows carry no "
+                               "readOn, so nothing says how old they are" % county)
+        age = (today - datetime.date.fromisoformat(stamp)).days
+        if age > CARRY_MAX_DAYS:
+            raise RuntimeError(
+                "%s was last read %s, %d days ago, past the %d-day carry ceiling — "
+                "re-read the county's page; pass --allow-drop to drop it deliberately"
+                % (county, stamp, age, CARRY_MAX_DAYS))
     return out
 
 
@@ -189,9 +232,21 @@ def main():
     with open(RAW) as f:
         raw = json.load(f)
     counties = raw["counties"]
-    if len(counties) < MIN_COUNTIES:
-        raise RuntimeError("only %d counties scraped, floor is %d — %s"
-                           % (len(counties), MIN_COUNTIES, raw.get("failures")))
+    # A COUNTY THIS RUN COULD NOT READ KEEPS WHAT WE ALREADY HAVE (Adam,
+    # 2026-09-19: "Preserve data we have already fetched"). Measured 2026-10-08:
+    # Vernon, Vilas and Juneau answered this runner 403 while Vernon and Juneau
+    # served the same pages to the same client from elsewhere that day, and a
+    # floor that counted only LIVE reads failed all 72 counties for it two weeks
+    # running, so every card in the state kept the 2026-09-25 file — including
+    # the counties whose boards had actually changed. The floor therefore counts
+    # the counties the SHIPPED FILE will hold; what bounds a carried county is
+    # its age (CARRY_MAX_DAYS below), not the week's luck with a firewall.
+    carry = carried_counties(set(e["county"] for e in counties.values()),
+                             allowed_drops)
+    if len(counties) + len(carry) < MIN_COUNTIES:
+        raise RuntimeError("only %d counties scraped and %d carried, floor is %d — %s"
+                           % (len(counties), len(carry), MIN_COUNTIES,
+                              raw.get("failures")))
 
     roster = {}
     total = vacant = withheld = 0
@@ -334,20 +389,25 @@ def main():
             if read_via:
                 roster["%s-at-large" % fips]["readVia"] = read_via
 
+    # THE CARRIED ROWS GO IN VERBATIM, `readOn` included, so the card goes on
+    # printing the day the county was last actually read and never a day it was
+    # not. A carried row is counted toward the seat floor exactly as it was the
+    # week it was read.
+    for county, rows in sorted(carry.items()):
+        for key, row in rows.items():
+            roster[key] = row
+            if "district" in row:
+                total += 1
+                if row.get("vacant"):
+                    vacant += 1
+                elif row.get("withheld"):
+                    withheld += 1
+        print("  carried %-12s %d rows, last read %s — this run could not read it (%s)"
+              % (county, len(rows), last_read(rows), failure_for(county, raw)),
+              file=sys.stderr)
+
     if total < MIN_SEATS:
         raise RuntimeError("%d seats resolved, floor is %d" % (total, MIN_SEATS))
-
-    # See the docstring: the floors above are a fleet-sized net, and one county
-    # falling out of a 57-county file slips straight through it.
-    was = shipped_counties()
-    gone = sorted(set(was) - {e["county"] for e in counties.values()} - allowed_drops)
-    if gone:
-        raise RuntimeError(
-            "%s shipped last time and resolved nothing this time (%s) — that is a "
-            "page to re-read, not a diff to merge; pass --allow-drop to drop a "
-            "county deliberately"
-            % (", ".join("%s (%d seats)" % (c, was[c]) for c in gone),
-               raw.get("failures") or "no failure recorded"))
 
     for fips, entry in sorted(counties.items()):
         # A county read from anywhere but its own live page says so on the log,
@@ -371,10 +431,12 @@ def main():
         "%s%s (%d)" % (day, " via %s" % via if via else "", len(cs))
         for (day, via), cs in sorted(per_day.items())), file=sys.stderr)
     dated = sorted({r["county"] for r in roster.values() if r.get("asOf")})
-    print("county-board-members: %d counties, %d seats (%d named, %d vacant%s)%s"
-          % (len(counties), total, total - vacant - withheld, vacant,
+    print("county-board-members: %d counties, %d seats (%d named, %d vacant%s)%s%s"
+          % (len(counties) + len(carry), total, total - vacant - withheld, vacant,
              ", %d withheld" % withheld if withheld else "",
-             "; carried from a document: %s" % ", ".join(dated) if dated else ""),
+             "; carried from a document: %s" % ", ".join(dated) if dated else "",
+             "; NOT READ THIS RUN, last read kept: %s" % ", ".join(sorted(carry))
+             if carry else ""),
           file=sys.stderr)
     if check_only:
         try:

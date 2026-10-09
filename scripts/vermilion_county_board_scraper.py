@@ -116,8 +116,14 @@ def fetch(url, verify):
     last = None
     for attempt in range(1, MAX_RETRIES + 1):
         try:
+            # The robots read takes the SAME pinned bundle as the page read:
+            # the host serves only its leaf certificate, so a read with the
+            # default trust store fails verification and an unreachable
+            # robots.txt disallows the whole host (RFC 9309 2.3.1.4). Missing
+            # this stopped the weekly refresh on 2026-10-02 and 2026-10-09.
             require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
-                                label="il-vermilion-county-board-scraper")
+                                label="il-vermilion-county-board-scraper",
+                                verify=verify)
             resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT,
                                 verify=verify)
         except requests.RequestException as exc:
