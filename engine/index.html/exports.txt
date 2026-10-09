@@ -339,7 +339,7 @@
     basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; }, // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
     // The QR encoder and the URL it is given, so a test can hold the drawn code
     // to the payload it should carry rather than only counting that something
-    // was drawn. Two URLs that differ by `utm_medium=link` against `qr` produce
+    // was drawn. Two URLs that differ by `ref=share` against `ref=qr` produce
     // different matrices, which is what makes that assertion sharp.
     qrDarkModules: function (text) {
       var code = qrEncode(text, { level: "M" });
@@ -350,5 +350,8 @@
       }
       return { dark: n, size: code.size, version: code.version };
     },
-    shareUrls: function () { return { link: shareLinkUrl(), qr: shareQrUrl() }; }
+    shareUrls: function () { return { link: shareLinkUrl(), qr: shareQrUrl() }; },
+    // The current address-bar view as the boot parse reads it — ids, never
+    // codes — so a test can assert what a link MEANS in either spelling.
+    permalinkState: function () { return readPermalink(location.hash.replace(/^#/, "")); }
   };

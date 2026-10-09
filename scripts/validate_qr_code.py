@@ -60,7 +60,11 @@ WHAT IS ASSERTED, AND THE ONE THING THAT IS ONLY BOUNDED.
 
 LEVELS L AND M ONLY, because nothing here needs Q or H: the longest share URL
 an app can hand out measured 663 bytes on 2026-09-27 (all 40 Illinois layers
-on, with a pin and the stats flag), which is version 18 at L and 20 at M.
+on, with a pin and the stats flag), which is version 18 at L and 20 at M. Links
+have been written in a short form since 2026-10-09 (layer codes, one-letter
+keys, `?ref=qr`), and the same worst case — now all 41 Illinois layers — then
+measured 199 bytes, version 9 at L and 10 at M; the long-form cases below stay
+because a longer payload is a harder test of the encoder, not a likelier one.
 
 Usage:
   python3 scripts/validate_qr_code.py            # the CI gate
@@ -128,7 +132,7 @@ def cases():
              "wi-assembly,municipality,school-district-unified&pin=county-board&stats=1",
         "HELLO WORLD",
         "a", "y" * 7, "z" * 8, "q" * 9, "w" * 40,     # around the count-field and byte edges
-        junk(120), junk(300), junk(663), junk(900),   # 663 is the measured longest share URL
+        junk(120), junk(300), junk(663), junk(900),   # 663 was the longest share URL before 2026-10-09
         "café — Zürich #point=41.9,-87.6",  # multi-byte UTF-8
     ]
 

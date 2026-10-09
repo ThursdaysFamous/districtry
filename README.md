@@ -71,7 +71,7 @@ Every result card fails independently: a layer whose data source is down shows a
 
 ### Shareable links
 
-The URL hash mirrors your current view (`#point=41.88250,-87.62850&layers=ward,school-board`). Copy it from the URL bar — or use the **Copy link** button on the selected-point chip — and anyone opening the link sees the same point with the same layers on.
+The URL hash mirrors your current view (`#p=41.8825,-87.6285&l=wd,sb` — each layer is written as a short code that never changes, listed in [`layer-codes.json`](layer-codes.json)). Copy it from the URL bar — or use the **Copy link** button on the selected-point chip — and anyone opening the link sees the same point with the same layers on. Links made before 2026-10-09 spell the view out (`#point=41.88250,-87.62850&layers=ward,school-board`) and still open.
 
 ## How Illinois coverage grew
 

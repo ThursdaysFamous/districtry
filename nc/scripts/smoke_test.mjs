@@ -527,7 +527,8 @@ try {
             return block && block.hidden === true;
           }, id, { timeout: QUERY_TIMEOUT })
           .then(() => true, () => false);
-        const hashKeepsLayer = await page.evaluate((cid) => location.hash.includes(cid), id);
+        const hashKeepsLayer = await page.evaluate(
+          ({ cid, n }) => window[n].permalinkState().layers.includes(cid), { cid: id, n: EXPORTS_NAME });
         // assert the invariant directly, not just its hash reflection: hide
         // must never mutate state.layersOn (that's what keeps permalinks and
         // reappear-on-return working)
@@ -571,14 +572,13 @@ try {
       const coords = pop.querySelector(".share-popover-coords").textContent;
       // the values are built at open time, AFTER the click's syncUrlHash —
       // so location.hash here is exactly the hash both strings must carry
-      const wantUrl = location.origin + location.pathname +
-        "?utm_source=share&utm_medium=link" + location.hash;
+      const wantUrl = location.origin + location.pathname + "?ref=share" + location.hash;
       document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
       return {
         opened: true,
         urlOk: url === wantUrl,
-        linkTagged: url.indexOf("?utm_source=share&utm_medium=link#") !== -1,
-        embedTagged: embed.indexOf("?utm_source=embed&utm_medium=iframe") !== -1,
+        linkTagged: url.indexOf("?ref=share#") !== -1,
+        embedTagged: embed.indexOf("?ref=embed#") !== -1,
         embedShape: embed.indexOf('<iframe src="') === 0 && embed.indexOf(location.hash) !== -1,
         embedCanonical: embed.indexOf(location.origin) === -1 || location.hostname !== "localhost",
         coordsOk: /^-?\d+\.\d{5}, -?\d+\.\d{5}$/.test(coords),
