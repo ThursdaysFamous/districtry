@@ -43,7 +43,8 @@
    * address and the date under the pinned district.
    *
    * A LINK REOPENS THE REPORT. While the report is open the permalink carries
-   * `stats=1` beside the pin (syncUrlHash), and "Copy link" hands that URL
+   * `s=1` beside the pin (syncUrlHash; `stats=1` in a link made before
+   * 2026-10-09, which still reopens it), and "Copy link" hands that URL
    * out — on a touch device through the platform's share sheet. A reader
    * who opens it gets the point, the layers and the pin from the permalink,
    * and then the report, once the pinned district and the other switched-on
@@ -210,11 +211,11 @@
     statsOpenSeq++; // anything still computing for the closed screen stops
     if (statsIsOpen()) {
       statsModal.shut();
-      syncUrlHash(); // the permalink stops carrying stats=1
+      syncUrlHash(); // the permalink stops carrying s=1
     }
   }
 
-  // REOPENING FROM A LINK (`stats=1`). Requested by applyStateFromHash after
+  // REOPENING FROM A LINK (`s=1`, or `stats=1` in the long form). Requested by applyStateFromHash after
   // it restores the pin; tried again every time the outlines refresh, which
   // is every time a layer's query or boundaries arrive.
   var STATS_RESTORE_WAIT_MS = 20000;
@@ -371,7 +372,7 @@
     var foot = cardEl("p", "stats-foot");
     body.appendChild(foot);
     m.open();
-    syncUrlHash(); // the permalink now reopens this report (stats=1)
+    syncUrlHash(); // the permalink now reopens this report (s=1)
 
     // People, where this app ships them: every county the districts touch.
     var box = featureBBox(parentFeature).slice();
@@ -453,7 +454,7 @@
     });
   }
 
-  // "Copy link": the permalink with stats=1, so the reader it is sent to
+  // "Copy link": the permalink with s=1, so the reader it is sent to
   // lands on this report. On a touch device the platform's share sheet, as
   // the point chip's Share does. Counted by the pinned layer, never the
   // district.

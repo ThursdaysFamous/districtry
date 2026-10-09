@@ -195,7 +195,7 @@
     var rt = layerRuntime[mod.id];
     var base = baseStyleFor(mod) || {};
     var selected = rt.tileSelectedId != null || !!rt.tileLiveSelected;
-    var hl = highlightStyleFor(mod), faded = fadedStyle(base);
+    var hl = highlightStyleFor(mod), faded = fadedStyle(base, mod);
     var isSel = ["boolean", ["feature-state", "sel"], false];
     var baseOpacity = base.opacity == null ? 1 : base.opacity;
     return {
@@ -407,7 +407,7 @@
       var mod = this.mod, rt = layerRuntime[mod.id], sel = this.liveSelected;
       var anySelected = !!sel || rt.tileSelectedId != null;
       var base = baseStyleFor(mod) || {};
-      var faded = fadedStyle(base), lit = Object.assign({}, base, highlightStyleFor(mod));
+      var faded = fadedStyle(base, mod), lit = Object.assign({}, base, highlightStyleFor(mod));
       this.live.eachLayer(function (sub) {
         var on = !!sel && sub.feature === sel;
         if (sub.setStyle) sub.setStyle(on ? lit : anySelected ? faded : base);

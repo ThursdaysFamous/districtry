@@ -4055,6 +4055,15 @@ function initMichiganExplorer() {
   var METRO_CENTER = [44.8, -85.6];
   // Permalink sanity gate: the *greater* metro area (wider than METRO_BBOX).
   var PERMALINK_GATE = { minLat: 41.55, maxLat: 48.45, minLng: -90.6, maxLng: -81.95 };
+  // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
+  // from the fleet-wide layer-codes.json. A code is permanent: links already
+  // shared carry it. ENGINE permalink reads both a code and a full id.
+  var LAYER_CODES = { "us-house": "us", "mi-senate": "mis", "county": "co", "mi-house": "mih",
+    "school-district-unified": "su", "school-district-elementary": "se",
+    "county-commissioner": "cm", "county-subdivision": "cs", "zip-code": "zp",
+    "city-ward": "cw", "precinct": "pc", "tribal-government": "tg", "municipality": "mu",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po",
+    "mi-court-of-appeals": "mia", "mi-circuit-court": "mic", "mi-isd": "is" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -5797,7 +5806,7 @@ function initMichiganExplorer() {
   // WHY THIS IS HAND WRITTEN, AND WHY A QR SERVICE IS NOT AN OPTION AT ALL.
   // Every QR image API takes its payload in the URL of the image request. The
   // payload here is a permalink, and a permalink carries the reader's selected
-  // point at full precision (`#point=41.88250,-87.62850`). Today that point
+  // point at full precision (`#p=41.8825,-87.6285`). Today that point
   // sits in the URL FRAGMENT, which a browser never sends to any server; a QR
   // API needs it in the query string, which is sent. So a third-party QR would
   // transmit a reader's exact selected location to a host the privacy page
@@ -6238,12 +6247,76 @@ function initMichiganExplorer() {
   /* ==== ENGINE:END qr-code ==== */
   /* ==== ENGINE:BEGIN permalink ==== */
   /* =========================================================================
-   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&pin=id&stats=1&zoom=N mirrors the
+   * SHAREABLE URL — #p=lat,lng&l=code1,code2&c=code&s=1&z=N mirrors the
    * current selection so any view can be copied out of the URL bar (or via the
    * point chip's Copy-link button) and restored on load. replaceState, not
    * location.hash assignment, so clicking around never pollutes the back
    * button. Parsed once at boot by applyStateFromHash().
+   *
+   * THE SHORT FORM SINCE 2026-10-09. Every link until then spelled the view
+   * out — #point=41.88250,-87.62850&layers=ward,congress&pin=…&stats=1&zoom=N
+   * — and a typical shared link ran 96 to 140 characters, 652 with every
+   * Illinois layer on. Layers are now written as their permanent short codes
+   * (LAYER_CODES, generated from the fleet-wide layer-codes.json), the keys
+   * are one letter, and a coordinate drops its trailing zeros while keeping
+   * all five decimals, because a shared link has to land on the same side of
+   * a boundary as the click that made it. THE LONG FORM IS STILL READ, and
+   * must be forever: those links sit in messages, posts and print nobody can
+   * recall. readPermalink() is the one reading of both.
    * ======================================================================= */
+
+  // Layer id <-> link code. Guarded, so an instance whose metro config carries
+  // no LAYER_CODES writes full ids exactly as before.
+  var layerCodeOf = {}, layerIdOfCode = {};
+  if (typeof LAYER_CODES === "object" && LAYER_CODES) {
+    Object.keys(LAYER_CODES).forEach(function (id) {
+      layerCodeOf[id] = LAYER_CODES[id];
+      layerIdOfCode[LAYER_CODES[id]] = id;
+    });
+  }
+  function layerLinkCode(id) { return layerCodeOf[id] || id; }
+  // A token from `l=` or `c=`: a code, or — hand-typed, or from an instance
+  // with no table — a full id. No code spells an id (generate_metro_files.py
+  // refuses one), so the two cannot be confused.
+  function layerFromLinkCode(token) { return layerIdOfCode[token] || token; }
+
+  // Five decimals (about a metre), trailing zeros dropped: 41.88250 -> 41.8825.
+  function linkCoord(n) { return String(+n.toFixed(5)); }
+
+  // ONE reading of a map link's hash (without the "#"), in either spelling,
+  // for the boot parse and for the smoke tests. Long keys are read verbatim
+  // as ids; short keys go through the code table. A key in both spellings —
+  // nothing writes that — takes the short one, and `layers=` with `l=` is
+  // their union, so nothing a link names is dropped.
+  function readPermalink(raw) {
+    var params = {};
+    (raw || "").split("&").forEach(function (kv) {
+      var eq = kv.indexOf("=");
+      if (eq <= 0) return;
+      try {
+        params[kv.slice(0, eq)] = decodeURIComponent(kv.slice(eq + 1));
+      } catch (e) {
+        // a malformed %-escape drops that one parameter, not the whole link
+      }
+    });
+    function pick(shortKey, longKey) {
+      return params[shortKey] !== undefined ? params[shortKey] : params[longKey];
+    }
+    var layers = [], seen = {};
+    function addLayer(id) {
+      if (id && !seen[id]) { seen[id] = true; layers.push(id); }
+    }
+    if (params.layers) params.layers.split(",").forEach(addLayer);
+    if (params.l) params.l.split(",").forEach(function (t) { if (t) addLayer(layerFromLinkCode(t)); });
+    return {
+      point: pick("p", "point"),
+      layers: layers,
+      pin: params.c !== undefined ? layerFromLinkCode(params.c) : params.pin,
+      stats: pick("s", "stats"),
+      zoom: pick("z", "zoom"),
+      q: params.q
+    };
+  }
 
   // The zoom this fork boots at, read from the map rather than configured, so
   // the engine needs no per-metro constant and every fork gets its own default.
@@ -6254,32 +6327,31 @@ function initMichiganExplorer() {
   function syncUrlHash() {
     var parts = [];
     if (state.selectedPoint) {
-      parts.push("point=" + state.selectedPoint.lat.toFixed(5) + "," + state.selectedPoint.lng.toFixed(5));
+      parts.push("p=" + linkCoord(state.selectedPoint.lat) + "," + linkCoord(state.selectedPoint.lng));
     }
     var on = layers.filter(function (l) { return state.layersOn[l.id]; })
-      .map(function (l) { return l.id; });
-    if (on.length) parts.push("layers=" + on.join(","));
+      .map(function (l) { return layerLinkCode(l.id); });
+    if (on.length) parts.push("l=" + on.join(","));
     // The PINNED PARENT rides the permalink too, because the relationship
     // outlines ARE part of the view being shared: a link that restores the
     // point and the layers and drops the pin hands the reader the same map
     // without the comparison the sender was looking at, and nothing on screen
     // says a pin was ever set. Emitted only while its layer is on, which is
-    // also why `pin=` can never be the ONLY parameter in a hash — the same
-    // condition puts that id in `on` above, so `layers=` is always emitted
-    // beside it, and the root's app-parameter forwarding guard (which matches
-    // point/layers/zoom) still recognises every link that carries a pin.
+    // also why the pin (`c=`, for compare) can never be the ONLY parameter in
+    // a hash — the same condition puts its layer in `on` above, so `l=` is
+    // always emitted beside it.
     if (pinnedParentId && state.layersOn[pinnedParentId]) {
-      parts.push("pin=" + pinnedParentId);
+      parts.push("c=" + layerLinkCode(pinnedParentId));
       // The comparison stats report, while it is open (compare-stats). Only
       // beside a pin, because the report is OF the pinned district.
-      if (statsIsOpen()) parts.push("stats=1");
+      if (statsIsOpen()) parts.push("s=1");
     }
     // Zoom rides the permalink because it is part of what was shared: an embed of
     // a whole county answers a different question from an embed of one block, and
     // a refresh should not throw the reader back to the default view. Emitted
     // ONLY when the user has moved off the boot zoom, so an untouched map still
     // produces a clean, hash-free URL.
-    if (map.getZoom() !== bootZoom) parts.push("zoom=" + map.getZoom());
+    if (map.getZoom() !== bootZoom) parts.push("z=" + map.getZoom());
     var hash = parts.length ? "#" + parts.join("&") : "";
     try {
       history.replaceState(null, "", hash || location.pathname + location.search);
@@ -6297,17 +6369,11 @@ function initMichiganExplorer() {
   function applyStateFromHash() {
     var raw = location.hash.replace(/^#/, "");
     if (!raw) return;
-    var params = {};
-    raw.split("&").forEach(function (kv) {
-      var eq = kv.indexOf("=");
-      if (eq > 0) params[kv.slice(0, eq)] = decodeURIComponent(kv.slice(eq + 1));
+    var params = readPermalink(raw);
+    params.layers.forEach(function (id) {
+      var box = document.getElementById("toggle-" + id);
+      if (box && !box.checked) box.click(); // a real click, so the change handler runs
     });
-    if (params.layers) {
-      params.layers.split(",").forEach(function (id) {
-        var box = document.getElementById("toggle-" + id);
-        if (box && !box.checked) box.click(); // a real click, so the change handler runs
-      });
-    }
     // Parsed BEFORE the point, because the point's pan has to know about it.
     // An unparseable or out-of-range zoom is ignored rather than clamped: a link
     // from a fork with different limits should fall back to this fork's default
@@ -6365,7 +6431,7 @@ function initMichiganExplorer() {
       if (parent && state.layersOn[parent.id] &&
           parent.overlay && parent.overlay.style) {
         setPinnedParent(parent.id);
-        // `stats=1`: reopen the comparison report once the pinned district
+        // `s=1` (`stats=1` in the long form): reopen the comparison report once the pinned district
         // and the other layers' boundaries have loaded (statsRequestRestore).
         // Only when the pin itself was restored — a report of nothing is
         // not opened.
@@ -6392,14 +6458,22 @@ function initMichiganExplorer() {
    * permalink, the <iframe> snippet (visible BEFORE it is copied — no more
    * blind clipboard write), and the coordinates as their own copyable row.
    *
-   * Every URL handed out carries CAMPAIGN TAGS (?utm_source=share|embed
-   * before the #hash, so the hash router never sees them). gtag reads utm_*
-   * natively; GoatCounter's count.js sends location.search with every hit
-   * and uses utm_source as the referrer, while its canonical-link path
-   * normalization keeps the recorded path clean — so shared/embedded
-   * arrivals attribute in both stacks and the path stats pay nothing.
-   * Organic traffic stays untagged, and a re-share from a tagged page
-   * rebuilds from origin+pathname, so an inbound tag is never copied
+   * Every URL handed out carries a SOURCE TAG before the #hash, where the
+   * hash router never sees it: ?ref=share for a copied or sent link, ?ref=qr
+   * for the QR code, ?ref=embed for the iframe. GoatCounter's count.js sends
+   * location.search with every hit and its server takes the first of
+   * utm_source, ref, src and source as the referrer, while its canonical-link
+   * path normalization keeps the recorded path clean.
+   *
+   * IT WAS ?utm_source=share&utm_medium=link|qr UNTIL 2026-10-09, and the
+   * medium half never reached the counter: GoatCounter keeps no utm_medium,
+   * so a scan and a pasted link both read "share" there, and only Google
+   * Analytics — on the two apps that run it — could tell them apart. One
+   * short tag per source is 25 characters shorter AND splits them in the
+   * counter every app runs. The cost is on those two apps: gtag reads only
+   * utm_* tags, so a shared arrival no longer carries a share label in Google
+   * Analytics. Organic traffic stays untagged, and a re-share from a tagged
+   * page rebuilds from origin+pathname, so an inbound tag is never copied
    * forward as the next reader's source.
    *
    * Everything interpolated is our own trusted content — canonical fork URL
@@ -6418,21 +6492,19 @@ function initMichiganExplorer() {
   }
 
   // The shareable link: CURRENT origin (a preview shares the preview, exactly
-  // like the old Copy-link did) + campaign tags + the live hash. Any inbound
-  // search — including someone else's utm tags — is deliberately dropped.
+  // like the old Copy-link did) + the source tag + the live hash. Any inbound
+  // search — including someone else's tags — is deliberately dropped.
   function shareLinkUrl() {
     syncUrlHash(); // reflect the very latest point/layers/zoom first
-    return location.origin + location.pathname +
-      "?utm_source=share&utm_medium=link" + location.hash;
+    return location.origin + location.pathname + "?ref=share" + location.hash;
   }
 
-  // The QR's own URL. Same view, but `utm_medium=qr`, because a scan and a
-  // pasted link are different mediums and a feature nobody can measure is one
-  // nobody can evaluate.
+  // The QR's own URL. Same view, but `ref=qr`, because a scan and a pasted
+  // link are different sources and a feature nobody can measure is one nobody
+  // can evaluate.
   function shareQrUrl() {
     syncUrlHash();
-    return location.origin + location.pathname +
-      "?utm_source=share&utm_medium=qr" + location.hash;
+    return location.origin + location.pathname + "?ref=qr" + location.hash;
   }
 
   function buildEmbedSnippet() {
@@ -6442,7 +6514,7 @@ function initMichiganExplorer() {
     // responsive; loading=lazy so it never blocks the host page;
     // allow=geolocation keeps the "locate me" button working inside.
     var url = shareCanonicalBase().replace(/[?#].*$/, "") +
-      "?utm_source=embed&utm_medium=iframe" + location.hash;
+      "?ref=embed" + location.hash;
     return '<iframe src="' + url + '" width="100%" height="600" ' +
       'style="border:0;max-width:100%" loading="lazy" ' +
       'title="' + appDisplayName() + '" ' +
@@ -6579,8 +6651,9 @@ function initMichiganExplorer() {
         trackEvent("share-qr");
       } else {
         // Unreachable for any view this app can produce — the longest share URL
-        // measured 663 bytes against version 40's 2,953 — but a reader is told
-        // rather than shown an empty box if it ever happens.
+        // measured 199 bytes on 2026-10-09 (all 41 Illinois layers, a pin, the
+        // stats flag) against version 40's 2,953 — but a reader is told rather
+        // than shown an empty box if it ever happens.
         var qrNote = document.createElement("p");
         qrNote.className = "share-popover-note";
         qrNote.textContent = "This view's link is too long for a QR code. Copy it instead.";
@@ -8638,7 +8711,15 @@ function initMichiganExplorer() {
     };
   }
 
-  function fadedStyle(baseStyle) {
+  // Every other district in a layer fades while one is lit, which suits a
+  // layer that tiles its ground: the neighbours are everywhere and the lit one
+  // has to stand out from them. A layer whose districts are few and scattered
+  // across ground most of which is in none of them (tribal land) loses its
+  // others from sight that way, so its style can set keepOthersVisible and
+  // they keep their ordinary style; the lit one still takes the highlight.
+  function fadedStyle(baseStyle, mod) {
+    var style = mod && mod.overlay && mod.overlay.style;
+    if (style && style.keepOthersVisible) return Object.assign({ opacity: 1 }, baseStyle);
     return {
       color: baseStyle.color,
       weight: Math.max(1, (baseStyle.weight || 1.5) - 0.5),
@@ -8721,7 +8802,7 @@ function initMichiganExplorer() {
     var feature = findFeatureContaining(rt.geojson, state.selectedPoint);
     if (!feature) { clearLayerHighlight(mod); return; }
 
-    var faded = fadedStyle(baseStyleFor(mod));
+    var faded = fadedStyle(baseStyleFor(mod), mod);
     var highlight = highlightStyleFor(mod);
 
     // Fast path (P7): the faded/base style of the non-matched paths depends only
@@ -9301,7 +9382,7 @@ function initMichiganExplorer() {
     var rt = layerRuntime[mod.id];
     var base = baseStyleFor(mod) || {};
     var selected = rt.tileSelectedId != null || !!rt.tileLiveSelected;
-    var hl = highlightStyleFor(mod), faded = fadedStyle(base);
+    var hl = highlightStyleFor(mod), faded = fadedStyle(base, mod);
     var isSel = ["boolean", ["feature-state", "sel"], false];
     var baseOpacity = base.opacity == null ? 1 : base.opacity;
     return {
@@ -9513,7 +9594,7 @@ function initMichiganExplorer() {
       var mod = this.mod, rt = layerRuntime[mod.id], sel = this.liveSelected;
       var anySelected = !!sel || rt.tileSelectedId != null;
       var base = baseStyleFor(mod) || {};
-      var faded = fadedStyle(base), lit = Object.assign({}, base, highlightStyleFor(mod));
+      var faded = fadedStyle(base, mod), lit = Object.assign({}, base, highlightStyleFor(mod));
       this.live.eachLayer(function (sub) {
         var on = !!sel && sub.feature === sel;
         if (sub.setStyle) sub.setStyle(on ? lit : anySelected ? faded : base);
@@ -13202,7 +13283,7 @@ function initMichiganExplorer() {
     group: "political",
     label: "Tribal Government",
     loader: loadMiTribalAreas,
-    style: { color: "#1F6F6B", weight: 2, fillColor: "#3E9A95", fillOpacity: 0.12, dashArray: "6 3" },
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
     fields: [
       // The nation as the Bureau of Indian Affairs names it, which is NOT the
       // Census's own text for the parcel: the Census writes names like
@@ -13843,7 +13924,7 @@ function initMichiganExplorer() {
       // features are already in it.
       if (!rt || !rt.overlayLayer || !features.length) return;
       rt.overlayLayer.addData({ type: "FeatureCollection", features: features });
-      var style = rt.highlightApplied ? fadedStyle(baseStyleFor(spec)) : baseStyleFor(spec);
+      var style = rt.highlightApplied ? fadedStyle(baseStyleFor(spec), spec) : baseStyleFor(spec);
       if (style) {
         rt.overlayLayer.eachLayer(function (subLayer) {
           if (subLayer.setStyle && features.indexOf(subLayer.feature) !== -1) subLayer.setStyle(style);
@@ -15869,7 +15950,8 @@ function initMichiganExplorer() {
    * address and the date under the pinned district.
    *
    * A LINK REOPENS THE REPORT. While the report is open the permalink carries
-   * `stats=1` beside the pin (syncUrlHash), and "Copy link" hands that URL
+   * `s=1` beside the pin (syncUrlHash; `stats=1` in a link made before
+   * 2026-10-09, which still reopens it), and "Copy link" hands that URL
    * out — on a touch device through the platform's share sheet. A reader
    * who opens it gets the point, the layers and the pin from the permalink,
    * and then the report, once the pinned district and the other switched-on
@@ -16036,11 +16118,11 @@ function initMichiganExplorer() {
     statsOpenSeq++; // anything still computing for the closed screen stops
     if (statsIsOpen()) {
       statsModal.shut();
-      syncUrlHash(); // the permalink stops carrying stats=1
+      syncUrlHash(); // the permalink stops carrying s=1
     }
   }
 
-  // REOPENING FROM A LINK (`stats=1`). Requested by applyStateFromHash after
+  // REOPENING FROM A LINK (`s=1`, or `stats=1` in the long form). Requested by applyStateFromHash after
   // it restores the pin; tried again every time the outlines refresh, which
   // is every time a layer's query or boundaries arrive.
   var STATS_RESTORE_WAIT_MS = 20000;
@@ -16197,7 +16279,7 @@ function initMichiganExplorer() {
     var foot = cardEl("p", "stats-foot");
     body.appendChild(foot);
     m.open();
-    syncUrlHash(); // the permalink now reopens this report (stats=1)
+    syncUrlHash(); // the permalink now reopens this report (s=1)
 
     // People, where this app ships them: every county the districts touch.
     var box = featureBBox(parentFeature).slice();
@@ -16279,7 +16361,7 @@ function initMichiganExplorer() {
     });
   }
 
-  // "Copy link": the permalink with stats=1, so the reader it is sent to
+  // "Copy link": the permalink with s=1, so the reader it is sent to
   // lands on this report. On a touch device the platform's share sheet, as
   // the point chip's Share does. Counted by the pinned layer, never the
   // district.
@@ -16816,7 +16898,7 @@ function initMichiganExplorer() {
     basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; }, // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
     // The QR encoder and the URL it is given, so a test can hold the drawn code
     // to the payload it should carry rather than only counting that something
-    // was drawn. Two URLs that differ by `utm_medium=link` against `qr` produce
+    // was drawn. Two URLs that differ by `ref=share` against `ref=qr` produce
     // different matrices, which is what makes that assertion sharp.
     qrDarkModules: function (text) {
       var code = qrEncode(text, { level: "M" });
@@ -16827,7 +16909,10 @@ function initMichiganExplorer() {
       }
       return { dark: n, size: code.size, version: code.version };
     },
-    shareUrls: function () { return { link: shareLinkUrl(), qr: shareQrUrl() }; }
+    shareUrls: function () { return { link: shareLinkUrl(), qr: shareQrUrl() }; },
+    // The current address-bar view as the boot parse reads it — ids, never
+    // codes — so a test can assert what a link MEANS in either spelling.
+    permalinkState: function () { return readPermalink(location.hash.replace(/^#/, "")); }
   };
   /* ==== ENGINE:END exports ==== */
   /* The theme is reachable from the debug namespace so a check can drive it

@@ -1012,11 +1012,11 @@ try {
     await page.waitForTimeout(300);
     const copied = await page.evaluate(() => navigator.clipboard.readText().catch(() => ""));
     check("the form's copied link carries the view and the text",
-      /#point=41\.88250,-87\.62850&layers=congress/.test(copied) && /[#&]feedback=Wrong%20name%20here$/.test(copied), copied);
+      /#p=41\.8825,-87\.6285&l=cg&/.test(copied) && /[#&]feedback=Wrong%20name%20here$/.test(copied), copied);
     await page.click("#feedback-github");
     const drafted = await page.evaluate(() => decodeURIComponent((window.__opened[0] || "").split("&body=")[1] || ""));
     check("the drafted report names the page without repeating the feedback text",
-      /^Wrong name here\n/.test(drafted) && /Page: \S+#point=41\.88250,-87\.62850/.test(drafted) && !/Page: \S*feedback=/.test(drafted), drafted.slice(0, 160));
+      /^Wrong name here\n/.test(drafted) && /Page: \S+#p=41\.8825,-87\.6285/.test(drafted) && !/Page: \S*feedback=/.test(drafted), drafted.slice(0, 160));
     const events = await page.evaluate(() => (window.__gcEvents || []).filter((v) => v && v.event && /^feedback/.test(v.path)).map((v) => v.path));
     check("opening from a link, copying and sending are each counted once",
       events.join() === "feedback-open/link,feedback-link,feedback-send/github", JSON.stringify(events));
@@ -1028,8 +1028,8 @@ try {
   //     on a touch device rather than replacing it, because the OS sheet cannot
   //     host a QR and the QR has to be reachable on a phone too). The code is
   //     held to the URL it should carry, not merely counted: the QR payload is
-  //     the same view with `utm_medium=qr`, which differs from the copy-link
-  //     URL by two characters and so produces a DIFFERENT matrix, so a stale or
+  //     the same view with `ref=qr`, which differs from the copy-link URL's
+  //     `ref=share` and so produces a DIFFERENT matrix, so a stale or
   //     wrong payload fails rather than passing for having drawn something. The
   //     white ground is asserted in the DARK theme, because an inverted QR fails
   //     on many scanners and that is the one thing here that must not follow the
@@ -1059,9 +1059,11 @@ try {
     check("the share popover draws a QR of THIS view's qr-tagged link",
       !!drawn && !!expect && drawn.rects === expect.dark && drawn.rects !== otherPayload.dark,
       `drawn=${drawn && drawn.rects} qr=${expect && expect.dark} link=${otherPayload && otherPayload.dark} v=${expect && expect.version}`);
-    check("the QR payload carries utm_medium=qr and the same point and layers",
-      /[?&]utm_medium=qr(&|#)/.test(urls.qr) && /#point=41\.88250,-87\.62850/.test(urls.qr) && /layers=congress/.test(urls.qr),
-      urls.qr);
+    // The short form, held literally: `cg` is congress's permanent code, so a
+    // code that moved would fail here as well as in generate_metro_files.
+    check("the QR payload carries ref=qr and the same point and layers, in the short form",
+      /\?ref=qr#p=41\.8825,-87\.6285&l=cg(&z=[\d.]+)?$/.test(urls.qr) && /\?ref=share#p=41\.8825,-87\.6285&l=cg(&z=[\d.]+)?$/.test(urls.link),
+      `${urls.qr} / ${urls.link}`);
     check("the QR keeps a white ground in the dark theme, so it still scans",
       !!drawn && drawn.ground === "#ffffff", drawn && drawn.ground);
     const events = await page.evaluate(() => (window.__gcEvents || []).filter((v) => v && v.event && /^share-qr$/.test(v.path)).map((v) => v.path));
@@ -1148,7 +1150,7 @@ try {
         (window.__gcEvents || []).filter((v) => v && v.event && /^compare-stats-(row|print)\//.test(v.path)).map((v) => v.path));
       check("opening a row and printing are each counted once, by layer",
         statsEvents.join() === "compare-stats-row/il-house,compare-stats-print/congress", JSON.stringify(statsEvents));
-      // A LINK REOPENS THE REPORT: the open report puts stats=1 in the
+      // A LINK REOPENS THE REPORT: the open report puts s=1 in the
       // permalink, closing it takes it out, and a fresh load of that link
       // opens the report by itself once the boundaries are in.
       const openHash = await page.evaluate(() => location.hash);
@@ -1159,8 +1161,8 @@ try {
         linkEvents.join() === "compare-stats-link/congress", JSON.stringify(linkEvents));
       await page.keyboard.press("Escape");
       const closedHash = await page.evaluate(() => location.hash);
-      check("the open report puts stats=1 in the link, and closing it takes it out",
-        /[#&]pin=congress&stats=1(&|$)/.test(openHash) && !/stats=1/.test(closedHash), `${openHash} / ${closedHash}`);
+      check("the open report puts s=1 in the link, and closing it takes it out",
+        /[#&]c=cg&s=1(&|$)/.test(openHash) && !/(^|[#&])s=1(&|$)/.test(closedHash), `${openHash} / ${closedHash}`);
       const again = await browser.newContext({ serviceWorkers: "block" });
       // The Congress card's roster is held back 4 s so the boundaries always
       // arrive first: the report must wait for the card, whose wording names
@@ -1187,8 +1189,8 @@ try {
         hash: location.hash,
         events: (window.__gcEvents || []).filter((v) => v && v.event && /^compare-stats/.test(v.path)).map((v) => v.path),
       }));
-      check("a link carrying stats=1 reopens the report for the same district",
-        came && back.name === "IL-7" && /stats=1/.test(back.hash), JSON.stringify(back));
+      check("a link carrying s=1 reopens the report for the same district",
+        came && back.name === "IL-7" && /(^|[#&])s=1(&|$)/.test(back.hash), JSON.stringify(back));
       check("a report reopened by a link is counted apart from one opened by hand",
         back.events.join() === "compare-stats-reopen/congress", JSON.stringify(back.events));
       await again.close();
@@ -1340,7 +1342,8 @@ try {
             return block && block.hidden === true;
           }, id, { timeout: QUERY_TIMEOUT })
           .then(() => true, () => false);
-        const hashKeepsLayer = await page.evaluate((cid) => location.hash.includes(cid), id);
+        const hashKeepsLayer = await page.evaluate(
+          ({ cid, n }) => window[n].permalinkState().layers.includes(cid), { cid: id, n: EXPORTS_NAME });
         // assert the invariant directly, not just its hash reflection: hide
         // must never mutate state.layersOn (that's what keeps permalinks and
         // reappear-on-return working)
@@ -1377,14 +1380,17 @@ try {
     const res = await page.evaluate((n) => {
       const board = document.getElementById("toggle-county-board");
       const fire = document.getElementById("toggle-fire-district");
-      const hash = location.hash;
+      // Read through the app's own parse: the hash is rewritten into the
+      // short form (`l=cb,fd`) once the toggles fire, so the ids are only
+      // visible decoded.
+      const ids = window[n].permalinkState().layers;
       return {
         boardOn: !!(board && board.checked) && window[n].state.layersOn["county-board"] === true,
         fireOn: !!(fire && fire.checked) && window[n].state.layersOn["fire-district"] === true,
-        hashRewritten: hash.indexOf("county-board") !== -1 && hash.indexOf("fire-district") !== -1 &&
-          hash.indexOf("commissioner") === -1 && hash.indexOf("will-county-board") === -1 &&
-          hash.indexOf("will-county-fire") === -1,
-        oneCopy: hash.split("county-board").length === 2,
+        hashRewritten: ids.includes("county-board") && ids.includes("fire-district") &&
+          !ids.includes("commissioner") && !ids.includes("will-county-board") &&
+          !ids.includes("will-county-fire"),
+        oneCopy: ids.filter((id) => id === "county-board").length === 1,
       };
     }, EXPORTS_NAME);
     check(
@@ -1528,14 +1534,13 @@ try {
       const coords = pop.querySelector(".share-popover-coords").textContent;
       // the values are built at open time, AFTER the click's syncUrlHash —
       // so location.hash here is exactly the hash both strings must carry
-      const wantUrl = location.origin + location.pathname +
-        "?utm_source=share&utm_medium=link" + location.hash;
+      const wantUrl = location.origin + location.pathname + "?ref=share" + location.hash;
       document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
       return {
         opened: true,
         urlOk: url === wantUrl,
-        linkTagged: url.indexOf("?utm_source=share&utm_medium=link#") !== -1,
-        embedTagged: embed.indexOf("?utm_source=embed&utm_medium=iframe") !== -1,
+        linkTagged: url.indexOf("?ref=share#") !== -1,
+        embedTagged: embed.indexOf("?ref=embed#") !== -1,
         embedShape: embed.indexOf('<iframe src="') === 0 && embed.indexOf(location.hash) !== -1,
         embedCanonical: embed.indexOf(location.origin) === -1 || location.hostname !== "localhost",
         coordsOk: /^-?\d+\.\d{5}, -?\d+\.\d{5}$/.test(coords),
@@ -1579,11 +1584,11 @@ try {
         present: !!btn,
         pressed: btn && btn.getAttribute("aria-pressed") === "true",
         styled: btn && btn.classList.contains("is-pinned"),
-        inHash: /(^|[#&])pin=school-board(&|$)/.test(location.hash),
+        inHash: /(^|[#&])c=sb(&|$)/.test(location.hash),
       };
     });
     check(
-      "a shared #pin= restores the pinned parent and stays in the hash",
+      "a shared #pin= restores the pinned parent and stays in the hash (as c=)",
       restored.present && restored.pressed && restored.styled && restored.inHash,
       JSON.stringify(restored)
     );
@@ -1604,17 +1609,17 @@ try {
       btn.click();
       const afterUnpin = {
         pressed: btn.getAttribute("aria-pressed") === "true",
-        inHash: /(^|[#&])pin=/.test(location.hash),
+        inHash: /(^|[#&])c=/.test(location.hash),
       };
       btn.click();
       const afterRepin = {
         pressed: btn.getAttribute("aria-pressed") === "true",
-        inHash: /(^|[#&])pin=school-board(&|$)/.test(location.hash),
+        inHash: /(^|[#&])c=sb(&|$)/.test(location.hash),
       };
       return { afterUnpin, afterRepin };
     });
     check(
-      "unpinning drops pin= from the hash and re-pinning puts it back",
+      "unpinning drops the pin from the hash and re-pinning puts it back",
       !roundTrip.afterUnpin.pressed && !roundTrip.afterUnpin.inHash &&
         roundTrip.afterRepin.pressed && roundTrip.afterRepin.inHash,
       JSON.stringify(roundTrip)
@@ -1638,7 +1643,7 @@ try {
       const page = await booted(context, `${BASE}#point=${POINT}${tail}`);
       await cardText(page, "school-board"); // one card rendered = the hash parse is done
       const res = await page.evaluate(() => ({
-        inHash: /(^|[#&])pin=/.test(location.hash),
+        inHash: /(^|[#&])(c|pin)=/.test(location.hash),
         anyPressed: !!document.querySelector('.pin-parent-btn[aria-pressed="true"]'),
         hash: location.hash,
       }));
@@ -1657,24 +1662,71 @@ try {
   //     `layers=` alone: a link shared before the county consolidation
   //     carries the old id in BOTH parameters, and a rewrite that fixed one
   //     of them would light the consolidated layer and silently drop the pin.
-  //     The hash is the whole assertion: `pin=` is emitted only while its
-  //     layer is on, so reading `pin=county-board` back proves the alias was
-  //     applied AND the restore honoured it.
-  {
+  //     The hash is the whole assertion: the pin is emitted (as `c=`) only
+  //     while its layer is on, so reading `c=cb` — county-board's permanent
+  //     code — back proves the alias was applied AND the restore honoured it.
+  //     The short keys `l=`/`c=` go through the same rewrite, which is what
+  //     the NEXT consolidation needs (it appends the retired layer's code);
+  //     a retired id typed into them stands in for that code here.
+  for (const [why, hash] of [
+    ["pin=", `#point=${POINT}&layers=commissioner&pin=commissioner`],
+    ["c=", `#p=${POINT}&l=commissioner&c=commissioner`],
+  ]) {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, `${BASE}#point=${POINT}&layers=commissioner&pin=commissioner`);
+    const page = await booted(context, `${BASE}${hash}`);
     await cardText(page, "county-board");
     const res = await page.evaluate(() => ({
-      aliased: /(^|[#&])pin=county-board(&|$)/.test(location.hash),
+      aliased: /(^|[#&])c=cb(&|$)/.test(location.hash),
       oldGone: location.hash.indexOf("commissioner") === -1,
       hash: location.hash,
     }));
     check(
-      "an old permalink id in pin= aliases with the layers",
+      `an old permalink id in ${why} aliases with the layers`,
       res.aliased && res.oldGone,
       JSON.stringify(res)
     );
     await context.close();
+  }
+
+  // 2h2. A SHORT LINK OPENS THE SAME VIEW AS THE LONG ONE IT REPLACED. Since
+  //     2026-10-09 the app writes `#p=…&l=…&c=…&z=…`, layers as their
+  //     permanent codes, and every link written before that is still read.
+  //     So this boots the LONG form, takes the short hash the app rewrote it
+  //     into, boots THAT in a fresh page, and requires the two pages to agree
+  //     on the point, the layers switched on, the pin and the zoom — read off
+  //     the app's state, not off either string. A code the table does not
+  //     know is dropped like an unknown id, never guessed at.
+  {
+    const long = `#point=${POINT}&layers=school-board,congress,ward&pin=school-board&zoom=14`;
+    const view = async (hash) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}${hash}`);
+      await cardText(page, "school-board");
+      const got = await page.evaluate((n) => {
+        const X = window[n];
+        const pressed = document.querySelector('.pin-parent-btn[aria-pressed="true"]');
+        return {
+          hash: location.hash,
+          point: X.state.selectedPoint && [+X.state.selectedPoint.lat.toFixed(5), +X.state.selectedPoint.lng.toFixed(5)],
+          on: Object.keys(X.state.layersOn).filter((id) => X.state.layersOn[id]).sort(),
+          pinned: !!pressed && !!document.getElementById("card-school-board").parentElement.contains(pressed),
+          zoom: X.map.getZoom(),
+        };
+      }, EXPORTS_NAME);
+      await context.close();
+      return got;
+    };
+    const a = await view(long);
+    const b = await view(a.hash);
+    const same = (x, y) => JSON.stringify({ ...x, hash: 0 }) === JSON.stringify({ ...y, hash: 0 });
+    check("a long link is rewritten into the short form",
+      /^#p=41\.8825,-87\.6285&l=[a-z0-9,]+&c=sb&z=14$/.test(a.hash) && a.hash.length < long.length,
+      `${long} -> ${a.hash}`);
+    check("the short link opens exactly the view the long one did",
+      same(a, b) && a.on.length === 3 && a.pinned && a.zoom === 14, JSON.stringify({ a, b }));
+    const c = await view("#p=41.8825,-87.6285&l=sb,zz9&z=14");
+    check("an unknown code in a short link is dropped, and the known ones still apply",
+      c.on.join() === "school-board" && !/zz9/.test(c.hash), JSON.stringify(c));
   }
 
   // 2i. THE PANEL COUNT COUNTS WHAT THE SIDEBAR SHOWS. The results panel's

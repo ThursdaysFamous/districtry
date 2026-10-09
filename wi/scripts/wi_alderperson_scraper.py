@@ -670,6 +670,44 @@ def fold_set(name):
                      ("jr", "sr", "ii", "iii", "iv"))
 
 
+CF_TOKEN = re.compile(r'(?:/cdn-cgi/l/email-protection#|data-cfemail=")([0-9a-fA-F]{4,})')
+
+
+def cf_decode(token):
+    """Cloudflare's e-mail scrambling: the first byte is the XOR key for the
+    rest. The same decode wi_county_board_scraper.py applies."""
+    raw = bytes.fromhex(token)
+    return "".join(chr(c ^ raw[0]) for c in raw[1:])
+
+
+def cf_email(fragment, label, domain=None):
+    """{"email": ...} from the one scrambled address in FRAGMENT, or {}.
+
+    THE SCRAMBLING IS NOT AN ACCESS CONTROL (Adam, 2026-10-09): the page hands
+    the key to every visitor inside the same bytes, so decoding it reads the
+    page as published. Two tokens decoding to different addresses, or a token
+    that does not decode to an address (on DOMAIN, where the city has one),
+    fails — a wrong address on a card is worse than none.
+    """
+    got = set()
+    for t in CF_TOKEN.findall(fragment):
+        try:
+            got.add(cf_decode(t).strip())
+        except ValueError:
+            raise SystemExit("%s: a Cloudflare email token is not hex pairs: %r" % (label, t))
+    if not got:
+        return {}
+    if len(got) > 1:
+        raise SystemExit("%s: one entry carries %d different scrambled addresses %s"
+                         % (label, len(got), sorted(got)))
+    addr = got.pop()
+    if not re.fullmatch(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", addr) or (
+            domain and not addr.lower().endswith("@" + domain)):
+        raise SystemExit("%s: a Cloudflare token decoded to %r, not an address%s"
+                         % (label, addr, " on " + domain if domain else ""))
+    return {"email": addr}
+
+
 def strip_tags(html):
     t = re.sub(r"<script.*?</script>|<style.*?</style>", "", html, flags=re.S)
     t = re.sub(r"<[^>]+>", "\n", t)
@@ -884,6 +922,8 @@ def scrape_green_bay():
         em = re.search(r'mailto:([^"?]+)"', li)
         if em:
             entry["email"] = em.group(1).strip()
+        else:
+            entry.update(cf_email(li, "green bay D%d" % n, "greenbaywi.gov"))
         ph = re.search(r'href="tel:([^",]+)', li)
         if ph:
             entry["phone"] = ph.group(1).strip()
@@ -893,36 +933,26 @@ def scrape_green_bay():
         members[key] = entry
     if len(members) != 12:
         raise SystemExit("green bay names %d of 12 districts" % len(members))
-    # THE ADDRESSES WENT BEHIND CLOUDFLARE'S OBFUSCATION ON OR BEFORE
-    # 2026-10-01. The page served twelve `mailto:` links and now serves none —
-    # zero in 673 KB — with `data-cfemail` in their place. That is an access
-    # control and is not worked around, which is the ruling this file already
-    # applies at New Lisbon.
+    # THE ADDRESSES WENT BEHIND CLOUDFLARE'S E-MAIL SCRAMBLING ON OR BEFORE
+    # 2026-10-01: the page served twelve `mailto:` links and now serves each
+    # as a `/cdn-cgi/l/email-protection#<hex>` link, which cf_email() reads.
+    # From 2026-10-01 to 2026-10-09 this function called that an access control
+    # and raised, so the builder carried the city whole. It is not one: the
+    # page hands the key to every visitor in the same bytes (Adam, 2026-10-09,
+    # the reading the county board scraper already applied at Buffalo, Iron
+    # and Manitowoc). Measured that day, all twelve decoded addresses are
+    # byte-identical to the ones the file already shipped.
     #
-    # IT IS A RuntimeError AND NOT A GATE, deliberately, and the difference is
-    # the whole point: a SystemExit here would end the run for every other city,
-    # while a recorded failure makes the builder carry Green Bay's last shipped
-    # block forward with a dated reason — which PRESERVES the twelve addresses
-    # this project already fetched (Adam, 2026-09-19) instead of deleting them
-    # because the city stopped printing them. Measured the same day, the carry
-    # costs nothing else: every name, profile link and phone this scrape now
-    # reads is byte-identical to what ships, so the only thing being preserved
-    # is the contact that vanished.
-    #
-    # THE COST IS NAMED RATHER THAN HIDDEN. While the carry stands, a CHANGE of
-    # alderperson in Green Bay would not reach the file either, because this
-    # builder carries whole cities and not single fields. The weekly run prints
-    # the carry's age on every pass, so that cost becomes more visible the
-    # longer it lasts, and the proper fix — carrying the e-mail alone, under the
-    # name-agreement guard build_wi_county_officer_roster.py already uses for
-    # exactly this — is recorded in wi/WATCH.md rather than rushed here.
+    # A page with no address in either form still fails, because twelve seats
+    # with no contact is the first draft's split defect above, not a city that
+    # stopped publishing.
     if not any("email" in m for m in members.values()):
-        raise RuntimeError(
-            "green bay publishes no address in the clear any more: 0 mailto "
-            "links on the page and %d data-cfemail in their place, which is an "
-            "access control. Names, profile links and phones still read; the "
-            "city is carried so the addresses already fetched are preserved"
-            % len(re.findall(r"data-cfemail", page)))
+        raise SystemExit(
+            "green bay: no member carries an address, in a mailto: link or a "
+            "Cloudflare email-protection link — the entry split or the markup "
+            "moved [%d data-cfemail, %d email-protection on the page]"
+            % (len(re.findall(r"data-cfemail", page)),
+               len(re.findall(r"email-protection#", page))))
     return members, GREEN_BAY_DIR
 
 
@@ -1567,9 +1597,13 @@ def scrape_new_lisbon():
     posture Menomonie and Viroqua take for their one-ward-per-district pages.
     A re-warding that broke the grouping fails here instead of moving a name.
 
-    E-MAIL IS NOT READ: the page serves every address through Cloudflare's
-    obfuscation ("[email protected]"), which is an access control and is not
-    worked around. The phones are published in the clear and do ship.
+    NO MEMBER E-MAIL IS PUBLISHED. The page's only addresses sit behind
+    Cloudflare's e-mail scrambling, and decoded on 2026-10-09 they are the
+    mayor's and the clerk's (nlmayor@, nlclerk@), neither a council seat's —
+    so there is nothing to read here, not something being withheld. (Until
+    that date this docstring called the scrambling an access control; it is
+    not, and cf_email() reads it where a seat's address is behind it.) The
+    phones are published in the clear and do ship.
     """
     ward_to_alder = ltsb_ward_to_alder("New Lisbon", "C")
     page = fetch(NEW_LISBON_INDEX)
@@ -2088,8 +2122,8 @@ def scrape_dodgeville():
     representatives" — which is asserted rather than trusted.
 
     ITS MAILBOXES ARE NUMERIC CHARACTER REFERENCES (`&#109;&#97;...`), not
-    Cloudflare's `data-cfemail`: H.unescape decodes them, so they are ordinary
-    published addresses and no obfuscation is being worked around.
+    Cloudflare's scrambling (which cf_email() reads): H.unescape decodes them,
+    and they are ordinary published addresses.
     """
     page = fetch(DODGEVILLE_INDEX)
     if not re.search(r"four aldermanic districts with two representatives", page, re.I):

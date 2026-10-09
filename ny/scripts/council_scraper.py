@@ -186,12 +186,49 @@ def district_office(url):
     Returns None (never a guess) when the page lists no street address — e.g.
     District 48, whose District Office block is a phone number only.
     """
+    html = _fetch_optional(url)
+    if html is None:
+        return None
+    addr = _office_from_html(html)
+    if addr is not None:
+        return addr
+    # Measured 2026-10-09 (bot PR #1434, which would have dropped the office for
+    # 49 of 51 members): the Council moved the District Office widget off the
+    # /district-N/ pages and onto each member's own WordPress subsite, e.g.
+    # https://council.nyc.gov/christopher-marte/ carries
+    # <h2 class="widget-title">District Office</h2> while /district-1/ no
+    # longer does. The district page still names its member's subsite in its
+    # REST link (<link rel="https://api.w.org/" href=".../<slug>/wp-json/">), so
+    # the slug is read from the page rather than derived from the name.
+    m = MEMBER_SITE_RE.search(html)
+    if not m:
+        return None
+    member = _fetch_optional("https://council.nyc.gov/%s/" % m.group(1))
+    if member is None:
+        return None
+    return _office_from_html(member)
+
+
+MEMBER_SITE_RE = re.compile(r'https://council\.nyc\.gov/([a-z0-9-]+)/wp-json/')
+
+
+def _fetch_optional(url):
     try:
-        html = fetch_page(url, timeout=45)
+        return fetch_page(url, timeout=45)
     except SystemExit:
         raise                                  # a refusal is never swallowed
     except Exception:  # noqa: BLE001 — the office is an enhancement, never fatal
         return None
+
+
+def _office_from_html(html):
+    # The member site's sidebar widget is the office of record. Its body text can
+    # carry a heading of its own — District 38's reads "District Office Office
+    # Hours at 4417 4th Avenue, Brooklyn, NY 11231", whose ZIP differs from the
+    # widget's 11220 — so when the widget is on the page, read only from it.
+    w = html.find('aria-label="District office contact information"')
+    if w >= 0:
+        html = html[w:]
     text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html))
     m = re.search(r"District Office\s+(.+)", text)
     if not m:
