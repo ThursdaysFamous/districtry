@@ -1,0 +1,602 @@
+{
+  "1": {
+    "name": "Eddy Dempsey",
+    "party": "Republican",
+    "email": "eddy.dempsey@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/eddy-dempsey"
+  },
+  "2": {
+    "name": "Jim Olsen",
+    "party": "Republican",
+    "email": "jim.olsen@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/jim-olsen"
+  },
+  "3": {
+    "name": "Rick West",
+    "party": "Republican",
+    "email": "rick.west@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/rick-west"
+  },
+  "4": {
+    "name": "Bob Culver",
+    "party": "Republican",
+    "email": "bob.culver@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/bob-culver"
+  },
+  "5": {
+    "name": "Josh West",
+    "party": "Republican",
+    "email": "josh.west@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/josh-west"
+  },
+  "6": {
+    "name": "Rusty Cornwell",
+    "party": "Republican",
+    "email": "rusty.cornwell@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/rusty-cornwell"
+  },
+  "7": {
+    "name": "Steve Bashore",
+    "party": "Republican",
+    "email": "steve.bashore@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/steve-bashore"
+  },
+  "8": {
+    "name": "Tom Gann",
+    "party": "Republican",
+    "email": "tom.gann@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/tom-gann"
+  },
+  "9": {
+    "name": "Mark Lepak",
+    "party": "Republican",
+    "email": "mark.lepak@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/mark-lepak"
+  },
+  "10": {
+    "name": "Judd Strom",
+    "party": "Republican",
+    "email": "judd.strom@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/judd-strom"
+  },
+  "11": {
+    "name": "John Kane",
+    "party": "Republican",
+    "email": "john.kane@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/john-kane"
+  },
+  "12": {
+    "name": "Mark Chapman",
+    "party": "Republican",
+    "email": "mark.chapman@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/mark-chapman"
+  },
+  "13": {
+    "name": "Neil Hays",
+    "party": "Republican",
+    "email": "neil.hays@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/neil-hays"
+  },
+  "14": {
+    "name": "Chris Sneed",
+    "party": "Republican",
+    "email": "chris.sneed@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/chris-sneed"
+  },
+  "15": {
+    "name": "Tim Turner",
+    "party": "Republican",
+    "email": "tim.turner@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/tim-turner"
+  },
+  "16": {
+    "name": "Scott Fetgatter",
+    "party": "Republican",
+    "email": "scott.fetgatter@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/scott-fetgatter"
+  },
+  "17": {
+    "name": "Jim Grego",
+    "party": "Republican",
+    "email": "jim.grego@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/jim-grego"
+  },
+  "18": {
+    "name": "David Smith",
+    "party": "Republican",
+    "email": "david.smith@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/david-smith"
+  },
+  "19": {
+    "name": "Justin Humphrey",
+    "party": "Republican",
+    "email": "justin.humphrey@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/justin-humphrey"
+  },
+  "20": {
+    "name": "Jonathan Wilk",
+    "party": "Republican",
+    "email": "jonathan.wilk@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/jonathan-wilk"
+  },
+  "21": {
+    "name": "Cody Maynard",
+    "party": "Republican",
+    "email": "cody.maynard@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/cody-maynard"
+  },
+  "22": {
+    "name": "Ryan Eaves",
+    "party": "Republican",
+    "email": "ryan.eaves@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/ryan-eaves"
+  },
+  "23": {
+    "name": "Derrick Hildebrant",
+    "party": "Republican",
+    "email": "derrick.hildebrant@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/derrick.hildebrant"
+  },
+  "24": {
+    "name": "Chris Banning",
+    "party": "Republican",
+    "email": "chris.banning@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/59th-chris-banning"
+  },
+  "25": {
+    "name": "Ronny Johns",
+    "party": "Republican",
+    "email": "ronny.johns@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/ronny-johns"
+  },
+  "26": {
+    "name": "Dell Kerbs",
+    "party": "Republican",
+    "email": "dell.kerbs@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/dell-kerbs"
+  },
+  "27": {
+    "name": "Danny Sterling",
+    "party": "Republican",
+    "email": "danny.sterling@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/danny-sterling"
+  },
+  "28": {
+    "name": "Danny Williams",
+    "party": "Republican",
+    "email": "danny.williams@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/danny-williams"
+  },
+  "29": {
+    "name": "Kyle Hilbert",
+    "party": "Republican",
+    "email": "kyle.hilbert@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/kyle-hilbert"
+  },
+  "30": {
+    "name": "Mark Lawson",
+    "party": "Republican",
+    "email": "mark.lawson@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/mark-lawson"
+  },
+  "31": {
+    "name": "Collin Duel",
+    "party": "Republican",
+    "email": "collin.duel@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/collin-duel"
+  },
+  "32": {
+    "name": "Jim Shaw",
+    "party": "Republican",
+    "email": "jim.shaw@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/jim-shaw"
+  },
+  "33": {
+    "name": "Molly Jenkins",
+    "party": "Republican",
+    "email": "molly.jenkins@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/molly-jenkins"
+  },
+  "34": {
+    "name": "Trish Ranson",
+    "party": "Democratic",
+    "email": "trish.ranson@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/trish-ranson"
+  },
+  "35": {
+    "name": "Dillon Travis",
+    "party": "Republican",
+    "email": "dillon.travis@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/dillon-travis"
+  },
+  "36": {
+    "name": "John George",
+    "party": "Republican",
+    "email": "john.george@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/john-george"
+  },
+  "37": {
+    "name": "Ken Luttrell",
+    "party": "Republican",
+    "email": "ken.luttrell@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/ken-luttrell"
+  },
+  "38": {
+    "name": "John Pfeiffer",
+    "party": "Republican",
+    "email": "john.pfeiffer@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/john-pfeiffer"
+  },
+  "39": {
+    "name": "Erick Harris",
+    "party": "Republican",
+    "email": "erick.harris@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/erick-harris"
+  },
+  "40": {
+    "name": "Chad Caldwell",
+    "party": "Republican",
+    "email": "chad.caldwell@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/chad-caldwell"
+  },
+  "41": {
+    "name": "Denise Crosswhite Hader",
+    "party": "Republican",
+    "email": "denise.crosswhitehader@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/denise-crosswhitehader"
+  },
+  "42": {
+    "name": "Cindy Roe",
+    "party": "Republican",
+    "email": "cynthia.roe@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/cynthia-roe"
+  },
+  "43": {
+    "name": "Jay Steagall",
+    "party": "Republican",
+    "email": "jay.steagall@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/jay-steagall"
+  },
+  "44": {
+    "name": "Jared Deck",
+    "party": "Democratic",
+    "email": "jared.deck@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/jared-deck"
+  },
+  "45": {
+    "name": "Annie Menz",
+    "party": "Democratic",
+    "email": "annie.menz@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/annie-menz"
+  },
+  "46": {
+    "name": "Jacob Rosecrants",
+    "party": "Democratic",
+    "email": "jacob.rosecrants@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/jacob-rosecrants"
+  },
+  "47": {
+    "name": "Brian Hill",
+    "party": "Republican",
+    "email": "brian.hill@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/brian-hill"
+  },
+  "48": {
+    "name": "Tammy Townley",
+    "party": "Republican",
+    "email": "tammy.townley@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/tammy-townley"
+  },
+  "49": {
+    "name": "Josh Cantrell",
+    "party": "Republican",
+    "email": "josh.cantrell@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/josh-cantrell"
+  },
+  "50": {
+    "name": "Stacy Adams",
+    "party": "Republican",
+    "email": "stacy.adams@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/stacy-adams"
+  },
+  "51": {
+    "name": "Brad Boles",
+    "party": "Republican",
+    "email": "brad.boles@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/brad-boles"
+  },
+  "52": {
+    "name": "Gerrid Kendrix",
+    "party": "Republican",
+    "email": "gerrid.kendrix@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/gerrid-kendrix"
+  },
+  "53": {
+    "name": "Jason Blair",
+    "party": "Republican",
+    "email": "jason.blair@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/jason-blair"
+  },
+  "54": {
+    "name": "Kevin West",
+    "party": "Republican",
+    "email": "kevin.west@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/kevin-west"
+  },
+  "55": {
+    "name": "Nick Archer",
+    "party": "Republican",
+    "email": "nick.archer@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/nick-archer"
+  },
+  "56": {
+    "name": "Dick Lowe",
+    "party": "Republican",
+    "email": "dick.lowe@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/dick-lowe"
+  },
+  "57": {
+    "name": "Anthony Moore",
+    "party": "Republican",
+    "email": "anthony.moore@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/anthony-moore"
+  },
+  "58": {
+    "name": "Carl Newton",
+    "party": "Republican",
+    "email": "carl.newton@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/carl-newton"
+  },
+  "59": {
+    "name": "Mike Dobrinski",
+    "party": "Republican",
+    "email": "mike.dobrinski@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/mike-dobrinski"
+  },
+  "60": {
+    "name": "Mike Kelley",
+    "party": "Republican",
+    "email": "mike.kelley@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/mike-kelley"
+  },
+  "61": {
+    "name": "Kenton Patzkowsky",
+    "party": "Republican",
+    "email": "kenton.patzkowsky@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/kenton-patzkowsky"
+  },
+  "62": {
+    "name": "Daniel Pae",
+    "party": "Republican",
+    "email": "daniel.pae@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/daniel-pae"
+  },
+  "63": {
+    "name": "Trey Caldwell",
+    "party": "Republican",
+    "email": "trey.caldwell@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/trey-caldwell"
+  },
+  "64": {
+    "name": "Rande Worthen",
+    "party": "Republican",
+    "email": "rande.worthen@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/rande-worthen"
+  },
+  "65": {
+    "name": "Toni Hasenbeck",
+    "party": "Republican",
+    "email": "toni.hasenbeck@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/toni-hasenbeck"
+  },
+  "66": {
+    "name": "Clay Staires",
+    "party": "Republican",
+    "email": "clay.staires@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/clay-staires"
+  },
+  "67": {
+    "name": "Rob Hall",
+    "party": "Republican",
+    "email": "rob.hall@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/rob-hall"
+  },
+  "68": {
+    "name": "Mike Lay",
+    "party": "Republican",
+    "email": "mike.lay@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/mike-lay"
+  },
+  "69": {
+    "name": "Mark Tedford",
+    "party": "Republican",
+    "email": "mark.tedford@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/mark-tedford"
+  },
+  "70": {
+    "name": "Suzanne Schreiber",
+    "party": "Democratic",
+    "email": "suzanne.schreiber@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/suzanne-schreiber"
+  },
+  "71": {
+    "name": "Amanda Clinton",
+    "party": "Democratic",
+    "email": "amanda.clinton@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/amanda-clinton"
+  },
+  "72": {
+    "name": "Michelle McCane",
+    "party": "Democratic",
+    "email": "michelle.mccane@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/michelle-mccane"
+  },
+  "73": {
+    "name": "Ron Stewart",
+    "party": "Democratic",
+    "email": "ronald.stewart@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/ronald-stewart"
+  },
+  "74": {
+    "name": "Kevin Norwood",
+    "party": "Republican",
+    "email": "kevin.norwood@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/kevin-norwood"
+  },
+  "75": {
+    "name": "T.J. Marti",
+    "party": "Republican",
+    "email": "tj.marti@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/tj-marti"
+  },
+  "76": {
+    "name": "Ross Ford",
+    "party": "Republican",
+    "email": "ross.ford@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/ross-ford"
+  },
+  "77": {
+    "name": "John Waldron",
+    "party": "Democratic",
+    "email": "john.waldron@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/john-waldron"
+  },
+  "78": {
+    "name": "Meloyde Blancett",
+    "party": "Democratic",
+    "email": "meloyde.blancett@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/meloyde-blancett"
+  },
+  "79": {
+    "name": "Melissa Provenzano",
+    "party": "Democratic",
+    "email": "melissa.provenzano@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/melissa-provenzano"
+  },
+  "80": {
+    "name": "Stan May",
+    "party": "Republican",
+    "email": "stan.may@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/stan-may"
+  },
+  "81": {
+    "name": "Mike Osburn",
+    "party": "Republican",
+    "email": "mike.osburn@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/mike-osburn"
+  },
+  "82": {
+    "name": "Nicole Miller",
+    "party": "Republican",
+    "email": "nicole.miller@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/nicole-miller"
+  },
+  "83": {
+    "name": "Eric Roberts",
+    "party": "Republican",
+    "email": "eric.roberts@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/eric-roberts"
+  },
+  "84": {
+    "name": "Tammy West",
+    "party": "Republican",
+    "email": "tammy.west@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/tammy-west"
+  },
+  "85": {
+    "name": "Cyndi Munson",
+    "party": "Democratic",
+    "email": "cyndi.munson@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/cyndi-munson"
+  },
+  "86": {
+    "name": "David Hardin",
+    "party": "Republican",
+    "email": "david.hardin@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/david-hardin"
+  },
+  "87": {
+    "name": "Ellyn Hefner",
+    "party": "Democratic",
+    "email": "ellyn.hefner@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/ellyn-hefner"
+  },
+  "88": {
+    "name": "Ellen Pogemiller",
+    "party": "Democratic",
+    "email": "ellen.pogemiller@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/ellen-pogemiller"
+  },
+  "89": {
+    "name": "Arturo Alonso",
+    "party": "Democratic",
+    "email": "arturo.alonso@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/arturo-alonsosandoval"
+  },
+  "90": {
+    "name": "Emily Gise",
+    "party": "Republican",
+    "email": "emily.gise@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/emily-gise"
+  },
+  "91": {
+    "name": "Chris Kannady",
+    "party": "Republican",
+    "email": "chris.kannady@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/chris-kannady"
+  },
+  "92": {
+    "name": "Sam Wargin Grimaldo",
+    "party": "Democratic",
+    "email": "sam.wargingrimaldo@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/sam-wargingrimaldo"
+  },
+  "93": {
+    "name": "Mickey Dollens",
+    "party": "Democratic",
+    "email": "mickey.dollens@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/mickey-dollens"
+  },
+  "94": {
+    "name": "Andy Fugate",
+    "party": "Democratic",
+    "email": "andy.fugate@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/andy-fugate"
+  },
+  "95": {
+    "name": "Max Wolfley",
+    "party": "Republican",
+    "email": "max.wolfley@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/max-wolfley"
+  },
+  "96": {
+    "name": "Preston Stinson",
+    "party": "Republican",
+    "email": "preston.stinson@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/preston-stinson"
+  },
+  "97": {
+    "name": "Aletia Timmons",
+    "party": "Democratic",
+    "email": "aletia.timmons@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/aletia-timmons"
+  },
+  "98": {
+    "name": "Gabe Woolley",
+    "party": "Republican",
+    "email": "gabe.woolley@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/gabe-woolley"
+  },
+  "100": {
+    "name": "Marilyn Stark",
+    "party": "Republican",
+    "email": "marilyn.stark@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/marilyn-stark"
+  },
+  "101": {
+    "name": "Robert Manger",
+    "party": "Republican",
+    "email": "robert.manger@okhouse.gov",
+    "url": "https://www.okhouse.gov/representatives/robert-manger"
+  }
+}
