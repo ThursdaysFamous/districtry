@@ -1,5 +1,5 @@
 {
- "measured": "2026-10-07",
+ "measured": "2026-10-08",
  "note": "The Census's own internal point per county \u2014 guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
  "points": {
   "adair": {
@@ -8,13 +8,6 @@
    "lng": -94.4781643,
    "name": "Adair County",
    "slug": "adair"
-  },
-  "adams": {
-   "fips": "003",
-   "lat": 41.0216555,
-   "lng": -94.6969059,
-   "name": "Adams County",
-   "slug": "adams"
   },
   "black-hawk": {
    "fips": "013",

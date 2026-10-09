@@ -733,14 +733,20 @@ try {
        null, "Washington, whose numbering agrees with this layer's"],
       [41.629118, -93.639423, "Polk County", "District 5 Angela Connolly",
        null, "Polk, whose numbering agrees with this layer's"],
-      // THE WITHHELD BRANCH. Adams County's numbering has not been measured,
-      // so its district card names nobody at all -- not the supervisor its
-      // own page puts in the district of this number, not anyone. Its
-      // supervisors are still on the County card. (Washington was this case
-      // until its numbering was checked on 2026-10-06.)
-      [41.0216555, -94.6969059, "Adams County", "District",
-       "Tony Hardisty",
-       "Adams, unchecked, names nobody on a district card"]
+      // Adams was the withheld case below until 2026-10-08, when the
+      // county's own district map showed its numbering agrees with this
+      // layer's; the same point now names the district's supervisor.
+      [41.0216555, -94.6969059, "Adams County", "District 2 Tony Hardisty",
+       null, "Adams, whose numbering agrees with this layer's"],
+      // THE WITHHELD BRANCH. Madison County's numbering has not been
+      // measured, so its district card names nobody at all -- not the
+      // supervisor its own page puts in the district of this number, not
+      // anyone. Its supervisors are still on the County card. (Washington
+      // and then Adams were this case until their numbering was checked.)
+      // The point is an interior point of this layer's Madison district 1.
+      [41.3280415, -94.141708, "Madison County", "District",
+       "Heather Stancil",
+       "Madison, unchecked, names nobody on a district card"]
     ]) {
       const page = await booted(context,
         `${BASE}#point=${lat},${lng}&layers=county-supervisor`);

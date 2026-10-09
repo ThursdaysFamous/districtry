@@ -294,6 +294,21 @@ NUMBERING_CHECKED = {
                    "in this layer's 1, P3 and P4 in 2, P5 in 3, P6 in 4 and P7 "
                    "in 5, each at least 99.9% of its area",
     },
+    "Adams": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-08",
+        "witness": "the county's own supervisor-district map (sent by its "
+                   "election and real estate deputy on 2026-10-08, the second "
+                   "of two images, which she said was the right one) labels "
+                   "five areas Precinct 1 to 5, each with a population near "
+                   "740, so in this county each precinct is a district; "
+                   "drawn in the same frame, each lies where this layer's "
+                   "same-numbered district does (1 south of Corning, 2 "
+                   "through and north-east of Corning, 3 north-central to the "
+                   "county line, 4 the west, 5 the east), and this instance's "
+                   "precincts ADAMS 1 to 5 each sit at least 99.9% inside the "
+                   "same-numbered district of this layer",
+    },
     "Cass": {
         "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
         "checked": "2026-10-07",
