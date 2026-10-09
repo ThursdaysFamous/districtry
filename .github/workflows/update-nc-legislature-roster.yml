@@ -8,10 +8,10 @@ name: Update NC legislature roster
 # Building room and Capitol telephone, and — if anything changed — opens a PR
 # rather than committing directly to main.
 #
-# NORTH CAROLINA IS DARK, so this job does not regenerate
-# nc/state-legislature.html: build_legislator_pages.py refuses an instance
-# metros.json does not carry, so that page is not built yet. Go-live adds the
-# step in the same change that adds nc to metros.json — nc/WATCH.md has the list.
+# THE PAGE STEPS LANDED WITH THE GO-LIVE CHANGE (2026-10-09).
+# `nc/state-legislature.html` carries a GENERATED table of both rosters, and
+# `about.html` and `sitemap.xml` count them, so all three are regenerated here
+# and staged in the same `git add`.
 
 on:
   schedule:
@@ -85,7 +85,10 @@ jobs:
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
           python3 nc/scripts/build_nc_legislature_roster.py --require-enrichment
-          git add nc/data/app/nc-senate-members.json nc/data/app/nc-house-members.json
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add nc/data/app/nc-senate-members.json nc/data/app/nc-house-members.json nc/state-legislature.html about.html sitemap.xml
           git commit -m "Update N.C. Senate + House rosters from Open States and ncleg.gov"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

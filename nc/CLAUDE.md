@@ -8,9 +8,11 @@ districtry North Carolina: a single-file, dependency-light web app. Click a poin
 Carolina (or search an address) and it reports every civic district containing that point and
 who represents you there. It serves at **districtry.com/nc/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not
-the Illinois root-scripts shape. It ships ELEVEN layers, and as of this PR **the instance is
-DARK**: no `metros.json` entry, `/nc` excluded from the Pages deploy, nothing served and no
-landing card naming it. `nc/WATCH.md` lists the four things go-live has to do in one change.
+the Illinois root-scripts shape. It ships ELEVEN layers and has been **LIVE since 2026-10-09**,
+after arriving dark on 2026-09-29. Its go-live generated `congress.html` and
+`state-legislature.html` — both chambers are named, so unlike Minnesota, Kentucky and Indiana
+this instance needed no recorded-absent legislature page — and `nc/WATCH.md` records what that
+change did and the re-check plan for every data file the app reads.
 
 **The national tier** — everything eleven layers answer today comes from a national publisher.
 **County** (100, Census TIGERweb, identity-only and the coverage ring), **U.S. House** (14

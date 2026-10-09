@@ -179,7 +179,8 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 # Counted from a coverage list instead, E would measure nothing: a state serves
 # every county it has listed, by construction.
 STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
-                  "ky": 120, "ny": 62, "in": 92}
+                  "ky": 120, "ny": 62, "in": 92,
+                  "nc": 100}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -1668,6 +1669,31 @@ ANSWERS = {
         "special-districts": OPEN,
         "tribal-government": OPEN,
     },
+    # North Carolina, added at its 2026-10-09 go-live with the national tier.
+    "nc": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("nc-senate", "nc-house"),
+        "county-boundaries": answers("county"),
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        "school-district-boundaries": answers("school-district-unified"),
+        "courts-by-district": OPEN,
+        # NORTH CAROLINA'S TOWNSHIPS GOVERN NOBODY. The Census carries every
+        # one with FUNCSTAT N (non-functioning): the boundaries exist and the
+        # governments do not, which is why nc/index.html's township card names
+        # no officeholder and records no gap. Recorded in nc/CLAUDE.md.
+        "sub-county-government": na(
+            "North Carolina's townships are boundaries without governments — "
+            "the Census marks every one non-functioning — so outside a city or "
+            "town limit the county governs."),
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # The Eastern Band of Cherokee Indians' Qualla Boundary is in the
+        # state; the fleet-wide tribal layer thread owns drawing it.
+        "tribal-government": OPEN,
+    },
     "ny": {
         "us-house": answers("congress"),
         "state-legislature": answers("state-senate", "state-assembly"),
@@ -1884,7 +1910,8 @@ def load_expected_units():
 # The state each statewide app answers for, for the one join that needs it: a
 # Wisconsin roster is keyed by the five-digit place code inside the state.
 STATE_FIPS_OF = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
-                 "mn": "27", "ky": "21", "ny": "36", "in": "18"}
+                 "mn": "27", "ky": "21", "ny": "36", "in": "18",
+                 "nc": "37"}
 
 
 def _named_anywhere(record):
