@@ -2128,8 +2128,8 @@ from the public map service, and the 13 fire, 6 library and 2 park outlines stay
 the site (the operator approved recording this on 2026-10-09). Two things in the
 answer are kept as he wrote them: the county does NOT vouch for the outlines, so
 nothing on a card may say the county drew or certified them; and the source notice
-is OPTIONAL, his suggestion rather than a condition, and whether to print it is the
-operator's choice. `LICENSE-DATA.md` §5 records the answer. What follows is the
+is OPTIONAL, his suggestion rather than a condition. The operator chose on
+2026-10-09 to print it, so the three Grundy cards carry it as a Source row. `LICENSE-DATA.md` §5 records the answer. What follows is the
 letter as drafted, kept for the record.
 
 ~~NOT YET ASKED — DRAFTED 2026-09-05. HELD.~~ The operator sends; nothing here

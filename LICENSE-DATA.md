@@ -148,8 +148,9 @@ the ODbL grant above like the project's other derived boundaries. And **the coun
 does not vouch for them**: they are this project's work from the county's public
 records, not a county dataset, and nothing here or in the app should be read as
 saying the county drew or certified them. The county suggested a source notice and
-left it optional; if you redistribute these three files, the notice it suggested is
-a courteous one to carry. If the county later says otherwise, that is a real outcome
+left it optional; the operator chose to print it, so each Grundy fire, library and
+park card carries it (from 2026-10-09). If you redistribute these three files, that
+notice is a courteous one to carry. If the county later says otherwise, that is a real outcome
 and this file will say so.
 
 ### Two related things this file does not cover
