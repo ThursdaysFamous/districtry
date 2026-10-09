@@ -3207,17 +3207,16 @@ trusted.
           "wanted": "Any source naming a Kentucky school board member against the division they were elected from, or a county's own division boundaries as map data."
       },
       {
-          "id": "ky-municipal-officeholders",
-          "concept": "City mayors and councils",
-          "area": "Kentucky — all 415 incorporated cities",
+          "id": "ky-city-council-districts",
+          "concept": "City council districts",
+          "area": "Louisville and Lexington",
           "counties": [],
-          "everyCounty": true,
           "kind": "no-source",
           "layer": "municipality",
-          "summary": "Your City card names the city and nobody who governs it — no mayor, no council member.",
-          "why": "The state's municipal directory answers one city at a time rather than publishing a list, and this app has not built a roster from it. The card links that directory instead of naming anyone.",
-          "blocker": "MEASURED 2026-10-01. THE DIRECTORY EXISTS AND IS NOT A ROSTER. The Department for Local Government publishes a municipal home page at kydlgweb.ky.gov/Cities/16_CityHome.cfm with a search by city name and by county; its robots.txt was read with this project's own client on 2026-10-01 and no rule in the one binding group matches that path, so the host permits it. What it does not offer is a downloadable list, so a roster here means a per-city read across 415 cities rather than one fetch, and whether every city's officials are carried, and how current each page is, has NOT been measured. THE BOUNDARIES ARE NOT THE PROBLEM: the 415 city outlines ship from the Census in the same change as this record. HOW EACH CITY IS GOVERNED IS ALSO NOT MEASURED — Kentucky cities run under statutory plans of government and which plan applies to a given city was not established here, so no card claims it. NOT YET ASKED and no ask is drafted; the Department for Local Government is the office to write to for a machine-readable list, and the Kentucky League of Cities is the obvious second place to try. The 17 cities above 25,000 people are the part of this that the fleet's own done standard requires first, and they are a bounded piece of work rather than a research question.",
-          "wanted": "A machine-readable list of Kentucky's city mayors and council members, from the state or from a city that publishes its own."
+          "summary": "In Louisville and Lexington your City card names the whole council rather than the one member elected from your district.",
+          "why": "Both councils are elected by district, and this app has not drawn either city's council districts yet, so it cannot say which member is yours.",
+          "blocker": "MEASURED 2026-10-09. The mayors and councils of 409 Kentucky cities now ship, read from the Department for Local Government's municipal directory (this record replaced ky-municipal-officeholders that day). The directory lists each council as one body and says nothing about districts. Lexington-Fayette's own council page, read with this project's client that day, prints twelve numbered districts beside their members; Louisville Metro's council page refused this client (HTTP 403) and was not read another way. Neither city's district boundaries have been looked for yet — both are in Kentucky's two largest county GIS programmes and finding them is a bounded piece of work, not a question for either city. TWO CENSUS PLACES ARE NOT IN THE DIRECTORY AT ALL — Keene and St. Mary — so their City cards name nobody; that is recorded in ky/WATCH.md rather than here, because it is two small cities rather than the reader-facing gap in the two largest.",
+          "wanted": "Nothing from a reader — this one is ours to build."
       }
   ]
 }
