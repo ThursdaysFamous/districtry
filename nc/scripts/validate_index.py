@@ -105,7 +105,7 @@ EXPECT_LAYER_IDS = [
 GEOMETRY_FILES = {
     "metro-outline.json": (1, 1),  # The whole-North-Carolina outline for the coverage wash (loadMetroOutline), dissolved from the 100-county fabric.
     "state-counties.json": (100, 100),  # The 100 counties — the instance's offline anchor layer and the ground the coverage tests use.
-    "congress-districts.json": (14, 14),  # The 14 U.S. House districts, TIGERweb layer 0 (CD120).
+    "congress-districts.json": (14, 14),  # The 14 U.S. House districts, TIGERweb layer 4 (CD119) until 3 January 2027.
     "nc-senate-districts.json": (50, 50),  # The 50 NC Senate districts. Simplified in the same mapshaper run as the other two chamber files.
     "nc-house-districts.json": (120, 120),  # The 120 NC House districts. Simplified in the same mapshaper run as the other two chamber files.
 }
