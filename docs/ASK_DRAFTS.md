@@ -6757,3 +6757,41 @@ a page or file outside the check, permission for the weekly reader by name, or a
 robots.txt. Permission: recorded in `scripts/cpd_district_scraper.py` with its date and whatever
 identifier the department names, and the Playwright rung stays retired either way. A no: the
 roster becomes a hand-checked file like the early-voting list, and the gap is recorded.
+
+## Ask il-vermilion-mcmahon-party — Vermilion County Board office: is James McMahon (District 9) now a Republican?
+
+> **NOT YET ASKED — DRAFTED 2026-10-09**, to Office Manager Jennifer Jenkins at
+> `jjenkins@vercounty.org`, the office contact the county's own County Board page lists (read
+> 2026-10-09). The Letters thread searches the mailbox for prior contact with this county before it
+> makes the draft. Adam chose to HOLD the change on 2026-10-09; bot PR #1447 stays open until the
+> county answers.
+
+**Why this is asked.** On 2026-10-09 the county's own members page
+(`https://www.vercounty.org/county-board/county-board-members/`) listed "James McMahon 9 Republican
+2023". Our weekly refresh copies that page, and his party is the only one that changed. Nothing else
+we could find confirms a switch: the county's June 2025 minutes give no party, a search engine's
+saved copy of the same page still reads Democrat, a 2014 news story calls him the board's longtime
+chairman, and District 9's other two members are Democrats. It may be a real change or a typo on the
+page. A party next to a real person's name is not something we publish on one unconfirmed line.
+
+> Subject: James McMahon's party on the County Board members page
+>
+> Dear Ms. Jenkins,
+>
+> I run districtry, a free public map that shows Vermilion County residents who represents them,
+> using the members list on the county's website.
+>
+> This week that list began showing James McMahon (District 9) as a Republican. Earlier it showed
+> him as a Democrat. Before I change what our map says, could you confirm which is correct?
+>
+> A one-word answer is all I need. If the page is right, I'll update our map to match. If it's a
+> typo, you may want to correct it on the county's site too.
+>
+> With thanks,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+**Either answer is useful.** A yes lets #1447 merge. A no keeps the map at Democrat, and the next
+weekly refresh will keep proposing the change until the county's page is corrected.
