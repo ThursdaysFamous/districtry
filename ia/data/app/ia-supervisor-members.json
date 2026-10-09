@@ -1,4 +1,39 @@
 {
+ "003": {
+  "boardPhone": "(641) 322-3240",
+  "county": "Adams",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Bobbi Maynes",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Tony Hardisty",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Scott Akin",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Leland Shipley",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Chris Standley",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-07",
+  "sourceUrl": "https://adamscounty.iowa.gov/supervisors/"
+ },
  "029": {
   "asOf": "2026-10-07",
   "asOfWhy": "Cass County's auditor gave this pairing by e-mail on 1 October 2026; the county publishes no page that names a district, so this app has no page to re-read.",
