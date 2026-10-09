@@ -81,24 +81,36 @@ NC_FIPS = "37"
 STATE_BBOX = {"minLng": -84.5, "minLat": 33.6, "maxLng": -75.1, "maxLat": 36.75}
 
 # chamber -> how to build data/app/<out>.
-#   layer:    TIGERweb Legislative MapServer layer index (0 US House, 1 upper, 2 lower)
+#   layer:    TIGERweb Legislative MapServer layer index (4 the serving U.S.
+#             House map — see its entry — 1 upper, 2 lower)
 #   fields:   outFields kept from TIGERweb. The app's extractDistrictNumber reads
-#             SLDU/SLDL directly; congress uses the NAME fallback since TIGERweb
-#             ships CD120, not a bare number.
+#             SLDU/SLDL and CD119/CD120 directly, with a NAME fallback.
+#   layer_name, serving_until: (us-house only) the layer's expected name, and
+#             the date the members it was drawn for leave office
 #   out:      the data/app file index.html fetches for this layer
 #   simplify: mapshaper Douglas-Peucker interval in METRES (keep-shapes) — see
 #             the docstring for why it is not a Visvalingam retain percentage
 #   min_features: count guard — the real district count
 LAYERS = {
     "us-house": {
-        "layer": 0,
-        # CD120, not CD119: TIGERweb's congressional layer rolled to the
-        # 120th Congress ("120th Congressional Districts", measured
-        # 2026-09-03) and a query naming the retired field is rejected
-        # outright — HTTP 400 "Failed to execute query", which this script's
-        # own no-features guard reports rather than swallowing. The sibling
-        # instances still name CD119 and would fail the same way on a rebuild.
-        "fields": ["CD120", "NAME", "BASENAME", "GEOID", "STATE"],
+        # LAYER 4, THE 119TH CONGRESS, UNTIL 3 JANUARY 2027 — NOT LAYER 0.
+        # Layer 0 is "120th Congressional Districts", the map North Carolina
+        # redrew in 2025 for the 2026 election. Nobody has been elected from
+        # it yet: the members congress-roster.json names were elected in 2024
+        # from the 119th Congress's map, and they serve until noon on
+        # 3 January 2027. Measured 2026-10-09 against TIGERweb, the two maps
+        # differ in districts 1 and 3 only — 15.3% of the state's area changes
+        # district (12.3% from the 119th's 3 into the 120th's 1, 3.0% the
+        # other way) and Goldsboro, which Rep. Don Davis (District 1)
+        # represents, reads as District 3 on the 120th map. Drawing that map
+        # beside these members put the wrong representative on the card.
+        # On 3 January 2027 switch to the layer named "120th Congressional
+        # Districts" and its CD120 field; CONGRESS_SERVING checks both the
+        # layer's name and the date, so the build refuses either way.
+        "layer": 4,
+        "fields": ["CD119", "NAME", "BASENAME", "GEOID", "STATE"],
+        "layer_name": "119th Congressional Districts",
+        "serving_until": "2027-01-03",
         "out": "congress-districts.json",
         "simplify": "interval=20",
         "min_features": 14,  # 14 North Carolina congressional districts
@@ -346,7 +358,34 @@ def validate(source_features, result_features, key_prop, samples=2000, seed=2024
     return True, "%d/%d (%.2f%%) agreement over the state envelope, 0 overlaps" % (agree, samples, pct)
 
 
+def check_serving_map(name, cfg, today=None):
+    """Refuse to build a map whose members have left office, or a layer index
+    that no longer carries the map it was chosen for. TIGERweb renumbers its
+    layers when a vintage rolls, so the index alone proves nothing."""
+    if "layer_name" not in cfg:
+        return
+    import datetime
+    today = today or datetime.date.today().isoformat()
+    if today >= cfg["serving_until"]:
+        raise RuntimeError(
+            "%s: the members drawn from %r left office on %s — switch to the "
+            "layer named '120th Congressional Districts' and its CD120 field, "
+            "then drop layer_name/serving_until" % (name, cfg["layer_name"], cfg["serving_until"]))
+    out = subprocess.run(
+        ["curl", "-sS", "--fail", "--max-time", "60",
+         TIGERWEB + "/" + str(cfg["layer"]) + "?f=json"],
+        check=True, capture_output=True,
+    ).stdout
+    got = json.loads(out).get("name", "")
+    if got != cfg["layer_name"]:
+        raise RuntimeError(
+            "%s: TIGERweb layer %d is now %r, not %r — find the layer that is, "
+            "and refuse rather than draw a different Congress's map"
+            % (name, cfg["layer"], got, cfg["layer_name"]))
+
+
 def build_chamber(name, cfg):
+    check_serving_map(name, cfg)
     source = fetch_tiger(cfg["layer"], cfg["fields"])
 
     with tempfile.TemporaryDirectory() as tmp:
