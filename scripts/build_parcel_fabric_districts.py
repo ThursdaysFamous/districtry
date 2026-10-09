@@ -358,8 +358,8 @@ GRUNDY_DISTRICTS_COL = ("GrundyParcels.dbo.GISParcelsJoinedDistrictCodes_"
 # ZERO of county research, ahead of every technical probe, and this build did
 # not. Asked afterwards (2026-09-05) the answer is genuinely ambiguous rather
 # than obviously fine, so it is recorded here and put to the county rather than
-# resolved by this script in either direction (docs/ASK_DRAFTS.md Ask 18,
-# DRAFTED and HELD):
+# resolved by this script in either direction (docs/ASK_DRAFTS.md Ask 18 —
+# ANSWERED 2026-10-08, see the end of this note):
 #   - the county SELLS BOTH OF THE THINGS THIS BUILD PRODUCES. Its GIS Data
 #     Request page publishes a fee schedule with a "Tax Parcel Data" line
 #     ($0.35 per parcel, real-estate information built in at $0.10 of that,
@@ -384,6 +384,12 @@ GRUNDY_DISTRICTS_COL = ("GrundyParcels.dbo.GISParcelsJoinedDistrictCodes_"
 # arise: its three items are `access: public` with empty licenceInfo and empty
 # accessInformation, and its Maps page publishes a viewer and a PDF gallery with
 # no fee schedule and no data-request form anywhere on the county site.
+#
+# THE COUNTY ANSWERED ON 2026-10-08 (LICENSE-DATA.md §5). Its GIS Director:
+# the fee schedule "does not pertain to derived data based on the county's
+# publicly available map services"; the outlines are not "data the county can
+# vouch for"; a source notice is optional. So these outlines may ship, and
+# nothing may say the county drew or certified them.
 
 # THE SECOND WITNESS IS THE COUNTY'S OWN TAX DISTRIBUTION LIST, and it is also
 # where the NAMES come from — the Boone division of labour, where one county
