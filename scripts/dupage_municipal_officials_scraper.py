@@ -143,6 +143,7 @@ Notes on data honesty (per project conventions):
 
 import argparse
 import json
+import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -478,16 +479,16 @@ def witness_phone(entry):
 
     report = []
     if not robots_allows(url, report):
-        return None, report[0]
+        return None, READ_FAILED + report[0]
     try:
         resp = requests.get(url, headers=HEADERS, timeout=SITE_TIMEOUT,
                             allow_redirects=True)
     except Exception as exc:  # noqa: BLE001
-        return None, "%s: %s" % (type(exc).__name__, str(exc).split("(Caused by")[0].strip()[:90])
+        return None, READ_FAILED + "%s: %s" % (type(exc).__name__, str(exc).split("(Caused by")[0].strip()[:90])
     if resp.status_code >= 400:
-        return None, "the site answers HTTP %d to this client" % resp.status_code
+        return None, READ_FAILED + "the site answers HTTP %d to this client" % resp.status_code
     if blocked(resp.text):
-        return None, "the site served an interstitial rather than a page"
+        return None, READ_FAILED + "the site served an interstitial rather than a page"
 
     matches = {"".join(groups) for groups in TEN_DIGIT_RE.findall(resp.text)
                if groups[1] + groups[2] == seven}
@@ -503,10 +504,53 @@ def witness_phone(entry):
     return codes[0] + seven, None
 
 
-def witness_all(entries):
-    """-> {municipality name: ten digits} plus a printed line per entry."""
+# A witness that could not READ the municipality's site is not a witness that
+# found the number gone. On 2026-10-07 www.elmhurst.org answered this client
+# with a 403 while its own front page still printed 630-530-3000 (re-read
+# 2026-10-08), and the run dropped the number from Elmhurst's card. Adam's
+# ruling of 2026-09-19 is that a failed read never unpublishes what we already
+# have, so these reasons carry the shipped number forward instead.
+READ_FAILED = "could not read the site: "
+SHIPPED_ROSTER = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                              "il", "data", "app", "municipal-officials.json")
+
+
+def shipped_phones(path=SHIPPED_ROSTER):
+    """-> {directory-style NAME: ten digits} for DuPage entries already shipped.
+
+    Keyed the way the directory names a municipality (upper case, no "City
+    of"/"Village of"), so a lookup needs nothing but the entry. A missing or
+    unreadable file returns {} and the run behaves exactly as it did before.
+    """
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, ValueError):
+        return {}
+    found = {}
+    for record in (data.values() if isinstance(data, dict) else data):
+        if not isinstance(record, dict) or record.get("county") != "DuPage":
+            continue
+        digits = re.sub(r"\D", "", (record.get("office") or {}).get("phone") or "")
+        if len(digits) != 10:
+            continue
+        name = re.sub(r"^(City|Village|Town) of ", "", record.get("name") or "")
+        found[name.upper()] = digits
+    return found
+
+
+def witness_all(entries, shipped=None):
+    """-> {municipality name: ten digits} plus a printed line per entry.
+
+    Where the site could not be read and the shipped roster already carries a
+    number ending in the directory's own seven digits, that number is carried
+    forward and the line says so. A site that WAS read and no longer prints the
+    number, or prints it under two area codes, is a real change and carries
+    nothing forward.
+    """
     import time
 
+    shipped = shipped_phones() if shipped is None else shipped
     found = {}
     for index, entry in enumerate(entries):
         if index:
@@ -515,6 +559,14 @@ def witness_all(entries):
         if number:
             found[entry["name"]] = number
             print("  %-24s %s-%s-%s" % (entry["name"], number[:3], number[3:6], number[6:]),
+                  file=sys.stderr)
+            continue
+        kept = shipped.get(entry["name"].upper())
+        seven = local_main(entry)
+        if why.startswith(READ_FAILED) and kept and seven and kept[3:] == seven:
+            found[entry["name"]] = kept
+            print("  %-24s %s-%s-%s CARRIED FORWARD — %s; the directory still prints %s-%s"
+                  % (entry["name"], kept[:3], kept[3:6], kept[6:], why, seven[:3], seven[3:]),
                   file=sys.stderr)
         else:
             print("  %-24s no phone — %s" % (entry["name"], why), file=sys.stderr)

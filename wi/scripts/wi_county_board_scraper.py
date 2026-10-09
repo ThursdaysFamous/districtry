@@ -5953,7 +5953,14 @@ def attach_officer_roles(lines, districts, county, name_side=None,
 # vacancy line that carries no district number. If the page ever names two
 # vacancies, or loses a second row, the county fails its count guard as before
 # and nothing is inferred.
-ELIMINATION_VACANCY = {"55075"}      # Marinette
+#
+# TREMPEALEAU JOINED 2026-10-08, when its page replaced District 7's row (Scott
+# Leonard, read 2026-09-25) with an image-pending photo captioned "Vacant" and
+# no phone, district or term cell at all. It sits between Districts 6 and 8 in
+# the page's own order, and 16 of 17 districts are numbered, so the same
+# arithmetic answers it. Before this the weekly run failed the county outright
+# and the shipped file went on naming a supervisor the county no longer lists.
+ELIMINATION_VACANCY = {"55075", "55121"}      # Marinette, Trempealeau
 
 # COUNTIES THAT PUBLISH A PAGE PER SUPERVISOR. Sheboygan's roster table links
 # each name to its own district page, and that page — not the table — carries
@@ -6059,8 +6066,9 @@ def eliminated_vacancy(lines, seats, found, vacant, county):
               " — nothing inferred" % (county, len(loose), len(unclaimed)), file=sys.stderr)
         return None
     print("  infer %-12s district %d is the county's one unnumbered %r row "
-          "(29 of 30 numbered, one vacancy stated)"
-          % (county, unclaimed[0], loose[0].strip()), file=sys.stderr)
+          "(%d of %d numbered, one vacancy stated)"
+          % (county, unclaimed[0], loose[0].strip(), len(found) + len(vacant),
+             seats), file=sys.stderr)
     return unclaimed[0]
 
 
@@ -8294,9 +8302,19 @@ def scrape_iron_board(spec):
                                "not read as a name" % (county, district, name))
         entry = {"name": name, "vacant": False,
                  "role": listed.get(name_fold(name))}
+        # THE MAILTO WENT BEHIND CLOUDFLARE'S OBFUSCATION BETWEEN 2026-09-25 AND
+        # 2026-10-01: the member pages now carry the address only as the
+        # /cdn-cgi/l/email-protection#<hex> fragment Buffalo uses, so the
+        # weekly run read 0 of 14 and the e-mail floor stopped the county —
+        # which is the floor working. Same carrier, same decoder (BUF_MAIL,
+        # cf_decode); the plain mailto stays first in case the county reverts.
         mail = IR_MAIL.search(own)
         if mail:
             entry["email"] = mail.group(1).lower()
+        else:
+            token = BUF_MAIL.search(own)
+            if token:
+                entry["email"] = cf_decode(token.group(1)).strip().lower()
         tel = IR_PHONE.search(flat)
         if tel:
             numbers[district] = ["-".join(tel.groups())]
