@@ -180,7 +180,7 @@ which is a claim about the ask and never about the source.
 | Henderson County Clerk | **asked 2026-07-21 (seal), 2026-08-05 and 08-16, no reply** | REWRITTEN 2026-10-01: cites them and says the August questions are answered |
 | Logan County Clerk | **same mailbox written to 2026-07-21** about the county seal | REWRITTEN 2026-10-01: opens by naming that letter |
 | Will County Clerk | none | first contact, correct |
-| Grundy County GIS | the county CLERK was written 2026-07-21; this is a different mailbox | first contact to this office, correct |
+| Grundy County GIS | the county CLERK was written 2026-07-21; this is a different mailbox | first contact to this office, correct  **SENT 2026-10-01** (redrafted to the GIS Director after the office mailbox bounced) and **ANSWERED 2026-10-08**: the fee schedule does not apply to outlines derived from the public map service; the county will not vouch for them; a source notice is optional (Ask 18) |
 | Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
 | Hardin County Clerk (IL) | who holds the commissioner seats | **seal 2026-07-21; board 08-05, 08-16, 08-21; ANSWERED 08-24** — countywide board, and NO county website | **SENT 2026-10-01 and ANSWERED IN SEVEN MINUTES**: three commissioners, with Darrick Armstrong as chairman, Ricky Williams as vice-chairman and Michael Belford the third (she first wrote "Belfor" and corrected it herself at 19:27 the same day: "I left the d off"). That closes the county's roster gap, and it is the clearest argument this file has for the prior-contact check — the question was answered at the fourth attempt, by a clerk who had already told us twice what the county does not have. Illinois's wording said the county's web address "leads to a parked page"; the Clerk had already said there is no website, so that claim is gone |
 | Johnson County Clerk (IL) | the same | **seal 07-21, ANSWERED twice that day** ("We don't have a website to point back to"); board 08-05 and 08-16, no reply | drafted 2026-10-01. Illinois's wording said the county's website "declines automated visits"; the Clerk had already said there is none **ANSWERED 2026-10-07**: Clerk Robin Harper-Whitehead named all three commissioners — Jason Taylor (Chairman), Matthew Hayden (Vice Chairman) and John McCuan — with one e-mail for the board and her own office's telephone. They ship on the County card and the `johnson-county-board` gap record is retired |
@@ -2117,7 +2117,22 @@ per-municipality route — that route is simply a poor one, which the sweep meas
 than assumed.
 ## Ask 18 — Grundy County GIS: does your fee schedule cover the public map service too?
 
-**NOT YET ASKED — DRAFTED 2026-09-05. HELD.** The operator sends; nothing here
+**ANSWERED 2026-10-08.** Sent 2026-10-01 18:12 UTC to Dave Ostrander, the county's
+GIS Director, after the copy to `gisdatarequest@grundycountyil.gov` bounced at 16:17.
+He answered at 19:41 UTC on 2026-10-08:
+
+> "The GIS fee schedule does not pertain to derived data based on the county's publicly available map services. Also, because you derived your boundary data using external methods and techniques, we would not consider it data the county can vouch for. If you would like, and this is totally up to your discretion, you can attribute it using a source notice, something like the following: derived in part from public records provided by the Grundy County GIS Department, as accessed on [date accessed]."
+
+So the fee schedule covers what the county sells and not what this project derived
+from the public map service, and the 13 fire, 6 library and 2 park outlines stay on
+the site (the operator approved recording this on 2026-10-09). Two things in the
+answer are kept as he wrote them: the county does NOT vouch for the outlines, so
+nothing on a card may say the county drew or certified them; and the source notice
+is OPTIONAL, his suggestion rather than a condition, and whether to print it is the
+operator's choice. `LICENSE-DATA.md` §5 records the answer. What follows is the
+letter as drafted, kept for the record.
+
+~~NOT YET ASKED — DRAFTED 2026-09-05. HELD.~~ The operator sends; nothing here
 is sent by the agent that wrote it.
 
 **Why this exists, and it is a question I should have asked before building.**

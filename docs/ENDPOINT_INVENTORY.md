@@ -332,6 +332,7 @@ underlying records. The categories of underlying terms it records:
 - [2. State, county and municipal public records](../LICENSE-DATA.md#2-state-county-and-municipal-public-records)
 - [3. Jo Daviess County board districts — licensed, display-only, NOT redistributable](../LICENSE-DATA.md#3-jo-daviess-county-board-districts-licensed-display-only-not-redistributable)
 - [4. The *Wisconsin Blue Book* — used by permission, on terms the Bureau stated](../LICENSE-DATA.md#4-the-wisconsin-blue-book-used-by-permission-on-terms-the-bureau-stated)
+- [5. Grundy County fire, library and park districts — derived, and the county's answer on record](../LICENSE-DATA.md#5-grundy-county-fire-library-and-park-districts-derived-and-the-countys-answer-on-record)
 
 See also its [Attribution](../LICENSE-DATA.md#attribution) and [Warranty](../LICENSE-DATA.md#warranty)
 sections. Two runtime things that document deliberately does not cover are

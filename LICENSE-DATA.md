@@ -129,6 +129,29 @@ one applied and she named none — and did not route the question to the Bureau'
 legal staff, which the ask had offered. If the Bureau later withdraws or narrows
 this, that is a real outcome and this file will say so.
 
+### 5. Grundy County fire, library and park districts — derived, and the county's answer on record
+
+`il/data/app/grundy-fire-districts.json`, `grundy-library-districts.json` and
+`grundy-park-districts.json` are derived, not copied. `scripts/build_parcel_fabric_districts.py`
+reads the `Districts` column of the county's public parcel map service at
+maps.grundyco.org and merges the parcels into one outline per district; no
+parcel, owner or assessment information is shipped. The county sells parcel and
+taxing-body boundary data under a published fee schedule, so this project asked
+whether that schedule reaches outlines derived from the public service (Ask 18 in
+`docs/ASK_DRAFTS.md`). The county's GIS Director, Dave Ostrander, answered on
+2026-10-08:
+
+> "The GIS fee schedule does not pertain to derived data based on the county's publicly available map services. Also, because you derived your boundary data using external methods and techniques, we would not consider it data the county can vouch for. If you would like, and this is totally up to your discretion, you can attribute it using a source notice, something like the following: derived in part from public records provided by the Grundy County GIS Department, as accessed on [date accessed]."
+
+Two things follow. **The fee schedule does not apply**, so these files fall under
+the ODbL grant above like the project's other derived boundaries. And **the county
+does not vouch for them**: they are this project's work from the county's public
+records, not a county dataset, and nothing here or in the app should be read as
+saying the county drew or certified them. The county suggested a source notice and
+left it optional; if you redistribute these three files, the notice it suggested is
+a courteous one to carry. If the county later says otherwise, that is a real outcome
+and this file will say so.
+
 ### Two related things this file does not cover
 
 * **Map tiles.** The coverage map draws CARTO basemap tiles built from
