@@ -226,6 +226,8 @@ jobs:
             # tell a dark folder from an unregistered one. An anchored `/nc`
             # excludes the same files and is invisible to all of them.
             'nc/**'
+            # Oklahoma arrives dark the same way, for the same reason.
+            'ok/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full

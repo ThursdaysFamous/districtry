@@ -1,0 +1,19 @@
+# Pinned dependencies for this instance's scraper pipeline (playbook R10 —
+# heuristic HTML parsers are exactly the code that breaks on silent
+# dependency drift). Used by the weekly and monthly workflows:
+#   .github/workflows/update-ok-congress-roster.yml     (stdlib only)
+#   .github/workflows/update-ok-legislature-roster.yml  (stdlib only)
+#   .github/workflows/ok-validate-sources.yml           (+ requests)
+#
+# ok/scripts/build_state_counties.py and build_legislative_boundaries.py use
+# only curl (via subprocess) and npx mapshaper — no Python HTTP library.
+# build_metro_outline.py imports requests inside its one fetching function.
+#
+# NEITHER ROSTER BUILDER NEEDS A THIRD-PARTY DEPENDENCY: Open States ships CSV
+# (stdlib csv) and congress-legislators ships JSON.
+requests==2.33.1
+
+# Conversion 2 (docs/MECHANIZATION_PLAYBOOK.md): worksheet validation in
+# scripts/generate_metro_files.py. The generator is otherwise stdlib-only;
+# validate_index.py deliberately stays stdlib and does NOT import this.
+jsonschema==4.26.0

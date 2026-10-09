@@ -59,7 +59,8 @@ in the researched-but-unbuilt backlog.
   "michigan": ["us-house", "mi-senate", "county", "mi-house", "school-district-unified", "school-district-elementary", "county-commissioner", "county-subdivision", "zip-code", "city-ward", "precinct", "municipality", "police-station", "fire-station", "post-office", "mi-court-of-appeals", "mi-circuit-court", "mi-isd", "tribal-government"],
   "minnesota": ["us-house", "mn-judicial-district", "mn-senate", "county", "mn-house", "watershed-district", "school-district-unified", "school-board-district", "county-commissioner", "zip-code", "school-district-elementary", "county-subdivision", "voting-precinct", "municipality", "school-district-secondary", "police-station", "fire-station", "post-office"],
   "indiana": ["us-house", "in-senate", "county", "in-house", "school-district-unified", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
-  "northcarolina": ["us-house", "nc-senate", "nc-house", "school-district-unified", "county", "county-subdivision", "municipality", "zip-code", "police-station", "fire-station", "post-office"]
+  "northcarolina": ["us-house", "nc-senate", "nc-house", "school-district-unified", "county", "county-subdivision", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
+  "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -3217,6 +3218,57 @@ trusted.
           "why": "The state's municipal directory answers one city at a time rather than publishing a list, and this app has not built a roster from it. The card links that directory instead of naming anyone.",
           "blocker": "MEASURED 2026-10-01. THE DIRECTORY EXISTS AND IS NOT A ROSTER. The Department for Local Government publishes a municipal home page at kydlgweb.ky.gov/Cities/16_CityHome.cfm with a search by city name and by county; its robots.txt was read with this project's own client on 2026-10-01 and no rule in the one binding group matches that path, so the host permits it. What it does not offer is a downloadable list, so a roster here means a per-city read across 415 cities rather than one fetch, and whether every city's officials are carried, and how current each page is, has NOT been measured. THE BOUNDARIES ARE NOT THE PROBLEM: the 415 city outlines ship from the Census in the same change as this record. HOW EACH CITY IS GOVERNED IS ALSO NOT MEASURED — Kentucky cities run under statutory plans of government and which plan applies to a given city was not established here, so no card claims it. NOT YET ASKED and no ask is drafted; the Department for Local Government is the office to write to for a machine-readable list, and the Kentucky League of Cities is the obvious second place to try. The 17 cities above 25,000 people are the part of this that the fleet's own done standard requires first, and they are a bounded piece of work rather than a research question.",
           "wanted": "A machine-readable list of Kentucky's city mayors and council members, from the state or from a city that publishes its own."
+      }
+  ],
+  "oklahoma": [
+      {
+            "id": "ok-commissioner-districts",
+            "concept": "County commissioner district",
+            "area": "Oklahoma — all 77 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "Every Oklahoma county is run by three elected commissioners, one from each of three districts, and this app does not yet show you which district you live in or who holds it.",
+            "why": "The districts and the commissioners' names are both published, and this app has not built them into a layer yet. Until it does, the County card names the county and nobody who runs it.",
+            "wanted": "Nothing from a reader — this one is ours to build.",
+            "blocker": "UNBUILT, NOT UNPUBLISHED, recorded so the silence on the County card is legible. 19 O.S. 321 divides every county into three commissioner districts, so the form of every board is settled by statute and there is no at-large county to tell apart. The state transport department publishes all 231 districts in one statewide file, read during this instance's planning; the names come county by county or from a statewide directory, and which one is current enough to ship has NOT been measured here. The layer arrives in this instance's second change as `county-commissioner`, and this record is retired then. Oklahoma is dark as of 2026-10-09, so no reader is served this file yet."
+      },
+      {
+            "id": "ok-municipal-officeholders",
+            "concept": "City or town government",
+            "area": "Oklahoma",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "This app can tell you which Oklahoma city or town you are in, and not who your mayor or council members are.",
+            "why": "No statewide list of Oklahoma's mayors and council members has been found. The boundary this card draws carries geography and no officeholder at all, and this app never guesses a name.",
+            "wanted": "A statewide roster of municipal mayors and council or town board members, or each city's own published list.",
+            "blocker": "The boundary is the Census's own incorporated-places layer, which carries a name, a code and a functional status and no officeholder field. Measured 2026-10-09: 600 places, 165 `<Name> city` and 435 `<Name> town`, 8 of the towns carrying FUNCSTAT `I` (inactive), which the card says rather than implying a working board. Oklahoma law makes a city and a town different kinds of government, with a council and a board of trustees respectively, which is why the card names the two separately. Not attempted in this change; the instance arrived on the national tier alone. The cities over 25,000 people are the part the fleet's done standard asks for first."
+      },
+      {
+            "id": "ok-school-board-members",
+            "concept": "School board",
+            "area": "Oklahoma",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "This app names your school district and not the people elected to run it.",
+            "why": "Oklahoma's school boards are elected, and no statewide list of their members has been read yet. The boundary this card draws carries the district's name and nothing about its board.",
+            "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
+            "blocker": "Measured 2026-10-09 against TIGERweb's School service for STATE='40': 415 unified districts, 91 elementary districts and NO secondary district, and the unified and elementary layers together cover the state's land exactly (166,222.99 + 11,441.40 = 177,664.38 km²), so every point is in exactly one of the two. The boundary carries the district's name and grade range and no board member. The route is the state Department of Education or each board's own list; not attempted in this change."
+      },
+      {
+            "id": "ok-tribal-government",
+            "concept": "Tribal government",
+            "area": "Oklahoma — statewide",
+            "counties": [],
+            "kind": "no-source",
+            "layer": null,
+            "summary": "No card names the tribal nation whose land you clicked on, or its government. Dozens of nations govern from Oklahoma, and none appears on a card yet.",
+            "why": "Each nation publishes its own government on its own site, and no source lists their councils together. The Census draws most of this land as a statistical area, which this app does not draw.",
+            "wanted": "Each nation's own published list of its council, and its district map where it elects by district.",
+            "blocker": "MEASURED 2026-10-09 with scripts/tribal_areas.py, control passed (the state layer answers code 40), scored by real intersection area against TIGERweb's own Oklahoma polygon: ONE federal reservation, `Osage Reservation`, 5,967.409 km² and wholly inside the state; ONE off-reservation trust land, `Shawnee Trust Land`, 0.430 km²; NO state reservation. Everything else the Census records for Oklahoma's nations is an Oklahoma Tribal Statistical Area, and under Adam's ruling of 2026-09-30 a statistical area is read only to decide which nation to name and is NEVER DRAWN as territory. THAT IS THE CENSUS'S CLASSIFICATION AND NOT A LEGAL ONE: since McGirt v. Oklahoma (2020) federal courts have held several of these reservations were never disestablished, so which ground a nation governs is a different question from which layer the Census puts it in, and this record settles neither. The fleet-wide tribal-government thread owns the build (https://claude.ai/artifact/CbZNWt4QDr7SBS7abdC1L2); Cherokee Nation was written to on 2026-10-01 about its district map and had not replied as of 2026-10-06. Oklahoma is dark as of this record."
       }
   ]
 }

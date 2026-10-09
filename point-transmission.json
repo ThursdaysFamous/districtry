@@ -386,6 +386,36 @@
         "zip-code"
       ]
     },
+    "ok": {
+      "layers_sending_point": 4,
+      "layers": [
+        "municipality",
+        "school-district-elementary",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_holding_hook_but_silent": [],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 2,
+      "layer_ids": [
+        "county",
+        "fire-station",
+        "municipality",
+        "ok-house",
+        "ok-senate",
+        "police-station",
+        "post-office",
+        "school-district-elementary",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
     "wi": {
       "layers_sending_point": 1,
       "layers": [
