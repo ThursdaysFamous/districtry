@@ -12435,7 +12435,8 @@ function initNorthCarolinaExplorer() {
   });
 
   /* ---------- 2. U.S. House — boundary + roster join ----------
-   * Pre-built TIGERweb Legislative layer 0 geometry
+   * Pre-built TIGERweb Legislative layer 4 geometry — the 119th Congress's
+   * map, the one the serving members were elected from, until 3 January 2027
    * (data/app/congress-districts.json, this state only) joined by district
    * number to a same-origin roster (data/app/congress-roster.json — built
    * by nc/scripts/build_congress_roster.py from the public-domain
@@ -12451,12 +12452,11 @@ function initNorthCarolinaExplorer() {
   var loadCongressRoster = makeCached(function () {
     return fetchJSONWithRetry("data/app/congress-roster.json", {}, 2);
   });
-  // TIGERweb's numbered-district field renames each Congress — CD120 is the
-  // current one, and it is not a cosmetic rename: the retired CD119 field is
-  // gone from the layer, and a query naming it is rejected outright with HTTP
-  // 400 rather than degrading (measured 2026-09-03, and it is what the
-  // sibling instances' builders still ask for). Newest first;
-  // extractDistrictNumber adds a name-field regex fallback behind these.
+  // TIGERweb's numbered-district field renames each Congress. The shipped
+  // file carries CD119 (the 119th Congress's map, which the serving members
+  // were elected from) and will carry CD120 after 3 January 2027, so both
+  // are listed. Newest first; extractDistrictNumber adds a name-field regex
+  // fallback behind these.
   var CONGRESS_DISTRICT_FIELDS = ["cd120", "cd119", "cdfp", "cd"];
 
   registerIlgaChamber({
