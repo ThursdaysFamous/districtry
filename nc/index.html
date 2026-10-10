@@ -4065,7 +4065,8 @@ function initNorthCarolinaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "nc-senate": "ncs", "county": "co", "nc-house": "nch",
     "school-district-unified": "su", "county-subdivision": "cs", "zip-code": "zp",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po",
+    "tribal-government": "tg" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8466,6 +8467,7 @@ function initNorthCarolinaExplorer() {
     "school-district-unified", // 118 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
     "county-subdivision", // 1,041 county subdivisions — North Carolina townships, the census fabric below the county
     "zip-code",          // 1,500 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope and kept where they overlap North Carolina
+    "tribal-government", // Tribal land — North Carolina has 2 pieces, the Qualla Boundary's 211.753 km² and its 2.640 km² of trust land, both the Eastern Band of Cherokee Indians', MEASURED by scripts/build_tribal_areas.py; median 107.2 km². Drawn above ZIP codes and below cities and towns. Drawn although no district is drawn on this land by the state, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "municipality",      // 552 incorporated places, live from TIGERweb
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -12457,6 +12459,106 @@ function initNorthCarolinaExplorer() {
     }
   });
 
+  /* ---------- Tribal Government — North Carolina's tribal land, 2 pieces.
+   *
+   * The Qualla Boundary and its off-reservation trust land, both the Eastern
+   * Band of Cherokee Indians'. The Census draws the Band's own communities on
+   * this land, and the card names them.
+   *
+   * THE 2020 CENSUS CALLED THE QUALLA BOUNDARY THE EASTERN CHEROKEE
+   * RESERVATION, under another code; the builder matched the two by shape,
+   * so its card carries the 2020 count and says which name it was counted
+   * under.
+   *
+   * WHO THE CARD NAMES. Nobody yet: the Band's site could not be read from
+   * where this project is built, and the card says why, from ROSTER_BLOCKED.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling of
+   * 2026-09-30, a government answers for that ground, so a reader who clicks
+   * it should be told which one, and land in one state whose government sits
+   * in another is answered where the land is, with the seat named.
+   *
+   * A PARCEL IS DRAWN WHOLE. The Census draws a reservation as one shape and
+   * this file keeps it, so where one crosses the state line the part beyond
+   * it is drawn too; the card's population sentence says when the count
+   * covers a whole parcel of which only part lies here.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // NO COUNCIL FILE IS FETCHED YET, because none exists: the Eastern Band's
+  // council is not read (ROSTER_BLOCKED) and build_tribal_areas.py --check
+  // refuses a councils file that names nobody. The day a council is carried,
+  // --rosters writes nc/data/app/tribal-councils.json and this loader gains
+  // the same network-first merge every other instance's has.
+  var loadNcTribalAreas = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadNcTribalAreas,
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land
+    // by the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" · ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from ↗",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. North Carolina has 2 tribal areas, the Qualla Boundary and its trust land, both the Eastern Band of Cherokee Indians', and this point is on neither."
+  });
+
+
   /* ---------- 2. U.S. House — boundary + roster join ----------
    * Pre-built TIGERweb Legislative layer 4 geometry — the 119th Congress's
    * map, the one the serving members were elected from, until 3 January 2027
@@ -14657,7 +14759,7 @@ function initNorthCarolinaExplorer() {
   var LAYER_SIDEBAR_RANK = ["us-house", "nc-senate", "nc-house",
     "school-district-unified",
     "county", "county-subdivision", "municipality", "zip-code",
-    "police-station", "fire-station", "post-office"];
+    "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
     for (var i = 0; i < LAYER_SIDEBAR_RANK.length; i++) pos[LAYER_SIDEBAR_RANK[i]] = i;
@@ -15138,10 +15240,10 @@ function initNorthCarolinaExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
-    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
-    "#D06A9C": "#FFBDDA"};
+    "#1F6F6B": "#5DC0BB", "#2F6B3A": "#6FBE7B", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93",
+    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

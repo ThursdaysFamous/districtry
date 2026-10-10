@@ -230,7 +230,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "552 incorporated places, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -248,7 +248,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -266,7 +266,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -284,7 +284,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -296,6 +296,24 @@
         ],
         "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a facility, not an elected district. Nobody is elected from one.",
         "applies": "North Carolina — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in Virginia or South Carolina, and the card's intro says these are straight-line distances."
+      }
+    },
+    {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 8,
+      "rank_note": "Tribal land — North Carolina has 2 pieces, the Qualla Boundary's 211.753 km² and its 2.640 km² of trust land, both the Eastern Band of Cherokee Indians', MEASURED by scripts/build_tribal_areas.py; median 107.2 km². Drawn above ZIP codes and below cities and towns. Drawn although no district is drawn on this land by the state, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — North Carolina has 2 such areas, both the Eastern Band of Cherokee Indians'.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "Nobody yet: the Eastern Band's site could not be read from where this project is built, and the card says so. The communities the Census draws on the land are named on the card. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Western North Carolina — the Qualla Boundary and its trust land. Most points in the state are on no tribal land."
       }
     }
   ],
@@ -362,6 +380,12 @@
         "min_features": 120,
         "max_features": 120,
         "note": "The 120 NC House districts. Simplified in the same mapshaper run as the other two chamber files."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 2,
+        "max_features": 2,
+        "note": "North Carolina's tribal land (scripts/build_tribal_areas.py) — the Qualla Boundary and its trust land, both the Eastern Band of Cherokee Indians'. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -388,7 +412,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-nc-shell-v2",
+    "cache_name": "districtry-nc-shell-v3",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",

@@ -4059,7 +4059,8 @@ function initIndianaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "in-senate": "ins", "county": "co", "in-house": "inh",
     "school-district-unified": "su", "zip-code": "zp", "county-subdivision": "cs",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po",
+    "tribal-government": "tg" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8461,6 +8462,7 @@ function initIndianaExplorer() {
     "zip-code",          // 882 ZIP Code Tabulation Areas intersecting Indiana, live from TIGERweb (no data/app file) — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan
     "county-subdivision", // 1,012 county-subdivision records tiling the state, live from TIGERweb (no data/app file) — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29
     "municipality",      // 566 incorporated places, live from TIGERweb (no data/app file) — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29
+    "tribal-government", // Tribal land — Indiana has 1 piece, 0.931 km² of the Pokagon Band of Potawatomi's off-reservation trust land, MEASURED by scripts/build_tribal_areas.py; the rest of that trust land, 8% of which lies in Indiana, is in Michigan. Drawn above cities and towns, which are larger. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // 650 police-station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
     "fire-station",      // 1,758 fire and EMS station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer
     "post-office"        // 1,012 post-office points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers
@@ -12526,6 +12528,114 @@ function initIndianaExplorer() {
     }
   });
 
+  /* ---------- Tribal Government — Indiana's tribal land, 1 piece.
+   *
+   * About a square kilometre of the Pokagon Band of Potawatomi's
+   * off-reservation trust land, near South Bend; the rest of that trust land,
+   * and the nation's seat, are in Michigan.
+   *
+   * WHO THE CARD NAMES. The Pokagon Band's council, from its own page, the
+   * same read the Michigan card uses.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling of
+   * 2026-09-30, a government answers for that ground, so a reader who clicks
+   * it should be told which one, and land in one state whose government sits
+   * in another is answered where the land is, with the seat named.
+   *
+   * A PARCEL IS DRAWN WHOLE. The Census draws a reservation as one shape and
+   * this file keeps it, so where one crosses the state line the part beyond
+   * it is drawn too; the card's population sentence says when the count
+   * covers a whole parcel of which only part lies here.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // A councils file that cannot be read leaves the land answering on its own.
+  var loadInTribalAreas = makeCached(function () {
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = both[1] || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadInTribalAreas,
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land
+    // by the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" · ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from ↗",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Indiana has one tribal area, a piece of the Pokagon Band of Potawatomi's trust land near South Bend, and this point is not on it."
+  });
+
+
   /* ---------- 2. U.S. House — boundary + roster join ----------
    * Pre-built TIGERweb Legislative layer 0 geometry
    * (data/app/congress-districts.json, this state only) joined by district
@@ -14708,7 +14818,7 @@ function initIndianaExplorer() {
     // family stops at the General Assembly for now and the County card below
     // is identity only. Both bodies land here when they ship.
     "county", "county-subdivision", "municipality", "zip-code",
-    "police-station", "fire-station", "post-office"];
+    "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
     for (var i = 0; i < LAYER_SIDEBAR_RANK.length; i++) pos[LAYER_SIDEBAR_RANK[i]] = i;
@@ -15192,10 +15302,10 @@ function initIndianaExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
-    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8",
-    "#D06A9C": "#FFBDDA"};
+    "#1F6F6B": "#5DC0BB", "#2F6B3A": "#6FBE7B", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93",
+    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

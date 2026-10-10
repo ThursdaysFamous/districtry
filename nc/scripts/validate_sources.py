@@ -192,6 +192,19 @@ PROVENANCE = [
             "unasked."
         ),
     },
+    {
+        "layer": "tribal-government",
+        "app_file": "tribal-areas.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
+        "note": (
+            "Tribal land from the Census's AIANNHA service, current vintage, through "
+            "the fleet's shared reader scripts/tribal_areas.py and built by "
+            "scripts/build_tribal_areas.py: 2 areas, the Qualla Boundary and its trust land, both the Eastern Band of Cherokee Indians'; the Census renumbered the Qualla Boundary after 2020 and the builder matches it to its 2020 shape for the population count. Land enters the map when the United "
+            "States takes it into trust, on no redistricting calendar, so only a "
+            "rebuild sees a new area; --check is offline and proves the "
+            "land-to-government join, never the Census's own set."
+        ),
+    },
 ]
 
 ENDPOINTS = [

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Read who sits on each Wisconsin, Michigan, Illinois, Minnesota and New York nation's council, from the nation.
+Read who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York and Iowa nation's council, from the nation.
 
 THE AUTHORITY IS EACH NATION'S OWN PUBLISHED COUNCIL. The Bureau of Indian
 Affairs' directory carries one leader per government and never a council, so
@@ -127,6 +127,10 @@ NATIONS = {
     # cached by URL) and carried under all three.
     "2980": {"nation": "Prairie Band Potawatomi",
              "pages": ["https://www.pbpindiantribe.com/tribal-council"], "seats": 7},
+    # Iowa (read 2026-10-10). The Winnebago Tribe of Nebraska holds a sliver
+    # of its reservation in Iowa. Its page was changed on 2026-10-07, after the
+    # swearing-in of that month's election, so it names the new council.
+    "4625": {"nation": "Winnebago", "pages": ["https://winnebagotribe.com/tribal-council/"], "seats": 9},
     "2890": {"nation": "Pokagon", "pages": ["https://www.pokagonband-nsn.gov/government/tribal-council/"], "seats": 11},
     "3085": {"nation": "Red Cliff", "pages": ["https://www.redcliff-nsn.gov/government/tribal_government/index.php"], "seats": 9},
     "3305": {"nation": "St. Croix", "pages": ["https://stcroixojibwe-nsn.gov/tribal-council/"], "seats": 5},
@@ -462,6 +466,25 @@ def p_pokagon(pages):
     return out
 
 
+def p_winnebago(pages):
+    # Each member is a four-line block under the heading: name, office, the
+    # tribe's main number with the member's extension, and an e-mail address.
+    # The list ends at the mission statement.
+    ls = _after(pages[0], "Winnebago Tribal Council")
+    ls = ls[:ls.index("MISSION STATEMENT")]
+    if len(ls) % 4:
+        raise ValueError("Winnebago's council blocks are not four lines each")
+    out = []
+    for i in range(0, len(ls), 4):
+        name, role, line, email = ls[i:i + 4]
+        x = re.search(r"Ext\. (\d+)$", line)
+        if not x or not _phone(line):
+            raise ValueError("Winnebago block %r carries no phone and extension" % name)
+        out.append(_m(name, role, phone="%s ext. %s" % (_phone(line), x.group(1)),
+                      email=_email(email)))
+    return out
+
+
 def p_prairie_band(pages):
     # The page lists the council twice: a short "name / office" run under each
     # heading, then the same people again with their term, contact lines and
@@ -724,7 +747,7 @@ PARSERS = {
     "1135": p_forest_county, "1370": p_grand_traverse, "1450": p_ho_chunk,
     "1550": p_nhbp, "1610": p_saginaw, "1815": p_lco, "1830": p_lvd,
     "1963": p_ltbb, "2150": p_gun_lake, "2175": p_menominee, "2560": p_oneida,
-    "2890": p_pokagon, "2980": p_prairie_band,
+    "2890": p_pokagon, "2980": p_prairie_band, "4625": p_winnebago,
     "0080": p_seneca, "0540": p_seneca, "2535": p_seneca, "3320": p_srmt, "0335": p_bois_forte, "1940": p_leech_lake, "2055": p_lower_sioux, "2285": p_mct,
     "3680": p_shakopee, "4445": p_upper_sioux, "4595": p_white_earth,
     "3085": p_red_cliff, "3305": p_st_croix, "3635": p_sault,
@@ -838,7 +861,7 @@ def run(from_dir=None, today=None):
     if failed:
         raise SystemExit("tribal-councils: never read and not readable now:\n  "
                          + "\n  ".join(failed))
-    doc = {"note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota and New York nation's council, read "
+    doc = {"note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York and Iowa nation's council, read "
                    "by scripts/tribal_council_scraper.py. Stamped onto the cards by "
                    "scripts/build_tribal_areas.py --rosters.",
            "councils": councils}

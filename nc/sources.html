@@ -1069,7 +1069,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">11 layers — 3 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">12 layers — 4 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1078,7 +1078,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1118,6 +1118,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">nc-house-members.json, rebuilt weekly by CI from the Open States current-people export for North Carolina.</td>
                 <td data-label="Where it applies">North Carolina — statewide, all 120 districts.</td>
+              </tr>
+              <tr id="layer-tribal-government">
+                <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
+                <td data-label="What it answers">Whether this address is on tribal land, and which nation's government answers for it — North Carolina has 2 such areas, both the Eastern Band of Cherokee Indians'.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Nobody yet: the Eastern Band's site could not be read from where this project is built, and the card says so. The communities the Census draws on the land are named on the card. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.</td>
+                <td data-label="Where it applies">Western North Carolina — the Qualla Boundary and its trust land. Most points in the state are on no tribal land.</td>
               </tr>
             </tbody>
           </table>
@@ -1420,6 +1431,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "North Carolina. A ZCTA is kept where it overlaps the state, so a click in Virginia, Tennessee, Georgia or South Carolina gets the layer's own empty note rather than a false silence or a neighbouring state's ZIP code"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/nc/sources.html#dataset-tribal-government",
+      "identifier": "tribal-government",
+      "name": "Tribal Government",
+      "description": "Whether this address is on tribal land, and which nation's government answers for it — North Carolina has 2 such areas, both the Eastern Band of Cherokee Indians'. Nobody yet: the Eastern Band's site could not be read from where this project is built, and the card says so. The communities the Census draws on the land are named on the card. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+      "url": "https://districtry.com/nc/sources.html#layer-tribal-government",
+      "isPartOf": {
+        "@id": "https://districtry.com/nc/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Western North Carolina — the Qualla Boundary and its trust land. Most points in the state are on no tribal land"
       }
     },
     {

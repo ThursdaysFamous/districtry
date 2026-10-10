@@ -73,6 +73,7 @@
         "school-director-district",
         "school-district-unified",
         "school-site",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -183,6 +184,7 @@
         "police-station",
         "post-office",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -322,6 +324,7 @@
         "police-station",
         "post-office",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
