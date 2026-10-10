@@ -690,6 +690,7 @@
   "sourceUrl": "https://www.villageofhoward.com/208/Village-President-Board-of-Trustees"
  },
  "39225": {
+  "carriedFrom": "2026-10-08",
   "districts": 17,
   "members": {
    "01": [
@@ -1049,6 +1050,7 @@
   }
  },
  "50825": {
+  "carriedFrom": "2026-10-08",
   "districts": 8,
   "members": {
    "01": [
@@ -1262,6 +1264,7 @@
   "sourceUrl": "https://webapi.legistar.com/v1/milwaukee/officerecords?$filter=OfficeRecordBodyId%20eq%201&$top=1000"
  },
  "55275": {
+  "carriedFrom": "2026-10-08",
   "districts": 7,
   "members": {
    "01": [
@@ -1663,6 +1666,7 @@
   "sourceUrl": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/"
  },
  "72975": {
+  "carriedFrom": "2026-10-08",
   "districts": 10,
   "members": {
    "01": [
@@ -2078,6 +2082,7 @@
   "sourceUrl": "https://viroqua-wisconsin.com/government/city_council_and_committees.php"
  },
  "84250": {
+  "carriedFrom": "2026-10-08",
   "districts": 15,
   "members": {
    "01": [
@@ -2406,6 +2411,7 @@
   "sourceUrl": "https://www.wauwatosa.net/government/common-council/contact-the-common-council"
  },
  "85350": {
+  "carriedFrom": "2026-10-08",
   "districts": 8,
   "members": {
    "01": [
