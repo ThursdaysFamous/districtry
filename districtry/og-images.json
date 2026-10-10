@@ -95,6 +95,14 @@
     "height": 630,
     "rendered": "2026-10-10"
   },
+  "tn": {
+    "path": "tn/og-image.png",
+    "label": "tn",
+    "sha256": "6e840593ce5c7e69e30e357f427224b9c889b4b4dd44608b02c43d42e464aea7",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-10-10"
+  },
   "wi": {
     "path": "wi/og-image.png",
     "label": "wi",

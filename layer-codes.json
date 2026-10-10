@@ -134,6 +134,8 @@
     "supervisor-district": "sd",
     "tid-district": "ti",
     "tif-district": "tf",
+    "tn-house": "tnh",
+    "tn-senate": "tns",
     "township": "tw",
     "tribal-government": "tg",
     "us-house": "us",
