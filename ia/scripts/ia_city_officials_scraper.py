@@ -78,6 +78,7 @@ from robots_gate import RobotsGate  # noqa: E402
 
 CACHE_DIR = os.path.join(HERE, ".cache")
 OUT_PATH = os.path.join(CACHE_DIR, "ia_city_officials.json")
+SHIPPED_PATH = os.path.join(os.path.dirname(HERE), "data", "app", "ia-city-officials.json")
 HEADERS = {"User-Agent": "districtry/1.0 (+https://districtry.com/ia/)",
            "Accept": "text/html,application/xhtml+xml"}
 
@@ -308,11 +309,29 @@ def _selftest():
     return 1 if failures else 0
 
 
+def carried_record(geoid):
+    """The record the shipped roster carries for this city, or None.
+
+    None when the roster does not name the city, so a city that has never been
+    read still fails loudly rather than being carried from nothing.
+    """
+    try:
+        with open(SHIPPED_PATH) as f:
+            shipped = json.load(f)
+    except (OSError, ValueError):
+        return None
+    rec = shipped.get(geoid)
+    if not rec or not rec.get("members"):
+        return None
+    return {"city": rec["city"], "sourceUrl": rec["sourceUrl"],
+            "members": rec["members"]}
+
+
 def main():
     os.makedirs(CACHE_DIR, exist_ok=True)
     session = requests.Session()
     gate = RobotsGate(session, HEADERS["User-Agent"])
-    payload, refused = {}, []
+    payload, refused, carried = {}, [], []
     for city in CITIES:
         allowed, why = gate.allows(city["url"])
         if not allowed:
@@ -329,8 +348,30 @@ def main():
             refused.append((city["name"], why))
             print("  %-11s NOT FETCHED — %s" % (city["name"], why), file=sys.stderr)
             continue
-        r = session.get(city["url"], headers=HEADERS, timeout=45)
-        r.raise_for_status()
+        try:
+            r = session.get(city["url"], headers=HEADERS, timeout=45)
+            r.raise_for_status()
+        except requests.RequestException as e:
+            # A PAGE THAT FAILS TO ARRIVE IS NOT A COUNCIL THAT CHANGED, so the
+            # city keeps the record this app last read from it rather than
+            # stopping the other cities' refresh (Adam's ruling, 2026-09-19:
+            # "Preserve data we have already fetched"). Measured 2026-10-09:
+            # Norwalk answered 403 to the GitHub runner on two runs twelve
+            # minutes apart while serving this same client 200 and the full
+            # page from the build sandbox -- the address being refused, not
+            # the request. Before this, that one refusal failed the step and
+            # Moravia, Riverside and Tiffin went unrefreshed with it. The page
+            # is not re-asked with another client. Only a fetch failure is
+            # carried: a page that ARRIVES and fails its gates below still
+            # stops the build, because that is the page saying something.
+            last = carried_record(city["geoid"])
+            if last is None:
+                raise
+            payload[city["geoid"]] = last
+            carried.append((city["name"], str(e)))
+            print("  %-11s NOT READ THIS RUN (%s); carrying the record last read "
+                  "from it" % (city["name"], e), file=sys.stderr)
+            continue
         recs = parse(r.text, city["convention"])
 
         if len(recs) != city["seats"]:
@@ -370,8 +411,9 @@ def main():
     with open(OUT_PATH, "w") as f:
         json.dump(payload, f, indent=1, sort_keys=True)
         f.write("\n")
-    print("ia-city-officials: %d cities cached to %s (%d refused by robots.txt)"
-          % (len(payload), OUT_PATH, len(refused)), file=sys.stderr)
+    print("ia-city-officials: %d cities cached to %s (%d refused by robots.txt, "
+          "%d carried from the last read)"
+          % (len(payload), OUT_PATH, len(refused), len(carried)), file=sys.stderr)
 
 
 if __name__ == "__main__":
