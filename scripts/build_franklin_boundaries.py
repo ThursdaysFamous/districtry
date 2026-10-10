@@ -39,6 +39,13 @@ members under District 1, 2 and 3 — Hargis under 1, Wilson under 2, Bartoni
 under 3 — and the 2026 primary's numbered headers independently produce the
 same three precinct sets. Two publishers, one answer.
 
+THE COUNTY ALSO DRAWS ITS PRECINCTS, found 2026-10-10. Its ArcGIS Online org
+publishes Precinct_Franklin/FeatureServer/0 on services7.arcgis.com
+(gb3yKpyyBmugDAn1), 35 polygons whose Precinct names equal the 35 shipped here
+exactly, data last edited 2026-09-15. The county's own pages do not link it.
+The shapes shipped here are Census 2020 voting districts composed by canvass,
+so that layer is the better geometry source and the obvious next rebuild.
+
 A WRONG SHORTCUT, RECORDED BECAUSE IT LOOKED RIGHT. The vendor's precinct ids
 group 51xx-54xx, 61xx-64xx and 71xx-74xx, which reads exactly like a district
 key. It is not one: Browning 1 (6201) and Browning 3 (6203) sit in District 1

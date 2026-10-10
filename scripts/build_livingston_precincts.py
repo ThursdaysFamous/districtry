@@ -3,7 +3,12 @@
 
 FOUND BY AUDITING GAP RECORDS BY DATE. Its record (`livingston-precincts`) was
 last measured 31 Jul 2026 and said "the county publishes no mapping data at
-all" — still true, and no longer the question. That measurement predates this
+all" — no longer the question, and (CORRECTED 2026-10-10) not true either: the
+Clerk publishes a countywide precinct map as a PDF, "Livingston county precinct
+polling sites.pdf" under /Documents/Department/Election/Maps/ (made in ArcMap
+2016, modified 2025-08-21), which refers readers to separate township maps for
+Dwight, Indian Grove and Pontiac. It is a picture, not data, so nothing below
+changes, but it is the map to compare these census shapes against. That measurement predates this
 project's discovery of the election-results vendors by nearly three weeks; a
 record whose newest measurement predates a route is a hypothesis about a route
 that did not exist.

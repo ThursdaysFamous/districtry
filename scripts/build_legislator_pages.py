@@ -243,6 +243,30 @@ INSTANCES = {
             layer="us-house", roster="congress-roster.json",
             state="North Carolina"),
     ),
+    # Oklahoma joined at its go-live with both chambers named from Open
+    # States (one seat in each currently unlisted, which the table prints as
+    # "Not listed"). Okla. Const. art. V, sec. 9 sets senators' terms at four
+    # years and representatives' at two.
+    "ok": dict(
+        worksheet="ok/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Oklahoma legislator?",
+            body="the Oklahoma Legislature",
+            short="Oklahoma Legislature",
+            term="Senators serve four-year terms and representatives two.",
+            chambers=[
+                dict(layer="ok-senate", name="Oklahoma Senate", short="Senate",
+                     holder="Senator", roster="ok-senate-members.json"),
+                dict(layer="ok-house", name="Oklahoma House of Representatives", short="House",
+                     holder="Representative", roster="ok-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Oklahoma"),
+    ),
 }
 
 

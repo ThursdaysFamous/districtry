@@ -44,8 +44,11 @@ except ImportError:  # pragma: no cover
 
 NOTICE_URL = ("https://cms9files.revize.com/carrollil/"
               "NOTICE%20OF%20POLLING%20PLACES%20FOR%20THE.pdf")
-CLERK_PAGE = ("https://www.carrollcountyil.gov/county_departments/"
-              "clerk___recorder/index.php")
+# The Clerk's election page on the 2026 site; the old Clerk front page
+# (/county_departments/clerk___recorder/index.php) answers 404, measured
+# 2026-10-10.
+CLERK_PAGE = ("https://www.carrollcountyil.gov/departments/"
+              "clerk_recorder/election_information/index.php")
 HEADERS = {
     "User-Agent": UA_ROSTER_BOT,
 }

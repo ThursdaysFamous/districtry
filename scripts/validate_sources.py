@@ -176,10 +176,10 @@ PROVENANCE = [
              "and present in the current one. build_tribal_areas.py --check is "
              "OFFLINE and proves the land-to-government join, never that the "
              "Census has not added an area, so this manifest is what watches the "
-             "service. The nation's own council is NOT watched here: "
-             "pbpindiantribe.com answers a Cloudflare managed challenge "
-             "(measured 2026-10-01, recorded in "
-             "robots_policy.CHALLENGE_FRONTED_HOSTS) and is never worked around."},
+             "service. The nation's own council is NOT watched here: it is "
+             "read weekly from pbpindiantribe.com by "
+             "scripts/tribal_council_scraper.py (update-tribal-councils.yml), "
+             "whose count guard fails a page that changes shape."},
     {"layer": "IL Supreme Court districts",
      "app_file": "il-supreme-court-districts.json",
      "source_url": "https://www.illinoiscourts.gov/",
@@ -769,12 +769,12 @@ PROVENANCE = [
              "officeholders — only its geometry would be sound."},
     {"layer": "Carroll County municipal governing bodies (roster)",
      "app_file": "municipal-officials.json",
-     "source_url": ("https://www.carrollcountyil.gov/county_departments/"
-                    "clerk___recorder/index.php"),
+     "source_url": ("https://www.carrollcountyil.gov/departments/"
+                    "clerk_recorder/documents_forms.php"),
      "note": "The Clerk's yearbook, 'Cities and Village Officers' section "
              "(carroll_municipal_officials_scraper.py) — head of government + "
              "clerk for all seven municipalities; the county prints no "
-             "trustees. Pinned to the Clerk page because the yearbook filename "
+             "trustees. Pinned to the Clerk's Documents & Forms page (the 2026 site rebuild moved it there) because the yearbook filename "
              "carries its edition and the scraper discovers it here; note the "
              "link is RELATIVE and only resolves against the Revize CDN root, "
              "which the scraper tries first."},

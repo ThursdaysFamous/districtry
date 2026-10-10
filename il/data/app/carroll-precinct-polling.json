@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-08-01",
+  "fetched": "2026-10-10",
   "precincts": {
     "CHERRY GROVE/SHANNON 1": {
       "address": "13 S. CEDAR, SHANNON,IL 61078",
@@ -90,5 +90,5 @@
     }
   },
   "source": "https://cms9files.revize.com/carrollil/NOTICE%20OF%20POLLING%20PLACES%20FOR%20THE.pdf",
-  "sourcePage": "https://www.carrollcountyil.gov/county_departments/clerk___recorder/index.php"
+  "sourcePage": "https://www.carrollcountyil.gov/departments/clerk_recorder/election_information/index.php"
 }

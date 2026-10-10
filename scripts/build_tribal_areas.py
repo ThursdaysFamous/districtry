@@ -48,27 +48,24 @@ falls on a given state's tribal land is a question with an answer. For Illinois
 on 2026-10-01 the answer is none, and the nation publishes none anywhere, so "no
 district is drawn on this land" is a measurement rather than a guess.
 
-WHY NO COUNCIL MEMBER IS NAMED
-------------------------------
+WHERE THE COUNCIL'S NAMES COME FROM
+-----------------------------------
 An officeholder is never guessed, and where no verifiable roster exists the card
 links the official body. The Bureau's directory carries exactly ONE person per
 government -- a leader, not a council -- and that reader deliberately drops the
 person columns, so there is no federal shortcut. The authority is each nation's
-own published council, and for Illinois this project cannot read it:
-pbpindiantribe.com answers robots.txt and its own front page with HTTP 403
-carrying Cloudflare's "Just a moment..." interstitial, three reads sixteen
-seconds apart on 2026-10-01, asked with the roster-bot token that would have
-done the crawling. A managed challenge is an access control and is never solved
-or worked around, and no second client was tried, because escalating past one is
-working around it. The host is recorded in
-`robots_policy.CHALLENGE_FRONTED_HOSTS` so the fleet's shared reader refuses it
-instead of reading its 403 as "no policy published, therefore allowed", which is
-what it did before -- publishing a permission the host has never granted.
+own published council, read weekly by `scripts/tribal_council_scraper.py` and
+written to each instance's tribal-councils.json by `--rosters` below.
 
-So the card names the nation, says where its government sits, says no district
-is drawn here, links the nation, and names nobody. That is the shape Iowa
-already ships for a residency district elected countywide: draw the ground, say
-how the seat is filled, name no person on it.
+FOR ILLINOIS THAT PAGE WAS UNREADABLE FOR NINE DAYS AND THEN WAS NOT. On
+2026-10-01 pbpindiantribe.com answered robots.txt and its front page with HTTP
+403 and Cloudflare's "Just a moment..." page, three reads sixteen seconds apart,
+and the card named nobody. On 2026-10-10 the same client was served both on
+three consecutive reads, which is the standard
+`robots_policy.CHALLENGE_FRONTED_HOSTS` sets for retiring an entry, so the host
+was retired there and the council is carried. A nation whose page cannot be read
+is listed in ROSTER_BLOCKED below with the measurement, and its card says why it
+names nobody.
 
 WHY AN UNPOPULATED PARCEL IS DRAWN
 ----------------------------------
@@ -175,15 +172,6 @@ ROSTER_BLOCKED = {
                "access control is not worked around, so no name is carried and "
                "the card links the nation.",
     },
-    "2980": {
-        "host": "pbpindiantribe.com",
-        "measured": "2026-10-01",
-        "why": "The nation publishes its council on its own site, which answers "
-               "every request from this project with a Cloudflare challenge — "
-               "robots.txt and the front page alike, HTTP 403, three reads "
-               "sixteen seconds apart. An access control is not worked around, "
-               "so no name is carried and the card links the nation instead.",
-    },
 }
 
 # Where a nation publishes its own council, for the nations whose page answers
@@ -212,6 +200,25 @@ def _not_read_why(entry):
             "answered this project on %s; these names are not in this app yet, "
             "so the card links the nation instead of naming anybody."
             % (entry["page"], entry["measured"]))
+
+
+# A STATE WHOSE NATIONS' COUNCILS NOBODY HERE HAS LOOKED FOR YET. Neither table
+# above fits it: ROSTER_BLOCKED is a measured refusal and ROSTER_NOT_READ a page
+# that answered, and for Oklahoma's thirty-odd nations no page has been asked
+# for at all. Saying so is the honest card; inventing a measurement per nation
+# would not be. Keyed by state, dated, and it leaves by each nation being moved
+# into one of the two per-nation tables above or into tribal-councils.json.
+ROSTER_NOT_SOUGHT = {
+    "Oklahoma": {"since": "2026-10-10"},
+}
+
+
+def _not_sought_why(shared):
+    """The card's own words for a council nobody here has looked for yet."""
+    return ("Not carried yet. This app has not yet read the council list %s "
+            "publishes, so the card links %s instead of naming anybody."
+            % (("each of these nations", "the nations") if shared
+               else ("this nation", "the nation")))
 
 
 COUNCILS = os.path.join(REPO, "data", "tribal-councils.json")
@@ -291,7 +298,7 @@ def _state_areas(state_name):
     T.check_vintage_counts(resolved)
     state_feat, state_code = T.state_polygon(state_name)
     out = []
-    for cls in T.GOVERNED_CLASSES:
+    for cls in T.drawn_classes(state_name):
         for feat in T.fetch_layer(T.AIANNHA, resolved[T.DEFAULT_VINTAGE][cls],
                                   fields=T.AREA_FIELDS):
             clip = T.clip_to_state(feat["geometry"], state_feat["geometry"])
@@ -300,7 +307,7 @@ def _state_areas(state_name):
     return out, state_code, state_feat, resolved
 
 
-def census_population(resolved):
+def census_population(resolved, classes=T.GOVERNED_CLASSES):
     """The 2020 count per AIANNH code, and which codes the 2020 geography lacks.
 
     Returns `(counts, known_codes)`. A code in `known_codes` with no entry in
@@ -310,7 +317,7 @@ def census_population(resolved):
     no populations anywhere cannot settle anything, so that raises.
     """
     counts, known, seen = {}, set(), {}
-    for cls in T.GOVERNED_CLASSES:
+    for cls in classes:
         layer = resolved[POP_VINTAGE].get(cls)
         if layer is None:
             continue
@@ -365,6 +372,58 @@ def districts_on(state_feat, subdivision_layer):
     return here, len(everywhere)
 
 
+def government_names(entry):
+    """Every government a join entry names, in the order the join gives them.
+
+    One, for every area except a few in Oklahoma, where the Census draws one
+    statistical area for several nations at once (the Kiowa, Comanche, Apache
+    and Fort Sill Apache share one) and the join lists each under `governments`
+    rather than picking one to name."""
+    if entry.get("governments"):
+        return list(entry["governments"])
+    return [entry["government"]]
+
+
+def nation_display(names):
+    """The card's one-line name for the government(s): "A", "A and B", or
+    "A, B and C"."""
+    if len(names) == 1:
+        return names[0]
+    return ", ".join(names[:-1]) + " and " + names[-1]
+
+
+def nations_list(entry, bia):
+    """For an area several governments share, each one's name, seat and site,
+    from the Bureau's own columns; None for an area one government holds, so
+    every such record is unchanged by this field existing."""
+    names = government_names(entry)
+    if len(names) == 1:
+        return None
+    out = []
+    for name in names:
+        gov = bia[name]
+        out.append({"name": name, "seat": _seat(gov), "url": gov.get("website")})
+    return out
+
+
+# WHAT A STATISTICAL AREA IS, ON THE CARD THAT DRAWS ONE. Only Oklahoma draws
+# them (tribal_areas.DRAWN_STATISTICAL), and a reader must not take the shape
+# for a legal map of a nation's land: the Census draws it to count people.
+_STATISTICAL_NOTE = {
+    "otsa": ("The Census Bureau draws this area to count people, as an Oklahoma "
+             "Tribal Statistical Area. It is not a legal boundary of any "
+             "nation's land."),
+    "joint-use": ("The Census Bureau draws this area to count people, as land two "
+                  "Oklahoma Tribal Statistical Areas share. It is not a legal "
+                  "boundary of any nation's land."),
+}
+
+
+def statistical_note(cls):
+    """The card's sentence for a drawn statistical area, or None."""
+    return _STATISTICAL_NOTE.get(cls)
+
+
 def check_join(areas, join, bia):
     """Hold the shipped areas, the join and the Bureau's list to one another.
 
@@ -382,6 +441,16 @@ def check_join(areas, join, bia):
                 "AIANNH %s has ground here and data/tribal-government-join.json "
                 "does not name its government — add the join entry rather than a "
                 "table in this file" % code)
+        if entry.get("governments"):
+            for name in entry["governments"]:
+                if name not in bia:
+                    raise RuntimeError(
+                        "the join names %r for AIANNH %s and the Bureau's own list "
+                        "does not carry that government" % (name, code))
+                if not bia[name].get("state"):
+                    raise RuntimeError("the Bureau lists no state for %r, so no "
+                                       "card can say where it sits" % name)
+            continue
         gov = bia.get(entry["government"])
         if gov is None:
             raise RuntimeError(
@@ -419,15 +488,30 @@ def _population_note(counts, known, code, cls):
     return "{:,} people at the 2020 census.".format(people)
 
 
-def _districts_note(district_names):
+# On a statistical area the Census's subdivisions are not known to be council
+# districts (the Cherokee OTSA carries 140 of them, and the Cherokee Nation's
+# council has far fewer seats), so the card neither lists dozens of names nor
+# says that no council seat belongs to the ground.
+_LONG_DISTRICT_LIST = 12
+
+
+def _districts_note(district_names, cls=None):
     """Whether any district is drawn on this land, in the card's own words."""
+    if cls in _STATISTICAL_NOTE:
+        if not district_names:
+            return "None. The Census draws no tribal subdivision on this area."
+        if len(district_names) > _LONG_DISTRICT_LIST:
+            return ("The Census draws %d tribal subdivisions on this area."
+                    % len(district_names))
+        return ", ".join(sorted(district_names))
     if not district_names:
         return ("None. The Census draws no tribal district on this land, so no "
                 "council seat belongs to it.")
     return ", ".join(sorted(district_names))
 
 
-def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils=None):
+def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils=None,
+            state=None, bia=None):
     props = feat["properties"]
     code = str(props.get("AIANNH"))
     rec = {
@@ -440,10 +524,10 @@ def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils
             # the government.
             "censusName": props.get("NAME"),
             "landClass": cls,
-            "nation": entry["government"],
+            "nation": nation_display(government_names(entry)),
             "parentNation": entry.get("parentGovernment"),
-            "seat": _seat(gov),
-            "url": gov.get("website"),
+            "seat": _seat(gov) if gov else None,
+            "url": gov.get("website") if gov else None,
             # Measured per build: the districts a nation draws on its own land.
             # An empty list means none was found beside a control that found
             # 484 nationwide, which is a measurement and not a silence.
@@ -461,16 +545,24 @@ def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils
             # raw fields would be guessing at what this builder measured. The
             # raw values stay beside them for anything that wants to compute.
             "populationNote": _population_note(counts, known, code, cls),
-            "districtsNote": _districts_note(district_names),
+            "districtsNote": _districts_note(district_names, cls),
             "areaKm2": round(clip["inside_km2"], 4),
             "wholeAreaKm2": round(clip["whole_km2"], 4),
             "shareInState": round(clip["share"], 6),
         },
     }
-    return stamp(rec, councils or {})
+    # Only an area several governments share carries the list, and only a drawn
+    # statistical area carries the sentence saying what it is.
+    shared = nations_list(entry, bia) if bia is not None else None
+    if shared:
+        rec["properties"]["nations"] = shared
+    snote = statistical_note(cls)
+    if snote:
+        rec["properties"]["statisticalNote"] = snote
+    return stamp(rec, councils or {}, state)
 
 
-def _no_roster_props(code, councils):
+def _no_roster_props(code, councils, state=None, shared=False):
     """The roster fields the GEOMETRY file carries. For a nation whose council
     is carried they are all empty, because the names live in the instance's
     own tribal-councils.json: the geometry is served cache-first and changes
@@ -485,6 +577,10 @@ def _no_roster_props(code, councils):
                 "rosterMeasured": None}
     blocked = ROSTER_BLOCKED.get(code)
     not_read = ROSTER_NOT_READ.get(code)
+    sought = ROSTER_NOT_SOUGHT.get(state) if not (blocked or not_read) else None
+    if sought:
+        return {"roster": None, "rosterWhy": _not_sought_why(shared),
+                "rosterHost": None, "rosterMeasured": sought["since"]}
     out = {
         "roster": None,
         "rosterWhy": (blocked["why"] if blocked
@@ -498,14 +594,14 @@ def _no_roster_props(code, councils):
     return out
 
 
-def stamp(feature, councils):
+def stamp(feature, councils, state=None):
     """Set a geometry feature's roster fields. The one place they are written,
     so a rebuild of the land and a weekly re-read of the councils cannot write
     them two ways."""
     p = feature["properties"]
     for k in [k for k in p if k.startswith("roster")]:
         del p[k]
-    p.update(_no_roster_props(p["aiannh"], councils))
+    p.update(_no_roster_props(p["aiannh"], councils, state, bool(p.get("nations"))))
     return feature
 
 
@@ -546,7 +642,7 @@ def stamp_rosters():
             continue
         doc = json.load(open(path))
         for f in doc["features"]:
-            stamp(f, councils)
+            stamp(f, councils, doc.get("state"))
         with open(path, "w") as fh:
             json.dump(doc, fh)
             fh.write("\n")
@@ -566,19 +662,174 @@ def stamp_rosters():
     print("build-tribal-areas --rosters: OK — %d instance file(s) stamped" % n)
 
 
+# WHERE THE LAND IS DRAWN SIMPLIFIED, AND HOW FAR IT MAY STRAY. Every other
+# state ships the Census's own lines, which is at most 0.8 MB. Oklahoma's
+# statistical areas cover most of the state and come to 2.8 MB as published, so
+# they go through ONE mapshaper run, all areas together so a shared edge is one
+# line simplified once, by Douglas-Peucker in metres -- the same setting and the
+# same 25 m ceiling Oklahoma's own chamber builder measured and gates
+# (ok/scripts/build_legislative_boundaries.py). The ceiling is held here on
+# every build: no vertex of the Census's line may lie further than it from the
+# line as drawn.
+MAPSHAPER = "mapshaper@0.6.102"
+SIMPLIFY = {"Oklahoma": {"interval": "interval=20", "ceiling_m": 25.0}}
+
+
+def _local_metres(lat0):
+    import math
+    return 111320.0 * math.cos(math.radians(lat0)), 110574.0
+
+
+def worst_stray_m(source_geom, drawn_geom):
+    """How far the Census's line strays, at its worst vertex, from the line as
+    drawn, in metres. The direction matters: a simplification keeps a subset of
+    the source vertices, so the drawn vertices all lie on the source line and
+    the other direction is about zero by construction."""
+    sg = T._shapely()
+    src_rings = T._rings(source_geom)
+    lat0 = sum(c[1] for r in src_rings for c in r) / sum(len(r) for r in src_rings)
+    mx, my = _local_metres(lat0)
+    edge = sg.MultiLineString([[(x * mx, y * my) for x, y in r[:]]
+                               for r in T._rings(drawn_geom)])
+    return max(edge.distance(sg.Point(c[0] * mx, c[1] * my))
+               for r in src_rings for c in r)
+
+
+def simplify(feats, spec):
+    """Simplify every feature's geometry in one mapshaper run and hold each to
+    the ceiling. Raises naming the feature and its stray when one is over."""
+    import subprocess
+    import tempfile
+    tmp = tempfile.mkdtemp()
+    src = os.path.join(tmp, "in.geojson")
+    out = os.path.join(tmp, "out.geojson")
+    with open(src, "w") as fh:
+        json.dump({"type": "FeatureCollection", "features": [
+            {"type": "Feature", "properties": {"k": i}, "geometry": f["geometry"]}
+            for i, f in enumerate(feats)]}, fh)
+    subprocess.run(["npx", "-y", MAPSHAPER, src, "-simplify", "dp", "keep-shapes",
+                    spec["interval"], "-o", "precision=0.000001", "format=geojson",
+                    out], check=True, cwd=REPO)
+    got = {f["properties"]["k"]: f["geometry"] for f in json.load(open(out))["features"]}
+    if sorted(got) != list(range(len(feats))):
+        raise RuntimeError("mapshaper returned %d of %d features" % (len(got), len(feats)))
+    worst = []
+    for i, f in enumerate(feats):
+        stray = worst_stray_m(f["geometry"], got[i])
+        worst.append((stray, f["properties"]["censusName"]))
+        f["geometry"] = got[i]
+    worst.sort(reverse=True)
+    print("build-tribal-areas: simplified with dp %s; worst stray %.1f m (%s), "
+          "ceiling %.1f m" % (spec["interval"], worst[0][0], worst[0][1], spec["ceiling_m"]))
+    over = [w for w in worst if w[0] > spec["ceiling_m"]]
+    if over:
+        raise RuntimeError("the drawn line strays past %.1f m from the Census's on %s"
+                           % (spec["ceiling_m"], "; ".join("%s %.1f m" % (n, m) for m, n in over)))
+
+
+# NATIONS SEATED IN AN AREA THE CENSUS NAMES FOR ANOTHER. In Oklahoma several
+# federally recognized governments have no area of their own: the United
+# Keetoowah Band and the Delaware Tribe of Indians sit inside the Cherokee
+# OTSA, and the Alabama-Quassarte, Kialegee and Thlopthlocco tribal towns
+# inside the Creek one. A card that named only the Cherokee Nation over
+# Tahlequah would leave the UKB's own citizens looking for their government.
+# So for a state listed here, every government the Bureau seats in that state
+# that no area names is placed by its seat -- the Census's own internal point
+# for the Bureau's city, incorporated place or census-designated place -- and
+# the area holding that point carries it as "also seated here". That
+# is a statement about where a seat is, measured, and never one about which
+# ground a nation governs.
+SEAT_STATES = {"Oklahoma": ("40", "OK")}
+PLACE_LAYERS = (4, 5)  # tigerWMS Places: incorporated places, then CDPs
+
+
+def seat_points(state_fips, govs):
+    """{government name: (lon, lat, Census place name)} for each government's
+    seat city, from the Census's places layers. A city the Census answers with
+    no place, or with more than one, raises rather than placing a seat by guess."""
+    import urllib.parse
+    base = T.TIGERWEB + "/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/%d/query?"
+    out = {}
+    for gov in govs:
+        hits = []
+        for layer in PLACE_LAYERS:
+            q = urllib.parse.urlencode({
+                "where": "STATE='%s' AND BASENAME='%s'" % (state_fips,
+                                                          gov["city"].replace("'", "''")),
+                "outFields": "NAME,INTPTLAT,INTPTLON", "returnGeometry": "false",
+                "f": "json"})
+            got = T._require_no_error(T._get(base % layer + q), "place %s" % gov["city"])
+            hits.extend(f["attributes"] for f in got.get("features") or [])
+        if len(hits) != 1:
+            raise RuntimeError("the Census answers %d place(s) for %r, the seat of %r — "
+                               "settle it before a seat is placed"
+                               % (len(hits), gov["city"], gov["name"]))
+        a = hits[0]
+        out[gov["name"]] = (float(a["INTPTLON"]), float(a["INTPTLAT"]), a["NAME"])
+    return out
+
+
+def also_seated(feats, state_name, bia):
+    """Stamp `alsoSeated` onto each area holding the seat of a government its
+    Census name does not name. Returns the governments seated in no area."""
+    if state_name not in SEAT_STATES:
+        return []
+    fips, usps = SEAT_STATES[state_name]
+    # Only a government no area already names is placed: the rest are on the
+    # card of their own area, and some (the Cheyenne and Arapaho at Concho) sit
+    # in no Census place at all, so placing them would ask a question nobody
+    # needs answered.
+    named = set()
+    for f in feats:
+        p = f["properties"]
+        named.update(n["name"] for n in (p.get("nations") or []))
+        named.add(p["nation"])
+    govs = [g for g in bia.values() if g.get("state") == usps and g.get("city")
+            and g["name"] not in named]
+    points = seat_points(fips, govs)
+    sg = T._shapely()
+    shapes = [(f, T.even_odd(f["geometry"])) for f in feats]
+    outside = []
+    for name in sorted(points):
+        lon, lat, place = points[name]
+        pt = sg.Point(lon, lat)
+        homes = [f for f, g in shapes if g.contains(pt)]
+        if not homes:
+            outside.append((name, place))
+            continue
+        for f in homes:
+            p = f["properties"]
+            named = [n["name"] for n in p.get("nations") or []] or [p["nation"]]
+            if name in named:
+                continue
+            gov = bia[name]
+            p.setdefault("alsoSeated", []).append(
+                {"name": name, "seat": _seat(gov), "url": gov.get("website")})
+            print("build-tribal-areas: %s is seated at %s, inside %s"
+                  % (name, place, p["censusName"]))
+    for name, place in outside:
+        print("build-tribal-areas: %s is seated at %s, inside no drawn area" % (name, place))
+    return outside
+
+
 def build(state_name, tag, out_path=None):
     join, bia = load_join(), load_bia()
     areas, state_code, state_feat, resolved = _state_areas(state_name)
     check_join(areas, join, bia)
     here, _ = districts_on(state_feat, resolved[T.DEFAULT_VINTAGE]["subdivision"])
-    counts, known = census_population(resolved)
+    counts, known = census_population(resolved, T.drawn_classes(state_name))
     feats = []
     for cls, feat, clip in areas:
         code = str(feat["properties"].get("AIANNH"))
         entry = join["areas"][code]
-        feats.append(_record(cls, feat, clip, entry, bia[entry["government"]],
-                             here.get(code, []), counts, known, load_councils()))
+        gov = None if entry.get("governments") else bia[entry["government"]]
+        feats.append(_record(cls, feat, clip, entry, gov,
+                             here.get(code, []), counts, known, load_councils(),
+                             state_name, bia))
     feats.sort(key=lambda f: (f["properties"]["nation"], f["properties"]["aiannh"]))
+    also_seated(feats, state_name, bia)
+    if state_name in SIMPLIFY:
+        simplify(feats, SIMPLIFY[state_name])
     doc = {
         "type": "FeatureCollection",
         "state": state_name,
@@ -645,7 +896,8 @@ def check():
             # and the card reads them with the councils file merged over them,
             # so every check below is made on that merged view.
             geo = feat["properties"]
-            stamped = _no_roster_props(geo["aiannh"], councils)
+            stamped = _no_roster_props(geo["aiannh"], councils, doc["state"],
+                                       bool(geo.get("nations")))
             if {k: v for k, v in geo.items() if k.startswith("roster")} != stamped:
                 raise RuntimeError(
                     "%s: AIANNH %s's geometry carries roster fields `stamp` "
@@ -657,23 +909,65 @@ def check():
             if entry is None:
                 raise RuntimeError("%s ships AIANNH %s, which the join does not "
                                    "name" % (tag, p["aiannh"]))
-            if p["nation"] != entry["government"]:
+            want_nation = nation_display(government_names(entry))
+            if p["nation"] != want_nation:
                 raise RuntimeError(
                     "%s names %r for AIANNH %s where the join says %r — rebuild "
                     "the file rather than editing it"
-                    % (tag, p["nation"], p["aiannh"], entry["government"]))
-            gov = bia.get(p["nation"])
+                    % (tag, p["nation"], p["aiannh"], want_nation))
+            if p.get("statisticalNote") != statistical_note(p.get("landClass")):
+                raise RuntimeError(
+                    "%s: AIANNH %s's statistical-area sentence is not what its land "
+                    "class gives — rebuild the file" % (tag, p["aiannh"]))
+            if (p.get("landClass") in T.STATISTICAL_CLASSES + ("joint-use",)
+                    and p.get("landClass") not in T.drawn_classes(doc["state"])):
+                raise RuntimeError(
+                    "%s draws a %s, which only a state named in "
+                    "tribal_areas.DRAWN_STATISTICAL may do" % (tag, p.get("landClass")))
+            if entry.get("governments"):
+                for name in entry["governments"]:
+                    if name not in bia:
+                        raise RuntimeError("%s names %r, which the Bureau's list does "
+                                           "not carry" % (tag, name))
+                if p.get("nations") != nations_list(entry, bia):
+                    raise RuntimeError(
+                        "%s: AIANNH %s's list of governments is not what the join and "
+                        "the Bureau give — rebuild the file" % (tag, p["aiannh"]))
+                if p["seat"] is not None or p["url"] is not None:
+                    raise RuntimeError(
+                        "%s: AIANNH %s is shared and carries one seat or link, which "
+                        "would credit one nation with the area" % (tag, p["aiannh"]))
+                gov = {"_shared": True}
+            else:
+                if p.get("nations") is not None:
+                    raise RuntimeError("%s: AIANNH %s lists several governments where "
+                                       "the join names one" % (tag, p["aiannh"]))
+                gov = bia.get(p["nation"])
             if gov is None:
                 raise RuntimeError("%s names %r, which the Bureau's list does not "
                                    "carry" % (tag, p["nation"]))
-            if p["seat"] != _seat(gov):
+            if gov.get("_shared"):
+                pass
+            elif p["seat"] != _seat(gov):
                 raise RuntimeError(
                     "%s says %r sits at %r where the Bureau says %r"
                     % (tag, p["nation"], p["seat"], _seat(gov)))
-            if p["url"] != gov.get("website"):
+            if not gov.get("_shared") and p["url"] != gov.get("website"):
                 raise RuntimeError("%s links %r for %r where the Bureau publishes "
                                    "%r" % (tag, p["url"], p["nation"],
                                            gov.get("website")))
+            # A nation listed as seated here must be the Bureau's, as the Bureau
+            # gives it, in a state that places seats, and not one the area's own
+            # name already names.
+            for n in p.get("alsoSeated") or []:
+                g = bia.get(n["name"])
+                if (doc["state"] not in SEAT_STATES or g is None
+                        or n != {"name": n["name"], "seat": _seat(g), "url": g.get("website")}
+                        or n["name"] in government_names(entry)):
+                    raise RuntimeError(
+                        "%s: AIANNH %s lists %r as seated there in a way the Bureau's "
+                        "list and the join do not give — rebuild the file"
+                        % (tag, p["aiannh"], n["name"]))
             # A carried council must be exactly what the councils file says,
             # stamped by the one function that stamps it, so a weekly re-read
             # that forgot to re-stamp, or a hand edit, fails here.
@@ -700,13 +994,46 @@ def check():
                     "the date, or carry a roster" % (tag, p["aiannh"]))
             if (p["roster"] is None
                     and p["aiannh"] not in ROSTER_BLOCKED
-                    and p["aiannh"] not in ROSTER_NOT_READ):
+                    and p["aiannh"] not in ROSTER_NOT_READ
+                    and doc["state"] not in ROSTER_NOT_SOUGHT):
                 raise RuntimeError(
                     "%s: AIANNH %s ships a reason this module does not declare, "
                     "so nothing re-reads it" % (tag, p["aiannh"]))
     if not seen:
         raise RuntimeError("no instance ships tribal-areas.json, so this gate "
                            "would pass vacuously")
+    # In a state that places seats, every government the Bureau seats there is
+    # named somewhere: by an area, or as seated in one. A government named
+    # nowhere is the card a citizen opens and does not find.
+    for tag in sorted(os.listdir(REPO)):
+        path = os.path.join(REPO, tag, "data", "app", "tribal-areas.json")
+        if not os.path.exists(path):
+            continue
+        doc = json.load(open(path))
+        if doc["state"] not in SEAT_STATES:
+            continue
+        usps = SEAT_STATES[doc["state"]][1]
+        named = set()
+        for f in doc["features"]:
+            p = f["properties"]
+            named.update(n["name"] for n in (p.get("nations") or []))
+            named.add(p["nation"])
+            named.update(n["name"] for n in (p.get("alsoSeated") or []))
+        missing = sorted(g["name"] for g in bia.values()
+                         if g.get("state") == usps and g["name"] not in named)
+        if missing:
+            raise RuntimeError("%s names %s nowhere, though the Bureau seats them in "
+                               "%s — rebuild, or record why" % (tag, "; ".join(missing),
+                                                               doc["state"]))
+    shipped_states = {json.load(open(os.path.join(REPO, t, "data", "app",
+                                                  "tribal-areas.json")))["state"]
+                      for t in os.listdir(REPO)
+                      if os.path.exists(os.path.join(REPO, t, "data", "app",
+                                                     "tribal-areas.json"))}
+    stale = sorted(set(ROSTER_NOT_SOUGHT) - shipped_states)
+    if stale:
+        raise RuntimeError("ROSTER_NOT_SOUGHT names %s and no instance ships that "
+                           "state's tribal land" % ", ".join(stale))
     both = sorted(set(ROSTER_BLOCKED) & set(ROSTER_NOT_READ))
     if both:
         raise RuntimeError(
@@ -814,6 +1141,42 @@ def selftest():
                                                publisher="Wisconsin Department of Administration")})
     assert "updated 2026-07-08" in state["rosterNote"] and "no council of its own" in state["rosterNote"]
     assert roster_props("0002", {"0001": rec}) is None
+
+    assert _districts_note([], "otsa") == "None. The Census draws no tribal subdivision on this area."
+    assert _districts_note(["d%d" % i for i in range(13)], "otsa") == (
+        "The Census draws 13 tribal subdivisions on this area.")
+    assert _districts_note(["B", "A"], "otsa") == "A, B"
+    assert _districts_note(["B District", "A District"]) == "A District, B District"
+    # Several governments on one area are all named, none first by accident of
+    # a seat or a link, and the sentence a statistical area carries exists only
+    # for the two classes Oklahoma draws.
+    assert nation_display(["A"]) == "A"
+    assert nation_display(["A", "B"]) == "A and B"
+    assert nation_display(["A", "B", "C"]) == "A, B and C"
+    shared_bia = {"A": {"city": "X", "state": "OK", "website": "http://a.invalid"},
+                  "B": {"city": "Y", "state": "OK", "website": None}}
+    assert nations_list({"governments": ["A", "B"]}, shared_bia) == [
+        {"name": "A", "seat": "X, OK", "url": "http://a.invalid"},
+        {"name": "B", "seat": "Y, OK", "url": None}]
+    assert nations_list({"government": "A"}, shared_bia) is None
+    assert check_join([("otsa", {"properties": {"AIANNH": "5720"}}, {})],
+                      {"areas": {"5720": {"governments": ["A", "B"]}}}, shared_bia)
+    try:
+        check_join([("otsa", {"properties": {"AIANNH": "5720"}}, {})],
+                   {"areas": {"5720": {"governments": ["A", "Z"]}}}, shared_bia)
+    except RuntimeError as e:
+        assert "own list does not carry" in str(e)
+    else:
+        raise AssertionError("a shared area naming an unknown government must fail")
+    assert statistical_note("otsa") and statistical_note("joint-use")
+    assert statistical_note("reservation") is None
+    assert "not a legal boundary" in statistical_note("otsa")
+    # A state nobody has looked in says so, in the plural where it must.
+    assert _no_roster_props("5550", {}, "Oklahoma")["rosterWhy"] == _not_sought_why(False)
+    assert "each of these nations" in _not_sought_why(True)
+    assert _no_roster_props("5550", {}, "Iowa")["rosterWhy"] is None
+    for state, row in ROSTER_NOT_SOUGHT.items():
+        assert len(row["since"]) == 10, state
 
     print("build-tribal-areas --selftest: OK — the join check fails three ways, "
           "the seat never invents a city, all %d blocked roster(s) name a host "
