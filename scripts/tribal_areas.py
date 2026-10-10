@@ -91,6 +91,23 @@ CLASS_NAMES = {
 GOVERNED_CLASSES = ("reservation", "trust-land", "state-reservation")
 STATISTICAL_CLASSES = ("otsa", "sdtsa", "tdsa")
 
+# THE ONE EXCEPTION TO THAT RULING, and it is Adam's, for one state (2026-10-10,
+# "Make an exception for OK"). In Oklahoma the Census draws only one federal
+# reservation (Osage) and one trust land; every other nation's ground is an
+# Oklahoma Tribal Statistical Area, or a joint-use area two of them share. Left
+# undrawn, a reader almost anywhere in the state would be told no tribal
+# government answers there. So in Oklahoma those two statistical classes ARE
+# drawn, and the card says plainly that the Census draws them for counting
+# people and that they are not a legal boundary. Keyed by state, so no other
+# state can draw a statistical area by accident.
+DRAWN_STATISTICAL = {"Oklahoma": ("otsa", "joint-use")}
+
+
+def drawn_classes(state_name):
+    """The land classes a builder draws in one state: the governed three, plus
+    a statistical class only where DRAWN_STATISTICAL names that state."""
+    return GOVERNED_CLASSES + DRAWN_STATISTICAL.get(state_name, ())
+
 # Measured 2026-09-30 on the current vintage. These are a control on the
 # order-based vintage resolution above, not a limit on what may ship: a count
 # that has MOVED is reported, and only a count that moved in a way that swaps two
@@ -433,6 +450,15 @@ def selftest():
         assert cls not in GOVERNED_CLASSES, cls
     checks += 1
 
+    # 7. The Oklahoma exception reaches Oklahoma alone, and draws only the two
+    #    classes Adam allowed there.
+    assert list(DRAWN_STATISTICAL) == ["Oklahoma"], DRAWN_STATISTICAL
+    assert drawn_classes("Oklahoma") == GOVERNED_CLASSES + ("otsa", "joint-use")
+    assert drawn_classes("Minnesota") == GOVERNED_CLASSES
+    for cls in DRAWN_STATISTICAL["Oklahoma"]:
+        assert cls in CLASS_NAMES and cls not in GOVERNED_CLASSES, cls
+    checks += 1
+
     print("OK tribal_areas selftest: %d assertions" % checks)
     return 0
 
@@ -450,7 +476,7 @@ def report(state_name):
     state, geoid = state_polygon(state_name)
     print("control OK: %s is state code %s" % (state_name, geoid))
 
-    for cls in GOVERNED_CLASSES:
+    for cls in drawn_classes(state_name):
         if cls not in ids:
             print("%s: not published in this vintage" % cls)
             continue

@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ok-senate", "ok-house"];
 const EXPECT_DISTRICT = { "county": "Oklahoma County", "us-house": "5", "ok-senate": "48", "ok-house": "99" };
 const NEGATIVE_POINT = "33.65000,-97.15000"; // near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.
 const APP_NAME = "districtry Oklahoma";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -887,6 +887,60 @@ try {
         `hidden=${hidden} leaked=${leaked} layersOn=${stillOn} text=${(info.text || "").slice(0, 90)}`);
       await context.close();
     }
+  }
+
+  // Tribal areas: Oklahoma draws its Census statistical areas, by Adam's
+  // exception of 2026-10-10, and every such card says what they are. A shared
+  // area names every nation on it, none first. Held at three real places and
+  // at the Capitol, which lies outside every tribal area (2026-10-10).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt) => {
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      return { text: card.text, by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+    const t = await at("35.9154,-94.9700");
+    check("Tahlequah names the Cherokee Nation, its seat, and says the area is the Census's, for counting people",
+          t.by("Tribal government") === "Cherokee Nation" &&
+          t.by("Seat of government") === "Tahlequah, OK" &&
+          t.by("Land") === "Cherokee OTSA" &&
+          t.by("What this area is").indexOf("count people") !== -1 &&
+          t.by("What this area is").indexOf("not a legal boundary") !== -1 &&
+          t.by("Why no names").indexOf("has not yet read") !== -1,
+          JSON.stringify(t.text.slice(0, 300)));
+    check("Tahlequah also lists the United Keetoowah Band, seated there in an area the Census names for the Cherokee Nation",
+          t.text.indexOf("Also seated in this area") !== -1 &&
+          t.text.indexOf("United Keetoowah Band of Cherokee Indians in Oklahoma") !== -1 &&
+          t.text.indexOf("Delaware Tribe of Indians") !== -1,
+          JSON.stringify(t.text.slice(-400)));
+    const m = await at("35.4293,-96.3003");
+    check("Okemah names the Muscogee (Creek) Nation and lists the three tribal towns seated in its area",
+          m.by("Tribal government") === "The Muscogee (Creek) Nation" &&
+          ["Thlopthlocco Tribal Town", "Kialegee Tribal Town", "Alabama-Quassarte Tribal Town"].every((n) => m.text.indexOf(n) !== -1),
+          JSON.stringify(m.text.slice(-400)));
+    const l = await at("34.6036,-98.3959");
+    check("Lawton names all four nations of the shared area, each with its own seat, and no single seat",
+          ["Kiowa", "Comanche Nation", "Apache Tribe of Oklahoma", "Fort Sill Apache"].every((n) => l.text.indexOf(n) !== -1) &&
+          l.text.indexOf("4 nations share this area") !== -1 &&
+          l.text.indexOf("Seat: Lawton") === -1 && l.text.indexOf("Seat: Elgin, OK") !== -1 &&
+          l.by("Seat of government") === "",
+          JSON.stringify(l.text.slice(0, 300)));
+    const o = await at("36.6678,-96.3372");
+    check("Pawhuska is on the Osage Reservation, which is not a statistical area",
+          o.by("Tribal government") === "The Osage Nation" && o.by("What this area is") === "",
+          JSON.stringify(o.text.slice(0, 200)));
+    const off = await at(POINT);
+    check("the Capitol is outside every tribal area and is told so in the layer's own words",
+          off.text.indexOf("not on any tribal area the Census draws in Oklahoma") !== -1,
+          JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
   }
 } finally {
   await browser.close();
