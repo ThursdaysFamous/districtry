@@ -124,12 +124,12 @@ prose.
 | ny | 0 | 39 |
 | ca | 0 | 16 |
 | wi | 1 | 32 |
-| ia | 0 | 20 |
+| ia | 0 | 21 |
 | mi | 0 | 19 |
 | mn | 6 | 19 |
 | ky | 4 | 12 |
-| in | 4 | 11 |
-| nc | 4 | 11 |
+| in | 4 | 12 |
+| nc | 4 | 12 |
 | ok | 4 | 12 |
 
 ### Where each layer's shapes come from
@@ -234,7 +234,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `library`, `post-office`.
 - **Not measured** — declared since the probe ran: `tribal-government`.
 
-#### ia — 3 of 20 layers fetch their shapes
+#### ia — 3 of 21 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -244,6 +244,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `ia-judicial-district`, `iowa-aea`, `ia-senate`, `county`, `ia-house`, `county-supervisor`, `school-district-unified`, `school-director-district`, `community-college`, `cc-director-district`, `city-ward`, `precinct`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `post-office`.
+- **Not measured** — declared since the probe ran: `tribal-government`.
 
 #### mi — 5 of 19 layers fetch their shapes
 
@@ -285,7 +286,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `ky-supreme-court`, `ky-court-of-appeals`, `ky-senate`, `ky-circuit-court`, `ky-district-court`, `ky-house`, `county`.
 
-#### in — 4 of 11 layers fetch their shapes
+#### in — 4 of 12 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -296,8 +297,9 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `in-senate`, `county`, `in-house`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+- **Not measured** — declared since the probe ran: `tribal-government`.
 
-#### nc — 4 of 11 layers fetch their shapes
+#### nc — 4 of 12 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -308,6 +310,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `nc-senate`, `county`, `nc-house`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+- **Not measured** — declared since the probe ran: `tribal-government`.
 
 #### ok — not measured
 
@@ -319,14 +322,14 @@ measured until the next run describes it.
 | ny | 39 | 35 | 0 |
 | ca | 17 | 14 | 0 |
 | wi | 92 | 265 | 5 |
-| ia | 70 | 64 | 0 |
+| ia | 71 | 66 | 0 |
 | mi | 32 | 61 | 1 |
 | mn | 28 | 17 | 0 |
 | ky | 14 | 13 | 0 |
-| in | 13 | 9 | 0 |
-| nc | 16 | 9 | 0 |
+| in | 14 | 11 | 0 |
+| nc | 17 | 10 | 0 |
 | ok | 15 | 10 | 0 |
-| **total** | **467** | **889** | **12** |
+| **total** | **470** | **894** | **12** |
 
 **140 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
