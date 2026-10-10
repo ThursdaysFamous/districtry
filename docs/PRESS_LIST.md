@@ -726,7 +726,7 @@ The plan's rule stands: **send to the desk, name the reporter in the first line.
 | The 74 | Kevin Mahnken | Senior Writer — education news and politics; wrote the June 2026 piece on D.C. school reform facing a political test. Closest staff fit for a governan… |
 | The 74 | Linda Jacobson | Senior Writer — "covering Congress, policy, courts, early education and more"; writes The 74's own election coverage (e.g. the Aug 2026 Oklahoma state… |
 | The Associated Press — Chicago, Milwaukee and Des Moines bureaus | Scott Bauer | Statehouse reporter covering politics and state government in Madison, Wisconsin — the natural byline for the Wisconsin half (all 72 counties, 31 laye… |
-| The Associated Press — Chicago, Milwaukee and Des Moines bureaus | Hannah Fingerhut | Government and politics reporter based in Des Moines, Iowa — the natural byline for the Iowa half (all 99 counties, 20 layers). |
+| The Associated Press — Chicago, Milwaukee and Des Moines bureaus | Hannah Fingerhut | Government and politics reporter based in Des Moines, Iowa — the natural byline for the Iowa half (all 99 counties, 21 layers). |
 | WICS NewsChannel 20 (Springfield) | Bethal Miles | General-assignment news reporter / MMJ. His bio describes "a reporter ... building a foundation in storytelling, community-focused journalism and brea… |
 | WICS NewsChannel 20 (Springfield) | Melodi Hankins | Evening News Anchor, FOX Illinois (shared WICS/WRSP newsroom). Newest arrival to Springfield, bio states she is "looking forward to growing as a journ… |
 | WXPR Public Radio | Katie Thoresen | News Director / Vice President — runs the newsroom and carries most of the staff local-news bylines across the seven-county Northwoods; recent work in… |

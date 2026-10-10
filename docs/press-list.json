@@ -5357,7 +5357,7 @@
      "source_url": "https://statesnewsroom.com/press-releases/iowa-capital-dispatch-marks-5-years-covering-state-legislature-politics-policy/"
     }
    ],
-   "notes": "HOW TO SEND: e-mail info@iowacapitaldispatch.com, addressed to Editor-in-Chief Kathie Obradovich, with Robin Opsahl named as the reporter whose beat it fits. Iowa Capital Dispatch is a good fit for districtry's Iowa instance (all 99 counties, 20 layers) and for the policy angle about inconsistent government record-keeping — their beat is state government and the state's relationship to county and city government, and their feed right now is dominated by 2026 election and congressional-district coverage. IMPORTANT PROVENANCE CAVEAT — READ BEFORE SENDING. I could not read iowacapitaldispatch.com directly. Every HTML path on the site (/, /about/, /contact/) returns HTTP 403 behind a Cloudflare managed challenge (\"Just a moment...\"), to both We…",
+   "notes": "HOW TO SEND: e-mail info@iowacapitaldispatch.com, addressed to Editor-in-Chief Kathie Obradovich, with Robin Opsahl named as the reporter whose beat it fits. Iowa Capital Dispatch is a good fit for districtry's Iowa instance (all 99 counties, 21 layers) and for the policy angle about inconsistent government record-keeping — their beat is state government and the state's relationship to county and city government, and their feed right now is dominated by 2026 election and congressional-district coverage. IMPORTANT PROVENANCE CAVEAT — READ BEFORE SENDING. I could not read iowacapitaldispatch.com directly. Every HTML path on the site (/, /about/, /contact/) returns HTTP 403 behind a Cloudflare managed challenge (\"Just a moment...\"), to both We…",
    "wave": 4,
    "link": "https://districtry.com/ia/?utm_source=press-ia&utm_medium=email&utm_campaign=districtry-launch",
    "intro": "The policy story rather than the launch. For the 39 counties on Plan Three the state itself draws the supervisor districts, and yet there is still no single place a resident can look up the result. I built one, free, for all 99 counties — with one gap I did not create: Jones County is absent from the Iowa Legislature's own statewide supervisor-district file, so that one county gets no supervisor card."
@@ -8686,7 +8686,7 @@
     },
     {
      "name": "Hannah Fingerhut",
-     "beat": "Government and politics reporter based in Des Moines, Iowa — the natural byline for the Iowa half (all 99 counties, 20 layers).",
+     "beat": "Government and politics reporter based in Des Moines, Iowa — the natural byline for the Iowa half (all 99 counties, 21 layers).",
      "address": "",
      "source_url": "https://apnews.com/author/hannah-fingerhut"
     }
