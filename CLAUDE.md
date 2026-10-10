@@ -96,7 +96,7 @@ counted instead as script invocations the whole battery is **157 — 141 that ne
 `il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`/`nc`/`ky`/`ok`/`sc`, 2 root-page tests, and the two fleet-wide probes
 for point transmission and contrast pairs), the per-instance `validate_index.py` runs included, and
 excluding the two `npx playwright install` setup lines and the `http.server` that serves the
-pages to the fifteen.
+pages to the sixteen.
 
 The pair moves whenever anything merges, not only when a gate is added. A new instance
 adds invocations without adding a named step; one step can carry a gate and its selftest;
