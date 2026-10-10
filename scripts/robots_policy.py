@@ -425,6 +425,14 @@ _CHALLENGE_MARKERS = (
     "sgcaptcha",                           # the vendor fronting Union and Williamson
     "challenge-platform",                  # Cloudflare managed challenge asset path
     "webdriver",                           # a bot check, obfuscated or not
+    # tncourts.gov, measured 2026-10-09 with the districtry token: robots.txt
+    # (and every other path) answers 200 with 2,502 bytes of HTML that computes
+    # a cookie in JavaScript and reloads. Its only visible text is the heading
+    # below; the script opens with a function of this name, which is the
+    # marker that still matches if a longer script pushes the heading past the
+    # 4 KB this reader examines. Read before this was added: `absent`, allow all.
+    "please wait while we validate your browser",
+    "function leastfactor(",
 )
 
 
@@ -624,19 +632,15 @@ CHALLENGE_FRONTED_HOSTS = {
     "www.kbic-nsn.gov": "same host, www spelling; measured 2026-09-29",
     "hannahville.net": "challenged the bare token 1 of 3; measured 2026-09-29",
     "www.hannahville.net": "challenged 3 of 6 across both clients; measured 2026-09-29",
-    # Measured 2026-10-01 for Illinois's tribal layer, with the roster-bot token
-    # that would do the crawling: three reads 16 s apart, every one HTTP 403
-    # carrying Cloudflare's "Just a moment..." interstitial, and the front page
-    # the same. DETERMINISTIC WHERE THE FOUR ABOVE ARE INTERMITTENT, which is
-    # the case this table most needs to cover rather than least: a 403 reads as
-    # `refused` and therefore as ALLOW, so without an entry this host publishes
-    # a permission it has never granted and the log says "no readable policy"
-    # where the truth is that nothing here can read anything. No second client
-    # was tried: escalating past a managed challenge is working around it.
-    "pbpindiantribe.com": "403 Cloudflare challenge on robots.txt and on the "
-                          "front page, 3 of 3 reads; measured 2026-10-01",
-    "www.pbpindiantribe.com": "same host, www spelling, 403 challenge 3 of 3; "
-                              "measured 2026-10-01",
+    # RETIRED 2026-10-10: pbpindiantribe.com and www.pbpindiantribe.com, the
+    # Prairie Band Potawatomi Nation's site, recorded here on 2026-10-01 after
+    # three reads 16 s apart all came back HTTP 403 with Cloudflare's "Just a
+    # moment..." page. Re-measured by the standard above with the client that
+    # crawls (requests + UA_HEADERS_ROSTER_BOT): www.pbpindiantribe.com served
+    # /robots.txt (200, 657 bytes, `*` disallows /Admin only) and
+    # /tribal-council (200, 82,579 bytes, no challenge text) on three
+    # consecutive reads 17-19 s apart, 00:29:42-00:30:20 UTC; the bare spelling
+    # answered 307 to the www host on three more. No second client was tried.
 }
 
 
@@ -904,8 +908,10 @@ def _selftest():
     here = os.path.dirname(os.path.abspath(__file__))
     fixtures = os.path.join(here, "fixtures", "robots")
     failures = []
+    ran = [0]
 
     def check(cond, msg):
+        ran[0] += 1
         if not cond:
             failures.append(msg)
 
@@ -1263,10 +1269,6 @@ def _selftest():
     # reads URL literals out of a source file and fetches them as written, so a real
     # https:// URL here would enrol this module as a caller of every host it names.
 
-    if failures:
-        for f in failures:
-            print("robots_policy --selftest: FAIL — " + f, file=sys.stderr)
-        sys.exit(1)
     # A BODY THAT IS NOT A ROBOTS.TXT (added 2026-09-21, off a live reading of
     # mitchellcounty.iowa.gov). The challenge fixture is that host's own
     # interstitial, trimmed; the point of the negative cases is that this must
@@ -1303,23 +1305,40 @@ def _selftest():
     check(v.allows(ua, "https://h/admin/")[0] is False, "and its rules still bind")
     check(v.allows(ua, "https://h/board/")[0] is True, "and its allows still allow")
 
+    # A JAVASCRIPT COOKIE CHALLENGE (added 2026-10-09, off tncourts.gov's own
+    # robots.txt, trimmed). It carries none of the markers above, so it used to
+    # read `absent` and allow every path. Each marker is also tested alone, so
+    # removing either one fails here rather than passing on the other.
+    tn_script = ('<html><head><script type="text/javascript"><!--\n'
+                 'function leastFactor(n) {\n if (isNaN(n)) return NaN;\n return n;\n}\n'
+                 'function go() { document.cookie="KEY="+n+";path=/;";'
+                 ' document.location.reload(true); }\n//--></script></head>\n'
+                 '<body onload="go()"></body></html>')
+    tn_text = ('<html><body><div class="content">\n'
+               '   <h1>Please wait while we validate your browser</h1>\n'
+               '   <div class="help">Having issues? Please make sure your browser has '
+               'Javascript enabled and accepts cookies.</div>\n</div></body></html>')
+    v = classify(200, tn_script.replace("</body>", tn_text[12:-14] + "</body>"),
+                 final_url="https://h/robots.txt")
+    check(v.status == "challenge", "the tncourts cookie challenge -> challenge, not absent")
+    check(v.allows(ua, "https://h/page")[0] is False,
+          "the tncourts cookie challenge must REFUSE the fetch")
+    check(classify(200, tn_script, final_url="https://h/robots.txt").status == "challenge",
+          "its leastFactor script alone still reads as a challenge")
+    check(classify(200, tn_text, final_url="https://h/robots.txt").status == "challenge",
+          "its heading alone still reads as a challenge")
+
+    if failures:
+        for f in failures:
+            print("robots_policy --selftest: FAIL — " + f, file=sys.stderr)
+        sys.exit(1)
+    # The count is the number of check() calls that RAN, not a literal. It was
+    # a literal until 2026-10-09, and by then it said 89 while 126 checks ran:
+    # the stickiness and redirect cases had been added without touching it, so
+    # a line written to be unable to misstate its own count misstated it.
     print("robots_policy --selftest: OK — 4 fixtures + this site's own "
           "robots.txt + the pacer + the not-a-robots-txt cases, %d assertions"
-          % _count_checks())
-
-
-def _count_checks():
-    # The number of check() calls above; kept as a literal so the OK line
-    # cannot claim a count the code does not make. 48 on the three saved
-    # robots.txt files, 6 on ISBE's BOM fixture (added 2026-09-25 — four on the
-    # parsed policy, two through `classify`, because the fetch path is the one a
-    # scraper takes), 5 on the pacer, 10 on bodies that are not a robots.txt at
-    # all, and 20 on this site's own robots.txt (one structural, nine agents x
-    # two, plus /llms.txt). COUNTED BY RUNNING IT rather than by reading the
-    # source: the file-missing check() is a call in the source that the normal
-    # path never executes, and a first draft of this literal said 74 for exactly
-    # that reason.
-    return 89
+          % ran[0])
 
 
 if __name__ == "__main__":
