@@ -1158,16 +1158,19 @@ PRECINCT_FORMS = [
     ("data", "Publishes it as data",
      "%s it as data: an online map service or a download that mapping software can read",
      ("publishes", "publish")),
+    ("viewer", "Shows it on an online map only",
+     "%s it only on an online map a person can look at, with no way to read the lines as data",
+     ("shows", "show")),
     ("pdf", "Posts it as a PDF or picture",
      "%s it only as a PDF or picture, which a person can read but a computer cannot",
      ("posts", "post")),
-    ("none", "No current map found",
-     "%s no current precinct map that we could find on the county's own website, its map "
-     "pages, or the documents they link to",
+    ("none", "No map found",
+     "%s no precinct map that we could find on the county's own website, its map pages, or "
+     "the documents they link to",
      ("has", "have")),
     ("not-checked", "Could not check",
-     "%s a website that refused automated readers or put up a challenge, so we could not "
-     "check, and we did not try to get around it",
+     "%s a website or online map we could not read, because it refused automated readers, put "
+     "up a challenge or a terms page, or did not answer; we did not try to get around any of them",
      ("has", "have")),
 ]
 
@@ -1191,7 +1194,7 @@ def precinct_survey():
             raise PageError("%s: %s has form %r, not one of %s"
                             % (PRECINCT_SURVEY, name, row.get("form"), sorted(forms)))
         url = row.get("url") or ""
-        if row["form"] in ("data", "pdf") and not url.startswith("https://") \
+        if row["form"] in ("data", "viewer", "pdf") and not url.startswith("https://") \
                 and not url.startswith("http://"):
             raise PageError("%s: %s says the county publishes a map and gives no "
                             "address for it" % (PRECINCT_SURVEY, name))
@@ -1223,17 +1226,16 @@ def precinct_maps_page(tag, spec, worksheet):
     groups = {f[0]: [r for r in rows if r["form"] == f[0]] for f in PRECINCT_FORMS}
     emailed = [r for r in rows if r.get("sent_on_request")]
     dates = sorted({r["checked"] for r in rows})
-    span = (long_date(dates[0]) if len(dates) == 1
+    span = ("on " + long_date(dates[0]) if len(dates) == 1
             else "between %s and %s" % (long_date(dates[0]), long_date(dates[-1])))
-    on = long_date(dates[-1])
 
     lede = dict(
         html='<p class="lede"><strong>The law asks every Illinois election authority to send '
              'the State Board of Elections a PDF of its precinct map and to post it on its '
-             'website.</strong> A PDF is a picture: a person can read it, but a computer cannot '
-             'tell which side of a line an address falls on. This page lists, county by '
+             'website.</strong> A PDF is made for people to look at: a computer cannot tell from '
+             'it which side of a line an address falls on. This page lists, county by '
              'county, whether each of Illinois\'s %d counties publishes its precinct map as '
-             'data, as a PDF, or not at all, as we found it on its own website.</p>'
+             'data, only as a picture, or not at all, as we found it on its own website.</p>'
              % len(rows),
         cta='    <a class="cta" href="./#layers=%s">Find your precinct →</a>\n'
             '    <p class="cta-note">Opens the map with both precinct layers on. Only the one '
@@ -1248,10 +1250,11 @@ def precinct_maps_page(tag, spec, worksheet):
                        % (n, "county" if n == 1 else "counties",
                           esc(phrase % verbs[0 if n == 1 else 1])))
     if emailed:
-        summary.append('        <li><strong>%d %s</strong> that %s not publish a digital precinct '
-                       'map sent us one by e-mail when we asked.</li>'
+        summary.append('        <li><strong>%d %s</strong> that %s not publish %s precinct '
+                       'map as data sent us a digital copy by e-mail when we asked.</li>'
                        % (len(emailed), "county" if len(emailed) == 1 else "counties",
-                          "does" if len(emailed) == 1 else "do"))
+                          "does" if len(emailed) == 1 else "do",
+                          "its" if len(emailed) == 1 else "their"))
 
     table = []
     labels = {f[0]: f[1] for f in PRECINCT_FORMS}
@@ -1282,8 +1285,8 @@ def precinct_maps_page(tag, spec, worksheet):
     <p>To tell someone which precinct their address is in, a lookup like this one needs the
       precinct lines as data. Where a county posts only a PDF, somebody has to trace every line by
       hand, and trace it again each time the county changes its precincts.</p>
-    <p>Where a county publishes no current map at all, this site falls back on the precinct map
-      the 2020 Census collected, which is already wrong wherever a county has merged or redrawn
+    <p>Where a county publishes no map this site can use, it falls back on the precinct map the
+      2020 Census collected, which is already wrong wherever a county has merged or redrawn
       precincts since.</p>
     <p>Wisconsin and Minnesota each publish one statewide precinct map. In Illinois, each county
       publishes its own, or doesn't.</p>
@@ -1305,23 +1308,25 @@ def precinct_maps_page(tag, spec, worksheet):
     <h2>How we checked</h2>
     <p>For each county we read its own website: the county clerk's election pages, the county's
       GIS or map pages, and the documents those pages link to, opening any PDF that looked like a
-      map. Where this site already reads a county's precinct map live, that map is the
-      evidence. We followed each website's robots.txt, and where a site refused automated readers
-      or put up a challenge, we stopped and marked the county <em>could not check</em>.</p>
-    <p>This is a snapshot, not a live check: each row describes what we found on the day shown in
-      the survey, the latest being %(on)s. A county may publish a map we missed, or may have
-      published one since. If yours does,
+      map. Where this site already reads a county's precinct map live, we read that map again the
+      same day. We followed each website's robots.txt, and where a site refused automated readers,
+      put up a challenge or a terms page, or did not answer, we stopped and marked the county
+      <em>could not check</em>.</p>
+    <p>This is a snapshot, not a live check: each row describes what we found %(span)s. A county
+      may publish a map we missed, or may have published one since. If yours does,
       <a href="../feedback.html#feedback=%(fb)s">tell us</a> and we will correct its row.</p>
     <p>The law in question is section 11-6 of the Illinois Election Code
       (<a href="%(law)s">10 ILCS 5/11-6</a>). Since 2014 it has asked each election authority to
       send the State Board a PDF map of its current precincts and to post it on any website it
       maintains, with a new map at least 90 days before the next election whenever its precincts
-      change. It does not ask for the map as data.</p>
+      change. It does not ask for the map as data. We did not check whether the State Board posts
+      the maps it receives: its website asks automated readers to stay away, and we respect
+      that.</p>
 %(disclaimer)s
   </section>
 
 """ % dict(total=len(rows), span=esc(span), summary="\n".join(summary),
-           table="\n".join(table), on=esc(on), law=PRECINCT_LAW, disclaimer=DISCLAIMER,
+           table="\n".join(table), law=PRECINCT_LAW, disclaimer=DISCLAIMER,
            fb="Correction%20to%20the%20precinct%20map%20page%3A%20")
 
     return dict(
@@ -1456,6 +1461,15 @@ PAGES = [
                       label="Who runs my fire protection district?",
                       note="The special district that answers a 911 call, and the one "
                            "here whose board you may not elect.")),
+    # No roster and no layer count: the page reports a dated survey a person
+    # owns (PRECINCT_SURVEY), which no scheduled job rewrites, so nothing here
+    # has to regenerate it on a bot's run.
+    dict(tag="il", file="precinct-maps.html", worksheet="metro-worksheet.json",
+         layers="ward-precinct,county-precinct", make=precinct_maps_page,
+         counts=[],
+         sibling=dict(page="precinct.html", label="What precinct am I in?",
+                      note="The lookup these maps feed: your precinct and, where the "
+                           "county publishes it, your polling place.")),
 ]
 
 
