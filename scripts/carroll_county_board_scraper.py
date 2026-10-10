@@ -40,7 +40,11 @@ from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
     output_path,
 )
 
-SOURCE_URL = "https://www.carrollcountyil.gov/county_board/board_members.php"
+# The county rebuilt its site in 2026 and the old address
+# (/county_board/board_members.php) now answers 404; measured 2026-10-10. The
+# members moved to the county board's own page, as Revize staff-directory
+# CARDS rather than the old six-column table, so parse() reads both shapes.
+SOURCE_URL = "https://www.carrollcountyil.gov/government/county_board/index.php"
 HEADERS = {
     "User-Agent": UA_ROSTER_BOT,
 }
@@ -75,8 +79,63 @@ def to_arabic(token):
     return str(ROMAN[token]) if token in ROMAN else None
 
 
+CARD_SPLIT_RE = re.compile(r'<div class="rz-staff-directory-card\b', re.I)
+CARD_FIELD_RE = {
+    "position": re.compile(r'class="staff-position[^"]*"[^>]*>(.*?)</div>', re.S | re.I),
+    "name": re.compile(r'class="staff-name[^"]*"[^>]*>(.*?)</div>', re.S | re.I),
+    "bio": re.compile(r'class="staff-bio[^"]*"[^>]*>(.*?)</div>', re.S | re.I),
+}
+TEL_RE = re.compile(r'href="tel:([^"]+)"', re.I)
+
+
+def card_rows(page):
+    """The 2026 site's staff-directory cards, as the (name, profession, contact
+    html) the table parser used to read: profession is the card's position line
+    ("Chair / District II") joined to its bio ("Term Expires 2028"), which is
+    the same text the old Profession cell carried in one string."""
+    rows = []
+    for chunk in CARD_SPLIT_RE.split(page)[1:]:
+        fields = {}
+        for key, rx in CARD_FIELD_RE.items():
+            m = rx.search(chunk)
+            fields[key] = text_of(m.group(1)) if m else ""
+        if not fields["name"]:
+            continue
+        prof = ", ".join(v for v in (fields["position"], fields["bio"]) if v)
+        rows.append((fields["name"], prof, chunk))
+    return rows
+
+
+def record_from(name, prof, contact_html):
+    d = DISTRICT_RE.search(prof)
+    if not d:
+        return None
+    district = to_arabic(d.group(1))
+    if district is None or not name:
+        return None
+    rec = {"district": district, "name": name, "profession": prof}
+    role = ROLE_RE.search(prof)
+    if role:
+        rec["role"] = ("Vice Chair" if role.group(1).lower().startswith("vice")
+                       else "Board Chair")
+    email = EMAIL_RE.search(contact_html)
+    if email:
+        rec["email"] = html.unescape(email.group(1)).strip()
+    tel = TEL_RE.search(contact_html)
+    phone = PHONE_RE.search(html.unescape(tel.group(1)) if tel else text_of(contact_html))
+    if phone:
+        rec["phone"] = re.sub(r"\s+", " ", phone.group(0)).strip()
+    term = re.search(r"Term Exp(?:ires|\.)?\s*(\d{4})", prof, re.I)
+    if term:
+        rec["term_through"] = term.group(1)
+    return rec
+
+
 def parse(page):
     page = SCRIPT_RE.sub(" ", page)
+    cards = [r for r in (record_from(*row) for row in card_rows(page)) if r]
+    if cards:
+        return cards
     records = []
     for row in ROW_RE.findall(page):
         cells = [text_of(c) for c in CELL_RE.findall(row)]

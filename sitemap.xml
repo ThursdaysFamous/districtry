@@ -9,13 +9,13 @@
        it makes the whole sitemap unparseable. One did, from 2026-09-12. -->
   <url>
     <loc>https://districtry.com/il/</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://districtry.com/</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -183,13 +183,13 @@
   </url>
   <url>
     <loc>https://districtry.com/il/precinct-maps.html</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/precinct.html</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1041,7 +1041,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/carroll.html</loc>
-    <lastmod>2026-09-23</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3645,7 +3645,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/history.html</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -3663,7 +3663,7 @@
   </url>
   <url>
     <loc>https://districtry.com/about.html</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
