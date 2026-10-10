@@ -8,6 +8,7 @@
   "Kentucky",
   "Michigan",
   "Minnesota",
+  "New York",
   "Oklahoma",
   "Wisconsin"
  ],
@@ -15,10 +16,27 @@
   "California",
   "Indiana",
   "Iowa",
-  "New York",
   "North Carolina"
  ],
  "areas": {
+  "0080": {
+   "government": "Seneca Nation of Indians",
+   "parentGovernment": null,
+   "governmentState": "NY",
+   "states": [
+    "New York"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "0080R",
+     "name": "Allegany Reservation",
+     "state": "New York",
+     "km2": 125.624,
+     "share": 1.0
+    }
+   ]
+  },
   "0140": {
    "government": "Bad River Band of the Lake Superior Tribe of Chippewa Indians of the Bad River Reservation, Wisconsin",
    "parentGovernment": null,
@@ -85,6 +103,24 @@
      "name": "Bois Forte Off-Reservation Trust Land",
      "state": "Minnesota",
      "km2": 5.452,
+     "share": 1.0
+    }
+   ]
+  },
+  "0540": {
+   "government": "Seneca Nation of Indians",
+   "parentGovernment": null,
+   "governmentState": "NY",
+   "states": [
+    "New York"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "0540R",
+     "name": "Cattaraugus Reservation",
+     "state": "New York",
+     "km2": 89.131,
      "share": 1.0
     }
    ]
@@ -595,6 +631,42 @@
     }
    ]
   },
+  "2535": {
+   "government": "Seneca Nation of Indians",
+   "parentGovernment": null,
+   "governmentState": "NY",
+   "states": [
+    "New York"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2535R",
+     "name": "Oil Springs Reservation",
+     "state": "New York",
+     "km2": 2.516,
+     "share": 1.0
+    }
+   ]
+  },
+  "2555": {
+   "government": "Oneida Indian Nation",
+   "parentGovernment": null,
+   "governmentState": "NY",
+   "states": [
+    "New York"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2555R",
+     "name": "Oneida Indian Nation Reservation",
+     "state": "New York",
+     "km2": 1104.192,
+     "share": 1.0
+    }
+   ]
+  },
   "2560": {
    "government": "Oneida Nation",
    "parentGovernment": null,
@@ -617,6 +689,24 @@
      "name": "Oneida (WI) Off-Reservation Trust Land",
      "state": "Wisconsin",
      "km2": 1.339,
+     "share": 1.0
+    }
+   ]
+  },
+  "2570": {
+   "government": "Onondaga Nation",
+   "parentGovernment": null,
+   "governmentState": "NY",
+   "states": [
+    "New York"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2570R",
+     "name": "Onondaga Nation Reservation",
+     "state": "New York",
+     "km2": 24.047,
      "share": 1.0
     }
    ]
@@ -797,6 +887,32 @@
     }
    ]
   },
+  "3320": {
+   "government": "Saint Regis Mohawk Tribe",
+   "parentGovernment": null,
+   "governmentState": "NY",
+   "states": [
+    "New York"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "3320R",
+     "name": "St. Regis Mohawk Reservation",
+     "state": "New York",
+     "km2": 54.337,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "3320T",
+     "name": "St. Regis Mohawk Off-Reservation Trust Land",
+     "state": "New York",
+     "km2": 1.166,
+     "share": 1.0
+    }
+   ]
+  },
   "3635": {
    "government": "Sault Ste. Marie Tribe of Chippewa Indians, Michigan",
    "parentGovernment": null,
@@ -915,6 +1031,42 @@
      "name": "Stockbridge Munsee Off-Reservation Trust Land",
      "state": "Wisconsin",
      "km2": 7.659,
+     "share": 1.0
+    }
+   ]
+  },
+  "4225": {
+   "government": "Tonawanda Band of Seneca",
+   "parentGovernment": null,
+   "governmentState": "NY",
+   "states": [
+    "New York"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "4225R",
+     "name": "Tonawanda Reservation",
+     "state": "New York",
+     "km2": 30.741,
+     "share": 1.0
+    }
+   ]
+  },
+  "4360": {
+   "government": "Tuscarora Nation",
+   "parentGovernment": null,
+   "governmentState": "NY",
+   "states": [
+    "New York"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "4360R",
+     "name": "Tuscarora Nation Reservation",
+     "state": "New York",
+     "km2": 23.525,
      "share": 1.0
     }
    ]
@@ -1547,6 +1699,50 @@
      "name": "Miami/Peoria joint-use OTSA",
      "state": "Oklahoma",
      "km2": 32.688,
+     "share": 1.0
+    }
+   ]
+  },
+  "9300": {
+   "government": "Poospatuck (Unkechauge) Indian Nation",
+   "parentGovernment": null,
+   "governmentState": "NY",
+   "stateRecognition": {
+    "by": "New York State",
+    "law": "N.Y. Indian Law, Article 10",
+    "publisher": "New York State Senate, Open Legislation",
+    "url": "https://legislation.nysenate.gov/pdf/laws/INDA10/",
+    "read": "2026-10-10",
+    "why": "The United States does not recognize this nation, so the Bureau of Indian Affairs lists no government for this land. Article 10 of New York's Indian Law is titled 'The Poospatuck (Unkechauge) Indian Nation', and section 150 sets its officers (a chief, three land trustees, a tribal secretary, a keeper of the records and a keeper of the wampums), elected each April. Drawn on Adam's ruling of 2026-10-10."
+   },
+   "states": [
+    "New York"
+   ],
+   "lands": [
+    {
+     "class": "state-reservation",
+     "geoid": "9300R",
+     "name": "Poospatuck (state) Reservation",
+     "state": "New York",
+     "km2": 0.441,
+     "share": 1.0
+    }
+   ]
+  },
+  "9370": {
+   "government": "Shinnecock Indian Nation",
+   "parentGovernment": null,
+   "governmentState": "NY",
+   "states": [
+    "New York"
+   ],
+   "lands": [
+    {
+     "class": "state-reservation",
+     "geoid": "9370R",
+     "name": "Shinnecock (state) Reservation",
+     "state": "New York",
+     "km2": 3.494,
      "share": 1.0
     }
    ]
