@@ -60,7 +60,8 @@ in the researched-but-unbuilt backlog.
   "minnesota": ["us-house", "mn-judicial-district", "mn-senate", "county", "mn-house", "watershed-district", "school-district-unified", "school-board-district", "county-commissioner", "zip-code", "school-district-elementary", "county-subdivision", "voting-precinct", "municipality", "school-district-secondary", "police-station", "fire-station", "post-office"],
   "indiana": ["us-house", "in-senate", "county", "in-house", "school-district-unified", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
   "northcarolina": ["us-house", "nc-senate", "nc-house", "school-district-unified", "county", "county-subdivision", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
-  "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"]
+  "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
+  "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -3269,6 +3270,57 @@ trusted.
             "why": "Each nation publishes its own government on its own site, and no source lists their councils together. The Census draws most of this land as a statistical area, which this app does not draw.",
             "wanted": "Each nation's own published list of its council, and its district map where it elects by district.",
             "blocker": "MEASURED 2026-10-09 with scripts/tribal_areas.py, control passed (the state layer answers code 40), scored by real intersection area against TIGERweb's own Oklahoma polygon: ONE federal reservation, `Osage Reservation`, 5,967.409 km² and wholly inside the state; ONE off-reservation trust land, `Shawnee Trust Land`, 0.430 km²; NO state reservation. Everything else the Census records for Oklahoma's nations is an Oklahoma Tribal Statistical Area, and under Adam's ruling of 2026-09-30 a statistical area is read only to decide which nation to name and is NEVER DRAWN as territory. THAT IS THE CENSUS'S CLASSIFICATION AND NOT A LEGAL ONE: since McGirt v. Oklahoma (2020) federal courts have held several of these reservations were never disestablished, so which ground a nation governs is a different question from which layer the Census puts it in, and this record settles neither. The fleet-wide tribal-government thread owns the build (https://claude.ai/artifact/CbZNWt4QDr7SBS7abdC1L2); Cherokee Nation was written to on 2026-10-01 about its district map and had not replied as of 2026-10-06. Oklahoma is dark as of this record."
+      }
+  ],
+  "southcarolina": [
+      {
+            "id": "sc-county-council",
+            "concept": "County council district",
+            "area": "South Carolina — all 46 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "Every South Carolina county is run by an elected county council, and this app does not yet show you which council district you live in or who represents it.",
+            "why": "The council districts and the election results that name the members are both published, and this app has not built them into a layer yet. Until it does, the County card names the county and nobody on its council.",
+            "wanted": "Nothing from a reader — this one is ours to build.",
+            "blocker": "UNBUILT, NOT UNPUBLISHED, recorded so the silence on the County card is legible. Every county has been governed by an elected council since the Home Rule Act of 1975, under which each county chose its own form (council, council-supervisor, council-administrator or council-manager); whether any county elects a seat at large beside its districts has NOT been measured here. The state Revenue and Fiscal Affairs Office publishes every county's council districts, 315 statewide as read during this instance's planning on 2026-10-09, and the State Election Commission's certified results name who won each seat. Neither is wired in this change. Council seats are on the 3 November 2026 ballot, so names shipped before then must be rebuilt from the certified results before the new members take office. The layer arrives in this instance's next change as `county-council`, and this record is retired then. South Carolina is dark as of 2026-10-10, so no reader is served this file yet."
+      },
+      {
+            "id": "sc-municipal-officeholders",
+            "concept": "City or town government",
+            "area": "South Carolina",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "This app can tell you which South Carolina city or town you are in, and not who your mayor or council members are.",
+            "why": "No statewide list of South Carolina's mayors and council members has been read yet. The boundary this card draws carries geography and no officeholder at all, and this app never guesses a name.",
+            "wanted": "A statewide roster of mayors and council members, or each city's own published list.",
+            "blocker": "The boundary is the Census's own incorporated-places layer, which carries a name, a code and a functional status and no officeholder field. Measured 2026-10-10: 271 places, 69 `<Name> city` and 202 `<Name> town`, every one FUNCSTAT A (active), covering 5,035 of the state's 77,866 km² of land. The card states the style the Census records and claims nothing about the form of government, which each municipality chooses. Not attempted in this change; the instance arrived on the national tier alone. The cities over 25,000 people are the part the fleet's done standard asks for first."
+      },
+      {
+            "id": "sc-school-board-members",
+            "concept": "School board",
+            "area": "South Carolina",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "This app names your school district and not the people who run it.",
+            "why": "South Carolina's school boards are not all chosen the same way, and no statewide list of their members has been read yet. The boundary this card draws carries the district's name and nothing about its board.",
+            "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
+            "blocker": "Measured 2026-10-10 against TIGERweb's School service for STATE='45': 72 unified districts, NO elementary and NO secondary district, and the unified districts' Census land area sums to the 46-county total (77,866 km²), so every point in the state is in exactly one. The boundary carries the district's name and no board member. How each board is chosen is set district by district in state law; the planning pass read that a few are appointed rather than elected, and the split has NOT been tabulated here. The route is the state Department of Education or each board's own list; not attempted in this change."
+      },
+      {
+            "id": "sc-tribal-government",
+            "concept": "Tribal government",
+            "area": "South Carolina — York County",
+            "counties": [],
+            "kind": "no-source",
+            "layer": null,
+            "summary": "No card names the Catawba Nation or its government for a point on its land near Rock Hill, the only tribal land the Census records in South Carolina.",
+            "why": "Tribal governments are being added across the whole app at once rather than state by state, and that work has not reached South Carolina yet.",
+            "wanted": "Nothing from a reader yet. The nation's own published list of its government is the source this will read.",
+            "blocker": "MEASURED 2026-10-10 with scripts/tribal_areas.py, control passed (the state layer answers code 45), scored by real intersection area against TIGERweb's own South Carolina polygon: ONE federal reservation, `Catawba Reservation`, 4.123 km², and ONE off-reservation trust land, `Catawba Off-Reservation Trust Land`, 0.054 km², both wholly inside the state; NO state reservation and no statistical area to decide about. The Catawba Indian Nation is the state's one federally recognized tribe. The fleet-wide tribal-government thread owns the build (https://claude.ai/artifact/CbZNWt4QDr7SBS7abdC1L2); do not draw a tribal layer in sc/ alone. South Carolina is dark as of this record."
       }
   ]
 }

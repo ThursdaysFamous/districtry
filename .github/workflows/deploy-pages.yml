@@ -226,6 +226,9 @@ jobs:
             # what dark_instances() reads, and four generators import that to
             # tell a dark folder from an unregistered one.
             'ok/**'
+            # South Carolina arrives dark on the same blanket form, and for the
+            # same reason: no metros.json entry until its go-live change.
+            'sc/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full
