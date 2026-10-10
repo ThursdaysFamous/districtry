@@ -8,6 +8,13 @@ was simply no gap record saying they were missing. The 2026-08-20 audit that fou
 eleven such counties is the reason this file exists, and this build gives Moultrie
 its first dispatch entry of any kind.
 
+THE COUNTY DRAWS THEM TOO, found 2026-10-10: Coles County's map server hosts
+Moultrie/Voter_Precincts/MapServer/0 on www.colesco.illinois.gov (read with
+aia_bundle.ca_bundle("coles"), the Coles incomplete-chain host), 16 polygons
+named Lowe, Lovington 1-2, Jonathan Creek, East Nelson, Marrowbone 1-2, Dora 1,
+Whitley and Sullivan 1-7 — the same sixteen. The census shapes below still
+ship; that layer is the better geometry source.
+
 THE PRECINCTS ARE THE CENSUS FABRIC, ONE FOR ONE. THE JASPER TEST PASSES 16/16 and
 their POP100 sums to the county's 2020 population of 14,526 to the person.
 

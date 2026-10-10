@@ -34,7 +34,7 @@
 | Christian | 17021 | dispatch | districted | `county-board` | 1 — `christian-precinct-geometry` (no-source) |
 | Clark | 17023 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `clark-board-contact` (data-quality); `clark-precinct-polling` (data-quality) |
 | Clay | 17025 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | none |
-| Clinton | 17027 | dispatch | districted | `county-board`, `library-district` | 3 — `clinton-precinct-geometry` (no-source); `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
+| Clinton | 17027 | dispatch | districted | `county-board`, `library-district` | 3 — `clinton-precinct-geometry` (data-quality); `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
 | Coles | 17029 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Cook | 17031 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | none |
 | Crawford | 17033 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
@@ -104,7 +104,7 @@
 | Stark | 17175 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 1 — `county-source-library-officials` (no-source) |
 | Stephenson | 17177 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 4 — `fire-park-district-officers` (no-source); `statewide-library-officials` (no-source); `stephenson-freeport-precincts` (data-quality); `stephenson-park-library-districts` (no-source) |
 | Tazewell | 17179 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
-| Union | 17181 | dispatch | at-large — County card | `county-precinct`, `library-district` | 2 — `captcha-county-commissioner-contact` (blocked); `statewide-library-officials` (no-source) |
+| Union | 17181 | dispatch | at-large — County card | `county-precinct`, `library-district` | 3 — `captcha-county-commissioner-contact` (blocked); `statewide-library-officials` (no-source); `union-precinct-consolidation` (data-quality) |
 | Vermilion | 17183 | dispatch | districted | `county-board`, `library-district` | 3 — `library-governance-type` (data-quality); `statewide-library-officials` (no-source); `vermilion-precinct-geometry` (no-source) |
 | Wabash | 17185 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Warren | 17187 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `pass10-frontier-unasked` (no-source); `statewide-library-officials` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 104 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 105 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
