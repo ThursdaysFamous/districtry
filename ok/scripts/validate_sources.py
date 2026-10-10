@@ -146,6 +146,21 @@ PROVENANCE = [
             "(77 of 77 correct) plus four OUTSIDE anchors over the state line."
         ),
     },
+    {
+        "layer": "tribal-government",
+        "app_file": "tribal-areas.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
+        "note": (
+            "Tribal areas from the Census's AIANNHA service, current vintage, through "
+            "the fleet's shared reader scripts/tribal_areas.py and built by "
+            "scripts/build_tribal_areas.py: 31 areas across 33 nations -- the Osage "
+            "Reservation, the Shawnee Tribe's trust land, 25 Oklahoma Tribal "
+            "Statistical Areas and 4 joint-use areas, drawn on Adam's exception for "
+            "Oklahoma (2026-10-10) and simplified by Douglas-Peucker at 20 m under a "
+            "25 m ceiling. Only a rebuild sees a new or redrawn area; --check is "
+            "offline and proves the land-to-government join, never the Census's own set."
+        ),
+    },
 ]
 
 ENDPOINTS = [

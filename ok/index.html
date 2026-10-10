@@ -4065,7 +4065,8 @@ function initOklahomaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ok-senate": "oks", "county": "co", "ok-house": "okh",
     "school-district-unified": "su", "zip-code": "zp", "school-district-elementary": "se",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po",
+    "tribal-government": "tg" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8450,6 +8451,7 @@ function initOklahomaExplorer() {
     "ok-senate",         // 48 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 77 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "ok-house",          // 101 House districts — the smallest of the three chamber tilings
+    "tribal-government", // Tribal areas — Oklahoma has 31, MEASURED by scripts/build_tribal_areas.py: the Osage Reservation, the Shawnee Tribe's 0.430 km² of trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas; median 523.7 km², between a House district and a unified school district. The statistical areas are drawn by Adam's exception for Oklahoma (2026-10-10), labelled on every card as areas the Census draws to count people.
     "school-district-unified", // 415 unified districts, live from TIGERweb (no data/app file); with the 91 elementary districts they cover the state exactly
     "zip-code",          // 1,058 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Oklahoma
     "school-district-elementary", // 91 elementary (dependent) districts, live from TIGERweb; the ground the unified tiling leaves
@@ -12422,6 +12424,99 @@ function initOklahomaExplorer() {
     }
   });
 
+  /* ---------- Tribal Government — Oklahoma's tribal areas, 31 of them.
+   *
+   * One federal reservation (Osage), one piece of trust land (the Shawnee
+   * Tribe's, in Texas County), 25 Oklahoma Tribal Statistical Areas and 4
+   * joint-use areas two of those share, across 33 nations.
+   *
+   * THE STATISTICAL AREAS ARE DRAWN BY ADAM'S EXCEPTION FOR OKLAHOMA
+   * (2026-10-10, "Make an exception for OK"). Everywhere else in the fleet a
+   * Census statistical area is never drawn, because it is a shape for counting
+   * people and not a nation's land. In Oklahoma nearly every nation's ground
+   * is drawn only that way, so leaving them out would tell a reader almost
+   * anywhere in the state that no tribal government answers there. So they
+   * are drawn, and every such card says, from the builder's statisticalNote,
+   * that the Census draws the area to count people and that it is not a
+   * legal boundary. Which ground a nation governs is a separate question
+   * (several reservations were held never disestablished after McGirt v.
+   * Oklahoma, 2020), and this layer settles none of it.
+   *
+   * SEVERAL NATIONS ON ONE AREA. Where the Census's own name for an area
+   * names several nations (the Kiowa, Comanche, Apache and Fort Sill Apache
+   * share one), the card names every one with its own seat and site, and
+   * names none first by giving it the area's only link.
+   *
+   * WHO THE CARD NAMES. Nobody yet: no Oklahoma nation's council list has
+   * been read, and the card says so in those words (ROSTER_NOT_SOUGHT).
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses, and
+   * simplified there (Douglas-Peucker, 20 m, held to a 25 m ceiling).
+   * ---------- */
+  // NO COUNCIL FILE IS FETCHED YET, because none exists: build_tribal_areas.py
+  // --check refuses a councils file that names nobody. The day a council is
+  // carried, --rosters writes ok/data/app/tribal-councils.json and this loader
+  // gains the same network-first merge every other instance's has.
+  var loadOkTribalAreas = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadOkTribalAreas,
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation(s) as the Bureau of Indian Affairs names them, not the
+      // Census's text for the area. findPropCI lowercases the property key, so
+      // every `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "statisticalNote", label: "What this area is", keys: ["statisticalnote"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "nations", label: "", keys: ["nations"], when: function () { return false; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here. A shared area has no single link; each
+    // nation's is on its own row below.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // EVERY NATION ON A SHARED AREA, each with its own seat and site.
+    people: function (result) {
+      var nations = result && result.nations;
+      if (!nations || !nations.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Governments",
+        note: nations.length + " nations share this area"
+      }));
+      wrap.appendChild(renderPersonRows(nations.map(function (n) {
+        var person = { name: String(n.name) };
+        if (n.seat) person.note = "Seat: " + String(n.seat);
+        if (n.url) person.links = [{ label: "Official website", url: String(n.url) }];
+        return person;
+      })));
+      return wrap;
+    },
+    emptyNote: "This point is not on any tribal area the Census draws in Oklahoma."
+  });
+
   /* ---------- 2. U.S. House — boundary + roster join ----------
    * Pre-built TIGERweb Legislative layer 0 geometry
    * (data/app/congress-districts.json, this state only) joined by district
@@ -14447,7 +14542,7 @@ function initOklahomaExplorer() {
   var LAYER_SIDEBAR_RANK = ["us-house", "ok-senate", "ok-house",
     "school-district-unified", "school-district-elementary",
     "county", "municipality", "zip-code",
-    "police-station", "fire-station", "post-office"];
+    "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
     for (var i = 0; i < LAYER_SIDEBAR_RANK.length; i++) pos[LAYER_SIDEBAR_RANK[i]] = i;
@@ -14907,9 +15002,10 @@ function initOklahomaExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4CA1FB", "#14181C": "#696F76", "#1B4F8C": "#599DF2",
-    "#2F6B3A": "#6BBB77", "#41B6E6": "#B3E6FF", "#444B54": "#8F99A6", "#4A2E8C": "#9879FA",
-    "#4B2E83": "#9C79EE", "#4C8F59": "#7DD68D", "#6B7280": "#ACB6C9", "#7FC4A3": "#A0FBD0",
-    "#8C2E4A": "#F06F91", "#A3341F": "#FD7C62", "#B0316E": "#FE80B4", "#D06A9C": "#FEB3D4"};
+    "#1F6F6B": "#59BCB7", "#2F6B3A": "#6BBB77", "#3E9A95": "#65DDD7", "#41B6E6": "#B3E6FF",
+    "#444B54": "#8F99A6", "#4A2E8C": "#9879FA", "#4B2E83": "#9C79EE", "#4C8F59": "#7DD68D",
+    "#6B7280": "#ACB6C9", "#7FC4A3": "#A0FBD0", "#8C2E4A": "#F06F91", "#A3341F": "#FD7C62",
+    "#B0316E": "#FE80B4", "#D06A9C": "#FEB3D4"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
