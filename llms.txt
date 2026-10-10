@@ -145,9 +145,9 @@ All 100 counties: townships, cities and towns, school districts, ZIP codes, and 
 
 ## Oklahoma
 
-All 77 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Oklahoma Senate, House and U.S. House districts, with a member named for every U.S. House seat and nearly every legislative one. Nobody is named yet on the county governments or city councils, and the Data gaps panel says why.
+All 77 counties: cities and towns, school districts, ZIP codes, the tribal areas the Census draws, and the nearest police station, fire station and post office — plus the Oklahoma Senate, House and U.S. House districts, with a member named for every U.S. House seat and nearly every legislative one. Nobody is named yet on the county governments or city councils, and the Data gaps panel says why.
 
-- [Oklahoma district lookup](https://districtry.com/ok/): 11 layers, all 77 counties.
+- [Oklahoma district lookup](https://districtry.com/ok/): 12 layers, all 77 counties.
 - [Who is my U.S. representative?](https://districtry.com/ok/congress.html)
 - [Sources & data layers](https://districtry.com/ok/sources.html)
 - [Who is my Oklahoma legislator?](https://districtry.com/ok/state-legislature.html)

@@ -52,7 +52,7 @@ different thing from one it failed.
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 15 | all | 11 of 13 levels |
 | nc | **EAM·** | 100 | 100/100 § | 0 | 0 | by record | 9 | all | 7 of 13 levels |
 | ny | **EAM·** | 62 | 62/62 § | 68 | 78 | all | 33 | all | 9 of 13 levels |
-| ok | **EA··** | 77 | 77/77 § | 0 | 0 | by record | 9 | 6 without a job | 7 of 13 levels |
+| ok | **EA··** | 77 | 77/77 § | 0 | 0 | by record | 10 | 7 without a job | 7 of 13 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,574 | all | 265 | all | 11 of 13 levels |
 
 § Examined in part by a record covering the whole state rather
@@ -168,13 +168,14 @@ this instance is in maintenance.
 
 - **Examined by a statewide record:** `ok-commissioner-districts` accounts for every county in the state, which is what Examined rests on here: 0 of 77 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Maintained: no.** 6 file(s) under no scheduled job at all, neither rewriting nor watching — 5 boundary, 0 census, 1 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
+- **Maintained: no.** 7 file(s) under no scheduled job at all, neither rewriting nor watching — 6 boundary, 0 census, 1 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
   - `ok/data/app/congress-districts.json` — **5** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `ok/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
   - `ok/data/app/metro-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `ok/data/app/ok-house-districts.json` — **101** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `ok/data/app/ok-senate-districts.json` — **48** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `ok/data/app/state-counties.json` — **77** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
+  - `ok/data/app/tribal-areas.json` — **31** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
 - **Covered: no.** 6 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 77 counties name a governing body
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
