@@ -48,27 +48,24 @@ falls on a given state's tribal land is a question with an answer. For Illinois
 on 2026-10-01 the answer is none, and the nation publishes none anywhere, so "no
 district is drawn on this land" is a measurement rather than a guess.
 
-WHY NO COUNCIL MEMBER IS NAMED
-------------------------------
+WHERE THE COUNCIL'S NAMES COME FROM
+-----------------------------------
 An officeholder is never guessed, and where no verifiable roster exists the card
 links the official body. The Bureau's directory carries exactly ONE person per
 government -- a leader, not a council -- and that reader deliberately drops the
 person columns, so there is no federal shortcut. The authority is each nation's
-own published council, and for Illinois this project cannot read it:
-pbpindiantribe.com answers robots.txt and its own front page with HTTP 403
-carrying Cloudflare's "Just a moment..." interstitial, three reads sixteen
-seconds apart on 2026-10-01, asked with the roster-bot token that would have
-done the crawling. A managed challenge is an access control and is never solved
-or worked around, and no second client was tried, because escalating past one is
-working around it. The host is recorded in
-`robots_policy.CHALLENGE_FRONTED_HOSTS` so the fleet's shared reader refuses it
-instead of reading its 403 as "no policy published, therefore allowed", which is
-what it did before -- publishing a permission the host has never granted.
+own published council, read weekly by `scripts/tribal_council_scraper.py` and
+written to each instance's tribal-councils.json by `--rosters` below.
 
-So the card names the nation, says where its government sits, says no district
-is drawn here, links the nation, and names nobody. That is the shape Iowa
-already ships for a residency district elected countywide: draw the ground, say
-how the seat is filled, name no person on it.
+FOR ILLINOIS THAT PAGE WAS UNREADABLE FOR NINE DAYS AND THEN WAS NOT. On
+2026-10-01 pbpindiantribe.com answered robots.txt and its front page with HTTP
+403 and Cloudflare's "Just a moment..." page, three reads sixteen seconds apart,
+and the card named nobody. On 2026-10-10 the same client was served both on
+three consecutive reads, which is the standard
+`robots_policy.CHALLENGE_FRONTED_HOSTS` sets for retiring an entry, so the host
+was retired there and the council is carried. A nation whose page cannot be read
+is listed in ROSTER_BLOCKED below with the measurement, and its card says why it
+names nobody.
 
 WHY AN UNPOPULATED PARCEL IS DRAWN
 ----------------------------------
@@ -174,15 +171,6 @@ ROSTER_BLOCKED = {
                "requests with a managed challenge (measured 2026-09-29). An "
                "access control is not worked around, so no name is carried and "
                "the card links the nation.",
-    },
-    "2980": {
-        "host": "pbpindiantribe.com",
-        "measured": "2026-10-01",
-        "why": "The nation publishes its council on its own site, which answers "
-               "every request from this project with a Cloudflare challenge — "
-               "robots.txt and the front page alike, HTTP 403, three reads "
-               "sixteen seconds apart. An access control is not worked around, "
-               "so no name is carried and the card links the nation instead.",
     },
 }
 

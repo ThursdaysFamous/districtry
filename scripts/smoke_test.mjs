@@ -2569,8 +2569,8 @@ try {
   // gate passed: `findPropCI` lowercases the property key and compares it to
   // the candidate exactly as given, so the camelCase `keys` this layer was
   // registered with matched nothing and the Land, Districts, Population and
-  // "Why no names" rows rendered as nothing at all. The last of those is the
-  // card's whole honesty claim, so it is asserted in a browser. The point is
+  // "Why no names" rows rendered as nothing at all. The card's claims are
+  // asserted in a browser for that reason. The point is
   // shapely's representative point for the shipped parcel, verified interior
   // against the file's own even-odd reading (2026-10-01), and the assertions
   // are on the WORDING and on the nation/land distinction — the Census's text
@@ -2589,14 +2589,20 @@ try {
     const nation = by("Tribal government") === "Prairie Band Potawatomi Nation";
     const land = by("Land").indexOf("Off-Reservation Trust Land") !== -1;
     const seat = by("Seat of government") === "Mayetta, KS";
-    const why = by("Why no names");
-    const whyOk = why.indexOf("Cloudflare") !== -1 && why.indexOf("not worked around") !== -1;
-    const noRoster = card.text.indexOf("Council member") === -1;
-    const ok = nation && land && seat && whyOk && noRoster;
-    check("the Tribal Government card names the nation, its Kansas seat and why no council member",
+    // Since 2026-10-10 the card names the nation's council, read from its
+    // own page and merged onto the land from tribal-councils.json by the
+    // loader. The "Why no names" row must be gone, the council block must
+    // carry the chairperson, and the dated note must say where the names
+    // came from.
+    const noWhy = by("Why no names") === "";
+    const council = card.text.indexOf("Council") !== -1
+      && card.text.indexOf("Rupnick") !== -1
+      && card.text.indexOf("From the nation's own council page") !== -1;
+    const ok = nation && land && seat && noWhy && council;
+    check("the Tribal Government card names the nation, its Kansas seat and its council",
           ok, `nation=${JSON.stringify(by("Tribal government"))} land=${land} ` +
-              `seat=${JSON.stringify(by("Seat of government"))} ` +
-              `why=${JSON.stringify(why.slice(0, 90))}`);
+              `seat=${JSON.stringify(by("Seat of government"))} noWhy=${noWhy} ` +
+              `council=${council}`);
 
     // and a point off tribal land says so in the layer's own words rather than
     // the generic "not inside any district", which reads as a lookup that
