@@ -87,6 +87,14 @@
     "height": 630,
     "rendered": "2026-10-09"
   },
+  "sc": {
+    "path": "sc/og-image.png",
+    "label": "sc",
+    "sha256": "8cffc2264f54ba04ef2df6d9caf0e0807ab293db13e2f3a6fceb4706bc39725b",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-10-10"
+  },
   "wi": {
     "path": "wi/og-image.png",
     "label": "wi",

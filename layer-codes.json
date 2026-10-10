@@ -118,6 +118,8 @@
     "post-office": "po",
     "precinct": "pc",
     "psap-area": "pa",
+    "sc-house": "sch",
+    "sc-senate": "scs",
     "school-board": "sb",
     "school-board-district": "bd",
     "school-director-district": "dd",

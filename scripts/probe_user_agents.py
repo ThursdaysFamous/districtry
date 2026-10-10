@@ -107,7 +107,7 @@ from scraper_common import (UA_CHROME_WIN_126, UA_HEADERS_ROSTER_BOT,  # noqa: E
 
 ARTIFACT = os.path.join(ROOT, "user-agent-measurements.json")
 
-INSTANCES = ("il", "ny", "ca", "wi", "ia", "mi", "in", "nc", "ok")
+INSTANCES = ("il", "ny", "ca", "wi", "ia", "mi", "in", "nc", "ok", "sc")
 
 
 # --- robots.txt: ONE COPY, at scripts/robots_policy.py (RFC 9309: every group
