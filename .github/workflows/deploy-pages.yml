@@ -227,6 +227,9 @@ jobs:
             # what dark_instances() reads, and four generators import that to
             # tell a dark folder from an unregistered one.
             'sc/**'
+            # Tennessee arrives dark the same way, and goes live only on the
+            # operator's word.
+            'tn/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full
