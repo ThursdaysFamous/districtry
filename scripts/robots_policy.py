@@ -632,6 +632,13 @@ CHALLENGE_FRONTED_HOSTS = {
     "www.kbic-nsn.gov": "same host, www spelling; measured 2026-09-29",
     "hannahville.net": "challenged the bare token 1 of 3; measured 2026-09-29",
     "www.hannahville.net": "challenged 3 of 6 across both clients; measured 2026-09-29",
+    # The Red Lake Nation's site. mn/WATCH.md recorded on 2026-09-29 that a
+    # managed challenge answered its robots.txt itself (11,990 bytes of
+    # challenge markup), and the table did not carry it. On 2026-10-10 one
+    # request to its front page was served, so it answers both ways, which is
+    # exactly the shape this table exists for. Bare redlakenation.org is a
+    # different fact (a default IIS page) and is not listed.
+    "www.redlakenation.org": "robots.txt answered with a managed challenge; measured 2026-09-29",
     # RETIRED 2026-10-10: pbpindiantribe.com and www.pbpindiantribe.com, the
     # Prairie Band Potawatomi Nation's site, recorded here on 2026-10-01 after
     # three reads 16 s apart all came back HTTP 403 with Cloudflare's "Just a

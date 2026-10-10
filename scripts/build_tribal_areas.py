@@ -172,6 +172,40 @@ ROSTER_BLOCKED = {
                "access control is not worked around, so no name is carried and "
                "the card links the nation.",
     },
+    "1355": {
+        "host": "www.grandportage.com",
+        "measured": "2026-10-10",
+        "why": "The Bureau of Indian Affairs lists www.grandportage.com as the "
+               "band's website, and that page names no council member (read "
+               "2026-10-10). The Minnesota Chippewa Tribe's page names two Grand "
+               "Portage officers, but not the whole council, so no name is carried "
+               "and the card links the band.",
+    },
+    "2270": {
+        "host": "www.millelacsband.com",
+        "measured": "2026-10-10",
+        "why": "The band's own pages describe its Band Assembly (a Speaker and "
+               "three District Representatives) without naming who holds those "
+               "seats (read 2026-10-10), so no name is carried and the card links "
+               "the band.",
+    },
+    "2985": {
+        "host": "www.prairieisland.org",
+        "measured": "2026-10-10",
+        "why": "The community's website could not be read from where this project "
+               "is built, because its security certificate could not be checked "
+               "(2026-10-10). Whether the fault is the site's or this project's "
+               "connection is not settled, so no name is carried and the card links "
+               "the community.",
+    },
+    "3100": {
+        "host": "www.redlakenation.org",
+        "measured": "2026-09-29",
+        "why": "The nation's own site is the authority for its council, and that "
+               "site answered this project's robots.txt request with an automated "
+               "challenge page (measured 2026-09-29). A check like that is not "
+               "worked around, so no name is carried and the card links the nation.",
+    },
 }
 
 # Where a nation publishes its own council, for the nations whose page answers
