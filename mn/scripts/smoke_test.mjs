@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "mn-senate", "mn-house", "mn-judicial-dis
 const EXPECT_DISTRICT = { "county": "Hennepin County", "us-house": "5", "mn-senate": "61", "mn-house": "61A", "mn-judicial-district": "Fourth Judicial District", "voting-precinct": "Minneapolis W-7 P-6", "county-commissioner": "Hennepin County Commissioner District 3", "watershed-district": "Mississippi Watershed Management Organization", "school-board-district": "District 4" };
 const NEGATIVE_POINT = "46.87720,-97.05000"; // inside Cass County, NORTH DAKOTA, about 20 km west of Fargo — outside Minnesota and outside every other instance in the fleet, and inside permalink_gate (minLng -97.40) so the app answers the click and every shipped layer correctly returns nothing. Measured: 0 hits in every shipped geometry file, TIGERweb's county layer names Cass County STATE 38 (control: the anchor returns Hennepin County STATE 27), and no outline in fleet-outlines.json contains it. TWO POINTS WERE TRIED FIRST AND BOTH FAILED FOR REASONS WORTH RECORDING, because each looked obvious. LAKE SUPERIOR: Minnesota's TIGER county fabric is WATER-INCLUSIVE out to the international boundary, so a point in open Lake Superior at 47.6, -90.0 is named Lk Superior by TIGERweb's hydrography and is still INSIDE Cook County, and a point offshore of Duluth is inside the city of Duluth. Water is not outside the state here. WORTH COUNTY, IOWA (43.45, -93.37): correct on every static test — 0 hits in every shipped geometry file, TIGERweb naming Worth County STATE 19 — and it MADE THE BROWSER LEAVE. fleet-outlines.json puts it inside Iowa, so placeOwner hands the selection off to districtry.com/ia/ and the page navigates away; the smoke test's coverage-band probe then timed out looking for a button on a blank document. A NEGATIVE POINT MUST BE OUTSIDE EVERY LIVE INSTANCE, not only outside this one. Iowa's own negative point (43.65, -93.37) sits inside Minnesota and will start handing off the day this instance goes live — recorded in mn/WATCH.md as a go-live item on ia/, not a defect in this change.
 const APP_NAME = "districtry Minnesota";
-const EXPECT_LAYERS = 18;
+const EXPECT_LAYERS = 19;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -621,6 +621,52 @@ try {
       });
     }
     check("tile failure shows dismissible banner", shown && hiddenAfterDismiss === true, `shown=${shown} hiddenAfterDismiss=${hiddenAfterDismiss}`);
+    await context.close();
+  }
+  // ---- Tribal Government. Leech Lake names its council from the nation's
+  // own page; Red Lake names nobody and has to say why (its site answered
+  // this project's robots.txt with an automated challenge, which is never
+  // worked around), so the card must carry the recorded reason rather than
+  // go quiet. Both points are shapely's representative point for the shipped
+  // reservation (2026-10-10).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const page = await booted(
+      context, `${BASE}#point=47.32818,-94.24246&layers=tribal-government`);
+    const card = await cardText(page, "tribal-government");
+    const fields = await fieldsOf(page);
+    const by = (l) => (fields.find((f) => f.label === l) || {}).value || "";
+    const leech = card.text.indexOf("Leech Lake Band") !== -1 &&
+                  by("Land") === "Leech Lake Reservation" &&
+                  card.text.indexOf("Faron Jackson") !== -1 &&
+                  card.text.indexOf("From the nation's own council page") !== -1 &&
+                  !by("Why no names");
+    check("Leech Lake names the band and its council from the band's own page",
+          leech, JSON.stringify(card.text.slice(0, 200)));
+
+    const page2 = await booted(
+      context, `${BASE}#point=48.00537,-95.1519&layers=tribal-government`);
+    const red = await cardText(page2, "tribal-government");
+    const fields2 = await fieldsOf(page2);
+    const why = (fields2.find((f) => f.label === "Why no names") || {}).value || "";
+    const redOk = red.text.indexOf("Red Lake Band") !== -1 &&
+                  why.indexOf("not worked around") !== -1 &&
+                  /\d{4}-\d{2}-\d{2}/.test(why);
+    check("Red Lake names the band and says why no council member is named",
+          redOk, JSON.stringify(why.slice(0, 120)));
+
+    const page3 = await booted(
+      context, `${BASE}#point=${POINT}&layers=tribal-government`);
+    const off = await cardText(page3, "tribal-government");
+    check("a point off tribal land is told so in the layer's own words",
+          off.text.indexOf("not on tribal land") !== -1 &&
+          off.text.indexOf("22 tribal areas") !== -1,
+          JSON.stringify(off.text.slice(0, 120)));
     await context.close();
   }
 } finally {

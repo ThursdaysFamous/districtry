@@ -4065,7 +4065,7 @@ function initMinnesotaExplorer() {
     "school-district-unified": "su", "school-board-district": "bd", "county-commissioner": "cm",
     "zip-code": "zp", "school-district-elementary": "se", "county-subdivision": "cs",
     "voting-precinct": "vp", "municipality": "mu", "school-district-secondary": "sh",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8456,6 +8456,7 @@ function initMinnesotaExplorer() {
     "school-district-elementary", // 8 districts the Census places in its elementary tiling, live from TIGERweb (no data/app file) — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points
     "county-subdivision", // 2,762 records tiling the state, live from TIGERweb (no data/app file) — 1,797 townships, 901 city placeholder records for 851 distinct cities (50 of which cross a county line), 59 unorganized territories, 2 unorganized survey townships, and 3 'not defined' records that are Lake Superior water
     "voting-precinct",   // 4,105 precincts tiling the state at a 55 km2 mean feature area, pre-built from the Secretary of State's own statewide service — the finest tiling on this map, and the only layer here published by the office that maintains it rather than by the Census
+    "tribal-government", // Tribal land — Minnesota has 22 pieces across 13 nations, from the Leech Lake Reservation's 3,393.820 km² down to a 0.146 km² Grand Portage parcel, MEASURED by scripts/build_tribal_areas.py. Ranked on its 6.892 km² MEDIAN, below the voting-precinct fabric's 14.72 km² median (measured 2026-10-10 on the shipped mn-precincts.json, cylindrical equal-area) — medians rather than means, because this layer's own mean of 514 km² is Leech Lake, Red Lake and White Earth and describes none of the other nineteen pieces. The municipality layer below it is live and publishes no median, so no claim is made about which of the two is smaller; the rank governs draw order only. Partial coverage: most of Minnesota is on no tribal land, so the layer carries its own emptyNote. The card names the nation as the Bureau of Indian Affairs names it, its seat (one, the Ho-Chunk Nation's, is in Wisconsin), the districts the Census draws on five of these pieces of land, the 2020 population, and the council from each nation's own published list: nine of the thirteen publish one this project reads weekly, and for the other four the card says why it names nobody. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "municipality",      // 856 incorporated places, live from TIGERweb (no data/app file) — every one a city, with no village among them, at a 14.7 km2 mean feature area
     "school-district-secondary", // 1 district, live from TIGERweb (no data/app file) — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota
     "police-station",    // 694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
@@ -12919,6 +12920,133 @@ function initMinnesotaExplorer() {
     }
   });
 
+  /* =========================================================================
+   * TRIBAL GOVERNMENT — Minnesota's tribal land, 22 pieces across 13 nations.
+   *
+   * Eleven reservations and eleven pieces of off-reservation trust land, from
+   * the Leech Lake Reservation's 3,393.820 km² down to a 0.146 km² Grand
+   * Portage parcel.
+   *
+   * A nation's land is answered WHERE THE LAND IS even where its government
+   * sits in another state, with the seat named on the card (Adam's ruling,
+   * 2026-09-30). One Minnesota card names an out-of-state seat: the Ho-Chunk
+   * Nation's trust land here is governed from Black River Falls, Wisconsin.
+   * The Minnesota Chippewa Tribe's own trust land is answered for the Tribe,
+   * which is a government of six member bands; the bands' own reservations
+   * are answered for each band.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND. The ordinary rule
+   * is that a body elected at large gets roster rows on an identity card and
+   * never a shape of its own. These are drawn anyway, by the same ruling: a
+   * government answers for that ground, so a reader who clicks it should be
+   * told which one. The districts the Census draws on five of these pieces of
+   * land are the nations' own and are named on the card, not drawn.
+   *
+   * WHO THE CARD NAMES. The authority for who sits on a nation's council is
+   * that nation's own published list. Nine of Minnesota's thirteen nations
+   * publish one this project can read, and the card names that council with
+   * the date it was read and a link to the page. For the other four the card
+   * says why it names nobody: two pages describe the council without naming
+   * it, one site could not be read from where this project is built, and one
+   * site answers with an automated challenge, which is never worked around.
+   * The names and the reasons are read from files rather than written here:
+   * scripts/tribal_council_scraper.py reads the councils weekly into
+   * data/app/tribal-councils.json, which the loader merges onto the land, and
+   * ROSTER_BLOCKED in scripts/build_tribal_areas.py writes the reasons onto
+   * the land itself.
+   *
+   * PARTIAL COVERAGE: most points in Minnesota are on no tribal land, so the
+   * layer declares its own emptyNote rather than letting the generic "not
+   * inside any district" stand.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ======================================================================= */
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // A councils file that cannot be read leaves the land answering on its own.
+  var loadMnTribalAreas = makeCached(function () {
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = both[1] || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadMnTribalAreas,
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land
+    // by the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" · ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from ↗",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Minnesota has 22 tribal areas across 13 nations — eleven reservations and eleven pieces of off-reservation trust land — and this point is on none of them."
+  });
+
   /* ---------- 2. U.S. House — boundary + roster join ----------
    * Pre-built TIGERweb Legislative layer 0 geometry
    * (data/app/congress-districts.json, this state only) joined by district
@@ -15452,6 +15580,10 @@ function initMinnesotaExplorer() {
     // the governments a reader lives in, and appointed rather than elected.
     "county", "county-subdivision", "municipality", "watershed-district",
     "voting-precinct", "zip-code",
+    // Last before the proximity layers, and placed rather than ranked: a
+    // nation is not a level of the state's own hierarchy, and most readers
+    // never see this slot because most of Minnesota is on no tribal land.
+    "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -15918,13 +16050,14 @@ function initMinnesotaExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#155E52": "#5AB3A1", "#1C6E9C": "#57BCFB",
-    "#1F4E79": "#62A0DD", "#1F6F5C": "#5EC1A7", "#1F7A6B": "#5ACBB6", "#2E8C7C": "#61D9C3",
-    "#2F6B4F": "#6FBD96", "#3FA898": "#67F0DA", "#3FA98C": "#67F1CA", "#41B6E6": "#C6EBFE",
-    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4BA3D3": "#B0E0FE",
-    "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2", "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D",
-    "#7C5CBF": "#C2ABFF", "#7D2E68": "#E073C1", "#8C2E4A": "#F47294", "#8D7BB5": "#D1BFFE",
-    "#9C4A14": "#FE8E4D", "#A78BFA": "#E0DAFF", "#A8538F": "#FF94DD", "#A98B6C": "#F3CBA1",
-    "#B0316E": "#FD88B8", "#B23A1E": "#FD9177", "#D06A9C": "#FFBDDA", "#D9792E": "#FECAA8"};
+    "#1F4E79": "#62A0DD", "#1F6F5C": "#5EC1A7", "#1F6F6B": "#5DC0BB", "#1F7A6B": "#5ACBB6",
+    "#2E8C7C": "#61D9C3", "#2F6B4F": "#6FBD96", "#3E9A95": "#6CE4DD", "#3FA898": "#67F0DA",
+    "#3FA98C": "#67F1CA", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
+    "#4B2E83": "#9E7BF1", "#4BA3D3": "#B0E0FE", "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2",
+    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#7C5CBF": "#C2ABFF", "#7D2E68": "#E073C1",
+    "#8C2E4A": "#F47294", "#8D7BB5": "#D1BFFE", "#9C4A14": "#FE8E4D", "#A78BFA": "#E0DAFF",
+    "#A8538F": "#FF94DD", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B23A1E": "#FD9177",
+    "#D06A9C": "#FFBDDA", "#D9792E": "#FECAA8"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

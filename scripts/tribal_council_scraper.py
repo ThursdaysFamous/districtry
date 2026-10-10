@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Read who sits on each Wisconsin, Michigan and Illinois nation's council, from the nation.
+Read who sits on each Wisconsin, Michigan, Illinois and Minnesota nation's council, from the nation.
 
 THE AUTHORITY IS EACH NATION'S OWN PUBLISHED COUNCIL. The Bureau of Indian
 Affairs' directory carries one leader per government and never a council, so
@@ -104,6 +104,21 @@ NATIONS = {
     "2150": {"nation": "Gun Lake", "pages": ["https://gunlaketribe-nsn.gov/about/tribal-council/"], "seats": 7},
     "2175": {"nation": "Menominee", "pages": ["https://www.menominee-nsn.gov/GovernmentPages/Legislature"], "seats": 9},
     "2560": {"nation": "Oneida", "pages": ["https://oneida-nsn.gov/government/business-committee/members/"], "seats": 9},
+    # Minnesota (read 2026-10-10)
+    "0335": {"nation": "Bois Forte", "pages": ["https://boisforte.com/departments/tribal-council/"], "seats": 5},
+    "1940": {"nation": "Leech Lake", "pages": ["https://www.llojibwe.org/government/government.html"], "seats": 5},
+    "2055": {"nation": "Lower Sioux", "pages": ["https://lowersioux.com/community-council/"], "seats": 5},
+    "2285": {"nation": "Minnesota Chippewa Tribe", "pages": ["https://mnchippewatribe.org/governance/tribal-executive-committee/"], "seats": 12},
+    "3680": {"nation": "Shakopee Mdewakanton", "pages": ["https://shakopeedakota.org/government/how-we-operate/"], "seats": 3},
+    "4445": {"nation": "Upper Sioux", "pages": ["https://www.uppersiouxcommunity-nsn.gov/page/board-of-trustees"], "seats": 5},
+    "4595": {"nation": "White Earth", "pages": ["https://www.whiteearth.com/rbc/chairman",
+                                               "https://www.whiteearth.com/rbc/secretary-treasurer",
+                                               "https://www.whiteearth.com/rbc/district-i",
+                                               "https://www.whiteearth.com/rbc/district-ii",
+                                               "https://www.whiteearth.com/rbc/district-iii"], "seats": 5},
+    # New York (read 2026-10-10). The Seneca Nation holds three reservations,
+    # each its own AIANNH code, so the one council is read once (the fetch is
+    # cached by URL) and carried under all three.
     "2980": {"nation": "Prairie Band Potawatomi",
              "pages": ["https://www.pbpindiantribe.com/tribal-council"], "seats": 7},
     "2890": {"nation": "Pokagon", "pages": ["https://www.pokagonband-nsn.gov/government/tribal-council/"], "seats": 11},
@@ -493,6 +508,130 @@ def p_prairie_band(pages):
     return out
 
 
+def p_bois_forte(pages):
+    # each member: name, office, then "Office:" / "Cell:" / "Fax:" lines and an
+    # e-mail. The office line is carried; a cell number is the member's own
+    # and the page prints one for every member, but the office line is what a
+    # reader calling the government wants, so that is the one carried.
+    ls = _after(pages[0], "Bois Forte Tribal Council")
+    office = re.compile(r"(Chairperson|Secretary Treasurer|District (I+) Representative)")
+    out = []
+    for k, line in enumerate(ls):
+        if len(out) == 5:
+            break
+        m = office.match(ls[k + 1]) if k + 1 < len(ls) else None
+        if not m or line.startswith(("Office", "Cell", "Fax")):
+            continue
+        label = ls[k + 1]
+        block = []
+        for l in ls[k + 2:k + 9]:
+            if office.match(l) or "@" in l:
+                if "@" in l:
+                    block.append(l)
+                break
+            block.append(l)
+        phone = None
+        for l in block:
+            pm = re.search(r"Office: (\(?\d{3}\)?[-. ]\d{3}-\d{4}(?: x \d+)?)", l)
+            if pm:
+                phone = pm.group(1)
+                break
+        district = None
+        dm = re.search(r"District (I+) Representative", label)
+        if dm:
+            district = "District " + dm.group(1)
+        if "Vice-Chairperson" in label:
+            role = "Vice-Chairperson"
+        elif dm:
+            role = "District Representative"
+        else:
+            role = label
+        out.append(_m(line, role, district=district, phone=phone,
+                      email=_email(block[-1]) if block else None))
+    return out
+
+
+def p_leech_lake(pages):
+    # "Faron Jackson, Sr," -- the page closes several names with a comma; it is
+    # punctuation between the name and the office below it, and is dropped.
+    ls = _after(pages[0], "Leech Lake Government")
+    out = []
+    for k in range(1, 11, 2):
+        name = ls[k].rstrip(",").strip()
+        label = ls[k + 1]
+        m = re.match(r"District (I+) Representative$", label)
+        out.append(_m(name, "District Representative" if m else label,
+                      district=("District " + m.group(1)) if m else None))
+    return out
+
+
+def p_lower_sioux(pages):
+    ls = _after(pages[0], "Community Council Members")
+    out, k = [], 0
+    while k < len(ls) and ls[k] != "Full Council Group Email":
+        name, role = ls[k], ls[k + 1]
+        k += 2
+        phone = email = None
+        while k < len(ls) and (_phone(ls[k]) or "@" in ls[k]):
+            if "@" in ls[k]:
+                email = _email(ls[k])
+            else:
+                phone = _phone(ls[k])
+            k += 1
+        out.append(_m(name, role, phone=phone, email=email))
+    return out
+
+
+def p_mct(pages):
+    # The Tribal Executive Committee is the six bands' chairs and
+    # secretary-treasurers; the office line under each name is their TEC
+    # office and the line under that is the band office they hold, which is
+    # carried as the row's note.
+    ls = _after(pages[0], "TEC Members")
+    out = []
+    for k in range(0, 36, 3):
+        out.append(_m(ls[k], ls[k + 1], note=ls[k + 2]))
+    return out
+
+
+def p_shakopee(pages):
+    # each member appears twice: on the list and again in a pop-up whose
+    # biography is still template text, which is not carried
+    ls = _after(pages[0], "Business Council Members")
+    out, seen = [], set()
+    for k in range(len(ls) - 1):
+        if ls[k].startswith("Gaming Enterprise"):
+            break
+        if re.match(r"(Chairman|Chairwoman|Vice-Chair\w*|Secretary/Treasurer)$", ls[k + 1]) \
+                and ls[k] not in seen and ls[k] != "Business Council Member":
+            out.append(_m(ls[k], ls[k + 1]))
+            seen.add(ls[k])
+    return out
+
+
+def p_upper_sioux(pages):
+    ls = _after(pages[0], "Mission")
+    roles = {"Tribal Chairman", "Vice Chair", "Tribal Treasurer", "Tribal Secretary",
+             "Member at Large"}
+    out = []
+    for k, line in enumerate(ls):
+        if line in roles:
+            out.append(_m(ls[k + 1], line, phone=_phone(ls[k + 2])))
+    return out
+
+
+def p_white_earth(pages):
+    # one page per office; each reads "Back", then the name, then the office
+    out = []
+    for ls in pages:
+        k = ls.index("Back")
+        name, label = ls[k + 1], ls[k + 2]
+        m = re.match(r"District (I+)$", label)
+        out.append(_m(name, "District Representative" if m else label,
+                      district=label if m else None))
+    return out
+
+
 def p_red_cliff(pages):
     ls = pages[0]
     start = ls.index([l for l in ls if re.match(r"20\d\d-\d\d Tribal Council$", l)][0])
@@ -547,7 +686,10 @@ PARSERS = {
     "1135": p_forest_county, "1370": p_grand_traverse, "1450": p_ho_chunk,
     "1550": p_nhbp, "1610": p_saginaw, "1815": p_lco, "1830": p_lvd,
     "1963": p_ltbb, "2150": p_gun_lake, "2175": p_menominee, "2560": p_oneida,
-    "2890": p_pokagon, "2980": p_prairie_band, "3085": p_red_cliff, "3305": p_st_croix, "3635": p_sault,
+    "2890": p_pokagon, "2980": p_prairie_band,
+    "0335": p_bois_forte, "1940": p_leech_lake, "2055": p_lower_sioux, "2285": p_mct,
+    "3680": p_shakopee, "4445": p_upper_sioux, "4595": p_white_earth,
+    "3085": p_red_cliff, "3305": p_st_croix, "3635": p_sault,
     "4015": p_stockbridge,
 }
 STATE_LIST_HEADINGS = {"1825": "Lac du Flambeau Band of Lake", "3885": "Sokaogon Chippewa Community"}
@@ -578,11 +720,31 @@ def validate(code, members):
     return members
 
 
+_PACER = []
+
+
+def _pacer():
+    """One HostPacer for the run. Bois Forte and White Earth both state a
+    Crawl-delay of 30 s (read 2026-10-10 with this scraper's own client), and
+    both are read across several pages, so each of their requests waits its
+    turn; a host that states no delay is not slowed."""
+    if not _PACER:
+        import requests
+        import robots_policy as R
+        import scraper_common as S
+        session = requests.Session()
+        gate = R.RobotsGate(session, S.UA_ROSTER_BOT,
+                            headers=S.UA_HEADERS_ROSTER_BOT)
+        _PACER.append(R.HostPacer(gate))
+    return _PACER[0]
+
+
 def fetch_page(url):
     import scraper_common as S
     S.require_robots_once(url, S.UA_ROSTER_BOT, headers=S.UA_HEADERS_ROSTER_BOT,
                           label="tribal-councils")
-    resp = S.fetch(url, S.UA_HEADERS_ROSTER_BOT, timeout=40, attempts=3)
+    with _pacer().hold(url):
+        resp = S.fetch(url, S.UA_HEADERS_ROSTER_BOT, timeout=40, attempts=3)
     return resp.content
 
 
@@ -624,7 +786,10 @@ def run(from_dir=None, today=None):
             councils[code] = rec
             print("tribal-councils: %s %-26s %2d member(s) from %s"
                   % (code, spec["nation"], len(members), rec["page"]))
-        except Exception as exc:  # noqa: BLE001 — one nation never stops the rest
+        # SystemExit too: scraper_common's robots gate exits on a refusal or an
+        # unreadable robots.txt, and one nation's host must never stop the rest
+        # (found 2026-10-10, when www.sagchip.org's robots.txt failed TLS here).
+        except (Exception, SystemExit) as exc:  # noqa: BLE001
             if code in prior:
                 councils[code] = dict(prior[code], carriedFrom=prior[code].get("read"))
                 print("tribal-councils: %s %s NOT READ this run (%s); carrying the "
@@ -635,7 +800,7 @@ def run(from_dir=None, today=None):
     if failed:
         raise SystemExit("tribal-councils: never read and not readable now:\n  "
                          + "\n  ".join(failed))
-    doc = {"note": "Who sits on each Wisconsin, Michigan and Illinois nation's council, read "
+    doc = {"note": "Who sits on each Wisconsin, Michigan, Illinois and Minnesota nation's council, read "
                    "by scripts/tribal_council_scraper.py. Stamped onto the cards by "
                    "scripts/build_tribal_areas.py --rosters.",
            "councils": councils}
@@ -694,6 +859,9 @@ def main():
     if args.selftest:
         return 0 if selftest() else 1
     run(args.from_dir)
+    if _PACER:
+        for line in _PACER[0].report():
+            print(line)
     return 0
 
 

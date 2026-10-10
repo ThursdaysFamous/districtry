@@ -49,7 +49,7 @@ different thing from one it failed.
 | in | **EAM·** | 92 | 92/92 § | 273 | 273 | all | 9 | all | 6 of 13 levels |
 | ky | **EAM·** | 120 | 120/120 § | 0 | 0 | by record | 12 | all | 9 of 13 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 61 | all | 12 of 13 levels |
-| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 15 | all | 11 of 13 levels |
+| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 17 | all | 11 of 13 levels |
 | nc | **EAM·** | 100 | 100/100 § | 0 | 0 | by record | 9 | all | 7 of 13 levels |
 | ny | **EAM·** | 62 | 62/62 § | 68 | 78 | all | 33 | all | 9 of 13 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,574 | all | 265 | all | 11 of 13 levels |
