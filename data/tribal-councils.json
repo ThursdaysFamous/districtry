@@ -1,5 +1,5 @@
 {
- "note": "Who sits on each Wisconsin and Michigan nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
+ "note": "Who sits on each Wisconsin, Michigan and Illinois nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
  "councils": {
   "0140": {
    "source": "nation",
@@ -781,6 +781,61 @@
     }
    ],
    "read": "2026-10-06"
+  },
+  "2980": {
+   "source": "nation",
+   "page": "https://www.pbpindiantribe.com/tribal-council",
+   "pages": [
+    "https://www.pbpindiantribe.com/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Joseph (Zeke) Rupnick",
+     "role": "Chairperson",
+     "phone": "785-966-4008",
+     "termEnds": "2026"
+    },
+    {
+     "name": "Zach Pahmahmie",
+     "role": "Vice Chairperson",
+     "phone": "785-966-4037",
+     "termEnds": "2028"
+    },
+    {
+     "name": "Wade Pahmahmie",
+     "role": "Treasurer",
+     "phone": "785-966-4005",
+     "termEnds": "2028"
+    },
+    {
+     "name": "Lorrie Melchior",
+     "role": "Secretary",
+     "phone": "785-966-4022",
+     "termEnds": "2026"
+    },
+    {
+     "name": "William (Bill) Evans",
+     "role": "Council Member",
+     "phone": "785-966-3991",
+     "note": "seat 1",
+     "termEnds": "2026"
+    },
+    {
+     "name": "Ronald (Tony) Wahweotten Jr.",
+     "role": "Council Member",
+     "phone": "785-966-3991",
+     "note": "seat 2",
+     "termEnds": "2028"
+    },
+    {
+     "name": "Raphael J. Wahwassuck",
+     "role": "Council Member",
+     "phone": "785-966-4048",
+     "note": "seat 3",
+     "termEnds": "2028"
+    }
+   ],
+   "read": "2026-10-10"
   },
   "3085": {
    "source": "nation",

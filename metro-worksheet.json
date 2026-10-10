@@ -784,7 +784,7 @@
       "label": "Tribal Government",
       "group": "political",
       "area_rank": 32,
-      "rank_note": "Tribal land \u2014 Illinois has one area, 0.5213 km\u00b2 of land held in trust for the Prairie Band Potawatomi Nation near Shabbona, DeKalb County, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked between county-precinct (~2.5 km\u00b2 for a suburban Cook precinct) and ssa (0.359 km\u00b2 median, itself ranked against tif's 0.268 on a named projection). The rank governs draw order only and nothing overlaps this parcel in practice \u2014 SSA, TIF and the CPS zones are all in or around Chicago \u2014 so it is placed on the measurement rather than on a conflict. Partial coverage: almost every Illinois point is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn here \u2014 measured against the Census's 484 tribal subdivisions nationwide, 0 in Illinois \u2014 and NOBODY: the authority for a council is the nation's own published list, which answers this project with a Cloudflare challenge (measured 2026-10-01, recorded in robots_policy.CHALLENGE_FRONTED_HOSTS and never worked around). Drawn although no district sits on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "rank_note": "Tribal land \u2014 Illinois has one area, 0.5213 km\u00b2 of land held in trust for the Prairie Band Potawatomi Nation near Shabbona, DeKalb County, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked between county-precinct (~2.5 km\u00b2 for a suburban Cook precinct) and ssa (0.359 km\u00b2 median, itself ranked against tif's 0.268 on a named projection). The rank governs draw order only and nothing overlaps this parcel in practice \u2014 SSA, TIF and the CPS zones are all in or around Chicago \u2014 so it is placed on the measurement rather than on a conflict. Partial coverage: almost every Illinois point is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn here \u2014 measured against the Census's 484 tribal subdivisions nationwide, 0 in Illinois \u2014 and its council of seven, read from the nation's own page (behind a Cloudflare challenge on 2026-10-01, served normally on three reads on 2026-10-10). Drawn although no district sits on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it \u2014 Illinois has one such area, near Shabbona in DeKalb County.",
         "boundary": [
@@ -793,7 +793,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
           }
         ],
-        "people": "Nobody is named. The nation's own published council is the authority and this project cannot read it, so the card names the government, says where it sits, and links the nation. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "people": "The council, from the nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card: seven members with their office, term and telephone. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
         "applies": "Illinois \u2014 one area, in DeKalb County. Almost every point in the state is on no tribal land."
       }
     },
@@ -2870,6 +2870,11 @@
     ],
     "rosters": [
       {
+        "file": "tribal-councils.json",
+        "min_keys": 1,
+        "note": "The Prairie Band Potawatomi Nation's council, keyed by the Census AIANNH code of its Illinois land (2980) \u2014 scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly from the nation's own page (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "clark-county-board-members.json",
         "min_keys": 8,
         "note": "Clark County Board members keyed by district (7 single-member districts) plus a top-level 'board' entry carrying the COUNTY's switchboard and courthouse address — the county publishes no per-member contact a machine can read, so one number stands for the board (the Calhoun switchboard rule). THE ROSTER IS THE COUNTY'S CERTIFIED ELECTION RETURNS, not a board page: the county's only board document is a SCANNED IMAGE with no text layer, so each member is whoever the county certified as elected in the most recent general election that seated their district (districts 3, 4 and 7 in 2024; 1, 2, 5 and 6 in 2022), and every row renders that election in districtSource because a canvass cannot show a mid-term appointment. Party ships; no term or chair does, because the returns publish neither. Per-member phones and e-mails are DELIBERATELY ABSENT — they exist only in that scan, where one of the seven addresses is unresolvable from the image, and six read-by-eye personal addresses plus a guess is not a roster; the current list is an open ask with the Clerk. The scan also prints every member's HOME ADDRESS, which never ships under any sourcing (the Madison/Peoria rule). The weekly run re-reads the canvasses and fails if a district's tabulated precincts stop matching the shipped boundaries (scripts/clark_county_board_scraper.py + build_clark_county_board.py)."
@@ -3336,7 +3341,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v39",
+    "cache_name": "districtry-il-shell-v40",
     "shell_urls": [
       "./",
       "./sources.html",

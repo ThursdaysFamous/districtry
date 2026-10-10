@@ -176,10 +176,10 @@ PROVENANCE = [
              "and present in the current one. build_tribal_areas.py --check is "
              "OFFLINE and proves the land-to-government join, never that the "
              "Census has not added an area, so this manifest is what watches the "
-             "service. The nation's own council is NOT watched here: "
-             "pbpindiantribe.com answers a Cloudflare managed challenge "
-             "(measured 2026-10-01, recorded in "
-             "robots_policy.CHALLENGE_FRONTED_HOSTS) and is never worked around."},
+             "service. The nation's own council is NOT watched here: it is "
+             "read weekly from pbpindiantribe.com by "
+             "scripts/tribal_council_scraper.py (update-tribal-councils.yml), "
+             "whose count guard fails a page that changes shape."},
     {"layer": "IL Supreme Court districts",
      "app_file": "il-supreme-court-districts.json",
      "source_url": "https://www.illinoiscourts.gov/",
