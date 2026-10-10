@@ -94,9 +94,9 @@ MIN_REGISTER_LAYER = 8
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "ok-senate", "county", "ok-house", "school-district-unified",
-    "zip-code", "school-district-elementary", "municipality",
-    "police-station", "fire-station", "post-office",
+    "us-house", "ok-senate", "county", "ok-house", "tribal-government",
+    "school-district-unified", "zip-code", "school-district-elementary",
+    "municipality", "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -106,6 +106,7 @@ GEOMETRY_FILES = {
     "congress-districts.json": (5, 5),  # The 5 U.S. House districts, TIGERweb layer 0 (CD120).
     "ok-senate-districts.json": (48, 48),  # The 48 Oklahoma Senate districts.
     "ok-house-districts.json": (101, 101),  # The 101 Oklahoma House districts.
+    "tribal-areas.json": (31, 31),  # Oklahoma's tribal areas (scripts/build_tribal_areas.py) — the Osage Reservation, the Shawnee Tribe's trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas, simplified by Douglas-Peucker at 20 m and held to a 25 m ceiling. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).

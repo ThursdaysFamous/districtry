@@ -176,7 +176,7 @@
       "id": "school-district-unified",
       "label": "School District (Unified)",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "415 unified districts, live from TIGERweb (no data/app file); with the 91 elementary districts they cover the state exactly",
       "source": {
         "answers": "The public school district covering the point.",
@@ -194,7 +194,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "1,058 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Oklahoma",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -212,7 +212,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "91 elementary (dependent) districts, live from TIGERweb; the ground the unified tiling leaves",
       "source": {
         "answers": "The elementary school district covering the point, where the point is in one.",
@@ -230,7 +230,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "600 incorporated cities and towns, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -248,7 +248,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -266,7 +266,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -284,7 +284,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -296,6 +296,24 @@
         ],
         "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a facility, not an elected district. Nobody is elected from one.",
         "applies": "Oklahoma — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances."
+      }
+    },
+    {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 5,
+      "rank_note": "Tribal areas — Oklahoma has 31, MEASURED by scripts/build_tribal_areas.py: the Osage Reservation, the Shawnee Tribe's 0.430 km² of trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas; median 523.7 km², between a House district and a unified school district. The statistical areas are drawn by Adam's exception for Oklahoma (2026-10-10), labelled on every card as areas the Census draws to count people.",
+      "source": {
+        "answers": "Whether this address is in a tribal area the Census draws, and which nation's government (or nations' governments) it names — 31 areas across 33 nations, most of them Oklahoma Tribal Statistical Areas, which the card says are drawn to count people and are not legal boundaries.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — the Osage Reservation, off-reservation trust land, Oklahoma Tribal Statistical Areas and their joint-use areas, simplified and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "Nobody yet: no Oklahoma nation's council list has been read, and the card says so. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Most of Oklahoma. The Census draws a tribal area over most of the state; the western Panhandle and parts of the north and west lie outside every one."
       }
     }
   ],
@@ -362,6 +380,12 @@
         "min_features": 101,
         "max_features": 101,
         "note": "The 101 Oklahoma House districts."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 31,
+        "max_features": 31,
+        "note": "Oklahoma's tribal areas (scripts/build_tribal_areas.py) — the Osage Reservation, the Shawnee Tribe's trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas, simplified by Douglas-Peucker at 20 m and held to a 25 m ceiling. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -388,7 +412,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ok-shell-v1",
+    "cache_name": "districtry-ok-shell-v2",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",

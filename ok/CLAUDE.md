@@ -57,12 +57,25 @@ research, and the state transport department publishes all 231 districts in one 
 Recorded as gap `ok-commissioner-districts` until it ships, beside `ok-municipal-officeholders`,
 `ok-school-board-members` and `ok-tribal-government`.
 
-**TRIBAL GOVERNMENTS ARE IN SCOPE AND ARE NOT IN THIS PR.** Measured with
-`scripts/tribal_areas.py` on 2026-10-09, the Census draws one federal reservation in Oklahoma
-(Osage, 5,967 km²) and one off-reservation trust land (Shawnee, 0.43 km²); everything else it
-records for Oklahoma's nations is an Oklahoma Tribal Statistical Area, which under Adam's ruling
-of 2026-09-30 is never drawn as territory. That is the Census's classification and not a legal
-one, and the fleet-wide tribal-government thread owns the decision.
+**TRIBAL AREAS ARE DRAWN, AND THIS IS THE ONE INSTANCE THAT DRAWS CENSUS STATISTICAL AREAS.**
+Measured with `scripts/tribal_areas.py` on 2026-10-09, the Census draws one federal reservation
+in Oklahoma (Osage, 5,967 km²) and one off-reservation trust land (the Shawnee Tribe's, 0.43 km²);
+everything else it records for Oklahoma's nations is an Oklahoma Tribal Statistical Area (25) or a
+joint-use area two of them share (4). The fleet rule (Adam, 2026-09-30) is that a statistical area
+is never drawn as territory, and **Adam made an exception for Oklahoma on 2026-10-10** ("Make an
+exception for OK"), because without it a reader almost anywhere in the state would be told no
+tribal government answers there. The exception is `tribal_areas.DRAWN_STATISTICAL`, keyed by
+state, so no other instance can draw one by accident. `tribal-government` ships 31 areas across 33
+nations, and every statistical-area card says the Census draws the area to count people and that it
+is not a legal boundary. That is the Census's classification and not a legal one: since McGirt v.
+Oklahoma (2020) federal courts have held several of these reservations were never disestablished,
+and this layer settles none of it. Where the Census's name for an area names several nations, the
+card names every one, each with its own seat and site. Five governments with no area
+of their own (the United Keetoowah Band and the Delaware Tribe of Indians in the Cherokee OTSA, and
+three Muscogee tribal towns in the Creek one) are placed by their seat city and listed on that
+area's card as "Also seated in this area", and `--check` fails if any government the Bureau seats in
+Oklahoma is named nowhere. No council is named yet (`ROSTER_NOT_SOUGHT` in
+`scripts/build_tribal_areas.py`), recorded in gap `ok-tribal-government`.
 
 **THE CHAMBER BOUNDARIES USE DOUGLAS-PEUCKER AT `interval=20`**, inherited from North Carolina's
 measurement and re-measured here: worst stray 23.9 / 24.0 / 24.0 m against the 25 m ceiling the
@@ -84,7 +97,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Oklahoma (`oklahoma`) — https://districtry.com/ok/
 - Geocoders: address Photon (Oklahoma-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Oklahoma-bounded, serial >=1s queue)
 - Ground truth: 35.49230,-97.50340 (the State Capitol, Oklahoma City, Oklahoma County) → county Oklahoma County; us-house 5; ok-senate 48; ok-house 99. Negative point 33.65000,-97.15000 (near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.).
-- Layers: 11 registered (political 3, safety 2, schools 2, geography 4); `registerLayer(` floor 8. Debug namespace `window.OklahomaExplorer`.
+- Layers: 12 registered (political 4, safety 2, schools 2, geography 4); `registerLayer(` floor 8. Debug namespace `window.OklahomaExplorer`.
 - Scheduled workflows: `update-ok-congress-roster.yml` (Mon 16:45 UTC); `update-ok-legislature-roster.yml` (Tue 16:45 UTC); `ok-validate-sources.yml` (1st of month 19:00 UTC).
 - Source registry: `ok/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

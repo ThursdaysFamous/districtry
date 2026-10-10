@@ -1434,13 +1434,12 @@ ANSWERS = {
         # the Prairie Band Potawatomi Nation's off-reservation trust land near
         # Shabbona — and the card names the NATION and the Kansas town it is
         # governed from, which is what this level asks for: a reader on that
-        # ground is told which government answers for it. It names NO COUNCIL
-        # MEMBER, and that is a narrower gap recorded as
-        # `il-tribal-government` rather than a level unanswered: the nation's
-        # own published list is the only authority for a council, and its site
-        # answers this project with a Cloudflare managed challenge. The Census
-        # draws no tribal subdivision on this land either, measured against a
-        # positive control, so there is no district here for a seat to belong to.
+        # ground is told which government answers for it. Since 2026-10-10 it
+        # also names the nation's seven-member council, read weekly from the
+        # nation's own page, which had answered with a Cloudflare challenge
+        # until then. The Census draws no tribal subdivision on this land,
+        # measured against a positive control, so there is no district here
+        # for a seat to belong to.
         "tribal-government": answers("tribal-government"),
     },
     "wi": {

@@ -188,8 +188,14 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://districtry.com/il/precinct-maps.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/il/precinct.html</loc>
-    <lastmod>2026-09-23</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1059,7 +1065,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/carroll.html</loc>
-    <lastmod>2026-09-23</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -1581,7 +1587,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/sources.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3669,7 +3675,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/history.html</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
