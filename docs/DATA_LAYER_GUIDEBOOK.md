@@ -60,7 +60,8 @@ in the researched-but-unbuilt backlog.
   "minnesota": ["us-house", "mn-judicial-district", "mn-senate", "county", "mn-house", "watershed-district", "school-district-unified", "school-board-district", "county-commissioner", "zip-code", "school-district-elementary", "county-subdivision", "voting-precinct", "municipality", "school-district-secondary", "police-station", "fire-station", "post-office"],
   "indiana": ["us-house", "in-senate", "county", "in-house", "school-district-unified", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
   "northcarolina": ["us-house", "nc-senate", "nc-house", "school-district-unified", "county", "county-subdivision", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
-  "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"]
+  "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
+  "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -3269,6 +3270,45 @@ trusted.
             "why": "Each nation publishes its own government on its own site, and no source lists their councils together. The Census draws most of this land as a statistical area, which this app does not draw.",
             "wanted": "Each nation's own published list of its council, and its district map where it elects by district.",
             "blocker": "MEASURED 2026-10-09 with scripts/tribal_areas.py, control passed (the state layer answers code 40), scored by real intersection area against TIGERweb's own Oklahoma polygon: ONE federal reservation, `Osage Reservation`, 5,967.409 km² and wholly inside the state; ONE off-reservation trust land, `Shawnee Trust Land`, 0.430 km²; NO state reservation. Everything else the Census records for Oklahoma's nations is an Oklahoma Tribal Statistical Area, and under Adam's ruling of 2026-09-30 a statistical area is read only to decide which nation to name and is NEVER DRAWN as territory. THAT IS THE CENSUS'S CLASSIFICATION AND NOT A LEGAL ONE: since McGirt v. Oklahoma (2020) federal courts have held several of these reservations were never disestablished, so which ground a nation governs is a different question from which layer the Census puts it in, and this record settles neither. The fleet-wide tribal-government thread owns the build (https://claude.ai/artifact/CbZNWt4QDr7SBS7abdC1L2); Cherokee Nation was written to on 2026-10-01 about its district map and had not replied as of 2026-10-06. Oklahoma is dark as of this record."
+      }
+  ],
+  "tennessee": [
+      {
+            "id": "tn-county-commission-districts",
+            "concept": "County commission district",
+            "area": "Tennessee — all 95 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "Every Tennessee county is governed by a commission elected from districts, and this app does not yet show you which district you live in or who represents it.",
+            "why": "The districts are published statewide and the members county by county, and this app has not built them into a layer yet. Until it does, the County card names the county and nobody on its commission.",
+            "wanted": "Nothing from a reader — this one is ours to build.",
+            "blocker": "UNBUILT, NOT UNPUBLISHED, recorded so the silence on the County card is legible. Every Tennessee county elects its legislative body from districts, and the Comptroller of the Treasury publishes all of them in one statewide service (Redistricting_Address_Lookup, layer 2: 859 county commission districts across the 95 counties, read during this instance's planning on 2026-10-09). No state office publishes the members' names, so they come county by county from each county's own site; which counties publish them, and in what form, has NOT been measured here. THREE COUNTIES ARE CONSOLIDATED WITH THEIR PRINCIPAL CITY — Nashville-Davidson, Lynchburg-Moore and Hartsville-Trousdale, the three records TIGERweb's place layer carries for STATE='47' that are neither a city nor a town (measured 2026-10-10) — and there the body is a metropolitan council; the County card already names the consolidation. The layer is this instance's next change. Tennessee is dark as of 2026-10-10, so no reader is served this file yet."
+      },
+      {
+            "id": "tn-municipal-officeholders",
+            "concept": "City or town government",
+            "area": "Tennessee",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "This app can tell you which Tennessee city or town you are in, and not who your mayor or council members are.",
+            "why": "No statewide list of Tennessee's mayors and council members has been read yet. The boundary this card draws carries geography and no officeholder at all, and this app never guesses a name.",
+            "wanted": "A statewide roster of municipal mayors and council or board members, or each city's own published list.",
+            "blocker": "The boundary is the Census's own incorporated-places layer, which carries a name, a code and a functional status and no officeholder field. Measured 2026-10-10: 345 places for STATE='47' — 182 `<Name> city`, 160 `<Name> town` and 3 consolidated governments, which the card names as such. Tennessee's municipalities run under several charter forms, so the body a card would name differs from place to place, and that has not been researched. Not attempted in this change; the instance arrived on the national tier alone. The cities over 25,000 people are the part the fleet's done standard asks for first."
+      },
+      {
+            "id": "tn-school-board-members",
+            "concept": "School board",
+            "area": "Tennessee",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "This app names your school district and not the people elected to run it.",
+            "why": "Tennessee's school boards are elected, and no statewide list of their members has been read yet. The boundary this card draws carries the district's name and grades and nothing about its board.",
+            "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
+            "blocker": "Measured 2026-10-10 against TIGERweb's School service for STATE='47': 127 unified districts over 105,791.82 km2 of land, and 15 elementary plus 15 secondary districts over the same 980.06 km2 — Tennessee's city and special school districts, which run the lower grades while the county runs the high school there. Unified plus elementary is exactly the 95-county total. The boundary carries the district's name and grade range and no board member. The Comptroller's statewide redistricting service also carries school board districts (layer 5, 115 features, read during planning on 2026-10-09) for the boards elected by district; neither those nor the members are wired here. The route for the names is the state Department of Education or each board's own list; not attempted in this change."
       }
   ]
 }
