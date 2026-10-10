@@ -217,6 +217,56 @@ INSTANCES = {
             layer="us-house", roster="congress-roster.json",
             state="Indiana"),
     ),
+    # North Carolina joined at its 2026-10-09 go-live with BOTH chambers named,
+    # the Wisconsin/Iowa/Michigan shape rather than Minnesota's: all 170
+    # legislators ship from Open States, enriched from the General Assembly's
+    # own member lists, and refreshed weekly. NC Const. art. II, secs. 2 and 4
+    # set both chambers' terms at two years, so the term sentence differs from
+    # every sibling's on purpose.
+    "nc": dict(
+        worksheet="nc/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my NC legislator?",
+            body="the North Carolina General Assembly",
+            short="North Carolina General Assembly",
+            term="Senators and representatives both serve two-year terms.",
+            chambers=[
+                dict(layer="nc-senate", name="North Carolina Senate", short="Senate",
+                     holder="Senator", roster="nc-senate-members.json"),
+                dict(layer="nc-house", name="North Carolina House of Representatives", short="House",
+                     holder="Representative", roster="nc-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="North Carolina"),
+    ),
+    # Oklahoma joined at its go-live with both chambers named from Open
+    # States (one seat in each currently unlisted, which the table prints as
+    # "Not listed"). Okla. Const. art. V, sec. 9 sets senators' terms at four
+    # years and representatives' at two.
+    "ok": dict(
+        worksheet="ok/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Oklahoma legislator?",
+            body="the Oklahoma Legislature",
+            short="Oklahoma Legislature",
+            term="Senators serve four-year terms and representatives two.",
+            chambers=[
+                dict(layer="ok-senate", name="Oklahoma Senate", short="Senate",
+                     holder="Senator", roster="ok-senate-members.json"),
+                dict(layer="ok-house", name="Oklahoma House of Representatives", short="House",
+                     holder="Representative", roster="ok-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Oklahoma"),
+    ),
 }
 
 
@@ -445,6 +495,13 @@ def congress_page(tag, inst, worksheet, brand, app_name, landing, metros):
                 "on the map." % state)
     desc = ("Your %s U.S. House district by address or ZIP \u2014 the district number, the "
             "representative who holds it, and every other district covering that point." % state)
+    # A LONG STATE NAME OVERRUNS validate_serp_lengths.py's 155 characters:
+    # "North Carolina" took this sentence to 159 at that instance's 2026-10-09
+    # go-live. The shorter wording is used only where the long one does not
+    # fit, so every page that already fits is unchanged.
+    if len(desc) > 155:
+        desc = ("Your %s U.S. House district by address or ZIP \u2014 the district number, "
+                "its representative, and every other district covering that point." % state)
     og = ("Find your %s congressional district by address or ZIP, and the "
           "representative who holds it." % state)
     return spec["file"], spec["title"], subtitle, desc, og, lede, sections, n

@@ -1,20 +1,22 @@
 {
- "measured": "2026-09-30",
+ "measured": "2026-10-10",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
  "vintage": "current",
- "note": "Land to government. The key is the Census's own AIANNH code, which a reservation and its off-reservation trust land share. Governments are named exactly as the Bureau of Indian Affairs names them in data/bia-tribal-governments.json. Kentucky is covered with NO AREAS, which is a measurement rather than an omission: all six AIANNH layers return zero features over the state's whole extent, with North Carolina run as a control on the same six queries and answering 7, 2 and 2 on three of them, so the queries work. Re-measured 2026-09-30 at that instance's go-live.",
+ "note": "Land to government. The key is the Census's own AIANNH code, which a reservation and its off-reservation trust land share. Governments are named exactly as the Bureau of Indian Affairs names them in data/bia-tribal-governments.json. Kentucky is covered with NO AREAS, which is a measurement rather than an omission: all six AIANNH layers return zero features over the state's whole extent, with North Carolina run as a control on the same six queries and answering 7, 2 and 2 on three of them, so the queries work. Re-measured 2026-09-30 at that instance's go-live. OKLAHOMA IS THE ONE STATE WHERE STATISTICAL AREAS ARE ENTERED (Adam, 2026-10-10, \"Make an exception for OK\"): its Oklahoma Tribal Statistical Areas and joint-use areas carry land classes `otsa` and `joint-use`, and tribal_areas.DRAWN_STATISTICAL is what allows them. Where the Census's own name for one area names several nations, the entry lists each under `governments`, matched to the Bureau's list by that name; nations seated inside an area whose name does not name them (the United Keetoowah Band, the Delaware Tribe of Indians and the Alabama-Quassarte, Kialegee and Thlopthlocco tribal towns) are not entered here; scripts/build_tribal_areas.py places them by their seat city and the card lists them as seated in that area. The Shawnee Trust Land is matched to the Shawnee Tribe by the Census's basename.",
  "statesCovered": [
   "Illinois",
   "Kentucky",
   "Michigan",
   "Minnesota",
+  "Oklahoma",
   "Wisconsin"
  ],
  "statesNotYetCovered": [
   "California",
   "Indiana",
   "Iowa",
-  "New York"
+  "New York",
+  "North Carolina"
  ],
  "areas": {
   "0140": {
@@ -637,6 +639,24 @@
     }
    ]
   },
+  "2595": {
+   "government": "The Osage Nation",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2595R",
+     "name": "Osage Reservation",
+     "state": "Oklahoma",
+     "km2": 5967.409,
+     "share": 1.0
+    }
+   ]
+  },
   "2890": {
    "government": "Pokagon Band of Potawatomi Indians, Michigan and Indiana",
    "parentGovernment": null,
@@ -829,6 +849,24 @@
     }
    ]
   },
+  "3695": {
+   "government": "Shawnee Tribe",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "trust-land",
+     "geoid": "3695T",
+     "name": "Shawnee Trust Land",
+     "state": "Oklahoma",
+     "km2": 0.43,
+     "share": 1.0
+    }
+   ]
+  },
   "3885": {
    "government": "Sokaogon Chippewa  Community, Wisconsin",
    "parentGovernment": null,
@@ -929,6 +967,586 @@
      "name": "White Earth Off-Reservation Trust Land",
      "state": "Minnesota",
      "km2": 10.336,
+     "share": 1.0
+    }
+   ]
+  },
+  "5540": {
+   "governments": [
+    "Caddo Nation of Oklahoma",
+    "Wichita and Affiliated Tribes (Wichita, Keechi, Waco & Tawakonie), Oklahoma",
+    "Delaware Nation, Oklahoma"
+   ],
+   "parentGovernment": null,
+   "governmentStates": [
+    "OK",
+    "OK",
+    "OK"
+   ],
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5540",
+     "name": "Caddo-Wichita-Delaware OTSA",
+     "state": "Oklahoma",
+     "km2": 2688.354,
+     "share": 1.0
+    }
+   ]
+  },
+  "5550": {
+   "government": "Cherokee Nation",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5550",
+     "name": "Cherokee OTSA",
+     "state": "Oklahoma",
+     "km2": 18034.68,
+     "share": 1.0
+    }
+   ]
+  },
+  "5560": {
+   "government": "Cheyenne and Arapaho Tribes, Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5560",
+     "name": "Cheyenne and Arapaho OTSA",
+     "state": "Oklahoma",
+     "km2": 21176.215,
+     "share": 1.0
+    }
+   ]
+  },
+  "5580": {
+   "government": "The Chickasaw Nation",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5580",
+     "name": "Chickasaw OTSA",
+     "state": "Oklahoma",
+     "km2": 19244.869,
+     "share": 1.0
+    }
+   ]
+  },
+  "5590": {
+   "government": "The Choctaw Nation of Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5590",
+     "name": "Choctaw OTSA",
+     "state": "Oklahoma",
+     "km2": 28268.289,
+     "share": 1.0
+    }
+   ]
+  },
+  "5600": {
+   "governments": [
+    "Citizen Potawatomi Nation, Oklahoma",
+    "Absentee-Shawnee Tribe of Indians of Oklahoma"
+   ],
+   "parentGovernment": null,
+   "governmentStates": [
+    "OK",
+    "OK"
+   ],
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5600",
+     "name": "Citizen Potawatomi Nation-Absentee Shawnee OTSA",
+     "state": "Oklahoma",
+     "km2": 2938.32,
+     "share": 1.0
+    }
+   ]
+  },
+  "5620": {
+   "government": "The Muscogee (Creek) Nation",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5620",
+     "name": "Creek OTSA",
+     "state": "Oklahoma",
+     "km2": 12394.231,
+     "share": 1.0
+    }
+   ]
+  },
+  "5640": {
+   "government": "Eastern Shawnee Tribe of Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "MO",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5640",
+     "name": "Eastern Shawnee OTSA",
+     "state": "Oklahoma",
+     "km2": 53.689,
+     "share": 1.0
+    }
+   ]
+  },
+  "5670": {
+   "government": "Iowa Tribe of Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5670",
+     "name": "Iowa OTSA",
+     "state": "Oklahoma",
+     "km2": 932.616,
+     "share": 1.0
+    }
+   ]
+  },
+  "5690": {
+   "government": "Kaw Nation, Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5690",
+     "name": "Kaw OTSA",
+     "state": "Oklahoma",
+     "km2": 1286.73,
+     "share": 1.0
+    }
+   ]
+  },
+  "5700": {
+   "government": "Kickapoo Tribe of Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5700",
+     "name": "Kickapoo OTSA",
+     "state": "Oklahoma",
+     "km2": 833.041,
+     "share": 1.0
+    }
+   ]
+  },
+  "5720": {
+   "governments": [
+    "Kiowa  Indian Tribe of Oklahoma",
+    "Comanche Nation, Oklahoma",
+    "Apache Tribe of Oklahoma",
+    "Fort Sill Apache Tribe of Oklahoma"
+   ],
+   "parentGovernment": null,
+   "governmentStates": [
+    "OK",
+    "OK",
+    "OK",
+    "OK"
+   ],
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5720",
+     "name": "Kiowa-Comanche-Apache-Fort Sill Apache OTSA",
+     "state": "Oklahoma",
+     "km2": 16651.102,
+     "share": 1.0
+    }
+   ]
+  },
+  "5730": {
+   "government": "Miami Tribe of Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5730",
+     "name": "Miami OTSA",
+     "state": "Oklahoma",
+     "km2": 72.689,
+     "share": 1.0
+    }
+   ]
+  },
+  "5740": {
+   "government": "Modoc Nation",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5740",
+     "name": "Modoc OTSA",
+     "state": "Oklahoma",
+     "km2": 16.174,
+     "share": 1.0
+    }
+   ]
+  },
+  "5760": {
+   "government": "Otoe-Missouria Tribe of Indians, Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5760",
+     "name": "Otoe-Missouria OTSA",
+     "state": "Oklahoma",
+     "km2": 523.715,
+     "share": 1.0
+    }
+   ]
+  },
+  "5770": {
+   "government": "Ottawa Tribe of Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5770",
+     "name": "Ottawa OTSA",
+     "state": "Oklahoma",
+     "km2": 62.112,
+     "share": 1.0
+    }
+   ]
+  },
+  "5780": {
+   "government": "Pawnee Nation of Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5780",
+     "name": "Pawnee OTSA",
+     "state": "Oklahoma",
+     "km2": 1390.302,
+     "share": 1.0
+    }
+   ]
+  },
+  "5795": {
+   "government": "Peoria Tribe of Indians of Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5795",
+     "name": "Peoria OTSA",
+     "state": "Oklahoma",
+     "km2": 102.13,
+     "share": 1.0
+    }
+   ]
+  },
+  "5800": {
+   "government": "Ponca Tribe of Indians of Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5800",
+     "name": "Ponca OTSA",
+     "state": "Oklahoma",
+     "km2": 432.398,
+     "share": 1.0
+    }
+   ]
+  },
+  "5810": {
+   "government": "Quapaw Nation",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5810",
+     "name": "Quapaw OTSA",
+     "state": "Oklahoma",
+     "km2": 224.998,
+     "share": 1.0
+    }
+   ]
+  },
+  "5820": {
+   "government": "Sac & Fox Nation, Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5820",
+     "name": "Sac and Fox OTSA",
+     "state": "Oklahoma",
+     "km2": 1946.36,
+     "share": 1.0
+    }
+   ]
+  },
+  "5830": {
+   "government": "The Seminole Nation of Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5830",
+     "name": "Seminole OTSA",
+     "state": "Oklahoma",
+     "km2": 1489.242,
+     "share": 1.0
+    }
+   ]
+  },
+  "5835": {
+   "government": "Seneca-Cayuga Nation",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5835",
+     "name": "Seneca-Cayuga OTSA",
+     "state": "Oklahoma",
+     "km2": 215.651,
+     "share": 1.0
+    }
+   ]
+  },
+  "5860": {
+   "government": "Tonkawa Tribe of Indians of Oklahoma",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5860",
+     "name": "Tonkawa OTSA",
+     "state": "Oklahoma",
+     "km2": 371.801,
+     "share": 1.0
+    }
+   ]
+  },
+  "5890": {
+   "government": "Wyandotte Nation",
+   "parentGovernment": null,
+   "governmentState": "OK",
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "otsa",
+     "geoid": "5890",
+     "name": "Wyandotte OTSA",
+     "state": "Oklahoma",
+     "km2": 88.355,
+     "share": 1.0
+    }
+   ]
+  },
+  "5915": {
+   "governments": [
+    "The Muscogee (Creek) Nation",
+    "The Seminole Nation of Oklahoma"
+   ],
+   "parentGovernment": null,
+   "governmentStates": [
+    "OK",
+    "OK"
+   ],
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "joint-use",
+     "geoid": "5915",
+     "name": "Creek/Seminole joint-use OTSA",
+     "state": "Oklahoma",
+     "km2": 169.712,
+     "share": 1.0
+    }
+   ]
+  },
+  "5950": {
+   "governments": [
+    "Kaw Nation, Oklahoma",
+    "Ponca Tribe of Indians of Oklahoma"
+   ],
+   "parentGovernment": null,
+   "governmentStates": [
+    "OK",
+    "OK"
+   ],
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "joint-use",
+     "geoid": "5950",
+     "name": "Kaw/Ponca joint-use OTSA",
+     "state": "Oklahoma",
+     "km2": 286.032,
+     "share": 1.0
+    }
+   ]
+  },
+  "5955": {
+   "governments": [
+    "Kiowa  Indian Tribe of Oklahoma",
+    "Comanche Nation, Oklahoma",
+    "Apache Tribe of Oklahoma",
+    "Fort Sill Apache Tribe of Oklahoma",
+    "Caddo Nation of Oklahoma",
+    "Wichita and Affiliated Tribes (Wichita, Keechi, Waco & Tawakonie), Oklahoma",
+    "Delaware Nation, Oklahoma"
+   ],
+   "parentGovernment": null,
+   "governmentStates": [
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK"
+   ],
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "joint-use",
+     "geoid": "5955",
+     "name": "Kiowa-Comanche-Apache-Ft Sill Apache/Caddo-Wichita-Delaware joint-use OTSA",
+     "state": "Oklahoma",
+     "km2": 501.042,
+     "share": 1.0
+    }
+   ]
+  },
+  "5970": {
+   "governments": [
+    "Miami Tribe of Oklahoma",
+    "Peoria Tribe of Indians of Oklahoma"
+   ],
+   "parentGovernment": null,
+   "governmentStates": [
+    "OK",
+    "OK"
+   ],
+   "states": [
+    "Oklahoma"
+   ],
+   "lands": [
+    {
+     "class": "joint-use",
+     "geoid": "5970",
+     "name": "Miami/Peoria joint-use OTSA",
+     "state": "Oklahoma",
+     "km2": 32.688,
      "share": 1.0
     }
    ]

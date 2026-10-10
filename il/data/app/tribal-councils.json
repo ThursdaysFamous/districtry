@@ -1,0 +1,58 @@
+{
+ "2980": {
+  "roster": [
+   {
+    "name": "Joseph (Zeke) Rupnick",
+    "role": "Chairperson",
+    "phone": "785-966-4008",
+    "termEnds": "2026"
+   },
+   {
+    "name": "Zach Pahmahmie",
+    "role": "Vice Chairperson",
+    "phone": "785-966-4037",
+    "termEnds": "2028"
+   },
+   {
+    "name": "Wade Pahmahmie",
+    "role": "Treasurer",
+    "phone": "785-966-4005",
+    "termEnds": "2028"
+   },
+   {
+    "name": "Lorrie Melchior",
+    "role": "Secretary",
+    "phone": "785-966-4022",
+    "termEnds": "2026"
+   },
+   {
+    "name": "William (Bill) Evans",
+    "role": "Council Member",
+    "phone": "785-966-3991",
+    "note": "seat 1",
+    "termEnds": "2026"
+   },
+   {
+    "name": "Ronald (Tony) Wahweotten Jr.",
+    "role": "Council Member",
+    "phone": "785-966-3991",
+    "note": "seat 2",
+    "termEnds": "2028"
+   },
+   {
+    "name": "Raphael J. Wahwassuck",
+    "role": "Council Member",
+    "phone": "785-966-4048",
+    "note": "seat 3",
+    "termEnds": "2028"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-10.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.pbpindiantribe.com/tribal-council",
+  "rosterRead": "2026-10-10",
+  "rosterHost": null,
+  "rosterMeasured": null
+ }
+}

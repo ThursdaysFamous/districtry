@@ -65,6 +65,8 @@ the audit asked for an item about the project.
 | P1001 (applies to jurisdiction) | Q1527 (Minnesota) | the `/mn/` instance |
 | P1001 (applies to jurisdiction) | Q1603 (Kentucky) | the `/ky/` instance |
 | P1001 (applies to jurisdiction) | Q1415 (Indiana) | the `/in/` instance |
+| P1001 (applies to jurisdiction) | Q1454 (North Carolina) | the `/nc/` instance |
+| P1001 (applies to jurisdiction) | Q1649 (Oklahoma) | the `/ok/` instance |
 
 ### What is deliberately absent
 
@@ -116,10 +118,12 @@ endpoint used.
 | `Q13785927` | Apache Software License 2.0 |
 | `Q1384` | New York |
 | `Q1415` | Indiana |
+| `Q1454` | North Carolina |
 | `Q1527` | Minnesota |
 | `Q1537` | Wisconsin |
 | `Q1546` | Iowa |
 | `Q1603` | Kentucky |
+| `Q1649` | Oklahoma |
 | `Q1860` | English |
 | `Q189210` | web application |
 | `Q30` | United States |

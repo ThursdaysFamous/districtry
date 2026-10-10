@@ -490,7 +490,8 @@ try {
             return block && block.hidden === true;
           }, id, { timeout: QUERY_TIMEOUT })
           .then(() => true, () => false);
-        const hashKeepsLayer = await page.evaluate((cid) => location.hash.includes(cid), id);
+        const hashKeepsLayer = await page.evaluate(
+          ({ cid, n }) => window[n].permalinkState().layers.includes(cid), { cid: id, n: EXPORTS_NAME });
         // assert the invariant directly, not just its hash reflection: hide
         // must never mutate state.layersOn (that's what keeps permalinks and
         // reappear-on-return working)
@@ -556,6 +557,56 @@ try {
     await context.close();
   }
 
+  // 2f. The City card names the mayor and council from the state's municipal
+  //     directory (ky-city-officials.json, keyed by Census place id). The city
+  //     itself comes from TIGERweb live, which a sandboxed browser cannot
+  //     reach, so the Places query is answered with one stubbed feature around
+  //     the anchor; what is asserted is the JOIN — that the card names whoever
+  //     the shipped roster names for that id, and that a place the directory
+  //     does not carry (Keene) says it names nobody rather than borrowing.
+  {
+    const [lat, lng] = POINT.split(",").map(Number);
+    function placesBody(props) {
+      const d = 0.05;
+      return JSON.stringify({
+        geometryType: "esriGeometryPolygon",
+        spatialReference: { wkid: 4326 },
+        fields: Object.keys(props).map((n) => ({ name: n, type: "esriFieldTypeString", alias: n })),
+        features: [{
+          attributes: props,
+          geometry: { rings: [[[lng - d, lat - d], [lng + d, lat - d], [lng + d, lat + d], [lng - d, lat + d], [lng - d, lat - d]]] }
+        }]
+      });
+    }
+    for (const c of [
+      { geoid: "2158620", name: "Owensboro city", named: true },
+      { geoid: "2141716", name: "Keene city", named: false }
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=municipality`, async (p) => {
+        await p.route("**/Places_CouSub_ConCity_SubMCD/MapServer/4/query**", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json",
+            body: placesBody({ GEOID: c.geoid, NAME: c.name, BASENAME: c.name.replace(/ city$/, ""), STATE: "21", LSADC: "25" }) }));
+      });
+      const roster = await page.evaluate(() =>
+        fetch("data/app/ky-city-officials.json").then((r) => r.json()));
+      const seats = ((roster[c.geoid] || {}).seats || []).map((s) => s.name);
+      const info = await cardText(page, "municipality");
+      const text = info.text || "";
+      if (c.named) {
+        check(`municipality names ${c.name}'s mayor and council from the directory`,
+          !info.error && seats.length > 0 && seats.every((n) => text.includes(n)) && /Mayor/.test(text) &&
+            !/Not named here/.test(text),
+          `roster names ${seats.length}: ${seats.slice(0, 3).join(", ")} | card: ${text.slice(0, 120)}`);
+      } else {
+        check(`municipality names nobody for ${c.name}, which the directory does not carry`,
+          !info.error && seats.length === 0 && /Not named here/.test(text),
+          text.slice(0, 120));
+      }
+      await context.close();
+    }
+  }
+
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged
   //     with its own source and pointed at the canonical deployment), and the
@@ -576,14 +627,13 @@ try {
       const coords = pop.querySelector(".share-popover-coords").textContent;
       // the values are built at open time, AFTER the click's syncUrlHash —
       // so location.hash here is exactly the hash both strings must carry
-      const wantUrl = location.origin + location.pathname +
-        "?utm_source=share&utm_medium=link" + location.hash;
+      const wantUrl = location.origin + location.pathname + "?ref=share" + location.hash;
       document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
       return {
         opened: true,
         urlOk: url === wantUrl,
-        linkTagged: url.indexOf("?utm_source=share&utm_medium=link#") !== -1,
-        embedTagged: embed.indexOf("?utm_source=embed&utm_medium=iframe") !== -1,
+        linkTagged: url.indexOf("?ref=share#") !== -1,
+        embedTagged: embed.indexOf("?ref=embed#") !== -1,
         embedShape: embed.indexOf('<iframe src="') === 0 && embed.indexOf(location.hash) !== -1,
         embedCanonical: embed.indexOf(location.origin) === -1 || location.hostname !== "localhost",
         coordsOk: /^-?\d+\.\d{5}, -?\d+\.\d{5}$/.test(coords),

@@ -179,7 +179,8 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 # Counted from a coverage list instead, E would measure nothing: a state serves
 # every county it has listed, by construction.
 STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
-                  "ky": 120, "ny": 62, "in": 92}
+                  "ky": 120, "ny": 62, "in": 92,
+                  "nc": 100, "ok": 77}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -1433,13 +1434,12 @@ ANSWERS = {
         # the Prairie Band Potawatomi Nation's off-reservation trust land near
         # Shabbona — and the card names the NATION and the Kansas town it is
         # governed from, which is what this level asks for: a reader on that
-        # ground is told which government answers for it. It names NO COUNCIL
-        # MEMBER, and that is a narrower gap recorded as
-        # `il-tribal-government` rather than a level unanswered: the nation's
-        # own published list is the only authority for a council, and its site
-        # answers this project with a Cloudflare managed challenge. The Census
-        # draws no tribal subdivision on this land either, measured against a
-        # positive control, so there is no district here for a seat to belong to.
+        # ground is told which government answers for it. Since 2026-10-10 it
+        # also names the nation's seven-member council, read weekly from the
+        # nation's own page, which had answered with a Cloudflare challenge
+        # until then. The Census draws no tribal subdivision on this land,
+        # measured against a positive control, so there is no district here
+        # for a seat to belong to.
         "tribal-government": answers("tribal-government"),
     },
     "wi": {
@@ -1668,6 +1668,61 @@ ANSWERS = {
         "special-districts": OPEN,
         "tribal-government": OPEN,
     },
+    # North Carolina, added at its 2026-10-09 go-live with the national tier.
+    "nc": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("nc-senate", "nc-house"),
+        "county-boundaries": answers("county"),
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        "school-district-boundaries": answers("school-district-unified"),
+        "courts-by-district": OPEN,
+        # NORTH CAROLINA'S TOWNSHIPS GOVERN NOBODY. The Census carries every
+        # one with FUNCSTAT N (non-functioning): the boundaries exist and the
+        # governments do not, which is why nc/index.html's township card names
+        # no officeholder and records no gap. Recorded in nc/CLAUDE.md.
+        "sub-county-government": na(
+            "North Carolina's townships are boundaries without governments — "
+            "the Census marks every one non-functioning — so outside a city or "
+            "town limit the county governs."),
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # The Eastern Band of Cherokee Indians' Qualla Boundary is in the
+        # state; the fleet-wide tribal layer thread owns drawing it.
+        "tribal-government": OPEN,
+    },
+    # Oklahoma, added at its go-live with the national tier.
+    "ok": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ok-senate", "ok-house"),
+        "county-boundaries": answers("county"),
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        # Both tilings, because Oklahoma needs both: unified (415) and
+        # elementary (91) districts together cover the state's land exactly,
+        # and the secondary tiling is empty. Recorded in ok/CLAUDE.md.
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary"),
+        "courts-by-district": OPEN,
+        # OKLAHOMA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 305 county
+        # subdivisions TIGERweb carries for the state are census county
+        # divisions (LSADC 22, FUNCSTAT S), statistical areas that govern
+        # nobody. Recorded in ok/CLAUDE.md with the method.
+        "sub-county-government": na(
+            "Oklahoma has no sub-county general-purpose government — outside a "
+            "city or town limit the county governs. The 305 sub-county units "
+            "the Census publishes for Oklahoma are census county divisions: "
+            "statistical areas, not governments."),
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # The fleet-wide tribal layer thread owns drawing Oklahoma's nations,
+        # as census statistical areas labeled as such (Adam, 2026-10-10).
+        "tribal-government": OPEN,
+    },
     "ny": {
         "us-house": answers("congress"),
         "state-legislature": answers("state-senate", "state-assembly"),
@@ -1757,6 +1812,11 @@ CITY_ROSTERS = {
     # Election winners from the Secretary of State's city results files, keyed
     # by the city's Census id, each seat dated to the election that filled it.
     "mn": [("mn/data/app/mn-city-councils.json", "geoid7")],
+    # The Department for Local Government's municipal directory, keyed by the
+    # Census place id the City card's feature carries. Louisville's one entry
+    # answers both of the Census's Louisville places, the consolidated metro
+    # (balance) and the pre-merger city inside it.
+    "ky": [("ky/data/app/ky-city-officials.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is
@@ -1884,7 +1944,8 @@ def load_expected_units():
 # The state each statewide app answers for, for the one join that needs it: a
 # Wisconsin roster is keyed by the five-digit place code inside the state.
 STATE_FIPS_OF = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
-                 "mn": "27", "ky": "21", "ny": "36", "in": "18"}
+                 "mn": "27", "ky": "21", "ny": "36", "in": "18",
+                 "nc": "37", "ok": "40"}
 
 
 def _named_anywhere(record):

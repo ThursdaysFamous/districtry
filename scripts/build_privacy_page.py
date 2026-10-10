@@ -1697,7 +1697,7 @@ def build():
             "storage": render_storage_paragraphs(apps),
             "appslede": render_apps_lede(apps),
             "analytics": render_analytics_section(apps),
-            "permalink": code("#point=41.88250,-87.62850"),
+            "permalink": code("#p=41.8825,-87.6285"),
             "hash": code("#"),
             "dp": COORD_DECIMALS,
         })

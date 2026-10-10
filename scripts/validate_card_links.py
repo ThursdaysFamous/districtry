@@ -437,6 +437,20 @@ ROBOTS_DECLINED = {
     "courts.michigan.gov":
         "the bare host 301s robots.txt to www.courts.michigan.gov, whose file "
         "refuses every client. Measured 2026-10-01. See the www entry",
+    # THE TENNESSEE GENERAL ASSEMBLY. Its three hosts (capitol.tn.gov, www. and
+    # wapp.) serve one 376-byte file
+    # (Last-Modified 25 September 2025) that allows eight named crawlers —
+    # SiteimproveBot, Googlebot, Googlebot-Image, Bingbot, Slurp, DuckDuckBot,
+    # ia_archiver, archive.org_bot — and then states `User-agent: *` /
+    # `Disallow: /`. The tn chamber cards LINK each member's page and the
+    # chamber directories on wapp.capitol.tn.gov for a reader, and
+    # tn/scripts/build_tn_legislature_roster.py reads the members' names from
+    # the state's TNMap service instead of this site, which is why.
+    "wapp.capitol.tn.gov":
+        "robots.txt allows eight named crawlers and then states `User-agent: *` / "
+        "`Disallow: /`. Measured 2026-10-10 with this checker's own token. The tn "
+        "chamber cards link members' pages and the chamber directories here for a "
+        "reader; the roster is read from the state's TNMap service instead",
 }
 
 # A HOST CAN DECLINE ONE DIRECTORY RATHER THAN ITSELF, and the table above

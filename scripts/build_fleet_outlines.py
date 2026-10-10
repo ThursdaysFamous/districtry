@@ -79,6 +79,14 @@ SOURCES = {
     # national tier and every one answers over the whole state, so the dissolve
     # of its 92 counties is the widest ground it answers on.
     "in": "in/data/app/metro-outline.json",
+    # North Carolina's coverage ring IS its state outline: the national tier
+    # answers statewide, and the county fabric is water-inclusive for the
+    # inland sounds, so the 100 counties dissolve to ONE ring.
+    "nc": "nc/data/app/metro-outline.json",
+    # Oklahoma's coverage ring IS its state outline: the national tier answers
+    # statewide, so the dissolve of its 77 counties is the widest ground it
+    # answers on.
+    "ok": "ok/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

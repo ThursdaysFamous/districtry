@@ -68,6 +68,8 @@ STATE_OF_INSTANCE = {
     "mn": "Minnesota",
     "ky": "Kentucky",
     "in": "Indiana",
+    "nc": "North Carolina",
+    "ok": "Oklahoma",
 }
 
 
@@ -119,7 +121,29 @@ def _problems(doc, govs, instance_states):
         if not (len(code) == 4 and code.isdigit()):
             out.append("%s: not a four-digit AIANNH code" % where)
         gov = entry.get("government")
-        if not gov:
+        shared = entry.get("governments")
+        if shared is not None:
+            # An area several governments share (Oklahoma's statistical areas,
+            # where the Census's own name for one area names several nations):
+            # every one must be the Bureau's, each with its own recorded seat
+            # state, and the entry must not also name one government alone.
+            if gov is not None:
+                out.append("%s: names one government and a shared list" % where)
+            if len(shared) < 2 or len(set(shared)) != len(shared):
+                out.append("%s: a shared list must name two or more distinct "
+                           "governments" % where)
+            states_rec = entry.get("governmentStates") or []
+            if len(states_rec) != len(shared):
+                out.append("%s: governmentStates does not give one seat state per "
+                           "government" % where)
+            for i, name in enumerate(shared):
+                if name not in govs:
+                    out.append("%s: names %r, which the Bureau's own list does not "
+                               "carry" % (where, name))
+                elif i < len(states_rec) and states_rec[i] != govs[name].get("state"):
+                    out.append("%s: seat of %r recorded as %r, the Bureau says %r"
+                               % (where, name, states_rec[i], govs[name].get("state")))
+        elif not gov:
             out.append("%s: names no government" % where)
         elif gov not in govs:
             out.append(
@@ -153,7 +177,7 @@ def _problems(doc, govs, instance_states):
                     "%s: land recorded in %r, which this table does not claim to cover"
                     % (where, st)
                 )
-            if land.get("class") not in ta.GOVERNED_CLASSES:
+            if land.get("class") not in ta.drawn_classes(st):
                 out.append(
                     "%s: land class %r is not one a government holds" % (where, land.get("class"))
                 )
@@ -226,7 +250,7 @@ def measure():
     for state in doc["statesCovered"]:
         poly, geoid = ta.state_polygon(state)
         print("control OK: %s is state code %s" % (state, geoid))
-        for cls in ta.GOVERNED_CLASSES:
+        for cls in ta.drawn_classes(state):
             if cls not in ids:
                 continue
             for feat in ta.fetch_layer(ta.AIANNHA, ids[cls], fields=ta.AREA_FIELDS):
@@ -247,7 +271,8 @@ def measure():
         for land in entry["lands"]:
             key = (code, land["class"], land["state"])
             if key not in seen:
-                extra.append((code, entry["government"], land["name"], land["state"]))
+                extra.append((code, entry.get("government") or " / ".join(entry["governments"]),
+                              land["name"], land["state"]))
 
     for state, cls, code, name, km2 in missing:
         print("MISSING %s in %s: %s %r (%s km2) has no entry" % (cls, state, code, name, km2))
@@ -302,6 +327,14 @@ def selftest():
          lambda d: d.update(statesNotYetCovered=d["statesNotYetCovered"] + ["Illinois"])),
         ("an empty covered list",
          lambda d: d.update(statesCovered=[])),
+        ("a shared area naming a government the Bureau does not carry",
+         lambda d: d["areas"]["5720"]["governments"].__setitem__(0, "Nation of Nowhere")),
+        ("a shared area whose seat states do not line up",
+         lambda d: d["areas"]["5720"].update(governmentStates=["OK"])),
+        ("a shared area that also names one government",
+         lambda d: d["areas"]["5720"].update(government="Cherokee Nation")),
+        ("a statistical area outside the one state allowed to draw it",
+         lambda d: d["areas"]["5720"]["lands"][0].update(state="Illinois")),
     ]
     for label, mutate in cases:
         assert broken(mutate), "the gate must catch %s" % label

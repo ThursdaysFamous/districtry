@@ -3,7 +3,7 @@
   // WHY THIS IS HAND WRITTEN, AND WHY A QR SERVICE IS NOT AN OPTION AT ALL.
   // Every QR image API takes its payload in the URL of the image request. The
   // payload here is a permalink, and a permalink carries the reader's selected
-  // point at full precision (`#point=41.88250,-87.62850`). Today that point
+  // point at full precision (`#p=41.8825,-87.6285`). Today that point
   // sits in the URL FRAGMENT, which a browser never sends to any server; a QR
   // API needs it in the query string, which is sent. So a third-party QR would
   // transmit a reader's exact selected location to a host the privacy page

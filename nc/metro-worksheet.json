@@ -37,7 +37,7 @@
     },
     "tagline": "Every civic district that covers your point in North Carolina, and who represents you there.",
     "theme_color": "#6d3fd1",
-    "favicon_data_uri": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3EMI%3C/text%3E%3C/svg%3E",
+    "favicon_data_uri": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3ENC%3C/text%3E%3C/svg%3E",
     "apple_touch_icon": "icons/apple-touch-icon.png",
     "head": {
       "title": "North Carolina district lookup — districtry North Carolina",
@@ -76,7 +76,9 @@
     { "id": "indiana", "label": "Indiana", "url": "https://districtry.com/in/", "emoji": "🏁", "explorer_name": "districtry Indiana",
       "bbox": { "minLng": -88.1, "minLat": 37.83, "maxLng": -84.78, "maxLat": 41.77 } },
     { "id": "northcarolina", "label": "North Carolina", "url": "https://districtry.com/nc/", "emoji": "🌳", "explorer_name": "districtry North Carolina",
-      "bbox": { "minLng": -84.33, "minLat": 33.74, "maxLng": -75.39, "maxLat": 36.6 } }
+      "bbox": { "minLng": -84.33, "minLat": 33.74, "maxLng": -75.39, "maxLat": 36.6 } },
+    { "id": "oklahoma", "label": "Oklahoma", "url": "https://districtry.com/ok/", "emoji": "🌾", "explorer_name": "districtry Oklahoma",
+      "bbox": { "minLng": -103.01, "minLat": 33.61, "maxLng": -94.43, "maxLat": 37.01 } }
   ],
   "hover_number_keys": [
     [
@@ -108,8 +110,8 @@
         "answers": "The U.S. House district covering the point, and the representative holding it.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app; 14 features for North Carolina, measured 2026-09-29. The layer's own district field is CD120.",
-            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
+            "label": "U.S. Census TIGERweb — Legislative, layer 4 (119th Congressional Districts), pre-built for the state and shipped with the app; 14 features for North Carolina, measured 2026-10-09. These are the districts the current members were elected from; the 120th Congress's map, redrawn in 2025, takes over when they leave office on 3 January 2027.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4"
           }
         ],
         "people": "congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
@@ -347,7 +349,7 @@
         "file": "congress-districts.json",
         "min_features": 14,
         "max_features": 14,
-        "note": "The 14 U.S. House districts, TIGERweb layer 0 (CD120)."
+        "note": "The 14 U.S. House districts, TIGERweb layer 4 (CD119) until 3 January 2027."
       },
       {
         "file": "nc-senate-districts.json",
@@ -386,7 +388,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-nc-shell-v1",
+    "cache_name": "districtry-nc-shell-v2",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",

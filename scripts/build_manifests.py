@@ -53,6 +53,9 @@ INSTANCES = [
     ("in", "in/metro-worksheet.json"),
     ("nc", "nc/metro-worksheet.json"),
     ("ky", "ky/metro-worksheet.json"),
+    ("ok", "ok/metro-worksheet.json"),
+    ("sc", "sc/metro-worksheet.json"),
+    ("tn", "tn/metro-worksheet.json"),
 ]
 
 # The splash background. Not the theme colour: the brand icons sit on a light

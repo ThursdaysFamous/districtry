@@ -1,0 +1,92 @@
+name: Update Oklahoma legislature roster
+
+# Weekly refresh of the Oklahoma Senate + House rosters
+# (ok/data/app/ok-senate-members.json and ok-house-members.json, fetched by
+# ok/index.html's chamber cards). Rebuilds both chambers from the Open States
+# current-people export (ok.csv) and — if anything changed — opens a PR rather
+# than committing directly to main.
+#
+# The export carries name, party, e-mail and each member's own page, and no
+# office or telephone, so there is no second publisher to join here yet and no
+# --require-enrichment flag. Reading the chambers' own sites for the room and
+# the phone is recorded in ok/WATCH.md.
+#
+# THE PAGE STEPS LANDED WITH THE GO-LIVE CHANGE.
+# `ok/state-legislature.html` carries a GENERATED table of both rosters, and
+# `about.html` and `sitemap.xml` count them, so all three are regenerated here
+# and staged in the same `git add`.
+
+on:
+  schedule:
+    - cron: "45 16 * * 2" # Tuesday 16:45 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # Stdlib only: the builder downloads ok.csv with urllib after reading
+      # data.openstates.org's robots.txt through scraper_common.
+      - name: Rebuild Oklahoma Senate + House rosters
+        run: python3 ok/scripts/build_ok_legislature_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, and every data/app file must be present
+      # and well formed.
+      - name: Validate app + data files
+        run: python3 ok/scripts/validate_index.py ok/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- ok/data/app/ok-senate-members.json ok/data/app/ok-house-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/ok-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 ok/scripts/build_ok_legislature_roster.py
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add ok/data/app/ok-senate-members.json ok/data/app/ok-house-members.json ok/state-legislature.html about.html sitemap.xml
+          git commit -m "Update Oklahoma Senate + House rosters from Open States"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Oklahoma Senate + House rosters" \
+              --body "Automated weekly refresh of the Oklahoma Senate and Oklahoma House chamber cards' rosters, from the Open States current-people export (\`ok.csv\`). Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

@@ -74,7 +74,7 @@
       "keywords": "Indiana district map, what district am I in, Indiana Senate district, Indiana House district, county lookup, civic districts, who represents me",
       "author": { "@id": "https://districtry.com/#author" },
       "isPartOf": { "@id": "https://districtry.com/in/#website" },
-      "dateModified": "2026-09-29",
+      "dateModified": "2026-10-09",
       "sameAs": "https://github.com/ThursdaysFamous/districtry"
     }
   ]
@@ -89,7 +89,7 @@
 <!-- ==== GENERATED:BEGIN head-theme ==== -->
 <meta name="theme-color" content="#6d3fd1">
 
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3EMI%3C/text%3E%3C/svg%3E" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3EIN%3C/text%3E%3C/svg%3E" />
 
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="districtry" />
@@ -3924,7 +3924,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="footer-meta" id="footer-meta">
         <span>Data last verified:
           <!-- ==== GENERATED:BEGIN verified-date ==== -->
-          <strong id="verified-date">September 29, 2026</strong>
+          <strong id="verified-date">October 9, 2026</strong>
           <!-- ==== GENERATED:END verified-date ==== -->
         </span>
       </div>
@@ -4054,6 +4054,12 @@ function initIndianaExplorer() {
   var METRO_CENTER = [39.77, -86.44];
   // Permalink sanity gate: the *greater* metro area (wider than METRO_BBOX).
   var PERMALINK_GATE = { minLat: 37.6, maxLat: 41.95, minLng: -88.3, maxLng: -84.6 };
+  // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
+  // from the fleet-wide layer-codes.json. A code is permanent: links already
+  // shared carry it. ENGINE permalink reads both a code and a full id.
+  var LAYER_CODES = { "us-house": "us", "in-senate": "ins", "county": "co", "in-house": "inh",
+    "school-district-unified": "su", "zip-code": "zp", "county-subdivision": "cs",
+    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4106,7 +4112,11 @@ function initIndianaExplorer() {
     { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
       bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } },
     { id: "indiana", label: "Indiana", url: "https://districtry.com/in/", emoji: "🏁", explorerName: "districtry Indiana",
-      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } }
+      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } },
+    { id: "northcarolina", label: "North Carolina", url: "https://districtry.com/nc/", emoji: "🌳", explorerName: "districtry North Carolina",
+      bbox: { minLng: -84.33, minLat: 33.74, maxLng: -75.39, maxLat: 36.6 } },
+    { id: "oklahoma", label: "Oklahoma", url: "https://districtry.com/ok/", emoji: "🌾", explorerName: "districtry Oklahoma",
+      bbox: { minLng: -103.01, minLat: 33.61, maxLng: -94.43, maxLat: 37.01 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -5794,7 +5804,7 @@ function initIndianaExplorer() {
   // WHY THIS IS HAND WRITTEN, AND WHY A QR SERVICE IS NOT AN OPTION AT ALL.
   // Every QR image API takes its payload in the URL of the image request. The
   // payload here is a permalink, and a permalink carries the reader's selected
-  // point at full precision (`#point=41.88250,-87.62850`). Today that point
+  // point at full precision (`#p=41.8825,-87.6285`). Today that point
   // sits in the URL FRAGMENT, which a browser never sends to any server; a QR
   // API needs it in the query string, which is sent. So a third-party QR would
   // transmit a reader's exact selected location to a host the privacy page
@@ -6235,12 +6245,76 @@ function initIndianaExplorer() {
   /* ==== ENGINE:END qr-code ==== */
   /* ==== ENGINE:BEGIN permalink ==== */
   /* =========================================================================
-   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&pin=id&stats=1&zoom=N mirrors the
+   * SHAREABLE URL — #p=lat,lng&l=code1,code2&c=code&s=1&z=N mirrors the
    * current selection so any view can be copied out of the URL bar (or via the
    * point chip's Copy-link button) and restored on load. replaceState, not
    * location.hash assignment, so clicking around never pollutes the back
    * button. Parsed once at boot by applyStateFromHash().
+   *
+   * THE SHORT FORM SINCE 2026-10-09. Every link until then spelled the view
+   * out — #point=41.88250,-87.62850&layers=ward,congress&pin=…&stats=1&zoom=N
+   * — and a typical shared link ran 96 to 140 characters, 652 with every
+   * Illinois layer on. Layers are now written as their permanent short codes
+   * (LAYER_CODES, generated from the fleet-wide layer-codes.json), the keys
+   * are one letter, and a coordinate drops its trailing zeros while keeping
+   * all five decimals, because a shared link has to land on the same side of
+   * a boundary as the click that made it. THE LONG FORM IS STILL READ, and
+   * must be forever: those links sit in messages, posts and print nobody can
+   * recall. readPermalink() is the one reading of both.
    * ======================================================================= */
+
+  // Layer id <-> link code. Guarded, so an instance whose metro config carries
+  // no LAYER_CODES writes full ids exactly as before.
+  var layerCodeOf = {}, layerIdOfCode = {};
+  if (typeof LAYER_CODES === "object" && LAYER_CODES) {
+    Object.keys(LAYER_CODES).forEach(function (id) {
+      layerCodeOf[id] = LAYER_CODES[id];
+      layerIdOfCode[LAYER_CODES[id]] = id;
+    });
+  }
+  function layerLinkCode(id) { return layerCodeOf[id] || id; }
+  // A token from `l=` or `c=`: a code, or — hand-typed, or from an instance
+  // with no table — a full id. No code spells an id (generate_metro_files.py
+  // refuses one), so the two cannot be confused.
+  function layerFromLinkCode(token) { return layerIdOfCode[token] || token; }
+
+  // Five decimals (about a metre), trailing zeros dropped: 41.88250 -> 41.8825.
+  function linkCoord(n) { return String(+n.toFixed(5)); }
+
+  // ONE reading of a map link's hash (without the "#"), in either spelling,
+  // for the boot parse and for the smoke tests. Long keys are read verbatim
+  // as ids; short keys go through the code table. A key in both spellings —
+  // nothing writes that — takes the short one, and `layers=` with `l=` is
+  // their union, so nothing a link names is dropped.
+  function readPermalink(raw) {
+    var params = {};
+    (raw || "").split("&").forEach(function (kv) {
+      var eq = kv.indexOf("=");
+      if (eq <= 0) return;
+      try {
+        params[kv.slice(0, eq)] = decodeURIComponent(kv.slice(eq + 1));
+      } catch (e) {
+        // a malformed %-escape drops that one parameter, not the whole link
+      }
+    });
+    function pick(shortKey, longKey) {
+      return params[shortKey] !== undefined ? params[shortKey] : params[longKey];
+    }
+    var layers = [], seen = {};
+    function addLayer(id) {
+      if (id && !seen[id]) { seen[id] = true; layers.push(id); }
+    }
+    if (params.layers) params.layers.split(",").forEach(addLayer);
+    if (params.l) params.l.split(",").forEach(function (t) { if (t) addLayer(layerFromLinkCode(t)); });
+    return {
+      point: pick("p", "point"),
+      layers: layers,
+      pin: params.c !== undefined ? layerFromLinkCode(params.c) : params.pin,
+      stats: pick("s", "stats"),
+      zoom: pick("z", "zoom"),
+      q: params.q
+    };
+  }
 
   // The zoom this fork boots at, read from the map rather than configured, so
   // the engine needs no per-metro constant and every fork gets its own default.
@@ -6251,32 +6325,31 @@ function initIndianaExplorer() {
   function syncUrlHash() {
     var parts = [];
     if (state.selectedPoint) {
-      parts.push("point=" + state.selectedPoint.lat.toFixed(5) + "," + state.selectedPoint.lng.toFixed(5));
+      parts.push("p=" + linkCoord(state.selectedPoint.lat) + "," + linkCoord(state.selectedPoint.lng));
     }
     var on = layers.filter(function (l) { return state.layersOn[l.id]; })
-      .map(function (l) { return l.id; });
-    if (on.length) parts.push("layers=" + on.join(","));
+      .map(function (l) { return layerLinkCode(l.id); });
+    if (on.length) parts.push("l=" + on.join(","));
     // The PINNED PARENT rides the permalink too, because the relationship
     // outlines ARE part of the view being shared: a link that restores the
     // point and the layers and drops the pin hands the reader the same map
     // without the comparison the sender was looking at, and nothing on screen
     // says a pin was ever set. Emitted only while its layer is on, which is
-    // also why `pin=` can never be the ONLY parameter in a hash — the same
-    // condition puts that id in `on` above, so `layers=` is always emitted
-    // beside it, and the root's app-parameter forwarding guard (which matches
-    // point/layers/zoom) still recognises every link that carries a pin.
+    // also why the pin (`c=`, for compare) can never be the ONLY parameter in
+    // a hash — the same condition puts its layer in `on` above, so `l=` is
+    // always emitted beside it.
     if (pinnedParentId && state.layersOn[pinnedParentId]) {
-      parts.push("pin=" + pinnedParentId);
+      parts.push("c=" + layerLinkCode(pinnedParentId));
       // The comparison stats report, while it is open (compare-stats). Only
       // beside a pin, because the report is OF the pinned district.
-      if (statsIsOpen()) parts.push("stats=1");
+      if (statsIsOpen()) parts.push("s=1");
     }
     // Zoom rides the permalink because it is part of what was shared: an embed of
     // a whole county answers a different question from an embed of one block, and
     // a refresh should not throw the reader back to the default view. Emitted
     // ONLY when the user has moved off the boot zoom, so an untouched map still
     // produces a clean, hash-free URL.
-    if (map.getZoom() !== bootZoom) parts.push("zoom=" + map.getZoom());
+    if (map.getZoom() !== bootZoom) parts.push("z=" + map.getZoom());
     var hash = parts.length ? "#" + parts.join("&") : "";
     try {
       history.replaceState(null, "", hash || location.pathname + location.search);
@@ -6294,17 +6367,11 @@ function initIndianaExplorer() {
   function applyStateFromHash() {
     var raw = location.hash.replace(/^#/, "");
     if (!raw) return;
-    var params = {};
-    raw.split("&").forEach(function (kv) {
-      var eq = kv.indexOf("=");
-      if (eq > 0) params[kv.slice(0, eq)] = decodeURIComponent(kv.slice(eq + 1));
+    var params = readPermalink(raw);
+    params.layers.forEach(function (id) {
+      var box = document.getElementById("toggle-" + id);
+      if (box && !box.checked) box.click(); // a real click, so the change handler runs
     });
-    if (params.layers) {
-      params.layers.split(",").forEach(function (id) {
-        var box = document.getElementById("toggle-" + id);
-        if (box && !box.checked) box.click(); // a real click, so the change handler runs
-      });
-    }
     // Parsed BEFORE the point, because the point's pan has to know about it.
     // An unparseable or out-of-range zoom is ignored rather than clamped: a link
     // from a fork with different limits should fall back to this fork's default
@@ -6362,7 +6429,7 @@ function initIndianaExplorer() {
       if (parent && state.layersOn[parent.id] &&
           parent.overlay && parent.overlay.style) {
         setPinnedParent(parent.id);
-        // `stats=1`: reopen the comparison report once the pinned district
+        // `s=1` (`stats=1` in the long form): reopen the comparison report once the pinned district
         // and the other layers' boundaries have loaded (statsRequestRestore).
         // Only when the pin itself was restored — a report of nothing is
         // not opened.
@@ -6389,14 +6456,22 @@ function initIndianaExplorer() {
    * permalink, the <iframe> snippet (visible BEFORE it is copied — no more
    * blind clipboard write), and the coordinates as their own copyable row.
    *
-   * Every URL handed out carries CAMPAIGN TAGS (?utm_source=share|embed
-   * before the #hash, so the hash router never sees them). gtag reads utm_*
-   * natively; GoatCounter's count.js sends location.search with every hit
-   * and uses utm_source as the referrer, while its canonical-link path
-   * normalization keeps the recorded path clean — so shared/embedded
-   * arrivals attribute in both stacks and the path stats pay nothing.
-   * Organic traffic stays untagged, and a re-share from a tagged page
-   * rebuilds from origin+pathname, so an inbound tag is never copied
+   * Every URL handed out carries a SOURCE TAG before the #hash, where the
+   * hash router never sees it: ?ref=share for a copied or sent link, ?ref=qr
+   * for the QR code, ?ref=embed for the iframe. GoatCounter's count.js sends
+   * location.search with every hit and its server takes the first of
+   * utm_source, ref, src and source as the referrer, while its canonical-link
+   * path normalization keeps the recorded path clean.
+   *
+   * IT WAS ?utm_source=share&utm_medium=link|qr UNTIL 2026-10-09, and the
+   * medium half never reached the counter: GoatCounter keeps no utm_medium,
+   * so a scan and a pasted link both read "share" there, and only Google
+   * Analytics — on the two apps that run it — could tell them apart. One
+   * short tag per source is 25 characters shorter AND splits them in the
+   * counter every app runs. The cost is on those two apps: gtag reads only
+   * utm_* tags, so a shared arrival no longer carries a share label in Google
+   * Analytics. Organic traffic stays untagged, and a re-share from a tagged
+   * page rebuilds from origin+pathname, so an inbound tag is never copied
    * forward as the next reader's source.
    *
    * Everything interpolated is our own trusted content — canonical fork URL
@@ -6415,21 +6490,19 @@ function initIndianaExplorer() {
   }
 
   // The shareable link: CURRENT origin (a preview shares the preview, exactly
-  // like the old Copy-link did) + campaign tags + the live hash. Any inbound
-  // search — including someone else's utm tags — is deliberately dropped.
+  // like the old Copy-link did) + the source tag + the live hash. Any inbound
+  // search — including someone else's tags — is deliberately dropped.
   function shareLinkUrl() {
     syncUrlHash(); // reflect the very latest point/layers/zoom first
-    return location.origin + location.pathname +
-      "?utm_source=share&utm_medium=link" + location.hash;
+    return location.origin + location.pathname + "?ref=share" + location.hash;
   }
 
-  // The QR's own URL. Same view, but `utm_medium=qr`, because a scan and a
-  // pasted link are different mediums and a feature nobody can measure is one
-  // nobody can evaluate.
+  // The QR's own URL. Same view, but `ref=qr`, because a scan and a pasted
+  // link are different sources and a feature nobody can measure is one nobody
+  // can evaluate.
   function shareQrUrl() {
     syncUrlHash();
-    return location.origin + location.pathname +
-      "?utm_source=share&utm_medium=qr" + location.hash;
+    return location.origin + location.pathname + "?ref=qr" + location.hash;
   }
 
   function buildEmbedSnippet() {
@@ -6439,7 +6512,7 @@ function initIndianaExplorer() {
     // responsive; loading=lazy so it never blocks the host page;
     // allow=geolocation keeps the "locate me" button working inside.
     var url = shareCanonicalBase().replace(/[?#].*$/, "") +
-      "?utm_source=embed&utm_medium=iframe" + location.hash;
+      "?ref=embed" + location.hash;
     return '<iframe src="' + url + '" width="100%" height="600" ' +
       'style="border:0;max-width:100%" loading="lazy" ' +
       'title="' + appDisplayName() + '" ' +
@@ -6576,8 +6649,9 @@ function initIndianaExplorer() {
         trackEvent("share-qr");
       } else {
         // Unreachable for any view this app can produce — the longest share URL
-        // measured 663 bytes against version 40's 2,953 — but a reader is told
-        // rather than shown an empty box if it ever happens.
+        // measured 199 bytes on 2026-10-09 (all 41 Illinois layers, a pin, the
+        // stats flag) against version 40's 2,953 — but a reader is told rather
+        // than shown an empty box if it ever happens.
         var qrNote = document.createElement("p");
         qrNote.className = "share-popover-note";
         qrNote.textContent = "This view's link is too long for a QR code. Copy it instead.";
@@ -8627,7 +8701,15 @@ function initIndianaExplorer() {
     };
   }
 
-  function fadedStyle(baseStyle) {
+  // Every other district in a layer fades while one is lit, which suits a
+  // layer that tiles its ground: the neighbours are everywhere and the lit one
+  // has to stand out from them. A layer whose districts are few and scattered
+  // across ground most of which is in none of them (tribal land) loses its
+  // others from sight that way, so its style can set keepOthersVisible and
+  // they keep their ordinary style; the lit one still takes the highlight.
+  function fadedStyle(baseStyle, mod) {
+    var style = mod && mod.overlay && mod.overlay.style;
+    if (style && style.keepOthersVisible) return Object.assign({ opacity: 1 }, baseStyle);
     return {
       color: baseStyle.color,
       weight: Math.max(1, (baseStyle.weight || 1.5) - 0.5),
@@ -8710,7 +8792,7 @@ function initIndianaExplorer() {
     var feature = findFeatureContaining(rt.geojson, state.selectedPoint);
     if (!feature) { clearLayerHighlight(mod); return; }
 
-    var faded = fadedStyle(baseStyleFor(mod));
+    var faded = fadedStyle(baseStyleFor(mod), mod);
     var highlight = highlightStyleFor(mod);
 
     // Fast path (P7): the faded/base style of the non-matched paths depends only
@@ -9290,7 +9372,7 @@ function initIndianaExplorer() {
     var rt = layerRuntime[mod.id];
     var base = baseStyleFor(mod) || {};
     var selected = rt.tileSelectedId != null || !!rt.tileLiveSelected;
-    var hl = highlightStyleFor(mod), faded = fadedStyle(base);
+    var hl = highlightStyleFor(mod), faded = fadedStyle(base, mod);
     var isSel = ["boolean", ["feature-state", "sel"], false];
     var baseOpacity = base.opacity == null ? 1 : base.opacity;
     return {
@@ -9502,7 +9584,7 @@ function initIndianaExplorer() {
       var mod = this.mod, rt = layerRuntime[mod.id], sel = this.liveSelected;
       var anySelected = !!sel || rt.tileSelectedId != null;
       var base = baseStyleFor(mod) || {};
-      var faded = fadedStyle(base), lit = Object.assign({}, base, highlightStyleFor(mod));
+      var faded = fadedStyle(base, mod), lit = Object.assign({}, base, highlightStyleFor(mod));
       this.live.eachLayer(function (sub) {
         var on = !!sel && sub.feature === sel;
         if (sub.setStyle) sub.setStyle(on ? lit : anySelected ? faded : base);
@@ -12280,18 +12362,52 @@ function initIndianaExplorer() {
    * service-worker cached, so this layer answers even when every
    * third-party host is down.
    *
-   * IDENTITY ONLY, ON PURPOSE. An Indiana county is run by TWO elected
-   * bodies — a three-member board of commissioners (IC 36-2-2) and a
-   * seven-member county council (IC 36-2-3) — and each is drawn on its own
-   * district lines, so neither can ride the other's geometry and neither can
-   * ride this card's. Both ship as their own change, with their own
-   * verification, rather than being half-joined onto this one. Until then
-   * the card names the county and claims nothing about who runs it, and
-   * says so in as many words rather than leaving a reader to wonder.
+   * THE CARD NAMES BOTH BODIES THAT RUN THE COUNTY, AS ELECTION WINNERS. An
+   * Indiana county outside Indianapolis is run by a three-member board of
+   * commissioners (IC 36-2-2) and a seven-member county council (IC 36-2-3),
+   * and the Indiana Election Division's certified 2022 and 2024 results name
+   * a winner for every seat on both in 91 counties
+   * (in/scripts/build_in_county_officials.py; data/app/in-county-commissioners.json
+   * and in-county-councils.json, keyed by county GEOID). A winner is dated to
+   * the election that seated them and is not a claim about who sits today:
+   * Indiana fills a vacancy by party caucus, which no result records, so the
+   * card says that in words. The card lists every seat in the county rather
+   * than yours, because neither body's district lines are drawn here yet
+   * (gap in-county-government). Marion County is in neither file: its
+   * legislative body is the Indianapolis City-County Council, and the card
+   * says so rather than naming nobody without a reason.
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
   });
+  var loadCountyCommissioners = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-county-commissioners.json", {}, 2);
+  });
+  var loadCountyCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-county-councils.json", {}, 2);
+  });
+  var IN_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  function inElectionDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return IN_MONTHS[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1];
+  }
+  // One body's seats as person rows: the seat is the badge, the election the
+  // note. A seat whose race title names no district says so in the note.
+  function inSeatRows(rec) {
+    var seats = (rec && rec.seats) || [];
+    return seats.map(function (seat) {
+      var when = inElectionDate(seat.election);
+      var note = when ? "elected " + when : null;
+      if (seat.party) note = String(seat.party) + (note ? " · " + note : "");
+      return {
+        name: String(seat.name),
+        badge: seat.seatNotStated ? "Seat not stated" : String(seat.seat),
+        note: note
+      };
+    });
+  }
 
   registerLayer({
     id: "county",
@@ -12310,11 +12426,26 @@ function initIndianaExplorer() {
       return queryFeatureAt(loadStateCounties, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          commissioners: null,
+          council: null
         };
+        // A roster that fails to load leaves the county answer standing and
+        // says so, rather than taking the boundary answer down with it.
+        var key = String(result.geoid);
+        return Promise.all([
+          loadCountyCommissioners().then(function (r) { return r[key] || null; },
+            function () { result.rosterFailed = true; return null; }),
+          loadCountyCouncils().then(function (r) { return r[key] || null; },
+            function () { result.rosterFailed = true; return null; })
+        ]).then(function (both) {
+          result.commissioners = both[0];
+          result.council = both[1];
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -12323,14 +12454,61 @@ function initIndianaExplorer() {
         title: result.name != null ? String(result.name) : "Unknown county",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      wrap.appendChild(renderFieldStack([{
-        label: "County government",
-        value: "Not shown yet — an Indiana county is run by TWO elected " +
-          "bodies, a three-member board of commissioners and a seven-member " +
-          "county council, and both are drawn on their own district lines. " +
-          "This instance has shipped neither yet, so it names no one here " +
-          "rather than guessing."
-      }]));
+      var rows = [];
+      if (result.commissioners || result.council) {
+        if (result.commissioners) {
+          wrap.appendChild(renderSectionLabel("Board of Commissioners"));
+          wrap.appendChild(renderPersonRows(inSeatRows(result.commissioners)));
+        }
+        if (result.council) {
+          wrap.appendChild(renderSectionLabel("County Council"));
+          wrap.appendChild(renderPersonRows(inSeatRows(result.council)));
+        }
+        rows.push({
+          label: "What these names are",
+          value: "The winner of the most recent election for each seat, from " +
+            "the Indiana Election Division's certified results. They are not " +
+            "a list the county keeps up to date: Indiana fills a vacancy by " +
+            "party caucus, so if a seat has changed hands since the election " +
+            "this still shows who won it. The county's own website says who " +
+            "holds each seat today."
+        });
+        rows.push({
+          label: "Which seat is yours",
+          value: "Every seat in the county is listed, because this app does not " +
+            "draw either body's district lines yet. The commissioners run the " +
+            "county and the council sets its budget and taxes; \"At large\" " +
+            "council seats are elected by the whole county."
+        });
+      } else if (result.name && /^Marion\b/.test(String(result.name))) {
+        rows.push({
+          label: "County government",
+          value: "Indianapolis and Marion County share one government. Its " +
+            "council is the 25-member Indianapolis City-County Council, which " +
+            "this app does not show yet."
+        });
+      } else {
+        rows.push({
+          label: "County government",
+          value: result.rosterFailed
+            ? "The list of commissioners and council members did not load, so " +
+              "no names are shown."
+            : "Not shown: the certified results this app reads name no " +
+              "commissioners or council members for this county."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      var seats = ((result.commissioners && result.commissioners.seats) || [])
+        .concat((result.council && result.council.seats) || []);
+      var newest = null;
+      seats.forEach(function (seat) {
+        if (seat.sourceUrl && (!newest || seat.election > newest.election)) newest = seat;
+      });
+      if (newest) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "Indiana Election Division results \u2197", url: String(newest.sourceUrl) }]
+        }));
+      }
       return wrap;
     }
   });
@@ -14010,7 +14188,8 @@ function initIndianaExplorer() {
    * address and the date under the pinned district.
    *
    * A LINK REOPENS THE REPORT. While the report is open the permalink carries
-   * `stats=1` beside the pin (syncUrlHash), and "Copy link" hands that URL
+   * `s=1` beside the pin (syncUrlHash; `stats=1` in a link made before
+   * 2026-10-09, which still reopens it), and "Copy link" hands that URL
    * out — on a touch device through the platform's share sheet. A reader
    * who opens it gets the point, the layers and the pin from the permalink,
    * and then the report, once the pinned district and the other switched-on
@@ -14177,11 +14356,11 @@ function initIndianaExplorer() {
     statsOpenSeq++; // anything still computing for the closed screen stops
     if (statsIsOpen()) {
       statsModal.shut();
-      syncUrlHash(); // the permalink stops carrying stats=1
+      syncUrlHash(); // the permalink stops carrying s=1
     }
   }
 
-  // REOPENING FROM A LINK (`stats=1`). Requested by applyStateFromHash after
+  // REOPENING FROM A LINK (`s=1`, or `stats=1` in the long form). Requested by applyStateFromHash after
   // it restores the pin; tried again every time the outlines refresh, which
   // is every time a layer's query or boundaries arrive.
   var STATS_RESTORE_WAIT_MS = 20000;
@@ -14338,7 +14517,7 @@ function initIndianaExplorer() {
     var foot = cardEl("p", "stats-foot");
     body.appendChild(foot);
     m.open();
-    syncUrlHash(); // the permalink now reopens this report (stats=1)
+    syncUrlHash(); // the permalink now reopens this report (s=1)
 
     // People, where this app ships them: every county the districts touch.
     var box = featureBBox(parentFeature).slice();
@@ -14420,7 +14599,7 @@ function initIndianaExplorer() {
     });
   }
 
-  // "Copy link": the permalink with stats=1, so the reader it is sent to
+  // "Copy link": the permalink with s=1, so the reader it is sent to
   // lands on this report. On a touch device the platform's share sheet, as
   // the point chip's Share does. Counted by the pinned layer, never the
   // district.
@@ -14947,7 +15126,7 @@ function initIndianaExplorer() {
     basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; }, // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
     // The QR encoder and the URL it is given, so a test can hold the drawn code
     // to the payload it should carry rather than only counting that something
-    // was drawn. Two URLs that differ by `utm_medium=link` against `qr` produce
+    // was drawn. Two URLs that differ by `ref=share` against `ref=qr` produce
     // different matrices, which is what makes that assertion sharp.
     qrDarkModules: function (text) {
       var code = qrEncode(text, { level: "M" });
@@ -14958,7 +15137,10 @@ function initIndianaExplorer() {
       }
       return { dark: n, size: code.size, version: code.version };
     },
-    shareUrls: function () { return { link: shareLinkUrl(), qr: shareQrUrl() }; }
+    shareUrls: function () { return { link: shareLinkUrl(), qr: shareQrUrl() }; },
+    // The current address-bar view as the boot parse reads it — ids, never
+    // codes — so a test can assert what a link MEANS in either spelling.
+    permalinkState: function () { return readPermalink(location.hash.replace(/^#/, "")); }
   };
   /* ==== ENGINE:END exports ==== */
   /* The theme is reachable from the debug namespace so a check can drive it

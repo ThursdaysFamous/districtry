@@ -4428,6 +4428,20 @@ function initChiExplorer() {
   var METRO_CENTER = [41.8781, -87.6298];
   // Permalink sanity gate: the *greater* metro area (wider than METRO_BBOX).
   var PERMALINK_GATE = { minLat: 36.95, maxLat: 42.75, minLng: -91.65, maxLng: -86.9 };
+  // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
+  // from the fleet-wide layer-codes.json. A code is permanent: links already
+  // shared carry it. ENGINE permalink reads both a code and a full id.
+  var LAYER_CODES = { "il-supreme-court": "ilj", "congress": "cg", "il-senate": "ils",
+    "il-house": "ilh", "county": "co", "mwrd": "mw", "school-district-secondary": "sh",
+    "school-district-unified": "su", "school-district-elementary": "se", "township": "tw",
+    "municipality": "mu", "judicial-subcircuit": "jc", "county-board": "cb", "ccbr": "br",
+    "fire-district": "fd", "dupage-county-special-police": "dp", "park-district": "pk",
+    "library-district": "ld", "school-board": "sb", "cps-hs-network": "hn", "cps-network": "nw",
+    "ward": "wd", "ward-precinct": "wp", "police-district": "pd", "police-beat": "pb",
+    "ccpsa-district-council": "dc", "community-area": "ar", "zip-code": "zp", "cps-high": "hi",
+    "cps-middle": "md", "county-precinct": "cp", "tribal-government": "tg", "ssa": "sa",
+    "tif-district": "tf", "cps-elementary": "el", "school-site": "ss", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po", "library": "lb", "early-voting": "ev" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4486,7 +4500,11 @@ function initChiExplorer() {
     { id: "kentucky", label: "Kentucky", url: "https://districtry.com/ky/", emoji: "🐎", explorerName: "districtry Kentucky",
       bbox: { minLng: -89.62, minLat: 36.45, maxLng: -81.91, maxLat: 39.2 } },
     { id: "indiana", label: "Indiana", url: "https://districtry.com/in/", emoji: "🏁", explorerName: "districtry Indiana",
-      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } }
+      bbox: { minLng: -88.1, minLat: 37.83, maxLng: -84.78, maxLat: 41.77 } },
+    { id: "northcarolina", label: "North Carolina", url: "https://districtry.com/nc/", emoji: "🌳", explorerName: "districtry North Carolina",
+      bbox: { minLng: -84.33, minLat: 33.74, maxLng: -75.39, maxLat: 36.6 } },
+    { id: "oklahoma", label: "Oklahoma", url: "https://districtry.com/ok/", emoji: "🌾", explorerName: "districtry Oklahoma",
+      bbox: { minLng: -103.01, minLat: 33.61, maxLng: -94.43, maxLat: 37.01 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -6353,7 +6371,7 @@ function initChiExplorer() {
   // WHY THIS IS HAND WRITTEN, AND WHY A QR SERVICE IS NOT AN OPTION AT ALL.
   // Every QR image API takes its payload in the URL of the image request. The
   // payload here is a permalink, and a permalink carries the reader's selected
-  // point at full precision (`#point=41.88250,-87.62850`). Today that point
+  // point at full precision (`#p=41.8825,-87.6285`). Today that point
   // sits in the URL FRAGMENT, which a browser never sends to any server; a QR
   // API needs it in the query string, which is sent. So a third-party QR would
   // transmit a reader's exact selected location to a host the privacy page
@@ -6794,12 +6812,76 @@ function initChiExplorer() {
   /* ==== ENGINE:END qr-code ==== */
   /* ==== ENGINE:BEGIN permalink ==== */
   /* =========================================================================
-   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&pin=id&stats=1&zoom=N mirrors the
+   * SHAREABLE URL — #p=lat,lng&l=code1,code2&c=code&s=1&z=N mirrors the
    * current selection so any view can be copied out of the URL bar (or via the
    * point chip's Copy-link button) and restored on load. replaceState, not
    * location.hash assignment, so clicking around never pollutes the back
    * button. Parsed once at boot by applyStateFromHash().
+   *
+   * THE SHORT FORM SINCE 2026-10-09. Every link until then spelled the view
+   * out — #point=41.88250,-87.62850&layers=ward,congress&pin=…&stats=1&zoom=N
+   * — and a typical shared link ran 96 to 140 characters, 652 with every
+   * Illinois layer on. Layers are now written as their permanent short codes
+   * (LAYER_CODES, generated from the fleet-wide layer-codes.json), the keys
+   * are one letter, and a coordinate drops its trailing zeros while keeping
+   * all five decimals, because a shared link has to land on the same side of
+   * a boundary as the click that made it. THE LONG FORM IS STILL READ, and
+   * must be forever: those links sit in messages, posts and print nobody can
+   * recall. readPermalink() is the one reading of both.
    * ======================================================================= */
+
+  // Layer id <-> link code. Guarded, so an instance whose metro config carries
+  // no LAYER_CODES writes full ids exactly as before.
+  var layerCodeOf = {}, layerIdOfCode = {};
+  if (typeof LAYER_CODES === "object" && LAYER_CODES) {
+    Object.keys(LAYER_CODES).forEach(function (id) {
+      layerCodeOf[id] = LAYER_CODES[id];
+      layerIdOfCode[LAYER_CODES[id]] = id;
+    });
+  }
+  function layerLinkCode(id) { return layerCodeOf[id] || id; }
+  // A token from `l=` or `c=`: a code, or — hand-typed, or from an instance
+  // with no table — a full id. No code spells an id (generate_metro_files.py
+  // refuses one), so the two cannot be confused.
+  function layerFromLinkCode(token) { return layerIdOfCode[token] || token; }
+
+  // Five decimals (about a metre), trailing zeros dropped: 41.88250 -> 41.8825.
+  function linkCoord(n) { return String(+n.toFixed(5)); }
+
+  // ONE reading of a map link's hash (without the "#"), in either spelling,
+  // for the boot parse and for the smoke tests. Long keys are read verbatim
+  // as ids; short keys go through the code table. A key in both spellings —
+  // nothing writes that — takes the short one, and `layers=` with `l=` is
+  // their union, so nothing a link names is dropped.
+  function readPermalink(raw) {
+    var params = {};
+    (raw || "").split("&").forEach(function (kv) {
+      var eq = kv.indexOf("=");
+      if (eq <= 0) return;
+      try {
+        params[kv.slice(0, eq)] = decodeURIComponent(kv.slice(eq + 1));
+      } catch (e) {
+        // a malformed %-escape drops that one parameter, not the whole link
+      }
+    });
+    function pick(shortKey, longKey) {
+      return params[shortKey] !== undefined ? params[shortKey] : params[longKey];
+    }
+    var layers = [], seen = {};
+    function addLayer(id) {
+      if (id && !seen[id]) { seen[id] = true; layers.push(id); }
+    }
+    if (params.layers) params.layers.split(",").forEach(addLayer);
+    if (params.l) params.l.split(",").forEach(function (t) { if (t) addLayer(layerFromLinkCode(t)); });
+    return {
+      point: pick("p", "point"),
+      layers: layers,
+      pin: params.c !== undefined ? layerFromLinkCode(params.c) : params.pin,
+      stats: pick("s", "stats"),
+      zoom: pick("z", "zoom"),
+      q: params.q
+    };
+  }
 
   // The zoom this fork boots at, read from the map rather than configured, so
   // the engine needs no per-metro constant and every fork gets its own default.
@@ -6810,32 +6892,31 @@ function initChiExplorer() {
   function syncUrlHash() {
     var parts = [];
     if (state.selectedPoint) {
-      parts.push("point=" + state.selectedPoint.lat.toFixed(5) + "," + state.selectedPoint.lng.toFixed(5));
+      parts.push("p=" + linkCoord(state.selectedPoint.lat) + "," + linkCoord(state.selectedPoint.lng));
     }
     var on = layers.filter(function (l) { return state.layersOn[l.id]; })
-      .map(function (l) { return l.id; });
-    if (on.length) parts.push("layers=" + on.join(","));
+      .map(function (l) { return layerLinkCode(l.id); });
+    if (on.length) parts.push("l=" + on.join(","));
     // The PINNED PARENT rides the permalink too, because the relationship
     // outlines ARE part of the view being shared: a link that restores the
     // point and the layers and drops the pin hands the reader the same map
     // without the comparison the sender was looking at, and nothing on screen
     // says a pin was ever set. Emitted only while its layer is on, which is
-    // also why `pin=` can never be the ONLY parameter in a hash — the same
-    // condition puts that id in `on` above, so `layers=` is always emitted
-    // beside it, and the root's app-parameter forwarding guard (which matches
-    // point/layers/zoom) still recognises every link that carries a pin.
+    // also why the pin (`c=`, for compare) can never be the ONLY parameter in
+    // a hash — the same condition puts its layer in `on` above, so `l=` is
+    // always emitted beside it.
     if (pinnedParentId && state.layersOn[pinnedParentId]) {
-      parts.push("pin=" + pinnedParentId);
+      parts.push("c=" + layerLinkCode(pinnedParentId));
       // The comparison stats report, while it is open (compare-stats). Only
       // beside a pin, because the report is OF the pinned district.
-      if (statsIsOpen()) parts.push("stats=1");
+      if (statsIsOpen()) parts.push("s=1");
     }
     // Zoom rides the permalink because it is part of what was shared: an embed of
     // a whole county answers a different question from an embed of one block, and
     // a refresh should not throw the reader back to the default view. Emitted
     // ONLY when the user has moved off the boot zoom, so an untouched map still
     // produces a clean, hash-free URL.
-    if (map.getZoom() !== bootZoom) parts.push("zoom=" + map.getZoom());
+    if (map.getZoom() !== bootZoom) parts.push("z=" + map.getZoom());
     var hash = parts.length ? "#" + parts.join("&") : "";
     try {
       history.replaceState(null, "", hash || location.pathname + location.search);
@@ -6853,17 +6934,11 @@ function initChiExplorer() {
   function applyStateFromHash() {
     var raw = location.hash.replace(/^#/, "");
     if (!raw) return;
-    var params = {};
-    raw.split("&").forEach(function (kv) {
-      var eq = kv.indexOf("=");
-      if (eq > 0) params[kv.slice(0, eq)] = decodeURIComponent(kv.slice(eq + 1));
+    var params = readPermalink(raw);
+    params.layers.forEach(function (id) {
+      var box = document.getElementById("toggle-" + id);
+      if (box && !box.checked) box.click(); // a real click, so the change handler runs
     });
-    if (params.layers) {
-      params.layers.split(",").forEach(function (id) {
-        var box = document.getElementById("toggle-" + id);
-        if (box && !box.checked) box.click(); // a real click, so the change handler runs
-      });
-    }
     // Parsed BEFORE the point, because the point's pan has to know about it.
     // An unparseable or out-of-range zoom is ignored rather than clamped: a link
     // from a fork with different limits should fall back to this fork's default
@@ -6921,7 +6996,7 @@ function initChiExplorer() {
       if (parent && state.layersOn[parent.id] &&
           parent.overlay && parent.overlay.style) {
         setPinnedParent(parent.id);
-        // `stats=1`: reopen the comparison report once the pinned district
+        // `s=1` (`stats=1` in the long form): reopen the comparison report once the pinned district
         // and the other layers' boundaries have loaded (statsRequestRestore).
         // Only when the pin itself was restored — a report of nothing is
         // not opened.
@@ -6948,14 +7023,22 @@ function initChiExplorer() {
    * permalink, the <iframe> snippet (visible BEFORE it is copied — no more
    * blind clipboard write), and the coordinates as their own copyable row.
    *
-   * Every URL handed out carries CAMPAIGN TAGS (?utm_source=share|embed
-   * before the #hash, so the hash router never sees them). gtag reads utm_*
-   * natively; GoatCounter's count.js sends location.search with every hit
-   * and uses utm_source as the referrer, while its canonical-link path
-   * normalization keeps the recorded path clean — so shared/embedded
-   * arrivals attribute in both stacks and the path stats pay nothing.
-   * Organic traffic stays untagged, and a re-share from a tagged page
-   * rebuilds from origin+pathname, so an inbound tag is never copied
+   * Every URL handed out carries a SOURCE TAG before the #hash, where the
+   * hash router never sees it: ?ref=share for a copied or sent link, ?ref=qr
+   * for the QR code, ?ref=embed for the iframe. GoatCounter's count.js sends
+   * location.search with every hit and its server takes the first of
+   * utm_source, ref, src and source as the referrer, while its canonical-link
+   * path normalization keeps the recorded path clean.
+   *
+   * IT WAS ?utm_source=share&utm_medium=link|qr UNTIL 2026-10-09, and the
+   * medium half never reached the counter: GoatCounter keeps no utm_medium,
+   * so a scan and a pasted link both read "share" there, and only Google
+   * Analytics — on the two apps that run it — could tell them apart. One
+   * short tag per source is 25 characters shorter AND splits them in the
+   * counter every app runs. The cost is on those two apps: gtag reads only
+   * utm_* tags, so a shared arrival no longer carries a share label in Google
+   * Analytics. Organic traffic stays untagged, and a re-share from a tagged
+   * page rebuilds from origin+pathname, so an inbound tag is never copied
    * forward as the next reader's source.
    *
    * Everything interpolated is our own trusted content — canonical fork URL
@@ -6974,21 +7057,19 @@ function initChiExplorer() {
   }
 
   // The shareable link: CURRENT origin (a preview shares the preview, exactly
-  // like the old Copy-link did) + campaign tags + the live hash. Any inbound
-  // search — including someone else's utm tags — is deliberately dropped.
+  // like the old Copy-link did) + the source tag + the live hash. Any inbound
+  // search — including someone else's tags — is deliberately dropped.
   function shareLinkUrl() {
     syncUrlHash(); // reflect the very latest point/layers/zoom first
-    return location.origin + location.pathname +
-      "?utm_source=share&utm_medium=link" + location.hash;
+    return location.origin + location.pathname + "?ref=share" + location.hash;
   }
 
-  // The QR's own URL. Same view, but `utm_medium=qr`, because a scan and a
-  // pasted link are different mediums and a feature nobody can measure is one
-  // nobody can evaluate.
+  // The QR's own URL. Same view, but `ref=qr`, because a scan and a pasted
+  // link are different sources and a feature nobody can measure is one nobody
+  // can evaluate.
   function shareQrUrl() {
     syncUrlHash();
-    return location.origin + location.pathname +
-      "?utm_source=share&utm_medium=qr" + location.hash;
+    return location.origin + location.pathname + "?ref=qr" + location.hash;
   }
 
   function buildEmbedSnippet() {
@@ -6998,7 +7079,7 @@ function initChiExplorer() {
     // responsive; loading=lazy so it never blocks the host page;
     // allow=geolocation keeps the "locate me" button working inside.
     var url = shareCanonicalBase().replace(/[?#].*$/, "") +
-      "?utm_source=embed&utm_medium=iframe" + location.hash;
+      "?ref=embed" + location.hash;
     return '<iframe src="' + url + '" width="100%" height="600" ' +
       'style="border:0;max-width:100%" loading="lazy" ' +
       'title="' + appDisplayName() + '" ' +
@@ -7135,8 +7216,9 @@ function initChiExplorer() {
         trackEvent("share-qr");
       } else {
         // Unreachable for any view this app can produce — the longest share URL
-        // measured 663 bytes against version 40's 2,953 — but a reader is told
-        // rather than shown an empty box if it ever happens.
+        // measured 199 bytes on 2026-10-09 (all 41 Illinois layers, a pin, the
+        // stats flag) against version 40's 2,953 — but a reader is told rather
+        // than shown an empty box if it ever happens.
         var qrNote = document.createElement("p");
         qrNote.className = "share-popover-note";
         qrNote.textContent = "This view's link is too long for a QR code. Copy it instead.";
@@ -8969,7 +9051,7 @@ function initChiExplorer() {
     // (smallest-on-top); turning it on drops both to outline-only, framing the
     // precinct fills from underneath.
     "county-precinct",   // Consolidated voting-precinct layer — suburban Cook current map (1,430, the Clerk's precinctHistorical L0; covers Cook-outside-Chicago only — city precincts are the BOE's ward-precinct layer) + Will current 2022 map (310) + DuPage current 2024 consolidated map (600) + Lake current map (431) + Kane current map (292, board district carried on the features, township named from the clerk's own prefix pairing, election-day polling place joined on the precinct code 292/292 and labelled with the election it was published for) + McHenry current map (223) + Kendall current map (78, township names derived from the county's own layers + per-precinct polling place joined by GlobalID) + LaSalle current map (119, township-compound names, per-precinct polling place joined on the precinct name — 119/119 exact) + Kankakee current map (59, name only; the county publishes no polling-place assignment to join) + Boone current 2022 map (37, township-compound names with the polling place carried ON the precinct feature — no join needed) + Grundy current map (40, polling place joined on POLLINGID, and its points carry a phone) + Macoupin current map (45, polling place joined 45/45 from the clerk's own Socrata polling dataset by deterministic label expansion) + McLean current map (141, polling place joined 141/141 by POLLINGID on the clerk's own MapServer) + Logan current map (29, township-named; the clerk's HTML polling table ships as a same-origin file and joins 29/29) + Sangamon approved fabric (166, polling place joined 165/166 by POLLID) + Carroll (22 — the county did not re-precinct, so TIGERweb's Census 2020 voting districts ARE the current fabric; the clerk's polling notice ships as a same-origin file, 22/22) + Woodford current map (37 via TCRPC's election service, polling joined 37/37 on the numeric polling reference with the precinct's own name cross-checked in the polling row's grouped label), county-dispatched; subOf township
-    "tribal-government", // Tribal land — Illinois has one area, 0.5213 km² of land held in trust for the Prairie Band Potawatomi Nation near Shabbona, DeKalb County, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked between county-precinct (~2.5 km² for a suburban Cook precinct) and ssa (0.359 km² median, itself ranked against tif's 0.268 on a named projection). The rank governs draw order only and nothing overlaps this parcel in practice — SSA, TIF and the CPS zones are all in or around Chicago — so it is placed on the measurement rather than on a conflict. Partial coverage: almost every Illinois point is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn here — measured against the Census's 484 tribal subdivisions nationwide, 0 in Illinois — and NOBODY: the authority for a council is the nation's own published list, which answers this project with a Cloudflare challenge (measured 2026-10-01, recorded in robots_policy.CHALLENGE_FRONTED_HOSTS and never worked around). Drawn although no district sits on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
+    "tribal-government", // Tribal land — Illinois has one area, 0.5213 km² of land held in trust for the Prairie Band Potawatomi Nation near Shabbona, DeKalb County, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked between county-precinct (~2.5 km² for a suburban Cook precinct) and ssa (0.359 km² median, itself ranked against tif's 0.268 on a named projection). The rank governs draw order only and nothing overlaps this parcel in practice — SSA, TIF and the CPS zones are all in or around Chicago — so it is placed on the measurement rather than on a conflict. Partial coverage: almost every Illinois point is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn here — measured against the Census's 484 tribal subdivisions nationwide, 0 in Illinois — and its council of seven, read from the nation's own page (behind a Cloudflare challenge on 2026-10-01, served normally on three reads on 2026-10-10). Drawn although no district sits on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "ssa",               // Chicago Special Service Areas — the city's current ACTIVE tiling (58, Data Portal cmr6-dn8c). Ranked between county-precinct and tif-district on MEASURED median polygon area, geodesic WGS84: SSA 0.359 km² against TIF's 0.268 km² (both fetched 2026-09-12). TIF was first recorded as 0.269, which no projection gives; it is 0.268 in geodesic, EPSG:3435, UTM 16N and Albers alike. The projection is NAMED because SSA's last digit depends on it — 0.359 geodesic/3435/Albers, 0.358 UTM 16N — and because EPSG:3435 is in FEET, so an area divided by 1e6 there reads 0.36 as 3.86 and looks like a different measurement. The rank moves under none of them. SSA is also far under a suburban Cook precinct (1,430 over ~3,600 km²). Card shows the corridor name + the SSA number + the wards the city's own ward_2023 column lists (labelled as the city's list, because it disagrees with the ward geometry on 2 of 58) + status, and links the city's SSA program page; the dataset's comm_area column is deliberately not shown — bare community-area numbers, up to eight per SSA, that the Community Area layer already answers by name for the point; partial coverage (most points in the city are in no SSA), Chicago-gated. The portal carries FIVE deprecated editions behind this id, so it goes into validate_sources.py's manifest on day one. Dedicated Chicago layer per the consolidation rule until a second municipality ships SSAs — Cook's clerkTaxDistricts L13 carries 286 county-wide special-service tax districts, 63 of them Chicago's, recorded as the next entry
     "tif-district",      // Cook TIF districts — the Clerk's current tax-increment-financing agency tiling (418, county GIS clerkTaxDistricts L18: the un-yeared layer the Clerk refreshes in place, retired year editions archived in the year-versioned service); card shows name + Clerk agency number + the Clerk's TIF-reports link; partial coverage (most points are in no TIF), Cook-gated. Dedicated Cook layer per the consolidation rule until a second county ships TIFs (Kendall's server carries a TIF_Districts service — recorded as the next entry)
     "cps-elementary",    // Elementary School attendance zone — smallest polygon layer
@@ -9231,7 +9313,15 @@ function initChiExplorer() {
     };
   }
 
-  function fadedStyle(baseStyle) {
+  // Every other district in a layer fades while one is lit, which suits a
+  // layer that tiles its ground: the neighbours are everywhere and the lit one
+  // has to stand out from them. A layer whose districts are few and scattered
+  // across ground most of which is in none of them (tribal land) loses its
+  // others from sight that way, so its style can set keepOthersVisible and
+  // they keep their ordinary style; the lit one still takes the highlight.
+  function fadedStyle(baseStyle, mod) {
+    var style = mod && mod.overlay && mod.overlay.style;
+    if (style && style.keepOthersVisible) return Object.assign({ opacity: 1 }, baseStyle);
     return {
       color: baseStyle.color,
       weight: Math.max(1, (baseStyle.weight || 1.5) - 0.5),
@@ -9314,7 +9404,7 @@ function initChiExplorer() {
     var feature = findFeatureContaining(rt.geojson, state.selectedPoint);
     if (!feature) { clearLayerHighlight(mod); return; }
 
-    var faded = fadedStyle(baseStyleFor(mod));
+    var faded = fadedStyle(baseStyleFor(mod), mod);
     var highlight = highlightStyleFor(mod);
 
     // Fast path (P7): the faded/base style of the non-matched paths depends only
@@ -9894,7 +9984,7 @@ function initChiExplorer() {
     var rt = layerRuntime[mod.id];
     var base = baseStyleFor(mod) || {};
     var selected = rt.tileSelectedId != null || !!rt.tileLiveSelected;
-    var hl = highlightStyleFor(mod), faded = fadedStyle(base);
+    var hl = highlightStyleFor(mod), faded = fadedStyle(base, mod);
     var isSel = ["boolean", ["feature-state", "sel"], false];
     var baseOpacity = base.opacity == null ? 1 : base.opacity;
     return {
@@ -10106,7 +10196,7 @@ function initChiExplorer() {
       var mod = this.mod, rt = layerRuntime[mod.id], sel = this.liveSelected;
       var anySelected = !!sel || rt.tileSelectedId != null;
       var base = baseStyleFor(mod) || {};
-      var faded = fadedStyle(base), lit = Object.assign({}, base, highlightStyleFor(mod));
+      var faded = fadedStyle(base, mod), lit = Object.assign({}, base, highlightStyleFor(mod));
       this.live.eachLayer(function (sub) {
         var on = !!sel && sub.feature === sel;
         if (sub.setStyle) sub.setStyle(on ? lit : anySelected ? faded : base);
@@ -22747,14 +22837,16 @@ function initChiExplorer() {
    * told which one. A layer that drew only land with a district on it would
    * answer "no government here" over land a nation governs.
    *
-   * WHY THE CARD NAMES NOBODY. The authority for who sits on a nation's
-   * council is that nation's own published list, and this one answers every
-   * request from this project with a Cloudflare challenge — robots.txt and
-   * front page alike, measured 2026-10-01. A managed challenge is an access
-   * control and is never worked around, so the card links the nation instead,
-   * which is the honesty rule's own remedy. The reason is carried on the
-   * feature (rosterWhy) rather than written here, so the card states a
-   * measurement rather than a sentence somebody typed.
+   * THE COUNCIL. The authority for who sits on a nation's council is that
+   * nation's own published list. The nation's site answered every request
+   * from this project with a Cloudflare challenge on 2026-10-01, and the card
+   * named nobody; it served the council page normally on three reads on
+   * 2026-10-10, so the card now names all seven members with the date they
+   * were read and a link to the page. scripts/tribal_council_scraper.py reads
+   * the page weekly into data/app/tribal-councils.json, which the loader
+   * merges onto the land. If the page stops answering, the last council read
+   * is carried with that date; if the names were ever removed, the card would
+   * say why from the feature's rosterWhy, which the builder writes.
    *
    * PARTIAL COVERAGE, like ssa and tif-district below: almost every point in
    * Illinois is on no tribal land, so the layer declares its own emptyNote
@@ -22767,8 +22859,29 @@ function initChiExplorer() {
    * Affairs' list of governments — one reader per publisher, so eight
    * instances cannot come to disagree.
    * ======================================================================= */
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // Each council is merged onto its nation's land here, once, so the card,
+  // the hover and the relationship outlines all read one set of properties.
+  // A councils file that cannot be read leaves the land answering on its own
+  // rather than failing the layer.
   var loadIlTribalAreas = makeCached(function () {
-    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = both[1] || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
   });
 
   registerPolygonLayer({
@@ -22776,7 +22889,7 @@ function initChiExplorer() {
     group: "political",
     label: "Tribal Government",
     loader: loadIlTribalAreas,
-    style: { color: "#1F6F6B", weight: 2, fillColor: "#3E9A95", fillOpacity: 0.12, dashArray: "6 3" },
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
     fields: [
       // The nation as the Bureau of Indian Affairs names it, which is NOT the
       // Census's own text for the parcel: the Census writes "Prairie Band of
@@ -22797,6 +22910,10 @@ function initChiExplorer() {
       // builder recorded, so the card cannot drift from it.
       { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
       { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      // where the council's names came from and when, and the page they were
+      // read from: the builder writes both, and the people block below shows them
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
       // extracted for primaryLink only — the hidden-column shape the SSA
       // layer below uses for the same purpose
       { name: "url", label: "", keys: ["url"], when: function () { return false; } },
@@ -22811,6 +22928,37 @@ function initChiExplorer() {
                  url: String(result.url) };
       }
       return null;
+    },
+    // THE COUNCIL, as the nation's own page names it. Read weekly by
+    // scripts/tribal_council_scraper.py and written by build_tribal_areas.py
+    // --rosters to tribal-councils.json, which the loader above merges onto
+    // the land, so the card makes no request of its own. Each row is the
+    // person and their office as the nation prints them.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" \u00b7 ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from \u2197",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
     },
     emptyNote: "This point is not on tribal land. Illinois has one tribal area — "
              + "land held in trust for the Prairie Band Potawatomi Nation near "
@@ -23237,7 +23385,7 @@ function initChiExplorer() {
       // features are already in it.
       if (!rt || !rt.overlayLayer || !features.length) return;
       rt.overlayLayer.addData({ type: "FeatureCollection", features: features });
-      var style = rt.highlightApplied ? fadedStyle(baseStyleFor(spec)) : baseStyleFor(spec);
+      var style = rt.highlightApplied ? fadedStyle(baseStyleFor(spec), spec) : baseStyleFor(spec);
       if (style) {
         rt.overlayLayer.eachLayer(function (subLayer) {
           if (subLayer.setStyle && features.indexOf(subLayer.feature) !== -1) subLayer.setStyle(style);
@@ -25125,7 +25273,7 @@ function initChiExplorer() {
         primaryLink: function () {
           return {
             label: "Official directory",
-            url: "https://www.carrollcountyil.gov/county_board/board_members.php"
+            url: "https://www.carrollcountyil.gov/government/county_board/index.php"
           };
         },
         hoverOfficial: {
@@ -31285,7 +31433,7 @@ function initChiExplorer() {
         primaryLink: function () {
           return {
             label: "Carroll County Clerk — Elections (official)",
-            url: "https://www.carrollcountyil.gov/county_departments/clerk___recorder/index.php"
+            url: "https://www.carrollcountyil.gov/departments/clerk_recorder/election_information/index.php"
           };
         }
       },
@@ -33850,6 +33998,15 @@ function initChiExplorer() {
   // already retired, so no shared link can carry `pin=commissioner`. Handling
   // it here is what stops the next consolidation having to remember that a
   // second parameter names a layer.
+  //
+  // Since 2026-10-09 a link writes layers as permanent CODES (`l=` and `c=`,
+  // the short form of `layers=` and `pin=`), and this instance's LAYER_CODES
+  // lists only the layers it registers — so a code whose layer is retired
+  // would be dropped like an unknown id. The next consolidation therefore
+  // appends the retired layer's CODE as well as its id (the code stays in the
+  // root layer-codes.json for ever), and both short keys are rewritten below.
+  // Rewriting a code to an id inside `l=` is safe: a token that is not a code
+  // is read as an id, and no code is spelled like an id.
   var CONSOLIDATED_LAYER_ALIASES = {
     "commissioner": "county-board",
     "will-county-board": "county-board",
@@ -33866,8 +34023,10 @@ function initChiExplorer() {
   (function rewriteAliasedPermalink() {
     var raw = location.hash.replace(/^#/, "");
     var next = raw;
-    var m = /(^|&)layers=([^&]*)/.exec(next);
-    if (m) {
+    ["layers", "l"].forEach(function (key) {
+      var re = new RegExp("(^|&)" + key + "=([^&]*)");
+      var m = re.exec(next);
+      if (!m) return;
       var seen = {};
       var ids = m[2].split(",").map(function (id) {
         return CONSOLIDATED_LAYER_ALIASES[id] || id;
@@ -33877,15 +34036,17 @@ function initChiExplorer() {
         return true;
       });
       if (ids.join(",") !== m[2]) {
-        next = next.replace(/(^|&)layers=[^&]*/, "$1layers=" + ids.join(","));
+        next = next.replace(re, "$1" + key + "=" + ids.join(","));
       }
-    }
+    });
     // The pin carries ONE id, so there is no duplicate to collapse.
-    var p = /(^|&)pin=([^&]*)/.exec(next);
-    if (p && CONSOLIDATED_LAYER_ALIASES[p[2]]) {
-      next = next.replace(/(^|&)pin=[^&]*/,
-        "$1pin=" + CONSOLIDATED_LAYER_ALIASES[p[2]]);
-    }
+    ["pin", "c"].forEach(function (key) {
+      var re = new RegExp("(^|&)" + key + "=([^&]*)");
+      var p = re.exec(next);
+      if (p && CONSOLIDATED_LAYER_ALIASES[p[2]]) {
+        next = next.replace(re, "$1" + key + "=" + CONSOLIDATED_LAYER_ALIASES[p[2]]);
+      }
+    });
     if (next === raw) return;
     try {
       history.replaceState(null, "", "#" + next);
@@ -34886,7 +35047,8 @@ function initChiExplorer() {
    * address and the date under the pinned district.
    *
    * A LINK REOPENS THE REPORT. While the report is open the permalink carries
-   * `stats=1` beside the pin (syncUrlHash), and "Copy link" hands that URL
+   * `s=1` beside the pin (syncUrlHash; `stats=1` in a link made before
+   * 2026-10-09, which still reopens it), and "Copy link" hands that URL
    * out — on a touch device through the platform's share sheet. A reader
    * who opens it gets the point, the layers and the pin from the permalink,
    * and then the report, once the pinned district and the other switched-on
@@ -35053,11 +35215,11 @@ function initChiExplorer() {
     statsOpenSeq++; // anything still computing for the closed screen stops
     if (statsIsOpen()) {
       statsModal.shut();
-      syncUrlHash(); // the permalink stops carrying stats=1
+      syncUrlHash(); // the permalink stops carrying s=1
     }
   }
 
-  // REOPENING FROM A LINK (`stats=1`). Requested by applyStateFromHash after
+  // REOPENING FROM A LINK (`s=1`, or `stats=1` in the long form). Requested by applyStateFromHash after
   // it restores the pin; tried again every time the outlines refresh, which
   // is every time a layer's query or boundaries arrive.
   var STATS_RESTORE_WAIT_MS = 20000;
@@ -35214,7 +35376,7 @@ function initChiExplorer() {
     var foot = cardEl("p", "stats-foot");
     body.appendChild(foot);
     m.open();
-    syncUrlHash(); // the permalink now reopens this report (stats=1)
+    syncUrlHash(); // the permalink now reopens this report (s=1)
 
     // People, where this app ships them: every county the districts touch.
     var box = featureBBox(parentFeature).slice();
@@ -35296,7 +35458,7 @@ function initChiExplorer() {
     });
   }
 
-  // "Copy link": the permalink with stats=1, so the reader it is sent to
+  // "Copy link": the permalink with s=1, so the reader it is sent to
   // lands on this report. On a touch device the platform's share sheet, as
   // the point chip's Share does. Counted by the pinned layer, never the
   // district.
@@ -35845,7 +36007,7 @@ function initChiExplorer() {
     basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; }, // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
     // The QR encoder and the URL it is given, so a test can hold the drawn code
     // to the payload it should carry rather than only counting that something
-    // was drawn. Two URLs that differ by `utm_medium=link` against `qr` produce
+    // was drawn. Two URLs that differ by `ref=share` against `ref=qr` produce
     // different matrices, which is what makes that assertion sharp.
     qrDarkModules: function (text) {
       var code = qrEncode(text, { level: "M" });
@@ -35856,7 +36018,10 @@ function initChiExplorer() {
       }
       return { dark: n, size: code.size, version: code.version };
     },
-    shareUrls: function () { return { link: shareLinkUrl(), qr: shareQrUrl() }; }
+    shareUrls: function () { return { link: shareLinkUrl(), qr: shareQrUrl() }; },
+    // The current address-bar view as the boot parse reads it — ids, never
+    // codes — so a test can assert what a link MEANS in either spelling.
+    permalinkState: function () { return readPermalink(location.hash.replace(/^#/, "")); }
   };
   /* ==== ENGINE:END exports ==== */
   window.ChiExplorer = EXPLORER_EXPORTS;

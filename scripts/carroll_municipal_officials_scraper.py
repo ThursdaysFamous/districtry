@@ -99,8 +99,11 @@ try:
 except ImportError:  # pragma: no cover
     pypdf = None
 
-CLERK_PAGE = ("https://www.carrollcountyil.gov/county_departments/"
-              "clerk___recorder/index.php")
+# The 2026 site rebuild moved the yearbook link off the Clerk's front page
+# (whose old address, /county_departments/clerk___recorder/index.php, now
+# answers 404) onto the Clerk's Documents & Forms page; measured 2026-10-10.
+CLERK_PAGE = ("https://www.carrollcountyil.gov/departments/"
+              "clerk_recorder/documents_forms.php")
 # Where the site's own redirect lands PDFs. Kept as a constant because the
 # discovered link is relative and this is the only form that actually serves.
 CDN_ROOT = "https://cms9files.revize.com/carrollil/"
@@ -109,7 +112,9 @@ HEADERS = {
 }
 REQUEST_TIMEOUT = 120
 
-YEARBOOK_LINK_RE = re.compile(r'href="([^"]*[Yy][Ee][Aa][Rr][Bb][Oo][Oo][Kk][^"]*\.pdf)"')
+# The rebuilt site appends a cache-busting "?t=<stamp>" to every document
+# link, which the group excludes.
+YEARBOOK_LINK_RE = re.compile(r'href="([^"?]*[Yy][Ee][Aa][Rr][Bb][Oo][Oo][Kk][^"?]*\.pdf)(?:\?[^"]*)?"')
 START_RE = re.compile(r"Cities and Village Officers", re.I)
 END_RE = re.compile(r"Carroll County Township Officials", re.I)
 

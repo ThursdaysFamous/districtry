@@ -132,7 +132,7 @@
       // features are already in it.
       if (!rt || !rt.overlayLayer || !features.length) return;
       rt.overlayLayer.addData({ type: "FeatureCollection", features: features });
-      var style = rt.highlightApplied ? fadedStyle(baseStyleFor(spec)) : baseStyleFor(spec);
+      var style = rt.highlightApplied ? fadedStyle(baseStyleFor(spec), spec) : baseStyleFor(spec);
       if (style) {
         rt.overlayLayer.eachLayer(function (subLayer) {
           if (subLayer.setStyle && features.indexOf(subLayer.feature) !== -1) subLayer.setStyle(style);

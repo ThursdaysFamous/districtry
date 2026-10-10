@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Nine instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky and Indiana. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Eleven instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina and Oklahoma. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -26,6 +26,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 - [Who runs my library district?](https://districtry.com/il/library-district.html)
 - [Who runs my park district?](https://districtry.com/il/park-district.html)
 - [What Chicago police district am I in?](https://districtry.com/il/police-district.html)
+- [Which counties publish precinct maps?](https://districtry.com/il/precinct-maps.html)
 - [What voting precinct am I in? Illinois](https://districtry.com/il/precinct.html)
 - [Which CPS school board district am I in?](https://districtry.com/il/school-board.html)
 - [Sources & data layers](https://districtry.com/il/sources.html)
@@ -128,8 +129,29 @@ All 92 counties: townships, cities and towns, school districts, ZIP codes, and t
 
 - [Indiana district lookup](https://districtry.com/in/): 11 layers, all 92 counties.
 - [Who is my U.S. representative?](https://districtry.com/in/congress.html)
+- [Who are my county commissioners?](https://districtry.com/in/county-commissioner.html): links a page per county, 91 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/in/sources.html)
 - [Indiana district questions](https://districtry.com/in/faq.html)
+
+## North Carolina
+
+All 100 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. Nobody is named yet on the county boards or city councils, and the Data gaps panel says why.
+
+- [North Carolina district lookup](https://districtry.com/nc/): 11 layers, all 100 counties.
+- [Who is my U.S. representative?](https://districtry.com/nc/congress.html)
+- [Sources & data layers](https://districtry.com/nc/sources.html)
+- [Who is my NC legislator?](https://districtry.com/nc/state-legislature.html)
+- [District questions](https://districtry.com/nc/faq.html)
+
+## Oklahoma
+
+All 77 counties: cities and towns, school districts, ZIP codes, the tribal areas the Census draws, and the nearest police station, fire station and post office — plus the Oklahoma Senate, House and U.S. House districts, with a member named for every U.S. House seat and nearly every legislative one. Nobody is named yet on the county governments or city councils, and the Data gaps panel says why.
+
+- [Oklahoma district lookup](https://districtry.com/ok/): 12 layers, all 77 counties.
+- [Who is my U.S. representative?](https://districtry.com/ok/congress.html)
+- [Sources & data layers](https://districtry.com/ok/sources.html)
+- [Who is my Oklahoma legislator?](https://districtry.com/ok/state-legislature.html)
+- [District questions](https://districtry.com/ok/faq.html)
 
 ## Where the answers come from
 
@@ -137,7 +159,7 @@ Each instance's sources page carries one row per layer: what it answers, the pub
 
 Officeholder names are never guessed. Where no verifiable roster exists, a card links the official body instead of inventing a name, and what the project does not know is recorded rather than left blank — each instance ships a machine-readable list of its own gaps at `<instance>/data/app/coverage-gaps.json`.
 
-Sources last reverified between September 11, 2026 and September 30, 2026, per instance.
+Sources last reverified between October 9, 2026 and September 30, 2026, per instance.
 
 This is a civic reference tool and it disclaims legal precision. Confirm a district assignment with the government office that draws it before relying on it for anything official.
 
