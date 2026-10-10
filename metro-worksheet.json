@@ -53,7 +53,9 @@
     { "id": "indiana", "label": "Indiana", "url": "https://districtry.com/in/", "emoji": "🏁", "explorer_name": "districtry Indiana",
       "bbox": { "minLng": -88.1, "minLat": 37.83, "maxLng": -84.78, "maxLat": 41.77 } },
     { "id": "northcarolina", "label": "North Carolina", "url": "https://districtry.com/nc/", "emoji": "🌳", "explorer_name": "districtry North Carolina",
-      "bbox": { "minLng": -84.33, "minLat": 33.74, "maxLng": -75.39, "maxLat": 36.6 } }
+      "bbox": { "minLng": -84.33, "minLat": 33.74, "maxLng": -75.39, "maxLat": 36.6 } },
+    { "id": "oklahoma", "label": "Oklahoma", "url": "https://districtry.com/ok/", "emoji": "🌾", "explorer_name": "districtry Oklahoma",
+      "bbox": { "minLng": -103.01, "minLat": 33.61, "maxLng": -94.43, "maxLat": 37.01 } }
   ],
   "hover_number_keys": [
     [

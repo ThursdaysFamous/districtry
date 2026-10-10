@@ -180,6 +180,24 @@
       "landing_name": "North Carolina",
       "blurb": "All 100 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. Nobody is named yet on the county boards or city councils, and the Data gaps panel says why.",
       "scope": "all 100 counties"
+    },
+    {
+      "id": "oklahoma",
+      "explorer_name": "districtry Oklahoma",
+      "label": "Oklahoma",
+      "url": "https://districtry.com/ok/",
+      "emoji": "🌾",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -103.01,
+        "minLat": 33.61,
+        "maxLng": -94.43,
+        "maxLat": 37.01
+      },
+      "tag": "ok",
+      "landing_name": "Oklahoma",
+      "blurb": "All 77 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Oklahoma Senate, House and U.S. House districts, with a member named for every U.S. House seat and nearly every legislative one. Nobody is named yet on the county governments or city councils, and the Data gaps panel says why.",
+      "scope": "all 77 counties"
     }
   ]
 }

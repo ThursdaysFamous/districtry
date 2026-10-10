@@ -81,7 +81,7 @@
       "@type": "ItemList",
       "name": "districtry instances",
       "itemListOrder": "https://schema.org/ItemListUnordered",
-      "numberOfItems": 10,
+      "numberOfItems": 11,
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -142,6 +142,12 @@
           "position": 10,
           "name": "North Carolina",
           "url": "https://districtry.com/nc/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 11,
+          "name": "Oklahoma",
+          "url": "https://districtry.com/ok/"
         }
       ]
     }
@@ -802,7 +808,7 @@ footer .support b { color: var(--ink); }
                placeholder="Street address or ZIP" autocomplete="off" />
         <button type="submit" id="search-button" class="search-button">Show districts</button>
       </form>
-      <p class="search-help">districtry opens the map that covers the point. Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana and North Carolina answer
+      <p class="search-help">districtry opens the map that covers the point. Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina and Oklahoma answer
          today — an address anywhere else says so instead of guessing.</p>
       <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
     </div>
@@ -825,6 +831,7 @@ footer .support b { color: var(--ink); }
         <li><a class="place" href="https://districtry.com/ky/" title="All 120 counties: the county a point sits in, and the Kentucky Senate, House and U.S. House districts — with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the fiscal courts, and the Data gaps panel says why." aria-label="Kentucky, all 120 counties, 12 layers"><span class="place-tag">ky</span><span class="place-id"><span class="place-name">Kentucky</span><span class="place-scope">all 120 counties</span></span><span class="place-n">12</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
         <li><a class="place" href="https://districtry.com/in/" title="All 92 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the county governments, and the Data gaps panel says why." aria-label="Indiana, all 92 counties, 11 layers"><span class="place-tag">in</span><span class="place-id"><span class="place-name">Indiana</span><span class="place-scope">all 92 counties</span></span><span class="place-n">11</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
         <li><a class="place" href="https://districtry.com/nc/" title="All 100 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. Nobody is named yet on the county boards or city councils, and the Data gaps panel says why." aria-label="North Carolina, all 100 counties, 11 layers"><span class="place-tag">nc</span><span class="place-id"><span class="place-name">North Carolina</span><span class="place-scope">all 100 counties</span></span><span class="place-n">11</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
+        <li><a class="place" href="https://districtry.com/ok/" title="All 77 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Oklahoma Senate, House and U.S. House districts, with a member named for every U.S. House seat and nearly every legislative one. Nobody is named yet on the county governments or city councils, and the Data gaps panel says why." aria-label="Oklahoma, all 77 counties, 11 layers"><span class="place-tag">ok</span><span class="place-id"><span class="place-name">Oklahoma</span><span class="place-scope">all 77 counties</span></span><span class="place-n">11</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
       </ul>
     </div>
     <p class="coverage-caption">Two tiers, because coverage is not one thing: the pale dashed area
@@ -832,7 +839,7 @@ footer .support b { color: var(--ink); }
        ZIP — and the solid fill is where the county-level layers reach as well. The map's own
        legend states how much of each place that is; click an area to open its map.</p>
     <details class="not-yet">
-      <summary>Not yet: 41 states and DC — what nobody covers yet is listed here
+      <summary>Not yet: 40 states and DC — what nobody covers yet is listed here
         rather than quietly missing.</summary>
       <div class="not-yet-list">
         <div>Alabama</div>
@@ -863,7 +870,6 @@ footer .support b { color: var(--ink); }
         <div>New Mexico</div>
         <div>North Dakota</div>
         <div>Ohio</div>
-        <div>Oklahoma</div>
         <div>Oregon</div>
         <div>Pennsylvania</div>
         <div>Rhode Island</div>
@@ -897,6 +903,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/ky/congress.html">Kentucky<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/in/congress.html">Indiana<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/nc/congress.html">North Carolina<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/ok/congress.html">Oklahoma<span class="chip-topic"> &#183; U.S. House</span></a></li>
         </ul>
       </div>
       <div class="ask">
@@ -909,6 +916,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/ia/state-legislature.html">Iowa<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/mi/state-legislature.html">Michigan<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/nc/state-legislature.html">North Carolina<span class="chip-topic"> &#183; Legislature</span></a></li>
+          <li><a class="chip" href="/ok/state-legislature.html">Oklahoma<span class="chip-topic"> &#183; Legislature</span></a></li>
         </ul>
       </div>
       <div class="ask">
@@ -1107,7 +1115,10 @@ footer .support b { color: var(--ink); }
       bbox: { minLat: 37.83, maxLat: 41.77, minLng: -88.1, maxLng: -84.78 } },
     { id: "northcarolina", tag: "nc", name: "North Carolina", url: "https://districtry.com/nc/",
       outline: "nc/data/app/metro-outline.json",
-      bbox: { minLat: 33.74, maxLat: 36.6, minLng: -84.33, maxLng: -75.39 } }
+      bbox: { minLat: 33.74, maxLat: 36.6, minLng: -84.33, maxLng: -75.39 } },
+    { id: "oklahoma", tag: "ok", name: "Oklahoma", url: "https://districtry.com/ok/",
+      outline: "ok/data/app/metro-outline.json",
+      bbox: { minLat: 33.61, maxLat: 37.01, minLng: -103.01, maxLng: -94.43 } }
   ];
 
   function metrosClaiming(lat, lng) {

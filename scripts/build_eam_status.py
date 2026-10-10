@@ -180,7 +180,7 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 # every county it has listed, by construction.
 STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   "ky": 120, "ny": 62, "in": 92,
-                  "nc": 100}
+                  "nc": 100, "ok": 77}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -1694,6 +1694,36 @@ ANSWERS = {
         # state; the fleet-wide tribal layer thread owns drawing it.
         "tribal-government": OPEN,
     },
+    # Oklahoma, added at its go-live with the national tier.
+    "ok": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ok-senate", "ok-house"),
+        "county-boundaries": answers("county"),
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        # Both tilings, because Oklahoma needs both: unified (415) and
+        # elementary (91) districts together cover the state's land exactly,
+        # and the secondary tiling is empty. Recorded in ok/CLAUDE.md.
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary"),
+        "courts-by-district": OPEN,
+        # OKLAHOMA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 305 county
+        # subdivisions TIGERweb carries for the state are census county
+        # divisions (LSADC 22, FUNCSTAT S), statistical areas that govern
+        # nobody. Recorded in ok/CLAUDE.md with the method.
+        "sub-county-government": na(
+            "Oklahoma has no sub-county general-purpose government — outside a "
+            "city or town limit the county governs. The 305 sub-county units "
+            "the Census publishes for Oklahoma are census county divisions: "
+            "statistical areas, not governments."),
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # The fleet-wide tribal layer thread owns drawing Oklahoma's nations,
+        # as census statistical areas labeled as such (Adam, 2026-10-10).
+        "tribal-government": OPEN,
+    },
     "ny": {
         "us-house": answers("congress"),
         "state-legislature": answers("state-senate", "state-assembly"),
@@ -1916,7 +1946,7 @@ def load_expected_units():
 # Wisconsin roster is keyed by the five-digit place code inside the state.
 STATE_FIPS_OF = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
                  "mn": "27", "ky": "21", "ny": "36", "in": "18",
-                 "nc": "37"}
+                 "nc": "37", "ok": "40"}
 
 
 def _named_anywhere(record):
