@@ -1330,7 +1330,7 @@ def precinct_maps_page(tag, spec, worksheet):
            fb="Correction%20to%20the%20precinct%20map%20page%3A%20")
 
     return dict(
-        title="Which Illinois counties publish their precinct map?",
+        title="Which counties publish precinct maps?",
         subtitle="County by county: which publish their voting precinct map as data, which post "
                  "only a PDF, and which publish none we could find.",
         desc="Which of Illinois's %d counties publish their voting precinct map as data a "
