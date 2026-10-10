@@ -209,7 +209,7 @@ QUESTION_ROWS = [
     # The tail row, for a concept only one place answers. A row of its own per
     # page would be three headings each naming a single link, which is the
     # shape the regrouping exists to retire.
-    ("Also answered in one place", ("precinct.html", "township.html",
+    ("Also answered in one place", ("precinct.html", "precinct-maps.html", "township.html",
                                     "community-board.html",
                                     "county-auditor.html", "borough.html")),
 ]
@@ -239,6 +239,7 @@ CHIP_TOPIC = {
     "judicial-subcircuit.html": "judicial subcircuit",
     "circuit-court.html": "circuit court",
     "precinct.html": "precinct",
+    "precinct-maps.html": "who publishes precinct maps",
     "township.html": "township",
     "community-board.html": "community board",
 }

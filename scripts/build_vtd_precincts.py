@@ -289,6 +289,17 @@ COUNTIES = {
         # LARKINSBURG I, PIXLEY I, where no II exists in the census, in either
         # canvass, or on the Clerk's polling list. norm() keeps arabic and
         # roman apart (HARTER1 vs HARTERI), so none of these can collide.
+        # THE COUNTY PUBLISHES PRECINCT MAPS, found 2026-10-10: its board page
+        # (claycounty.illinois.gov/county-board/) links eight per-precinct PDFs
+        # posted June 2026 — Bible Grove, Blair, Larkinsburg, Oskaloosa, Pixley,
+        # Songer, Stanford and Xenia — made in ArcMap on 2026-02-04 and naming
+        # their neighbours exactly as this list does (CLAY CITY, HARTER III…).
+        # The other ten (Clay City, Harter, Louisville, Hoosier) have no PDF
+        # there. They are pictures, not data, and the census shapes still ship.
+        # The same page lists board District A as "Clay City I" and B as "Clay
+        # City II & Stanford", which reads as the village split the board note
+        # below describes rather than a second precinct (inferred: no canvass or
+        # polling list has a CLAY CITY II).
         "aliases": {"CLAY CITY": "CLAY CITY I",
                     "HARTER 1": "HARTER I", "HARTER 3": "HARTER III",
                     "HARTER 4": "HARTER IV", "HARTER 5": "HARTER V",

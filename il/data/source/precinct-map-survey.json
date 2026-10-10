@@ -1,0 +1,752 @@
+{
+ "_about": "Which Illinois counties publish their voting precinct map, and in what form, as found on each county's own website on the date in each row. A person owns this file: no scheduled job rewrites it. It feeds il/precinct-maps.html through scripts/build_concept_pages.py. Forms: data (a map service or download mapping software can read), viewer (an online map a person can look at, with no way to read the lines as data), pdf (a PDF or picture), none (nothing found on the county's website, its map pages or the documents they link to), not-checked (a site that refused automated readers, put up a challenge or a terms page, or did not answer; none was worked around). sent_on_request: the county e-mailed this project a digital precinct map when asked, recorded in that county's precinct builder.",
+ "counties": [
+  {
+   "county": "Adams",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services3.arcgis.com/BXTAaNPMn1VANOeH/arcgis/rest/services/Adams_County_Voting_Precincts_view/FeatureServer/0",
+   "url_label": "map data",
+   "note": "Last edited 2 January 2025."
+  },
+  {
+   "county": "Alexander",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "Nothing on the county's website. A second county web address, used for the clerk's e-mail, refuses automated readers, so we could not look there."
+  },
+  {
+   "county": "Bond",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The county's online map has county board districts but no precincts."
+  },
+  {
+   "county": "Boone",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://maps.boonecountyil.org/arcgis/rest/services/Clerk_and_Recorder/Voting_Polling_Places/MapServer/1",
+   "url_label": "map data"
+  },
+  {
+   "county": "Brown",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The election page posts results by precinct but no map. A second web address, used for the clerk's e-mail, did not answer."
+  },
+  {
+   "county": "Bureau",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The clerk's page says the county has 50 precincts but links no map."
+  },
+  {
+   "county": "Calhoun",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The county's website has no map pages beyond a visitors' map."
+  },
+  {
+   "county": "Carroll",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://www.carrollcountyil.gov/Documents/Departments/Clerk%20and%20Recorder/Election%20Information/Precinct%20Maps.pdf",
+   "url_label": "PDF",
+   "note": "One scanned PDF of 2017 township maps with the precinct lines drawn on by hand, scanned July 2025."
+  },
+  {
+   "county": "Cass",
+   "form": "not-checked",
+   "checked": "2026-10-10",
+   "note": "The county's website has no precinct map. Its online map runs on a service that puts up a challenge, so we could not look there."
+  },
+  {
+   "county": "Champaign",
+   "form": "viewer",
+   "checked": "2026-10-10",
+   "url": "https://www.champaigncountyclerkil.gov/government-bodies/relevant-county-maps",
+   "url_label": "maps page",
+   "note": "The County Clerk links an online map of the precincts kept by the county's GIS consortium, which licenses the lines under terms that do not allow republishing them."
+  },
+  {
+   "county": "Christian",
+   "form": "not-checked",
+   "checked": "2026-10-10",
+   "note": "The county's website puts up a challenge, and its other web address refuses automated readers."
+  },
+  {
+   "county": "Clark",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://www.clarkcountyil.org/precinct-maps",
+   "url_label": "maps page",
+   "note": "A countywide map dated October 2014 and city maps from January 2015."
+  },
+  {
+   "county": "Clay",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://claycounty.illinois.gov/county-board/",
+   "url_label": "maps page",
+   "note": "One PDF per precinct, posted June 2026. We found 13, and the set may be missing one."
+  },
+  {
+   "county": "Clinton",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services3.arcgis.com/gnvxvf9aoRBjW15Q/arcgis/rest/services/voting_dist_ClintonCo/FeatureServer/0",
+   "url_label": "map data",
+   "note": "The precinct layer of the county's online map. Last edited 7 April 2026."
+  },
+  {
+   "county": "Coles",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services2.arcgis.com/MgTN1xrZnaahv1AF/arcgis/rest/services/2022_Voter_Precincts_WFL1/FeatureServer/1",
+   "url_label": "map data",
+   "note": "Last edited 10 March 2022."
+  },
+  {
+   "county": "Cook",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://gis.cookcountyil.gov/traditional/rest/services/precinctHistorical/MapServer/0",
+   "url_label": "map data",
+   "note": "Suburban Cook County only. Chicago's own precincts are published by the City of Chicago."
+  },
+  {
+   "county": "Crawford",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://crawfordcounty.illinois.gov/wp-content/uploads/2025/07/crawford-county-boundry-maps.pdf",
+   "url_label": "PDF",
+   "note": "Scanned maps with the precinct names written on by hand, scanned February 2024."
+  },
+  {
+   "county": "Cumberland",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The county's online map has no precinct layer."
+  },
+  {
+   "county": "De Witt",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services.arcgis.com/4YineAQdtmx0tv46/arcgis/rest/services/ElectionPrecincts_DeWittIL/FeatureServer/0",
+   "url_label": "map data",
+   "note": "Kept on a mapping company's account. Last edited 13 March 2024."
+  },
+  {
+   "county": "DeKalb",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services7.arcgis.com/hEXJrPwm89CLXBYe/arcgis/rest/services/Precincts/FeatureServer/1",
+   "url_label": "map data",
+   "note": "Last edited 22 August 2025."
+  },
+  {
+   "county": "Douglas",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services3.arcgis.com/HXjsHxkFFcZquC8P/arcgis/rest/services/VotingDistricts/FeatureServer/0",
+   "url_label": "map data",
+   "note": "Last edited 6 May 2026. The election page also posts a 2015 PDF map."
+  },
+  {
+   "county": "DuPage",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services.arcgis.com/neJvtQ4PXvnQ86MJ/arcgis/rest/services/Precincts_2024/FeatureServer/0",
+   "url_label": "map data",
+   "note": "The 2024 precinct map. Last edited 3 February 2026."
+  },
+  {
+   "county": "Edgar",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The county's online map has no precinct layer. The clerk posts a list of the precincts each voting center serves."
+  },
+  {
+   "county": "Edwards",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "We could not reach a county website, and the county's online maps have no precinct layer."
+  },
+  {
+   "county": "Effingham",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services.arcgis.com/vj0V9Lal6oiz0YXp/arcgis/rest/services/ElectionGeography_public_2d9b4955467947e2802e5d4c4173060f/FeatureServer/1",
+   "url_label": "map data",
+   "note": "Last edited 24 January 2024."
+  },
+  {
+   "county": "Fayette",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://www.fayettecountyillinois.gov/wp-content/uploads/2023/10/County-Board-District-Map-Effective-2022.pdf",
+   "url_label": "PDF",
+   "note": "A county board district map, titled 2020, that also draws the precincts."
+  },
+  {
+   "county": "Ford",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://fordcounty.illinois.gov/wp-content/uploads/2022/04/FORD-COUNTY-PRECINCTS.pdf",
+   "url_label": "PDF",
+   "note": "A countywide picture of the precincts, with 2011 scans of two townships' precincts, posted April 2022."
+  },
+  {
+   "county": "Franklin",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services7.arcgis.com/gb3yKpyyBmugDAn1/arcgis/rest/services/Precinct_Franklin/FeatureServer/0",
+   "url_label": "map data",
+   "note": "Last edited 15 September 2026. The county's own pages do not link it; it is in the county's mapping account."
+  },
+  {
+   "county": "Fulton",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://gis.fultoncountyil.gov/arcgis/rest/services/Hosted/voting_precincts/FeatureServer/43",
+   "url_label": "map data",
+   "note": "Last edited 11 October 2024."
+  },
+  {
+   "county": "Gallatin",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://gallatinco.illinois.gov/wp-content/uploads/2022/05/Precient-map.pdf",
+   "url_label": "PDF",
+   "note": "One scanned countywide map, posted May 2022."
+  },
+  {
+   "county": "Greene",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "Nothing on the county's website or on its online maps, which Western Illinois University keeps."
+  },
+  {
+   "county": "Grundy",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://maps.grundyco.org/arcgis/rest/services/CountyClerk/PollingPlaces_SPIE_Public/MapServer/1",
+   "url_label": "map data"
+  },
+  {
+   "county": "Hamilton",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services.arcgis.com/4YineAQdtmx0tv46/arcgis/rest/services/Voter_Precincts_Hamilton/FeatureServer/0",
+   "url_label": "map data",
+   "note": "Kept on a mapping company's account, which the County Clerk pointed us to. Last edited 11 December 2023."
+  },
+  {
+   "county": "Hancock",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The only district map is a 2023 county board district map."
+  },
+  {
+   "county": "Hardin",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The county's web address shows a placeholder page, and we found no other county website."
+  },
+  {
+   "county": "Henderson",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The county's web address shows a placeholder page. Its online maps, which Western Illinois University keeps, have no precinct layer."
+  },
+  {
+   "county": "Henry",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://www.henrycty.com/244/Precinct-Maps",
+   "url_label": "maps page",
+   "note": "One PDF per township, made in 2007.",
+   "sent_on_request": true
+  },
+  {
+   "county": "Iroquois",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services6.arcgis.com/6FZQl5a5SiSFMv8P/arcgis/rest/services/ElectionGeography_public/FeatureServer/1",
+   "url_label": "map data",
+   "note": "Published by the county assessor's office. Last edited 5 February 2026."
+  },
+  {
+   "county": "Jackson",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://www.jacksoncounty-il.gov/DocumentCenter/View/320/All-Precincts-PDF",
+   "url_label": "PDF",
+   "note": "Maps dated 26 January 2012."
+  },
+  {
+   "county": "Jasper",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://jaspercountyillinois.gov/wp-content/uploads/2024/07/Redistricting-County-Board-Effective-2022.pdf",
+   "url_label": "PDF",
+   "note": "Linked as the precinct map. It draws the 2022 county board districts and shows Ste. Marie's two precincts as one."
+  },
+  {
+   "county": "Jefferson",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://jeffersoncounty.illinois.gov/services/county_clerk___recorder/elections/precincts.php",
+   "url_label": "maps page",
+   "note": "Maps of the precincts approved in May 2011.",
+   "sent_on_request": true
+  },
+  {
+   "county": "Jersey",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://jerseycountyclerk-il.gov/wp-content/uploads/2022/01/CC-Polling-Places-2021.pdf",
+   "url_label": "PDF",
+   "note": "A countywide map dated December 2021, with a closer 2022 picture of precincts Jersey 1 to 8."
+  },
+  {
+   "county": "Jo Daviess",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://www.jodaviesscountyil.gov/DocumentCenter/View/675/Countywide-Voting-Precincts-Map-PDF",
+   "url_label": "PDF",
+   "note": "A countywide map made 6 January 2022, with city maps."
+  },
+  {
+   "county": "Johnson",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The clerk's election site lists polling places but no map. The county's own web address could not be read."
+  },
+  {
+   "county": "Kane",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services1.arcgis.com/oRKmdBXD6EbdmVgJ/arcgis/rest/services/KaneCo_IL_ElectionsPrecincts/FeatureServer/1",
+   "url_label": "map data",
+   "note": "Last edited 17 July 2025."
+  },
+  {
+   "county": "Kankakee",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://k3gis.net/arcgis/rest/services/BASE/Elected_Officials/MapServer/0",
+   "url_label": "map data"
+  },
+  {
+   "county": "Kendall",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://maps.co.kendall.il.us/server/rest/services/Hosted/Voting_Precincts_and_Polling_Places/FeatureServer/1",
+   "url_label": "map data"
+  },
+  {
+   "county": "Knox",
+   "form": "not-checked",
+   "checked": "2026-10-10",
+   "note": "The county's website puts up a challenge, and its own map server has no precinct layer. The City of Galesburg publishes its own precincts as data."
+  },
+  {
+   "county": "LaSalle",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://gis.lasallecounty.org/arcgis/rest/services/PollingPlaceLocator/MapServer/1",
+   "url_label": "map data"
+  },
+  {
+   "county": "Lake",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services3.arcgis.com/HESxeTbDliKKvec2/arcgis/rest/services/LakeCounty_PoliticalBoundaries/FeatureServer/7",
+   "url_label": "map data",
+   "note": "Last edited 4 October 2026."
+  },
+  {
+   "county": "Lawrence",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The county's online map has no precinct layer."
+  },
+  {
+   "county": "Lee",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://gis.leecountyil.gov/leecogis/rest/services/Election/Election_Precincts/MapServer/1",
+   "url_label": "map data"
+  },
+  {
+   "county": "Livingston",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://www.livingstoncountyil.gov/Documents/Department/Election/Maps/Livingston%20county%20precinct%20polling%20sites.pdf",
+   "url_label": "PDF",
+   "note": "A countywide map updated August 2025, with closer maps of seven towns and townships."
+  },
+  {
+   "county": "Logan",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services.arcgis.com/pPTAs43AFhhk0pXQ/arcgis/rest/services/Logan_County_Districts_and_Zoning/FeatureServer/40",
+   "url_label": "map data",
+   "note": "Published for the county by the Tri-County Regional Planning Commission. Last edited 2 April 2026."
+  },
+  {
+   "county": "Macon",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services1.arcgis.com/a3k0qIja5SolIRYR/arcgis/rest/services/ElectionGeography_public_e465746545b04d86ad93c78e731c292a/FeatureServer/1",
+   "url_label": "map data",
+   "note": "Last edited 14 September 2022."
+  },
+  {
+   "county": "Macoupin",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://data.macoupincountyil.gov/resource/ab79-cnsh.geojson",
+   "url_label": "map data",
+   "note": "Published on the county's open-data site. Last updated 1 November 2025."
+  },
+  {
+   "county": "Madison",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://gisportal.co.madison.il.us/serverh/rest/services/Hosted/ElectionGeography_public_e52134a5089e48deb03585c901d6c563/FeatureServer/1",
+   "url_label": "map data"
+  },
+  {
+   "county": "Marion",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The county's website has no election page, and its online map has no precinct layer."
+  },
+  {
+   "county": "Marshall",
+   "form": "not-checked",
+   "checked": "2026-10-10",
+   "note": "The county's website has no precinct map, and we could not read its online map."
+  },
+  {
+   "county": "Mason",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://masoncountyil.gov/county-clerk/elections/county-clerk-polling-places/",
+   "url_label": "maps page",
+   "note": "One picture per precinct, posted April 2024."
+  },
+  {
+   "county": "Massac",
+   "form": "not-checked",
+   "checked": "2026-10-10",
+   "note": "No precinct map on the clerk's page or the county's map site, and we could not read the assessor's online map."
+  },
+  {
+   "county": "McDonough",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://gis.wiu.edu/arcgis/rest/services/precinct_map/MapServer/4",
+   "url_label": "map data",
+   "note": "Kept for the county by Western Illinois University's GIS Center and linked from the county's voter registration page."
+  },
+  {
+   "county": "McHenry",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services1.arcgis.com/6iYC5AXXYapRVNzl/arcgis/rest/services/Voting_Precincts/FeatureServer/0",
+   "url_label": "map data",
+   "note": "Last edited 2 October 2026."
+  },
+  {
+   "county": "McLean",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://gis.mcleancountyil.gov/arcgis/rest/services/Clerks/PollingPlaces/MapServer/1",
+   "url_label": "map data"
+  },
+  {
+   "county": "Menard",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://www.menardcountyil.gov/index.php/download_file/view/2837/",
+   "url_label": "picture",
+   "note": "One picture of all 14 precincts, posted April 2024."
+  },
+  {
+   "county": "Mercer",
+   "form": "not-checked",
+   "checked": "2026-10-10",
+   "note": "The county's website has no precinct map, and we could not read its online map."
+  },
+  {
+   "county": "Monroe",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services.arcgis.com/AZVIEb4WFZST2UYx/arcgis/rest/services/VoterPrecinct/FeatureServer/0",
+   "url_label": "map data",
+   "note": "Last edited 3 March 2026."
+  },
+  {
+   "county": "Montgomery",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://montgomerycountyil.gov/gis/",
+   "url_label": "maps page",
+   "note": "Precinct maps made in 2020, and a 2022 map of county board districts and precincts.",
+   "sent_on_request": true
+  },
+  {
+   "county": "Morgan",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services3.arcgis.com/95PFahBF8eyGEfuc/arcgis/rest/services/VotingPrecincts/FeatureServer/0",
+   "url_label": "map data",
+   "note": "Last edited 30 March 2023."
+  },
+  {
+   "county": "Moultrie",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://www.colesco.illinois.gov/arcgis/rest/services/Moultrie/Voter_Precincts/MapServer/0",
+   "url_label": "map data",
+   "note": "Kept on Coles County's map server and shown on Moultrie's county maps page."
+  },
+  {
+   "county": "Ogle",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://cms7files.revize.com/oglecounty/document_center/GIS/OgleCoIL_VotingPrecincts_2022.pdf",
+   "url_label": "PDF",
+   "note": "A map book dated March 2022. An older precinct layer from 2016 is still online.",
+   "sent_on_request": true
+  },
+  {
+   "county": "Peoria",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services.arcgis.com/iPiPjILCMYxPZWTc/arcgis/rest/services/2020_Voting_Precincts/FeatureServer/0",
+   "url_label": "map data",
+   "note": "Last edited 19 September 2026."
+  },
+  {
+   "county": "Perry",
+   "form": "not-checked",
+   "checked": "2026-10-10",
+   "note": "The county's website has no precinct map. Its online map runs on a service that puts up a challenge, so we could not look there."
+  },
+  {
+   "county": "Piatt",
+   "form": "not-checked",
+   "checked": "2026-10-10",
+   "note": "The county's main online map opens only after accepting its terms, which we did not do. The rest of its website has no precinct map."
+  },
+  {
+   "county": "Pike",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The county's online map has no precinct layer."
+  },
+  {
+   "county": "Pope",
+   "form": "not-checked",
+   "checked": "2026-10-10",
+   "note": "No county website answered."
+  },
+  {
+   "county": "Pulaski",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The clerk's page lists the precincts with their results but no map."
+  },
+  {
+   "county": "Putnam",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services6.arcgis.com/Z2F3lckKXNBvWQZU/arcgis/rest/services/Parcel_Layers/FeatureServer/11",
+   "url_label": "map data",
+   "note": "A copy of the 2020 Census precinct map, on the county's online map."
+  },
+  {
+   "county": "Randolph",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services5.arcgis.com/pweYHqdOby1TE9DD/arcgis/rest/services/VotingPrecincts/FeatureServer/1",
+   "url_label": "map data",
+   "note": "The mapping account it sits on does not say who owns it. Last edited 14 April 2026."
+  },
+  {
+   "county": "Richland",
+   "form": "viewer",
+   "checked": "2026-10-10",
+   "url": "https://richlandil.wthgis.com/",
+   "url_label": "online map",
+   "note": "The county's online map has a precinct layer. The County Clerk also posts a one-page picture of it, made in May 2026."
+  },
+  {
+   "county": "Rock Island",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services9.arcgis.com/6FnscPPlUa9DXXOk/arcgis/rest/services/Other_Layers/FeatureServer/3",
+   "url_label": "map data",
+   "note": "Last edited 7 October 2022."
+  },
+  {
+   "county": "Saline",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The clerk posts a table of polling places by precinct but no map."
+  },
+  {
+   "county": "Sangamon",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services.arcgis.com/XqG0RpqsNfIBGGb2/arcgis/rest/services/ApprovedPrecincts20231012/FeatureServer/0",
+   "url_label": "map data",
+   "note": "Last edited 12 October 2023."
+  },
+  {
+   "county": "Schuyler",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The county's online map has townships but no precincts."
+  },
+  {
+   "county": "Scott",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The clerk's election page links only to State Board tools and to results."
+  },
+  {
+   "county": "Shelby",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://www.shelbycounty-il.gov/documents/CountyClerk/Election%20information/Township%20Precinct%20Maps%202022.PDF",
+   "url_label": "PDF",
+   "note": "A scanned book of precinct maps dated August 2022."
+  },
+  {
+   "county": "St. Clair",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://arcgispublicmap.co.st-clair.il.us/server/rest/services/SCC_voting_districts/MapServer/18",
+   "url_label": "map data"
+  },
+  {
+   "county": "Stark",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://www.google.com/maps/d/viewer?mid=1T0Iz1DogKirf-ZbEfFlFoIRSAxY",
+   "url_label": "map data",
+   "note": "A public Google map that can be downloaded. The County Clerk told us in August 2026 that its precincts are correct; the county's website does not link it."
+  },
+  {
+   "county": "Stephenson",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://stephensoncountyil.gov/government/county_clerk_and_recorder/elections.php",
+   "url_label": "maps page",
+   "note": "Two maps, of the Freeport precincts and the rural precincts, posted January 2022."
+  },
+  {
+   "county": "Tazewell",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services.arcgis.com/LIEind9C2d6XYeOY/arcgis/rest/services/ElectionGeography_public_280605e69d4f4c2696479fc6050cab53/FeatureServer/1",
+   "url_label": "map data",
+   "note": "Last edited 20 August 2026."
+  },
+  {
+   "county": "Union",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The clerk's November 2026 polling list has 15 precincts where the March 2026 results had 20, so the county appears to have merged precincts."
+  },
+  {
+   "county": "Vermilion",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services6.arcgis.com/am689ZyfXfdo9vCK/arcgis/rest/services/Elections_Polling_Place_Locator/FeatureServer/1",
+   "url_label": "map data",
+   "note": "Last edited 10 March 2022. Its Danville city precincts are older than the ones Danville's own election commission uses now. The County Clerk also posts one PDF per precinct."
+  },
+  {
+   "county": "Wabash",
+   "form": "not-checked",
+   "checked": "2026-10-10",
+   "note": "The county's website did not answer."
+  },
+  {
+   "county": "Warren",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://warrencountyil.gov/wp-content/uploads/2025/07/Precinct-Map.pdf",
+   "url_label": "PDF",
+   "note": "Draws only the City of Monmouth's precincts; the rural precincts are listed but not drawn. Posted July 2025."
+  },
+  {
+   "county": "Washington",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://washingtonco.illinois.gov/wp-content/uploads/2025-2026-BLUE-BOOK-1.pdf",
+   "url_label": "PDF, page 35",
+   "note": "A small scanned map in the County Clerk's 2025-2026 Blue Book."
+  },
+  {
+   "county": "Wayne",
+   "form": "none",
+   "checked": "2026-10-10",
+   "note": "The county's online map shows its townships, not its precincts."
+  },
+  {
+   "county": "White",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://irp.cdn-website.com/4e51b38b/files/uploaded/White%20County%2C%20IL%20voting%20districts%20%26%20precincts%20map.pdf",
+   "url_label": "PDF",
+   "note": "A countywide map made February 2022."
+  },
+  {
+   "county": "Whiteside",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services.arcgis.com/l0M0OC6J9QAHCiGx/arcgis/rest/services/ElectionGeography_public/FeatureServer/1",
+   "url_label": "map data",
+   "note": "Last edited 25 September 2026."
+  },
+  {
+   "county": "Will",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services.arcgis.com/fGsbyIOAuxHnF97m/arcgis/rest/services/Precincts_2022/FeatureServer/1",
+   "url_label": "map data",
+   "note": "The 2022 precinct map. Last edited 8 September 2022."
+  },
+  {
+   "county": "Williamson",
+   "form": "pdf",
+   "checked": "2026-10-10",
+   "url": "https://www.williamsoncountyil.gov/wp-content/uploads/2025/03/Precint-Map.pdf",
+   "url_label": "PDF",
+   "note": "A countywide map made November 2023, after the county changed its precincts that year."
+  },
+  {
+   "county": "Winnebago",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://maps.wingis.org/public/rest/services/WardsAndDistricts/MapServer/7",
+   "url_label": "map data",
+   "note": "Published by WinGIS, the regional mapping agency. Covers the county outside Rockford, which runs its own elections."
+  },
+  {
+   "county": "Woodford",
+   "form": "data",
+   "checked": "2026-10-10",
+   "url": "https://services.arcgis.com/pPTAs43AFhhk0pXQ/arcgis/rest/services/2024_General_Primary_Election___March_19th__2024_WFL1/FeatureServer/2",
+   "url_label": "map data",
+   "note": "Published for the county by the Tri-County Regional Planning Commission. Last edited 17 July 2024."
+  }
+ ]
+}

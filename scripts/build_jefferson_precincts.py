@@ -10,6 +10,16 @@ which is writing to the clerk and asking." Asked 2026-08-05; County Clerk
 Davis replied on 2026-08-06 with "Please see attached" and this shapefile,
 archived under data/source/raw/. Refreshing it means asking again.
 
+CORRECTED 2026-10-10: "Jefferson publishes no boundaries" was wrong about the
+page this file already cites. LEGAL_DESCRIPTIONS_URL itself carries a "PRECINCT
+MAPS" heading with four PDFs above the descriptions — "Rural Precincts with
+Roads.pdf" (made in ArcMap 2012-02-08, modified 2012-04-25), RuralPrecincts.pdf,
+"Urban Precincts.pdf" and UrbanPrecinctMaps.pdf (a 2016 scan), served from
+cms2.revize.com, whose robots.txt allows /*.pdf. They are rasters of the
+2011-12 precinct plan, so the Clerk's shapefile remains the only DATA source and
+nothing below changes; the sentence was a claim about the county and it was not
+true of it.
+
 THE GEOMETRY IS NOW CHECKED AGAINST A PUBLISHED SOURCE, added 2026-08-10.
 The shapefile arrived by e-mail, so for four days the only thing corroborating
 it was that it looked right. On 2026-08-10 Clerk Davis pointed at a page this

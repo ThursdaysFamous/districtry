@@ -29,7 +29,7 @@ import json
 import os
 import sys
 
-SOURCE_URL = "https://www.carrollcountyil.gov/county_board/board_members.php"
+SOURCE_URL = "https://www.carrollcountyil.gov/government/county_board/index.php"
 
 # THE SEAT COUNT IS CARRIED INTO THE DATA, not just asserted in this docstring,
 # because the card has no other way to know a district is SHORT. Emitting
