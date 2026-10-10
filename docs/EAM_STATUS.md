@@ -53,7 +53,7 @@ different thing from one it failed.
 | nc | **EAM·** | 100 | 100/100 § | 0 | 0 | by record | 9 | all | 7 of 13 levels |
 | ny | **EAM·** | 62 | 62/62 § | 68 | 78 | all | 33 | all | 9 of 13 levels |
 | ok | **EA··** | 77 | 77/77 § | 0 | 0 | by record | 10 | 7 without a job | 7 of 13 levels |
-| wi | **EAM·** | 72 | 72/72 | 1590 | 1,574 | all | 265 | all | 11 of 13 levels |
+| wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 265 | all | 11 of 13 levels |
 
 § Examined in part by a record covering the whole state rather
 than county by county. That is a weaker statement than a record
