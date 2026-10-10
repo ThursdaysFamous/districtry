@@ -727,6 +727,91 @@ def simplify(feats, spec):
                            % (spec["ceiling_m"], "; ".join("%s %.1f m" % (n, m) for m, n in over)))
 
 
+# NATIONS SEATED IN AN AREA THE CENSUS NAMES FOR ANOTHER. In Oklahoma several
+# federally recognized governments have no area of their own: the United
+# Keetoowah Band and the Delaware Tribe of Indians sit inside the Cherokee
+# OTSA, and the Alabama-Quassarte, Kialegee and Thlopthlocco tribal towns
+# inside the Creek one. A card that named only the Cherokee Nation over
+# Tahlequah would leave the UKB's own citizens looking for their government.
+# So for a state listed here, every government the Bureau seats in that state
+# that no area names is placed by its seat -- the Census's own internal point
+# for the Bureau's city, incorporated place or census-designated place -- and
+# the area holding that point carries it as "also seated here". That
+# is a statement about where a seat is, measured, and never one about which
+# ground a nation governs.
+SEAT_STATES = {"Oklahoma": ("40", "OK")}
+PLACE_LAYERS = (4, 5)  # tigerWMS Places: incorporated places, then CDPs
+
+
+def seat_points(state_fips, govs):
+    """{government name: (lon, lat, Census place name)} for each government's
+    seat city, from the Census's places layers. A city the Census answers with
+    no place, or with more than one, raises rather than placing a seat by guess."""
+    import urllib.parse
+    base = T.TIGERWEB + "/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/%d/query?"
+    out = {}
+    for gov in govs:
+        hits = []
+        for layer in PLACE_LAYERS:
+            q = urllib.parse.urlencode({
+                "where": "STATE='%s' AND BASENAME='%s'" % (state_fips,
+                                                          gov["city"].replace("'", "''")),
+                "outFields": "NAME,INTPTLAT,INTPTLON", "returnGeometry": "false",
+                "f": "json"})
+            got = T._require_no_error(T._get(base % layer + q), "place %s" % gov["city"])
+            hits.extend(f["attributes"] for f in got.get("features") or [])
+        if len(hits) != 1:
+            raise RuntimeError("the Census answers %d place(s) for %r, the seat of %r — "
+                               "settle it before a seat is placed"
+                               % (len(hits), gov["city"], gov["name"]))
+        a = hits[0]
+        out[gov["name"]] = (float(a["INTPTLON"]), float(a["INTPTLAT"]), a["NAME"])
+    return out
+
+
+def also_seated(feats, state_name, bia):
+    """Stamp `alsoSeated` onto each area holding the seat of a government its
+    Census name does not name. Returns the governments seated in no area."""
+    if state_name not in SEAT_STATES:
+        return []
+    fips, usps = SEAT_STATES[state_name]
+    # Only a government no area already names is placed: the rest are on the
+    # card of their own area, and some (the Cheyenne and Arapaho at Concho) sit
+    # in no Census place at all, so placing them would ask a question nobody
+    # needs answered.
+    named = set()
+    for f in feats:
+        p = f["properties"]
+        named.update(n["name"] for n in (p.get("nations") or []))
+        named.add(p["nation"])
+    govs = [g for g in bia.values() if g.get("state") == usps and g.get("city")
+            and g["name"] not in named]
+    points = seat_points(fips, govs)
+    sg = T._shapely()
+    shapes = [(f, T.even_odd(f["geometry"])) for f in feats]
+    outside = []
+    for name in sorted(points):
+        lon, lat, place = points[name]
+        pt = sg.Point(lon, lat)
+        homes = [f for f, g in shapes if g.contains(pt)]
+        if not homes:
+            outside.append((name, place))
+            continue
+        for f in homes:
+            p = f["properties"]
+            named = [n["name"] for n in p.get("nations") or []] or [p["nation"]]
+            if name in named:
+                continue
+            gov = bia[name]
+            p.setdefault("alsoSeated", []).append(
+                {"name": name, "seat": _seat(gov), "url": gov.get("website")})
+            print("build-tribal-areas: %s is seated at %s, inside %s"
+                  % (name, place, p["censusName"]))
+    for name, place in outside:
+        print("build-tribal-areas: %s is seated at %s, inside no drawn area" % (name, place))
+    return outside
+
+
 def build(state_name, tag, out_path=None):
     join, bia = load_join(), load_bia()
     areas, state_code, state_feat, resolved = _state_areas(state_name)
@@ -742,6 +827,7 @@ def build(state_name, tag, out_path=None):
                              here.get(code, []), counts, known, load_councils(),
                              state_name, bia))
     feats.sort(key=lambda f: (f["properties"]["nation"], f["properties"]["aiannh"]))
+    also_seated(feats, state_name, bia)
     if state_name in SIMPLIFY:
         simplify(feats, SIMPLIFY[state_name])
     doc = {
@@ -870,6 +956,18 @@ def check():
                 raise RuntimeError("%s links %r for %r where the Bureau publishes "
                                    "%r" % (tag, p["url"], p["nation"],
                                            gov.get("website")))
+            # A nation listed as seated here must be the Bureau's, as the Bureau
+            # gives it, in a state that places seats, and not one the area's own
+            # name already names.
+            for n in p.get("alsoSeated") or []:
+                g = bia.get(n["name"])
+                if (doc["state"] not in SEAT_STATES or g is None
+                        or n != {"name": n["name"], "seat": _seat(g), "url": g.get("website")}
+                        or n["name"] in government_names(entry)):
+                    raise RuntimeError(
+                        "%s: AIANNH %s lists %r as seated there in a way the Bureau's "
+                        "list and the join do not give — rebuild the file"
+                        % (tag, p["aiannh"], n["name"]))
             # A carried council must be exactly what the councils file says,
             # stamped by the one function that stamps it, so a weekly re-read
             # that forgot to re-stamp, or a hand edit, fails here.
@@ -904,6 +1002,29 @@ def check():
     if not seen:
         raise RuntimeError("no instance ships tribal-areas.json, so this gate "
                            "would pass vacuously")
+    # In a state that places seats, every government the Bureau seats there is
+    # named somewhere: by an area, or as seated in one. A government named
+    # nowhere is the card a citizen opens and does not find.
+    for tag in sorted(os.listdir(REPO)):
+        path = os.path.join(REPO, tag, "data", "app", "tribal-areas.json")
+        if not os.path.exists(path):
+            continue
+        doc = json.load(open(path))
+        if doc["state"] not in SEAT_STATES:
+            continue
+        usps = SEAT_STATES[doc["state"]][1]
+        named = set()
+        for f in doc["features"]:
+            p = f["properties"]
+            named.update(n["name"] for n in (p.get("nations") or []))
+            named.add(p["nation"])
+            named.update(n["name"] for n in (p.get("alsoSeated") or []))
+        missing = sorted(g["name"] for g in bia.values()
+                         if g.get("state") == usps and g["name"] not in named)
+        if missing:
+            raise RuntimeError("%s names %s nowhere, though the Bureau seats them in "
+                               "%s — rebuild, or record why" % (tag, "; ".join(missing),
+                                                               doc["state"]))
     shipped_states = {json.load(open(os.path.join(REPO, t, "data", "app",
                                                   "tribal-areas.json")))["state"]
                       for t in os.listdir(REPO)

@@ -915,6 +915,16 @@ try {
           t.by("What this area is").indexOf("not a legal boundary") !== -1 &&
           t.by("Why no names").indexOf("has not yet read") !== -1,
           JSON.stringify(t.text.slice(0, 300)));
+    check("Tahlequah also lists the United Keetoowah Band, seated there in an area the Census names for the Cherokee Nation",
+          t.text.indexOf("Also seated in this area") !== -1 &&
+          t.text.indexOf("United Keetoowah Band of Cherokee Indians in Oklahoma") !== -1 &&
+          t.text.indexOf("Delaware Tribe of Indians") !== -1,
+          JSON.stringify(t.text.slice(-400)));
+    const m = await at("35.4293,-96.3003");
+    check("Okemah names the Muscogee (Creek) Nation and lists the three tribal towns seated in its area",
+          m.by("Tribal government") === "The Muscogee (Creek) Nation" &&
+          ["Thlopthlocco Tribal Town", "Kialegee Tribal Town", "Alabama-Quassarte Tribal Town"].every((n) => m.text.indexOf(n) !== -1),
+          JSON.stringify(m.text.slice(-400)));
     const l = await at("34.6036,-98.3959");
     check("Lawton names all four nations of the shared area, each with its own seat, and no single seat",
           ["Kiowa", "Comanche Nation", "Apache Tribe of Oklahoma", "Fort Sill Apache"].every((n) => l.text.indexOf(n) !== -1) &&

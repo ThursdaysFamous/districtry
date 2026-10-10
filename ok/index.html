@@ -12447,6 +12447,13 @@ function initOklahomaExplorer() {
    * share one), the card names every one with its own seat and site, and
    * names none first by giving it the area's only link.
    *
+   * NATIONS SEATED IN AN AREA NAMED FOR ANOTHER. Five governments have no
+   * area of their own (the United Keetoowah Band and the Delaware Tribe of
+   * Indians in the Cherokee OTSA; three Muscogee tribal towns in the Creek
+   * one). The builder places each by its seat city and the card lists it as
+   * "Also seated in this area", which says where a seat is and nothing about
+   * which ground a nation governs.
+   *
    * WHO THE CARD NAMES. Nobody yet: no Oklahoma nation's council list has
    * been read, and the card says so in those words (ROSTER_NOT_SOUGHT).
    *
@@ -12481,6 +12488,7 @@ function initOklahomaExplorer() {
       { name: "populationNote", label: "Population", keys: ["populationnote"] },
       { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
       { name: "nations", label: "", keys: ["nations"], when: function () { return false; } },
+      { name: "alsoSeated", label: "", keys: ["alsoseated"], when: function () { return false; } },
       { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
       { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
       { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
@@ -12497,21 +12505,36 @@ function initOklahomaExplorer() {
       }
       return null;
     },
-    // EVERY NATION ON A SHARED AREA, each with its own seat and site.
+    // EVERY NATION ON A SHARED AREA, each with its own seat and site, and
+    // every government whose seat is inside this area though the Census's
+    // name for it names another nation (the builder measures the seat).
     people: function (result) {
-      var nations = result && result.nations;
-      if (!nations || !nations.length) return null;
+      var nations = (result && result.nations) || [];
+      var also = (result && result.alsoSeated) || [];
+      if (!nations.length && !also.length) return null;
+      var rowsOf = function (list) {
+        return renderPersonRows(list.map(function (n) {
+          var person = { name: String(n.name) };
+          if (n.seat) person.note = "Seat: " + String(n.seat);
+          if (n.url) person.links = [{ label: "Official website", url: String(n.url) }];
+          return person;
+        }));
+      };
       var wrap = cardEl("div");
-      wrap.appendChild(renderBodyIntro({
-        title: "Governments",
-        note: nations.length + " nations share this area"
-      }));
-      wrap.appendChild(renderPersonRows(nations.map(function (n) {
-        var person = { name: String(n.name) };
-        if (n.seat) person.note = "Seat: " + String(n.seat);
-        if (n.url) person.links = [{ label: "Official website", url: String(n.url) }];
-        return person;
-      })));
+      if (nations.length) {
+        wrap.appendChild(renderBodyIntro({
+          title: "Governments",
+          note: nations.length + " nations share this area"
+        }));
+        wrap.appendChild(rowsOf(nations));
+      }
+      if (also.length) {
+        wrap.appendChild(renderBodyIntro({
+          title: "Also seated in this area",
+          note: "These governments have their seat inside this area, which the Census names for another nation. Where each one's own land lies is not something the Census's map says."
+        }));
+        wrap.appendChild(rowsOf(also));
+      }
       return wrap;
     },
     emptyNote: "This point is not on any tribal area the Census draws in Oklahoma."

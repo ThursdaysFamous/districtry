@@ -68,9 +68,12 @@ nations, and every statistical-area card says the Census draws the area to count
 is not a legal boundary. That is the Census's classification and not a legal one: since McGirt v.
 Oklahoma (2020) federal courts have held several of these reservations were never disestablished,
 and this layer settles none of it. Where the Census's name for an area names several nations, the
-card names every one, each with its own seat and site. No council is named yet (`ROSTER_NOT_SOUGHT`
-in `scripts/build_tribal_areas.py`), and five nations seated inside an area named for another
-nation are not named; both are in gap `ok-tribal-government`.
+card names every one, each with its own seat and site. Five governments with no area
+of their own (the United Keetoowah Band and the Delaware Tribe of Indians in the Cherokee OTSA, and
+three Muscogee tribal towns in the Creek one) are placed by their seat city and listed on that
+area's card as "Also seated in this area", and `--check` fails if any government the Bureau seats in
+Oklahoma is named nowhere. No council is named yet (`ROSTER_NOT_SOUGHT` in
+`scripts/build_tribal_areas.py`), recorded in gap `ok-tribal-government`.
 
 **THE CHAMBER BOUNDARIES USE DOUGLAS-PEUCKER AT `interval=20`**, inherited from North Carolina's
 measurement and re-measured here: worst stray 23.9 / 24.0 / 24.0 m against the 25 m ceiling the
