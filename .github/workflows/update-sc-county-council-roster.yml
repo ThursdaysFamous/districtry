@@ -23,6 +23,15 @@ name: Update South Carolina county councils
 # when the shipped file was built and opens or updates one tracking issue when
 # they differ, staying green — the validate-sources pattern.
 #
+# THE RESULTS SITE TURNS GITHUB'S RUNNERS AWAY (measured 2026-10-11: its
+# robots.txt answers HTTP 202, an access control, on 2 of 2 runs, while it serves
+# the build sandbox normally), so this job often cannot rebuild. The builder then
+# keeps the shipped roster unchanged, still reads every county page against it,
+# and exits 75; the rebuild step reports that on one tracking issue and stays
+# green. It turns RED once a new election's results have been out CANVASS_DAYS
+# and nobody has read them, because from then on the names are owed a refresh —
+# see `owed()` in the builder and sc/WATCH.md.
+#
 # SOUTH CAROLINA IS DARK, so this job regenerates no county page:
 # scripts/build_county_pages.py records this roster in NOT_COUNTY_BOARDS until
 # go-live adds its adapter. Go-live adds the county-page steps here in the same
@@ -79,9 +88,21 @@ jobs:
           exit 0
 
       # Asks the six elections from the 2022 general on (about 300 requests,
-      # paced half a second apart), then reads the 46 county pages.
+      # paced half a second apart), then reads the 46 county pages. Exit 75 is
+      # the results site refusing or unreadable with nothing owed yet: the shipped
+      # roster is kept and the county pages were still read against it.
       - name: Rebuild county council roster
-        run: python3 sc/scripts/build_sc_county_council_roster.py
+        id: rebuild
+        run: |
+          set +e
+          python3 sc/scripts/build_sc_county_council_roster.py 2>&1 | tee rebuild.log
+          code=${PIPESTATUS[0]}
+          if [ "$code" = 75 ]; then
+            echo "unreadable=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::The results site could not be read; the shipped roster was kept and the county pages were read against it."
+            exit 0
+          fi
+          exit "$code"
 
       - name: Validate app + data files
         run: |
@@ -117,6 +138,33 @@ jobs:
           if [ -n "$existing" ]; then
             gh issue edit "$existing" --body-file issue-body.md
             gh issue comment "$existing" --body "Refreshed by the weekly South Carolina council map watch — see the updated issue body."
+            echo "Updated existing issue #$existing."
+          else
+            gh issue create --title "$title" --body-file issue-body.md
+            echo "Opened a new tracking issue."
+          fi
+
+      - name: Report the unreadable results site
+        if: steps.rebuild.outputs.unreadable == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="South Carolina results site refused the weekly council job"
+          {
+            echo "_Automated by \`.github/workflows/update-sc-county-council-roster.yml\` on $(date -u +%Y-%m-%d). Nothing was changed in the app._"
+            echo
+            echo "The State Election Commission's results site could not be read from GitHub's runner, so the county council names were not rebuilt from the certified results. The shipped names were kept, and every county page that could be read was checked against them."
+            echo
+            echo "This run stays green while no new election is owed. Once a general's results have been out for three weeks and nobody has read them, the run turns red and names the election. sc/WATCH.md says what to do then."
+            echo
+            echo '```'
+            grep -E "^(sc-council-roster|robots.txt|  county page|county pages:)" rebuild.log || true
+            echo '```'
+          } > issue-body.md
+
+          existing="$(gh issue list --state open --search "in:title $title" --json number --jq '.[0].number')"
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file issue-body.md
             echo "Updated existing issue #$existing."
           else
             gh issue create --title "$title" --body-file issue-body.md

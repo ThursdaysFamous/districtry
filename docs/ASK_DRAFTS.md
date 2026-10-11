@@ -6987,3 +6987,64 @@ be its own letter.
 **Any answer is useful.** A yes to the first two would let every county's current map be found in
 one place; a pointer to maps the Board already posts would answer most of the letter; a clean no
 closes the policy route and leaves a narrow change in law as the fallback.
+
+## Ask sc-results-site-runner — South Carolina State Election Commission: a way for our weekly program to read the county council results
+
+> **NOT YET ASKED — DRAFTED 2026-10-11**, to the State Election Commission at
+> `elections@elections.sc.gov`, the general address on its own contact page (read 2026-10-11).
+> Adam was asked in the South Carolina thread on 2026-10-11 how the council names get refreshed
+> after the 3 November election, and this letter is the recommended answer. The Letters thread
+> searches the mailbox for any earlier contact with the Commission before it makes the draft. On
+> send, record `ASKED <date>` in gap `sc-county-council`.
+
+**Why this is asked.** South Carolina's map (still hidden) names all 334 county council seats from
+the Commission's certified results, and a weekly job is meant to refresh them after each election.
+From GitHub's servers, where that job runs, the results site answers its robots.txt with HTTP 202,
+a challenge, on both runs so far (2026-10-11), so the job reads nothing there; a challenge is an
+access control and is not worked around. From the sandbox the roster was built in, the same site
+answered normally the same day, which is how the shipped names were read. Every council seat is on
+the November ballot, and the Commission's results page links no other copy of the certified
+results. The challenge may be the results vendor's setting rather than the Commission's choice, so
+the letter asks them to pass it on. Three answers all work: permission for the weekly program, a
+file outside the check, or a clean no.
+
+> Subject: Reading county council results on your election results site
+>
+> Dear State Election Commission,
+>
+> I run districtry (https://districtry.com), a free public map where a resident can click their
+> address and see who represents them. We are building South Carolina's map now, including every
+> county council seat, and the names come from your certified election results. Each card will
+> link back to the results it came from.
+>
+> To keep the names current after each election, a small program reads your results site once a
+> week. It identifies itself by name, reads only the results summaries, and reads slowly. When it
+> runs from GitHub's servers, where our scheduled programs run, the results site answers with a
+> security check, so the program stops and reads nothing. We will not try to get around that
+> check. The names we have now were read from the site before we found this, from a computer it
+> answered normally.
+>
+> Is there a way for us to read the county council results that you are comfortable with? Any of
+> these would work:
+>
+> 1. permission for our weekly program to read the results site from GitHub's servers (it can
+>    send whatever identifying name or header suits you);
+> 2. a file of the certified results, or of the county council winners, posted somewhere outside
+>    the security check; or
+> 3. a no, which is a perfectly good answer. We would then keep the names current from each
+>    county's own council page.
+>
+> If the results site is run for you by a vendor, I would be grateful if you could pass this
+> along to them.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** Permission: recorded in `sc/scripts/build_sc_county_council_roster.py`
+with its date and whatever identifier the Commission names, and the weekly job rebuilds the names
+itself again. A file: the builder reads it instead, after its robots.txt. A no: the certified
+results stay the one-time source they already are, the county pages become how a changed seat is
+found, and gap `sc-county-council` says so.

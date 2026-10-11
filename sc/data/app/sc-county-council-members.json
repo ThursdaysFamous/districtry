@@ -75,7 +75,7 @@
  },
  "45003": {
   "county": "Aiken",
-  "countyPage": "https://www.aikencountysc.gov/DspDocTopic?qDocID=37",
+  "countyPage": "https://www.aikencountysc.gov/529/Council-Members",
   "form": "district",
   "seats": [
    {
@@ -921,6 +921,10 @@
     "sourceUrl": "https://www.enr-scvotes.org/SC/Chesterfield/122449/"
    },
    {
+    "countySays": {
+     "name": "Lawrance Brand",
+     "read": "2026-10-11"
+    },
     "district": "2",
     "election": "2022-11-08",
     "electionName": "2022 general election",
@@ -1251,6 +1255,10 @@
   "form": "district",
   "seats": [
    {
+    "countySays": {
+     "name": "Peter Smith Jr.",
+     "read": "2026-10-11"
+    },
     "district": "1",
     "election": "2022-11-08",
     "electionName": "2022 general election",
@@ -1296,6 +1304,10 @@
     "sourceUrl": "https://www.enr-scvotes.org/SC/Dorchester/122454/"
    },
    {
+    "countySays": {
+     "name": "Frankie Staropoli",
+     "read": "2026-10-11"
+    },
     "district": "6",
     "election": "2024-11-05",
     "electionName": "2024 general election",
@@ -2981,7 +2993,7 @@
  },
  "45083": {
   "county": "Spartanburg",
-  "countyPage": "https://www.spartanburgcounty.org/189/County-Council",
+  "countyPage": "https://www.spartanburgcounty.gov/189/County-Council",
   "form": "district",
   "seats": [
    {
@@ -3011,6 +3023,10 @@
     "sourceUrl": "https://www.enr-scvotes.org/SC/Spartanburg/115454/"
    },
    {
+    "countySays": {
+     "name": "Paul D. Abbott, Jr.",
+     "read": "2026-10-11"
+    },
     "district": "3",
     "election": "2024-11-05",
     "electionName": "2024 general election",
@@ -3029,6 +3045,10 @@
     "sourceUrl": "https://www.enr-scvotes.org/SC/Spartanburg/122478/"
    },
    {
+    "countySays": {
+     "former": true,
+     "read": "2026-10-11"
+    },
     "district": "5",
     "election": "2022-11-08",
     "electionName": "2022 general election",
@@ -3267,7 +3287,7 @@
  },
  "45091": {
   "county": "York",
-  "countyPage": "https://www.yorkcountygov.com/375/County-Council",
+  "countyPage": "https://www.yorkcountysc.gov/375/County-Council",
   "form": "district",
   "seats": [
    {

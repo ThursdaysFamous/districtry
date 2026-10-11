@@ -60,16 +60,36 @@ seat shows its last general's winner. The county pages below are what catch it.
 A SECOND PUBLISHER CHECKS THE FIRST. `COUNTY_PAGES` names each county's own
 council page. Every run reads each page it can (robots.txt read at every
 redirect hop), and checks that every winner's surname appears on it. Read here
-on 2026-10-11, four seats are a different person on the county's page, and
-`COUNTY_SAYS` records each by hand with the name the county gives and the date
-it was read; the record carries it as `countySays` and the card prints both,
-each saying whose it is. The results winner is not overwritten: the county page
-is the newer fact and the results the certified one, and a reader should see
-that they disagree. A NEW disagreement with no entry fails the build, and so
-does an entry that has stopped describing the page (its name gone, or the
-winner's surname back), so the table cannot rot in either direction. A winner
-elected within WITNESS_GRACE_DAYS is not held to the page, because a new member
-takes office in January and the county's page follows after.
+on 2026-10-11, eleven seats are not the winner on the county's page (one of
+them names the winner as a former member), and `COUNTY_SAYS` records each by
+hand with what the county says and the date it was read; the record carries it
+as `countySays` and the card prints both, each saying whose it is. The results
+winner is not overwritten: the county page is the newer fact and the results
+the certified one, and a reader should see that they disagree. A NEW
+disagreement with no entry fails the build, and so does an entry that has
+stopped describing the page (its name gone, or the winner's surname back), so
+the table cannot rot in either direction. A winner elected within
+WITNESS_GRACE_DAYS is not held to the page, because a new member takes office
+in January and the county's page follows after.
+
+THE RESULTS SITE CHALLENGES GITHUB'S RUNNERS, SO THE WEEKLY JOB OFTEN CANNOT
+REBUILD AND MUST NOT GO QUIET ABOUT IT. Measured 2026-10-11: from this
+project's build sandbox www.enr-scvotes.org answers robots.txt with 404 (allow
+all) and every results file with 200, while from a GitHub runner its robots.txt
+answers HTTP 202, an access control, on 2 of 2 runs, so the scheduled job may
+not fetch a single result there. A refusal or a failed read on the results site
+is therefore not a crash. The run keeps the shipped roster exactly as it is,
+reads every county page against it (the witness below runs in full), and exits
+EX_RESULTS_UNREADABLE (75), which the workflow reports on a tracking issue
+rather than as a red run. What stops that becoming a job that never refreshes
+anything is `owed()`: once a cycle's general is CANVASS_DAYS past and the
+Commission's results page links an election of that cycle that `ELECTIONS`
+does not pin, a run that cannot read it FAILS, naming the election, because
+from then on the shipped names are owed a refresh nobody has done. Between
+elections the certified results do not change, so not reading them costs
+nothing. Whoever rebuilds after an election adds its ids to `ELECTIONS` in the
+same change. How that rebuild is done while the runners are refused is a
+question for the operator, recorded in sc/WATCH.md.
 
 What the witness cannot see: it matches SURNAMES, so a page naming a different
 person with the winner's surname reads as agreement; and a county whose page
@@ -114,6 +134,7 @@ RESULTS_HOST = "https://www.enr-scvotes.org"
 RESULTS_PAGE = "https://scvotes.gov/elections-statistics/election-results/"
 REQUEST_TIMEOUT = 60
 PACE_SECONDS = 0.5
+EX_RESULTS_UNREADABLE = 75
 
 FIRST_CYCLE = 2022
 CANVASS_DAYS = 21
@@ -173,10 +194,13 @@ PARTY_NAMES = {"REP": "Republican", "DEM": "Democratic", "LIB": "Libertarian",
 # The state's council map carries a page link per county, and four of them
 # had moved when read on 2026-10-11 (Richland, Lancaster, Jasper, Marlboro);
 # Laurens's points at laurenscounty.us, a domain that now redirects to two
-# unrelated businesses, where the county is at laurenscountysc.gov.
+# unrelated businesses, where the county is at laurenscountysc.gov. Aiken's
+# first link here answered a 404 page, and Spartanburg's and York's moved from
+# .org and .com to .gov (all three read 2026-10-11). The first url in a list is
+# the one the card links.
 COUNTY_PAGES = {
     "Abbeville": ["https://abbevillecountysc.com/county-council/"],
-    "Aiken": ["https://www.aikencountysc.gov/DspDocTopic?qDocID=37"],
+    "Aiken": ["https://www.aikencountysc.gov/529/Council-Members"],
     "Allendale": ("https://www.allendalecounty.com/government/county_government/"
                   "city_council_members.php",
                   "the county's robots.txt disallows every path for every "
@@ -222,35 +246,64 @@ COUNTY_PAGES = {
     "Pickens": ["https://www.co.pickens.sc.us/government/county_council/index.php"],
     "Richland": ["https://www.richlandcountysc.gov/Government/Elected-Offices/County-Council"],
     "Saluda": ["https://saludacounty.sc.gov/county-council"],
-    "Spartanburg": ["https://www.spartanburgcounty.org/189/County-Council"],
+    # The council page names the chairman only; each district has a page.
+    "Spartanburg": ["https://www.spartanburgcounty.gov/189/County-Council",
+                    "https://www.spartanburgcounty.gov/194/Council-Chairman",
+                    "https://www.spartanburgcounty.gov/196/District-1",
+                    "https://www.spartanburgcounty.gov/197/District-2",
+                    "https://www.spartanburgcounty.gov/198/District-3",
+                    "https://www.spartanburgcounty.gov/199/District-4",
+                    "https://www.spartanburgcounty.gov/200/District-5",
+                    "https://www.spartanburgcounty.gov/201/District-6"],
     "Sumter": ["https://www.sumtercountysc.org/our_council/council_members/index.php"],
     "Union": ["https://gearupunionsc.com/officials/union-county-council/",
               "https://gearupunionsc.com/officials/union-county-supervisor/"],
     "Williamsburg": ["https://www.williamsburgcounty.sc.gov/184/County-Council"],
-    "York": ["https://www.yorkcountygov.com/375/County-Council"],
+    "York": ["https://www.yorkcountysc.gov/375/County-Council"],
 }
 
-# Counties whose page this project has not been able to read from where this
-# file was written (2026-10-11): a Cloudflare block in front of four
-# CivicPlus sites, an Akamai denial on two, Charleston's own block page, and a
-# rate limit on Chesterfield's — each refusing this address, which is not the
-# address the weekly job reads from. (Chesterfield's site is case-sensitive:
-# the county's own home page links /countycouncil, and /CountyCouncil is a
-# 404, which is what the first reading here asked for.) Their pages are read every run, and a
-# winner they do not name is PRINTED rather than failed until a person has
-# read the page and settled it, so that a first reading from the runner cannot
-# turn the job red on a disagreement nobody has looked at. Settle one and
-# remove it; an entry for a county whose page names every winner fails.
-UNREAD_BY_A_PERSON = {"Aiken", "Charleston", "Chesterfield", "Dorchester",
-                      "Kershaw", "Orangeburg", "Spartanburg", "York"}
+# Counties whose page no person has read, so a winner it does not name is
+# PRINTED rather than failed: a first reading from the runner must not turn
+# the job red on a disagreement nobody has looked at. Settle one and remove it;
+# an entry for a county whose page names every winner fails.
+#
+# Charleston is the one left. Its site answers this project with its own block
+# page from this sandbox and from GitHub's runner, for this project's client
+# and for a browser's alike (read 2026-10-11), so the refusal is about the
+# address and no client changes it.
+#
+# The other seven were read by a person on 2026-10-11. Aiken, Kershaw,
+# Orangeburg and York name every winner; Chesterfield, Dorchester and
+# Spartanburg differ on five seats, each now in COUNTY_SAYS below. Six of
+# them refuse THIS PROJECT'S OWN CLIENT at the page itself, from the sandbox
+# and from the runner alike: Aiken, Orangeburg,
+# Spartanburg and York answer HTTP 403 with Cloudflare's "Attention Required!"
+# block page, and Dorchester and Kershaw answer HTTP 403 with Akamai's "Access
+# Denied". Each served its page to the standard library with
+# scraper_common.UA_CHROME_WIN_126 and UA_HINTS_CHROME_126, robots.txt read
+# with that same client first (no rule matches any path read), and that is how
+# the person read them. This builder still sends its own token to all six, so
+# the weekly job prints them unreadable and re-checks their COUNTY_SAYS
+# entries only on a run where they answer it; switching those hosts to the
+# browser client is a separate change, because it must first be measured from
+# the runner and recorded in the fleet's user-agent measurements. Chesterfield
+# was refused only by a rate limit here and is read by the runner.
+UNREAD_BY_A_PERSON = {"Charleston"}
 
 # Seats where the county's own page does not name the certified winner, each
 # read by hand: the page names someone else ("name"), calls the seat vacant
-# ("vacant"), or lists the other members and not this one ("notListed").
-# Re-verified every run the page can be read: the winner's surname must still
-# be absent, and a name the county gives must still be present. All six read
-# 2026-10-11 from the page in COUNTY_PAGES; none is explained by a special
-# election this builder can see.
+# ("vacant"), lists the other members and not this one ("notListed"), or
+# names the winner as a former member ("former"). Re-verified every run the
+# page can be read: for the first three the winner's surname must still be
+# absent and a name the county gives must still be present; for "former" the
+# page's own words saying so (`phrase`) must still be on it, word for word,
+# because a surname alone can be somebody else's (Spartanburg's council page
+# names a clerk Walker). All
+# eleven read 2026-10-11 from the page in COUNTY_PAGES. Two are explained by
+# events the results this builder reads cannot show: Spartanburg District 3
+# by a special election in November 2025 and District 5 by a resignation in
+# August 2026, both as local news reported them. The other nine are not
+# explained by anything this builder can see.
 COUNTY_SAYS = {
     # "LaSean Tutt ... serving as the elected District 2 Councilwoman", term
     # expiring 2026; the 2022 general's District 2 winner is Christine W Long.
@@ -271,6 +324,28 @@ COUNTY_SAYS = {
     # "Ceccarelli, Gene Council Member Coosawhatchie Township".
     "Jasper|Coosawhatchie township": {"winner": "Martin Sauls IV",
                                       "name": "Gene Ceccarelli", "read": "2026-10-11"},
+    # "Dr. Lawrance Brand District 2 Term Expires: December 31, 2026".
+    "Chesterfield|District 2": {"winner": "Gerald Miller", "name": "Lawrance Brand",
+                                "read": "2026-10-11"},
+    # "District 1: Peter Smith Jr." and "District 6: Frankie Staropoli", in the
+    # page's own list and again in its contact table.
+    "Dorchester|District 1": {"winner": "Harriet Holman", "name": "Peter Smith Jr.",
+                              "read": "2026-10-11"},
+    "Dorchester|District 6": {"winner": "Bill Hearn", "name": "Frankie Staropoli",
+                              "read": "2026-10-11"},
+    # The District 3 page names "Paul D. Abbott, Jr.", "Term Expires:
+    # 01/01/2029", the term the 2024 winner was elected to. Local news reports
+    # David Britt resigned in May 2025 and Abbott won a special election for
+    # the rest of the term that November; this builder reads no special
+    # elections, so the page is what records it.
+    "Spartanburg|District 3": {"winner": "David Britt", "name": "Paul D. Abbott, Jr.",
+                               "read": "2026-10-11"},
+    # The District 5 page: "Bob Walker (Retired) Former Spartanburg County
+    # Council Member". Local news reports he resigned in August 2026 and that
+    # the governor left the seat to the 3 November election.
+    "Spartanburg|District 5": {"winner": "Bob Walker", "former": True,
+                               "phrase": "Bob Walker (Retired) Former",
+                               "read": "2026-10-11"},
 }
 
 
@@ -356,6 +431,57 @@ def get_text(url):
     return _get(url)[2]
 
 
+class ResultsUnreadable(Exception):
+    """The results site refused this client or could not be read this run."""
+
+
+def results_text(url):
+    """get_text for the results site, where a robots refusal, a network
+    failure or anything but a 200 is ResultsUnreadable rather than a crash: a
+    challenge page read as JSON would otherwise surface as a parse error."""
+    try:
+        status, _, text = _get(url)
+    except SystemExit as exc:  # require_robots_once refuses by raising it
+        # It prints the refusal itself and raises with a bare exit status, so
+        # str(exc) would be "1"; only a message raised with one is worth keeping.
+        raise ResultsUnreadable(exc.code if isinstance(exc.code, str) else
+                                "robots.txt refused this client (the reason is "
+                                "printed above)")
+    except (OSError, RuntimeError) as exc:
+        raise ResultsUnreadable("%s: %s" % (type(exc).__name__, exc))
+    if status != 200:
+        raise ResultsUnreadable("%s answered HTTP %d" % (url, status))
+    return text
+
+
+def general_day(year):
+    """The general election's date in an even year: the Tuesday after the
+    first Monday in November."""
+    nov1 = datetime.date(year, 11, 1)
+    day = nov1 + datetime.timedelta(days=(1 - nov1.weekday()) % 7)
+    if day == nov1:  # the Tuesday after the first MONDAY
+        day += datetime.timedelta(days=7)
+    return day
+
+
+def owed(found, today):
+    """Problems for each election the results page links that `ELECTIONS`
+    does not pin, once its cycle's general is CANVASS_DAYS past. Asked only
+    when the results site could not be read, because a run that reads it takes
+    the new election itself."""
+    pinned = {e["id"] for e in ELECTIONS}
+    out = []
+    for eid, meta in sorted(found.items()):
+        age = (today - general_day(meta["cycle"])).days
+        if eid not in pinned and age >= CANVASS_DAYS:
+            out.append("the results page links the %d %s (election %s), %d days after "
+                       "that general, and this run could not read the results site, "
+                       "so the shipped names are owed a refresh — rebuild and add it to "
+                       "ELECTIONS (sc/WATCH.md says how)"
+                       % (meta["cycle"], meta["kind"], eid, age))
+    return out
+
+
 def discover(today):
     """General-election links on the Commission's results page from
     FIRST_CYCLE on, as {id: {cycle, kind}}; and fail on an overdue general."""
@@ -378,10 +504,7 @@ def discover(today):
         fail("the results page carries no general-election link at all — its "
              "layout changed, and this builder cannot see new elections")
     for year in range(2026, today.year + 1, 2):
-        nov1 = datetime.date(year, 11, 1)
-        day = nov1 + datetime.timedelta(days=(1 - nov1.weekday()) % 7)
-        if day == nov1:  # the Tuesday after the first MONDAY
-            day += datetime.timedelta(days=7)
+        day = general_day(year)
         if (today - day).days > OVERDUE_DAYS and not any(
                 e["cycle"] == year and e["kind"] == "general" for e in found.values()):
             fail("the %d general (%s) is %d days past and the results page links "
@@ -391,15 +514,15 @@ def discover(today):
 
 def fetch_election(eid):
     """(settings, {county: (summary rows, county results url)})."""
-    ver = get_text("%s/SC/%s/current_ver.txt" % (RESULTS_HOST, eid)).strip()
-    settings = json.loads(get_text(
+    ver = results_text("%s/SC/%s/current_ver.txt" % (RESULTS_HOST, eid)).strip()
+    settings = json.loads(results_text(
         "%s/SC/%s/%s/json/en/electionsettings.json" % (RESULTS_HOST, eid, ver)))
     details = settings["settings"]["electiondetails"]
     out = {}
     for row in details.get("participatingcounties") or []:
         name, ceid, cver = row.split("|")[:3]
         url = "%s/SC/%s/%s/%s/json/en/summary.json" % (RESULTS_HOST, name, ceid, cver)
-        out[name] = (json.loads(get_text(url)),
+        out[name] = (json.loads(results_text(url)),
                      "%s/SC/%s/%s/" % (RESULTS_HOST, name, ceid))
     return details, out
 
@@ -606,9 +729,9 @@ def surname_parts(name):
     return [p for p in re.split(r"[-\s]", _fold(toks[-1])) if p] if toks else []
 
 
-def page_words(text):
-    """The page's visible text plus image alt and title text, as a set of
-    folded words. Nothing else is kept."""
+def page_tokens(text):
+    """The page's visible text plus image alt and title text, as a list of
+    folded words in page order. Nothing else is kept."""
     alts = " ".join(re.findall(r'\b(?:alt|title)="([^"]*)"', text, re.I))
     # Greenville writes each member's name into the page from an inline script
     # (`var contact = " Joey Russo"`, to hide the e-mail address from
@@ -616,7 +739,19 @@ def page_words(text):
     alts += " " + " ".join(re.findall(r'\bvar\s+contact\s*=\s*"([^"]*)"', text))
     t = re.sub(r"(?is)<(script|style|noscript)[^>]*>.*?</\1>", " ", text)
     t = html.unescape(re.sub(r"<[^>]+>", " ", t)) + " " + html.unescape(alts)
-    return set(re.findall(r"[a-z]+", _fold(t).replace("'", "").replace("’", "")))
+    return re.findall(r"[a-z]+", _fold(t).replace("'", "").replace("’", ""))
+
+
+def page_words(text):
+    return set(page_tokens(text))
+
+
+def has_phrase(token_lists, phrase):
+    """Whether the folded words of `phrase` appear consecutively on a page."""
+    want = page_tokens(phrase)
+    n = len(want)
+    return bool(n) and any(toks[i:i + n] == want for toks in token_lists
+                           for i in range(len(toks) - n + 1))
 
 
 def witness(roster, today):
@@ -628,9 +763,10 @@ def witness(roster, today):
             print("  county page %s: not read — %s" % (county, entry[1]))
             continue
         try:
-            words = set()
+            words, tokens = set(), []
             for url in entry:
-                words |= page_words(get_text(url))
+                tokens.append(page_tokens(get_text(url)))
+                words |= set(tokens[-1])
         except BaseException as exc:  # a robots refusal raises SystemExit
             if isinstance(exc, KeyboardInterrupt):
                 raise
@@ -650,6 +786,12 @@ def witness(roster, today):
             present = any(p in words for p in surname_parts(rec["name"]))
             says = COUNTY_SAYS.get(label)
             if says and says.get("winner") == rec["name"]:
+                if says.get("former"):
+                    if not has_phrase(tokens, says["phrase"]):
+                        problems.append("COUNTY_SAYS %s no longer describes the county's "
+                                        "page (%r is gone from it) — re-read it"
+                                        % (label, says["phrase"]))
+                    continue
                 theirs = (surname_parts(says["name"]) if says.get("name")
                           else ["vacant"] if says.get("vacant") else [])
                 if present or (theirs and not any(p in words for p in theirs)):
@@ -692,11 +834,14 @@ def attach_county_says(roster):
             fail("COUNTY_SAYS %s names winner %r, and %d seats match"
                  % (label, says.get("winner"), len(hits)))
         out = {"read": says["read"]}
-        for k in ("name", "vacant", "notListed"):
+        for k in ("name", "vacant", "notListed", "former"):
             if says.get(k):
                 out[k] = says[k]
         if len(out) != 2:
-            fail("COUNTY_SAYS %s must say exactly one of name, vacant, notListed" % label)
+            fail("COUNTY_SAYS %s must say exactly one of name, vacant, notListed, "
+                 "former" % label)
+        if out.get("former") and not says.get("phrase"):
+            fail("COUNTY_SAYS %s says former and quotes no phrase to re-check" % label)
         hits[0]["countySays"] = out
 
 
@@ -789,11 +934,27 @@ def main():
     for eid in sorted(set(pinned) - set(found)):
         print("  note: election %s is no longer linked from the results page" % eid)
     elections = []
-    for e in sorted(pinned.values(), key=lambda e: (e["cycle"], KIND_ORDER[e["kind"]])):
-        details, counties = fetch_election(e["id"])
-        elections.append({**e, "details": details, "counties": counties})
-        print("  election %s (%d %s, %s): %d counties"
-              % (e["id"], e["cycle"], e["kind"], details["electiondate"], len(counties)))
+    try:
+        for e in sorted(pinned.values(), key=lambda e: (e["cycle"], KIND_ORDER[e["kind"]])):
+            details, counties = fetch_election(e["id"])
+            elections.append({**e, "details": details, "counties": counties})
+            print("  election %s (%d %s, %s): %d counties"
+                  % (e["id"], e["cycle"], e["kind"], details["electiondate"], len(counties)))
+    except ResultsUnreadable as exc:
+        print("sc-council-roster: the results site could not be read this run — %s" % exc)
+        print("  the shipped roster is kept as it is; reading the county pages against it")
+        with open(OUT_FILE, encoding="utf-8") as f:
+            doc = json.load(f)
+        problems, named, total = check(doc, geo, groups)
+        problems += witness({rec["county"]: rec["seats"] for rec in doc.values()}, today)
+        problems += owed(found, today)
+        if problems:
+            for p in problems:
+                print("build-sc-county-council-roster: FAIL: " + p)
+            raise SystemExit(1)
+        print("sc-council-roster: nothing written; %d of %d shipped seats named, and no "
+              "new election is owed yet" % (named, total))
+        raise SystemExit(EX_RESULTS_UNREADABLE)
     all_contests, held = contests(elections, groups, today)
     for c, why in held:
         print("  held: %s %s %s — %s" % (c["date"], c["county"], c["contest"], why))
