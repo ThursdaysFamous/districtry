@@ -4064,8 +4064,9 @@ function initSouthCarolinaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "sc-senate": "scs", "county": "co",
-    "school-district-unified": "su", "sc-house": "sch", "zip-code": "zp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "school-district-unified": "su", "sc-house": "sch", "county-council": "cu",
+    "zip-code": "zp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
+    "post-office": "po" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8464,6 +8465,7 @@ function initSouthCarolinaExplorer() {
     "county",            // 46 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "school-district-unified", // 72 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
     "sc-house",          // 124 House districts — the smallest of the three chamber tilings
+    "county-council",    // 315 council districts in 46 counties (one of them, Hampton's, the whole county) — smaller than a state House district and larger than most ZIP codes
     "zip-code",          // 841 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside South Carolina
     "municipality",      // 271 incorporated cities and towns, live from TIGERweb
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -12289,13 +12291,10 @@ function initSouthCarolinaExplorer() {
    * instance per docs/EXPANSION_GUIDE.md Part 2 (statewide growth) and Part 3
    * (the per-county build).
    *
-   * THE LAYER THIS INSTANCE IS BUILT TOWARD IS `county-council`. Every South
-   * Carolina county has been governed by an elected county council since the
-   * Home Rule Act of 1975, and the state Revenue and Fiscal Affairs Office
-   * publishes every county's council districts; the State Election
-   * Commission's results name who won each seat. Neither is wired in this
-   * first change, which ships the national tier alone — see sc/WATCH.md for
-   * the measurements and the order the plan takes them in.
+   * THE FLAGSHIP IS `county-council`, every county's council districts from
+   * the state Revenue and Fiscal Affairs Office with each seat's winner from
+   * the State Election Commission's certified results — see its block below
+   * and sc/WATCH.md.
    * ======================================================================= */
 
   // The one state fact every TIGERweb where-clause reads.
@@ -12372,19 +12371,241 @@ function initSouthCarolinaExplorer() {
     return load;
   }
 
+  /* ---------- County council — every county, one layer ----------
+   * Every South Carolina county has been governed by an elected council since
+   * the Home Rule Act of 1975. The districts are the state Revenue and Fiscal
+   * Affairs Office's, all 46 counties in one layer
+   * (sc/scripts/build_sc_county_council_districts.py,
+   * data/app/sc-county-council-districts.json); the names are the winners of
+   * each seat's most recent general election in the State Election
+   * Commission's certified results
+   * (sc/scripts/build_sc_county_council_roster.py,
+   * data/app/sc-county-council-members.json), keyed by county FIPS.
+   *
+   * THE NAMES ARE ELECTION WINNERS AND THE CARD SAYS SO. A winner is dated to
+   * the election that seated them and is not a claim about who sits today.
+   * Each county's own council page was read beside them; where it names
+   * someone else, calls the seat vacant, or leaves the winner off, the card
+   * prints both, each saying whose it is.
+   *
+   * TWO COUNTIES ARE NOT DISTRICT MAPS. Hampton elects all five members at
+   * large, so its one feature is the whole county; Jasper elects all five by
+   * the whole county, four of them required to live in one of four townships
+   * whose numbers on the state's map are not tied to a township name anywhere
+   * this project has found. Both cards say so and name every member. Seats
+   * elected by the whole county (a chair, a supervisor, an at-large member)
+   * are listed on every district card of that county and on the County card.
+   * ---------- */
+  var loadScCouncilDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sc-county-council-districts.json", {}, 2);
+  });
+  var loadScCouncilRoster = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sc-county-council-members.json", {}, 2);
+  });
+  var SC_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  function scDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return SC_MONTHS[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1];
+  }
+  function scSeatLabel(seat) {
+    if (seat.seat === "chair") return "Council chair, elected by the whole county";
+    if (seat.seat === "supervisor") return "County supervisor, who chairs the council";
+    if (seat.seat === "at-large") return "At large";
+    if (seat.seat === "township") return String(seat.township) + " Township seat";
+    return "District " + String(seat.district);
+  }
+  function scCountywide(seat) {
+    return seat.seat !== "district";
+  }
+  // One person row per seat: name, party, and the election that seated them.
+  function scSeatPerson(seat, withSeat) {
+    if (!seat.name) {
+      return { name: withSeat ? scSeatLabel(seat) : "Not named here",
+        note: "not named: " + String(seat.unnamed || "no result was found") };
+    }
+    var when = scDate(seat.election);
+    var bits = [];
+    if (withSeat) bits.push(scSeatLabel(seat));
+    if (when) bits.push((seat.unexpiredTerm ? "elected to finish a term " : "elected ") + when);
+    return { name: String(seat.name), badge: seat.party ? String(seat.party) : null,
+      note: bits.length ? bits.join(", ") : null };
+  }
+  // What the county's own page says, where it disagrees with the results.
+  function scCountySaysRow(county, seat) {
+    var says = seat.countySays;
+    if (!says) return null;
+    var read = scDate(says.read);
+    var whose = county + " County's own council page";
+    var text;
+    if (says.name) {
+      text = whose + " names " + String(says.name) + " for this seat, not " +
+        String(seat.name) + ".";
+    } else if (says.vacant) {
+      text = whose + " lists this seat as vacant.";
+    } else if (says.former) {
+      text = whose + " lists " + String(seat.name) + " as a former member.";
+    } else {
+      text = whose + " lists the other members and not " + String(seat.name) + ".";
+    }
+    return { label: "The county's own page says something else",
+      value: text + (read ? " Read " + read + "." : "") + " The two disagree, " +
+        "and the county's page is the newer of the two; the link below reaches it." };
+  }
+
+  registerLayer({
+    id: "county-council",
+    group: "political",
+    label: "County Council District",
+    overlay: {
+      load: loadScCouncilDistricts,
+      // a warm hue no other layer here uses, so a county council reads apart
+      // from the purple legislative chambers
+      style: { color: "#9C4A14", weight: 1.5, fillColor: "#D9792E", fillOpacity: 0.05, dashArray: "4 3" }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      if (p.form === "whole-county") return String(p.county) + " County Council";
+      if (p.form === "residence") return String(p.county) + " residence district " + String(p.district);
+      return String(p.county) + " District " + String(p.district);
+    },
+    // the hover names a district's own member(s) from the prefetched roster,
+    // and nobody for the two counties whose members are all elected countywide
+    hoverOfficial: {
+      load: loadScCouncilRoster,
+      name: function (feature, roster) {
+        var p = feature.properties || {};
+        var rec = roster ? roster[String(p.countyFips)] : null;
+        if (!rec || p.form !== "district") return null;
+        var names = (rec.seats || []).filter(function (s) {
+          return s.seat === "district" && String(s.district) === String(p.district) && s.name;
+        }).map(function (s) { return String(s.name); });
+        return names.length ? names.join(" and ") : null;
+      }
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadScCouncilDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var p = feature.properties || {};
+        var result = {
+          seq: seq,
+          county: p.county,
+          fips: p.countyFips,
+          district: p.district,
+          form: p.form,
+          council: null
+        };
+        // A roster that fails to load leaves the district card standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadScCouncilRoster().then(function (roster) {
+          result.council = roster[String(p.countyFips)] || null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      // Card convention: identity -> officeholder -> office -> contact -> link.
+      // The officeholders are each seat's most recent election winners, dated;
+      // the results publish no office or contact, and the county's own page
+      // (the footer link) does.
+      var county = String(result.county || "");
+      var wrap = cardEl("div", "card-flush");
+      var title = result.form === "whole-county" ? county + " County Council"
+        : result.form === "residence" ? county + " County Council, residence district " + String(result.district)
+          : county + " County Council District " + String(result.district);
+      wrap.appendChild(renderBodyIntro({ title: title, note: county + " County" }));
+      var seats = (result.council && result.council.seats) || [];
+      var own = seats.filter(function (s) {
+        return result.form === "district" && s.seat === "district" &&
+          String(s.district) === String(result.district);
+      });
+      var wide = seats.filter(scCountywide);
+      var rows = [];
+      if (result.rosterFailed || !result.council) {
+        rows.push({
+          label: "Who holds these seats",
+          value: "The list of election winners did not load, so no name is shown. " +
+            "The county publishes its own council, and the link below reaches it."
+        });
+      } else if (own.length) {
+        wrap.appendChild(renderPersonRows(own.map(function (s) { return scSeatPerson(s, false); })));
+      }
+      seats.forEach(function (s) {
+        if (own.indexOf(s) >= 0 || scCountywide(s)) {
+          var row = scCountySaysRow(county, s);
+          if (row) rows.push(row);
+        }
+      });
+      if (seats.length) {
+        rows.push({
+          label: "What these names are",
+          value: "The winners of the most recent election for each seat, in the " +
+            "South Carolina Election Commission's certified results. It is not a " +
+            "list the county keeps up to date, so if a seat has changed hands " +
+            "since (a resignation, a death or an appointment) this still shows " +
+            "who won. The county's own council page says who holds it today."
+        });
+      }
+      if (result.form === "whole-county") {
+        rows.push({
+          label: "Who you elect here",
+          value: "All five members of the council, by the whole county. " +
+            county + " County has no council districts, so every member " +
+            "represents every voter."
+        });
+      } else if (result.form === "residence") {
+        rows.push({
+          label: "Who you elect here",
+          value: "All five members of the council, by the whole county. Four " +
+            "must each live in one of four townships and one is elected at " +
+            "large. This area is residence district " + String(result.district) +
+            " on the state's map; the county names its seats by township, and " +
+            "no published source this map has found says which number is which " +
+            "township, so all five are listed below."
+        });
+      } else {
+        rows.push({
+          label: "Who you elect here",
+          value: (own.length > 1 ? "Two council members, one at each of the " +
+            "county's alternating elections" : "One council member") +
+            ", chosen by the voters of this district alone. The county council " +
+            "sets the county's budget and its share of your property tax, and " +
+            "runs its roads, its sheriff's and emergency budgets and its " +
+            "services outside city limits."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      if (wide.length) {
+        wrap.appendChild(renderSectionLabel("Elected by the whole county"));
+        wrap.appendChild(renderPersonRows(wide.map(function (s) {
+          return scSeatPerson(s, true);
+        }), { tinted: true }));
+      }
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var page = result && result.council && result.council.countyPage;
+      if (page) return { label: String(result.county) + " County Council", url: String(page) };
+      return { label: "South Carolina county directory", url: "https://www.sccounties.org/county-information/county-directory-pages" };
+    }
+  });
+
   /* ---------- 1. County — the instance's offline anchor ----------
    * Geometry is pre-built (TIGERweb State_County layer 1, STATE-filtered,
    * sc/scripts/build_state_counties.py) and served same-origin +
    * service-worker cached, so this layer answers even when every
    * third-party host is down.
    *
-   * IDENTITY ONLY IN THIS FIRST CHANGE. Every South Carolina county is
-   * governed by an elected county council, and the council districts and the
-   * results naming who won them are both published by the state — the
-   * districts by the Revenue and Fiscal Affairs Office, the winners by the
-   * State Election Commission. Neither is wired yet, so the card says the
-   * council exists and names nobody on it rather than leaving a reader to
-   * wonder. Recorded as gap `sc-county-council`.
+   * THE CARD NAMES THE COUNCIL'S COUNTYWIDE SEATS. A chair, a supervisor or
+   * an at-large member is elected by the whole county, so the county is that
+   * person's ground and the County card lists them; the district members are
+   * on the County Council District card, which this card points to. The names
+   * come from the same roster that card reads, and a roster that fails to
+   * load leaves the county's identity standing.
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
@@ -12407,11 +12628,18 @@ function initSouthCarolinaExplorer() {
       return queryFeatureAt(loadStateCounties, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          council: null
         };
+        return loadScCouncilRoster().then(function (roster) {
+          result.council = roster[String(result.geoid)] || null;
+          return result;
+        }, function () {
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -12420,14 +12648,36 @@ function initSouthCarolinaExplorer() {
         title: result.name != null ? String(result.name) : "Unknown county",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      wrap.appendChild(renderFieldStack([{
-        label: "County council",
-        value: "Not named here yet. Every South Carolina county elects a " +
-          "county council. The state publishes the council districts and " +
-          "the election results that name the members, and this map does " +
-          "not carry them yet, so it names no one here rather than guessing."
-      }]));
+      var seats = (result.council && result.council.seats) || [];
+      var wide = seats.filter(scCountywide);
+      var districts = seats.length - wide.length;
+      var value;
+      if (!seats.length) {
+        value = "Every South Carolina county elects a county council. The " +
+          "list of its members did not load, so no one is named here.";
+      } else if (!districts) {
+        value = "The council has " + seats.length + " members, all elected by " +
+          "the whole county and listed below.";
+      } else {
+        value = "The council has " + seats.length + " members. " + districts +
+          (districts === 1 ? " is" : " are") + " elected by districts, and the " +
+          "County Council District layer names yours" +
+          (wide.length ? "; " + (wide.length === 1 ? "one is" : wide.length + " are") +
+            " elected by the whole county and listed below." : ".");
+      }
+      wrap.appendChild(renderFieldStack([{ label: "County council", value: value }]));
+      if (wide.length) {
+        wrap.appendChild(renderSectionLabel("Elected by the whole county"));
+        wrap.appendChild(renderPersonRows(wide.map(function (s) {
+          return scSeatPerson(s, true);
+        }), { tinted: true }));
+      }
       return wrap;
+    },
+    primaryLink: function (result) {
+      var page = result && result.council && result.council.countyPage;
+      if (page) return { label: String(result.name) + " Council", url: String(page) };
+      return { label: "South Carolina county directory", url: "https://www.sccounties.org/county-information/county-directory-pages" };
     }
   });
 
@@ -14424,6 +14674,9 @@ function initSouthCarolinaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "sc-senate", "sc-house",
+    // The county council sits with the chambers rather than down in
+    // geography: like them it is a member elected by this district alone.
+    "county-council",
     "school-district-unified",
     "county", "municipality", "zip-code",
     "police-station", "fire-station", "post-office"];
@@ -14654,100 +14907,121 @@ function initSouthCarolinaExplorer() {
     // compares the HOVER name: the canvas names a district from the tile's
     // own properties, with nothing a loader stamps after its fetch, so a
     // hover that reads a stamped property would differ from the file's.
+    //
+    // A point the layer's own coverage test rejects is skipped and returned
+    // with `hidden: true`: the app hides the layer there and never runs its
+    // query, so no reader sees a card to compare. Asking anyway sent a county
+    // layer's query to its fallback, which asks every county in turn, live
+    // servers included, and one of them answering badly from a CI runner
+    // failed the check at a point no reader can reach (2026-10-11, a point
+    // just outside White County, Illinois). A coverage test that throws keeps
+    // the point, as the engine fails open.
     tileCardCheck: function (id, points) {
       var mod = getLayerById(id), load = mod && mod.overlay && mod.overlay.load;
       if (!load || !load.tileMod) return Promise.reject(new Error(id + " is not drawn from tiles"));
       var rt = layerRuntime[id], viaTiles = [];
-      if (mod.countyEntries) {
-        var countyResults = [], hovers = [];
-        var byKey = {};
-        mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
-        function hoverPair(p) {
-          return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
-            var tf = findFeatureContaining(fc, p);
-            var key = tf && tf.properties._c, entry = key != null && byKey[key];
-            if (!entry || !entry.loadGeometry) return null;
-            var props = {};
-            for (var k in tf.properties) if (tf.properties.hasOwnProperty(k) && k !== "_c") props[k] = tf.properties[k];
-            var tiles = mod.hoverName({ type: "Feature", properties: props, dxCounty: key });
-            return Promise.resolve(entry.loadGeometry()).then(function (g) {
-              var ff = findFeatureContaining(g, p);
-              return { tiles: tiles, file: ff ? mod.hoverName({ type: "Feature", properties: ff.properties, dxCounty: key }) : null };
-            });
-          }).then(null, function (e) { return { tiles: "error: " + String(e && e.message || e), file: null }; });
-        }
-        return countyTileKeys(mod).then(function (keys) {
-          function runCounty(out, record) {
-            return points.reduce(function (chain, p, i) {
-              return chain.then(function () {
-                rt.tileAnswer = null;
-                return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
-                  out.push(r == null ? null : JSON.stringify(r, function (k, v) {
-                    return k === "seq" || k === "geometry" ? undefined : v;
-                  }));
-                  if (record) {
-                    countyResults.push({ via: !!(rt.tileAnswer && rt.tileAnswer.point === p),
-                      county: r ? r.dxCounty : null, inArchive: !!(r && keys[r.dxCounty]) });
-                    return hoverPair(p).then(function (h) { hovers.push(h); });
+      return Promise.all(points.map(function (p) {
+        if (typeof mod.coverage !== "function") return false;
+        return Promise.resolve().then(function () { return mod.coverage(p); })
+          .then(function (inside) { return !inside; }, function () { return false; });
+      })).then(function (hidden) {
+        if (mod.countyEntries) {
+          var countyResults = [], hovers = [];
+          var byKey = {};
+          mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
+          function hoverPair(p) {
+            return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+              var tf = findFeatureContaining(fc, p);
+              var key = tf && tf.properties._c, entry = key != null && byKey[key];
+              if (!entry || !entry.loadGeometry) return null;
+              var props = {};
+              for (var k in tf.properties) if (tf.properties.hasOwnProperty(k) && k !== "_c") props[k] = tf.properties[k];
+              var tiles = mod.hoverName({ type: "Feature", properties: props, dxCounty: key });
+              return Promise.resolve(entry.loadGeometry()).then(function (g) {
+                var ff = findFeatureContaining(g, p);
+                return { tiles: tiles, file: ff ? mod.hoverName({ type: "Feature", properties: ff.properties, dxCounty: key }) : null };
+              });
+            }).then(null, function (e) { return { tiles: "error: " + String(e && e.message || e), file: null }; });
+          }
+          return countyTileKeys(mod).then(function (keys) {
+            function runCounty(out, record) {
+              return points.reduce(function (chain, p, i) {
+                return chain.then(function () {
+                  if (hidden[i]) {
+                    out.push(null);
+                    if (record) { countyResults.push({ via: false, county: null, inArchive: false }); hovers.push(null); }
+                    return;
                   }
-                }, function (e) {
-                  out.push("error: " + String(e && e.message || e));
-                  if (!record) return;
-                  hovers.push(null);
-                  // A query that errored names no county, so ask the archive
-                  // itself: a tile feature under the point carries its county
-                  // key, and only a point no archived district holds can be a
-                  // live county's. Unreadable, it stays unknown (null), which
-                  // the probe never forgives as a live source's outage.
-                  return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
-                    var tf = findFeatureContaining(fc, p), c = tf && tf.properties ? tf.properties._c : null;
-                    countyResults.push({ via: false, county: c != null ? c : null, inArchive: c != null && !!keys[c] });
-                  }, function () {
-                    countyResults.push({ via: false, county: null, inArchive: null });
+                  rt.tileAnswer = null;
+                  return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+                    out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                      return k === "seq" || k === "geometry" ? undefined : v;
+                    }));
+                    if (record) {
+                      countyResults.push({ via: !!(rt.tileAnswer && rt.tileAnswer.point === p),
+                        county: r ? r.dxCounty : null, inArchive: !!(r && keys[r.dxCounty]) });
+                      return hoverPair(p).then(function (h) { hovers.push(h); });
+                    }
+                  }, function (e) {
+                    out.push("error: " + String(e && e.message || e));
+                    if (!record) return;
+                    hovers.push(null);
+                    // A query that errored names no county, so ask the archive
+                    // itself: a tile feature under the point carries its county
+                    // key, and only a point no archived district holds can be a
+                    // live county's. Unreadable, it stays unknown (null), which
+                    // the probe never forgives as a live source's outage.
+                    return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+                      var tf = findFeatureContaining(fc, p), c = tf && tf.properties ? tf.properties._c : null;
+                      countyResults.push({ via: false, county: c != null ? c : null, inArchive: c != null && !!keys[c] });
+                    }, function () {
+                      countyResults.push({ via: false, county: null, inArchive: null });
+                    });
                   });
                 });
+              }, Promise.resolve());
+            }
+            var tiled = [], whole = [];
+            return runCounty(tiled, true).then(function () {
+              mod.tilesOff = true;
+              return runCounty(whole);
+            }).then(function () {
+              mod.tilesOff = false;
+              return points.map(function (p, i) {
+                var c = countyResults[i];
+                var h = hovers[i];
+                return { point: p, tiles: tiled[i], file: whole[i], viaTiles: c.via, county: c.county, inArchive: c.inArchive, hidden: hidden[i],
+                  hoverTiles: h ? h.tiles : null, hoverFile: h ? h.file : null };
               });
-            }, Promise.resolve());
-          }
-          var tiled = [], whole = [];
-          return runCounty(tiled, true).then(function () {
-            mod.tilesOff = true;
-            return runCounty(whole);
-          }).then(function () {
-            mod.tilesOff = false;
-            return points.map(function (p, i) {
-              var c = countyResults[i];
-              var h = hovers[i];
-              return { point: p, tiles: tiled[i], file: whole[i], viaTiles: c.via, county: c.county, inArchive: c.inArchive,
-                hoverTiles: h ? h.tiles : null, hoverFile: h ? h.file : null };
-            });
-          }, function (e) { mod.tilesOff = false; throw e; });
-        });
-      }
-      function run(out, record) {
-        return points.reduce(function (chain, p, i) {
-          return chain.then(function () {
-            if (record) rt.tileAnswer = null;
-            return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
-              out.push(r == null ? null : JSON.stringify(r, function (k, v) {
-                return k === "seq" || k === "geometry" ? undefined : v;
-              }));
-              // whether the tile path really answered: a query that reaches
-              // its boundaries some other way passes the comparison while
-              // downloading the whole file and lighting nothing
-              if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
-            }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+            }, function (e) { mod.tilesOff = false; throw e; });
           });
-        }, Promise.resolve());
-      }
-      var tiled = [], whole = [], keep = load.tileMod;
-      return run(tiled, true).then(function () {
-        load.tileMod = null;
-        return run(whole);
-      }).then(function () {
-        load.tileMod = keep;
-        return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i] }; });
-      }, function (e) { load.tileMod = keep; throw e; });
+        }
+        function run(out, record) {
+          return points.reduce(function (chain, p, i) {
+            return chain.then(function () {
+              if (hidden[i]) { out.push(null); if (record) viaTiles.push(false); return; }
+              if (record) rt.tileAnswer = null;
+              return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+                out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                  return k === "seq" || k === "geometry" ? undefined : v;
+                }));
+                // whether the tile path really answered: a query that reaches
+                // its boundaries some other way passes the comparison while
+                // downloading the whole file and lighting nothing
+                if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
+              }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+            });
+          }, Promise.resolve());
+        }
+        var tiled = [], whole = [], keep = load.tileMod;
+        return run(tiled, true).then(function () {
+          load.tileMod = null;
+          return run(whole);
+        }).then(function () {
+          load.tileMod = keep;
+          return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i], hidden: hidden[i] }; });
+        }, function (e) { load.tileMod = keep; throw e; });
+      });
     },
     // The colour a layer's outline is painted in right now, whichever way it
     // is drawn: the tile canvas's paint, or a Leaflet path's stroke. What the
@@ -14888,7 +15162,8 @@ function initSouthCarolinaExplorer() {
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
     "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
     "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#8C2E4A": "#F47294",
-    "#A3341F": "#FE8269", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
+    "#9C4A14": "#FE8E4D", "#A3341F": "#FE8269", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA",
+    "#D9792E": "#FECAA8"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -4064,9 +4064,9 @@ function initTennesseeExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "tn-senate": "tns", "county": "co", "tn-house": "tnh",
-    "school-district-unified": "su", "zip-code": "zp", "school-district-elementary": "se",
-    "school-district-secondary": "sh", "municipality": "mu", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po" };
+    "school-district-unified": "su", "county-commissioner": "cm", "zip-code": "zp",
+    "school-district-elementary": "se", "school-district-secondary": "sh", "municipality": "mu",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8467,6 +8467,7 @@ function initTennesseeExplorer() {
     "county",            // 95 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "tn-house",          // 99 House districts — the smallest of the three chamber tilings
     "school-district-unified", // 127 unified districts, live from TIGERweb (no data/app file); with the 15 elementary districts they cover the state exactly
+    "county-commissioner", // 859 districts in 95 counties, pre-built from the Comptroller of the Treasury's statewide layer; smaller on average than a state House district or a unified school district
     "zip-code",          // 1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee
     "school-district-elementary", // 15 city and special school districts running the lower grades, live from TIGERweb
     "school-district-secondary", // 15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb
@@ -12385,14 +12386,10 @@ function initTennesseeExplorer() {
    * service-worker cached, so this layer answers even when every
    * third-party host is down.
    *
-   * IDENTITY ONLY IN THIS FIRST CHANGE. Every Tennessee county elects its
-   * legislative body — a county commission in most, a metropolitan council
-   * where the county has consolidated with its principal city — from
-   * districts, and the Comptroller of the Treasury publishes every county's
-   * districts statewide. No state office publishes the names, and neither is
-   * wired yet, so the card says the body exists and names nobody on it rather
-   * than leaving a reader to wonder. Recorded as gap
-   * `tn-county-commission-districts`.
+   * IDENTITY ONLY. Every Tennessee county elects its legislative body from
+   * districts, and those districts are their own layer below (County
+   * Commission District), which is where the members will be named as each
+   * county's roster ships. This card points there rather than repeating it.
    *
    * THREE COUNTIES ARE CONSOLIDATED WITH THEIR PRINCIPAL CITY, and the Census
    * says so: TIGERweb's place layer carries exactly three records for
@@ -12454,11 +12451,9 @@ function initTennesseeExplorer() {
       }
       rows.push({
         label: consolidated ? "Who represents you on it" : "Your county commissioners",
-        value: "Not named here yet. Every Tennessee county elects its " +
-          "governing body from districts, and the state's Comptroller of the " +
-          "Treasury publishes every county's districts. No state office " +
-          "publishes the members' names, and this map does not carry them " +
-          "yet, so it names no one here rather than guessing."
+        value: "Every Tennessee county elects its governing body from " +
+          "districts. Turn on the County Commission District layer to see " +
+          "which district this point is in."
       });
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
@@ -12569,6 +12564,203 @@ function initTennesseeExplorer() {
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "Tennessee House directory",
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+  });
+
+  /* ---------- 5. County Commission District ----------
+   * Pre-built from the Comptroller of the Treasury's statewide layer of every
+   * county's commission districts (tn/scripts/build_tn_commission_districts.py
+   * — 859 districts in 95 counties, each county numbered 1..N, a 25 m
+   * fidelity ceiling and a witness that every district answers to its own
+   * county). Every Tennessee county elects its legislative body from these
+   * districts, the three consolidated governments included: Nashville-
+   * Davidson's 35 are its Metropolitan Council districts.
+   *
+   * A DISTRICT IS NOT A SEAT. Many counties elect two or three commissioners
+   * from one district, and the state's layer carries no seat count, so the
+   * card says which district a point is in and never how many people hold it.
+   *
+   * THE NAMES COME COUNTY BY COUNTY. No state office publishes who sits on
+   * a county commission: the Division of Elections' results carry no county
+   * races, so tn-commissioners.json is built from each county's own page,
+   * a tranche at a time, and refreshed weekly
+   * (tn/scripts/tn_commissioner_scraper.py + build_tn_commissioner_roster.py).
+   * A county in the file names every seat in the district, each with its seat
+   * label and role where the county prints one, and its countywide members
+   * below them; a county absent from it keeps the sentence saying this app has
+   * not named it yet. The roster's own failure is not this layer's failure: a
+   * fetch miss degrades to that same sentence rather than to an error card.
+   * Recorded as gap tn-county-commissioners. ---------- */
+  var loadTnCommissionDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-commission-districts.json", {}, 2);
+  });
+  var loadTnCommissioners = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-commissioners.json", {}, 2);
+  });
+  var TN_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  // "2026-10-11" -> "11 October 2026"; null for anything else, so a malformed
+  // date drops its row rather than printing as something it is not.
+  function tnReadDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return String(Number(m[3])) + " " + TN_MONTHS[Number(m[2]) - 1] + " " + m[1];
+  }
+  // A seat label as the county prints it: "A" reads "Seat A", while
+  // "Position 1" and "Seat 10" already say what they are.
+  function tnSeatLabel(seat) {
+    if (seat == null || seat === "") return null;
+    var s = String(seat);
+    return /^[A-Za-z]{2,}/.test(s) ? s : "Seat " + s;
+  }
+  function tnPersonRows(members, title) {
+    var people = [], vacancies = [];
+    (members || []).forEach(function (m) {
+      if (m.vacant) {
+        vacancies.push(tnSeatLabel(m.seat));
+        return;
+      }
+      if (!m.name) return;
+      var note = [];
+      if (tnSeatLabel(m.seat)) note.push(tnSeatLabel(m.seat));
+      if (m.role) note.push(String(m.role));
+      var person = { name: String(m.name), badge: title };
+      if (note.length) person.note = note.join(" \u00b7 ");
+      if (m.phone) person.phone = String(m.phone);
+      if (m.email) person.email = String(m.email);
+      people.push(person);
+    });
+    return { people: people, vacancies: vacancies };
+  }
+
+  registerLayer({
+    id: "county-commissioner",
+    group: "political",
+    label: "County Commission District",
+    overlay: {
+      load: loadTnCommissionDistricts,
+      style: { color: "#1B7A3D", weight: 2, fillColor: "#2E9E6B", fillOpacity: 0.06 }
+    },
+    // the same value the card's header pill shows, so hover and card cannot
+    // disagree about which district a polygon is
+    hoverName: function (feature) {
+      var district = findPropCI(feature.properties || {}, ["district"]);
+      return district != null ? String(district) : null;
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadTnCommissionDistricts, point),
+        loadTnCommissioners().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var fips = findPropCI(props, ["countyfips"]);
+        var district = findPropCI(props, ["district"]);
+        var entry = (parts[1] && fips != null) ? parts[1][String(fips)] || null : null;
+        return {
+          seq: seq,
+          district: district,
+          county: findPropCI(props, ["county"]),
+          countyfips: fips,
+          members: (entry && entry.districts && district != null)
+            ? entry.districts[String(district)] || null : null,
+          atLarge: entry ? entry.atLarge || null : null,
+          // the county's own name for a district the state numbers (Dyer
+          // letters its districts A to J); null wherever the numbers are its own
+          districtLabel: (entry && entry.districtLabels && district != null)
+            ? entry.districtLabels[String(district)] || null : null,
+          title: entry && entry.seatTitle ? String(entry.seatTitle) : "Commissioner",
+          body: entry && entry.bodyName ? String(entry.bodyName) : null,
+          readAt: entry ? entry.readAt : null,
+          sourceUrl: entry ? entry.sourceUrl : null
+        };
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.district != null ? "District " + String(result.district) : "Unknown district";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var consolidated = result.countyfips != null
+        ? TN_CONSOLIDATED_COUNTIES[String(result.countyfips)] : null;
+      var district = tnPersonRows(result.members, result.title);
+      // The members first: the header pill already carries "District N".
+      if (district.people.length) wrap.appendChild(renderPersonRows(district.people));
+      var rows = [{
+        label: "County",
+        value: result.county != null ? String(result.county) : "Unknown county",
+        primary: true
+      }];
+      if (result.districtLabel) {
+        // The header pill keeps the state's number, which is what the hover
+        // name and the map say; this row gives the name the county's own
+        // ballot and page use for the same district.
+        rows.push({
+          label: "The county's name for it",
+          value: String(result.districtLabel) + ". The state's map numbers it District " +
+            String(result.district) + "."
+        });
+      }
+      if (consolidated) {
+        rows.push({
+          label: "Government",
+          value: "This county and its principal city are one consolidated " +
+            "government, which the Census Bureau names " + consolidated +
+            ". This district elects members of the body that governs both."
+        });
+      }
+      if (result.members) {
+        var seats = result.members.length;
+        if (seats > 1) {
+          // A vacant seat is not "listed above", so the sentence says how
+          // many are named when the county reports one empty.
+          var open = district.vacancies.length;
+          rows.push({ label: "Seats", value: "This district elects " + seats + " members" +
+            (open ? ": " + (seats - open) + " named above and " + open +
+              (open === 1 ? " seat" : " seats") + " empty." : ", each listed above.") });
+        }
+        district.vacancies.forEach(function (seat) {
+          rows.push({ label: seat ? seat : "Seat",
+            value: "Vacant, as the county's own page says." });
+        });
+        var read = tnReadDate(result.readAt);
+        rows.push({
+          label: "Where these names come from",
+          value: (result.county != null ? String(result.county) : "The county") +
+            "'s own published list of its " + (result.body || "county commission") +
+            (read ? ", read " + read : "") + ". This app reads it every week."
+        });
+      } else {
+        rows.push({
+          label: "Who represents this district",
+          value: "Not named here yet. The state publishes these districts but " +
+            "not who holds them, and many counties elect two or three members " +
+            "from each district. This app is naming them county by county from " +
+            "each county's own pages, and this county is not done yet, so it " +
+            "names no one here rather than guessing."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      var county = tnPersonRows(result.atLarge, result.title);
+      if (county.people.length) {
+        // Members elected countywide represent this point too, so they belong
+        // on the card, under their own label rather than mixed into the
+        // district's seats.
+        wrap.appendChild(renderSectionLabel("Elected countywide"));
+        wrap.appendChild(renderPersonRows(county.people, { tinted: true }));
+      }
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var named = (result.members || []).filter(function (m) { return m && m.name; });
+      if (named.length === 1 && named[0].profileUrl && safeHttpUrl(named[0].profileUrl)) {
+        return { label: String(named[0].name) + "'s page", url: safeHttpUrl(named[0].profileUrl) };
+      }
+      var url = safeHttpUrl(result.sourceUrl);
+      if (!url) return null;
+      return { label: (result.county != null ? String(result.county) : "County") + " " +
+        (result.body || "commission"), url: url };
+    }
   });
 
   /* No county-subdivision layer, on purpose. Tennessee has no township
@@ -14602,6 +14794,7 @@ function initTennesseeExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "tn-senate", "tn-house",
+    "county-commissioner",
     "school-district-unified", "school-district-elementary",
     "school-district-secondary",
     "county", "municipality", "zip-code",
@@ -14833,100 +15026,121 @@ function initTennesseeExplorer() {
     // compares the HOVER name: the canvas names a district from the tile's
     // own properties, with nothing a loader stamps after its fetch, so a
     // hover that reads a stamped property would differ from the file's.
+    //
+    // A point the layer's own coverage test rejects is skipped and returned
+    // with `hidden: true`: the app hides the layer there and never runs its
+    // query, so no reader sees a card to compare. Asking anyway sent a county
+    // layer's query to its fallback, which asks every county in turn, live
+    // servers included, and one of them answering badly from a CI runner
+    // failed the check at a point no reader can reach (2026-10-11, a point
+    // just outside White County, Illinois). A coverage test that throws keeps
+    // the point, as the engine fails open.
     tileCardCheck: function (id, points) {
       var mod = getLayerById(id), load = mod && mod.overlay && mod.overlay.load;
       if (!load || !load.tileMod) return Promise.reject(new Error(id + " is not drawn from tiles"));
       var rt = layerRuntime[id], viaTiles = [];
-      if (mod.countyEntries) {
-        var countyResults = [], hovers = [];
-        var byKey = {};
-        mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
-        function hoverPair(p) {
-          return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
-            var tf = findFeatureContaining(fc, p);
-            var key = tf && tf.properties._c, entry = key != null && byKey[key];
-            if (!entry || !entry.loadGeometry) return null;
-            var props = {};
-            for (var k in tf.properties) if (tf.properties.hasOwnProperty(k) && k !== "_c") props[k] = tf.properties[k];
-            var tiles = mod.hoverName({ type: "Feature", properties: props, dxCounty: key });
-            return Promise.resolve(entry.loadGeometry()).then(function (g) {
-              var ff = findFeatureContaining(g, p);
-              return { tiles: tiles, file: ff ? mod.hoverName({ type: "Feature", properties: ff.properties, dxCounty: key }) : null };
-            });
-          }).then(null, function (e) { return { tiles: "error: " + String(e && e.message || e), file: null }; });
-        }
-        return countyTileKeys(mod).then(function (keys) {
-          function runCounty(out, record) {
-            return points.reduce(function (chain, p, i) {
-              return chain.then(function () {
-                rt.tileAnswer = null;
-                return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
-                  out.push(r == null ? null : JSON.stringify(r, function (k, v) {
-                    return k === "seq" || k === "geometry" ? undefined : v;
-                  }));
-                  if (record) {
-                    countyResults.push({ via: !!(rt.tileAnswer && rt.tileAnswer.point === p),
-                      county: r ? r.dxCounty : null, inArchive: !!(r && keys[r.dxCounty]) });
-                    return hoverPair(p).then(function (h) { hovers.push(h); });
+      return Promise.all(points.map(function (p) {
+        if (typeof mod.coverage !== "function") return false;
+        return Promise.resolve().then(function () { return mod.coverage(p); })
+          .then(function (inside) { return !inside; }, function () { return false; });
+      })).then(function (hidden) {
+        if (mod.countyEntries) {
+          var countyResults = [], hovers = [];
+          var byKey = {};
+          mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
+          function hoverPair(p) {
+            return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+              var tf = findFeatureContaining(fc, p);
+              var key = tf && tf.properties._c, entry = key != null && byKey[key];
+              if (!entry || !entry.loadGeometry) return null;
+              var props = {};
+              for (var k in tf.properties) if (tf.properties.hasOwnProperty(k) && k !== "_c") props[k] = tf.properties[k];
+              var tiles = mod.hoverName({ type: "Feature", properties: props, dxCounty: key });
+              return Promise.resolve(entry.loadGeometry()).then(function (g) {
+                var ff = findFeatureContaining(g, p);
+                return { tiles: tiles, file: ff ? mod.hoverName({ type: "Feature", properties: ff.properties, dxCounty: key }) : null };
+              });
+            }).then(null, function (e) { return { tiles: "error: " + String(e && e.message || e), file: null }; });
+          }
+          return countyTileKeys(mod).then(function (keys) {
+            function runCounty(out, record) {
+              return points.reduce(function (chain, p, i) {
+                return chain.then(function () {
+                  if (hidden[i]) {
+                    out.push(null);
+                    if (record) { countyResults.push({ via: false, county: null, inArchive: false }); hovers.push(null); }
+                    return;
                   }
-                }, function (e) {
-                  out.push("error: " + String(e && e.message || e));
-                  if (!record) return;
-                  hovers.push(null);
-                  // A query that errored names no county, so ask the archive
-                  // itself: a tile feature under the point carries its county
-                  // key, and only a point no archived district holds can be a
-                  // live county's. Unreadable, it stays unknown (null), which
-                  // the probe never forgives as a live source's outage.
-                  return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
-                    var tf = findFeatureContaining(fc, p), c = tf && tf.properties ? tf.properties._c : null;
-                    countyResults.push({ via: false, county: c != null ? c : null, inArchive: c != null && !!keys[c] });
-                  }, function () {
-                    countyResults.push({ via: false, county: null, inArchive: null });
+                  rt.tileAnswer = null;
+                  return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+                    out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                      return k === "seq" || k === "geometry" ? undefined : v;
+                    }));
+                    if (record) {
+                      countyResults.push({ via: !!(rt.tileAnswer && rt.tileAnswer.point === p),
+                        county: r ? r.dxCounty : null, inArchive: !!(r && keys[r.dxCounty]) });
+                      return hoverPair(p).then(function (h) { hovers.push(h); });
+                    }
+                  }, function (e) {
+                    out.push("error: " + String(e && e.message || e));
+                    if (!record) return;
+                    hovers.push(null);
+                    // A query that errored names no county, so ask the archive
+                    // itself: a tile feature under the point carries its county
+                    // key, and only a point no archived district holds can be a
+                    // live county's. Unreadable, it stays unknown (null), which
+                    // the probe never forgives as a live source's outage.
+                    return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+                      var tf = findFeatureContaining(fc, p), c = tf && tf.properties ? tf.properties._c : null;
+                      countyResults.push({ via: false, county: c != null ? c : null, inArchive: c != null && !!keys[c] });
+                    }, function () {
+                      countyResults.push({ via: false, county: null, inArchive: null });
+                    });
                   });
                 });
+              }, Promise.resolve());
+            }
+            var tiled = [], whole = [];
+            return runCounty(tiled, true).then(function () {
+              mod.tilesOff = true;
+              return runCounty(whole);
+            }).then(function () {
+              mod.tilesOff = false;
+              return points.map(function (p, i) {
+                var c = countyResults[i];
+                var h = hovers[i];
+                return { point: p, tiles: tiled[i], file: whole[i], viaTiles: c.via, county: c.county, inArchive: c.inArchive, hidden: hidden[i],
+                  hoverTiles: h ? h.tiles : null, hoverFile: h ? h.file : null };
               });
-            }, Promise.resolve());
-          }
-          var tiled = [], whole = [];
-          return runCounty(tiled, true).then(function () {
-            mod.tilesOff = true;
-            return runCounty(whole);
-          }).then(function () {
-            mod.tilesOff = false;
-            return points.map(function (p, i) {
-              var c = countyResults[i];
-              var h = hovers[i];
-              return { point: p, tiles: tiled[i], file: whole[i], viaTiles: c.via, county: c.county, inArchive: c.inArchive,
-                hoverTiles: h ? h.tiles : null, hoverFile: h ? h.file : null };
-            });
-          }, function (e) { mod.tilesOff = false; throw e; });
-        });
-      }
-      function run(out, record) {
-        return points.reduce(function (chain, p, i) {
-          return chain.then(function () {
-            if (record) rt.tileAnswer = null;
-            return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
-              out.push(r == null ? null : JSON.stringify(r, function (k, v) {
-                return k === "seq" || k === "geometry" ? undefined : v;
-              }));
-              // whether the tile path really answered: a query that reaches
-              // its boundaries some other way passes the comparison while
-              // downloading the whole file and lighting nothing
-              if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
-            }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+            }, function (e) { mod.tilesOff = false; throw e; });
           });
-        }, Promise.resolve());
-      }
-      var tiled = [], whole = [], keep = load.tileMod;
-      return run(tiled, true).then(function () {
-        load.tileMod = null;
-        return run(whole);
-      }).then(function () {
-        load.tileMod = keep;
-        return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i] }; });
-      }, function (e) { load.tileMod = keep; throw e; });
+        }
+        function run(out, record) {
+          return points.reduce(function (chain, p, i) {
+            return chain.then(function () {
+              if (hidden[i]) { out.push(null); if (record) viaTiles.push(false); return; }
+              if (record) rt.tileAnswer = null;
+              return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+                out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                  return k === "seq" || k === "geometry" ? undefined : v;
+                }));
+                // whether the tile path really answered: a query that reaches
+                // its boundaries some other way passes the comparison while
+                // downloading the whole file and lighting nothing
+                if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
+              }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+            });
+          }, Promise.resolve());
+        }
+        var tiled = [], whole = [], keep = load.tileMod;
+        return run(tiled, true).then(function () {
+          load.tileMod = null;
+          return run(whole);
+        }).then(function () {
+          load.tileMod = keep;
+          return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i], hidden: hidden[i] }; });
+        }, function (e) { load.tileMod = keep; throw e; });
+      });
     },
     // The colour a layer's outline is painted in right now, whichever way it
     // is drawn: the tile canvas's paint, or a Leaflet path's stroke. What the
@@ -15065,10 +15279,10 @@ function initTennesseeExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4CA1FB", "#14181C": "#696F76", "#14503A": "#5AA485",
-    "#1B4F8C": "#599DF2", "#1F6F4A": "#5ABE8B", "#2E7D5B": "#63C99A", "#3E9E72": "#65E3A8",
-    "#41B6E6": "#B3E6FF", "#444B54": "#8F99A6", "#4A2E8C": "#9879FA", "#4B2E83": "#9C79EE",
-    "#6B7280": "#ACB6C9", "#7FC4A3": "#A0FBD0", "#8C2E4A": "#F06F91", "#A3341F": "#FD7C62",
-    "#B0316E": "#FE80B4", "#D06A9C": "#FEB3D4"};
+    "#1B4F8C": "#599DF2", "#1B7A3D": "#53C976", "#1F6F4A": "#5ABE8B", "#2E7D5B": "#63C99A",
+    "#2E9E6B": "#54E4A0", "#3E9E72": "#65E3A8", "#41B6E6": "#B3E6FF", "#444B54": "#8F99A6",
+    "#4A2E8C": "#9879FA", "#4B2E83": "#9C79EE", "#6B7280": "#ACB6C9", "#7FC4A3": "#A0FBD0",
+    "#8C2E4A": "#F06F91", "#A3341F": "#FD7C62", "#B0316E": "#FE80B4", "#D06A9C": "#FEB3D4"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

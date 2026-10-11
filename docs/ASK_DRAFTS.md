@@ -407,8 +407,8 @@ nobody, and the county's own page is the evidence.
 
 A letter cannot be put in the mailbox until somebody writes it. These have a recipient
 and an argument here and no wording: Asks 13, 25, 33, `wi-oshkosh-council` and
-`ia-pottawattamie-tama-wright-boards`. Ask 11 (CCGISC) has wording and no recipient
-address. The thirteen Illinois county letters that exist only in state notes are being
+`ia-pottawattamie-tama-wright-boards`. (Ask 11, CCGISC, was listed here as having no
+recipient address; it was sent on 2026-08-05, and its follow-up is drafted.) The thirteen Illinois county letters that exist only in state notes are being
 rewritten as follow-ups, because every one of them bar Scott was asked in early August
 and followed up on 2026-08-16, and Jasper (2026-08-17) and Hardin (2026-08-24) answered.
 
@@ -1381,7 +1381,12 @@ official's name wrong is the cheapest possible way to lose a reader.
 
 ## Ask 11 — CCGISC: the licence question behind two whole counties
 
-> **NOT YET ASKED — DRAFTED.** Champaign and Piatt are the only two Illinois counties this
+> **PENDING — SENT 2026-08-05, NO REPLY; FOLLOW-UP DRAFTED.** Corrected 2026-10-11: this
+> line said NOT YET ASKED until the Letters thread read Adam's sent folder, which shows
+> the letter went to the consortium on 5 Aug 2026 and nothing came back. The follow-up
+> is drafted as a Gmail draft by that thread; nothing is credited until CCGISC answers.
+>
+> Champaign and Piatt are the only two Illinois counties this
 > project records as blocked for a LEGAL rather than a technical reason: the Champaign
 > County GIS Consortium sells the data under terms that forbid copying, public display and
 > rehosting, and Piatt additionally asserts "All Rights Reserved" over its GIS. Both
@@ -1566,7 +1571,7 @@ whole ledger.
 **Two sequencing notes for whoever sends them.** Piatt's clerk is cc'd on Ask 11 AND is the
 recipient of one of Ask 12's follow-ups; sending both the same day puts two requests about
 overlapping data in front of her, so Ask 11 should go first and Piatt's follow-up after, or
-the follow-up should be held. And Ask 11's recipient address is inherited from the existing
+the follow-up should be held. (Ask 11 itself went on 2026-08-05, so only its follow-up is still to send.) And Ask 11's recipient address is inherited from the existing
 thread (`ccgisc@co.champaign.il.us`) — confirm it against ccgisc.org before sending, which
 this file has asked for since the ask was written.
 
@@ -3923,10 +3928,24 @@ before writing any publisher off.
 
 ## Ask ny-comptroller-local-officials — New York's Comptroller: how current are the names, and are they dated?
 
-**Status: NOT YET ASKED — DRAFTED 2026-10-01.** Named rather than numbered. **This is a
-FOLLOW-UP, not an opening**: `localgov@osc.ny.gov` was copied in on Ask 33 at 16:09 on
-2026-10-01 and has not replied, so the letter cites that message rather than introducing the
-project from scratch.
+**Status: SENT 2026-10-07 at 21:15 UTC — NO REPLY as of 2026-10-11; ONE FOLLOW-UP DUE ON OR
+AFTER 2026-10-21.** Read off the sent folder (subject "Following up: the municipal officials
+information the Comptroller holds", to `localgov@osc.ny.gov`, its own thread rather than a reply
+on Ask 33's). Named rather than numbered. **This is a FOLLOW-UP, not an opening**:
+`localgov@osc.ny.gov` was copied in on Ask 33 at 16:09 on 2026-10-01 and has not replied, so the
+letter cites that message rather than introducing the project from scratch.
+
+**The operator rewrote the letter before sending it, and the sent wording is what was asked.**
+It keeps the three questions (can it be shared, does each record carry a date, and if not what
+shows how current an entry is) and the closing that a no is a complete answer. It drops the
+credit-and-link offer and the starting-list sentence, and it adds one thing the draft did not
+say: without a date, names would be shown "with a caveat or omit[ted] entirely". So an undated
+file is not refused in advance; how a caveated name would read on a card is a decision for the
+operator if such a file ever arrives.
+
+Gap records `ny-county-governing-body` and `ny-local-governing-body` both wait on this letter,
+which is why the county boards outside the city that the scorecard counts as unnamed are not
+being built one county at a time meanwhile, beyond the board-of-supervisors tranche.
 
 Gaps `ny-county-governing-body`, `ny-local-governing-body`.
 
@@ -3996,6 +4015,30 @@ stops.
 
 **One thing deliberately not asked.** Nothing about reuse terms or licensing, for the reason
 Ask 33 gives: there is nothing yet to license. If a file arrives, that is a separate letter.
+
+### Follow-up — for the Letters thread to draft on or after 2026-10-21, as a reply in the sent thread
+
+Send only if nothing has arrived from `osc.ny.gov` by then; check the inbox first, because a
+reply may have come to a different thread. This is the one follow-up the ask gets: if it goes
+unanswered for thirty days after this, the ask is `UNRESPONSIVE`, which is a claim about the ask
+and never about the office.
+
+> Subject: Re: Following up: the municipal officials information the Comptroller holds
+>
+> Dear Division of Local Government and School Accountability,
+>
+> I wrote on 7 October asking whether the municipal officials information your office supplies
+> to the Department of State could be shared, and whether each record carries a date. I am
+> writing once more in case it went astray.
+>
+> A one-line answer to the first question would be enough: whether it can be shared at all. If
+> it cannot, I will record that and not ask again.
+>
+> Thank you,
+>
+> Adam Overberg
+> adam@overberg.co
+> districtry.com
 
 ## Ask il-five-counties-commissioner-roster — five Illinois county clerks: who holds the commissioner seats?
 
@@ -6944,3 +6987,64 @@ be its own letter.
 **Any answer is useful.** A yes to the first two would let every county's current map be found in
 one place; a pointer to maps the Board already posts would answer most of the letter; a clean no
 closes the policy route and leaves a narrow change in law as the fallback.
+
+## Ask sc-results-site-runner — South Carolina State Election Commission: a way for our weekly program to read the county council results
+
+> **NOT YET ASKED — DRAFTED 2026-10-11**, to the State Election Commission at
+> `elections@elections.sc.gov`, the general address on its own contact page (read 2026-10-11).
+> Adam was asked in the South Carolina thread on 2026-10-11 how the council names get refreshed
+> after the 3 November election, and this letter is the recommended answer. The Letters thread
+> searches the mailbox for any earlier contact with the Commission before it makes the draft. On
+> send, record `ASKED <date>` in gap `sc-county-council`.
+
+**Why this is asked.** South Carolina's map (still hidden) names all 334 county council seats from
+the Commission's certified results, and a weekly job is meant to refresh them after each election.
+From GitHub's servers, where that job runs, the results site answers its robots.txt with HTTP 202,
+a challenge, on both runs so far (2026-10-11), so the job reads nothing there; a challenge is an
+access control and is not worked around. From the sandbox the roster was built in, the same site
+answered normally the same day, which is how the shipped names were read. Every council seat is on
+the November ballot, and the Commission's results page links no other copy of the certified
+results. The challenge may be the results vendor's setting rather than the Commission's choice, so
+the letter asks them to pass it on. Three answers all work: permission for the weekly program, a
+file outside the check, or a clean no.
+
+> Subject: Reading county council results on your election results site
+>
+> Dear State Election Commission,
+>
+> I run districtry (https://districtry.com), a free public map where a resident can click their
+> address and see who represents them. We are building South Carolina's map now, including every
+> county council seat, and the names come from your certified election results. Each card will
+> link back to the results it came from.
+>
+> To keep the names current after each election, a small program reads your results site once a
+> week. It identifies itself by name, reads only the results summaries, and reads slowly. When it
+> runs from GitHub's servers, where our scheduled programs run, the results site answers with a
+> security check, so the program stops and reads nothing. We will not try to get around that
+> check. The names we have now were read from the site before we found this, from a computer it
+> answered normally.
+>
+> Is there a way for us to read the county council results that you are comfortable with? Any of
+> these would work:
+>
+> 1. permission for our weekly program to read the results site from GitHub's servers (it can
+>    send whatever identifying name or header suits you);
+> 2. a file of the certified results, or of the county council winners, posted somewhere outside
+>    the security check; or
+> 3. a no, which is a perfectly good answer. We would then keep the names current from each
+>    county's own council page.
+>
+> If the results site is run for you by a vendor, I would be grateful if you could pass this
+> along to them.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** Permission: recorded in `sc/scripts/build_sc_county_council_roster.py`
+with its date and whatever identifier the Commission names, and the weekly job rebuilds the names
+itself again. A file: the builder reads it instead, after its robots.txt. A no: the certified
+results stay the one-time source they already are, the county pages become how a changed seat is
+found, and gap `sc-county-council` says so.
