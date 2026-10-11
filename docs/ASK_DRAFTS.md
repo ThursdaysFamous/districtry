@@ -3928,10 +3928,24 @@ before writing any publisher off.
 
 ## Ask ny-comptroller-local-officials — New York's Comptroller: how current are the names, and are they dated?
 
-**Status: NOT YET ASKED — DRAFTED 2026-10-01.** Named rather than numbered. **This is a
-FOLLOW-UP, not an opening**: `localgov@osc.ny.gov` was copied in on Ask 33 at 16:09 on
-2026-10-01 and has not replied, so the letter cites that message rather than introducing the
-project from scratch.
+**Status: SENT 2026-10-07 at 21:15 UTC — NO REPLY as of 2026-10-11; ONE FOLLOW-UP DUE ON OR
+AFTER 2026-10-21.** Read off the sent folder (subject "Following up: the municipal officials
+information the Comptroller holds", to `localgov@osc.ny.gov`, its own thread rather than a reply
+on Ask 33's). Named rather than numbered. **This is a FOLLOW-UP, not an opening**:
+`localgov@osc.ny.gov` was copied in on Ask 33 at 16:09 on 2026-10-01 and has not replied, so the
+letter cites that message rather than introducing the project from scratch.
+
+**The operator rewrote the letter before sending it, and the sent wording is what was asked.**
+It keeps the three questions (can it be shared, does each record carry a date, and if not what
+shows how current an entry is) and the closing that a no is a complete answer. It drops the
+credit-and-link offer and the starting-list sentence, and it adds one thing the draft did not
+say: without a date, names would be shown "with a caveat or omit[ted] entirely". So an undated
+file is not refused in advance; how a caveated name would read on a card is a decision for the
+operator if such a file ever arrives.
+
+Gap records `ny-county-governing-body` and `ny-local-governing-body` both wait on this letter,
+which is why the county boards outside the city that the scorecard counts as unnamed are not
+being built one county at a time meanwhile, beyond the board-of-supervisors tranche.
 
 Gaps `ny-county-governing-body`, `ny-local-governing-body`.
 
@@ -4001,6 +4015,30 @@ stops.
 
 **One thing deliberately not asked.** Nothing about reuse terms or licensing, for the reason
 Ask 33 gives: there is nothing yet to license. If a file arrives, that is a separate letter.
+
+### Follow-up — for the Letters thread to draft on or after 2026-10-21, as a reply in the sent thread
+
+Send only if nothing has arrived from `osc.ny.gov` by then; check the inbox first, because a
+reply may have come to a different thread. This is the one follow-up the ask gets: if it goes
+unanswered for thirty days after this, the ask is `UNRESPONSIVE`, which is a claim about the ask
+and never about the office.
+
+> Subject: Re: Following up: the municipal officials information the Comptroller holds
+>
+> Dear Division of Local Government and School Accountability,
+>
+> I wrote on 7 October asking whether the municipal officials information your office supplies
+> to the Department of State could be shared, and whether each record carries a date. I am
+> writing once more in case it went astray.
+>
+> A one-line answer to the first question would be enough: whether it can be shared at all. If
+> it cannot, I will record that and not ask again.
+>
+> Thank you,
+>
+> Adam Overberg
+> adam@overberg.co
+> districtry.com
 
 ## Ask il-five-counties-commissioner-roster — five Illinois county clerks: who holds the commissioner seats?
 
