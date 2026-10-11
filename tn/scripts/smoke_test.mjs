@@ -920,7 +920,9 @@ try {
   // fixture rather than to whichever names this week's refresh shipped: one
   // district with a named seat carrying a seat label and a role, a vacancy the
   // county states, and a countywide member, which must render under its own
-  // label. The second half stubs an empty roster and requires the not-named
+  // label, and the county's own name for a district the state numbers
+  // (Dyer letters its districts), beside the state's number. The second half
+  // stubs an empty roster and requires the not-named
   // sentence, because a card that names nobody must still say why.
   {
     const roster = {
@@ -932,6 +934,7 @@ try {
           { name: "Fixture Member", seat: "A", role: "Chair", email: "fixture@nashville.gov" },
           { vacant: true, seat: "B" }
         ] },
+        districtLabels: { "19": "District S" },
         atLarge: [{ name: "Fixture Countywide" }]
       }
     };
@@ -939,7 +942,8 @@ try {
       ["names the district's seats, a stated vacancy and the countywide members",
        roster,
        [/Fixture Member/, /Council Member/, /Seat A/, /Chair/, /Seat B/, /Vacant/,
-        /Elected countywide/i, /Fixture Countywide/, /read 11 October 2026/],
+        /Elected countywide/i, /Fixture Countywide/, /read 11 October 2026/,
+        /District S\. The state's map numbers it District 19\./],
        /Not named here yet/],
       ["says it names nobody where the roster has not reached the county",
        {}, [/Not named here yet/], /Fixture/]

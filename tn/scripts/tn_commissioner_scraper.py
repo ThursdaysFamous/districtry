@@ -114,7 +114,8 @@ def load_counties():
                      "at_large": mod.AT_LARGE, "domains": list(mod.DOMAINS),
                      "phones": bool(getattr(mod, "PHONES", False)),
                      "title": getattr(mod, "TITLE", None),
-                     "body": getattr(mod, "BODY", None), "module": info.name})
+                     "body": getattr(mod, "BODY", None),
+                     "labels": getattr(mod, "DISTRICT_LABELS", None), "module": info.name})
     seen = {}
     for row in rows:
         # TITLE and BODY are words a card prints. A parser is free to keep a
@@ -127,6 +128,12 @@ def load_counties():
                 raise SystemExit("tn-commissioner-scraper: FAIL - %s.%s is %s, not text; "
                                  "name a pattern of your own something else"
                                  % (row["module"], key.upper(), type(row[key]).__name__))
+        labels = row["labels"]
+        if labels is not None and not (isinstance(labels, dict) and all(
+                isinstance(k, str) and isinstance(v, str) and v.strip()
+                for k, v in labels.items())):
+            raise SystemExit("tn-commissioner-scraper: FAIL - %s.DISTRICT_LABELS is not "
+                             "a table of district number to text" % row["module"])
         if row["fips"] in seen:
             raise SystemExit("tn-commissioner-scraper: FAIL - %s and %s both claim "
                              "county %s" % (seen[row["fips"]], row["module"], row["fips"]))
@@ -272,6 +279,7 @@ def main():
             "bodyName": spec.get("body") or "County Commission",
             "districts": districts,
             "atLarge": parsed.get("atLarge") or [],
+            "districtLabels": dict(spec["labels"]) if spec.get("labels") else None,
             # PER COUNTY, never the run's own timestamp: --county merges, so a
             # global stamp would date every county to a run that read one.
             "readAt": read_date,

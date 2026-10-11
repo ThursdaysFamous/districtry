@@ -376,15 +376,31 @@ def seat_heading(inst, label):
     return "%s %s" % (word, label) if word else label
 
 
-def district(label, members=(), vacancies=0, note=None):
+def district(label, members=(), vacancies=0, note=None, alias=None):
     """One district on a page. A DICT rather than a tuple because a district
     that names nobody can be three different things and a reader has to be told
     which: the county says the seat is vacant (`vacancies`), somebody says why
     no name can be shown (`note` — Wisconsin's one withheld district), or
     nothing is published at all (neither). Wisconsin's own card has drawn that
-    distinction since it shipped; these pages draw the same one."""
+    distinction since it shipped; these pages draw the same one.
+
+    `alias` is the county's own name for a district the state's map numbers
+    (Dyer, Tennessee, letters its districts A to J): printed beside the
+    number in the heading, never in place of it, because the number is what
+    the map, the anchor and the app's card all use."""
     return {"label": str(label), "members": list(members),
-            "vacancies": vacancies, "note": note}
+            "vacancies": vacancies, "note": note, "alias": alias}
+
+
+def district_heading(inst, d):
+    """A district section's heading, ONE copy for the page and for the
+    read-back that proves every district is on it: the instance's own wording
+    for the number, and the county's own name for it beside that where the
+    county uses another (`alias`)."""
+    heading = seat_heading(inst, d["label"])
+    if d.get("alias"):
+        heading = "%s (the county's %s)" % (heading, d["alias"])
+    return heading
 
 
 def _slug_of(path):
@@ -1324,11 +1340,13 @@ def tn_commissioners(inst):
             return p
 
         districts = []
+        aliases = rec.get("districtLabels") or {}
         for label in sorted(named_districts, key=district_sort_key):
             ms = named_districts[label] or []
             districts.append(district(
                 label, [person(m) for m in ms if not m.get("vacant")],
-                vacancies=sum(1 for m in ms if m.get("vacant"))))
+                vacancies=sum(1 for m in ms if m.get("vacant")),
+                alias=aliases.get(label)))
         countywide = rec.get("atLarge") or []
         if any(m.get("vacant") for m in countywide):
             # A page section for countywide members has no vacancy line yet,
@@ -1939,7 +1957,7 @@ def districted_body(inst, name, rec):
         anchor = "district-%s" % re.sub(r"[^A-Za-z0-9]+", "-",
                                         re.sub(r"^District\s+", "", label)).lower()
         out.append('<section class="district" id="%s">' % esc(anchor))
-        out.append('<h2>%s</h2>' % esc(seat_heading(inst, label)))
+        out.append('<h2>%s</h2>' % esc(district_heading(inst, d)))
         rows = [h for h in (member_html(m) for m in d["members"]) if h]
         if rows:
             out.append('<ul class="members">%s</ul>' % "".join(rows))
@@ -2503,7 +2521,7 @@ def verify_page(inst, name, rec, at_large, html):
     if not at_large:
         for d in rec["districts"]:
             if ("<h2>%s</h2>"
-                    % esc(seat_heading(inst, d["label"]))) not in html:
+                    % esc(district_heading(inst, d))) not in html:
                 problems.append("%s: district %s has no section on its page"
                                 % (name, d["label"]))
     return problems
