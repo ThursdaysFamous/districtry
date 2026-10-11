@@ -41,7 +41,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 
 Counties, towns and villages, school and judicial districts across the state, plus the city's boroughs, Council and community districts, NYPD precincts and school zones.
 
-- [New York district lookup](https://districtry.com/ny/): 38 layers, statewide, 5 boroughs in depth.
+- [New York district lookup](https://districtry.com/ny/): 39 layers, statewide, 5 boroughs in depth.
 - [Who is my borough president?](https://districtry.com/ny/borough.html)
 - [What community board am I in?](https://districtry.com/ny/community-board.html)
 - [Who is my U.S. representative?](https://districtry.com/ny/congress.html)
@@ -120,6 +120,7 @@ All 120 counties: the county a point sits in, and the Kentucky Senate, House and
 
 - [Kentucky district lookup](https://districtry.com/ky/): 12 layers, all 120 counties.
 - [Who is my U.S. representative?](https://districtry.com/ky/congress.html)
+- [Who runs my county?](https://districtry.com/ky/county-government.html): links a page per county, 120 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/ky/sources.html)
 - [Kentucky district questions](https://districtry.com/ky/faq.html)
 
@@ -129,7 +130,7 @@ All 92 counties: townships, cities and towns, school districts, ZIP codes, and t
 
 - [Indiana district lookup](https://districtry.com/in/): 11 layers, all 92 counties.
 - [Who is my U.S. representative?](https://districtry.com/in/congress.html)
-- [Who are my county commissioners?](https://districtry.com/in/county-commissioner.html): links a page per county, 91 of them, each naming every member with whatever contact details that county publishes.
+- [Who are my county commissioners?](https://districtry.com/in/county-commissioner.html): links a page per county, 92 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/in/sources.html)
 - [Indiana district questions](https://districtry.com/in/faq.html)
 
@@ -160,7 +161,7 @@ Each instance's sources page carries one row per layer: what it answers, the pub
 
 Officeholder names are never guessed. Where no verifiable roster exists, a card links the official body instead of inventing a name, and what the project does not know is recorded rather than left blank — each instance ships a machine-readable list of its own gaps at `<instance>/data/app/coverage-gaps.json`.
 
-Sources last reverified between October 9, 2026 and September 30, 2026, per instance.
+Sources last reverified between October 11, 2026 and September 29, 2026, per instance.
 
 This is a civic reference tool and it disclaims legal precision. Confirm a district assignment with the government office that draws it before relying on it for anything official.
 

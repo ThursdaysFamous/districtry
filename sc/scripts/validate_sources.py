@@ -137,10 +137,9 @@ PROVENANCE = [
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
         "note": (
             "All 46 counties pre-built from TIGERweb by "
-            "sc/scripts/build_state_counties.py. The card is identity-only for "
-            "now: every county is governed by an elected county council, "
-            "recorded as gap sc-county-council until the county-council layer "
-            "ships."
+            "sc/scripts/build_state_counties.py. The card names the council "
+            "members each county elects countywide and points at the "
+            "county-council layer for the rest."
         ),
     },
     {
@@ -153,6 +152,31 @@ PROVENANCE = [
             "measured rather than predicted. Its --check is offline and holds "
             "the shipped file to one verified-interior INSIDE anchor per county "
             "(46 of 46 correct) plus six OUTSIDE anchors over the state line."
+        ),
+    },
+    {
+        "layer": "county-council",
+        "app_file": "sc-county-council-districts.json",
+        "source_url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/County_Council_Districts/FeatureServer/0",
+        "note": (
+            "All 315 county council districts in 46 counties, pre-built from "
+            "the state Revenue and Fiscal Affairs Office's one statewide layer "
+            "by sc/scripts/build_sc_county_council_districts.py. "
+            "update-sc-county-council-roster.yml compares the live layer with "
+            "the fingerprint recorded at build time every week and opens an "
+            "issue when a county redistricts; this check only says the layer "
+            "still answers."
+        ),
+    },
+    {
+        "layer": "county-council",
+        "app_file": "sc-county-council-members.json",
+        "source_url": "https://scvotes.gov/elections-statistics/election-results/",
+        "note": (
+            "The State Election Commission's results page, which links each "
+            "general election's certified results; every seat names the winner "
+            "of its most recent election, rebuilt weekly by "
+            "sc/scripts/build_sc_county_council_roster.py."
         ),
     },
 ]

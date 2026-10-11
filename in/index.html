@@ -74,7 +74,7 @@
       "keywords": "Indiana district map, what district am I in, Indiana Senate district, Indiana House district, county lookup, civic districts, who represents me",
       "author": { "@id": "https://districtry.com/#author" },
       "isPartOf": { "@id": "https://districtry.com/in/#website" },
-      "dateModified": "2026-10-09",
+      "dateModified": "2026-10-11",
       "sameAs": "https://github.com/ThursdaysFamous/districtry"
     }
   ]
@@ -3924,7 +3924,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="footer-meta" id="footer-meta">
         <span>Data last verified:
           <!-- ==== GENERATED:BEGIN verified-date ==== -->
-          <strong id="verified-date">October 9, 2026</strong>
+          <strong id="verified-date">October 11, 2026</strong>
           <!-- ==== GENERATED:END verified-date ==== -->
         </span>
       </div>
@@ -6766,9 +6766,19 @@ function initIndianaExplorer() {
     setSelectedPoint(lat, lng);
   }
 
+  // Why a press of the button did not end in a selected point here, by app.
+  // The reason and this app's tag only: never the position, which is what
+  // geolocate-success alone carries (rounded). Its own prefix, not
+  // "geolocate-...", so these rows cannot crowd the two geolocate rows out of
+  // the traffic report's name-filtered query, which GoatCounter caps at ten.
+  function trackLocateFail(reason) {
+    trackEvent("locate-fail/" + METRO_BRAND.instanceTag + "/" + reason);
+  }
+
   locateBtn.addEventListener("click", function () {
     trackEvent("geolocate");
     if (!("geolocation" in navigator)) {
+      trackLocateFail("unsupported");
       geoStatusEl.textContent = "Geolocation isn't supported in this browser.";
       geoStatusEl.className = "geo-status err";
       return;
@@ -6795,19 +6805,22 @@ function initIndianaExplorer() {
             geoStatusEl.textContent = "You're outside " + METRO_NAME + " — but " +
               siblingDisplayName(owner) + " covers where you are.";
             geoStatusEl.className = "geo-status";
+            trackLocateFail("other-app");
             offerMetroPortal(owner, { point: { lat: lat, lng: lng }, source: "geolocate" });
             return;
           }
+          trackLocateFail("outside");
           geoStatusEl.textContent = "Your current location looks like it's outside the " + METRO_NAME + " area this app covers.";
           geoStatusEl.className = "geo-status err";
         });
       },
       function (err) {
         locateBtn.disabled = false;
-        var msg = "Couldn't get your location.";
-        if (err.code === err.PERMISSION_DENIED) msg = "Location access was denied. Allow it in your browser's site settings to use this.";
-        else if (err.code === err.TIMEOUT) msg = "Location request timed out. Try again.";
-        else if (err.code === err.POSITION_UNAVAILABLE) msg = "Your location is currently unavailable.";
+        var msg = "Couldn't get your location.", reason = "other";
+        if (err.code === err.PERMISSION_DENIED) { msg = "Location access was denied. Allow it in your browser's site settings to use this."; reason = "denied"; }
+        else if (err.code === err.TIMEOUT) { msg = "Location request timed out. Try again."; reason = "timeout"; }
+        else if (err.code === err.POSITION_UNAVAILABLE) { msg = "Your location is currently unavailable."; reason = "unavailable"; }
+        trackLocateFail(reason);
         geoStatusEl.textContent = msg;
         geoStatusEl.className = "geo-status err";
       },
@@ -12374,8 +12387,9 @@ function initIndianaExplorer() {
    * card says that in words. The card lists every seat in the county rather
    * than yours, because neither body's district lines are drawn here yet
    * (gap in-county-government). Marion County is in neither file: its
-   * legislative body is the Indianapolis City-County Council, and the card
-   * says so rather than naming nobody without a reason.
+   * legislative body is the Indianapolis City-County Council, so its card
+   * reads Indianapolis's record in data/app/in-city-officials.json — the
+   * mayor and the council's 25 seats, from the 2023 municipal general.
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
@@ -12386,6 +12400,14 @@ function initIndianaExplorer() {
   var loadCountyCouncils = makeCached(function () {
     return fetchJSONWithRetry("data/app/in-county-councils.json", {}, 2);
   });
+  // The mayors and councils of the places over 25,000 people, keyed by Census
+  // place id (in/scripts/build_in_city_officials.py). The County card reads
+  // Indianapolis's record for Marion, whose legislative body is the
+  // City-County Council; the City or Town card reads the rest.
+  var loadCityOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-city-officials.json", {}, 2);
+  });
+  var INDIANAPOLIS_GEOID = "1836003";
   var IN_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
   function inElectionDate(iso) {
@@ -12406,6 +12428,49 @@ function initIndianaExplorer() {
         badge: seat.seatNotStated ? "Seat not stated" : String(seat.seat),
         note: note
       };
+    });
+  }
+
+  // A city's (or town's) mayor and council, for the City or Town card and for
+  // Marion's County card. `county` says the body is also Marion County's.
+  function inCityRows(wrap, rows, rec, county) {
+    var seats = rec.seats || [];
+    var mayor = seats.filter(function (s) { return s.seat === "Mayor"; });
+    var council = { seats: seats.filter(function (s) { return s.seat !== "Mayor"; }) };
+    if (mayor.length) {
+      wrap.appendChild(renderSectionLabel(
+        rec.kind === "town" ? "Town mayor" : "Mayor"));
+      wrap.appendChild(renderPersonRows(inSeatRows({ seats: mayor }).map(function (r) {
+        r.badge = null; return r;
+      })));
+    }
+    wrap.appendChild(renderSectionLabel(String(rec.body)));
+    wrap.appendChild(renderPersonRows(inSeatRows(council)));
+    if (county) {
+      rows.push({
+        label: "One government",
+        value: "Indianapolis and Marion County share one government. The " +
+          "City-County Council is the county's legislative body as well as the " +
+          "city's, and everyone in Marion County votes for it, including the " +
+          "residents of Beech Grove, Lawrence, Southport and Speedway, which " +
+          "keep city or town governments of their own."
+      });
+    }
+    rows.push({
+      label: "What these names are",
+      value: "The winner of the most recent election for each seat, from the " +
+        "Indiana Election Division's certified results. They are not a list " +
+        "the " + (rec.kind === "town" ? "town" : "city") + " keeps up to date: " +
+        "Indiana fills a vacancy by party caucus, so if a seat has changed " +
+        "hands since the election this still shows who won it. The " +
+        (rec.kind === "town" ? "town's" : "city's") + " own website says who " +
+        "holds each seat today."
+    });
+    rows.push({
+      label: "Which seat is yours",
+      value: "Every seat is listed, because this app does not draw the " +
+        "council's district lines yet. \"At large\" seats are elected by the " +
+        "whole " + (county ? "county" : rec.kind === "town" ? "town" : "city") + "."
     });
   }
 
@@ -12436,6 +12501,13 @@ function initIndianaExplorer() {
         // A roster that fails to load leaves the county answer standing and
         // says so, rather than taking the boundary answer down with it.
         var key = String(result.geoid);
+        if (key === "18097") {
+          // Marion: the consolidated city's council and mayor
+          return loadCityOfficials().then(function (r) {
+            result.cityCounty = r[INDIANAPOLIS_GEOID] || null;
+            return result;
+          }, function () { result.rosterFailed = true; return result; });
+        }
         return Promise.all([
           loadCountyCommissioners().then(function (r) { return r[key] || null; },
             function () { result.rosterFailed = true; return null; }),
@@ -12480,12 +12552,17 @@ function initIndianaExplorer() {
             "county and the council sets its budget and taxes; \"At large\" " +
             "council seats are elected by the whole county."
         });
-      } else if (result.name && /^Marion\b/.test(String(result.name))) {
+      } else if (result.cityCounty) {
+        inCityRows(wrap, rows, result.cityCounty, true);
+      } else if (String(result.geoid) === "18097") {
         rows.push({
           label: "County government",
-          value: "Indianapolis and Marion County share one government. Its " +
-            "council is the 25-member Indianapolis City-County Council, which " +
-            "this app does not show yet."
+          value: result.rosterFailed
+            ? "Indianapolis and Marion County share one government. The list " +
+              "of its council members and mayor did not load, so no names are " +
+              "shown."
+            : "Indianapolis and Marion County share one government, run by " +
+              "the Mayor of Indianapolis and the 25-member City-County Council."
         });
       } else {
         rows.push({
@@ -12499,7 +12576,8 @@ function initIndianaExplorer() {
       }
       wrap.appendChild(renderFieldStack(rows));
       var seats = ((result.commissioners && result.commissioners.seats) || [])
-        .concat((result.council && result.council.seats) || []);
+        .concat((result.council && result.council.seats) || [])
+        .concat((result.cityCounty && result.cityCounty.seats) || []);
       var newest = null;
       seats.forEach(function (seat) {
         if (seat.sourceUrl && (!newest || seat.election > newest.election)) newest = seat;
@@ -12763,12 +12841,16 @@ function initIndianaExplorer() {
    * lookup: most of Indiana's land is unincorporated township, which IS an
    * answer, and the Township or City card is the one that names it.
    *
-   * NO OFFICEHOLDER. No statewide source names Indiana's mayors, council
-   * members or clerk-treasurers — Aim (the Association of Indiana
-   * Municipalities) publishes a membership-facing directory and the state
-   * publishes no aggregate — so the card names no one rather than guessing.
-   * Recorded as gap in-municipal-officeholders; per-city rosters are later
-   * phase work, the route every other instance took. ---------- */
+   * THE MAYOR AND COUNCIL OF EVERY PLACE OVER 25,000, AS ELECTION WINNERS.
+   * The Indiana Election Division's certified 2023 municipal general names a
+   * winner for every mayor's and council seat in 36 of the 39 places the
+   * Census counted at 25,000 or more (in/scripts/build_in_city_officials.py,
+   * data/app/in-city-officials.json, keyed by Census place id). The other
+   * three are towns — Plainfield, Brownsburg and Schererville — where an
+   * uncontested seat is on no ballot, so the results cannot name the whole
+   * council; their cards say so. A smaller place is not in the file yet and
+   * its card says that too. Recorded as gap in-municipal-officeholders.
+   * ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC", "incorporated places");
@@ -12800,7 +12882,7 @@ function initIndianaExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // same NAME-minus-BASENAME technique as the subdivision card, for
@@ -12809,8 +12891,14 @@ function initIndianaExplorer() {
                  String(name).indexOf(String(base)) === 0)
             ? String(name).slice(String(base).length).trim().toLowerCase()
             : null,
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          officials: null
         };
+        // A roster that fails to load leaves the place answer standing.
+        return loadCityOfficials().then(function (r) {
+          result.officials = r[String(result.geoid)] || null;
+          return result;
+        }, function () { result.rosterFailed = true; return result; });
       });
     },
     render: function (result) {
@@ -12834,12 +12922,39 @@ function initIndianaExplorer() {
           { label: "Type", value: KIND_NOTE[result.kind] }
         ]));
       }
-      wrap.appendChild(renderFieldStack([{
-        label: "Your mayor or council",
-        value: "Not named here. No statewide source names Indiana's mayors, " +
-          "council members or clerk-treasurers, and this app does not guess " +
-          "— this municipality's own website is the current source."
-      }]));
+      var rows = [];
+      var NOT_NAMED = {
+        "1860246": 1, "1808416": 1, "1868220": 1 // Plainfield, Brownsburg, Schererville
+      };
+      if (result.officials) {
+        inCityRows(wrap, rows, result.officials,
+          String(result.geoid) === INDIANAPOLIS_GEOID);
+      } else if (NOT_NAMED[String(result.geoid)]) {
+        rows.push({
+          label: "Your town council",
+          value: "Not named here yet. A town holds no general election for a " +
+            "seat nobody runs against, and the state's election results this " +
+            "app reads do not name the whole council. The town's own website " +
+            "is the current source."
+        });
+      } else {
+        rows.push({
+          label: "Your mayor or council",
+          value: result.rosterFailed
+            ? "The list of mayors and council members did not load, so no " +
+              "names are shown."
+            : "Not named here yet. This app names the mayor and council of " +
+              "Indiana's cities and towns over 25,000 people, and this one is " +
+              "smaller. Its own website is the current source."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      if (result.officials && result.officials.seats && result.officials.seats[0]) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "Indiana Election Division results \u2197",
+            url: String(result.officials.seats[0].sourceUrl) }]
+        }));
+      }
       return wrap;
     }
   });
@@ -14926,100 +15041,121 @@ function initIndianaExplorer() {
     // compares the HOVER name: the canvas names a district from the tile's
     // own properties, with nothing a loader stamps after its fetch, so a
     // hover that reads a stamped property would differ from the file's.
+    //
+    // A point the layer's own coverage test rejects is skipped and returned
+    // with `hidden: true`: the app hides the layer there and never runs its
+    // query, so no reader sees a card to compare. Asking anyway sent a county
+    // layer's query to its fallback, which asks every county in turn, live
+    // servers included, and one of them answering badly from a CI runner
+    // failed the check at a point no reader can reach (2026-10-11, a point
+    // just outside White County, Illinois). A coverage test that throws keeps
+    // the point, as the engine fails open.
     tileCardCheck: function (id, points) {
       var mod = getLayerById(id), load = mod && mod.overlay && mod.overlay.load;
       if (!load || !load.tileMod) return Promise.reject(new Error(id + " is not drawn from tiles"));
       var rt = layerRuntime[id], viaTiles = [];
-      if (mod.countyEntries) {
-        var countyResults = [], hovers = [];
-        var byKey = {};
-        mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
-        function hoverPair(p) {
-          return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
-            var tf = findFeatureContaining(fc, p);
-            var key = tf && tf.properties._c, entry = key != null && byKey[key];
-            if (!entry || !entry.loadGeometry) return null;
-            var props = {};
-            for (var k in tf.properties) if (tf.properties.hasOwnProperty(k) && k !== "_c") props[k] = tf.properties[k];
-            var tiles = mod.hoverName({ type: "Feature", properties: props, dxCounty: key });
-            return Promise.resolve(entry.loadGeometry()).then(function (g) {
-              var ff = findFeatureContaining(g, p);
-              return { tiles: tiles, file: ff ? mod.hoverName({ type: "Feature", properties: ff.properties, dxCounty: key }) : null };
-            });
-          }).then(null, function (e) { return { tiles: "error: " + String(e && e.message || e), file: null }; });
-        }
-        return countyTileKeys(mod).then(function (keys) {
-          function runCounty(out, record) {
-            return points.reduce(function (chain, p, i) {
-              return chain.then(function () {
-                rt.tileAnswer = null;
-                return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
-                  out.push(r == null ? null : JSON.stringify(r, function (k, v) {
-                    return k === "seq" || k === "geometry" ? undefined : v;
-                  }));
-                  if (record) {
-                    countyResults.push({ via: !!(rt.tileAnswer && rt.tileAnswer.point === p),
-                      county: r ? r.dxCounty : null, inArchive: !!(r && keys[r.dxCounty]) });
-                    return hoverPair(p).then(function (h) { hovers.push(h); });
+      return Promise.all(points.map(function (p) {
+        if (typeof mod.coverage !== "function") return false;
+        return Promise.resolve().then(function () { return mod.coverage(p); })
+          .then(function (inside) { return !inside; }, function () { return false; });
+      })).then(function (hidden) {
+        if (mod.countyEntries) {
+          var countyResults = [], hovers = [];
+          var byKey = {};
+          mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
+          function hoverPair(p) {
+            return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+              var tf = findFeatureContaining(fc, p);
+              var key = tf && tf.properties._c, entry = key != null && byKey[key];
+              if (!entry || !entry.loadGeometry) return null;
+              var props = {};
+              for (var k in tf.properties) if (tf.properties.hasOwnProperty(k) && k !== "_c") props[k] = tf.properties[k];
+              var tiles = mod.hoverName({ type: "Feature", properties: props, dxCounty: key });
+              return Promise.resolve(entry.loadGeometry()).then(function (g) {
+                var ff = findFeatureContaining(g, p);
+                return { tiles: tiles, file: ff ? mod.hoverName({ type: "Feature", properties: ff.properties, dxCounty: key }) : null };
+              });
+            }).then(null, function (e) { return { tiles: "error: " + String(e && e.message || e), file: null }; });
+          }
+          return countyTileKeys(mod).then(function (keys) {
+            function runCounty(out, record) {
+              return points.reduce(function (chain, p, i) {
+                return chain.then(function () {
+                  if (hidden[i]) {
+                    out.push(null);
+                    if (record) { countyResults.push({ via: false, county: null, inArchive: false }); hovers.push(null); }
+                    return;
                   }
-                }, function (e) {
-                  out.push("error: " + String(e && e.message || e));
-                  if (!record) return;
-                  hovers.push(null);
-                  // A query that errored names no county, so ask the archive
-                  // itself: a tile feature under the point carries its county
-                  // key, and only a point no archived district holds can be a
-                  // live county's. Unreadable, it stays unknown (null), which
-                  // the probe never forgives as a live source's outage.
-                  return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
-                    var tf = findFeatureContaining(fc, p), c = tf && tf.properties ? tf.properties._c : null;
-                    countyResults.push({ via: false, county: c != null ? c : null, inArchive: c != null && !!keys[c] });
-                  }, function () {
-                    countyResults.push({ via: false, county: null, inArchive: null });
+                  rt.tileAnswer = null;
+                  return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+                    out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                      return k === "seq" || k === "geometry" ? undefined : v;
+                    }));
+                    if (record) {
+                      countyResults.push({ via: !!(rt.tileAnswer && rt.tileAnswer.point === p),
+                        county: r ? r.dxCounty : null, inArchive: !!(r && keys[r.dxCounty]) });
+                      return hoverPair(p).then(function (h) { hovers.push(h); });
+                    }
+                  }, function (e) {
+                    out.push("error: " + String(e && e.message || e));
+                    if (!record) return;
+                    hovers.push(null);
+                    // A query that errored names no county, so ask the archive
+                    // itself: a tile feature under the point carries its county
+                    // key, and only a point no archived district holds can be a
+                    // live county's. Unreadable, it stays unknown (null), which
+                    // the probe never forgives as a live source's outage.
+                    return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+                      var tf = findFeatureContaining(fc, p), c = tf && tf.properties ? tf.properties._c : null;
+                      countyResults.push({ via: false, county: c != null ? c : null, inArchive: c != null && !!keys[c] });
+                    }, function () {
+                      countyResults.push({ via: false, county: null, inArchive: null });
+                    });
                   });
                 });
+              }, Promise.resolve());
+            }
+            var tiled = [], whole = [];
+            return runCounty(tiled, true).then(function () {
+              mod.tilesOff = true;
+              return runCounty(whole);
+            }).then(function () {
+              mod.tilesOff = false;
+              return points.map(function (p, i) {
+                var c = countyResults[i];
+                var h = hovers[i];
+                return { point: p, tiles: tiled[i], file: whole[i], viaTiles: c.via, county: c.county, inArchive: c.inArchive, hidden: hidden[i],
+                  hoverTiles: h ? h.tiles : null, hoverFile: h ? h.file : null };
               });
-            }, Promise.resolve());
-          }
-          var tiled = [], whole = [];
-          return runCounty(tiled, true).then(function () {
-            mod.tilesOff = true;
-            return runCounty(whole);
-          }).then(function () {
-            mod.tilesOff = false;
-            return points.map(function (p, i) {
-              var c = countyResults[i];
-              var h = hovers[i];
-              return { point: p, tiles: tiled[i], file: whole[i], viaTiles: c.via, county: c.county, inArchive: c.inArchive,
-                hoverTiles: h ? h.tiles : null, hoverFile: h ? h.file : null };
-            });
-          }, function (e) { mod.tilesOff = false; throw e; });
-        });
-      }
-      function run(out, record) {
-        return points.reduce(function (chain, p, i) {
-          return chain.then(function () {
-            if (record) rt.tileAnswer = null;
-            return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
-              out.push(r == null ? null : JSON.stringify(r, function (k, v) {
-                return k === "seq" || k === "geometry" ? undefined : v;
-              }));
-              // whether the tile path really answered: a query that reaches
-              // its boundaries some other way passes the comparison while
-              // downloading the whole file and lighting nothing
-              if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
-            }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+            }, function (e) { mod.tilesOff = false; throw e; });
           });
-        }, Promise.resolve());
-      }
-      var tiled = [], whole = [], keep = load.tileMod;
-      return run(tiled, true).then(function () {
-        load.tileMod = null;
-        return run(whole);
-      }).then(function () {
-        load.tileMod = keep;
-        return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i] }; });
-      }, function (e) { load.tileMod = keep; throw e; });
+        }
+        function run(out, record) {
+          return points.reduce(function (chain, p, i) {
+            return chain.then(function () {
+              if (hidden[i]) { out.push(null); if (record) viaTiles.push(false); return; }
+              if (record) rt.tileAnswer = null;
+              return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+                out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                  return k === "seq" || k === "geometry" ? undefined : v;
+                }));
+                // whether the tile path really answered: a query that reaches
+                // its boundaries some other way passes the comparison while
+                // downloading the whole file and lighting nothing
+                if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
+              }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+            });
+          }, Promise.resolve());
+        }
+        var tiled = [], whole = [], keep = load.tileMod;
+        return run(tiled, true).then(function () {
+          load.tileMod = null;
+          return run(whole);
+        }).then(function () {
+          load.tileMod = keep;
+          return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i], hidden: hidden[i] }; });
+        }, function (e) { load.tileMod = keep; throw e; });
+      });
     },
     // The colour a layer's outline is painted in right now, whichever way it
     // is drawn: the tile canvas's paint, or a Leaflet path's stroke. What the

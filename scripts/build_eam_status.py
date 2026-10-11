@@ -319,8 +319,13 @@ def load_rosters():
                 out, _problems, _nameless, used, _note = getattr(B, adapter)(inst)
                 merged.update(out)
                 read.extend(used)
-            counties[tag] = merged
-            paths[tag] = read
+            # A STATE CAN HOLD MORE THAN ONE ENTRY (New York's legislatures
+            # and boards of supervisors, Indiana's commissioners and the
+            # Indianapolis City-County Council), so each entry ADDS to its
+            # tag. Assigning here let the second entry replace the first, and
+            # New York's Tompkins County read as naming nobody.
+            counties.setdefault(tag, {}).update(merged)
+            paths.setdefault(tag, []).extend(read)
     return counties, paths, B
 
 
@@ -1577,7 +1582,11 @@ ANSWERS = {
         # State's precinct service also carries soil-and-water, hospital and
         # park districts, which are further layers rather than a gap here.
         "special-districts": answers("watershed-district"),
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-10 (#1470): the app draws Minnesota's 22 pieces of
+        # tribal land across 13 nations, and the card names nine councils
+        # from the nations' own pages and says why the other four name
+        # nobody -- the Wisconsin and Michigan shape.
+        "tribal-government": answers("tribal-government"),
     },
     "ky": {
         "us-house": answers("us-house"),
@@ -1817,6 +1826,9 @@ CITY_ROSTERS = {
     # answers both of the Census's Louisville places, the consolidated metro
     # (balance) and the pre-merger city inside it.
     "ky": [("ky/data/app/ky-city-officials.json", "geoid7")],
+    # Election winners from the Election Division's certified 2023 municipal
+    # general, keyed by the city's Census id, each seat dated to its election.
+    "in": [("in/data/app/in-city-officials.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is
@@ -1945,7 +1957,7 @@ def load_expected_units():
 # Wisconsin roster is keyed by the five-digit place code inside the state.
 STATE_FIPS_OF = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
                  "mn": "27", "ky": "21", "ny": "36", "in": "18",
-                 "nc": "37", "ok": "40"}
+                 "nc": "37", "ok": "40", "sc": "45", "tn": "47"}
 
 
 def _named_anywhere(record):
@@ -1989,7 +2001,18 @@ def city_tier(tag, expected):
     inside the unit is told who governs that point: where the council elects at
     large there is no district to draw, and many units above the floor do.
     """
-    units = {u["geoid"]: u for u in expected.get("units", {}).get(tag, [])}
+    # A STATE THE MEASUREMENT NEVER REACHED IS NOT A STATE WITH NO LARGE
+    # TOWNS. Reading a missing entry as an empty list scored zero units of
+    # zero, which is "answered": Indiana, North Carolina and Oklahoma passed
+    # this level unchecked from their go-lives until 2026-10-11, because the
+    # measurement had been taken for the first seven apps only.
+    if tag not in expected.get("units", {}):
+        fail("%s: docs/expected-governments.json carries no measurement for "
+             "this state, so its city tier cannot be scored. Add the state to "
+             "STATE_FIPS in scripts/build_expected_governments.py and run it "
+             "(it needs the network); a missing state must not read as one "
+             "with nothing to answer." % tag)
+    units = {u["geoid"]: u for u in expected["units"][tag]}
     named = set()
     for rel, keyed_by in CITY_ROSTERS.get(tag, []):
         path = os.path.join(REPO_ROOT, rel)

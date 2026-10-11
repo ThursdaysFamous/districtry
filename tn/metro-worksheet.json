@@ -284,7 +284,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "None yet — identity only. Every Tennessee county elects its legislative body from districts, and the Comptroller of the Treasury publishes every county's districts in one statewide service; no state office publishes the members' names, and neither is wired in this first change. Recorded as gap tn-county-commission-districts.",
+        "people": "None. The county's governing body is drawn by the County Commission District layer, which carries its districts and, county by county as each roster ships, its members.",
         "applies": "Tennessee — statewide, all 95 counties."
       }
     },
@@ -325,10 +325,28 @@
       }
     },
     {
+      "id": "county-commissioner",
+      "label": "County Commission District",
+      "group": "political",
+      "area_rank": 6,
+      "rank_note": "859 districts in 95 counties, pre-built from the Comptroller of the Treasury's statewide layer; smaller on average than a state House district or a unified school district",
+      "source": {
+        "answers": "The county commission district covering the point, and its county. In the three consolidated counties the district elects members of the consolidated government's governing body.",
+        "boundary": [
+          {
+            "label": "Tennessee Comptroller of the Treasury, Office of Local Government — \"County Commission Districts New\", layer 2 of its Redistricting_Address_Lookup service: every county's commission districts in one statewide layer, pre-built and shipped with the app; 859 districts in 95 counties, each county numbered 1 to N, measured 2026-10-11.",
+            "url": "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/2"
+          }
+        ],
+        "people": "Each county's own published list of its commission (in Nashville, the Metro Council), read every week, in the counties this app has reached so far; the county commission page lists them. Each county's list was checked against that county's own results of the 6 August 2026 election before its names were added. No state office publishes who sits on a county commission, so in every other county the card says the names are not on it yet; recorded as gap tn-county-commissioners.",
+        "applies": "Tennessee — statewide, all 95 counties, 859 districts."
+      }
+    },
+    {
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -346,7 +364,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "15 city and special school districts running the lower grades, live from TIGERweb",
       "source": {
         "answers": "The district running the lower grades at the point, where that is not a unified district.",
@@ -364,7 +382,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb",
       "source": {
         "answers": "The district running the high school at the point, where that is not a unified district.",
@@ -382,7 +400,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "345 incorporated places, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any, and whether it is a consolidated city-county government.",
@@ -400,7 +418,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -418,7 +436,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -436,7 +454,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -473,6 +491,10 @@
     {
       "layer": "tn-house",
       "expected": "51"
+    },
+    {
+      "layer": "county-commissioner",
+      "expected": "19"
     }
   ],
   "negative_point": {
@@ -514,6 +536,12 @@
         "min_features": 99,
         "max_features": 99,
         "note": "The 99 Tennessee House districts."
+      },
+      {
+        "file": "tn-commission-districts.json",
+        "min_features": 859,
+        "max_features": 859,
+        "note": "The 859 county commission districts in 95 counties, from the Comptroller of the Treasury's statewide layer (tn/scripts/build_tn_commission_districts.py)."
       }
     ],
     "rosters": [
@@ -533,6 +561,11 @@
         "note": "Tennessee House roster, one record per seat on the same terms; House 31 and 84 read vacant on 2026-10-10."
       },
       {
+        "file": "tn-commissioners.json",
+        "min_keys": 54,
+        "note": "County commission members by district, read from each county's own page and refreshed weekly by update-tn-commissioner-roster.yml (tn/scripts/tn_commissioner_scraper.py + build_tn_commissioner_roster.py). Keyed by 5-digit county code; a county joins by having a module in tn/scripts/tn_commission_parsers/."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -540,7 +573,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-tn-shell-v1",
+    "cache_name": "districtry-tn-shell-v2",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
@@ -566,6 +599,11 @@
       "file": "update-tn-legislature-roster.yml",
       "purpose": "Tennessee Senate and Tennessee House rosters (the Legislature's district map on TNMap, with Open States)",
       "schedule": "Tue 17:15 UTC"
+    },
+    {
+      "file": "update-tn-commissioner-roster.yml",
+      "purpose": "Tennessee county commission members, read from each county's own page (tn/scripts/tn_commission_parsers/, one module per county)",
+      "schedule": "Wed 17:15 UTC"
     },
     {
       "file": "tn-validate-sources.yml",

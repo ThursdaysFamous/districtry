@@ -141,10 +141,8 @@ PROVENANCE = [
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
         "note": (
             "All 95 counties pre-built from TIGERweb by "
-            "tn/scripts/build_state_counties.py. The card names the county and "
-            "not its commissioners: every county elects a county commission "
-            "from districts, recorded as gap tn-county-commission-districts "
-            "until the commission layer ships."
+            "tn/scripts/build_state_counties.py. The card names the county; "
+            "its commission districts are a layer of their own."
         ),
     },
     {
@@ -157,6 +155,23 @@ PROVENANCE = [
             "measured rather than predicted. Its --check is offline and holds "
             "the shipped file to one verified-interior INSIDE anchor per county "
             "(95 of 95 correct) plus eight OUTSIDE anchors over the state line."
+        ),
+    },
+    {
+        "layer": "county-commissioner",
+        "app_file": "tn-commission-districts.json",
+        "source_url": ("https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/"
+                       "Redistricting_Address_Lookup/FeatureServer/2?f=json"),
+        # The date the Comptroller's layer reported as its last data edit when
+        # the shipped file was built. A later date on the live layer is the
+        # signal to rebuild: a county that redraws its districts mid-decade
+        # files the new plan with the state, and nothing else here would notice.
+        "edited_at_build": "2026-09-10",
+        "note": (
+            "859 county commission districts in 95 counties, pre-built from the "
+            "Comptroller of the Treasury's statewide layer by "
+            "tn/scripts/build_tn_commission_districts.py. The layer carries the "
+            "district and its county and nothing about who holds it."
         ),
     },
 ]
@@ -411,6 +426,8 @@ def check_provenance(findings, offline):
                          "Recorded block: %s" % (p["source_url"], blocked))
         elif ok:
             findings.add(OK, layer, "source reachable: %s — %s" % (p["source_url"], p["note"]))
+            if p.get("edited_at_build"):
+                check_edit_date(findings, p)
         elif blocked:
             findings.add(OK, layer,
                          "unreachable AS EXPECTED (%s) — %s. %s"
@@ -420,6 +437,37 @@ def check_provenance(findings, offline):
                          "source not reachable (%s): %s. Boundaries change ~once a "
                          "decade; verify the source still exists and re-download if redrawn. %s"
                          % (res, p["source_url"], p["note"]))
+
+
+def check_edit_date(findings, p):
+    """WARN when an ArcGIS layer has been edited since the shipped file was built.
+
+    The layer's own `editingInfo.dataLastEditDate` is the publisher saying the
+    data changed; the file in data/app/ is a snapshot of the day it was built,
+    so a later date means the snapshot may describe districts a county has since
+    redrawn. It is a WARN rather than a FAIL for the reason every finding here
+    is: this validator reports, a person rebuilds and compares."""
+    import datetime
+    ok, meta = http_get(p["source_url"], want_json=True)
+    edited = ((meta or {}).get("editingInfo") or {}).get("dataLastEditDate") if ok else None
+    if not edited:
+        findings.add(WARN, p["layer"],
+                     "could not read the layer's last-edit date (%s), so whether it "
+                     "changed since the build on %s is unknown: %s"
+                     % (meta if not ok else "no editingInfo", p["edited_at_build"],
+                        p["source_url"]))
+        return
+    day = datetime.datetime.fromtimestamp(
+        edited / 1000, datetime.timezone.utc).date().isoformat()
+    if day > p["edited_at_build"]:
+        findings.add(WARN, p["layer"],
+                     "the source layer was edited on %s, after the %s edit the shipped "
+                     "data/app/%s was built from. Rebuild it and compare: a county may "
+                     "have redrawn its districts. %s"
+                     % (day, p["edited_at_build"], p["app_file"], p["source_url"]))
+    else:
+        findings.add(OK, p["layer"], "source layer last edited %s, the edit the "
+                     "shipped file was built from" % day)
 
 
 # ---- check 4: live endpoints reachable --------------------------------------

@@ -198,6 +198,51 @@ ROSTER_BLOCKED = {
                "connection is not settled, so no name is carried and the card links "
                "the community.",
     },
+    "2555": {
+        "host": "www.oneidaindiannation.com",
+        "measured": "2026-10-10",
+        "why": "The nation's leadership page names its federally recognized "
+               "Representative, Ray Halbritter, and says each clan chooses members "
+               "of the Nation Council, without naming them (read 2026-10-10). A "
+               "partial council is not carried, so the card links the nation.",
+    },
+    "2570": {
+        "host": "www.onondaganation.org",
+        "measured": "2026-10-10",
+        "why": "The Onondaga Nation is led by 14 chiefs (Hoyane), each chosen for "
+               "life by a Clan Mother. The nation's own page describes them "
+               "without naming them (read 2026-10-10), so the card links the nation.",
+    },
+    "4225": {
+        "host": "www.bia.gov",
+        "measured": "2026-10-10",
+        "why": "The Bureau of Indian Affairs lists no website for the Tonawanda "
+               "Band, and this project has found no council list the nation "
+               "publishes, so no name is carried.",
+    },
+    "4360": {
+        "host": "www.bia.gov",
+        "measured": "2026-10-10",
+        "why": "The Bureau of Indian Affairs lists no website for the Tuscarora "
+               "Nation, and this project has found no council list the nation "
+               "publishes, so no name is carried.",
+    },
+    "9300": {
+        "host": "legislation.nysenate.gov",
+        "measured": "2026-10-10",
+        "why": "New York's Indian Law sets this nation's officers (a chief, three "
+               "land trustees, a tribal secretary, a keeper of the records and a "
+               "keeper of the wampums, elected each April) and names nobody. No "
+               "government source naming them was found (2026-10-10), so no name "
+               "is carried.",
+    },
+    "9370": {
+        "host": "www.bia.gov",
+        "measured": "2026-10-10",
+        "why": "The Bureau of Indian Affairs lists no website for the Shinnecock "
+               "Indian Nation, and this project has not yet found a council list "
+               "the nation publishes, so no name is carried.",
+    },
     "3100": {
         "host": "www.redlakenation.org",
         "measured": "2026-09-29",
@@ -457,6 +502,32 @@ def statistical_note(cls):
     """The card's sentence for a drawn statistical area, or None."""
     return _STATISTICAL_NOTE.get(cls)
 
+def government_of(entry, bia):
+    """The government record a join entry names, or None.
+
+    Every entry names a government the Bureau of Indian Affairs lists, with one
+    exception: a nation New York State recognizes and the United States does
+    not, which the Bureau's list cannot carry. Adam ruled on 2026-10-10 that
+    its land is drawn, named only where a state government source names it.
+    Such an entry carries `stateRecognition` naming that source, and the record
+    returned here has no seat and no website, because the state source gives
+    neither and this project supplies none.
+    """
+    rec = entry.get("stateRecognition")
+    if rec:
+        return {"name": entry["government"], "state": None, "city": None,
+                "website": None, "stateRecognition": rec}
+    return bia.get(entry["government"])
+
+
+def recognition_note(entry):
+    """The card's sentence for a nation only its state recognizes, or None."""
+    rec = entry.get("stateRecognition")
+    if not rec:
+        return None
+    return ("Recognized by %s under %s, and not by the federal government. "
+            "The name is the one that law gives." % (rec["by"], rec["law"]))
+
 
 def check_join(areas, join, bia):
     """Hold the shipped areas, the join and the Bureau's list to one another.
@@ -485,11 +556,13 @@ def check_join(areas, join, bia):
                     raise RuntimeError("the Bureau lists no state for %r, so no "
                                        "card can say where it sits" % name)
             continue
-        gov = bia.get(entry["government"])
+        gov = government_of(entry, bia)
         if gov is None:
             raise RuntimeError(
                 "the join names %r for AIANNH %s and the Bureau's own list does "
                 "not carry that government" % (entry["government"], code))
+        if gov.get("stateRecognition"):
+            continue
         if not gov.get("state"):
             raise RuntimeError("the Bureau lists no state for %r, so no card can "
                                "say where it sits" % entry["government"])
@@ -624,6 +697,12 @@ def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils
     snote = statistical_note(cls)
     if snote:
         rec["properties"]["statisticalNote"] = snote
+    # Only a nation the state alone recognizes carries these two, so every
+    # federally listed nation's shipped record is unchanged by their existence.
+    note = recognition_note(entry)
+    if note:
+        rec["properties"]["recognition"] = note
+        rec["properties"]["recognitionUrl"] = entry["stateRecognition"]["url"]
     return stamp(rec, councils or {}, state)
 
 
@@ -891,7 +970,7 @@ def build(state_name, tag, out_path=None):
     for cls, feat, clip in areas:
         code = str(feat["properties"].get("AIANNH"))
         entry = join["areas"][code]
-        gov = None if entry.get("governments") else bia[entry["government"]]
+        gov = None if entry.get("governments") else government_of(entry, bia)
         feats.append(_record(cls, feat, clip, entry, gov,
                              here.get(code, []), counts, known, load_councils(),
                              state_name, bia))
@@ -1011,7 +1090,11 @@ def check():
                 if p.get("nations") is not None:
                     raise RuntimeError("%s: AIANNH %s lists several governments where "
                                        "the join names one" % (tag, p["aiannh"]))
-                gov = bia.get(p["nation"])
+                gov = government_of(entry, bia)
+            if p.get("recognition") != recognition_note(entry):
+                raise RuntimeError(
+                    "%s: AIANNH %s's recognition sentence is not what the join "
+                    "gives — rebuild the file" % (tag, p["aiannh"]))
             if p.get("populationNote") != population_note(
                     p.get("population"), p.get("countedIn2020"),
                     p.get("shareInState"), doc["state"], p.get("landClass")):
@@ -1131,9 +1214,12 @@ def check():
             "measurement nothing reads is the shape this project keeps finding "
             "wrong" % ", ".join(orphans))
     print("build-tribal-areas --check: OK — %d instance(s), %d area(s); every "
-          "government named by the join and listed by the Bureau, every seat and "
-          "link theirs, %d council(s) carried as read, and every unnamed roster "
-          "explained" % (seen, areas, len(councils)))
+          "government named by the join and listed by the Bureau (or, for %d "
+          "nation(s) only a state recognizes, named by that state's law), every "
+          "seat and link theirs, %d council(s) carried as read, and every unnamed "
+          "roster explained"
+          % (seen, areas, sum(1 for e in join["areas"].values()
+                              if e.get("stateRecognition")), len(councils)))
     return True
 
 
