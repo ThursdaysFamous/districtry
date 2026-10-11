@@ -4064,9 +4064,9 @@ function initTennesseeExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "tn-senate": "tns", "county": "co", "tn-house": "tnh",
-    "school-district-unified": "su", "zip-code": "zp", "school-district-elementary": "se",
-    "school-district-secondary": "sh", "municipality": "mu", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po" };
+    "school-district-unified": "su", "county-commissioner": "cm", "zip-code": "zp",
+    "school-district-elementary": "se", "school-district-secondary": "sh", "municipality": "mu",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8454,6 +8454,7 @@ function initTennesseeExplorer() {
     "county",            // 95 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "tn-house",          // 99 House districts — the smallest of the three chamber tilings
     "school-district-unified", // 127 unified districts, live from TIGERweb (no data/app file); with the 15 elementary districts they cover the state exactly
+    "county-commissioner", // 859 districts in 95 counties, pre-built from the Comptroller of the Treasury's statewide layer; smaller on average than a state House district or a unified school district
     "zip-code",          // 1,070 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Tennessee
     "school-district-elementary", // 15 city and special school districts running the lower grades, live from TIGERweb
     "school-district-secondary", // 15 county districts running the high school over the same ground as the 15 elementary districts, live from TIGERweb
@@ -12372,14 +12373,10 @@ function initTennesseeExplorer() {
    * service-worker cached, so this layer answers even when every
    * third-party host is down.
    *
-   * IDENTITY ONLY IN THIS FIRST CHANGE. Every Tennessee county elects its
-   * legislative body — a county commission in most, a metropolitan council
-   * where the county has consolidated with its principal city — from
-   * districts, and the Comptroller of the Treasury publishes every county's
-   * districts statewide. No state office publishes the names, and neither is
-   * wired yet, so the card says the body exists and names nobody on it rather
-   * than leaving a reader to wonder. Recorded as gap
-   * `tn-county-commission-districts`.
+   * IDENTITY ONLY. Every Tennessee county elects its legislative body from
+   * districts, and those districts are their own layer below (County
+   * Commission District), which is where the members will be named as each
+   * county's roster ships. This card points there rather than repeating it.
    *
    * THREE COUNTIES ARE CONSOLIDATED WITH THEIR PRINCIPAL CITY, and the Census
    * says so: TIGERweb's place layer carries exactly three records for
@@ -12441,11 +12438,9 @@ function initTennesseeExplorer() {
       }
       rows.push({
         label: consolidated ? "Who represents you on it" : "Your county commissioners",
-        value: "Not named here yet. Every Tennessee county elects its " +
-          "governing body from districts, and the state's Comptroller of the " +
-          "Treasury publishes every county's districts. No state office " +
-          "publishes the members' names, and this map does not carry them " +
-          "yet, so it names no one here rather than guessing."
+        value: "Every Tennessee county elects its governing body from " +
+          "districts. Turn on the County Commission District layer to see " +
+          "which district this point is in."
       });
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
@@ -12556,6 +12551,87 @@ function initTennesseeExplorer() {
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "Tennessee House directory",
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+  });
+
+  /* ---------- 5. County Commission District ----------
+   * Pre-built from the Comptroller of the Treasury's statewide layer of every
+   * county's commission districts (tn/scripts/build_tn_commission_districts.py
+   * — 859 districts in 95 counties, each county numbered 1..N, a 25 m
+   * fidelity ceiling and a witness that every district answers to its own
+   * county). Every Tennessee county elects its legislative body from these
+   * districts, the three consolidated governments included: Nashville-
+   * Davidson's 35 are its Metropolitan Council districts.
+   *
+   * A DISTRICT IS NOT A SEAT. Many counties elect two or three commissioners
+   * from one district, and the state's layer carries no seat count, so the
+   * card says which district a point is in and never how many people hold it.
+   *
+   * NO NAMES YET. No state office publishes who sits on a county commission:
+   * the Division of Elections' results carry no county races, so the names
+   * have to come county by county from each county's own pages. Until a
+   * county's roster ships, the card says so rather than guessing. Recorded as
+   * gap tn-county-commissioners. ---------- */
+  var loadTnCommissionDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-commission-districts.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "county-commissioner",
+    group: "political",
+    label: "County Commission District",
+    overlay: {
+      load: loadTnCommissionDistricts,
+      style: { color: "#1B7A3D", weight: 2, fillColor: "#2E9E6B", fillOpacity: 0.06 }
+    },
+    // the same value the card's header pill shows, so hover and card cannot
+    // disagree about which district a polygon is
+    hoverName: function (feature) {
+      var district = findPropCI(feature.properties || {}, ["district"]);
+      return district != null ? String(district) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadTnCommissionDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          district: findPropCI(props, ["district"]),
+          county: findPropCI(props, ["county"]),
+          countyfips: findPropCI(props, ["countyfips"])
+        };
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.district != null ? "District " + String(result.district) : "Unknown district";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var consolidated = result.countyfips != null
+        ? TN_CONSOLIDATED_COUNTIES[String(result.countyfips)] : null;
+      var rows = [{
+        label: "County",
+        value: result.county != null ? String(result.county) : "Unknown county",
+        primary: true
+      }];
+      if (consolidated) {
+        rows.push({
+          label: "Government",
+          value: "This county and its principal city are one consolidated " +
+            "government, which the Census Bureau names " + consolidated +
+            ". This district elects members of the body that governs both."
+        });
+      }
+      rows.push({
+        label: "Who represents this district",
+        value: "Not named here yet. The state publishes these districts but " +
+          "not who holds them, and many counties elect two or three members " +
+          "from each district. This app is naming them county by county from " +
+          "each county's own pages, and this county is not done yet, so it " +
+          "names no one here rather than guessing."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    }
   });
 
   /* No county-subdivision layer, on purpose. Tennessee has no township
@@ -14589,6 +14665,7 @@ function initTennesseeExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "tn-senate", "tn-house",
+    "county-commissioner",
     "school-district-unified", "school-district-elementary",
     "school-district-secondary",
     "county", "municipality", "zip-code",
@@ -15052,10 +15129,10 @@ function initTennesseeExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4CA1FB", "#14181C": "#696F76", "#14503A": "#5AA485",
-    "#1B4F8C": "#599DF2", "#1F6F4A": "#5ABE8B", "#2E7D5B": "#63C99A", "#3E9E72": "#65E3A8",
-    "#41B6E6": "#B3E6FF", "#444B54": "#8F99A6", "#4A2E8C": "#9879FA", "#4B2E83": "#9C79EE",
-    "#6B7280": "#ACB6C9", "#7FC4A3": "#A0FBD0", "#8C2E4A": "#F06F91", "#A3341F": "#FD7C62",
-    "#B0316E": "#FE80B4", "#D06A9C": "#FEB3D4"};
+    "#1B4F8C": "#599DF2", "#1B7A3D": "#53C976", "#1F6F4A": "#5ABE8B", "#2E7D5B": "#63C99A",
+    "#2E9E6B": "#54E4A0", "#3E9E72": "#65E3A8", "#41B6E6": "#B3E6FF", "#444B54": "#8F99A6",
+    "#4A2E8C": "#9879FA", "#4B2E83": "#9C79EE", "#6B7280": "#ACB6C9", "#7FC4A3": "#A0FBD0",
+    "#8C2E4A": "#F06F91", "#A3341F": "#FD7C62", "#B0316E": "#FE80B4", "#D06A9C": "#FEB3D4"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
