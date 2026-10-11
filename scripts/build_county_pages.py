@@ -243,6 +243,29 @@ INSTANCES = [
          index_provenance="each name the winner of that seat's most recent "
                           "election in the Indiana Election Division's "
                           "certified results, dated to it"),
+    # KENTUCKY'S GOVERNING BODY IS NOT ONE BODY. 118 counties are governed by a
+    # fiscal court, and Jefferson and Fayette by the councils of the merged
+    # Louisville Metro and Lexington-Fayette governments, so the concept path
+    # is the county's government rather than the fiscal court, and those two
+    # pages take their own heading from `heading_for` rather than calling a
+    # metro council a fiscal court. The names come from the state's county
+    # directory, which says nothing about districts, so every page is the flat
+    # shape and none claims an election method it was not told.
+    dict(tag="ky", state="Kentucky", concept="county-government",
+         index_page="county-government.html",
+         heading="%(county)s County Fiscal Court",
+         heading_for={"Jefferson": "Louisville Metro Council",
+                      "Fayette": "Lexington-Fayette Urban County Council"},
+         page_title="%(county)s County Fiscal Court",
+         page_title_for={"Jefferson": "Louisville Metro Council",
+                         "Fayette": "Lexington-Fayette Urban Council"},
+         phrase="fiscal court", index_label="County governments",
+         all_label="All Kentucky county governments",
+         app_name="districtry Kentucky", app_url="https://districtry.com/ky/",
+         district_word="District", member_word="Magistrate",
+         adapters=("ky_county_governments",),
+         index_provenance="each name as the Kentucky Department for Local "
+                          "Government's county directory lists it"),
     # TENNESSEE NAMES WHAT EACH COUNTY'S OWN PAGE LISTS, county by county as
     # the roster reaches them, so a county the roster has not read has no page
     # rather than one naming nobody. Every county elects its commission from
@@ -301,11 +324,13 @@ def heading_of(inst, county, rec=None):
     one state can hold counties whose legislative body is not the one the
     instance's wording describes: Tennessee's county commissions sit beside
     the Metro Council of Nashville and Davidson County, one metropolitan
-    government whose council is that county's legislative body. A record
-    carrying no `heading` reads exactly as before."""
+    government whose council is that county's legislative body. An instance
+    may also name a county's body in `heading_for` (Kentucky's two merged
+    governments). A county with neither reads exactly as before."""
     if rec and rec.get("heading"):
         return rec["heading"]
-    return inst["heading"] % {"county": county}
+    own = (inst.get("heading_for") or {}).get(county)
+    return own or inst["heading"] % {"county": county}
 
 
 def inst_key(inst):
@@ -1273,6 +1298,128 @@ def in_commissioners(inst):
     return out, problems, nameless, [path], note
 
 
+# Kept short because it ends every page's search description, and the longest
+# county names put "the ... county directory" past the 155-character limit.
+KY_SOURCE_LABEL = "Kentucky's Department for Local Government"
+KY_LEDE = {
+    "magistrate": (
+        "%(county)s County's fiscal court is its county judge/executive, who "
+        "presides, and its magistrates, each elected from a magisterial district "
+        "(KRS 67.040). These are the %(who)s the Kentucky Department for Local "
+        "Government's county directory lists. The directory does not say which "
+        "district each magistrate holds."),
+    "commissioner": (
+        "%(county)s County's fiscal court is its county judge/executive, who "
+        "presides, and three commissioners, each elected by the whole county's "
+        "voters and one living in each commissioner district (KRS 67.060). These "
+        "are the %(who)s the Kentucky Department for Local Government's county "
+        "directory lists."),
+}
+KY_MERGED_LEDE = (
+    "%(county)s County has no fiscal court: it merged with its city, and the "
+    "%(body)s is its governing body (%(law)s). These are the %(who)s the "
+    "Kentucky Department for Local Government's directory lists, each elected "
+    "from a council district that is not drawn here yet. The mayor, %(mayor)s, "
+    "is the government's executive and is not a member of the council.")
+# Appended to the lede where the builder matched members to the districts they
+# won in 2022, so a county with no match never claims one.
+KY_DISTRICT_NOTE = ("Where the State Board of Elections' certified 2022 results "
+                    "name a member as the winner of a district, that district is "
+                    "shown beside the name; a member without one took the seat "
+                    "after that election or could not be matched.")
+KY_STANDFIRST = ("Every member of the %(heading)s, as the Kentucky Department "
+                 "for Local Government's county directory lists them.")
+KY_DESC = {"magistrate": "%d members: the judge/executive and the magistrates",
+           "commissioner": "%d members: the judge/executive and three commissioners",
+           "merged": "%d council members"}
+KY_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is listed "
+                 "by the Kentucky Department for Local Government,\n"
+                 "which does not say when a county last updated its entry, so the "
+                 "county's own website is the current word.")
+KY_CTA_NOTE = ("Opens the map with the county layer on. Its card lists this body "
+               "and the county's elected officers; the district lines are not "
+               "drawn yet, so the map cannot say which district a point is in.")
+
+
+def ky_county_governments(inst):
+    """Kentucky: ONE file keyed by county GEOID (ky/data/app/ky-county-officials.json,
+    built by ky/scripts/build_ky_county_officials.py from the Department for
+    Local Government's county directory).
+
+    FLAT, AND NEVER CLAIMED AT LARGE. The directory names every magistrate and
+    commissioner and no district, so a page lists the body as one list; the
+    lede says how the county actually elects (KRS 67.045 and 67.060), which is
+    by district or from residence districts and never at large. Where the
+    builder matched a member to the district they won in 2022 (the State
+    Board of Elections' recap sheets), the district rides in the member's role
+    ("Magistrate, District 3") and the lede says where it came from; the list
+    stays flat because a member the results do not name has no district to
+    file under.
+
+    JEFFERSON AND FAYETTE are the merged governments and their pages are about
+    the council, so the mayor is named in the lede as the executive and is not
+    listed as a member of a body he does not sit on."""
+    path = os.path.join(app_data(inst["tag"]), "ky-county-officials.json")
+    out, problems, nameless = {}, [], set()
+    for geoid, rec in sorted(_read(path).items()):
+        name = (rec.get("county") or "").strip()
+        members = [dict(m) for m in rec.get("members") or []]
+        for m in members:
+            if m.get("district"):
+                d = str(m.pop("district"))
+                m["role"] = "%s, %s" % (m.get("role") or "Member",
+                                        "District " + d if re.match(r"^(\d+|[A-Z])$", d)
+                                        else d + " District")
+        if not name:
+            problems.append("ky-county-officials.json %r carries no county" % geoid)
+            continue
+        if not any((m.get("name") or "").strip() for m in members):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("ky %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        merged = rec.get("body") != "Fiscal Court"
+        if merged:
+            if (inst.get("heading_for") or {}).get(name) != rec.get("body"):
+                problems.append("ky %s County's body is %r and heading_for does not "
+                                "name it" % (name, rec.get("body")))
+                continue
+            mayor = (rec.get("executive") or {}).get("name") or ""
+            lede = KY_MERGED_LEDE % {
+                "county": "%(county)s", "who": "%(who)s",
+                "body": esc(rec["body"]).replace("%", "%%"),
+                "law": esc(rec.get("law") or "").replace("%", "%%"),
+                "mayor": esc(mayor).replace("%", "%%")}
+            desc, index_note = KY_DESC["merged"], ", " + rec["body"]
+        else:
+            if rec.get("form") not in KY_LEDE:
+                problems.append("ky %s County's fiscal court form %r has no wording"
+                                % (name, rec.get("form")))
+                continue
+            lede, desc = KY_LEDE[rec["form"]], KY_DESC[rec["form"]]
+            index_note = ", fiscal court"
+            if rec.get("districtsFrom"):
+                lede += " " + KY_DISTRICT_NOTE
+            if rec.get("formNote"):
+                lede += " " + esc(rec["formNote"]).replace("%", "%%")
+        out[name] = {"members": members,
+                     "structure": None,
+                     "verified": rec.get("bodyRead") or rec.get("read"),
+                     "sourceUrl": rec.get("bodySourceUrl") or rec.get("sourceUrl"),
+                     "source_label": KY_SOURCE_LABEL,
+                     "sourceDocument": None,
+                     "seats": len(members) + int(rec.get("unnamedSeats") or 0),
+                     "slug": county_slug(name), "at_large": True,
+                     "claims_at_large": False,
+                     "lede": lede, "standfirst": KY_STANDFIRST, "desc": desc,
+                     "disclaimer": KY_DISCLAIMER, "cta_note": KY_CTA_NOTE,
+                     "index_note": index_note, "source_file": path}
+    note = ("%d of Kentucky's 120 counties, every name from the Department for "
+            "Local Government's county directory" % len(out))
+    return out, problems, nameless, [path], note
+
+
 TN_LEDE = ("The %(heading)s is elected by district. This page lists its "
            "%(districts)d districts and the %(named)d members who hold them, "
            "exactly as the county publishes them; it is the same list the "
@@ -1619,6 +1766,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "mi_commissioners": mi_commissioners,
             "mn_commissioners": mn_commissioners,
             "in_commissioners": in_commissioners,
+            "ky_county_governments": ky_county_governments,
             "tn_commissioners": tn_commissioners,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
@@ -2039,8 +2187,9 @@ def at_large_body(inst, name, rec):
                '<p class="unlisted">Not listed in the county\'s directory.</p>')
     out.append('</section>')
     if rec.get("seats") and rec["seats"] > named:
-        out.append('<p class="unlisted">%d of %d seats are not named by the '
-                   'county\'s own source.</p>' % (rec["seats"] - named, rec["seats"]))
+        out.append('<p class="unlisted">%d of %d seats are not named by %s.</p>'
+                   % (rec["seats"] - named, rec["seats"],
+                      esc(rec.get("source_label") or "the county's own source")))
     out.append('<a class="cta" href="../#layers=county">'
                'See %s County on the map →</a>' % esc(name))
     out.append('<p class="cta-note">%s</p>'
@@ -2060,6 +2209,10 @@ def source_note(rec, at_large):
     if at_large:
         if rec.get("sourceDocument"):
             bits.append("Source: %s." % esc(rec["sourceDocument"]))
+        elif rec.get("sourceUrl") and rec.get("source_label"):
+            # A flat roster that is not the county's own says whose it is.
+            bits.append('Source: <a href="%s" rel="noopener" target="_blank">%s</a>.'
+                        % (esc(rec["sourceUrl"]), esc(rec["source_label"])))
         elif rec.get("sourceUrl"):
             bits.append('Source: <a href="%s" rel="noopener" target="_blank">the '
                         "county's own published roster</a>." % esc(rec["sourceUrl"]))
@@ -2295,9 +2448,10 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
     if block:
         body = body + "\n" + block
     head = heading_of(inst, name, rec)
-    title = "%s — %s" % (rec.get("page_title")
-                         or inst["page_title"] % {"county": name}, inst["app_name"])
-    if len(title) > 60 and inst.get("page_title_short") and not rec.get("page_title"):
+    own_title = rec.get("page_title") or (inst.get("page_title_for") or {}).get(name)
+    title = "%s — %s" % (own_title or inst["page_title"] % {"county": name},
+                         inst["app_name"])
+    if len(title) > 60 and inst.get("page_title_short") and not own_title:
         title = "%s — %s" % (inst["page_title_short"] % {"county": name},
                              inst["app_name"])
     if at_large:
@@ -2313,11 +2467,11 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
         # the districted half of this same generator never carried it. The
         # em dash matches that half too — the two shapes were gratuitously
         # different.
-        desc = ("Who sits on the %s — %s, from the county's own published "
-                "roster."
+        desc = ("Who sits on the %s — %s, from %s."
                 % (head, (rec.get("desc")
                           or "%d members elected at large across the whole "
-                             "county") % named))
+                             "county") % named,
+                   rec.get("source_label") or "the county's own published roster"))
     else:
         # `named` counts the EXTRA sections too — Illinois's elected chair,
         # Menominee's two at-large supervisors — and none of those people is in
