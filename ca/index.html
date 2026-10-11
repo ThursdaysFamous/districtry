@@ -6787,9 +6787,19 @@ function initSFExplorer() {
     setSelectedPoint(lat, lng);
   }
 
+  // Why a press of the button did not end in a selected point here, by app.
+  // The reason and this app's tag only: never the position, which is what
+  // geolocate-success alone carries (rounded). Its own prefix, not
+  // "geolocate-...", so these rows cannot crowd the two geolocate rows out of
+  // the traffic report's name-filtered query, which GoatCounter caps at ten.
+  function trackLocateFail(reason) {
+    trackEvent("locate-fail/" + METRO_BRAND.instanceTag + "/" + reason);
+  }
+
   locateBtn.addEventListener("click", function () {
     trackEvent("geolocate");
     if (!("geolocation" in navigator)) {
+      trackLocateFail("unsupported");
       geoStatusEl.textContent = "Geolocation isn't supported in this browser.";
       geoStatusEl.className = "geo-status err";
       return;
@@ -6816,19 +6826,22 @@ function initSFExplorer() {
             geoStatusEl.textContent = "You're outside " + METRO_NAME + " — but " +
               siblingDisplayName(owner) + " covers where you are.";
             geoStatusEl.className = "geo-status";
+            trackLocateFail("other-app");
             offerMetroPortal(owner, { point: { lat: lat, lng: lng }, source: "geolocate" });
             return;
           }
+          trackLocateFail("outside");
           geoStatusEl.textContent = "Your current location looks like it's outside the " + METRO_NAME + " area this app covers.";
           geoStatusEl.className = "geo-status err";
         });
       },
       function (err) {
         locateBtn.disabled = false;
-        var msg = "Couldn't get your location.";
-        if (err.code === err.PERMISSION_DENIED) msg = "Location access was denied. Allow it in your browser's site settings to use this.";
-        else if (err.code === err.TIMEOUT) msg = "Location request timed out. Try again.";
-        else if (err.code === err.POSITION_UNAVAILABLE) msg = "Your location is currently unavailable.";
+        var msg = "Couldn't get your location.", reason = "other";
+        if (err.code === err.PERMISSION_DENIED) { msg = "Location access was denied. Allow it in your browser's site settings to use this."; reason = "denied"; }
+        else if (err.code === err.TIMEOUT) { msg = "Location request timed out. Try again."; reason = "timeout"; }
+        else if (err.code === err.POSITION_UNAVAILABLE) { msg = "Your location is currently unavailable."; reason = "unavailable"; }
+        trackLocateFail(reason);
         geoStatusEl.textContent = msg;
         geoStatusEl.className = "geo-status err";
       },
