@@ -52,7 +52,7 @@ different thing from one it failed.
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 17 | all | 12 of 13 levels |
 | nc | **EAM·** | 100 | 100/100 § | 0 | 0 | by record | 9 | all | 6 of 13 levels |
 | ny | **EAM·** | 62 | 62/62 § | 68 | 78 | all | 33 | all | 9 of 13 levels |
-| ok | **EAM·** | 77 | 77/77 § | 0 | 0 | by record | 10 | all | 6 of 13 levels |
+| ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 12 | all | 7 of 13 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 265 | all | 11 of 13 levels |
 
 § Examined in part by a record covering the whole state rather
@@ -167,11 +167,8 @@ this instance is in maintenance.
 
 ### ok — EAM·
 
-- **Examined by a statewide record:** `ok-commissioner-districts` accounts for every county in the state, which is what Examined rests on here: 0 of 77 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
-- **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-house-districts.json`, `ok-senate-districts.json`, `state-counties.json`, `tribal-areas.json`
-- **Covered: no.** 7 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 0 of 77 counties name a governing body
+- **Under a WATCH.md plan (8):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-commissioner-districts.json`, `ok-house-districts.json`, `ok-senate-districts.json`, `state-counties.json`, `tribal-areas.json`
+- **Covered: no.** 6 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 16 units at 25,000+ name a governing body; unanswered: Bartlesville city, Bixby city, Broken Arrow city, Edmond city, Enid city, Jenks city, Lawton city, Midwest City city and 8 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
