@@ -120,6 +120,7 @@ All 120 counties: the county a point sits in, and the Kentucky Senate, House and
 
 - [Kentucky district lookup](https://districtry.com/ky/): 12 layers, all 120 counties.
 - [Who is my U.S. representative?](https://districtry.com/ky/congress.html)
+- [Who runs my county?](https://districtry.com/ky/county-government.html): links a page per county, 120 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/ky/sources.html)
 - [Kentucky district questions](https://districtry.com/ky/faq.html)
 
@@ -159,7 +160,7 @@ Each instance's sources page carries one row per layer: what it answers, the pub
 
 Officeholder names are never guessed. Where no verifiable roster exists, a card links the official body instead of inventing a name, and what the project does not know is recorded rather than left blank — each instance ships a machine-readable list of its own gaps at `<instance>/data/app/coverage-gaps.json`.
 
-Sources last reverified between October 9, 2026 and September 30, 2026, per instance.
+Sources last reverified between October 11, 2026 and September 29, 2026, per instance.
 
 This is a civic reference tool and it disclaims legal precision. Confirm a district assignment with the government office that draws it before relying on it for anything official.
 
