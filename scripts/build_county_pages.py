@@ -1417,6 +1417,9 @@ def ky_county_governments(inst):
                      "index_note": index_note, "source_file": path}
     note = ("%d of Kentucky's 120 counties, every name from the Department for "
             "Local Government's county directory" % len(out))
+    return out, problems, nameless, [path], note
+
+
 TN_LEDE = ("The %(heading)s is elected by district. This page lists its "
            "%(districts)d districts and the %(named)d members who hold them, "
            "exactly as the county publishes them; it is the same list the "
