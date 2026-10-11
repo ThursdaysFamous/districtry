@@ -74,7 +74,7 @@
       "keywords": "Indiana district map, what district am I in, Indiana Senate district, Indiana House district, county lookup, civic districts, who represents me",
       "author": { "@id": "https://districtry.com/#author" },
       "isPartOf": { "@id": "https://districtry.com/in/#website" },
-      "dateModified": "2026-10-09",
+      "dateModified": "2026-10-11",
       "sameAs": "https://github.com/ThursdaysFamous/districtry"
     }
   ]
@@ -3924,7 +3924,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="footer-meta" id="footer-meta">
         <span>Data last verified:
           <!-- ==== GENERATED:BEGIN verified-date ==== -->
-          <strong id="verified-date">October 9, 2026</strong>
+          <strong id="verified-date">October 11, 2026</strong>
           <!-- ==== GENERATED:END verified-date ==== -->
         </span>
       </div>
@@ -12389,8 +12389,9 @@ function initIndianaExplorer() {
    * card says that in words. The card lists every seat in the county rather
    * than yours, because neither body's district lines are drawn here yet
    * (gap in-county-government). Marion County is in neither file: its
-   * legislative body is the Indianapolis City-County Council, and the card
-   * says so rather than naming nobody without a reason.
+   * legislative body is the Indianapolis City-County Council, so its card
+   * reads Indianapolis's record in data/app/in-city-officials.json — the
+   * mayor and the council's 25 seats, from the 2023 municipal general.
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
@@ -12401,6 +12402,14 @@ function initIndianaExplorer() {
   var loadCountyCouncils = makeCached(function () {
     return fetchJSONWithRetry("data/app/in-county-councils.json", {}, 2);
   });
+  // The mayors and councils of the places over 25,000 people, keyed by Census
+  // place id (in/scripts/build_in_city_officials.py). The County card reads
+  // Indianapolis's record for Marion, whose legislative body is the
+  // City-County Council; the City or Town card reads the rest.
+  var loadCityOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-city-officials.json", {}, 2);
+  });
+  var INDIANAPOLIS_GEOID = "1836003";
   var IN_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
   function inElectionDate(iso) {
@@ -12421,6 +12430,49 @@ function initIndianaExplorer() {
         badge: seat.seatNotStated ? "Seat not stated" : String(seat.seat),
         note: note
       };
+    });
+  }
+
+  // A city's (or town's) mayor and council, for the City or Town card and for
+  // Marion's County card. `county` says the body is also Marion County's.
+  function inCityRows(wrap, rows, rec, county) {
+    var seats = rec.seats || [];
+    var mayor = seats.filter(function (s) { return s.seat === "Mayor"; });
+    var council = { seats: seats.filter(function (s) { return s.seat !== "Mayor"; }) };
+    if (mayor.length) {
+      wrap.appendChild(renderSectionLabel(
+        rec.kind === "town" ? "Town mayor" : "Mayor"));
+      wrap.appendChild(renderPersonRows(inSeatRows({ seats: mayor }).map(function (r) {
+        r.badge = null; return r;
+      })));
+    }
+    wrap.appendChild(renderSectionLabel(String(rec.body)));
+    wrap.appendChild(renderPersonRows(inSeatRows(council)));
+    if (county) {
+      rows.push({
+        label: "One government",
+        value: "Indianapolis and Marion County share one government. The " +
+          "City-County Council is the county's legislative body as well as the " +
+          "city's, and everyone in Marion County votes for it, including the " +
+          "residents of Beech Grove, Lawrence, Southport and Speedway, which " +
+          "keep city or town governments of their own."
+      });
+    }
+    rows.push({
+      label: "What these names are",
+      value: "The winner of the most recent election for each seat, from the " +
+        "Indiana Election Division's certified results. They are not a list " +
+        "the " + (rec.kind === "town" ? "town" : "city") + " keeps up to date: " +
+        "Indiana fills a vacancy by party caucus, so if a seat has changed " +
+        "hands since the election this still shows who won it. The " +
+        (rec.kind === "town" ? "town's" : "city's") + " own website says who " +
+        "holds each seat today."
+    });
+    rows.push({
+      label: "Which seat is yours",
+      value: "Every seat is listed, because this app does not draw the " +
+        "council's district lines yet. \"At large\" seats are elected by the " +
+        "whole " + (county ? "county" : rec.kind === "town" ? "town" : "city") + "."
     });
   }
 
@@ -12451,6 +12503,13 @@ function initIndianaExplorer() {
         // A roster that fails to load leaves the county answer standing and
         // says so, rather than taking the boundary answer down with it.
         var key = String(result.geoid);
+        if (key === "18097") {
+          // Marion: the consolidated city's council and mayor
+          return loadCityOfficials().then(function (r) {
+            result.cityCounty = r[INDIANAPOLIS_GEOID] || null;
+            return result;
+          }, function () { result.rosterFailed = true; return result; });
+        }
         return Promise.all([
           loadCountyCommissioners().then(function (r) { return r[key] || null; },
             function () { result.rosterFailed = true; return null; }),
@@ -12495,12 +12554,17 @@ function initIndianaExplorer() {
             "county and the council sets its budget and taxes; \"At large\" " +
             "council seats are elected by the whole county."
         });
-      } else if (result.name && /^Marion\b/.test(String(result.name))) {
+      } else if (result.cityCounty) {
+        inCityRows(wrap, rows, result.cityCounty, true);
+      } else if (String(result.geoid) === "18097") {
         rows.push({
           label: "County government",
-          value: "Indianapolis and Marion County share one government. Its " +
-            "council is the 25-member Indianapolis City-County Council, which " +
-            "this app does not show yet."
+          value: result.rosterFailed
+            ? "Indianapolis and Marion County share one government. The list " +
+              "of its council members and mayor did not load, so no names are " +
+              "shown."
+            : "Indianapolis and Marion County share one government, run by " +
+              "the Mayor of Indianapolis and the 25-member City-County Council."
         });
       } else {
         rows.push({
@@ -12514,7 +12578,8 @@ function initIndianaExplorer() {
       }
       wrap.appendChild(renderFieldStack(rows));
       var seats = ((result.commissioners && result.commissioners.seats) || [])
-        .concat((result.council && result.council.seats) || []);
+        .concat((result.council && result.council.seats) || [])
+        .concat((result.cityCounty && result.cityCounty.seats) || []);
       var newest = null;
       seats.forEach(function (seat) {
         if (seat.sourceUrl && (!newest || seat.election > newest.election)) newest = seat;
@@ -12886,12 +12951,16 @@ function initIndianaExplorer() {
    * lookup: most of Indiana's land is unincorporated township, which IS an
    * answer, and the Township or City card is the one that names it.
    *
-   * NO OFFICEHOLDER. No statewide source names Indiana's mayors, council
-   * members or clerk-treasurers — Aim (the Association of Indiana
-   * Municipalities) publishes a membership-facing directory and the state
-   * publishes no aggregate — so the card names no one rather than guessing.
-   * Recorded as gap in-municipal-officeholders; per-city rosters are later
-   * phase work, the route every other instance took. ---------- */
+   * THE MAYOR AND COUNCIL OF EVERY PLACE OVER 25,000, AS ELECTION WINNERS.
+   * The Indiana Election Division's certified 2023 municipal general names a
+   * winner for every mayor's and council seat in 36 of the 39 places the
+   * Census counted at 25,000 or more (in/scripts/build_in_city_officials.py,
+   * data/app/in-city-officials.json, keyed by Census place id). The other
+   * three are towns — Plainfield, Brownsburg and Schererville — where an
+   * uncontested seat is on no ballot, so the results cannot name the whole
+   * council; their cards say so. A smaller place is not in the file yet and
+   * its card says that too. Recorded as gap in-municipal-officeholders.
+   * ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC", "incorporated places");
@@ -12923,7 +12992,7 @@ function initIndianaExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // same NAME-minus-BASENAME technique as the subdivision card, for
@@ -12932,8 +13001,14 @@ function initIndianaExplorer() {
                  String(name).indexOf(String(base)) === 0)
             ? String(name).slice(String(base).length).trim().toLowerCase()
             : null,
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          officials: null
         };
+        // A roster that fails to load leaves the place answer standing.
+        return loadCityOfficials().then(function (r) {
+          result.officials = r[String(result.geoid)] || null;
+          return result;
+        }, function () { result.rosterFailed = true; return result; });
       });
     },
     render: function (result) {
@@ -12957,12 +13032,39 @@ function initIndianaExplorer() {
           { label: "Type", value: KIND_NOTE[result.kind] }
         ]));
       }
-      wrap.appendChild(renderFieldStack([{
-        label: "Your mayor or council",
-        value: "Not named here. No statewide source names Indiana's mayors, " +
-          "council members or clerk-treasurers, and this app does not guess " +
-          "— this municipality's own website is the current source."
-      }]));
+      var rows = [];
+      var NOT_NAMED = {
+        "1860246": 1, "1808416": 1, "1868220": 1 // Plainfield, Brownsburg, Schererville
+      };
+      if (result.officials) {
+        inCityRows(wrap, rows, result.officials,
+          String(result.geoid) === INDIANAPOLIS_GEOID);
+      } else if (NOT_NAMED[String(result.geoid)]) {
+        rows.push({
+          label: "Your town council",
+          value: "Not named here yet. A town holds no general election for a " +
+            "seat nobody runs against, and the state's election results this " +
+            "app reads do not name the whole council. The town's own website " +
+            "is the current source."
+        });
+      } else {
+        rows.push({
+          label: "Your mayor or council",
+          value: result.rosterFailed
+            ? "The list of mayors and council members did not load, so no " +
+              "names are shown."
+            : "Not named here yet. This app names the mayor and council of " +
+              "Indiana's cities and towns over 25,000 people, and this one is " +
+              "smaller. Its own website is the current source."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      if (result.officials && result.officials.seats && result.officials.seats[0]) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "Indiana Election Division results \u2197",
+            url: String(result.officials.seats[0].sourceUrl) }]
+        }));
+      }
       return wrap;
     }
   });

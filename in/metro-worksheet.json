@@ -126,7 +126,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "Every commissioner and county council member in 91 of the 92 counties, each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2022 and 2024 generals), dated to that election and rebuilt weekly by in/scripts/build_in_county_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, which no result records, and the card says so. Every seat in the county is listed because neither body's district lines are drawn yet. Marion County's legislative body is the Indianapolis City-County Council, which is not shown yet.",
+        "people": "Every commissioner and county council member in 91 of the 92 counties, each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2022 and 2024 generals), dated to that election and rebuilt weekly by in/scripts/build_in_county_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, which no result records, and the card says so. Every seat in the county is listed because neither body's district lines are drawn yet. Marion County's legislative body is the Indianapolis City-County Council, so its card names the council's 25 members and the Mayor of Indianapolis from the 2023 municipal general instead (in/scripts/build_in_city_officials.py).",
         "applies": "Indiana — statewide, all 92 counties."
       }
     },
@@ -216,7 +216,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "NO OFFICEHOLDER YET, AND THE CARD SAYS SO. Indiana's municipal officers are elected in the odd-year municipal general and certified by the Election Division, so a roster is reachable; it is not fetched in this change. Recorded as gap in-municipal-officeholders.",
+        "people": "The mayor and council of 36 of the 39 places over 25,000 people (all 33 cities and three of six towns), each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2023 municipal general), dated to that election and rebuilt weekly by in/scripts/build_in_city_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, and the card says so. Plainfield, Brownsburg and Schererville are towns where an uncontested seat is on no ballot, so the results cannot name the whole council; smaller places are not named yet. Recorded as gap in-municipal-officeholders.",
         "applies": "Indiana — statewide, all 566 incorporated places. 'Indianapolis city (balance)' is the Census record for the part of the consolidated Indianapolis–Marion County government outside its included towns, not a separate municipality."
       }
     },
@@ -373,12 +373,17 @@
       {
         "file": "in-county-commissioners.json",
         "min_keys": 91,
-        "note": "Every county commissioner in 91 counties (Marion excluded), each the winner of that seat's most recent certified general, built by in/scripts/build_in_county_officials.py from the Indiana Election Division's results archive."
+        "note": "Every county commissioner in 91 counties (Marion's body is the Indianapolis City-County Council, in in-city-officials.json), each the winner of that seat's most recent certified general, built by in/scripts/build_in_county_officials.py from the Indiana Election Division's results archive."
       },
       {
         "file": "in-county-councils.json",
         "min_keys": 91,
         "note": "Every county council member in 91 counties (Marion excluded), from the same certified results and the same builder."
+      },
+      {
+        "file": "in-city-officials.json",
+        "min_keys": 36,
+        "note": "The mayor and council of 36 of Indiana's 39 places over 25,000 people, Indianapolis's City-County Council among them, each the winner of that seat's most recent certified municipal general, built by in/scripts/build_in_city_officials.py from the Indiana Election Division's results archive."
       },
       {
         "file": "coverage-gaps.json",
@@ -417,7 +422,7 @@
     },
     {
       "file": "update-in-county-officials.yml",
-      "purpose": "County commissioners and council (Indiana Election Division certified results)",
+      "purpose": "County commissioners and council, and city mayors and councils (Indiana Election Division certified results)",
       "schedule": "Wed 15:50 UTC"
     }
   ],
@@ -438,7 +443,7 @@
     "canonical": "https://districtry.com/in/"
   },
   "exports_name": "IndianaExplorer",
-  "verified_date": "October 9, 2026",
+  "verified_date": "October 11, 2026",
   "sources_page": {
     "file": "in/sources.html",
     "credits": [

@@ -63,6 +63,7 @@ const ROSTER_URLS = [
   "./data/app/congress-roster.json",
   "./data/app/in-county-commissioners.json",
   "./data/app/in-county-councils.json",
+  "./data/app/in-city-officials.json",
   "./data/app/coverage-gaps.json",
   "./data/app/tribal-councils.json",
 ];

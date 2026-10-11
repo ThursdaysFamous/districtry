@@ -638,7 +638,8 @@ try {
 
 
   // 2f. The County card names both bodies that run a county, as election
-  //     winners, and says so; Marion names neither and says why. Fort Wayne
+  //     winners, and says so; Marion names the Indianapolis City-County
+  //     Council and the mayor instead. Fort Wayne
   //     (Allen County) has three commissioners and seven council seats in the
   //     shipped files, so the card must carry ten person rows and the sentence
   //     saying they are winners rather than sitting members. Offline: both
@@ -656,11 +657,40 @@ try {
     const ctx2 = await browser.newContext({ serviceWorkers: "block" });
     const p2 = await booted(ctx2, `${BASE}#point=${POINT}&layers=county`);
     const marion = await cardText(p2, "county");
-    check("county card at Marion names the City-County Council instead of a board",
+    check("county card at Marion names the City-County Council's 25 seats and the mayor instead of a board",
       !marion.error && /Marion County/.test(marion.text) && /City-County Council/.test(marion.text) &&
-        !/Board of Commissioners/i.test(marion.text),
+        /District 25/.test(marion.text) && /^MAYOR | MAYOR /.test(marion.text) &&
+        /party caucus/.test(marion.text) && !/Board of Commissioners/i.test(marion.text),
       marion.text.slice(0, 160));
     await ctx2.close();
+  }
+
+
+  // 2g. The City or Town card names a large city's mayor and council, from the
+  //     same-origin city file joined by the place's Census id. The place
+  //     polygon is TIGERweb's, so it is stubbed: a square around downtown Fort
+  //     Wayne carrying Fort Wayne's id, in the ESRI JSON the loader asks for.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const [la, ln] = [41.0793, -85.1394];
+    const ring = [[ln - 0.01, la - 0.01], [ln - 0.01, la + 0.01], [ln + 0.01, la + 0.01],
+      [ln + 0.01, la - 0.01], [ln - 0.01, la - 0.01]];
+    const page = await booted(context, `${BASE}#point=${la},${ln}&layers=municipality`, (p) =>
+      p.route(/Places_CouSub_ConCity_SubMCD\/MapServer\/4\/query/, (route) =>
+        route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({
+          features: [{
+            attributes: { GEOID: "1825000", NAME: "Fort Wayne city", BASENAME: "Fort Wayne",
+                          STATE: "18", LSADC: "25" },
+            geometry: { rings: [ring] },
+          }],
+        }) })));
+    const fw = await cardText(page, "municipality");
+    check("City or Town card names Fort Wayne's mayor and common council as dated winners",
+      !fw.error && /Fort Wayne/.test(fw.text) && / MAYOR /.test(fw.text) &&
+        /FORT WAYNE COMMON COUNCIL/i.test(fw.text) && /District 6/.test(fw.text) &&
+        /At large/.test(fw.text) && /elected November 7, 2023/.test(fw.text),
+      fw.text.slice(0, 160));
+    await context.close();
   }
 
 

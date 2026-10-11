@@ -63,20 +63,36 @@ winners have taken office on January 1. **NINE RACES ARE MISFILED IN THE STATE'S
 district race published as electing several seats — and `MISFILED_SEAT_COUNTS` records each with
 the winner the file flags, refusing the build if any moves; a few races are titled with no
 district at all, and those seats print "Seat not stated" rather than a guessed number.
-**MARION IS NOT IN THESE FILES**: Indianapolis and Marion County are consolidated, its
-legislative body is the 25-member City-County Council elected in municipal years, and the card
-says this app does not show it yet. The council file is recorded in `build_county_pages.py`'s
+**MARION IS NOT IN THESE FILES**: Indianapolis and Marion County are consolidated, and its
+legislative body is the 25-member City-County Council, elected in the MUNICIPAL general. Since
+2026-10-11 Marion's card and county page read it from the city file below. The council file is recorded in `build_county_pages.py`'s
 `NOT_COUNTY_BOARDS` (a county council is the FISCAL body, IC 36-1-2-6; commissioners are the
 legislative and executive body), so the 91 per-county pages under `in/county-commissioner/` carry
 the commissioners. Gap `in-county-government` now records only the missing district lines, which
 IGIO publishes for 58 counties (commissioners) and 56 (councils) — the next change.
 
+**THE CITY OR TOWN CARD NAMES THE MAYOR AND COUNCIL OF 36 OF THE 39 PLACES OVER 25,000**
+(2026-10-11). `in/scripts/build_in_city_officials.py` reads the same archive's certified 2023
+MUNICIPAL general (office categories 1002 mayor, 1032 city council, 1037 town council) and
+writes `in-city-officials.json`, keyed by Census place id: every city over 25,000, Indianapolis's
+City-County Council among them, and the towns of Merrillville and Zionsville. **THE PLACES ARE
+STATED, NOT INFERRED**: `UNITS` names each place's races exactly as the results title them
+("Ec Council 1", Kokomo's bare "City Council District 1", a mayor's race titled just "Mayor" in
+a county with several cities, matched by its jurisdiction) and the district and at-large counts
+the 2023 results carry, and the build fails if `UNITS` plus `NOT_NAMED` stops equalling the
+places `docs/expected-governments.json` counts. **THREE TOWNS ARE NOT NAMED**: a town holds no
+general election for an uncontested seat, so the results carry no Plainfield race and only three
+wards each of Brownsburg and Schererville; their cards say so rather than showing part of a
+council. New Albany's at-large race is filed as electing one and elects three
+(`MISFILED_SEAT_COUNTS`). Council district lines are not drawn, so the card lists every seat.
+Gap `in-municipal-officeholders` records the rest.
+
 **NEITHER CHAMBER NAMES A PERSON.** This instance ships no General Assembly roster, so both
 chamber cards give the district number and the Assembly's own directory — the chamber factory's
 roster-miss path, which is the honest card until a roster is built. Recorded as gap
-`in-general-assembly-roster`. Three more gaps cover the live fabric, where the Census carries
-geography and no officeholder field at all: `in-township-officers`,
-`in-municipal-officeholders`, `in-school-board-members`.
+`in-general-assembly-roster`. Two more gaps cover the live fabric, where the Census carries
+geography and no officeholder field at all: `in-township-officers` and
+`in-school-board-members`.
 
 **There is no build step, no framework, and no server-side code.** The app — styles, engine,
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;
@@ -156,9 +172,9 @@ after every await) and **per-layer failure isolation** (a layer's failure shows 
 its own card, never breaks the others).
 
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
-roster source exists, cards link to the official body instead of inventing a name. Nine of this
-instance's eleven layers name nobody (U.S. House and County name people), and every one of their
-cards says so. External strings
+roster source exists, cards link to the official body instead of inventing a name. Eight of this
+instance's eleven layers name nobody (U.S. House, County and City or Town name people), and every
+one of their cards says so. External strings
 always render through `sanitize()`/`textContent`. Roster refreshes always land as PRs for human
 review — never as direct commits to main.
 
@@ -172,9 +188,11 @@ and `congress-districts.json`, `in-senate-districts.json`, `in-house-districts.j
 (`in/scripts/build_legislative_boundaries.py` — statewide TIGERweb, mapshaper-simplified,
 refused unless the 2,000-random-point agreement gate passes). The rosters are
 `congress-roster.json` (`in/scripts/build_congress_roster.py`, from
-unitedstates/congress-legislators) and the two county files above
-(`in/scripts/build_in_county_officials.py`, `--check` offline), each count-guarded and refreshed
-weekly by CI as a reviewed PR (`update-in-congress-roster.yml`, `update-in-county-officials.yml`).
+unitedstates/congress-legislators), the two county files above
+(`in/scripts/build_in_county_officials.py`) and the city file
+(`in/scripts/build_in_city_officials.py`), each `--check` offline, count-guarded and refreshed
+weekly by CI as a reviewed PR (`update-in-congress-roster.yml`, `update-in-county-officials.yml`,
+which runs both Election Division builders).
 
 ## Growing this instance
 

@@ -44,14 +44,14 @@ different thing from one it failed.
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 13 levels |
-| ia | **EAM·** | 99 | 99/99 | 72 | 72 | all | 66 | all | 10 of 13 levels |
+| ia | **EAM·** | 99 | 99/99 | 72 | 72 | all | 64 | all | 10 of 13 levels |
 | il | **EAM·** | 102 | 102/102 | 632 | 1,089 | all | 409 | all | 11 of 13 levels |
-| in | **EAM·** | 92 | 92/92 § | 273 | 273 | all | 11 | all | 5 of 13 levels |
+| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 10 | all | 6 of 13 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 13 | all | 10 of 13 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 61 | all | 12 of 13 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 17 | all | 12 of 13 levels |
-| nc | **EAM·** | 100 | 100/100 § | 0 | 0 | by record | 10 | all | 6 of 13 levels |
-| ny | **EAM·** | 62 | 62/62 § | 68 | 78 | all | 35 | all | 9 of 13 levels |
+| nc | **EAM·** | 100 | 100/100 § | 0 | 0 | by record | 9 | all | 6 of 13 levels |
+| ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 9 of 13 levels |
 | ok | **EAM·** | 77 | 77/77 § | 0 | 0 | by record | 10 | all | 6 of 13 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 265 | all | 11 of 13 levels |
 
@@ -99,11 +99,9 @@ this instance is in maintenance.
 
 ### in — EAM·
 
-- **Examined by a statewide record:** `in-county-government` accounts for every county in the state, which is what Examined rests on here: 91 of 92 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `in-house-districts.json`, `in-senate-districts.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 8 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 91 of 92 counties name a governing body
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 39 units at 25,000+ name a governing body; unanswered: Anderson city, Bloomington city, Brownsburg town, Carmel city, Columbus city, Crown Point city, East Chicago city, Elkhart city and 31 more
+- **Covered: no.** 7 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 36 of 39 units at 25,000+ name a governing body; unanswered: Brownsburg town, Plainfield town, Schererville town
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
@@ -155,10 +153,10 @@ this instance is in maintenance.
 
 ### ny — EAM·
 
-- **Examined by a statewide record:** `ny-county-governing-body` accounts for every county in the state, which is what Examined rests on here: 10 of 62 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Examined by a statewide record:** `ny-county-governing-body` accounts for every county in the state, which is what Examined rests on here: 11 of 62 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Under a WATCH.md plan (24):** re-checked on a stated cadence rather than by a job — `borough-boundaries.json`, `bronx-county-outline.json`, `brooklyn-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `judicial-districts.json`, `manhattan-county-outline.json`, `metro-outline.json`, `municipal-court-districts.json`, `ny-central-hs-districts.json`, `ny-cities-towns.json`, `ny-counties.json`, `ny-school-districts.json`, `ny-state-outline.json`, `ny-villages.json`, `queens-county-outline.json`, `state-assembly-districts.json`, `state-senate-districts.json`, `staten-island-county-outline.json`, `sullivan-county-outline.json`, `sullivan-fire-districts.json`, `sullivan-library-districts.json`, `tompkins-county-outline.json`, `tompkins-legislature-districts.json`
 - **Covered: no.** 4 of the 13 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
-  - **4. The county governing body, in every county of the state** — open. 4 of 62 counties name a governing body. A record declares this level and earns nothing: `ny-county-governing-body` — no ask recorded, so it covers nothing yet under the standard
+  - **4. The county governing body, in every county of the state** — open. 5 of 62 counties name a governing body. A record declares this level and earns nothing: `ny-county-governing-body` — no ask recorded, so it covers nothing yet under the standard
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 1 of 104 units at 25,000+ name a governing body; unanswered: Albany city, Amherst town, Auburn city, Babylon town, Bethlehem town, Binghamton city, Brighton town, Brookhaven town and 95 more. A record declares this level and earns nothing: `ny-local-governing-body` — no ask recorded, so it covers nothing yet under the standard
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level). A record declares this level and earns nothing: `ny-local-governing-body` — no ask recorded, so it covers nothing yet under the standard
   - **13. Tribal governments** — open (required only where the state has the level)

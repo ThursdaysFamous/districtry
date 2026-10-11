@@ -1,0 +1,3146 @@
+{
+ "1801468": {
+  "body": "Anderson Common Council",
+  "county": "Madison",
+  "kind": "city",
+  "name": "Anderson",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Thomas Broderick Jr.",
+    "office": "Mayor Of Anderson",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jennifer Culp",
+    "office": "Anderson City Common Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jeff Freeman",
+    "office": "Anderson City Common Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Greg Graham",
+    "office": "Anderson City Common Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Ollie H Dixon",
+    "office": "Anderson City Common Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Lance Stephenson",
+    "office": "Anderson City Common Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Joseph (Joe) Newman",
+    "office": "Anderson City Common Council, District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Rachel Lee Landers",
+    "office": "Anderson City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Tiffany Harless",
+    "office": "Anderson City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Mark Turner",
+    "office": "Anderson City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1805860": {
+  "body": "Bloomington Common Council",
+  "county": "Monroe",
+  "kind": "city",
+  "name": "Bloomington",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Kerry Thomson",
+    "office": "Mayor Of Bloomington",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Isabel Piedmont-Smith",
+    "office": "Bloomington City Common Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Kate Rosenbarger",
+    "office": "Bloomington City Common Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Hopi H Stosberg",
+    "office": "Bloomington City Common Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Dave Rollo",
+    "office": "Bloomington City Common Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Shruti Rana",
+    "office": "Bloomington City Common Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Sydney Zulich",
+    "office": "Bloomington City Common Council, District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Isak Asare",
+    "office": "Bloomington City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Andy Ruff",
+    "office": "Bloomington City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Matt Flaherty",
+    "office": "Bloomington City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1810342": {
+  "body": "Carmel Common Council",
+  "county": "Hamilton",
+  "kind": "city",
+  "name": "Carmel",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Sue Finkam",
+    "office": "Mayor Of Carmel",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Teresa Ayers",
+    "office": "Carmel City Common Council, North Central District",
+    "party": "Republican",
+    "seat": "North Central District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Shannon Minnaar",
+    "office": "Carmel City Common Council, Northeast District",
+    "party": "Republican",
+    "seat": "Northeast District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Ryan Locke",
+    "office": "Carmel City Common Council, Northwest District",
+    "party": "Republican",
+    "seat": "Northwest District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Anthony (Tony) Green",
+    "office": "Carmel City Common Council, South Central District",
+    "party": "Republican",
+    "seat": "South Central District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Adam Aasen",
+    "office": "Carmel City Common Council, Southeast District",
+    "party": "Republican",
+    "seat": "Southeast District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Anita JoshI",
+    "office": "Carmel City Common Council, West District",
+    "party": "Democratic",
+    "seat": "West District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jeff Worrell",
+    "office": "Carmel City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Matthew J. Snyder",
+    "office": "Carmel City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Rich Taylor",
+    "office": "Carmel City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1814734": {
+  "body": "Columbus Common Council",
+  "county": "Bartholomew",
+  "kind": "city",
+  "name": "Columbus",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Mary Ferdon",
+    "office": "Mayor Of Columbus",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Christopher Lee Bartels",
+    "office": "Columbus City Common Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Elaine Hilber",
+    "office": "Columbus City Common Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jerone B. Wood",
+    "office": "Columbus City Common Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Frank Miller",
+    "office": "Columbus City Common Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Kent Anderson",
+    "office": "Columbus City Common Council, District 5",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jay Foyst",
+    "office": "Columbus City Common Council, District 6",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Tom Dell",
+    "office": "Columbus City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Josh Burnett",
+    "office": "Columbus City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Grace Kestler",
+    "office": "Columbus City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1816138": {
+  "body": "Crown Point Common Council",
+  "county": "Lake",
+  "kind": "city",
+  "name": "Crown Point",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Pete Land",
+    "office": "Crown Point Mayor",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Chad J Jeffries",
+    "office": "Crown Point Council 1",
+    "party": "Democratic",
+    "seat": "Seat 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Bob Clemons",
+    "office": "Crown Point Council 2",
+    "party": "Republican",
+    "seat": "Seat 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Andrew S Kyres",
+    "office": "Crown Point Council 3",
+    "party": "Democratic",
+    "seat": "Seat 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Laura Sauerman",
+    "office": "Crown Point Council 4",
+    "party": "Republican",
+    "seat": "Seat 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Joe Sanders",
+    "office": "Crown Point Council 5",
+    "party": "Republican",
+    "seat": "Seat 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Scott Evorik",
+    "office": "Crown Point Council At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Zack Bryan",
+    "office": "Crown Point Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1819486": {
+  "body": "East Chicago Common Council",
+  "county": "Lake",
+  "kind": "city",
+  "name": "East Chicago",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Anthony Copeland",
+    "office": "Ec Mayor",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Monica Guzman Gonzalez",
+    "office": "Ec Council 1",
+    "party": "Democratic",
+    "seat": "Seat 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Lenny FranciskI",
+    "office": "Ec Council 2",
+    "party": "Democratic",
+    "seat": "Seat 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Terence (Terry) Hill",
+    "office": "Ec Council 3",
+    "party": "Democratic",
+    "seat": "Seat 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Stacy Dixon-Winfield",
+    "office": "Ec Council 4",
+    "party": "Democratic",
+    "seat": "Seat 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Robert Garcia",
+    "office": "Ec Council 5",
+    "party": "Democratic",
+    "seat": "Seat 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Gilda Orange",
+    "office": "Ec Council 6",
+    "party": "Democratic",
+    "seat": "Seat 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Vanessa (Coach V) Hernandez-Orange",
+    "office": "Ec Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Kenny (Coach) Monroe",
+    "office": "Ec Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Dwayne (Tuss) Rancifer Jr.",
+    "office": "Ec Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1820728": {
+  "body": "Elkhart Common Council",
+  "county": "Elkhart",
+  "kind": "city",
+  "name": "Elkhart",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Rod Roberson",
+    "office": "Mayor Of Elkhart",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Aaron Mishler",
+    "office": "Elkhart City Common Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Chad M. Crabtree",
+    "office": "Elkhart City Common Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "David E. Henke",
+    "office": "Elkhart City Common Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Dwight Fish",
+    "office": "Elkhart City Common Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "H. Brent Curry",
+    "office": "Elkhart City Common Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Latonya King",
+    "office": "Elkhart City Common Council, District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Alex Holtz",
+    "office": "Elkhart City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Arvis L. Dawson",
+    "office": "Elkhart City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Tonda Hines",
+    "office": "Elkhart City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1822000": {
+  "body": "Evansville Common Council",
+  "county": "Vanderburgh",
+  "kind": "city",
+  "name": "Evansville",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "STEPHANIE TERRY",
+    "office": "Mayor",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "BEN TROCKMAN",
+    "office": "Evansville City Common Council, Ward 1",
+    "party": "Democratic",
+    "seat": "Ward 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "MISSY MOSBY",
+    "office": "Evansville City Common Council, Ward 2",
+    "party": "Democratic",
+    "seat": "Ward 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "ZAC HERONEMUS",
+    "office": "Evansville City Common Council, Ward 3",
+    "party": "Democratic",
+    "seat": "Ward 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "ALEX BURTON",
+    "office": "Evansville City Common Council, Ward 4",
+    "party": "Democratic",
+    "seat": "Ward 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "ANGELA KOEHLER LINDSEY",
+    "office": "Evansville City Common Council, Ward 5",
+    "party": "Republican",
+    "seat": "Ward 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "JIM BRINKMEYER",
+    "office": "Evansville City Common Council, Ward 6",
+    "party": "Democratic",
+    "seat": "Ward 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "MARY ALLEN",
+    "office": "Evansville City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "COURTNEY L. JOHNSON",
+    "office": "Evansville City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "PAUL GREEN",
+    "office": "Evansville City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1823278": {
+  "body": "Fishers Common Council",
+  "county": "Hamilton",
+  "kind": "city",
+  "name": "Fishers",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Scott Fadness",
+    "office": "Mayor Of Fishers",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "John P. Delucia",
+    "office": "Fishers City Common Council, Nc District",
+    "party": "Republican",
+    "seat": "North Central District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Brad Dereamer",
+    "office": "Fishers City Common Council, Ne District",
+    "party": "Republican",
+    "seat": "Northeast District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Selina Stoller",
+    "office": "Fishers City Common Council, Nw District",
+    "party": "Republican",
+    "seat": "Northwest District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "John W. Weingardt",
+    "office": "Fishers City Common Council, Sc District",
+    "party": "Republican",
+    "seat": "South Central District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Pete Peterson",
+    "office": "Fishers City Common Council, Se District",
+    "party": "Republican",
+    "seat": "Southeast District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Bill Stuart",
+    "office": "Fishers City Common Council, Sw District",
+    "party": "Democratic",
+    "seat": "Southwest District",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Cecilia Coble",
+    "office": "Fishers City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Todd Zimmerman",
+    "office": "Fishers City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Tiffanie Ditlevson",
+    "office": "Fishers City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1825000": {
+  "body": "Fort Wayne Common Council",
+  "county": "Allen",
+  "kind": "city",
+  "name": "Fort Wayne",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Thomas C Henry",
+    "office": "Mayor Of Fort Wayne",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Paul Ensley",
+    "office": "Fort Wayne City Common Council District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Russ Jehl",
+    "office": "Fort Wayne City Common Council District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Nathan Hartman",
+    "office": "Fort Wayne City Common Council District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Scott Myers",
+    "office": "Fort Wayne City Common Council District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Geoff Paddock",
+    "office": "Fort Wayne City Common Council District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Sharon Tucker",
+    "office": "Fort Wayne City Common Council District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Michelle Chambers",
+    "office": "Fort Wayne City Common Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "MARTIN (MARTY) BENDER",
+    "office": "Fort Wayne City Common Council At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Thomas Freistroffer",
+    "office": "Fort Wayne City Common Council At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1825450": {
+  "body": "Franklin Common Council",
+  "county": "Johnson",
+  "kind": "city",
+  "name": "Franklin",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Steve Barnett",
+    "office": "Mayor Of Franklin",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Josh Prine",
+    "office": "Franklin City Common Council Member, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Anne McGuinness",
+    "office": "Franklin City Common Council Member, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jennifer L Price",
+    "office": "Franklin City Common Council Member, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Ken Austin",
+    "office": "Franklin City Common Council Member, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Irene Nalley",
+    "office": "Franklin City Common Council Member, District 5",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Todd A Shuck",
+    "office": "Franklin City Common Council Member, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Shawn Taylor",
+    "office": "Franklin City Common Council Member, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1827000": {
+  "body": "Gary Common Council",
+  "county": "Lake",
+  "kind": "city",
+  "name": "Gary",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Eddie Melton",
+    "office": "Gary Mayor",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Lori Latham",
+    "office": "Gary Council 1",
+    "party": "Democratic",
+    "seat": "Seat 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Dwayne Halliburton",
+    "office": "Gary Council 2",
+    "party": "Democratic",
+    "seat": "Seat 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Mary Brown",
+    "office": "Gary Council 3",
+    "party": "Democratic",
+    "seat": "Seat 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Tai Adkins",
+    "office": "Gary Council 4",
+    "party": "Democratic",
+    "seat": "Seat 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Linda Barnes-Caldwell",
+    "office": "Gary Council 5",
+    "party": "Democratic",
+    "seat": "Seat 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Dwight A (Twin) Williams",
+    "office": "Gary Council 6",
+    "party": "Democratic",
+    "seat": "Seat 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Ronald (Ron) G Brewer Sr",
+    "office": "Gary Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Mark Spencer",
+    "office": "Gary Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Darren L Washington",
+    "office": "Gary Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1828386": {
+  "body": "Goshen Common Council",
+  "county": "Elkhart",
+  "kind": "city",
+  "name": "Goshen",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Gina Leichty",
+    "office": "Mayor Of Goshen",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Donald E. (Don) Riegsecker",
+    "office": "Goshen City Common Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Douglas L. Nisley",
+    "office": "Goshen City Common Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Matthew P. Schrock",
+    "office": "Goshen City Common Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Megan Eichorn",
+    "office": "Goshen City Common Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Philip Lederach",
+    "office": "Goshen City Common Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Brett F. Weddell",
+    "office": "Goshen City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Linda M. Gerber",
+    "office": "Goshen City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1829898": {
+  "body": "Greenwood Common Council",
+  "county": "Johnson",
+  "kind": "city",
+  "name": "Greenwood",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Mark W Myers",
+    "office": "Mayor Of Greenwood",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Linda S Gibson",
+    "office": "Greenwood City Common Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Ezra Hill",
+    "office": "Greenwood City Common Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Michael Williams",
+    "office": "Greenwood City Common Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Teri Manship",
+    "office": "Greenwood City Common Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "J. David Hopper",
+    "office": "Greenwood City Common Council, District 5",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "David J Lekse",
+    "office": "Greenwood City Common Council, District 6",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Steve Moan",
+    "office": "Greenwood City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Mike Campbell",
+    "office": "Greenwood City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Erin Maurine Betron",
+    "office": "Greenwood City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1831000": {
+  "body": "Hammond Common Council",
+  "county": "Lake",
+  "kind": "city",
+  "name": "Hammond",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Thomas M Mcdermott Jr.",
+    "office": "Hammond Mayor",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Mark KalwinskI",
+    "office": "Hammond Council 1",
+    "party": "Democratic",
+    "seat": "Seat 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Alfonso (Al) Salinas",
+    "office": "Hammond Council 2",
+    "party": "Democratic",
+    "seat": "Seat 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Barry Tyler Jr.",
+    "office": "Hammond Council 3",
+    "party": "Democratic",
+    "seat": "Seat 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "William J Emerson Sr.",
+    "office": "Hammond Council 4",
+    "party": "Democratic",
+    "seat": "Seat 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Dave Woerpel",
+    "office": "Hammond Council 5",
+    "party": "Democratic",
+    "seat": "Seat 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Scott M Rakos",
+    "office": "Hammond Council 6",
+    "party": "Democratic",
+    "seat": "Seat 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Katrina D Alexander",
+    "office": "Hammond Councl At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Dan Spitale",
+    "office": "Hammond Councl At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Janet Venecz",
+    "office": "Hammond Councl At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1834114": {
+  "body": "Hobart Common Council",
+  "county": "Lake",
+  "kind": "city",
+  "name": "Hobart",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Josh Huddlestun",
+    "office": "Mayor Of Hobart",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Mark A Kopil",
+    "office": "Hobart Council 1",
+    "party": "Democratic",
+    "seat": "Seat 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Mark D Kara",
+    "office": "Hobart Council 2",
+    "party": "Democratic",
+    "seat": "Seat 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Michael Rodriguez",
+    "office": "Hobart Council 3",
+    "party": "Democratic",
+    "seat": "Seat 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Lisa M Winstead",
+    "office": "Hobart Council 4",
+    "party": "Democratic",
+    "seat": "Seat 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "William L (Bill) Perryman",
+    "office": "Hobart Council 5",
+    "party": "Democratic",
+    "seat": "Seat 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Matthew Claussen",
+    "office": "Hobart Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Dan Waldrop",
+    "office": "Hobart Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1836003": {
+  "body": "Indianapolis City-County Council",
+  "county": "Marion",
+  "kind": "city",
+  "name": "Indianapolis",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Joe Hogsett",
+    "office": "Mayor Of Indianapolis",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Leroy Robinson",
+    "office": "City-County Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Brienne Delaney",
+    "office": "City-County Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Dan Boots",
+    "office": "City-County Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Nick Roberts",
+    "office": "City-County Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Maggie A Lewis",
+    "office": "City-County Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Carlos Perkins",
+    "office": "City-County Council, District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "John Barth",
+    "office": "City-County Council, District 7",
+    "party": "Democratic",
+    "seat": "District 7",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Ron Gibson",
+    "office": "City-County Council, District 8",
+    "party": "Democratic",
+    "seat": "District 8",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Keith Graves",
+    "office": "City-County Council, District 9",
+    "party": "Democratic",
+    "seat": "District 9",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Alison (Ali) Brown",
+    "office": "City-County Council, District 10",
+    "party": "Democratic",
+    "seat": "District 10",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Crista Carlino",
+    "office": "City-County Council, District 11",
+    "party": "Democratic",
+    "seat": "District 11",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Vop Osili",
+    "office": "City-County Council, District 12",
+    "party": "Democratic",
+    "seat": "District 12",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jesse Brown",
+    "office": "City-County Council, District 13",
+    "party": "Democratic",
+    "seat": "District 13",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Andy Nielsen",
+    "office": "City-County Council, District 14",
+    "party": "Democratic",
+    "seat": "District 14",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "La Keisha Jackson",
+    "office": "City-County Council, District 15",
+    "party": "Democratic",
+    "seat": "District 15",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jessica McCormick",
+    "office": "City-County Council, District 16",
+    "party": "Democratic",
+    "seat": "District 16",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jared Evans",
+    "office": "City-County Council, District 17",
+    "party": "Democratic",
+    "seat": "District 17",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Kristin Jones",
+    "office": "City-County Council, District 18",
+    "party": "Democratic",
+    "seat": "District 18",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Frank Mascari",
+    "office": "City-County Council, District 19",
+    "party": "Democratic",
+    "seat": "District 19",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Michael-Paul Hart",
+    "office": "City-County Council, District 20",
+    "party": "Republican",
+    "seat": "District 20",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Josh Bain",
+    "office": "City-County Council, District 21",
+    "party": "Republican",
+    "seat": "District 21",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Paul M. Annee",
+    "office": "City-County Council, District 22",
+    "party": "Republican",
+    "seat": "District 22",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Derek Cahill",
+    "office": "City-County Council, District 23",
+    "party": "Republican",
+    "seat": "District 23",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Mike Dilk",
+    "office": "City-County Council, District 24",
+    "party": "Republican",
+    "seat": "District 24",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Brian L. Mowery",
+    "office": "City-County Council, District 25",
+    "party": "Republican",
+    "seat": "District 25",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1838358": {
+  "body": "Jeffersonville Common Council",
+  "county": "Clark",
+  "kind": "city",
+  "name": "Jeffersonville",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Mike Moore",
+    "office": "Mayor",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Dustin T White",
+    "office": "Jeffersonville City Common Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Bill Burns",
+    "office": "Jeffersonville City Common Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Amy Michelle Semones",
+    "office": "Jeffersonville City Common Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Scott Anderson",
+    "office": "Jeffersonville City Common Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Donna Reed",
+    "office": "Jeffersonville City Common Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Steve Webb",
+    "office": "Jeffersonville City Common Council, District 6",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Scott Hawkins",
+    "office": "Jeffersonville City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Evan Stoner",
+    "office": "Jeffersonville City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jacky Snelling",
+    "office": "Jeffersonville City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1840392": {
+  "body": "Kokomo Common Council",
+  "county": "Howard",
+  "kind": "city",
+  "name": "Kokomo",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Tyler Moore",
+    "office": "Mayor Of Kokomo",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "David M Capshaw",
+    "office": "City Council District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Robert D Stephenson",
+    "office": "City Council District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Ray A Collins",
+    "office": "City Council District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jeff Plough",
+    "office": "City Council District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Greg Davis",
+    "office": "City Council District 5",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Crystal Sanburn",
+    "office": "City Council District 6",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Tom (Thomas) Miklik",
+    "office": "City Council At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Matt Grecu",
+    "office": "City Council At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Tony Stewart",
+    "office": "City Council At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1840788": {
+  "body": "Lafayette Common Council",
+  "county": "Tippecanoe",
+  "kind": "city",
+  "name": "Lafayette",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Tony M. Roswarski",
+    "office": "Mayor Of Lafayette",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jerry Reynolds",
+    "office": "Lafayette City Common Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Eileen Hession Weiss",
+    "office": "Lafayette City Common Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Perry Brown",
+    "office": "Lafayette City Common Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Lauren Ahlersmeyer",
+    "office": "Lafayette City Common Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Melissa Weast-Williamson",
+    "office": "Lafayette City Common Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Bob Downing",
+    "office": "Lafayette City Common Council, District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Kevin M. Klinker",
+    "office": "Lafayette City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Nancy Nargi",
+    "office": "Lafayette City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Steve Snyder",
+    "office": "Lafayette City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1842426": {
+  "body": "Lawrence Common Council",
+  "county": "Marion",
+  "kind": "city",
+  "name": "Lawrence",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Deborah Whitfield",
+    "office": "Mayor Of Lawrence",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Tyrrell Giles",
+    "office": "Lawrence City Common Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Rick Wells",
+    "office": "Lawrence City Common Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Sherron R. Freeman",
+    "office": "Lawrence City Common Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Carlos Jennings",
+    "office": "Lawrence City Common Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Zach Cramer",
+    "office": "Lawrence City Common Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Kristina Krone",
+    "office": "Lawrence City Common Council, District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Lisa Chavis",
+    "office": "Lawrence City Common Council, At-Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Betty Robinson",
+    "office": "Lawrence City Common Council, At-Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Liz Masur",
+    "office": "Lawrence City Common Council, At-Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1846908": {
+  "body": "Marion Common Council",
+  "county": "Grant",
+  "kind": "city",
+  "name": "Marion",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Ronald Morrell Jr.",
+    "office": "Mayor Of Marion",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Gary T. Fordyce Sr",
+    "office": "Marion City Common Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Mike Cline",
+    "office": "Marion City Common Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Erika E. Devine",
+    "office": "Marion City Common Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Robin Fouce",
+    "office": "Marion City Common Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Andy Whitton",
+    "office": "Marion City Common Council, District 5",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "David Cain",
+    "office": "Marion City Common Council, District 6",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jim Brunner",
+    "office": "Marion City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Nick McKinley",
+    "office": "Marion City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Brian Cowgill",
+    "office": "Marion City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1848528": {
+  "body": "Merrillville Town Council",
+  "county": "Lake",
+  "kind": "town",
+  "name": "Merrillville",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Rhonda Neal",
+    "office": "Merrillville Ward 1",
+    "party": "Democratic",
+    "seat": "Ward 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Shauna Haynes-Edwards",
+    "office": "Merrillville Ward 2",
+    "party": "Democratic",
+    "seat": "Ward 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Leona Chandler-Felton",
+    "office": "Merrillville Ward 3",
+    "party": "Democratic",
+    "seat": "Ward 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Margaret A Uzelac",
+    "office": "Merrillville Ward 4",
+    "party": "Democratic",
+    "seat": "Ward 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Rick Bella",
+    "office": "Merrillville Ward 5",
+    "party": "Democratic",
+    "seat": "Ward 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Shawn Michael Pettit",
+    "office": "Merrillville Ward 6",
+    "party": "Democratic",
+    "seat": "Ward 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Keesha M Hardaway",
+    "office": "Merrillville Ward 7",
+    "party": "Democratic",
+    "seat": "Ward 7",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1848798": {
+  "body": "Michigan City Common Council",
+  "county": "LaPorte",
+  "kind": "city",
+  "name": "Michigan City",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Angie Nelson Deuitch",
+    "office": "Mayor Of Michigan City",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Greg Coulter",
+    "office": "Michigan City Common Council, Ward 1",
+    "party": "Democratic",
+    "seat": "Ward 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Daisy Lee",
+    "office": "Michigan City Common Council, Ward 2",
+    "party": "Democratic",
+    "seat": "Ward 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Joseph S. Nelson",
+    "office": "Michigan City Common Council, Ward 3",
+    "party": "Democratic",
+    "seat": "Ward 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Sean \"Fitz\" Fitzpatrick",
+    "office": "Michigan City Common Council, Ward 4",
+    "party": "Democratic",
+    "seat": "Ward 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Tracie Y. Tillman",
+    "office": "Michigan City Common Council, Ward 5",
+    "party": "Democratic",
+    "seat": "Ward 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Nancy Moldenhauer",
+    "office": "Michigan City Common Council, Ward 6",
+    "party": "Democratic",
+    "seat": "Ward 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Don Przybylinski",
+    "office": "Michigan City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Vidya Kora",
+    "office": "Michigan City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Bryant Dabney",
+    "office": "Michigan City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1849932": {
+  "body": "Mishawaka Common Council",
+  "county": "St. Joseph",
+  "kind": "city",
+  "name": "Mishawaka",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "DAVE WOOD",
+    "office": "City Of Mishawaka Mayor",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "DALE (WOODY) EMMONS",
+    "office": "Mishawaka City Council District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "MATT CARROLL",
+    "office": "Mishawaka City Council District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "ANTHONY (TONY) HAZEN",
+    "office": "Mishawaka City Council District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "KATE VOELKER",
+    "office": "Mishawaka City Council District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "TONY VIOLI",
+    "office": "Mishawaka City Council District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "RON BANICKI",
+    "office": "Mishawaka City Council District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "GREGG A HIXENBAUGH",
+    "office": "Mishawaka City Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "MATT MAMMOLENTI",
+    "office": "Mishawaka City Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "LACY HAHN",
+    "office": "Mishawaka City Council At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1851876": {
+  "body": "Muncie Common Council",
+  "county": "Delaware",
+  "kind": "city",
+  "name": "Muncie",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Dan Ridenour",
+    "office": "Mayor Of Muncie",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jeff Green",
+    "office": "Muncie City Common Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Nora K Evans Powell",
+    "office": "Muncie City Common Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Brandon M Garrett",
+    "office": "Muncie City Common Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Sara Gullion",
+    "office": "Muncie City Common Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jerry D Dishman",
+    "office": "Muncie City Common Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Harold D Mason Jr.",
+    "office": "Muncie City Common Council, District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Dale Basham",
+    "office": "Muncie City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Ro Selvey",
+    "office": "Muncie City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "William (Billy Mac) Mcintosh",
+    "office": "Muncie City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1852326": {
+  "body": "New Albany Common Council",
+  "county": "Floyd",
+  "kind": "city",
+  "name": "New Albany",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "JEFF GAHAN",
+    "office": "Mayor Of New Albany",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "JENNIE E COLLIER",
+    "office": "New Albany City Common Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "ADAM T DICKEY",
+    "office": "New Albany City Common Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "GREG H PHIPPS",
+    "office": "New Albany City Common Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "CHRISTOPHER FITZGERALD",
+    "office": "New Albany City Common Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "LOUISE GOHMANN",
+    "office": "New Albany City Common Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "SCOTT A BLAIR",
+    "office": "New Albany City Common Council, District 6",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "ELAINE GUNTERMAN-MURPHY",
+    "office": "New Albany City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "DON UNRUH",
+    "office": "New Albany City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "STEFANIE GRIFFITH",
+    "office": "New Albany City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1854180": {
+  "body": "Noblesville Common Council",
+  "county": "Hamilton",
+  "kind": "city",
+  "name": "Noblesville",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Chris Jensen",
+    "office": "Mayor Of Noblesville",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Mike Davis",
+    "office": "Noblesville City Common Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Todd Thurston",
+    "office": "Noblesville City Common Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Aaron Smith",
+    "office": "Noblesville City Common Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Mark W Boice",
+    "office": "Noblesville City Common Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Dave Johnson",
+    "office": "Noblesville City Common Council, District 5",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Megan G. Wiles",
+    "office": "Noblesville City Common Council, District 6",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Darren Peterson",
+    "office": "Noblesville City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Evan Elliott",
+    "office": "Noblesville City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Pete Schwartz",
+    "office": "Noblesville City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1861092": {
+  "body": "Portage Common Council",
+  "county": "Porter",
+  "kind": "city",
+  "name": "Portage",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Austin Bonta",
+    "office": "Mayor Of Portage",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Gina Giese-Hurst",
+    "office": "Portage City Common Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Robert \"Bob\" Parnell",
+    "office": "Portage City Common Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Victoria Gresham",
+    "office": "Portage City Common Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Penny Ambler",
+    "office": "Portage City Common Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Collin W. Czilli",
+    "office": "Portage City Common Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Ferdinand Alvarez",
+    "office": "Portage City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Melissa Weidenbach",
+    "office": "Portage City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1864260": {
+  "body": "Richmond Common Council",
+  "county": "Wayne",
+  "kind": "city",
+  "name": "Richmond",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Ron Oler",
+    "office": "Mayor Of Richmond",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Douglas A Goss",
+    "office": "Richmond City Common Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Lucinda M Wright",
+    "office": "Richmond City Common Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "William C Engle",
+    "office": "Richmond City Common Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Larry L Parker",
+    "office": "Richmond City Common Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Anne Taylor",
+    "office": "Richmond City Common Council, District 5",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Gary V Turner",
+    "office": "Richmond City Common Council, District 6",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jerry L Purcell",
+    "office": "Richmond City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jane E Bumbalough",
+    "office": "Richmond City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Justin R Burkhardt",
+    "office": "Richmond City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1871000": {
+  "body": "South Bend Common Council",
+  "county": "St. Joseph",
+  "kind": "city",
+  "name": "South Bend",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "JAMES MUELLER",
+    "office": "City Of South Bend Mayor",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "CANNETH J LEE",
+    "office": "South Bend Common Council District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "OPHELIA GOODEN-RODGERS",
+    "office": "South Bend Common Council District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "SHARON MCBRIDE",
+    "office": "South Bend Common Council District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "TROY WARNER",
+    "office": "South Bend Common Council District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "SHERRY L BOLDEN-SIMPSON",
+    "office": "South Bend Common Council District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "SHEILA NIEZGODSKI",
+    "office": "South Bend Common Council District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "KAREN L WHITE",
+    "office": "South Bend Common Council Member, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "RACHEL TOMAS MORGAN",
+    "office": "South Bend Common Council Member, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "OLIVER DAVIS",
+    "office": "South Bend Common Council Member, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1875428": {
+  "body": "Terre Haute Common Council",
+  "county": "Vigo",
+  "kind": "city",
+  "name": "Terre Haute",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "BRANDON C. SAKBUN",
+    "office": "Mayor Of Terre Haute",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "KANDACE G. HINTON",
+    "office": "Terre Haute City Common Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "AMANDA THOMPSON",
+    "office": "Terre Haute City Common Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "CHERYL A. LOUDERMILK",
+    "office": "Terre Haute City Common Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "TODD NATION",
+    "office": "Terre Haute City Common Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "JAMES P. (JIM) CHALOS",
+    "office": "Terre Haute City Common Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "ANTHONY J. DINKEL",
+    "office": "Terre Haute City Common Council, District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "TAMMY BOLAND",
+    "office": "Terre Haute City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "CURTIS A. DEBAUN IV",
+    "office": "Terre Haute City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "GEORGE J AZAR",
+    "office": "Terre Haute City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1878326": {
+  "body": "Valparaiso Common Council",
+  "county": "Porter",
+  "kind": "city",
+  "name": "Valparaiso",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Jon Costas",
+    "office": "Mayor Of Valparaiso",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Diana Reed",
+    "office": "Valparaiso City Common Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Robert (Bob) Cotton",
+    "office": "Valparaiso City Common Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Barbara Domer",
+    "office": "Valparaiso City Common Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jack Pupillo",
+    "office": "Valparaiso City Common Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Peter M. Anderson",
+    "office": "Valparaiso City Common Council, District 5",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Ellen Kapitan",
+    "office": "Valparaiso City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Emilie Hunt",
+    "office": "Valparaiso City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1882700": {
+  "body": "Westfield Common Council",
+  "county": "Hamilton",
+  "kind": "city",
+  "name": "Westfield",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Scott Willis",
+    "office": "Mayor Of Westfield",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jon Dartt",
+    "office": "Westfield City Common Council, District 1",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Victor McCarty",
+    "office": "Westfield City Common Council, District 2",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Joe Duepner",
+    "office": "Westfield City Common Council, District 3",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Patrick T. Tamm",
+    "office": "Westfield City Common Council, District 4",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Noah Herron",
+    "office": "Westfield City Common Council, District 5",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Chad Huff",
+    "office": "Westfield City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Kurt J. Wanninger",
+    "office": "Westfield City Common Council, At Large",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1882862": {
+  "body": "West Lafayette Common Council",
+  "county": "Tippecanoe",
+  "kind": "city",
+  "name": "West Lafayette",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "Erin R. Easter",
+    "office": "Mayor Of West Lafayette",
+    "party": "Democratic",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Laila Veidemanis",
+    "office": "West Lafayette City Common Council, District 1",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Michelle Dennis",
+    "office": "West Lafayette City Common Council, District 2",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Colin Lee",
+    "office": "West Lafayette City Common Council, District 3",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Larry J. Leverenz",
+    "office": "West Lafayette City Common Council, District 4",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Kathy Parker",
+    "office": "West Lafayette City Common Council, District 5",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Stacey Baitinger Burr",
+    "office": "West Lafayette City Common Council, District 6",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Iris O'Donnell Bellisario",
+    "office": "West Lafayette City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "James Blanco",
+    "office": "West Lafayette City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "David A. Sanders",
+    "office": "West Lafayette City Common Council, At Large",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ },
+ "1886372": {
+  "body": "Zionsville Town Council",
+  "county": "Boone",
+  "kind": "town",
+  "name": "Zionsville",
+  "seats": [
+   {
+    "election": "2023-11-07",
+    "name": "John Stehr",
+    "office": "Mayor Of Zionsville",
+    "party": "Republican",
+    "seat": "Mayor",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Tim McElderry",
+    "office": "Zionsville Town Council Member, Ward 1",
+    "party": "Democratic",
+    "seat": "Ward 1",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Jason Alan Plunkett",
+    "office": "Zionsville Town Council Member, Ward 2",
+    "party": "Republican",
+    "seat": "Ward 2",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Craig J Melton",
+    "office": "Zionsville Town Council Member, Ward 3",
+    "party": "Republican",
+    "seat": "Ward 3",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Sarah Esterline Sampson",
+    "office": "Zionsville Town Council Member, Ward 4",
+    "party": "Republican",
+    "seat": "Ward 4",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Brad Burk",
+    "office": "Zionsville Town Council Member, Ward 5",
+    "party": "Republican",
+    "seat": "Ward 5",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Joe Stein",
+    "office": "Zionsville Town Council",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   },
+   {
+    "election": "2023-11-07",
+    "name": "Evan M Norris",
+    "office": "Zionsville Town Council",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://enr.indianavoters.in.gov/archive/2023General/index.html"
+   }
+  ]
+ }
+}
