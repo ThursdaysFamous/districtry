@@ -2679,6 +2679,16 @@ NOT_COUNTY_BOARDS = {
                "on the app's County card from the same certified results; a "
                "section for them on these pages is its own change.",
     ),
+    "sc/data/app/sc-county-council-members.json": dict(
+        date="2026-10-11",
+        reason="South Carolina's county councils, which ARE the county's "
+               "governing body and belong on these pages. They are held back "
+               "for one reason: South Carolina is dark, and a county page, its "
+               "index and the about page's officeholder count would describe an "
+               "app nobody can open yet. The adapter lands in the go-live "
+               "change (sc/WATCH.md lists it), copied from mn_commissioners, "
+               "and this entry goes with it.",
+    ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",
         reason="San Francisco's Board of Supervisors is a CITY council that "
