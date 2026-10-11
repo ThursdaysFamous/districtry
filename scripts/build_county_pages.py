@@ -1259,8 +1259,9 @@ def in_commissioners(inst):
     return out, problems, nameless, [path], note
 
 
-KY_SOURCE_LABEL = ("the Kentucky Department for Local Government's county "
-                   "directory")
+# Kept short because it ends every page's search description, and the longest
+# county names put "the ... county directory" past the 155-character limit.
+KY_SOURCE_LABEL = "Kentucky's Department for Local Government"
 KY_LEDE = {
     "magistrate": (
         "%(county)s County's fiscal court is its county judge/executive, who "
