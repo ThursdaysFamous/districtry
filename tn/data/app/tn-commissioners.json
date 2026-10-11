@@ -777,6 +777,61 @@
    ]
   }
  },
+ "47027": {
+  "county": "Clay County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.claycountytngov.com/commissioners",
+  "readAt": "2026-10-11",
+  "seats": 10,
+  "domains": [
+   "claycountytngov.com",
+   "claycountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "J. Bryan Coons"
+    },
+    {
+     "name": "Dale McLerran"
+    }
+   ],
+   "2": [
+    {
+     "name": "Jeff Gentry"
+    },
+    {
+     "name": "Parrish Wright"
+    }
+   ],
+   "3": [
+    {
+     "name": "Clifton Boles"
+    },
+    {
+     "name": "Kristen Mathews"
+    }
+   ],
+   "4": [
+    {
+     "name": "Winton Young"
+    },
+    {
+     "name": "Anthony Boles"
+    }
+   ],
+   "5": [
+    {
+     "name": "J. Tanner Harvey"
+    },
+    {
+     "name": "J. Elijah Watson"
+    }
+   ]
+  }
+ },
  "47029": {
   "county": "Cocke County",
   "seatTitle": "Commissioner",
@@ -4191,6 +4246,115 @@
     },
     {
      "name": "Alexis Taylor"
+    }
+   ]
+  }
+ },
+ "47163": {
+  "county": "Sullivan County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.scelect.org/electedofficials.html",
+  "readAt": "2026-10-11",
+  "seats": 24,
+  "domains": [
+   "sullivancountytn.gov",
+   "scelect.org"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Don Thompson"
+    }
+   ],
+   "2": [
+    {
+     "name": "David Akard III"
+    },
+    {
+     "name": "Kim Harvey"
+    },
+    {
+     "name": "Mark A. Vance"
+    }
+   ],
+   "3": [
+    {
+     "name": "Andrew K. Cross"
+    }
+   ],
+   "4": [
+    {
+     "name": "Michael B. Cole"
+    },
+    {
+     "name": "Joyce Neal Crosswhite"
+    },
+    {
+     "name": "Josh Hayes"
+    }
+   ],
+   "5": [
+    {
+     "name": "Ty Boomershine"
+    },
+    {
+     "name": "Dwight King"
+    }
+   ],
+   "6": [
+    {
+     "name": "Bob Harshbarger Jr."
+    },
+    {
+     "name": "Matthew Jerry Johnson"
+    },
+    {
+     "name": "Tim L. Pullon"
+    }
+   ],
+   "7": [
+    {
+     "name": "Samuel \"Sam\" Jones"
+    },
+    {
+     "name": "Travis Ward"
+    }
+   ],
+   "8": [
+    {
+     "name": "Stanley Hodges"
+    },
+    {
+     "name": "Mark Ireson"
+    }
+   ],
+   "9": [
+    {
+     "name": "Joe Carr"
+    },
+    {
+     "name": "Todd Golden"
+    }
+   ],
+   "10": [
+    {
+     "name": "Larry Crawford"
+    },
+    {
+     "name": "Lakie Derrick"
+    }
+   ],
+   "11": [
+    {
+     "name": "John Gardner"
+    },
+    {
+     "name": "Hunter Michael Locke"
+    },
+    {
+     "name": "Zac Thomas"
     }
    ]
   }
