@@ -83,13 +83,14 @@ MIN_REGISTER_LAYER = 5
 EXPECT_LAYER_IDS = [
     "judicial-district", "county", "nys-central-hs-district",
     "nys-school-district", "library-district", "municipality",
-    "county-supervisor", "county-legislature", "fire-district", "village",
-    "borough", "borough-president", "district-attorney", "congress",
-    "municipal-court", "state-senate", "school-district", "cec",
-    "fire-battalion", "council", "community-district", "election-district",
-    "state-assembly", "police-sector", "police-precinct", "nys-zip-code",
-    "zip-code", "neighborhood", "hs-zone", "ms-zone", "es-zone",
-    "school-site", "police-station", "fire-station", "post-office", "library",
+    "county-supervisor", "county-legislature", "fire-district",
+    "tribal-government", "village", "borough", "borough-president",
+    "district-attorney", "congress", "municipal-court", "state-senate",
+    "school-district", "cec", "fire-battalion", "council",
+    "community-district", "election-district", "state-assembly",
+    "police-sector", "police-precinct", "nys-zip-code", "zip-code",
+    "neighborhood", "hs-zone", "ms-zone", "es-zone", "school-site",
+    "police-station", "fire-station", "post-office", "library",
     "early-voting", "polling-place",
 ]
 
@@ -118,6 +119,7 @@ GEOMETRY_FILES = {
     "sullivan-fire-districts.json": (45, 45),  # Sullivan County's 45 fire districts (ny/scripts/build_sullivan_special_districts.py), the county's own register unioned from its 58 per-municipality rows and simplified with Douglas-Peucker at a 10 m interval — about one step of the source's own median. The bounds are EXACT rather than a floor: a change in the count means the county has created or dissolved a district, which a person reads.
     "sullivan-library-districts.json": (2, 2),  # Sullivan County's 2 library districts (same builder, same interval, simplified together with the fire districts so the two layers' shared edges are simplified once). Exact bounds for the same reason.
     "sullivan-county-outline.json": (1, 1),  # Sullivan County sliced verbatim from ny-counties.json, so the fire-district and library-district layers' coverage test and the county card cannot disagree about where Sullivan is.
+    "tribal-areas.json": (11, 11),  # New York's tribal land (scripts/build_tribal_areas.py) — 11 areas across 8 nations, two of them state reservations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -132,6 +134,7 @@ ROSTER_FILES = {
     "borough-officials.json": 5,  # 10 offices (5 BP + 5 DA), operator-maintained from official sites; floor 5 = one entry per borough (build_borough_officials.py keys by borough)
     "tompkins-legislature-members.json": 17,  # The 16 legislators keyed by district plus one `board` key carrying the Legislature's own office, switchboard, fax and term — so 17 keys, not 16. People from the county's own Legislature page and contact sheet, never from the boundary layer's own member column.
     "ny-supervisor-members.json": 4,  # The board-of-supervisors counties, keyed by county, each carrying its board's name, its own page's stated seat count and a members list per town or city. The floor is the county count rather than the seat count, because the roster grows one county at a time while the builder already refuses to write a county whose seats do not add up.
+    "tribal-councils.json": 4,  # The council of every New York nation whose council is carried, keyed by the Census AIANNH code of its land (the Seneca Nation's three territories are three keys) — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at
