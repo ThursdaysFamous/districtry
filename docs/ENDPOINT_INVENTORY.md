@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **242 distinct hosts** those files
-name, **43 are fetched by the browser**; the other 199 are links.
+makes from a link a reader clicks. Of **243 distinct hosts** those files
+name, **43 are fetched by the browser**; the other 200 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -324,9 +324,9 @@ measured until the next run describes it.
 | mn | 28 | 17 | 0 |
 | ky | 14 | 13 | 0 |
 | in | 13 | 10 | 0 |
-| nc | 16 | 9 | 0 |
+| nc | 16 | 10 | 0 |
 | ok | 15 | 10 | 0 |
-| **total** | **467** | **890** | **12** |
+| **total** | **467** | **891** | **12** |
 
 **140 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
