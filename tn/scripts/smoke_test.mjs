@@ -942,6 +942,7 @@ try {
       ["names the district's seats, a stated vacancy and the countywide members",
        roster,
        [/Fixture Member/, /Council Member/, /Seat A/, /Chair/, /Seat B/, /Vacant/,
+        /elects 2 members: 1 named above and 1 seat empty\./,
         /Elected countywide/i, /Fixture Countywide/, /read 11 October 2026/,
         /District S\. The state's map numbers it District 19\./],
        /Not named here yet/],
