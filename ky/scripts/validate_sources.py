@@ -207,6 +207,19 @@ PROVENANCE = [
             "as a reviewed pull request."
         ),
     },
+    {
+        "layer": "county",
+        "app_file": "ky-county-officials.json",
+        "source_url": "https://kydlgweb.ky.gov/Counties/16_CountyHome.cfm",
+        "note": (
+            "Each county's judge/executive, magistrates or commissioners and "
+            "elected officers, from the Department for Local Government's "
+            "county directory, one page per county (2026-10-11). Jefferson's "
+            "and Fayette's governing bodies are the merged governments' "
+            "councils, taken from ky-city-officials.json. Refreshed weekly by "
+            "update-ky-county-officials.yml as a reviewed pull request."
+        ),
+    },
 ]
 
 ENDPOINTS = [

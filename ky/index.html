@@ -74,7 +74,7 @@
       "keywords": "Kentucky district map, what district am I in, Kentucky Senate district, Kentucky House district, magisterial district, fiscal court, civic districts, who represents me Kentucky",
       "author": { "@id": "https://districtry.com/#author" },
       "isPartOf": { "@id": "https://districtry.com/ky/#website" },
-      "dateModified": "2026-09-30",
+      "dateModified": "2026-10-11",
       "sameAs": "https://github.com/ThursdaysFamous/districtry"
     }
   ]
@@ -3932,7 +3932,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="footer-meta" id="footer-meta">
         <span>Data last verified:
           <!-- ==== GENERATED:BEGIN verified-date ==== -->
-          <strong id="verified-date">September 30, 2026</strong>
+          <strong id="verified-date">October 11, 2026</strong>
           <!-- ==== GENERATED:END verified-date ==== -->
         </span>
       </div>
@@ -12383,23 +12383,39 @@ function initKentuckyExplorer() {
    * service-worker cached, so this layer answers even when every third-party
    * host is down.
    *
-   * IDENTITY ONLY, and the card says which body it is not naming. Kentucky's
-   * Department for Local Government publishes officials for all 120 counties,
-   * so this is unbuilt rather than unpublished; what no source pairs is a
-   * person with a district. Recorded in data/app/coverage-gaps.json rather
-   * than filled with a guess.
+   * THE CARD NAMES THE COUNTY'S GOVERNING BODY AND ITS ELECTED OFFICERS
+   * (2026-10-11), from data/app/ky-county-officials.json, which
+   * ky/scripts/build_ky_county_officials.py builds from the Department for
+   * Local Government's county directory, one page per county. In 118 counties
+   * the body is the fiscal court: the judge/executive and the magistrates or
+   * three commissioners (KRS 67.040). Jefferson and Fayette have no fiscal
+   * court — Louisville Metro (KRS 67C) and Lexington-Fayette (KRS 67A) are
+   * merged governments — so those two cards name the council and mayor from
+   * the city roster the directory lists them under.
    *
-   * THE CARD NAMES NO GOVERNING BODY IN PARTICULAR, deliberately. 118 counties
-   * are governed by a fiscal court; Jefferson County is governed by the
-   * Louisville Metro Council and Fayette County by the Lexington-Fayette Urban
-   * County Council, and the instance's own anchor point is in Jefferson — so a
-   * card reading "fiscal court" would be wrong at the very point every gate
-   * tests. It names the county's own governing body generically and links the
-   * state directory that lists all 120.
+   * NO DISTRICT IS NAMED. The directory names every magistrate and
+   * commissioner and never says which district one holds, and the magisterial
+   * district lines are not drawn, so the card lists the whole court and says
+   * so (gap ky-fiscal-court). A seat the directory lists with no name is
+   * counted, never filled.
+   *
+   * A roster that fails to load does not take the county answer down with it:
+   * the boundary is a same-origin file and the card still names the county.
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
   });
+  var loadKyCountyOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-county-officials.json", {}, 2);
+  });
+  var KY_COUNTY_DIRECTORY = "https://kydlgweb.ky.gov/Counties/16_CountyHome.cfm";
+
+  function kyCountyPersonRow(p, badge) {
+    var row = { name: String(p.name), badge: String(badge) };
+    if (p.phone) row.phone = String(p.phone);
+    if (p.email) row.email = String(p.email);
+    return row;
+  }
 
   registerLayer({
     id: "county",
@@ -12423,7 +12439,7 @@ function initKentuckyExplorer() {
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"])
         };
-        return loadKyCityOfficials().then(function (roster) {
+        return loadKyCountyOfficials().then(function (roster) {
           base.officials = base.geoid != null ? (roster || {})[String(base.geoid)] || null : null;
           return base;
         }, function () {
@@ -12434,25 +12450,96 @@ function initKentuckyExplorer() {
     },
     render: function (result) {
       // Card convention: identity -> officeholder -> office -> contact -> link.
-      // This card stops at identity, and says so, because nothing published
-      // pairs a Kentucky county officeholder with a district.
       var wrap = cardEl("div", "card-flush");
       wrap.appendChild(renderBodyIntro({
         title: result.name != null ? String(result.name) : "Unknown county",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      wrap.appendChild(renderFieldStack([{
-        label: "County government",
-        value: "Not shown yet. The state's Department for Local Government " +
-          "lists every county's elected officials, and no source pairs them " +
-          "with the districts they are elected from."
-      }]));
+      var c = result.officials;
+      var members = c && c.members ? c.members : [];
+      if (members.length) {
+        var merged = c.body !== "Fiscal Court";
+        wrap.appendChild(renderSectionLabel(merged ? String(c.body)
+          : c.form === "commissioner" ? "Fiscal court: judge/executive and commissioners"
+          : "Fiscal court: judge/executive and magistrates"));
+        var rows = [];
+        if (c.executive) rows.push(kyCountyPersonRow(c.executive, c.executive.role || "Mayor"));
+        members.forEach(function (m) { rows.push(kyCountyPersonRow(m, m.role || "Member")); });
+        wrap.appendChild(renderPersonRows(rows));
+      }
+      var fields = [];
+      if (!members.length) {
+        fields.push({
+          label: "County government",
+          value: result.rosterFailed
+            ? "The list of county officials could not be loaded just now. The " +
+              "county above is still the right answer for this point."
+            : "Not named here. The state's county directory has no entry for " +
+              "this county, and this app does not guess."
+        });
+      }
+      if (c && c.unnamedSeats) {
+        fields.push({
+          label: "Not listed",
+          value: "The state's directory lists " + c.unnamedSeats + " more " +
+            (c.unnamedSeats === 1 ? "seat" : "seats") + " on this body without " +
+            "a name. That does not say the seat is empty; the county's own " +
+            "website will name who holds it."
+        });
+      }
+      if (members.length) {
+        fields.push({
+          label: "Your district",
+          value: c.body === "Fiscal Court"
+            ? (c.form === "commissioner"
+              ? "Kentucky elects each of a county's three commissioners by the " +
+                "whole county's voters, one from each district, and the state's " +
+                "directory does not say which district each one lives in, so " +
+                "every member is listed here."
+              : "Each magistrate is elected from a magisterial district. The " +
+                "state's directory does not say which district each one holds and " +
+                "those district lines are not drawn here yet, so every member is " +
+                "listed.")
+            : "This council is elected by district. Its districts are not drawn " +
+              "here yet, so every member is listed."
+        });
+      }
+      if (c && c.formNote) fields.push({ label: "Form of government", value: String(c.formNote) });
+      if (members.length && c.read) {
+        fields.push({
+          label: "Names read",
+          value: String(c.body === "Fiscal Court" ? c.read : c.bodyRead || c.read) +
+            ", from the Kentucky Department for Local Government's " +
+            (c.body === "Fiscal Court" ? "county" : "municipal") + " directory. " +
+            "It does not say when an entry was last updated, so the county's " +
+            "own website is the check."
+        });
+      }
+      if (fields.length) wrap.appendChild(renderFieldStack(fields));
+      var officers = c && c.officers ? c.officers : [];
+      if (officers.length) {
+        wrap.appendChild(renderSectionLabel("Elected county officers"));
+        wrap.appendChild(renderPersonRows(officers.map(function (o) {
+          return kyCountyPersonRow(o, o.office);
+        })));
+      }
+      if (c && c.office && (c.office.address || c.office.phone)) {
+        wrap.appendChild(renderOfficeGroup({
+          label: "County office",
+          offices: [{
+            label: "County office",
+            lines: c.office.address ? [String(c.office.address)] : [],
+            phone: c.office.phone ? String(c.office.phone) : null
+          }]
+        }));
+      }
       return wrap;
     },
-    primaryLink: function () {
+    primaryLink: function (result) {
+      var c = result && result.officials;
       return {
-        label: "Kentucky county directory",
-        url: "https://kydlgweb.ky.gov/Counties/16_CountyHome.cfm"
+        label: "Kentucky Department for Local Government — county directory",
+        url: c && c.sourceUrl ? String(c.sourceUrl) : KY_COUNTY_DIRECTORY
       };
     }
   });

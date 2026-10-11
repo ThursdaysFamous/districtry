@@ -1,0 +1,102 @@
+name: Update Kentucky county officials
+
+# Weekly refresh of the Kentucky County card's governing body and elected
+# officers (ky/data/app/ky-county-officials.json, read by ky/index.html) and of
+# the per-county pages built from it (ky/county-government/). Re-reads the
+# Department for Local Government's county directory — one page per county,
+# 121 requests half a second apart — and, if anything changed, opens a PR rather
+# than committing to main: these are real officeholders and they get a look
+# before they ship.
+#
+# WHAT MAKES IT SAFE TO RUN UNATTENDED is in the scraper and the builder. The
+# scraper fails below 120 counties or 1,300 official rows, and on any county
+# page that lists nobody. The builder fails on a title it does not classify, on
+# a county whose members are titled two ways, on a Government Type that
+# contradicts the titles, on a fiscal court without exactly one
+# judge/executive, and on a name fix or form note that no longer matches what
+# the directory prints.
+
+on:
+  schedule:
+    - cron: "55 14 * * 4" # Thursday 14:55 UTC — a free slot in the fleet's roster schedule
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; a PR opened with the default GITHUB_TOKEN fires no workflows. Falls
+      # back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: pip install -c scripts/requirements.txt requests
+
+      # The scraper asks kydlgweb.ky.gov's robots.txt once, through the fleet's
+      # shared gate, with the exact client that then crawls.
+      - name: Read the Department for Local Government's county directory
+        run: python3 ky/scripts/ky_county_officials_scraper.py
+
+      - name: Rebuild the county officials roster
+        run: python3 ky/scripts/build_ky_county_officials.py
+
+      - name: Validate roster + app
+        run: |
+          python3 ky/scripts/build_ky_county_officials.py --check
+          python3 ky/scripts/validate_index.py ky/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- ky/data/app/ky-county-officials.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch: an unmerged roster PR is refreshed in place by the
+          # force-push below instead of spawning a duplicate every week.
+          branch="bot/ky-county-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Carry the read to main's current tip, so the branch differs from
+          # main in its data files and the pages built from them alone.
+          cp ky/data/source/ky-county-officials-scrape.json "$RUNNER_TEMP/scrape.json"
+          git stash --include-untracked
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          cp "$RUNNER_TEMP/scrape.json" ky/data/source/ky-county-officials-scrape.json
+          python3 ky/scripts/build_ky_county_officials.py
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          python3 scripts/build_llms_txt.py
+          python3 scripts/build_eam_status.py
+          git add ky/data/app/ky-county-officials.json ky/data/source/ky-county-officials-scrape.json ky/county-government ky/county-government.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
+          git commit -m "Update Kentucky county officials from the Department for Local Government"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Kentucky county officials from the Department for Local Government" \
+              --body "Automated weekly refresh of the Kentucky County card's fiscal court and elected county officers, read from the Department for Local Government's county directory by \`ky/scripts/ky_county_officials_scraper.py\` and written by \`ky/scripts/build_ky_county_officials.py\`, with the per-county pages regenerated. Please review the diff before merging: this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

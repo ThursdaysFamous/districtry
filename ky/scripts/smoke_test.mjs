@@ -607,6 +607,33 @@ try {
     }
   }
 
+  // 2g. The County card names the county's governing body from the Department
+  //     for Local Government's directory (ky-county-officials.json, keyed by
+  //     county GEOID). The county layer is a same-origin file, so this needs
+  //     no stub. At the anchor (Jefferson) the body is the Louisville Metro
+  //     Council, read from the city roster, with the mayor first; at Frankfort
+  //     (Franklin) it is a fiscal court led by its judge/executive. What is
+  //     asserted is that every person the shipped roster names is on the card.
+  for (const c of [
+    { point: POINT, geoid: "21111", label: "Jefferson", body: /Louisville Metro Council/i },
+    { point: "38.20090,-84.87330", geoid: "21073", label: "Franklin", body: /Fiscal court/i }
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=county`);
+    const roster = await page.evaluate(() =>
+      fetch("data/app/ky-county-officials.json").then((r) => r.json()));
+    const rec = roster[c.geoid] || {};
+    const names = (rec.members || []).map((m) => m.name)
+      .concat(rec.executive ? [rec.executive.name] : [])
+      .concat((rec.officers || []).map((o) => o.name));
+    const info = await cardText(page, "county");
+    const text = info.text || "";
+    check(`county names ${c.label} County's governing body and officers from the directory`,
+      !info.error && names.length > 5 && names.every((n) => text.includes(n)) && c.body.test(text),
+      `roster names ${names.length}; missing: ${names.filter((n) => !text.includes(n)).join(", ") || "none"} | card: ${text.slice(0, 160)}`);
+    await context.close();
+  }
+
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged
   //     with its own source and pointed at the canonical deployment), and the

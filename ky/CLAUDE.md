@@ -29,26 +29,26 @@ case moved to Butler County, Ohio. An audit that is re-run rather than trusted i
 reason any of that was seen before it broke.
 
 It ships four layers, the national tier every U.S. state can serve from national publishers:
-**County** (120, from Census TIGERweb, identity-only), **U.S. House** (6 districts, TIGERweb
+**County** (120, from Census TIGERweb, naming its governing body and officers since 2026-10-11), **U.S. House** (6 districts, TIGERweb
 geometry joined to the public-domain unitedstates/congress-legislators roster, refreshed
 weekly), and **Kentucky Senate** / **Kentucky House** (38 and 100 districts, TIGERweb
 geometry, naming nobody yet).
 
-**THREE OF THE FOUR CARDS NAME NOBODY, AND EACH SILENCE IS RECORDED RATHER THAN IMPLIED.**
-Both chamber cards enter the engine chamber factory's roster-miss path deliberately — district
-identity plus the chamber's own directory, never an invented name — under gap
-`ky-legislature-roster`, which says plainly that the General Assembly publishes both rosters
-and this instance has not built them. The County card is identity only under
-`ky-county-officers`: the state's Department for Local Government lists every county's elected
-officials and pairs none of them with a district, so the card names the county and links that
-directory. A reader meeting three quiet cards should be able to find out why, which is what
-those records are for.
-
-**THE COUNTY CARD NAMES NO GOVERNING BODY IN PARTICULAR, AND THAT IS DELIBERATE.** 118 of
-Kentucky's 120 counties are governed by a fiscal court, but the two that are not are Jefferson
-and Fayette — Louisville Metro and the Lexington-Fayette urban-county government — and the
-ground-truth anchor every gate in this instance tests sits in Jefferson. A card that read
-"fiscal court" would therefore be wrong at the one point the whole battery checks.
+**THE COUNTY CARD NAMES THE WHOLE GOVERNING BODY SINCE 2026-10-11, AND NOT YOUR MEMBER.**
+`ky/scripts/ky_county_officials_scraper.py` reads the Department for Local Government's page
+for each of the 120 counties and `ky/scripts/build_ky_county_officials.py` keeps the judge/
+executive, the magistrates or commissioners and six elected officers (attorney, clerk, sheriff,
+jailer, coroner, PVA), dropping staff titles. The directory's "Government Type" field is blank
+in 76 counties, so the FORM is read from the members' own titles and cross-checked against the
+field wherever it is filled in: 104 magistrate counties, 14 commissioner counties (Pike among
+them; see below). **Jefferson and Fayette have no fiscal court**, so their cards name the
+Louisville Metro Council and the Lexington-Fayette Urban County Council, mayor first, from
+`ky-city-officials.json` — one source per body, which is why the city workflow rebuilds this
+roster too — and their judge/executive is listed among the officers. The directory carries no
+district number, so the card lists the whole court and says so; gap `ky-fiscal-court` holds
+what remains. One name is corrected from the county's own site (`NAME_FIXES`, Christian County),
+and the builder fails the day the directory stops carrying the error. The 120 per-county pages
+under `ky/county-government/` come from `scripts/build_county_pages.py` off the same roster.
 
 **THE FLAGSHIP LAYER THIS INSTANCE IS BUILT TOWARD IS THE FISCAL COURT**, and its FORM was
 censused before any code was written (2026-09-30), from two certified elections per county:
@@ -94,7 +94,7 @@ the member, and this instance names none.
 - Geocoders: address Photon (Kentucky-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Kentucky-bounded, serial >=1s queue)
 - Ground truth: 38.25270,-85.75850 (downtown Louisville, Jefferson County) → county Jefferson County; us-house 3; ky-senate 33; ky-house 43. Negative point 36.40000,-86.50000 (inside Sumner County, TENNESSEE, about 15 km south of the Kentucky line and north-east of Nashville — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (minLat 36.35) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-09-30: TIGERweb's county layer names Sumner County STATE 47 (control: the anchor returns Jefferson County STATE 21), and no outline in fleet-outlines.json contains it (control: the Louisville anchor is likewise in none of them, so the file genuinely has no Kentucky coverage rather than the test passing vacuously). TENNESSEE RATHER THAN ONE OF THE OTHER SIX NEIGHBOURS, deliberately. Illinois is live and borders Kentucky across the Ohio, so a point over there would sit inside an instance's own outline and the browser would hand the selection off to districtry.com/il/ and navigate away — which is how Minnesota's first candidate failed, silently, as a smoke-test timeout on a blank document rather than as a wrong answer. Indiana and North Carolina are in build as dark instances and will become live outlines, so they were avoided for the same reason one step ahead. Tennessee is in no instance and in no launch plan. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.).
 - Layers: 12 registered (political 7, schools 3, geography 2); `registerLayer(` floor 4. Debug namespace `window.KentuckyExplorer`.
-- Scheduled workflows: `update-ky-congress-roster.yml` (Mon 13:55 UTC); `update-ky-judges-roster.yml` (Tue 14:40 UTC); `update-ky-city-officials.yml` (Wed 14:50 UTC).
+- Scheduled workflows: `update-ky-congress-roster.yml` (Mon 13:55 UTC); `update-ky-judges-roster.yml` (Tue 14:40 UTC); `update-ky-city-officials.yml` (Wed 14:50 UTC); `update-ky-county-officials.yml` (Thu 14:55 UTC).
 - Source registry: `ky/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 
