@@ -325,13 +325,18 @@ def measure_address_list(src, name):
 # `boundary-streets/on` and `boundary-streets/off` joined on 2026-09-25 with
 # the map's "Boundary streets" button (name the streets a selected district's
 # edge runs along). They record the switch and nothing about the map.
+# `locate-fail/` joined on 2026-10-11 with "Use my current location": when a
+# press does not end in a point selected in that app, it records why (the
+# browser's answer, denied / timeout / unavailable / unsupported / other, or
+# that the reader is outside this app's area or in another app's) and which
+# app it was, as `locate-fail/<tag>/<reason>`. It never carries the position.
 EXPECTED_EVENTS = ["address-search", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
                    "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
-                   "geolocate-success", "layer/", "metro-portal-go/", "more-item/", "more-open", "select",
+                   "geolocate-success", "layer/", "locate-fail/", "metro-portal-go/", "more-item/", "more-open", "select",
                    "share-native", "share-open", "share-permalink", "share-qr"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
 
