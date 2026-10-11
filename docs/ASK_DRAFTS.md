@@ -407,8 +407,8 @@ nobody, and the county's own page is the evidence.
 
 A letter cannot be put in the mailbox until somebody writes it. These have a recipient
 and an argument here and no wording: Asks 13, 25, 33, `wi-oshkosh-council` and
-`ia-pottawattamie-tama-wright-boards`. Ask 11 (CCGISC) has wording and no recipient
-address. The thirteen Illinois county letters that exist only in state notes are being
+`ia-pottawattamie-tama-wright-boards`. (Ask 11, CCGISC, was listed here as having no
+recipient address; it was sent on 2026-08-05, and its follow-up is drafted.) The thirteen Illinois county letters that exist only in state notes are being
 rewritten as follow-ups, because every one of them bar Scott was asked in early August
 and followed up on 2026-08-16, and Jasper (2026-08-17) and Hardin (2026-08-24) answered.
 
@@ -1381,7 +1381,12 @@ official's name wrong is the cheapest possible way to lose a reader.
 
 ## Ask 11 — CCGISC: the licence question behind two whole counties
 
-> **NOT YET ASKED — DRAFTED.** Champaign and Piatt are the only two Illinois counties this
+> **PENDING — SENT 2026-08-05, NO REPLY; FOLLOW-UP DRAFTED.** Corrected 2026-10-11: this
+> line said NOT YET ASKED until the Letters thread read Adam's sent folder, which shows
+> the letter went to the consortium on 5 Aug 2026 and nothing came back. The follow-up
+> is drafted as a Gmail draft by that thread; nothing is credited until CCGISC answers.
+>
+> Champaign and Piatt are the only two Illinois counties this
 > project records as blocked for a LEGAL rather than a technical reason: the Champaign
 > County GIS Consortium sells the data under terms that forbid copying, public display and
 > rehosting, and Piatt additionally asserts "All Rights Reserved" over its GIS. Both
@@ -1566,7 +1571,7 @@ whole ledger.
 **Two sequencing notes for whoever sends them.** Piatt's clerk is cc'd on Ask 11 AND is the
 recipient of one of Ask 12's follow-ups; sending both the same day puts two requests about
 overlapping data in front of her, so Ask 11 should go first and Piatt's follow-up after, or
-the follow-up should be held. And Ask 11's recipient address is inherited from the existing
+the follow-up should be held. (Ask 11 itself went on 2026-08-05, so only its follow-up is still to send.) And Ask 11's recipient address is inherited from the existing
 thread (`ccgisc@co.champaign.il.us`) — confirm it against ccgisc.org before sending, which
 this file has asked for since the ask was written.
 
