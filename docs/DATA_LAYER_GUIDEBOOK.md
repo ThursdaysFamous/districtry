@@ -60,7 +60,7 @@ in the researched-but-unbuilt backlog.
   "minnesota": ["us-house", "mn-judicial-district", "mn-senate", "county", "mn-house", "watershed-district", "school-district-unified", "school-board-district", "county-commissioner", "zip-code", "school-district-elementary", "county-subdivision", "voting-precinct", "tribal-government", "municipality", "school-district-secondary", "police-station", "fire-station", "post-office"],
   "indiana": ["us-house", "in-senate", "county", "in-house", "school-district-unified", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
   "northcarolina": ["us-house", "nc-senate", "nc-house", "school-district-unified", "county", "county-subdivision", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
-  "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "county-commissioner", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
+  "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "county-commissioner", "tribal-government", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
   "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"]
 }
