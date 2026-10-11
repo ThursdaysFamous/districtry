@@ -1236,15 +1236,42 @@ IN_CTA_NOTE = ("Opens the map with the county layer on. Its card lists this "
                "board and the county council, from the same certified results; "
                "the commissioner district lines are not drawn yet.")
 
+# MARION COUNTY'S BODY IS THE INDIANAPOLIS CITY-COUNTY COUNCIL (IC 36-3), the
+# legislative body of the consolidated city and of the county, elected in the
+# municipal general rather than with the county officers. Its record carries
+# its own wording so the page never calls it a board of commissioners.
+IN_MARION_WORDING = dict(
+    heading="Indianapolis City-County Council",
+    page_title="Indianapolis City-County Council",
+    page_title_short="Indianapolis City-County Council",
+    phrase="City-County Council", member_word="Councilor")
+IN_MARION_LEDE = ("Indianapolis and Marion County share one government, and "
+                  "its legislative body is the 25-member %(heading)s. These are "
+                  "the people who won each of its seats at the most recent "
+                  "municipal election in the Indiana Election Division's "
+                  "certified results, each dated to that election. They are "
+                  "election winners, not a list the council keeps up to date: "
+                  "Indiana fills a vacancy by party caucus, so a seat that has "
+                  "changed hands since still shows the person who won it.")
+IN_MARION_DESC = ("Who won each of the %(districts)d seats on the Indianapolis "
+                  "City-County Council, Marion County's legislative body, at "
+                  "its most recent election.")
+IN_MARION_CTA_NOTE = ("Opens the map with the county layer on. Its card lists "
+                      "the council and the mayor, from the same certified "
+                      "results; the council's district lines are not drawn yet.")
+
 
 def in_commissioners(inst):
     """Indiana: ONE file keyed by county GEOID, each record carrying the
     county's name and a `seats` list of {seat, name, party, election, office,
     sourceUrl, seatNotStated?} (in/scripts/build_in_county_officials.py).
 
-    91 OF 92 COUNTIES, BY CONSTRUCTION. Marion County's legislative body is the
-    Indianapolis City-County Council, which the certified commissioner results
-    do not carry, so it has no record and no page here.
+    ALL 92 COUNTIES, ONE OF THEM A CITY COUNCIL. Marion County's legislative
+    body is the Indianapolis City-County Council, which the certified
+    commissioner results do not carry; its 25 seats come from
+    in-city-officials.json (in/scripts/build_in_city_officials.py, the same
+    archive's 2023 municipal general), and its record carries its own
+    `wording` so its page is headed by the body it is about.
 
     A SEAT WHOSE RACE TITLE NAMES NO DISTRICT is labelled with the title as
     published (Clinton's and Ohio's "County Commissioner"), and the member row
@@ -1292,10 +1319,40 @@ def in_commissioners(inst):
                      "lede": IN_LEDE, "standfirst": IN_STANDFIRST,
                      "desc": IN_DESC, "disclaimer": IN_DISCLAIMER,
                      "cta_note": IN_CTA_NOTE}
+    # Marion, from the city file: the City-County Council's 25 seats, not the
+    # mayor, who is the executive rather than a member of the body.
+    city_path = os.path.join(data_dir, "in-city-officials.json")
+    indy = _read(city_path).get("1836003") or {}
+    seats = [s for s in indy.get("seats") or [] if s.get("seat") != "Mayor"]
+    if indy.get("county") != "Marion" or len(seats) != 25:
+        problems.append("in-city-officials.json does not carry the 25 seats of "
+                        "the Indianapolis City-County Council")
+    else:
+        districts = []
+        for seat in seats:
+            when = _mn_date(seat.get("election"))
+            if not when or not (seat.get("name") or "").strip():
+                problems.append("Indianapolis City-County Council %r names "
+                                "nobody or carries no election date"
+                                % seat.get("seat"))
+                continue
+            member = {"name": seat["name"].strip(), "elected": "Elected %s." % when}
+            if seat.get("party"):
+                member["party"] = seat["party"]
+            districts.append(district(seat["seat"], [member]))
+        out["Marion"] = {"districts": districts,
+                         "sourceUrl": seats[0].get("sourceUrl"),
+                         "source_label": "the Indiana Election Division's certified results",
+                         "extras": [], "skipped": [], "slug": county_slug("Marion"),
+                         "at_large": False, "source_file": city_path,
+                         "wording": IN_MARION_WORDING,
+                         "lede": IN_MARION_LEDE, "standfirst": IN_STANDFIRST,
+                         "desc": IN_MARION_DESC, "disclaimer": IN_DISCLAIMER,
+                         "cta_note": IN_MARION_CTA_NOTE}
     note = ("%d of Indiana's 92 counties, every seat named from the Election "
-            "Division's certified results (Marion's City-County Council is not "
-            "in them)" % len(out))
-    return out, problems, nameless, [path], note
+            "Division's certified results (Marion's is the Indianapolis "
+            "City-County Council)" % len(out))
+    return out, problems, nameless, [path, city_path], note
 
 
 # Kept short because it ends every page's search description, and the longest
@@ -2437,6 +2494,14 @@ def mark_svg():
 
 
 def build_page(inst, name, rec, at_large, shell, contact=None):
+    # A RECORD MAY NAME A DIFFERENT BODY FROM ITS INSTANCE'S. Indianapolis and
+    # Marion County are one government, so Marion's governing body is the
+    # City-County Council rather than a board of commissioners; its record
+    # carries `wording` (heading, page_title, page_title_short, phrase,
+    # member_word) and every sentence on its page reads from that instead. A
+    # record without the key renders byte-identically to before it existed.
+    if rec.get("wording"):
+        inst = dict(inst, **rec["wording"])
     slug = rec["slug"]
     canonical = "%s%s/%s.html" % (inst["app_url"], inst["concept"], slug)
     body, n_dist, named = (at_large_body(inst, name, rec) if at_large
