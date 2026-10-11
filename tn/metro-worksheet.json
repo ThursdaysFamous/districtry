@@ -562,7 +562,7 @@
       },
       {
         "file": "tn-commissioners.json",
-        "min_keys": 13,
+        "min_keys": 33,
         "note": "County commission members by district, read from each county's own page and refreshed weekly by update-tn-commissioner-roster.yml (tn/scripts/tn_commissioner_scraper.py + build_tn_commissioner_roster.py). Keyed by 5-digit county code; a county joins by having a module in tn/scripts/tn_commission_parsers/."
       },
       {

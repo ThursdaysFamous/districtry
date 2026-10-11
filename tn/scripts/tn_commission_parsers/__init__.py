@@ -16,11 +16,15 @@ on the day the parser was written:
   PHONES         True only where every phone the parser keeps is a government
                  office line (default False)
   TITLE, BODY    what the county calls a member and the body, where that is not
-                 "Commissioner" of the "County Commission"
+                 "Commissioner" of the "County Commission" (text only: a
+                 pattern of the parser's own takes another name)
   parse(pages)   {url: page text, HTML comments removed} ->
                  {"districts": {"1": [member, ...]}, "atLarge": [member, ...]}
 
-and its docstring records how its names were checked against that county's
-results of the 6 August 2026 election before it joined. A module whose name
+and its docstring records what its names were checked against before it
+joined: that county's results of the 6 August 2026 election where a government
+host serves them to us, and otherwise the county's own documents from after the
+new term began on 1 September 2026, named one by one, with what they did not
+establish said plainly. A module whose name
 starts with an underscore is shared code, not a county.
 """

@@ -100,7 +100,25 @@ District 4, Seat C, which the county's own pages list as vacant although the Aug
 give it a winner; neither says why, so the card says what the county says). Each of the 13 was
 checked against that county's results of 6 August 2026 before it joined, and what each was
 checked against is in its module's docstring. The survey of the other counties, and why Shelby
-is not in the first tranche, is in `tn/WATCH.md`. A county that cannot be read keeps its
+is not in the first tranche, is in `tn/WATCH.md`. **A SECOND TRANCHE OF 20 JOINED THE SAME DAY,
+AND NOT ALL OF IT ON RESULTS**: 33 counties, 635 seats, 633 named, the second vacancy Anderson
+District 8, whose August winner declined the seat by letter (the county's 21 September agenda).
+Fourteen were checked against their own August results. Six could not be, because the results
+sit behind a robots.txt refusal on a county's file host (Bedford, Tipton), say "available soon"
+(Franklin), or are not published on any county host (Giles, Lincoln, Hawkins), and the state's
+results site answers this project 403; those six joined on county documents dated after
+1 September 2026 instead, and **two of them, Lincoln and Hawkins, carry a district pairing that
+no government document read here confirms**: their September documents name who sits and not
+where, and the district each sits in was compared only with a news outlet's copy of the results
+or the ballot. Each module's docstring says exactly which. Five more were held back rather than
+shipped on weaker evidence: Hamblen (no record readable here gives its districts), Carter (its
+results and minutes are behind the same kind of robots.txt refusal and its page carries no
+date), Dyer (it letters its districts A to J and the state's map numbers them 1 to 10, with
+nothing published that pairs the two), Greene (its page lists District 5 as open while the
+county's own September committee list seats the man elected there) and Cumberland (its site
+answered every request with HTTP 429). **A PARSER'S `TITLE` IS A CARD'S WORD AND NOTHING ELSE**:
+three of the twenty kept a compiled pattern under that name, which the scraper would have
+shipped as the seat title, so it now refuses a non-text `TITLE` or `BODY` at load. A county that cannot be read keeps its
 last good record for 45 days, dated to the day it was read, and past that the weekly run
 (`update-tn-commissioner-roster.yml`, Wednesday) fails. **PRIVACY IS A WHITELIST, NOT A
 FILTER**: county pages print home addresses, personal mobile numbers and personal e-mail beside

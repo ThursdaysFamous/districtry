@@ -23,7 +23,8 @@ but District 4, which elects 3), and Knox and Davidson also elect members
 countywide. Each county's module states the seats per district AS THE
 COUNTY ELECTS THEM (`SEATS`) and the countywide seats (`AT_LARGE`), read off
 the county's own page on the day the parser was written and checked against
-that county's August 2026 results. The builder refuses a county whose parse
+that county's August 2026 results, or the county's own record of the new
+commission where those results cannot be read. The builder refuses a county whose parse
 does not match its module exactly, so a board resize
 or a redistricting turns the run red rather than shipping a roster keyed to
 lines that moved.
@@ -32,7 +33,13 @@ CURRENCY WAS CHECKED BEFORE A COUNTY JOINED, AND IT IS WHY SOME DID NOT.
 Terms began 1 September 2026. The survey of 2026-10-11 found six county pages
 still listing members from before that date, so a county joins only once its
 page's names match its own August 2026 results, and what each county was
-checked against is recorded in its module's docstring.
+checked against is recorded in its module's docstring. Where no results can be
+read on a government host (a results file behind a robots.txt refusal, or none
+published), a county joins on county documents from after 1 September 2026
+instead — a roster headed with the new term, the new commission's minutes or
+committee list, an election commission's list of officeholders — and its
+docstring says which, and what they did NOT establish. Five counties were held
+back on 2026-10-11 for failing this; tn/WATCH.md names them and why.
 
 THE CLIENT, AND WHAT IT ASKS FIRST
 -----------------------------------
@@ -109,6 +116,16 @@ def load_counties():
                      "body": getattr(mod, "BODY", None), "module": info.name})
     seen = {}
     for row in rows:
+        # TITLE and BODY are words a card prints. A parser is free to keep a
+        # compiled pattern of its own, and the obvious name for one that reads
+        # a member's title line is TITLE: three of the second tranche's twenty
+        # did exactly that (2026-10-11), and the module would have handed the
+        # roster a regex object as the seat title.
+        for key in ("title", "body"):
+            if row[key] is not None and not isinstance(row[key], str):
+                raise SystemExit("tn-commissioner-scraper: FAIL - %s.%s is %s, not text; "
+                                 "name a pattern of your own something else"
+                                 % (row["module"], key.upper(), type(row[key]).__name__))
         if row["fips"] in seen:
             raise SystemExit("tn-commissioner-scraper: FAIL - %s and %s both claim "
                              "county %s" % (seen[row["fips"]], row["module"], row["fips"]))
