@@ -51,11 +51,20 @@ live service answers with a neighbouring state's ZIP (Wichita Falls TX gives 763
 AR 72903, against the Capitol's 73105, measured 2026-10-09). The coverage test reads the shipped
 outline, and the smoke test asserts both halves.
 
-**THE FLAGSHIP THIS INSTANCE IS BUILDING TOWARD IS `county-commissioner`.** Every county elects
-three commissioners from three districts (19 O.S. 321), so the board's form needs no per-county
-research, and the state transport department publishes all 231 districts in one statewide file.
-Recorded as gap `ok-commissioner-districts` until it ships, beside `ok-municipal-officeholders`,
-`ok-school-board-members` and `ok-tribal-government`.
+**`county-commissioner` SHIPPED 2026-10-11, THE STATE'S MAP AND THE STATE'S NAMES.** Every
+county elects three commissioners from three districts (19 O.S. 321). The 231 districts are the
+state Department of Transportation's statewide layer (`ok/scripts/build_ok_commissioner_districts.py`),
+and every build compares a University of Oklahoma copy of the same map: they agree on 229 of 231
+and disagree in Beaver County alone, over 27.6 km² between Districts 1 and 2, so those two
+features carry a `lineNote` the card prints and the builder fails if any other county starts to
+disagree. Government source first, per the fleet rule, so ODOT's copy is the one drawn. The names
+are the State Election Board's Roster of State and County Officers (`build_ok_commissioner_roster.py`,
+weekly): a PDF compiled after each general election that lists all three of every county's
+commissioners, holdovers included. It is a snapshot, so every card and county page dates it, and
+the two seats it lists vacant (Oklahoma County 1, Okmulgee County 1) say vacant rather than nobody.
+**The roster prints each officer's home town and that is never carried** — `--check` fails on any
+field outside the ones the card reads. The County card lists the whole board, and
+`build_county_pages.py` writes a page per county under `ok/county-commissioner/`.
 
 **TRIBAL AREAS ARE DRAWN, AND THIS IS THE ONE INSTANCE THAT DRAWS CENSUS STATISTICAL AREAS.**
 Measured with `scripts/tribal_areas.py` on 2026-10-09, the Census draws one federal reservation
@@ -97,8 +106,8 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Oklahoma (`oklahoma`) — https://districtry.com/ok/
 - Geocoders: address Photon (Oklahoma-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Oklahoma-bounded, serial >=1s queue)
 - Ground truth: 35.49230,-97.50340 (the State Capitol, Oklahoma City, Oklahoma County) → county Oklahoma County; us-house 5; ok-senate 48; ok-house 99. Negative point 33.65000,-97.15000 (near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.).
-- Layers: 12 registered (political 4, safety 2, schools 2, geography 4); `registerLayer(` floor 8. Debug namespace `window.OklahomaExplorer`.
-- Scheduled workflows: `update-ok-congress-roster.yml` (Mon 16:45 UTC); `update-ok-legislature-roster.yml` (Tue 16:45 UTC); `ok-validate-sources.yml` (1st of month 19:00 UTC).
+- Layers: 13 registered (political 5, safety 2, schools 2, geography 4); `registerLayer(` floor 8. Debug namespace `window.OklahomaExplorer`.
+- Scheduled workflows: `update-ok-congress-roster.yml` (Mon 16:45 UTC); `update-ok-legislature-roster.yml` (Tue 16:45 UTC); `update-ok-commissioner-roster.yml` (Wed 16:45 UTC); `ok-validate-sources.yml` (1st of month 19:00 UTC).
 - Source registry: `ok/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 ## Running & testing

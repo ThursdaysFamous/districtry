@@ -60,7 +60,7 @@ in the researched-but-unbuilt backlog.
   "minnesota": ["us-house", "mn-judicial-district", "mn-senate", "county", "mn-house", "watershed-district", "school-district-unified", "school-board-district", "county-commissioner", "zip-code", "school-district-elementary", "county-subdivision", "voting-precinct", "tribal-government", "municipality", "school-district-secondary", "police-station", "fire-station", "post-office"],
   "indiana": ["us-house", "in-senate", "county", "in-house", "school-district-unified", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
   "northcarolina": ["us-house", "nc-senate", "nc-house", "school-district-unified", "county", "county-subdivision", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
-  "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
+  "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "county-commissioner", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
   "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"]
 }
@@ -3225,19 +3225,6 @@ trusted.
       }
   ],
   "oklahoma": [
-      {
-            "id": "ok-commissioner-districts",
-            "concept": "County commissioner district",
-            "area": "Oklahoma — all 77 counties",
-            "counties": [],
-            "everyCounty": true,
-            "kind": "no-source",
-            "layer": "county",
-            "summary": "Every Oklahoma county is run by three elected commissioners, one from each of three districts, and this app does not yet show you which district you live in or who holds it.",
-            "why": "The districts and the commissioners' names are both published, and this app has not built them into a layer yet. Until it does, the County card names the county and nobody who runs it.",
-            "wanted": "Nothing from a reader — this one is ours to build.",
-            "blocker": "UNBUILT, NOT UNPUBLISHED, recorded so the silence on the County card is legible. 19 O.S. 321 divides every county into three commissioner districts, so the form of every board is settled by statute and there is no at-large county to tell apart. The state transport department publishes all 231 districts in one statewide file, read during this instance's planning; the names come county by county or from a statewide directory, and which one is current enough to ship has NOT been measured here. The layer arrives in this instance's second change as `county-commissioner`, and this record is retired then. Oklahoma is dark as of 2026-10-09, so no reader is served this file yet."
-      },
       {
             "id": "ok-municipal-officeholders",
             "concept": "City or town government",

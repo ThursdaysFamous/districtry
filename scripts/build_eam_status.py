@@ -1702,7 +1702,10 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("ok-senate", "ok-house"),
         "county-boundaries": answers("county"),
-        "county-government": depth(),
+        # 19 O.S. 321 gives every county three commissioners from three
+        # districts; the layer draws all 231 districts and names each seat
+        # from the State Election Board's roster (2 listed vacant).
+        "county-government": depth("county-commissioner"),
         "municipal-boundaries": answers("municipality"),
         "local-government": depth(),
         # Both tilings, because Oklahoma needs both: unified (415) and

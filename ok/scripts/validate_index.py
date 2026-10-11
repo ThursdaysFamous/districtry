@@ -94,9 +94,10 @@ MIN_REGISTER_LAYER = 8
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "ok-senate", "county", "ok-house", "tribal-government",
-    "school-district-unified", "zip-code", "school-district-elementary",
-    "municipality", "police-station", "fire-station", "post-office",
+    "us-house", "ok-senate", "county", "ok-house", "county-commissioner",
+    "tribal-government", "school-district-unified", "zip-code",
+    "school-district-elementary", "municipality", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +108,7 @@ GEOMETRY_FILES = {
     "ok-senate-districts.json": (48, 48),  # The 48 Oklahoma Senate districts.
     "ok-house-districts.json": (101, 101),  # The 101 Oklahoma House districts.
     "tribal-areas.json": (31, 31),  # Oklahoma's tribal areas (scripts/build_tribal_areas.py) — the Osage Reservation, the Shawnee Tribe's trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas, simplified by Douglas-Peucker at 20 m and held to a 25 m ceiling. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "ok-commissioner-districts.json": (231, 231),  # The 231 county commissioner districts, three per county (ok/scripts/build_ok_commissioner_districts.py, from the state Department of Transportation). The floor and the ceiling are equal because 19 O.S. 321 fixes three per county.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -114,6 +116,7 @@ ROSTER_FILES = {
     "congress-roster.json": 5,  # U.S. House (OK) roster, refreshed weekly by update-ok-congress-roster.yml.
     "ok-senate-members.json": 44,  # Oklahoma Senate roster from Open States, refreshed weekly. The floor is below 48 because a vacant seat is a real event; the export carried 47 on 2026-10-09.
     "ok-house-members.json": 93,  # Oklahoma House roster from Open States, refreshed weekly. The floor is below 101 for the same reason; the export carried 100 on 2026-10-09.
+    "ok-county-commissioners.json": 231,  # One record per commissioner seat from the State Election Board's officer roster, refreshed weekly by update-ok-commissioner-roster.yml. Every seat has a record; a vacant seat carries vacant: true.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 
