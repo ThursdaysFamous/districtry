@@ -95,6 +95,10 @@ AREAS = {
     # mn, ky and in: its eleven layers are the national tier and every one
     # answers over the whole state. Its coverage_key carries `outside` alone.
     "nc": {"outline": "nc/data/app/metro-outline.json", "state_outline": None},
+    # Oklahoma joined at its go-live. ONE tier, like ia, mi, mn, ky, in and
+    # nc: its eleven layers are the national tier and every one answers over
+    # the whole state. Its coverage_key carries `outside` alone.
+    "ok": {"outline": "ok/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,

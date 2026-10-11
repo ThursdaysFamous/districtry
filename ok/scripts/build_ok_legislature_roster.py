@@ -25,9 +25,15 @@ page for the office — the chambers' own sites carry the room and the phone,
 and reading them is recorded in ok/WATCH.md as the next step rather than done
 here.
 
-Honesty: names are never guessed. A vacant district simply doesn't appear in
-its roster, and the card falls back to "district number + chamber directory"
-— the factory's empty-member path. Open States itself is a sourced,
+Honesty: names are never guessed. A district the export names nobody for is
+written as an EMPTY record ({}), never left out: the fleet's chamber roster
+contract is a record for every district the map draws, so the card says "No
+member listed" and the generated table on ok/state-legislature.html prints
+"Not listed" and counts the chamber at its real size. Leaving the key out made
+that page say 47 Senate and 100 House districts at go-live. The record carries
+no date on purpose, so an unchanged export produces an unchanged file and no
+weekly PR; and it never says "vacant", because the export naming nobody is a
+fact about the export, not a statement by the chamber. Open States itself is a sourced,
 machine-maintained dataset (each person row carries `sources`), never
 hand-entered here.
 
@@ -144,12 +150,13 @@ def main():
                   % (emails, len(roster), cfg["label"]), file=sys.stderr)
             sys.exit(1)
         missing = [str(d) for d in range(1, cfg["seats"] + 1) if str(d) not in roster]
+        roster = {str(d): roster.get(str(d), {}) for d in range(1, cfg["seats"] + 1)}
         out_path = os.path.join(out_dir, cfg["out"])
         with open(out_path, "w", encoding="utf-8") as fh:
             json.dump(roster, fh, ensure_ascii=False, indent=2)
             fh.write("\n")
-        print("Wrote %s (%d of %d districts, %d with an e-mail; no member in the "
-              "export for: %s)" % (out_path, len(roster), cfg["seats"], emails,
+        print("Wrote %s (%d of %d districts named, %d with an e-mail; no member in the "
+              "export for: %s)" % (out_path, cfg["seats"] - len(missing), cfg["seats"], emails,
                                    ", ".join(missing) or "none"), file=sys.stderr)
 
 

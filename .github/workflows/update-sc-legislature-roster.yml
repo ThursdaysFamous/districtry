@@ -1,0 +1,90 @@
+name: Update South Carolina legislature roster
+
+# Weekly refresh of the South Carolina Senate + House rosters
+# (sc/data/app/sc-senate-members.json and sc-house-members.json, fetched by
+# sc/index.html's chamber cards). Rebuilds both chambers from the General
+# Assembly's own member lists and member pages on www.scstatehouse.gov and —
+# if anything changed — opens a PR rather than committing directly to main.
+#
+# The builder reads 2 chamber lists and 170 member pages, one request a second,
+# so the rebuild takes about three minutes. It reads each member's State House
+# office and business telephone and never the home address or home telephone
+# the same pages print.
+#
+# SOUTH CAROLINA IS DARK, so this job does not regenerate
+# sc/state-legislature.html: build_legislator_pages.py refuses an instance
+# metros.json does not carry, so that page is not built yet. Go-live adds the
+# step in the same change that adds sc to metros.json — sc/WATCH.md has the
+# list.
+
+on:
+  schedule:
+    - cron: "7 17 * * 2" # Tuesday 17:07 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # Stdlib only: the builder fetches with urllib after reading
+      # www.scstatehouse.gov's robots.txt through scraper_common.
+      - name: Rebuild South Carolina Senate + House rosters
+        run: python3 sc/scripts/build_sc_legislature_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, and every data/app file must be present
+      # and well formed.
+      - name: Validate app + data files
+        run: python3 sc/scripts/validate_index.py sc/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- sc/data/app/sc-senate-members.json sc/data/app/sc-house-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/sc-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 sc/scripts/build_sc_legislature_roster.py
+          git add sc/data/app/sc-senate-members.json sc/data/app/sc-house-members.json
+          git commit -m "Update South Carolina Senate + House rosters from the General Assembly"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update South Carolina Senate + House rosters" \
+              --body "Automated weekly refresh of the South Carolina Senate and South Carolina House chamber cards' rosters, from the General Assembly's own member pages on www.scstatehouse.gov. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

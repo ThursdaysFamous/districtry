@@ -8,9 +8,11 @@ districtry Oklahoma: a single-file, dependency-light web app. Click a point in O
 search an address) and it reports every civic district containing that point and who
 represents you there. It serves at **districtry.com/ok/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not
-the Illinois root-scripts shape. It ships ELEVEN layers, and as of this PR **the instance is
-DARK**: no `metros.json` entry, `ok/**` excluded from the Pages deploy, nothing served and no
-landing card naming it. `ok/WATCH.md` lists what go-live has to do in one change.
+the Illinois root-scripts shape. It ships ELEVEN layers, and it went **LIVE** in its go-live change,
+which Adam held until the fleet-wide tribal thread had drawn Oklahoma's tribal areas: it has a
+`metros.json` entry and a landing card, the Pages deploy publishes `ok/` (keeping
+`ok/data/state`, `ok/data/source` and `ok/scripts` out), and `ok/congress.html` and
+`ok/state-legislature.html` carry its rosters as generated tables.
 
 **The national tier** — everything eleven layers answer today comes from a national publisher.
 **County** (77, Census TIGERweb, identity-only and the coverage ring), **U.S. House** (5

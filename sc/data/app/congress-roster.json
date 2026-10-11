@@ -1,0 +1,107 @@
+{
+  "1": {
+    "name": "Nancy Mace",
+    "party": "Republican",
+    "url": "https://mace.house.gov",
+    "capitolOffice": [
+      "1728 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3176"
+    ],
+    "districtOffice": [
+      "900 Island Park Dr., Suite 260",
+      "Daniel Island, SC 29492",
+      "Phone: 843-352-7572"
+    ]
+  },
+  "2": {
+    "name": "Joe Wilson",
+    "party": "Republican",
+    "url": "https://joewilson.house.gov",
+    "capitolOffice": [
+      "1436 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2452"
+    ],
+    "districtOffice": [
+      "1700 Sunset Blvd. (US 378), Suite 1",
+      "West Columbia, SC 29169",
+      "Phone: 803-939-0041"
+    ]
+  },
+  "3": {
+    "name": "Sheri Biggs",
+    "party": "Republican",
+    "url": "https://sheribiggs.house.gov",
+    "capitolOffice": [
+      "1530 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5301"
+    ],
+    "districtOffice": [
+      "303 West Beltline Blvd",
+      "Anderson, SC 29625",
+      "Phone: 864-224-7401"
+    ]
+  },
+  "4": {
+    "name": "William R. Timmons IV",
+    "party": "Republican",
+    "url": "https://timmons.house.gov",
+    "capitolOffice": [
+      "267 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6030"
+    ],
+    "districtOffice": [
+      "114 Trade Street",
+      "Greer, SC 29651",
+      "Phone: 864-241-0175"
+    ]
+  },
+  "5": {
+    "name": "Ralph Norman",
+    "party": "Republican",
+    "url": "https://norman.house.gov",
+    "capitolOffice": [
+      "569 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5501"
+    ],
+    "districtOffice": [
+      "516 Oakland Ave",
+      "Rock Hill, SC 29730",
+      "Phone: 803-327-1114"
+    ]
+  },
+  "6": {
+    "name": "James E. Clyburn",
+    "party": "Democrat",
+    "url": "https://clyburn.house.gov",
+    "capitolOffice": [
+      "274 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3315"
+    ],
+    "districtOffice": [
+      "1225 Lady St., Suite 200",
+      "Columbia, SC 29201",
+      "Phone: 803-799-1100"
+    ]
+  },
+  "7": {
+    "name": "Russell Fry",
+    "party": "Republican",
+    "url": "https://fry.house.gov",
+    "capitolOffice": [
+      "345 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-9895"
+    ],
+    "districtOffice": [
+      "1831 West Evans Street, Suite 300",
+      "Florence, SC 29501",
+      "Phone: 843-799-6880"
+    ]
+  }
+}

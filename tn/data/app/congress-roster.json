@@ -1,0 +1,139 @@
+{
+  "1": {
+    "name": "Diana Harshbarger",
+    "party": "Republican",
+    "url": "https://harshbarger.house.gov",
+    "capitolOffice": [
+      "167 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6356"
+    ],
+    "districtOffice": [
+      "205 Revere Street",
+      "Kingsport, TN 37660",
+      "Phone: 423-398-5186"
+    ]
+  },
+  "2": {
+    "name": "Tim Burchett",
+    "party": "Republican",
+    "url": "https://burchett.house.gov",
+    "capitolOffice": [
+      "1122 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5435"
+    ],
+    "districtOffice": [
+      "800 Market St, Suite 110",
+      "Knoxville, TN 37902-2327",
+      "Phone: 865-523-3772"
+    ]
+  },
+  "3": {
+    "name": "Charles J. \"Chuck\" Fleischmann",
+    "party": "Republican",
+    "url": "https://fleischmann.house.gov",
+    "capitolOffice": [
+      "2187 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3271"
+    ],
+    "districtOffice": [
+      "6 E. Madison Ave.",
+      "Athens, TN 37303",
+      "Phone: 423-745-4671"
+    ]
+  },
+  "4": {
+    "name": "Scott DesJarlais",
+    "party": "Republican",
+    "url": "https://desjarlais.house.gov",
+    "capitolOffice": [
+      "2304 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6831"
+    ],
+    "districtOffice": [
+      "200 S. Jefferson St., Suite 311",
+      "Federal Building",
+      "Winchester, TN 37398",
+      "Phone: 931-962-3180"
+    ]
+  },
+  "5": {
+    "name": "Andrew Ogles",
+    "party": "Republican",
+    "url": "https://ogles.house.gov",
+    "capitolOffice": [
+      "151 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4311"
+    ],
+    "districtOffice": [
+      "22 Public Square, Suite 5",
+      "Columbia, TN 38401",
+      "Phone: 931-777-2140"
+    ]
+  },
+  "6": {
+    "name": "John W. Rose",
+    "party": "Republican",
+    "url": "https://johnrose.house.gov",
+    "capitolOffice": [
+      "2238 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4231"
+    ],
+    "districtOffice": [
+      "355 N Belvedere Dr, Suite 308",
+      "Gallatin, TN 37066-5466",
+      "Phone: 615-206-8204"
+    ]
+  },
+  "7": {
+    "name": "Matt Van Epps",
+    "party": "Republican",
+    "url": "https://vanepps.house.gov",
+    "capitolOffice": [
+      "2446 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2811"
+    ],
+    "districtOffice": [
+      "128 N Second St, Suite 104",
+      "Clarksville, TN 37040",
+      "Phone: 931-266-4483"
+    ]
+  },
+  "8": {
+    "name": "David Kustoff",
+    "party": "Republican",
+    "url": "https://kustoff.house.gov",
+    "capitolOffice": [
+      "560 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4714"
+    ],
+    "districtOffice": [
+      "5900 Poplar Ave., Suite 202",
+      "Memphis, TN 38119",
+      "Phone: 901-682-4422"
+    ]
+  },
+  "9": {
+    "name": "Steve Cohen",
+    "party": "Democrat",
+    "url": "https://cohen.house.gov",
+    "capitolOffice": [
+      "2268 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3265"
+    ],
+    "districtOffice": [
+      "167 N. Main St., Suite 369",
+      "The Odell Horton Federal Building",
+      "Memphis, TN 38103",
+      "Phone: 901-544-4131"
+    ]
+  }
+}

@@ -1,0 +1,92 @@
+name: Update Tennessee legislature roster
+
+# Weekly refresh of the Tennessee Senate + House rosters
+# (tn/data/app/tn-senate-members.json and tn-house-members.json, fetched by
+# tn/index.html's chamber cards) and — if anything changed — opens a PR rather
+# than committing directly to main.
+#
+# TWO SOURCES, AND THE STATE'S DECIDES. Who holds each seat, and whether it is
+# vacant, comes from the Tennessee Legislature's own district map on the
+# state's TNMap service; party, e-mail and the member's page come from the Open
+# States export (tn.csv), only where its member has the same surname. The
+# builder prints every seat where the two disagree, so a PR's run log says
+# which seat moved and why. Neither carries a Capitol office or telephone, and
+# the Legislature's own site refuses every crawler by robots.txt —
+# tn/WATCH.md records it.
+#
+# TENNESSEE IS DARK, so this job does not regenerate tn/state-legislature.html:
+# build_legislator_pages.py refuses an instance metros.json does not carry, so
+# that page is not built yet. Go-live adds the step in the same change that
+# adds tn to metros.json — tn/WATCH.md has the list.
+
+on:
+  schedule:
+    - cron: "15 17 * * 2" # Tuesday 17:15 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # Stdlib only: the builder reads the state map and tn.csv with urllib,
+      # after reading each host's robots.txt through scraper_common.
+      - name: Rebuild Tennessee Senate + House rosters
+        run: python3 tn/scripts/build_tn_legislature_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, and every data/app file must be present
+      # and well formed.
+      - name: Validate app + data files
+        run: python3 tn/scripts/validate_index.py tn/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- tn/data/app/tn-senate-members.json tn/data/app/tn-house-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/tn-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 tn/scripts/build_tn_legislature_roster.py
+          git add tn/data/app/tn-senate-members.json tn/data/app/tn-house-members.json
+          git commit -m "Update Tennessee Senate + House rosters"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Tennessee Senate + House rosters" \
+              --body "Automated weekly refresh of the Tennessee Senate and Tennessee House chamber cards' rosters: who holds each seat from the Tennessee Legislature's district map on TNMap, party, e-mail and member page from the Open States export (\`tn.csv\`) where the two agree. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

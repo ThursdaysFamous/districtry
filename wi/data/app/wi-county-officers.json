@@ -47,7 +47,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 4
  },
  "55003": {
@@ -238,7 +238,7 @@
    "phone": "920-448-4185"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 7
  },
  "55011": {
@@ -256,7 +256,7 @@
    "title": "Administrative Coordinator",
    "appointed": true,
    "url": "https://www.buffalocountywi.gov/departments/county-administration/",
-   "phone": "608-685-6234"
+   "phone": "(608) 685-6234"
   },
   "treasurer": {
    "name": "Tina Anibas",
@@ -290,7 +290,7 @@
    "phone": "(608) 685-4433"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 4
  },
  "55013": {
@@ -337,7 +337,7 @@
    "url": "https://burnettcountywi.gov/directory.aspx"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 6
  },
  "55015": {
@@ -387,7 +387,7 @@
    "url": "https://calumetcounty.org/Directory"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 7
  },
  "55017": {
@@ -438,7 +438,7 @@
    "url": "https://chippewacountywi.gov/Directory"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 7
  },
  "55019": {
@@ -484,7 +484,7 @@
    "url": "https://www.clarkcountywi.gov/corner"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 4
  },
  "55021": {
@@ -531,7 +531,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 2,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 2
  },
  "55023": {
@@ -616,7 +616,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 4
  },
  "55027": {
@@ -728,8 +728,8 @@
    "url": "https://douglascountywi.gov/Directory"
   },
   "districtAttorney": {
-   "name": "Mark Fruehauf",
-   "party": "Democrat",
+   "name": "Chad La Lor",
+   "source": "county-page",
    "url": "https://douglascountywi.gov/Directory"
   },
   "sheriff": {
@@ -742,7 +742,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 5
  },
  "55033": {
@@ -848,7 +848,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 5
  },
  "55037": {
@@ -903,7 +903,7 @@
    "phone": "715.528.3346"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 5
  },
  "55039": {
@@ -1039,7 +1039,7 @@
    "title": "Coroner"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 6
  },
  "55045": {
@@ -1087,7 +1087,7 @@
    "url": "https://greencountywi.org/directory.aspx"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 6
  },
  "55047": {
@@ -1143,7 +1143,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 5
  },
  "55049": {
@@ -1234,7 +1234,7 @@
    "url": "https://www.co.iron.wi.gov/Directory"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 7
  },
  "55053": {
@@ -1326,7 +1326,7 @@
    "phone": "920-674-7119"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 6
  },
  "55057": {
@@ -1372,9 +1372,10 @@
    "name": "Myron Oestreich",
    "title": "Medical Examiner (appointed)"
   },
-  "contactChecked": 3,
-  "contactReadOn": "2026-09-25",
-  "contactCheckedWeekly": 3
+  "contactChecked": 8,
+  "contactAsOf": "2026-09-25",
+  "contactRetried": true,
+  "contactAsOfWhy": "The county's pages could not be read on this run: 0 of the county's offices resolved against a floor of 2, so the read was refused rather than shipped short."
  },
  "55059": {
   "county": "Kenosha",
@@ -1422,7 +1423,7 @@
    "url": "https://www.kenoshacountywi.gov/Directory"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 7
  },
  "55061": {
@@ -1601,7 +1602,7 @@
    "url": "https://www.co.langlade.wi.us/departments/coroner/"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 6
  },
  "55069": {
@@ -1690,7 +1691,7 @@
    "phone": "920-683-4008"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 4
  },
  "55073": {
@@ -1782,7 +1783,7 @@
    "phone": "715-732-7421"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 6
  },
  "55077": {
@@ -1837,7 +1838,7 @@
    "email": "athoma@marquettecountywi.gov"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 5
  },
  "55078": {
@@ -1990,8 +1991,9 @@
    "url": "https://www.ocontocountywi.gov/Directory"
   },
   "districtAttorney": {
-   "name": "Hannah N Schuchart",
-   "note": "Appointed to fill a vacancy"
+   "name": "Joshua Dryak",
+   "source": "county-page",
+   "url": "https://www.ocontocountywi.gov/Directory"
   },
   "sheriff": {
    "name": "Todd Skarban",
@@ -2003,9 +2005,9 @@
    "title": "Medical Examiner (appointed)",
    "url": "https://www.ocontocountywi.gov/Directory"
   },
-  "contactChecked": 6,
-  "contactReadOn": "2026-09-25",
-  "contactCheckedWeekly": 6
+  "contactChecked": 7,
+  "contactReadOn": "2026-10-09",
+  "contactCheckedWeekly": 7
  },
  "55085": {
   "county": "Oneida",
@@ -2054,7 +2056,7 @@
   },
   "coroner": null,
   "contactChecked": 4,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 4
  },
  "55087": {
@@ -2143,7 +2145,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 6
  },
  "55091": {
@@ -2338,7 +2340,7 @@
    "url": "https://www.co.portage.wi.gov/Directory"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 7
  },
  "55099": {
@@ -2386,7 +2388,7 @@
    "url": "https://co.price.wi.us/Directory"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 6
  },
  "55101": {
@@ -2592,7 +2594,7 @@
    "url": "https://sccwi.gov/Directory"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 7
  },
  "55111": {
@@ -2643,7 +2645,7 @@
    "url": "https://www.co.sauk.wi.us/coroner"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 7
  },
  "55113": {
@@ -2690,7 +2692,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 5
  },
  "55115": {
@@ -2783,7 +2785,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 5
  },
  "55119": {
@@ -2875,7 +2877,7 @@
    "email": "kindscb@co.trempealeau.wi.us"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 5
  },
  "55123": {
@@ -2928,9 +2930,10 @@
    "phone": "608-637-2124",
    "email": "bnigh@vernoncountywi.gov"
   },
-  "contactChecked": 4,
-  "contactReadOn": "2026-09-25",
-  "contactCheckedWeekly": 4
+  "contactChecked": 12,
+  "contactAsOf": "2026-09-25",
+  "contactRetried": true,
+  "contactAsOfWhy": "The county's pages could not be read on this run: 0 of the county's offices resolved against a floor of 3, so the read was refused rather than shipped short."
  },
  "55125": {
   "county": "Vilas",
@@ -3016,7 +3019,7 @@
    "url": "https://co.walworth.wi.us/directory.aspx"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 7
  },
  "55129": {
@@ -3069,7 +3072,7 @@
    "title": "Coroner"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 4
  },
  "55131": {
@@ -3120,7 +3123,7 @@
    "phone": "414-516-4300"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 7
  },
  "55133": {
@@ -3174,7 +3177,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 5
  },
  "55135": {
@@ -3228,7 +3231,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 5
  },
  "55137": {
@@ -3279,7 +3282,7 @@
    "phone": "920-787-6612"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 6
  },
  "55139": {
@@ -3326,7 +3329,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 5
  },
  "55141": {
@@ -3379,7 +3382,7 @@
    "phone": "715-421-8702"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-25",
+  "contactReadOn": "2026-10-09",
   "contactCheckedWeekly": 5
  }
 }

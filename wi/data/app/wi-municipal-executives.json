@@ -23,7 +23,7 @@
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
     "withheld": true,
-    "withheldWhy": "the municipality's own site asks automated clients not to read it, so its page is not fetched and no name is witnessed"
+    "withheldWhy": "the municipality's own site refuses this client, so no name is witnessed"
   },
   "5527075": {
     "email": "csymchych@villageoffoxpoint.com",

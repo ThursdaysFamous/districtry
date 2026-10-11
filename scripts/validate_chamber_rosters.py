@@ -60,6 +60,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BUILDERS = (
     "ca/scripts/build_ca_legislature_roster.py",
     "ia/scripts/build_ia_legislature_roster.py",
+    "tn/scripts/build_tn_legislature_roster.py",
 )
 
 
