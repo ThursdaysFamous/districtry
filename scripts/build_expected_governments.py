@@ -61,8 +61,8 @@ FLOOR = 25000
 # The state each app answers for. A city app is not here: San Francisco's own
 # city tier is the whole app, which the report states rather than measures.
 STATE_FIPS = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
-              "mn": "27", "ky": "21", "ny": "36", "in": "18", "nc": "37",
-              "ok": "40"}
+              "mn": "27", "ky": "21", "ny": "36", "in": "18",
+              "nc": "37", "ok": "40", "sc": "45", "tn": "47"}
 
 # Is a county subdivision the GENERAL-PURPOSE government for residents outside
 # incorporated places in this state? A fact of that state's law, recorded with
@@ -77,16 +77,21 @@ SUBDIVISION_IS_GENERAL_PURPOSE = {
     "mn": None,   # Same: no Minnesota township reaches the floor.
     "ia": None,   # Same.
     "ky": None,   # Kentucky has no township tier at all.
-    "in": False,  # Limited purpose, as in Illinois: an Indiana township runs
-                  # township assistance, fire protection and cemeteries
-                  # (IC 36-6-4-3), and the county is the general government
-                  # outside incorporated places (IC 36-2). Ruled 2026-10-11 by
-                  # the Indiana thread on the same reading Illinois's entry rests
-                  # on; 61 Indiana townships clear the floor, so it had to be
-                  # recorded rather than left as "does not arise".
-    "nc": None,   # The Census marks every North Carolina township
-                  # non-functioning, so FUNCSTAT='A' finds none.
-    "ok": None,   # Oklahoma has no township governments.
+    # An Indiana township is limited purpose: the trustee runs township
+    # assistance, fire protection and cemeteries (IC 36-6), while an
+    # unincorporated resident is governed generally by the county's
+    # commissioners and council. The Illinois reading, for the same reason.
+    # Measured 2026-10-11, 61 active Indiana townships clear the floor; they
+    # are owed under the standard's entry 9 instead.
+    "in": False,
+    # The four below return NO active county subdivision at the floor,
+    # measured 2026-10-11: North Carolina's townships are non-functioning
+    # (FUNCSTAT N), and Oklahoma, South Carolina and Tennessee are divided
+    # into census county divisions, statistical areas that govern nobody.
+    "nc": None,
+    "ok": None,
+    "sc": None,
+    "tn": None,
 }
 
 

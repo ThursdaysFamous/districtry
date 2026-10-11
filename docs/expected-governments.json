@@ -15,6 +15,8 @@
   "nc": null,
   "ny": true,
   "ok": null,
+  "sc": null,
+  "tn": null,
   "wi": null
  },
  "units": {
@@ -3184,6 +3186,325 @@
     "lsadc": "25",
     "name": "Jenks city",
     "pop": 25949
+   }
+  ],
+  "sc": [
+   {
+    "geoid": "4513330",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Charleston city",
+    "pop": 150227
+   },
+   {
+    "geoid": "4516000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Columbia city",
+    "pop": 136632
+   },
+   {
+    "geoid": "4550875",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "North Charleston city",
+    "pop": 114852
+   },
+   {
+    "geoid": "4548535",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Mount Pleasant town",
+    "pop": 90801
+   },
+   {
+    "geoid": "4561405",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rock Hill city",
+    "pop": 74372
+   },
+   {
+    "geoid": "4530850",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Greenville city",
+    "pop": 70720
+   },
+   {
+    "geoid": "4570270",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Summerville town",
+    "pop": 50915
+   },
+   {
+    "geoid": "4529815",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Goose Creek city",
+    "pop": 45946
+   },
+   {
+    "geoid": "4570405",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sumter city",
+    "pop": 43463
+   },
+   {
+    "geoid": "4525810",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Florence city",
+    "pop": 39899
+   },
+   {
+    "geoid": "4568290",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Spartanburg city",
+    "pop": 38732
+   },
+   {
+    "geoid": "4534045",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Hilton Head Island town",
+    "pop": 37661
+   },
+   {
+    "geoid": "4549075",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Myrtle Beach city",
+    "pop": 35682
+   },
+   {
+    "geoid": "4530985",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Greer city",
+    "pop": 35308
+   },
+   {
+    "geoid": "4500550",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Aiken city",
+    "pop": 32025
+   },
+   {
+    "geoid": "4501360",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Anderson city",
+    "pop": 28106
+   },
+   {
+    "geoid": "4507210",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Bluffton town",
+    "pop": 27716
+   }
+  ],
+  "tn": [
+   {
+    "geoid": "4752006",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Nashville-Davidson metropolitan government (balance)",
+    "pop": 689447
+   },
+   {
+    "geoid": "4748000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Memphis city",
+    "pop": 633104
+   },
+   {
+    "geoid": "4740000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Knoxville city",
+    "pop": 190740
+   },
+   {
+    "geoid": "4714000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Chattanooga city",
+    "pop": 181099
+   },
+   {
+    "geoid": "4715160",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Clarksville city",
+    "pop": 166722
+   },
+   {
+    "geoid": "4751560",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Murfreesboro city",
+    "pop": 152769
+   },
+   {
+    "geoid": "4727740",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Franklin city",
+    "pop": 83454
+   },
+   {
+    "geoid": "4738320",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Johnson City city",
+    "pop": 71046
+   },
+   {
+    "geoid": "4737640",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Jackson city",
+    "pop": 68205
+   },
+   {
+    "geoid": "4733280",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hendersonville city",
+    "pop": 61753
+   },
+   {
+    "geoid": "4703440",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bartlett city",
+    "pop": 57786
+   },
+   {
+    "geoid": "4739560",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kingsport city",
+    "pop": 55442
+   },
+   {
+    "geoid": "4769420",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Smyrna town",
+    "pop": 53070
+   },
+   {
+    "geoid": "4716420",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Collierville town",
+    "pop": 51324
+   },
+   {
+    "geoid": "4770580",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Spring Hill city",
+    "pop": 50005
+   },
+   {
+    "geoid": "4715400",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Cleveland city",
+    "pop": 47356
+   },
+   {
+    "geoid": "4708280",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Brentwood city",
+    "pop": 45373
+   },
+   {
+    "geoid": "4728540",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gallatin city",
+    "pop": 44431
+   },
+   {
+    "geoid": "4716540",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Columbia city",
+    "pop": 41690
+   },
+   {
+    "geoid": "4728960",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Germantown city",
+    "pop": 41333
+   },
+   {
+    "geoid": "4750780",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Mount Juliet city",
+    "pop": 39289
+   },
+   {
+    "geoid": "4741200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "La Vergne city",
+    "pop": 38719
+   },
+   {
+    "geoid": "4741520",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lebanon city",
+    "pop": 38431
+   },
+   {
+    "geoid": "4716920",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Cookeville city",
+    "pop": 34842
+   },
+   {
+    "geoid": "4746380",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Maryville city",
+    "pop": 31907
+   },
+   {
+    "geoid": "4755120",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Oak Ridge city",
+    "pop": 31402
+   },
+   {
+    "geoid": "4750280",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Morristown city",
+    "pop": 30431
+   },
+   {
+    "geoid": "4708540",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bristol city",
+    "pop": 27147
    }
   ],
   "wi": [

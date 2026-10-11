@@ -311,6 +311,34 @@ def closure(entry, scripts_dir, entry_is_executed=True):
                 continue
             if os.path.exists(os.path.join(scripts_dir, mod + ".py")):
                 stack.append(mod)            # local module: keep walking
+            elif os.path.isfile(os.path.join(scripts_dir, mod, "__init__.py")):
+                # A LOCAL PACKAGE, not a pip name. Until 2026-10-11 every
+                # instance kept its modules flat, so a directory import fell
+                # through to the third-party branch and the gate demanded a
+                # package called `tn_commission_parsers` from PyPI. Every
+                # module in it is read at module scope, because the package
+                # Tennessee added is loaded by discovery (pkgutil) rather than
+                # by name, so which of its modules run cannot be read off the
+                # importer. Their own local imports are relative, which
+                # module_scope_imports already skips; anything absolute is
+                # classified exactly as a flat module's would be.
+                pkg = os.path.join(scripts_dir, mod)
+                for fn in sorted(os.listdir(pkg)):
+                    if not fn.endswith(".py"):
+                        continue
+                    seen.add("%s.%s" % (mod, fn[:-3]))
+                    for sub in module_scope_imports(os.path.join(pkg, fn)):
+                        if sub in sys.stdlib_module_names or sub in ALWAYS_AVAILABLE:
+                            continue
+                        if os.path.exists(os.path.join(scripts_dir, sub + ".py")):
+                            stack.append(sub)
+                        elif (sub in FLEET_SHARED and os.path.exists(
+                                os.path.join(ROOT_SCRIPTS, sub + ".py"))):
+                            sub_seen, sub_third = closure(sub, ROOT_SCRIPTS, entry_is_executed=False)
+                            seen |= {"%s (root)" % n for n in sub_seen}
+                            third_party |= sub_third
+                        elif sub != mod:
+                            third_party.add(sub)
             elif (mod in FLEET_SHARED
                   and os.path.exists(os.path.join(ROOT_SCRIPTS, mod + ".py"))):
                 # A declared shared module, reached only because this instance

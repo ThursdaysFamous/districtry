@@ -1582,7 +1582,11 @@ ANSWERS = {
         # State's precinct service also carries soil-and-water, hospital and
         # park districts, which are further layers rather than a gap here.
         "special-districts": answers("watershed-district"),
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-10 (#1470): the app draws Minnesota's 22 pieces of
+        # tribal land across 13 nations, and the card names nine councils
+        # from the nations' own pages and says why the other four name
+        # nobody -- the Wisconsin and Michigan shape.
+        "tribal-government": answers("tribal-government"),
     },
     "ky": {
         "us-house": answers("us-house"),
@@ -1953,7 +1957,7 @@ def load_expected_units():
 # Wisconsin roster is keyed by the five-digit place code inside the state.
 STATE_FIPS_OF = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
                  "mn": "27", "ky": "21", "ny": "36", "in": "18",
-                 "nc": "37", "ok": "40"}
+                 "nc": "37", "ok": "40", "sc": "45", "tn": "47"}
 
 
 def _named_anywhere(record):
@@ -1997,15 +2001,18 @@ def city_tier(tag, expected):
     inside the unit is told who governs that point: where the council elects at
     large there is no district to draw, and many units above the floor do.
     """
-    units = {u["geoid"]: u for u in expected.get("units", {}).get(tag, [])}
-    # NO UNITS IS NOT NO SHORTFALL. A live state the measurement never asked
-    # about scores zero of zero, which reads as the tier answered — and it did,
-    # for Indiana, North Carolina and Oklahoma until 2026-10-11.
-    if not units:
-        fail("%s: docs/expected-governments.json carries no units for this "
-             "state, so its local tier would score as answered with nothing "
-             "measured. Add it to STATE_FIPS in "
-             "scripts/build_expected_governments.py and rebuild." % tag)
+    # A STATE THE MEASUREMENT NEVER REACHED IS NOT A STATE WITH NO LARGE
+    # TOWNS. Reading a missing entry as an empty list scored zero units of
+    # zero, which is "answered": Indiana, North Carolina and Oklahoma passed
+    # this level unchecked from their go-lives until 2026-10-11, because the
+    # measurement had been taken for the first seven apps only.
+    if tag not in expected.get("units", {}):
+        fail("%s: docs/expected-governments.json carries no measurement for "
+             "this state, so its city tier cannot be scored. Add the state to "
+             "STATE_FIPS in scripts/build_expected_governments.py and run it "
+             "(it needs the network); a missing state must not read as one "
+             "with nothing to answer." % tag)
+    units = {u["geoid"]: u for u in expected["units"][tag]}
     named = set()
     for rel, keyed_by in CITY_ROSTERS.get(tag, []):
         path = os.path.join(REPO_ROOT, rel)
