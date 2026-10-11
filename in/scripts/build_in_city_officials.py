@@ -64,6 +64,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 import build_in_county_officials as C  # noqa: E402
+from scraper_common import require_robots_once  # noqa: E402  (C put scripts/ on the path)
 
 INSTANCE = C.INSTANCE
 REPO_ROOT = os.path.dirname(INSTANCE)
@@ -476,6 +477,10 @@ def main():
     import requests  # noqa: PLC0415
     session = requests.Session()
     session.headers.update(C.UA_HEADERS_ROSTER_BOT)
+    # The same read C.fetch_json makes before each fetch, stated here so this
+    # file asks the host's policy itself, with the client that crawls.
+    require_robots_once(C.HOST + "/", C.UA_ROSTER_BOT,
+                        headers=C.UA_HEADERS_ROSTER_BOT)
     years = counting_years(session, datetime.date.today())
     print("generals read: %s" % ", ".join(str(y) for y, _ in years))
     by_year = {year: read_year(session, year, root) for year, root in years}
