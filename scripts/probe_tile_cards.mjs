@@ -318,7 +318,10 @@ try {
       // another way compares equal while downloading the whole file. For a
       // county layer, only where the answering county's entry reads its
       // boundaries through queryFeatureAt at all; the rest are counted below
-      const notTiled = county ? [] : res.filter((r) => !r.viaTiles);
+      const notTiled = county ? [] : res.filter((r) => !r.viaTiles && !r.hidden);
+      // a point the layer's own coverage rejects is never queried: the app
+      // hides the layer there, so there is no card to compare (tileCardCheck)
+      const hidden = res.filter((r) => r.hidden).length;
       const hoverBad = res.filter((r) => r.hoverTiles != null && r.hoverTiles !== r.hoverFile);
       // a county layer's live counties answer from their own servers, so an
       // error in BOTH runs is that server, not the tiles: the file run reads an
@@ -353,6 +356,7 @@ try {
       const stampBad = (stamps || []).filter((r) => r.problem);
       const ok = !bad.length && !errs.length && !notTiled.length && !hoverBad.length && !unasked.length && !stampBad.length;
       console.log(`  ${ok ? "ok  " : "FAIL"}  ${tag}:${id} — ${res.length} points (${pts.dropped} dropped within ${EDGE_TOLERANCE_M} m of an edge), ${res.filter((r) => r.file).length} with a district, ` +
+        (hidden ? `${hidden} outside the layer's coverage and skipped, ` : "") +
         `${bad.length} differ, ${errs.length} errored` +
         (county ? `, ${hoverBad.length} hover names differ` : `, ${notTiled.length} not answered from tiles`));
       if (county) {
