@@ -60,7 +60,7 @@ seat shows its last general's winner. The county pages below are what catch it.
 A SECOND PUBLISHER CHECKS THE FIRST. `COUNTY_PAGES` names each county's own
 council page. Every run reads each page it can (robots.txt read at every
 redirect hop), and checks that every winner's surname appears on it. Read here
-on 2026-10-11, four seats are a different person on the county's page, and
+on 2026-10-11, six seats are not the winner on the county's page, and
 `COUNTY_SAYS` records each by hand with the name the county gives and the date
 it was read; the record carries it as `countySays` and the card prints both,
 each saying whose it is. The results winner is not overwritten: the county page
@@ -70,6 +70,25 @@ does an entry that has stopped describing the page (its name gone, or the
 winner's surname back), so the table cannot rot in either direction. A winner
 elected within WITNESS_GRACE_DAYS is not held to the page, because a new member
 takes office in January and the county's page follows after.
+
+THE RESULTS SITE CHALLENGES GITHUB'S RUNNERS, SO THE WEEKLY JOB OFTEN CANNOT
+REBUILD AND MUST NOT GO QUIET ABOUT IT. Measured 2026-10-11: from this
+project's build sandbox www.enr-scvotes.org answers robots.txt with 404 (allow
+all) and every results file with 200, while from a GitHub runner its robots.txt
+answers HTTP 202, an access control, on 2 of 2 runs, so the scheduled job may
+not fetch a single result there. A refusal or a failed read on the results site
+is therefore not a crash. The run keeps the shipped roster exactly as it is,
+reads every county page against it (the witness below runs in full), and exits
+EX_RESULTS_UNREADABLE (75), which the workflow reports on a tracking issue
+rather than as a red run. What stops that becoming a job that never refreshes
+anything is `owed()`: once a cycle's general is CANVASS_DAYS past and the
+Commission's results page links an election of that cycle that `ELECTIONS`
+does not pin, a run that cannot read it FAILS, naming the election, because
+from then on the shipped names are owed a refresh nobody has done. Between
+elections the certified results do not change, so not reading them costs
+nothing. Whoever rebuilds after an election adds its ids to `ELECTIONS` in the
+same change. How that rebuild is done while the runners are refused is a
+question for the operator, recorded in sc/WATCH.md.
 
 What the witness cannot see: it matches SURNAMES, so a page naming a different
 person with the winner's surname reads as agreement; and a county whose page
@@ -114,6 +133,7 @@ RESULTS_HOST = "https://www.enr-scvotes.org"
 RESULTS_PAGE = "https://scvotes.gov/elections-statistics/election-results/"
 REQUEST_TIMEOUT = 60
 PACE_SECONDS = 0.5
+EX_RESULTS_UNREADABLE = 75
 
 FIRST_CYCLE = 2022
 CANVASS_DAYS = 21
@@ -356,6 +376,53 @@ def get_text(url):
     return _get(url)[2]
 
 
+class ResultsUnreadable(Exception):
+    """The results site refused this client or could not be read this run."""
+
+
+def results_text(url):
+    """get_text for the results site, where a robots refusal, a network
+    failure or anything but a 200 is ResultsUnreadable rather than a crash: a
+    challenge page read as JSON would otherwise surface as a parse error."""
+    try:
+        status, _, text = _get(url)
+    except SystemExit as exc:  # require_robots_once refuses by raising it
+        raise ResultsUnreadable(str(exc))
+    except (OSError, RuntimeError) as exc:
+        raise ResultsUnreadable("%s: %s" % (type(exc).__name__, exc))
+    if status != 200:
+        raise ResultsUnreadable("%s answered HTTP %d" % (url, status))
+    return text
+
+
+def general_day(year):
+    """The general election's date in an even year: the Tuesday after the
+    first Monday in November."""
+    nov1 = datetime.date(year, 11, 1)
+    day = nov1 + datetime.timedelta(days=(1 - nov1.weekday()) % 7)
+    if day == nov1:  # the Tuesday after the first MONDAY
+        day += datetime.timedelta(days=7)
+    return day
+
+
+def owed(found, today):
+    """Problems for each election the results page links that `ELECTIONS`
+    does not pin, once its cycle's general is CANVASS_DAYS past. Asked only
+    when the results site could not be read, because a run that reads it takes
+    the new election itself."""
+    pinned = {e["id"] for e in ELECTIONS}
+    out = []
+    for eid, meta in sorted(found.items()):
+        age = (today - general_day(meta["cycle"])).days
+        if eid not in pinned and age >= CANVASS_DAYS:
+            out.append("the results page links the %d %s (election %s), %d days after "
+                       "that general, and this run could not read the results site, "
+                       "so the shipped names are owed a refresh — rebuild and add it to "
+                       "ELECTIONS (sc/WATCH.md says how)"
+                       % (meta["cycle"], meta["kind"], eid, age))
+    return out
+
+
 def discover(today):
     """General-election links on the Commission's results page from
     FIRST_CYCLE on, as {id: {cycle, kind}}; and fail on an overdue general."""
@@ -378,10 +445,7 @@ def discover(today):
         fail("the results page carries no general-election link at all — its "
              "layout changed, and this builder cannot see new elections")
     for year in range(2026, today.year + 1, 2):
-        nov1 = datetime.date(year, 11, 1)
-        day = nov1 + datetime.timedelta(days=(1 - nov1.weekday()) % 7)
-        if day == nov1:  # the Tuesday after the first MONDAY
-            day += datetime.timedelta(days=7)
+        day = general_day(year)
         if (today - day).days > OVERDUE_DAYS and not any(
                 e["cycle"] == year and e["kind"] == "general" for e in found.values()):
             fail("the %d general (%s) is %d days past and the results page links "
@@ -391,15 +455,15 @@ def discover(today):
 
 def fetch_election(eid):
     """(settings, {county: (summary rows, county results url)})."""
-    ver = get_text("%s/SC/%s/current_ver.txt" % (RESULTS_HOST, eid)).strip()
-    settings = json.loads(get_text(
+    ver = results_text("%s/SC/%s/current_ver.txt" % (RESULTS_HOST, eid)).strip()
+    settings = json.loads(results_text(
         "%s/SC/%s/%s/json/en/electionsettings.json" % (RESULTS_HOST, eid, ver)))
     details = settings["settings"]["electiondetails"]
     out = {}
     for row in details.get("participatingcounties") or []:
         name, ceid, cver = row.split("|")[:3]
         url = "%s/SC/%s/%s/%s/json/en/summary.json" % (RESULTS_HOST, name, ceid, cver)
-        out[name] = (json.loads(get_text(url)),
+        out[name] = (json.loads(results_text(url)),
                      "%s/SC/%s/%s/" % (RESULTS_HOST, name, ceid))
     return details, out
 
@@ -789,11 +853,27 @@ def main():
     for eid in sorted(set(pinned) - set(found)):
         print("  note: election %s is no longer linked from the results page" % eid)
     elections = []
-    for e in sorted(pinned.values(), key=lambda e: (e["cycle"], KIND_ORDER[e["kind"]])):
-        details, counties = fetch_election(e["id"])
-        elections.append({**e, "details": details, "counties": counties})
-        print("  election %s (%d %s, %s): %d counties"
-              % (e["id"], e["cycle"], e["kind"], details["electiondate"], len(counties)))
+    try:
+        for e in sorted(pinned.values(), key=lambda e: (e["cycle"], KIND_ORDER[e["kind"]])):
+            details, counties = fetch_election(e["id"])
+            elections.append({**e, "details": details, "counties": counties})
+            print("  election %s (%d %s, %s): %d counties"
+                  % (e["id"], e["cycle"], e["kind"], details["electiondate"], len(counties)))
+    except ResultsUnreadable as exc:
+        print("sc-council-roster: the results site could not be read this run — %s" % exc)
+        print("  the shipped roster is kept as it is; reading the county pages against it")
+        with open(OUT_FILE, encoding="utf-8") as f:
+            doc = json.load(f)
+        problems, named, total = check(doc, geo, groups)
+        problems += witness({rec["county"]: rec["seats"] for rec in doc.values()}, today)
+        problems += owed(found, today)
+        if problems:
+            for p in problems:
+                print("build-sc-county-council-roster: FAIL: " + p)
+            raise SystemExit(1)
+        print("sc-council-roster: nothing written; %d of %d shipped seats named, and no "
+              "new election is owed yet" % (named, total))
+        raise SystemExit(EX_RESULTS_UNREADABLE)
     all_contests, held = contests(elections, groups, today)
     for c, why in held:
         print("  held: %s %s %s — %s" % (c["date"], c["county"], c["contest"], why))
