@@ -1,17 +1,20 @@
 {
  "built_by": "scripts/build_expected_governments.py",
  "floor": 25000,
- "measured": "2026-10-01",
+ "measured": "2026-10-11",
  "read_by": "scripts/build_eam_status.py",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer",
  "source": "U.S. Census Bureau TIGERweb, tigerWMS_Census2020 \u2014 layer 26 (Incorporated Places) and layer 20 (County Subdivisions, FUNCSTAT='A'); POP100 is the 2020 decennial count.",
  "subdivision_is_general_purpose": {
   "ia": null,
   "il": false,
+  "in": false,
   "ky": null,
   "mi": true,
   "mn": null,
+  "nc": null,
   "ny": true,
+  "ok": null,
   "wi": null
  },
  "units": {
@@ -766,6 +769,281 @@
     "lsadc": "47",
     "name": "Morton Grove village",
     "pop": 25297
+   }
+  ],
+  "in": [
+   {
+    "geoid": "1836003",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Indianapolis city (balance)",
+    "pop": 887642
+   },
+   {
+    "geoid": "1825000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fort Wayne city",
+    "pop": 263886
+   },
+   {
+    "geoid": "1822000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Evansville city",
+    "pop": 117298
+   },
+   {
+    "geoid": "1871000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "South Bend city",
+    "pop": 103453
+   },
+   {
+    "geoid": "1810342",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Carmel city",
+    "pop": 99757
+   },
+   {
+    "geoid": "1823278",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fishers city",
+    "pop": 98977
+   },
+   {
+    "geoid": "1805860",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bloomington city",
+    "pop": 79168
+   },
+   {
+    "geoid": "1831000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hammond city",
+    "pop": 77879
+   },
+   {
+    "geoid": "1840788",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lafayette city",
+    "pop": 70783
+   },
+   {
+    "geoid": "1854180",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Noblesville city",
+    "pop": 69604
+   },
+   {
+    "geoid": "1827000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gary city",
+    "pop": 69093
+   },
+   {
+    "geoid": "1851876",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Muncie city",
+    "pop": 65194
+   },
+   {
+    "geoid": "1829898",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Greenwood city",
+    "pop": 63830
+   },
+   {
+    "geoid": "1840392",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kokomo city",
+    "pop": 59604
+   },
+   {
+    "geoid": "1875428",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Terre Haute city",
+    "pop": 58389
+   },
+   {
+    "geoid": "1801468",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Anderson city",
+    "pop": 54788
+   },
+   {
+    "geoid": "1820728",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Elkhart city",
+    "pop": 53923
+   },
+   {
+    "geoid": "1849932",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Mishawaka city",
+    "pop": 51063
+   },
+   {
+    "geoid": "1814734",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Columbus city",
+    "pop": 50474
+   },
+   {
+    "geoid": "1838358",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Jeffersonville city",
+    "pop": 49447
+   },
+   {
+    "geoid": "1842426",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lawrence city",
+    "pop": 49370
+   },
+   {
+    "geoid": "1882700",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Westfield city",
+    "pop": 46410
+   },
+   {
+    "geoid": "1882862",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "West Lafayette city",
+    "pop": 44595
+   },
+   {
+    "geoid": "1861092",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Portage city",
+    "pop": 37926
+   },
+   {
+    "geoid": "1852326",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "New Albany city",
+    "pop": 37841
+   },
+   {
+    "geoid": "1848528",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Merrillville town",
+    "pop": 36444
+   },
+   {
+    "geoid": "1864260",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Richmond city",
+    "pop": 35720
+   },
+   {
+    "geoid": "1860246",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Plainfield town",
+    "pop": 34625
+   },
+   {
+    "geoid": "1828386",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Goshen city",
+    "pop": 34517
+   },
+   {
+    "geoid": "1878326",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Valparaiso city",
+    "pop": 34151
+   },
+   {
+    "geoid": "1816138",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Crown Point city",
+    "pop": 33899
+   },
+   {
+    "geoid": "1848798",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Michigan City city",
+    "pop": 32075
+   },
+   {
+    "geoid": "1886372",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Zionsville town",
+    "pop": 30603
+   },
+   {
+    "geoid": "1834114",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hobart city",
+    "pop": 29752
+   },
+   {
+    "geoid": "1868220",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Schererville town",
+    "pop": 29646
+   },
+   {
+    "geoid": "1808416",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Brownsburg town",
+    "pop": 28973
+   },
+   {
+    "geoid": "1846908",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Marion city",
+    "pop": 28310
+   },
+   {
+    "geoid": "1819486",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "East Chicago city",
+    "pop": 26370
+   },
+   {
+    "geoid": "1825450",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Franklin city",
+    "pop": 25313
    }
   ],
   "ky": [
@@ -1768,6 +2046,302 @@
     "pop": 25650
    }
   ],
+  "nc": [
+   {
+    "geoid": "3712000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Charlotte city",
+    "pop": 874579
+   },
+   {
+    "geoid": "3755000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Raleigh city",
+    "pop": 467665
+   },
+   {
+    "geoid": "3728000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Greensboro city",
+    "pop": 299035
+   },
+   {
+    "geoid": "3719000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Durham city",
+    "pop": 283506
+   },
+   {
+    "geoid": "3775000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Winston-Salem city",
+    "pop": 249545
+   },
+   {
+    "geoid": "3722920",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fayetteville city",
+    "pop": 208501
+   },
+   {
+    "geoid": "3710740",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Cary town",
+    "pop": 174721
+   },
+   {
+    "geoid": "3774440",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wilmington city",
+    "pop": 115451
+   },
+   {
+    "geoid": "3731400",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "High Point city",
+    "pop": 114059
+   },
+   {
+    "geoid": "3714100",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Concord city",
+    "pop": 105240
+   },
+   {
+    "geoid": "3702140",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Asheville city",
+    "pop": 94589
+   },
+   {
+    "geoid": "3728080",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Greenville city",
+    "pop": 87521
+   },
+   {
+    "geoid": "3725580",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gastonia city",
+    "pop": 80411
+   },
+   {
+    "geoid": "3734200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Jacksonville city",
+    "pop": 72723
+   },
+   {
+    "geoid": "3711800",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Chapel Hill town",
+    "pop": 61960
+   },
+   {
+    "geoid": "3733120",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Huntersville town",
+    "pop": 61376
+   },
+   {
+    "geoid": "3701520",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Apex town",
+    "pop": 58780
+   },
+   {
+    "geoid": "3709060",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Burlington city",
+    "pop": 57303
+   },
+   {
+    "geoid": "3757500",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rocky Mount city",
+    "pop": 54341
+   },
+   {
+    "geoid": "3735200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kannapolis city",
+    "pop": 53114
+   },
+   {
+    "geoid": "3744220",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Mooresville town",
+    "pop": 50193
+   },
+   {
+    "geoid": "3774540",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wilson city",
+    "pop": 47851
+   },
+   {
+    "geoid": "3770540",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Wake Forest town",
+    "pop": 47601
+   },
+   {
+    "geoid": "3731060",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hickory city",
+    "pop": 43490
+   },
+   {
+    "geoid": "3732260",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Holly Springs town",
+    "pop": 41239
+   },
+   {
+    "geoid": "3733560",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Indian Trail town",
+    "pop": 39997
+   },
+   {
+    "geoid": "3758860",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Salisbury city",
+    "pop": 35540
+   },
+   {
+    "geoid": "3743920",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Monroe city",
+    "pop": 34562
+   },
+   {
+    "geoid": "3725300",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Fuquay-Varina town",
+    "pop": 34152
+   },
+   {
+    "geoid": "3726880",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Goldsboro city",
+    "pop": 33657
+   },
+   {
+    "geoid": "3714700",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Cornelius town",
+    "pop": 31412
+   },
+   {
+    "geoid": "3746340",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "New Bern city",
+    "pop": 31291
+   },
+   {
+    "geoid": "3725480",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Garner town",
+    "pop": 31159
+   },
+   {
+    "geoid": "3759280",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sanford city",
+    "pop": 30261
+   },
+   {
+    "geoid": "3744520",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Morrisville town",
+    "pop": 29630
+   },
+   {
+    "geoid": "3741960",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Matthews town",
+    "pop": 29435
+   },
+   {
+    "geoid": "3764740",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Statesville city",
+    "pop": 28419
+   },
+   {
+    "geoid": "3767420",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Thomasville city",
+    "pop": 27183
+   },
+   {
+    "geoid": "3702080",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Asheboro city",
+    "pop": 27156
+   },
+   {
+    "geoid": "3743480",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Mint Hill town",
+    "pop": 26450
+   },
+   {
+    "geoid": "3735600",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Kernersville town",
+    "pop": 26449
+   },
+   {
+    "geoid": "3712860",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Clayton town",
+    "pop": 26307
+   }
+  ],
   "ny": [
    {
     "geoid": "3651000",
@@ -2496,6 +3070,120 @@
     "lsadc": "43",
     "name": "Camillus town",
     "pop": 25346
+   }
+  ],
+  "ok": [
+   {
+    "geoid": "4055000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Oklahoma City city",
+    "pop": 681054
+   },
+   {
+    "geoid": "4075000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Tulsa city",
+    "pop": 413066
+   },
+   {
+    "geoid": "4052500",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Norman city",
+    "pop": 128026
+   },
+   {
+    "geoid": "4009050",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Broken Arrow city",
+    "pop": 113540
+   },
+   {
+    "geoid": "4023200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Edmond city",
+    "pop": 94428
+   },
+   {
+    "geoid": "4041850",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lawton city",
+    "pop": 90381
+   },
+   {
+    "geoid": "4049200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Moore city",
+    "pop": 62793
+   },
+   {
+    "geoid": "4048350",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Midwest City city",
+    "pop": 58409
+   },
+   {
+    "geoid": "4023950",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Enid city",
+    "pop": 51308
+   },
+   {
+    "geoid": "4070300",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Stillwater city",
+    "pop": 48394
+   },
+   {
+    "geoid": "4056650",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Owasso city",
+    "pop": 38240
+   },
+   {
+    "geoid": "4004450",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bartlesville city",
+    "pop": 37290
+   },
+   {
+    "geoid": "4050050",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Muskogee city",
+    "pop": 36878
+   },
+   {
+    "geoid": "4066800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Shawnee city",
+    "pop": 31377
+   },
+   {
+    "geoid": "4006400",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bixby city",
+    "pop": 28609
+   },
+   {
+    "geoid": "4037800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Jenks city",
+    "pop": 25949
    }
   ],
   "wi": [
