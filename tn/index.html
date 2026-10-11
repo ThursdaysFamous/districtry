@@ -12652,6 +12652,10 @@ function initTennesseeExplorer() {
           members: (entry && entry.districts && district != null)
             ? entry.districts[String(district)] || null : null,
           atLarge: entry ? entry.atLarge || null : null,
+          // the county's own name for a district the state numbers (Dyer
+          // letters its districts A to J); null wherever the numbers are its own
+          districtLabel: (entry && entry.districtLabels && district != null)
+            ? entry.districtLabels[String(district)] || null : null,
           title: entry && entry.seatTitle ? String(entry.seatTitle) : "Commissioner",
           body: entry && entry.bodyName ? String(entry.bodyName) : null,
           readAt: entry ? entry.readAt : null,
@@ -12674,6 +12678,16 @@ function initTennesseeExplorer() {
         value: result.county != null ? String(result.county) : "Unknown county",
         primary: true
       }];
+      if (result.districtLabel) {
+        // The header pill keeps the state's number, which is what the hover
+        // name and the map say; this row gives the name the county's own
+        // ballot and page use for the same district.
+        rows.push({
+          label: "The county's name for it",
+          value: String(result.districtLabel) + ". The state's map numbers it District " +
+            String(result.district) + "."
+        });
+      }
       if (consolidated) {
         rows.push({
           label: "Government",
@@ -12685,8 +12699,12 @@ function initTennesseeExplorer() {
       if (result.members) {
         var seats = result.members.length;
         if (seats > 1) {
-          rows.push({ label: "Seats", value: "This district elects " + seats +
-            " members, each listed above." });
+          // A vacant seat is not "listed above", so the sentence says how
+          // many are named when the county reports one empty.
+          var open = district.vacancies.length;
+          rows.push({ label: "Seats", value: "This district elects " + seats + " members" +
+            (open ? ": " + (seats - open) + " named above and " + open +
+              (open === 1 ? " seat" : " seats") + " empty." : ", each listed above.") });
         }
         district.vacancies.forEach(function (seat) {
           rows.push({ label: seat ? seat : "Seat",

@@ -777,6 +777,61 @@
    ]
   }
  },
+ "47027": {
+  "county": "Clay County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.claycountytngov.com/commissioners",
+  "readAt": "2026-10-11",
+  "seats": 10,
+  "domains": [
+   "claycountytngov.com",
+   "claycountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "J. Bryan Coons"
+    },
+    {
+     "name": "Dale McLerran"
+    }
+   ],
+   "2": [
+    {
+     "name": "Jeff Gentry"
+    },
+    {
+     "name": "Parrish Wright"
+    }
+   ],
+   "3": [
+    {
+     "name": "Clifton Boles"
+    },
+    {
+     "name": "Kristen Mathews"
+    }
+   ],
+   "4": [
+    {
+     "name": "Winton Young"
+    },
+    {
+     "name": "Anthony Boles"
+    }
+   ],
+   "5": [
+    {
+     "name": "J. Tanner Harvey"
+    },
+    {
+     "name": "J. Elijah Watson"
+    }
+   ]
+  }
+ },
  "47029": {
   "county": "Cocke County",
   "seatTitle": "Commissioner",
@@ -1586,6 +1641,112 @@
    ]
   }
  },
+ "47045": {
+  "county": "Dyer County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.dyercounty.com/elected-officials",
+  "readAt": "2026-10-11",
+  "seats": 20,
+  "domains": [
+   "dyercounty.com"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Greg Vestal"
+    },
+    {
+     "name": "Mike Nicks"
+    }
+   ],
+   "2": [
+    {
+     "name": "Tanner Seratt"
+    },
+    {
+     "name": "Brandon Dodds"
+    }
+   ],
+   "3": [
+    {
+     "name": "Bradley Gray"
+    },
+    {
+     "name": "Walter Wilkerson"
+    }
+   ],
+   "4": [
+    {
+     "name": "Cody Walker"
+    },
+    {
+     "name": "Eugene Smith"
+    }
+   ],
+   "5": [
+    {
+     "name": "Steve Reed"
+    },
+    {
+     "name": "Adam McGuire"
+    }
+   ],
+   "6": [
+    {
+     "name": "Terry McCreight"
+    },
+    {
+     "name": "Victor McLin"
+    }
+   ],
+   "7": [
+    {
+     "name": "Chris Hamm"
+    },
+    {
+     "name": "Debra Roberson"
+    }
+   ],
+   "8": [
+    {
+     "name": "Hunter Jackson"
+    },
+    {
+     "name": "Tyler Rogers"
+    }
+   ],
+   "9": [
+    {
+     "name": "Casey King"
+    },
+    {
+     "name": "Amy McDonald"
+    }
+   ],
+   "10": [
+    {
+     "name": "Dob Johnson"
+    },
+    {
+     "name": "Steve North"
+    }
+   ]
+  },
+  "districtLabels": {
+   "1": "District A",
+   "2": "District B",
+   "3": "District C",
+   "4": "District D",
+   "5": "District E",
+   "6": "District F",
+   "7": "District G",
+   "8": "District H",
+   "9": "District I",
+   "10": "District J"
+  }
+ },
  "47047": {
   "county": "Fayette County",
   "seatTitle": "Commissioner",
@@ -1954,6 +2115,106 @@
    ]
   }
  },
+ "47063": {
+  "county": "Hamblen County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://hamblencountytn.gov/county-commission/",
+  "readAt": "2026-10-11",
+  "seats": 14,
+  "domains": [
+   "hamblencountytn.gov",
+   "co.hamblen.tn.us"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "district1@co.hamblen.tn.us",
+     "name": "Tom Hyde"
+    }
+   ],
+   "2": [
+    {
+     "email": "district2@co.hamblen.tn.us",
+     "name": "Debbie A'Hearn"
+    }
+   ],
+   "3": [
+    {
+     "email": "district3@co.hamblen.tn.us",
+     "name": "Joyce Cotner"
+    }
+   ],
+   "4": [
+    {
+     "email": "district4@co.hamblen.tn.us",
+     "name": "Wayne NeSmith"
+    }
+   ],
+   "5": [
+    {
+     "email": "district5@co.hamblen.tn.us",
+     "name": "Mike Reed"
+    }
+   ],
+   "6": [
+    {
+     "email": "district6@co.hamblen.tn.us",
+     "name": "Joe Spoone"
+    }
+   ],
+   "7": [
+    {
+     "email": "district7@co.hamblen.tn.us",
+     "name": "Frank Lane"
+    }
+   ],
+   "8": [
+    {
+     "email": "district8@co.hamblen.tn.us",
+     "name": "Mark Johns"
+    }
+   ],
+   "9": [
+    {
+     "email": "district9@co.hamblen.tn.us",
+     "name": "Jamie Carden"
+    }
+   ],
+   "10": [
+    {
+     "email": "district10@co.hamblen.tn.us",
+     "name": "Stan Harville",
+     "role": "Chair"
+    }
+   ],
+   "11": [
+    {
+     "email": "district11@co.hamblen.tn.us",
+     "name": "Matt Stuart"
+    }
+   ],
+   "12": [
+    {
+     "email": "district12@co.hamblen.tn.us",
+     "name": "Leo E. Shalhoup, Jr"
+    }
+   ],
+   "13": [
+    {
+     "email": "district13@co.hamblen.tn.us",
+     "name": "Tim Horner"
+    }
+   ],
+   "14": [
+    {
+     "email": "district14@co.hamblen.tn.us",
+     "name": "Scott Depew"
+    }
+   ]
+  }
+ },
  "47065": {
   "county": "Hamilton County",
   "seatTitle": "Commissioner",
@@ -2196,6 +2457,76 @@
     },
     {
      "name": "Robert Palmer"
+    }
+   ]
+  }
+ },
+ "47079": {
+  "county": "Henry County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://henrycountytn.gov/government?tab=commissioners",
+  "readAt": "2026-10-11",
+  "seats": 15,
+  "domains": [
+   "henrycountytn.gov",
+   "henrycountytn.org"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "James Eichel"
+    },
+    {
+     "name": "David Flowers"
+    },
+    {
+     "name": "Blake Stewart"
+    }
+   ],
+   "2": [
+    {
+     "name": "Charles Elizondo"
+    },
+    {
+     "name": "Ralph Wiles"
+    },
+    {
+     "vacant": true
+    }
+   ],
+   "3": [
+    {
+     "name": "Monte Starks"
+    },
+    {
+     "name": "Marty Visser"
+    },
+    {
+     "name": "Todd Wright"
+    }
+   ],
+   "4": [
+    {
+     "name": "David Hayes"
+    },
+    {
+     "name": "Kenneth Humphreys"
+    },
+    {
+     "name": "Rick Parker"
+    }
+   ],
+   "5": [
+    {
+     "name": "Patrick Burns"
+    },
+    {
+     "name": "Randall Perry"
+    },
+    {
+     "name": "Joe Rice"
     }
    ]
   }
@@ -4191,6 +4522,115 @@
     },
     {
      "name": "Alexis Taylor"
+    }
+   ]
+  }
+ },
+ "47163": {
+  "county": "Sullivan County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.scelect.org/electedofficials.html",
+  "readAt": "2026-10-11",
+  "seats": 24,
+  "domains": [
+   "sullivancountytn.gov",
+   "scelect.org"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Don Thompson"
+    }
+   ],
+   "2": [
+    {
+     "name": "David Akard III"
+    },
+    {
+     "name": "Kim Harvey"
+    },
+    {
+     "name": "Mark A. Vance"
+    }
+   ],
+   "3": [
+    {
+     "name": "Andrew K. Cross"
+    }
+   ],
+   "4": [
+    {
+     "name": "Michael B. Cole"
+    },
+    {
+     "name": "Joyce Neal Crosswhite"
+    },
+    {
+     "name": "Josh Hayes"
+    }
+   ],
+   "5": [
+    {
+     "name": "Ty Boomershine"
+    },
+    {
+     "name": "Dwight King"
+    }
+   ],
+   "6": [
+    {
+     "name": "Bob Harshbarger Jr."
+    },
+    {
+     "name": "Matthew Jerry Johnson"
+    },
+    {
+     "name": "Tim L. Pullon"
+    }
+   ],
+   "7": [
+    {
+     "name": "Samuel \"Sam\" Jones"
+    },
+    {
+     "name": "Travis Ward"
+    }
+   ],
+   "8": [
+    {
+     "name": "Stanley Hodges"
+    },
+    {
+     "name": "Mark Ireson"
+    }
+   ],
+   "9": [
+    {
+     "name": "Joe Carr"
+    },
+    {
+     "name": "Todd Golden"
+    }
+   ],
+   "10": [
+    {
+     "name": "Larry Crawford"
+    },
+    {
+     "name": "Lakie Derrick"
+    }
+   ],
+   "11": [
+    {
+     "name": "John Gardner"
+    },
+    {
+     "name": "Hunter Michael Locke"
+    },
+    {
+     "name": "Zac Thomas"
     }
    ]
   }

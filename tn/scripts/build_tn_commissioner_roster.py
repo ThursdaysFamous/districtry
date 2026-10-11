@@ -146,6 +146,21 @@ def county_problems(fips5, entry, n_geom, check_seats=True):
         if len(entry.get("atLarge") or []) != (entry.get("atLargeSeats") or 0):
             out.append("%s: %d countywide seat(s) parsed, the county elects %d"
                        % (name, len(entry.get("atLarge") or []), entry.get("atLargeSeats") or 0))
+    labels = entry.get("districtLabels")
+    if labels is not None:
+        # THE COUNTY'S OWN NAME FOR A DISTRICT the state numbers (Dyer letters
+        # its districts A to J): every district or none, each name different,
+        # because a card printing one county's "District A" beside the state's
+        # "District 3" for the same ground would be two answers to one question.
+        if set(labels) != set(ds):
+            out.append("%s names districts %s and labels %s"
+                       % (name, sorted(ds, key=int), sorted(labels)))
+        vals = [str(v).strip() for v in labels.values()]
+        if not all(vals) or len(set(vals)) != len(vals):
+            out.append("%s district labels %s are empty or repeat" % (name, vals))
+        for v in vals:
+            if ADDRESS.search(v) or ZIP.search(v) or len(v) > 40:
+                out.append("%s district label %r is not a district's name" % (name, v))
     names = []
     for d in sorted(ds, key=int):
         if not ds[d]:
@@ -183,6 +198,9 @@ def shipped_entry(entry, county_name, domains, phones):
            "domains": domains,
            "phones": phones,
            "districts": {d: ds[d] for d in sorted(ds, key=int)}}
+    if entry.get("districtLabels"):
+        rec["districtLabels"] = {d: entry["districtLabels"][d]
+                                 for d in sorted(entry["districtLabels"], key=int)}
     if entry.get("atLarge"):
         rec["atLarge"] = entry["atLarge"]
     return rec

@@ -18,6 +18,11 @@ on the day the parser was written:
   TITLE, BODY    what the county calls a member and the body, where that is not
                  "Commissioner" of the "County Commission" (text only: a
                  pattern of the parser's own takes another name)
+  DISTRICT_LABELS  the county's own name for each district, keyed by the
+                 state's district number, where the county does not call its
+                 districts by those numbers ({"1": "District A", ...}); every
+                 district or none, each name different, and the module's
+                 docstring says how the pairing was MEASURED, never assumed
   parse(pages)   {url: page text, HTML comments removed} ->
                  {"districts": {"1": [member, ...]}, "atLarge": [member, ...]}
 
