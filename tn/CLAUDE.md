@@ -8,13 +8,13 @@ districtry Tennessee: a single-file, dependency-light web app. Click a point in 
 search an address) and it reports every civic district containing that point and who
 represents you there. It serves at **districtry.com/tn/** as a folder of the consolidated
 districtry repo, following the statewide shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships TWELVE layers, and **the instance is DARK**: no
+Illinois root-scripts shape. It ships THIRTEEN layers, and **the instance is DARK**: no
 `metros.json` entry, `tn/**` excluded from the Pages deploy, nothing served and no landing card
 naming it. It goes live on the operator's word. `tn/WATCH.md` lists what
 go-live has to do in one change.
 
 **The national tier, plus the Legislature's own names.** County (95, Census TIGERweb, the
-coverage ring and a card that names the county and not yet its commissioners), **U.S. House**
+coverage ring and a card that names the county), **U.S. House**
 (9 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators
 roster), **Tennessee Senate** and **Tennessee House** (33 and 99 districts, TIGERweb geometry),
 the LIVE TIGERweb fabric (**City or Town**, **School District (Unified)** 127,
@@ -71,11 +71,22 @@ point just over the Alabama line 35773; the Capitol 37219). The envelope the app
 returns 1,070 ZCTAs, 638 of them with their interior point in Tennessee (measured 2026-10-10).
 The coverage test reads the shipped outline, and the smoke test asserts both halves.
 
-**THE FLAGSHIP THIS INSTANCE IS BUILDING TOWARD IS THE COUNTY COMMISSION.** Every county but the
-three consolidated governments elects a county commission from districts, and the Comptroller's
-redistricting address lookup publishes them statewide (859 districts in one layer, measured
-2026-10-09). Recorded as gap `tn-county-commission-districts` until it ships, beside
-`tn-municipal-officeholders` and `tn-school-board-members`.
+**THE FLAGSHIP IS THE COUNTY COMMISSION, AND ITS DISTRICTS SHIPPED 2026-10-11; ITS MEMBERS ARE
+NOT NAMED YET.** Every Tennessee county elects its legislative body from districts, the three
+consolidated governments included (Nashville-Davidson's 35 are its Metropolitan Council
+districts), and the Comptroller of the Treasury publishes all of them in one statewide layer.
+`tn/scripts/build_tn_commission_districts.py` builds **County Commission District** from it: 859
+districts in 95 counties, each county numbered 1..N. **THE COUNTY CODE ARRIVES IN TWO SPELLINGS**
+("005" and "5"), which read naively is 118 counties, so the builder normalises it and refuses
+unless the result is exactly the 95 counties in `state-counties.json`, and a witness then checks
+that every district answers to its own county at points inside it. **A DISTRICT IS NOT A SEAT**:
+many counties elect two or three members from one district, and the layer carries no seat count,
+so the card never says how many people hold a district. **NO STATE OFFICE PUBLISHES THE NAMES** —
+the Division of Elections' results of the 6 August 2026 election carry 219 offices and no county
+race — so they come county by county from each county's own pages, in later changes. Recorded as
+gap `tn-county-commissioners`, beside `tn-municipal-officeholders` and `tn-school-board-members`.
+The Comptroller's layer reports the date of its last data edit, and the monthly source check
+warns when it moves past the edit the shipped file was built from (2026-09-10).
 
 **TRIBAL GOVERNMENTS ARE IN SCOPE AND ARE NOT IN THIS PR.** Measured with
 `scripts/tribal_areas.py` on 2026-10-10, the Census draws no reservation in Tennessee and one
@@ -83,10 +94,11 @@ piece of off-reservation trust land: 0.695 km2 of the Mississippi Band of Chocta
 trust land, near Henning in Lauderdale County (4.1% of that trust land's area). The fleet-wide
 tribal-government thread owns it.
 
-**THE CHAMBER BOUNDARIES USE DOUGLAS-PEUCKER AT `interval=20`**, inherited from North Carolina's
-measurement and re-measured here: worst stray 23.2 / 21.4 / 21.5 m (U.S. House, Senate, House)
-against the 25 m ceiling the builder gates, with Tennessee's median source step 27.67 / 25.41 /
-23.63 m. The coverage outline is ONE ring, 2,288 vertices, read from
+**THE CHAMBER AND COMMISSION BOUNDARIES USE DOUGLAS-PEUCKER AT `interval=20`**, inherited from
+North Carolina's measurement and re-measured here: worst stray 23.2 / 21.4 / 21.5 / 21.4 m (U.S.
+House, Senate, House, county commission) against the 25 m ceiling the builders gate, with
+Tennessee's median source step 27.67 / 25.41 / 23.63 / 21.34 m. At `interval=30` the commission
+layer strays 31.2 m and 846 of its 859 districts exceed the ceiling, so 20 is a measured choice here and not a default. The coverage outline is ONE ring, 2,288 vertices, read from
 `build_metro_outline.py --check`.
 
 **`tncourts.gov` serves a browser challenge**, which the fleet's robots reader recognises as
@@ -106,8 +118,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Tennessee (`tennessee`) — https://districtry.com/tn/
 - Geocoders: address Photon (Tennessee-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Tennessee-bounded, serial >=1s queue)
-- Ground truth: 36.16590,-86.78440 (the State Capitol, Nashville, Davidson County) → county Davidson County; us-house 7; tn-senate 21; tn-house 51. Negative point 34.90000,-86.60000 (near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.).
-- Layers: 12 registered (political 3, safety 2, schools 3, geography 4); `registerLayer(` floor 11. Debug namespace `window.TennesseeExplorer`.
+- Ground truth: 36.16590,-86.78440 (the State Capitol, Nashville, Davidson County) → county Davidson County; us-house 7; tn-senate 21; tn-house 51; county-commissioner 19. Negative point 34.90000,-86.60000 (near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.).
+- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 11. Debug namespace `window.TennesseeExplorer`.
 - Scheduled workflows: `update-tn-congress-roster.yml` (Mon 17:15 UTC); `update-tn-legislature-roster.yml` (Tue 17:15 UTC); `tn-validate-sources.yml` (1st of month 19:30 UTC).
 - Source registry: `tn/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
