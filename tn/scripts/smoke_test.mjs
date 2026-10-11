@@ -49,11 +49,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "36.16590,-86.78440"; // the State Capitol, Nashville, Davidson County
-const OFFLINE = ["county", "us-house", "tn-senate", "tn-house"];
-const EXPECT_DISTRICT = { "county": "Davidson County", "us-house": "7", "tn-senate": "21", "tn-house": "51" };
+const OFFLINE = ["county", "us-house", "tn-senate", "tn-house", "county-commissioner"];
+const EXPECT_DISTRICT = { "county": "Davidson County", "us-house": "7", "tn-senate": "21", "tn-house": "51", "county-commissioner": "19" };
 const NEGATIVE_POINT = "34.90000,-86.60000"; // near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.
 const APP_NAME = "districtry Tennessee";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -911,6 +911,55 @@ try {
       check("zip-code hides outside Tennessee rather than naming an Alabama ZIP",
         hidden && !leaked && stillOn,
         `hidden=${hidden} leaked=${leaked} layersOn=${stillOn} text=${(info.text || "").slice(0, 90)}`);
+      await context.close();
+    }
+  }
+
+  // county-commissioner NAMES THE DISTRICT'S SEATS FROM THE ROSTER, and says
+  // so when it cannot. The roster is stubbed so this holds the CARD to a
+  // fixture rather than to whichever names this week's refresh shipped: one
+  // district with a named seat carrying a seat label and a role, a vacancy the
+  // county states, and a countywide member, which must render under its own
+  // label, and the county's own name for a district the state numbers
+  // (Dyer letters its districts), beside the state's number. The second half
+  // stubs an empty roster and requires the not-named
+  // sentence, because a card that names nobody must still say why.
+  {
+    const roster = {
+      "47037": {
+        county: "Davidson County", seatTitle: "Council Member", bodyName: "Metro Council",
+        sourceUrl: "https://www.nashville.gov/departments/council/districts",
+        readAt: "2026-10-11", seats: 3, domains: ["nashville.gov"], phones: true,
+        districts: { "19": [
+          { name: "Fixture Member", seat: "A", role: "Chair", email: "fixture@nashville.gov" },
+          { vacant: true, seat: "B" }
+        ] },
+        districtLabels: { "19": "District S" },
+        atLarge: [{ name: "Fixture Countywide" }]
+      }
+    };
+    for (const [label, body, want, wantNot] of [
+      ["names the district's seats, a stated vacancy and the countywide members",
+       roster,
+       [/Fixture Member/, /Council Member/, /Seat A/, /Chair/, /Seat B/, /Vacant/,
+        /elects 2 members: 1 named above and 1 seat empty\./,
+        /Elected countywide/i, /Fixture Countywide/, /read 11 October 2026/,
+        /District S\. The state's map numbers it District 19\./],
+       /Not named here yet/],
+      ["says it names nobody where the roster has not reached the county",
+       {}, [/Not named here yet/], /Fixture/]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=county-commissioner`, async (p) => {
+        await p.route("**/data/app/tn-commissioners.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(body) }));
+      });
+      const info = await cardText(page, "county-commissioner");
+      const text = info.text || "";
+      const missing = want.filter((re) => !re.test(text)).map(String);
+      check(`county-commissioner ${label}`,
+        !info.error && missing.length === 0 && !wantNot.test(text),
+        missing.length ? `missing ${missing.join(" ")} in: ${text.slice(0, 160)}` : text.slice(0, 120));
       await context.close();
     }
   }

@@ -1,0 +1,125 @@
+name: Update Tennessee county commissioner roster
+
+# Weekly refresh of tn/data/app/tn-commissioners.json, read by tn/index.html's
+# `county-commissioner` card, and of the per-county pages generated from it.
+#
+# WHY IT IS NOT ONE STATEWIDE FETCH. No state office publishes who sits on
+# Tennessee's county commissions: the Comptroller's statewide district layer
+# carries no member field, and the Division of Elections' results carry no
+# county race. So the names come from each county's own page, county by
+# county, in tranches.
+#
+# THE COUNTY LIST IS COUNTIES IN tn/scripts/tn_commissioner_scraper.py AND IS
+# NOT RESTATED HERE, because a count in a comment goes stale on the tranche
+# that moves it and nothing compares the two.
+#
+# The builder refuses a county whose districts are not exactly 1..N for the
+# district count the shipped geometry draws, or whose seats per district do not
+# match the county's row, so a redistricting or a board resize fails this run
+# instead of shipping a roster keyed to lines that moved. A county that cannot
+# be read this week keeps its last good record for up to 45 days, dated to the
+# day it was read, and past that the run fails.
+#
+# Nothing here works around an access control. robots.txt is read through
+# scripts/robots_policy.py before the first fetch of every host and a stated
+# Crawl-delay is honoured; a managed challenge is left alone and the county is
+# recorded as unread.
+#
+# TENNESSEE IS DARK, and this job already runs the three root generators that
+# skip a dark instance (build_about_page.py, build_sitemap.py,
+# build_llms_txt.py), so nothing they write moves until go-live, and go-live
+# has nothing to add here. build_about_page.py --check fails a roster job that
+# does not run it, dark or not.
+
+on:
+  schedule:
+    - cron: "15 17 * * 3" # Wednesday 17:15 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers). Falls back to github.token when
+      # the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install -c tn/scripts/requirements.txt requests
+
+      - name: Scrape each county's own commission page
+        run: python3 tn/scripts/tn_commissioner_scraper.py
+
+      - name: Rebuild the commissioner roster
+        run: python3 tn/scripts/build_tn_commissioner_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, and every data/app file must be present
+      # and well formed.
+      - name: Validate app + data files
+        run: python3 tn/scripts/validate_index.py tn/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- tn/data/app/tn-commissioners.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR.
+          branch="bot/tn-commissioner-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter. The roster is
+          # rebuilt there from this run's scrape cache, which the checkout
+          # does not touch.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 tn/scripts/build_tn_commissioner_roster.py
+          # The per-county pages (tn/county-commissioner/) are GENERATED from
+          # the roster this job just rewrote, so regenerate them here or the
+          # smoke gate's `build_county_pages.py --check` fails on this PR with
+          # a page naming last week's commissioners.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          # llms.txt COUNTS the per-county pages once Tennessee is live, so a
+          # county dropping out of the roster would move it.
+          python3 scripts/build_llms_txt.py
+          # docs/EAM_STATUS.md counts the districts this roster names, so a
+          # county gaining or losing a member moves it.
+          python3 scripts/build_eam_status.py
+          git add tn/data/app/tn-commissioners.json tn/county-commissioner tn/county-commissioner.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
+          git commit -m "Update Tennessee county commissioner roster"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Tennessee county commissioner roster" \
+              --body "Automated weekly refresh of the \`county-commissioner\` card's names, read from each county's own page. The counties covered are the COUNTIES table in \`tn/scripts/tn_commissioner_scraper.py\`; the run's own log names each one and any county carried forward unread, so read the checks rather than this paragraph for what this week's refresh touched. The builder refuses a county whose districts or seats do not match its row and the shipped geometry, and refuses any home address, personal telephone or e-mail off the county's own domain. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

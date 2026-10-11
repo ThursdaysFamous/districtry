@@ -1,0 +1,3358 @@
+{
+ "45001": {
+  "county": "Abbeville",
+  "countyPage": "https://abbevillecountysc.com/county-council/",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Brandon Johnson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Abbeville/115413/"
+   },
+   {
+    "countySays": {
+     "name": "LaSean Tutt",
+     "read": "2026-10-11"
+    },
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Christine W Long",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Abbeville/115413/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Charles H Goodwin",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Abbeville/122437/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Billy Norris",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Abbeville/122437/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "James P McCord",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Abbeville/122437/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Trent Taylor",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Abbeville/122437/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Bryan McClain",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Abbeville/115413/"
+   }
+  ]
+ },
+ "45003": {
+  "county": "Aiken",
+  "countyPage": "https://www.aikencountysc.gov/529/Council-Members",
+  "form": "district",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Gary Bunker",
+    "party": "Republican",
+    "seat": "chair",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Aiken/122438/"
+   },
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Ron Felder",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Aiken/115414/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Mike Kellems",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Aiken/115414/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Danny Feagin",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Aiken/122438/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Landon Ball",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Aiken/122438/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Sandy Haskell",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Aiken/115414/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Phil Napier",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Aiken/115414/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Andrew Siders",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Aiken/122438/"
+   },
+   {
+    "district": "8",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "P K Hightower",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Aiken/122438/"
+   }
+  ]
+ },
+ "45005": {
+  "county": "Allendale",
+  "countyPage": "https://www.allendalecounty.com/government/county_government/city_council_members.php",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "John A Chaney",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Allendale/122439/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "James White",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Allendale/115415/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Willa Marian Jennings",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Allendale/115415/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Matthew Connelly",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Allendale/122439/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Bill Robinson",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Allendale/115415/"
+   }
+  ]
+ },
+ "45007": {
+  "county": "Anderson",
+  "countyPage": "https://www.andersoncountysc.org/county-council/",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Chris Sullivan",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Anderson/122440/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Glenn Davis",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Anderson/122440/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Greg Elgin",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Anderson/122440/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Brett Sanders",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Anderson/122440/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Tommy Dunn",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Anderson/122440/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Jimmy Davis",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Anderson/122440/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "M Cindy Wilson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Anderson/122440/"
+   }
+  ]
+ },
+ "45009": {
+  "county": "Bamberg",
+  "countyPage": "https://www.bambergcounty.sc.gov/county-council-and-staff-directory",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Kenneth Ahlin",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Bamberg/122441/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Sharon Hammond",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Bamberg/115417/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Larry Haynes",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Bamberg/115417/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Spencer A Donaldson",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Bamberg/122441/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Jonathan M Goodman II",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Bamberg/122441/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Evert Comer Jr",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Bamberg/115417/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Michelle Martin",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Bamberg/122441/"
+   }
+  ]
+ },
+ "45011": {
+  "county": "Barnwell",
+  "countyPage": "https://barnwellcountysc.us/173/Council",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Freddie L Houston Sr",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Barnwell/122442/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "David Kenner",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Barnwell/115418/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Andy Hogg",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Barnwell/122442/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Daniel Alexander",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Barnwell/115418/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "J J Cruz",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Barnwell/122442/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Harold Buckmon",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Barnwell/115418/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Travis Hooper",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Barnwell/122442/"
+   }
+  ]
+ },
+ "45013": {
+  "county": "Beaufort",
+  "countyPage": "https://www.beaufortcountysc.gov/council/council-members/index.html",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Gerald Dawson",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Beaufort/122443/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "David Bartholomew",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Beaufort/115419/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "York L Glover",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Beaufort/122443/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Alice G Howard",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Beaufort/115419/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Joseph Passiment",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Beaufort/115419/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Tab Tabernik",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Beaufort/115419/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Logan S Cunningham",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Beaufort/122443/"
+   },
+   {
+    "district": "8",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Paula Brown",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Beaufort/115419/"
+   },
+   {
+    "district": "9",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Mark Lawson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Beaufort/115419/"
+   },
+   {
+    "district": "10",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Larry McElynn",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Beaufort/115419/"
+   },
+   {
+    "district": "11",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Tommy Reitz",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Beaufort/115419/"
+   }
+  ]
+ },
+ "45015": {
+  "county": "Berkeley",
+  "countyPage": "https://berkeleycountysc.gov/dept/council/elected-officials/",
+  "form": "district",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Johnny Cribb",
+    "party": "Republican",
+    "seat": "supervisor",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Berkeley/115420/"
+   },
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Dan Owens",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Berkeley/122444/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Jarrod Brooks",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Berkeley/122444/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Phillip Obie II",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Berkeley/122444/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Tommy Newell",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Berkeley/115420/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Amy Stern",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Berkeley/115420/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Marshall West",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Berkeley/115420/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Caldwell Pinckney Jr",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Berkeley/115420/"
+   },
+   {
+    "district": "8",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Steve C Davis",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Berkeley/115420/"
+   }
+  ]
+ },
+ "45017": {
+  "county": "Calhoun",
+  "countyPage": "https://calhouncounty.sc.gov/officials",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Richard Carson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Calhoun/122445/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Ken Westbury",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Calhoun/122445/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Rebecca A Bonnette",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Calhoun/115421/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Cecil M Thornton Jr",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Calhoun/115421/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "James E Haigler",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Calhoun/115421/"
+   }
+  ]
+ },
+ "45019": {
+  "county": "Charleston",
+  "countyPage": "https://www.charlestoncounty.org/departments/county-council/index.php",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Herb Sass",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Charleston/115422/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Larry Kobrovsky",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Charleston/115422/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Rob Wehrman",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Charleston/122446/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Henry E Darby",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Charleston/122446/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Teddie Pryor",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Charleston/115422/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Kylon Jerome Middleton",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Charleston/122446/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Brantley Moody",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Charleston/122446/"
+   },
+   {
+    "district": "8",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Joe Boykin",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Charleston/115422/"
+   },
+   {
+    "district": "9",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jenny Costa Honeycutt",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Charleston/115422/"
+   }
+  ]
+ },
+ "45021": {
+  "county": "Cherokee",
+  "countyPage": "https://cherokeecountysc.gov/county-council-administration/",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Teresa Corry Bonner",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Cherokee/122447/"
+   },
+   {
+    "countySays": {
+     "read": "2026-10-11",
+     "vacant": true
+    },
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Bill Blanton",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Cherokee/115423/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Donnie Hardin",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Cherokee/122447/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Tim Spencer",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Cherokee/122447/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Elliott Hughes",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Cherokee/115423/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "David Smitty Smith",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Cherokee/122447/"
+   },
+   {
+    "countySays": {
+     "name": "Peter M. Wilkins",
+     "read": "2026-10-11"
+    },
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Tracy A McDaniel",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Cherokee/115423/"
+   }
+  ]
+ },
+ "45023": {
+  "county": "Chester",
+  "countyPage": "https://chestercountysc.gov/government/chester-county-council/county-council-members/",
+  "form": "district",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Erin Mosley",
+    "party": "Republican",
+    "seat": "at-large",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chester/115424/"
+   },
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "John H Agee",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chester/115424/"
+   },
+   {
+    "countySays": {
+     "name": "Roy Brunson",
+     "read": "2026-10-11"
+    },
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Mike Vaughn",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chester/115424/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Bobby Raines",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chester/122448/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Pete Wilson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chester/122448/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Corey Guy",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chester/115424/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "William Buddha Killian",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chester/122448/"
+   }
+  ]
+ },
+ "45025": {
+  "county": "Chesterfield",
+  "countyPage": "https://www.chesterfieldcountysc.com/countycouncil",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Brandon Price",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chesterfield/122449/"
+   },
+   {
+    "countySays": {
+     "name": "Lawrance Brand",
+     "read": "2026-10-11"
+    },
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Gerald Miller",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chesterfield/115425/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Ethan Foard",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chesterfield/115425/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Douglas A Curtis",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chesterfield/115425/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Eddie Kirkley",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chesterfield/122449/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Hattie Burns",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chesterfield/122449/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Todd Smallwood",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chesterfield/122449/"
+   },
+   {
+    "district": "8",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Mary Davis Anderson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chesterfield/115425/"
+   },
+   {
+    "district": "9",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Johnnie McLendon",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Chesterfield/122449/"
+   }
+  ]
+ },
+ "45027": {
+  "county": "Clarendon",
+  "countyPage": "https://www.clarendoncountysc.gov/our-government/council/",
+  "form": "district",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Jay Johnson",
+    "party": "Republican",
+    "seat": "chair",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Clarendon/122450/"
+   },
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Billy Richardson",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Clarendon/115426/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Kurtis Rodine",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Clarendon/122450/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "W J Frierson",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Clarendon/115426/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Pat Coker",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Clarendon/115426/"
+   }
+  ]
+ },
+ "45029": {
+  "county": "Colleton",
+  "countyPage": "https://www.colletoncounty.org/county-council",
+  "form": "district",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Bubba Trippe",
+    "party": "Republican",
+    "seat": "at-large",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Colleton/115427/"
+   },
+   {
+    "district": "23",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Phillip M Taylor Sr",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Colleton/122451/"
+   },
+   {
+    "district": "23",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Scott Biering",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Colleton/115427/"
+   },
+   {
+    "district": "45",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Johnny Frank",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Colleton/122451/"
+   },
+   {
+    "district": "45",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Steven D Murdaugh",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Colleton/115427/"
+   }
+  ]
+ },
+ "45031": {
+  "county": "Darlington",
+  "countyPage": "https://www.darcosc.com/government/county_council/index.php",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Angie Stone Godbold",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Darlington/122452/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Dannie Douglas Jr",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Darlington/115428/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Joyce W Thomas",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Darlington/122452/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Bobby Hudson",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Darlington/115428/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Le Flowers",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Darlington/122452/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Albert Davis III",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Darlington/115428/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Kirk Askins",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Darlington/122452/"
+   },
+   {
+    "district": "8",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "David H Coker",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Darlington/115428/"
+   }
+  ]
+ },
+ "45033": {
+  "county": "Dillon",
+  "countyPage": "https://www.dilloncountysc.org/government/county_council/index.php",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "James Bobie Washington",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dillon/122453/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Dennis Townsend",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dillon/122453/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Detrice McCollum-Dawkins",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dillon/122453/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Brad Coward",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dillon/122453/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Kenny Cook",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dillon/115429/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Robbie Coward",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dillon/115429/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Stevie Grice",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dillon/115429/"
+   }
+  ]
+ },
+ "45035": {
+  "county": "Dorchester",
+  "countyPage": "https://www.dorchestercountysc.gov/government/county-council/council-members",
+  "form": "district",
+  "seats": [
+   {
+    "countySays": {
+     "name": "Peter Smith Jr.",
+     "read": "2026-10-11"
+    },
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Harriet Holman",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dorchester/115430/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "David Chinnis",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dorchester/115430/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "RitaMay Ranck",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dorchester/115430/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "S Todd Friddle",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dorchester/122454/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Eddie Crosby",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dorchester/122454/"
+   },
+   {
+    "countySays": {
+     "name": "Frankie Staropoli",
+     "read": "2026-10-11"
+    },
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Bill Hearn",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dorchester/122454/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jay Byars",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Dorchester/115430/"
+   }
+  ]
+ },
+ "45037": {
+  "county": "Edgefield",
+  "countyPage": "https://edgefieldcounty.sc.gov/county-council/",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Albert Talbert",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Edgefield/122455/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Tiffani Ireland",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Edgefield/122455/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Dean Campbell",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Edgefield/122455/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Jackie Glover Kennion",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Edgefield/122455/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Jerry Moody",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Edgefield/122455/"
+   }
+  ]
+ },
+ "45039": {
+  "county": "Fairfield",
+  "countyPage": "https://www.fairfieldsc.com/departments/county-council",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Dan Ruff",
+    "party": "NON",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Fairfield/115432/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Don Goldbach",
+    "party": "NON",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Fairfield/122456/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Peggy D Swearingen",
+    "party": "NON",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Fairfield/115432/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Carl E Bell",
+    "party": "NON",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Fairfield/122456/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Douglas Pauley",
+    "party": "NON",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Fairfield/115432/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Oren Gadson",
+    "party": "NON",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Fairfield/122456/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Clarence Gilbert",
+    "party": "NON",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Fairfield/115432/"
+   }
+  ]
+ },
+ "45041": {
+  "county": "Florence",
+  "countyPage": "https://florenceco.org/council",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jason M Springs",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Florence/115433/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Andy Rodgers",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Florence/122457/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "AL Bradley",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Florence/115433/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Jerry Wayne Yarborough Jr",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Florence/122457/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Kent C Caudle",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Florence/122457/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Toney Moore",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Florence/115433/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Waymon Mumford",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Florence/115433/"
+   },
+   {
+    "district": "8",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "William Schofield",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Florence/115433/"
+   },
+   {
+    "district": "9",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Willard Dorriety",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Florence/122457/"
+   }
+  ]
+ },
+ "45043": {
+  "county": "Georgetown",
+  "countyPage": "https://www.gtcounty.org/291/County-Council",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Clint A Elliott",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Georgetown/115434/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Bob Anderson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Georgetown/122458/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Ernie L Cooper Sr",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Georgetown/122458/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Ron Charlton",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Georgetown/122458/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Raymond Newton",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Georgetown/122458/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Stella Mercado",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Georgetown/115434/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Louis R Morant",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Georgetown/115434/"
+   }
+  ]
+ },
+ "45045": {
+  "county": "Greenville",
+  "countyPage": "https://www.greenvillecounty.org/Council/ContactInfo.aspx",
+  "form": "district",
+  "seats": [
+   {
+    "district": "17",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Joey Russo",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenville/115435/"
+   },
+   {
+    "district": "18",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Kelly Cason Long",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenville/122459/"
+   },
+   {
+    "district": "19",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Benton Blount",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenville/115435/"
+   },
+   {
+    "district": "20",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Steve Shaw",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenville/122459/"
+   },
+   {
+    "district": "21",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Curt McGahhey",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenville/122459/"
+   },
+   {
+    "district": "22",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Frank Farmer",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenville/122459/"
+   },
+   {
+    "district": "23",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Alan Mitchell",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenville/115435/"
+   },
+   {
+    "district": "24",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Liz Seman",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenville/122459/"
+   },
+   {
+    "district": "25",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Ennis M Fant",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenville/122459/"
+   },
+   {
+    "district": "26",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Rick Bradley",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenville/115435/"
+   },
+   {
+    "district": "27",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Garey Collins",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenville/122459/"
+   },
+   {
+    "district": "28",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Daniel Tripp",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenville/115435/"
+   }
+  ]
+ },
+ "45047": {
+  "county": "Greenwood",
+  "countyPage": "https://www.greenwoodcounty-sc.gov/county-council",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Teresa A Griffin",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenwood/115436/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Mark Allison",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenwood/115436/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Johanna Bishop",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenwood/115436/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Cathy L Miller",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenwood/122460/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Dayne Pruitt",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenwood/122460/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Robbie Templeton",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenwood/122460/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Theo Lane",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Greenwood/122460/"
+   }
+  ]
+ },
+ "45049": {
+  "county": "Hampton",
+  "countyPage": "https://www.hamptoncountysc.org/2/County-Council",
+  "form": "whole-county",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Marvin J Love",
+    "party": "Democratic",
+    "seat": "at-large",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Hampton/122461/"
+   },
+   {
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Roy Hollingsworth",
+    "party": "Democratic",
+    "seat": "at-large",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Hampton/122461/"
+   },
+   {
+    "countySays": {
+     "notListed": true,
+     "read": "2026-10-11"
+    },
+    "election": "2022-11-08",
+    "electionName": "2022 general election, after a recount",
+    "name": "Camille Mixson Welch",
+    "party": "Democratic",
+    "seat": "at-large",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Hampton/116284/"
+   },
+   {
+    "election": "2022-11-08",
+    "electionName": "2022 general election, after a recount",
+    "name": "Darin Williams",
+    "party": "Democratic",
+    "seat": "at-large",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Hampton/116284/"
+   },
+   {
+    "election": "2022-11-08",
+    "electionName": "2022 general election, after a recount",
+    "name": "Jordan JJ Jinks",
+    "party": "Democratic",
+    "seat": "at-large",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Hampton/116284/"
+   }
+  ]
+ },
+ "45051": {
+  "county": "Horry",
+  "countyPage": "https://www.horrycountysc.gov/county-council/",
+  "form": "district",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Johnny Gardner",
+    "party": "Republican",
+    "seat": "chair",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Horry/115438/"
+   },
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jenna Dukes",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Horry/115438/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Bill Howard",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Horry/115438/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Dennis DiSabato",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Horry/122462/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Gary Loftus",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Horry/122462/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Tyler Servant",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Horry/115438/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Cam Crawford",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Horry/122462/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Tom Anderson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Horry/115438/"
+   },
+   {
+    "district": "8",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Mikey Mash Masciarelli",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Horry/115438/"
+   },
+   {
+    "district": "9",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Mark Causey",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Horry/122462/"
+   },
+   {
+    "district": "10",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Danny J Hardee",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Horry/122462/"
+   },
+   {
+    "district": "11",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Al Allen",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Horry/115438/"
+   }
+  ]
+ },
+ "45053": {
+  "county": "Jasper",
+  "countyPage": "https://www.jaspercountysc.gov/government/council/",
+  "form": "residence",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "John Kemp",
+    "party": "Republican",
+    "seat": "at-large",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Jasper/122463/"
+   },
+   {
+    "countySays": {
+     "name": "Gene Ceccarelli",
+     "read": "2026-10-11"
+    },
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Martin Sauls IV",
+    "party": "Republican",
+    "seat": "township",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Jasper/115439/",
+    "township": "Coosawhatchie"
+   },
+   {
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Joseph Arzillo",
+    "party": "Republican",
+    "seat": "township",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Jasper/122463/",
+    "township": "Hardeeville"
+   },
+   {
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "William Joey Rowell",
+    "party": "Republican",
+    "seat": "township",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Jasper/122463/",
+    "township": "Pocotaligo"
+   },
+   {
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Chris VanGeison",
+    "party": "Republican",
+    "seat": "township",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Jasper/122463/",
+    "township": "Robertville",
+    "unexpiredTerm": true
+   }
+  ]
+ },
+ "45055": {
+  "county": "Kershaw",
+  "countyPage": "https://www.kershaw.sc.gov/our-county",
+  "form": "district",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Ben Connell",
+    "party": "Republican",
+    "seat": "chair",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Kershaw/122464/"
+   },
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Russell Brazell",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Kershaw/122464/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Sammie Tucker Jr",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Kershaw/122464/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Derek Shoemake",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Kershaw/122464/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jimmy Jones",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Kershaw/115440/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Brant Tomlinson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Kershaw/115440/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Danny Bruce Catoe",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Kershaw/115440/"
+   }
+  ]
+ },
+ "45057": {
+  "county": "Lancaster",
+  "countyPage": "https://www.lancastercountysc.gov/351/Lancaster-County-Council",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Stuart Graham",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lancaster/122465/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Charlene McGriff",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lancaster/115441/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Billy Mosteller",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lancaster/122465/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jose Luis",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lancaster/115441/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Steve Harper",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lancaster/122465/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Bryant Neal",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lancaster/122465/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Brian Carnes",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lancaster/122465/"
+   }
+  ]
+ },
+ "45059": {
+  "county": "Laurens",
+  "countyPage": "https://www.laurenscountysc.gov/departments/county_council/index.php",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "M Kemp Younts",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Laurens/115442/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Matthew J Brownlee",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Laurens/122466/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Shirley H Clark",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Laurens/122466/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "W Brown Patterson Jr",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Laurens/115442/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jeffrey Carroll",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Laurens/115442/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Arthur Lee Philson Jr",
+    "party": "Petition candidate",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Laurens/122466/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Justin Lane",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Laurens/122466/"
+   }
+  ]
+ },
+ "45061": {
+  "county": "Lee",
+  "countyPage": "https://www.leecountysc.org/county_council/council_members.php",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "R Travis Windham",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lee/122467/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Ron Fountain",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lee/122467/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Keel Addison",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lee/115443/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Gordon Eckley",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lee/115443/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Jacqueline Josey",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lee/122467/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Charles Beasley",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lee/115443/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Johnette McCutchen Caughman",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lee/115443/"
+   }
+  ]
+ },
+ "45063": {
+  "county": "Lexington",
+  "countyPage": "https://lex-co.sc.gov/county-council/council-members",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Michael Bishop",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lexington/122468/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Larry Brigham",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lexington/115444/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Darrell Hudson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lexington/122468/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Todd Cockrell",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lexington/122468/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Clifford Fisher",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lexington/122468/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Charli Wessinger",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lexington/122468/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Beth Carrigg",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lexington/115444/"
+   },
+   {
+    "district": "8",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Glen M Conwell",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lexington/115444/"
+   },
+   {
+    "district": "9",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "M Todd Cullum",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Lexington/115444/"
+   }
+  ]
+ },
+ "45065": {
+  "county": "McCormick",
+  "countyPage": "https://www.mccormickcountysc.org/government/county_council.php",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "David Morrah",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/McCormick/122471/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Bernie Hamby",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/McCormick/115447/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Charles H Chuck Cook",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/McCormick/122471/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Charles Bud Jennings",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/McCormick/122471/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jackie Brown",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/McCormick/115447/"
+   }
+  ]
+ },
+ "45067": {
+  "county": "Marion",
+  "countyPage": "https://www.marionsc.org/government/county_council/index.php",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "John Q Atkinson Jr",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marion/122469/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Oscar J Foxworth",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marion/122469/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Joel Rogers",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marion/115445/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Allen W Floyd",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marion/122469/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Tarus G Gilchrist",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marion/115445/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Robin Turner",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marion/122469/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Dewayne Tennie",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marion/115445/"
+   }
+  ]
+ },
+ "45069": {
+  "county": "Marlboro",
+  "countyPage": "https://marlborocounty.sc.gov/government_/council.php",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jason K Steen",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marlboro/115446/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Damien Johnson",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marlboro/122470/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Charles Paul Midgley Jr",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marlboro/122470/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Pearly C Lawson",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marlboro/115446/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Lafeyette Jackson",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marlboro/122470/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Verd Odom",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marlboro/122470/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Steve Blackmon",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marlboro/115446/"
+   },
+   {
+    "district": "8",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Anthony Woods",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Marlboro/115446/"
+   }
+  ]
+ },
+ "45071": {
+  "county": "Newberry",
+  "countyPage": "https://www.newberrycounty.net/county-council",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Todd Johnson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Newberry/122472/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Leon Fulmer Jr",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Newberry/122472/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Karl Sease",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Newberry/115448/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Robert Nick Shealy",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Newberry/122472/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Stuart Smith",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Newberry/122472/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Johnny Mack Scurry",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Newberry/115448/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Travis D Reeder",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Newberry/115448/"
+   }
+  ]
+ },
+ "45073": {
+  "county": "Oconee",
+  "countyPage": "https://oconeesc.com/council-home/council-officials",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "John A Elliott",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Oconee/115449/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Matthew Durham",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Oconee/122473/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Don Mize",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Oconee/115449/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Tommy James",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Oconee/122473/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Glenn Hart",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Oconee/122473/"
+   }
+  ]
+ },
+ "45075": {
+  "county": "Orangeburg",
+  "countyPage": "https://www.orangeburgcounty.org/288/County-Council",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Johnnie Wright Sr",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Orangeburg/115450/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Johnny Ravenell",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Orangeburg/122474/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Kenneth MAC McCaster",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Orangeburg/122474/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Joe Garvin",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Orangeburg/122474/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Janie Cooper",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Orangeburg/122474/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Deloris Frazier",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Orangeburg/115450/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Latisha Walker",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Orangeburg/115450/"
+   }
+  ]
+ },
+ "45077": {
+  "county": "Pickens",
+  "countyPage": "https://www.co.pickens.sc.us/government/county_council/index.php",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "C Claiborne Linvill",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Pickens/115451/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Chris Lollis",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Pickens/115451/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Alex Saitta",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Pickens/122475/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Scott Lang",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Pickens/122475/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Chris Bowers",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Pickens/122475/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Dale Holloway",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Pickens/122475/"
+   }
+  ]
+ },
+ "45079": {
+  "county": "Richland",
+  "countyPage": "https://www.richlandcountysc.gov/Government/Elected-Offices/County-Council",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jason Branham",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Richland/115452/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Derrek Pugh",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Richland/122476/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Tyra Little",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Richland/122476/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Paul Livingston",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Richland/115452/"
+   },
+   {
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Allison Terracio",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Richland/115452/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Don Weaver",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Richland/115452/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Gretchen D Barron",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Richland/122476/"
+   },
+   {
+    "district": "8",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Tish Dozier Alleyne",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Richland/122476/"
+   },
+   {
+    "district": "9",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Jesica Mackey",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Richland/122476/"
+   },
+   {
+    "district": "10",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Cheryl English",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Richland/122476/"
+   },
+   {
+    "district": "11",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Chakisse Newton",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Richland/115452/"
+   }
+  ]
+ },
+ "45081": {
+  "county": "Saluda",
+  "countyPage": "https://saludacounty.sc.gov/county-council",
+  "form": "district",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jim Moore",
+    "party": "Republican",
+    "seat": "chair",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Saluda/115453/"
+   },
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "J Frank Daniel",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Saluda/115453/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "JW Jack Atkinson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Saluda/122477/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Justin Anderson",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Saluda/115453/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Carey Bedenbaugh",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Saluda/122477/"
+   }
+  ]
+ },
+ "45083": {
+  "county": "Spartanburg",
+  "countyPage": "https://www.spartanburgcounty.gov/189/County-Council",
+  "form": "district",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Manning Lynch",
+    "party": "Republican",
+    "seat": "chair",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Spartanburg/115454/"
+   },
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Mo Abusaft",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Spartanburg/122478/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jack A Mabry",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Spartanburg/115454/"
+   },
+   {
+    "countySays": {
+     "name": "Paul D. Abbott, Jr.",
+     "read": "2026-10-11"
+    },
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "David Britt",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Spartanburg/122478/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Grant DeShields",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Spartanburg/122478/"
+   },
+   {
+    "countySays": {
+     "former": true,
+     "read": "2026-10-11"
+    },
+    "district": "5",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Bob Walker",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Spartanburg/115454/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jessica Coker",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Spartanburg/115454/"
+   }
+  ]
+ },
+ "45085": {
+  "county": "Sumter",
+  "countyPage": "https://www.sumtercountysc.org/our_council/council_members/index.php",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Carlton B Washington",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Sumter/122479/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Artie Baker",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Sumter/115455/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Jimmy Byrd",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Sumter/122479/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Charles T Edens",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Sumter/115455/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Vivian Fleming-McGhaney",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Sumter/122479/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "James T McCain Jr",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Sumter/115455/"
+   },
+   {
+    "district": "7",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Tasha Gardner-Greene",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Sumter/122479/"
+   }
+  ]
+ },
+ "45087": {
+  "county": "Union",
+  "countyPage": "https://gearupunionsc.com/officials/union-county-council/",
+  "form": "district",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Phillip G Russell II",
+    "party": "Republican",
+    "seat": "supervisor",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Union/115456/"
+   },
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Danny Bright",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Union/115456/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "John Glenn",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Union/122480/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "David Sinclair",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Union/122480/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Annie Smith",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Union/115456/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Carolyn Rutherford",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Union/122480/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "John Flood",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Union/122480/"
+   }
+  ]
+ },
+ "45089": {
+  "county": "Williamsburg",
+  "countyPage": "https://www.williamsburgcounty.sc.gov/184/County-Council",
+  "form": "district",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Kelvin C Washington",
+    "party": "Democratic",
+    "seat": "supervisor",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Williamsburg/115457/"
+   },
+   {
+    "district": "1",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Joe Lee",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Williamsburg/115457/"
+   },
+   {
+    "district": "2",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Torrance Wilson",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Williamsburg/115457/"
+   },
+   {
+    "district": "3",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Randall Nesmith",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Williamsburg/122481/"
+   },
+   {
+    "district": "4",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Glenn A Keels",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Williamsburg/122481/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Paul Ervin McKnight",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Williamsburg/122481/"
+   },
+   {
+    "district": "6",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Sam L Floyd",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Williamsburg/115457/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Jackie Bradley Hailes",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/Williamsburg/115457/"
+   }
+  ]
+ },
+ "45091": {
+  "county": "York",
+  "countyPage": "https://www.yorkcountysc.gov/375/County-Council",
+  "form": "district",
+  "seats": [
+   {
+    "district": "1",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Tom Audette",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/York/122482/"
+   },
+   {
+    "district": "2",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Andy Litten",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/York/122482/"
+   },
+   {
+    "district": "3",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Tommy Adkins",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/York/115458/"
+   },
+   {
+    "district": "4",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "William Bump Roddey",
+    "party": "Democratic",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/York/115458/"
+   },
+   {
+    "district": "5",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "Christi Cox",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/York/122482/"
+   },
+   {
+    "district": "6",
+    "election": "2024-11-05",
+    "electionName": "2024 general election",
+    "name": "A Watts Huckabee Sr",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/York/122482/"
+   },
+   {
+    "district": "7",
+    "election": "2022-11-08",
+    "electionName": "2022 general election",
+    "name": "Debi Cloninger",
+    "party": "Republican",
+    "seat": "district",
+    "sourceUrl": "https://www.enr-scvotes.org/SC/York/115458/"
+   }
+  ]
+ }
+}

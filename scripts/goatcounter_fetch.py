@@ -388,6 +388,13 @@ def collect(s, total, start, end):
     event_rows += [r for r in pages(widget(s, 0, total, start, end, max=mx,
                                            filter="geolocate"))
                    if r["path"] not in {e["path"] for e in event_rows}]
+    # Why "Use my current location" did not end in a point, by app and reason
+    # (`locate-fail/<tag>/<reason>`, sent since 2026-10-11). Asked for by name
+    # for the same reason as the geolocate rows above, and kept apart from
+    # them. This list is capped at ten rows too, so it is the ten most common
+    # app-and-reason pairs, not every one.
+    locate_fail_rows = pages(widget(s, 0, total, start, end, max=mx,
+                                    filter="locate-fail/"))
     fleet_layer_rows = pages(widget(s, 0, total, start, end, max=mx,
                                     filter=LAYER_PREFIX))
     per_instance = layer_instances(s, total, start, end, mx, fleet_tags(),
@@ -401,6 +408,7 @@ def collect(s, total, start, end):
         "events": sum(d["events"] for d in daily),
         "pages": top(page_rows, 20),
         "top_events": top(event_rows, 20),
+        "locate_fail": top(locate_fail_rows, 10),
         "layers": top(layer_rows, 20),
         # The ATTRIBUTED part: one row per (instance, layer) the new event
         # shape has recorded. Empty on the first runs after the engine change
