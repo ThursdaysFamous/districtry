@@ -7048,3 +7048,70 @@ with its date and whatever identifier the Commission names, and the weekly job r
 itself again. A file: the builder reads it instead, after its robots.txt. A no: the certified
 results stay the one-time source they already are, the county pages become how a changed seat is
 found, and gap `sc-county-council` says so.
+
+## Ask tn-ctas-commissioner-districts — University of Tennessee County Technical Assistance Service: add each county commissioner's district to its directory
+
+> **NOT YET ASKED — DRAFTED 2026-10-11**, to Liz Gossett, CTAS Marketing Director, at
+> `liz@tennessee.edu`. Every county page of the CTAS directory names her for "Questions about
+> county information?" with that address (read 2026-10-11 on the Johnson County page, after its
+> robots.txt, which permits `/county/`). Adam chose "Ask the state" on 2026-10-11, over letters to
+> six counties, because one change at one office would cover all 95 counties. The mailbox was
+> searched the same day for any message to or from `tennessee.edu`, `utk.edu`, `tn.gov` or CTAS:
+> none. On send, record `ASKED <date>` in gap `tn-county-commissioners` and in `tn/WATCH.md`.
+
+**Why this is asked.** Tennessee's map (still hidden) draws all 859 county commission districts
+from the Comptroller of the Treasury's statewide layer, and names the commissioners county by
+county from each county's own page, each checked against that county's results of the 6 August
+2026 election. That has reached 54 of the 95 counties. In most of the other 41 the county's page
+still lists the commission from before the September 2026 term, lists no members, or names members
+without their districts, and nothing published after September settles it. No state office
+publishes commissioners by district: the Division of Elections' results carry no county race. The
+CTAS directory lists every county commissioner in the state (1,585 measured on 2026-10-11) with no
+district, and its statewide list also prints home addresses, which this project never reads. One
+added column there would cover every county at once, which is also the kind of change in how
+Tennessee publishes this information that the project exists to encourage.
+
+> Subject: Adding each county commissioner's district to the CTAS directory
+>
+> Dear Ms. Gossett,
+>
+> I run districtry (https://districtry.com), a free, non-commercial website where anyone can click
+> a point on a map, or type an address, and see every district that covers it and who represents
+> them there. We are building Tennessee's map now; it is not public yet.
+>
+> For county commissions, the map draws every district from the Comptroller of the Treasury's
+> statewide map of county commission districts. For the names, we read each county's own website
+> and check it against that county's August 2026 election results. So far that has given us the
+> commissioners for 54 of the 95 counties. In most of the rest, the county's page still lists the
+> commission from before September, lists no members, or does not say which district each member
+> represents.
+>
+> Your county directory is the one place that lists every county commissioner in Tennessee. What
+> it does not show is the district each commissioner represents. Would CTAS consider adding the
+> district beside each commissioner's name, and the seat where a district elects more than one
+> member? That one addition would let anyone match every commissioner to the map, in all 95
+> counties. If publishing it is not practical, a list of commissioners and their districts that we
+> may use and credit to CTAS would help just as much.
+>
+> We show only each commissioner's name, district and official county e-mail address, never a
+> home address.
+>
+> A one-line reply is plenty. If this is not something CTAS can take on, a "no" is a genuinely
+> useful answer too, and we will keep reading the counties' own pages. If someone else looks
+> after the directory, I would be grateful if you could pass this along.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** Districts added to the directory: the weekly commissioner refresh reads
+them (after the host's robots.txt) to check every county page it already reads, and a held county
+whose page is out of date can be named where the directory's names and districts agree with that
+county's own August results. Whether the directory ALONE may name a county whose results cannot be
+read is decided then, and recorded in gap `tn-county-commissioners`. A list instead: recorded with
+its date and the terms CTAS gives, and used the same way. Only names and districts are ever read
+from either; the directory's home addresses never are. A no: recorded in the gap with its date, the
+counties stay read one by one, and letters to the counties whose own pages are out of date remain
+the next route.

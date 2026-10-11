@@ -207,6 +207,31 @@ PROVENANCE = [
             "as a reviewed pull request."
         ),
     },
+    {
+        "layer": "county",
+        "app_file": "ky-county-officials.json",
+        "source_url": "https://kydlgweb.ky.gov/Counties/16_CountyHome.cfm",
+        "note": (
+            "Each county's judge/executive, magistrates or commissioners and "
+            "elected officers, from the Department for Local Government's "
+            "county directory, one page per county (2026-10-11). Jefferson's "
+            "and Fayette's governing bodies are the merged governments' "
+            "councils, taken from ky-city-officials.json. Refreshed weekly by "
+            "update-ky-county-officials.yml as a reviewed pull request."
+        ),
+    },
+    {
+        "layer": "county",
+        "app_file": "ky-county-officials.json",
+        "source_url": "https://elect.ky.gov/results/2020-2029/Pages/2022-General-Recap-Sheets.aspx",
+        "note": (
+            "The district each magistrate or commissioner won in the 2022 "
+            "general election, from the State Board of Elections' county recap "
+            "sheets (read 2026-10-11 by ky_fiscal_court_results_scraper.py into "
+            "data/source/ky-fiscal-court-2022-results.json). A one-time read: "
+            "re-run it against the 2026 recap sheets once they are posted."
+        ),
+    },
 ]
 
 ENDPOINTS = [

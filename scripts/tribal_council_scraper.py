@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Read who sits on each Wisconsin, Michigan, Illinois and Minnesota nation's council, from the nation.
+Read who sits on each Wisconsin, Michigan, Illinois, Minnesota and New York nation's council, from the nation.
 
 THE AUTHORITY IS EACH NATION'S OWN PUBLISHED COUNCIL. The Bureau of Indian
 Affairs' directory carries one leader per government and never a council, so
@@ -84,6 +84,8 @@ WI_DOA_LIST = "https://doa.wi.gov/DIR/Tribal-Leaders.pdf"
 
 # AIANNH code -> the pages read and the parser. `seats` is the exact number of
 # members the page states today; see the module docstring.
+_SENECA = ["https://sni.org/about-our-government/executive/",
+           "https://sni.org/about-our-government/council/"]
 NATIONS = {
     "0140": {"nation": "Bad River", "pages": ["https://www.badriver-nsn.gov/government/"], "seats": 7},
     "0170": {"nation": "Bay Mills", "pages": ["https://www.baymills.org/executive-council"], "seats": 5},
@@ -110,6 +112,10 @@ NATIONS = {
     "2055": {"nation": "Lower Sioux", "pages": ["https://lowersioux.com/community-council/"], "seats": 5},
     "2285": {"nation": "Minnesota Chippewa Tribe", "pages": ["https://mnchippewatribe.org/governance/tribal-executive-committee/"], "seats": 12},
     "3680": {"nation": "Shakopee Mdewakanton", "pages": ["https://shakopeedakota.org/government/how-we-operate/"], "seats": 3},
+    "0080": {"nation": "Seneca Nation (Allegany)", "pages": _SENECA, "seats": 17},
+    "0540": {"nation": "Seneca Nation (Cattaraugus)", "pages": _SENECA, "seats": 17},
+    "2535": {"nation": "Seneca Nation (Oil Springs)", "pages": _SENECA, "seats": 17},
+    "3320": {"nation": "Saint Regis Mohawk", "pages": ["https://www.srmt-nsn.gov/tribal-council"], "seats": 6},
     "4445": {"nation": "Upper Sioux", "pages": ["https://www.uppersiouxcommunity-nsn.gov/page/board-of-trustees"], "seats": 5},
     "4595": {"nation": "White Earth", "pages": ["https://www.whiteearth.com/rbc/chairman",
                                                "https://www.whiteearth.com/rbc/secretary-treasurer",
@@ -681,13 +687,45 @@ def p_stockbridge(pages):
     return [_m(ls[k], ls[k + 1]) for k in range(0, 14, 2)]
 
 
+def p_seneca(pages):
+    # the President from the executive page, then the councilors, who are
+    # elected from the nation's two territories and listed under each
+    ls = _after(pages[0], "President", nth=pages[0].count("President") - 1)
+    out = [_m(ls[0], "President", note="from " + ls[1])]
+    district = None
+    for line in _after(pages[1], "RFP/RFQ"):
+        m = re.match(r"(Allegany|Cattaraugus) Councilors$", line)
+        if m:
+            district = m.group(1)
+            continue
+        if line == "About":
+            break
+        if district:
+            out.append(_m(line, "Councilor", district=district))
+    return out
+
+
+def p_srmt(pages):
+    # the council is listed three times on the page; the last, in the body
+    # text, carries each chief's full name
+    ls = pages[0]
+    k = [i for i, l in enumerate(ls) if l.startswith("The Tribal Council is comprised of")][0]
+    out = []
+    for line in ls[k + 1:k + 7]:
+        m = re.match(r"(Sub-Chief|Chief) (.+)$", line)
+        if not m:
+            raise ValueError("not a chief: %r" % line)
+        out.append(_m(m.group(2), m.group(1)))
+    return out
+
+
 PARSERS = {
     "0140": p_bad_river, "0170": p_bay_mills, "1125": p_fond_du_lac,
     "1135": p_forest_county, "1370": p_grand_traverse, "1450": p_ho_chunk,
     "1550": p_nhbp, "1610": p_saginaw, "1815": p_lco, "1830": p_lvd,
     "1963": p_ltbb, "2150": p_gun_lake, "2175": p_menominee, "2560": p_oneida,
     "2890": p_pokagon, "2980": p_prairie_band,
-    "0335": p_bois_forte, "1940": p_leech_lake, "2055": p_lower_sioux, "2285": p_mct,
+    "0080": p_seneca, "0540": p_seneca, "2535": p_seneca, "3320": p_srmt, "0335": p_bois_forte, "1940": p_leech_lake, "2055": p_lower_sioux, "2285": p_mct,
     "3680": p_shakopee, "4445": p_upper_sioux, "4595": p_white_earth,
     "3085": p_red_cliff, "3305": p_st_croix, "3635": p_sault,
     "4015": p_stockbridge,
@@ -800,7 +838,7 @@ def run(from_dir=None, today=None):
     if failed:
         raise SystemExit("tribal-councils: never read and not readable now:\n  "
                          + "\n  ".join(failed))
-    doc = {"note": "Who sits on each Wisconsin, Michigan, Illinois and Minnesota nation's council, read "
+    doc = {"note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota and New York nation's council, read "
                    "by scripts/tribal_council_scraper.py. Stamped onto the cards by "
                    "scripts/build_tribal_areas.py --rosters.",
            "councils": councils}

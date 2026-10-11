@@ -1,6 +1,102 @@
 {
- "note": "Who sits on each Wisconsin, Michigan, Illinois and Minnesota nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
+ "note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota and New York nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
  "councils": {
+  "0080": {
+   "source": "nation",
+   "page": "https://sni.org/about-our-government/council/",
+   "pages": [
+    "https://sni.org/about-our-government/executive/",
+    "https://sni.org/about-our-government/council/"
+   ],
+   "members": [
+    {
+     "name": "J. Conrad Seneca",
+     "role": "President",
+     "note": "from Cattaraugus"
+    },
+    {
+     "name": "Tina Abrams",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Rickey L. Armstrong",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Joshua Becker",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Josh Jimerson",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Maurice A. John Sr.",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Odie Porter",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Christian Reiller",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Kevin Seneca",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Todd Gates",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Jeffrey Gill",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Geraldine Huff",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Eliot Jimerson",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Marta Kettle",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Lisa Maybee",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Klint Nephew",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Jonathan D. Williams",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    }
+   ],
+   "read": "2026-10-10"
+  },
   "0140": {
    "source": "nation",
    "page": "https://www.badriver-nsn.gov/government/",
@@ -109,6 +205,102 @@
      "district": "District I",
      "phone": "218-757-3261 x 1263",
      "email": "mildredholmes@boisforte-nsn.gov"
+    }
+   ],
+   "read": "2026-10-10"
+  },
+  "0540": {
+   "source": "nation",
+   "page": "https://sni.org/about-our-government/council/",
+   "pages": [
+    "https://sni.org/about-our-government/executive/",
+    "https://sni.org/about-our-government/council/"
+   ],
+   "members": [
+    {
+     "name": "J. Conrad Seneca",
+     "role": "President",
+     "note": "from Cattaraugus"
+    },
+    {
+     "name": "Tina Abrams",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Rickey L. Armstrong",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Joshua Becker",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Josh Jimerson",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Maurice A. John Sr.",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Odie Porter",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Christian Reiller",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Kevin Seneca",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Todd Gates",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Jeffrey Gill",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Geraldine Huff",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Eliot Jimerson",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Marta Kettle",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Lisa Maybee",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Klint Nephew",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Jonathan D. Williams",
+     "role": "Councilor",
+     "district": "Cattaraugus"
     }
    ],
    "read": "2026-10-10"
@@ -851,6 +1043,102 @@
    ],
    "read": "2026-10-10"
   },
+  "2535": {
+   "source": "nation",
+   "page": "https://sni.org/about-our-government/council/",
+   "pages": [
+    "https://sni.org/about-our-government/executive/",
+    "https://sni.org/about-our-government/council/"
+   ],
+   "members": [
+    {
+     "name": "J. Conrad Seneca",
+     "role": "President",
+     "note": "from Cattaraugus"
+    },
+    {
+     "name": "Tina Abrams",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Rickey L. Armstrong",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Joshua Becker",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Josh Jimerson",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Maurice A. John Sr.",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Odie Porter",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Christian Reiller",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Kevin Seneca",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Todd Gates",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Jeffrey Gill",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Geraldine Huff",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Eliot Jimerson",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Marta Kettle",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Lisa Maybee",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Klint Nephew",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Jonathan D. Williams",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    }
+   ],
+   "read": "2026-10-10"
+  },
   "2560": {
    "source": "nation",
    "page": "https://oneida-nsn.gov/government/business-committee/members/",
@@ -1113,6 +1401,40 @@
     {
      "name": "Lester Merrill",
      "role": "Representative"
+    }
+   ],
+   "read": "2026-10-10"
+  },
+  "3320": {
+   "source": "nation",
+   "page": "https://www.srmt-nsn.gov/tribal-council",
+   "pages": [
+    "https://www.srmt-nsn.gov/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Michael Karoniatens Conners",
+     "role": "Chief"
+    },
+    {
+     "name": "Donald Thompson Jr.",
+     "role": "Chief"
+    },
+    {
+     "name": "Ross Garrow",
+     "role": "Chief"
+    },
+    {
+     "name": "Agnes \"Sweets\" Jacobs",
+     "role": "Sub-Chief"
+    },
+    {
+     "name": "Benjamin Herne",
+     "role": "Sub-Chief"
+    },
+    {
+     "name": "Derrick King",
+     "role": "Sub-Chief"
     }
    ],
    "read": "2026-10-10"

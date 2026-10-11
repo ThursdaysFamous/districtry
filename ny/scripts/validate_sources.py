@@ -367,7 +367,17 @@ PROVENANCE = [
      "builder_ref": "LegislativeDistrictBoundaries/FeatureServer/0",
      "vintage": "16 single-member districts balanced on the 2020 census (every district's published population re-derived to the person from the Census 2020 blocks inside it at build time)",
      "expected_successor": "the 2031 plan on the 2030 census; before then, updated in place. A rename surfaces as unreachable",
-     "note": "Also writes tompkins-county-outline.json, which is a slice of ny-counties.json and rides that entry's source. The service's own Member/URL columns are deliberately NOT read — the roster comes from the county's own pages, and the weekly job re-reads that column only as a drift witness."},
+     "note": "Also writes tompkins-county-outline.json, which is a slice of ny-counties.json and rides that entry's source. The service's own Member/URL columns are deliberately NOT read — the roster comes from the county's own pages, and the weekly job re-reads that column only as a drift witness."},    # Tribal land, from the Census's AIANNHA service through the fleet's shared
+    # reader. The builder lives at the repository root because every instance
+    # draws its tribal areas through it.
+    {"layer": "Tribal government areas (New York)",
+     "app_file": "tribal-areas.json",
+     "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer?f=json",
+     "builder": os.path.join(os.path.dirname(REPO_ROOT), "scripts", "tribal_areas.py"),
+     "builder_ref": "AIANNHA/MapServer",
+     "vintage": "the current TIGERweb vintage: 11 areas carrying 8 nations (eight reservations, one piece of off-reservation trust land, two state reservations)",
+     "expected_successor": "the next annual vintage. Land enters the map when the United States takes it into trust, on no redistricting calendar, so only a rebuild sees a new area",
+     "note": "scripts/build_tribal_areas.py --check is offline and proves the land-to-government join, never that the Census has not added an area. Poospatuck is recognized by New York State alone (N.Y. Indian Law, Article 10) and is named as that law names it. The four Seneca and Saint Regis Mohawk councils are re-read weekly by update-tribal-councils.yml; the other nations are in build_tribal_areas.ROSTER_BLOCKED."},
 ]
 
 # Live named services the app queries at runtime. These aren't year-versioned
