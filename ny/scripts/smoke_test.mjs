@@ -58,7 +58,7 @@ const OFFLINE = ["judicial-district", "county", "nys-school-district", "municipa
 const EXPECT_DISTRICT = { "judicial-district": "3", "county": "Albany", "nys-school-district": "ALBANY", "municipality": "Albany" };
 const NEGATIVE_POINT = "41.76370,-72.68510"; // Downtown Hartford, Connecticut — outside New York State and 66 km from the nearest geometry this instance ships. NOT a water point: the county, school-district, cities-towns, villages and three legislative files are all water-inclusive off Long Island and in Lake Ontario, so a mid-Sound or mid-lake click is positive, not negative
 const APP_NAME = "districtry New York";
-const EXPECT_LAYERS = 38; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
+const EXPECT_LAYERS = 39; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
 // ==== GENERATED:END smoke-config ====
 const POINT2 = "40.69354,-73.98963"; // Brooklyn Borough Hall (Brooklyn) — the re-classify hop stays fork test code
 // THE CITY GROUND TRUTH SURVIVES THE GO-LIVE AS FORK TEST CODE. The worksheet's
@@ -775,6 +775,67 @@ try {
       });
     }
     check("tile failure shows dismissible banner", shown && hiddenAfterDismiss === true, `shown=${shown} hiddenAfterDismiss=${hiddenAfterDismiss}`);
+    await context.close();
+  }
+  // ---- Tribal Government. Allegany names the Seneca Nation's council from
+  // the nation's own page; Poospatuck is the one nation New York recognizes
+  // and the United States does not, so its card must say so and link the
+  // state law that names it (Adam's ruling, 2026-10-10); Onondaga names
+  // nobody and has to say why. Points are shapely's representative point for
+  // each shipped area (2026-10-10).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const field = (fields, l) => (fields.find((f) => f.label === l) || {}).value || "";
+
+    const page = await booted(
+      context, `${BASE}#point=42.08548,-78.63468&layers=tribal-government`);
+    const seneca = await cardText(page, "tribal-government");
+    const f1 = await fieldsOf(page);
+    check("Allegany names the Seneca Nation and its council from the nation's own page",
+          seneca.text.indexOf("Seneca Nation of Indians") !== -1 &&
+          field(f1, "Land") === "Allegany Reservation" &&
+          seneca.text.indexOf("J. Conrad Seneca") !== -1 &&
+          seneca.text.indexOf("From the nation's own council page") !== -1 &&
+          !field(f1, "Why no names"),
+          JSON.stringify(seneca.text.slice(0, 200)));
+
+    const page2 = await booted(
+      context, `${BASE}#point=40.78917,-72.83166&layers=tribal-government`);
+    const poos = await cardText(page2, "tribal-government");
+    const f2 = await fieldsOf(page2);
+    // the footer link sits beside the card body, not inside it
+    const link = await page2.$$eval(
+      "#card-tribal-government a, #card-tribal-government + .card-footer a",
+      (as) => as.map((a) => a.href));
+    check("Poospatuck names the nation as New York's law does and says only the state recognizes it",
+          poos.text.indexOf("Poospatuck (Unkechauge) Indian Nation") !== -1 &&
+          field(f2, "Recognized by").indexOf("not by the federal government") !== -1 &&
+          !field(f2, "Seat of government") &&
+          link.indexOf("https://legislation.nysenate.gov/pdf/laws/INDA10/") !== -1 &&
+          /\d{4}-\d{2}-\d{2}/.test(field(f2, "Why no names")),
+          JSON.stringify(f2).slice(0, 300) + " link " + link);
+
+    const page3 = await booted(
+      context, `${BASE}#point=42.94089,-76.15795&layers=tribal-government`);
+    await cardText(page3, "tribal-government");
+    const f3 = await fieldsOf(page3);
+    check("Onondaga names the nation and says why no council member is named",
+          field(f3, "Tribal government") === "Onondaga Nation" &&
+          field(f3, "Why no names").indexOf("Clan Mother") !== -1,
+          JSON.stringify(field(f3, "Why no names").slice(0, 120)));
+
+    const page4 = await booted(
+      context, `${BASE}#point=${POINT2}&layers=tribal-government`);
+    const off = await cardText(page4, "tribal-government");
+    check("a point off tribal land is told so in the layer's own words",
+          off.text.indexOf("not on tribal land") !== -1 &&
+          off.text.indexOf("11 tribal areas") !== -1,
+          JSON.stringify(off.text.slice(0, 120)));
     await context.close();
   }
 } finally {

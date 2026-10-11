@@ -102,7 +102,7 @@ of 2021, and `scripts/build_il_court_justices.py` holds a transcription of its c
 weekly roster run refuses to write unless the counties the court's own district pages name still
 match it, so a redraw surfaces as a failing refresh rather than as silence.
 
-### NYC (38 layers)
+### NYC (39 layers)
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
@@ -121,6 +121,7 @@ match it, so a redraw surfaces as a failing refresh rather than as silence.
 | Central high school districts (3) | Statute — a reorganisation, not a redistricting (very rare) | NYSED / the component districts' own voters | geometry refresh, AND the containment split: `ny/scripts/build_ny_school_districts.py` derives the tier by containment and REFUSES to write unless the upper tier comes out at `EXPECTED_UPPER_TIER` (3), so a fourth district, a merger or a dissolution fails the build rather than re-partitioning silently. Nothing the state publishes marks the tier, so there is no column to re-read instead — rebuild both files together and run the builder's `--check` |
 | Poll sites (early voting and Election Day) | Every election | State and county Boards of Elections | locations, which is what the layer is; the card never claims one is yours |
 | ZIP (MODZCTA in the city, ZCTA statewide) | Rarely / USPS-driven | NYC DOHMH / U.S. Census Bureau | geometry only; the two are different tilings and each is gated to where it answers |
+| Tribal government (11 areas, all outside the city) | **NOT A REDISTRICTING AT ALL** — federal land enters the map when the United States takes it into trust, published by no calendar; the two state reservations change only by state law | the United States, on a nation's trust application, and for Poospatuck and Shinnecock New York State; drawn by the Census Bureau's AIANNHA service | geometry (`scripts/build_tribal_areas.py --state "New York" --tag ny` re-run against the live service). `--check` is OFFLINE and proves the join, never that the Census has not added or removed an area. A new area needs a join row first. Poospatuck's join entry cites N.Y. Indian Law, Article 10, and the validator fails if the Bureau of Indian Affairs ever lists the nation |
 
 NY congressional is the cautionary example: three maps in three years — the 2022 legislature map
 was struck in Harkenrider v. Hochul and replaced by special-master (Cervas) lines for 2022, then
@@ -375,6 +376,7 @@ metro-worksheet.json and hand-edits fail `--check`.
 | NYPD precincts (78) | NYPD | nyc.gov | 116th Precinct opened Dec 18, 2024 (Rosedale, SE Queens), carved from the 105th/113th — first new precinct since 2013 |
 | Community districts | NYC charter | nyc.gov | Rarely change |
 | School zones | DOE | DOE / open data | Annual |
+| Tribal land (11 areas) | the United States, on a nation's application; New York State for the two state reservations | Census TIGERweb/AIANNHA, whose vintage rolls annually | No enactment date is published; Poospatuck's state reservation rests on N.Y. Indian Law, Article 10, read 2026-10-10 |
 
 ### SF — layer → authority → next-map source → last enactment/effective
 

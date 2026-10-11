@@ -121,6 +121,7 @@ def _problems(doc, govs, instance_states):
         if not (len(code) == 4 and code.isdigit()):
             out.append("%s: not a four-digit AIANNH code" % where)
         gov = entry.get("government")
+        recog = entry.get("stateRecognition")
         shared = entry.get("governments")
         if shared is not None:
             # An area several governments share (Oklahoma's statistical areas,
@@ -145,6 +146,25 @@ def _problems(doc, govs, instance_states):
                                % (where, name, states_rec[i], govs[name].get("state")))
         elif not gov:
             out.append("%s: names no government" % where)
+        elif recog is not None:
+            # A nation New York State recognizes and the United States does
+            # not (Adam's ruling, 2026-10-10): named from a state government
+            # source, so the Bureau's list is the wrong witness. What must hold
+            # instead is that the source is named, linked and dated, that the
+            # land is a STATE reservation, and that the Bureau still does not
+            # carry the nation -- the day it does, this exception is stale.
+            for key in ("by", "law", "publisher", "url", "read", "why"):
+                if not recog.get(key):
+                    out.append("%s: state recognition carries no %r" % (where, key))
+            if not str(recog.get("url", "")).startswith("https://"):
+                out.append("%s: state recognition's source is not an https link" % where)
+            if gov in govs:
+                out.append(
+                    "%s: %r is in the Bureau's own list now, so the state-recognition "
+                    "exception is stale — name it as the Bureau does" % (where, gov))
+            if any(l.get("class") != "state-reservation" for l in entry.get("lands") or []):
+                out.append("%s: a state-recognized nation's land must be a state "
+                           "reservation" % where)
         elif gov not in govs:
             out.append(
                 "%s: names %r, which the Bureau's own list does not carry" % (where, gov)
@@ -335,6 +355,12 @@ def selftest():
          lambda d: d["areas"]["5720"].update(government="Cherokee Nation")),
         ("a statistical area outside the one state allowed to draw it",
          lambda d: d["areas"]["5720"]["lands"][0].update(state="Illinois")),
+        ("a state-recognized nation with no source link",
+         lambda d: d["areas"]["9300"]["stateRecognition"].update(url="")),
+        ("a state-recognized nation the Bureau now lists",
+         lambda d: d["areas"]["9300"].update(government=sorted(govs)[0])),
+        ("a state-recognized nation drawn on federal land",
+         lambda d: d["areas"]["9300"]["lands"][0].update(**{"class": "reservation"})),
     ]
     for label, mutate in cases:
         assert broken(mutate), "the gate must catch %s" % label
