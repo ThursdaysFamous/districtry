@@ -325,7 +325,7 @@
             "url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/County_Council_Districts/FeatureServer/0"
           }
         ],
-        "people": "sc-county-council-members.json, rebuilt weekly by CI from the South Carolina Election Commission's certified results: each seat's most recent general election winner (2022 or 2024), dated, with party. A winner is not a claim about who sits today, and the card says so. Each county's own council page is read beside the results, and where it names someone else, calls a seat vacant or leaves the winner off (six seats on 2026-10-11) the card prints both.",
+        "people": "sc-county-council-members.json, built from the South Carolina Election Commission's certified results and checked weekly by CI: each seat's most recent general election winner (2022 or 2024), dated, with party. A winner is not a claim about who sits today, and the card says so. Each county's own council page is read beside the results, and where it names someone else, calls a seat vacant, leaves the winner off or lists the winner as a former member (eleven seats on 2026-10-11) the card prints both.",
         "applies": "South Carolina — all 46 counties. Hampton elects its whole council at large and Jasper elects its council by the whole county from four residence townships, so both cards name every member."
       }
     },

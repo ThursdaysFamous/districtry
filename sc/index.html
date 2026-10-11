@@ -12431,6 +12431,8 @@ function initSouthCarolinaExplorer() {
         String(seat.name) + ".";
     } else if (says.vacant) {
       text = whose + " lists this seat as vacant.";
+    } else if (says.former) {
+      text = whose + " lists " + String(seat.name) + " as a former member.";
     } else {
       text = whose + " lists the other members and not " + String(seat.name) + ".";
     }

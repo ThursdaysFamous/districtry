@@ -69,14 +69,20 @@ map's four numbers is which township, so its card names all five.
 roster builder reads each county's council page (robots.txt at every redirect hop, standard
 library, our own token) and keeps only folded words, never an address — four of those pages print
 members' home addresses. A page naming somebody else for a seat FAILS the build unless a person
-has read it and recorded it in `COUNTY_SAYS`; on 2026-10-11, 36 pages named 252 winners and six
-seats differed, each shown on the card beside the winner. Eight pages this sandbox could not read
-are listed in `UNREAD_BY_A_PERSON`, where a disagreement is printed rather than failed until
-somebody reads them, and two are never read on purpose (Allendale's robots.txt disallows every
+has read it and recorded it in `COUNTY_SAYS`; on 2026-10-11, 43 of the 46 pages were read (36 by
+the build, seven more by a person) and eleven seats differed, each shown on the card beside the
+winner. Six of those pages refuse our own
+token by Cloudflare or Akamai and were read with the browser client, so the weekly job, which
+still sends the token, prints them unreadable. Charleston's page blocks every client and is the
+one county left in `UNREAD_BY_A_PERSON`, where a disagreement is printed rather than failed until
+somebody reads it, and two are never read on purpose (Allendale's robots.txt disallows every
 path; Berkeley answers with a managed challenge). Recorded as gap `sc-county-council`
 (data-quality), beside `sc-municipal-officeholders`, `sc-school-board-members` and
-`sc-tribal-government`. **Council seats are on the 3 November 2026 ballot**; the weekly job takes
-an election once it is 21 days old.
+`sc-tribal-government`. **Council seats are on the 3 November 2026 ballot, and the weekly job
+cannot read the results site from GitHub's runners** (a 202 challenge on robots.txt, measured
+2026-10-11): it keeps the shipped names, opens a tracking issue, and turns red once an election's
+results are 21 days old and unread. How those names get refreshed waits on Adam's ruling
+(`sc/WATCH.md`).
 
 **TRIBAL GOVERNMENTS ARE IN SCOPE AND ARE NOT IN THIS PR.** Measured with
 `scripts/tribal_areas.py` on 2026-10-10, the Census draws one federal reservation in South
