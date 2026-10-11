@@ -220,6 +220,18 @@ PROVENANCE = [
             "update-ky-county-officials.yml as a reviewed pull request."
         ),
     },
+    {
+        "layer": "county",
+        "app_file": "ky-county-officials.json",
+        "source_url": "https://elect.ky.gov/results/2020-2029/Pages/2022-General-Recap-Sheets.aspx",
+        "note": (
+            "The district each magistrate or commissioner won in the 2022 "
+            "general election, from the State Board of Elections' county recap "
+            "sheets (read 2026-10-11 by ky_fiscal_court_results_scraper.py into "
+            "data/source/ky-fiscal-court-2022-results.json). A one-time read: "
+            "re-run it against the 2026 recap sheets once they are posted."
+        ),
+    },
 ]
 
 ENDPOINTS = [

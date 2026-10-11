@@ -18,10 +18,20 @@ directory prints the form in a "Government Type" field in only 44 counties, so
 the form is read from the TITLES the directory gives the members, and the two
 must agree wherever the field is filled in.
 
-WHAT IT DOES NOT CLAIM. The directory names each magistrate and commissioner
-and never says which district one holds, so no record here carries a district
-and the card says so. Measured 2026-10-11: 120 counties, 520 magistrates and 42
-commissioners named, one magistrate row in Bracken with no name.
+WHICH DISTRICT A MEMBER HOLDS. The directory names each magistrate and
+commissioner and never says which district one holds. The State Board of
+Elections' 2022 recap sheets do (ky_fiscal_court_results_scraper.py writes
+them to ky/data/source/ky-fiscal-court-2022-results.json), so a member gains a
+`district` when exactly one 2022 contest for the county's own office was won by
+a candidate with the member's surname (and, where two winners share a surname,
+the member's first name). Nothing else is inferred: a member who took the seat
+after that election, a sheet that was not served, or a name spelled two ways
+leaves the member without a district, and the card still lists them. The
+match holds 346 of 562 members (2026-10-11): 245 of 252 where the sheet carries
+text, 101 of 300 where it is a scan, most of the rest being scans whose
+hand-tallied grids text recognition cannot read. Measured 2026-10-11: 120
+counties, 520 magistrates and 42 commissioners named, one
+magistrate row in Bracken with no name.
 
 THE ELECTED OFFICERS. KRS elects a county attorney, clerk, sheriff, jailer,
 coroner, surveyor and property valuation administrator beside the court. The
@@ -39,6 +49,7 @@ import argparse
 import json
 import os
 import re
+import unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 INSTANCE = os.path.dirname(HERE)
@@ -48,6 +59,7 @@ SCRAPE = os.path.join(INSTANCE, "data", "source", "ky-county-officials-scrape.js
 CITIES = os.path.join(INSTANCE, "data", "app", "ky-city-officials.json")
 COUNTIES = os.path.join(INSTANCE, "data", "app", "state-counties.json")
 OUT = os.path.join(INSTANCE, "data", "app", "ky-county-officials.json")
+RESULTS = os.path.join(INSTANCE, "data", "source", "ky-fiscal-court-2022-results.json")
 
 JUDGE = "County Judge Executive"
 BOARD = {"County Magistrate": ("magistrate", "Magistrate"),
@@ -113,6 +125,80 @@ NAME_FIXES = {("Christian", "2", "Gilliam"): "Jerry"}
 # commissioners), not counting the two merged councils.
 MIN_COUNTIES = 120
 MIN_MEMBERS = 650
+# Measured 2026-10-11: 346 of 562 magistrates and commissioners matched, 245
+# of 252 in the 51 counties whose sheets carry text and 101 of 300 in the 67
+# read from scans. A rebuild matching far fewer has lost the results file.
+MIN_DISTRICTED = 330
+
+
+# Name parts that say nothing about who someone is.
+SUFFIXES = {"jr", "sr", "ii", "iii", "iv"}
+# The contest heading each fiscal court form is elected under.
+CONTEST = {"magistrate": "MAGISTRATE", "commissioner": "COUNTY COMMISSIONER"}
+
+
+def name_tokens(name):
+    """Lower-case ASCII words of a name, quoted nicknames and suffixes dropped."""
+    name = re.sub(r'["“”][^"“”]*["“”]', " ", name)
+    name = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode()
+    return [t for t in re.sub(r"[^a-z]", " ", name.lower()).split() if t not in SUFFIXES]
+
+
+# A nickname whose first letter is not its given name's, so "Bobby Cummins"
+# (directory) and "Robert N. CUMMINS" (ballot) can be read as one person.
+NICK_INITIAL = {"bobby": "r", "bob": "r", "rob": "r", "dick": "r", "bill": "w",
+                "peggy": "m", "ted": "e", "ned": "e", "hank": "h", "jack": "j"}
+
+
+def initials(name):
+    """Every initial a person's given names could be written with, quoted
+    nicknames included."""
+    quoted = " ".join(re.findall(r'["“”]([^"“”]*)["“”]', name))
+    toks = name_tokens(name)[:-1] + name_tokens(quoted)
+    return {t[0] for t in toks} | {NICK_INITIAL[t] for t in toks if t in NICK_INITIAL}
+
+
+def district_sort(d):
+    return (0, int(d), "") if d.isdigit() else (1, 0, d)
+
+
+def attach_districts(rec, sheet):
+    """Give each member the district whose 2022 winner bears their name.
+
+    A member matches only when the surname is the winner's, and one of the
+    member's given-name initials is one of the winner's (so "Sara COMBS" never
+    gives Dennis Combs a district), in exactly one contest for the county's own office, narrowed by
+    first name when two winners share a surname, and no other member has
+    already taken that district."""
+    want = CONTEST[rec["form"]]
+    winners = {}
+    for key, contest in (sheet or {}).get("contests", {}).items():
+        office, _, district = key.partition("|")
+        if office == want:
+            winners[district] = (name_tokens(contest["winner"]), initials(contest["winner"]))
+    taken = set()
+    for m in rec["members"]:
+        if m["role"] == "County Judge/Executive":
+            continue
+        mine = name_tokens(m["name"])
+        if not mine:
+            continue
+        given = initials(m["name"])
+        hits = [d for d, (w, wi) in winners.items()
+                if w and w[-1] == mine[-1] and given & wi]
+        if len(hits) > 1:
+            hits = [d for d in hits if winners[d][0][0] == mine[0]]
+        if len(hits) == 1 and hits[0] not in taken:
+            taken.add(hits[0])
+            m["district"] = hits[0]
+    if taken:
+        judge = [m for m in rec["members"] if m["role"] == "County Judge/Executive"]
+        rest = [m for m in rec["members"] if m["role"] != "County Judge/Executive"]
+        rest.sort(key=lambda m: (0,) + district_sort(m["district"]) if "district" in m
+                  else (1, 0, 0, ""))
+        rec["members"] = judge + rest
+        rec["districtsFrom"] = {"url": sheet["url"], "election": sheet["election"],
+                                "method": sheet["method"]}
 
 
 def full_name(o):
@@ -136,8 +222,13 @@ def person(o, role_key, role):
     return rec
 
 
-def build(scrape, cities, counties, fixes=None):
+def build(scrape, cities, counties, fixes=None, results=None):
     fixes = NAME_FIXES if fixes is None else fixes
+    results = results or {}
+    election = (results.get("source") or {}).get("election")
+    sheets = {k.lower(): dict(v, election=election)
+              for k, v in (results.get("counties") or {}).items()}
+
     read = scrape["source"]["read"]
     geoid_of = {f["properties"]["BASENAME"]: f["properties"]["GEOID"] for f in counties}
     out, unknown, used_notes, used_fixes = {}, set(), set(), set()
@@ -224,6 +315,7 @@ def build(scrape, cities, counties, fixes=None):
                                  % (county, len(judges)))
             rec.update(form=form, body="Fiscal Court",
                        members=judges + members)
+            attach_districts(rec, sheets.get(county.lower()))
             if unnamed:
                 rec["unnamedSeats"] = unnamed
         if county in FORM_NOTES:
@@ -253,10 +345,13 @@ def build(scrape, cities, counties, fixes=None):
 def gate(out):
     members = sum(len(r["members"]) for r in out.values()
                   if r["body"] == "Fiscal Court")
-    if len(out) < MIN_COUNTIES or members < MIN_MEMBERS:
-        raise SystemExit("FAIL: %d counties and %d fiscal court members, floors %d and %d"
-                         % (len(out), members, MIN_COUNTIES, MIN_MEMBERS))
-    return len(out), members
+    districted = sum(1 for r in out.values() for m in r["members"] if "district" in m)
+    if len(out) < MIN_COUNTIES or members < MIN_MEMBERS or districted < MIN_DISTRICTED:
+        raise SystemExit("FAIL: %d counties, %d fiscal court members and %d with a "
+                         "district, floors %d, %d and %d"
+                         % (len(out), members, districted, MIN_COUNTIES, MIN_MEMBERS,
+                            MIN_DISTRICTED))
+    return len(out), members, districted
 
 
 def load(path):
@@ -292,8 +387,21 @@ def selftest():
     cities = {"2148006": {"sourceUrl": "c", "read": "2026-10-09", "seats": [
         {"name": "Craig Greenberg", "title": "Mayor"},
         {"name": "Brent Ackerson", "title": "City Council", "phone": "1"}]}}
-    out = build(scrape, cities, counties, fixes={})
+    results = {"source": {"election": "2022-11-08"}, "counties": {"ADAIR": {
+        "url": "r1", "method": "text", "contests": {
+            "MAGISTRATE|3": {"winner": "Sammy L. BAKER"},
+            "COUNTY COMMISSIONER|1": {"winner": "Ann LEE"}}}}}
+    out = build(scrape, cities, counties, fixes={}, results=results)
     a = out["21001"]
+    assert a["members"][1]["district"] == "3" and a["districtsFrom"]["url"] == "r1", a
+    # A shared surname with no shared initial is two people, not one.
+    rec = {"form": "magistrate", "members": [{"name": "Dennis Combs", "role": "Magistrate"}]}
+    attach_districts(rec, {"contests": {"MAGISTRATE|2": {"winner": "Sara COMBS"}}})
+    assert "district" not in rec["members"][0] and "districtsFrom" not in rec, rec
+    rec = {"form": "magistrate", "members": [{"name": "Bobby Cummins", "role": "Magistrate"}]}
+    attach_districts(rec, {"url": "r", "election": "e", "method": "ocr",
+                           "contests": {"MAGISTRATE|1": {"winner": "Robert N. CUMMINS"}}})
+    assert rec["members"][0]["district"] == "1", rec
     assert a["body"] == "Fiscal Court" and a["form"] == "magistrate", a
     assert [m["role"] for m in a["members"]] == ["County Judge/Executive", "Magistrate"], a
     assert a["unnamedSeats"] == 1 and a["office"]["address"] == "424 Public Square, Columbia, KY 42728"
@@ -323,8 +431,9 @@ def main():
     if args.selftest:
         selftest()
         return
-    out = build(load(SCRAPE), load(CITIES), load(COUNTIES)["features"])
-    n, members = gate(out)
+    out = build(load(SCRAPE), load(CITIES), load(COUNTIES)["features"],
+                results=load(RESULTS))
+    n, members, districted = gate(out)
     text = render(out)
     if args.check:
         with open(OUT, encoding="utf-8") as fh:
@@ -332,13 +441,13 @@ def main():
                 raise SystemExit("FAIL: %s is not what the scrape builds; run "
                                  "python3 ky/scripts/build_ky_county_officials.py"
                                  % os.path.relpath(OUT, REPO))
-        print("build-ky-county-officials: OK — %d counties, %d fiscal court members"
-              % (n, members))
+        print("build-ky-county-officials: OK — %d counties, %d fiscal court members, "
+              "%d with a district" % (n, members, districted))
         return
     with open(OUT, "w", encoding="utf-8") as fh:
         fh.write(text)
-    print("build-ky-county-officials: wrote %s — %d counties, %d fiscal court members"
-          % (os.path.relpath(OUT, REPO), n, members))
+    print("build-ky-county-officials: wrote %s — %d counties, %d fiscal court members, "
+          "%d with a district" % (os.path.relpath(OUT, REPO), n, members, districted))
 
 
 if __name__ == "__main__":

@@ -1267,8 +1267,8 @@ KY_LEDE = {
         "%(county)s County's fiscal court is its county judge/executive, who "
         "presides, and its magistrates, each elected from a magisterial district "
         "(KRS 67.040). These are the %(who)s the Kentucky Department for Local "
-        "Government's county directory lists. It does not say which district each "
-        "magistrate holds, so they are listed together."),
+        "Government's county directory lists. The directory does not say which "
+        "district each magistrate holds."),
     "commissioner": (
         "%(county)s County's fiscal court is its county judge/executive, who "
         "presides, and three commissioners, each elected by the whole county's "
@@ -1282,6 +1282,12 @@ KY_MERGED_LEDE = (
     "Kentucky Department for Local Government's directory lists, each elected "
     "from a council district that is not drawn here yet. The mayor, %(mayor)s, "
     "is the government's executive and is not a member of the council.")
+# Appended to the lede where the builder matched members to the districts they
+# won in 2022, so a county with no match never claims one.
+KY_DISTRICT_NOTE = ("Where the State Board of Elections' certified 2022 results "
+                    "name a member as the winner of a district, that district is "
+                    "shown beside the name; a member without one took the seat "
+                    "after that election or could not be matched.")
 KY_STANDFIRST = ("Every member of the %(heading)s, as the Kentucky Department "
                  "for Local Government's county directory lists them.")
 KY_DESC = {"magistrate": "%d members: the judge/executive and the magistrates",
@@ -1294,7 +1300,7 @@ KY_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
                  "county's own website is the current word.")
 KY_CTA_NOTE = ("Opens the map with the county layer on. Its card lists this body "
                "and the county's elected officers; the district lines are not "
-               "drawn yet, so every member is listed.")
+               "drawn yet, so the map cannot say which district a point is in.")
 
 
 def ky_county_governments(inst):
@@ -1305,7 +1311,12 @@ def ky_county_governments(inst):
     FLAT, AND NEVER CLAIMED AT LARGE. The directory names every magistrate and
     commissioner and no district, so a page lists the body as one list; the
     lede says how the county actually elects (KRS 67.045 and 67.060), which is
-    by district or from residence districts and never at large.
+    by district or from residence districts and never at large. Where the
+    builder matched a member to the district they won in 2022 (the State
+    Board of Elections' recap sheets), the district rides in the member's role
+    ("Magistrate, District 3") and the lede says where it came from; the list
+    stays flat because a member the results do not name has no district to
+    file under.
 
     JEFFERSON AND FAYETTE are the merged governments and their pages are about
     the council, so the mayor is named in the lede as the executive and is not
@@ -1315,6 +1326,12 @@ def ky_county_governments(inst):
     for geoid, rec in sorted(_read(path).items()):
         name = (rec.get("county") or "").strip()
         members = [dict(m) for m in rec.get("members") or []]
+        for m in members:
+            if m.get("district"):
+                d = str(m.pop("district"))
+                m["role"] = "%s, %s" % (m.get("role") or "Member",
+                                        "District " + d if re.match(r"^(\d+|[A-Z])$", d)
+                                        else d + " District")
         if not name:
             problems.append("ky-county-officials.json %r carries no county" % geoid)
             continue
@@ -1343,6 +1360,8 @@ def ky_county_governments(inst):
                 continue
             lede, desc = KY_LEDE[rec["form"]], KY_DESC[rec["form"]]
             index_note = ", fiscal court"
+            if rec.get("districtsFrom"):
+                lede += " " + KY_DISTRICT_NOTE
             if rec.get("formNote"):
                 lede += " " + esc(rec["formNote"]).replace("%", "%%")
         out[name] = {"members": members,

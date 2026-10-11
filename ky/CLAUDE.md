@@ -34,7 +34,7 @@ geometry joined to the public-domain unitedstates/congress-legislators roster, r
 weekly), and **Kentucky Senate** / **Kentucky House** (38 and 100 districts, TIGERweb
 geometry, naming nobody yet).
 
-**THE COUNTY CARD NAMES THE WHOLE GOVERNING BODY SINCE 2026-10-11, AND NOT YOUR MEMBER.**
+**THE COUNTY CARD NAMES THE WHOLE GOVERNING BODY SINCE 2026-10-11, AND MOST MEMBERS' DISTRICTS, BUT NOT YOUR MEMBER.**
 `ky/scripts/ky_county_officials_scraper.py` reads the Department for Local Government's page
 for each of the 120 counties and `ky/scripts/build_ky_county_officials.py` keeps the judge/
 executive, the magistrates or commissioners and six elected officers (attorney, clerk, sheriff,
@@ -45,8 +45,15 @@ them; see below). **Jefferson and Fayette have no fiscal court**, so their cards
 Louisville Metro Council and the Lexington-Fayette Urban County Council, mayor first, from
 `ky-city-officials.json` — one source per body, which is why the city workflow rebuilds this
 roster too — and their judge/executive is listed among the officers. The directory carries no
-district number, so the card lists the whole court and says so; gap `ky-fiscal-court` holds
-what remains. One name is corrected from the county's own site (`NAME_FIXES`, Christian County),
+district number, so `ky/scripts/ky_fiscal_court_results_scraper.py` reads the State Board of
+Elections' 2022 general recap sheets and the builder gives a member the district whose 2022
+winner has the same surname and a given-name initial in common: 346 of 562 match, 245 of 252
+where the sheet has text and 101 of 300 where it is a scan read by tesseract (many scans are
+hand-tallied grids it cannot read). The card prints "Magistrate, District 3" and still lists
+the whole court, because the district lines are not drawn, so it cannot say which district a
+point is in; gap `ky-fiscal-court` holds what remains. **The match is a 2022 snapshot**: it
+describes the term ending in January 2027, and `ky/WATCH.md` says how to re-read the 2026
+sheets. One name is corrected from the county's own site (`NAME_FIXES`, Christian County),
 and the builder fails the day the directory stops carrying the error. The 120 per-county pages
 under `ky/county-government/` come from `scripts/build_county_pages.py` off the same roster.
 

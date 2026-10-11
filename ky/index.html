@@ -12393,11 +12393,15 @@ function initKentuckyExplorer() {
    * merged governments — so those two cards name the council and mayor from
    * the city roster the directory lists them under.
    *
-   * NO DISTRICT IS NAMED. The directory names every magistrate and
-   * commissioner and never says which district one holds, and the magisterial
-   * district lines are not drawn, so the card lists the whole court and says
-   * so (gap ky-fiscal-court). A seat the directory lists with no name is
-   * counted, never filled.
+   * EACH MEMBER'S DISTRICT, WHERE THE 2022 RESULTS NAME IT. The directory
+   * never says which district a magistrate or commissioner holds; the State
+   * Board of Elections' 2022 recap sheets do, and the builder gives a member
+   * a `district` only when one 2022 contest for that county's office was won
+   * under the member's name. A member with none took the seat after that
+   * election or could not be matched, and is still listed. The district lines
+   * are not drawn, so the card cannot say which district this point is in and
+   * lists the whole court (gap ky-fiscal-court). A seat the directory lists
+   * with no name is counted, never filled.
    *
    * A roster that fails to load does not take the county answer down with it:
    * the boundary is a same-origin file and the card still names the county.
@@ -12410,7 +12414,14 @@ function initKentuckyExplorer() {
   });
   var KY_COUNTY_DIRECTORY = "https://kydlgweb.ky.gov/Counties/16_CountyHome.cfm";
 
+  // "3" -> "District 3", "A" -> "District A", "Northwest" -> "Northwest District".
+  function kyDistrictLabel(d) {
+    d = String(d);
+    return /^(\d+|[A-Z])$/.test(d) ? "District " + d : d + " District";
+  }
+
   function kyCountyPersonRow(p, badge) {
+    if (p.district != null) badge = String(badge) + ", " + kyDistrictLabel(p.district);
     var row = { name: String(p.name), badge: String(badge) };
     if (p.phone) row.phone = String(p.phone);
     if (p.email) row.email = String(p.email);
@@ -12488,18 +12499,22 @@ function initKentuckyExplorer() {
         });
       }
       if (members.length) {
+        var districted = c.districtsFrom != null;
+        var fromResults = districted
+          ? " A district beside a name is the one that member won in the 2022 " +
+            "general election, from the State Board of Elections' results; a " +
+            "member without one took the seat later or could not be matched."
+          : "";
         fields.push({
           label: "Your district",
           value: c.body === "Fiscal Court"
             ? (c.form === "commissioner"
               ? "Kentucky elects each of a county's three commissioners by the " +
-                "whole county's voters, one from each district, and the state's " +
-                "directory does not say which district each one lives in, so " +
-                "every member is listed here."
-              : "Each magistrate is elected from a magisterial district. The " +
-                "state's directory does not say which district each one holds and " +
-                "those district lines are not drawn here yet, so every member is " +
-                "listed.")
+                "whole county's voters, one living in each district, so every " +
+                "member is listed here." + fromResults
+              : "Each magistrate is elected from a magisterial district. Those " +
+                "district lines are not drawn here yet, so this map cannot say " +
+                "which one this point is in, and every member is listed." + fromResults)
             : "This council is elected by district. Its districts are not drawn " +
               "here yet, so every member is listed."
         });

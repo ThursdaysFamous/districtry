@@ -2,6 +2,11 @@
  "21001": {
   "body": "Fiscal Court",
   "county": "Adair",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Adair%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -11,45 +16,52 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "sammybakerusedcows@gmail.com",
-    "name": "Sammy Baker",
-    "phone": "(270) 378-1536",
-    "role": "Magistrate"
-   },
-   {
-    "email": "billycoffey1944@gmail.com",
-    "name": "Billy Dean Coffey",
-    "phone": "(270) 250-4449",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "carrie2820.cd@gmail.com",
     "name": "Tony Denton",
     "phone": "(270) 634-3174",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "dflatt941@gmail.com",
     "name": "Daryl Flatt",
     "phone": "(270) 634-1033",
     "role": "Magistrate"
    },
    {
-    "email": "tmhadley59@gmail.com",
-    "name": "Terry M. Hadley",
-    "phone": "(270) 634-4565",
+    "district": "3",
+    "email": "sammybakerusedcows@gmail.com",
+    "name": "Sammy Baker",
+    "phone": "(270) 378-1536",
     "role": "Magistrate"
    },
    {
+    "district": "4",
+    "email": "chris.reeder74@icloud.com",
+    "name": "Chris Reeder",
+    "phone": "(270) 634-0485",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "billycoffey1944@gmail.com",
+    "name": "Billy Dean Coffey",
+    "phone": "(270) 250-4449",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
     "email": "mark.humphress@gmail.com",
     "name": "Mark Humphress",
     "phone": "(270) 789-8591",
     "role": "Magistrate"
    },
    {
-    "email": "chris.reeder74@icloud.com",
-    "name": "Chris Reeder",
-    "phone": "(270) 634-0485",
+    "district": "7",
+    "email": "tmhadley59@gmail.com",
+    "name": "Terry M. Hadley",
+    "phone": "(270) 634-4565",
     "role": "Magistrate"
    }
   ],
@@ -102,6 +114,11 @@
  "21003": {
   "body": "Fiscal Court",
   "county": "Allen",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Allen%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -111,33 +128,37 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
     "email": "tjbransford@yahoo.com",
     "name": "Todd Bransford",
     "phone": "(270) 622-9244",
     "role": "Magistrate"
    },
    {
-    "email": "john@bigscreennashville.com",
-    "name": "John H. Buchanon",
-    "phone": "(615) 830-5723",
-    "role": "Magistrate"
-   },
-   {
-    "email": "rickeyf7@msn.com",
-    "name": "Rickey Cooksey",
-    "phone": "(270) 622-7527",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "wendellspears@icloud.com",
     "name": "Wendell Spears",
     "phone": "(270) 237-7461",
     "role": "Magistrate"
    },
    {
+    "district": "4",
+    "email": "rickeyf7@msn.com",
+    "name": "Rickey Cooksey",
+    "phone": "(270) 622-7527",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
     "email": "anthony.thompson8019@gmail.com",
     "name": "Anthony Thompson",
     "phone": "(270) 618-1188",
+    "role": "Magistrate"
+   },
+   {
+    "email": "john@bigscreennashville.com",
+    "name": "John H. Buchanon",
+    "phone": "(615) 830-5723",
     "role": "Magistrate"
    }
   ],
@@ -464,6 +485,11 @@
  "21011": {
   "body": "Fiscal Court",
   "county": "Bath",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Bath%20County.pdf"
+  },
   "form": "commissioner",
   "members": [
    {
@@ -473,21 +499,24 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "jcline1125@gmail.com",
-    "name": "Jamie Cline",
-    "phone": "(606) 776-5645",
+    "district": "1",
+    "email": "jimmywhite2023@yahoo.com",
+    "name": "James White",
+    "phone": "(606) 336-4493",
     "role": "Commissioner"
    },
    {
+    "district": "2",
     "email": "jimmycraig674@gmail.com",
     "name": "Jimmy Craig",
     "phone": "(606) 210-3222",
     "role": "Commissioner"
    },
    {
-    "email": "jimmywhite2023@yahoo.com",
-    "name": "James White",
-    "phone": "(606) 336-4493",
+    "district": "3",
+    "email": "jcline1125@gmail.com",
+    "name": "Jamie Cline",
+    "phone": "(606) 776-5645",
     "role": "Commissioner"
    }
   ],
@@ -539,6 +568,11 @@
  "21013": {
   "body": "Fiscal Court",
   "county": "Bell",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Bell%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -548,30 +582,35 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "joe-snapon@hotmail.com",
-    "name": "Joseph Hammontree",
-    "phone": "(606) 524-2153",
+    "district": "1",
+    "name": "Eddie Saylor",
+    "phone": "(606) 337-2824",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "spinnish2@gmail.com",
     "name": "Donald Lefevers",
     "phone": "(606) 269-5499",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "name": "Lonnie E. Maiden",
     "phone": "(606) 248-8934",
     "role": "Magistrate"
    },
    {
-    "name": "Eddie Saylor",
-    "phone": "(606) 337-2824",
+    "district": "4",
+    "name": "Glenn D. Webb",
+    "phone": "(606) 248-1793",
     "role": "Magistrate"
    },
    {
-    "name": "Glenn D. Webb",
-    "phone": "(606) 248-1793",
+    "district": "5",
+    "email": "joe-snapon@hotmail.com",
+    "name": "Joseph Hammontree",
+    "phone": "(606) 524-2153",
     "role": "Magistrate"
    }
   ],
@@ -622,6 +661,11 @@
  "21015": {
   "body": "Fiscal Court",
   "county": "Boone",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Boone%20County.pdf"
+  },
   "form": "commissioner",
   "members": [
    {
@@ -631,21 +675,24 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "jbrewer@boonecountyky.org",
-    "name": "Jesse Brewer",
-    "phone": "(859) 620-5061",
-    "role": "Commissioner"
-   },
-   {
+    "district": "1",
     "email": "cflaig@boonecountyky.org",
     "name": "Cathy Flaig",
     "phone": "(859) 468-3456",
     "role": "Commissioner"
    },
    {
+    "district": "2",
     "email": "chand@boonecountyky.org",
     "name": "Chet Hand",
     "phone": "(513) 518-5185",
+    "role": "Commissioner"
+   },
+   {
+    "district": "3",
+    "email": "jbrewer@boonecountyky.org",
+    "name": "Jesse Brewer",
+    "phone": "(859) 620-5061",
     "role": "Commissioner"
    }
   ],
@@ -697,6 +744,11 @@
  "21017": {
   "body": "Fiscal Court",
   "county": "Bourbon",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Bourbon%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -706,39 +758,44 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "b2conner@yahoo.com",
-    "name": "Bill Conner",
-    "phone": "(502) 642-8539",
-    "role": "Magistrate"
-   },
-   {
-    "email": "t.earlywine@bourbonky.com",
-    "name": "Todd Earlywine",
-    "phone": "(859) 749-2148",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "b.horne@bourbonky.com",
     "name": "Bart N. Horne",
     "phone": "(859) 707-7472",
     "role": "Magistrate"
    },
    {
-    "email": "homerinhank@yahoo.com",
-    "name": "Henry Lovell",
-    "phone": "(859) 340-2598",
+    "district": "2",
+    "email": "r.taulbee@bourbonky.com",
+    "name": "Randy Taulbee",
+    "phone": "(859) 707-2606",
     "role": "Magistrate"
    },
    {
+    "district": "3",
+    "email": "t.earlywine@bourbonky.com",
+    "name": "Todd Earlywine",
+    "phone": "(859) 749-2148",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
     "email": "L.Stubblefield@bourbonky.com",
     "name": "Lewis Stubblefield",
     "phone": "(859) 987-2152",
     "role": "Magistrate"
    },
    {
-    "email": "r.taulbee@bourbonky.com",
-    "name": "Randy Taulbee",
-    "phone": "(859) 707-2606",
+    "district": "7",
+    "email": "b2conner@yahoo.com",
+    "name": "Bill Conner",
+    "phone": "(502) 642-8539",
+    "role": "Magistrate"
+   },
+   {
+    "email": "homerinhank@yahoo.com",
+    "name": "Henry Lovell",
+    "phone": "(859) 340-2598",
     "role": "Magistrate"
    },
    {
@@ -796,6 +853,11 @@
  "21019": {
   "body": "Fiscal Court",
   "county": "Boyd",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Boyd%20County.pdf"
+  },
   "form": "commissioner",
   "members": [
    {
@@ -805,18 +867,21 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "jholbrook@boydcountyky.gov",
-    "name": "Jeremy Holbrook",
-    "phone": "(606) 465-2470",
-    "role": "Commissioner"
-   },
-   {
+    "district": "1",
     "email": "dsalisbury@boydcountyky.gov",
     "name": "Dave Salisbury",
     "phone": "(606) 739-4134",
     "role": "Commissioner"
    },
    {
+    "district": "2",
+    "email": "jholbrook@boydcountyky.gov",
+    "name": "Jeremy Holbrook",
+    "phone": "(606) 465-2470",
+    "role": "Commissioner"
+   },
+   {
+    "district": "3",
     "email": "rstapleton@boydcountyky.gov",
     "name": "Randy Stapleton",
     "phone": "(606) 831-1045",
@@ -871,6 +936,11 @@
  "21021": {
   "body": "Fiscal Court",
   "county": "Boyle",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Boyle%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -880,36 +950,42 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "paula.bodner@boyleky.com",
-    "name": "Paula Bodner",
-    "phone": "(859) 326-0214",
-    "role": "Magistrate"
-   },
-   {
-    "email": "jason.cullen@boyleky.com",
-    "name": "Jason Cullen",
-    "phone": "(302) 220-7666",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "tom.ellis@boyleky.com",
     "name": "Tom V. Ellis",
     "phone": "(859) 516-6571",
     "role": "Magistrate"
    },
    {
-    "email": "jamey.gay@boyleky.com",
-    "name": "Jamey Gay",
-    "phone": "(859) 583-0197",
+    "district": "2",
+    "email": "paula.bodner@boyleky.com",
+    "name": "Paula Bodner",
+    "phone": "(859) 326-0214",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "barry.harmon@boyleky.com",
     "name": "Barry Harmon",
     "phone": "(859) 239-8327",
     "role": "Magistrate"
    },
    {
+    "district": "4",
+    "email": "jason.cullen@boyleky.com",
+    "name": "Jason Cullen",
+    "phone": "(302) 220-7666",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "jamey.gay@boyleky.com",
+    "name": "Jamey Gay",
+    "phone": "(859) 583-0197",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
     "email": "steve.sleeper@boyleky.com",
     "name": "Steven Sleeper",
     "phone": "(859) 319-9041",
@@ -964,6 +1040,11 @@
  "21023": {
   "body": "Fiscal Court",
   "county": "Bracken",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Bracken%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -973,45 +1054,52 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "brumleymagistrate@yahoo.com",
-    "name": "Heather Brumley",
-    "phone": "(606) 782-2672",
-    "role": "Magistrate"
-   },
-   {
-    "email": "dholleran1@gmail.com",
-    "name": "Daniel Holleran",
-    "phone": "(606) 782-4234",
-    "role": "Magistrate"
-   },
-   {
-    "email": "djarrells@gmail.com",
-    "name": "Kevin Jarrells",
-    "phone": "(606) 782-0542",
-    "role": "Magistrate"
-   },
-   {
-    "email": "dkelsch@windstream.net",
-    "name": "David Kelsch",
-    "phone": "(606) 756-3992",
-    "role": "Magistrate"
-   },
-   {
-    "email": "debbiem1960@windstream.net",
-    "name": "Deborah Mayfield",
-    "phone": "(606) 782-5637",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "sandy.williams1961@yahoo.com",
     "name": "Sandra Ruf",
     "phone": "(606) 402-0798",
     "role": "Magistrate"
    },
    {
+    "district": "3",
+    "email": "dkelsch@windstream.net",
+    "name": "David Kelsch",
+    "phone": "(606) 756-3992",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "dholleran1@gmail.com",
+    "name": "Daniel Holleran",
+    "phone": "(606) 782-4234",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "debbiem1960@windstream.net",
+    "name": "Deborah Mayfield",
+    "phone": "(606) 782-5637",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
     "email": "johntscott@windstream.net",
     "name": "John Titus Scott",
     "phone": "(859) 588-1451",
+    "role": "Magistrate"
+   },
+   {
+    "district": "7",
+    "email": "brumleymagistrate@yahoo.com",
+    "name": "Heather Brumley",
+    "phone": "(606) 782-2672",
+    "role": "Magistrate"
+   },
+   {
+    "district": "8",
+    "email": "djarrells@gmail.com",
+    "name": "Kevin Jarrells",
+    "phone": "(606) 782-0542",
     "role": "Magistrate"
    }
   ],
@@ -1234,6 +1322,11 @@
  "21029": {
   "body": "Fiscal Court",
   "county": "Bullitt",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Bullitt%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -1243,27 +1336,31 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "bbleemel@bullittky.com",
-    "name": "Brian Bleemel",
-    "phone": "(502) 301-0138",
+    "district": "1",
+    "email": "vsanders@bullittky.com",
+    "name": "Vera Sanders",
+    "phone": "(502) 442-3539",
     "role": "Magistrate"
    },
    {
-    "email": "thecopycats@hotmail.com",
-    "name": "Karen Johnson",
-    "phone": "(502) 741-4244",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "slogsdon@bullittky.com",
     "name": "Shaun Logsdon",
     "phone": "(502) 492-5121",
     "role": "Magistrate"
    },
    {
-    "email": "vsanders@bullittky.com",
-    "name": "Vera Sanders",
-    "phone": "(502) 442-3539",
+    "district": "3",
+    "email": "thecopycats@hotmail.com",
+    "name": "Karen Johnson",
+    "phone": "(502) 741-4244",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "bbleemel@bullittky.com",
+    "name": "Brian Bleemel",
+    "phone": "(502) 301-0138",
     "role": "Magistrate"
    }
   ],
@@ -1401,6 +1498,11 @@
  "21033": {
   "body": "Fiscal Court",
   "county": "Caldwell",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Caldwell%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -1410,27 +1512,30 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
     "email": "elbertbennett49@gmail.com",
     "name": "Elbert Bennett",
     "phone": "(502) 545-3305",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "jeffboone@caldwellcountyhouse.com",
     "name": "Jeff Boone",
     "phone": "(270) 963-0200",
     "role": "Magistrate"
    },
    {
-    "email": "jsimms@ky.gov",
-    "name": "Jeff Sims",
-    "phone": "(270) 601-1081",
-    "role": "Magistrate"
-   },
-   {
+    "district": "3",
     "email": "bstallins@gmail.com",
     "name": "Brent Stallins",
     "phone": "(270) 841-9355",
+    "role": "Magistrate"
+   },
+   {
+    "email": "jsimms@ky.gov",
+    "name": "Jeff Sims",
+    "phone": "(270) 601-1081",
     "role": "Magistrate"
    }
   ],
@@ -1483,6 +1588,11 @@
  "21035": {
   "body": "Fiscal Court",
   "county": "Calloway",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Calloway%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -1492,26 +1602,30 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
+    "email": "wrs527@yahoo.com",
+    "name": "Ricky Stewart",
+    "phone": "(270) 293-1195",
+    "role": "Magistrate"
+   },
+   {
+    "district": "2",
+    "name": "Larry Crutcher",
+    "phone": "(270) 753-2920",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
     "email": "msdnc@msn.com",
     "name": "Don Cherry",
     "phone": "(272) 293-0445",
     "role": "Magistrate"
    },
    {
-    "name": "Larry Crutcher",
-    "phone": "(270) 753-2920",
-    "role": "Magistrate"
-   },
-   {
+    "district": "4",
     "email": "pwrister4@gmail.com",
     "name": "Paul Rister",
     "phone": "(270) 293-5455",
-    "role": "Magistrate"
-   },
-   {
-    "email": "wrs527@yahoo.com",
-    "name": "Ricky Stewart",
-    "phone": "(270) 293-1195",
     "role": "Magistrate"
    }
   ],
@@ -1563,6 +1677,11 @@
  "21037": {
   "body": "Fiscal Court",
   "county": "Campbell",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Campbell%20County.pdf"
+  },
   "form": "commissioner",
   "members": [
    {
@@ -1572,21 +1691,24 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
+    "email": "bpainter@campbellcountyky.gov",
+    "name": "Brian D. Painter",
+    "phone": "(859) 292-3838",
+    "role": "Commissioner"
+   },
+   {
+    "district": "2",
     "email": "gbesecker@campbellcountyky.gov",
     "name": "Geoff Besecker",
     "phone": "(859) 292-3838",
     "role": "Commissioner"
    },
    {
+    "district": "3",
     "email": "tlampe@campbellcountyky.gov",
     "name": "Tom Lampe",
     "phone": "(859) 547-1803",
-    "role": "Commissioner"
-   },
-   {
-    "email": "bpainter@campbellcountyky.gov",
-    "name": "Brian D. Painter",
-    "phone": "(859) 292-3838",
     "role": "Commissioner"
    }
   ],
@@ -1713,6 +1835,11 @@
  "21041": {
   "body": "Fiscal Court",
   "county": "Carroll",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Carroll%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -1722,21 +1849,23 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "ccable@carrollcountygov.us",
-    "name": "Lowery Cable",
-    "phone": "(502) 645-8121",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "BenLongRVC@gmail.com",
     "name": "Benjamin Long",
     "phone": "(502) 682-4873",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "snab@carrollcountygov.us",
     "name": "Jeffrey Nab",
     "phone": "(502) 640-8649",
+    "role": "Magistrate"
+   },
+   {
+    "email": "ccable@carrollcountygov.us",
+    "name": "Lowery Cable",
+    "phone": "(502) 645-8121",
     "role": "Magistrate"
    }
   ],
@@ -1873,6 +2002,11 @@
  "21045": {
   "body": "Fiscal Court",
   "county": "Casey",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Casey%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -1882,15 +2016,17 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "robby.murphy701@gmail.com",
-    "name": "Robby Murphy",
-    "phone": "(606) 787-8964",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "randy.dian@windstream.net",
     "name": "Cecil Roy",
     "phone": "(606) 787-8311",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
+    "email": "robby.murphy701@gmail.com",
+    "name": "Robby Murphy",
+    "phone": "(606) 787-8964",
     "role": "Magistrate"
    },
    {
@@ -1953,6 +2089,11 @@
  "21047": {
   "body": "Fiscal Court",
   "county": "Christian",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Christian%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -1962,50 +2103,58 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "gbarnett@christiancountyky.gov",
-    "name": "George Barnett",
-    "phone": "(270) 985-8270",
-    "role": "Magistrate"
-   },
-   {
-    "email": "bruc7174@gmail.com",
-    "name": "John Bruce",
-    "phone": "(270) 881-7780",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "mferguson@christiancountyky.gov",
     "name": "Magaline Ferguson",
     "phone": "(270) 887-4100",
     "role": "Magistrate"
    },
    {
-    "email": "russguffey@gmail.com",
-    "name": "Russ Guffey",
-    "phone": "(270) 887-4100",
+    "district": "2",
+    "name": "Josh Turner",
+    "phone": "(270) 881-8230",
     "role": "Magistrate"
    },
    {
-    "email": "richcathy@bellsouth.net",
-    "name": "Rich Liebe",
-    "phone": "(270) 885-5169",
+    "district": "3",
+    "email": "gbarnett@christiancountyky.gov",
+    "name": "George Barnett",
+    "phone": "(270) 985-8270",
     "role": "Magistrate"
    },
    {
-    "email": "petersonformagistrate@gmail.com",
-    "name": "Phillip R. Peterson",
-    "phone": "(270) 839-1210",
-    "role": "Magistrate"
-   },
-   {
+    "district": "4",
     "email": "jepryor08@gmail.com",
     "name": "James Pryor",
     "phone": "(270) 985-0040",
     "role": "Magistrate"
    },
    {
-    "name": "Josh Turner",
-    "phone": "(270) 881-8230",
+    "district": "5",
+    "email": "richcathy@bellsouth.net",
+    "name": "Rich Liebe",
+    "phone": "(270) 885-5169",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "petersonformagistrate@gmail.com",
+    "name": "Phillip R. Peterson",
+    "phone": "(270) 839-1210",
+    "role": "Magistrate"
+   },
+   {
+    "district": "7",
+    "email": "russguffey@gmail.com",
+    "name": "Russ Guffey",
+    "phone": "(270) 887-4100",
+    "role": "Magistrate"
+   },
+   {
+    "district": "8",
+    "email": "bruc7174@gmail.com",
+    "name": "John Bruce",
+    "phone": "(270) 881-7780",
     "role": "Magistrate"
    }
   ],
@@ -2054,6 +2203,11 @@
  "21049": {
   "body": "Fiscal Court",
   "county": "Clark",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Clark%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -2063,35 +2217,41 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "rgblanton@bellsouth.net",
-    "name": "Robert G. Blanton",
-    "role": "Magistrate"
-   },
-   {
-    "email": "scraycraft@clarkcoky.com",
-    "name": "Stephen Craycraft",
-    "role": "Magistrate"
-   },
-   {
-    "email": "winchesterlaw@yahoo.com",
-    "name": "Christopher Micah Davis",
-    "phone": "(859) 437-0083",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "magistratedanielk@gmail.com",
     "name": "Daniel Konstantopoulos",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "ernestpasley@att.net",
+    "name": "Ernest Pasley",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
+    "email": "scraycraft@clarkcoky.com",
+    "name": "Stephen Craycraft",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
     "email": "miller4magistrate@gmail.com",
     "name": "Mark Miller",
     "phone": "(859) 744-3700",
     "role": "Magistrate"
    },
    {
-    "email": "ernestpasley@att.net",
-    "name": "Ernest Pasley",
+    "district": "5",
+    "email": "winchesterlaw@yahoo.com",
+    "name": "Christopher Micah Davis",
+    "phone": "(859) 437-0083",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "rgblanton@bellsouth.net",
+    "name": "Robert G. Blanton",
     "role": "Magistrate"
    }
   ],
@@ -2317,6 +2477,11 @@
  "21055": {
   "body": "Fiscal Court",
   "county": "Crittenden",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Crittenden%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -2326,38 +2491,44 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "scott.belt@crittendencountyky.org",
-    "name": "Scott Belt",
-    "phone": "(270) 965-5251",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "dave.belt@crittendencountyky.org",
     "name": "Dave Belt",
     "phone": "(270) 965-5251",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "matt.grimes@crittendencountyky.org",
     "name": "Matt Grimes",
     "phone": "(270) 965-5251",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "robert.kirby@crittendencountyky.org",
     "name": "Robert Kirby",
     "phone": "(270) 965-5251",
     "role": "Magistrate"
    },
    {
+    "district": "4",
+    "email": "chad.thomas@crittendencountyky.org",
+    "name": "Chad Thomas",
+    "phone": "(270) 965-5251",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
     "email": "mailto:travis.perryman@crittendencountyky.org",
     "name": "Travis Perryman",
     "phone": "(270) 965-5251",
     "role": "Magistrate"
    },
    {
-    "email": "chad.thomas@crittendencountyky.org",
-    "name": "Chad Thomas",
+    "district": "6",
+    "email": "scott.belt@crittendencountyky.org",
+    "name": "Scott Belt",
     "phone": "(270) 965-5251",
     "role": "Magistrate"
    }
@@ -2410,6 +2581,11 @@
  "21057": {
   "body": "Fiscal Court",
   "county": "Cumberland",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Cumberland%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -2419,27 +2595,31 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "cumberlandcountylarry@gmal.com",
-    "name": "Larry Anderson",
-    "phone": "(270) 459-0363",
+    "district": "1",
+    "email": "juliewray3@yahoo.com",
+    "name": "Rondall Carl Wray",
+    "phone": "(270) 864-3444",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "cumberlandcountylane@gmail.com",
     "name": "Lane Cope",
     "phone": "(270) 459-0929",
     "role": "Magistrate"
    },
    {
-    "email": "jefferycypers@yahho.com",
-    "name": "Jeffery Allen Cyphers",
-    "phone": "(270) 459-1193",
+    "district": "3",
+    "email": "cumberlandcountylarry@gmal.com",
+    "name": "Larry Anderson",
+    "phone": "(270) 459-0363",
     "role": "Magistrate"
    },
    {
-    "email": "juliewray3@yahoo.com",
-    "name": "Rondall Carl Wray",
-    "phone": "(270) 864-3444",
+    "district": "4",
+    "email": "jefferycypers@yahho.com",
+    "name": "Jeffery Allen Cyphers",
+    "phone": "(270) 459-1193",
     "role": "Magistrate"
    }
   ],
@@ -2492,6 +2672,11 @@
  "21059": {
   "body": "Fiscal Court",
   "county": "Daviess",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Daviess%20County.pdf"
+  },
   "form": "commissioner",
   "members": [
    {
@@ -2501,20 +2686,23 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "chriscastlen@daviessky.org",
-    "name": "Christopher Castlen",
-    "phone": "(270) 685-8424",
-    "role": "Commissioner"
-   },
-   {
+    "district": "Central",
     "email": "lconder@daviessky.org",
     "name": "Larry Conder",
     "phone": "(270) 685-8424",
     "role": "Commissioner"
    },
    {
+    "district": "Eastern",
     "email": "jmarksberry@daviessky.org",
     "name": "Janie Marksberry",
+    "phone": "(270) 685-8424",
+    "role": "Commissioner"
+   },
+   {
+    "district": "Western",
+    "email": "chriscastlen@daviessky.org",
+    "name": "Christopher Castlen",
     "phone": "(270) 685-8424",
     "role": "Commissioner"
    }
@@ -2659,6 +2847,11 @@
  "21063": {
   "body": "Fiscal Court",
   "county": "Elliott",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Elliott%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -2668,45 +2861,52 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
     "email": "emily.adkins@elliott.kyschools.us",
     "name": "Emily Adkins",
     "phone": "(606) 738-5826",
     "role": "Magistrate"
    },
    {
-    "email": "jmac_leasing@yahoo.com",
-    "name": "Christopher Dickerson",
-    "phone": "(606) 738-5373",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "midickerson@yahoo.com",
     "name": "Michael Dickerson",
     "phone": "(606) 738-5821",
     "role": "Magistrate"
    },
    {
+    "district": "3",
+    "email": "charleswhitt1959@yahoo.com",
+    "name": "Charles L. Whitt",
+    "phone": "(606) 738-4110",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
     "email": "bubbadillion@gmail.com",
     "name": "Brian Dillon",
     "phone": "(606) 738-9329",
     "role": "Magistrate"
    },
    {
-    "email": "darrennewell2014@yahoo.com",
-    "name": "Darren Newell",
-    "phone": "(606) 738-5821",
+    "district": "5",
+    "email": "jmac_leasing@yahoo.com",
+    "name": "Christopher Dickerson",
+    "phone": "(606) 738-5373",
     "role": "Magistrate"
    },
    {
+    "district": "6",
     "email": "deweysmith@hotmail.com",
     "name": "Dewey Smith",
     "phone": "(502) 738-4934",
     "role": "Magistrate"
    },
    {
-    "email": "charleswhitt1959@yahoo.com",
-    "name": "Charles L. Whitt",
-    "phone": "(606) 738-4110",
+    "district": "7",
+    "email": "darrennewell2014@yahoo.com",
+    "name": "Darren Newell",
+    "phone": "(606) 738-5821",
     "role": "Magistrate"
    }
   ],
@@ -3072,6 +3272,11 @@
  "21071": {
   "body": "Fiscal Court",
   "county": "Floyd",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Floyd%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -3081,27 +3286,31 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "cakers1@mikrotec.com",
-    "name": "Ronnie Akers",
-    "phone": "(606) 478-3808",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "anna.allen@floydjudge.com",
     "name": "Mark Crider",
     "phone": "(606) 886-9193",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "anna.allen@floydjudge.com",
     "name": "George Ousley",
     "phone": "(606) 886-9193",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "anna.allen@floydjudge.com",
     "name": "Mike Tackett",
     "phone": "(660) 886-9193",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "cakers1@mikrotec.com",
+    "name": "Ronnie Akers",
+    "phone": "(606) 478-3808",
     "role": "Magistrate"
    }
   ],
@@ -3153,6 +3362,11 @@
  "21073": {
   "body": "Fiscal Court",
   "county": "Franklin",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Franklin%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -3162,38 +3376,43 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "JW.Blackburn@franklincounty.ky.gov",
-    "name": "James Weir Blackburn",
-    "phone": "(502) 875-8751",
-    "role": "Magistrate"
-   },
-   {
-    "email": "kelly.dycus@franklincounty.ky.gov",
-    "name": "Kelly Dycus",
-    "phone": "(502) 545-3769",
-    "role": "Magistrate"
-   },
-   {
-    "email": "mike.harrord@franklincountyky.gov",
-    "name": "Michael Harrod",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "Sherry.Sebastian@franklincounty.ky.gov",
     "name": "Sherry Sebastian",
     "phone": "(502) 875-8751",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "JW.Blackburn@franklincounty.ky.gov",
+    "name": "James Weir Blackburn",
+    "phone": "(502) 875-8751",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
+    "email": "kelly.dycus@franklincounty.ky.gov",
+    "name": "Kelly Dycus",
+    "phone": "(502) 545-3769",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
     "email": "richard.tanner@franklincounty.ky.gov",
     "name": "Richard Tanner",
     "phone": "(502) 875-8751",
     "role": "Magistrate"
    },
    {
+    "district": "6",
     "email": "ee.whisman@franklincounty.ky.gov",
     "name": "Eric Whisman",
     "phone": "(502) 875-8751",
+    "role": "Magistrate"
+   },
+   {
+    "email": "mike.harrord@franklincountyky.gov",
+    "name": "Michael Harrod",
     "role": "Magistrate"
    }
   ],
@@ -3245,6 +3464,11 @@
  "21075": {
   "body": "Fiscal Court",
   "county": "Fulton",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Fulton%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -3254,27 +3478,30 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
+    "email": "jimpaitsel@gmail.com",
+    "name": "Jim Paitsel",
+    "phone": "(270) 519-2692",
+    "role": "Magistrate"
+   },
+   {
+    "district": "2",
     "email": "wadams01@hotmail.com",
     "name": "Wade Adams",
     "phone": "(270) 627-1765",
     "role": "Magistrate"
    },
    {
-    "email": "1954lpbjr@gmail.com",
-    "name": "Butch Busby",
-    "phone": "(270) 627-6236",
-    "role": "Magistrate"
-   },
-   {
+    "district": "3",
     "email": "matt-moss@hotmail.com",
     "name": "Matt Moss",
     "phone": "(270) 210-5611",
     "role": "Magistrate"
    },
    {
-    "email": "jimpaitsel@gmail.com",
-    "name": "Jim Paitsel",
-    "phone": "(270) 519-2692",
+    "email": "1954lpbjr@gmail.com",
+    "name": "Butch Busby",
+    "phone": "(270) 627-6236",
     "role": "Magistrate"
    }
   ],
@@ -3408,6 +3635,11 @@
  "21079": {
   "body": "Fiscal Court",
   "county": "Garrard",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Garrard%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -3417,15 +3649,24 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "2",
     "email": "chrisbutner72@iclound.com",
     "name": "Chris Butner",
     "phone": "(859) 229-5033",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "gbarker6420@yahoo.com",
     "name": "Glendon Barker",
     "phone": "(859) 339-1333",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "jayamyevan@aol.com",
+    "name": "Bobby Preston",
+    "phone": "(859) 339-2658",
     "role": "Magistrate"
    },
    {
@@ -3438,12 +3679,6 @@
     "email": "oscarwday@icloud.com",
     "name": "Wayne Day",
     "phone": "(859) 302-4117",
-    "role": "Magistrate"
-   },
-   {
-    "email": "jayamyevan@aol.com",
-    "name": "Bobby Preston",
-    "phone": "(859) 339-2658",
     "role": "Magistrate"
    }
   ],
@@ -3495,6 +3730,11 @@
  "21081": {
   "body": "Fiscal Court",
   "county": "Grant",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Grant%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -3504,14 +3744,15 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "scoldiron@grantco.org",
-    "name": "Shawna Coldiron",
+    "district": "3",
+    "email": "rhumphrey@grantco.org",
+    "name": "Roger Humphrey",
     "phone": "(859) 823-7561",
     "role": "Magistrate"
    },
    {
-    "email": "rhumphrey@grantco.org",
-    "name": "Roger Humphrey",
+    "email": "scoldiron@grantco.org",
+    "name": "Shawna Coldiron",
     "phone": "(859) 823-7561",
     "role": "Magistrate"
    },
@@ -3570,6 +3811,11 @@
  "21083": {
   "body": "Fiscal Court",
   "county": "Graves",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Graves%20County.pdf"
+  },
   "form": "commissioner",
   "members": [
    {
@@ -3579,21 +3825,24 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
+    "email": "winfreybubba@gmail.com",
+    "name": "Danny Winfrey",
+    "phone": "(270) 247-3626",
+    "role": "Commissioner"
+   },
+   {
+    "district": "2",
     "email": "goodman.tyler@gmail.com",
     "name": "Tyler Goodman",
     "phone": "(270) 247-3626",
     "role": "Commissioner"
    },
    {
+    "district": "3",
     "email": "toddhayden@wk.net",
     "name": "Todd Hayden",
     "phone": "(270) 705-1051",
-    "role": "Commissioner"
-   },
-   {
-    "email": "winfreybubba@gmail.com",
-    "name": "Danny Winfrey",
-    "phone": "(270) 247-3626",
     "role": "Commissioner"
    }
   ],
@@ -3645,6 +3894,11 @@
  "21085": {
   "body": "Fiscal Court",
   "county": "Grayson",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Grayson%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -3654,38 +3908,44 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "bpa1285@live.com",
-    "name": "Brian P. Ashley",
-    "phone": "(270) 259-1285",
-    "role": "Magistrate"
-   },
-   {
-    "email": "jason.dennis041@gmail.com",
-    "name": "Randy Jason Dennis",
-    "phone": "(270) 589-0419",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "ben.bensfurniture@yahoo.com",
     "name": "Ben Hodges",
     "phone": "(270) 230-6734",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "modsetter@gmail.com",
+    "name": "Phillip Darin Whitely",
+    "phone": "(270) 259-5000",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
     "name": "Brenda Huffman",
     "phone": "(270) 259-3159",
     "role": "Magistrate"
    },
    {
-    "email": "josaltsman@hotmail.com",
-    "name": "Charles Neal Saltsman",
-    "phone": "(270) 287-2852",
+    "district": "4",
+    "email": "jason.dennis041@gmail.com",
+    "name": "Randy Jason Dennis",
+    "phone": "(270) 589-0419",
     "role": "Magistrate"
    },
    {
-    "email": "modsetter@gmail.com",
-    "name": "Phillip Darin Whitely",
-    "phone": "(270) 259-5000",
+    "district": "5",
+    "email": "bpa1285@live.com",
+    "name": "Brian P. Ashley",
+    "phone": "(270) 259-1285",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "josaltsman@hotmail.com",
+    "name": "Charles Neal Saltsman",
+    "phone": "(270) 287-2852",
     "role": "Magistrate"
    }
   ],
@@ -3737,6 +3997,11 @@
  "21087": {
   "body": "Fiscal Court",
   "county": "Green",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Green%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -3746,33 +4011,38 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "sdcaaron@yahoo.com",
-    "name": "Terry F. Aaron",
-    "phone": "(270) 932-1881",
+    "district": "1",
+    "email": "magistrateparson@gmail.com",
+    "name": "Andrew Parson",
+    "phone": "(270) 932-1449",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "tim70@me.com",
     "name": "Timothy Lee Darnell",
     "phone": "(270) 299-6426",
     "role": "Magistrate"
    },
    {
-    "email": "charlesjudd1980@gmail.com",
-    "name": "Charles Judd",
-    "phone": "(270) 932-0092",
-    "role": "Magistrate"
-   },
-   {
+    "district": "3",
     "email": "slewis10@windstream.net",
     "name": "Steve Lewis",
     "phone": "(270) 932-5447",
     "role": "Magistrate"
    },
    {
-    "email": "magistrateparson@gmail.com",
-    "name": "Andrew Parson",
-    "phone": "(270) 932-1449",
+    "district": "4",
+    "email": "sdcaaron@yahoo.com",
+    "name": "Terry F. Aaron",
+    "phone": "(270) 932-1881",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "charlesjudd1980@gmail.com",
+    "name": "Charles Judd",
+    "phone": "(270) 932-0092",
     "role": "Magistrate"
    }
   ],
@@ -3899,6 +4169,11 @@
  "21091": {
   "body": "Fiscal Court",
   "county": "Hancock",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Hancock%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -3908,21 +4183,24 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "gary.baker@hancockky.us",
-    "name": "Gary Baker",
-    "phone": "(270) 929-2911",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "kasey.emmick@yahoo.com",
     "name": "Kasey Emmick",
     "phone": "(270) 302-0668",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "jmgray@yahoo.com",
     "name": "John Mark Gray",
     "phone": "(270) 927-8137",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "gary.baker@hancockky.us",
+    "name": "Gary Baker",
+    "phone": "(270) 929-2911",
     "role": "Magistrate"
    },
    {
@@ -3980,6 +4258,11 @@
  "21093": {
   "body": "Fiscal Court",
   "county": "Hardin",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Hardin%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -3989,51 +4272,59 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "fclem.hcgo@hcky.org",
-    "name": "Fred Clem Jr.",
-    "phone": "(270) 737-3415",
+    "district": "1",
+    "email": "christopheryates1977@gmail.com",
+    "name": "Chris Yates",
+    "phone": "(270) 317-3996",
     "role": "Magistrate"
    },
    {
-    "email": "votelarryhicks2022@gmail.com",
-    "name": "Larry Hicks",
-    "phone": "(270) 234-4951",
-    "role": "Magistrate"
-   },
-   {
-    "email": "kmuse@hardincuntyky.gov",
-    "name": "Kenny Muse",
-    "phone": "(270) 765-2350",
-    "role": "Magistrate"
-   },
-   {
-    "email": "aaronrickypennington@gmail.com",
-    "name": "Aaron Pennington",
-    "phone": "(270) 872-5469",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "ksaltsman@hardincountyky.gov",
     "name": "Kenny Saltsman",
     "phone": "(270) 307-0508",
     "role": "Magistrate"
    },
    {
-    "email": "ethompson@hcky.org",
-    "name": "E. G. Thompson",
-    "phone": "(270) 312-2167",
-    "role": "Magistrate"
-   },
-   {
+    "district": "3",
     "email": "patsywhitehead@yahoo.com",
     "name": "Patsy Whitehead",
     "phone": "(270) 234-3431",
     "role": "Magistrate"
    },
    {
-    "email": "christopheryates1977@gmail.com",
-    "name": "Chris Yates",
-    "phone": "(270) 317-3996",
+    "district": "4",
+    "email": "fclem.hcgo@hcky.org",
+    "name": "Fred Clem Jr.",
+    "phone": "(270) 737-3415",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "aaronrickypennington@gmail.com",
+    "name": "Aaron Pennington",
+    "phone": "(270) 872-5469",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "ethompson@hcky.org",
+    "name": "E. G. Thompson",
+    "phone": "(270) 312-2167",
+    "role": "Magistrate"
+   },
+   {
+    "district": "7",
+    "email": "votelarryhicks2022@gmail.com",
+    "name": "Larry Hicks",
+    "phone": "(270) 234-4951",
+    "role": "Magistrate"
+   },
+   {
+    "district": "8",
+    "email": "kmuse@hardincuntyky.gov",
+    "name": "Kenny Muse",
+    "phone": "(270) 765-2350",
     "role": "Magistrate"
    }
   ],
@@ -4169,6 +4460,11 @@
  "21097": {
   "body": "Fiscal Court",
   "county": "Harrison",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Harrison%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -4178,50 +4474,57 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "jburden4000@gmail.com",
-    "name": "Jeremy Burden",
-    "phone": "(859) 298-1596",
-    "role": "Magistrate"
-   },
-   {
-    "email": "dfloelectric@gmail.com",
-    "name": "Dwayne C. Florence",
-    "phone": "(859) 234-7541",
-    "role": "Magistrate"
-   },
-   {
-    "email": "garnett.dist4@gmail.com",
-    "name": "Charles Garnett",
-    "phone": "(859) 588-1542",
-    "role": "Magistrate"
-   },
-   {
-    "name": "Laurena Judy",
-    "phone": "(859) 588-8462",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "tunamelt8@yahoo.com",
     "name": "Stanley F. Lemons",
     "phone": "(859) 234-7874",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "northcutt974@yahoo.com",
     "name": "Daryl Northcutt",
     "phone": "(859) 588-2933",
     "role": "Magistrate"
    },
    {
+    "district": "4",
+    "email": "garnett.dist4@gmail.com",
+    "name": "Charles Garnett",
+    "phone": "(859) 588-1542",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "jburden4000@gmail.com",
+    "name": "Jeremy Burden",
+    "phone": "(859) 298-1596",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "brad.yearsley@harrision.kyschools.us",
+    "name": "Bradley Yearsley",
+    "phone": "(859) 588-2433",
+    "role": "Magistrate"
+   },
+   {
+    "district": "7",
+    "email": "dfloelectric@gmail.com",
+    "name": "Dwayne C. Florence",
+    "phone": "(859) 234-7541",
+    "role": "Magistrate"
+   },
+   {
+    "district": "8",
     "email": "adclp1@yahoo.com",
     "name": "Christopher Philpot",
     "phone": "(859) 298-0193",
     "role": "Magistrate"
    },
    {
-    "email": "brad.yearsley@harrision.kyschools.us",
-    "name": "Bradley Yearsley",
-    "phone": "(859) 588-2433",
+    "name": "Laurena Judy",
+    "phone": "(859) 588-8462",
     "role": "Magistrate"
    }
   ],
@@ -4273,6 +4576,11 @@
  "21099": {
   "body": "Fiscal Court",
   "county": "Hart",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Hart%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -4282,33 +4590,38 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "alveytowing@yahoo.com",
-    "name": "Ricky Alvey",
-    "phone": "(270) 590-0122",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "kensigns@scrtc.com",
     "name": "Katherine Kenny",
     "phone": "(270) 473-0353",
     "role": "Magistrate"
    },
    {
-    "email": "lee5thdistrict@gmail.com",
-    "name": "Lee Miles",
-    "phone": "(270) 834-0019",
+    "district": "2",
+    "email": "alveytowing@yahoo.com",
+    "name": "Ricky Alvey",
+    "phone": "(270) 590-0122",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "riordanfarms@yahoo.com",
     "name": "Ronald Riordan",
     "phone": "(270) 528-6700",
     "role": "Magistrate"
    },
    {
+    "district": "4",
     "email": "dougwellshc@yahoo.com",
     "name": "Doug Wells",
     "phone": "(270) 528-6129",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "lee5thdistrict@gmail.com",
+    "name": "Lee Miles",
+    "phone": "(270) 834-0019",
     "role": "Magistrate"
    }
   ],
@@ -4360,6 +4673,11 @@
  "21101": {
   "body": "Fiscal Court",
   "county": "Henderson",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Henderson%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -4369,33 +4687,38 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
     "email": "126.kberry@gmail.com",
     "name": "Keith Berry",
     "phone": "(270) 869-5918",
     "role": "Magistrate"
    },
    {
-    "email": "bpputt@gmail.com",
-    "name": "Billy Puttman",
-    "phone": "(270) 860-6157",
+    "district": "2",
+    "email": "hcdistrict2magistrate@gmail.com",
+    "name": "Taylor Tompkins",
+    "phone": "(270) 860-0957",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "tjsmagistrate@gmail.com",
     "name": "Timothy J. Southard",
     "phone": "(270) 860-1437",
     "role": "Magistrate"
    },
    {
-    "email": "williamstarks@twc.com",
-    "name": "Bill Starks",
-    "phone": "(270) 860-3286",
+    "district": "4",
+    "email": "bpputt@gmail.com",
+    "name": "Billy Puttman",
+    "phone": "(270) 860-6157",
     "role": "Magistrate"
    },
    {
-    "email": "hcdistrict2magistrate@gmail.com",
-    "name": "Taylor Tompkins",
-    "phone": "(270) 860-0957",
+    "district": "5",
+    "email": "williamstarks@twc.com",
+    "name": "Bill Starks",
+    "phone": "(270) 860-3286",
     "role": "Magistrate"
    }
   ],
@@ -4447,6 +4770,11 @@
  "21103": {
   "body": "Fiscal Court",
   "county": "Henry",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Henry%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -4456,39 +4784,44 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "bradleyfisher280@gmail.com",
-    "name": "Bradley Fisher",
-    "phone": "(502) 262-1304",
-    "role": "Magistrate"
-   },
-   {
-    "email": "racehorse523@gmail.com",
-    "name": "Edward Fredrick",
-    "phone": "(502) 845-9206",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "rogerhartlage@aol.com",
     "name": "Roger Hartlage",
     "phone": "(502) 639-5566",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "kmcmanis61@gmail.com",
     "name": "Kevin Gene McManis",
     "phone": "(502) 706-0164",
     "role": "Magistrate"
    },
    {
+    "district": "4",
     "email": "dannyshain@ymail.com",
     "name": "Danny Shain",
     "phone": "(502) 639-3211",
     "role": "Magistrate"
    },
    {
+    "district": "5",
+    "email": "bradleyfisher280@gmail.com",
+    "name": "Bradley Fisher",
+    "phone": "(502) 262-1304",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
     "email": "carlt66@live.com",
     "name": "Carl Tingle",
     "phone": "(502) 523-1026",
+    "role": "Magistrate"
+   },
+   {
+    "email": "racehorse523@gmail.com",
+    "name": "Edward Fredrick",
+    "phone": "(502) 845-9206",
     "role": "Magistrate"
    }
   ],
@@ -4538,6 +4871,11 @@
  "21105": {
   "body": "Fiscal Court",
   "county": "Hickman",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Hickman%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -4547,18 +4885,21 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
     "email": "henrycole155@yahoo.com",
     "name": "Henry Cole",
     "phone": "(270) 556-1942",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "aknaranjo@hotmail.com",
     "name": "Kory Anthony Naranjo",
     "phone": "(270) 653-4369",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "ashearblend@att.net",
     "name": "Irvin W. Stroud",
     "phone": "(270) 254-0296",
@@ -5003,6 +5344,11 @@
  "21113": {
   "body": "Fiscal Court",
   "county": "Jessamine",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Jessamine%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -5012,8 +5358,37 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "2",
+    "email": "tvaughan@jessamineco.com",
+    "name": "Tim Vaughan",
+    "phone": "(859) 885-4500",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
     "email": "tmeckstroth@jessamineco.com",
     "name": "Terry L. Meckstroth",
+    "phone": "(859) 885-4500",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "kslusher@jessamineco.com",
+    "name": "Kent Slusher",
+    "phone": "(859) 859-4500",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "ateater@jessamineco.com",
+    "name": "Adam Teater",
+    "phone": "(859) 885-4500",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "gmorgan@jessamineco.com",
+    "name": "Gary E. Morgan",
     "phone": "(859) 885-4500",
     "role": "Magistrate"
    },
@@ -5021,30 +5396,6 @@
     "email": "fredallenmeyer@gmail.com",
     "name": "Fred Allen Meyr",
     "phone": "(859) 948-9160",
-    "role": "Magistrate"
-   },
-   {
-    "email": "gmorgan@jessamineco.com",
-    "name": "Gary E. Morgan",
-    "phone": "(859) 885-4500",
-    "role": "Magistrate"
-   },
-   {
-    "email": "kslusher@jessamineco.com",
-    "name": "Kent Slusher",
-    "phone": "(859) 859-4500",
-    "role": "Magistrate"
-   },
-   {
-    "email": "ateater@jessamineco.com",
-    "name": "Adam Teater",
-    "phone": "(859) 885-4500",
-    "role": "Magistrate"
-   },
-   {
-    "email": "tvaughan@jessamineco.com",
-    "name": "Tim Vaughan",
-    "phone": "(859) 885-4500",
     "role": "Magistrate"
    }
   ],
@@ -5169,6 +5520,11 @@
  "21117": {
   "body": "Fiscal Court",
   "county": "Kenton",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Kenton%20County.pdf"
+  },
   "form": "commissioner",
   "members": [
    {
@@ -5178,20 +5534,23 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
+    "email": "beth.sewell@kentoncounty.org",
+    "name": "Beth Sewell",
+    "phone": "(859) 392-1400",
+    "role": "Commissioner"
+   },
+   {
+    "district": "2",
     "email": "jondraud@gmail.com",
     "name": "Jon E. Draud",
     "phone": "(859) 392-1400",
     "role": "Commissioner"
    },
    {
+    "district": "3",
     "email": "joe.nienaber@kentoncounty.org",
     "name": "Joe Nienaber Jr.",
-    "phone": "(859) 392-1400",
-    "role": "Commissioner"
-   },
-   {
-    "email": "beth.sewell@kentoncounty.org",
-    "name": "Beth Sewell",
     "phone": "(859) 392-1400",
     "role": "Commissioner"
    }
@@ -5243,6 +5602,11 @@
  "21119": {
   "body": "Fiscal Court",
   "county": "Knott",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Knott%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -5252,24 +5616,28 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
     "email": "ccraft@knottky.com",
     "name": "Carl Craft",
     "phone": "(606) 785-5592",
     "role": "Magistrate"
    },
    {
-    "email": "bsmith@knottky.com",
-    "name": "Brent Smith",
-    "phone": "(606) 634-1350",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "rthomas@knottky.com",
     "name": "Ricky Thomas",
     "phone": "(606) 785-5592",
     "role": "Magistrate"
    },
    {
+    "district": "3",
+    "email": "bsmith@knottky.com",
+    "name": "Brent Smith",
+    "phone": "(606) 634-1350",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
     "name": "Calvin Waddles",
     "phone": "(606) 447-3243",
     "role": "Magistrate"
@@ -5486,6 +5854,11 @@
  "21125": {
   "body": "Fiscal Court",
   "county": "Laurel",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Laurel%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -5495,38 +5868,44 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "richardbales@live.com",
-    "name": "Richard D. Bales",
-    "phone": "(606) 864-6607",
-    "role": "Magistrate"
-   },
-   {
-    "email": "jsbmag4@windstream.net",
-    "name": "Jeff Book",
-    "phone": "(606) 843-7862",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "lcfiscalcourt3@windstream.net",
     "name": "John Crawford",
     "phone": "(606) 224-2093",
     "role": "Magistrate"
    },
    {
-    "name": "Billy Oakley",
-    "phone": "(606) 864-5046",
+    "district": "2",
+    "email": "dancarsmith@windstream.net",
+    "name": "Danny Smith",
+    "phone": "(606) 862-8258",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "lcfiscalcourt3@windstream.net",
     "name": "Bobby L. Overbay",
     "phone": "(606) 864-4640",
     "role": "Magistrate"
    },
    {
-    "email": "dancarsmith@windstream.net",
-    "name": "Danny Smith",
-    "phone": "(606) 862-8258",
+    "district": "4",
+    "email": "jsbmag4@windstream.net",
+    "name": "Jeff Book",
+    "phone": "(606) 843-7862",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "name": "Billy Oakley",
+    "phone": "(606) 864-5046",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "richardbales@live.com",
+    "name": "Richard D. Bales",
+    "phone": "(606) 864-6607",
     "role": "Magistrate"
    }
   ],
@@ -5579,6 +5958,11 @@
  "21127": {
   "body": "Fiscal Court",
   "county": "Lawrence",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Lawrence%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -5588,27 +5972,31 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "richard.blackburn@lawrencekyschool.us",
-    "name": "Rick Blackburn",
-    "phone": "(606) 638-4102",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "mrhwolfgang1970@gmail.com",
     "name": "Michael R. Halcomb",
     "phone": "(606) 638-4102",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "sedona103@gmail.com",
+    "name": "Jonathan B. Scaggs",
+    "phone": "(606) 682-4102",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
     "email": "dpinson88@gmail.com",
     "name": "David M. Pinson",
     "phone": "(606) 652-3588",
     "role": "Magistrate"
    },
    {
-    "email": "sedona103@gmail.com",
-    "name": "Jonathan B. Scaggs",
-    "phone": "(606) 682-4102",
+    "district": "4",
+    "email": "richard.blackburn@lawrencekyschool.us",
+    "name": "Rick Blackburn",
+    "phone": "(606) 638-4102",
     "role": "Magistrate"
    }
   ],
@@ -5658,6 +6046,11 @@
  "21129": {
   "body": "Fiscal Court",
   "county": "Lee",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Lee%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -5667,27 +6060,31 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
     "email": "timothybrandenburg1967@gmail.com",
     "name": "Timothy Brandenburg",
     "phone": "(606) 464-4100",
     "role": "Magistrate"
    },
    {
-    "email": "dean.noe@catalent.com",
-    "name": "Dean Noe",
-    "phone": "(606) 464-0084",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "denpel1959@gmail.com",
     "name": "Dennis Pelfrey",
     "phone": "(606) 567-5095",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "rods.auto52@yahoo.com",
     "name": "Rodney Ross",
     "phone": "(606) 464-4100",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "dean.noe@catalent.com",
+    "name": "Dean Noe",
+    "phone": "(606) 464-0084",
     "role": "Magistrate"
    }
   ],
@@ -5902,6 +6299,11 @@
  "21135": {
   "body": "Fiscal Court",
   "county": "Lewis",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Lewis%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -5911,26 +6313,30 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "mark.horsley@lewiscountyky.gov",
-    "name": "Mark Horsley",
-    "phone": "(606) 796-2722",
-    "role": "Magistrate"
-   },
-   {
-    "email": "joey.mccann@lewiscountyky.gov",
-    "name": "Joey McCann",
-    "phone": "(606) 796-2722",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "johnny.osborne@lewiscountyky.gov",
     "name": "Johnny Osborne",
     "phone": "(606) 796-2722",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "joey.mccann@lewiscountyky.gov",
+    "name": "Joey McCann",
+    "phone": "(606) 796-2722",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
     "email": "woody.underwood@lewiscountyky.gov",
     "name": "Woody Underwood",
+    "phone": "(606) 796-2722",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "mark.horsley@lewiscountyky.gov",
+    "name": "Mark Horsley",
     "phone": "(606) 796-2722",
     "role": "Magistrate"
    }
@@ -5983,6 +6389,11 @@
  "21137": {
   "body": "Fiscal Court",
   "county": "Lincoln",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Lincoln%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -5992,24 +6403,28 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
     "email": "dvfaulkner@hotmail.com",
     "name": "David Faulkner",
     "phone": "(606) 669-5621",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "dan.gutenson@gmail.com",
     "name": "Dan Gutenson",
     "phone": "(606) 879-8183",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "bobbyking@asplundh.com",
     "name": "Bobby King",
     "phone": "(606) 365-2534",
     "role": "Magistrate"
    },
    {
+    "district": "4",
     "email": "jstanley@lincolnky.com",
     "name": "Joseph Stanley",
     "phone": "(606) 365-0703",
@@ -6144,6 +6559,11 @@
  "21141": {
   "body": "Fiscal Court",
   "county": "Logan",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Logan%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -6153,39 +6573,45 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "tbouldin@bouldinroofing.com",
-    "name": "Thomas P. Bouldin",
-    "phone": "(270) 726-1920",
-    "role": "Magistrate"
-   },
-   {
-    "email": "anne8451@msn.com",
-    "name": "Anne Crawford",
-    "phone": "(270) 542-7336",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "tylerdmagistrate@gmail.com",
     "name": "Tyler R. Davenport",
     "phone": "(270) 772-3268",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "jamieutley@logantele.com",
     "name": "Jamie Goodwin",
     "phone": "(270) 772-1057",
     "role": "Magistrate"
    },
    {
+    "district": "3",
+    "email": "cwilcutt1@gmail.com",
+    "name": "Chris Wilcutt",
+    "phone": "(270) 726-0447",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
     "email": "dealmakerjunior@gmail.com",
     "name": "Jason Harper",
     "phone": "(270) 772-3916",
     "role": "Magistrate"
    },
    {
-    "email": "cwilcutt1@gmail.com",
-    "name": "Chris Wilcutt",
-    "phone": "(270) 726-0447",
+    "district": "5",
+    "email": "anne8451@msn.com",
+    "name": "Anne Crawford",
+    "phone": "(270) 542-7336",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "tbouldin@bouldinroofing.com",
+    "name": "Thomas P. Bouldin",
+    "phone": "(270) 726-1920",
     "role": "Magistrate"
    }
   ],
@@ -6238,6 +6664,11 @@
  "21143": {
   "body": "Fiscal Court",
   "county": "Lyon",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Lyon%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -6247,21 +6678,24 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
     "email": "bobbycummins@bellsouth.net",
     "name": "Bobby Cummins",
     "phone": "(270) 963-0699",
     "role": "Magistrate"
    },
    {
-    "email": "fowlball@bellsouth.net",
-    "name": "Jeff Fowler",
-    "phone": "(270) 625-9926",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "quinsutton@bellsouth.net",
     "name": "Quin Tyler Sutton",
     "phone": "(270) 625-5028",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
+    "email": "fowlball@bellsouth.net",
+    "name": "Jeff Fowler",
+    "phone": "(270) 625-9926",
     "role": "Magistrate"
    }
   ],
@@ -6313,6 +6747,11 @@
  "21145": {
   "body": "Fiscal Court",
   "county": "McCracken",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Mccracken%20County.pdf"
+  },
   "form": "commissioner",
   "members": [
    {
@@ -6322,18 +6761,21 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "rabraham@mccrackencountyky.gov",
-    "name": "Richard Abraham",
-    "phone": "(270) 816-7592",
-    "role": "Commissioner"
-   },
-   {
+    "district": "1",
     "email": "bartleman@paducah.com",
     "name": "J. W. Bartleman",
     "phone": "(270) 805-6414",
     "role": "Commissioner"
    },
    {
+    "district": "2",
+    "email": "rabraham@mccrackencountyky.gov",
+    "name": "Richard Abraham",
+    "phone": "(270) 816-7592",
+    "role": "Commissioner"
+   },
+   {
+    "district": "3",
     "email": "ejones@mccrackenky.com",
     "name": "Edwin Jones",
     "phone": "(270) 559-7928",
@@ -6466,6 +6908,11 @@
  "21149": {
   "body": "Fiscal Court",
   "county": "McLean",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Mclean%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -6475,27 +6922,30 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "Northeast",
+    "email": "claytroutman@gmail.com",
+    "name": "Clay Troutman",
+    "phone": "(270) 903-7522",
+    "role": "Magistrate"
+   },
+   {
+    "district": "Southeast",
     "email": "bishopfarms@att.net",
     "name": "Robert N. Bishop",
     "phone": "(270) 499-3128",
     "role": "Magistrate"
    },
    {
-    "email": "kristiebowlds@yahoo.com",
-    "name": "Kristie Bowlds",
-    "phone": "(270) 993-5287",
-    "role": "Magistrate"
-   },
-   {
+    "district": "Southwest",
     "email": "jlowery@hfchc.net",
     "name": "Joseph P. Lowery",
     "phone": "(270) 499-2047",
     "role": "Magistrate"
    },
    {
-    "email": "claytroutman@gmail.com",
-    "name": "Clay Troutman",
-    "phone": "(270) 903-7522",
+    "email": "kristiebowlds@yahoo.com",
+    "name": "Kristie Bowlds",
+    "phone": "(270) 993-5287",
     "role": "Magistrate"
    }
   ],
@@ -6548,6 +6998,11 @@
  "21151": {
   "body": "Fiscal Court",
   "county": "Madison",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Madison%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -6557,27 +7012,31 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "tom.botkin@madisoncountyky.gov",
-    "name": "Tom Botkin",
-    "phone": "(859) 200-9765",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "brian.combs@madisonocountyky.gov",
     "name": "James Combs",
     "phone": "(859) 582-8130",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "stephen.lochmueller@madisoncountyky.gov",
+    "name": "Stephen Lochmueller",
+    "phone": "(859) 661-1086",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
     "email": "billyray.hughes@madisoncountyky.gov",
     "name": "Billy Hughes",
     "phone": "(859) 661-0044",
     "role": "Magistrate"
    },
    {
-    "email": "stephen.lochmueller@madisoncountyky.gov",
-    "name": "Stephen Lochmueller",
-    "phone": "(859) 661-1086",
+    "district": "4",
+    "email": "tom.botkin@madisoncountyky.gov",
+    "name": "Tom Botkin",
+    "phone": "(859) 200-9765",
     "role": "Magistrate"
    }
   ],
@@ -6703,6 +7162,11 @@
  "21155": {
   "body": "Fiscal Court",
   "county": "Marion",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Marion%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -6712,33 +7176,38 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "craig.bishop.nursery@gmail.com",
-    "name": "Craig Allen Bishop",
-    "phone": "(270) 692-0793",
-    "role": "Magistrate"
-   },
-   {
-    "email": "calabbuckman@gmail.com",
-    "name": "Calab Buckman",
-    "phone": "(270) 699-6650",
-    "role": "Magistrate"
-   },
-   {
-    "email": "fogleandfogle2@yahoo.com",
-    "name": "John Fogle",
-    "phone": "(270) 402-3147",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "kirkland_joepat@yahoo.com",
     "name": "Joseph Kirkland",
     "phone": "(270) 692-3451",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "unit2155@gmail.com",
     "name": "Larry Mattingly",
     "phone": "(270) 692-3451",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
+    "email": "craig.bishop.nursery@gmail.com",
+    "name": "Craig Allen Bishop",
+    "phone": "(270) 692-0793",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "fogleandfogle2@yahoo.com",
+    "name": "John Fogle",
+    "phone": "(270) 402-3147",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "calabbuckman@gmail.com",
+    "name": "Calab Buckman",
+    "phone": "(270) 699-6650",
     "role": "Magistrate"
    }
   ],
@@ -6790,6 +7259,11 @@
  "21157": {
   "body": "Fiscal Court",
   "county": "Marshall",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Marshall%20County.pdf"
+  },
   "form": "commissioner",
   "members": [
    {
@@ -6799,21 +7273,24 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
+    "email": "eddie.mcguire@marshallcountyky.gov",
+    "name": "Eddie McGuire",
+    "phone": "(270) 703-1751",
+    "role": "Commissioner"
+   },
+   {
+    "district": "2",
     "email": "marty.barrett@marshallcountyky.gov",
     "name": "Marty Barrett",
     "phone": "(270) 205-1085",
     "role": "Commissioner"
    },
    {
+    "district": "3",
     "email": "monti.collins@marshallcountyky.gov",
     "name": "Monti R. Collins",
     "phone": "(270) 703-2850",
-    "role": "Commissioner"
-   },
-   {
-    "email": "eddie.mcguire@marshallcountyky.gov",
-    "name": "Eddie McGuire",
-    "phone": "(270) 703-1751",
     "role": "Commissioner"
    }
   ],
@@ -6954,6 +7431,11 @@
  "21161": {
   "body": "Fiscal Court",
   "county": "Mason",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Mason%20County.pdf"
+  },
   "form": "commissioner",
   "members": [
    {
@@ -6963,21 +7445,24 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "peggytony1900@gmail.com",
-    "name": "Peggy Frame",
-    "phone": "(606) 584-3804",
-    "role": "Commissioner"
-   },
-   {
+    "district": "1",
     "email": "joemckay76@yahoo.com",
     "name": "Joseph G. McKay",
     "phone": "(606) 407-5395",
     "role": "Commissioner"
    },
    {
+    "district": "2",
     "email": "chrisohearn41056@gmail.com",
     "name": "Chris O'Hearn",
     "phone": "(606) 584-6676",
+    "role": "Commissioner"
+   },
+   {
+    "district": "3",
+    "email": "peggytony1900@gmail.com",
+    "name": "Peggy Frame",
+    "phone": "(606) 584-3804",
     "role": "Commissioner"
    }
   ],
@@ -7122,6 +7607,11 @@
  "21165": {
   "body": "Fiscal Court",
   "county": "Menifee",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Menifee%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -7131,28 +7621,33 @@
     "role": "County Judge/Executive"
    },
    {
-    "name": "Ricky Bair",
-    "phone": "(606) 362-9898",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "name": "Pamela Ballard",
     "phone": "(606) 768-9552",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "name": "Ollie Whitaker",
+    "phone": "(606) 768-3553",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
     "name": "Forrest Mullins",
     "phone": "(606) 768-6569",
     "role": "Magistrate"
    },
    {
-    "name": "Ricky Peck",
-    "phone": "(606) 768-3859",
+    "district": "4",
+    "name": "Ricky Bair",
+    "phone": "(606) 362-9898",
     "role": "Magistrate"
    },
    {
-    "name": "Ollie Whitaker",
-    "phone": "(606) 768-3553",
+    "district": "5",
+    "name": "Ricky Peck",
+    "phone": "(606) 768-3859",
     "role": "Magistrate"
    }
   ],
@@ -7297,6 +7792,11 @@
  "21169": {
   "body": "Fiscal Court",
   "county": "Metcalfe",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Metcalfe%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -7306,24 +7806,28 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "Daniel@Bragg-Builders.com",
-    "name": "Daniel Bragg",
-    "phone": "(270) 590-0307",
-    "role": "Magistrate"
-   },
-   {
-    "email": "kevin@metcalferealty.net",
-    "name": "Kevin Crain",
-    "phone": "(270) 565-4831",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "ksscott@scrtc.com",
     "name": "Harvey Hawkins",
     "phone": "(270) 670-3626",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "kevin@metcalferealty.net",
+    "name": "Kevin Crain",
+    "phone": "(270) 565-4831",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
+    "email": "Daniel@Bragg-Builders.com",
+    "name": "Daniel Bragg",
+    "phone": "(270) 590-0307",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
     "email": "ron777miller@gmail.com",
     "name": "Ronnie Miller",
     "phone": "(270) 646-6452",
@@ -7378,6 +7882,11 @@
  "21171": {
   "body": "Fiscal Court",
   "county": "Monroe",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Monroe%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -7387,30 +7896,35 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "rjb623@hotmail.com",
-    "name": "Ricky J. Bartley",
-    "phone": "(270) 427-6629",
-    "role": "Magistrate"
-   },
-   {
-    "email": "nathanfox.74@me.com",
-    "name": "Nathan Fox",
-    "phone": "(270) 477-8659",
-    "role": "Magistrate"
-   },
-   {
-    "email": "pages@scrtc.com",
-    "name": "Ronnie Page",
-    "phone": "(270) 427-8042",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "jamiev1977@hotmail.com",
     "name": "Jaime Veach",
     "phone": "(270) 427-6039",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "pages@scrtc.com",
+    "name": "Ronnie Page",
+    "phone": "(270) 427-8042",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
+    "email": "rjb623@hotmail.com",
+    "name": "Ricky J. Bartley",
+    "phone": "(270) 427-6629",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "nathanfox.74@me.com",
+    "name": "Nathan Fox",
+    "phone": "(270) 477-8659",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
     "email": "tmjjw@hotmail.com",
     "name": "Mark Williams",
     "phone": "(270) 427-0796",
@@ -7533,6 +8047,11 @@
  "21175": {
   "body": "Fiscal Court",
   "county": "Morgan",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Morgan%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -7542,33 +8061,36 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "bevans20@mrtc.com",
-    "name": "Brandon Evans",
-    "phone": "(606) 743-4297",
-    "role": "Magistrate"
-   },
-   {
-    "email": "tfannin50@yahoo.com",
-    "name": "Tommy Fannin",
-    "phone": "(606) 743-3897",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "mcfc.dk68@gmail.com",
     "name": "Donnie Keeton",
     "phone": "(606) 743-3897",
     "role": "Magistrate"
    },
    {
-    "email": "epelfrey22@gmail.com",
-    "name": "Eric Pelfrey",
-    "phone": "(606) 422-0909",
+    "district": "3",
+    "email": "tfannin50@yahoo.com",
+    "name": "Tommy Fannin",
+    "phone": "(606) 743-3897",
     "role": "Magistrate"
    },
    {
+    "district": "5",
     "email": "rcl7481@yahoo.com",
     "name": "Leroy Phipps",
     "phone": "(606) 477-6259",
+    "role": "Magistrate"
+   },
+   {
+    "email": "bevans20@mrtc.com",
+    "name": "Brandon Evans",
+    "phone": "(606) 743-4297",
+    "role": "Magistrate"
+   },
+   {
+    "email": "epelfrey22@gmail.com",
+    "name": "Eric Pelfrey",
+    "phone": "(606) 422-0909",
     "role": "Magistrate"
    }
   ],
@@ -7620,6 +8142,11 @@
  "21177": {
   "body": "Fiscal Court",
   "county": "Muhlenberg",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Muhlenberg%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -7629,33 +8156,38 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
+    "email": "malwest57@aol.com",
+    "name": "Malcolm West",
+    "phone": "(270) 977-6805",
+    "role": "Magistrate"
+   },
+   {
+    "district": "2",
     "email": "darrin.benton@kyfb.com",
     "name": "Darrin Benton",
     "phone": "(270) 543-0097",
     "role": "Magistrate"
    },
    {
-    "email": "a.bullock@muhlenbergcountyky.org",
-    "name": "Andrew Bullock",
-    "phone": "(270) 832-5256",
-    "role": "Magistrate"
-   },
-   {
-    "email": "k.phillips@muhlenbergcountyky.org",
-    "name": "Keith Phillips",
-    "phone": "(270) 543-5636",
-    "role": "Magistrate"
-   },
-   {
+    "district": "3",
     "email": "j.vincent@muhlenbergcountyky.org",
     "name": "Jeff Vincent",
     "phone": "(270) 543-4422",
     "role": "Magistrate"
    },
    {
-    "email": "malwest57@aol.com",
-    "name": "Malcolm West",
-    "phone": "(270) 977-6805",
+    "district": "4",
+    "email": "k.phillips@muhlenbergcountyky.org",
+    "name": "Keith Phillips",
+    "phone": "(270) 543-5636",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "a.bullock@muhlenbergcountyky.org",
+    "name": "Andrew Bullock",
+    "phone": "(270) 832-5256",
     "role": "Magistrate"
    }
   ],
@@ -7791,6 +8323,11 @@
  "21181": {
   "body": "Fiscal Court",
   "county": "Nicholas",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Nicholas%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -7800,33 +8337,38 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "tommycrawford@yahoo.com",
-    "name": "Tommy Crawford",
-    "phone": "(859) 473-0549",
+    "district": "1",
+    "email": "Fourquartersfarmky@gmail.com",
+    "name": "Rodney Matthews",
+    "phone": "(859) 473-1877",
     "role": "Magistrate"
    },
    {
-    "email": "rmhaneymusic@gmail.com",
-    "name": "Ross Haney",
-    "phone": "(859) 473-3033",
-    "role": "Magistrate"
-   },
-   {
-    "email": "mholbrook64@aol.com",
-    "name": "Kenny Holbrook",
-    "phone": "(859) 289-3725",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "Phughes@commAction.org",
     "name": "Matt Hughes",
     "phone": "(859) 473-0566",
     "role": "Magistrate"
    },
    {
-    "email": "Fourquartersfarmky@gmail.com",
-    "name": "Rodney Matthews",
-    "phone": "(859) 473-1877",
+    "district": "3",
+    "email": "mholbrook64@aol.com",
+    "name": "Kenny Holbrook",
+    "phone": "(859) 289-3725",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "tommycrawford@yahoo.com",
+    "name": "Tommy Crawford",
+    "phone": "(859) 473-0549",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "rmhaneymusic@gmail.com",
+    "name": "Ross Haney",
+    "phone": "(859) 473-3033",
     "role": "Magistrate"
    }
   ],
@@ -7878,6 +8420,11 @@
  "21183": {
   "body": "Fiscal Court",
   "county": "Ohio",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Ohio%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -7887,33 +8434,37 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "dale.beavin@yahoo.com",
-    "name": "Robet Beavin",
-    "phone": "(270) 314-1912",
-    "role": "Magistrate"
-   },
-   {
-    "email": "magistrate3@ohiocountyky.gov",
-    "name": "Bo Bennett",
-    "phone": "(270) 298-4400",
-    "role": "Magistrate"
-   },
-   {
-    "email": "magistrate2@ohiocountyky.gov",
-    "name": "Jason Bullock",
-    "phone": "(270) 256-5506",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "treasurer@ohiocountyky.gov",
     "name": "Michael McKenney",
     "phone": "(270) 298-4400",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "magistrate2@ohiocountyky.gov",
+    "name": "Jason Bullock",
+    "phone": "(270) 256-5506",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
+    "email": "magistrate3@ohiocountyky.gov",
+    "name": "Bo Bennett",
+    "phone": "(270) 298-4400",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
     "email": "magistrate5@ohiocountyky.gov",
     "name": "Larry W. Morphew",
     "phone": "(270) 274-9579",
+    "role": "Magistrate"
+   },
+   {
+    "email": "dale.beavin@yahoo.com",
+    "name": "Robet Beavin",
+    "phone": "(270) 314-1912",
     "role": "Magistrate"
    }
   ],
@@ -7964,6 +8515,11 @@
  "21185": {
   "body": "Fiscal Court",
   "county": "Oldham",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Oldham%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -7973,51 +8529,59 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "bdye@oldhamcountyky.gov",
-    "name": "Bob Dye",
-    "phone": "(502) 423-7371",
-    "role": "Magistrate"
-   },
-   {
-    "email": "chaunz@oldhamcountyky.gov",
-    "name": "Christopher Haunz",
-    "phone": "(502) 643-6724",
-    "role": "Magistrate"
-   },
-   {
-    "email": "shawkins@oldhamcountyky.gov",
-    "name": "Stephanie Hawkins",
-    "phone": "(502) 229-4500",
-    "role": "Magistrate"
-   },
-   {
-    "email": "kkeffries@oldhamcountyky.gov",
-    "name": "Kevin Jeffries",
-    "phone": "(502) 553-2938",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "blikens@oldhamcountyky.gov",
     "name": "Brent Likins",
     "phone": "(502) 821-1821",
     "role": "Magistrate"
    },
    {
-    "email": "mlogsdon@oldhamcounyky.gov",
-    "name": "Mike Logsdon",
-    "phone": "(502) 417-7985",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "wtheiss@oldhamcountyky.gov",
     "name": "Wayne Theiss",
     "phone": "(502) 609-0567",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "kwoosley@oldhamcountyky.gov",
     "name": "Kevin Woosley",
     "phone": "(502) 724-7838",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "kkeffries@oldhamcountyky.gov",
+    "name": "Kevin Jeffries",
+    "phone": "(502) 553-2938",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "chaunz@oldhamcountyky.gov",
+    "name": "Christopher Haunz",
+    "phone": "(502) 643-6724",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "shawkins@oldhamcountyky.gov",
+    "name": "Stephanie Hawkins",
+    "phone": "(502) 229-4500",
+    "role": "Magistrate"
+   },
+   {
+    "district": "7",
+    "email": "bdye@oldhamcountyky.gov",
+    "name": "Bob Dye",
+    "phone": "(502) 423-7371",
+    "role": "Magistrate"
+   },
+   {
+    "district": "8",
+    "email": "mlogsdon@oldhamcounyky.gov",
+    "name": "Mike Logsdon",
+    "phone": "(502) 417-7985",
     "role": "Magistrate"
    }
   ],
@@ -8069,6 +8633,11 @@
  "21187": {
   "body": "Fiscal Court",
   "county": "Owen",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Owen%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -8078,27 +8647,31 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "Travis.fitzgerald@owencountyky.us",
-    "name": "Travis Fitzgerald",
-    "phone": "(502) 803-0362",
+    "district": "1",
+    "email": "tom.slayback@owencountyky.us",
+    "name": "Tom Slayback",
+    "phone": "(502) 482-6274",
     "role": "Magistrate"
    },
    {
-    "email": "wayne.harris@owencountyky.us",
-    "name": "Hershal Wayne Harris",
-    "phone": "(502) 484-3405",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "judge@owencountyky.us",
     "name": "Dane Perkins",
     "phone": "(502) 484-3405",
     "role": "Magistrate"
    },
    {
-    "email": "tom.slayback@owencountyky.us",
-    "name": "Tom Slayback",
-    "phone": "(502) 482-6274",
+    "district": "3",
+    "email": "wayne.harris@owencountyky.us",
+    "name": "Hershal Wayne Harris",
+    "phone": "(502) 484-3405",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "Travis.fitzgerald@owencountyky.us",
+    "name": "Travis Fitzgerald",
+    "phone": "(502) 803-0362",
     "role": "Magistrate"
    }
   ],
@@ -8150,6 +8723,11 @@
  "21189": {
   "body": "Fiscal Court",
   "county": "Owsley",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Owsley%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -8159,17 +8737,20 @@
     "role": "County Judge/Executive"
    },
    {
-    "name": "Jeffrey Dooley",
+    "district": "1",
+    "name": "Alan Taylor",
     "phone": "(606) 593-6202",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "name": "Jason Reed",
     "phone": "(606) 593-6202",
     "role": "Magistrate"
    },
    {
-    "name": "Alan Taylor",
+    "district": "3",
+    "name": "Jeffrey Dooley",
     "phone": "(606) 593-6202",
     "role": "Magistrate"
    }
@@ -8375,6 +8956,11 @@
  "21195": {
   "body": "Fiscal Court",
   "county": "Pike",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Pike%20County.pdf"
+  },
   "form": "commissioner",
   "formNote": "The state directory lists three commissioners, while Pike County's certified 2026 primary ran five numbered magistrate races. This app has not settled which form the next term takes.",
   "members": [
@@ -8385,15 +8971,16 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "jimabshire49@yahoo.com",
-    "name": "Jim Abshire",
-    "phone": "(606) 213-0098",
-    "role": "Commissioner"
-   },
-   {
+    "district": "2",
     "email": "clinardadkins@bellsouth.net",
     "name": "Clinard Adkins",
     "phone": "(606) 754-0478",
+    "role": "Commissioner"
+   },
+   {
+    "email": "jimabshire49@yahoo.com",
+    "name": "Jim Abshire",
+    "phone": "(606) 213-0098",
     "role": "Commissioner"
    },
    {
@@ -8450,6 +9037,11 @@
  "21197": {
   "body": "Fiscal Court",
   "county": "Powell",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Powell%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -8459,33 +9051,37 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "jlbowen@mountaincompanies.com",
-    "name": "James Bowen",
-    "phone": "(606) 663-2834",
+    "district": "1",
+    "email": "chadpatton2014@gmail.com",
+    "name": "Chad A. Patton",
+    "phone": "(606) 569-6533",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "dennislc_22@yahoo.com",
     "name": "Dennis L. Combs",
     "phone": "(606) 481-9032",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "mlockard@powellcountyky.com",
     "name": "Mike Lockard",
     "phone": "(606) 663-5643",
     "role": "Magistrate"
    },
    {
+    "district": "5",
     "email": "bmckinney23@gmail.com",
     "name": "Brian McKinney",
     "phone": "(606) 663-2834",
     "role": "Magistrate"
    },
    {
-    "email": "chadpatton2014@gmail.com",
-    "name": "Chad A. Patton",
-    "phone": "(606) 569-6533",
+    "email": "jlbowen@mountaincompanies.com",
+    "name": "James Bowen",
+    "phone": "(606) 663-2834",
     "role": "Magistrate"
    }
   ],
@@ -8537,6 +9133,11 @@
  "21199": {
   "body": "Fiscal Court",
   "county": "Pulaski",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Pulaski%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -8546,33 +9147,38 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "mranshaw@aol.com",
-    "name": "Mark W. Ranshaw",
-    "phone": "(606) 451-2100",
-    "role": "Magistrate"
-   },
-   {
-    "email": "strunkmagistrate@yahoo.com",
-    "name": "Mike Strunk",
-    "phone": "(606) 271-2886",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "jturp2@gmail.com",
     "name": "Jason Turpen",
     "phone": "(606) 271-7159",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "gwsmith58@yahoo.com",
+    "name": "Mike L. Wilson",
+    "phone": "(606) 305-4653",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
     "email": "jimmywheeldon1953@gmail.com",
     "name": "Jimmy Wheeldon",
     "phone": "(606) 271-0427",
     "role": "Magistrate"
    },
    {
-    "email": "gwsmith58@yahoo.com",
-    "name": "Mike L. Wilson",
-    "phone": "(606) 305-4653",
+    "district": "4",
+    "email": "mranshaw@aol.com",
+    "name": "Mark W. Ranshaw",
+    "phone": "(606) 451-2100",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "strunkmagistrate@yahoo.com",
+    "name": "Mike Strunk",
+    "phone": "(606) 271-2886",
     "role": "Magistrate"
    }
   ],
@@ -8623,6 +9229,11 @@
  "21201": {
   "body": "Fiscal Court",
   "county": "Robertson",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Robertson%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -8632,23 +9243,26 @@
     "role": "County Judge/Executive"
    },
    {
-    "name": "Terry Cracraft",
-    "phone": "(606) 724-5215",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "name": "Rita Goddard",
     "phone": "(606) 724-5615",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "name": "Larry Jones",
     "phone": "(606) 842-0068",
     "role": "Magistrate"
    },
    {
+    "district": "4",
     "name": "Troy Martin",
     "phone": "(606) 206-3085",
+    "role": "Magistrate"
+   },
+   {
+    "name": "Terry Cracraft",
+    "phone": "(606) 724-5215",
     "role": "Magistrate"
    },
    {
@@ -8785,6 +9399,11 @@
  "21205": {
   "body": "Fiscal Court",
   "county": "Rowan",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Rowan%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -8794,27 +9413,31 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "dlglover1200@yahoo.com",
-    "name": "Darrell Glover",
-    "phone": "(606) 780-7193",
-    "role": "Magistrate"
-   },
-   {
-    "email": "robert.hamm@kctcs.edu",
-    "name": "Rob Hamm",
-    "phone": "(606) 784-8806",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "rwhite@haroldwhitelumber.com",
     "name": "Ray D. White",
     "phone": "(606) 784-1529",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "dlglover1200@yahoo.com",
+    "name": "Darrell Glover",
+    "phone": "(606) 780-7193",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
     "email": "winklemanfarms@windstream.net",
     "name": "Charlie Winkleman",
     "phone": "(606) 784-4211",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "robert.hamm@kctcs.edu",
+    "name": "Rob Hamm",
+    "phone": "(606) 784-8806",
     "role": "Magistrate"
    }
   ],
@@ -8954,6 +9577,11 @@
  "21209": {
   "body": "Fiscal Court",
   "county": "Scott",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Scott%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -8963,30 +9591,42 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "kelly.corman@scottky.gov",
-    "name": "Kelly Corman",
-    "phone": "(859) 351-9915",
-    "role": "Magistrate"
-   },
-   {
-    "email": "dwayne.ellison@scottky.gov",
-    "name": "Dwayne Ellison",
-    "phone": "(859) 699-8737",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "ricky.hostetler@scottky.com",
     "name": "Rick Hostetler",
     "phone": "(502) 857-2246",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "rob.jones@scottky.gov",
     "name": "Rob Jones",
     "phone": "(502) 863-7850",
     "role": "Magistrate"
    },
    {
+    "district": "3",
+    "email": "chad.wallace@scottky.gov",
+    "name": "Chad S. Wallace",
+    "phone": "(859) 221-0791",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "kelly.corman@scottky.gov",
+    "name": "Kelly Corman",
+    "phone": "(859) 351-9915",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "dwayne.ellison@scottky.gov",
+    "name": "Dwayne Ellison",
+    "phone": "(859) 699-8737",
+    "role": "Magistrate"
+   },
+   {
+    "district": "7",
     "email": "david.livingston@scottky.gov",
     "name": "David Livingston",
     "phone": "(502) 863-7449",
@@ -8996,12 +9636,6 @@
     "email": "ryan.pratt@scottky.gov",
     "name": "Ryan Pratt",
     "phone": "(502) 863-7850",
-    "role": "Magistrate"
-   },
-   {
-    "email": "chad.wallace@scottky.gov",
-    "name": "Chad S. Wallace",
-    "phone": "(859) 221-0791",
     "role": "Magistrate"
    }
   ],
@@ -9052,6 +9686,11 @@
  "21211": {
   "body": "Fiscal Court",
   "county": "Shelby",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Shelby%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -9061,44 +9700,51 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "district7@shelbycoky.com",
-    "name": "Danny Eades",
-    "phone": "(502) 633-1220",
-    "role": "Magistrate"
-   },
-   {
-    "email": "district4@shelbycoky.com",
-    "name": "Bill L. Hedges",
-    "phone": "(502) 633-1220",
-    "role": "Magistrate"
-   },
-   {
-    "email": "brock.lisby@shelbycoky.com",
-    "name": "Brock Lisby",
-    "phone": "(502) 633-1220",
-    "role": "Magistrate"
-   },
-   {
-    "email": "district3@shelbycoky.com",
-    "name": "Joey Riddle Sr.",
-    "phone": "(502) 633-1220",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "district1@shelbycoky.com",
     "name": "Jon Swindler",
     "phone": "(502) 593-1200",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "district2@shelbycoky.com",
     "name": "Karen Waller",
     "phone": "(502) 633-1220",
     "role": "Magistrate"
    },
    {
+    "district": "3",
+    "email": "district3@shelbycoky.com",
+    "name": "Joey Riddle Sr.",
+    "phone": "(502) 633-1220",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "district4@shelbycoky.com",
+    "name": "Bill L. Hedges",
+    "phone": "(502) 633-1220",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
     "email": "district5@shelbycoky.com",
     "name": "Gene Witt",
+    "phone": "(502) 633-1220",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "brock.lisby@shelbycoky.com",
+    "name": "Brock Lisby",
+    "phone": "(502) 633-1220",
+    "role": "Magistrate"
+   },
+   {
+    "district": "7",
+    "email": "district7@shelbycoky.com",
+    "name": "Danny Eades",
     "phone": "(502) 633-1220",
     "role": "Magistrate"
    }
@@ -9152,6 +9798,11 @@
  "21213": {
   "body": "Fiscal Court",
   "county": "Simpson",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Simpson%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -9161,25 +9812,29 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "burrfarms@logantele.com",
-    "name": "Jeffrey Burr",
-    "phone": "(270) 776-0830",
-    "role": "Magistrate"
-   },
-   {
+    "district": "East",
     "name": "Marty Chandler",
     "phone": "(270) 586-0064",
     "role": "Magistrate"
    },
    {
+    "district": "North",
     "email": "sposton@simpsoncounty.us",
     "name": "William S. Poston",
     "phone": "(270) 647-2817",
     "role": "Magistrate"
    },
    {
+    "district": "South",
     "name": "Myron C. Thurman",
     "phone": "(270) 586-7184",
+    "role": "Magistrate"
+   },
+   {
+    "district": "West",
+    "email": "burrfarms@logantele.com",
+    "name": "Jeffrey Burr",
+    "phone": "(270) 776-0830",
     "role": "Magistrate"
    }
   ],
@@ -9229,6 +9884,11 @@
  "21215": {
   "body": "Fiscal Court",
   "county": "Spencer",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Spencer%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -9238,6 +9898,28 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
+    "email": "dannypharris@spencercountyky.gov",
+    "name": "Dan Pharris",
+    "phone": "(502) 902-5793",
+    "role": "Magistrate"
+   },
+   {
+    "district": "2",
+    "email": "mikestump@spencercountyky.gov",
+    "name": "Mike Stump",
+    "phone": "(502) 649-7192",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
+    "email": "jimtravis@spencercountyky.gov",
+    "name": "Jimmy Travis",
+    "phone": "(502) 902-5908",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
     "email": "zachcotton@spencercountyky.gov",
     "name": "Zach Cotton",
     "phone": "(502) 902-5927",
@@ -9247,24 +9929,6 @@
     "email": "willeldridge@spencercountyky.gov",
     "name": "Will Eldridge",
     "phone": "(502) 902-7318",
-    "role": "Magistrate"
-   },
-   {
-    "email": "dannypharris@spencercountyky.gov",
-    "name": "Dan Pharris",
-    "phone": "(502) 902-5793",
-    "role": "Magistrate"
-   },
-   {
-    "email": "mikestump@spencercountyky.gov",
-    "name": "Mike Stump",
-    "phone": "(502) 649-7192",
-    "role": "Magistrate"
-   },
-   {
-    "email": "jimtravis@spencercountyky.gov",
-    "name": "Jimmy Travis",
-    "phone": "(502) 902-5908",
     "role": "Magistrate"
    }
   ],
@@ -9495,6 +10159,11 @@
  "21221": {
   "body": "Fiscal Court",
   "county": "Trigg",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Trigg%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -9504,45 +10173,52 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "jbroadbent@pennyroyalcenter.org",
-    "name": "Jeff Broadbent",
-    "phone": "(270) 350-1936",
+    "district": "1",
+    "email": "trophyland@outlook.com",
+    "name": "Michael L. Wright",
+    "phone": "(270) 350-0767",
     "role": "Magistrate"
    },
    {
-    "email": "patrickbush73@yahoo.com",
-    "name": "Patrick Bush",
-    "phone": "(270) 206-0599",
-    "role": "Magistrate"
-   },
-   {
-    "email": "alanafbaker@gmail.com",
-    "name": "Alana Baker Dunn",
-    "phone": "(502) 333-5838",
-    "role": "Magistrate"
-   },
-   {
-    "email": "lanesconstruction@ymail.com",
-    "name": "William M. Lane",
-    "phone": "(270) 350-0741",
-    "role": "Magistrate"
-   },
-   {
+    "district": "2",
     "email": "barrylittlejohn@yahoo.com",
     "name": "Barry Littlejohn",
     "phone": "(270) 350-0213",
     "role": "Magistrate"
    },
    {
+    "district": "3",
     "email": "sumner.cameron@yahoo.com",
     "name": "Cameron Sumner",
     "phone": "(270) 350-5181",
     "role": "Magistrate"
    },
    {
-    "email": "trophyland@outlook.com",
-    "name": "Michael L. Wright",
-    "phone": "(270) 350-0767",
+    "district": "4",
+    "email": "jbroadbent@pennyroyalcenter.org",
+    "name": "Jeff Broadbent",
+    "phone": "(270) 350-1936",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "alanafbaker@gmail.com",
+    "name": "Alana Baker Dunn",
+    "phone": "(502) 333-5838",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "patrickbush73@yahoo.com",
+    "name": "Patrick Bush",
+    "phone": "(270) 206-0599",
+    "role": "Magistrate"
+   },
+   {
+    "district": "7",
+    "email": "lanesconstruction@ymail.com",
+    "name": "William M. Lane",
+    "phone": "(270) 350-0741",
     "role": "Magistrate"
    }
   ],
@@ -9594,6 +10270,11 @@
  "21223": {
   "body": "Fiscal Court",
   "county": "Trimble",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Trimble%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -9603,24 +10284,28 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "melissacornish2@gmail.com",
-    "name": "Melissa Cornish",
-    "phone": "(502) 255-7196",
-    "role": "Magistrate"
-   },
-   {
-    "email": "j.d.jones137@gmail.com",
-    "name": "John D. Jones",
-    "phone": "(502) 525-7199",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "cliter@seidata.com",
     "name": "Chris Liter",
     "phone": "(812) 701-3090",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "melissacornish2@gmail.com",
+    "name": "Melissa Cornish",
+    "phone": "(502) 255-7196",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
+    "email": "j.d.jones137@gmail.com",
+    "name": "John D. Jones",
+    "phone": "(502) 525-7199",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
     "email": "cwhitice@gmail.com",
     "name": "Crystal Whitice",
     "phone": "(502) 255-7196",
@@ -9674,6 +10359,11 @@
  "21225": {
   "body": "Fiscal Court",
   "county": "Union",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "ocr",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Union%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -9683,33 +10373,38 @@
     "role": "County Judge/Executive"
    },
    {
+    "district": "1",
+    "email": "rick.wyatt@unioncountyky.gov",
+    "name": "Rick Wyatt",
+    "phone": "(270) 952-0510",
+    "role": "Magistrate"
+   },
+   {
+    "district": "2",
     "email": "jerri.floyd@unioncountyky.gov",
     "name": "Jerri Floyd",
     "phone": "(270) 952-0738",
     "role": "Magistrate"
    },
    {
-    "email": "bo.girten@unioncountyky.gov",
-    "name": "Bo Girten",
-    "phone": "(270) 860-1384",
-    "role": "Magistrate"
-   },
-   {
-    "email": "dakota.jones@unioncountyky.gov",
-    "name": "Dakata Jones",
-    "phone": "(270) 952-8620",
-    "role": "Magistrate"
-   },
-   {
+    "district": "3",
     "email": "jim.ricketts@unioncountyky.gov",
     "name": "James R. Ricketts",
     "phone": "(270) 997-0086",
     "role": "Magistrate"
    },
    {
-    "email": "rick.wyatt@unioncountyky.gov",
-    "name": "Rick Wyatt",
-    "phone": "(270) 952-0510",
+    "district": "4",
+    "email": "dakota.jones@unioncountyky.gov",
+    "name": "Dakata Jones",
+    "phone": "(270) 952-8620",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "bo.girten@unioncountyky.gov",
+    "name": "Bo Girten",
+    "phone": "(270) 860-1384",
     "role": "Magistrate"
    }
   ],
@@ -9762,6 +10457,11 @@
  "21227": {
   "body": "Fiscal Court",
   "county": "Warren",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Warren%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -9771,37 +10471,43 @@
     "role": "County Judge/Executive"
    },
    {
-    "name": "Eric Aldridge",
-    "phone": "(270) 843-4146",
-    "role": "Magistrate"
-   },
-   {
-    "email": "roncumm@aol.com",
-    "name": "Ron Cummings",
-    "phone": "(270) 843-4146",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "scott.lasley.warren@gmail.com",
     "name": "Scott Lasley",
     "phone": "(270) 841-4136",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "seconddistrictmagistrategmail.com",
     "name": "Tom Lawrence",
     "phone": "(270) 535-0354",
     "role": "Magistrate"
    },
    {
+    "district": "3",
+    "email": "rickwilliamsbgky@gmail.com",
+    "name": "Rick Williams",
+    "phone": "(270) 843-4146",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
     "email": "rexmcwhorter@yahoo.com",
     "name": "Rex McWhorter",
     "phone": "(270) 779-2463",
     "role": "Magistrate"
    },
    {
-    "email": "rickwilliamsbgky@gmail.com",
-    "name": "Rick Williams",
+    "district": "5",
+    "name": "Eric Aldridge",
+    "phone": "(270) 843-4146",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "roncumm@aol.com",
+    "name": "Ron Cummings",
     "phone": "(270) 843-4146",
     "role": "Magistrate"
    }
@@ -10025,6 +10731,11 @@
  "21233": {
   "body": "Fiscal Court",
   "county": "Webster",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Webster%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -10034,21 +10745,24 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "tfelker48@gmail.com",
-    "name": "Tony Felker",
-    "phone": "(270) 667-5389",
+    "district": "1",
+    "email": "chad1020@msn.com",
+    "name": "Chad E. Townsend",
+    "phone": "(270) 639-9301",
     "role": "Magistrate"
    },
    {
+    "district": "2",
     "email": "bobhardison1947@gmail.com",
     "name": "Bob Hardison",
     "phone": "(270) 635-8829",
     "role": "Magistrate"
    },
    {
-    "email": "chad1020@msn.com",
-    "name": "Chad E. Townsend",
-    "phone": "(270) 639-9301",
+    "district": "3",
+    "email": "tfelker48@gmail.com",
+    "name": "Tony Felker",
+    "phone": "(270) 667-5389",
     "role": "Magistrate"
    }
   ],
@@ -10100,6 +10814,11 @@
  "21235": {
   "body": "Fiscal Court",
   "county": "Whitley",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Whitley%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -10109,24 +10828,28 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "cimahouse@gmail.com",
-    "name": "Mondo Cima",
-    "phone": "(606) 528-6685",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "scott-harrison@hotmail.com",
     "name": "Scotty Harrison",
     "phone": "(606) 215-1863",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "cimahouse@gmail.com",
+    "name": "Mondo Cima",
+    "phone": "(606) 528-6685",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
     "email": "wmjarboe@yahoo.com",
     "name": "Michael Jarboe",
     "phone": "(606) 549-6000",
     "role": "Magistrate"
    },
    {
+    "district": "4",
     "email": "raleigh.meadors62@gmail.com",
     "name": "Raleigh Meadors",
     "phone": "(606) 524-1592",
@@ -10256,6 +10979,11 @@
  "21239": {
   "body": "Fiscal Court",
   "county": "Woodford",
+  "districtsFrom": {
+   "election": "2022-11-08",
+   "method": "text",
+   "url": "https://elect.ky.gov/results/2020-2029/2022ElectionReports/GeneralRecaps/Woodford%20County.pdf"
+  },
   "form": "magistrate",
   "members": [
    {
@@ -10265,51 +10993,59 @@
     "role": "County Judge/Executive"
    },
    {
-    "email": "lblackford@woodfordcountyky.gov",
-    "name": "Larry G. Blackford",
-    "phone": "(859) 492-4075",
-    "role": "Magistrate"
-   },
-   {
-    "email": "jbrown@woodfordcountyky.gov",
-    "name": "Jackie Brown",
-    "phone": "(859) 621-9923",
-    "role": "Magistrate"
-   },
-   {
-    "email": "kcarl@woodfordcountyky.gov",
-    "name": "Kelly Carl",
-    "phone": "(859) 300-1133",
-    "role": "Magistrate"
-   },
-   {
-    "email": "wdowney@woodfordcountyky.gov",
-    "name": "William Downey",
-    "phone": "(859) 351-4429",
-    "role": "Magistrate"
-   },
-   {
-    "email": "jgentry@woodfordcountyky.gov",
-    "name": "John Gentry",
-    "phone": "(502) 680-6590",
-    "role": "Magistrate"
-   },
-   {
-    "email": "mgill@woodfordcountyky.gov",
-    "name": "Mary Ann Gill",
-    "phone": "(859) 873-8163",
-    "role": "Magistrate"
-   },
-   {
+    "district": "1",
     "email": "ltaylor@woodfordcountyky.org",
     "name": "Liles Taylor",
     "phone": "(859) 533-1897",
     "role": "Magistrate"
    },
    {
+    "district": "2",
+    "email": "jgentry@woodfordcountyky.gov",
+    "name": "John Gentry",
+    "phone": "(502) 680-6590",
+    "role": "Magistrate"
+   },
+   {
+    "district": "3",
     "email": "dvarner@woodfordcountyky.gov",
     "name": "Darrell Varner",
     "phone": "(859) 490-0335",
+    "role": "Magistrate"
+   },
+   {
+    "district": "4",
+    "email": "kcarl@woodfordcountyky.gov",
+    "name": "Kelly Carl",
+    "phone": "(859) 300-1133",
+    "role": "Magistrate"
+   },
+   {
+    "district": "5",
+    "email": "wdowney@woodfordcountyky.gov",
+    "name": "William Downey",
+    "phone": "(859) 351-4429",
+    "role": "Magistrate"
+   },
+   {
+    "district": "6",
+    "email": "lblackford@woodfordcountyky.gov",
+    "name": "Larry G. Blackford",
+    "phone": "(859) 492-4075",
+    "role": "Magistrate"
+   },
+   {
+    "district": "7",
+    "email": "mgill@woodfordcountyky.gov",
+    "name": "Mary Ann Gill",
+    "phone": "(859) 873-8163",
+    "role": "Magistrate"
+   },
+   {
+    "district": "8",
+    "email": "jbrown@woodfordcountyky.gov",
+    "name": "Jackie Brown",
+    "phone": "(859) 621-9923",
     "role": "Magistrate"
    }
   ],

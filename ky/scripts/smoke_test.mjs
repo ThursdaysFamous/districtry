@@ -613,7 +613,10 @@ try {
   //     no stub. At the anchor (Jefferson) the body is the Louisville Metro
   //     Council, read from the city roster, with the mayor first; at Frankfort
   //     (Franklin) it is a fiscal court led by its judge/executive. What is
-  //     asserted is that every person the shipped roster names is on the card.
+  //     asserted is that every person the shipped roster names is on the card,
+  //     and that every member the roster gives a 2022 district carries it
+  //     ("Magistrate, District 3"), so a district the builder matched cannot be
+  //     dropped by the card.
   for (const c of [
     { point: POINT, geoid: "21111", label: "Jefferson", body: /Louisville Metro Council/i },
     { point: "38.20090,-84.87330", geoid: "21073", label: "Franklin", body: /Fiscal court/i }
@@ -628,6 +631,14 @@ try {
       .concat((rec.officers || []).map((o) => o.name));
     const info = await cardText(page, "county");
     const text = info.text || "";
+    const badges = (rec.members || []).filter((m) => m.district != null).map((m) =>
+      new RegExp(String(m.role).replace(/[/]/g, "\\/") + ", (District " + m.district +
+        "|" + m.district + " District)", "i"));
+    if (c.geoid === "21073") {
+      check(`county shows the district each ${c.label} County magistrate won in 2022`,
+        badges.length > 0 && badges.every((re) => re.test(text)),
+        `members with a district ${badges.length}; missing: ${badges.filter((re) => !re.test(text)).map(String).join(", ") || "none"}`);
+    }
     check(`county names ${c.label} County's governing body and officers from the directory`,
       !info.error && names.length > 5 && names.every((n) => text.includes(n)) && c.body.test(text),
       `roster names ${names.length}; missing: ${names.filter((n) => !text.includes(n)).join(", ") || "none"} | card: ${text.slice(0, 160)}`);
