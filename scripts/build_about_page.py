@@ -127,12 +127,23 @@ def check_illinois_scope(fleet):
              "fix metros.json." % (il["scope"], served))
 
 
-def county_pages():
+def county_pages(fleet):
     """The per-county pages and the seats on them, from the generator that
-    writes them rather than from a count typed here."""
+    writes them rather than from a count typed here.
+
+    SERVED INSTANCES ONLY, for gap_files' reason: a dark instance's pages are
+    in the tree and excluded from the deploy, so counting them tells a reader
+    about pages they cannot open. It counted 542 for a served 529 the day
+    Tennessee's first commissioner pages were built, while Tennessee was dark.
+    Excluded instances are printed, as gap_files prints its own."""
     from build_county_pages import INSTANCES, load_instance  # noqa: E402
+    served = {e["tag"] for e in fleet}
     pages = seats = 0
     for inst in INSTANCES:
+        if inst["tag"] not in served:
+            note("%s is not in metros.json, so its county pages are not "
+                 "counted here — nothing serves them yet" % inst["tag"])
+            continue
         counties = load_instance(inst)[0]
         for rec in counties.values():
             pages += 1
@@ -385,7 +396,7 @@ EXTRA_CSS = """
 
 def build():
     fleet = instances()
-    pages, seats = county_pages()
+    pages, seats = county_pages(fleet)
     tabled, tables = table_names()
     gaps = recorded_gaps(fleet)
     jobs = weekly_jobs()
