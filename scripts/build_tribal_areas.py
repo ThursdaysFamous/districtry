@@ -172,6 +172,40 @@ ROSTER_BLOCKED = {
                "access control is not worked around, so no name is carried and "
                "the card links the nation.",
     },
+    "1355": {
+        "host": "www.grandportage.com",
+        "measured": "2026-10-10",
+        "why": "The Bureau of Indian Affairs lists www.grandportage.com as the "
+               "band's website, and that page names no council member (read "
+               "2026-10-10). The Minnesota Chippewa Tribe's page names two Grand "
+               "Portage officers, but not the whole council, so no name is carried "
+               "and the card links the band.",
+    },
+    "2270": {
+        "host": "www.millelacsband.com",
+        "measured": "2026-10-10",
+        "why": "The band's own pages describe its Band Assembly (a Speaker and "
+               "three District Representatives) without naming who holds those "
+               "seats (read 2026-10-10), so no name is carried and the card links "
+               "the band.",
+    },
+    "2985": {
+        "host": "www.prairieisland.org",
+        "measured": "2026-10-10",
+        "why": "The community's website could not be read from where this project "
+               "is built, because its security certificate could not be checked "
+               "(2026-10-10). Whether the fault is the site's or this project's "
+               "connection is not settled, so no name is carried and the card links "
+               "the community.",
+    },
+    "3100": {
+        "host": "www.redlakenation.org",
+        "measured": "2026-09-29",
+        "why": "The nation's own site is the authority for its council, and that "
+               "site answered this project's robots.txt request with an automated "
+               "challenge page (measured 2026-09-29). A check like that is not "
+               "worked around, so no name is carried and the card links the nation.",
+    },
 }
 
 # Where a nation publishes its own council, for the nations whose page answers
@@ -474,18 +508,49 @@ def _seat(gov):
     return gov.get("state") or None
 
 
-def _population_note(counts, known, code, cls):
+def _population_note(counts, known, code, cls, share=1.0, state=None):
     """What the Census says lives on this parcel, in the card's own words."""
     if (code, cls) not in known:
         return ("Not counted. This land was added to the Census's map after the "
                 "2020 count, so no census population for it has been published.")
     people = counts.get((code, cls))
+    return population_note(people, True, share, state, cls)
+
+
+# The Census counts a parcel WHOLE, and a parcel can cross a state line. Until
+# 2026-10-10 the card printed that whole count over the part inside the state,
+# so Minnesota's 3.5% sliver of a Ho-Chunk trust land read "730 people" when
+# the Census counted 730 over all of it, most of which lies in Wisconsin. The
+# count is still the only one published, so it is kept and said to be the
+# whole parcel's. Below this share a parcel is called split; above it the
+# difference is a drafting sliver and the count stands as the parcel's own.
+SPLIT_SHARE = 0.995
+
+_LAND_WORD = {"reservation": "reservation", "trust-land": "trust land",
+              "state-reservation": "reservation"}
+
+
+def population_note(people, counted, share, state, cls):
+    """The card's population sentence from the shipped fields alone, so the
+    offline restamp and --check write and hold the same words as a build."""
+    if not counted:
+        return ("Not counted. This land was added to the Census's map after the "
+                "2020 count, so no census population for it has been published.")
     if people is None:
         return ("Not published. The Census counted this land in 2020 and gives "
                 "no population for it.")
+    split = share is not None and share < SPLIT_SHARE and state
     if people == 0:
+        if split:
+            return ("Nobody lived on this %s at the 2020 census, counted over all "
+                    "of it." % _LAND_WORD.get(cls, "land"))
         return "Nobody lived here at the 2020 census."
-    return "{:,} people at the 2020 census.".format(people)
+    if not split:
+        return "{:,} people at the 2020 census.".format(people)
+    pct = 100 * share
+    part = "under 1%" if pct < 1 else "about %d%%" % round(pct)
+    return ("{:,} people at the 2020 census, counted over the whole {}; "
+            "{} of it lies in {}.").format(people, _LAND_WORD.get(cls, "land"), part, state)
 
 
 # On a statistical area the Census's subdivisions are not known to be council
@@ -544,7 +609,7 @@ def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils
             # list nobody looked for, so a card that re-derived either from the
             # raw fields would be guessing at what this builder measured. The
             # raw values stay beside them for anything that wants to compute.
-            "populationNote": _population_note(counts, known, code, cls),
+            "populationNote": _population_note(counts, known, code, cls, clip["share"], state),
             "districtsNote": _districts_note(district_names, cls),
             "areaKm2": round(clip["inside_km2"], 4),
             "wholeAreaKm2": round(clip["whole_km2"], 4),
@@ -643,6 +708,10 @@ def stamp_rosters():
         doc = json.load(open(path))
         for f in doc["features"]:
             stamp(f, councils, doc.get("state"))
+            p = f["properties"]
+            p["populationNote"] = population_note(
+                p.get("population"), p.get("countedIn2020"), p.get("shareInState"),
+                doc.get("state"), p.get("landClass"))
         with open(path, "w") as fh:
             json.dump(doc, fh)
             fh.write("\n")
@@ -943,6 +1012,13 @@ def check():
                     raise RuntimeError("%s: AIANNH %s lists several governments where "
                                        "the join names one" % (tag, p["aiannh"]))
                 gov = bia.get(p["nation"])
+            if p.get("populationNote") != population_note(
+                    p.get("population"), p.get("countedIn2020"),
+                    p.get("shareInState"), doc["state"], p.get("landClass")):
+                raise RuntimeError(
+                    "%s: AIANNH %s's population sentence is not what its own "
+                    "count and share give — run build_tribal_areas.py --rosters"
+                    % (tag, p["aiannh"]))
             if gov is None:
                 raise RuntimeError("%s names %r, which the Bureau's list does not "
                                    "carry" % (tag, p["nation"]))
@@ -1103,6 +1179,15 @@ def selftest():
                             "2980", "trust-land") == "Nobody lived here at the 2020 census."
     assert _population_note({("2980", "trust-land"): 1529}, {("2980", "trust-land")},
                             "2980", "trust-land") == "1,529 people at the 2020 census."
+    # A parcel crossing a state line is counted whole, so the card says so
+    # rather than crediting the sliver with every person on the parcel.
+    assert population_note(730, True, 0.035382, "Minnesota", "trust-land") == (
+        "730 people at the 2020 census, counted over the whole trust land; "
+        "about 4% of it lies in Minnesota.")
+    assert population_note(2737, True, 0.005669, "Iowa", "reservation").endswith(
+        "under 1% of it lies in Iowa.")
+    assert population_note(4, True, 0.998663, "Wisconsin", "trust-land") == (
+        "4 people at the 2020 census.")
     assert _districts_note([]).startswith("None.")
     assert _districts_note(["B District", "A District"]) == "A District, B District"
 

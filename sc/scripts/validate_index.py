@@ -95,8 +95,8 @@ MIN_REGISTER_LAYER = 8
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "sc-senate", "county", "school-district-unified", "sc-house",
-    "zip-code", "municipality", "police-station", "fire-station",
-    "post-office",
+    "county-council", "zip-code", "municipality", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -106,6 +106,7 @@ GEOMETRY_FILES = {
     "congress-districts.json": (7, 7),  # The 7 U.S. House districts, TIGERweb layer 0 (CD120).
     "sc-senate-districts.json": (46, 46),  # The 46 South Carolina Senate districts.
     "sc-house-districts.json": (124, 124),  # The 124 South Carolina House districts.
+    "sc-county-council-districts.json": (315, 315),  # The 315 county council districts in all 46 counties, from the state Revenue and Fiscal Affairs Office (sc/scripts/build_sc_county_council_districts.py).
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -113,6 +114,7 @@ ROSTER_FILES = {
     "congress-roster.json": 7,  # U.S. House (SC) roster, refreshed weekly by update-sc-congress-roster.yml.
     "sc-senate-members.json": 42,  # South Carolina Senate roster from the General Assembly's own member pages, refreshed weekly. The floor is below 46 because a vacant seat is a real event; the chamber listed all 46 on 2026-10-10.
     "sc-house-members.json": 114,  # South Carolina House roster from the General Assembly's own member pages, refreshed weekly. The floor is below 124 for the same reason; the chamber listed all 124 on 2026-10-10.
+    "sc-county-council-members.json": 46,  # County council members, one key per county FIPS, from the Election Commission's certified results, refreshed weekly by update-sc-county-council-roster.yml.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 

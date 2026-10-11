@@ -1,5 +1,5 @@
 {
- "note": "Who sits on each Wisconsin, Michigan and Illinois nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
+ "note": "Who sits on each Wisconsin, Michigan, Illinois and Minnesota nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
  "councils": {
   "0140": {
    "source": "nation",
@@ -38,7 +38,7 @@
      "note": "the same page also spells it Connors"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "0170": {
    "source": "nation",
@@ -68,7 +68,50 @@
      "role": "Treasurer"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
+  },
+  "0335": {
+   "source": "nation",
+   "page": "https://boisforte.com/departments/tribal-council/",
+   "pages": [
+    "https://boisforte.com/departments/tribal-council/"
+   ],
+   "members": [
+    {
+     "name": "Carlos Hernandez",
+     "role": "Chairperson",
+     "phone": "218-757-3261 x 1260",
+     "email": "carloshernandez@boisforte-nsn.gov"
+    },
+    {
+     "name": "Robert Moyer",
+     "role": "Vice-Chairperson",
+     "district": "District II",
+     "phone": "218-753-4542",
+     "email": "rmoyer@boisforte-nsn.gov"
+    },
+    {
+     "name": "David Morrison, Sr.",
+     "role": "Secretary Treasurer",
+     "phone": "218-757-3261 x 1267",
+     "email": "davidmorrisonsr@boisforte-nsn.gov"
+    },
+    {
+     "name": "Jeneal Goggleye",
+     "role": "District Representative",
+     "district": "District I",
+     "phone": "218-757-3261 x 1262",
+     "email": "jgoggleye@boisforte-nsn.gov"
+    },
+    {
+     "name": "Mildred R. Holmes",
+     "role": "District Representative",
+     "district": "District I",
+     "phone": "218-757-3261 x 1263",
+     "email": "mildredholmes@boisforte-nsn.gov"
+    }
+   ],
+   "read": "2026-10-10"
   },
   "1125": {
    "source": "nation",
@@ -101,7 +144,7 @@
      "district": "District II"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "1135": {
    "source": "nation",
@@ -135,7 +178,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "1370": {
    "source": "nation",
@@ -173,7 +216,7 @@
      "role": "Councilor"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "1450": {
    "source": "nation",
@@ -260,7 +303,7 @@
      "email": "David.Greendeer@ho-chunk.com"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "1550": {
    "source": "nation",
@@ -290,7 +333,7 @@
      "role": "Sergeant-at-Arms"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "1610": {
    "source": "nation",
@@ -348,7 +391,8 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-06",
+   "carriedFrom": "2026-10-06"
   },
   "1815": {
    "source": "nation",
@@ -386,7 +430,7 @@
      "role": "Member"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "1825": {
    "source": "state-list",
@@ -443,7 +487,8 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-06",
+   "carriedFrom": "2026-10-06"
   },
   "1830": {
    "source": "nation",
@@ -489,7 +534,40 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
+  },
+  "1940": {
+   "source": "nation",
+   "page": "https://www.llojibwe.org/government/government.html",
+   "pages": [
+    "https://www.llojibwe.org/government/government.html"
+   ],
+   "members": [
+    {
+     "name": "Faron Jackson, Sr",
+     "role": "Chairman"
+    },
+    {
+     "name": "Cindy Kingbird",
+     "role": "Secretary/Treasurer"
+    },
+    {
+     "name": "Jonathan White",
+     "role": "District Representative",
+     "district": "District I"
+    },
+    {
+     "name": "Steve White",
+     "role": "District Representative",
+     "district": "District II"
+    },
+    {
+     "name": "Leon Staples",
+     "role": "District Representative",
+     "district": "District III"
+    }
+   ],
+   "read": "2026-10-10"
   },
   "1963": {
    "source": "nation",
@@ -571,7 +649,46 @@
      "termEnds": "2027"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
+  },
+  "2055": {
+   "source": "nation",
+   "page": "https://lowersioux.com/community-council/",
+   "pages": [
+    "https://lowersioux.com/community-council/"
+   ],
+   "members": [
+    {
+     "name": "Joseph O’Brien",
+     "role": "President",
+     "email": "joey.obrien@lowersioux-nsn.gov"
+    },
+    {
+     "name": "Robert Prescott",
+     "role": "Vice President",
+     "phone": "507-697-6185",
+     "email": "bob.prescott@lowersioux-nsn.gov"
+    },
+    {
+     "name": "Kristi Schoen",
+     "role": "Secretary",
+     "phone": "507-697-6185",
+     "email": "kristi.schoen@lowersioux-nsn.gov"
+    },
+    {
+     "name": "Tamara Desjarlais",
+     "role": "Treasurer",
+     "phone": "507-697-6185",
+     "email": "tamara.desjarlais@lowersioux-nsn.gov"
+    },
+    {
+     "name": "Dawn Pendleton",
+     "role": "Assistant Secretary/Treasurer",
+     "phone": "507-697-6185",
+     "email": "dawn.pendleton@lowersioux-nsn.gov"
+    }
+   ],
+   "read": "2026-10-10"
   },
   "2150": {
    "source": "nation",
@@ -616,7 +733,7 @@
      "district": "Bradley District"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "2175": {
    "source": "nation",
@@ -662,7 +779,77 @@
      "role": "Legislator"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
+  },
+  "2285": {
+   "source": "nation",
+   "page": "https://mnchippewatribe.org/governance/tribal-executive-committee/",
+   "pages": [
+    "https://mnchippewatribe.org/governance/tribal-executive-committee/"
+   ],
+   "members": [
+    {
+     "name": "Carlos Hernandez",
+     "role": "President",
+     "note": "Bois Forte Reservation Chairman"
+    },
+    {
+     "name": "Faron Jackson, Sr.",
+     "role": "Vice President",
+     "note": "Leech Lake Reservation Chairman"
+    },
+    {
+     "name": "April M. McCormick",
+     "role": "Secretary",
+     "note": "Grand Portage Reservation Secretary/Treasurer"
+    },
+    {
+     "name": "Bruce Savage",
+     "role": "Treasurer",
+     "note": "Fond du Lac Reservation Chairman"
+    },
+    {
+     "name": "Cindy Jackson Kingbird",
+     "role": "Member",
+     "note": "Leech Lake Reservation Secretary/Treasurer"
+    },
+    {
+     "name": "Virgil Wind",
+     "role": "Member",
+     "note": "Mille Lacs Reservation Chief Executive"
+    },
+    {
+     "name": "Sheldon R. Boyd",
+     "role": "Member",
+     "note": "Mille Lacs Reservation Secretary/Treasurer"
+    },
+    {
+     "name": "Robert “Bobby” Deschampe",
+     "role": "Member",
+     "note": "Grand Portage Reservation Chairman"
+    },
+    {
+     "name": "Wayne Dupuis",
+     "role": "Member",
+     "note": "Fond du lac Reservation Secretary/Treasurer"
+    },
+    {
+     "name": "David C. Morrison, Sr.",
+     "role": "Member",
+     "note": "Bois Forte Reservation Secretary/Treasurer"
+    },
+    {
+     "name": "Michael Fairbanks",
+     "role": "Member",
+     "note": "White Earth Reservation Chairman"
+    },
+    {
+     "name": "Jacob McArthur",
+     "role": "Member",
+     "note": "White Earth Reservation Secretary/Treasurer"
+    }
+   ],
+   "read": "2026-10-10"
   },
   "2560": {
    "source": "nation",
@@ -726,7 +913,7 @@
      "email": "khill@oneidanation.org"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "2890": {
    "source": "nation",
@@ -780,7 +967,7 @@
      "role": "Member At Large"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "2980": {
    "source": "nation",
@@ -898,7 +1085,7 @@
      "termEnds": "July 2027"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "3305": {
    "source": "nation",
@@ -928,7 +1115,7 @@
      "role": "Representative"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "3635": {
    "source": "nation",
@@ -1015,13 +1202,35 @@
      "phone": "906-440-8294"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
+  },
+  "3680": {
+   "source": "nation",
+   "page": "https://shakopeedakota.org/government/how-we-operate/",
+   "pages": [
+    "https://shakopeedakota.org/government/how-we-operate/"
+   ],
+   "members": [
+    {
+     "name": "Cole W. Miller",
+     "role": "Chairman"
+    },
+    {
+     "name": "Natasha K. Hacker",
+     "role": "Vice-Chairwoman"
+    },
+    {
+     "name": "Ashley J. Cornforth",
+     "role": "Secretary/Treasurer"
+    }
+   ],
+   "read": "2026-10-10"
   },
   "3885": {
    "source": "state-list",
    "publisher": "Wisconsin Department of Administration",
    "page": "https://doa.wi.gov/DIR/Tribal-Leaders.pdf",
-   "listUpdated": "2026-07-08",
+   "listUpdated": "2026-10-07",
    "members": [
     {
      "name": "Robert VanZile Jr.",
@@ -1048,7 +1257,7 @@
      "role": "Council Member II"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
   },
   "4015": {
    "source": "nation",
@@ -1086,7 +1295,79 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-06"
+   "read": "2026-10-10"
+  },
+  "4445": {
+   "source": "nation",
+   "page": "https://www.uppersiouxcommunity-nsn.gov/page/board-of-trustees",
+   "pages": [
+    "https://www.uppersiouxcommunity-nsn.gov/page/board-of-trustees"
+   ],
+   "members": [
+    {
+     "name": "Kevin Jensvold",
+     "role": "Tribal Chairman",
+     "phone": "(320) 564-6326"
+    },
+    {
+     "name": "Caralyn Trutna",
+     "role": "Vice Chair",
+     "phone": "(320) 564-6327"
+    },
+    {
+     "name": "Camille Tanhoff",
+     "role": "Tribal Treasurer",
+     "phone": "(320) 564-6330"
+    },
+    {
+     "name": "Drew Brockman",
+     "role": "Tribal Secretary",
+     "phone": "(320) 564-6328"
+    },
+    {
+     "name": "Jeremy Hamilton",
+     "role": "Member at Large",
+     "phone": "(320) 564-6329"
+    }
+   ],
+   "read": "2026-10-10"
+  },
+  "4595": {
+   "source": "nation",
+   "page": "https://www.whiteearth.com/rbc/district-iii",
+   "pages": [
+    "https://www.whiteearth.com/rbc/chairman",
+    "https://www.whiteearth.com/rbc/secretary-treasurer",
+    "https://www.whiteearth.com/rbc/district-i",
+    "https://www.whiteearth.com/rbc/district-ii",
+    "https://www.whiteearth.com/rbc/district-iii"
+   ],
+   "members": [
+    {
+     "name": "Michael Fairbanks",
+     "role": "Chairman"
+    },
+    {
+     "name": "Jacob McArthur",
+     "role": "Secretary-Treasurer"
+    },
+    {
+     "name": "Henry George Fox",
+     "role": "District Representative",
+     "district": "District I"
+    },
+    {
+     "name": "Alrick \"Son\" Accobee",
+     "role": "District Representative",
+     "district": "District II"
+    },
+    {
+     "name": "Laura Lee Erickson",
+     "role": "District Representative",
+     "district": "District III"
+    }
+   ],
+   "read": "2026-10-10"
   }
  }
 }

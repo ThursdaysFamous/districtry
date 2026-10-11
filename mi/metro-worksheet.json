@@ -887,7 +887,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mi-shell-v19",
+    "cache_name": "districtry-mi-shell-v20",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",

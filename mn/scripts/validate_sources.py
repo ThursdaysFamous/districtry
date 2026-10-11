@@ -324,6 +324,27 @@ PROVENANCE = [
             "this method."
         ),
     },
+    {
+        "layer": "Tribal government areas (Minnesota)",
+        "app_file": "tribal-areas.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
+        "note": (
+            "The Census's American Indian / Alaska Native areas service, "
+            "current vintage, reservation + off-reservation trust land "
+            "(always name the service beside a layer id, since those ids mean "
+            "other classes in tigerWMS_Current). Minnesota holds 22 areas, 11 "
+            "reservations and 11 pieces of trust land, carrying 13 nations. THE "
+            "SET MOVES AND NOT ON A REDISTRICTING CALENDAR: land enters the map "
+            "when the United States takes it into trust, so a vintage comparison "
+            "is the only thing that sees a new parcel. "
+            "scripts/build_tribal_areas.py --check is OFFLINE and proves the "
+            "land-to-government join and the shipped properties, never that the "
+            "Census has not added an area, so this manifest is what watches the "
+            "service. The nine councils carried are re-read weekly by "
+            "update-tribal-councils.yml; the other four nations are in "
+            "build_tribal_areas.ROSTER_BLOCKED."
+        ),
+    },
 ]
 
 ENDPOINTS = [

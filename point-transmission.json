@@ -289,6 +289,7 @@
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "voting-precinct",
         "watershed-district",
@@ -434,6 +435,7 @@
       "atpoint_hooks_fired": 2,
       "layer_ids": [
         "county",
+        "county-council",
         "fire-station",
         "municipality",
         "police-station",
@@ -464,6 +466,7 @@
       "atpoint_hooks_fired": 2,
       "layer_ids": [
         "county",
+        "county-commissioner",
         "fire-station",
         "municipality",
         "police-station",
