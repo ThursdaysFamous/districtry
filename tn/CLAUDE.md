@@ -116,7 +116,22 @@ results and minutes are behind the same kind of robots.txt refusal and its page 
 date), Dyer (it letters its districts A to J and the state's map numbers them 1 to 10, with
 nothing published that pairs the two), Greene (its page lists District 5 as open while the
 county's own September committee list seats the man elected there) and Cumberland (its site
-answered every request with HTTP 429). **A PARSER'S `TITLE` IS A CARD'S WORD AND NOTHING ELSE**:
+answered every request with HTTP 429). **A THIRD TRANCHE OF 16 JOINED THE SAME DAY, OUT OF 36
+TRIED**: 49 counties, 867 seats, 864 named, the third vacancy Polk District 2, which the county's
+page states. Twelve were checked against their own August results (Benton, Cannon, Cheatham,
+Chester, Cocke, Crockett, DeKalb, Hickman, Marion, Obion, Stewart, Unicoi — Crockett's list is its
+election commission's own page, as the county government publishes none), and four on county
+documents from after the election that name members by district (Claiborne's "term ends August
+2030" on every member plus the outgoing body's roll call for the twelve who continue, Fentress's
+21 September resolution signed by all ten by district, Polk's September commissioner list,
+Scott's election commission list of officeholders by district). Twenty were held: fourteen with
+nothing that confirms the page is current or which district each member sits for, and six whose
+page cannot be used as it stands — four disagree with the county's own results or later documents
+(Hancock, Johnson, Overton, Sequatchie), Smith leaves three districts' write-in seats unnamed
+without calling them vacant, and Houston's layout separates two members from any district
+heading. **A CHAIR NAMED ON A PAGE IS NOT RECORDED UNLESS SOMETHING SHOWS THE NEW
+COMMISSION ELECTED THEM**: the chairs are chosen in September, and Cocke's and Claiborne's pages
+both print one that nothing confirms for the new term. **A PARSER'S `TITLE` IS A CARD'S WORD AND NOTHING ELSE**:
 three of the twenty kept a compiled pattern under that name, which the scraper would have
 shipped as the seat title, so it now refuses a non-text `TITLE` or `BODY` at load. A county that cannot be read keeps its
 last good record for 45 days, dated to the day it was read, and past that the weekly run

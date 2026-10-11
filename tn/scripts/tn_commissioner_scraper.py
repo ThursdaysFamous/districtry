@@ -38,8 +38,9 @@ read on a government host (a results file behind a robots.txt refusal, or none
 published), a county joins on county documents from after 1 September 2026
 instead — a roster headed with the new term, the new commission's minutes or
 committee list, an election commission's list of officeholders — and its
-docstring says which, and what they did NOT establish. Five counties were held
-back on 2026-10-11 for failing this; tn/WATCH.md names them and why.
+docstring says which, and what they did NOT establish. Twenty-five counties
+were held back on 2026-10-11 for failing this or for a page that disagrees
+with the results; tn/WATCH.md names each and what it waits on.
 
 THE CLIENT, AND WHAT IT ASKS FIRST
 -----------------------------------
