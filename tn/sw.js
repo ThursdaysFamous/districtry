@@ -63,6 +63,7 @@ const ROSTER_URLS = [
   "./data/app/congress-roster.json",
   "./data/app/tn-senate-members.json",
   "./data/app/tn-house-members.json",
+  "./data/app/tn-commissioners.json",
   "./data/app/coverage-gaps.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */

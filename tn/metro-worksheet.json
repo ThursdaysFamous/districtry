@@ -338,7 +338,7 @@
             "url": "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/2"
           }
         ],
-        "people": "None yet. No state office publishes who sits on a county commission: the Division of Elections' results of the 6 August 2026 election carry no county races, so the names have to come from each county's own pages, and this app has not read them yet. Many counties elect two or three members from one district, and the state's layer carries no seat count, so the card never says how many people hold a district. Recorded as gap tn-county-commissioners.",
+        "people": "Each county's own published list of its commission (in Nashville, the Metro Council), read every week, in the counties this app has reached so far; the county commission page lists them. Each county's list was checked against that county's own results of the 6 August 2026 election before its names were added. No state office publishes who sits on a county commission, so in every other county the card says the names are not on it yet; recorded as gap tn-county-commissioners.",
         "applies": "Tennessee — statewide, all 95 counties, 859 districts."
       }
     },
@@ -561,6 +561,11 @@
         "note": "Tennessee House roster, one record per seat on the same terms; House 31 and 84 read vacant on 2026-10-10."
       },
       {
+        "file": "tn-commissioners.json",
+        "min_keys": 13,
+        "note": "County commission members by district, read from each county's own page and refreshed weekly by update-tn-commissioner-roster.yml (tn/scripts/tn_commissioner_scraper.py + build_tn_commissioner_roster.py). Keyed by 5-digit county code; a county joins by having a module in tn/scripts/tn_commission_parsers/."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -594,6 +599,11 @@
       "file": "update-tn-legislature-roster.yml",
       "purpose": "Tennessee Senate and Tennessee House rosters (the Legislature's district map on TNMap, with Open States)",
       "schedule": "Tue 17:15 UTC"
+    },
+    {
+      "file": "update-tn-commissioner-roster.yml",
+      "purpose": "Tennessee county commission members, read from each county's own page (tn/scripts/tn_commission_parsers/, one module per county)",
+      "schedule": "Wed 17:15 UTC"
     },
     {
       "file": "tn-validate-sources.yml",

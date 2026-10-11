@@ -12566,14 +12566,58 @@ function initTennesseeExplorer() {
    * from one district, and the state's layer carries no seat count, so the
    * card says which district a point is in and never how many people hold it.
    *
-   * NO NAMES YET. No state office publishes who sits on a county commission:
-   * the Division of Elections' results carry no county races, so the names
-   * have to come county by county from each county's own pages. Until a
-   * county's roster ships, the card says so rather than guessing. Recorded as
-   * gap tn-county-commissioners. ---------- */
+   * THE NAMES COME COUNTY BY COUNTY. No state office publishes who sits on
+   * a county commission: the Division of Elections' results carry no county
+   * races, so tn-commissioners.json is built from each county's own page,
+   * a tranche at a time, and refreshed weekly
+   * (tn/scripts/tn_commissioner_scraper.py + build_tn_commissioner_roster.py).
+   * A county in the file names every seat in the district, each with its seat
+   * label and role where the county prints one, and its countywide members
+   * below them; a county absent from it keeps the sentence saying this app has
+   * not named it yet. The roster's own failure is not this layer's failure: a
+   * fetch miss degrades to that same sentence rather than to an error card.
+   * Recorded as gap tn-county-commissioners. ---------- */
   var loadTnCommissionDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/tn-commission-districts.json", {}, 2);
   });
+  var loadTnCommissioners = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-commissioners.json", {}, 2);
+  });
+  var TN_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  // "2026-10-11" -> "11 October 2026"; null for anything else, so a malformed
+  // date drops its row rather than printing as something it is not.
+  function tnReadDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return String(Number(m[3])) + " " + TN_MONTHS[Number(m[2]) - 1] + " " + m[1];
+  }
+  // A seat label as the county prints it: "A" reads "Seat A", while
+  // "Position 1" and "Seat 10" already say what they are.
+  function tnSeatLabel(seat) {
+    if (seat == null || seat === "") return null;
+    var s = String(seat);
+    return /^[A-Za-z]{2,}/.test(s) ? s : "Seat " + s;
+  }
+  function tnPersonRows(members, title) {
+    var people = [], vacancies = [];
+    (members || []).forEach(function (m) {
+      if (m.vacant) {
+        vacancies.push(tnSeatLabel(m.seat));
+        return;
+      }
+      if (!m.name) return;
+      var note = [];
+      if (tnSeatLabel(m.seat)) note.push(tnSeatLabel(m.seat));
+      if (m.role) note.push(String(m.role));
+      var person = { name: String(m.name), badge: title };
+      if (note.length) person.note = note.join(" \u00b7 ");
+      if (m.phone) person.phone = String(m.phone);
+      if (m.email) person.email = String(m.email);
+      people.push(person);
+    });
+    return { people: people, vacancies: vacancies };
+  }
 
   registerLayer({
     id: "county-commissioner",
@@ -12590,14 +12634,28 @@ function initTennesseeExplorer() {
       return district != null ? String(district) : null;
     },
     query: function (point, seq) {
-      return queryFeatureAt(loadTnCommissionDistricts, point).then(function (feature) {
+      return Promise.all([
+        queryFeatureAt(loadTnCommissionDistricts, point),
+        loadTnCommissioners().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
         if (!feature) return null;
         var props = feature.properties || {};
+        var fips = findPropCI(props, ["countyfips"]);
+        var district = findPropCI(props, ["district"]);
+        var entry = (parts[1] && fips != null) ? parts[1][String(fips)] || null : null;
         return {
           seq: seq,
-          district: findPropCI(props, ["district"]),
+          district: district,
           county: findPropCI(props, ["county"]),
-          countyfips: findPropCI(props, ["countyfips"])
+          countyfips: fips,
+          members: (entry && entry.districts && district != null)
+            ? entry.districts[String(district)] || null : null,
+          atLarge: entry ? entry.atLarge || null : null,
+          title: entry && entry.seatTitle ? String(entry.seatTitle) : "Commissioner",
+          body: entry && entry.bodyName ? String(entry.bodyName) : null,
+          readAt: entry ? entry.readAt : null,
+          sourceUrl: entry ? entry.sourceUrl : null
         };
       });
     },
@@ -12608,6 +12666,9 @@ function initTennesseeExplorer() {
       var wrap = cardEl("div", "card-flush");
       var consolidated = result.countyfips != null
         ? TN_CONSOLIDATED_COUNTIES[String(result.countyfips)] : null;
+      var district = tnPersonRows(result.members, result.title);
+      // The members first: the header pill already carries "District N".
+      if (district.people.length) wrap.appendChild(renderPersonRows(district.people));
       var rows = [{
         label: "County",
         value: result.county != null ? String(result.county) : "Unknown county",
@@ -12621,16 +12682,53 @@ function initTennesseeExplorer() {
             ". This district elects members of the body that governs both."
         });
       }
-      rows.push({
-        label: "Who represents this district",
-        value: "Not named here yet. The state publishes these districts but " +
-          "not who holds them, and many counties elect two or three members " +
-          "from each district. This app is naming them county by county from " +
-          "each county's own pages, and this county is not done yet, so it " +
-          "names no one here rather than guessing."
-      });
+      if (result.members) {
+        var seats = result.members.length;
+        if (seats > 1) {
+          rows.push({ label: "Seats", value: "This district elects " + seats +
+            " members, each listed above." });
+        }
+        district.vacancies.forEach(function (seat) {
+          rows.push({ label: seat ? seat : "Seat",
+            value: "Vacant, as the county's own page says." });
+        });
+        var read = tnReadDate(result.readAt);
+        rows.push({
+          label: "Where these names come from",
+          value: (result.county != null ? String(result.county) : "The county") +
+            "'s own published list of its " + (result.body || "county commission") +
+            (read ? ", read " + read : "") + ". This app reads it every week."
+        });
+      } else {
+        rows.push({
+          label: "Who represents this district",
+          value: "Not named here yet. The state publishes these districts but " +
+            "not who holds them, and many counties elect two or three members " +
+            "from each district. This app is naming them county by county from " +
+            "each county's own pages, and this county is not done yet, so it " +
+            "names no one here rather than guessing."
+        });
+      }
       wrap.appendChild(renderFieldStack(rows));
+      var county = tnPersonRows(result.atLarge, result.title);
+      if (county.people.length) {
+        // Members elected countywide represent this point too, so they belong
+        // on the card, under their own label rather than mixed into the
+        // district's seats.
+        wrap.appendChild(renderSectionLabel("Elected countywide"));
+        wrap.appendChild(renderPersonRows(county.people, { tinted: true }));
+      }
       return wrap;
+    },
+    primaryLink: function (result) {
+      var named = (result.members || []).filter(function (m) { return m && m.name; });
+      if (named.length === 1 && named[0].profileUrl && safeHttpUrl(named[0].profileUrl)) {
+        return { label: String(named[0].name) + "'s page", url: safeHttpUrl(named[0].profileUrl) };
+      }
+      var url = safeHttpUrl(result.sourceUrl);
+      if (!url) return null;
+      return { label: (result.county != null ? String(result.county) : "County") + " " +
+        (result.body || "commission"), url: url };
     }
   });
 
