@@ -465,6 +465,7 @@
       "atpoint_hooks_fired": 2,
       "layer_ids": [
         "county",
+        "county-commissioner",
         "fire-station",
         "municipality",
         "police-station",

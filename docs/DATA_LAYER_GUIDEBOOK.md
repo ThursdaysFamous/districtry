@@ -62,7 +62,7 @@ in the researched-but-unbuilt backlog.
   "northcarolina": ["us-house", "nc-senate", "nc-house", "school-district-unified", "county", "county-subdivision", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
   "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
   "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"]
+  "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "county-commissioner", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -3328,17 +3328,17 @@ trusted.
   ],
   "tennessee": [
       {
-            "id": "tn-county-commission-districts",
-            "concept": "County commission district",
+            "id": "tn-county-commissioners",
+            "concept": "County commissioner",
             "area": "Tennessee — all 95 counties",
             "counties": [],
             "everyCounty": true,
             "kind": "no-source",
-            "layer": "county",
-            "summary": "Every Tennessee county is governed by a commission elected from districts, and this app does not yet show you which district you live in or who represents it.",
-            "why": "The districts are published statewide and the members county by county, and this app has not built them into a layer yet. Until it does, the County card names the county and nobody on its commission.",
+            "layer": "county-commissioner",
+            "summary": "This app shows which county commission district you live in, and not yet who represents it.",
+            "why": "The state publishes every county's districts but not who holds them, so the names have to come from each county's own pages, and this app has not read them yet.",
             "wanted": "Nothing from a reader — this one is ours to build.",
-            "blocker": "UNBUILT, NOT UNPUBLISHED, recorded so the silence on the County card is legible. Every Tennessee county elects its legislative body from districts, and the Comptroller of the Treasury publishes all of them in one statewide service (Redistricting_Address_Lookup, layer 2: 859 county commission districts across the 95 counties, read during this instance's planning on 2026-10-09). No state office publishes the members' names, so they come county by county from each county's own site; which counties publish them, and in what form, has NOT been measured here. THREE COUNTIES ARE CONSOLIDATED WITH THEIR PRINCIPAL CITY — Nashville-Davidson, Lynchburg-Moore and Hartsville-Trousdale, the three records TIGERweb's place layer carries for STATE='47' that are neither a city nor a town (measured 2026-10-10) — and there the body is a metropolitan council; the County card already names the consolidation. The layer is this instance's next change. Tennessee is dark as of 2026-10-10, so no reader is served this file yet."
+            "blocker": "Measured 2026-10-11. The Comptroller of the Treasury's statewide layer carries 859 districts in 95 counties and no member field. The Division of Elections' results of the 6 August 2026 election carry 219 offices and no county race. The University of Tennessee's County Technical Assistance Service lists 1,585 commissioners with no district, and it is not a government publication, so it is not used. A survey of 93 counties the same day (Davidson and Hamilton not yet surveyed) found the names by district on 78 counties' own commission pages, on one county's map service, in three election commissions' results and on two other county pages; nine had nothing readable — two behind a managed challenge, one refused by robots.txt, one with a certificate for the wrong name, one answering a server error on every path and four with no list found. Six of the 78 county pages still list members from before the September 2026 term and sixteen could not be compared with the results, so each county is checked against its August results before it ships. Not yet built: the names ship a group of counties at a time, each read weekly from its own government's page."
       },
       {
             "id": "tn-municipal-officeholders",
