@@ -27,6 +27,7 @@ Usage:
 import json
 import os
 import sys
+from validate_officeholder_names import is_vacancy_marker  # noqa: E402  (one reader for the word)
 
 SOURCE_URL = "https://www.oglecountyil.gov/staff_directory/county_board_members.php"
 
@@ -74,6 +75,13 @@ def resolve_roster(records):
             continue
         slot = roster.setdefault(district, {"members": [], "seats": SEATS_PER_DISTRICT,
                                             "sourceUrl": SOURCE_URL})
+        if is_vacancy_marker(name):
+            # The directory prints "VACANT" in the name cell of an empty seat
+            # (District 4, 2026-10-11). That is a fact about the seat, never a
+            # person, so it is counted the way Logan and Sangamon count theirs
+            # and the card and county page say "N of 3 seats is vacant".
+            slot["vacancies"] = slot.get("vacancies", 0) + 1
+            continue
         slot["members"].append(member_obj(rec))
     rank = {"Board Chair": 0, "Vice Chair": 1}
     for slot in roster.values():

@@ -95,8 +95,9 @@ MIN_REGISTER_LAYER = 11
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "tn-senate", "county", "tn-house", "school-district-unified",
-    "zip-code", "school-district-elementary", "school-district-secondary",
-    "municipality", "police-station", "fire-station", "post-office",
+    "county-commissioner", "zip-code", "school-district-elementary",
+    "school-district-secondary", "municipality", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -106,6 +107,7 @@ GEOMETRY_FILES = {
     "congress-districts.json": (9, 9),  # The 9 U.S. House districts, TIGERweb layer 4 (CD119) — the map the sitting members were elected from, drawn until 3 January 2027.
     "tn-senate-districts.json": (33, 33),  # The 33 Tennessee Senate districts.
     "tn-house-districts.json": (99, 99),  # The 99 Tennessee House districts.
+    "tn-commission-districts.json": (859, 859),  # The 859 county commission districts in 95 counties, from the Comptroller of the Treasury's statewide layer (tn/scripts/build_tn_commission_districts.py).
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -113,6 +115,7 @@ ROSTER_FILES = {
     "congress-roster.json": 9,  # U.S. House (TN) roster, refreshed weekly by update-tn-congress-roster.yml.
     "tn-senate-members.json": 33,  # Tennessee Senate roster, one record per seat, names from the Legislature's own district map on the state's TNMap service; refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "tn-house-members.json": 99,  # Tennessee House roster, one record per seat on the same terms; House 31 and 84 read vacant on 2026-10-10.
+    "tn-commissioners.json": 54,  # County commission members by district, read from each county's own page and refreshed weekly by update-tn-commissioner-roster.yml (tn/scripts/tn_commissioner_scraper.py + build_tn_commissioner_roster.py). Keyed by 5-digit county code; a county joins by having a module in tn/scripts/tn_commission_parsers/.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 

@@ -1069,7 +1069,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">10 layers — 3 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">11 layers — 4 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1078,7 +1078,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1118,6 +1118,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">sc-house-members.json, rebuilt weekly by CI from the South Carolina General Assembly's own House member pages.</td>
                 <td data-label="Where it applies">South Carolina — statewide, all 124 districts.</td>
+              </tr>
+              <tr id="layer-county-council">
+                <th scope="row"><span class="layer-name">County Council District</span><code>county-council</code></th>
+                <td data-label="What it answers">The county council district covering the point, the council member(s) it elects, and the members elected by the whole county.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/County_Council_Districts/FeatureServer/0" target="_blank" rel="noopener">South Carolina Revenue and Fiscal Affairs Office — County Council Districts, all 46 counties in one layer, pre-built and shipped with the app; 315 features, measured 2026-10-11. Simplified by Douglas-Peucker at a 20 m interval and refused over a 25 m fidelity ceiling, with every county's districts held to cover that county.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">sc-county-council-members.json, built from the South Carolina Election Commission's certified results and checked weekly by CI: each seat's most recent general election winner (2022 or 2024), dated, with party. A winner is not a claim about who sits today, and the card says so. Each county's own council page is read beside the results, and where it names someone else, calls a seat vacant, leaves the winner off or lists the winner as a former member (eleven seats on 2026-10-11) the card prints both.</td>
+                <td data-label="Where it applies">South Carolina — all 46 counties. Hampton elects its whole council at large and Jasper elects its council by the whole county from four residence townships, so both cards name every member.</td>
               </tr>
             </tbody>
           </table>
@@ -1365,6 +1376,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "South Carolina — statewide, all 124 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/sc/sources.html#dataset-county-council",
+      "identifier": "county-council",
+      "name": "County Council District",
+      "description": "The county council district covering the point, the council member(s) it elects, and the members elected by the whole county. sc-county-council-members.json, built from the South Carolina Election Commission's certified results and checked weekly by CI: each seat's most recent general election winner (2022 or 2024), dated, with party. A winner is not a claim about who sits today, and the card says so. Each county's own council page is read beside the results, and where it names someone else, calls a seat vacant, leaves the winner off or lists the winner as a former member (eleven seats on 2026-10-11) the card prints both.",
+      "url": "https://districtry.com/sc/sources.html#layer-county-council",
+      "isPartOf": {
+        "@id": "https://districtry.com/sc/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "South Carolina Revenue and Fiscal Affairs Office — County Council Districts, all 46 counties in one layer, pre-built and shipped with the app; 315 features, measured 2026-10-11. Simplified by Douglas-Peucker at a 20 m interval and refused over a 25 m fidelity ceiling, with every county's districts held to cover that county.",
+          "url": "https://gis.state.sc.us/arcgis/rest/services/Boundaries_Districts/County_Council_Districts/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "South Carolina — all 46 counties. Hampton elects its whole council at large and Jasper elects its council by the whole county from four residence townships, so both cards name every member"
       }
     },
     {

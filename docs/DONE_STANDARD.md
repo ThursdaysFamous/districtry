@@ -112,10 +112,15 @@ It is **not** an Illinois township. Eighty-four of those clear the line, and
 they are limited-purpose — roads, assessment, general assistance — while an
 unincorporated Illinois resident is governed generally by the county. They are
 still owed under entry 9 below, which is where Illinois's township officials
-already sit. No township or town in Iowa, Kentucky, Wisconsin or Minnesota
-reaches 25,000, so the question does not arise in those four today; if one ever
-does, it is answered by the general-purpose test above and not by a per-state
-exception.
+already sit. Nor is an Indiana township, for the same reason: measured
+2026-10-11, 61 clear the line, and the trustee runs township assistance, fire
+protection and cemeteries while the county governs an unincorporated resident.
+No active township or town in Iowa, Kentucky, Wisconsin, Minnesota, North
+Carolina, Oklahoma, South Carolina or Tennessee reaches 25,000 (North
+Carolina's townships govern nobody, and the last three states are divided into
+census county divisions, which are statistical areas), so the question does not
+arise in those eight today; if one ever does, it is answered by the
+general-purpose test above and not by a per-state exception.
 
 | app | units at 25,000+ | of which towns or townships |
 |---|---|---|
@@ -123,12 +128,20 @@ exception.
 | Illinois | 89 | — |
 | Michigan | 82 | 34 |
 | Minnesota | 43 | — |
+| North Carolina | 42 | — |
+| Indiana | 39 | — |
 | Wisconsin | 35 | — |
+| Tennessee (not yet live) | 28 | — |
 | Iowa | 18 | — |
 | Kentucky | 17 | — |
+| South Carolina (not yet live) | 17 | — |
+| Oklahoma | 16 | — |
 
-That is 388 governments across the seven statewide apps. San Francisco is one
-city, so its city tier is the whole app.
+That is 530 governments across the ten statewide apps and the two not yet
+live. The first seven rows were measured 2026-10-01 and the rest 2026-10-11;
+until then the scoring tool read a state it had not measured as one with nothing
+to answer, so Indiana, North Carolina and Oklahoma passed this entry unchecked.
+San Francisco is one city, so its city tier is the whole app.
 
 **A city is answered when a reader clicking inside it is told who governs that
 point.** Where the council elects by district, that means the districts are
