@@ -1032,7 +1032,7 @@ table.matrix code {
       with the relevant government office before relying on them for anything official.
     </div>
     <!-- ==== GENERATED:BEGIN sources-verified ==== -->
-        <p class="verified">Data last verified: <strong>September 30, 2026</strong></p>
+        <p class="verified">Data last verified: <strong>October 11, 2026</strong></p>
 <!-- ==== GENERATED:END sources-verified ==== -->
     <p class="lede">Where a source publishes nothing, the app says so rather than guessing — the
       <a href="./#gaps">missing-data panel</a> on the map is the standing list of what nobody publishes
@@ -1229,13 +1229,13 @@ table.matrix code {
             <tbody>
               <tr id="layer-county">
                 <th scope="row"><span class="layer-name">County</span><code>county</code></th>
-                <td data-label="What it answers">Which county contains the point.</td>
+                <td data-label="What it answers">Which county contains the point, who sits on its governing body, and who holds its elected county offices.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">Not yet shipped. Kentucky's county governing body is the fiscal court, and its districts and members arrive together in a later change; the card names no officeholder rather than guessing one. Recorded as the coverage gaps ky-fiscal-court and ky-county-officers.</td>
+                <td data-label="Who it names">Every county's governing body and elected officers, from the Kentucky Department for Local Government's county directory (kydlgweb.ky.gov/Counties/), one page per county; built by ky/scripts/build_ky_county_officials.py and refreshed weekly by update-ky-county-officials.yml. In 118 counties that is the fiscal court — the judge/executive and the magistrates or three commissioners; Jefferson and Fayette are merged governments, so their cards name the Louisville Metro Council and the Lexington-Fayette Urban County Council from the same directory's city entries. The officers are the county attorney, clerk, sheriff, jailer, coroner and property valuation administrator. The directory does not say which district a magistrate or commissioner holds and those lines are not drawn, so the card lists the whole court; recorded as the coverage gap ky-fiscal-court.</td>
                 <td data-label="Where it applies">Kentucky — statewide.</td>
               </tr>
               <tr id="layer-municipality">
@@ -1427,7 +1427,7 @@ table.matrix code {
       "@id": "https://districtry.com/ky/sources.html#dataset-county",
       "identifier": "county",
       "name": "County",
-      "description": "Which county contains the point. Not yet shipped. Kentucky's county governing body is the fiscal court, and its districts and members arrive together in a later change; the card names no officeholder rather than guessing one. Recorded as the coverage gaps ky-fiscal-court and ky-county-officers.",
+      "description": "Which county contains the point, who sits on its governing body, and who holds its elected county offices. Every county's governing body and elected officers, from the Kentucky Department for Local Government's county directory (kydlgweb.ky.gov/Counties/), one page per county; built by ky/scripts/build_ky_county_officials.py and refreshed weekly by update-ky-county-officials.yml. In 118 counties that is the fiscal court — the judge/executive and the magistrates or three commissioners; Jefferson and Fayette are merged governments, so their cards name the Louisville Metro Council and the Lexington-Fayette Urban County Council from the same directory's city entries. The officers are the county attorney, clerk, sheriff, jailer, coroner and property valuation administrator. The directory does not say which district a magistrate or commissioner holds and those lines are not drawn, so the card lists the whole court; recorded as the coverage gap ky-fiscal-court.",
       "url": "https://districtry.com/ky/sources.html#layer-county",
       "isPartOf": {
         "@id": "https://districtry.com/ky/sources.html#catalog"

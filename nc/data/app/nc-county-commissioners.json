@@ -1,0 +1,5230 @@
+{
+ "37001": {
+  "county": "Alamance",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Craig Turner",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ed Priola",
+    "note": "1 of these seats (Pamela Tyler Thompson, John Paisley, Jr., Ed Priola) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "John Paisley, Jr.",
+    "note": "1 of these seats (Pamela Tyler Thompson, John Paisley, Jr., Ed Priola) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Pamela Tyler Thompson",
+    "note": "1 of these seats (Pamela Tyler Thompson, John Paisley, Jr., Ed Priola) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Steve Carter",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37003": {
+  "county": "Alexander",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Josh Lail",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Larry G. Yoder",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Marty Pennell",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Robert Kent Herman",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ronnie L. Reese",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37005": {
+  "county": "Alleghany",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Billy (Bill) Osborne",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Garrison B. Wagoner",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Greg Walker",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Timothy (Timmy) Evans",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Wade (Bobby) Irwin",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37007": {
+  "county": "Anson",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Kyle Leary",
+    "party": "Unaffiliated",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Priscilla Ann Little",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Robert Mims",
+    "party": "Unaffiliated",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jamie Caudle",
+    "party": "Unaffiliated",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Lawrence Gatewood",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jarvis Woodburn",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Joshua E. Ellerbe, Sr.",
+    "party": "Democratic",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37009": {
+  "county": "Ashe",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Chuck Olive",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jerry D. Powers",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mike Eldreth",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Russell M. Killen",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Todd A. McNeill",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Wes Greene",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37011": {
+  "county": "Avery",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Dennis Aldridge",
+    "party": "Republican",
+    "seat": "Board seat",
+    "shortTerm": true,
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Junior Benfield",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Robert Burleson",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tim Phillips",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Wood Hall (Woodie) Young, Jr.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37013": {
+  "county": "Beaufort",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Ed Booth",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Frankie Waters",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Hood Richardson",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jerry E. Langley",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Randy Walker",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Stan Deatherage",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tandy Dunn",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37015": {
+  "county": "Bertie",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Lewis (L.C.) Hoggard III",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michael White",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Corey Ballance, Sr.",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Vivian B. Saunders",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ronald (Ron) Roberson",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37017": {
+  "county": "Bladen",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "David R. Gooden",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Arthur A. Bullock",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ophelia Munn-Goins",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Charles Ray Peterson",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rodney Hester",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Cameron McGill",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Danny L. Ellis II",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37019": {
+  "county": "Brunswick",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Randy Thompson",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "J.M. (Marty) Cooke",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Pat Sykes",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Forte",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Frank Williams",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37021": {
+  "county": "Buncombe",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Amanda Edwards",
+    "party": "Democratic",
+    "seat": "Chair",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Al Whitesides",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jennifer Horton",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Martin Moore",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Terri Wells",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07",
+    "unnamed": "Amanda Edwards won this seat on November 8, 2022 and then won the Chair seat on November 5, 2024, so has left this one. Whoever the board appointed is in no election result."
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Parker Sloan",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37023": {
+  "county": "Burke",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Brian Barrier",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Brittain",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Stroud",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Phil Smith",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Randy Burns",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37025": {
+  "county": "Cabarrus",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Chris Measmer",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kenny Wortman",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Larry G. Pittman",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Laura Blackwell Lindsey",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Lynn Shue",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37027": {
+  "county": "Caldwell",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Donnie Potter",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Branch",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mike LaBrose",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Patrick Starnes",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Randy Church",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37029": {
+  "county": "Camden",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Jason A. Banks",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Whitney (Sissy) Aydlett",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Randy Krainiak",
+    "party": "Republican",
+    "seat": "Courthouse District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Troy Leary",
+    "party": "Republican",
+    "seat": "Shiloh District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tiffney White",
+    "party": "Republican",
+    "seat": "South Mills District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37031": {
+  "county": "Carteret",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "David Quinn",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Chuck Shinn",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Chimer Clark",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mark Mansfield",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Marianne Waldrop",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Keith Moore",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Chris Chadwick",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37033": {
+  "county": "Caswell",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "David Wrenn",
+    "note": "1 of these seats (Tony Smith, David Wrenn) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tony Smith",
+    "note": "1 of these seats (Tony Smith, David Wrenn) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Frank Rose",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Finch Holt",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Greg Ingram",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04",
+    "unnamed": "Ethel Gwynn won this seat on November 5, 2024 and has since left it: the rest of the term is on the November 3, 2026 ballot. Whoever the board appointed meanwhile is in no election result."
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tim Yarbrough",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37035": {
+  "county": "Catawba",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Austin Allran",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Barbara Gale Beatty",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "C. Randall (Randy) Isenhower",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Cole Setzer",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Robert C. Abernethy, Jr.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37037": {
+  "county": "Chatham",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Karen Howard",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Amanda Robertson",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "David Delaney",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Katie Kenlan",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Franklin Gomez Flores",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37039": {
+  "county": "Cherokee",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Cal Stiles",
+    "party": "Republican",
+    "seat": "District I",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "seat": "District II",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04",
+    "unnamed": "Justin Hyde won this seat on November 5, 2024 and has since left it: the rest of the term is on the November 3, 2026 ballot. Whoever the board appointed meanwhile is in no election result."
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ben Adams",
+    "party": "Republican",
+    "seat": "District III",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dan Eichenbaum",
+    "party": "Republican",
+    "seat": "District IV",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "seat": "District V",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04",
+    "unnamed": "Alan Bryant won this seat on November 5, 2024 and has since left it: the rest of the term is on the November 3, 2026 ballot. Whoever the board appointed meanwhile is in no election result."
+   }
+  ]
+ },
+ "37041": {
+  "county": "Chowan",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Chris Evans",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bob Kirby",
+    "party": "Republican",
+    "seat": "District 1 Seat 02",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ron Cummings",
+    "party": "Republican",
+    "seat": "District 1 Seat 01",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Larry McLaughlin",
+    "party": "Republican",
+    "seat": "District 2 Seat 02",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tony Shaffer",
+    "party": "Republican",
+    "seat": "District 2 Seat 01",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ellis Lawrence",
+    "party": "Democratic",
+    "seat": "District 3 Seat 02",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tray Taylor",
+    "party": "Democratic",
+    "seat": "District 3 Seat 01",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37043": {
+  "county": "Clay",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Clay Logan",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dwight H. Penland",
+    "note": "1 of these seats (Randy Nichols, Dwight H. Penland) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Randy Nichols",
+    "note": "1 of these seats (Randy Nichols, Dwight H. Penland) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rob Peck",
+    "party": "Republican",
+    "seat": "Board seat",
+    "shortTerm": true,
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Scotty Penland",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37045": {
+  "county": "Cleveland",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Deb Hardin",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Doug Bridges",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Johnny Hutchins",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kevin Gordon",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tony Berry",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37047": {
+  "county": "Columbus",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Barbara Roseboro Featherson",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Chris Smith",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Giles E. (Buddy) Byrd",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Lavern Coleman",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brent Watts",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ricky Bullard",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Scott S. Floyd",
+    "party": "Republican",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37049": {
+  "county": "Craven",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Tom Mark",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jason R. Jones",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Beatrice Smith",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "ET Mitchell",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Shevel (Sherry) Hunt",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Chadwick Howard",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Denny Bucher",
+    "party": "Republican",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37051": {
+  "county": "Cumberland",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Marshall Faircloth",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Veronica B. Jones",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Glenn B. Adams",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeannette Council",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Henry Tyson",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kirk DeViere",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Pavan D. Patel",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37053": {
+  "county": "Currituck",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Kevin E. McCord",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Paul O'Neal",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tony Angell",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Selina S. Jarvis",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mike Payment",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Janet Williams Rose",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "J. Owen Etheridge",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37055": {
+  "county": "Dare",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Ervin Bateman",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Carson Creef",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Burrus",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07",
+    "unexpiredTerm": true
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rob Ross",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Robert L. (Bob) Woodard, Sr.",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Steve House",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mary Ellon D. Ballance",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37057": {
+  "county": "Davidson",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Chris Elliott",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Fred D. McClure",
+    "note": "1 of these seats (Tripp Kester, Fred D. McClure, Todd Yates) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Karen Watford",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Matt Mizell",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Steve Shell",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Todd Yates",
+    "note": "1 of these seats (Tripp Kester, Fred D. McClure, Todd Yates) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tripp Kester",
+    "note": "1 of these seats (Tripp Kester, Fred D. McClure, Todd Yates) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37059": {
+  "county": "Davie",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Benita Finney",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brent Shoaf",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mark Jones",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Richard B. Poindexter",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Terry Renegar",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37061": {
+  "county": "Duplin",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Elwood Garner",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dexter Edwards",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Justin C. Edwards",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jesse Dowe",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Wayne E. Branch",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37063": {
+  "county": "Durham",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Michelle Burton",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Lee",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nida Allam",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Stephen J. Valentine",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Wendy Jacobs",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37065": {
+  "county": "Edgecombe",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Evelyn Dancy Powell",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Viola Savage Harris",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Leonard Wiggins",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "George B. Thorne",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ralph Dawson Webb",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Donald C. Boswell",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "E. Wayne Hines",
+    "party": "Democratic",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37067": {
+  "county": "Forsyth",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Dan Besse",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Shai Woodbury",
+    "party": "Democratic",
+    "seat": "District A",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tonya D. McDaniel",
+    "party": "Democratic",
+    "seat": "District A",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Don Martin",
+    "party": "Republican",
+    "seat": "District B",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gloria D. Whisenhunt",
+    "party": "Republican",
+    "seat": "District B",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gray Wilson",
+    "party": "Republican",
+    "seat": "District B",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Richard V. Linville",
+    "party": "Republican",
+    "seat": "District B",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37069": {
+  "county": "Franklin",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Harry Foy",
+    "party": "Republican",
+    "seat": "At large Seat 06",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Stuart May",
+    "party": "Republican",
+    "seat": "At large Seat 07",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Logan Davis",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Roxanne Bragg",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mark Speed",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "David Bunn",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Michael Schriver",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37071": {
+  "county": "Gaston",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Allen R. Fraley",
+    "party": "Republican",
+    "seat": "Cherryville Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bob Hovis",
+    "party": "Republican",
+    "seat": "Crowders Mountain Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Cathy Cloninger",
+    "party": "Republican",
+    "seat": "Dallas Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott Shehan",
+    "party": "Republican",
+    "seat": "Gastonia Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tom Keigher",
+    "party": "Republican",
+    "seat": "Gastonia Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Chad Brown",
+    "party": "Republican",
+    "seat": "Riverbend Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jim Bailey",
+    "party": "Republican",
+    "seat": "South Point Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37073": {
+  "county": "Gates",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jonathan T. Craddock",
+    "party": "Democratic",
+    "seat": "Eure District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brian Keith Rountree",
+    "party": "Democratic",
+    "seat": "Gates District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Emily Truman",
+    "party": "Unaffiliated",
+    "seat": "Gatesville District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nathan Berryman",
+    "party": "Republican",
+    "seat": "Hobbsville District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dave Forsythe",
+    "party": "Republican",
+    "seat": "Sunbury District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37075": {
+  "county": "Graham",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Connie Orr",
+    "party": "Republican",
+    "seat": "Board seat",
+    "shortTerm": true,
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jacob Nelms",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Lynn Cody",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Meggan Smith",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Natasha Williams",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37077": {
+  "county": "Granville",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Zelodis Jay",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Robert (Rob) Williford II",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mark C. Griffin",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tony W. Cozart",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Russ May",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tim Karan",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jimmy Gooch",
+    "party": "Democratic",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37079": {
+  "county": "Greene",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Robert L. (Bobby) Taylor, Jr.",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Derek Burress",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jerry R. Jones",
+    "party": "Unaffiliated",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bennie Heath",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ray Johnson",
+    "party": "Unaffiliated",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37081": {
+  "county": "Guilford",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Kay Cashion",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "J. Carlvena Foster",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Alan Perdue",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Pat Tillman",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mary Beth Murphy",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Carly Cooke",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brandon Gray-Hill",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Frankie T. Jones, Jr.",
+    "party": "Democratic",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Skip Alston",
+    "party": "Democratic",
+    "seat": "District 8",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37083": {
+  "county": "Halifax",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Chenoa Richardson Davis",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Sammy Davis Webb",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Vernon J. Bryant",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jimmie Silver",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gary R. Redding",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Thomas Barrett",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37085": {
+  "county": "Harnett",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Barbara McKoy",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "W.H. (Bill) Morris",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "W. Brooks Matthews",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Eddie Jaggers",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Matthew Nicol",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37087": {
+  "county": "Haywood",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Brandon C. Rogers",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jennifer Best",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "L. Kevin Ensley",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Terry Ramey",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tommy Long",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37089": {
+  "county": "Henderson",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "J. Michael Edney",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sheila Franklin",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "William G. Lapsley",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rebecca McCall",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jay Egolf",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37091": {
+  "county": "Hertford",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "John D. Horton",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Leroy Douglas",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Andre M. Lassiter",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ronald J. Gatling",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "William (Bill) Mitchell, Jr.",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37093": {
+  "county": "Hoke",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Allen Thomas, Jr.",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Harry Southerland",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "James A. Leach",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mary Blue McCollum",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tony Hunt",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37095": {
+  "county": "Hyde",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "M. Shannon Swindell",
+    "seat": "Currituck Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07",
+    "writeIn": true
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeffrey G. Berry",
+    "party": "Unaffiliated",
+    "seat": "Fairfield Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Thomas Midgette",
+    "party": "Democratic",
+    "seat": "Lake Landing Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Randal Mathews",
+    "party": "Democratic",
+    "seat": "Ocracoke Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jan Moore",
+    "party": "Republican",
+    "seat": "Swan Quarter Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37097": {
+  "county": "Iredell",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Bert Connolly",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brad Stroud, Sr.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gene Houpe",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Melissa Neader",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scottie Brown",
+    "party": "Republican",
+    "seat": "Board seat",
+    "shortTerm": true,
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37099": {
+  "county": "Jackson",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Mark Letson",
+    "party": "Republican",
+    "seat": "Chair",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Todd Bryson",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John W. Smith",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jenny Lynn Hooper",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Michael Jennings",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37101": {
+  "county": "Johnston",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Michelle Pace Davis",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ted G. Godwin",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Richard D. (Dickie) Braswell",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "April Stephens",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Patrick Harris",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bill Stovall",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "R.S. (Butch) Lawter, Jr.",
+    "party": "Republican",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37103": {
+  "county": "Jones",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Charlie Dunn, Jr.",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "James Harper",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "April Philyaw Aycock",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Sondra Ipock Riggs",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Frank Emory",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mike Haddock",
+    "party": "Unaffiliated",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Charlie Gray",
+    "party": "Republican",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37105": {
+  "county": "Lee",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Cameron Sharpe",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mark Lovick",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Samantha Martin",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Robert Reives",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kirk D. Smith",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Andre Knecht",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Taylor Vorbeck",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37107": {
+  "county": "Lenoir",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Keith King",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Linda Rouse Sutton",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "J Mac Daughety",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Eric S. Rouse",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "June S. Cummings",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Preston L. Harris",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Roland Best",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37109": {
+  "county": "Lincoln",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Alex Patton",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bud Cesena",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jamie Lineberger",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mark L. Mullen",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Trent Carpenter",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37111": {
+  "county": "McDowell",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "David Walker",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Lynn Greene",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Patrick Ellis",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tony Brown",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Trisha Garner",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37113": {
+  "county": "Macon",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "John Shearl",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Danny Antoine",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Gary Shields",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Josh Young",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Barry Breeden",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37115": {
+  "county": "Madison",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Alan Wyatt",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "C. William (Bill) Briggs",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeremy Hensley",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Matthew (Matt) Wechtel",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Michael Garrison",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37117": {
+  "county": "Martin",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "David (Skip) Gurganus",
+    "party": "Republican",
+    "seat": "Eastern District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dempsey Bond, Jr.",
+    "party": "Democratic",
+    "seat": "Eastern District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeremiah Taylor",
+    "party": "Republican",
+    "seat": "Eastern District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Joe R. Ayers",
+    "party": "Republican",
+    "seat": "Western District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ronnie Smith",
+    "party": "Democratic",
+    "seat": "Western District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37119": {
+  "county": "Mecklenburg",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Arthur Griffin, Jr.",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Leigh Altman",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Yvette Townsend-Ingram",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Elaine Powell",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Vilma D. Leake",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "George Dunlap",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mark Jerrell",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Laura Meier",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Susan Rodriguez-McDowell",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37121": {
+  "county": "Mitchell",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Clayton Roberts",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dale Blevins",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Harley Masters",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jeff Harding",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Lee Ellis",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Steve Pitman",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37123": {
+  "county": "Montgomery",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "John Shaw",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Steven Hair",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "David (Chip) Hurley, Jr.",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeffery Winn Pope",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Steve Tedder",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37125": {
+  "county": "Moore",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Jim Von Canon",
+    "party": "Republican",
+    "seat": "District I",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Nick Picerno",
+    "party": "Republican",
+    "seat": "District II",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "John L. Ritter",
+    "party": "Republican",
+    "seat": "District III",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tom Adams",
+    "party": "Republican",
+    "seat": "District IV",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kurt Cook",
+    "party": "Republican",
+    "seat": "District V",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37127": {
+  "county": "Nash",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Marvin C. Arrington",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Fred Belfield, Jr.",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Freddy Howell",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sue Leggett",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "J. Wayne Outlaw",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Gwen Wilkins",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Robbie B. Davis",
+    "party": "Republican",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37129": {
+  "county": "New Hanover",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Bill Rivenbark",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Dane Scalise",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "LeAnn Pierce",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rob Zapple",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Stephanie Walker",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37131": {
+  "county": "Northampton",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Keith Hugh Edwards",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Keedra Whitaker",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Ed Martin",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Melvetta Broadnax Taylor",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kelvin Edwards",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37133": {
+  "county": "Onslow",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "John Davis",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Lisa Carpenter",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Paul Buchanan",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Robin L. Knapp",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Royce Bennett",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tim Foster",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tony Padgett",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37135": {
+  "county": "Orange",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Amy Fowler",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Sally Greene",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jamezetta R. Bedford",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jean Hamilton",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Marilyn Carter",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Earl McKee",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Phyllis Portie-Ascott",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37137": {
+  "county": "Pamlico",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Doug Brinson",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kari Forrest",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Thomas Andrew Mills",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Candy Bohmert",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Edward Lee Riggs, Jr.",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Carl J. Ollison",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ken Heath",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37139": {
+  "county": "Pasquotank",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Barry A. Overman",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Charles H. Jordan",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sam Davis III",
+    "party": "Democratic",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Lloyd E. Griffin III",
+    "party": "Democratic",
+    "seat": "Northern Inside",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Sean Lavin",
+    "party": "Republican",
+    "seat": "Northern Outside",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Clifford Shaw",
+    "party": "Democratic",
+    "seat": "Southern Inside",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07",
+    "unexpiredTerm": true
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jonathan Meads",
+    "party": "Republican",
+    "seat": "Southern Outside",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37141": {
+  "county": "Pender",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Brad George",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07",
+    "unexpiredTerm": true
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Randy Burton",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07",
+    "unexpiredTerm": true
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jerry D. Groves",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04",
+    "unnamed": "Ken Smith won this seat on November 5, 2024 and has since left it: the rest of the term is on the November 3, 2026 ballot. Whoever the board appointed meanwhile is in no election result."
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Brent Springer",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37143": {
+  "county": "Perquimans",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Charles E. Woodard",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "James William Ward",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Joseph W. Hoffler",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kathryn Treiber",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Timothy J. Corprew",
+    "party": "Unaffiliated",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Wallace Nelson",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37145": {
+  "county": "Person",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Antoinetta Cash Royster",
+    "note": "1 of these seats (Sherry Wilborn, Tracy Ellixson, Antoinetta Cash Royster) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Democratic",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jason Thomas",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kyle W. Puryear",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sherry Wilborn",
+    "note": "1 of these seats (Sherry Wilborn, Tracy Ellixson, Antoinetta Cash Royster) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tracy Ellixson",
+    "note": "1 of these seats (Sherry Wilborn, Tracy Ellixson, Antoinetta Cash Royster) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37147": {
+  "county": "Pitt",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Ann Floyd Huggins",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mary Perkins-Williams",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Christopher W. Nunnally",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Benji Holloman",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mark C. Smith",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Lauren S. White",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Melvin C. McLawhorn",
+    "party": "Democratic",
+    "seat": "District A",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Rochelle Brown",
+    "party": "Republican",
+    "seat": "District B",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mac Manning",
+    "party": "Democratic",
+    "seat": "District C",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37149": {
+  "county": "Polk",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "David Moore",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jennifer Hargett",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Myron Yoder",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Paul (Little) Beiler",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tommy W. Melton",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37151": {
+  "county": "Randolph",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Kenny Kidd",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Darrell Frye",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "David L. Allen",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Hope Haywood",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Lester Rivenbark",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37153": {
+  "county": "Richmond",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Andy Grooms",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jamie Gathings",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jason Gainey",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Smart",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Justin Dawkins",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rick Watkins",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Robin Roberts",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37155": {
+  "county": "Robeson",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Wixie Stephens",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Pauline H. Campbell",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "John E. Cummings",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Faline Locklear Dial",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Judy Oxendine Sampson",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "David L. Edge",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "H.T. (Tom) Taylor, Jr.",
+    "party": "Republican",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Lance Herndon",
+    "party": "Democratic",
+    "seat": "District 8",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37157": {
+  "county": "Rockingham",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Charlie Hall",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Houston Barrow",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Kallam",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Kevin Berger",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mark Richardson",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37159": {
+  "county": "Rowan",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Craig Pierce",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Greg Edds",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jim Greene",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Judy Klusman",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mike Caskey",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37161": {
+  "county": "Rutherford",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Bryan A. King",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Donnie Haulk",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Hunter Haynes",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Michael J. Benfield",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Alan Toney",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37163": {
+  "county": "Sampson",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Allen McLamb",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Eric Pope",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Sue Lane Lee",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Lethia R. Lee",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Thaddeus L. Godwin, Sr.",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37165": {
+  "county": "Scotland",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Ed O'Neal",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tanya Edge",
+    "party": "Republican",
+    "seat": "Laurel Hill Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bo Frizzell",
+    "party": "Republican",
+    "seat": "Spring Hill Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Clarence McPhatter",
+    "party": "Democratic",
+    "seat": "Stewartsville Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Darwin (Duke) Williams",
+    "party": "Democratic",
+    "seat": "Stewartsville Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tim Ivey",
+    "party": "Republican",
+    "seat": "Stewartsville Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Shelley",
+    "party": "Republican",
+    "seat": "Williamson Township",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37167": {
+  "county": "Stanly",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Patty Crump",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Scott Efird",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Mike Barbee",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bill Lawhon",
+    "party": "Republican",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Brandon King",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Trent Hatley",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Billy Dean Mills",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37169": {
+  "county": "Stokes",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Brad Chandler",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Keith Wood",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rick Morris",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sonya Moorefield Cox",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Wayne Barneycastle",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37171": {
+  "county": "Surry",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Mark Marion",
+    "party": "Republican",
+    "seat": "Central District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Van Tucker",
+    "party": "Republican",
+    "seat": "East District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bill Goins",
+    "party": "Republican",
+    "seat": "Mount Airy District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Melissa W. Hiatt",
+    "party": "Republican",
+    "seat": "Mount Airy District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Eddie Harris",
+    "party": "Republican",
+    "seat": "South District",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37173": {
+  "county": "Swain",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Kevin Seagle",
+    "party": "Republican",
+    "seat": "Chair",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bobby Jenkins",
+    "party": "Unaffiliated",
+    "seat": "Members",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "David Loftis",
+    "party": "Republican",
+    "seat": "Members",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Phillip Carson",
+    "party": "Republican",
+    "seat": "Members",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tanner Lawson",
+    "party": "Republican",
+    "seat": "Members",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37175": {
+  "county": "Transylvania",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Chase R. McKelvey",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07",
+    "unexpiredTerm": true
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Emmett Casciato",
+    "note": "One of the people elected to these seats on November 8, 2022 (Jake Dalton, Emmett Casciato) left the board before November 5, 2024, when Chase R. McKelvey won the rest of that term; the results do not say which one.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Jake Dalton",
+    "note": "One of the people elected to these seats on November 8, 2022 (Jake Dalton, Emmett Casciato) left the board before November 5, 2024, when Chase R. McKelvey won the rest of that term; the results do not say which one.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jason Robert Chappell",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Larry L. Chapman",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Teresa K. McCall",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37177": {
+  "county": "Tyrrell",
+  "seats": [
+   {
+    "seat": "Board seat",
+    "unnamed": "Tyrrell County elects its board by limited voting, so the election results do not say how many seats each contest filled, and the county's website did not answer when this was built. This map names nobody here rather than guessing."
+   }
+  ]
+ },
+ "37179": {
+  "county": "Union",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Brian W. Helms",
+    "note": "One of the people elected to these seats on November 8, 2022 (Brian W. Helms, Melissa Merrell, Stony Rushing) left the board before November 5, 2024, when Clancy Baucom won the rest of that term; the results do not say which one.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Christina B. Helms",
+    "note": "1 of these seats (Christina B. Helms, Gary Sides) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Clancy Baucom",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07",
+    "unexpiredTerm": true
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Gary Sides",
+    "note": "1 of these seats (Christina B. Helms, Gary Sides) changed hands after the election: the rest of that term is on the November 3, 2026 ballot, and the results do not say whose seat it was.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Melissa Merrell",
+    "note": "One of the people elected to these seats on November 8, 2022 (Brian W. Helms, Melissa Merrell, Stony Rushing) left the board before November 5, 2024, when Clancy Baucom won the rest of that term; the results do not say which one.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Stony Rushing",
+    "note": "One of the people elected to these seats on November 8, 2022 (Brian W. Helms, Melissa Merrell, Stony Rushing) left the board before November 5, 2024, when Clancy Baucom won the rest of that term; the results do not say which one.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37181": {
+  "county": "Vance",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Carolyn Faines",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Valencia L. Perry",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Sean Alston, Sr.",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Dan Brummitt",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Leo Kelly, Jr.",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Yolanda J. Feimster",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tommy Hester",
+    "party": "Republican",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37183": {
+  "county": "Wake",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Donald Mial",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Matt Calabria",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Cheryl F. Stallings",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Susan P. Evans",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tara Waters",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Shinica Thomas",
+    "party": "Democratic",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Vickie Adamson",
+    "party": "Democratic",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37185": {
+  "county": "Warren",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "name": "Angelena Kearney-Dunlap",
+    "party": "Unaffiliated",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tare (T) Davis",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Victor Hunt",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bertadean Williams Baker",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Al Cooper",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37187": {
+  "county": "Washington",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "John Spruill",
+    "party": "Republican",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Carol Phelps",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Julius Walker, Jr.",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Tracey A. Johnson",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ann C. Keyes",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37189": {
+  "county": "Watauga",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07",
+    "unnamed": "Todd Castle won this seat on November 8, 2022 and then won the District 5 seat on November 5, 2024, so has left this one. Whoever the board appointed is in no election result."
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Braxton Eggers",
+    "party": "Republican",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Larry Turnbow",
+    "note": "Elected under the district map in force before S.L. 2023-147 redrew Watauga's districts; this term runs to December 2026.",
+    "party": "Democratic",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ronnie Marsh",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Todd Castle",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37191": {
+  "county": "Wayne",
+  "seats": [
+   {
+    "election": "2024-11-05",
+    "seat": "At large",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04",
+    "unnamed": "Wayne Aycock won this seat on November 5, 2024 and has since left it: the rest of the term is on the November 3, 2026 ballot. Whoever the board appointed meanwhile is in no election result."
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Barbara Aycock",
+    "party": "Republican",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Antonio Williams",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Bevan Foster",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tim Harrell",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Chris Gurley",
+    "party": "Republican",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Joe Daughtery",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37193": {
+  "county": "Wilkes",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Bill Sexton",
+    "note": "One of the people elected to these seats on November 8, 2022 (Stoney S. Greene, Bill Sexton) left the board before November 5, 2024, when Evan Handy won the rest of that term; the results do not say which one.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Casey Joe Johnson",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Evan Handy",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07",
+    "unexpiredTerm": true
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Hardin C. Kennedy III",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Shirley B. Randleman",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Stoney S. Greene",
+    "note": "One of the people elected to these seats on November 8, 2022 (Stoney S. Greene, Bill Sexton) left the board before November 5, 2024, when Evan Handy won the rest of that term; the results do not say which one.",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37195": {
+  "county": "Wilson",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Leslie T. Atkinson",
+    "party": "Democratic",
+    "seat": "District 1",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Sherry L. Lucas",
+    "party": "Democratic",
+    "seat": "District 2",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "JoAnne Daniels",
+    "party": "Democratic",
+    "seat": "District 3",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Roger Lucas",
+    "party": "Republican",
+    "seat": "District 4",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Rob Boyette",
+    "party": "Democratic",
+    "seat": "District 5",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Chris Hill",
+    "party": "Republican",
+    "seat": "District 6",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Bill Blackman",
+    "party": "Republican",
+    "seat": "District 7",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "37197": {
+  "county": "Yadkin",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "Cliff Collins",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "David Moxley",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Frank C. Zachary",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Kevin Austin",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Ricky Oliver",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Tim Parks",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   }
+  ]
+ },
+ "37199": {
+  "county": "Yancey",
+  "seats": [
+   {
+    "election": "2022-11-08",
+    "name": "David Grindstaff",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Jeff Whitson",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Mark Ledford",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2028-12-04"
+   },
+   {
+    "election": "2024-11-05",
+    "name": "Sandi Norton",
+    "party": "Republican",
+    "seat": "Board seat",
+    "shortTerm": true,
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/05/2024&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   },
+   {
+    "election": "2022-11-08",
+    "name": "Stacey McEntyre Greene",
+    "party": "Republican",
+    "seat": "Board seat",
+    "sourceUrl": "https://er.ncsbe.gov/?election_dt=11/08/2022&county_id=0&office=ALL&contest=0",
+    "termEnds": "2026-12-07"
+   }
+  ]
+ },
+ "_meta": {
+  "generals": [
+   "2022-11-08",
+   "2024-11-05"
+  ],
+  "source": "North Carolina State Board of Elections: certified precinct results and candidate filing lists (dl.ncsbe.gov)",
+  "witness": "the 2026 candidate filing list"
+ }
+}

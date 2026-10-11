@@ -4159,7 +4159,8 @@ function initNycExplorer() {
     "hs-zone": "hz", "ms-zone": "mz", "es-zone": "ez", "school-site": "ss",
     "police-station": "ps", "fire-station": "fs", "post-office": "po", "library": "lb",
     "early-voting": "ev", "polling-place": "pl", "county-supervisor": "cv",
-    "county-legislature": "lg", "fire-district": "fd", "library-district": "ld" };
+    "county-legislature": "lg", "fire-district": "fd", "library-district": "ld",
+    "tribal-government": "tg" };
   var SOCRATA_HOST = "https://data.cityofnewyork.us";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -6903,9 +6904,19 @@ function initNycExplorer() {
     setSelectedPoint(lat, lng);
   }
 
+  // Why a press of the button did not end in a selected point here, by app.
+  // The reason and this app's tag only: never the position, which is what
+  // geolocate-success alone carries (rounded). Its own prefix, not
+  // "geolocate-...", so these rows cannot crowd the two geolocate rows out of
+  // the traffic report's name-filtered query, which GoatCounter caps at ten.
+  function trackLocateFail(reason) {
+    trackEvent("locate-fail/" + METRO_BRAND.instanceTag + "/" + reason);
+  }
+
   locateBtn.addEventListener("click", function () {
     trackEvent("geolocate");
     if (!("geolocation" in navigator)) {
+      trackLocateFail("unsupported");
       geoStatusEl.textContent = "Geolocation isn't supported in this browser.";
       geoStatusEl.className = "geo-status err";
       return;
@@ -6932,19 +6943,22 @@ function initNycExplorer() {
             geoStatusEl.textContent = "You're outside " + METRO_NAME + " — but " +
               siblingDisplayName(owner) + " covers where you are.";
             geoStatusEl.className = "geo-status";
+            trackLocateFail("other-app");
             offerMetroPortal(owner, { point: { lat: lat, lng: lng }, source: "geolocate" });
             return;
           }
+          trackLocateFail("outside");
           geoStatusEl.textContent = "Your current location looks like it's outside the " + METRO_NAME + " area this app covers.";
           geoStatusEl.className = "geo-status err";
         });
       },
       function (err) {
         locateBtn.disabled = false;
-        var msg = "Couldn't get your location.";
-        if (err.code === err.PERMISSION_DENIED) msg = "Location access was denied. Allow it in your browser's site settings to use this.";
-        else if (err.code === err.TIMEOUT) msg = "Location request timed out. Try again.";
-        else if (err.code === err.POSITION_UNAVAILABLE) msg = "Your location is currently unavailable.";
+        var msg = "Couldn't get your location.", reason = "other";
+        if (err.code === err.PERMISSION_DENIED) { msg = "Location access was denied. Allow it in your browser's site settings to use this."; reason = "denied"; }
+        else if (err.code === err.TIMEOUT) { msg = "Location request timed out. Try again."; reason = "timeout"; }
+        else if (err.code === err.POSITION_UNAVAILABLE) { msg = "Your location is currently unavailable."; reason = "unavailable"; }
+        trackLocateFail(reason);
         geoStatusEl.textContent = msg;
         geoStatusEl.className = "geo-status err";
       },
@@ -8647,6 +8661,7 @@ function initNycExplorer() {
     "county-supervisor", // The towns and cities of the counties whose county board IS their own supervisors sitting together, so a unit here is the same size as a unit of the cities-and-towns layer above it. It sits below that layer rather than beside it because it answers in two counties, not the whole state.
     "county-legislature", // 16 districts in Tompkins County today, each about half the area of an average New York town, so this sits between the cities-and-towns layer and the villages. The table grows one county at a time and only over counties that ELECT a legislature from districts: a board-of-supervisors county has no district to draw, because its seat is the town.
     "fire-district",     // 45 fire districts in Sullivan County today, averaging about half the area of a New York town, so this sits between the county-legislature districts and the villages. The table grows one county at a time.
+    "tribal-government", // Tribal land — New York has 11 pieces across 8 nations, from the Oneida Reservation's 1,104.192 km² down to the 0.441 km² Poospatuck Reservation, MEASURED by scripts/build_tribal_areas.py; median 24.047 km². Drawn above cities and towns, which tile the state and which several of these reservations contain or sit inside (the city of Salamanca lies inside the Allegany Reservation), and below villages, which nest inside towns. All of it is outside the five boroughs. The card names the nation as the Bureau of Indian Affairs names it, its seat, the 2020 population, and the council from each nation's own published list: two nations today. One nation, the Poospatuck (Unkechauge) Indian Nation, is recognized by New York State and not by the United States, so it is named as New York's Indian Law names it, on Adam's ruling of 2026-10-10. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "village",           // 532 villages, nested inside towns rather than beside them, so a point can be in both a village and its town
     // borough / judicial-district / BP / DA are the same 5 county polygons —
     // later = drawn on top (§7).
@@ -12678,6 +12693,130 @@ function initNycExplorer() {
     primaryLink: function () {
       return { label: "New York State Association of Counties", url: "https://www.nysac.org/" };
     }
+  });
+
+  /* ---------- Tribal Government — New York's tribal land, 11 pieces across 8 nations.
+   *
+   * Eight federal reservations, one piece of off-reservation trust land and
+   * two state reservations, from the Oneida Reservation's 1,104.192 km² down to
+   * the 0.441 km² Poospatuck Reservation. All of it lies outside the five
+   * boroughs, so inside the city this card only ever says the point is on no
+   * tribal land.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling of
+   * 2026-09-30, a government answers for that ground, so a reader who clicks
+   * it should be told which one.
+   *
+   * ONE NATION HERE IS RECOGNIZED BY THE STATE AND NOT BY THE UNITED STATES.
+   * The Poospatuck Reservation is the Unkechaug Nation's, which the Bureau of
+   * Indian Affairs does not list. Adam ruled on 2026-10-10 to draw it anyway,
+   * naming the nation only as a state government source does: Article 10 of
+   * New York's Indian Law, "The Poospatuck (Unkechauge) Indian Nation". Its
+   * card says that, links the law, and gives no seat, because the law names
+   * none. The Shinnecock Reservation is also a state reservation, but the
+   * Shinnecock Indian Nation is federally recognized and is named as the
+   * Bureau names it.
+   *
+   * WHO THE CARD NAMES. The council from the nation's own published list:
+   * the Seneca Nation (its three territories share one council) and the Saint
+   * Regis Mohawk Tribe today. For the other six the card says why it names
+   * nobody, from ROSTER_BLOCKED in scripts/build_tribal_areas.py.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // A councils file that cannot be read leaves the land answering on its own.
+  var loadNyTribalAreas = makeCached(function () {
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = both[1] || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadNyTribalAreas,
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      // Only the Poospatuck Reservation carries this: the nation is recognized
+      // by New York State and not by the United States, which the card says.
+      { name: "recognition", label: "Recognized by", keys: ["recognition"] },
+      { name: "recognitionUrl", label: "", keys: ["recognitionurl"], when: function () { return false; } },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      // a state-recognized nation has no Bureau-listed website, so the card
+      // links the state law that names it instead
+      if (result && result.recognitionUrl) {
+        return { label: "New York's Indian Law, Article 10", url: String(result.recognitionUrl) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land
+    // by the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" · ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from ↗",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. New York has 11 tribal areas across 8 nations — eight reservations, one piece of off-reservation trust land and two state reservations, all outside New York City — and this point is on none of them."
   });
 
   /* ---------- County Legislature District — the county tier's first county --
@@ -17259,100 +17398,121 @@ function initNycExplorer() {
     // compares the HOVER name: the canvas names a district from the tile's
     // own properties, with nothing a loader stamps after its fetch, so a
     // hover that reads a stamped property would differ from the file's.
+    //
+    // A point the layer's own coverage test rejects is skipped and returned
+    // with `hidden: true`: the app hides the layer there and never runs its
+    // query, so no reader sees a card to compare. Asking anyway sent a county
+    // layer's query to its fallback, which asks every county in turn, live
+    // servers included, and one of them answering badly from a CI runner
+    // failed the check at a point no reader can reach (2026-10-11, a point
+    // just outside White County, Illinois). A coverage test that throws keeps
+    // the point, as the engine fails open.
     tileCardCheck: function (id, points) {
       var mod = getLayerById(id), load = mod && mod.overlay && mod.overlay.load;
       if (!load || !load.tileMod) return Promise.reject(new Error(id + " is not drawn from tiles"));
       var rt = layerRuntime[id], viaTiles = [];
-      if (mod.countyEntries) {
-        var countyResults = [], hovers = [];
-        var byKey = {};
-        mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
-        function hoverPair(p) {
-          return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
-            var tf = findFeatureContaining(fc, p);
-            var key = tf && tf.properties._c, entry = key != null && byKey[key];
-            if (!entry || !entry.loadGeometry) return null;
-            var props = {};
-            for (var k in tf.properties) if (tf.properties.hasOwnProperty(k) && k !== "_c") props[k] = tf.properties[k];
-            var tiles = mod.hoverName({ type: "Feature", properties: props, dxCounty: key });
-            return Promise.resolve(entry.loadGeometry()).then(function (g) {
-              var ff = findFeatureContaining(g, p);
-              return { tiles: tiles, file: ff ? mod.hoverName({ type: "Feature", properties: ff.properties, dxCounty: key }) : null };
-            });
-          }).then(null, function (e) { return { tiles: "error: " + String(e && e.message || e), file: null }; });
-        }
-        return countyTileKeys(mod).then(function (keys) {
-          function runCounty(out, record) {
-            return points.reduce(function (chain, p, i) {
-              return chain.then(function () {
-                rt.tileAnswer = null;
-                return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
-                  out.push(r == null ? null : JSON.stringify(r, function (k, v) {
-                    return k === "seq" || k === "geometry" ? undefined : v;
-                  }));
-                  if (record) {
-                    countyResults.push({ via: !!(rt.tileAnswer && rt.tileAnswer.point === p),
-                      county: r ? r.dxCounty : null, inArchive: !!(r && keys[r.dxCounty]) });
-                    return hoverPair(p).then(function (h) { hovers.push(h); });
+      return Promise.all(points.map(function (p) {
+        if (typeof mod.coverage !== "function") return false;
+        return Promise.resolve().then(function () { return mod.coverage(p); })
+          .then(function (inside) { return !inside; }, function () { return false; });
+      })).then(function (hidden) {
+        if (mod.countyEntries) {
+          var countyResults = [], hovers = [];
+          var byKey = {};
+          mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
+          function hoverPair(p) {
+            return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+              var tf = findFeatureContaining(fc, p);
+              var key = tf && tf.properties._c, entry = key != null && byKey[key];
+              if (!entry || !entry.loadGeometry) return null;
+              var props = {};
+              for (var k in tf.properties) if (tf.properties.hasOwnProperty(k) && k !== "_c") props[k] = tf.properties[k];
+              var tiles = mod.hoverName({ type: "Feature", properties: props, dxCounty: key });
+              return Promise.resolve(entry.loadGeometry()).then(function (g) {
+                var ff = findFeatureContaining(g, p);
+                return { tiles: tiles, file: ff ? mod.hoverName({ type: "Feature", properties: ff.properties, dxCounty: key }) : null };
+              });
+            }).then(null, function (e) { return { tiles: "error: " + String(e && e.message || e), file: null }; });
+          }
+          return countyTileKeys(mod).then(function (keys) {
+            function runCounty(out, record) {
+              return points.reduce(function (chain, p, i) {
+                return chain.then(function () {
+                  if (hidden[i]) {
+                    out.push(null);
+                    if (record) { countyResults.push({ via: false, county: null, inArchive: false }); hovers.push(null); }
+                    return;
                   }
-                }, function (e) {
-                  out.push("error: " + String(e && e.message || e));
-                  if (!record) return;
-                  hovers.push(null);
-                  // A query that errored names no county, so ask the archive
-                  // itself: a tile feature under the point carries its county
-                  // key, and only a point no archived district holds can be a
-                  // live county's. Unreadable, it stays unknown (null), which
-                  // the probe never forgives as a live source's outage.
-                  return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
-                    var tf = findFeatureContaining(fc, p), c = tf && tf.properties ? tf.properties._c : null;
-                    countyResults.push({ via: false, county: c != null ? c : null, inArchive: c != null && !!keys[c] });
-                  }, function () {
-                    countyResults.push({ via: false, county: null, inArchive: null });
+                  rt.tileAnswer = null;
+                  return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+                    out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                      return k === "seq" || k === "geometry" ? undefined : v;
+                    }));
+                    if (record) {
+                      countyResults.push({ via: !!(rt.tileAnswer && rt.tileAnswer.point === p),
+                        county: r ? r.dxCounty : null, inArchive: !!(r && keys[r.dxCounty]) });
+                      return hoverPair(p).then(function (h) { hovers.push(h); });
+                    }
+                  }, function (e) {
+                    out.push("error: " + String(e && e.message || e));
+                    if (!record) return;
+                    hovers.push(null);
+                    // A query that errored names no county, so ask the archive
+                    // itself: a tile feature under the point carries its county
+                    // key, and only a point no archived district holds can be a
+                    // live county's. Unreadable, it stays unknown (null), which
+                    // the probe never forgives as a live source's outage.
+                    return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+                      var tf = findFeatureContaining(fc, p), c = tf && tf.properties ? tf.properties._c : null;
+                      countyResults.push({ via: false, county: c != null ? c : null, inArchive: c != null && !!keys[c] });
+                    }, function () {
+                      countyResults.push({ via: false, county: null, inArchive: null });
+                    });
                   });
                 });
+              }, Promise.resolve());
+            }
+            var tiled = [], whole = [];
+            return runCounty(tiled, true).then(function () {
+              mod.tilesOff = true;
+              return runCounty(whole);
+            }).then(function () {
+              mod.tilesOff = false;
+              return points.map(function (p, i) {
+                var c = countyResults[i];
+                var h = hovers[i];
+                return { point: p, tiles: tiled[i], file: whole[i], viaTiles: c.via, county: c.county, inArchive: c.inArchive, hidden: hidden[i],
+                  hoverTiles: h ? h.tiles : null, hoverFile: h ? h.file : null };
               });
-            }, Promise.resolve());
-          }
-          var tiled = [], whole = [];
-          return runCounty(tiled, true).then(function () {
-            mod.tilesOff = true;
-            return runCounty(whole);
-          }).then(function () {
-            mod.tilesOff = false;
-            return points.map(function (p, i) {
-              var c = countyResults[i];
-              var h = hovers[i];
-              return { point: p, tiles: tiled[i], file: whole[i], viaTiles: c.via, county: c.county, inArchive: c.inArchive,
-                hoverTiles: h ? h.tiles : null, hoverFile: h ? h.file : null };
-            });
-          }, function (e) { mod.tilesOff = false; throw e; });
-        });
-      }
-      function run(out, record) {
-        return points.reduce(function (chain, p, i) {
-          return chain.then(function () {
-            if (record) rt.tileAnswer = null;
-            return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
-              out.push(r == null ? null : JSON.stringify(r, function (k, v) {
-                return k === "seq" || k === "geometry" ? undefined : v;
-              }));
-              // whether the tile path really answered: a query that reaches
-              // its boundaries some other way passes the comparison while
-              // downloading the whole file and lighting nothing
-              if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
-            }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+            }, function (e) { mod.tilesOff = false; throw e; });
           });
-        }, Promise.resolve());
-      }
-      var tiled = [], whole = [], keep = load.tileMod;
-      return run(tiled, true).then(function () {
-        load.tileMod = null;
-        return run(whole);
-      }).then(function () {
-        load.tileMod = keep;
-        return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i] }; });
-      }, function (e) { load.tileMod = keep; throw e; });
+        }
+        function run(out, record) {
+          return points.reduce(function (chain, p, i) {
+            return chain.then(function () {
+              if (hidden[i]) { out.push(null); if (record) viaTiles.push(false); return; }
+              if (record) rt.tileAnswer = null;
+              return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+                out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                  return k === "seq" || k === "geometry" ? undefined : v;
+                }));
+                // whether the tile path really answered: a query that reaches
+                // its boundaries some other way passes the comparison while
+                // downloading the whole file and lighting nothing
+                if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
+              }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+            });
+          }, Promise.resolve());
+        }
+        var tiled = [], whole = [], keep = load.tileMod;
+        return run(tiled, true).then(function () {
+          load.tileMod = null;
+          return run(whole);
+        }).then(function () {
+          load.tileMod = keep;
+          return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i], hidden: hidden[i] }; });
+        }, function (e) { load.tileMod = keep; throw e; });
+      });
     },
     // The colour a layer's outline is painted in right now, whichever way it
     // is drawn: the tile canvas's paint, or a Leaflet path's stroke. What the
@@ -17501,16 +17661,16 @@ function initNycExplorer() {
   var DST_DARK_MAP_COLORS = { "#0A4D5C": "#53A0B5", "#0B5394": "#4CA1FB", "#0B7285": "#49BED8",
     "#0E5A8A": "#4FA8EB", "#14181C": "#696F76", "#14532D": "#5AA872", "#155C4B": "#58AE96",
     "#1D3557": "#6689BA", "#1E7A8C": "#53C4DD", "#1F5C3A": "#60AF7F", "#1F6F5C": "#5ABEA3",
-    "#1F6FB2": "#6EB7FD", "#2E7D5B": "#63C99B", "#2E7FAE": "#69C5FE", "#2F6E6B": "#69BBB6",
-    "#3A0CA3": "#8178FE", "#3B8FD4": "#98CDFE", "#3F918D": "#6BD7D1", "#4361EE": "#9BB4FD",
-    "#457B9D": "#7AC1EF", "#4B2E83": "#9C79EF", "#4CA98F": "#70EAC8", "#4E6E9C": "#89B4F3",
-    "#5A6B7C": "#9BB2CA", "#5B2A86": "#B172F0", "#5FB49C": "#81F2D2", "#6A3FA0": "#B886FE",
-    "#6B4E8C": "#B992E7", "#6B7280": "#ADB6C9", "#7048E8": "#B0A7FE", "#7A0A1C": "#E8595F",
-    "#7A1E5C": "#E063B2", "#7A5901": "#CDA040", "#7A6A55": "#C4AF92", "#7C2D12": "#E27451",
-    "#7CC49B": "#9EFDC7", "#8A5A00": "#E09E3C", "#8C6A2E": "#DBAD5E", "#8C6D3F": "#D9AF72",
-    "#A15C00": "#F99B38", "#B3261E": "#FE8171", "#B5179E": "#FE79E3", "#B5462F": "#FD927A",
-    "#B8860B": "#FEC141", "#C2410C": "#FF9776", "#C8102E": "#FE8B89", "#D8613F": "#FEB39E",
-    "#E4572E": "#FDB5A0", "#F72585": "#FDB1C7"};
+    "#1F6F6B": "#59BDB7", "#1F6FB2": "#6EB7FD", "#2E7D5B": "#63C99B", "#2E7FAE": "#69C5FE",
+    "#2F6E6B": "#69BBB6", "#3A0CA3": "#8178FE", "#3B8FD4": "#98CDFE", "#3E9A95": "#66DED7",
+    "#3F918D": "#6BD7D1", "#4361EE": "#9BB4FD", "#457B9D": "#7AC1EF", "#4B2E83": "#9C79EF",
+    "#4CA98F": "#70EAC8", "#4E6E9C": "#89B4F3", "#5A6B7C": "#9BB2CA", "#5B2A86": "#B172F0",
+    "#5FB49C": "#81F2D2", "#6A3FA0": "#B886FE", "#6B4E8C": "#B992E7", "#6B7280": "#ADB6C9",
+    "#7048E8": "#B0A7FE", "#7A0A1C": "#E8595F", "#7A1E5C": "#E063B2", "#7A5901": "#CDA040",
+    "#7A6A55": "#C4AF92", "#7C2D12": "#E27451", "#7CC49B": "#9EFDC7", "#8A5A00": "#E09E3C",
+    "#8C6A2E": "#DBAD5E", "#8C6D3F": "#D9AF72", "#A15C00": "#F99B38", "#B3261E": "#FE8171",
+    "#B5179E": "#FE79E3", "#B5462F": "#FD927A", "#B8860B": "#FEC141", "#C2410C": "#FF9776",
+    "#C8102E": "#FE8B89", "#D8613F": "#FEB39E", "#E4572E": "#FDB5A0", "#F72585": "#FDB1C7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

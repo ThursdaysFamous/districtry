@@ -191,14 +191,16 @@ CANONICAL = "https://districtry.com/"
 QUESTION_ROWS = [
     ("Who is my U.S. representative?", ("congress.html",)),
     ("Who is my state legislator?", ("state-legislature.html",)),
-    # FOUR NAMES FOR ONE READER'S QUESTION. A county's governing body is a
+    # FIVE NAMES FOR ONE READER'S QUESTION. A county's governing body is a
     # board in Illinois and Wisconsin, a board of supervisors in Iowa, a board
-    # of commissioners in Michigan and a county legislature in New York, and
+    # of commissioners in Michigan, a county legislature in New York and a
+    # fiscal court (or a merged council) in Kentucky, and
     # somebody asking who sits on it does not know or care which word their
     # state uses. One row, so the front door asks the question once.
     ("Who sits on my county board?", ("county-board.html", "county-supervisor.html",
                                       "county-commissioner.html",
-                                      "county-legislature.html")),
+                                      "county-legislature.html",
+                                      "county-government.html")),
     ("Who represents me on the city council?", ("ward.html", "council-district.html",
                                                 "supervisor-district.html",
                                                 "city-council.html")),
@@ -224,6 +226,7 @@ CHIP_TOPIC = {
     "county-board.html": "county board",
     "county-supervisor.html": "supervisors",
     "county-commissioner.html": "commissioners",
+    "county-government.html": "fiscal court",
     "county-legislature.html": "county legislature",
     "city-council.html": "city council",
     "county-auditor.html": "county auditor",

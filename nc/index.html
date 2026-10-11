@@ -6772,9 +6772,19 @@ function initNorthCarolinaExplorer() {
     setSelectedPoint(lat, lng);
   }
 
+  // Why a press of the button did not end in a selected point here, by app.
+  // The reason and this app's tag only: never the position, which is what
+  // geolocate-success alone carries (rounded). Its own prefix, not
+  // "geolocate-...", so these rows cannot crowd the two geolocate rows out of
+  // the traffic report's name-filtered query, which GoatCounter caps at ten.
+  function trackLocateFail(reason) {
+    trackEvent("locate-fail/" + METRO_BRAND.instanceTag + "/" + reason);
+  }
+
   locateBtn.addEventListener("click", function () {
     trackEvent("geolocate");
     if (!("geolocation" in navigator)) {
+      trackLocateFail("unsupported");
       geoStatusEl.textContent = "Geolocation isn't supported in this browser.";
       geoStatusEl.className = "geo-status err";
       return;
@@ -6801,19 +6811,22 @@ function initNorthCarolinaExplorer() {
             geoStatusEl.textContent = "You're outside " + METRO_NAME + " — but " +
               siblingDisplayName(owner) + " covers where you are.";
             geoStatusEl.className = "geo-status";
+            trackLocateFail("other-app");
             offerMetroPortal(owner, { point: { lat: lat, lng: lng }, source: "geolocate" });
             return;
           }
+          trackLocateFail("outside");
           geoStatusEl.textContent = "Your current location looks like it's outside the " + METRO_NAME + " area this app covers.";
           geoStatusEl.className = "geo-status err";
         });
       },
       function (err) {
         locateBtn.disabled = false;
-        var msg = "Couldn't get your location.";
-        if (err.code === err.PERMISSION_DENIED) msg = "Location access was denied. Allow it in your browser's site settings to use this.";
-        else if (err.code === err.TIMEOUT) msg = "Location request timed out. Try again.";
-        else if (err.code === err.POSITION_UNAVAILABLE) msg = "Your location is currently unavailable.";
+        var msg = "Couldn't get your location.", reason = "other";
+        if (err.code === err.PERMISSION_DENIED) { msg = "Location access was denied. Allow it in your browser's site settings to use this."; reason = "denied"; }
+        else if (err.code === err.TIMEOUT) { msg = "Location request timed out. Try again."; reason = "timeout"; }
+        else if (err.code === err.POSITION_UNAVAILABLE) { msg = "Your location is currently unavailable."; reason = "unavailable"; }
+        trackLocateFail(reason);
         geoStatusEl.textContent = msg;
         geoStatusEl.className = "geo-status err";
       },
@@ -12389,18 +12402,58 @@ function initNorthCarolinaExplorer() {
    * service-worker cached, so this layer answers even when every
    * third-party host is down.
    *
-   * IDENTITY ONLY, ON PURPOSE. Every North Carolina county is governed by
-   * an elected board of commissioners, and no state publisher carries their
-   * districts — measured 2026-09-29 across seven catalogues, with NCGS
-   * 153A-20 and 153A-22(f) explaining it: the delineation lives in the
-   * county clerk's office as a written description and the resolution is
-   * filed with the Secretary of State as text. So the card names the county
-   * and claims nothing about who runs it, in as many words rather than
-   * leaving a reader to wonder. Recorded as gap `nc-commissioner-districts`.
+   * THE CARD NAMES THE BOARD OF COMMISSIONERS, AS ELECTION WINNERS. Every
+   * North Carolina county is run by an elected board of commissioners, and
+   * the State Board of Elections' 2022 and 2024 results, read with its
+   * candidate filing lists (term lengths, unexpired terms), name a winner for
+   * almost every seat (nc/scripts/build_nc_county_commissioners.py;
+   * data/app/nc-county-commissioners.json, keyed by county GEOID). A winner
+   * is dated to the election that seated them and is not a claim about who
+   * sits today: a board fills a vacancy by appointment (NCGS 153A-27), which
+   * no result records, so the card says that in words, and a seat the
+   * results show has changed hands names nobody and says why. The card lists
+   * every seat in the county rather than yours, because no publisher draws
+   * the commissioner districts (gap nc-commissioner-districts: NCGS
+   * 153A-22(f) keeps them as written descriptions in the clerk's office).
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
   });
+  var loadCountyCommissioners = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nc-county-commissioners.json", {}, 2);
+  });
+  var NC_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  function ncDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return NC_MONTHS[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1];
+  }
+  // One seat per row: the seat label is the badge, the party and election
+  // the note, and anything the results cannot carry sits behind an expander.
+  function ncSeatRows(rec) {
+    return ((rec && rec.seats) || []).map(function (seat) {
+      if (!seat.name) {
+        return {
+          name: "Not named",
+          badge: String(seat.seat),
+          details: { label: "Why", items: [String(seat.unnamed || "")] }
+        };
+      }
+      var bits = [];
+      if (seat.party) bits.push(String(seat.party));
+      var when = ncDate(seat.election);
+      if (when) bits.push((seat.unexpiredTerm ? "elected to the rest of a term " : "elected ") + when);
+      if (seat.writeIn) bits.push("as a write-in candidate");
+      var row = {
+        name: String(seat.name),
+        badge: String(seat.seat),
+        note: bits.length ? bits.join(" \u00b7 ") : null
+      };
+      if (seat.note) row.details = { label: "Note", items: [String(seat.note)] };
+      return row;
+    });
+  }
 
   registerLayer({
     id: "county",
@@ -12419,11 +12472,21 @@ function initNorthCarolinaExplorer() {
       return queryFeatureAt(loadStateCounties, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          board: null
         };
+        // A roster that fails to load leaves the county answer standing and
+        // says so, rather than taking the boundary answer down with it.
+        return loadCountyCommissioners().then(function (r) {
+          result.board = r[String(result.geoid)] || null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -12432,14 +12495,42 @@ function initNorthCarolinaExplorer() {
         title: result.name != null ? String(result.name) : "Unknown county",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      wrap.appendChild(renderFieldStack([{
-        label: "Board of commissioners",
-        value: "Not named here. Every North Carolina county is governed by an " +
-          "elected board of commissioners, and no statewide source publishes " +
-          "their districts or their names — the districts are kept as written " +
-          "descriptions in each county clerk's office. This map names no one " +
-          "here rather than guessing."
-      }]));
+      var rows = [];
+      if (result.board && result.board.seats && result.board.seats.length) {
+        wrap.appendChild(renderSectionLabel("Board of Commissioners"));
+        wrap.appendChild(renderPersonRows(ncSeatRows(result.board)));
+        rows.push({
+          label: "What these names are",
+          value: "The winner of the most recent election for each seat, from " +
+            "the North Carolina State Board of Elections' results. They are " +
+            "not a list the county keeps up to date: a board fills a vacancy " +
+            "by appointment, so if a seat has changed hands since the " +
+            "election this may still show who won it. The county's own " +
+            "website says who holds each seat today."
+        });
+        rows.push({
+          label: "Which seat is yours",
+          value: "Every seat in the county is listed, because no statewide map " +
+            "of commissioner districts exists. A seat named for a district " +
+            "may still be elected by the whole county; the results do not " +
+            "say which."
+        });
+      } else {
+        rows.push({
+          label: "Board of commissioners",
+          value: result.rosterFailed
+            ? "The list of commissioners did not load, so no names are shown."
+            : "Not shown: the election results this app reads name no " +
+              "commissioners for this county."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      if (result.board) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "NC State Board of Elections results \u2197",
+            url: "https://er.ncsbe.gov/" }]
+        }));
+      }
       return wrap;
     }
   });
@@ -14872,100 +14963,121 @@ function initNorthCarolinaExplorer() {
     // compares the HOVER name: the canvas names a district from the tile's
     // own properties, with nothing a loader stamps after its fetch, so a
     // hover that reads a stamped property would differ from the file's.
+    //
+    // A point the layer's own coverage test rejects is skipped and returned
+    // with `hidden: true`: the app hides the layer there and never runs its
+    // query, so no reader sees a card to compare. Asking anyway sent a county
+    // layer's query to its fallback, which asks every county in turn, live
+    // servers included, and one of them answering badly from a CI runner
+    // failed the check at a point no reader can reach (2026-10-11, a point
+    // just outside White County, Illinois). A coverage test that throws keeps
+    // the point, as the engine fails open.
     tileCardCheck: function (id, points) {
       var mod = getLayerById(id), load = mod && mod.overlay && mod.overlay.load;
       if (!load || !load.tileMod) return Promise.reject(new Error(id + " is not drawn from tiles"));
       var rt = layerRuntime[id], viaTiles = [];
-      if (mod.countyEntries) {
-        var countyResults = [], hovers = [];
-        var byKey = {};
-        mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
-        function hoverPair(p) {
-          return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
-            var tf = findFeatureContaining(fc, p);
-            var key = tf && tf.properties._c, entry = key != null && byKey[key];
-            if (!entry || !entry.loadGeometry) return null;
-            var props = {};
-            for (var k in tf.properties) if (tf.properties.hasOwnProperty(k) && k !== "_c") props[k] = tf.properties[k];
-            var tiles = mod.hoverName({ type: "Feature", properties: props, dxCounty: key });
-            return Promise.resolve(entry.loadGeometry()).then(function (g) {
-              var ff = findFeatureContaining(g, p);
-              return { tiles: tiles, file: ff ? mod.hoverName({ type: "Feature", properties: ff.properties, dxCounty: key }) : null };
-            });
-          }).then(null, function (e) { return { tiles: "error: " + String(e && e.message || e), file: null }; });
-        }
-        return countyTileKeys(mod).then(function (keys) {
-          function runCounty(out, record) {
-            return points.reduce(function (chain, p, i) {
-              return chain.then(function () {
-                rt.tileAnswer = null;
-                return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
-                  out.push(r == null ? null : JSON.stringify(r, function (k, v) {
-                    return k === "seq" || k === "geometry" ? undefined : v;
-                  }));
-                  if (record) {
-                    countyResults.push({ via: !!(rt.tileAnswer && rt.tileAnswer.point === p),
-                      county: r ? r.dxCounty : null, inArchive: !!(r && keys[r.dxCounty]) });
-                    return hoverPair(p).then(function (h) { hovers.push(h); });
+      return Promise.all(points.map(function (p) {
+        if (typeof mod.coverage !== "function") return false;
+        return Promise.resolve().then(function () { return mod.coverage(p); })
+          .then(function (inside) { return !inside; }, function () { return false; });
+      })).then(function (hidden) {
+        if (mod.countyEntries) {
+          var countyResults = [], hovers = [];
+          var byKey = {};
+          mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
+          function hoverPair(p) {
+            return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+              var tf = findFeatureContaining(fc, p);
+              var key = tf && tf.properties._c, entry = key != null && byKey[key];
+              if (!entry || !entry.loadGeometry) return null;
+              var props = {};
+              for (var k in tf.properties) if (tf.properties.hasOwnProperty(k) && k !== "_c") props[k] = tf.properties[k];
+              var tiles = mod.hoverName({ type: "Feature", properties: props, dxCounty: key });
+              return Promise.resolve(entry.loadGeometry()).then(function (g) {
+                var ff = findFeatureContaining(g, p);
+                return { tiles: tiles, file: ff ? mod.hoverName({ type: "Feature", properties: ff.properties, dxCounty: key }) : null };
+              });
+            }).then(null, function (e) { return { tiles: "error: " + String(e && e.message || e), file: null }; });
+          }
+          return countyTileKeys(mod).then(function (keys) {
+            function runCounty(out, record) {
+              return points.reduce(function (chain, p, i) {
+                return chain.then(function () {
+                  if (hidden[i]) {
+                    out.push(null);
+                    if (record) { countyResults.push({ via: false, county: null, inArchive: false }); hovers.push(null); }
+                    return;
                   }
-                }, function (e) {
-                  out.push("error: " + String(e && e.message || e));
-                  if (!record) return;
-                  hovers.push(null);
-                  // A query that errored names no county, so ask the archive
-                  // itself: a tile feature under the point carries its county
-                  // key, and only a point no archived district holds can be a
-                  // live county's. Unreadable, it stays unknown (null), which
-                  // the probe never forgives as a live source's outage.
-                  return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
-                    var tf = findFeatureContaining(fc, p), c = tf && tf.properties ? tf.properties._c : null;
-                    countyResults.push({ via: false, county: c != null ? c : null, inArchive: c != null && !!keys[c] });
-                  }, function () {
-                    countyResults.push({ via: false, county: null, inArchive: null });
+                  rt.tileAnswer = null;
+                  return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+                    out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                      return k === "seq" || k === "geometry" ? undefined : v;
+                    }));
+                    if (record) {
+                      countyResults.push({ via: !!(rt.tileAnswer && rt.tileAnswer.point === p),
+                        county: r ? r.dxCounty : null, inArchive: !!(r && keys[r.dxCounty]) });
+                      return hoverPair(p).then(function (h) { hovers.push(h); });
+                    }
+                  }, function (e) {
+                    out.push("error: " + String(e && e.message || e));
+                    if (!record) return;
+                    hovers.push(null);
+                    // A query that errored names no county, so ask the archive
+                    // itself: a tile feature under the point carries its county
+                    // key, and only a point no archived district holds can be a
+                    // live county's. Unreadable, it stays unknown (null), which
+                    // the probe never forgives as a live source's outage.
+                    return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+                      var tf = findFeatureContaining(fc, p), c = tf && tf.properties ? tf.properties._c : null;
+                      countyResults.push({ via: false, county: c != null ? c : null, inArchive: c != null && !!keys[c] });
+                    }, function () {
+                      countyResults.push({ via: false, county: null, inArchive: null });
+                    });
                   });
                 });
+              }, Promise.resolve());
+            }
+            var tiled = [], whole = [];
+            return runCounty(tiled, true).then(function () {
+              mod.tilesOff = true;
+              return runCounty(whole);
+            }).then(function () {
+              mod.tilesOff = false;
+              return points.map(function (p, i) {
+                var c = countyResults[i];
+                var h = hovers[i];
+                return { point: p, tiles: tiled[i], file: whole[i], viaTiles: c.via, county: c.county, inArchive: c.inArchive, hidden: hidden[i],
+                  hoverTiles: h ? h.tiles : null, hoverFile: h ? h.file : null };
               });
-            }, Promise.resolve());
-          }
-          var tiled = [], whole = [];
-          return runCounty(tiled, true).then(function () {
-            mod.tilesOff = true;
-            return runCounty(whole);
-          }).then(function () {
-            mod.tilesOff = false;
-            return points.map(function (p, i) {
-              var c = countyResults[i];
-              var h = hovers[i];
-              return { point: p, tiles: tiled[i], file: whole[i], viaTiles: c.via, county: c.county, inArchive: c.inArchive,
-                hoverTiles: h ? h.tiles : null, hoverFile: h ? h.file : null };
-            });
-          }, function (e) { mod.tilesOff = false; throw e; });
-        });
-      }
-      function run(out, record) {
-        return points.reduce(function (chain, p, i) {
-          return chain.then(function () {
-            if (record) rt.tileAnswer = null;
-            return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
-              out.push(r == null ? null : JSON.stringify(r, function (k, v) {
-                return k === "seq" || k === "geometry" ? undefined : v;
-              }));
-              // whether the tile path really answered: a query that reaches
-              // its boundaries some other way passes the comparison while
-              // downloading the whole file and lighting nothing
-              if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
-            }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+            }, function (e) { mod.tilesOff = false; throw e; });
           });
-        }, Promise.resolve());
-      }
-      var tiled = [], whole = [], keep = load.tileMod;
-      return run(tiled, true).then(function () {
-        load.tileMod = null;
-        return run(whole);
-      }).then(function () {
-        load.tileMod = keep;
-        return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i] }; });
-      }, function (e) { load.tileMod = keep; throw e; });
+        }
+        function run(out, record) {
+          return points.reduce(function (chain, p, i) {
+            return chain.then(function () {
+              if (hidden[i]) { out.push(null); if (record) viaTiles.push(false); return; }
+              if (record) rt.tileAnswer = null;
+              return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+                out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                  return k === "seq" || k === "geometry" ? undefined : v;
+                }));
+                // whether the tile path really answered: a query that reaches
+                // its boundaries some other way passes the comparison while
+                // downloading the whole file and lighting nothing
+                if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
+              }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+            });
+          }, Promise.resolve());
+        }
+        var tiled = [], whole = [], keep = load.tileMod;
+        return run(tiled, true).then(function () {
+          load.tileMod = null;
+          return run(whole);
+        }).then(function () {
+          load.tileMod = keep;
+          return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i], hidden: hidden[i] }; });
+        }, function (e) { load.tileMod = keep; throw e; });
+      });
     },
     // The colour a layer's outline is painted in right now, whichever way it
     // is drawn: the tile canvas's paint, or a Leaflet path's stroke. What the

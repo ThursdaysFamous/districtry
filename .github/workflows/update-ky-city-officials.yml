@@ -51,6 +51,7 @@ jobs:
       - name: Validate roster + app
         run: |
           python3 ky/scripts/build_ky_city_officials.py --check
+          python3 ky/scripts/build_ky_county_officials.py
           python3 ky/scripts/validate_index.py ky/index.html
 
       - name: Check for changes
@@ -80,7 +81,16 @@ jobs:
           git checkout -B "$branch" FETCH_HEAD
           cp "$RUNNER_TEMP/scrape.json" ky/data/source/ky-city-officials-scrape.json
           python3 ky/scripts/build_ky_city_officials.py
-          git add ky/data/app/ky-city-officials.json ky/data/source/ky-city-officials-scrape.json
+          # Jefferson's and Fayette's County cards name the Louisville Metro and
+          # Lexington-Fayette councils from this same roster, so the county
+          # roster and its pages are rebuilt from it here too.
+          python3 ky/scripts/build_ky_county_officials.py
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          python3 scripts/build_llms_txt.py
+          python3 scripts/build_eam_status.py
+          git add ky/data/app/ky-city-officials.json ky/data/source/ky-city-officials-scrape.json ky/data/app/ky-county-officials.json ky/county-government ky/county-government.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
           git commit -m "Update Kentucky city officials from the Department for Local Government"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

@@ -319,8 +319,13 @@ def load_rosters():
                 out, _problems, _nameless, used, _note = getattr(B, adapter)(inst)
                 merged.update(out)
                 read.extend(used)
-            counties[tag] = merged
-            paths[tag] = read
+            # A STATE CAN HOLD MORE THAN ONE ENTRY (New York's legislatures
+            # and boards of supervisors, Indiana's commissioners and the
+            # Indianapolis City-County Council), so each entry ADDS to its
+            # tag. Assigning here let the second entry replace the first, and
+            # New York's Tompkins County read as naming nobody.
+            counties.setdefault(tag, {}).update(merged)
+            paths.setdefault(tag, []).extend(read)
     return counties, paths, B
 
 
@@ -1824,6 +1829,9 @@ CITY_ROSTERS = {
     # answers both of the Census's Louisville places, the consolidated metro
     # (balance) and the pre-merger city inside it.
     "ky": [("ky/data/app/ky-city-officials.json", "geoid7")],
+    # Election winners from the Election Division's certified 2023 municipal
+    # general, keyed by the city's Census id, each seat dated to its election.
+    "in": [("in/data/app/in-city-officials.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is

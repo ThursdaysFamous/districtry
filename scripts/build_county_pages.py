@@ -114,8 +114,14 @@ from build_county_status import ALL_COUNTIES, slug_of  # noqa: E402
 # both have a Winnebago County, Wisconsin has a county named IOWA, and eleven
 # other names are shared between the two states — a bare county name would let
 # an entry written about one state silence a real regression in another.
-NAMES_NOBODY = {}
-# EMPTY, which is a measurement rather than an omission. It carried one entry
+NAMES_NOBODY = {
+    "nc/Tyrrell": {"date": "2026-10-11",
+                   "reason": "Tyrrell County elects its board by limited voting, "
+                             "so the State Board's results do not say how many "
+                             "seats each contest filled, and the county's website "
+                             "did not answer when the roster was built"},
+}
+# It was EMPTY from 2026-09-15 to 2026-10-11, and carried one entry
 # from 2026-09-13 — Illinois's Winnebago, whose data/app file is 20 flat records
 # with an e-mail, a phone and a source URL and no name field anywhere, because
 # the card reads the member from WinGIS live. il_gis_board_scraper.py
@@ -263,6 +269,65 @@ INSTANCES = [
          index_provenance="each name from the Oklahoma State Election Board's "
                           "Roster of State and County Officers, compiled after "
                           "the general election it is dated to"),
+    # NORTH CAROLINA NAMES ELECTION WINNERS TOO, from the State Board of
+    # Elections' results read with its filing lists, and many boards elect
+    # several seats in one contest, so a label ("Board seat", "At large")
+    # holds more than one member and `district_word` is empty for the same
+    # reason as Indiana's. There is no commissioner-district layer, so the map
+    # link opens the county layer, whose card lists the board.
+    dict(tag="nc", state="North Carolina", concept="county-commissioner",
+         index_page="county-commissioner.html",
+         heading="%(county)s County Board of Commissioners",
+         page_title="%(county)s County Commissioners",
+         page_title_short="%(county)s commissioners",
+         phrase="board of commissioners", index_label="Boards of commissioners",
+         all_label="All North Carolina boards of commissioners",
+         app_name="districtry North Carolina", app_url="https://districtry.com/nc/",
+         district_word="", member_word="Commissioner",
+         cta_layers="county",
+         adapters=("nc_commissioners",),
+         index_provenance="each name the winner of that seat's most recent "
+                          "election in the North Carolina State Board of "
+                          "Elections' results, dated to it"),
+    # KENTUCKY'S GOVERNING BODY IS NOT ONE BODY. 118 counties are governed by a
+    # fiscal court, and Jefferson and Fayette by the councils of the merged
+    # Louisville Metro and Lexington-Fayette governments, so the concept path
+    # is the county's government rather than the fiscal court, and those two
+    # pages take their own heading from `heading_for` rather than calling a
+    # metro council a fiscal court. The names come from the state's county
+    # directory, which says nothing about districts, so every page is the flat
+    # shape and none claims an election method it was not told.
+    dict(tag="ky", state="Kentucky", concept="county-government",
+         index_page="county-government.html",
+         heading="%(county)s County Fiscal Court",
+         heading_for={"Jefferson": "Louisville Metro Council",
+                      "Fayette": "Lexington-Fayette Urban County Council"},
+         page_title="%(county)s County Fiscal Court",
+         page_title_for={"Jefferson": "Louisville Metro Council",
+                         "Fayette": "Lexington-Fayette Urban Council"},
+         phrase="fiscal court", index_label="County governments",
+         all_label="All Kentucky county governments",
+         app_name="districtry Kentucky", app_url="https://districtry.com/ky/",
+         district_word="District", member_word="Magistrate",
+         adapters=("ky_county_governments",),
+         index_provenance="each name as the Kentucky Department for Local "
+                          "Government's county directory lists it"),
+    # TENNESSEE NAMES WHAT EACH COUNTY'S OWN PAGE LISTS, county by county as
+    # the roster reaches them, so a county the roster has not read has no page
+    # rather than one naming nobody. Every county elects its commission from
+    # districts, often two or three members from one district, and Nashville
+    # and Davidson County's body is the Metro Council, which its record names.
+    dict(tag="tn", state="Tennessee", concept="county-commissioner",
+         index_page="county-commissioner.html",
+         heading="%(county)s County Commission",
+         page_title="%(county)s County Commissioners",
+         phrase="county commission", index_label="County commissions",
+         all_label="All Tennessee county commissions",
+         app_name="districtry Tennessee", app_url="https://districtry.com/tn/",
+         district_word="District", member_word="Commissioner",
+         adapters=("tn_commissioners",),
+         index_provenance="each name from the county's own published list of "
+                          "its commission, read every week"),
     # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
     # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
     # rather than the county tier: a county legislature is elected from
@@ -300,8 +365,18 @@ INSTANCES = [
 ]
 
 
-def heading_of(inst, county):
-    return inst["heading"] % {"county": county}
+def heading_of(inst, county, rec=None):
+    """The body's name for one county. A RECORD MAY NAME ITS OWN BODY, because
+    one state can hold counties whose legislative body is not the one the
+    instance's wording describes: Tennessee's county commissions sit beside
+    the Metro Council of Nashville and Davidson County, one metropolitan
+    government whose council is that county's legislative body. An instance
+    may also name a county's body in `heading_for` (Kentucky's two merged
+    governments). A county with neither reads exactly as before."""
+    if rec and rec.get("heading"):
+        return rec["heading"]
+    own = (inst.get("heading_for") or {}).get(county)
+    return own or inst["heading"] % {"county": county}
 
 
 def inst_key(inst):
@@ -372,15 +447,31 @@ def seat_heading(inst, label):
     return "%s %s" % (word, label) if word else label
 
 
-def district(label, members=(), vacancies=0, note=None):
+def district(label, members=(), vacancies=0, note=None, alias=None):
     """One district on a page. A DICT rather than a tuple because a district
     that names nobody can be three different things and a reader has to be told
     which: the county says the seat is vacant (`vacancies`), somebody says why
     no name can be shown (`note` — Wisconsin's one withheld district), or
     nothing is published at all (neither). Wisconsin's own card has drawn that
-    distinction since it shipped; these pages draw the same one."""
+    distinction since it shipped; these pages draw the same one.
+
+    `alias` is the county's own name for a district the state's map numbers
+    (Dyer, Tennessee, letters its districts A to J): printed beside the
+    number in the heading, never in place of it, because the number is what
+    the map, the anchor and the app's card all use."""
     return {"label": str(label), "members": list(members),
-            "vacancies": vacancies, "note": note}
+            "vacancies": vacancies, "note": note, "alias": alias}
+
+
+def district_heading(inst, d):
+    """A district section's heading, ONE copy for the page and for the
+    read-back that proves every district is on it: the instance's own wording
+    for the number, and the county's own name for it beside that where the
+    county uses another (`alias`)."""
+    heading = seat_heading(inst, d["label"])
+    if d.get("alias"):
+        heading = "%s (the county's %s)" % (heading, d["alias"])
+    return heading
 
 
 def _slug_of(path):
@@ -1268,15 +1359,42 @@ IN_CTA_NOTE = ("Opens the map with the county layer on. Its card lists this "
                "board and the county council, from the same certified results; "
                "the commissioner district lines are not drawn yet.")
 
+# MARION COUNTY'S BODY IS THE INDIANAPOLIS CITY-COUNTY COUNCIL (IC 36-3), the
+# legislative body of the consolidated city and of the county, elected in the
+# municipal general rather than with the county officers. Its record carries
+# its own wording so the page never calls it a board of commissioners.
+IN_MARION_WORDING = dict(
+    heading="Indianapolis City-County Council",
+    page_title="Indianapolis City-County Council",
+    page_title_short="Indianapolis City-County Council",
+    phrase="City-County Council", member_word="Councilor")
+IN_MARION_LEDE = ("Indianapolis and Marion County share one government, and "
+                  "its legislative body is the 25-member %(heading)s. These are "
+                  "the people who won each of its seats at the most recent "
+                  "municipal election in the Indiana Election Division's "
+                  "certified results, each dated to that election. They are "
+                  "election winners, not a list the council keeps up to date: "
+                  "Indiana fills a vacancy by party caucus, so a seat that has "
+                  "changed hands since still shows the person who won it.")
+IN_MARION_DESC = ("Who won each of the %(districts)d seats on the Indianapolis "
+                  "City-County Council, Marion County's legislative body, at "
+                  "its most recent election.")
+IN_MARION_CTA_NOTE = ("Opens the map with the county layer on. Its card lists "
+                      "the council and the mayor, from the same certified "
+                      "results; the council's district lines are not drawn yet.")
+
 
 def in_commissioners(inst):
     """Indiana: ONE file keyed by county GEOID, each record carrying the
     county's name and a `seats` list of {seat, name, party, election, office,
     sourceUrl, seatNotStated?} (in/scripts/build_in_county_officials.py).
 
-    91 OF 92 COUNTIES, BY CONSTRUCTION. Marion County's legislative body is the
-    Indianapolis City-County Council, which the certified commissioner results
-    do not carry, so it has no record and no page here.
+    ALL 92 COUNTIES, ONE OF THEM A CITY COUNCIL. Marion County's legislative
+    body is the Indianapolis City-County Council, which the certified
+    commissioner results do not carry; its 25 seats come from
+    in-city-officials.json (in/scripts/build_in_city_officials.py, the same
+    archive's 2023 municipal general), and its record carries its own
+    `wording` so its page is headed by the body it is about.
 
     A SEAT WHOSE RACE TITLE NAMES NO DISTRICT is labelled with the title as
     published (Clinton's and Ohio's "County Commissioner"), and the member row
@@ -1324,9 +1442,350 @@ def in_commissioners(inst):
                      "lede": IN_LEDE, "standfirst": IN_STANDFIRST,
                      "desc": IN_DESC, "disclaimer": IN_DISCLAIMER,
                      "cta_note": IN_CTA_NOTE}
+    # Marion, from the city file: the City-County Council's 25 seats, not the
+    # mayor, who is the executive rather than a member of the body.
+    city_path = os.path.join(data_dir, "in-city-officials.json")
+    indy = _read(city_path).get("1836003") or {}
+    seats = [s for s in indy.get("seats") or [] if s.get("seat") != "Mayor"]
+    if indy.get("county") != "Marion" or len(seats) != 25:
+        problems.append("in-city-officials.json does not carry the 25 seats of "
+                        "the Indianapolis City-County Council")
+    else:
+        districts = []
+        for seat in seats:
+            when = _mn_date(seat.get("election"))
+            if not when or not (seat.get("name") or "").strip():
+                problems.append("Indianapolis City-County Council %r names "
+                                "nobody or carries no election date"
+                                % seat.get("seat"))
+                continue
+            member = {"name": seat["name"].strip(), "elected": "Elected %s." % when}
+            if seat.get("party"):
+                member["party"] = seat["party"]
+            districts.append(district(seat["seat"], [member]))
+        out["Marion"] = {"districts": districts,
+                         "sourceUrl": seats[0].get("sourceUrl"),
+                         "source_label": "the Indiana Election Division's certified results",
+                         "extras": [], "skipped": [], "slug": county_slug("Marion"),
+                         "at_large": False, "source_file": city_path,
+                         "wording": IN_MARION_WORDING,
+                         "lede": IN_MARION_LEDE, "standfirst": IN_STANDFIRST,
+                         "desc": IN_MARION_DESC, "disclaimer": IN_DISCLAIMER,
+                         "cta_note": IN_MARION_CTA_NOTE}
     note = ("%d of Indiana's 92 counties, every seat named from the Election "
-            "Division's certified results (Marion's City-County Council is not "
-            "in them)" % len(out))
+            "Division's certified results (Marion's is the Indianapolis "
+            "City-County Council)" % len(out))
+    return out, problems, nameless, [path, city_path], note
+
+
+# Kept short because it ends every page's search description, and the longest
+# county names put "the ... county directory" past the 155-character limit.
+KY_SOURCE_LABEL = "Kentucky's Department for Local Government"
+KY_LEDE = {
+    "magistrate": (
+        "%(county)s County's fiscal court is its county judge/executive, who "
+        "presides, and its magistrates, each elected from a magisterial district "
+        "(KRS 67.040). These are the %(who)s the Kentucky Department for Local "
+        "Government's county directory lists. The directory does not say which "
+        "district each magistrate holds."),
+    "commissioner": (
+        "%(county)s County's fiscal court is its county judge/executive, who "
+        "presides, and three commissioners, each elected by the whole county's "
+        "voters and one living in each commissioner district (KRS 67.060). These "
+        "are the %(who)s the Kentucky Department for Local Government's county "
+        "directory lists."),
+}
+KY_MERGED_LEDE = (
+    "%(county)s County has no fiscal court: it merged with its city, and the "
+    "%(body)s is its governing body (%(law)s). These are the %(who)s the "
+    "Kentucky Department for Local Government's directory lists, each elected "
+    "from a council district that is not drawn here yet. The mayor, %(mayor)s, "
+    "is the government's executive and is not a member of the council.")
+# Appended to the lede where the builder matched members to the districts they
+# won in 2022, so a county with no match never claims one.
+KY_DISTRICT_NOTE = ("Where the State Board of Elections' certified 2022 results "
+                    "name a member as the winner of a district, that district is "
+                    "shown beside the name; a member without one took the seat "
+                    "after that election or could not be matched.")
+KY_STANDFIRST = ("Every member of the %(heading)s, as the Kentucky Department "
+                 "for Local Government's county directory lists them.")
+KY_DESC = {"magistrate": "%d members: the judge/executive and the magistrates",
+           "commissioner": "%d members: the judge/executive and three commissioners",
+           "merged": "%d council members"}
+KY_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is listed "
+                 "by the Kentucky Department for Local Government,\n"
+                 "which does not say when a county last updated its entry, so the "
+                 "county's own website is the current word.")
+KY_CTA_NOTE = ("Opens the map with the county layer on. Its card lists this body "
+               "and the county's elected officers; the district lines are not "
+               "drawn yet, so the map cannot say which district a point is in.")
+
+
+def ky_county_governments(inst):
+    """Kentucky: ONE file keyed by county GEOID (ky/data/app/ky-county-officials.json,
+    built by ky/scripts/build_ky_county_officials.py from the Department for
+    Local Government's county directory).
+
+    FLAT, AND NEVER CLAIMED AT LARGE. The directory names every magistrate and
+    commissioner and no district, so a page lists the body as one list; the
+    lede says how the county actually elects (KRS 67.045 and 67.060), which is
+    by district or from residence districts and never at large. Where the
+    builder matched a member to the district they won in 2022 (the State
+    Board of Elections' recap sheets), the district rides in the member's role
+    ("Magistrate, District 3") and the lede says where it came from; the list
+    stays flat because a member the results do not name has no district to
+    file under.
+
+    JEFFERSON AND FAYETTE are the merged governments and their pages are about
+    the council, so the mayor is named in the lede as the executive and is not
+    listed as a member of a body he does not sit on."""
+    path = os.path.join(app_data(inst["tag"]), "ky-county-officials.json")
+    out, problems, nameless = {}, [], set()
+    for geoid, rec in sorted(_read(path).items()):
+        name = (rec.get("county") or "").strip()
+        members = [dict(m) for m in rec.get("members") or []]
+        for m in members:
+            if m.get("district"):
+                d = str(m.pop("district"))
+                m["role"] = "%s, %s" % (m.get("role") or "Member",
+                                        "District " + d if re.match(r"^(\d+|[A-Z])$", d)
+                                        else d + " District")
+        if not name:
+            problems.append("ky-county-officials.json %r carries no county" % geoid)
+            continue
+        if not any((m.get("name") or "").strip() for m in members):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("ky %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        merged = rec.get("body") != "Fiscal Court"
+        if merged:
+            if (inst.get("heading_for") or {}).get(name) != rec.get("body"):
+                problems.append("ky %s County's body is %r and heading_for does not "
+                                "name it" % (name, rec.get("body")))
+                continue
+            mayor = (rec.get("executive") or {}).get("name") or ""
+            lede = KY_MERGED_LEDE % {
+                "county": "%(county)s", "who": "%(who)s",
+                "body": esc(rec["body"]).replace("%", "%%"),
+                "law": esc(rec.get("law") or "").replace("%", "%%"),
+                "mayor": esc(mayor).replace("%", "%%")}
+            desc, index_note = KY_DESC["merged"], ", " + rec["body"]
+        else:
+            if rec.get("form") not in KY_LEDE:
+                problems.append("ky %s County's fiscal court form %r has no wording"
+                                % (name, rec.get("form")))
+                continue
+            lede, desc = KY_LEDE[rec["form"]], KY_DESC[rec["form"]]
+            index_note = ", fiscal court"
+            if rec.get("districtsFrom"):
+                lede += " " + KY_DISTRICT_NOTE
+            if rec.get("formNote"):
+                lede += " " + esc(rec["formNote"]).replace("%", "%%")
+        out[name] = {"members": members,
+                     "structure": None,
+                     "verified": rec.get("bodyRead") or rec.get("read"),
+                     "sourceUrl": rec.get("bodySourceUrl") or rec.get("sourceUrl"),
+                     "source_label": KY_SOURCE_LABEL,
+                     "sourceDocument": None,
+                     "seats": len(members) + int(rec.get("unnamedSeats") or 0),
+                     "slug": county_slug(name), "at_large": True,
+                     "claims_at_large": False,
+                     "lede": lede, "standfirst": KY_STANDFIRST, "desc": desc,
+                     "disclaimer": KY_DISCLAIMER, "cta_note": KY_CTA_NOTE,
+                     "index_note": index_note, "source_file": path}
+    note = ("%d of Kentucky's 120 counties, every name from the Department for "
+            "Local Government's county directory" % len(out))
+    return out, problems, nameless, [path], note
+
+
+TN_LEDE = ("The %(heading)s is elected by district. This page lists its "
+           "%(districts)d districts and the %(named)d members who hold them, "
+           "exactly as the county publishes them; it is the same list the "
+           "map's commission district card reads.")
+TN_LEDE_AT_LARGE = ("The %(heading)s is elected mostly by district, with some "
+                    "members elected countywide. This page lists its "
+                    "%(districts)d districts, the %(named)d members who hold "
+                    "them and the members elected countywide, exactly as the "
+                    "county publishes them; it is the same list the map's "
+                    "commission district card reads.")
+TN_CTA_NOTE = ("Opens the map with the county and commission district layers "
+               "on. Search your address or ZIP, or tap your location.")
+
+
+def _tn_seat(seat):
+    """The county's own seat label inside a district, as the app's card prints
+    it: a bare letter or number reads "Seat A", anything longer is the
+    county's own words ("Position 1")."""
+    seat = str(seat or "").strip()
+    if not seat:
+        return ""
+    return "Seat " + seat if len(seat) <= 2 else seat
+
+
+def tn_commissioners(inst):
+    """Tennessee: ONE file keyed by county GEOID ("47093"), each record
+    carrying the county's name, its body's name and member title, the day the
+    county's page was read, and `districts` mapping each district number to the
+    members that page lists for it (tn/scripts/build_tn_commissioner_roster.py).
+
+    A DISTRICT IS NOT A SEAT. Many Tennessee counties elect two or three
+    members from one district, so a district holds a list; a member may carry
+    the county's own seat label, which this page prints beside the name; and a
+    seat the county says is vacant is a record marked `vacant`, counted as a
+    vacancy and never as a name.
+
+    ONLY THE COUNTIES THE ROSTER HAS READ GET A PAGE. The roster grows county by
+    county as each county's page is proven, so a county it has not reached has
+    no record here.
+
+    THE BODY IS NOT ALWAYS A COUNTY COMMISSION. Nashville and Davidson County is
+    one metropolitan government whose legislative body is the Metro Council, so
+    a record whose `bodyName` is not "County Commission" carries that name in
+    its heading and title, in the words the app's card uses."""
+    path = os.path.join(app_data(inst["tag"]), "tn-commissioners.json")
+    out, problems, nameless = {}, [], set()
+    for geoid, rec in sorted(_read(path).items()):
+        full = (rec.get("county") or "").strip()
+        name = re.sub(r"\s+County$", "", full)
+        named_districts = rec.get("districts") or {}
+        read_on = _mn_date(rec.get("readAt"))
+        if not name or not named_districts or not read_on:
+            problems.append("tn-commissioners.json %r carries no county, no "
+                            "districts or no read date" % geoid)
+            continue
+
+        def person(m):
+            p = {k: m[k].strip() for k in ("name", "email", "phone", "profileUrl")
+                 if isinstance(m.get(k), str) and m[k].strip()}
+            role = ", ".join(x for x in ((m.get("role") or "").strip(),
+                                         _tn_seat(m.get("seat"))) if x)
+            if role:
+                p["role"] = role
+            p["readOn"] = read_on
+            return p
+
+        districts = []
+        aliases = rec.get("districtLabels") or {}
+        for label in sorted(named_districts, key=district_sort_key):
+            ms = named_districts[label] or []
+            districts.append(district(
+                label, [person(m) for m in ms if not m.get("vacant")],
+                vacancies=sum(1 for m in ms if m.get("vacant")),
+                alias=aliases.get(label)))
+        countywide = rec.get("atLarge") or []
+        if any(m.get("vacant") for m in countywide):
+            # A page section for countywide members has no vacancy line yet,
+            # and dropping the seat would make the page claim a smaller body.
+            problems.append("tn %s County reports a vacant countywide seat, which "
+                            "these pages cannot say yet" % name)
+            continue
+        extras = ([("at-large", "Elected countywide",
+                    [person(m) for m in countywide])] if countywide else [])
+        if not _count_named(districts, extras):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("tn %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        entry = {"districts": districts, "sourceUrl": rec.get("sourceUrl"),
+                 "extras": extras, "skipped": [], "slug": county_slug(name),
+                 "at_large": False, "source_file": path,
+                 "lede": TN_LEDE_AT_LARGE if extras else TN_LEDE,
+                 "cta_note": TN_CTA_NOTE}
+        body = (rec.get("bodyName") or "").strip()
+        if body and body != "County Commission":
+            entry["heading"] = entry["page_title"] = "%s County %s" % (name, body)
+            entry["member_word"] = (rec.get("seatTitle") or "").strip() or None
+        out[name] = entry
+    note = ("%d of Tennessee's 95 counties, each named from the county's own "
+            "published list" % len(out))
+    return out, problems, nameless, [path], note
+
+
+NC_LEDE = ("These are the people who won each seat on %(county)s County's "
+           "Board of Commissioners at its most recent election in the North "
+           "Carolina State Board of Elections' results, each dated to that "
+           "election. They are election winners, not a list the county keeps up "
+           "to date: a board fills a vacancy by appointment, so a seat that has "
+           "changed hands since may still show the person who won it.")
+NC_STANDFIRST = ("Who won each seat on the %(heading)s at its most recent "
+                 "election, from the North Carolina State Board of Elections' results.")
+NC_DESC = ("Who won each of the %(districts)d seats on %(county)s County's "
+           "Board of Commissioners at its most recent election.")
+NC_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above won an "
+                 "election the North Carolina State Board of Elections reports,\n"
+                 "and this page dates each name to that election rather than "
+                 "claiming the seat is still held.")
+NC_CTA_NOTE = ("Opens the map with the county layer on. Its card lists this "
+               "board from the same results; no publisher draws the "
+               "commissioner districts.")
+
+
+def nc_commissioners(inst):
+    """North Carolina: ONE file keyed by county GEOID, each record carrying
+    the county's name and a `seats` list of {seat, name | unnamed, party,
+    election, note?} (nc/scripts/build_nc_county_commissioners.py).
+
+    A LABEL CAN HOLD SEVERAL SEATS, because a county that elects three
+    commissioners in one contest labels all three "Board seat" or "At large",
+    so seats are grouped by label into one section each. A seat that names
+    nobody carries its reason, printed as the section's note; a named seat's
+    own note (one of several earlier winners has left, and the results do not
+    say which) prints beside its election date."""
+    data_dir = app_data(inst["tag"])
+    path = os.path.join(data_dir, "nc-county-commissioners.json")
+    out, problems, nameless = {}, [], set()
+    for geoid, rec in sorted(_read(path).items()):
+        if geoid.startswith("_"):
+            continue
+        name = (rec.get("county") or "").strip()
+        seats = rec.get("seats") or []
+        if not name or not seats:
+            problems.append("nc-county-commissioners.json %r carries no county "
+                            "or no seats" % geoid)
+            continue
+        groups = {}
+        for seat in seats:
+            groups.setdefault(seat.get("seat") or "Board seat", []).append(seat)
+        districts = []
+        for label, group in groups.items():
+            members, notes = [], []
+            for seat in group:
+                if not (seat.get("name") or "").strip():
+                    notes.append((seat.get("unnamed") or "the results name nobody").rstrip("."))
+                    continue
+                when = _mn_date(seat.get("election"))
+                if not when:
+                    problems.append("nc %s County %r names %r with no election "
+                                    "date" % (name, label, seat["name"]))
+                    continue
+                note = ("Elected to the rest of a term %s." if seat.get("unexpiredTerm")
+                        else "Elected %s.") % when
+                if seat.get("note"):
+                    note += " " + seat["note"]
+                member = {"name": seat["name"].strip(), "elected": note}
+                if seat.get("party"):
+                    member["party"] = seat["party"]
+                members.append(member)
+            districts.append(district(label, members,
+                                      note="; ".join(notes) if notes else None))
+        if not _count_named(districts, []):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("nc %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        out[name] = {"districts": districts,
+                     "sourceUrl": "https://er.ncsbe.gov/",
+                     "source_label": "the North Carolina State Board of Elections' results",
+                     "extras": [], "skipped": [], "slug": county_slug(name),
+                     "at_large": False, "source_file": path,
+                     "lede": NC_LEDE, "standfirst": NC_STANDFIRST,
+                     "desc": NC_DESC, "disclaimer": NC_DISCLAIMER,
+                     "cta_note": NC_CTA_NOTE}
+    note = ("%d of North Carolina's 100 counties, every seat named from the "
+            "State Board of Elections' results or marked with why not" % len(out))
     return out, problems, nameless, [path], note
 
 
@@ -1574,6 +2033,9 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "mn_commissioners": mn_commissioners,
             "in_commissioners": in_commissioners,
             "ok_commissioners": ok_commissioners,
+            "nc_commissioners": nc_commissioners,
+            "ky_county_governments": ky_county_governments,
+            "tn_commissioners": tn_commissioners,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
@@ -1651,6 +2113,9 @@ def board_graph(rec, inst, canonical, head, name):
     """
     org_id = canonical + "#board"
     roles, items = [], []
+    # A record naming its own body names its own members too (Nashville's
+    # Metro Council seats Council Members, not Commissioners).
+    member_word = rec.get("member_word") or inst["member_word"]
     # AN AT-LARGE BOARD HAS NO DISTRICT LIST AND GETS NO ItemList, which is the
     # statement its page already makes in words: every member is elected
     # countywide, so there are no seats to enumerate. Its members are still
@@ -1661,7 +2126,7 @@ def board_graph(rec, inst, canonical, head, name):
         roles.append({"@type": "OrganizationRole",
                       "@id": "%s-at-large-%d" % (org_id, n),
                       "roleName": (m.get("role") or "").strip()
-                                  or inst["member_word"],
+                                  or member_word,
                       "member": member_node(m)})
     position = 0
     for d in rec.get("districts") or []:
@@ -1677,7 +2142,7 @@ def board_graph(rec, inst, canonical, head, name):
                                     n)
             roles.append({"@type": "OrganizationRole", "@id": role_id,
                           "roleName": (m.get("role") or "").strip()
-                                      or inst["member_word"],
+                                      or member_word,
                           "namedPosition": seat,
                           "member": member_node(m)})
             ids.append(role_id)
@@ -1837,7 +2302,7 @@ def districted_body(inst, name, rec):
     if not source_file:
         fail("%s has no source_file, so this cannot tell whether the app reads "
              "its roster — every adapter must record the path it read"
-             % heading_of(inst, name))
+             % heading_of(inst, name, rec))
     app_reads = "%sdata%sapp%s" % (os.sep, os.sep, os.sep) in source_file
     same = ("it is the same roster the map's %s card reads"
             % esc(inst["phrase"]) if app_reads else
@@ -1863,7 +2328,7 @@ def districted_body(inst, name, rec):
     if rec.get("lede"):
         out.append('<p class="lede">%s</p>'
                    % (rec["lede"] % {"county": esc(name),
-                                     "heading": esc(heading_of(inst, name)),
+                                     "heading": esc(heading_of(inst, name, rec)),
                                      "phrase": esc(inst["phrase"]),
                                      "districts": n_dist,
                                      "named": named}))
@@ -1872,7 +2337,7 @@ def districted_body(inst, name, rec):
             '<p class="lede">The %s is elected by district. This page '
             'lists %s %s and the %s who %s them, exactly as the county %s '
             'them — %s.</p>'
-            % (esc(heading_of(inst, name)), n_dist,
+            % (esc(heading_of(inst, name, rec)), n_dist,
                "district" if n_dist == 1 else "districts",
                "member" if named == 1 else "%d members" % named,
                "holds" if named == 1 else "hold",
@@ -1908,7 +2373,7 @@ def districted_body(inst, name, rec):
         anchor = "district-%s" % re.sub(r"[^A-Za-z0-9]+", "-",
                                         re.sub(r"^District\s+", "", label)).lower()
         out.append('<section class="district" id="%s">' % esc(anchor))
-        out.append('<h2>%s</h2>' % esc(seat_heading(inst, label)))
+        out.append('<h2>%s</h2>' % esc(district_heading(inst, d)))
         rows = [h for h in (member_html(m) for m in d["members"]) if h]
         if rows:
             out.append('<ul class="members">%s</ul>' % "".join(rows))
@@ -1993,8 +2458,9 @@ def at_large_body(inst, name, rec):
                '<p class="unlisted">Not listed in the county\'s directory.</p>')
     out.append('</section>')
     if rec.get("seats") and rec["seats"] > named:
-        out.append('<p class="unlisted">%d of %d seats are not named by the '
-                   'county\'s own source.</p>' % (rec["seats"] - named, rec["seats"]))
+        out.append('<p class="unlisted">%d of %d seats are not named by %s.</p>'
+                   % (rec["seats"] - named, rec["seats"],
+                      esc(rec.get("source_label") or "the county's own source")))
     out.append('<a class="cta" href="../#layers=county">'
                'See %s County on the map →</a>' % esc(name))
     out.append('<p class="cta-note">%s</p>'
@@ -2014,6 +2480,10 @@ def source_note(rec, at_large):
     if at_large:
         if rec.get("sourceDocument"):
             bits.append("Source: %s." % esc(rec["sourceDocument"]))
+        elif rec.get("sourceUrl") and rec.get("source_label"):
+            # A flat roster that is not the county's own says whose it is.
+            bits.append('Source: <a href="%s" rel="noopener" target="_blank">%s</a>.'
+                        % (esc(rec["sourceUrl"]), esc(rec["source_label"])))
         elif rec.get("sourceUrl"):
             bits.append('Source: <a href="%s" rel="noopener" target="_blank">the '
                         "county's own published roster</a>." % esc(rec["sourceUrl"]))
@@ -2238,6 +2708,14 @@ def mark_svg():
 
 
 def build_page(inst, name, rec, at_large, shell, contact=None):
+    # A RECORD MAY NAME A DIFFERENT BODY FROM ITS INSTANCE'S. Indianapolis and
+    # Marion County are one government, so Marion's governing body is the
+    # City-County Council rather than a board of commissioners; its record
+    # carries `wording` (heading, page_title, page_title_short, phrase,
+    # member_word) and every sentence on its page reads from that instead. A
+    # record without the key renders byte-identically to before it existed.
+    if rec.get("wording"):
+        inst = dict(inst, **rec["wording"])
     slug = rec["slug"]
     canonical = "%s%s/%s.html" % (inst["app_url"], inst["concept"], slug)
     body, n_dist, named = (at_large_body(inst, name, rec) if at_large
@@ -2248,9 +2726,11 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
     block = contact_html(contact)
     if block:
         body = body + "\n" + block
-    head = heading_of(inst, name)
-    title = "%s — %s" % (inst["page_title"] % {"county": name}, inst["app_name"])
-    if len(title) > 60 and inst.get("page_title_short"):
+    head = heading_of(inst, name, rec)
+    own_title = rec.get("page_title") or (inst.get("page_title_for") or {}).get(name)
+    title = "%s — %s" % (own_title or inst["page_title"] % {"county": name},
+                         inst["app_name"])
+    if len(title) > 60 and inst.get("page_title_short") and not own_title:
         title = "%s — %s" % (inst["page_title_short"] % {"county": name},
                              inst["app_name"])
     if at_large:
@@ -2266,11 +2746,11 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
         # the districted half of this same generator never carried it. The
         # em dash matches that half too — the two shapes were gratuitously
         # different.
-        desc = ("Who sits on the %s — %s, from the county's own published "
-                "roster."
+        desc = ("Who sits on the %s — %s, from %s."
                 % (head, (rec.get("desc")
                           or "%d members elected at large across the whole "
-                             "county") % named))
+                             "county") % named,
+                   rec.get("source_label") or "the county's own published roster"))
     else:
         # `named` counts the EXTRA sections too — Illinois's elected chair,
         # Menominee's two at-large supervisors — and none of those people is in
@@ -2474,7 +2954,7 @@ def verify_page(inst, name, rec, at_large, html):
     if not at_large:
         for d in rec["districts"]:
             if ("<h2>%s</h2>"
-                    % esc(seat_heading(inst, d["label"]))) not in html:
+                    % esc(district_heading(inst, d))) not in html:
                 problems.append("%s: district %s has no section on its page"
                                 % (name, d["label"]))
     return problems
@@ -2649,6 +3129,16 @@ NOT_COUNTY_BOARDS = {
                "in-county-commissioners.json. The council's members are named "
                "on the app's County card from the same certified results; a "
                "section for them on these pages is its own change.",
+    ),
+    "sc/data/app/sc-county-council-members.json": dict(
+        date="2026-10-11",
+        reason="South Carolina's county councils, which ARE the county's "
+               "governing body and belong on these pages. They are held back "
+               "for one reason: South Carolina is dark, and a county page, its "
+               "index and the about page's officeholder count would describe an "
+               "app nobody can open yet. The adapter lands in the go-live "
+               "change (sc/WATCH.md lists it), copied from mn_commissioners, "
+               "and this entry goes with it.",
     ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",
@@ -3040,7 +3530,7 @@ def main():
                     wrong.append(
                         "%s: the roster seats %d and %s says the county elects "
                         "%d. The page states both and would contradict itself"
-                        % (heading_of(inst, n), held, inst["contacts"],
+                        % (heading_of(inst, n, rec), held, inst["contacts"],
                            c["seats"]))
             missing = sorted(n for n in counties
                              if _norm_county(n) not in contacts)

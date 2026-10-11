@@ -19,11 +19,13 @@ and the next state's go-live reads them.
 |---|---|---|---|
 | Weekly (Mon 13:55 UTC) | U.S. House (KY) roster refresh | `.github/workflows/update-ky-congress-roster.yml` → PR on change | Review + merge the PR; a week with a surprise diff is worth a look at the source |
 | Weekly (Wed 14:50 UTC) | City mayors and councils from the Department for Local Government's municipal directory | `.github/workflows/update-ky-city-officials.yml` → PR on change | Review + merge the PR. A red run is usually a new title in the directory or a city that no longer joins a Census place — both are the builder asking a question, not a job to re-run |
+| Weekly (Thu 14:55 UTC) | County judge/executives, magistrates or commissioners and elected officers from the Department for Local Government's county directory | `.github/workflows/update-ky-county-officials.yml` → PR on change | Review + merge the PR. A red run is usually a title the builder has not classified, a county whose titles mix the magistrate and commissioner forms, or a county naming two judge/executives — each is the builder asking a question, not a job to re-run. The city workflow rebuilds this roster too, because Jefferson's and Fayette's councils come from the city roster |
 | Monthly (1st, 17:00 UTC) | Source freshness — the four TIGERweb layers and the congress-legislators feed | `.github/workflows/ky-validate-sources.yml` → tracking issue on WARN/FAIL | Read the issue; the job stays green on purpose, the issue is the signal |
 
-Only one roster refreshes here, because only one roster ships. The two chamber cards and
-the county card name nobody — gaps `ky-legislature-roster`, `ky-fiscal-court` and
-`ky-county-officers` in `docs/DATA_LAYER_GUIDEBOOK.md`.
+The two chamber cards name nobody — gap `ky-legislature-roster` in
+`docs/DATA_LAYER_GUIDEBOOK.md`. The County card names every county's whole fiscal court
+(or, in Jefferson and Fayette, the merged council) and its elected officers since
+2026-10-11, but not which member holds a reader's district — gap `ky-fiscal-court`.
 
 **Minnesota, the instance this one was ported from, has no monthly source workflow at
 all.** That is a gap on that instance rather than a precedent for this one: an instance
@@ -56,7 +58,7 @@ that declares a source registry and never runs it has filed a measurement nowher
 |---|---|---|
 | After each U.S. general (November, even years) | The delegation turns over; the weekly congress-legislators refresh picks it up | 2026-09-30 (initial build: 6/6, each with a district office) |
 | After each Kentucky general (November, even years) and each January seating | The two chamber rosters turn over — and this instance names nobody in either, so there is nothing to refresh until `ky-legislature-roster` is built. Until then the cards enter the engine chamber factory's roster-miss path and link each chamber's own directory | — (gap `ky-legislature-roster`) |
-| After each Kentucky general | County judge-executives, magistrates and commissioners turn over. The Department for Local Government's directory is the roster source and it carries no district number, so there is nothing here to refresh yet either (gap `ky-fiscal-court`) | — |
+| After each Kentucky general | County judge-executives, magistrates and commissioners turn over. The weekly county directory refresh picks them up; the directory carries no district number, so the card still lists the whole court (gap `ky-fiscal-court`). **The district beside each name comes from the 2022 results and describes the term ending the first Monday of January 2027**: once the State Board posts the 2026 general recap sheets, point `PAGE` and `ELECTION` in `ky/scripts/ky_fiscal_court_results_scraper.py` at them, run it (it needs `poppler-utils` and `tesseract-ocr`, and reads 67 scanned sheets by text recognition), rename the output file and `RESULTS` in the builder to say 2026, and rebuild. Until then a member elected in 2026 gets no district, which is the safe direction. Two things to re-read by hand after the 2026 general: **Pike**, where the directory lists three commissioners and the certified 2026 primary ran five magisterial contests, and **Christian**, whose District 2 magistrate's first name the directory prints as `Gilliam` and the builder corrects to `Jerry` from the county's own page (`NAME_FIXES`, which fails once the directory stops carrying the error) | 2026-10-11 (initial build: 118 judge/executives, 520 named magistrates, 42 commissioners; 346 of the 562 matched to a 2022 district) |
 
 ---
 

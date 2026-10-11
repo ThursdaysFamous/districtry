@@ -8,12 +8,12 @@ districtry South Carolina: a single-file, dependency-light web app. Click a poin
 Carolina (or search an address) and it reports every civic district containing that point and
 who represents you there. It serves at **districtry.com/sc/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships TEN layers, and as of this PR **the instance is DARK**: no
+Illinois root-scripts shape. It ships ELEVEN layers, and **the instance is DARK**: no
 `metros.json` entry, `sc/**` excluded from the Pages deploy, nothing served and no landing card
 naming it. `sc/WATCH.md` lists what go-live has to do in one change.
 
-**The national tier** — everything ten layers answer today comes from a national publisher or
-the General Assembly. **County** (46, Census TIGERweb, identity-only and the coverage ring),
+**The national tier** — ten of the eleven layers answer from a national publisher or the
+General Assembly. **County** (46, Census TIGERweb, identity-only and the coverage ring),
 **U.S. House** (7 districts, TIGERweb geometry joined to the public-domain
 unitedstates/congress-legislators roster), **South Carolina Senate** and **South Carolina House**
 (46 and 124 districts, TIGERweb geometry joined to the General Assembly's own member pages), the
@@ -51,13 +51,38 @@ the live service answers with a neighbouring state's ZIP (the Georgia negative p
 and Augusta 30904, against the State House's 29201, measured 2026-10-10). The coverage test reads
 the shipped outline, and the smoke test asserts both halves.
 
-**THE FLAGSHIP THIS INSTANCE IS BUILDING TOWARD IS `county-council`.** Every county has been
-governed by an elected council since the Home Rule Act of 1975, the state Revenue and Fiscal
-Affairs Office publishes every county's council districts, and the State Election Commission's
-results name who won. Recorded as gap `sc-county-council` until it ships, beside
-`sc-municipal-officeholders`, `sc-school-board-members` and `sc-tribal-government`. **Council
-seats are on the 3 November 2026 ballot**, so names shipped before then are rebuilt from the
-certified results before the new members take office.
+**THE FLAGSHIP IS `county-council`, AND ITS NAMES COME FROM CERTIFIED ELECTION RESULTS.** Every
+county has been governed by an elected council since the Home Rule Act of 1975. The districts are
+the state Revenue and Fiscal Affairs Office's one statewide layer — 315 districts in 46 counties,
+`sc/scripts/build_sc_county_council_districts.py`, Douglas-Peucker at 20 m under a 25 m ceiling,
+with every county's districts held to cover that county. The people are each seat's most recent
+winner in the State Election Commission's certified results (the 2022 and 2024 generals, their
+recounts and runoffs), `sc/scripts/build_sc_county_council_roster.py`: **334 seats, every one
+named**, refreshed weekly by `update-sc-county-council-roster.yml`, which also watches the district
+layer and opens an issue when a county redistricts. Thirteen counties elect somebody countywide —
+six chairs, three supervisors, three at-large members, and Hampton's whole council — so the
+`county` card names those members and the council card names the district's own; Jasper elects
+all five countywide from four residence townships, and no published source says which of the
+map's four numbers is which township, so its card names all five.
+
+**A WINNER IS NOT A SITTING MEMBER, SO THE COUNTY'S OWN PAGE IS READ BESIDE THE RESULTS.** The
+roster builder reads each county's council page (robots.txt at every redirect hop, standard
+library, our own token) and keeps only folded words, never an address — four of those pages print
+members' home addresses. A page naming somebody else for a seat FAILS the build unless a person
+has read it and recorded it in `COUNTY_SAYS`; on 2026-10-11, 43 of the 46 pages were read (36 by
+the build, seven more by a person) and eleven seats differed, each shown on the card beside the
+winner. Six of those pages refuse our own
+token by Cloudflare or Akamai and were read with the browser client, so the weekly job, which
+still sends the token, prints them unreadable. Charleston's page blocks every client and is the
+one county left in `UNREAD_BY_A_PERSON`, where a disagreement is printed rather than failed until
+somebody reads it, and two are never read on purpose (Allendale's robots.txt disallows every
+path; Berkeley answers with a managed challenge). Recorded as gap `sc-county-council`
+(data-quality), beside `sc-municipal-officeholders`, `sc-school-board-members` and
+`sc-tribal-government`. **Council seats are on the 3 November 2026 ballot, and the weekly job
+cannot read the results site from GitHub's runners** (a 202 challenge on robots.txt, measured
+2026-10-11): it keeps the shipped names, opens a tracking issue, and turns red once an election's
+results are 21 days old and unread. How those names get refreshed waits on Adam's ruling
+(`sc/WATCH.md`).
 
 **TRIBAL GOVERNMENTS ARE IN SCOPE AND ARE NOT IN THIS PR.** Measured with
 `scripts/tribal_areas.py` on 2026-10-10, the Census draws one federal reservation in South
@@ -84,9 +109,9 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: South Carolina (`southcarolina`) — https://districtry.com/sc/
 - Geocoders: address Photon (South Carolina-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, South Carolina-bounded, serial >=1s queue)
-- Ground truth: 34.00035,-81.03295 (the State House, Columbia, Richland County) → county Richland County; us-house 6; sc-senate 26; sc-house 72. Negative point 33.75000,-82.55000 (Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.SCExplorer`.
-- Scheduled workflows: `update-sc-congress-roster.yml` (Mon 17:07 UTC); `update-sc-legislature-roster.yml` (Tue 17:07 UTC); `sc-validate-sources.yml` (1st of month 19:37 UTC).
+- Ground truth: 34.00035,-81.03295 (the State House, Columbia, Richland County) → county Richland County; us-house 6; sc-senate 26; sc-house 72; county-council 4. Negative point 33.75000,-82.55000 (Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.).
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.SCExplorer`.
+- Scheduled workflows: `update-sc-congress-roster.yml` (Mon 17:07 UTC); `update-sc-legislature-roster.yml` (Tue 17:07 UTC); `update-sc-county-council-roster.yml` (Wed 17:07 UTC); `sc-validate-sources.yml` (1st of month 19:37 UTC).
 - Source registry: `sc/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 
@@ -149,9 +174,10 @@ others).
 
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards link to the official body instead of inventing a name. Both chamber
-cards degrade to the district number + the chamber's own directory on a roster miss; the county,
-school-district and municipality cards carry no roster at all and **say so on the
-card**. External strings always render through `sanitize()`/`textContent`. Roster refreshes
+cards degrade to the district number + the chamber's own directory on a roster miss; the
+council and county cards keep the district or county and link the state association's county
+directory when the council roster does not load; the school-district and municipality cards carry no roster at all
+and **say so on the card**. External strings always render through `sanitize()`/`textContent`. Roster refreshes
 always land as PRs for human review — never as direct commits to main.
 
 ## Data pipeline
@@ -165,9 +191,12 @@ anchors in Georgia and North Carolina), `state-counties.json`
 `sc-senate-districts.json`, `sc-house-districts.json`
 (`sc/scripts/build_legislative_boundaries.py` — statewide TIGERweb, mapshaper-simplified with
 Douglas-Peucker, refused unless BOTH the 2,000-random-point agreement gate and the 25 m fidelity
-ceiling pass). Rosters: `congress-roster.json` (`sc/scripts/build_congress_roster.py`, from
-unitedstates/congress-legislators) and `sc-{senate,house}-members.json`
-(`sc/scripts/build_sc_legislature_roster.py`, from the General Assembly's own pages) — all
+ceiling pass), and `sc-county-council-districts.json` (`sc/scripts/build_sc_county_council_districts.py`, from the state's own layer, with its source
+fingerprint in `data/source/`). Rosters: `congress-roster.json` (`sc/scripts/build_congress_roster.py`, from
+unitedstates/congress-legislators), `sc-{senate,house}-members.json`
+(`sc/scripts/build_sc_legislature_roster.py`, from the General Assembly's own pages) and
+`sc-county-council-members.json` (`sc/scripts/build_sc_county_council_roster.py`, from the
+Election Commission's certified results) — all
 count-guarded, all refreshed weekly by CI as reviewed PRs. The legislature builder writes neither
 file unless BOTH chambers pass: no fewer than 42 senators and 114 representatives, every
 district inside the chamber's range and claimed once, the member page's own district and surname

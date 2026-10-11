@@ -1032,7 +1032,7 @@ table.matrix code {
       with the relevant government office before relying on them for anything official.
     </div>
     <!-- ==== GENERATED:BEGIN sources-verified ==== -->
-        <p class="verified">Data last verified: <strong>October 9, 2026</strong></p>
+        <p class="verified">Data last verified: <strong>October 11, 2026</strong></p>
 <!-- ==== GENERATED:END sources-verified ==== -->
     <p class="lede">Where a source publishes nothing, the app says so rather than guessing — the
       <a href="./#gaps">missing-data panel</a> on the map is the standing list of what nobody publishes
@@ -1202,7 +1202,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 92 features, measured 2026-09-29.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">Every commissioner and county council member in 91 of the 92 counties, each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2022 and 2024 generals), dated to that election and rebuilt weekly by in/scripts/build_in_county_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, which no result records, and the card says so. Every seat in the county is listed because neither body's district lines are drawn yet. Marion County's legislative body is the Indianapolis City-County Council, which is not shown yet.</td>
+                <td data-label="Who it names">Every commissioner and county council member in 91 of the 92 counties, each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2022 and 2024 generals), dated to that election and rebuilt weekly by in/scripts/build_in_county_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, which no result records, and the card says so. Every seat in the county is listed because neither body's district lines are drawn yet. Marion County's legislative body is the Indianapolis City-County Council, so its card names the council's 25 members and the Mayor of Indianapolis from the 2023 municipal general instead (in/scripts/build_in_city_officials.py).</td>
                 <td data-label="Where it applies">Indiana — statewide, all 92 counties.</td>
               </tr>
               <tr id="layer-zip-code">
@@ -1235,7 +1235,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 566 features for Indiana, measured 2026-09-29</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER YET, AND THE CARD SAYS SO. Indiana's municipal officers are elected in the odd-year municipal general and certified by the Election Division, so a roster is reachable; it is not fetched in this change. Recorded as gap in-municipal-officeholders.</td>
+                <td data-label="Who it names">The mayor and council of 36 of the 39 places over 25,000 people (all 33 cities and three of six towns), each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2023 municipal general), dated to that election and rebuilt weekly by in/scripts/build_in_city_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, and the card says so. Plainfield, Brownsburg and Schererville are towns where an uncontested seat is on no ballot, so the results cannot name the whole council; smaller places are not named yet. Recorded as gap in-municipal-officeholders.</td>
                 <td data-label="Where it applies">Indiana — statewide, all 566 incorporated places. 'Indianapolis city (balance)' is the Census record for the part of the consolidated Indianapolis–Marion County government outside its included towns, not a separate municipality.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1317,7 +1317,7 @@ table.matrix code {
       "@id": "https://districtry.com/in/sources.html#dataset-county",
       "identifier": "county",
       "name": "County",
-      "description": "Which county contains the point, and who won each seat on its board of commissioners and its county council. Every commissioner and county council member in 91 of the 92 counties, each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2022 and 2024 generals), dated to that election and rebuilt weekly by in/scripts/build_in_county_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, which no result records, and the card says so. Every seat in the county is listed because neither body's district lines are drawn yet. Marion County's legislative body is the Indianapolis City-County Council, which is not shown yet.",
+      "description": "Which county contains the point, and who won each seat on its board of commissioners and its county council. Every commissioner and county council member in 91 of the 92 counties, each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2022 and 2024 generals), dated to that election and rebuilt weekly by in/scripts/build_in_county_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, which no result records, and the card says so. Every seat in the county is listed because neither body's district lines are drawn yet. Marion County's legislative body is the Indianapolis City-County Council, so its card names the council's 25 members and the Mayor of Indianapolis from the 2023 municipal general instead (in/scripts/build_in_city_officials.py).",
       "url": "https://districtry.com/in/sources.html#layer-county",
       "isPartOf": {
         "@id": "https://districtry.com/in/sources.html#catalog"
@@ -1427,7 +1427,7 @@ table.matrix code {
       "@id": "https://districtry.com/in/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City or Town",
-      "description": "The incorporated city or town covering the point, if any — and which of the two it is, because in Indiana that changes what governs the point. NO OFFICEHOLDER YET, AND THE CARD SAYS SO. Indiana's municipal officers are elected in the odd-year municipal general and certified by the Election Division, so a roster is reachable; it is not fetched in this change. Recorded as gap in-municipal-officeholders.",
+      "description": "The incorporated city or town covering the point, if any — and which of the two it is, because in Indiana that changes what governs the point. The mayor and council of 36 of the 39 places over 25,000 people (all 33 cities and three of six towns), each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2023 municipal general), dated to that election and rebuilt weekly by in/scripts/build_in_city_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, and the card says so. Plainfield, Brownsburg and Schererville are towns where an uncontested seat is on no ballot, so the results cannot name the whole council; smaller places are not named yet. Recorded as gap in-municipal-officeholders.",
       "url": "https://districtry.com/in/sources.html#layer-municipality",
       "isPartOf": {
         "@id": "https://districtry.com/in/sources.html#catalog"
