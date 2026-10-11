@@ -72,7 +72,7 @@ returns 1,070 ZCTAs, 638 of them with their interior point in Tennessee (measure
 The coverage test reads the shipped outline, and the smoke test asserts both halves.
 
 **THE FLAGSHIP IS THE COUNTY COMMISSION, AND ITS DISTRICTS SHIPPED 2026-10-11; ITS MEMBERS ARE
-NOT NAMED YET.** Every Tennessee county elects its legislative body from districts, the three
+NAMED COUNTY BY COUNTY, STARTING THE SAME DAY.** Every Tennessee county elects its legislative body from districts, the three
 consolidated governments included (Nashville-Davidson's 35 are its Metropolitan Council
 districts), and the Comptroller of the Treasury publishes all of them in one statewide layer.
 `tn/scripts/build_tn_commission_districts.py` builds **County Commission District** from it: 859
@@ -83,8 +83,67 @@ that every district answers to its own county at points inside it. **A DISTRICT 
 many counties elect two or three members from one district, and the layer carries no seat count,
 so the card never says how many people hold a district. **NO STATE OFFICE PUBLISHES THE NAMES** —
 the Division of Elections' results of the 6 August 2026 election carry 219 offices and no county
-race — so they come county by county from each county's own pages, in later changes. Recorded as
-gap `tn-county-commissioners`, beside `tn-municipal-officeholders` and `tn-school-board-members`.
+race — so they come county by county from each county's own pages. Recorded as gap
+`tn-county-commissioners`, beside `tn-municipal-officeholders` and `tn-school-board-members`;
+the gap names every county still unnamed.
+
+**THE NAMES ARE ONE PARSER PER COUNTY, AND A COUNTY JOINS BY HAVING ONE.**
+`tn/scripts/tn_commission_parsers/` holds a module per county (its FIPS, the pages it reads, the
+seats each district elects, how many sit at large, and a `parse()` over those pages);
+`tn/scripts/tn_commissioner_scraper.py` discovers the package, reads robots.txt at every
+redirect hop with the client that crawls, and leaves a managed challenge alone;
+`tn/scripts/build_tn_commissioner_roster.py` writes `tn/data/app/tn-commissioners.json` and
+refuses a county whose districts are not exactly 1..N for the district count the shipped
+geometry draws, whose seats per district differ from its module, or that carries a field not on
+its whitelist. The first tranche (2026-10-11) is 13 counties: 277 seats, 276 named and one vacant (Blount
+District 4, Seat C, which the county's own pages list as vacant although the August results
+give it a winner; neither says why, so the card says what the county says). Each of the 13 was
+checked against that county's results of 6 August 2026 before it joined, and what each was
+checked against is in its module's docstring. The survey of the other counties, and why Shelby
+is not in the first tranche, is in `tn/WATCH.md`. **A SECOND TRANCHE OF 20 JOINED THE SAME DAY,
+AND NOT ALL OF IT ON RESULTS**: 33 counties, 635 seats, 633 named, the second vacancy Anderson
+District 8, whose August winner declined the seat by letter (the county's 21 September agenda).
+Fourteen were checked against their own August results. Six could not be, because the results
+sit behind a robots.txt refusal on a county's file host (Bedford, Tipton), say "available soon"
+(Franklin), or are not published on any county host (Giles, Lincoln, Hawkins), and the state's
+results site answers this project 403; those six joined on county documents dated after
+1 September 2026 instead, and **two of them, Lincoln and Hawkins, carry a district pairing that
+no government document read here confirms**: their September documents name who sits and not
+where, and the district each sits in was compared only with a news outlet's copy of the results
+or the ballot. Each module's docstring says exactly which. Five more were held back rather than
+shipped on weaker evidence: Hamblen (no record readable here gives its districts), Carter (its
+results and minutes are behind the same kind of robots.txt refusal and its page carries no
+date), Dyer (it letters its districts A to J and the state's map numbers them 1 to 10, with
+nothing published that pairs the two), Greene (its page lists District 5 as open while the
+county's own September committee list seats the man elected there) and Cumberland (its site
+answered every request with HTTP 429). **A THIRD TRANCHE OF 16 JOINED THE SAME DAY, OUT OF 36
+TRIED**: 49 counties, 867 seats, 864 named, the third vacancy Polk District 2, which the county's
+page states. Twelve were checked against their own August results (Benton, Cannon, Cheatham,
+Chester, Cocke, Crockett, DeKalb, Hickman, Marion, Obion, Stewart, Unicoi — Crockett's list is its
+election commission's own page, as the county government publishes none), and four on county
+documents from after the election that name members by district (Claiborne's "term ends August
+2030" on every member plus the outgoing body's roll call for the twelve who continue, Fentress's
+21 September resolution signed by all ten by district, Polk's September commissioner list,
+Scott's election commission list of officeholders by district). Twenty were held: fourteen with
+nothing that confirms the page is current or which district each member sits for, and six whose
+page cannot be used as it stands — four disagree with the county's own results or later documents
+(Hancock, Johnson, Overton, Sequatchie), Smith leaves three districts' write-in seats unnamed
+without calling them vacant, and Houston's layout separates two members from any district
+heading. **A CHAIR NAMED ON A PAGE IS NOT RECORDED UNLESS SOMETHING SHOWS THE NEW
+COMMISSION ELECTED THEM**: the chairs are chosen in September, and Cocke's and Claiborne's pages
+both print one that nothing confirms for the new term. **A PARSER'S `TITLE` IS A CARD'S WORD AND NOTHING ELSE**:
+three of the twenty kept a compiled pattern under that name, which the scraper would have
+shipped as the seat title, so it now refuses a non-text `TITLE` or `BODY` at load. A county that cannot be read keeps its
+last good record for 45 days, dated to the day it was read, and past that the weekly run
+(`update-tn-commissioner-roster.yml`, Wednesday) fails. **PRIVACY IS A WHITELIST, NOT A
+FILTER**: county pages print home addresses, personal mobile numbers and personal e-mail beside
+the official ones, so a member record can carry only a name, a seat, a role, an e-mail on the
+county's own domain, and a telephone only for the one county (Davidson) whose numbers are the
+Council's own office lines. **NASHVILLE IS A METROPOLITAN COUNCIL, NOT A COMMISSION**, with 35
+district members and 5 elected countywide, so its record carries its own body name and member
+title, and its generated page is titled "Davidson County Metro Council". The per-county pages
+under `tn/county-commissioner/` and their index on `tn/county-commissioner.html` are generated
+by `scripts/build_county_pages.py` from the same roster.
 The Comptroller's layer reports the date of its last data edit, and the monthly source check
 warns when it moves past the edit the shipped file was built from (2026-09-10).
 
@@ -120,7 +179,7 @@ every other instance via `scripts/compose_app.py`.
 - Geocoders: address Photon (Tennessee-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Tennessee-bounded, serial >=1s queue)
 - Ground truth: 36.16590,-86.78440 (the State Capitol, Nashville, Davidson County) → county Davidson County; us-house 7; tn-senate 21; tn-house 51; county-commissioner 19. Negative point 34.90000,-86.60000 (near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.).
 - Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 11. Debug namespace `window.TennesseeExplorer`.
-- Scheduled workflows: `update-tn-congress-roster.yml` (Mon 17:15 UTC); `update-tn-legislature-roster.yml` (Tue 17:15 UTC); `tn-validate-sources.yml` (1st of month 19:30 UTC).
+- Scheduled workflows: `update-tn-congress-roster.yml` (Mon 17:15 UTC); `update-tn-legislature-roster.yml` (Tue 17:15 UTC); `update-tn-commissioner-roster.yml` (Wed 17:15 UTC); `tn-validate-sources.yml` (1st of month 19:30 UTC).
 - Source registry: `tn/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 ## Running & testing

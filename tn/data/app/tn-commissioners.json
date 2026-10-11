@@ -1,0 +1,5072 @@
+{
+ "47001": {
+  "county": "Anderson County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://andersoncountytn.gov/county-commission/",
+  "readAt": "2026-10-11",
+  "seats": 16,
+  "domains": [
+   "andersoncountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Chad McNabb"
+    },
+    {
+     "email": "twandell@andersoncountytn.gov",
+     "name": "Tracy Wandell"
+    }
+   ],
+   "2": [
+    {
+     "email": "mfoster@andersoncountytn.gov",
+     "name": "Michael Foster"
+    },
+    {
+     "email": "dpalmer@andersoncountytn.gov",
+     "name": "Denise Palmer"
+    }
+   ],
+   "3": [
+    {
+     "email": "sgray@andersoncountytn.gov",
+     "name": "Shannon Gray"
+    },
+    {
+     "email": "svandagriff@andersoncountytn.gov",
+     "name": "Shelly Vandagriff"
+    }
+   ],
+   "4": [
+    {
+     "name": "Shain Vowell"
+    },
+    {
+     "name": "Tim Isbel"
+    }
+   ],
+   "5": [
+    {
+     "name": "Robert McKamey"
+    },
+    {
+     "email": "jpack@andersoncountytn.gov",
+     "name": "Jeff Pack"
+    }
+   ],
+   "6": [
+    {
+     "email": "ecapshaw@andersoncountytn.gov",
+     "name": "Ebony Capshaw"
+    },
+    {
+     "email": "awells@andersoncountytn.gov",
+     "name": "Aaron Wells"
+    }
+   ],
+   "7": [
+    {
+     "email": "scapshaw@andersoncountytn.gov",
+     "name": "Sharon Bourgeois-Capshaw"
+    },
+    {
+     "email": "sverran@andersoncountytn.gov",
+     "name": "Stephen Verran"
+    }
+   ],
+   "8": [
+    {
+     "email": "jcook@andersoncountytn.gov",
+     "name": "Jawrell Cook"
+    },
+    {
+     "vacant": true
+    }
+   ]
+  }
+ },
+ "47003": {
+  "county": "Bedford County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.bedfordcountytn.gov/government/board_of_commissioners.php",
+  "readAt": "2026-10-11",
+  "seats": 18,
+  "domains": [
+   "bedfordcountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Jared Featherstone"
+    },
+    {
+     "email": "eric.maddox@bedfordcountytn.gov",
+     "name": "Eric Maddox"
+    }
+   ],
+   "2": [
+    {
+     "name": "Michael Gregory"
+    },
+    {
+     "name": "Roy Turner"
+    }
+   ],
+   "3": [
+    {
+     "name": "Alex Mitchell"
+    },
+    {
+     "name": "Jason P. Sanders"
+    }
+   ],
+   "4": [
+    {
+     "email": "anita.epperson4@bedfordcountytn.gov",
+     "name": "Anita Epperson"
+    },
+    {
+     "email": "diane.neeley@bedfordcountytn.gov",
+     "name": "Diane Neeley"
+    }
+   ],
+   "5": [
+    {
+     "name": "Brent E. Smith"
+    },
+    {
+     "name": "Brian K. Bruce"
+    }
+   ],
+   "6": [
+    {
+     "name": "David Deason"
+    },
+    {
+     "name": "Jennifer Templeton"
+    }
+   ],
+   "7": [
+    {
+     "email": "keith.davis@bedfordcountytn.gov",
+     "name": "Keith Davis"
+    },
+    {
+     "email": "sylvia.pinson@bedfordcountytn.gov",
+     "name": "Sylvia Pinson"
+    }
+   ],
+   "8": [
+    {
+     "email": "john.boutwell@bedfordcountytn.gov",
+     "name": "John Boutwell"
+    },
+    {
+     "email": "jason.boyette@bedfordcountytn.gov",
+     "name": "Jason Boyette"
+    }
+   ],
+   "9": [
+    {
+     "email": "mark.thomas@bedfordcountytn.gov",
+     "name": "Mark Thomas"
+    },
+    {
+     "name": "P.T. \"Biff\" Farrar"
+    }
+   ]
+  }
+ },
+ "47005": {
+  "county": "Benton County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://bentoncountytn.gov/county_commission.html",
+  "readAt": "2026-10-11",
+  "seats": 18,
+  "domains": [
+   "bentoncountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Keith Arnold"
+    },
+    {
+     "name": "Nicholas Horton"
+    },
+    {
+     "name": "Phil Davis"
+    }
+   ],
+   "2": [
+    {
+     "name": "Tim Vick"
+    },
+    {
+     "name": "Randy Shannon"
+    },
+    {
+     "name": "Rocky Presson"
+    }
+   ],
+   "3": [
+    {
+     "name": "Bret Burke"
+    },
+    {
+     "name": "Sam Shaw"
+    },
+    {
+     "name": "Gary Furr"
+    }
+   ],
+   "4": [
+    {
+     "name": "Dakota Green"
+    },
+    {
+     "name": "Larry Kirk"
+    },
+    {
+     "name": "Phil Melton"
+    }
+   ],
+   "5": [
+    {
+     "name": "Barry Holland"
+    },
+    {
+     "name": "Mike Nunnery"
+    },
+    {
+     "name": "Rosanne Ward"
+    }
+   ],
+   "6": [
+    {
+     "name": "Terry Kiehn"
+    },
+    {
+     "name": "Jerry Price"
+    },
+    {
+     "name": "Jeff Murphy"
+    }
+   ]
+  }
+ },
+ "47009": {
+  "county": "Blount County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://blounttn.gov/835/Commissioners",
+  "readAt": "2026-10-11",
+  "seats": 21,
+  "domains": [
+   "blounttn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "jhannah@blounttn.gov",
+     "name": "Jessica Hannah"
+    },
+    {
+     "email": "ksudderth@blounttn.gov",
+     "name": "Keenan Sudderth"
+    }
+   ],
+   "2": [
+    {
+     "email": "makard@blounttn.gov",
+     "name": "Mike Akard"
+    },
+    {
+     "email": "joe.cooper@blounttn.gov",
+     "name": "Joe Cooper"
+    }
+   ],
+   "3": [
+    {
+     "email": "tjones@blounttn.gov",
+     "name": "Tanner Jones"
+    },
+    {
+     "email": "nporter@blounttn.gov",
+     "name": "Neal Porter"
+    }
+   ],
+   "4": [
+    {
+     "email": "rbennett@blounttn.gov",
+     "name": "Robbie Bennett"
+    },
+    {
+     "email": "rsimerly@blounttn.gov",
+     "name": "Robert Simerly"
+    },
+    {
+     "vacant": true
+    }
+   ],
+   "5": [
+    {
+     "email": "bramsey@blounttn.gov",
+     "name": "Bob Ramsey"
+    },
+    {
+     "email": "rcarver@blounttn.gov",
+     "name": "Rick Carver"
+    }
+   ],
+   "6": [
+    {
+     "email": "nbright@blounttn.gov",
+     "name": "Nick Bright",
+     "role": "Chairman"
+    },
+    {
+     "email": "mddavis@blounttn.gov",
+     "name": "Misty Davis"
+    }
+   ],
+   "7": [
+    {
+     "email": "seffler@blounttn.gov",
+     "name": "Shannon Effler"
+    },
+    {
+     "email": "jsatterfield@blounttn.gov",
+     "name": "Jasmine Satterfield"
+    }
+   ],
+   "8": [
+    {
+     "email": "rshields@blounttn.gov",
+     "name": "Roy Shields"
+    },
+    {
+     "email": "jjopling@blounttn.gov",
+     "name": "Jeff Jopling",
+     "role": "Vice Chairman"
+    }
+   ],
+   "9": [
+    {
+     "email": "dcorwin@blounttn.gov",
+     "name": "David Corwin"
+    },
+    {
+     "email": "cblankenship@blounttn.gov",
+     "name": "Chip Blankenship"
+    }
+   ],
+   "10": [
+    {
+     "email": "dmoore@blounttn.gov",
+     "name": "Doug Moore"
+    },
+    {
+     "email": "dwells@blounttn.gov",
+     "name": "David Wells"
+    }
+   ]
+  }
+ },
+ "47011": {
+  "county": "Bradley County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://bradleycountytn.gov/county-government/county-commission/",
+  "readAt": "2026-10-11",
+  "seats": 14,
+  "domains": [
+   "bradleycountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "dbeaty@bradleycountytn.gov",
+     "name": "Daniel Beaty"
+    },
+    {
+     "email": "mhughes@bradleycountytn.gov",
+     "name": "Mike Hughes"
+    }
+   ],
+   "2": [
+    {
+     "email": "tmurray@bradleycountytn.gov",
+     "name": "Terri Murray"
+    },
+    {
+     "email": "lalford@bradleycountytn.gov",
+     "name": "Louie Alford"
+    }
+   ],
+   "3": [
+    {
+     "email": "mblake@bradleycountytn.gov",
+     "name": "Milan Blake"
+    },
+    {
+     "email": "dennycollins@bradleycountytn.gov",
+     "name": "Denny Collins"
+    }
+   ],
+   "4": [
+    {
+     "email": "jtaylor@bradleycountytn.gov",
+     "name": "Josh Taylor"
+    },
+    {
+     "email": "richk@bradleycountytn.gov",
+     "name": "Rich Kienlen"
+    }
+   ],
+   "5": [
+    {
+     "email": "bgoins@bradleycountytn.gov",
+     "name": "Bobby Goins"
+    },
+    {
+     "email": "cslater@bradleycountytn.gov",
+     "name": "Cindy Slater"
+    }
+   ],
+   "6": [
+    {
+     "email": "tmason@bradleycountytn.gov",
+     "name": "Tim Mason"
+    },
+    {
+     "email": "tommyledford@bradleycountytn.gov",
+     "name": "Tommy Ledford"
+    }
+   ],
+   "7": [
+    {
+     "email": "sbeasley@bradleycountytn.gov",
+     "name": "Stephen Beasley"
+    },
+    {
+     "email": "rasble@bradleycountytn.gov",
+     "name": "Rusty Asble"
+    }
+   ]
+  }
+ },
+ "47015": {
+  "county": "Cannon County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://cannoncountytn.gov/county-commissioners/",
+  "readAt": "2026-10-11",
+  "seats": 10,
+  "domains": [
+   "cannoncountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Nathan Sanders"
+    },
+    {
+     "email": "Judy.Schoen@CannonCountyTN.gov",
+     "name": "Judy Schoen"
+    }
+   ],
+   "2": [
+    {
+     "email": "James.Adkins@CannonCountyTN.gov",
+     "name": "James Adkins"
+    },
+    {
+     "email": "Marty.Williams@CannonCountyTN.gov",
+     "name": "Marty Williams"
+    }
+   ],
+   "3": [
+    {
+     "email": "Shea.Basham@CannonCountyTN.gov",
+     "name": "Shea Basham"
+    },
+    {
+     "name": "Curtis George"
+    }
+   ],
+   "4": [
+    {
+     "name": "Randy Gannon"
+    },
+    {
+     "email": "Michael.Hollandsworth@CannonCountyTN.gov",
+     "name": "Michael Hollandsworth"
+    }
+   ],
+   "5": [
+    {
+     "name": "Kristal Alexander"
+    },
+    {
+     "email": "Tony.Burnett@CannonCountyTN.gov",
+     "name": "Tony Burnett"
+    }
+   ]
+  }
+ },
+ "47021": {
+  "county": "Cheatham County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://cheathamcountytn.gov/commission.html",
+  "readAt": "2026-10-11",
+  "seats": 12,
+  "domains": [
+   "cheathamcountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "calton.blacker@cheathamcountytn.gov",
+     "name": "Calton Blacker"
+    },
+    {
+     "email": "david.anderson@cheathamcountytn.gov",
+     "name": "David Anderson"
+    }
+   ],
+   "2": [
+    {
+     "email": "randy.noe@cheathamcountytn.gov",
+     "name": "Randy Noe"
+    },
+    {
+     "email": "tim.williamson@cheathamcountytn.gov",
+     "name": "Tim Williamson"
+    }
+   ],
+   "3": [
+    {
+     "email": "bj.hudspeth@cheathamcountytn.gov",
+     "name": "B.J. Hudspeth"
+    },
+    {
+     "email": "chris.gilmore@cheathamcountytn.gov",
+     "name": "Chris Gilmore"
+    }
+   ],
+   "4": [
+    {
+     "email": "james.gupton@cheathamcountytn.gov",
+     "name": "James Gupton"
+    },
+    {
+     "email": "walter.weakley@cheathamcountytn.gov",
+     "name": "Walter Weakley"
+    }
+   ],
+   "5": [
+    {
+     "email": "jody.vann@cheathamcountytn.gov",
+     "name": "Jody Vann"
+    },
+    {
+     "email": "Diana.lovell@cheathamcountytn.gov",
+     "name": "Diana Pike Lovell"
+    }
+   ],
+   "6": [
+    {
+     "email": "clint.biggers@cheathamcountytn.gov",
+     "name": "Clint Biggers"
+    },
+    {
+     "email": "james.hedgepath@cheathamcountytn.gov",
+     "name": "James Hedgepath"
+    }
+   ]
+  }
+ },
+ "47023": {
+  "county": "Chester County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://chestercountytn.org/county_commission.html",
+  "readAt": "2026-10-11",
+  "seats": 12,
+  "domains": [
+   "chestercountytn.org"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Heather Carter"
+    },
+    {
+     "name": "Kevin Faulkner"
+    }
+   ],
+   "2": [
+    {
+     "name": "Al McKinnon"
+    },
+    {
+     "name": "Dwain Seaton"
+    }
+   ],
+   "3": [
+    {
+     "name": "Ann Moore"
+    },
+    {
+     "name": "Luke Weaver"
+    }
+   ],
+   "4": [
+    {
+     "name": "Dylan Clayton"
+    },
+    {
+     "name": "Darryl Thompson"
+    }
+   ],
+   "5": [
+    {
+     "name": "Tim Crowe"
+    },
+    {
+     "name": "Barry Smith"
+    }
+   ],
+   "6": [
+    {
+     "name": "Dane Burns"
+    },
+    {
+     "name": "Dan Crump"
+    }
+   ]
+  }
+ },
+ "47025": {
+  "county": "Claiborne County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://claibornecountytn.gov/countyoffices/county-commission",
+  "readAt": "2026-10-11",
+  "seats": 21,
+  "domains": [
+   "claibornecountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "tammy.cheek@claibornecountytn.gov",
+     "name": "Tammy Cheek"
+    },
+    {
+     "email": "nathan.fultz@claibornecountytn.gov",
+     "name": "Nathan Fultz"
+    },
+    {
+     "email": "zach.king@claibornecountytn.gov",
+     "name": "Zach King"
+    }
+   ],
+   "2": [
+    {
+     "email": "nathan.epperson@claibornecountytn.gov",
+     "name": "Nathan Epperson"
+    },
+    {
+     "email": "gary.poore@claibornecountytn.gov",
+     "name": "Gary Poore"
+    },
+    {
+     "email": "haley.barker@claibornecountytn.gov",
+     "name": "Haley Barker"
+    }
+   ],
+   "3": [
+    {
+     "email": "blaine.coffey@claibornecountytn.gov",
+     "name": "Blaine Coffey"
+    },
+    {
+     "email": "stacey.crawford@claibornecountytn.gov",
+     "name": "Stacey Crawford"
+    },
+    {
+     "email": "travis.lester@claibornecountytn.gov",
+     "name": "Travis Lester"
+    }
+   ],
+   "4": [
+    {
+     "email": "zach.mullins@claibornecountytn.gov",
+     "name": "Zach Mullins"
+    },
+    {
+     "email": "anthony.rowe@claibornecountytn.gov",
+     "name": "Anthony Rowe"
+    }
+   ],
+   "5": [
+    {
+     "email": "mitchell.cosby@claibornecountytn.gov",
+     "name": "Mitchell Cosby"
+    }
+   ],
+   "6": [
+    {
+     "email": "richard.smith@claibornecountytn.gov",
+     "name": "Richard Smith"
+    },
+    {
+     "email": "carolyn.brooks@claibornecountytn.gov",
+     "name": "Carolyn S. Brooks"
+    },
+    {
+     "email": "steve.mason@claibornecountytn.gov",
+     "name": "Steve Mason"
+    }
+   ],
+   "7": [
+    {
+     "email": "steve.brogan@claibornecountytn.gov",
+     "name": "James Steve Brogan"
+    },
+    {
+     "email": "sherry.mccreary@claibornecountytn.gov",
+     "name": "Sherry McCreary"
+    },
+    {
+     "email": "eric.jones@claibornecountytn.gov",
+     "name": "Kelly “Eric” Jones"
+    }
+   ],
+   "8": [
+    {
+     "email": "shane.evans@claibornecountytn.gov",
+     "name": "Shane Baine Evans"
+    },
+    {
+     "email": "tad.russell@claibornecountytn.gov",
+     "name": "Tad Russell"
+    }
+   ],
+   "9": [
+    {
+     "email": "anita.jenkins@claibornecountytn.gov",
+     "name": "Anita Jenkins"
+    }
+   ]
+  }
+ },
+ "47029": {
+  "county": "Cocke County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.cockecountytn.gov/county-legislative-body",
+  "readAt": "2026-10-11",
+  "seats": 14,
+  "domains": [
+   "cockecountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Tim Grigsby",
+     "seat": "Post 1"
+    },
+    {
+     "name": "William (Bill) Miller",
+     "seat": "Post 2"
+    }
+   ],
+   "2": [
+    {
+     "name": "Judy Hensley",
+     "seat": "Post 1"
+    },
+    {
+     "name": "Kenneth Norton",
+     "seat": "Post 2"
+    }
+   ],
+   "3": [
+    {
+     "name": "Norman Smith",
+     "seat": "Post 1"
+    },
+    {
+     "name": "Sid Mason",
+     "seat": "Post 2"
+    }
+   ],
+   "4": [
+    {
+     "name": "Jonathan Templin",
+     "seat": "Post 1"
+    },
+    {
+     "name": "Donnie Raines",
+     "seat": "Post 2"
+    }
+   ],
+   "5": [
+    {
+     "name": "Dan (Pete) Bright",
+     "seat": "Post 1"
+    },
+    {
+     "name": "Daniel Reece",
+     "seat": "Post 2"
+    }
+   ],
+   "6": [
+    {
+     "name": "Casey Reed",
+     "seat": "Post 1"
+    },
+    {
+     "name": "Jeff Eslinger",
+     "seat": "Post 2"
+    }
+   ],
+   "7": [
+    {
+     "name": "Tim Layman",
+     "seat": "Post 1"
+    },
+    {
+     "name": "Clayton Ellison",
+     "seat": "Post 2"
+    }
+   ]
+  }
+ },
+ "47031": {
+  "county": "Coffee County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.coffeecountytn.gov/213/County-Commission",
+  "readAt": "2026-10-11",
+  "seats": 18,
+  "domains": [
+   "coffeecountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "alevieux@coffeecountytn.gov",
+     "name": "Amanda LeVieux",
+     "profileUrl": "https://www.coffeecountytn.gov/214/Amanda-LeVieux"
+    },
+    {
+     "email": "djones@coffeecountytn.gov",
+     "name": "Dowe Jones",
+     "profileUrl": "https://www.coffeecountytn.gov/215/Dowe-Jones"
+    }
+   ],
+   "2": [
+    {
+     "email": "jperry@coffeecountytn.gov",
+     "name": "Jeff Perry",
+     "profileUrl": "https://www.coffeecountytn.gov/216/Jeff-Perry"
+    },
+    {
+     "email": "rchambers@coffeecountytn.gov",
+     "name": "Roger Chambers",
+     "profileUrl": "https://www.coffeecountytn.gov/217/Roger-Chambers"
+    }
+   ],
+   "3": [
+    {
+     "email": "lnettles@coffeecountytn.gov",
+     "name": "Laura Nettles",
+     "profileUrl": "https://www.coffeecountytn.gov/218/Laura-Nettles"
+    },
+    {
+     "email": "rsmith@coffeecountytn.gov",
+     "name": "Rose Ann Carden Smith",
+     "profileUrl": "https://www.coffeecountytn.gov/219/Rose-Ann-Carden-Smith"
+    }
+   ],
+   "4": [
+    {
+     "email": "tbrown@coffeecountytn.gov",
+     "name": "Tim Brown",
+     "profileUrl": "https://www.coffeecountytn.gov/220/Tim-Brown"
+    },
+    {
+     "email": "mbrothers@coffeecountytn.gov",
+     "name": "Mark Brothers",
+     "profileUrl": "https://www.coffeecountytn.gov/221/Mark-Brothers"
+    }
+   ],
+   "5": [
+    {
+     "email": "pdeford@coffeecountytn.gov",
+     "name": "Missy DeFord",
+     "profileUrl": "https://www.coffeecountytn.gov/222/Missy-DeFord"
+    },
+    {
+     "email": "tmorris@coffeecountytn.gov",
+     "name": "Tim Morris",
+     "profileUrl": "https://www.coffeecountytn.gov/224/Tim-Morris"
+    }
+   ],
+   "6": [
+    {
+     "email": "thershman@coffeecountytn.gov",
+     "name": "Terry Hershman",
+     "profileUrl": "https://www.coffeecountytn.gov/225/Terry-Hershman"
+    },
+    {
+     "email": "sanderson@coffeecountytn.gov",
+     "name": "Sammy Anderson",
+     "profileUrl": "https://www.coffeecountytn.gov/226/Sammy-Anderson"
+    }
+   ],
+   "7": [
+    {
+     "email": "rcrabtree@coffeecountytn.gov",
+     "name": "Rosemary Crabtree",
+     "profileUrl": "https://www.coffeecountytn.gov/227/Rosemary-Crabtree"
+    },
+    {
+     "email": "jduncan@coffeecountytn.gov",
+     "name": "Jackie Duncan",
+     "profileUrl": "https://www.coffeecountytn.gov/228/Jackie-Duncan"
+    }
+   ],
+   "8": [
+    {
+     "email": "dmann@coffeecountytn.gov",
+     "name": "Derick Mann",
+     "profileUrl": "https://www.coffeecountytn.gov/229/Derick-Mann"
+    },
+    {
+     "email": "tstubblefield@coffeecountytn.gov",
+     "name": "Tim Stubblefield",
+     "profileUrl": "https://www.coffeecountytn.gov/236/Tim-Stubblefield"
+    }
+   ],
+   "9": [
+    {
+     "email": "tmalone@coffeecountytn.gov",
+     "name": "Todd Malone",
+     "profileUrl": "https://www.coffeecountytn.gov/237/Todd-Malone"
+    },
+    {
+     "email": "fwatkins@coffeecountytn.gov",
+     "name": "Frank Watkins",
+     "profileUrl": "https://www.coffeecountytn.gov/239/Frank-Watkins"
+    }
+   ]
+  }
+ },
+ "47033": {
+  "county": "Crockett County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.crockettvote.com/county-commission",
+  "readAt": "2026-10-11",
+  "seats": 24,
+  "domains": [
+   "crockettvote.com"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Jonathan Dodd",
+     "seat": "Position 1"
+    },
+    {
+     "name": "Clayton Smith",
+     "seat": "Position 2"
+    }
+   ],
+   "2": [
+    {
+     "name": "William C Hooten",
+     "seat": "Position 1"
+    },
+    {
+     "name": "John Kelley",
+     "seat": "Position 2"
+    }
+   ],
+   "3": [
+    {
+     "name": "Justin Mosier",
+     "seat": "Position 1"
+    },
+    {
+     "name": "Taylor L Branch",
+     "seat": "Position 2"
+    }
+   ],
+   "4": [
+    {
+     "name": "Lee S Woods",
+     "seat": "Position 1"
+    },
+    {
+     "name": "Bill Henderson",
+     "seat": "Position 2"
+    }
+   ],
+   "5": [
+    {
+     "name": "Edwina Michelle Little",
+     "seat": "Position 1"
+    },
+    {
+     "name": "Joel Dupree",
+     "seat": "Position 2"
+    }
+   ],
+   "6": [
+    {
+     "name": "Beth Woodson Smith",
+     "seat": "Position 1"
+    },
+    {
+     "name": "Ryan Woodward",
+     "seat": "Position 2"
+    }
+   ],
+   "7": [
+    {
+     "name": "Harvey D Bradshaw",
+     "seat": "Position 1"
+    },
+    {
+     "name": "Megan Sparks",
+     "seat": "Position 2"
+    }
+   ],
+   "8": [
+    {
+     "name": "Karen Utley",
+     "seat": "Position 1"
+    },
+    {
+     "name": "Dustin Bodkins",
+     "seat": "Position 2"
+    }
+   ],
+   "9": [
+    {
+     "name": "Ronde' J Howell",
+     "seat": "Position 1"
+    },
+    {
+     "name": "Wayne Jernigan",
+     "seat": "Position 2"
+    }
+   ],
+   "10": [
+    {
+     "name": "Gary Emison",
+     "seat": "Position 1"
+    },
+    {
+     "name": "Alice F McDearman",
+     "seat": "Position 2"
+    }
+   ],
+   "11": [
+    {
+     "name": "Gene Permenter",
+     "seat": "Position 1"
+    },
+    {
+     "name": "Michael Laxton",
+     "seat": "Position 2"
+    }
+   ],
+   "12": [
+    {
+     "name": "Tosh Newman",
+     "seat": "Position 1"
+    },
+    {
+     "name": "Jared C Foust",
+     "seat": "Position 2"
+    }
+   ]
+  }
+ },
+ "47037": {
+  "county": "Davidson County",
+  "seatTitle": "Council Member",
+  "bodyName": "Metro Council",
+  "sourceUrl": "https://www.nashville.gov/departments/council/districts",
+  "readAt": "2026-10-11",
+  "seats": 40,
+  "domains": [
+   "nashville.gov"
+  ],
+  "phones": true,
+  "districts": {
+   "1": [
+    {
+     "email": "joy.kimbrough@nashville.gov",
+     "name": "Joy Kimbrough",
+     "phone": "615-432-1301",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-1"
+    }
+   ],
+   "2": [
+    {
+     "email": "kyonzte.toombs@nashville.gov",
+     "name": "Kyonzté Toombs",
+     "phone": "615-432-1302",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-2"
+    }
+   ],
+   "3": [
+    {
+     "email": "Jennifer.Gamble@nashville.gov",
+     "name": "Jennifer Gamble",
+     "phone": "615-432-1303",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-3"
+    }
+   ],
+   "4": [
+    {
+     "email": "Mike.Cortese@nashville.gov",
+     "name": "Mike Cortese",
+     "phone": "615-432-1304",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-4"
+    }
+   ],
+   "5": [
+    {
+     "email": "Sean.Parker@nashville.gov",
+     "name": "Sean Parker",
+     "phone": "615-432-1305",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-5"
+    }
+   ],
+   "6": [
+    {
+     "email": "clay.capp@nashville.gov",
+     "name": "Clay Capp",
+     "phone": "615-432-1306",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-6"
+    }
+   ],
+   "7": [
+    {
+     "email": "Emily.Benedict@nashville.gov",
+     "name": "Emily Benedict",
+     "phone": "615-432-1307",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-7"
+    }
+   ],
+   "8": [
+    {
+     "email": "deonte.harrell@nashville.gov",
+     "name": "Deonté Harrell",
+     "phone": "615-432-1308",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-8"
+    }
+   ],
+   "9": [
+    {
+     "email": "Tonya.Hancock@nashville.gov",
+     "name": "Tonya Hancock",
+     "phone": "615-432-1309",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-9"
+    }
+   ],
+   "10": [
+    {
+     "email": "Jennifer.Webb@nashville.gov",
+     "name": "Jennifer Frensley Webb",
+     "phone": "615-432-1310",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-10"
+    }
+   ],
+   "11": [
+    {
+     "email": "Jeff.Eslick@nashville.gov",
+     "name": "Jeff Eslick",
+     "phone": "615-432-1311",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-11"
+    }
+   ],
+   "12": [
+    {
+     "email": "Erin.Evans@nashville.gov",
+     "name": "Erin Evans",
+     "phone": "615-432-1312",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-12"
+    }
+   ],
+   "13": [
+    {
+     "email": "Russ.Bradford@nashville.gov",
+     "name": "Russ Bradford",
+     "phone": "615-432-1313",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-13"
+    }
+   ],
+   "14": [
+    {
+     "email": "Jordan.Huffman@nashville.gov",
+     "name": "Jordan Huffman",
+     "phone": "615-432-1314",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-14"
+    }
+   ],
+   "15": [
+    {
+     "email": "jeff.gregg@nashville.gov",
+     "name": "Jeff Gregg",
+     "phone": "615-432-1315",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-15"
+    }
+   ],
+   "16": [
+    {
+     "email": "Ginny.Welsch@nashville.gov",
+     "name": "Ginny Welsch",
+     "phone": "615-432-1316",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-16"
+    }
+   ],
+   "17": [
+    {
+     "email": "Terry.Vo@nashville.gov",
+     "name": "Terry Vo",
+     "phone": "615-432-1317",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-17"
+    }
+   ],
+   "18": [
+    {
+     "email": "Thomas.Cash@Nashville.gov",
+     "name": "Tom Cash",
+     "phone": "615-432-1318",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-18"
+    }
+   ],
+   "19": [
+    {
+     "email": "Jacob.Kupin@nashville.gov",
+     "name": "Jacob Kupin",
+     "phone": "615-432-1319",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-19"
+    }
+   ],
+   "20": [
+    {
+     "email": "Rollin.Horton@nashville.gov",
+     "name": "Rollin Horton",
+     "phone": "615-432-1320",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-20"
+    }
+   ],
+   "21": [
+    {
+     "email": "Brandon.Taylor@nashville.gov",
+     "name": "Brandon Taylor",
+     "phone": "615-432-1321",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-21"
+    }
+   ],
+   "22": [
+    {
+     "email": "Sheri.Weiner@nashville.gov",
+     "name": "Sheri Weiner",
+     "phone": "615-432-1322",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-22"
+    }
+   ],
+   "23": [
+    {
+     "email": "Thom.Druffel@nashville.gov",
+     "name": "Thom Druffel",
+     "phone": "615-432-1323",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-23"
+    }
+   ],
+   "24": [
+    {
+     "email": "Brenda.Gadd@nashville.gov",
+     "name": "Brenda Gadd",
+     "phone": "615-432-1324",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-24"
+    }
+   ],
+   "25": [
+    {
+     "email": "Jeff.Preptit@nashville.gov",
+     "name": "Jeff Preptit",
+     "phone": "615-432-1325",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-25"
+    }
+   ],
+   "26": [
+    {
+     "email": "Courtney.Johnston@nashville.gov",
+     "name": "Courtney Johnston",
+     "phone": "615-432-1326",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-26"
+    }
+   ],
+   "27": [
+    {
+     "email": "Bob.Nash@nashville.gov",
+     "name": "Robert Nash",
+     "phone": "615-432-1327",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-27"
+    }
+   ],
+   "28": [
+    {
+     "email": "David.Benton@nashville.gov",
+     "name": "David Benton",
+     "phone": "615-432-1328",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-28"
+    }
+   ],
+   "29": [
+    {
+     "email": "Tasha.Ellis@nashville.gov",
+     "name": "Tasha Ellis",
+     "phone": "615-432-1329",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-29"
+    }
+   ],
+   "30": [
+    {
+     "email": "Sandra.Sepulveda@nashville.gov",
+     "name": "Sandra Sepulveda",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-30"
+    }
+   ],
+   "31": [
+    {
+     "email": "John.Rutherford@nashville.gov",
+     "name": "John Rutherford",
+     "phone": "615-432-1331",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-31"
+    }
+   ],
+   "32": [
+    {
+     "email": "Joy.Styles@nashville.gov",
+     "name": "Joy Styles",
+     "phone": "615-432-1332",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-32"
+    }
+   ],
+   "33": [
+    {
+     "email": "antoinette.lee@nashville.gov",
+     "name": "Antoinette Lee",
+     "phone": "615-432-1333",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-33"
+    }
+   ],
+   "34": [
+    {
+     "email": "Sandy.Ewing@nashville.gov",
+     "name": "Sandy Ewing",
+     "phone": "615-432-1334",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-34"
+    }
+   ],
+   "35": [
+    {
+     "email": "Jason.Spain@nashville.gov",
+     "name": "Jason Spain",
+     "phone": "615-432-1335",
+     "profileUrl": "https://www.nashville.gov/departments/council/districts/district-35"
+    }
+   ]
+  },
+  "atLarge": [
+   {
+    "email": "Zulfat.Suara@nashville.gov",
+    "name": "Zulfat Suara",
+    "phone": "615-432-1341",
+    "profileUrl": "https://www.nashville.gov/departments/council/districts/at-large-1"
+   },
+   {
+    "email": "Delishia.Porterfield@nashville.gov",
+    "name": "Delishia Porterfield",
+    "phone": "615-432-1342",
+    "profileUrl": "https://www.nashville.gov/departments/council/districts/at-large-2"
+   },
+   {
+    "email": "Quin.EvansSegall@nashville.gov",
+    "name": "Quin Evans Segall",
+    "phone": "615-432-1343",
+    "profileUrl": "https://www.nashville.gov/departments/council/districts/at-large-3"
+   },
+   {
+    "email": "burkley.allen@nashville.gov",
+    "name": "Burkley Allen",
+    "phone": "615-432-1344",
+    "profileUrl": "https://www.nashville.gov/departments/council/districts/at-large-4"
+   },
+   {
+    "email": "olivia.hill@nashville.gov",
+    "name": "Olivia Hill",
+    "phone": "615-432-1345",
+    "profileUrl": "https://www.nashville.gov/departments/council/districts/at-large-5"
+   }
+  ]
+ },
+ "47041": {
+  "county": "DeKalb County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.dekalbtennessee.com/county-commission.html",
+  "readAt": "2026-10-11",
+  "seats": 14,
+  "domains": [
+   "dekalbtennessee.com"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Randy Slager"
+    },
+    {
+     "name": "Daniel Cripps"
+    }
+   ],
+   "2": [
+    {
+     "name": "Myron Rhody"
+    },
+    {
+     "name": "Danny Adamson"
+    }
+   ],
+   "3": [
+    {
+     "name": "Don Rigsby"
+    },
+    {
+     "name": "Bradley Hendrix"
+    }
+   ],
+   "4": [
+    {
+     "name": "Tony 'Cully' Culwell"
+    },
+    {
+     "name": "Greg Matthews"
+    }
+   ],
+   "5": [
+    {
+     "name": "Judith Hale"
+    },
+    {
+     "name": "Steven Cantrell"
+    }
+   ],
+   "6": [
+    {
+     "name": "Bruce Parsley"
+    },
+    {
+     "name": "Andy Pack"
+    }
+   ],
+   "7": [
+    {
+     "name": "Anthony Fuller"
+    },
+    {
+     "name": "Mathias Anderson"
+    }
+   ]
+  }
+ },
+ "47043": {
+  "county": "Dickson County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.dicksoncountytn.gov/county_commission.html",
+  "readAt": "2026-10-11",
+  "seats": 12,
+  "domains": [
+   "dicksoncountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Randy Simpkins"
+    }
+   ],
+   "2": [
+    {
+     "name": "Kenny McCallister"
+    }
+   ],
+   "3": [
+    {
+     "name": "Dennis O'Shea"
+    }
+   ],
+   "4": [
+    {
+     "name": "Joey Wenck"
+    }
+   ],
+   "5": [
+    {
+     "name": "James \"Cotton\" Dawson"
+    }
+   ],
+   "6": [
+    {
+     "name": "Becky Spicer"
+    }
+   ],
+   "7": [
+    {
+     "name": "Richard Riehn"
+    }
+   ],
+   "8": [
+    {
+     "name": "Jody Britt"
+    }
+   ],
+   "9": [
+    {
+     "name": "Mike Petty"
+    }
+   ],
+   "10": [
+    {
+     "name": "John Stritikus"
+    }
+   ],
+   "11": [
+    {
+     "name": "Rusty Grove"
+    }
+   ],
+   "12": [
+    {
+     "name": "Johnnie Reed"
+    }
+   ]
+  }
+ },
+ "47047": {
+  "county": "Fayette County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://fayettetn.us/county-boards-councils/county-commission/",
+  "readAt": "2026-10-11",
+  "seats": 19,
+  "domains": [
+   "fayettetn.us"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "mrhea@fayettetn.us",
+     "name": "Matt Rhea"
+    }
+   ],
+   "2": [
+    {
+     "name": "Marandy Wilkerson"
+    }
+   ],
+   "3": [
+    {
+     "email": "brice@fayettetn.us",
+     "name": "Elizabeth “Betsy” Rice"
+    }
+   ],
+   "4": [
+    {
+     "email": "dwebb@fayettetn.us",
+     "name": "David Webb"
+    },
+    {
+     "email": "kpowers@fayettetn.us",
+     "name": "Kevin Powers"
+    }
+   ],
+   "5": [
+    {
+     "name": "Bill Burke"
+    }
+   ],
+   "6": [
+    {
+     "name": "Steve Reeves"
+    },
+    {
+     "name": "Mike Reeves"
+    }
+   ],
+   "7": [
+    {
+     "email": "coglesby@fayettetn.us",
+     "name": "Claude Oglesby"
+    }
+   ],
+   "8": [
+    {
+     "name": "Robert Sills"
+    },
+    {
+     "name": "Jay Cooper"
+    }
+   ],
+   "9": [
+    {
+     "email": "nneuhauser@fayettetn.us",
+     "name": "Nancy Neuhauser"
+    },
+    {
+     "email": "ckivelle@fayettetn.us",
+     "name": "Chelsey Kivelle"
+    }
+   ],
+   "10": [
+    {
+     "email": "lwatkins@fayettetn.us",
+     "name": "Larry Watkins"
+    },
+    {
+     "name": "Thomas Day"
+    }
+   ],
+   "11": [
+    {
+     "name": "Glen Morman"
+    }
+   ],
+   "12": [
+    {
+     "email": "eallen@fayettetn.us",
+     "name": "Ed Allen"
+    }
+   ],
+   "13": [
+    {
+     "name": "Betty Salmon"
+    }
+   ],
+   "14": [
+    {
+     "name": "Terrye Canady"
+    }
+   ]
+  }
+ },
+ "47049": {
+  "county": "Fentress County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://fentresscountytn.gov/county-commissioners/",
+  "readAt": "2026-10-11",
+  "seats": 10,
+  "domains": [
+   "fentresscountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Ben Cooper"
+    },
+    {
+     "name": "Kyle Cooper"
+    }
+   ],
+   "2": [
+    {
+     "name": "Kim Davidson"
+    },
+    {
+     "name": "J.P. Reagan"
+    }
+   ],
+   "3": [
+    {
+     "name": "Haylee Martin"
+    },
+    {
+     "name": "Heather Harvey"
+    }
+   ],
+   "4": [
+    {
+     "name": "Jeff Green"
+    },
+    {
+     "name": "Leon Stepp"
+    }
+   ],
+   "5": [
+    {
+     "name": "Rita Pierce Murphy"
+    },
+    {
+     "name": "Allen Tompkins"
+    }
+   ]
+  }
+ },
+ "47051": {
+  "county": "Franklin County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://franklincotn.us/county_commission.html",
+  "readAt": "2026-10-11",
+  "seats": 16,
+  "domains": [
+   "franklincotn.us",
+   "franklincotn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "David Eldridge",
+     "seat": "A"
+    },
+    {
+     "name": "Lydia Curtis Johnson",
+     "seat": "B"
+    }
+   ],
+   "2": [
+    {
+     "email": "william.anderson@franklincotn.gov",
+     "name": "William Anderson",
+     "seat": "A"
+    },
+    {
+     "name": "Carolyn Wiseman",
+     "seat": "B"
+    }
+   ],
+   "3": [
+    {
+     "name": "Scottie Riddle",
+     "seat": "A"
+    },
+    {
+     "name": "Dale Schultz",
+     "seat": "B"
+    }
+   ],
+   "4": [
+    {
+     "name": "Greg King",
+     "seat": "A"
+    },
+    {
+     "name": "Chuck Stines",
+     "seat": "B"
+    }
+   ],
+   "5": [
+    {
+     "name": "Bruce McMillan",
+     "seat": "A"
+    },
+    {
+     "name": "Susan Holmes",
+     "seat": "B"
+    }
+   ],
+   "6": [
+    {
+     "email": "silasearle@franklincotn.gov",
+     "name": "Silas Earle",
+     "seat": "A"
+    },
+    {
+     "name": "Jarad Shetters",
+     "seat": "B"
+    }
+   ],
+   "7": [
+    {
+     "name": "Sam Davidson",
+     "seat": "A"
+    },
+    {
+     "name": "Chris Hawkersmith",
+     "seat": "B"
+    }
+   ],
+   "8": [
+    {
+     "name": "Glenn Summers",
+     "seat": "A"
+    },
+    {
+     "name": "Edie Snyder",
+     "seat": "B"
+    }
+   ]
+  }
+ },
+ "47055": {
+  "county": "Giles County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://gilescountytn.gov/commission/",
+  "readAt": "2026-10-11",
+  "seats": 21,
+  "domains": [
+   "gilescountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "calbury@gilescountytn.gov",
+     "name": "Lynn Albury"
+    },
+    {
+     "email": "jbeecham@gilescountytn.gov",
+     "name": "Jan Beecham"
+    },
+    {
+     "email": "croberts@gilescountytn.gov",
+     "name": "Cathy Roberts"
+    }
+   ],
+   "2": [
+    {
+     "email": "bbeard@gilescountytn.gov",
+     "name": "Brandon Beard"
+    },
+    {
+     "email": "ssuddarth@gilescountytn.gov",
+     "name": "Sarah Suddarth"
+    },
+    {
+     "email": "twilburn@gilescountytn.gov",
+     "name": "Tracy Wilburn"
+    }
+   ],
+   "3": [
+    {
+     "name": "Chris Adcock"
+    },
+    {
+     "email": "r.carpenter@gilescountytn.gov",
+     "name": "Rickie Carpenter"
+    },
+    {
+     "email": "tprice@gilescountytn.gov",
+     "name": "Thomas Price"
+    }
+   ],
+   "4": [
+    {
+     "email": "mhopkins@gilescountytn.gov",
+     "name": "Matthew Hopkins"
+    },
+    {
+     "email": "csavage@gilescountytn.gov",
+     "name": "Caleb Savage"
+    },
+    {
+     "email": "cwinborn@gilescountytn.gov",
+     "name": "Chris Winborn"
+    }
+   ],
+   "5": [
+    {
+     "email": "gjones@gilescountytn.gov",
+     "name": "Gayle Jones"
+    },
+    {
+     "name": "Tommy Pollard"
+    },
+    {
+     "email": "swoods@gilescountytn.gov",
+     "name": "Steve Woods"
+    }
+   ],
+   "6": [
+    {
+     "email": "ebaddour@gilescountytn.gov",
+     "name": "Evan Baddour"
+    },
+    {
+     "name": "James Gentry"
+    },
+    {
+     "email": "rkemp@gilescountytn.gov",
+     "name": "Richard Kemp"
+    }
+   ],
+   "7": [
+    {
+     "email": "cbrown@gilescountytn.gov",
+     "name": "Carman Brown"
+    },
+    {
+     "email": "mcesarini@gilescountytn.gov",
+     "name": "Mike Cesarini"
+    },
+    {
+     "email": "jpruett@gilescountytn.gov",
+     "name": "Judy Pruett"
+    }
+   ]
+  }
+ },
+ "47065": {
+  "county": "Hamilton County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.hamiltontn.gov/CountyCommission_Committees.aspx",
+  "readAt": "2026-10-11",
+  "seats": 11,
+  "domains": [
+   "hamiltontn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Gene-o Shipley",
+     "profileUrl": "https://www.hamiltontn.gov/District1.aspx"
+    }
+   ],
+   "2": [
+    {
+     "name": "Chip Baker",
+     "profileUrl": "https://www.hamiltontn.gov/District2.aspx"
+    }
+   ],
+   "3": [
+    {
+     "name": "Ken Smith",
+     "profileUrl": "https://www.hamiltontn.gov/District3.aspx",
+     "role": "Chairman"
+    }
+   ],
+   "4": [
+    {
+     "name": "Warren Mackey",
+     "profileUrl": "https://www.hamiltontn.gov/District4.aspx"
+    }
+   ],
+   "5": [
+    {
+     "name": "Katherlyn Geter",
+     "profileUrl": "https://www.hamiltontn.gov/District5.aspx"
+    }
+   ],
+   "6": [
+    {
+     "name": "David Sharpe",
+     "profileUrl": "https://www.hamiltontn.gov/District6.aspx"
+    }
+   ],
+   "7": [
+    {
+     "name": "Lee Helton",
+     "profileUrl": "https://www.hamiltontn.gov/District7.aspx",
+     "role": "Chairman Pro-Tempore"
+    }
+   ],
+   "8": [
+    {
+     "name": "Joshua Wichman",
+     "profileUrl": "https://www.hamiltontn.gov/District8.aspx"
+    }
+   ],
+   "9": [
+    {
+     "name": "Dr. Steve Highlander",
+     "profileUrl": "https://www.hamiltontn.gov/District9.aspx"
+    }
+   ],
+   "10": [
+    {
+     "name": "Jeff Eversole",
+     "profileUrl": "https://www.hamiltontn.gov/District10.aspx"
+    }
+   ],
+   "11": [
+    {
+     "name": "Montrell Besley",
+     "profileUrl": "https://www.hamiltontn.gov/District11.aspx"
+    }
+   ]
+  }
+ },
+ "47071": {
+  "county": "Hardin County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.hardincogov.com/directory/",
+  "readAt": "2026-10-11",
+  "seats": 20,
+  "domains": [
+   "hardincogov.com"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Gary Combs"
+    },
+    {
+     "name": "Fred McFalls, Jr."
+    }
+   ],
+   "2": [
+    {
+     "name": "Adam Coleman"
+    },
+    {
+     "name": "Kyle Murphy"
+    }
+   ],
+   "3": [
+    {
+     "name": "Mark Woodruff"
+    },
+    {
+     "name": "Roger L. Jenkins"
+    }
+   ],
+   "4": [
+    {
+     "name": "TJ Barker"
+    },
+    {
+     "name": "Nanette Spencer"
+    }
+   ],
+   "5": [
+    {
+     "name": "Lisa Wyatt"
+    },
+    {
+     "name": "Don Robertson"
+    }
+   ],
+   "6": [
+    {
+     "name": "Kaden Holt"
+    },
+    {
+     "name": "Michael Pitts"
+    }
+   ],
+   "7": [
+    {
+     "name": "Shane McGee"
+    },
+    {
+     "name": "Kirk Taylor"
+    }
+   ],
+   "8": [
+    {
+     "name": "Michael Fielder"
+    },
+    {
+     "name": "Brian Qualls"
+    }
+   ],
+   "9": [
+    {
+     "name": "Ryan Burlesci"
+    },
+    {
+     "name": "Emery White"
+    }
+   ],
+   "10": [
+    {
+     "name": "Barker Burnham"
+    },
+    {
+     "name": "Alex Seaton"
+    }
+   ]
+  }
+ },
+ "47073": {
+  "county": "Hawkins County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.hawkinscountytn.gov/county_commission.html",
+  "readAt": "2026-10-11",
+  "seats": 14,
+  "domains": [
+   "hawkinscountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Syble Vaughan Trent"
+    },
+    {
+     "name": "John Keith Gibson"
+    }
+   ],
+   "2": [
+    {
+     "name": "Jeff Barrett"
+    },
+    {
+     "name": "Randy Patterson"
+    }
+   ],
+   "3": [
+    {
+     "name": "Stacy Vaughan"
+    },
+    {
+     "name": "Matthew Williams"
+    }
+   ],
+   "4": [
+    {
+     "name": "Warren Bishop"
+    },
+    {
+     "name": "Joshua Gilliam"
+    }
+   ],
+   "5": [
+    {
+     "name": "Glenda Davis"
+    },
+    {
+     "name": "Jamie Miller"
+    }
+   ],
+   "6": [
+    {
+     "name": "Nancy Barker"
+    },
+    {
+     "name": "Edwin Cope"
+    }
+   ],
+   "7": [
+    {
+     "name": "Bobby Jinks"
+    },
+    {
+     "name": "Robert Palmer"
+    }
+   ]
+  }
+ },
+ "47081": {
+  "county": "Hickman County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://hickmancountytn.gov/government/commissioners",
+  "readAt": "2026-10-11",
+  "seats": 14,
+  "domains": [
+   "hickmancountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "shelley.farinato@hickmancountytn.gov",
+     "name": "Shelley Farinato"
+    },
+    {
+     "email": "jonathan.lacasse@hickmancountytn.gov",
+     "name": "Jonathan LaCasse"
+    }
+   ],
+   "2": [
+    {
+     "email": "bob.holt@hickmancountytn.gov",
+     "name": "Bob Holt"
+    },
+    {
+     "email": "nick.bentley@hickmancountytn.gov",
+     "name": "Nick Bentley"
+    }
+   ],
+   "3": [
+    {
+     "email": "ethan.hudgins@hickmancountytn.gov",
+     "name": "Ethan Hudgins"
+    },
+    {
+     "email": "tony.essary@hickmancountytn.gov",
+     "name": "Tony Essary"
+    }
+   ],
+   "4": [
+    {
+     "email": "garen.graves@hickmancountytn.gov",
+     "name": "Garen Graves"
+    },
+    {
+     "email": "steve.gianakos@hickmancountytn.gov",
+     "name": "Steve Gianakos"
+    }
+   ],
+   "5": [
+    {
+     "email": "dusty.jordan@hickmancountytn.gov",
+     "name": "Dusty Jordan"
+    },
+    {
+     "email": "zach.bentley@hickmancountytn.gov",
+     "name": "Zach Bentley"
+    }
+   ],
+   "6": [
+    {
+     "email": "devin.pickard@hickmancountytn.gov",
+     "name": "Devin Pickard"
+    },
+    {
+     "email": "ryan.rogers@hickmancountytn.gov",
+     "name": "Ryan Rogers"
+    }
+   ],
+   "7": [
+    {
+     "email": "jim.tanner@hickmancountytn.gov",
+     "name": "Jim Tanner"
+    },
+    {
+     "email": "steve.anglin@hickmancountytn.gov",
+     "name": "Steve Anglin"
+    }
+   ]
+  }
+ },
+ "47089": {
+  "county": "Jefferson County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://jeffersoncountytn.gov/county-commission/",
+  "readAt": "2026-10-11",
+  "seats": 21,
+  "domains": [
+   "jeffersoncountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "JCcomm01@jeffersoncountytn.gov",
+     "name": "Katy Hufaker",
+     "role": "Vice Chair"
+    },
+    {
+     "email": "JCcomm02@jeffersoncountytn.gov",
+     "name": "Jan Leja"
+    }
+   ],
+   "2": [
+    {
+     "email": "JCcomm03@jeffersoncountytn.gov",
+     "name": "Rick Moore"
+    },
+    {
+     "email": "JCcomm04@jeffersoncountytn.gov",
+     "name": "Craig Knierim"
+    }
+   ],
+   "3": [
+    {
+     "email": "JCcomm07@jeffersoncountytn.gov",
+     "name": "Nick Leckie"
+    },
+    {
+     "email": "JCcomm06@jeffersoncountytn.gov",
+     "name": "Taylor Reed"
+    },
+    {
+     "email": "JCcomm05@jeffersoncountytn.gov",
+     "name": "Jim Snodgrass"
+    }
+   ],
+   "4": [
+    {
+     "email": "JCcomm08@jeffersoncountytn.gov",
+     "name": "Gregory D. Byrd"
+    },
+    {
+     "email": "JCcomm09@jeffersoncountytn.gov",
+     "name": "James Lance"
+    }
+   ],
+   "5": [
+    {
+     "email": "JCcomm10@jeffersoncountytn.gov",
+     "name": "Jeff Underwood"
+    },
+    {
+     "email": "JCcomm11@jeffersoncountytn.gov",
+     "name": "Sammy Solomon"
+    }
+   ],
+   "6": [
+    {
+     "email": "JCcomm13@jeffersoncountytn.gov",
+     "name": "Robert Bruner"
+    },
+    {
+     "email": "JCcomm12@jeffersoncountytn.gov",
+     "name": "Mike Parker"
+    }
+   ],
+   "7": [
+    {
+     "email": "JCcomm14@jeffersoncountytn.gov",
+     "name": "Jason Bales"
+    },
+    {
+     "email": "JCcomm15@jeffersoncountytn.gov",
+     "name": "Aaron Loy",
+     "role": "Parliamentarian"
+    }
+   ],
+   "8": [
+    {
+     "email": "JCcomm16@jeffersoncountytn.gov",
+     "name": "Ronny Coleman"
+    },
+    {
+     "email": "JCcomm23@jeffersoncountytn.gov",
+     "name": "W.D. Henry"
+    }
+   ],
+   "9": [
+    {
+     "email": "JCcomm18@jeffersoncountytn.gov",
+     "name": "Jimmy Carmichael",
+     "role": "Chair"
+    },
+    {
+     "email": "JCcomm19@jeffersoncountytn.gov",
+     "name": "Anthony (AJ) Walker"
+    }
+   ],
+   "10": [
+    {
+     "email": "JCcomm20@jeffersoncountytn.gov",
+     "name": "Marcus Reed"
+    },
+    {
+     "email": "JCcomm21@jeffersoncountytn.gov",
+     "name": "Brett Kilgore"
+    }
+   ]
+  }
+ },
+ "47093": {
+  "county": "Knox County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://commission.knoxcountytn.gov/people/",
+  "readAt": "2026-10-11",
+  "seats": 11,
+  "domains": [
+   "knoxcounty.org",
+   "knoxcountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "damon.rawls@knoxcounty.org",
+     "name": "Damon Rawls",
+     "profileUrl": "https://commission.knoxcountytn.gov/people/damon-rawls/"
+    }
+   ],
+   "2": [
+    {
+     "email": "courtney.durrett@knoxcounty.org",
+     "name": "Courtney Durrett",
+     "profileUrl": "https://commission.knoxcountytn.gov/people/commissioner-courtney-durrett/"
+    }
+   ],
+   "3": [
+    {
+     "email": "Brandon.Huckaby@knoxcounty.org",
+     "name": "Brandon Huckaby",
+     "profileUrl": "https://commission.knoxcountytn.gov/people/commissioner-brandon-huckaby/"
+    }
+   ],
+   "4": [
+    {
+     "email": "shane.jackson@knoxcounty.org",
+     "name": "Shane Jackson",
+     "profileUrl": "https://commission.knoxcountytn.gov/people/shane-jackson/"
+    }
+   ],
+   "5": [
+    {
+     "email": "angela.russell@knoxcounty.org",
+     "name": "Angela Russell",
+     "profileUrl": "https://commission.knoxcountytn.gov/people/angela-russell/"
+    }
+   ],
+   "6": [
+    {
+     "email": "terry.hill@knoxcounty.org",
+     "name": "Terry Hill",
+     "profileUrl": "https://commission.knoxcountytn.gov/people/terry-hill/",
+     "role": "Chair"
+    }
+   ],
+   "7": [
+    {
+     "email": "Barry.Beeler@knoxcounty.org",
+     "name": "Barry Beeler",
+     "profileUrl": "https://commission.knoxcountytn.gov/people/commissioner-barry-beeler/"
+    }
+   ],
+   "8": [
+    {
+     "email": "adam.thompson@knoxcounty.org",
+     "name": "Adam Thompson",
+     "profileUrl": "https://commission.knoxcountytn.gov/people/adam-thompson/",
+     "role": "Vice-Chair"
+    }
+   ],
+   "9": [
+    {
+     "email": "andy.fox@knoxcounty.org",
+     "name": "Andy Fox",
+     "profileUrl": "https://commission.knoxcountytn.gov/people/andy-fox/"
+    }
+   ]
+  },
+  "atLarge": [
+   {
+    "email": "Justin.Cofer@knoxcounty.org",
+    "name": "Justin D. Cofer",
+    "profileUrl": "https://commission.knoxcountytn.gov/people/commissioner-justin-cofer/",
+    "seat": "Seat 10"
+   },
+   {
+    "email": "Garrett.Holt@knoxcounty.org",
+    "name": "Garrett Holt",
+    "profileUrl": "https://commission.knoxcountytn.gov/people/commissioner-garrett-holt/",
+    "seat": "Seat 11"
+   }
+  ]
+ },
+ "47099": {
+  "county": "Lawrence County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://lawrencecountytn.gov/government/commissioners/",
+  "readAt": "2026-10-11",
+  "seats": 18,
+  "domains": [
+   "lawrencecountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Wayne Yocom",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-1/"
+    }
+   ],
+   "2": [
+    {
+     "name": "Barry Luffman",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-2/"
+    }
+   ],
+   "3": [
+    {
+     "name": "Denny Gillespie",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-3/"
+    }
+   ],
+   "4": [
+    {
+     "name": "Steve Hagan",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-4/"
+    }
+   ],
+   "5": [
+    {
+     "name": "Blake Grooms",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-5/"
+    }
+   ],
+   "6": [
+    {
+     "name": "Chris Sutherland",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-6/"
+    }
+   ],
+   "7": [
+    {
+     "name": "Travis Cauwels",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-7/"
+    }
+   ],
+   "8": [
+    {
+     "name": "Rick Skillington",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-8/"
+    }
+   ],
+   "9": [
+    {
+     "name": "Ronald “Bubba” Benefield",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-9/"
+    }
+   ],
+   "10": [
+    {
+     "name": "Delano Benefield",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-10/"
+    }
+   ],
+   "11": [
+    {
+     "name": "Scott Franks",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-11/"
+    }
+   ],
+   "12": [
+    {
+     "name": "Angie Jacobs",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-12/"
+    }
+   ],
+   "13": [
+    {
+     "name": "Ray Brazier",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-13/"
+    }
+   ],
+   "14": [
+    {
+     "name": "Sandy Newton",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-14/"
+    }
+   ],
+   "15": [
+    {
+     "name": "Tammy Wisdom",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-15/"
+    }
+   ],
+   "16": [
+    {
+     "name": "J.D. Bosheers",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-16/"
+    }
+   ],
+   "17": [
+    {
+     "name": "Tim Clifton",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-17/"
+    }
+   ],
+   "18": [
+    {
+     "name": "Will Burnett",
+     "profileUrl": "https://lawrencecountytn.gov/commissioners/district-18/"
+    }
+   ]
+  }
+ },
+ "47103": {
+  "county": "Lincoln County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://lincolncountytn.gov/county_directory/chairman_commission.php",
+  "readAt": "2026-10-11",
+  "seats": 24,
+  "domains": [
+   "lincolncountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "jhammons@lincolncountytn.gov",
+     "name": "Jim Hammons"
+    },
+    {
+     "email": "djenkins@lincolncountytn.gov",
+     "name": "Don Jenkins"
+    },
+    {
+     "email": "dwalker@lincolncountytn.gov",
+     "name": "Danny Walker"
+    }
+   ],
+   "2": [
+    {
+     "email": "jcreson@lincolncountytn.gov",
+     "name": "John Creson"
+    },
+    {
+     "email": "dadkinson@lincolncountytn.gov",
+     "name": "Dustin Adkinson"
+    },
+    {
+     "email": "trogers@lincolncountytn.gov",
+     "name": "Terri Rogers"
+    }
+   ],
+   "3": [
+    {
+     "email": "jatchley@lincolncountytn.gov",
+     "name": "Jack Atchley"
+    },
+    {
+     "email": "rgrubbs@lincolncountytn.gov",
+     "name": "Rod Grubbs"
+    },
+    {
+     "email": "mmitchell@lincolncountytn.gov",
+     "name": "Mark Mitchell"
+    }
+   ],
+   "4": [
+    {
+     "email": "chunter@lincolncountytn.gov",
+     "name": "Charles Hunter"
+    },
+    {
+     "email": "tcaldwell@lincolncountytn.gov",
+     "name": "Tony Caldwell"
+    },
+    {
+     "email": "sspray@lincolncountytn.gov",
+     "name": "Steve Spray"
+    }
+   ],
+   "5": [
+    {
+     "email": "jeakes@lincolncountytn.gov",
+     "name": "Jacky Eakes"
+    },
+    {
+     "email": "jnix@lincolncountytn.gov",
+     "name": "Jason Gary Nix"
+    },
+    {
+     "email": "jspray@lincolncountytn.gov",
+     "name": "Jeremy Spray"
+    }
+   ],
+   "6": [
+    {
+     "email": "cynthia.bates@lincolncountytn.gov",
+     "name": "Cynthia Bates"
+    },
+    {
+     "email": "cgraham@lincolncountytn.gov",
+     "name": "Chris Graham"
+    },
+    {
+     "email": "nwebb@lincolncountytn.gov",
+     "name": "Nathan Webb"
+    }
+   ],
+   "7": [
+    {
+     "email": "rbryant@lincolncountytn.gov",
+     "name": "Ricky Bryant"
+    },
+    {
+     "email": "sguntherberg@lincolncountytn.gov",
+     "name": "Steve Guntherberg"
+    },
+    {
+     "email": "ebates@lincolncountytn.gov",
+     "name": "Ethan Kyle Bates"
+    }
+   ],
+   "8": [
+    {
+     "email": "jjennings@lincolncountytn.gov",
+     "name": "Jude Jennings"
+    },
+    {
+     "email": "bshelton@lincolncountytn.gov",
+     "name": "Bill Shelton"
+    },
+    {
+     "email": "gtrammell@lincolncountytn.gov",
+     "name": "Greg Trammell"
+    }
+   ]
+  }
+ },
+ "47107": {
+  "county": "McMinn County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.mcminncountytn.gov/county_commission_main.html",
+  "readAt": "2026-10-11",
+  "seats": 10,
+  "domains": [
+   "mcminncountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Brent Carter"
+    },
+    {
+     "name": "Scott Williams"
+    }
+   ],
+   "2": [
+    {
+     "name": "Jerry Millsaps"
+    },
+    {
+     "name": "J.W. McPhail"
+    }
+   ],
+   "3": [
+    {
+     "name": "Roger Masingale"
+    },
+    {
+     "name": "Tim King"
+    }
+   ],
+   "4": [
+    {
+     "name": "Scott Cass"
+    },
+    {
+     "name": "Tony Allman"
+    }
+   ],
+   "5": [
+    {
+     "name": "Travis Crisp"
+    },
+    {
+     "name": "Scott Curtis"
+    }
+   ]
+  }
+ },
+ "47113": {
+  "county": "Madison County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.madisoncountytn.gov/154/County-Commission",
+  "readAt": "2026-10-11",
+  "seats": 25,
+  "domains": [
+   "madisoncountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "William C. Martin"
+    },
+    {
+     "email": "tmercer@madisoncountytn.gov",
+     "name": "Tina Mercer"
+    }
+   ],
+   "2": [
+    {
+     "email": "ahess@madisoncountytn.gov",
+     "name": "Allan Hess"
+    },
+    {
+     "email": "kmckenney@madisoncountytn.gov",
+     "name": "Kristen McKenney"
+    },
+    {
+     "email": "tblack@madisoncountytn.gov",
+     "name": "Tony Black"
+    }
+   ],
+   "3": [
+    {
+     "email": "tneihoff@madisoncountytn.gov",
+     "name": "Tony Neihoff"
+    },
+    {
+     "email": "rkirkland@madisoncountytn.gov",
+     "name": "Ronald H. Kirkland"
+    }
+   ],
+   "4": [
+    {
+     "name": "Gary D. Deaton"
+    },
+    {
+     "email": "mbryant@madisoncountytn.gov",
+     "name": "Mike Bryant"
+    },
+    {
+     "email": "cbryant@madisoncountytn.gov",
+     "name": "Cyndi Bryant"
+    }
+   ],
+   "5": [
+    {
+     "email": "jjones@madisoncountytn.gov",
+     "name": "Juanita Jones"
+    },
+    {
+     "name": "Claudell Brown, Jr."
+    },
+    {
+     "email": "sgodwin@madisoncountytn.gov",
+     "name": "Shelia Godwin"
+    }
+   ],
+   "6": [
+    {
+     "email": "bwilson@madisoncountytn.gov",
+     "name": "Brian Wilson"
+    },
+    {
+     "email": "mbailey@madisoncountytn.gov",
+     "name": "Mike Bailey"
+    }
+   ],
+   "7": [
+    {
+     "email": "aellison@madisoncountytn.gov",
+     "name": "Aaron \"Billy\" Ellison"
+    },
+    {
+     "email": "mmerriweather@madisoncountytn.gov",
+     "name": "Mitiz Merriweather"
+    }
+   ],
+   "8": [
+    {
+     "email": "calexander@madisoncountytn.gov",
+     "name": "Carl Alexander"
+    },
+    {
+     "email": "maday@madisoncountytn.gov",
+     "name": "Mark Aday"
+    }
+   ],
+   "9": [
+    {
+     "email": "ktbond@madisoncountytn.gov",
+     "name": "Karley Bond"
+    },
+    {
+     "email": "khicks@madisoncountytn.gov",
+     "name": "Kevin Hicks"
+    },
+    {
+     "email": "jwall@madisoncountytn.gov",
+     "name": "Jeff Wall"
+    }
+   ],
+   "10": [
+    {
+     "email": "mtaylor@madisoncountytn.gov",
+     "name": "Mike Taylor"
+    },
+    {
+     "name": "Julie Wiser"
+    },
+    {
+     "email": "rwatson@madisoncountytn.gov",
+     "name": "Richard Watson"
+    }
+   ]
+  }
+ },
+ "47115": {
+  "county": "Marion County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://marioncountytn.net/leadership",
+  "readAt": "2026-10-11",
+  "seats": 15,
+  "domains": [
+   "marioncountytn.net"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "jburkhalter@marioncountytn.net",
+     "name": "Joyce Burkhalter",
+     "seat": "A"
+    },
+    {
+     "email": "tsmith2@marioncountytn.net",
+     "name": "Terry Smith",
+     "seat": "B"
+    },
+    {
+     "email": "jstory@marioncountytn.net",
+     "name": "Jeff Story",
+     "seat": "C"
+    }
+   ],
+   "2": [
+    {
+     "email": "jwinters@marioncountytn.net",
+     "name": "Josh Winters",
+     "seat": "A"
+    },
+    {
+     "email": "ckeef@marioncountytn.net",
+     "name": "Chuck Keef",
+     "seat": "B"
+    },
+    {
+     "name": "Jimmy Cantrell",
+     "seat": "C"
+    }
+   ],
+   "3": [
+    {
+     "email": "bburnett@marioncountytn.net",
+     "name": "Ronnie “Bo” Burnett",
+     "seat": "A"
+    },
+    {
+     "email": "jbaker@marioncountytn.net",
+     "name": "Justin Baker",
+     "seat": "B"
+    },
+    {
+     "email": "mistanich@marioncountytn.net",
+     "name": "Mark Istanich",
+     "seat": "C"
+    }
+   ],
+   "4": [
+    {
+     "name": "Linda Mason",
+     "seat": "A"
+    },
+    {
+     "name": "Dennis Rollins",
+     "seat": "B"
+    },
+    {
+     "email": "tstiefel@marioncountytn.net",
+     "name": "Terry Stiefel",
+     "seat": "C"
+    }
+   ],
+   "5": [
+    {
+     "email": "lhigdon@marioncountytn.net",
+     "name": "Larry Higdon",
+     "seat": "A"
+    },
+    {
+     "name": "Logan Campbell",
+     "seat": "B"
+    },
+    {
+     "name": "Chris Morrison",
+     "seat": "C"
+    }
+   ]
+  }
+ },
+ "47117": {
+  "county": "Marshall County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.marshallcountytn.gov/county-commission",
+  "readAt": "2026-10-11",
+  "seats": 18,
+  "domains": [
+   "marshallcountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "mwaggoner@marshallcountytn.gov",
+     "name": "Mike Waggoner"
+    },
+    {
+     "email": "hlopez@marshallcountytn.gov",
+     "name": "Hugo Lopez"
+    }
+   ],
+   "2": [
+    {
+     "email": "dgilbert@marshallcountytn.gov",
+     "name": "Debbie Gilbert"
+    },
+    {
+     "email": "rperryman@marshallcountytn.gov",
+     "name": "Randy Perryman"
+    }
+   ],
+   "3": [
+    {
+     "email": "jpoarch@marshallcountytn.gov",
+     "name": "Jeff Poarch"
+    },
+    {
+     "email": "lmurdock@marshallcountytn.gov",
+     "name": "Landry Murdock"
+    }
+   ],
+   "4": [
+    {
+     "email": "mking@marshallcountytn.gov",
+     "name": "Mickey King"
+    },
+    {
+     "email": "klee@marshallcountytn.gov",
+     "name": "Ken Lee"
+    }
+   ],
+   "5": [
+    {
+     "email": "tdunnivant@marshallcountytn.gov",
+     "name": "Terry Dunnivant"
+    },
+    {
+     "email": "msullivan@marshallcountytn.gov",
+     "name": "Michael Sullivan"
+    }
+   ],
+   "6": [
+    {
+     "email": "sarndt@marshallcountytn.gov",
+     "name": "Shaun Arndt"
+    },
+    {
+     "email": "jmoore@marshallcountytn.gov",
+     "name": "Jeff Moore"
+    }
+   ],
+   "7": [
+    {
+     "email": "shunter@marshallcountytn.gov",
+     "name": "Susan Hunter"
+    },
+    {
+     "email": "gosborne@marshallcountytn.gov",
+     "name": "Geoffrey \"Spanky\" Osborne"
+    }
+   ],
+   "8": [
+    {
+     "email": "pparsons@marshallcountytn.gov",
+     "name": "Patty Parsons"
+    },
+    {
+     "email": "jhopkins@marshallcountytn.gov",
+     "name": "James Hopkins"
+    }
+   ],
+   "9": [
+    {
+     "email": "njohnson@marshallcountytn.gov",
+     "name": "Nathan Johnson"
+    },
+    {
+     "email": "gwhite@marshallcountytn.gov",
+     "name": "Glen White"
+    }
+   ]
+  }
+ },
+ "47119": {
+  "county": "Maury County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.maurycounty-tn.gov/168/Commissioners",
+  "readAt": "2026-10-11",
+  "seats": 22,
+  "domains": [
+   "maurycounty-tn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Jerry Strahan",
+     "profileUrl": "https://www.maurycounty-tn.gov/170/Jerry-Strahan"
+    },
+    {
+     "name": "Tim Holt",
+     "profileUrl": "https://www.maurycounty-tn.gov/169/Tim-Holt"
+    }
+   ],
+   "2": [
+    {
+     "name": "Patricia Hollinsworth",
+     "profileUrl": "https://www.maurycounty-tn.gov/171/Patricia-Hollinsworth"
+    },
+    {
+     "name": "Wayne Romesburg",
+     "profileUrl": "https://www.maurycounty-tn.gov/172/Wayne-Romesburg"
+    }
+   ],
+   "3": [
+    {
+     "name": "Winston B. Harlan",
+     "profileUrl": "https://www.maurycounty-tn.gov/174/Winston-B.-Harlan"
+    },
+    {
+     "name": "Gary Stovall",
+     "profileUrl": "https://www.maurycounty-tn.gov/173/Gary-Stovall"
+    }
+   ],
+   "4": [
+    {
+     "name": "Connie Green",
+     "profileUrl": "https://www.maurycounty-tn.gov/175/Connie-Green"
+    },
+    {
+     "name": "Mike Kuzawinski",
+     "profileUrl": "https://www.maurycounty-tn.gov/176/MIKE-KUZAWINSKI"
+    }
+   ],
+   "5": [
+    {
+     "name": "Scott Sumners",
+     "profileUrl": "https://www.maurycounty-tn.gov/177/Scott%20Sumners"
+    },
+    {
+     "name": "Sam Barnes",
+     "profileUrl": "https://www.maurycounty-tn.gov/178/Sam-Barnes"
+    }
+   ],
+   "6": [
+    {
+     "name": "Rebecca Haines",
+     "profileUrl": "https://www.maurycounty-tn.gov/179/Rebecca-Haines"
+    },
+    {
+     "name": "Cindy Hestla",
+     "profileUrl": "https://www.maurycounty-tn.gov/180/Cindy-Hestla"
+    }
+   ],
+   "7": [
+    {
+     "name": "Richard Baud",
+     "profileUrl": "https://www.maurycounty-tn.gov/183/Richard-Baud"
+    },
+    {
+     "name": "Kenny Morrow",
+     "profileUrl": "https://www.maurycounty-tn.gov/182/Kenny-Morrow"
+    }
+   ],
+   "8": [
+    {
+     "name": "Missy Phillips",
+     "profileUrl": "https://www.maurycounty-tn.gov/185/Missy-Phillips"
+    },
+    {
+     "name": "Steven Burford",
+     "profileUrl": "https://www.maurycounty-tn.gov/184/Steven-Burford"
+    }
+   ],
+   "9": [
+    {
+     "name": "Brent Coen",
+     "profileUrl": "https://www.maurycounty-tn.gov/186/Brent-Coen"
+    },
+    {
+     "name": "Kevin Markham",
+     "profileUrl": "https://www.maurycounty-tn.gov/187/Kevin-Markham"
+    }
+   ],
+   "10": [
+    {
+     "name": "Danny Grooms",
+     "profileUrl": "https://www.maurycounty-tn.gov/189/Danny-Grooms"
+    },
+    {
+     "name": "Greg Combs",
+     "profileUrl": "https://www.maurycounty-tn.gov/188/Greg-Combs"
+    }
+   ],
+   "11": [
+    {
+     "name": "Tim Mullen",
+     "profileUrl": "https://www.maurycounty-tn.gov/191/Tim-Mullen"
+    },
+    {
+     "name": "Chad Brothers",
+     "profileUrl": "https://www.maurycounty-tn.gov/190/Chad-Brothers"
+    }
+   ]
+  }
+ },
+ "47123": {
+  "county": "Monroe County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://monroetn.gov/board-of-county-commissioners/",
+  "readAt": "2026-10-11",
+  "seats": 10,
+  "domains": [
+   "monroetn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "adam.reynolds@monroetn.gov",
+     "name": "Adam Reynolds"
+    },
+    {
+     "email": "donald.seiler@monroetn.gov",
+     "name": "Donald Seiler"
+    },
+    {
+     "email": "travis.wade@monroetn.gov",
+     "name": "Travis Wade"
+    }
+   ],
+   "2": [
+    {
+     "email": "brian.harrill@monroetn.gov",
+     "name": "Brian Harrill"
+    },
+    {
+     "email": "mark.hatcher@monroetn.gov",
+     "name": "Mark Hatcher"
+    },
+    {
+     "email": "david.winters@monroetn.gov",
+     "name": "David Winters"
+    }
+   ],
+   "3": [
+    {
+     "email": "kraig.miller@monroetn.gov",
+     "name": "Kraig Miller"
+    },
+    {
+     "email": "roger.thomas@monroetn.gov",
+     "name": "Roger Thomas"
+    },
+    {
+     "email": "danny.everhart@monroetn.gov",
+     "name": "Danny Everhart"
+    }
+   ],
+   "4": [
+    {
+     "email": "leslie.moore@monroetn.gov",
+     "name": "Leslie Moore"
+    }
+   ]
+  }
+ },
+ "47125": {
+  "county": "Montgomery County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://montgomerytn.gov/commission",
+  "readAt": "2026-10-11",
+  "seats": 21,
+  "domains": [
+   "montgomerytn.gov",
+   "mcgtn.org"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "John Gannon",
+     "profileUrl": "https://montgomerytn.gov/commission/district1"
+    }
+   ],
+   "2": [
+    {
+     "name": "Ted Denny",
+     "profileUrl": "https://montgomerytn.gov/commission/district2"
+    }
+   ],
+   "3": [
+    {
+     "name": "Joe Smith",
+     "profileUrl": "https://montgomerytn.gov/commission/district3"
+    }
+   ],
+   "4": [
+    {
+     "name": "Rickey Ray",
+     "profileUrl": "https://montgomerytn.gov/commission/district4"
+    }
+   ],
+   "5": [
+    {
+     "name": "Rashidah Leverett",
+     "profileUrl": "https://montgomerytn.gov/commission/district5"
+    }
+   ],
+   "6": [
+    {
+     "name": "Clayton Rudder",
+     "profileUrl": "https://montgomerytn.gov/commission/district6"
+    }
+   ],
+   "7": [
+    {
+     "name": "Nathan Burkholder",
+     "profileUrl": "https://montgomerytn.gov/commission/district7"
+    }
+   ],
+   "8": [
+    {
+     "name": "LaTonia Brown",
+     "profileUrl": "https://montgomerytn.gov/commission/district8"
+    }
+   ],
+   "9": [
+    {
+     "name": "Lekeshia Hicks",
+     "profileUrl": "https://montgomerytn.gov/commission/district9"
+    }
+   ],
+   "10": [
+    {
+     "name": "Jeremiah Walker",
+     "profileUrl": "https://montgomerytn.gov/commission/district10"
+    }
+   ],
+   "11": [
+    {
+     "name": "Luther Hutchenson",
+     "profileUrl": "https://montgomerytn.gov/commission/district11"
+    }
+   ],
+   "12": [
+    {
+     "name": "Carmelle Chandler",
+     "profileUrl": "https://montgomerytn.gov/commission/district12"
+    }
+   ],
+   "13": [
+    {
+     "name": "Walker Woodruff",
+     "profileUrl": "https://montgomerytn.gov/commission/district13"
+    }
+   ],
+   "14": [
+    {
+     "name": "Joshua Beal",
+     "profileUrl": "https://montgomerytn.gov/commission/district14"
+    }
+   ],
+   "15": [
+    {
+     "name": "David Harper",
+     "profileUrl": "https://montgomerytn.gov/commission/district15"
+    }
+   ],
+   "16": [
+    {
+     "name": "Lisa Prichard",
+     "profileUrl": "https://montgomerytn.gov/commission/district16"
+    }
+   ],
+   "17": [
+    {
+     "name": "Chris Rasnic",
+     "profileUrl": "https://montgomerytn.gov/commission/district17"
+    }
+   ],
+   "18": [
+    {
+     "name": "Tiffany Pearl Manning",
+     "profileUrl": "https://montgomerytn.gov/commission/district18"
+    }
+   ],
+   "19": [
+    {
+     "name": "Cydney Daane",
+     "profileUrl": "https://montgomerytn.gov/commission/district19"
+    }
+   ],
+   "20": [
+    {
+     "name": "Renee Michelle Bruens",
+     "profileUrl": "https://montgomerytn.gov/commission/district20"
+    }
+   ],
+   "21": [
+    {
+     "name": "Brad VanKirk",
+     "profileUrl": "https://montgomerytn.gov/commission/district21"
+    }
+   ]
+  }
+ },
+ "47131": {
+  "county": "Obion County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.obioncountytn.gov/county_commission.html",
+  "readAt": "2026-10-11",
+  "seats": 21,
+  "domains": [
+   "obioncountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Kenny Mayo"
+    },
+    {
+     "name": "John McConnell"
+    },
+    {
+     "name": "Ricky Cranford"
+    }
+   ],
+   "2": [
+    {
+     "name": "Kenneth Barnes"
+    },
+    {
+     "name": "Joe Lewis"
+    },
+    {
+     "name": "Ryan Ellegood"
+    }
+   ],
+   "3": [
+    {
+     "name": "Danny Jowers"
+    },
+    {
+     "name": "Seth Taylor"
+    },
+    {
+     "name": "Rob Holman"
+    }
+   ],
+   "4": [
+    {
+     "name": "James Gray"
+    },
+    {
+     "name": "Phillip Dunlap"
+    },
+    {
+     "name": "Larry Sherwood"
+    }
+   ],
+   "5": [
+    {
+     "name": "Taylor Pierce"
+    },
+    {
+     "name": "Benny McGuire"
+    },
+    {
+     "name": "Greg Ferguson"
+    }
+   ],
+   "6": [
+    {
+     "name": "Eugene Hudgins"
+    },
+    {
+     "name": "Terry Roberts"
+    },
+    {
+     "name": "Heath Cunningham"
+    }
+   ],
+   "7": [
+    {
+     "name": "Kyle Baggett"
+    },
+    {
+     "name": "Clare Saum"
+    },
+    {
+     "name": "Sam Sinclair, Jr."
+    }
+   ]
+  }
+ },
+ "47139": {
+  "county": "Polk County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://polkcountytn.gov/county-commissioners/",
+  "readAt": "2026-10-11",
+  "seats": 10,
+  "domains": [
+   "polkcountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "gary.miller@polkcountytn.gov",
+     "name": "Gary Miller"
+    },
+    {
+     "email": "debbie.davis@polkcountytn.gov",
+     "name": "Deborah Anne Davis"
+    },
+    {
+     "email": "jared.allen@polkcountytn.gov",
+     "name": "Jared Allen"
+    }
+   ],
+   "2": [
+    {
+     "email": "ryan.cooke@polkcountytn.gov",
+     "name": "Ryan Cooke"
+    },
+    {
+     "vacant": true
+    }
+   ],
+   "3": [
+    {
+     "email": "samantha.trantham@polkcountytn.gov",
+     "name": "Samantha Trantham"
+    },
+    {
+     "email": "james.davis@polkcountytn.gov",
+     "name": "James Mush Davis"
+    },
+    {
+     "email": "keith.barker@polkcountytn.gov",
+     "name": "Keith Barker"
+    }
+   ],
+   "4": [
+    {
+     "email": "christy.hardin@polkcountytn.gov",
+     "name": "Christy Hardin"
+    },
+    {
+     "email": "danny.carver@polkcountytn.gov",
+     "name": "Danny Carver"
+    }
+   ]
+  }
+ },
+ "47141": {
+  "county": "Putnam County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://putnamcountytn.gov/county-commission",
+  "readAt": "2026-10-11",
+  "seats": 24,
+  "domains": [
+   "putnamcountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Jonathan Williams"
+    },
+    {
+     "name": "Terry Randolph"
+    }
+   ],
+   "2": [
+    {
+     "name": "Ron Chaffin"
+    },
+    {
+     "name": "Stacye Choate"
+    }
+   ],
+   "3": [
+    {
+     "name": "Shayne Bilbrey"
+    },
+    {
+     "name": "Brendan Laney"
+    }
+   ],
+   "4": [
+    {
+     "name": "Theresa Tayes"
+    },
+    {
+     "name": "Ken Hall"
+    }
+   ],
+   "5": [
+    {
+     "name": "Jack Phillips"
+    },
+    {
+     "name": "Junior C Phipps"
+    }
+   ],
+   "6": [
+    {
+     "name": "Kenneth Matheney"
+    },
+    {
+     "name": "Chris Cassetty"
+    }
+   ],
+   "7": [
+    {
+     "name": "Steve Brown"
+    },
+    {
+     "name": "Tina Flatt"
+    }
+   ],
+   "8": [
+    {
+     "name": "Danny Holmes"
+    },
+    {
+     "name": "Jason Stanton"
+    }
+   ],
+   "9": [
+    {
+     "name": "Dale Moss"
+    },
+    {
+     "name": "Robert Riddle"
+    }
+   ],
+   "10": [
+    {
+     "name": "Kim Bradford"
+    },
+    {
+     "name": "Gene Mullins"
+    }
+   ],
+   "11": [
+    {
+     "name": "Darren Wilson"
+    },
+    {
+     "name": "Kathy Dunn"
+    }
+   ],
+   "12": [
+    {
+     "name": "David Andrews"
+    },
+    {
+     "name": "Cathy Qualls Reel"
+    }
+   ]
+  }
+ },
+ "47145": {
+  "county": "Roane County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://roanecountytn.gov/county-commission/",
+  "readAt": "2026-10-11",
+  "seats": 15,
+  "domains": [
+   "roanecountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Ron Berry"
+    },
+    {
+     "name": "Randy Kirby"
+    },
+    {
+     "name": "Chris Lehman"
+    }
+   ],
+   "2": [
+    {
+     "name": "Brad Goss"
+    },
+    {
+     "name": "Chris Ahler"
+    },
+    {
+     "name": "Mike Kittrell"
+    }
+   ],
+   "3": [
+    {
+     "name": "Ben Gann"
+    }
+   ],
+   "4": [
+    {
+     "name": "Charlotte Bowers"
+    },
+    {
+     "name": "Lance Duff"
+    }
+   ],
+   "5": [
+    {
+     "name": "Mike Hooks"
+    }
+   ],
+   "6": [
+    {
+     "name": "Nancy Hamilton"
+    },
+    {
+     "name": "David Brackett"
+    },
+    {
+     "name": "Ben Wilson"
+    }
+   ],
+   "7": [
+    {
+     "name": "Shannon Hester"
+    },
+    {
+     "name": "Travis Parks"
+    }
+   ]
+  }
+ },
+ "47149": {
+  "county": "Rutherford County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://maps.rutherfordcountytn.gov/server/rest/services/Election/Election_Commission/MapServer/5",
+  "readAt": "2026-10-11",
+  "seats": 21,
+  "domains": [
+   "rutherfordcountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Hope Oliver"
+    }
+   ],
+   "2": [
+    {
+     "name": "Stephen Pearcy"
+    }
+   ],
+   "3": [
+    {
+     "name": "Rick Hall"
+    }
+   ],
+   "4": [
+    {
+     "name": "Robert Peay"
+    }
+   ],
+   "5": [
+    {
+     "name": "Jeff Crum"
+    }
+   ],
+   "6": [
+    {
+     "name": "Jonathan Beverly"
+    }
+   ],
+   "7": [
+    {
+     "name": "Michael Kusch"
+    }
+   ],
+   "8": [
+    {
+     "name": "Bill Tollett"
+    }
+   ],
+   "9": [
+    {
+     "name": "Joshua James"
+    }
+   ],
+   "10": [
+    {
+     "name": "Phil Wilson"
+    }
+   ],
+   "11": [
+    {
+     "name": "Wayne Sharpe"
+    }
+   ],
+   "12": [
+    {
+     "name": "Carl B. Boyd"
+    }
+   ],
+   "13": [
+    {
+     "name": "Brendan Doughtie"
+    }
+   ],
+   "14": [
+    {
+     "name": "Wayne Irvin"
+    }
+   ],
+   "15": [
+    {
+     "name": "Shawn McGowan"
+    }
+   ],
+   "16": [
+    {
+     "name": "Cathy Watts"
+    }
+   ],
+   "17": [
+    {
+     "name": "Sean Tyler Gilliland"
+    }
+   ],
+   "18": [
+    {
+     "name": "Allen McAdoo"
+    }
+   ],
+   "19": [
+    {
+     "name": "Romel McMurry"
+    }
+   ],
+   "20": [
+    {
+     "name": "Trey Gooch"
+    }
+   ],
+   "21": [
+    {
+     "name": "Laura Blackwell Clark"
+    }
+   ]
+  }
+ },
+ "47151": {
+  "county": "Scott County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://scottcounty.com/government/board-of-county-commissioners/",
+  "readAt": "2026-10-11",
+  "seats": 14,
+  "domains": [
+   "scottcounty.com"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "David “Blue” Day",
+     "profileUrl": "http://www.scottcounty.com/government/board-of-county-commissioners/commissioner-david-blue-day/"
+    },
+    {
+     "name": "Allen “Ladd” Phillips"
+    }
+   ],
+   "2": [
+    {
+     "name": "Joyce Keeton",
+     "profileUrl": "http://scottcounty.com/government/board-of-county-commissioners/commissioner-joyce-keeton/"
+    },
+    {
+     "name": "Taylor Stephens",
+     "profileUrl": "http://scottcounty.com/government/board-of-county-commissioners/commissioner-taylor-stephens/"
+    }
+   ],
+   "3": [
+    {
+     "name": "Mike Keeton"
+    },
+    {
+     "name": "Dacy Williams"
+    }
+   ],
+   "4": [
+    {
+     "name": "Kenny Chadwell",
+     "profileUrl": "http://www.scottcounty.com/government/board-of-county-commissioners/commissioner-kenny-chadwell/"
+    },
+    {
+     "name": "Shonda Gray",
+     "profileUrl": "http://www.scottcounty.com/government/board-of-county-commissioners/commissioner-shonda-gray/"
+    }
+   ],
+   "5": [
+    {
+     "name": "Kelly Chitwood",
+     "profileUrl": "http://scottcounty.com/government/board-of-county-commissioners/commissioner-kelly-posey-chitwood/"
+    },
+    {
+     "name": "Zach Strunk"
+    }
+   ],
+   "6": [
+    {
+     "name": "Colby Burke",
+     "profileUrl": "http://scottcounty.com/government/board-of-county-commissioners/commissioner-colby-burke/"
+    },
+    {
+     "name": "Jason Perry"
+    }
+   ],
+   "7": [
+    {
+     "name": "Jared Burke",
+     "profileUrl": "http://scottcounty.com/government/board-of-county-commissioners/commissioner-jared-burke/"
+    },
+    {
+     "name": "Tom Payne",
+     "profileUrl": "http://scottcounty.com/government/board-of-county-commissioners/commissioner-tom-payne/"
+    }
+   ]
+  }
+ },
+ "47155": {
+  "county": "Sevier County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://seviercountytn.gov/government/county_officials/county_commissioners/",
+  "readAt": "2026-10-11",
+  "seats": 25,
+  "domains": [
+   "seviercountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Warren N. Hurst",
+     "seat": "A"
+    },
+    {
+     "name": "Tommy Watts",
+     "seat": "B"
+    }
+   ],
+   "2": [
+    {
+     "name": "Brandon Headrick",
+     "seat": "A"
+    },
+    {
+     "name": "Don McGill",
+     "seat": "B"
+    }
+   ],
+   "3": [
+    {
+     "name": "Dale Hill",
+     "seat": "A"
+    },
+    {
+     "name": "Mike Chambers",
+     "seat": "B"
+    }
+   ],
+   "4": [
+    {
+     "name": "Ronnie Whaley",
+     "seat": "A"
+    },
+    {
+     "name": "Steve Leo",
+     "seat": "B"
+    },
+    {
+     "name": "Jack Parton",
+     "seat": "C"
+    }
+   ],
+   "5": [
+    {
+     "name": "Michael Maddron",
+     "seat": "A"
+    },
+    {
+     "name": "Rick Valentine",
+     "seat": "B"
+    },
+    {
+     "name": "Zac Boling",
+     "seat": "C"
+    }
+   ],
+   "6": [
+    {
+     "name": "Andy Jackson",
+     "seat": "A"
+    },
+    {
+     "name": "Harold Pitner",
+     "seat": "B"
+    }
+   ],
+   "7": [
+    {
+     "name": "Marcus Whaley",
+     "seat": "A"
+    },
+    {
+     "name": "Scott Catlett",
+     "seat": "B"
+    }
+   ],
+   "8": [
+    {
+     "name": "Aaron Foster",
+     "seat": "A"
+    },
+    {
+     "name": "Mike Hillard",
+     "seat": "B"
+    },
+    {
+     "name": "Kent Woods",
+     "seat": "C"
+    }
+   ],
+   "9": [
+    {
+     "name": "Greg Haggard",
+     "seat": "A"
+    },
+    {
+     "name": "Dustin Weaver",
+     "seat": "B"
+    }
+   ],
+   "10": [
+    {
+     "name": "Bryan Delius",
+     "seat": "A"
+    },
+    {
+     "name": "Todd Humble",
+     "seat": "B"
+    }
+   ],
+   "11": [
+    {
+     "name": "Gary Cole",
+     "seat": "A"
+    },
+    {
+     "name": "Ray I. Ogle",
+     "seat": "B"
+    }
+   ]
+  }
+ },
+ "47161": {
+  "county": "Stewart County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.stewartcogov.com/commissioners/commissioners.html",
+  "readAt": "2026-10-11",
+  "seats": 14,
+  "domains": [
+   "stewartcogov.com"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Lane Page"
+    },
+    {
+     "name": "Elijah Thomas"
+    }
+   ],
+   "2": [
+    {
+     "name": "Justin Booth"
+    },
+    {
+     "name": "William Taylor"
+    }
+   ],
+   "3": [
+    {
+     "name": "Shane Keatts"
+    },
+    {
+     "name": "Eric Watkins"
+    }
+   ],
+   "4": [
+    {
+     "name": "Terry Fitzhugh"
+    },
+    {
+     "name": "Edward Williams"
+    }
+   ],
+   "5": [
+    {
+     "name": "Leslie Bickford"
+    },
+    {
+     "name": "Melissa Fields"
+    }
+   ],
+   "6": [
+    {
+     "name": "Clint Mathis"
+    },
+    {
+     "name": "Bradley Jones"
+    }
+   ],
+   "7": [
+    {
+     "name": "Mark Dortch"
+    },
+    {
+     "name": "Alexis Taylor"
+    }
+   ]
+  }
+ },
+ "47165": {
+  "county": "Sumner County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://sumnercountytn.gov/government/county-commission/",
+  "readAt": "2026-10-11",
+  "seats": 24,
+  "domains": [
+   "sumnercountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "jody.garrison@sumnercountytn.gov",
+     "name": "Jody Garrison",
+     "profileUrl": "https://sumnercountytn.gov/jody-garrison/"
+    }
+   ],
+   "2": [
+    {
+     "email": "christopher.tarlecky@sumnercountytn.gov",
+     "name": "Christopher Tarlecky",
+     "profileUrl": "https://sumnercountytn.gov/christopher-tarlecky/"
+    }
+   ],
+   "3": [
+    {
+     "email": "mark.harrison@sumnercountytn.gov",
+     "name": "Mark Harrison",
+     "profileUrl": "https://sumnercountytn.gov/mark-harrison/"
+    }
+   ],
+   "4": [
+    {
+     "email": "dillon.lamberth@sumnercountytn.gov",
+     "name": "Dillon Lamberth",
+     "profileUrl": "https://sumnercountytn.gov/dillon-lamberth/"
+    }
+   ],
+   "5": [
+    {
+     "email": "darrell.rogers@sumnercountytn.gov",
+     "name": "Darrell Rogers",
+     "profileUrl": "https://sumnercountytn.gov/darrell-rogers/"
+    }
+   ],
+   "6": [
+    {
+     "email": "adam.issa@sumnercountytn.gov",
+     "name": "Adam Issa",
+     "profileUrl": "https://sumnercountytn.gov/adam-issa/"
+    }
+   ],
+   "7": [
+    {
+     "email": "daniel.bristol@sumnercountytn.gov",
+     "name": "Daniel Bristol",
+     "profileUrl": "https://sumnercountytn.gov/daniel-bristol/"
+    }
+   ],
+   "8": [
+    {
+     "email": "rory.edmonds@sumnercountytn.gov",
+     "name": "Rory Edmonds",
+     "profileUrl": "https://sumnercountytn.gov/rory-edmonds/"
+    }
+   ],
+   "9": [
+    {
+     "email": "paul.graden@sumnercountytn.gov",
+     "name": "Paul Graden",
+     "profileUrl": "https://sumnercountytn.gov/paul-graden/"
+    }
+   ],
+   "10": [
+    {
+     "email": "ben.harris@sumnercountytn.gov",
+     "name": "Benjamin Harris",
+     "profileUrl": "https://sumnercountytn.gov/benjamin-harris/"
+    }
+   ],
+   "11": [
+    {
+     "email": "nick.ivey@sumnercountytn.gov",
+     "name": "Nick Ivey",
+     "profileUrl": "https://sumnercountytn.gov/nick-ivey/"
+    }
+   ],
+   "12": [
+    {
+     "email": "matt.campbell@sumnercountytn.gov",
+     "name": "Matt Campbell",
+     "profileUrl": "https://sumnercountytn.gov/matt-campbell/"
+    }
+   ],
+   "13": [
+    {
+     "email": "james.rohnkohl@sumnercountytn.gov",
+     "name": "James Rohnkohl, Jr.",
+     "profileUrl": "https://sumnercountytn.gov/james-ronkohl-jr/"
+    }
+   ],
+   "14": [
+    {
+     "email": "jacob.edgar@sumnercountytn.gov",
+     "name": "Jacob Edgar",
+     "profileUrl": "https://sumnercountytn.gov/jacob-edgar/"
+    }
+   ],
+   "15": [
+    {
+     "email": "jwes.wynne@sumnercountytn.gov",
+     "name": "J. Wes Wynne",
+     "profileUrl": "https://sumnercountytn.gov/j-wes-wynne/"
+    }
+   ],
+   "16": [
+    {
+     "email": "billy.barnfield@sumnercountytn.gov",
+     "name": "Billy Barnfield",
+     "profileUrl": "https://sumnercountytn.gov/billy-barnfield/"
+    }
+   ],
+   "17": [
+    {
+     "email": "suzanne.holt@sumnercountytn.gov",
+     "name": "Suzanne Holt",
+     "profileUrl": "https://sumnercountytn.gov/suzanne-holt/"
+    }
+   ],
+   "18": [
+    {
+     "email": "don.schmit@sumnercountytn.gov",
+     "name": "Don Schmit",
+     "profileUrl": "https://sumnercountytn.gov/don-schmit/"
+    }
+   ],
+   "19": [
+    {
+     "email": "shannon.burgdorf@sumnercountytn.gov",
+     "name": "Shannon Burgdorf",
+     "profileUrl": "https://sumnercountytn.gov/shannon-burgdorf/"
+    }
+   ],
+   "20": [
+    {
+     "email": "Merrol.Hyde@sumnercountytn.gov",
+     "name": "Merrol N. Hyde",
+     "profileUrl": "https://sumnercountytn.gov/merrol-n-hyde/"
+    }
+   ],
+   "21": [
+    {
+     "email": "Jerry.Becker@SumnerCountyTN.gov",
+     "name": "Jerry F. Becker",
+     "profileUrl": "https://sumnercountytn.gov/jerry-f-becker/"
+    }
+   ],
+   "22": [
+    {
+     "email": "matthew.shoaf@sumnercountytn.gov",
+     "name": "Matthew Shoaf",
+     "profileUrl": "https://sumnercountytn.gov/matthew-shoaf/"
+    }
+   ],
+   "23": [
+    {
+     "email": "tim.jones@sumnercountytn.gov",
+     "name": "Tim Jones",
+     "profileUrl": "https://sumnercountytn.gov/tim-jones/"
+    }
+   ],
+   "24": [
+    {
+     "email": "matthew.wilkinson@sumnercountytn.gov",
+     "name": "Matthew Wilkinson",
+     "profileUrl": "https://sumnercountytn.gov/matthew-wilkinson/"
+    }
+   ]
+  }
+ },
+ "47167": {
+  "county": "Tipton County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://tiptonco.com/government/legislative_body/index.php",
+  "readAt": "2026-10-11",
+  "seats": 18,
+  "domains": [
+   "tiptonco.com"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Shelia Barlow"
+    },
+    {
+     "name": "Rusty Wooten"
+    }
+   ],
+   "2": [
+    {
+     "name": "Michael W. Naifeh"
+    },
+    {
+     "name": "Justin Gangaware"
+    }
+   ],
+   "3": [
+    {
+     "name": "Richard Kelley"
+    },
+    {
+     "name": "John Mashburn"
+    }
+   ],
+   "4": [
+    {
+     "name": "Walker Adams",
+     "role": "Chairman Pro Tempore"
+    },
+    {
+     "name": "Jason Skinner"
+    }
+   ],
+   "5": [
+    {
+     "name": "Glenn Turner"
+    },
+    {
+     "name": "Randy Roe"
+    }
+   ],
+   "6": [
+    {
+     "name": "Michelle Smith"
+    },
+    {
+     "name": "James (Jimbo) C. Adkins"
+    }
+   ],
+   "7": [
+    {
+     "name": "Courtney Fee"
+    },
+    {
+     "name": "Brad Case"
+    }
+   ],
+   "8": [
+    {
+     "name": "James (Lamont) Sneed"
+    },
+    {
+     "name": "Cecil Watson"
+    }
+   ],
+   "9": [
+    {
+     "name": "David Copeland"
+    },
+    {
+     "name": "Jonathan G. Murphy"
+    }
+   ]
+  }
+ },
+ "47171": {
+  "county": "Unicoi County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.unicoicountytn.gov/boards_commissions.html",
+  "readAt": "2026-10-11",
+  "seats": 9,
+  "domains": [
+   "unicoicountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Jamie Harris"
+    },
+    {
+     "name": "Tim Lingerfelt"
+    },
+    {
+     "name": "Loren Thomas"
+    }
+   ],
+   "2": [
+    {
+     "name": "Patrick Callahan"
+    },
+    {
+     "name": "Jason Harris"
+    },
+    {
+     "name": "Corey Hatcher"
+    }
+   ],
+   "3": [
+    {
+     "name": "Gina Clark"
+    },
+    {
+     "name": "Debbie Lemmon"
+    },
+    {
+     "name": "Todd Wilcox"
+    }
+   ]
+  }
+ },
+ "47177": {
+  "county": "Warren County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.warrencountytn.gov/government/county_commission/commissioners.php",
+  "readAt": "2026-10-11",
+  "seats": 24,
+  "domains": [
+   "warrencountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "rlee@warrencountytn.gov",
+     "name": "Ron Lee"
+    },
+    {
+     "email": "cross@warrencountytn.gov",
+     "name": "Christy Ross"
+    }
+   ],
+   "2": [
+    {
+     "email": "cdotson@warrencountytn.gov",
+     "name": "Charles Dotson"
+    },
+    {
+     "email": "cmontgomery@warrencountytn.gov",
+     "name": "Cam Montgomery"
+    }
+   ],
+   "3": [
+    {
+     "name": "Ken Martin"
+    },
+    {
+     "email": "crippy@warrencountytn.gov",
+     "name": "Chris Rippy"
+    }
+   ],
+   "4": [
+    {
+     "name": "James Zahn"
+    },
+    {
+     "email": "bwilcher@warrencountytn.gov",
+     "name": "Blaine Wilcher"
+    }
+   ],
+   "5": [
+    {
+     "email": "bhillis@warrencountytn.gov",
+     "name": "Brad Hillis"
+    },
+    {
+     "email": "skelly@warrencountytn.gov",
+     "name": "Scott Kelly"
+    }
+   ],
+   "6": [
+    {
+     "name": "Traye Cope"
+    },
+    {
+     "email": "pstout@warrencountytn.gov",
+     "name": "Phillip Stout"
+    }
+   ],
+   "7": [
+    {
+     "name": "Caleb Graves"
+    },
+    {
+     "email": "tsavage@warrencountytn.gov",
+     "name": "Tommy Savage"
+    }
+   ],
+   "8": [
+    {
+     "email": "rengland@warrencountytn.gov",
+     "name": "Randy England"
+    },
+    {
+     "email": "srubley@warrencountytn.gov",
+     "name": "Scott Rubley",
+     "role": "Chairman Pro Tem"
+    }
+   ],
+   "9": [
+    {
+     "email": "cbrown@warrencountytn.gov",
+     "name": "Carlene Brown"
+    },
+    {
+     "name": "Stephen Potter"
+    }
+   ],
+   "10": [
+    {
+     "email": "gprater@warrencountytn.gov",
+     "name": "Gary Prater"
+    },
+    {
+     "email": "ctaylor@warrencountytn.gov",
+     "name": "Cole Taylor"
+    }
+   ],
+   "11": [
+    {
+     "email": "mbell@warrencountytn.gov",
+     "name": "Michael Bell",
+     "role": "Parliamentarian"
+    },
+    {
+     "email": "sglenn@warrencountytn.gov",
+     "name": "Steve M. Glenn"
+    }
+   ],
+   "12": [
+    {
+     "email": "cdbouldin@warrencountytn.gov",
+     "name": "Carl D. Bouldin"
+    },
+    {
+     "email": "kmoffitt@warrencountytn.gov",
+     "name": "Kenny Moffitt"
+    }
+   ]
+  }
+ },
+ "47179": {
+  "county": "Washington County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.washingtoncountytn.org/208/County-Commission",
+  "readAt": "2026-10-11",
+  "seats": 15,
+  "domains": [
+   "washingtoncountytn.org"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Richard Tucker",
+     "profileUrl": "https://www.washingtoncountytn.org/209/Richard-Tucker"
+    }
+   ],
+   "2": [
+    {
+     "name": "Billy Austin",
+     "profileUrl": "https://www.washingtoncountytn.org/210/Billy-Austin"
+    }
+   ],
+   "3": [
+    {
+     "name": "Jerome Fitzgerald",
+     "profileUrl": "https://www.washingtoncountytn.org/211/Jerome-Fitzgerald"
+    }
+   ],
+   "4": [
+    {
+     "name": "Josh Edens",
+     "profileUrl": "https://www.washingtoncountytn.org/212/Josh-Edens"
+    }
+   ],
+   "5": [
+    {
+     "name": "Roger Verran",
+     "profileUrl": "https://www.washingtoncountytn.org/213/Roger-Verran"
+    }
+   ],
+   "6": [
+    {
+     "name": "Greg Matherly",
+     "profileUrl": "https://www.washingtoncountytn.org/214/Greg-Matherly",
+     "role": "Chairman"
+    }
+   ],
+   "7": [
+    {
+     "name": "Harrison Wexler, Sr",
+     "profileUrl": "https://www.washingtoncountytn.org/215/Harrison-Wexler"
+    }
+   ],
+   "8": [
+    {
+     "name": "Freddie Malone",
+     "profileUrl": "https://www.washingtoncountytn.org/216/Freddie-Malone"
+    }
+   ],
+   "9": [
+    {
+     "name": "Sarah Laposky",
+     "profileUrl": "https://www.washingtoncountytn.org/217/Sarah-Laposky"
+    }
+   ],
+   "10": [
+    {
+     "name": "Lori Sukel",
+     "profileUrl": "https://www.washingtoncountytn.org/218/Lori-Sukel"
+    }
+   ],
+   "11": [
+    {
+     "name": "Jodi Jones",
+     "profileUrl": "https://www.washingtoncountytn.org/219/Jodi-Jones"
+    }
+   ],
+   "12": [
+    {
+     "name": "Daniel Cutshall",
+     "profileUrl": "https://www.washingtoncountytn.org/220/Daniel-Cutshall"
+    }
+   ],
+   "13": [
+    {
+     "name": "Kenneth Huffine",
+     "profileUrl": "https://www.washingtoncountytn.org/221/Kenneth-Huffine"
+    }
+   ],
+   "14": [
+    {
+     "name": "Jim Wheeler",
+     "profileUrl": "https://www.washingtoncountytn.org/222/Jim-Wheeler"
+    }
+   ],
+   "15": [
+    {
+     "name": "Mike Masters",
+     "profileUrl": "https://www.washingtoncountytn.org/223/Mike-Masters"
+    }
+   ]
+  }
+ },
+ "47187": {
+  "county": "Williamson County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.williamsoncounty-tn.gov/m/directory/department?did=3",
+  "readAt": "2026-10-11",
+  "seats": 24,
+  "domains": [
+   "williamsoncounty-tn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "Andrew.Mitchell@williamsoncounty-tn.gov",
+     "name": "Andrew Mitchell",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=2"
+    },
+    {
+     "email": "ricky.jones@williamsoncounty-tn.gov",
+     "name": "Ricky D. Jones",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=3"
+    }
+   ],
+   "2": [
+    {
+     "email": "Allen.Floyd@williamsoncounty-tn.gov",
+     "name": "Allen Floyd",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=4"
+    },
+    {
+     "email": "judy.herbert@williamsoncounty-tn.gov",
+     "name": "Judy Herbert",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=6"
+    }
+   ],
+   "3": [
+    {
+     "email": "jennifer.mason@williamsoncounty-tn.gov",
+     "name": "Jennifer Mason",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=252"
+    },
+    {
+     "email": "Guy.Carden@williamsoncounty-tn.gov",
+     "name": "Guy Carden II",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=253"
+    }
+   ],
+   "4": [
+    {
+     "email": "Jeff.Goodspeed@williamsoncounty-tn.gov",
+     "name": "Jeff Goodspeed",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=8"
+    },
+    {
+     "email": "gregg.lawrence@williamsoncounty-tn.gov",
+     "name": "Gregg Lawrence",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=254"
+    }
+   ],
+   "5": [
+    {
+     "email": "greg.sanford@williamsoncounty-tn.gov",
+     "name": "Greg Sanford",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=10"
+    },
+    {
+     "email": "Rob.Verell@williamsoncounty-tn.gov",
+     "name": "Rob Verell",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=11"
+    }
+   ],
+   "6": [
+    {
+     "email": "David.Oneil@williamsoncounty-tn.gov",
+     "name": "David O’Neil",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=13"
+    },
+    {
+     "email": "Paul.Webb@williamsoncounty-tn.gov",
+     "name": "Paul Webb",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=255"
+    }
+   ],
+   "7": [
+    {
+     "email": "Nancy.Bailey@williamsoncounty-tn.gov",
+     "name": "Nancy Bailey",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=14"
+    },
+    {
+     "email": "Tom.Tunnicliffe@williamsoncounty-tn.gov",
+     "name": "Tom Tunnicliffe",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=15"
+    }
+   ],
+   "8": [
+    {
+     "email": "Drew.Torres@williamsoncounty-tn.gov",
+     "name": "Drew Torres",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=17"
+    },
+    {
+     "email": "Barb.Sturgeon@williamsoncounty-tn.gov",
+     "name": "Barb Sturgeon",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=256"
+    }
+   ],
+   "9": [
+    {
+     "email": "Chas.Morton@williamsoncounty-tn.gov",
+     "name": "Chas Morton",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=19"
+    },
+    {
+     "email": "Matt.Williams@williamsoncounty-tn.gov",
+     "name": "Matt Williams",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=257"
+    }
+   ],
+   "10": [
+    {
+     "email": "Jody.Todd@williamsoncounty-tn.gov",
+     "name": "Jody Todd",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=292"
+    },
+    {
+     "email": "Bill.Petty@williamsoncounty-tn.gov",
+     "name": "Bill Petty",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=373"
+    }
+   ],
+   "11": [
+    {
+     "email": "Eric.McElroy@williamsoncounty-tn.gov",
+     "name": "Eric McElroy",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=22"
+    },
+    {
+     "email": "Marie.Fellhauer@williamsoncounty-tn.gov",
+     "name": "Marie Fellhauer",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=23"
+    }
+   ],
+   "12": [
+    {
+     "email": "Drason.Beasley@williamsoncounty-tn.gov",
+     "name": "Drason Beasley",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=24"
+    },
+    {
+     "email": "Brian.Clifford@williamsoncounty-tn.gov",
+     "name": "Brian Clifford",
+     "profileUrl": "https://www.williamsoncounty-tn.gov/m/directory/employee?eid=259"
+    }
+   ]
+  }
+ },
+ "47189": {
+  "county": "Wilson County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.wilsoncountytn.gov/245/County-Commissioners",
+  "readAt": "2026-10-11",
+  "seats": 25,
+  "domains": [
+   "wilsoncountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Robert Fields",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=59"
+    }
+   ],
+   "2": [
+    {
+     "name": "Robert Moxley",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=165"
+    }
+   ],
+   "3": [
+    {
+     "name": "Bobby Franklin",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=61"
+    }
+   ],
+   "4": [
+    {
+     "name": "Chad Barnard",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=62"
+    }
+   ],
+   "5": [
+    {
+     "name": "Jerry McFarland",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=63"
+    }
+   ],
+   "6": [
+    {
+     "name": "James Smallwood",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=166"
+    }
+   ],
+   "7": [
+    {
+     "name": "Jeff Joines",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=167"
+    }
+   ],
+   "8": [
+    {
+     "name": "Kevin Costley",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=66"
+    }
+   ],
+   "9": [
+    {
+     "name": "Blake Hall",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=120"
+    }
+   ],
+   "10": [
+    {
+     "name": "Nathan Bulmon",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=168"
+    }
+   ],
+   "11": [
+    {
+     "name": "Ardis Ferguson",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=169"
+    }
+   ],
+   "12": [
+    {
+     "name": "Haskell Evans",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=121"
+    }
+   ],
+   "13": [
+    {
+     "name": "Jeremy Hobbs",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=122"
+    }
+   ],
+   "14": [
+    {
+     "name": "Tommy Jones",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=72"
+    }
+   ],
+   "15": [
+    {
+     "name": "Chris Dowell",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=73"
+    }
+   ],
+   "16": [
+    {
+     "name": "Jeremy H.G.Hayes",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=170"
+    }
+   ],
+   "17": [
+    {
+     "name": "Ken Nelson, Jr.",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=171"
+    }
+   ],
+   "18": [
+    {
+     "name": "Lauren Breeze",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=76"
+    }
+   ],
+   "19": [
+    {
+     "name": "William Glover",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=77"
+    }
+   ],
+   "20": [
+    {
+     "name": "Aaron Wilson",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=164"
+    }
+   ],
+   "21": [
+    {
+     "name": "Mike Kurtz",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=79"
+    }
+   ],
+   "22": [
+    {
+     "name": "Wendell Marlowe",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=80"
+    }
+   ],
+   "23": [
+    {
+     "name": "Jeremy Reich",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=124"
+    }
+   ],
+   "24": [
+    {
+     "name": "Danny R. Clark",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=125"
+    }
+   ],
+   "25": [
+    {
+     "name": "Justin Smith",
+     "profileUrl": "https://www.wilsoncountytn.gov/Directory.aspx?EID=83"
+    }
+   ]
+  }
+ }
+}

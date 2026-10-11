@@ -914,6 +914,50 @@ try {
       await context.close();
     }
   }
+
+  // county-commissioner NAMES THE DISTRICT'S SEATS FROM THE ROSTER, and says
+  // so when it cannot. The roster is stubbed so this holds the CARD to a
+  // fixture rather than to whichever names this week's refresh shipped: one
+  // district with a named seat carrying a seat label and a role, a vacancy the
+  // county states, and a countywide member, which must render under its own
+  // label. The second half stubs an empty roster and requires the not-named
+  // sentence, because a card that names nobody must still say why.
+  {
+    const roster = {
+      "47037": {
+        county: "Davidson County", seatTitle: "Council Member", bodyName: "Metro Council",
+        sourceUrl: "https://www.nashville.gov/departments/council/districts",
+        readAt: "2026-10-11", seats: 3, domains: ["nashville.gov"], phones: true,
+        districts: { "19": [
+          { name: "Fixture Member", seat: "A", role: "Chair", email: "fixture@nashville.gov" },
+          { vacant: true, seat: "B" }
+        ] },
+        atLarge: [{ name: "Fixture Countywide" }]
+      }
+    };
+    for (const [label, body, want, wantNot] of [
+      ["names the district's seats, a stated vacancy and the countywide members",
+       roster,
+       [/Fixture Member/, /Council Member/, /Seat A/, /Chair/, /Seat B/, /Vacant/,
+        /Elected countywide/i, /Fixture Countywide/, /read 11 October 2026/],
+       /Not named here yet/],
+      ["says it names nobody where the roster has not reached the county",
+       {}, [/Not named here yet/], /Fixture/]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=county-commissioner`, async (p) => {
+        await p.route("**/data/app/tn-commissioners.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(body) }));
+      });
+      const info = await cardText(page, "county-commissioner");
+      const text = info.text || "";
+      const missing = want.filter((re) => !re.test(text)).map(String);
+      check(`county-commissioner ${label}`,
+        !info.error && missing.length === 0 && !wantNot.test(text),
+        missing.length ? `missing ${missing.join(" ")} in: ${text.slice(0, 160)}` : text.slice(0, 120));
+      await context.close();
+    }
+  }
 } finally {
   await browser.close();
 }
