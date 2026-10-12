@@ -249,6 +249,26 @@ INSTANCES = [
          index_provenance="each name the winner of that seat's most recent "
                           "election in the Indiana Election Division's "
                           "certified results, dated to it"),
+    # OKLAHOMA NAMES THE STATE ELECTION BOARD'S ROSTER, A DATED SNAPSHOT.
+    # Every county elects three commissioners from three districts (19 O.S.
+    # 321), and the Board's Roster of State and County Officers lists all
+    # three after each general election, holdovers included. It is not kept
+    # current between elections, so the pages say when it was compiled.
+    dict(tag="ok", state="Oklahoma", concept="county-commissioner",
+         index_page="county-commissioner.html",
+         heading="%(county)s County Board of Commissioners",
+         page_title="%(county)s County Commissioners",
+         page_title_short="%(county)s commissioners",
+         phrase="board of county commissioners", index_label="Boards of county commissioners",
+         all_label="All Oklahoma boards of county commissioners",
+         app_name="districtry Oklahoma", app_url="https://districtry.com/ok/",
+         district_word="District", member_word="Commissioner",
+         adapters=("ok_commissioners",),
+         contacts="ok_county_contact",
+         vacancy_phrase="as the State Election Board's roster listed it",
+         index_provenance="each name from the Oklahoma State Election Board's "
+                          "Roster of State and County Officers, compiled after "
+                          "the general election it is dated to"),
     # NORTH CAROLINA NAMES ELECTION WINNERS TOO, from the State Board of
     # Elections' results read with its filing lists, and many boards elect
     # several seats in one contest, so a label ("Board seat", "At large")
@@ -1242,6 +1262,83 @@ def mn_commissioners(inst):
     return out, problems, nameless, [path], note
 
 
+OK_LEDE = ("These are the three commissioners the Oklahoma State Election "
+           "Board's Roster of State and County Officers lists for %(county)s "
+           "County. The Board compiles the roster after each general election "
+           "and lists every county's commissioners whether or not their seat "
+           "was on that ballot. It is not kept up to date between elections, "
+           "so a seat that has changed hands since still shows the earlier name.")
+OK_STANDFIRST = ("Who sits on the %(heading)s, from the Oklahoma State Election "
+                 "Board's roster of county officers.")
+OK_DESC = ("The %(districts)d commissioners of %(county)s County, Oklahoma, "
+           "from the State Election Board's roster, and the district each one "
+           "represents.")
+OK_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is "
+                 "printed in the Oklahoma State Election Board's roster,\n"
+                 "and this page dates the roster rather than claiming each seat "
+                 "is still held.")
+OK_CTA_NOTE = ("Opens the map with the commissioner-district layer on. The "
+               "district lines come from the state Department of "
+               "Transportation; the names come from the State Election Board's "
+               "roster and are dated to it.")
+
+
+def ok_commissioners(inst):
+    """Oklahoma: ONE file keyed "<county GEOID>-<district>", every record
+    carrying its county, its district, the `election` the roster was compiled
+    after, and either a `name` (with `party`) or `vacant: true`
+    (ok/scripts/build_ok_commissioner_roster.py). Every county has three
+    seats, so every county gets a page; a vacant seat is drawn as the
+    county's roster drew it."""
+    path = os.path.join(app_data(inst["tag"]), "ok-county-commissioners.json")
+    by_county, problems, nameless = {}, [], set()
+    for key, rec in sorted(_read(path).items()):
+        name = (rec.get("county") or "").strip()
+        if not name or rec.get("district") is None:
+            problems.append("ok-county-commissioners.json %r carries no county "
+                            "or district" % key)
+            continue
+        by_county.setdefault(name, []).append(rec)
+    out = {}
+    for name, recs in sorted(by_county.items()):
+        if len(recs) != 3:
+            problems.append("ok %s County has %d seats, not 3" % (name, len(recs)))
+            continue
+        districts = []
+        when = _mn_date(recs[0].get("election"))
+        if not when:
+            problems.append("ok %s County carries no roster date" % name)
+            continue
+        for rec in sorted(recs, key=lambda r: int(r["district"])):
+            label = str(rec["district"])
+            if rec.get("vacant"):
+                districts.append(district(label, vacancies=1))
+            elif (rec.get("name") or "").strip():
+                member = {"name": rec["name"].strip(),
+                          "elected": "In the roster compiled after the %s general election." % when}
+                if rec.get("party"):
+                    member["party"] = rec["party"]
+                districts.append(district(label, [member]))
+            else:
+                problems.append("ok %s County District %s is neither named nor "
+                                "vacant" % (name, label))
+        if not _count_named(districts, []):
+            nameless.add(name)
+            continue
+        out[name] = {"districts": districts,
+                     "sourceUrl": recs[0].get("sourceUrl"),
+                     "source_label": "the Oklahoma State Election Board's roster of state and county officers",
+                     "extras": [], "skipped": [], "slug": county_slug(name),
+                     "at_large": False, "source_file": path,
+                     "lede": OK_LEDE, "standfirst": OK_STANDFIRST,
+                     "desc": OK_DESC, "disclaimer": OK_DISCLAIMER,
+                     "cta_note": OK_CTA_NOTE}
+    note = ("%d of Oklahoma's 77 counties, every seat named from the State "
+            "Election Board's roster or marked vacant as it is there" % len(out))
+    return out, problems, nameless, [path], note
+
+
 IN_LEDE = ("These are the people who won each seat on %(county)s County's "
            "Board of Commissioners at its most recent election in the Indiana "
            "Election Division's certified results, each dated to that election. "
@@ -1935,6 +2032,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "mi_commissioners": mi_commissioners,
             "mn_commissioners": mn_commissioners,
             "in_commissioners": in_commissioners,
+            "ok_commissioners": ok_commissioners,
             "nc_commissioners": nc_commissioners,
             "ky_county_governments": ky_county_governments,
             "tn_commissioners": tn_commissioners,
@@ -2286,11 +2384,14 @@ def districted_body(inst, name, rec):
             # card has always distinguished the two ("N of M seats is vacant");
             # the first draft of this page did not, and Jo Daviess's District 10
             # is exactly the case — filled last week, reported vacant this week.
+            # WHO REPORTED IT is the instance's to say: Oklahoma's vacancies
+            # are the State Election Board's roster, not the county's own word.
             out.append('<p class="unlisted">%d of %d seat%s here %s vacant, '
-                       'as the county reports it.</p>'
+                       '%s.</p>'
                        % (d["vacancies"], len(rows) + d["vacancies"],
                           "" if len(rows) + d["vacancies"] == 1 else "s",
-                          "is" if d["vacancies"] == 1 else "are"))
+                          "is" if d["vacancies"] == 1 else "are",
+                          esc(inst.get("vacancy_phrase", "as the county reports it"))))
         elif d["note"]:
             # A THIRD STATE: somebody holds this seat and this project will not
             # say who, with the reason printed. Wisconsin's Lincoln District 21
@@ -3222,6 +3323,25 @@ def wi_clerk_contact(inst):
                      rec.get("phone"), rec.get("email"), rec.get("website"))
         if c:
             out[_norm_county(rec["county"])] = c
+    return out, [path]
+
+
+def ok_county_contact(inst):
+    """Oklahoma: the county information line the State Election Board's roster
+    prints at the foot of each county's block, carried on every seat record."""
+    path = os.path.join(app_data("ok"), "ok-county-commissioners.json")
+    if not os.path.exists(path):
+        return {}, [path]
+    out = {}
+    for rec in _read(path).values():
+        if not isinstance(rec, dict) or not rec.get("countyPhone"):
+            continue
+        key = _norm_county(rec["county"])
+        if key not in out:
+            c = _contact("County information line", None, [], rec["countyPhone"],
+                         None, None, None)
+            if c:
+                out[key] = c
     return out, [path]
 
 

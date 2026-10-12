@@ -150,7 +150,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "None yet — identity only. Every Oklahoma county elects three commissioners from three districts (19 O.S. 321); the state Department of Transportation publishes the districts and the State Election Board the names, and neither is wired in this first change. Recorded as gap ok-commissioner-districts.",
+        "people": "ok-county-commissioners.json, from the Oklahoma State Election Board's Roster of State and County Officers (the 2024 edition, compiled after the November 5, 2024 general election), rebuilt weekly by CI. The card lists the county's three commissioners and the county's information telephone line. The roster is a snapshot the counties do not keep current between elections, and the card says so.",
         "applies": "Oklahoma — statewide, all 77 counties."
       }
     },
@@ -176,7 +176,7 @@
       "id": "school-district-unified",
       "label": "School District (Unified)",
       "group": "schools",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "415 unified districts, live from TIGERweb (no data/app file); with the 91 elementary districts they cover the state exactly",
       "source": {
         "answers": "The public school district covering the point.",
@@ -194,7 +194,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "1,058 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Oklahoma",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -212,7 +212,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "91 elementary (dependent) districts, live from TIGERweb; the ground the unified tiling leaves",
       "source": {
         "answers": "The elementary school district covering the point, where the point is in one.",
@@ -230,7 +230,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "600 incorporated cities and towns, live from TIGERweb",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -248,7 +248,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -266,7 +266,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -284,7 +284,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -302,7 +302,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "Tribal areas — Oklahoma has 31, MEASURED by scripts/build_tribal_areas.py: the Osage Reservation, the Shawnee Tribe's 0.430 km² of trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas; median 523.7 km², between a House district and a unified school district. The statistical areas are drawn by Adam's exception for Oklahoma (2026-10-10), labelled on every card as areas the Census draws to count people.",
       "source": {
         "answers": "Whether this address is in a tribal area the Census draws, and which nation's government (or nations' governments) it names — 31 areas across 33 nations, most of them Oklahoma Tribal Statistical Areas, which the card says are drawn to count people and are not legal boundaries.",
@@ -314,6 +314,24 @@
         ],
         "people": "Nobody yet: no Oklahoma nation's council list has been read, and the card says so. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
         "applies": "Most of Oklahoma. The Census draws a tribal area over most of the state; the western Panhandle and parts of the north and west lie outside every one."
+      }
+    },
+    {
+      "id": "county-commissioner",
+      "label": "County Commissioner District",
+      "group": "political",
+      "area_rank": 5,
+      "rank_note": "231 districts, three in each of the 77 counties; median 715.8 km² (mean 785, from 33.5 to 3,704.5), measured 2026-10-11 — smaller than a House district and larger than the median tribal area",
+      "source": {
+        "answers": "Which of the county's three commissioner districts covers the point, and the commissioner the State Election Board lists for it.",
+        "boundary": [
+          {
+            "label": "Oklahoma Department of Transportation — County Commissioner Districts (ArcGIS FeatureServer layer 0), pre-built for the state and shipped with the app; 231 features, measured 2026-10-11. Compared on every build with a University of Oklahoma copy, which agrees on 229 of 231 and draws Beaver County's line between Districts 1 and 2 differently; the card says so there. Simplified by Douglas-Peucker at a 20 m interval and refused over a 25 m fidelity ceiling.",
+            "url": "https://services6.arcgis.com/RBtoEUQ2lmN0K3GY/arcgis/rest/services/County_Commissioner_Districts/FeatureServer/0"
+          }
+        ],
+        "people": "ok-county-commissioners.json, from the Oklahoma State Election Board's Roster of State and County Officers (the 2024 edition: 229 named, 2 listed vacant), rebuilt weekly by CI, which picks up a newer edition the week it is posted. Home towns printed in the roster are not carried.",
+        "applies": "Oklahoma — statewide, all 231 districts in 77 counties."
       }
     }
   ],
@@ -386,6 +404,12 @@
         "min_features": 31,
         "max_features": 31,
         "note": "Oklahoma's tribal areas (scripts/build_tribal_areas.py) — the Osage Reservation, the Shawnee Tribe's trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas, simplified by Douglas-Peucker at 20 m and held to a 25 m ceiling. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
+      },
+      {
+        "file": "ok-commissioner-districts.json",
+        "min_features": 231,
+        "max_features": 231,
+        "note": "The 231 county commissioner districts, three per county (ok/scripts/build_ok_commissioner_districts.py, from the state Department of Transportation). The floor and the ceiling are equal because 19 O.S. 321 fixes three per county."
       }
     ],
     "rosters": [
@@ -405,6 +429,11 @@
         "note": "Oklahoma House roster from Open States, refreshed weekly. The floor is below 101 for the same reason; the export carried 100 on 2026-10-09."
       },
       {
+        "file": "ok-county-commissioners.json",
+        "min_keys": 231,
+        "note": "One record per commissioner seat from the State Election Board's officer roster, refreshed weekly by update-ok-commissioner-roster.yml. Every seat has a record; a vacant seat carries vacant: true."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -412,7 +441,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ok-shell-v2",
+    "cache_name": "districtry-ok-shell-v3",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
@@ -438,6 +467,11 @@
       "file": "update-ok-legislature-roster.yml",
       "purpose": "Oklahoma Senate and Oklahoma House rosters (Open States)",
       "schedule": "Tue 16:45 UTC"
+    },
+    {
+      "file": "update-ok-commissioner-roster.yml",
+      "purpose": "Oklahoma county commissioners (State Election Board officer roster)",
+      "schedule": "Wed 16:45 UTC"
     },
     {
       "file": "ok-validate-sources.yml",

@@ -4066,7 +4066,7 @@ function initOklahomaExplorer() {
   var LAYER_CODES = { "us-house": "us", "ok-senate": "oks", "county": "co", "ok-house": "okh",
     "school-district-unified": "su", "zip-code": "zp", "school-district-elementary": "se",
     "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po",
-    "tribal-government": "tg" };
+    "tribal-government": "tg", "county-commissioner": "cm" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8464,6 +8464,7 @@ function initOklahomaExplorer() {
     "ok-senate",         // 48 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 77 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "ok-house",          // 101 House districts — the smallest of the three chamber tilings
+    "county-commissioner", // 231 districts, three in each of the 77 counties; median 715.8 km² (mean 785, from 33.5 to 3,704.5), measured 2026-10-11 — smaller than a House district and larger than the median tribal area
     "tribal-government", // Tribal areas — Oklahoma has 31, MEASURED by scripts/build_tribal_areas.py: the Osage Reservation, the Shawnee Tribe's 0.430 km² of trust land, 25 Oklahoma Tribal Statistical Areas and 4 joint-use areas; median 523.7 km², between a House district and a unified school district. The statistical areas are drawn by Adam's exception for Oklahoma (2026-10-10), labelled on every card as areas the Census draws to count people.
     "school-district-unified", // 415 unified districts, live from TIGERweb (no data/app file); with the 91 elementary districts they cover the state exactly
     "zip-code",          // 1,058 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Oklahoma
@@ -12298,9 +12299,9 @@ function initOklahomaExplorer() {
    * no at-large or mixed variant anywhere, and the state Department of
    * Transportation publishes all 231 districts as one statewide file; the
    * State Election Board publishes a roster of county officers naming each
-   * district's commissioner. Neither is wired in this first change, which
-   * ships the national tier alone — see ok/WATCH.md for the measurements
-   * and the order the plan takes them in.
+   * district's commissioner. Both are wired: the County Commissioner
+   * District layer below draws the districts and names each one's
+   * commissioner, and the County card lists the county's whole board.
    * ======================================================================= */
 
   // The one state fact every TIGERweb where-clause reads.
@@ -12383,14 +12384,12 @@ function initOklahomaExplorer() {
    * service-worker cached, so this layer answers even when every
    * third-party host is down.
    *
-   * IDENTITY ONLY IN THIS FIRST CHANGE. Every Oklahoma county is governed
-   * by an elected three-member board of county commissioners, one from each
-   * of three districts (19 O.S. 321), and the districts and the names are
-   * both published statewide — the districts by the state Department of
-   * Transportation, the names by the State Election Board. Neither is wired
-   * yet, so the card says the board exists and names nobody on it rather
-   * than leaving a reader to wonder. Recorded as gap
-   * `ok-commissioner-districts`.
+   * THE CARD NAMES THE WHOLE BOARD. Every Oklahoma county is governed by
+   * an elected three-member board of county commissioners, one from each of
+   * three districts (19 O.S. 321). The county card lists all three from the
+   * State Election Board's roster (the same file the County Commissioner
+   * District layer below reads), and that layer says which of the three
+   * districts the point is in.
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
@@ -12413,11 +12412,20 @@ function initOklahomaExplorer() {
       return queryFeatureAt(loadStateCounties, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          board: null
         };
+        // A roster that fails to load leaves the county answer standing.
+        return loadOkCommissionerRoster().then(function (roster) {
+          result.board = okBoardFor(roster, result.geoid);
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -12426,13 +12434,182 @@ function initOklahomaExplorer() {
         title: result.name != null ? String(result.name) : "Unknown county",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      wrap.appendChild(renderFieldStack([{
-        label: "Board of commissioners",
-        value: "Not named here yet. Every Oklahoma county elects three " +
-          "commissioners, one from each of three districts. The state " +
-          "publishes both the districts and the names, and this map does " +
-          "not carry them yet, so it names no one here rather than guessing."
-      }]));
+      var board = result.board || [];
+      if (board.length) {
+        wrap.appendChild(renderSectionLabel("Board of county commissioners"));
+        wrap.appendChild(renderPersonRows(board.map(function (rec) {
+          return {
+            name: rec.vacant ? "Vacant" : String(rec.name),
+            badge: "District " + String(rec.district),
+            note: rec.vacant ? "listed vacant in the roster" : (rec.party ? String(rec.party) : null)
+          };
+        })));
+      }
+      var rows = [];
+      if (board.length) {
+        rows.push({ label: "Where these names come from", value: okRosterNote(board[0]) });
+      } else {
+        rows.push({
+          label: "Board of commissioners",
+          value: result.rosterFailed
+            ? "The list of commissioners did not load, so no one is named here. " +
+              "Every Oklahoma county elects three commissioners, one from each " +
+              "of three districts."
+            : "No one is named here: the roster this map reads lists no " +
+              "commissioners for this county."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      if (board.length && board[0].countyPhone) {
+        wrap.appendChild(renderLinkRow({ title: "County information line", phone: String(board[0].countyPhone) }));
+      }
+      return wrap;
+    }
+  });
+
+  /* ---------- 1b. County commissioner district ----------
+   * Oklahoma's 231 county commissioner districts, three in every county
+   * (19 O.S. 321), drawn from the state Department of Transportation's
+   * statewide layer (ok/scripts/build_ok_commissioner_districts.py;
+   * data/app/ok-commissioner-districts.json). A University of Oklahoma copy
+   * of the same map agrees on 229 of the 231 and draws Beaver County's line
+   * between Districts 1 and 2 differently; those two features carry a
+   * `lineNote` the card prints, and the builder fails if any other county
+   * starts to disagree.
+   *
+   * THE NAMES ARE THE STATE ELECTION BOARD'S ROSTER AND THE CARD DATES THEM.
+   * The Board publishes one "Roster of Oklahoma State and County Officers"
+   * after each general election, listing every county's three commissioners
+   * whether or not their seat was on that ballot
+   * (ok/scripts/build_ok_commissioner_roster.py;
+   * data/app/ok-county-commissioners.json). It is a snapshot, not a list the
+   * counties keep current, so the card says when it was compiled and that the
+   * county can say who holds the seat today. Home towns are printed in the
+   * roster and never carried here.
+   * ---------- */
+  var loadOkCommissionerDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ok-commissioner-districts.json", {}, 2);
+  });
+  // keyed "<county GEOID>-<district>", the districts file's own `key`
+  var loadOkCommissionerRoster = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ok-county-commissioners.json", {}, 2);
+  });
+  var OK_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  function okElectionDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return OK_MONTHS[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1];
+  }
+  function okBoardFor(roster, geoid) {
+    var out = [];
+    if (!roster || geoid == null) return out;
+    for (var d = 1; d <= 3; d++) {
+      var rec = roster[String(geoid) + "-" + d];
+      if (rec) out.push(rec);
+    }
+    return out;
+  }
+  function okRosterNote(rec) {
+    var when = okElectionDate(rec && rec.election);
+    return "The Oklahoma State Election Board's Roster of State and County " +
+      "Officers" + (when ? ", compiled after the general election of " + when : "") +
+      ". It lists every county's three commissioners at the time it was " +
+      "compiled and is not kept up to date between elections, so if a seat " +
+      "has changed hands since, this still shows the earlier name. The " +
+      "county can say who holds the seat today.";
+  }
+
+  registerLayer({
+    id: "county-commissioner",
+    group: "political",
+    label: "County Commissioner District",
+    overlay: {
+      load: loadOkCommissionerDistricts,
+      // a warm hue no other layer uses, so the county board reads apart from
+      // the legislative tilings
+      style: { color: "#9C4A14", weight: 1.5, fillColor: "#D9792E", fillOpacity: 0.05, dashArray: "4 3" }
+    },
+    hoverName: function (feature) {
+      var props = feature.properties || {};
+      return props.county != null && props.name != null
+        ? String(props.county) + " County " + String(props.name) : null;
+    },
+    hoverOfficial: {
+      load: loadOkCommissionerRoster,
+      name: function (feature, roster) {
+        var props = feature.properties || {};
+        var rec = roster ? roster[String(props.key)] : null;
+        return rec && rec.name ? String(rec.name) : null;
+      }
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadOkCommissionerDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = {
+          seq: seq,
+          key: props.key,
+          name: props.name,
+          number: props.district,
+          county: props.county,
+          lineNote: props.lineNote || null,
+          holder: null
+        };
+        return loadOkCommissionerRoster().then(function (roster) {
+          result.holder = roster[String(props.key)] || null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      // Card convention: identity -> officeholder -> office -> contact.
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name ? String(result.name) : "County Commissioner District",
+        note: result.county ? String(result.county) + " County" : null
+      }));
+      var rows = [];
+      var holder = result.holder;
+      if (holder && holder.name) {
+        wrap.appendChild(renderPersonRows([{
+          name: String(holder.name),
+          note: holder.party ? String(holder.party) : null
+        }]));
+        rows.push({ label: "Where this name comes from", value: okRosterNote(holder) });
+      } else if (holder && holder.vacant) {
+        rows.push({
+          label: "Who holds this seat",
+          value: "The State Election Board's roster listed this seat as vacant " +
+            "when it was compiled" +
+            (okElectionDate(holder.election) ? ", after the general election of " +
+              okElectionDate(holder.election) : "") +
+            ". It may have been filled since; the county can say who holds it today."
+        });
+      } else {
+        rows.push({
+          label: "Who holds this seat",
+          value: result.rosterFailed
+            ? "The list of commissioners did not load, so no name is shown."
+            : "The roster this map reads names no one for this seat."
+        });
+      }
+      rows.push({
+        label: "Who you elect here",
+        value: "One of the county's three commissioners, chosen by the voters " +
+          "of this district. The board of county commissioners runs the " +
+          "county: its roads and bridges, its budget and its buildings."
+      });
+      if (result.lineNote) {
+        rows.push({ label: "Two maps disagree near here", value: String(result.lineNote) });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      if (holder && holder.countyPhone) {
+        wrap.appendChild(renderLinkRow({ title: "County information line", phone: String(holder.countyPhone) }));
+      }
       return wrap;
     }
   });
@@ -14575,7 +14752,7 @@ function initOklahomaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ok-senate", "ok-house",
+  var LAYER_SIDEBAR_RANK = ["us-house", "ok-senate", "ok-house", "county-commissioner",
     "school-district-unified", "school-district-elementary",
     "county", "municipality", "zip-code",
     "tribal-government", "police-station", "fire-station", "post-office"];
@@ -15061,8 +15238,8 @@ function initOklahomaExplorer() {
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4CA1FB", "#14181C": "#696F76", "#1B4F8C": "#599DF2",
     "#1F6F6B": "#59BCB7", "#2F6B3A": "#6BBB77", "#3E9A95": "#65DDD7", "#41B6E6": "#B3E6FF",
     "#444B54": "#8F99A6", "#4A2E8C": "#9879FA", "#4B2E83": "#9C79EE", "#4C8F59": "#7DD68D",
-    "#6B7280": "#ACB6C9", "#7FC4A3": "#A0FBD0", "#8C2E4A": "#F06F91", "#A3341F": "#FD7C62",
-    "#B0316E": "#FE80B4", "#D06A9C": "#FEB3D4"};
+    "#6B7280": "#ACB6C9", "#7FC4A3": "#A0FBD0", "#8C2E4A": "#F06F91", "#9C4A14": "#FA8949",
+    "#A3341F": "#FD7C62", "#B0316E": "#FE80B4", "#D06A9C": "#FEB3D4", "#D9792E": "#FDC199"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
