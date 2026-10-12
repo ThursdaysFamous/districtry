@@ -308,7 +308,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `tribal-government`.
 
-#### ok — 4 of 12 layers fetch their shapes
+#### ok — 4 of 13 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -319,6 +319,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `ok-senate`, `county`, `ok-house`, `tribal-government`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+- **Not measured** — declared since the probe ran: `county-commissioner`.
 
 ## 2. Build-time datasets
 
