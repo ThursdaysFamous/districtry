@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "nc-senate", "nc-house"];
 const EXPECT_DISTRICT = { "county": "Wake County", "us-house": "2", "nc-senate": "14", "nc-house": "38" };
 const NEGATIVE_POINT = "35.60000,-75.30000"; // the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable.
 const APP_NAME = "districtry North Carolina";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -899,6 +899,39 @@ try {
         `hidden=${hidden} leaked=${leaked} layersOn=${stillOn} text=${(info.text || "").slice(0, 90)}`);
       await context.close();
     }
+  }
+  // ---- Tribal Government. The Qualla Boundary was the 2020 census's Eastern Cherokee Reservation
+  // under another code, so its card carries that count and says so; the Band's
+  // communities are drawn by the Census and named; its site could not be read,
+  // so the card must say why it names nobody. Points are shapely's representative point
+  // for the part of each shipped parcel inside the state (2026-10-10).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt) => {
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      return { text: card.text, by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+    const q = await at("35.51618,-83.23237");
+    check("the Qualla Boundary names the Eastern Band, its communities and its 2020 count",
+          q.by("Tribal government") === "Eastern Band of Cherokee Indians" &&
+          q.by("Land") === "Qualla Boundary" &&
+          q.by("Districts drawn here").indexOf("Birdtown Community") !== -1 &&
+          q.by("Population").indexOf("9,233") !== -1 &&
+          q.by("Population").indexOf("Eastern Cherokee Reservation") !== -1 &&
+          /\d{4}-\d{2}-\d{2}/.test(q.by("Why no names")),
+          JSON.stringify(q.text.slice(0, 300)));
+    const off = await at(POINT);
+    check("a point off tribal land is told so in the layer's own words",
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("2 tribal areas") !== -1,
+          JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
   }
 } finally {
   await browser.close();
