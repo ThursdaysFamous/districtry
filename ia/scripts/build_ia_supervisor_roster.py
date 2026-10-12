@@ -309,6 +309,22 @@ NUMBERING_CHECKED = {
                    "precincts ADAMS 1 to 5 each sit at least 99.9% inside the "
                    "same-numbered district of this layer",
     },
+    "Mitchell": {
+        "map": {"1": "2", "2": "1", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-12",
+        "witness": "the county Auditor (Rachel Foster, by e-mail, 2026-10-12, "
+                   "answering this project's ask) listed the precincts in each "
+                   "district: 2, 3 and 11 in 1; 1, 4 and 12 in 2; 5 and 6 in "
+                   "3; 7 and 8 in 4; 9 and 10 in 5; each of this instance's "
+                   "twelve Mitchell precincts lies at least 99.7% inside one "
+                   "district of this layer, and they put the county's 1 in "
+                   "this layer's 2 and its 2 in this layer's 1, with 3 to 5 "
+                   "the same; the county's own supervisor-district map "
+                   "(mitchellcountyelections.iowa.gov, read 2026-10-12) colours "
+                   "the same five groups and puts the county's District 1 "
+                   "(precincts 2, 3 and 11) on the west side of Osage, where "
+                   "this layer's district 2 is",
+    },
     "Cass": {
         "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
         "checked": "2026-10-07",
