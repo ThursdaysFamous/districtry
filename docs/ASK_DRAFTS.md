@@ -7054,13 +7054,14 @@ found, and gap `sc-county-council` says so.
 
 ## Ask tn-ctas-commissioner-districts — University of Tennessee County Technical Assistance Service: add each county commissioner's district to its directory
 
-> **NOT YET ASKED — DRAFTED 2026-10-11**, to Liz Gossett, CTAS Marketing Director, at
-> `liz@tennessee.edu`. Every county page of the CTAS directory names her for "Questions about
+> **ASKED 2026-10-11** — sent by Adam at 22:36 UTC to Liz Gossett, CTAS Marketing Director, at
+> `liz@tennessee.edu`, with no one copied (his sent folder, read 2026-10-12). No reply yet; the
+> follow-up falls due about 1 November 2026. Drafted the same day, to the same address. Every county page of the CTAS directory names her for "Questions about
 > county information?" with that address (read 2026-10-11 on the Johnson County page, after its
 > robots.txt, which permits `/county/`). Adam chose "Ask the state" on 2026-10-11, over letters to
 > six counties, because one change at one office would cover all 95 counties. The mailbox was
 > searched the same day for any message to or from `tennessee.edu`, `utk.edu`, `tn.gov` or CTAS:
-> none. On send, record `ASKED <date>` in gap `tn-county-commissioners` and in `tn/WATCH.md`.
+> none. Recorded as asked in gap `tn-county-commissioners` and in `tn/WATCH.md` on 2026-10-12.
 
 **Why this is asked.** Tennessee's map (still hidden) draws all 859 county commission districts
 from the Comptroller of the Treasury's statewide layer, and names the commissioners county by
