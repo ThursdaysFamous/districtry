@@ -327,7 +327,7 @@
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "939 incorporated cities, live from TIGERweb (no data/app file) — small dense pockets within the county-subdivision fabric, so smaller on average than a civil township despite fewer records",
       "source": {
         "answers": "The incorporated city covering the point, if any.",
@@ -345,7 +345,7 @@
       "id": "city-ward",
       "label": "City Council District",
       "group": "political",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "The instance's CITY tier: 14 subdivisions across three cities — Des Moines's 4 wards averaging 22.7 sq mi inside one 90.66 sq mi city, Waterloo's 5 wards averaging 12.6 sq mi inside one 62.98 sq mi city, Cedar Rapids's 5 districts averaging 15.2 sq mi inside one 75.54 sq mi city — so strictly smaller than the City that contains them and larger than a precinct",
       "source": {
         "answers": "Which city council ward or district covers the point, in the Iowa cities whose boundaries are published — Des Moines, Waterloo and Cedar Rapids — the council member it elects, and the seats no ward or district carries because the whole city elects them. The toggle says DISTRICT because that is the concept's generic word: the first two cities elect by ward and Cedar Rapids by district, and each card names the unit as its own city does.",
@@ -391,7 +391,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "Census ZCTAs by Iowa envelope (no data/app file) — 1,443 features measured in-envelope, smaller on average than an incorporated city",
       "source": {
         "answers": "The ZIP Code Tabulation Area (ZCTA) covering the point.",
@@ -408,7 +408,7 @@
       "id": "precinct",
       "label": "Precinct",
       "group": "political",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "1,660 election precincts, pre-built (mapshaper-simplified from the Legislature's own ArcGIS layer) — identity-only, no roster; ranked with the other fine-grained political boundaries",
       "source": {
         "answers": "The election precinct covering the point, and its county.",
@@ -425,7 +425,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 17,
+      "area_rank": 18,
       "rank_note": "Nearest-3 point layer (449 stations in the state envelope) — not a containment boundary; ranked with the amenity points",
       "source": {
         "answers": "The three nearest police stations, straight-line distance.",
@@ -442,7 +442,7 @@
       "id": "fire-station",
       "label": "Fire Station",
       "group": "safety",
-      "area_rank": 18,
+      "area_rank": 19,
       "rank_note": "Nearest-3 point layer (1,262 stations in the state envelope) — denser than the police set, so ranked after it",
       "source": {
         "answers": "The three nearest fire stations, straight-line distance.",
@@ -459,7 +459,7 @@
       "id": "school-site",
       "label": "School Location",
       "group": "schools",
-      "area_rank": 19,
+      "area_rank": 20,
       "rank_note": "Nearest-3 point layer (1,321 public school buildings, pre-built) — not a containment boundary; ranked with the amenity points",
       "source": {
         "answers": "The three nearest public school buildings, straight-line distance.",
@@ -476,7 +476,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 20,
+      "area_rank": 21,
       "rank_note": "Nearest-3 point layer, straight-line distance — not a containment boundary, ranked last",
       "source": {
         "answers": "The three nearest post offices, straight-line distance.",
@@ -487,6 +487,24 @@
           }
         ],
         "applies": "Iowa — the state's bounding envelope; nearest-3 is a proximity fact, not a jurisdictional claim."
+      }
+    },
+    {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 13,
+      "rank_note": "Tribal land — Iowa has 4 pieces across 3 nations inside the state, from the Meskwaki Settlement's 26.188 km² down to the Meskwaki trust land's 1.673 km², MEASURED by scripts/build_tribal_areas.py; median 9.19 km². Drawn above county subdivisions, which are townships of about 93 km², and below cities, several of which are smaller. The Omaha and Winnebago reservations cross the Missouri from Nebraska and are drawn whole. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Iowa has 4 such areas across 3 nations.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card: the Winnebago Tribe of Nebraska today. For the Meskwaki and Omaha nations the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Iowa — 4 areas across 3 nations: the Meskwaki Settlement in Tama County and its trust land, and the Iowa parts of the Omaha and Winnebago reservations along the Missouri. Most points in the state are on no tribal land."
       }
     }
   ],
@@ -836,6 +854,12 @@
         "max_features": 1,
         "dynamic_reference": true,
         "note": "Winneshiek County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Winneshiek County which recorded gap affects them: the county's own district numbering has not been measured against the supervisor-district layer this instance draws, so no supervisor is named on a district card there and the board stays on the County card. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it — measuring this county's numbering retires both its gap entry and this file."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Iowa's tribal land (scripts/build_tribal_areas.py) — 4 areas across 3 nations, two of them the Iowa parts of Nebraska reservations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -928,11 +952,16 @@
         "file": "ia-city-councils.json",
         "min_keys": 14,
         "note": "The mayor and council of the FOURTEEN IOWA CITIES ABOVE 25,000 that named nobody in this app before 2026-10-01 -- 96 officeholders, 47 with an e-mail, 47 with a phone and 61 with a ward, district or at-large seat. Iowa has eighteen cities over 25,000; Des Moines and Waterloo were already answered by ward and Cedar Rapids and Des Moines by their own builders, and these fourteen published nothing, which was the whole of what this instance was missing at the local-government level of the done standard's Covered test. A SEPARATE FILE FROM ia-city-officials.json ON PURPOSE: that one holds five SMALL cities under global gates (six seats each, exactly one plain Mayor, an e-mail for everyone) and not one of those holds here -- Davenport seats ten, Sioux City five, Council Bluffs publishes no member e-mail at all -- so admitting these fourteen would have retired the gates protecting the five. Every declaration is PER CITY and every one is a measurement of that city's own page taken 2026-10-01. NINE CONVENTIONS FOR FOURTEEN CITIES AND THE PLATFORM PREDICTS NONE OF THEM: Ankeny, Marshalltown, Urbandale, Sioux City and Council Bluffs run the SAME content system and need five different parsers, Davenport writes `Seat, Name` where Marshalltown writes `Name, Seat`, and Cedar Falls writes `Name-Seat` for its wards and `At Large-Name` for its at-large members in one list, so the side is decided per row. THREE CITIES PUBLISH THEIR MEMBERS' HOME ADDRESSES (Bettendorf, Dubuque, Ottumwa) and none of them ships: the scraper reads name, role, seat, phone, e-mail and term only, and the builder refuses to write any field that reads as a street address, per field and over the whole record. TWO CITIES NAME NO MAYOR anywhere this project has read -- Davenport, whose own Mayor's Office page carries the office's address and telephone and no person, and Cedar Falls, whose /67/Mayor path answers 404 -- so both carry namesMayor false and the card says the mayor is missing here rather than absent in the city. NOT EVERY PERSON ON A COUNCIL PAGE IS ON THE COUNCIL: Ames' Iowa State ex-officio, Council Bluffs' Assistant to the Mayor and Iowa City's student liaison are each dropped WITH THEIR NAME PRINTED, never silently, because a title that stops matching looks exactly like a person who left. A PHONE EVERY MEMBER SHARES IS THE OFFICE'S and is dropped -- Council Bluffs prints one council-office number beside all five members. Three cities answer only a browser client (Iowa City, Marion, West Des Moines) and their robots.txt is read with that same client, which is the consistency rule and not an escalation. A member's ward is NAMED and not DRAWN: this app draws city wards in Des Moines and Waterloo only. Built by ia/scripts/ia_city_council_scraper.py + build_ia_city_councils.py, refreshed weekly by update-ia-city-councils-roster.yml."
+      },
+      {
+        "file": "tribal-councils.json",
+        "min_keys": 1,
+        "note": "The council of every Iowa nation whose council is carried, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
       }
     ]
   },
   "sw": {
-    "cache_name": "districtry-ia-shell-v23",
+    "cache_name": "districtry-ia-shell-v24",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",

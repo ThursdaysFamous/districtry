@@ -44,13 +44,13 @@ different thing from one it failed.
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 13 levels |
-| ia | **EAM·** | 99 | 99/99 | 72 | 72 | all | 64 | all | 10 of 13 levels |
+| ia | **EAM·** | 99 | 99/99 | 72 | 72 | all | 66 | all | 10 of 13 levels |
 | il | **EAM·** | 102 | 102/102 | 632 | 1,089 | all | 409 | all | 11 of 13 levels |
-| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 10 | all | 6 of 13 levels |
+| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 12 | all | 6 of 13 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 13 | all | 10 of 13 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 61 | all | 12 of 13 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 17 | all | 12 of 13 levels |
-| nc | **EAM·** | 100 | 100/100 § | 372 | 579 | all | 10 | all | 6 of 13 levels |
+| nc | **EAM·** | 100 | 100/100 § | 372 | 579 | all | 11 | all | 6 of 13 levels |
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 9 of 13 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 12 | all | 7 of 13 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 265 | all | 11 of 13 levels |

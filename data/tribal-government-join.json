@@ -5,18 +5,18 @@
  "note": "Land to government. The key is the Census's own AIANNH code, which a reservation and its off-reservation trust land share. Governments are named exactly as the Bureau of Indian Affairs names them in data/bia-tribal-governments.json. Kentucky is covered with NO AREAS, which is a measurement rather than an omission: all six AIANNH layers return zero features over the state's whole extent, with North Carolina run as a control on the same six queries and answering 7, 2 and 2 on three of them, so the queries work. Re-measured 2026-09-30 at that instance's go-live. OKLAHOMA IS THE ONE STATE WHERE STATISTICAL AREAS ARE ENTERED (Adam, 2026-10-10, \"Make an exception for OK\"): its Oklahoma Tribal Statistical Areas and joint-use areas carry land classes `otsa` and `joint-use`, and tribal_areas.DRAWN_STATISTICAL is what allows them. Where the Census's own name for one area names several nations, the entry lists each under `governments`, matched to the Bureau's list by that name; nations seated inside an area whose name does not name them (the United Keetoowah Band, the Delaware Tribe of Indians and the Alabama-Quassarte, Kialegee and Thlopthlocco tribal towns) are not entered here; scripts/build_tribal_areas.py places them by their seat city and the card lists them as seated in that area. The Shawnee Trust Land is matched to the Shawnee Tribe by the Census's basename.",
  "statesCovered": [
   "Illinois",
+  "Indiana",
+  "Iowa",
   "Kentucky",
   "Michigan",
   "Minnesota",
   "New York",
+  "North Carolina",
   "Oklahoma",
   "Wisconsin"
  ],
  "statesNotYetCovered": [
-  "California",
-  "Indiana",
-  "Iowa",
-  "North Carolina"
+  "California"
  ],
  "areas": {
   "0080": {
@@ -649,6 +649,24 @@
     }
    ]
   },
+  "2550": {
+   "government": "Omaha Tribe of Nebraska",
+   "parentGovernment": null,
+   "governmentState": "NE",
+   "states": [
+    "Iowa"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2550R",
+     "name": "Omaha Reservation",
+     "state": "Iowa",
+     "km2": 15.769,
+     "share": 0.0196
+    }
+   ]
+  },
   "2555": {
    "government": "Oneida Indian Nation",
    "parentGovernment": null,
@@ -752,7 +770,8 @@
    "parentGovernment": null,
    "governmentState": "MI",
    "states": [
-    "Michigan"
+    "Michigan",
+    "Indiana"
    ],
    "lands": [
     {
@@ -770,6 +789,14 @@
      "state": "Michigan",
      "km2": 10.555,
      "share": 0.9189
+    },
+    {
+     "class": "trust-land",
+     "geoid": "2890T",
+     "name": "Pokagon Off-Reservation Trust Land",
+     "state": "Indiana",
+     "km2": 0.931,
+     "share": 0.0811
     }
    ]
   },
@@ -817,6 +844,32 @@
     }
    ]
   },
+  "3015": {
+   "government": "Eastern Band of Cherokee Indians",
+   "parentGovernment": null,
+   "governmentState": "NC",
+   "states": [
+    "North Carolina"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "3015R",
+     "name": "Qualla Boundary",
+     "state": "North Carolina",
+     "km2": 211.753,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "3015T",
+     "name": "Qualla Boundary Off-Reservation Trust Land",
+     "state": "North Carolina",
+     "km2": 2.64,
+     "share": 1.0
+    }
+   ]
+  },
   "3085": {
    "government": "Red Cliff Band of Lake Superior Chippewa Indians of Wisconsin",
    "parentGovernment": null,
@@ -857,6 +910,32 @@
      "name": "Red Lake Reservation",
      "state": "Minnesota",
      "km2": 3262.964,
+     "share": 1.0
+    }
+   ]
+  },
+  "3280": {
+   "government": "Sac & Fox Tribe of the Mississippi in Iowa",
+   "parentGovernment": null,
+   "governmentState": "IA",
+   "states": [
+    "Iowa"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "3280R",
+     "name": "Sac and Fox/Meskwaki Settlement",
+     "state": "Iowa",
+     "km2": 26.188,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "3280T",
+     "name": "Sac and Fox/Meskwaki Off-Reservation Trust Land",
+     "state": "Iowa",
+     "km2": 1.673,
      "share": 1.0
     }
    ]
@@ -1120,6 +1199,24 @@
      "state": "Minnesota",
      "km2": 10.336,
      "share": 1.0
+    }
+   ]
+  },
+  "4625": {
+   "government": "Winnebago Tribe of Nebraska",
+   "parentGovernment": null,
+   "governmentState": "NE",
+   "states": [
+    "Iowa"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "4625R",
+     "name": "Winnebago Reservation",
+     "state": "Iowa",
+     "km2": 2.609,
+     "share": 0.0057
     }
    ]
   },

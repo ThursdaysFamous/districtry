@@ -1,5 +1,5 @@
 {
- "note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota and New York nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
+ "note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York and Iowa nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
  "councils": {
   "0080": {
    "source": "nation",
@@ -1687,6 +1687,70 @@
      "name": "Laura Lee Erickson",
      "role": "District Representative",
      "district": "District III"
+    }
+   ],
+   "read": "2026-10-10"
+  },
+  "4625": {
+   "source": "nation",
+   "page": "https://winnebagotribe.com/tribal-council/",
+   "pages": [
+    "https://winnebagotribe.com/tribal-council/"
+   ],
+   "members": [
+    {
+     "name": "Coly Brown",
+     "role": "Chairman",
+     "phone": "(402) 878-2272 ext. 3203",
+     "email": "coly.brown@winnebagotribe.com"
+    },
+    {
+     "name": "Trey Blackhawk",
+     "role": "Vice-Chairman",
+     "phone": "(402) 878-2272 ext. 3201",
+     "email": "trey.blackhawk@winnebagotribe.com"
+    },
+    {
+     "name": "Eugene DeCora",
+     "role": "Treasurer",
+     "phone": "(402) 878-2272 ext. 3205",
+     "email": "eugene.decora@winnebagotribe.com"
+    },
+    {
+     "name": "Teresa Littlegeorge",
+     "role": "Secretary",
+     "phone": "(402) 878-2272 ext. 3206",
+     "email": "teresa.littlegeorge@winnebagotribe.com"
+    },
+    {
+     "name": "Margaret Scott",
+     "role": "Member",
+     "phone": "(402) 878-2272 ext. 3209",
+     "email": "margaret.scott@winnebagotribe.com"
+    },
+    {
+     "name": "Craig Cleveland Sr.",
+     "role": "Member",
+     "phone": "(402) 878-2272 ext. 3204",
+     "email": "craig.clevelandsr@winnebagotribe.com"
+    },
+    {
+     "name": "Rona Stealer",
+     "role": "Member",
+     "phone": "(402) 878-2272 ext. 3207",
+     "email": "rona.stealer@winnebagotribe.com"
+    },
+    {
+     "name": "Keely Purscell",
+     "role": "Member",
+     "phone": "(402) 878-2272 ext. 3208",
+     "email": "keely.purscell@winnebagotribe.com"
+    },
+    {
+     "name": "Ireta Frazier",
+     "role": "Member",
+     "phone": "(402) 878-2272 ext. 3202",
+     "email": "ireta.frazier@winnebagotribe.com"
     }
    ],
    "read": "2026-10-10"

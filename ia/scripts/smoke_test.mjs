@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ia-senate", "ia-house", "county-supervis
 const EXPECT_DISTRICT = { "county": "Marshall County", "us-house": "4", "ia-senate": "26", "ia-house": "52", "county-supervisor": "At-large", "school-district-unified": "Marshalltown Community School District" };
 const NEGATIVE_POINT = "43.65000,-93.37000"; // inside Minnesota (near Albert Lea), north of the Iowa land border (~43.50) and inside permalink_gate's maxLat (43.70) so the point is still selectable. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: sampling permalink_gate every 0.25 degrees and naming each point's state off TIGERweb, the ground it reaches outside Iowa's own ring is Minnesota, Wisconsin, Illinois, Missouri, Nebraska and South Dakota and nothing else — one live instance, one published dark, four states that could each take one later. Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays and the two checks that select it refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; Iowa asserts nothing about fleet routing.
 const APP_NAME = "districtry Iowa";
-const EXPECT_LAYERS = 20;
+const EXPECT_LAYERS = 21;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -902,6 +902,45 @@ try {
       });
     }
     check("tile failure shows dismissible banner", shown && hiddenAfterDismiss === true, `shown=${shown} hiddenAfterDismiss=${hiddenAfterDismiss}`);
+    await context.close();
+  }
+  // ---- Tribal Government. The Winnebago Tribe's land crosses from Nebraska, so its card names the
+  // council from the tribe's own page and says the census count covers the
+  // whole reservation; the Meskwaki site answers with a challenge page, so its
+  // card must say why it names nobody. Points are shapely's representative point
+  // for the part of each shipped parcel inside the state (2026-10-10).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt) => {
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      return { text: card.text, by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+    const w = await at("42.22794,-96.31798");
+    check("the Winnebago land in Iowa names the tribe's council and says the count covers the whole reservation",
+          w.by("Tribal government") === "Winnebago Tribe of Nebraska" &&
+          w.by("Seat of government") === "Winnebago, NE" &&
+          w.text.indexOf("Coly Brown") !== -1 &&
+          w.text.indexOf("From the nation's own council page") !== -1 &&
+          w.by("Population").indexOf("under 1% of it lies in Iowa") !== -1 &&
+          !w.by("Why no names"),
+          JSON.stringify(w.text.slice(0, 200)));
+    const m = await at("41.98186,-92.65608");
+    check("the Meskwaki Settlement names the tribe and says why no council member is named",
+          m.by("Tribal government") === "Sac & Fox Tribe of the Mississippi in Iowa" &&
+          m.by("Why no names").indexOf("not worked around") !== -1 &&
+          /\d{4}-\d{2}-\d{2}/.test(m.by("Why no names")),
+          JSON.stringify(m.by("Why no names").slice(0, 120)));
+    const off = await at(POINT);
+    check("a point off tribal land is told so in the layer's own words",
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("4 tribal areas") !== -1,
+          JSON.stringify(off.text.slice(0, 120)));
     await context.close();
   }
 } finally {
