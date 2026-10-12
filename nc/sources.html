@@ -1207,13 +1207,13 @@ table.matrix code {
             <tbody>
               <tr id="layer-county">
                 <th scope="row"><span class="layer-name">County</span><code>county</code></th>
-                <td data-label="What it answers">Which county contains the point.</td>
+                <td data-label="What it answers">Which county contains the point, and who won each seat on its board of commissioners.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 100 features, measured 2026-09-29.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">None yet — identity only. MEASURED 2026-09-29: no state agency publishes any county's commissioner district lines — NC OneMap's one political-boundary service carries voting precincts alone, its 619-item catalogue has no commissioner item, the State Board's shapefile tree has none, and the General Assembly publishes congressional and legislative plans only. G.S. 153A-20 puts each districted county's delineation in its own clerk's office, and a written description satisfies the statute. The board's FORM is a separate and answerable question (see nc/WATCH.md); this card names the county and claims nothing about who runs it.</td>
+                <td data-label="Who it names">Every county's board of commissioners, each seat named for the winner of its most recent election in the North Carolina State Board of Elections' results (the 2022 and 2024 generals), read with the State Board's candidate filing lists for each seat's term and dated to that election; rebuilt weekly by nc/scripts/build_nc_county_commissioners.py. A winner is not a sitting member: a board fills a vacancy by appointment, which no result records, and the card says so. A seat the 2026 filing list shows has changed hands names nobody and says why. Three limited-voting counties' seat counts were read from the counties' own board pages; Tyrrell's could not be, so its board names nobody. Every seat in the county is listed because no publisher draws commissioner districts (G.S. 153A-22(f) keeps them as written descriptions in each clerk's office).</td>
                 <td data-label="Where it applies">North Carolina — statewide, all 100 counties.</td>
               </tr>
               <tr id="layer-county-subdivision">
@@ -1328,7 +1328,7 @@ table.matrix code {
       "@id": "https://districtry.com/nc/sources.html#dataset-county",
       "identifier": "county",
       "name": "County",
-      "description": "Which county contains the point. None yet — identity only. MEASURED 2026-09-29: no state agency publishes any county's commissioner district lines — NC OneMap's one political-boundary service carries voting precincts alone, its 619-item catalogue has no commissioner item, the State Board's shapefile tree has none, and the General Assembly publishes congressional and legislative plans only. G.S. 153A-20 puts each districted county's delineation in its own clerk's office, and a written description satisfies the statute. The board's FORM is a separate and answerable question (see nc/WATCH.md); this card names the county and claims nothing about who runs it.",
+      "description": "Which county contains the point, and who won each seat on its board of commissioners. Every county's board of commissioners, each seat named for the winner of its most recent election in the North Carolina State Board of Elections' results (the 2022 and 2024 generals), read with the State Board's candidate filing lists for each seat's term and dated to that election; rebuilt weekly by nc/scripts/build_nc_county_commissioners.py. A winner is not a sitting member: a board fills a vacancy by appointment, which no result records, and the card says so. A seat the 2026 filing list shows has changed hands names nobody and says why. Three limited-voting counties' seat counts were read from the counties' own board pages; Tyrrell's could not be, so its board names nobody. Every seat in the county is listed because no publisher draws commissioner districts (G.S. 153A-22(f) keeps them as written descriptions in each clerk's office).",
       "url": "https://districtry.com/nc/sources.html#layer-county",
       "isPartOf": {
         "@id": "https://districtry.com/nc/sources.html#catalog"

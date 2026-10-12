@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "ok-senate", "ok-house"];
 const EXPECT_DISTRICT = { "county": "Oklahoma County", "us-house": "5", "ok-senate": "48", "ok-house": "99" };
 const NEGATIVE_POINT = "33.65000,-97.15000"; // near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.
 const APP_NAME = "districtry Oklahoma";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -887,6 +887,47 @@ try {
         `hidden=${hidden} leaked=${leaked} layersOn=${stillOn} text=${(info.text || "").slice(0, 90)}`);
       await context.close();
     }
+  }
+
+  // County commissioners (2026-10-11): the district from ODOT's map, the name
+  // from the State Election Board's roster, dated. The Capitol sits in
+  // Oklahoma County District 1, which the 2024 roster lists vacant, so the
+  // anchor exercises the vacant path; Tulsa District 2 names its commissioner;
+  // Beaver District 2 carries the note about the second copy of the map; and
+  // the County card lists the whole board.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const at = async (pt, layers) => {
+      const page = await booted(context, `${BASE}#point=${pt}&layers=${layers}`);
+      const out = {};
+      for (const id of layers.split(",")) out[id] = (await cardText(page, id)).text;
+      return out;
+    };
+    const cap = await at(POINT, "county-commissioner,county");
+    check("the Capitol is in Oklahoma County District 1, and the card says the roster listed it vacant",
+          cap["county-commissioner"].indexOf("District 1") !== -1 &&
+          cap["county-commissioner"].indexOf("Oklahoma County") !== -1 &&
+          cap["county-commissioner"].indexOf("listed this seat as vacant") !== -1 &&
+          cap["county-commissioner"].indexOf("November 5, 2024") !== -1,
+          JSON.stringify(cap["county-commissioner"].slice(0, 300)));
+    check("the County card lists Oklahoma County's whole board, the vacancy included",
+          ["Brian Maughan", "Myles Davidson", "Vacant", "District 3"].every((n) => cap.county.indexOf(n) !== -1) &&
+          // the card prints the number with non-breaking hyphens
+          cap.county.replace(/\u2011/g, "-").indexOf("(405) 270-0082") !== -1,
+          JSON.stringify(cap.county.slice(0, 300)));
+    const tul = await at("36.1540,-95.9928", "county-commissioner");
+    check("Tulsa County District 2 names its commissioner, dated to the roster, with no home town",
+          tul["county-commissioner"].indexOf("Lonnie Sims") !== -1 &&
+          tul["county-commissioner"].indexOf("Where this name comes from") !== -1 &&
+          tul["county-commissioner"].indexOf("Two maps disagree") === -1,
+          JSON.stringify(tul["county-commissioner"].slice(0, 300)));
+    const bea = await at("36.8156,-100.5196", "county-commissioner");
+    check("Beaver County District 2 says a second copy of the map draws the 1-2 line differently",
+          bea["county-commissioner"].indexOf("C. J. Rose") !== -1 &&
+          bea["county-commissioner"].indexOf("Two maps disagree near here") !== -1 &&
+          bea["county-commissioner"].indexOf("University of Oklahoma") !== -1,
+          JSON.stringify(bea["county-commissioner"].slice(0, 400)));
+    await context.close();
   }
 
   // Tribal areas: Oklahoma draws its Census statistical areas, by Adam's

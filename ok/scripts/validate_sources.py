@@ -128,10 +128,31 @@ PROVENANCE = [
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
         "note": (
             "All 77 counties pre-built from TIGERweb by "
-            "ok/scripts/build_state_counties.py. The card is identity-only for "
-            "now: every county elects three commissioners from three districts "
-            "(19 O.S. 321), recorded as gap ok-commissioner-districts until the "
-            "county-commissioner layer ships."
+            "ok/scripts/build_state_counties.py. The card lists the county's "
+            "three commissioners from ok-county-commissioners.json."
+        ),
+    },
+    {
+        "layer": "county-commissioner",
+        "app_file": "ok-commissioner-districts.json",
+        "source_url": "https://services6.arcgis.com/RBtoEUQ2lmN0K3GY/arcgis/rest/services/County_Commissioner_Districts/FeatureServer/0",
+        "note": (
+            "231 commissioner districts, three per county (19 O.S. 321), from the "
+            "Oklahoma Department of Transportation, pre-built by "
+            "ok/scripts/build_ok_commissioner_districts.py, which compares a "
+            "University of Oklahoma copy on every build (agrees on 229 of 231; "
+            "Beaver County's District 1-2 line differs, measured 2026-10-11)."
+        ),
+    },
+    {
+        "layer": "county-commissioner",
+        "app_file": "ok-county-commissioners.json",
+        "source_url": "https://oklahoma.gov/content/dam/ok/en/elections/rosters/officer-roster-2024.pdf",
+        "note": (
+            "The State Election Board's Roster of State and County Officers, 2024 "
+            "edition (compiled after the November 5, 2024 general election): 229 "
+            "of 231 seats named, 2 listed vacant. Rebuilt weekly by "
+            "update-ok-commissioner-roster.yml, which picks up a newer edition."
         ),
     },
     {

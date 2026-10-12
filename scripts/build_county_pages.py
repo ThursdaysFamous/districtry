@@ -114,8 +114,14 @@ from build_county_status import ALL_COUNTIES, slug_of  # noqa: E402
 # both have a Winnebago County, Wisconsin has a county named IOWA, and eleven
 # other names are shared between the two states — a bare county name would let
 # an entry written about one state silence a real regression in another.
-NAMES_NOBODY = {}
-# EMPTY, which is a measurement rather than an omission. It carried one entry
+NAMES_NOBODY = {
+    "nc/Tyrrell": {"date": "2026-10-11",
+                   "reason": "Tyrrell County elects its board by limited voting, "
+                             "so the State Board's results do not say how many "
+                             "seats each contest filled, and the county's website "
+                             "did not answer when the roster was built"},
+}
+# It was EMPTY from 2026-09-15 to 2026-10-11, and carried one entry
 # from 2026-09-13 — Illinois's Winnebago, whose data/app file is 20 flat records
 # with an e-mail, a phone and a source URL and no name field anywhere, because
 # the card reads the member from WinGIS live. il_gis_board_scraper.py
@@ -243,6 +249,46 @@ INSTANCES = [
          index_provenance="each name the winner of that seat's most recent "
                           "election in the Indiana Election Division's "
                           "certified results, dated to it"),
+    # OKLAHOMA NAMES THE STATE ELECTION BOARD'S ROSTER, A DATED SNAPSHOT.
+    # Every county elects three commissioners from three districts (19 O.S.
+    # 321), and the Board's Roster of State and County Officers lists all
+    # three after each general election, holdovers included. It is not kept
+    # current between elections, so the pages say when it was compiled.
+    dict(tag="ok", state="Oklahoma", concept="county-commissioner",
+         index_page="county-commissioner.html",
+         heading="%(county)s County Board of Commissioners",
+         page_title="%(county)s County Commissioners",
+         page_title_short="%(county)s commissioners",
+         phrase="board of county commissioners", index_label="Boards of county commissioners",
+         all_label="All Oklahoma boards of county commissioners",
+         app_name="districtry Oklahoma", app_url="https://districtry.com/ok/",
+         district_word="District", member_word="Commissioner",
+         adapters=("ok_commissioners",),
+         contacts="ok_county_contact",
+         vacancy_phrase="as the State Election Board's roster listed it",
+         index_provenance="each name from the Oklahoma State Election Board's "
+                          "Roster of State and County Officers, compiled after "
+                          "the general election it is dated to"),
+    # NORTH CAROLINA NAMES ELECTION WINNERS TOO, from the State Board of
+    # Elections' results read with its filing lists, and many boards elect
+    # several seats in one contest, so a label ("Board seat", "At large")
+    # holds more than one member and `district_word` is empty for the same
+    # reason as Indiana's. There is no commissioner-district layer, so the map
+    # link opens the county layer, whose card lists the board.
+    dict(tag="nc", state="North Carolina", concept="county-commissioner",
+         index_page="county-commissioner.html",
+         heading="%(county)s County Board of Commissioners",
+         page_title="%(county)s County Commissioners",
+         page_title_short="%(county)s commissioners",
+         phrase="board of commissioners", index_label="Boards of commissioners",
+         all_label="All North Carolina boards of commissioners",
+         app_name="districtry North Carolina", app_url="https://districtry.com/nc/",
+         district_word="", member_word="Commissioner",
+         cta_layers="county",
+         adapters=("nc_commissioners",),
+         index_provenance="each name the winner of that seat's most recent "
+                          "election in the North Carolina State Board of "
+                          "Elections' results, dated to it"),
     # KENTUCKY'S GOVERNING BODY IS NOT ONE BODY. 118 counties are governed by a
     # fiscal court, and Jefferson and Fayette by the councils of the merged
     # Louisville Metro and Lexington-Fayette governments, so the concept path
@@ -1216,6 +1262,83 @@ def mn_commissioners(inst):
     return out, problems, nameless, [path], note
 
 
+OK_LEDE = ("These are the three commissioners the Oklahoma State Election "
+           "Board's Roster of State and County Officers lists for %(county)s "
+           "County. The Board compiles the roster after each general election "
+           "and lists every county's commissioners whether or not their seat "
+           "was on that ballot. It is not kept up to date between elections, "
+           "so a seat that has changed hands since still shows the earlier name.")
+OK_STANDFIRST = ("Who sits on the %(heading)s, from the Oklahoma State Election "
+                 "Board's roster of county officers.")
+OK_DESC = ("The %(districts)d commissioners of %(county)s County, Oklahoma, "
+           "from the State Election Board's roster, and the district each one "
+           "represents.")
+OK_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is "
+                 "printed in the Oklahoma State Election Board's roster,\n"
+                 "and this page dates the roster rather than claiming each seat "
+                 "is still held.")
+OK_CTA_NOTE = ("Opens the map with the commissioner-district layer on. The "
+               "district lines come from the state Department of "
+               "Transportation; the names come from the State Election Board's "
+               "roster and are dated to it.")
+
+
+def ok_commissioners(inst):
+    """Oklahoma: ONE file keyed "<county GEOID>-<district>", every record
+    carrying its county, its district, the `election` the roster was compiled
+    after, and either a `name` (with `party`) or `vacant: true`
+    (ok/scripts/build_ok_commissioner_roster.py). Every county has three
+    seats, so every county gets a page; a vacant seat is drawn as the
+    county's roster drew it."""
+    path = os.path.join(app_data(inst["tag"]), "ok-county-commissioners.json")
+    by_county, problems, nameless = {}, [], set()
+    for key, rec in sorted(_read(path).items()):
+        name = (rec.get("county") or "").strip()
+        if not name or rec.get("district") is None:
+            problems.append("ok-county-commissioners.json %r carries no county "
+                            "or district" % key)
+            continue
+        by_county.setdefault(name, []).append(rec)
+    out = {}
+    for name, recs in sorted(by_county.items()):
+        if len(recs) != 3:
+            problems.append("ok %s County has %d seats, not 3" % (name, len(recs)))
+            continue
+        districts = []
+        when = _mn_date(recs[0].get("election"))
+        if not when:
+            problems.append("ok %s County carries no roster date" % name)
+            continue
+        for rec in sorted(recs, key=lambda r: int(r["district"])):
+            label = str(rec["district"])
+            if rec.get("vacant"):
+                districts.append(district(label, vacancies=1))
+            elif (rec.get("name") or "").strip():
+                member = {"name": rec["name"].strip(),
+                          "elected": "In the roster compiled after the %s general election." % when}
+                if rec.get("party"):
+                    member["party"] = rec["party"]
+                districts.append(district(label, [member]))
+            else:
+                problems.append("ok %s County District %s is neither named nor "
+                                "vacant" % (name, label))
+        if not _count_named(districts, []):
+            nameless.add(name)
+            continue
+        out[name] = {"districts": districts,
+                     "sourceUrl": recs[0].get("sourceUrl"),
+                     "source_label": "the Oklahoma State Election Board's roster of state and county officers",
+                     "extras": [], "skipped": [], "slug": county_slug(name),
+                     "at_large": False, "source_file": path,
+                     "lede": OK_LEDE, "standfirst": OK_STANDFIRST,
+                     "desc": OK_DESC, "disclaimer": OK_DISCLAIMER,
+                     "cta_note": OK_CTA_NOTE}
+    note = ("%d of Oklahoma's 77 counties, every seat named from the State "
+            "Election Board's roster or marked vacant as it is there" % len(out))
+    return out, problems, nameless, [path], note
+
+
 IN_LEDE = ("These are the people who won each seat on %(county)s County's "
            "Board of Commissioners at its most recent election in the Indiana "
            "Election Division's certified results, each dated to that election. "
@@ -1580,6 +1703,92 @@ def tn_commissioners(inst):
     return out, problems, nameless, [path], note
 
 
+NC_LEDE = ("These are the people who won each seat on %(county)s County's "
+           "Board of Commissioners at its most recent election in the North "
+           "Carolina State Board of Elections' results, each dated to that "
+           "election. They are election winners, not a list the county keeps up "
+           "to date: a board fills a vacancy by appointment, so a seat that has "
+           "changed hands since may still show the person who won it.")
+NC_STANDFIRST = ("Who won each seat on the %(heading)s at its most recent "
+                 "election, from the North Carolina State Board of Elections' results.")
+NC_DESC = ("Who won each of the %(districts)d seats on %(county)s County's "
+           "Board of Commissioners at its most recent election.")
+NC_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above won an "
+                 "election the North Carolina State Board of Elections reports,\n"
+                 "and this page dates each name to that election rather than "
+                 "claiming the seat is still held.")
+NC_CTA_NOTE = ("Opens the map with the county layer on. Its card lists this "
+               "board from the same results; no publisher draws the "
+               "commissioner districts.")
+
+
+def nc_commissioners(inst):
+    """North Carolina: ONE file keyed by county GEOID, each record carrying
+    the county's name and a `seats` list of {seat, name | unnamed, party,
+    election, note?} (nc/scripts/build_nc_county_commissioners.py).
+
+    A LABEL CAN HOLD SEVERAL SEATS, because a county that elects three
+    commissioners in one contest labels all three "Board seat" or "At large",
+    so seats are grouped by label into one section each. A seat that names
+    nobody carries its reason, printed as the section's note; a named seat's
+    own note (one of several earlier winners has left, and the results do not
+    say which) prints beside its election date."""
+    data_dir = app_data(inst["tag"])
+    path = os.path.join(data_dir, "nc-county-commissioners.json")
+    out, problems, nameless = {}, [], set()
+    for geoid, rec in sorted(_read(path).items()):
+        if geoid.startswith("_"):
+            continue
+        name = (rec.get("county") or "").strip()
+        seats = rec.get("seats") or []
+        if not name or not seats:
+            problems.append("nc-county-commissioners.json %r carries no county "
+                            "or no seats" % geoid)
+            continue
+        groups = {}
+        for seat in seats:
+            groups.setdefault(seat.get("seat") or "Board seat", []).append(seat)
+        districts = []
+        for label, group in groups.items():
+            members, notes = [], []
+            for seat in group:
+                if not (seat.get("name") or "").strip():
+                    notes.append((seat.get("unnamed") or "the results name nobody").rstrip("."))
+                    continue
+                when = _mn_date(seat.get("election"))
+                if not when:
+                    problems.append("nc %s County %r names %r with no election "
+                                    "date" % (name, label, seat["name"]))
+                    continue
+                note = ("Elected to the rest of a term %s." if seat.get("unexpiredTerm")
+                        else "Elected %s.") % when
+                if seat.get("note"):
+                    note += " " + seat["note"]
+                member = {"name": seat["name"].strip(), "elected": note}
+                if seat.get("party"):
+                    member["party"] = seat["party"]
+                members.append(member)
+            districts.append(district(label, members,
+                                      note="; ".join(notes) if notes else None))
+        if not _count_named(districts, []):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("nc %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        out[name] = {"districts": districts,
+                     "sourceUrl": "https://er.ncsbe.gov/",
+                     "source_label": "the North Carolina State Board of Elections' results",
+                     "extras": [], "skipped": [], "slug": county_slug(name),
+                     "at_large": False, "source_file": path,
+                     "lede": NC_LEDE, "standfirst": NC_STANDFIRST,
+                     "desc": NC_DESC, "disclaimer": NC_DISCLAIMER,
+                     "cta_note": NC_CTA_NOTE}
+    note = ("%d of North Carolina's 100 counties, every seat named from the "
+            "State Board of Elections' results or marked with why not" % len(out))
+    return out, problems, nameless, [path], note
+
+
 _MN_MONTHS = ("January", "February", "March", "April", "May", "June", "July",
               "August", "September", "October", "November", "December")
 
@@ -1823,6 +2032,8 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "mi_commissioners": mi_commissioners,
             "mn_commissioners": mn_commissioners,
             "in_commissioners": in_commissioners,
+            "ok_commissioners": ok_commissioners,
+            "nc_commissioners": nc_commissioners,
             "ky_county_governments": ky_county_governments,
             "tn_commissioners": tn_commissioners,
             "ny_supervisors": ny_supervisors,
@@ -2173,11 +2384,14 @@ def districted_body(inst, name, rec):
             # card has always distinguished the two ("N of M seats is vacant");
             # the first draft of this page did not, and Jo Daviess's District 10
             # is exactly the case — filled last week, reported vacant this week.
+            # WHO REPORTED IT is the instance's to say: Oklahoma's vacancies
+            # are the State Election Board's roster, not the county's own word.
             out.append('<p class="unlisted">%d of %d seat%s here %s vacant, '
-                       'as the county reports it.</p>'
+                       '%s.</p>'
                        % (d["vacancies"], len(rows) + d["vacancies"],
                           "" if len(rows) + d["vacancies"] == 1 else "s",
-                          "is" if d["vacancies"] == 1 else "are"))
+                          "is" if d["vacancies"] == 1 else "are",
+                          esc(inst.get("vacancy_phrase", "as the county reports it"))))
         elif d["note"]:
             # A THIRD STATE: somebody holds this seat and this project will not
             # say who, with the reason printed. Wisconsin's Lincoln District 21
@@ -3109,6 +3323,25 @@ def wi_clerk_contact(inst):
                      rec.get("phone"), rec.get("email"), rec.get("website"))
         if c:
             out[_norm_county(rec["county"])] = c
+    return out, [path]
+
+
+def ok_county_contact(inst):
+    """Oklahoma: the county information line the State Election Board's roster
+    prints at the foot of each county's block, carried on every seat record."""
+    path = os.path.join(app_data("ok"), "ok-county-commissioners.json")
+    if not os.path.exists(path):
+        return {}, [path]
+    out = {}
+    for rec in _read(path).values():
+        if not isinstance(rec, dict) or not rec.get("countyPhone"):
+            continue
+        key = _norm_county(rec["county"])
+        if key not in out:
+            c = _contact("County information line", None, [], rec["countyPhone"],
+                         None, None, None)
+            if c:
+                out[key] = c
     return out, [path]
 
 

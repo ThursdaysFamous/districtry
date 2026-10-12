@@ -116,6 +116,7 @@ ROSTER_FILES = {
     "congress-roster.json": 14,  # U.S. House (NC) roster, refreshed weekly by update-nc-congress-roster.yml.
     "nc-senate-members.json": 45,  # NC Senate roster from Open States, refreshed weekly. The floor is below 50 because a vacant seat is a real event.
     "nc-house-members.json": 110,  # NC House roster from Open States, refreshed weekly. The floor is below 120 for the same reason.
+    "nc-county-commissioners.json": 100,  # Every county's board of commissioners, each seat the winner of its most recent general in the State Board of Elections' results, built by nc/scripts/build_nc_county_commissioners.py and refreshed weekly by update-nc-county-commissioners.yml.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 
