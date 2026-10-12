@@ -1652,28 +1652,47 @@ jobs:
             sleep 0.5
           done
           status=0
-          # Run every instance even if an early one fails, so a PR sees every broken
-          # instance in one go rather than one per push.
-          BASE_URL=http://localhost:8000/il/  node scripts/smoke_test.mjs     || status=1
-          BASE_URL=http://localhost:8000/ca/  node ca/scripts/smoke_test.mjs  || status=1
-          BASE_URL=http://localhost:8000/ny/  node ny/scripts/smoke_test.mjs  || status=1
-          BASE_URL=http://localhost:8000/wi/  node wi/scripts/smoke_test.mjs  || status=1
-          BASE_URL=http://localhost:8000/ia/  node ia/scripts/smoke_test.mjs  || status=1
-          BASE_URL=http://localhost:8000/mi/  node mi/scripts/smoke_test.mjs  || status=1
-          BASE_URL=http://localhost:8000/mn/  node mn/scripts/smoke_test.mjs  || status=1
-          BASE_URL=http://localhost:8000/in/  node in/scripts/smoke_test.mjs  || status=1
-          BASE_URL=http://localhost:8000/nc/  node nc/scripts/smoke_test.mjs  || status=1
-          BASE_URL=http://localhost:8000/ky/  node ky/scripts/smoke_test.mjs  || status=1
-          BASE_URL=http://localhost:8000/ok/  node ok/scripts/smoke_test.mjs  || status=1
-          BASE_URL=http://localhost:8000/sc/  node sc/scripts/smoke_test.mjs  || status=1
-          BASE_URL=http://localhost:8000/tn/  node tn/scripts/smoke_test.mjs  || status=1
+          # The browser gates run THREE AT A TIME, not one after another.
+          # Measured on main on 2026-10-12, running them in sequence took this
+          # step 21 to 24 minutes and the whole job 25 to 28 against its
+          # 30-minute limit, and one doc-only merge was cancelled at the limit
+          # mid-step. Each new state adds a smoke test, so raising the limit
+          # would only move the date it is hit again. The runner has four
+          # cores, no gate shares a port or writes a file another reads, and
+          # http.server answers each request on its own thread. If parallel
+          # runs ever make a gate flaky, lower BROWSER_GATE_JOBS rather than
+          # adding sleeps or retries.
+          #
+          # The list below is read by validate_gate_counts.py,
+          # validate_steward_mirror.py and validate_instance_registration.py,
+          # so each gate stays one line in the same form it had when the
+          # gates ran in sequence. Every gate runs even if an early one fails,
+          # so a PR sees every broken instance in one go, and each gate's
+          # output is printed whole, in list order, under its own heading.
+          BROWSER_GATE_JOBS=3
+          gates=/tmp/browser-gates
+          rm -rf "$gates"
+          mkdir -p "$gates"
+          cat > "$gates/list" <<'GATES'
+          BASE_URL=http://localhost:8000/il/  node scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ca/  node ca/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ny/  node ny/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/wi/  node wi/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ia/  node ia/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/mi/  node mi/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/mn/  node mn/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/in/  node in/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/nc/  node nc/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ky/  node ky/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ok/  node ok/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/sc/  node sc/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/tn/  node tn/scripts/smoke_test.mjs
           # The root landing page and — the part that matters — its forwarding
           # guard, which is what keeps every already-distributed share link and
           # embed snippet built from the OLD root URL reaching the app. A regex
           # typo there breaks other people's pages silently, on a page that still
           # looks right and still passes its drift check.
-          BASE_URL=http://localhost:8000        node scripts/landing_test.mjs || status=1
-
+          BASE_URL=http://localhost:8000        node scripts/landing_test.mjs
           # Every page in the sitemap carries the same brand and the same
           # standing links. This exists because three published pages were found
           # on 2026-08-24 still serving the PRE-REBRAND skin — Inter, no theme
@@ -1685,8 +1704,7 @@ jobs:
           # product. It derives its page list from sitemap.xml and its
           # expectations from the tree, so a new page is covered the day it
           # ships and a correct change cannot fail it.
-          BASE_URL=http://localhost:8000        node scripts/page_consistency_test.mjs || status=1
-
+          BASE_URL=http://localhost:8000        node scripts/page_consistency_test.mjs
           # Which layers send the reader's SELECTED POINT to a government
           # server. The privacy page publishes that number per app, and until
           # 2026-09-05 it counted `loadArcGISPointGeoJSON(` call sites —
@@ -1708,8 +1726,7 @@ jobs:
           # counts the hooks that FIRE. build_privacy_page.py — which has no
           # browser in its own step — reads the artifact and refuses to publish
           # when the apps have moved under it.
-          BASE_URL=http://localhost:8000        node scripts/probe_point_transmission.mjs --check || status=1
-
+          BASE_URL=http://localhost:8000        node scripts/probe_point_transmission.mjs --check
           # Every text node on every sitemap page, both themes, joined against
           # what validate_contrast.py measures. That gate tests a STATED table
           # of pairs — it has to, because no regex follows `color:` through the
@@ -1730,7 +1747,34 @@ jobs:
           # condition that sleep stood for, and ~68s before the grouping. A
           # figure here is per-page cost x a page count that moves whenever a
           # county ships, so re-measure it rather than trust it.
-          BASE_URL=http://localhost:8000        node scripts/probe_contrast_pairs.mjs || status=1
+          BASE_URL=http://localhost:8000        node scripts/probe_contrast_pairs.mjs
+          GATES
+          n=0
+          while IFS= read -r cmd; do
+            case "$cmd" in ""|"#"*) continue ;; esac
+            n=$((n + 1))
+            printf '%s\n' "$cmd" > "$gates/$(printf %02d "$n").cmd"
+          done < "$gates/list"
+          started=$(date +%s)
+          ls "$gates"/*.cmd | xargs -P "$BROWSER_GATE_JOBS" -I{} bash -c '
+            f="$1"; t0=$(date +%s)
+            bash -c "$(cat "$f")" > "${f%.cmd}.log" 2>&1
+            echo $? > "${f%.cmd}.rc"
+            echo $(( $(date +%s) - t0 )) > "${f%.cmd}.secs"
+          ' _ {}
+          for f in "$gates"/*.cmd; do
+            b=${f%.cmd}
+            rc=$(cat "$b.rc" 2>/dev/null || echo 1)
+            verdict=ok
+            if [ "$rc" != 0 ]; then verdict="FAILED (exit $rc)"; status=1; fi
+            echo "::group::$(cat "$f") — $verdict, $(cat "$b.secs" 2>/dev/null || echo ?)s"
+            cat "$b.log" 2>/dev/null || true
+            echo "::endgroup::"
+            if [ "$rc" != 0 ]; then
+              echo "::error::$(cat "$f") failed (exit $rc); its output is in the group above"
+            fi
+          done
+          echo "browser gates: $n run, $BROWSER_GATE_JOBS at a time, $(( $(date +%s) - started ))s wall"
 
           # The server's own log, only where it can explain something: a 404 on
           # an asset, or a page that never answered.
