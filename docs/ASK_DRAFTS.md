@@ -6841,12 +6841,15 @@ weekly refresh will keep proposing the change until the county's page is correct
 
 ## Ask il-grundy-gis-state-board-view — Grundy County GIS: is it reasonable to ask the State Board for digital precinct maps, and may we quote you?
 
-> **NOT YET ASKED — DRAFTED 2026-10-10**, to Dave Ostrander, Grundy County's GIS Director, as a
-> reply on the thread of Ask 18 (his answer of 2026-10-08 is the last message there). The Letters
-> thread makes the Gmail draft; the operator sends. **It waits for `il/precinct-maps.html` to be
-> live**, because it links that page; if it must go first, replace the second paragraph with: "Since
-> we spoke I've been checking what every Illinois county publishes for its precinct map, and I'll
-> send you the list when it's done."
+> **ASKED 2026-10-11**, sent 00:52:10 UTC to Dave Ostrander, Grundy County's GIS Director, as a
+> reply on the thread of Ask 18, after `il/precinct-maps.html` went live on 2026-10-10. It answers
+> his last message there, Kimball Brace's contact card of 2026-10-09 18:15 UTC (the operator had
+> replied to his 2026-10-08 answer at 12:39 UTC that day). The operator reworded the draft below
+> before sending, keeping its substance: the same counts, the page link, the State Board plan and
+> the three ways he can be named, with the public-record note and the offer to wait. The two
+> questions went as a numbered pair, the Brace sentence was left out, and "A few sentences is
+> plenty" and the line about staying out of it were dropped. **No answer yet**; the follow-up clock
+> runs to about 2026-11-01.
 
 **Why this is asked.** The operator spoke with him by phone after Ask 18 was answered; he suggested
 Kimball Brace (Election Data Services, which collected Illinois's precinct maps for the Census's
@@ -6900,8 +6903,8 @@ Board letter goes without them.
 ## Ask il-state-board-precinct-maps — Illinois State Board of Elections: publish the precinct maps it receives in one place
 
 > **NOT YET ASKED — DRAFTED 2026-10-10. HELD** until Dave Ostrander answers
-> `il-grundy-gis-state-board-view` or two weeks pass with no answer, and until
-> `il/precinct-maps.html` is live. To Bernadette Matthews, Executive Director (named in a 7 July 2026
+> `il-grundy-gis-state-board-view` (sent 2026-10-11) or two weeks pass with no answer, which is
+> 2026-10-25. `il/precinct-maps.html` has been live since 2026-10-10. To Bernadette Matthews, Executive Director (named in a 7 July 2026
 > Justice Department letter reported by Capitol News Illinois). The Board's website refuses
 > automated readers (`User-agent: *` / `Disallow: /`), so its e-mail contact was not read from here:
 > the operator takes it from the Board's contact page in a browser. Postal: 2329 S. MacArthur Blvd.,
@@ -7051,13 +7054,14 @@ found, and gap `sc-county-council` says so.
 
 ## Ask tn-ctas-commissioner-districts — University of Tennessee County Technical Assistance Service: add each county commissioner's district to its directory
 
-> **NOT YET ASKED — DRAFTED 2026-10-11**, to Liz Gossett, CTAS Marketing Director, at
-> `liz@tennessee.edu`. Every county page of the CTAS directory names her for "Questions about
+> **ASKED 2026-10-11** — sent by Adam at 22:36 UTC to Liz Gossett, CTAS Marketing Director, at
+> `liz@tennessee.edu`, with no one copied (his sent folder, read 2026-10-12). No reply yet; the
+> follow-up falls due about 1 November 2026. Drafted the same day, to the same address. Every county page of the CTAS directory names her for "Questions about
 > county information?" with that address (read 2026-10-11 on the Johnson County page, after its
 > robots.txt, which permits `/county/`). Adam chose "Ask the state" on 2026-10-11, over letters to
 > six counties, because one change at one office would cover all 95 counties. The mailbox was
 > searched the same day for any message to or from `tennessee.edu`, `utk.edu`, `tn.gov` or CTAS:
-> none. On send, record `ASKED <date>` in gap `tn-county-commissioners` and in `tn/WATCH.md`.
+> none. Recorded as asked in gap `tn-county-commissioners` and in `tn/WATCH.md` on 2026-10-12.
 
 **Why this is asked.** Tennessee's map (still hidden) draws all 859 county commission districts
 from the Comptroller of the Treasury's statewide layer, and names the commissioners county by
