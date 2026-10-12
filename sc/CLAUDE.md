@@ -8,11 +8,11 @@ districtry South Carolina: a single-file, dependency-light web app. Click a poin
 Carolina (or search an address) and it reports every civic district containing that point and
 who represents you there. It serves at **districtry.com/sc/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships ELEVEN layers, and **the instance is DARK**: no
+Illinois root-scripts shape. It ships TWELVE layers, and **the instance is DARK**: no
 `metros.json` entry, `sc/**` excluded from the Pages deploy, nothing served and no landing card
 naming it. `sc/WATCH.md` lists what go-live has to do in one change.
 
-**The national tier** — ten of the eleven layers answer from a national publisher or the
+**The national tier** — ten of the twelve layers answer from a national publisher or the
 General Assembly. **County** (46, Census TIGERweb, identity-only and the coverage ring),
 **U.S. House** (7 districts, TIGERweb geometry joined to the public-domain
 unitedstates/congress-legislators roster), **South Carolina Senate** and **South Carolina House**
@@ -77,17 +77,23 @@ still sends the token, prints them unreadable. Charleston's page blocks every cl
 one county left in `UNREAD_BY_A_PERSON`, where a disagreement is printed rather than failed until
 somebody reads it, and two are never read on purpose (Allendale's robots.txt disallows every
 path; Berkeley answers with a managed challenge). Recorded as gap `sc-county-council`
-(data-quality), beside `sc-municipal-officeholders`, `sc-school-board-members` and
-`sc-tribal-government`. **Council seats are on the 3 November 2026 ballot, and the weekly job
+(data-quality), beside `sc-municipal-officeholders` and `sc-school-board-members`. **Council seats are on the 3 November 2026 ballot, and the weekly job
 cannot read the results site from GitHub's runners** (a 202 challenge on robots.txt, measured
 2026-10-11): it keeps the shipped names, opens a tracking issue, and turns red once an election's
 results are 21 days old and unread. How those names get refreshed waits on Adam's ruling
 (`sc/WATCH.md`).
 
-**TRIBAL GOVERNMENTS ARE IN SCOPE AND ARE NOT IN THIS PR.** Measured with
-`scripts/tribal_areas.py` on 2026-10-10, the Census draws one federal reservation in South
-Carolina (Catawba, 4.123 km²) and one off-reservation trust land (Catawba, 0.054 km²). The
-fleet-wide tribal-government thread owns the build.
+**TRIBAL LAND IS DRAWN, AND ITS CARD NAMES THE CATAWBA NATION'S EXECUTIVE COMMITTEE.** Measured
+with `scripts/tribal_areas.py` on 2026-10-12, the Census draws one federal reservation in South
+Carolina (Catawba, 4.123 km², 849 people in 2020) and one off-reservation trust land (Catawba,
+0.054 km², nobody), both in York County and both wholly inside the state. `tribal-government` draws
+both from `data/app/tribal-areas.json` (`scripts/build_tribal_areas.py`, the same builder every
+instance uses), and the card names the five officers the nation lists on its own page at
+`catawba.com/executive-committee`, read weekly by `scripts/tribal_council_scraper.py`. The Bureau of
+Indian Affairs still lists `www.catawbaindian.net` as the nation's site, which reset the connection
+on every read from here on 2026-10-12, so the card's official link is the Bureau's and the names
+link to the page they came from. That page's prose still says the committee elected in 2019 serves
+until July 2023; its list was revised after that, and the list is what is carried.
 
 **THE CHAMBER BOUNDARIES USE DOUGLAS-PEUCKER AT `interval=20`**, inherited from North Carolina's
 measurement and re-measured here: worst stray 21.7 / 20.6 / 20.2 m (U.S. House, Senate, House)
@@ -110,7 +116,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: South Carolina (`southcarolina`) — https://districtry.com/sc/
 - Geocoders: address Photon (South Carolina-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, South Carolina-bounded, serial >=1s queue)
 - Ground truth: 34.00035,-81.03295 (the State House, Columbia, Richland County) → county Richland County; us-house 6; sc-senate 26; sc-house 72; county-council 4. Negative point 33.75000,-82.55000 (Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.SCExplorer`.
+- Layers: 12 registered (political 5, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.SCExplorer`.
 - Scheduled workflows: `update-sc-congress-roster.yml` (Mon 17:07 UTC); `update-sc-legislature-roster.yml` (Tue 17:07 UTC); `update-sc-county-council-roster.yml` (Wed 17:07 UTC); `sc-validate-sources.yml` (1st of month 19:37 UTC).
 - Source registry: `sc/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

@@ -95,8 +95,8 @@ MIN_REGISTER_LAYER = 8
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "sc-senate", "county", "school-district-unified", "sc-house",
-    "county-council", "zip-code", "municipality", "police-station",
-    "fire-station", "post-office",
+    "county-council", "zip-code", "municipality", "tribal-government",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +107,7 @@ GEOMETRY_FILES = {
     "sc-senate-districts.json": (46, 46),  # The 46 South Carolina Senate districts.
     "sc-house-districts.json": (124, 124),  # The 124 South Carolina House districts.
     "sc-county-council-districts.json": (315, 315),  # The 315 county council districts in all 46 counties, from the state Revenue and Fiscal Affairs Office (sc/scripts/build_sc_county_council_districts.py).
+    "tribal-areas.json": (2, 2),  # South Carolina's tribal land (scripts/build_tribal_areas.py) — the Catawba Reservation and its off-reservation trust land. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-12; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -116,6 +117,7 @@ ROSTER_FILES = {
     "sc-house-members.json": 114,  # South Carolina House roster from the General Assembly's own member pages, refreshed weekly. The floor is below 124 for the same reason; the chamber listed all 124 on 2026-10-10.
     "sc-county-council-members.json": 46,  # County council members, one key per county FIPS, from the Election Commission's certified results, refreshed weekly by update-sc-county-council-roster.yml.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
+    "tribal-councils.json": 1,  # The Catawba Nation's Executive Committee, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

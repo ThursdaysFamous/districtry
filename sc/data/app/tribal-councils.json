@@ -1,0 +1,33 @@
+{
+ "0525": {
+  "roster": [
+   {
+    "name": "Brian Harris",
+    "role": "Chief"
+   },
+   {
+    "name": "Patricia Leach",
+    "role": "Assistant Chief"
+   },
+   {
+    "name": "Rod Beck",
+    "role": "Secretary/Treasurer"
+   },
+   {
+    "name": "Quinlan Canty",
+    "role": "Executive Committee Member"
+   },
+   {
+    "name": "Sam Beck",
+    "role": "Executive Committee Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-12.",
+  "rosterSource": "nation",
+  "rosterPage": "https://catawba.com/executive-committee",
+  "rosterRead": "2026-10-12",
+  "rosterHost": null,
+  "rosterMeasured": null
+ }
+}

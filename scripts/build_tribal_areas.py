@@ -334,7 +334,7 @@ COUNCILS = os.path.join(REPO, "data", "tribal-councils.json")
 # right), which is no order a reader can use.
 _OFFICE_RANK = [
     (r"^(?:tribal )?(?:chair(?:man|woman|person)?|president|chief)$", 0),
-    (r"^vice[- ]|^sub-chief$", 1),
+    (r"^vice[- ]|^sub-chief$|^assistant chief$", 1),
     (r"legislative leader", 2),
     (r"secretary|treasurer", 3),
     (r"sergeant|chaplain|elder", 4),
