@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-04T16:55:34Z",
+  "generated": "2026-10-11T17:48:56Z",
   "libraries": {
     "Alpha Park Public Library District": {
       "comptrollerCode": "072/010/10",
@@ -931,7 +931,7 @@
         }
       ],
       "comptrollerCode": "088/015/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "St. Clair",
       "heads": [
         {
@@ -944,7 +944,7 @@
         }
       ],
       "office": {
-        "address": "220 SOUTH 5TH STREET",
+        "address": "220 SOUTH 5TH ST",
         "city": "DUPO IL 62239",
         "phone": "(618) 286-4444"
       }
@@ -3124,19 +3124,19 @@
       }
     },
     "Rock Falls Public Library District": {
-      "board": [
+      "comptrollerCode": "098/015/10",
+      "filedFor": "2026",
+      "filesIn": "Whiteside",
+      "heads": [
         {
-          "name": "Jason Smith",
-          "role": "President"
+          "name": "Amy Lego",
+          "role": "Director"
         },
         {
           "name": "Karla Portner",
-          "role": "Sec./Treas."
+          "role": "Clerk/Treas."
         }
       ],
-      "comptrollerCode": "098/015/10",
-      "filedFor": "2025",
-      "filesIn": "Whiteside",
       "office": {
         "address": "1007 7th Ave",
         "city": "Rock Falls IL 61071",
@@ -3673,7 +3673,7 @@
         }
       ],
       "comptrollerCode": "067/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Monroe",
       "heads": [
         {
