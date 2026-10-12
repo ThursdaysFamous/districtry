@@ -61,7 +61,7 @@ in the researched-but-unbuilt backlog.
   "indiana": ["us-house", "in-senate", "county", "in-house", "school-district-unified", "zip-code", "county-subdivision", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "northcarolina": ["us-house", "nc-senate", "nc-house", "school-district-unified", "county", "county-subdivision", "municipality", "zip-code", "tribal-government", "police-station", "fire-station", "post-office"],
   "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "county-commissioner", "tribal-government", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
-  "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "county-council", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "county-council", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "county-commissioner", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
@@ -3274,18 +3274,6 @@ trusted.
             "why": "South Carolina's school boards are not all chosen the same way, and no statewide list of their members has been read yet. The boundary this card draws carries the district's name and nothing about its board.",
             "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
             "blocker": "Measured 2026-10-10 against TIGERweb's School service for STATE='45': 72 unified districts, NO elementary and NO secondary district, and the unified districts' Census land area sums to the 46-county total (77,866 km²), so every point in the state is in exactly one. The boundary carries the district's name and no board member. How each board is chosen is set district by district in state law; the planning pass read that a few are appointed rather than elected, and the split has NOT been tabulated here. The route is the state Department of Education or each board's own list; not attempted in this change."
-      },
-      {
-            "id": "sc-tribal-government",
-            "concept": "Tribal government",
-            "area": "South Carolina — York County",
-            "counties": [],
-            "kind": "no-source",
-            "layer": null,
-            "summary": "No card names the Catawba Nation or its government for a point on its land near Rock Hill, the only tribal land the Census records in South Carolina.",
-            "why": "Tribal governments are being added across the whole app at once rather than state by state, and that work has not reached South Carolina yet.",
-            "wanted": "Nothing from a reader yet. The nation's own published list of its government is the source this will read.",
-            "blocker": "MEASURED 2026-10-10 with scripts/tribal_areas.py, control passed (the state layer answers code 45), scored by real intersection area against TIGERweb's own South Carolina polygon: ONE federal reservation, `Catawba Reservation`, 4.123 km², and ONE off-reservation trust land, `Catawba Off-Reservation Trust Land`, 0.054 km², both wholly inside the state; NO state reservation and no statistical area to decide about. The Catawba Indian Nation is the state's one federally recognized tribe. The fleet-wide tribal-government thread owns the build (https://claude.ai/artifact/CbZNWt4QDr7SBS7abdC1L2); do not draw a tribal layer in sc/ alone. South Carolina is dark as of this record."
       }
   ],
   "tennessee": [

@@ -13,6 +13,7 @@
   "New York",
   "North Carolina",
   "Oklahoma",
+  "South Carolina",
   "Wisconsin"
  ],
  "statesNotYetCovered": [
@@ -103,6 +104,32 @@
      "name": "Bois Forte Off-Reservation Trust Land",
      "state": "Minnesota",
      "km2": 5.452,
+     "share": 1.0
+    }
+   ]
+  },
+  "0525": {
+   "government": "Catawba Indian Nation (aka Catawba Indian Tribe of South Carolina)",
+   "parentGovernment": null,
+   "governmentState": "SC",
+   "states": [
+    "South Carolina"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "0525R",
+     "name": "Catawba Reservation",
+     "state": "South Carolina",
+     "km2": 4.123,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "0525T",
+     "name": "Catawba Off-Reservation Trust Land",
+     "state": "South Carolina",
+     "km2": 0.054,
      "share": 1.0
     }
    ]

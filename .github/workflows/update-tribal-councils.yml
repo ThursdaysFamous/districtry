@@ -62,6 +62,7 @@ jobs:
           python3 ia/scripts/validate_index.py ia/index.html
           python3 in/scripts/validate_index.py in/index.html
           python3 nc/scripts/validate_index.py nc/index.html
+          python3 sc/scripts/validate_index.py sc/index.html
 
       - name: Check for changes
         id: diff
@@ -84,7 +85,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add data/tribal-councils.json wi/data/app/tribal-councils.json mi/data/app/tribal-councils.json il/data/app/tribal-councils.json mn/data/app/tribal-councils.json ny/data/app/tribal-councils.json ia/data/app/tribal-councils.json in/data/app/tribal-councils.json wi/data/app/tribal-areas.json mi/data/app/tribal-areas.json il/data/app/tribal-areas.json mn/data/app/tribal-areas.json ny/data/app/tribal-areas.json ia/data/app/tribal-areas.json in/data/app/tribal-areas.json nc/data/app/tribal-areas.json
+          git add data/tribal-councils.json wi/data/app/tribal-councils.json mi/data/app/tribal-councils.json il/data/app/tribal-councils.json mn/data/app/tribal-councils.json ny/data/app/tribal-councils.json ia/data/app/tribal-councils.json in/data/app/tribal-councils.json sc/data/app/tribal-councils.json wi/data/app/tribal-areas.json mi/data/app/tribal-areas.json il/data/app/tribal-areas.json mn/data/app/tribal-areas.json ny/data/app/tribal-areas.json ia/data/app/tribal-areas.json in/data/app/tribal-areas.json nc/data/app/tribal-areas.json sc/data/app/tribal-areas.json
           git commit -m "Update tribal councils from each nation's own page"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

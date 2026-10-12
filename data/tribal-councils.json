@@ -1,5 +1,5 @@
 {
- "note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York and Iowa nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
+ "note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa and South Carolina nation's council, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
  "councils": {
   "0080": {
    "source": "nation",
@@ -208,6 +208,36 @@
     }
    ],
    "read": "2026-10-10"
+  },
+  "0525": {
+   "source": "nation",
+   "page": "https://catawba.com/executive-committee",
+   "pages": [
+    "https://catawba.com/executive-committee"
+   ],
+   "members": [
+    {
+     "name": "Brian Harris",
+     "role": "Chief"
+    },
+    {
+     "name": "Patricia Leach",
+     "role": "Assistant Chief"
+    },
+    {
+     "name": "Rod Beck",
+     "role": "Secretary/Treasurer"
+    },
+    {
+     "name": "Quinlan Canty",
+     "role": "Executive Committee Member"
+    },
+    {
+     "name": "Sam Beck",
+     "role": "Executive Committee Member"
+    }
+   ],
+   "read": "2026-10-12"
   },
   "0540": {
    "source": "nation",

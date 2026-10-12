@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Read who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York and Iowa nation's council, from the nation.
+Read who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa and South Carolina nation's council, from the nation.
 
 THE AUTHORITY IS EACH NATION'S OWN PUBLISHED COUNCIL. The Bureau of Indian
 Affairs' directory carries one leader per government and never a council, so
@@ -137,6 +137,11 @@ NATIONS = {
     "3635": {"nation": "Sault Ste. Marie", "pages": ["https://www.saulttribe.com/government/board-of-directors/29-government/board-of-directors/109-board-members-and-reports"], "seats": 13},
     "3885": {"nation": "Sokaogon", "pages": [WI_DOA_LIST], "seats": 6, "stateList": True},
     "4015": {"nation": "Stockbridge-Munsee", "pages": ["https://mohican-nsn.gov/tribal-council/"], "seats": 7},
+    # South Carolina. The Bureau lists www.catawbaindian.net, which reset the
+    # connection on every read here (2026-10-12); the nation's own site is
+    # catawba.com, whose robots.txt is a 404 (allow all), read with this
+    # scraper's client the same day.
+    "0525": {"nation": "Catawba", "pages": ["https://catawba.com/executive-committee"], "seats": 5},
 }
 
 _BLOCK = (r"(?:p|div|h[1-6]|li|ul|ol|td|th|tr|table|section|article|header|footer|"
@@ -710,6 +715,23 @@ def p_stockbridge(pages):
     return [_m(ls[k], ls[k + 1]) for k in range(0, 14, 2)]
 
 
+def p_catawba(pages):
+    # The five elected officers, each a name then an office. Two "Council
+    # Member" entries further down sit inside HTML comments, which lines_of
+    # drops, so they are not read. The page's prose still says the committee
+    # elected in 2019 serves until July 2023; the list itself was revised
+    # after that (the 2022 seal stands in for one member's photo), and the
+    # list, not the prose, is what is carried.
+    ls = _after(pages[0], "The Catawba Nation Executive Committee")
+    out = []
+    for k in range(0, 10, 2):
+        role = ls[k + 1].replace("Commitee", "Committee")  # the page's typo
+        out.append(_m(ls[k], role))
+    if ls[10] != "Executive Committee Duties":
+        raise ValueError("Catawba: the list runs past five offices: %r" % ls[10])
+    return out
+
+
 def p_seneca(pages):
     # the President from the executive page, then the councilors, who are
     # elected from the nation's two territories and listed under each
@@ -751,7 +773,7 @@ PARSERS = {
     "0080": p_seneca, "0540": p_seneca, "2535": p_seneca, "3320": p_srmt, "0335": p_bois_forte, "1940": p_leech_lake, "2055": p_lower_sioux, "2285": p_mct,
     "3680": p_shakopee, "4445": p_upper_sioux, "4595": p_white_earth,
     "3085": p_red_cliff, "3305": p_st_croix, "3635": p_sault,
-    "4015": p_stockbridge,
+    "4015": p_stockbridge, "0525": p_catawba,
 }
 STATE_LIST_HEADINGS = {"1825": "Lac du Flambeau Band of Lake", "3885": "Sokaogon Chippewa Community"}
 
@@ -861,7 +883,7 @@ def run(from_dir=None, today=None):
     if failed:
         raise SystemExit("tribal-councils: never read and not readable now:\n  "
                          + "\n  ".join(failed))
-    doc = {"note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York and Iowa nation's council, read "
+    doc = {"note": "Who sits on each Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa and South Carolina nation's council, read "
                    "by scripts/tribal_council_scraper.py. Stamped onto the cards by "
                    "scripts/build_tribal_areas.py --rosters.",
            "councils": councils}

@@ -1069,7 +1069,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">11 layers — 4 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">12 layers — 5 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1078,7 +1078,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1129,6 +1129,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">sc-county-council-members.json, built from the South Carolina Election Commission's certified results and checked weekly by CI: each seat's most recent general election winner (2022 or 2024), dated, with party. A winner is not a claim about who sits today, and the card says so. Each county's own council page is read beside the results, and where it names someone else, calls a seat vacant, leaves the winner off or lists the winner as a former member (eleven seats on 2026-10-11) the card prints both.</td>
                 <td data-label="Where it applies">South Carolina — all 46 counties. Hampton elects its whole council at large and Jasper elects its council by the whole county from four residence townships, so both cards name every member.</td>
+              </tr>
+              <tr id="layer-tribal-government">
+                <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
+                <td data-label="What it answers">Whether this address is on tribal land, and which nation's government answers for it — South Carolina has 2 such areas, both the Catawba Indian Nation's.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The Catawba Nation's Executive Committee, from the nation's own page at catawba.com, read weekly by scripts/tribal_council_scraper.py and dated on the card. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.</td>
+                <td data-label="Where it applies">South Carolina — the Catawba Reservation and its trust land in York County, east of Rock Hill. Every other point in the state is on no tribal land.</td>
               </tr>
             </tbody>
           </table>
@@ -1442,6 +1453,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "South Carolina — statewide. A point outside every city and town is unincorporated, which the card states"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/sc/sources.html#dataset-tribal-government",
+      "identifier": "tribal-government",
+      "name": "Tribal Government",
+      "description": "Whether this address is on tribal land, and which nation's government answers for it — South Carolina has 2 such areas, both the Catawba Indian Nation's. The Catawba Nation's Executive Committee, from the nation's own page at catawba.com, read weekly by scripts/tribal_council_scraper.py and dated on the card. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+      "url": "https://districtry.com/sc/sources.html#layer-tribal-government",
+      "isPartOf": {
+        "@id": "https://districtry.com/sc/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "South Carolina — the Catawba Reservation and its trust land in York County, east of Rock Hill. Every other point in the state is on no tribal land"
       }
     },
     {
