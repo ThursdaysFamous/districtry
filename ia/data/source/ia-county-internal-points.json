@@ -1,5 +1,5 @@
 {
- "measured": "2026-10-08",
+ "measured": "2026-10-12",
  "note": "The Census's own internal point per county \u2014 guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
  "points": {
   "adair": {
@@ -120,13 +120,6 @@
    "lng": -94.0151842,
    "name": "Madison County",
    "slug": "madison"
-  },
-  "mitchell": {
-   "fips": "131",
-   "lat": 43.3485643,
-   "lng": -92.7844663,
-   "name": "Mitchell County",
-   "slug": "mitchell"
   },
   "montgomery": {
    "fips": "137",
