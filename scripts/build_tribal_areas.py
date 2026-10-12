@@ -243,6 +243,31 @@ ROSTER_BLOCKED = {
                "Indian Nation, and this project has not yet found a council list "
                "the nation publishes, so no name is carried.",
     },
+    "2550": {
+        "host": "www.omaha-nsn.gov",
+        "measured": "2026-10-10",
+        "why": "The tribe's website, as the Bureau of Indian Affairs lists it, "
+               "could not be reached from where this project is built (2026-10-10), "
+               "so its rules for automated readers could not be read and nothing "
+               "was fetched. No name is carried and the card links the tribe.",
+    },
+    "3280": {
+        "host": "www.meskwaki.org",
+        "measured": "2026-10-10",
+        "why": "The tribe's own site answered both this project's robots.txt "
+               "request and its front page with an automated challenge page "
+               "(2026-10-10). A check like that is not worked around, so no name "
+               "is carried and the card links the tribe.",
+    },
+    "3015": {
+        "host": "ebci.com",
+        "measured": "2026-10-10",
+        "why": "The tribe's website could not be read from where this project is "
+               "built, because its security certificate could not be checked "
+               "(2026-10-10). Whether the fault is the site's or this project's "
+               "connection is not settled, so no name is carried and the card links "
+               "the tribe.",
+    },
     "3100": {
         "host": "www.redlakenation.org",
         "measured": "2026-09-29",
@@ -424,6 +449,50 @@ def census_population(resolved, classes=T.GOVERNED_CLASSES):
     return counts, known
 
 
+# A CODE THE 2020 MAP LACKS IS NOT ALWAYS NEW LAND. The Census renumbers and
+# renames: the Qualla Boundary (current code 3015) was the "Eastern Cherokee
+# Reservation", code 0990, in the 2020 vintage, where 9,233 people were counted
+# on it, and a join on the code alone told the card it was never counted
+# (found 2026-10-10). So a parcel whose (code, class) pair is not in the 2020
+# geography is matched by SHAPE against that vintage's features of the same
+# class, and taken as the same land only when the two nearly coincide. Measured
+# that day over every shipped parcel the code join missed, the Qualla Boundary
+# matched at IoU 0.998 and the other five overlapped nothing at all, so the
+# threshold separates them by a wide margin either way.
+RENAMED_IOU = 0.95
+
+
+def renamed_since_2020(resolved, areas, known):
+    """{(code, class): (2020 name, 2020 count)} for parcels the code join missed
+    whose land the 2020 vintage drew under another code."""
+    out, cache = {}, {}
+    for cls, feat, _clip in areas:
+        code = str(feat["properties"].get("AIANNH"))
+        if (code, cls) in known:
+            continue
+        layer = resolved[POP_VINTAGE].get(cls)
+        if layer is None:
+            continue
+        if cls not in cache:
+            cache[cls] = [(f["properties"], T.even_odd(f["geometry"]))
+                          for f in T.fetch_layer(T.AIANNHA, layer,
+                                                 fields="AIANNH,NAME,POP100")
+                          if f.get("geometry")]
+        here = T.even_odd(feat["geometry"])
+        best = None
+        for props, geom in cache[cls]:
+            if not geom.intersects(here):
+                continue
+            iou = geom.intersection(here).area / geom.union(here).area
+            if best is None or iou > best[0]:
+                best = (iou, props)
+        if best and best[0] >= RENAMED_IOU and best[1].get("POP100") is not None:
+            out[(code, cls)] = (best[1]["NAME"], best[1]["POP100"])
+            print("build-tribal-areas: %s %s is the 2020 map's %s (code %s, IoU %.4f)"
+                  % (code, cls, best[1]["NAME"], best[1]["AIANNH"], best[0]))
+    return out
+
+
 def districts_on(state_feat, subdivision_layer):
     """Which tribal subdivisions have ground in this state, with a control.
 
@@ -581,8 +650,10 @@ def _seat(gov):
     return gov.get("state") or None
 
 
-def _population_note(counts, known, code, cls, share=1.0, state=None):
+def _population_note(counts, known, code, cls, share=1.0, state=None, renamed=None):
     """What the Census says lives on this parcel, in the card's own words."""
+    if renamed:
+        return population_note(renamed[1], True, share, state, cls, renamed[0])
     if (code, cls) not in known:
         return ("Not counted. This land was added to the Census's map after the "
                 "2020 count, so no census population for it has been published.")
@@ -603,9 +674,16 @@ _LAND_WORD = {"reservation": "reservation", "trust-land": "trust land",
               "state-reservation": "reservation"}
 
 
-def population_note(people, counted, share, state, cls):
+def population_note(people, counted, share, state, cls, name2020=None):
     """The card's population sentence from the shipped fields alone, so the
     offline restamp and --check write and hold the same words as a build."""
+    base = _population_sentence(people, counted, share, state, cls)
+    if counted and name2020:
+        return base + " The 2020 census named it the %s." % name2020
+    return base
+
+
+def _population_sentence(people, counted, share, state, cls):
     if not counted:
         return ("Not counted. This land was added to the Census's map after the "
                 "2020 count, so no census population for it has been published.")
@@ -649,9 +727,10 @@ def _districts_note(district_names, cls=None):
 
 
 def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils=None,
-            state=None, bia=None):
+            state=None, bia=None, renamed=None):
     props = feat["properties"]
     code = str(props.get("AIANNH"))
+    renamed = (renamed or {}).get((code, cls))
     rec = {
         "type": "Feature",
         "geometry": feat["geometry"],
@@ -674,15 +753,16 @@ def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils
             # tabulation geography — which `countedIn2020` distinguishes, so a
             # card can never print "nobody lives here" over land the census
             # never counted.
-            "population": counts.get((code, cls)) if (code, cls) in known else None,
-            "countedIn2020": (code, cls) in known,
+            "population": (renamed[1] if renamed else
+                           counts.get((code, cls)) if (code, cls) in known else None),
+            "countedIn2020": bool(renamed) or (code, cls) in known,
             # THE TWO SENTENCES THE CARD PRINTS, written here because the
             # measurement is here. The app has no way to tell a null population
             # apart from a zero, or an empty district list apart from a district
             # list nobody looked for, so a card that re-derived either from the
             # raw fields would be guessing at what this builder measured. The
             # raw values stay beside them for anything that wants to compute.
-            "populationNote": _population_note(counts, known, code, cls, clip["share"], state),
+            "populationNote": _population_note(counts, known, code, cls, clip["share"], state, renamed),
             "districtsNote": _districts_note(district_names, cls),
             "areaKm2": round(clip["inside_km2"], 4),
             "wholeAreaKm2": round(clip["whole_km2"], 4),
@@ -697,6 +777,10 @@ def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils
     snote = statistical_note(cls)
     if snote:
         rec["properties"]["statisticalNote"] = snote
+    # Only land the 2020 map drew under another code carries this, so every
+    # other shipped record is unchanged by its existence.
+    if renamed:
+        rec["properties"]["censusName2020"] = renamed[0]
     # Only a nation the state alone recognizes carries these two, so every
     # federally listed nation's shipped record is unchanged by their existence.
     note = recognition_note(entry)
@@ -790,7 +874,7 @@ def stamp_rosters():
             p = f["properties"]
             p["populationNote"] = population_note(
                 p.get("population"), p.get("countedIn2020"), p.get("shareInState"),
-                doc.get("state"), p.get("landClass"))
+                doc.get("state"), p.get("landClass"), p.get("censusName2020"))
         with open(path, "w") as fh:
             json.dump(doc, fh)
             fh.write("\n")
@@ -966,6 +1050,7 @@ def build(state_name, tag, out_path=None):
     check_join(areas, join, bia)
     here, _ = districts_on(state_feat, resolved[T.DEFAULT_VINTAGE]["subdivision"])
     counts, known = census_population(resolved, T.drawn_classes(state_name))
+    renamed = renamed_since_2020(resolved, areas, known)
     feats = []
     for cls, feat, clip in areas:
         code = str(feat["properties"].get("AIANNH"))
@@ -973,7 +1058,7 @@ def build(state_name, tag, out_path=None):
         gov = None if entry.get("governments") else government_of(entry, bia)
         feats.append(_record(cls, feat, clip, entry, gov,
                              here.get(code, []), counts, known, load_councils(),
-                             state_name, bia))
+                             state_name, bia, renamed))
     feats.sort(key=lambda f: (f["properties"]["nation"], f["properties"]["aiannh"]))
     also_seated(feats, state_name, bia)
     if state_name in SIMPLIFY:
@@ -1097,7 +1182,8 @@ def check():
                     "gives — rebuild the file" % (tag, p["aiannh"]))
             if p.get("populationNote") != population_note(
                     p.get("population"), p.get("countedIn2020"),
-                    p.get("shareInState"), doc["state"], p.get("landClass")):
+                    p.get("shareInState"), doc["state"], p.get("landClass"),
+                    p.get("censusName2020")):
                 raise RuntimeError(
                     "%s: AIANNH %s's population sentence is not what its own "
                     "count and share give — run build_tribal_areas.py --rosters"
@@ -1272,6 +1358,10 @@ def selftest():
         "about 4% of it lies in Minnesota.")
     assert population_note(2737, True, 0.005669, "Iowa", "reservation").endswith(
         "under 1% of it lies in Iowa.")
+    assert population_note(9233, True, 1.0, "North Carolina", "reservation",
+                           "Eastern Cherokee Reservation") == (
+        "9,233 people at the 2020 census. The 2020 census named it the "
+        "Eastern Cherokee Reservation.")
     assert population_note(4, True, 0.998663, "Wisconsin", "trust-land") == (
         "4 people at the 2020 census.")
     assert _districts_note([]).startswith("None.")

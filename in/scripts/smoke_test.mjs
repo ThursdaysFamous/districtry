@@ -53,7 +53,7 @@ const OFFLINE = ["county", "us-house", "in-senate", "in-house"];
 const EXPECT_DISTRICT = { "county": "Marion County", "us-house": "7", "in-senate": "46", "in-house": "97" };
 const NEGATIVE_POINT = "38.25270,-85.75850"; // downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json, which is what the pan hand-off reads — the same fix Iowa, Illinois and Wisconsin each made rather than moving their own point. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.
 const APP_NAME = "districtry Indiana";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -846,6 +846,36 @@ try {
     await context.close();
   }
 
+  // ---- Tribal Government. Indiana's one parcel is a piece of the Pokagon Band's trust land, whose
+  // seat is in Michigan, so the card names the seat there, the council from
+  // the band's own page, and says the census count covers the whole parcel. Points are shapely's representative point
+  // for the part of each shipped parcel inside the state (2026-10-10).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt) => {
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      return { text: card.text, by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+    const p = await at("41.63967,-86.29121");
+    check("the Pokagon trust land names the band, its Michigan seat and its council",
+          p.by("Tribal government") === "Pokagon Band of Potawatomi Indians, Michigan and Indiana" &&
+          p.by("Seat of government") === "Dowagiac, MI" &&
+          p.text.indexOf("Matthew J. Wesaw") !== -1 &&
+          p.by("Population").indexOf("about 8% of it lies in Indiana") !== -1,
+          JSON.stringify(p.text.slice(0, 200)));
+    const off = await at(POINT);
+    check("a point off tribal land is told so in the layer's own words",
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("one tribal area") !== -1,
+          JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
+  }
 } finally {
   await browser.close();
 }

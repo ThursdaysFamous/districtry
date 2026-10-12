@@ -97,8 +97,8 @@ MIN_REGISTER_LAYER = 8
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "nc-senate", "county", "nc-house", "school-district-unified",
-    "county-subdivision", "zip-code", "municipality", "police-station",
-    "fire-station", "post-office",
+    "county-subdivision", "zip-code", "tribal-government", "municipality",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -108,6 +108,7 @@ GEOMETRY_FILES = {
     "congress-districts.json": (14, 14),  # The 14 U.S. House districts, TIGERweb layer 4 (CD119) until 3 January 2027.
     "nc-senate-districts.json": (50, 50),  # The 50 NC Senate districts. Simplified in the same mapshaper run as the other two chamber files.
     "nc-house-districts.json": (120, 120),  # The 120 NC House districts. Simplified in the same mapshaper run as the other two chamber files.
+    "tribal-areas.json": (2, 2),  # North Carolina's tribal land (scripts/build_tribal_areas.py) — the Qualla Boundary and its trust land, both the Eastern Band of Cherokee Indians'. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-10; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).

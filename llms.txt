@@ -82,7 +82,7 @@ County boards, circuit courts, wards and aldermanic districts across all 72 coun
 
 All 99 counties: supervisor districts with each county's own election plan, townships and cities, school districts, ZIP codes and post offices — and the Iowa Senate, House and U.S. House seats, and who holds those.
 
-- [Iowa district lookup](https://districtry.com/ia/): 20 layers, all 99 counties.
+- [Iowa district lookup](https://districtry.com/ia/): 21 layers, all 99 counties.
 - [Who is on my city council?](https://districtry.com/ia/city-council.html)
 - [Who is my U.S. representative?](https://districtry.com/ia/congress.html)
 - [Who is my county auditor?](https://districtry.com/ia/county-auditor.html)
@@ -128,7 +128,7 @@ All 120 counties: the county a point sits in, and the Kentucky Senate, House and
 
 All 92 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the county governments, and the Data gaps panel says why.
 
-- [Indiana district lookup](https://districtry.com/in/): 11 layers, all 92 counties.
+- [Indiana district lookup](https://districtry.com/in/): 12 layers, all 92 counties.
 - [Who is my U.S. representative?](https://districtry.com/in/congress.html)
 - [Who are my county commissioners?](https://districtry.com/in/county-commissioner.html): links a page per county, 92 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/in/sources.html)
@@ -138,7 +138,7 @@ All 92 counties: townships, cities and towns, school districts, ZIP codes, and t
 
 All 100 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. Nobody is named yet on the county boards or city councils, and the Data gaps panel says why.
 
-- [North Carolina district lookup](https://districtry.com/nc/): 11 layers, all 100 counties.
+- [North Carolina district lookup](https://districtry.com/nc/): 12 layers, all 100 counties.
 - [Who is my U.S. representative?](https://districtry.com/nc/congress.html)
 - [Who are my county commissioners?](https://districtry.com/nc/county-commissioner.html): links a page per county, 99 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/nc/sources.html)

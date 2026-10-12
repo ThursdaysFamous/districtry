@@ -4063,7 +4063,8 @@ function initIowaExplorer() {
     "school-district-unified": "su", "school-director-district": "dd",
     "community-college": "cc", "cc-director-district": "ccd", "county-subdivision": "cs",
     "municipality": "mu", "city-ward": "cw", "zip-code": "zp", "precinct": "pc",
-    "police-station": "ps", "fire-station": "fs", "school-site": "ss", "post-office": "po" };
+    "police-station": "ps", "fire-station": "fs", "school-site": "ss", "post-office": "po",
+    "tribal-government": "tg" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8469,6 +8470,7 @@ function initIowaExplorer() {
     "community-college", // 15 merged areas, shipped as published (no dissolve) — larger on average than a school district, ranked beside it
     "cc-director-district", // 123 director districts inside the 15 community college merged areas — the sub-fabric a college's board of trustees is elected from (Iowa Code 260C.11)
     "county-subdivision", // 1,663 records tiling the state, live from TIGERweb (no data/app file) — 1,600 civil townships, 62 incorporated cities that double as their own subdivision record, and one federal reservoir carried as unorganized territory
+    "tribal-government", // Tribal land — Iowa has 4 pieces across 3 nations inside the state, from the Meskwaki Settlement's 26.188 km² down to the Meskwaki trust land's 1.673 km², MEASURED by scripts/build_tribal_areas.py; median 9.19 km². Drawn above county subdivisions, which are townships of about 93 km², and below cities, several of which are smaller. The Omaha and Winnebago reservations cross the Missouri from Nebraska and are drawn whole. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "municipality",      // 939 incorporated cities, live from TIGERweb (no data/app file) — small dense pockets within the county-subdivision fabric, so smaller on average than a civil township despite fewer records
     "city-ward",         // The instance's CITY tier: 14 subdivisions across three cities — Des Moines's 4 wards averaging 22.7 sq mi inside one 90.66 sq mi city, Waterloo's 5 wards averaging 12.6 sq mi inside one 62.98 sq mi city, Cedar Rapids's 5 districts averaging 15.2 sq mi inside one 75.54 sq mi city — so strictly smaller than the City that contains them and larger than a precinct
     "zip-code",          // Census ZCTAs by Iowa envelope (no data/app file) — 1,443 features measured in-envelope, smaller on average than an incorporated city
@@ -12654,6 +12656,117 @@ function initIowaExplorer() {
     }
   });
 
+  /* ---------- Tribal Government — Iowa's tribal land, 4 pieces across 3 nations.
+   *
+   * The Meskwaki Settlement and its trust land, held by the Sac & Fox Tribe
+   * of the Mississippi in Iowa, and the parts of the Omaha and Winnebago
+   * reservations that cross the Missouri from Nebraska, where both nations
+   * are seated. The Ponca Tribe of Nebraska's 0.004 km2 of trust land here is
+   * under the cross-state floor and is not drawn.
+   *
+   * WHO THE CARD NAMES. The Winnebago Tribe's council, from its own page. The
+   * Meskwaki site answers with a challenge page and the Omaha site could not
+   * be reached, so those cards say why they name nobody, from ROSTER_BLOCKED.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling of
+   * 2026-09-30, a government answers for that ground, so a reader who clicks
+   * it should be told which one, and land in one state whose government sits
+   * in another is answered where the land is, with the seat named.
+   *
+   * A PARCEL IS DRAWN WHOLE. The Census draws a reservation as one shape and
+   * this file keeps it, so where one crosses the state line the part beyond
+   * it is drawn too; the card's population sentence says when the count
+   * covers a whole parcel of which only part lies here.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // A councils file that cannot be read leaves the land answering on its own.
+  var loadIaTribalAreas = makeCached(function () {
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = both[1] || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadIaTribalAreas,
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land
+    // by the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" · ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from ↗",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Iowa has 4 tribal areas across 3 nations — the Meskwaki Settlement and its trust land, and the parts of the Omaha and Winnebago reservations that cross from Nebraska — and this point is on none of them."
+  });
+
+
   /* ---------- 2. U.S. House — boundary + roster join ----------
    * Pre-built TIGERweb Legislative layer 0 geometry
    * (data/app/congress-districts.json, this state only) joined by district
@@ -16450,7 +16563,7 @@ function initIowaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ia-judicial-district", "ia-senate", "ia-house", "county", "county-subdivision", "municipality", "city-ward", "county-supervisor", "school-district-unified", "school-director-district", "community-college", "cc-director-district", "iowa-aea", "zip-code", "precinct", "police-station", "fire-station", "school-site", "post-office"];
+  var LAYER_SIDEBAR_RANK = ["us-house", "ia-judicial-district", "ia-senate", "ia-house", "county", "county-subdivision", "municipality", "city-ward", "county-supervisor", "school-district-unified", "school-director-district", "community-college", "cc-director-district", "iowa-aea", "zip-code", "precinct", "tribal-government", "police-station", "fire-station", "school-site", "post-office"];
   (function applySidebarRank() {
     var pos = {};
     for (var i = 0; i < LAYER_SIDEBAR_RANK.length; i++) pos[LAYER_SIDEBAR_RANK[i]] = i;
@@ -16936,13 +17049,14 @@ function initIowaExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#125E63": "#57B1B8", "#14181C": "#696F76",
-    "#1B5E3F": "#5FB387", "#1B7A3D": "#57CC79", "#1B8A91": "#4FD6DF", "#1F7A3A": "#5ACC75",
-    "#2E9E6B": "#5AE9A4", "#2F6B3A": "#6EBE7A", "#41B6E6": "#C2EAFF", "#444B54": "#919BA8",
-    "#4A2E8C": "#9A7BFC", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#5C4B8C": "#AA94EE",
-    "#6B6320": "#BAAF59", "#6B7280": "#B0BACD", "#6FBF7F": "#9FFFB1", "#7A0B1E": "#EA5B63",
-    "#7A4B12": "#D69550", "#7A5C3E": "#CEA57C", "#8A5A1E": "#E3A155", "#8C2E4A": "#F37293",
-    "#8F7BC4": "#D0C1FE", "#A98B6C": "#F2CAA0", "#B0316E": "#FE86B7", "#B3A64A": "#F4E36A",
-    "#C98A3E": "#FECE9B", "#D06A9C": "#FEBCD9", "#D89A4E": "#FEDDB9"};
+    "#1B5E3F": "#5FB387", "#1B7A3D": "#57CC79", "#1B8A91": "#4FD6DF", "#1F6F6B": "#5CC0BA",
+    "#1F7A3A": "#5ACC75", "#2E9E6B": "#5AE9A4", "#2F6B3A": "#6EBE7A", "#3E9A95": "#6BE2DC",
+    "#41B6E6": "#C2EAFF", "#444B54": "#919BA8", "#4A2E8C": "#9A7BFC", "#4B2E83": "#9E7BF1",
+    "#4C8F59": "#82DB92", "#5C4B8C": "#AA94EE", "#6B6320": "#BAAF59", "#6B7280": "#B0BACD",
+    "#6FBF7F": "#9FFFB1", "#7A0B1E": "#EA5B63", "#7A4B12": "#D69550", "#7A5C3E": "#CEA57C",
+    "#8A5A1E": "#E3A155", "#8C2E4A": "#F37293", "#8F7BC4": "#D0C1FE", "#A98B6C": "#F2CAA0",
+    "#B0316E": "#FE86B7", "#B3A64A": "#F4E36A", "#C98A3E": "#FECE9B", "#D06A9C": "#FEBCD9",
+    "#D89A4E": "#FEDDB9"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
