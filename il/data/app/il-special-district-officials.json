@@ -10,11 +10,11 @@
             },
             {
               "name": "Jeff Hart",
-              "role": "Sec./Treas."
+              "role": "Treasurer"
             }
           ],
           "comptrollerCode": "075/010/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Pike",
           "office": {
             "address": "867 Main Street",
@@ -199,7 +199,7 @@
             }
           ],
           "comptrollerCode": "001/090/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "email": "paysonfire@adams.net"
           }
@@ -350,16 +350,16 @@
               "role": "President"
             },
             {
-              "name": "Steve Schwartz",
+              "name": "Kyle Hill",
               "role": "Secretary"
             }
           ],
           "comptrollerCode": "101/020/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Winnebago",
           "heads": [
             {
-              "name": "Bill LeFevre",
+              "name": "Doug Edwards",
               "role": "Treas./Admin."
             }
           ],
@@ -389,7 +389,7 @@
             }
           ],
           "comptrollerCode": "016/010/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "22222 N. Pepper RD",
             "city": "Lake Barrington IL 60010",
@@ -771,12 +771,12 @@
               "role": "President"
             },
             {
-              "name": "Ric Warchol",
+              "name": "Ric Warhol",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "016/150/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "740 Dundee Rd",
             "city": "Northbrook IL 60062",
@@ -785,7 +785,7 @@
         },
         "NORTHWEST HOMER FIRE PROTECTION DISTRICT": {
           "comptrollerCode": "099/110/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Will",
           "heads": [
             {
@@ -864,10 +864,10 @@
         },
         "PALOS FIRE PROTECTION DISTRICT": {
           "comptrollerCode": "016/250/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
-              "name": "Christopher Courtney",
+              "name": "Michael Gabriele",
               "role": "Fire Chief"
             },
             {
@@ -1719,23 +1719,21 @@
           }
         },
         "GOLF MAINE PARK DISTRICT": {
-          "board": [
-            {
-              "name": "Jamal Liddell",
-              "role": "President"
-            }
-          ],
           "comptrollerCode": "016/280/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
+              "name": "Kevin Hubka",
+              "role": "Director"
+            },
+            {
               "name": "Dina Weymouth",
-              "role": "Manager"
+              "role": "Accountant"
             }
           ],
           "office": {
             "address": "8800 Kathy Lane",
-            "city": "Niles IL 60714",
+            "city": "Feldman Park IL 60714",
             "phone": "(847) 297-3000"
           }
         },
@@ -2257,7 +2255,7 @@
         },
         "OAK LAWN PARK DISTRICT": {
           "comptrollerCode": "016/530/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Tom Hartwig",
@@ -2372,20 +2370,17 @@
         "PHOENIX PARK DISTRICT": {
           "board": [
             {
-              "name": "LaToya Crowder",
+              "name": "Mildred Garcia",
               "role": "Commissioner"
             },
             {
               "name": "Mildred Garcia",
-              "role": "Commissioner"
+              "role": "Treasurer"
             }
           ],
           "comptrollerCode": "016/590/12",
-          "filedFor": "2025",
-          "office": {
-            "address": "155th & 9th Avenue",
-            "city": "Phoenix IL 60426"
-          }
+          "filedFor": "2026",
+          "office": {}
         },
         "PLEASANTDALE PARK DISTRICT": {
           "board": [
@@ -2698,7 +2693,7 @@
         },
         "VETERANS PARK DISTRICT": {
           "comptrollerCode": "016/770/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "William Otte",
@@ -3385,7 +3380,7 @@
         },
         "Bloomingdale": {
           "comptrollerCode": "022/070/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Matthew Beyer",
@@ -3405,7 +3400,7 @@
         },
         "Carol Stream": {
           "comptrollerCode": "022/090/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Robert Schultz",
@@ -3481,21 +3476,22 @@
         },
         "Glenside": {
           "comptrollerCode": "022/135/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Rich Cassady",
               "role": "Chief"
             },
             {
-              "name": "James Howard",
-              "role": "Comptroller"
+              "name": "Laura Haiden",
+              "role": "Executive"
             }
           ],
           "office": {
             "address": "1608 Bloomingdale Rd",
             "city": "Glendale Heights IL 60139",
-            "email": "RCassady@glensidefire.org"
+            "email": "RCassady@glensidefire.org",
+            "phone": "(630) 668-5323"
           }
         },
         "Golfview Hills": {
@@ -3767,12 +3763,12 @@
         "Winfield": {
           "board": [
             {
-              "name": "Robb Hannen",
+              "name": "Lucas Allen",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "022/230/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Steven Evans",
@@ -3782,7 +3778,7 @@
           "office": {
             "address": "0N525 County Farm Rd",
             "city": "Winfield IL 60190",
-            "email": "rkyoungberg@winfieldfpd.org",
+            "email": "klezza@winfieldfpd.org",
             "phone": "(630) 653-5050"
           }
         },
@@ -3969,15 +3965,15 @@
             }
           ],
           "comptrollerCode": "022/040/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
-              "name": "Chuck Szoke",
+              "name": "Jack Savage",
               "role": "Director"
             }
           ],
           "office": {
-            "address": "21W730 Butterfield Rd",
+            "address": "210W730 Butterfield Rd",
             "city": "Lombard IL 60148",
             "phone": "(630) 858-2229"
           }
@@ -4043,7 +4039,7 @@
         },
         "Darien": {
           "comptrollerCode": "022/065/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Stephanie Gurgone",
@@ -4629,10 +4625,14 @@
             {
               "name": "Darrell Schaal",
               "role": "Treasurer"
+            },
+            {
+              "name": "Clint Storck",
+              "role": "Secretary"
             }
           ],
           "comptrollerCode": "026/020/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Fayette",
           "office": {}
         },
@@ -4643,17 +4643,16 @@
               "role": "President"
             },
             {
-              "name": "Alan Griffy",
+              "name": "Randy McNeely",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "013/020/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Clay",
           "office": {
             "address": "PO Box 502",
-            "city": "Flora IL 62839",
-            "phone": "(618) 662-6022"
+            "city": "Flora IL 62839"
           }
         },
         "Shumway": {
@@ -4764,7 +4763,7 @@
             }
           ],
           "comptrollerCode": "025/040/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "Tri-County": {
@@ -4813,6 +4812,25 @@
           "comptrollerCode": "025/030/12",
           "filedFor": "2025",
           "office": {}
+        },
+        "Effingham": {
+          "board": [
+            {
+              "name": "Matt Dasenbrock",
+              "role": "President"
+            },
+            {
+              "name": "Serena Buzzard",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "025/010/12",
+          "filedFor": "2024",
+          "office": {
+            "address": "1906 South 4th Street",
+            "city": "Effingham IL 62401",
+            "phone": "(217) 342-4415"
+          }
         },
         "Mason": {
           "board": [
@@ -5094,16 +5112,16 @@
         "Kempton": {
           "board": [
             {
-              "name": "Marlin Donley",
+              "name": "MARLIN DONLEY",
               "role": "President"
             },
             {
-              "name": "Roger Gualandi",
+              "name": "ROGER GUALANDI",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "027/010/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Ford",
           "office": {}
         },
@@ -5205,16 +5223,18 @@
         "Papineu": {
           "board": [
             {
-              "name": "MYRON MUNYON",
-              "role": "Trustee"
-            },
-            {
               "name": "CHRIS JOHNSON",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "038/160/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
+          "heads": [
+            {
+              "name": "MYRON MUNYON",
+              "role": "C.E.O."
+            }
+          ],
           "office": {}
         },
         "Pilot": {
@@ -5376,7 +5396,7 @@
         },
         "MONTGOMERY FPD": {
           "comptrollerCode": "045/120/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Kane",
           "heads": [
             {
@@ -5652,7 +5672,7 @@
             }
           ],
           "comptrollerCode": "016/010/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Cook",
           "office": {
             "address": "22222 N. Pepper RD",
@@ -6807,7 +6827,7 @@
             }
           ],
           "comptrollerCode": "074/030/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Piatt",
           "office": {}
         },
@@ -7250,7 +7270,7 @@
             }
           ],
           "comptrollerCode": "016/010/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Cook",
           "office": {
             "address": "22222 N. Pepper RD",
@@ -7353,7 +7373,7 @@
             }
           ],
           "comptrollerCode": "063/050/06",
-          "filedFor": "2024",
+          "filedFor": "2025",
           "office": {
             "address": "PO Box 263",
             "city": "Harvard IL 60033",
@@ -7668,17 +7688,19 @@
         "New Athens Volunteer Fire Department": {
           "board": [
             {
-              "name": "DOUGLASS KINZINGER",
+              "name": "DOUGLAS KINZINGER",
               "role": "President"
-            },
-            {
-              "name": "SCOTT HARRISS",
-              "role": "Treasurer"
             }
           ],
           "comptrollerCode": "088/170/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "St. Clair",
+          "heads": [
+            {
+              "name": "SCOTT HARRISS",
+              "role": "Treas./Admin."
+            }
+          ],
           "office": {
             "address": "909 SPOTSYLVANIA ST",
             "city": "NEW ATHENS IL 62264",
@@ -8142,7 +8164,7 @@
             }
           ],
           "comptrollerCode": "083/060/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "ELKHART FPD": {
@@ -8269,7 +8291,7 @@
             }
           ],
           "comptrollerCode": "083/130/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "PAWNEE FPD": {
@@ -8773,16 +8795,18 @@
         "New Athens Fire Dept.": {
           "board": [
             {
-              "name": "DOUGLASS KINZINGER",
+              "name": "DOUGLAS KINZINGER",
               "role": "President"
-            },
-            {
-              "name": "SCOTT HARRISS",
-              "role": "Treasurer"
             }
           ],
           "comptrollerCode": "088/170/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
+          "heads": [
+            {
+              "name": "SCOTT HARRISS",
+              "role": "Treas./Admin."
+            }
+          ],
           "office": {
             "address": "909 SPOTSYLVANIA ST",
             "city": "NEW ATHENS IL 62264",
@@ -9381,7 +9405,7 @@
       }
     }
   },
-  "generated": "2026-09-28T22:57:39Z",
+  "generated": "2026-10-12T21:32:47Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
