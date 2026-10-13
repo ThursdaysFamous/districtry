@@ -175,7 +175,7 @@ measured until the next run describes it.
 | ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
 | CPS High School Zone (`cps-high`) | `data.cityofchicago.org` | — |
 | CPS Middle School Zone (`cps-middle`) | `data.cityofchicago.org` | — |
-| Voting Precinct (`county-precinct`) | 37 of 83 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.macoupincountyil.gov`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.lasallecounty.org`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.grundyco.org`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`, `tigerweb.geo.census.gov`; 46 shipped with the app | — |
+| Voting Precinct (`county-precinct`) | 36 of 83 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.macoupincountyil.gov`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.lasallecounty.org`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.grundyco.org`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`, `tigerweb.geo.census.gov`; 47 shipped with the app | — |
 | Special Service Area (`ssa`) | `data.cityofchicago.org` | — |
 | TIF District (`tif-district`) | `gis.cookcountyil.gov` | — |
 | CPS Elementary School Zone (`cps-elementary`) | `data.cityofchicago.org` | — |
@@ -352,7 +352,7 @@ measured until the next run describes it.
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 131 | 392 | 6 |
+| il | 131 | 393 | 6 |
 | ny | 39 | 35 | 0 |
 | ca | 17 | 14 | 0 |
 | wi | 92 | 265 | 5 |
@@ -365,7 +365,7 @@ measured until the next run describes it.
 | ok | 17 | 12 | 0 |
 | sc | 17 | 13 | 0 |
 | tn | 17 | 11 | 0 |
-| **total** | **506** | **921** | **12** |
+| **total** | **506** | **922** | **12** |
 
 **145 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
