@@ -5,6 +5,8 @@
       if (metro.id === THIS_METRO) continue;
       var a = document.createElement("a");
       a.href = metro.url;
+      // the layers on now travel with the reader (ENGINE metro-portal)
+      if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, metro);
       a.target = "_blank";
       a.rel = "noopener";
       a.textContent = metro.label;

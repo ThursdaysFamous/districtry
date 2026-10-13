@@ -15,8 +15,9 @@ regions, marked like the engine's fences but generator-owned:
 
 Targets (region name -> file):
     metro-config      -> index.html   (interior of the METRO config fence; it also
-                                       carries LAYER_CODES, read from the
-                                       fleet-wide layer-codes.json)
+                                       carries LAYER_CODES and LAYER_CONCEPTS, read
+                                       from the fleet-wide layer-codes.json and
+                                       layer-concepts.json)
     layer-area-rank   -> index.html   (the LAYER_AREA_RANK array)
     sw-metro-config   -> sw.js        (CACHE_NAME + shell/geometry/roster lists)
     validator-config  -> scripts/validate_index.py (floors + expected ids)
@@ -150,6 +151,7 @@ def render_metro_config(w):
     a("  // Permalink sanity gate: the *greater* metro area (wider than METRO_BBOX).")
     a("  var PERMALINK_GATE = %s;" % bbox_js(w["permalink_gate"], ["minLat", "maxLat", "minLng", "maxLng"]))
     L.extend(render_layer_codes(w))
+    L.extend(render_layer_concepts(w))
     # Emitted ONLY when the worksheet declares it. A fork whose layers are all
     # city-scoped keeps a byte-identical metro-config region, which is what
     # makes this safe to ship through the engine release: the bump workflow
@@ -223,6 +225,8 @@ def render_metro_config(w):
     if "coverage_key" in w:
         ck = w["coverage_key"]
         fields = ["outside: %s" % js_str(ck["outside"])]
+        if "edge" in ck:
+            fields.append("edge: %s" % js_str(ck["edge"]))
         if "region" in ck:
             r = ck["region"]
             rf = ["edge: %s" % js_str(r["edge"]), "label: %s" % js_str(r["label"])]
@@ -234,17 +238,17 @@ def render_metro_config(w):
         a("  // an instance whose full coverage is a proper subset of a wider region its")
         a("  // statewide layers still answer in; it also requires that instance's boot")
         a("  // to hand drawOutOfScopeMask() the region geometry, because the key names")
-        a("  // only the bands that were actually drawn.")
+        a("  // only the bands that were actually drawn. `edge` names the purple line")
+        a("  // around the coverage in an instance with no region.")
         a("  var COVERAGE_KEY = { %s };" % ", ".join(fields))
     a("  /* Sibling District Explorer deployments — one canonical list shared by every")
     a("   * metro fork. When a new metro launches, add its entry to every fork's")
     a("   * worksheet and regenerate (Conversion 3 will source this list from the")
     a("   * fleet manifest instead). THIS_METRO drops the fork's own entry so the")
     a("   * list is identical in every fork. `bbox` (greater metro area, mirroring")
-    a("   * that fork's PERMALINK_GATE) and `emoji` feed the sibling-metro portal")
-    a("   * easter egg (ENGINE metro-portal): wander the map into a sibling's bbox —")
-    a("   * or search/geolocate a point inside one — and the app offers to hand you")
-    a("   * off to that fork's explorer. */")
+    a("   * that fork's PERMALINK_GATE) and `emoji` feed the sibling hand-off")
+    a("   * (ENGINE metro-portal): click, search or geolocate a point a sibling")
+    a("   * answers for and the app sends you to that sibling, with your layers. */")
     a("  var METRO_EXPLORERS = [")
     for i, e in enumerate(w["metro_explorers"]):
         tail = "," if i != len(w["metro_explorers"]) - 1 else ""
@@ -292,6 +296,31 @@ def render_layer_codes(w):
     line = "  var LAYER_CODES = {"
     for i, (lid, code) in enumerate(pairs):
         item = "%s: %s" % (js_str(lid), js_str(code)) + ("," if i != len(pairs) - 1 else "")
+        if len(line) + 1 + len(item) > 96:
+            a(line)
+            line = "    " + item
+        else:
+            line += " " + item
+    a(line + " };")
+    return L
+
+
+def render_layer_concepts(w):
+    """The LAYER_CONCEPTS table for one instance: concept -> its own layer ids,
+    in layer-concepts.json's row order. Always emitted, empty when the instance
+    answers no concept, so the engine never has to tell a missing table from an
+    empty one."""
+    rows = w["_layer_concepts"]
+    L = []
+    a = L.append
+    a("  // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a")
+    a("  // reader moving to a sibling app takes the concepts of the layers they have")
+    a("  // on (`carry=`), and the app they arrive in turns on its own layers for")
+    a("  // each. ENGINE metro-portal writes it and ENGINE permalink reads it.")
+    line = "  var LAYER_CONCEPTS = {"
+    for i, (concept, ids) in enumerate(rows):
+        item = "%s: [%s]" % (js_str(concept), ", ".join(js_str(x) for x in ids)) \
+            + ("," if i != len(rows) - 1 else "")
         if len(line) + 1 + len(item) > 96:
             a(line)
             line = "    " + item
@@ -1400,6 +1429,93 @@ def check_layer_code_history(root, codes):
     return problems
 
 
+LAYER_CONCEPTS_FILE = "layer-concepts.json"
+CONCEPT_RE = re.compile(r"^[a-z][a-z0-9-]*$")
+
+
+def load_layer_concepts(root):
+    """The fleet's concept -> {instance tag: [layer ids]} table, shape-checked.
+
+    Values are normalised to lists (a row may name one id as a bare string).
+    What the ids MEAN is checked per instance in main(), against the worksheet
+    that registers them."""
+    path = os.path.join(root, LAYER_CONCEPTS_FILE)
+    try:
+        with open(path, encoding="utf-8") as f:
+            doc = json.load(f)
+    except (OSError, ValueError) as e:
+        fail("cannot read %s: %s" % (path, e))
+    rows = doc.get("concepts") if isinstance(doc, dict) else None
+    if not isinstance(rows, dict) or not rows:
+        fail("%s: `concepts` must be a non-empty object of concept -> {tag: id}" % LAYER_CONCEPTS_FILE)
+    problems, out = [], {}
+    for concept, cols in rows.items():
+        if not CONCEPT_RE.match(concept):
+            problems.append("concept %r is not lowercase letters, digits and hyphens" % concept)
+            continue
+        if not isinstance(cols, dict):
+            problems.append("%s: must map instance tags to layer ids" % concept)
+            continue
+        # One app alone carries nothing anywhere: a row like that reads as a
+        # promise that the layer travels, and it never can.
+        if len(cols) < 2:
+            problems.append("%s: only %s answers it, so it carries nothing — drop the row "
+                            "until a second app has the same thing" % (concept, ", ".join(cols) or "no app"))
+        norm = {}
+        for tag, ids in cols.items():
+            if tag not in INSTANCES:
+                problems.append("%s: %r is not an instance (known: %s)"
+                                % (concept, tag, ", ".join(sorted(INSTANCES))))
+                continue
+            ids = [ids] if isinstance(ids, str) else ids
+            if (not isinstance(ids, list) or not ids or len(set(ids)) != len(ids)
+                    or not all(isinstance(x, str) and x for x in ids)):
+                problems.append("%s/%s: must be a layer id or a list of distinct ids" % (concept, tag))
+                continue
+            norm[tag] = ids
+        out[concept] = norm
+    if problems:
+        fail("%s:\n  %s" % (LAYER_CONCEPTS_FILE, "\n  ".join(problems)))
+    return out
+
+
+def check_shared_ids_carried(root, concepts, schema):
+    """A layer id two LIVE apps both register is one a reader can switch on in
+    either, and moving between them should keep it on — so it must sit under a
+    concept in each, or the hand-off silently drops it. Matching ids are not
+    assumed to mean the same thing (Illinois's `ward` and Wisconsin's do not),
+    which is why this asks for a row rather than carrying by id. A dark
+    instance is skipped: nobody can be sent to it, and its go-live is where
+    its column gets filled. Returns problems."""
+    try:
+        from validate_instance_registration import dark_instances
+        dark = dark_instances()
+    except ImportError:  # pragma: no cover — the module ships beside this one
+        dark = set()
+    live = [t for t in sorted(INSTANCES) if t not in dark]
+    owners = {}
+    for tag in live:
+        ws_path = os.path.join(root, INSTANCES[tag]["worksheet"])
+        try:
+            with open(ws_path, encoding="utf-8") as f:
+                ws = json.load(f)
+        except (OSError, ValueError):
+            continue  # load_worksheet reports an unreadable worksheet itself
+        for l in ws.get("layers", []):
+            owners.setdefault(l["id"], []).append(tag)
+    carried = {(tag, lid) for cols in concepts.values() for tag, ids in cols.items() for lid in ids}
+    problems = []
+    for lid, tags in sorted(owners.items()):
+        if len(tags) < 2:
+            continue
+        missing = [t for t in tags if (t, lid) not in carried]
+        if missing:
+            problems.append("`%s` is registered by %s but no row in %s carries it for %s — add "
+                            "it under the concept it answers (or a new row)"
+                            % (lid, ", ".join(tags), LAYER_CONCEPTS_FILE, ", ".join(missing)))
+    return problems
+
+
 def load_worksheet(ws_path, schema):
     """Read, schema-validate and sanity-check one instance's worksheet."""
     try:
@@ -1490,6 +1606,12 @@ def main():
             fail("%s — a shipped layer code changed or vanished:\n  %s"
                  % (LAYER_CODES_FILE, "\n  ".join(history)))
 
+    layer_concepts = load_layer_concepts(args.root)
+    unshared = check_shared_ids_carried(args.root, layer_concepts, schema)
+    if unshared:
+        fail("%s — a layer two live apps share would not travel between them:\n  %s"
+             % (LAYER_CONCEPTS_FILE, "\n  ".join(unshared)))
+
     drift, processed = [], 0
     for instance in ids:
         inst = INSTANCES[instance]
@@ -1502,6 +1624,14 @@ def main():
         # Private key, added AFTER schema validation: render_metro_config reads
         # it, and nothing writes the worksheet back.
         worksheet["_layer_codes"] = [(l["id"], layer_codes[l["id"]]) for l in worksheet["layers"]]
+        registered = {l["id"] for l in worksheet["layers"]}
+        unknown_ids = ["%s -> %s" % (c, x) for c, cols in layer_concepts.items()
+                       for x in cols.get(instance, []) if x not in registered]
+        if unknown_ids:
+            fail("%s: %s names layer(s) %s does not register: %s"
+                 % (inst["worksheet"], LAYER_CONCEPTS_FILE, instance, ", ".join(unknown_ids)))
+        worksheet["_layer_concepts"] = [(c, cols[instance]) for c, cols in layer_concepts.items()
+                                        if instance in cols]
         # The apple-touch-icon href is the one generated brand value naming a
         # file on disk rather than carrying its own bytes (the favicon is a
         # data: URI). A tag pointing at a missing PNG is invisible in every
