@@ -4064,6 +4064,21 @@ function initMichiganExplorer() {
     "city-ward": "cw", "precinct": "pc", "tribal-government": "tg", "municipality": "mu",
     "police-station": "ps", "fire-station": "fs", "post-office": "po",
     "mi-court-of-appeals": "mia", "mi-circuit-court": "mic", "mi-isd": "is" };
+  // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
+  // reader moving to a sibling app takes the concepts of the layers they have
+  // on (`carry=`), and the app they arrive in turns on its own layers for
+  // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
+  var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["mi-senate"],
+    "state-house": ["mi-house"], "appellate-court-district": ["mi-court-of-appeals"],
+    "trial-court-district": ["mi-circuit-court"], "county": ["county"],
+    "county-board": ["county-commissioner"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "city-council": ["city-ward"],
+    "voting-precinct": ["precinct"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
+    "school-district-elementary": ["school-district-elementary"],
+    "regional-education-agency": ["mi-isd"], "police-station": ["police-station"],
+    "fire-station": ["fire-station"], "post-office": ["post-office"],
+    "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4087,17 +4102,17 @@ function initMichiganExplorer() {
   // an instance whose full coverage is a proper subset of a wider region its
   // statewide layers still answer in; it also requires that instance's boot
   // to hand drawOutOfScopeMask() the region geometry, because the key names
-  // only the bands that were actually drawn.
-  var COVERAGE_KEY = { outside: "Outside Michigan" };
+  // only the bands that were actually drawn. `edge` names the purple line
+  // around the coverage in an instance with no region.
+  var COVERAGE_KEY = { outside: "Outside Michigan", edge: "Michigan" };
   /* Sibling District Explorer deployments — one canonical list shared by every
    * metro fork. When a new metro launches, add its entry to every fork's
    * worksheet and regenerate (Conversion 3 will source this list from the
    * fleet manifest instead). THIS_METRO drops the fork's own entry so the
    * list is identical in every fork. `bbox` (greater metro area, mirroring
-   * that fork's PERMALINK_GATE) and `emoji` feed the sibling-metro portal
-   * easter egg (ENGINE metro-portal): wander the map into a sibling's bbox —
-   * or search/geolocate a point inside one — and the app offers to hand you
-   * off to that fork's explorer. */
+   * that fork's PERMALINK_GATE) and `emoji` feed the sibling hand-off
+   * (ENGINE metro-portal): click, search or geolocate a point a sibling
+   * answers for and the app sends you to that sibling, with your layers. */
   var METRO_EXPLORERS = [
     { id: "chicago", label: "Illinois", url: "https://districtry.com/il/", emoji: "🌭", explorerName: "districtry Illinois",
       bbox: { minLng: -91.52, minLat: 36.96, maxLng: -87.01, maxLat: 42.51 } },
@@ -5581,6 +5596,22 @@ function initMichiganExplorer() {
     return biggest ? ringToLatLng(biggest) : null;
   }
 
+  // Every ring of the coverage outline (GeoJSON [lng,lat]) as a closed
+  // Leaflet line, for the edge drawn along it. All of them, because each is a
+  // place the wash stops: measured 2026-10-13, the ten outlines this draws
+  // hold one ring each except San Francisco's (the city and Treasure Island)
+  // and Kentucky's (the state and the Kentucky Bend), both covered ground.
+  function outlineEdgeLines(rings) {
+    var out = [];
+    for (var i = 0; i < (rings || []).length; i++) {
+      var r = rings[i];
+      if (!r || r.length < 4) continue;
+      var line = ringToLatLng(r);
+      out.push(line.concat([line[0]]));
+    }
+    return out;
+  }
+
   /* ---------- the coverage key ----------
    * A <details> rather than a <div>, and that is a layout decision rather
    * than a stylistic one: on desktop it is open and reads as a legend card,
@@ -5748,6 +5779,34 @@ function initMichiganExplorer() {
         // Read by styleDistrictryCoverage: with no region ring to sit inside,
         // one band carries the whole claim and is drawn lighter for it.
         c.fallbackMask = true;
+        /* AND THE SAME PURPLE EDGE, around the coverage itself. Until
+           2026-10-13 only the three apps that pass a region (Illinois, New
+           York, Wisconsin) drew the glowing state line, so the nine whose
+           coverage IS their state, and San Francisco, whose coverage is its
+           city, showed the wash with no line along it, and the operator
+           noticed the difference. Their edge is the coverage outline, so the
+           line is drawn there: exactly where the wash stops.
+           Only for an app that DECLARES no region. One that declares a region
+           whose file failed to load keeps the two-band wash with no line, as
+           before: its line means the state line, and the coverage ring is
+           not that. So `dst-glow` still appears in a region-declaring app
+           only once the region band has painted, which is what Illinois's and
+           New York's smoke tests wait on. Unlike the region's line, which
+           keeps only the largest ring so a state's lake islands get no glow of
+           their own, this one goes round every ring: a separate piece of
+           coverage (Treasure Island, the Kentucky Bend) is ground the app
+           answers for, and the line marks where that stops. */
+        var edges = typeof loadRegionGeometry === "function" ? [] : outlineEdgeLines(outline);
+        if (edges.length) {
+          c.glow = L.polyline(edges, {
+            pane: "scope-mask", className: "dst-glow",
+            weight: 9, opacity: 0, interactive: false
+          }).addTo(map);
+          c.stateLine = L.polyline(edges, {
+            pane: "scope-mask", weight: 1.5, opacity: 0.9, interactive: false
+          }).addTo(map);
+          if (ck && ck.edge) bands.push({ swatch: "dml-glow", label: ck.edge });
+        }
       }
       if (ck) bands.push({ swatch: "dml-sw dml-out", label: ck.outside, rule: bands.length > 0 });
 
@@ -6286,6 +6345,11 @@ function initMichiganExplorer() {
   // refuses one), so the two cannot be confused.
   function layerFromLinkCode(token) { return layerIdOfCode[token] || token; }
 
+  // Concept -> this app's layer ids, for a hand-off's `carry=` (ENGINE
+  // metro-portal writes it when it sends a reader here from a sibling app).
+  // Guarded like LAYER_CODES: an app with no table turns nothing on from it.
+  var layerIdsOfConcept = (typeof LAYER_CONCEPTS === "object" && LAYER_CONCEPTS) ? LAYER_CONCEPTS : {};
+
   // Five decimals (about a metre), trailing zeros dropped: 41.88250 -> 41.8825.
   function linkCoord(n) { return String(+n.toFixed(5)); }
 
@@ -6314,6 +6378,12 @@ function initMichiganExplorer() {
     }
     if (params.layers) params.layers.split(",").forEach(addLayer);
     if (params.l) params.l.split(",").forEach(function (t) { if (t) addLayer(layerFromLinkCode(t)); });
+    // `carry=`: the layers a reader had on in the sibling app they just left,
+    // named by what they mean. Each concept this app has turns on its own
+    // layers for it; one it lacks is dropped, like an unknown id.
+    if (params.carry) params.carry.split(",").forEach(function (c) {
+      if (Object.prototype.hasOwnProperty.call(layerIdsOfConcept, c)) layerIdsOfConcept[c].forEach(addLayer);
+    });
     return {
       point: pick("p", "point"),
       layers: layers,
@@ -7403,15 +7473,23 @@ function initMichiganExplorer() {
   /* =========================================================================
    * SIBLING-METRO HANDOFF — every instance knows where its siblings live
    * (fleet-outlines.json; METRO_EXPLORERS[].bbox for the search rows' coarse
-   * pass). When the map centre, a selected point, a searched address or a
-   * geolocation fix lands inside a sibling's area, the reader goes STRAIGHT
-   * there, carrying the zoom they were at (and the point, when there is one)
-   * so the map they arrive on is framed like the one they left.
+   * pass). When a selected point, a searched address or a geolocation fix
+   * lands inside a sibling's area, the reader goes STRAIGHT there, carrying
+   * the point, the zoom they were at and the layers they had on, so the map
+   * they arrive on is framed like the one they left.
    *
    * This was an easter egg until 2026-08-25: a card, a five-second countdown
    * and a "Stay" button. Retired at the operator's direction — it asked a
    * question whose answer was always yes, and made every reader who crossed a
    * state line watch a timer to get where they were already going.
+   *
+   * PANNING NO LONGER SWITCHES APPS (2026-10-13, the operator's ruling,
+   * reversing his own of 2026-09-30). Until then a `moveend` handler sent the
+   * reader on as soon as the map's CENTRE left this app's outline and a
+   * sibling's held it, so dragging the map across a state line opened another
+   * app. Only a SELECTION hands off now: a click, the keyboard select button,
+   * a searched address, a geolocation fix. Panning past the line shows the
+   * wash and stays here.
    * ======================================================================= */
 
   /* A metro without a (well-formed) bbox simply opts out of the handoff —
@@ -7444,16 +7522,56 @@ function initMichiganExplorer() {
     return best;
   }
 
+  /* THE LAYERS THE READER HAS ON, AS WHAT THEY MEAN RATHER THAN WHAT THIS APP
+   * CALLS THEM. Layer ids differ between apps for one thing (Illinois's
+   * `congress` is Iowa's `us-house`, its `il-house` is Wisconsin's
+   * `wi-assembly`), and one id can mean two things (Illinois's `ward` is a
+   * city council ward, Wisconsin's an election ward). So a hand-off names
+   * CONCEPTS, from the fleet-wide layer-concepts.json, which
+   * generate_metro_files.py slices into each app as LAYER_CONCEPTS (concept ->
+   * this app's layer ids). The receiving app turns on its own layers for each
+   * concept it has and drops the rest (ENGINE permalink, `carry=`). A layer in
+   * no concept is not carried. Guarded, so an app with no table carries
+   * nothing rather than failing. */
+  function carriedLayerConcepts() {
+    if (typeof LAYER_CONCEPTS !== "object" || !LAYER_CONCEPTS) return [];
+    var out = [];
+    Object.keys(LAYER_CONCEPTS).forEach(function (concept) {
+      var ids = LAYER_CONCEPTS[concept] || [];
+      for (var i = 0; i < ids.length; i++) {
+        if (state.layersOn[ids[i]]) { out.push(concept); return; }
+      }
+    });
+    return out;
+  }
+
   /* The sibling's URL, framed like the view being left: the point when there
-   * is one (a click, a search hit, a geolocation fix) and the zoom always. A
-   * pan-triggered handoff carries zoom alone — the reader selected nothing, so
-   * arriving with a point selected for them would answer a question they never
-   * asked. */
+   * is one (a click, a search hit, a geolocation fix), the zoom when one is
+   * given, and the layers on now. The state menu and the footer row pass
+   * neither point nor zoom — the reader asked for another state, not for a
+   * place in it — so they carry the layers alone. Long form on purpose: these
+   * links are never shared, and the receiving app rewrites the hash to its own
+   * short form as soon as its layers are on. */
   function metroPortalUrl(metro, point, zoom) {
     var parts = [];
     if (point) parts.push("point=" + point.lat.toFixed(5) + "," + point.lng.toFixed(5));
-    if (isFinite(zoom)) parts.push("zoom=" + zoom);
+    if (zoom !== null && zoom !== undefined && isFinite(zoom)) parts.push("zoom=" + zoom);
+    var carry = carriedLayerConcepts();
+    if (carry.length) parts.push("carry=" + carry.join(","));
     return parts.length ? metro.url + "#" + parts.join("&") : metro.url;
+  }
+
+  /* A link to a sibling app that keeps its href current with the layers on.
+   * Rewritten as the reader reaches for it rather than when it is built,
+   * because the layers change after the menu exists: `pointerdown` comes
+   * before a click, a middle click and a right click's "open in new tab",
+   * `focus` before a keyboard Enter, and `click` itself runs before the
+   * browser follows the link. */
+  function carryLayersOnLink(a, metro) {
+    function refresh() { a.href = metroPortalUrl(metro); }
+    a.addEventListener("pointerdown", refresh);
+    a.addEventListener("focus", refresh);
+    a.addEventListener("click", refresh);
   }
 
   // One handoff per page load. Belt and braces beside the coverage guard
@@ -7473,7 +7591,7 @@ function initMichiganExplorer() {
     // caller has already asked placeOwner(); this is the last word on it.
     if (here && servedHereNow(here.lat, here.lng) === true) return false;
     metroHandedOff = true;
-    trackEvent("metro-portal-go/" + metro.id, opts.source || "wander");
+    trackEvent("metro-portal-go/" + metro.id, opts.source || "select");
     window.location.href = metroPortalUrl(metro, here, map.getZoom());
     return true;
   }
@@ -7576,13 +7694,9 @@ function initMichiganExplorer() {
    * `proceed` selects the point here, and runs unless the reader is sent on.
    * Returns true when it has taken over (the caller stops and `proceed` runs
    * later, if at all), false when the point is plainly this app's and the
-   * caller should select it now.
-   *
-   * Panning already hands off on `moveend`, but only when the CENTRE crosses.
-   * A reader looking at Illinois can click Wisconsin near the top of the map
-   * without the centre ever leaving Illinois, which is exactly the case this
-   * covers: the click carries the point, so they arrive with it selected
-   * rather than merely somewhere in the neighbourhood. */
+   * caller should select it now. The click carries the point, so the reader
+   * arrives with it selected rather than merely somewhere in the
+   * neighbourhood. */
   var handoffSeq = 0;
   function handoffSelection(lat, lng, source, proceed) {
     if (metroHandedOff) return false;
@@ -7596,21 +7710,6 @@ function initMichiganExplorer() {
     });
     return true;
   }
-
-  var wanderSeq = 0;
-  map.on("moveend", function () {
-    if (metroHandedOff) return;
-    var c = map.getCenter();
-    // Only once this app's own outline has loaded and says the centre has left
-    // it. Before then, or while it is inside, the reader is looking at their
-    // own map near its edge.
-    if (servedHereNow(c.lat, c.lng) !== false) return;
-    var seq = ++wanderSeq;
-    placeOwner(c.lat, c.lng).then(function (owner) {
-      if (seq !== wanderSeq || !owner || owner === "here") return;
-      offerMetroPortal(owner, { source: "wander" });
-    });
-  });
   /* ==== ENGINE:END metro-portal ==== */
   /* =========================================================================
    * GEOCODER — Photon search box + Nominatim POI lookups, bounded to
@@ -16871,6 +16970,8 @@ function initMichiganExplorer() {
       if (metro.id === THIS_METRO) continue;
       var a = document.createElement("a");
       a.href = metro.url;
+      // the layers on now travel with the reader (ENGINE metro-portal)
+      if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, metro);
       a.target = "_blank";
       a.rel = "noopener";
       a.textContent = metro.label;
@@ -17447,6 +17548,9 @@ function initMichiganExplorer() {
       if (m.id === THIS_METRO) continue;
       var a = document.createElement("a");
       a.href = m.url;
+      /* and the layers the reader has on travel with them (ENGINE
+         metro-portal), as they do when a click crosses a state line */
+      if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, m);
       a.setAttribute("role", "menuitem");
       if (m.emoji) {
         var e = document.createElement("span");
