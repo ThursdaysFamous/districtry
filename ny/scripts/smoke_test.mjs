@@ -101,6 +101,23 @@ async function booted(context, url, routeFn) {
   return page;
 }
 
+// Wait for a coverage-gated layer's coverage test to SETTLE as "out of
+// coverage" before anyone reads whether it is hidden. Reading at boot raced
+// it: the block starts visible and is hidden only once the test resolves, so
+// under load the read could land first — measured 2026-10-13, 1 run in 3
+// with the il and wi smoke tests beside this one, the way CI runs them since
+// the browser gates went three at a time. relevant starts undefined, which
+// layerLoadState reports as true, so this cannot pass before the test has
+// run; a layer whose test answers "inside" times out and the check fails.
+async function settledOutOfCoverage(page, id) {
+  return page
+    .waitForFunction((lid) => {
+      const st = window.NycExplorer.layerLoadState(lid);
+      return !!st && st.relevant === false;
+    }, id, { timeout: 20000 })
+    .then(() => true, () => false);
+}
+
 // Wait for a layer card to finish loading, then return its normalized text.
 async function cardText(page, id) {
   await page
@@ -438,6 +455,7 @@ try {
                                ["New York City, which absorbed its counties", NYC_POINT]]) {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${pt}&layers=county-legislature`);
+      const settled = await settledOutOfCoverage(page, "county-legislature");
       const shown = await page.evaluate(() => {
         const card = document.getElementById("card-county-legislature");
         const block = card && card.closest(".layer-block");
@@ -446,7 +464,7 @@ try {
         return { card: visible(block), toggle: visible(toggle) };
       });
       check(`county-legislature stays hidden at ${where}`,
-        !shown.card && !shown.toggle, JSON.stringify(shown));
+        settled && !shown.card && !shown.toggle, JSON.stringify({ settled, ...shown }));
       await context.close();
     }
   }
@@ -500,6 +518,7 @@ try {
                                  ["New York City", NYC_POINT]]) {
         const context = await browser.newContext({ serviceWorkers: "block" });
         const page = await booted(context, `${BASE}#point=${pt}&layers=${layer}`);
+        const settled = await settledOutOfCoverage(page, layer);
         const shown = await page.evaluate((id) => {
           const card = document.getElementById("card-" + id);
           const block = card && card.closest(".layer-block");
@@ -508,7 +527,7 @@ try {
           return { card: visible(block), toggle: visible(toggle) };
         }, layer);
         check(`${layer} stays hidden at ${where}`,
-          !shown.card && !shown.toggle, JSON.stringify(shown));
+          settled && !shown.card && !shown.toggle, JSON.stringify({ settled, ...shown }));
         await context.close();
       }
     }
