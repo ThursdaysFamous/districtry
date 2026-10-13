@@ -7,8 +7,8 @@
 //
 // The links below were written in the shapes Google and Apple publish and
 // that the two apps' share buttons produce; none carries a real person's
-// location. A short link is recognised and never followed: following one is
-// the lookup's job (services/link-lookup/main.ts).
+// location. A short link is recognised and handed to the lookup
+// (services/link-lookup/main.ts), stubbed here: following one is its job.
 //
 //   node scripts/map_link_test.mjs
 import { readFileSync } from "node:fs";
@@ -73,15 +73,33 @@ for (const [text, want] of cases) {
   }
 }
 
-// With no lookup configured, a short link is never sent anywhere.
-let sent = false;
-globalThis.fetch = () => { sent = true; return Promise.reject(new Error("fetch")); };
-await api.resolveShortMapLink({ kind: "short", url: "https://maps.app.goo.gl/x", source: "google" })
-  .then(() => { failed++; console.error("map-link: FAIL a short link resolved with no lookup configured"); }, () => {});
-if (sent) { failed++; console.error("map-link: FAIL a short link was sent with no lookup configured"); }
-if (!/Short Google Maps links/.test(api.mapLinkMessage({ kind: "short", source: "google" }))) {
+// A short link goes to the lookup, and only the short link: the URL asked is
+// the lookup's own address with the link as its one parameter, and the full
+// link it answers is read by the same parser.
+const LOOKUP = "https://link-lookup.districtry.deno.net/";
+const SHORT = "https://maps.app.goo.gl/x";
+let asked = [];
+globalThis.fetch = (url) => {
+  asked.push(String(url));
+  return Promise.resolve({ ok: true, json: () => Promise.resolve({
+    url: "https://www.google.com/maps/place/Daley+Plaza/@41.8836,-87.6314,17z/data=!3m1!4b1!8m2!3d41.88395!4d-87.63022" }) });
+};
+const full = await api.resolveShortMapLink({ kind: "short", url: SHORT, source: "google" }).catch((e) => e);
+if (asked.length !== 1 || asked[0] !== LOOKUP + "?u=" + encodeURIComponent(SHORT)) {
+  failed++; console.error("map-link: FAIL a short link should ask only the lookup, once; asked " + JSON.stringify(asked));
+}
+if (!full || full.kind !== "point" || !near(full.lat, 41.88395) || !near(full.lng, -87.63022)) {
+  failed++; console.error("map-link: FAIL the lookup's full link was not read as its place; got " + JSON.stringify(full));
+}
+// A lookup that answers with another short link, or fails, is a rejection.
+for (const answer of [{ ok: true, json: () => Promise.resolve({ url: SHORT }) }, { ok: false, status: 502 }]) {
+  globalThis.fetch = () => Promise.resolve(answer);
+  await api.resolveShortMapLink({ kind: "short", url: SHORT, source: "google" })
+    .then(() => { failed++; console.error("map-link: FAIL a lookup answering " + JSON.stringify(answer.status || "a short link") + " resolved"); }, () => {});
+}
+if (!/short Google Maps link/.test(api.mapLinkMessage({ kind: "short", source: "google" }))) {
   failed++; console.error("map-link: FAIL the short-link message does not name Google Maps");
 }
 
-if (failed) { console.error("map-link: " + failed + " of " + (cases.length + 2) + " checks failed"); process.exit(1); }
-console.log("map-link: OK — " + cases.length + " pasted texts read as expected; no short link is sent without a lookup");
+if (failed) { console.error("map-link: " + failed + " of " + (cases.length + 5) + " checks failed"); process.exit(1); }
+console.log("map-link: OK — " + cases.length + " pasted texts read as expected; a short link is sent only to the lookup");
