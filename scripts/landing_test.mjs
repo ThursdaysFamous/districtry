@@ -417,6 +417,45 @@ try {
     await ctx.close();
   }
 
+  // --- 1c-quinquies. a pasted map link is read here, never geocoded --------
+  //
+  // engine/shared/map-link.txt reads the position out of a full Google Maps
+  // link in the browser, so the front door opens the app that covers it and
+  // Photon is never asked. The Photon route records any request at all, so a
+  // build that sent the link to the geocoder as address text fails here even
+  // though the stub would have answered it.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    let photonAsked = false;
+    await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "https://www.google.com/maps/place/Lambeau+Field/@44.50,-88.06,12z/data=!3m1!4b1!8m2!3d44.5013!4d-88.0622");
+    await page.click("#search-button");
+    await page.waitForTimeout(700);
+    check("a pasted Google Maps link in Green Bay opens /wi/", new URL(page.url()).pathname === "/wi/", page.url());
+    check("a pasted Google Maps link is never sent to the geocoder", !photonAsked, String(photonAsked));
+    await ctx.close();
+  }
+  // ...and a short link, with no lookup configured, says how to get the full one
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    let photonAsked = false;
+    await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
+    await page.click("#search-button");
+    await page.waitForTimeout(500);
+    const msg = await textOrNull(page, "#search-status");
+    check("a short map link stays on the landing page and says what to paste instead",
+      new URL(page.url()).pathname === "/" && /copy the full address/i.test(msg || ""), JSON.stringify(msg));
+    check("a short map link is never sent to the geocoder", !photonAsked, String(photonAsked));
+    await ctx.close();
+  }
+
   // --- 1d. an address nobody covers SAYS SO, and never guesses -------------
   //
   // The honesty rule this whole project runs on, applied to the front door: a
