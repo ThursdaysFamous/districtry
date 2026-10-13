@@ -223,24 +223,13 @@ try {
   //     so this needs no network.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    // THE FLEET FILE IS REFUSED FOR THE WHOLE OF THIS CHECK, because its
-    // coverage-band half selects NEGATIVE_POINT and setSelectedPoint PANS
-    // there, which puts the map's CENTRE outside Kentucky and arms the pan
-    // hand-off (ENGINE metro-portal's moveend -> placeOwner ->
-    // offerMetroPortal, which sets window.location.href). The point is in
-    // Tennessee, which no instance and no launch plan covers TODAY — so unlike
-    // Iowa's and Wisconsin's cases nothing is broken now, and this is refused
-    // anyway, because the alternative is a check that passes until somebody
-    // ships a state and then fails as a TIMEOUT WAITING FOR A BUTTON ON A PAGE
-    // THAT HAS NAVIGATED AWAY, a symptom that names nothing about its cause.
-    // Iowa (#1267) and Wisconsin (#1268) both arrived at refusing the file
-    // rather than moving the point; a new instance starts there instead of
-    // waiting to be bitten. Refused, placeOwner's own error leg answers
-    // "nobody", which is the state this check is about. Kentucky asserts
-    // nothing about fleet routing, so nothing else here needs the file.
-    const page = await booted(context, BASE, async (p) => {
-      await p.route("**/fleet-outlines.json", (r) => r.abort());
-    });
+    // The coverage-band half selects NEGATIVE_POINT, which is in Tennessee,
+    // and setSelectedPoint PANS there. Until 2026-10-13 that would have put
+    // the map's centre in a sibling's state once Tennessee went live and the
+    // pan hand-off navigated away mid-assertion, so this check refused
+    // ../fleet-outlines.json; panning no longer switches apps, so it refuses
+    // nothing.
+    const page = await booted(context, BASE);
     const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/coverage-gaps.json"), "utf8"));
     const expected = Object.keys(shipped).length;
 
@@ -318,6 +307,18 @@ try {
       }, null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
     }
     if (await washPainted()) {
+      // THE PURPLE EDGE (2026-10-13). This app's coverage is its whole ground,
+      // so the glowing line is drawn along the coverage itself, as the apps
+      // with a wider region band always drew theirs. Until that day this one
+      // drew no line at all. The coverage key names it.
+      const edge = await page.evaluate(() => {
+        const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
+        const sw = document.querySelector(".districtry-map-legend .dml-items .dml-glow");
+        const label = sw && sw.parentElement.querySelector(".dml-label");
+        return { line: !!(pane && pane.querySelector("path.dst-glow")), label: label ? label.textContent : null };
+      });
+      check("the wash draws the purple edge along the coverage, and the key names it",
+        edge.line && !!edge.label, JSON.stringify(edge));
       await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
         { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
       const beyond = await openGaps();
@@ -477,9 +478,6 @@ try {
     // identical either way — the negative point is outside both tilings.
     const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=${OFFLINE.join(",")}`, async (p) => {
       await p.route(`**${PORTAL_HOST}**`, (r) => r.abort());
-      // And the fleet file, for the reason check 1a gives: restoring a point
-      // from the hash pans the map to it, which arms the same hand-off.
-      await p.route("**/fleet-outlines.json", (r) => r.abort());
     });
     for (const id of OFFLINE) {
       if (NEGATIVE_HIDDEN.includes(id)) {

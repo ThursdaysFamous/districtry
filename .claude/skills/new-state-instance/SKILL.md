@@ -174,8 +174,10 @@ Then decide the BANDS by §2.5.1's test, not by arrival shape: three only when
 full coverage is a proper subset of a wider region whose layers still answer
 throughout. Wisconsin is three bands and NYC and SF are two (§2.5.1's table)
 — a two-band key is not a degraded key. Add `coverage_key` to the worksheet
-— `outside` required, `region{edge,label,sub}` only for three bands — and do
-not derive the words from the metro name. **A three-band instance owes
+— `outside` required, `region{edge,label,sub}` only for three bands, and for
+two bands a top-level `edge` (the state's name), which labels the purple line
+the wash draws along the coverage — and do not derive the words from the
+metro name. **A three-band instance owes
 GEOMETRY as well as words**: the region ring, simplified at the SAME
 tolerance as the coverage outline and wired as the second argument of
 `drawOutOfScopeMask`. The root `scripts/build_metro_outline.py` shows the
@@ -230,7 +232,10 @@ use (`<tag>/data/source`, `<tag>/data/state`, `<tag>/scripts`,
 `<tag>/data/*.geojson`) and add `<tag>` to its `for published in` presence
 loop; add the `metros.json` entry (`tag`, `landing_name`, `blurb`, `scope`,
 `url`, `bbox` and the rest, copied from a sibling) and run
-`python3 scripts/generate_metro_files.py --sync-fleet`; add the tag to
+`python3 scripts/generate_metro_files.py --sync-fleet`; give the tag its
+column in the root `layer-concepts.json` (each row the instance has a layer
+for), because once it is live the generator fails on any id it shares with
+another live app that no row carries; add the tag to
 `AREAS` in `scripts/build_coverage_map.py` (an outline pair, `state_outline`
 None for a single-tier instance — a `metros.json` tag in neither `AREAS` nor
 `CITY_TAGS` fails its `--check`, and a state is never a marker); every page

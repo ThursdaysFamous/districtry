@@ -493,7 +493,8 @@
     "note": "downtown Toledo, Ohio — south of the Michigan line and inside permalink_gate's minLat (41.55), so the point is still selectable; measured to miss all eight ANCHOR layers (phase 3's four live TIGERweb fabric layers are deliberately not anchors — anchors are pre-built and election-stable)"
   },
   "coverage_key": {
-    "outside": "Outside Michigan"
+    "outside": "Outside Michigan",
+    "edge": "Michigan"
   },
   "data_files": {
     "geometry": [

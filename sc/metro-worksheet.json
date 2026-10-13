@@ -353,7 +353,8 @@
     "note": "Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side."
   },
   "coverage_key": {
-    "outside": "Outside South Carolina"
+    "outside": "Outside South Carolina",
+    "edge": "South Carolina"
   },
   "data_files": {
     "geometry": [
