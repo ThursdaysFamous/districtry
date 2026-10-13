@@ -365,6 +365,19 @@ INSTANCES = [
 ]
 
 
+# AN INSTANCE WHOSE ADAPTER IS SETTLED AND WHOSE PAGES ARE HELD. Nothing here
+# renders, indexes or counts these: they exist so that build_eam_status.py's
+# scorecard reads the county tier through the same adapter the pages will use,
+# rather than through a second reader of the same file. South Carolina is held
+# because it is dark (its NOT_COUNTY_BOARDS entry says why); its go-live moves
+# this entry into INSTANCES with the page wording beside it and drops that
+# entry, and the adapter does not change.
+HELD_INSTANCES = [
+    dict(tag="sc", state="South Carolina", concept="county-council",
+         adapters=("sc_councils",)),
+]
+
+
 def heading_of(inst, county, rec=None):
     """The body's name for one county. A RECORD MAY NAME ITS OWN BODY, because
     one state can hold counties whose legislative body is not the one the
@@ -1793,6 +1806,92 @@ _MN_MONTHS = ("January", "February", "March", "April", "May", "June", "July",
               "August", "September", "October", "November", "December")
 
 
+# South Carolina's non-district seat kinds, in the words a page prints for them.
+SC_SEAT_LABELS = {"chair": "Chair, elected countywide",
+                  "at-large": "Elected countywide",
+                  "supervisor": "Supervisor, elected countywide",
+                  "township": "Elected by township"}
+
+
+def sc_councils(inst):
+    """South Carolina: ONE file keyed by county GEOID ("45001"), each record
+    carrying the county's name, its council's `form` and `seats`, every seat
+    the winner of its most recent election in the State Election Commission's
+    results (sc/scripts, sc-county-council-members.json).
+
+    A SEAT IS EITHER A DISTRICT OR NOT. A `district` seat goes under its
+    district; every other kind — a chair or supervisor elected countywide, an
+    at-large member, Charleston-area members elected by township — goes in an
+    extra section named for the kind, because placing it in a district would
+    claim ground the seat does not represent. A council elected wholly at
+    large (`form: whole-county`) has no district at all and carries its
+    members at the top of the record, the at-large shape the fleet already
+    reads.
+
+    Where the county's own page names somebody else for a seat (`countySays`),
+    the member's line says so beside the election date: the two publishers
+    disagreeing is what a reader of that seat should see."""
+    path = os.path.join(app_data(inst["tag"]), "sc-county-council-members.json")
+    out, problems, nameless = {}, [], set()
+    for geoid, rec in sorted(_read(path).items()):
+        name = re.sub(r"\s+County$", "", (rec.get("county") or "").strip())
+        seats = rec.get("seats") or []
+        if not name or not seats:
+            problems.append("sc-county-council-members.json %r carries no county "
+                            "or no seats" % geoid)
+            continue
+
+        def person(seat):
+            when = _mn_date(seat.get("election"))
+            p = {"name": seat["name"].strip()}
+            note = "Elected %s." % when if when else None
+            says = seat.get("countySays") or {}
+            if (says.get("name") or "").strip():
+                note = ((note + " ") if note else "") + (
+                    "The county's own page names %s for this seat."
+                    % says["name"].strip())
+            if note:
+                p["elected"] = note
+            return p
+
+        by_district, extra = {}, {}
+        for seat in seats:
+            if not (seat.get("name") or "").strip():
+                problems.append("sc %s County has a seat naming nobody" % name)
+                continue
+            kind = seat.get("seat")
+            if kind == "district" and seat.get("district") is not None:
+                by_district.setdefault(str(seat["district"]), []).append(person(seat))
+            elif kind in SC_SEAT_LABELS:
+                extra.setdefault(kind, []).append(person(seat))
+            else:
+                problems.append("sc %s County has a seat of unknown kind %r"
+                                % (name, kind))
+        districts = [district(label, by_district[label])
+                     for label in sorted(by_district, key=district_sort_key)]
+        extras = [(kind, SC_SEAT_LABELS[kind], extra[kind])
+                  for kind in SC_SEAT_LABELS if kind in extra]
+        entry = {"districts": districts, "sourceUrl": rec.get("countyPage"),
+                 "source_label": "the South Carolina Election Commission's "
+                                 "results",
+                 "extras": extras, "skipped": [], "slug": county_slug(name),
+                 "at_large": False, "source_file": path}
+        if not districts:
+            # A council elected wholly at large: its members are the record.
+            entry["at_large"] = True
+            entry["members"] = [m for _k, _l, ms in extras for m in ms]
+            entry["extras"] = []
+        if not _count_named(districts, extras):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("sc %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        out[name] = entry
+    note = ("%d of South Carolina's 46 counties, every seat the winner of its "
+            "most recent election" % len(out))
+    return out, problems, nameless, [path], note
+
+
 def _mn_date(iso):
     m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", str(iso or ""))
     if not m:
@@ -3136,9 +3235,10 @@ NOT_COUNTY_BOARDS = {
                "governing body and belong on these pages. They are held back "
                "for one reason: South Carolina is dark, and a county page, its "
                "index and the about page's officeholder count would describe an "
-               "app nobody can open yet. The adapter lands in the go-live "
-               "change (sc/WATCH.md lists it), copied from mn_commissioners, "
-               "and this entry goes with it.",
+               "app nobody can open yet. The adapter, sc_councils, landed "
+               "2026-10-13 under HELD_INSTANCES so the scorecard reads the "
+               "county tier through it; the go-live change (sc/WATCH.md "
+               "lists it) moves it into INSTANCES and this entry goes.",
     ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",

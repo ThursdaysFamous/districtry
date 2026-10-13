@@ -192,7 +192,12 @@ jobs:
           # carried over the checkout as an uncommitted change.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add sc/data/app/sc-county-council-members.json
+          # docs/EAM_STATUS.md reads this roster through build_county_pages'
+          # sc_councils adapter, so a county gaining or losing a member can
+          # move it; while South Carolina is dark the report does not score
+          # it, and the regenerate is a no-op until go-live.
+          python3 scripts/build_eam_status.py
+          git add sc/data/app/sc-county-council-members.json docs/EAM_STATUS.md
           git commit -m "Update South Carolina county councils from certified election results"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

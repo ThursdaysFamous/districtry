@@ -312,7 +312,11 @@ def load_rosters():
     counties, paths = {}, {}
     quiet = io.StringIO()
     with contextlib.redirect_stdout(quiet):
-        for inst in B.INSTANCES:
+        # HELD_INSTANCES are read here and rendered nowhere: an instance whose
+        # county-page adapter is settled while its pages wait for go-live
+        # (South Carolina). Without them its county tier read as naming
+        # nobody, which is what a state with no adapter looks like.
+        for inst in B.INSTANCES + B.HELD_INSTANCES:
             tag = inst["tag"]
             merged, read = {}, []
             for adapter in inst["adapters"]:
@@ -1497,7 +1501,11 @@ ANSWERS = {
         "school-boards-by-district": answers("school-director-district"),
         "precincts": answers("precinct"),
         "special-districts": answers("community-college", "cc-director-district", "iowa-aea"),
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-10 (#1496) by the fleet-wide tribal thread: four
+        # areas across three nations, each named with the town its government
+        # sits in, and the Winnebago council named -- the Wisconsin and
+        # Michigan shape.
+        "tribal-government": answers("tribal-government"),
     },
     "mi": {
         "us-house": answers("us-house"),
@@ -1675,7 +1683,9 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-10 (#1496): the Pokagon Band's trust land, the one
+        # piece of tribal land in Indiana, with the band's council named.
+        "tribal-government": answers("tribal-government"),
     },
     # North Carolina, added at its 2026-10-09 go-live with the national tier.
     "nc": {
@@ -1698,9 +1708,10 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        # The Eastern Band of Cherokee Indians' Qualla Boundary is in the
-        # state; the fleet-wide tribal layer thread owns drawing it.
-        "tribal-government": OPEN,
+        # SHIPPED 2026-10-10 (#1496): the Eastern Band of Cherokee Indians'
+        # Qualla Boundary and its one piece of trust land, the only tribal
+        # land in the state, named with the government that answers there.
+        "tribal-government": answers("tribal-government"),
     },
     # Oklahoma, added at its go-live with the national tier.
     "ok": {
@@ -1764,7 +1775,10 @@ ANSWERS = {
         # Sullivan's service are tax-map assessment districts a town board
         # governs, with no body of their own, so they are not governments.
         "special-districts": answers("fire-district", "library-district"),
-        "tribal-government": OPEN,
+        # SHIPPED (#1480): eleven areas across eight nations, federal and state
+        # reservations both, each named with its government, and two nations'
+        # councils named -- the Wisconsin and Michigan shape.
+        "tribal-government": answers("tribal-government"),
     },
     "ca": {
         "us-house": answers("congress"),
