@@ -45,7 +45,7 @@
 // refreshed per election.)
 /* ==== TEMPLATE:END sw-version-history ==== */
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-il-shell-v40";
+const CACHE_NAME = "districtry-il-shell-v41";
 
 const SHELL_URLS = [
   "./",
@@ -150,6 +150,7 @@ const GEOMETRY_URLS = [
   "./data/app/grundy-county-board-districts.json",
   "./data/app/grundy-county-outline.json",
   "./data/app/hamilton-county-outline.json",
+  "./data/app/hamilton-precincts.json",
   "./data/app/hancock-county-outline.json",
   "./data/app/hardin-county-outline.json",
   "./data/app/henderson-precincts.json",
