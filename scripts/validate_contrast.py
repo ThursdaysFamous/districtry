@@ -63,15 +63,16 @@ something, and WHICH opaque thing matters: dark --brand-tint is
 rgba(167,139,250,0.16), and the same --muted text on it measures 4.94:1 over
 --paper and 4.33:1 over --surface — one side of the 4.5 floor each. So a row
 names the opaque ground under a translucent background with `@`:
-`brand-tint@surface` is the coverage-map legend's hover, which sits on a
---surface panel; bare `brand-tint` is the landing page's pill, which sits on
-the body. A translucent FOREGROUND takes the same suffix (`border@paper` is
+`brand-tint@surface` is the hover on the landing page's state list, which
+sits on the --surface coverage card; bare `brand-tint` is the landing page's
+notice, which sits on the body. A translucent FOREGROUND takes the same suffix (`border@paper` is
 the search input's border composited over its own dark interior before it is
 seen against the masthead). Without `@`, a translucent background is
 composited over --paper, the body ground, and a translucent foreground over
 its row's background. The first draft of this gate composited every
-translucent ground over --paper and passed the legend hover at 4.94:1 while
-the browser paints it at 4.33:1; the review that caught it is why the ground
+translucent ground over --paper and passed the coverage-map legend's hover
+(retired with the legend on 2026-10-13) at 4.94:1 while the browser painted it
+at 4.33:1; the review that caught it is why the ground
 is now written down per row. Composited channels are rounded to 8 bits
 before measuring, so a recorded ratio is one a rasteriser can reproduce.
 
@@ -220,19 +221,19 @@ PAIRS = [
     ("ink",        "border",     "text", ".gap-suggest:hover — text with the border colour as its ground (styles-footer; the gaps modal is composed outside the hidden footer)"),
     ("ink-2",      "surface",    "text", "history.html .tile-l (build_history_page)"),
     ("ink-2",      "paper",      "text", "history.html .intro, .entry p, code (build_history_page)"),
-    ("ink-3",      "surface",    "text", "the question pages' .lookup-label and .lookup-status on the --panel .lookup-card (shell); h1.title small, .masthead-action-link (skin, as --slate); .share-popover-note / -label (styles-app, on the #fff popover); the gaps panel's .gap-area, .gap-detail, .gaps-credit and its group caret .gaps-section-label::before — a state indicator repainted from --line-strong on 2026-09-02 (styles-footer); renderSourceUnavailable paints it from JS"),
+    ("ink-3",      "surface",    "text", "landing .cov-count beside its --ink strong, on the --surface .coverage card (build_landing_page); the question pages' .lookup-label and .lookup-status on the --panel .lookup-card (shell); h1.title small, .masthead-action-link (skin, as --slate); .share-popover-note / -label (styles-app, on the #fff popover); the gaps panel's .gap-area, .gap-detail, .gaps-credit and its group caret .gaps-section-label::before — a state indicator repainted from --line-strong on 2026-09-02 (styles-footer); renderSourceUnavailable paints it from JS"),
     ("ink-3",      "paper",      "text", "sub-page details body, landing h1 at <=560px, .kbd-select-btn (shell, root, styles-app); the .lookup-input PLACEHOLDER, which is --slate rather than the --slate-soft every other placeholder in the fleet uses \u2014 that pair is 2.28:1 on --paper and is the recorded (faint, paper) shortfall below, so a new field does not join it"),
     ("ink-3",      "surface-2",  "text", "privacy.html thead th at 12px (build_privacy_page)"),
     ("ink-3",      "brand-tint", "text", "landing .notice-b, footer .support (build_landing_page — on body)"),
     ("ink-3",      "border",     "text", ".gap-badge at 10px — text on the border colour (styles-footer)"),
-    ("muted",      "surface",    "text", "privacy .masthead h1 small, .which, .footer-inner; coverage-map attribution at 10px"),
-    ("muted",      "paper",      "text", "landing .lede, .coverage-caption, .not-yet-list; history .kicker and its scheduled-jobs th at 12px"),
+    ("muted",      "surface",    "text", "privacy .masthead h1 small, .which, .footer-inner; coverage-map attribution at 10px; landing .st-scope at 12px, the not-yet .st-off names and the .cov-key at 12.5px, all on the --surface .coverage card (build_landing_page)"),
+    ("muted",      "paper",      "text", "landing .lede; history .kicker and its scheduled-jobs th at 12px"),
     ("muted",      "surface-2",  "text", ".card-section-label and .card-tinted (styles-card-v2) on --card-section-bg, which the skin sets to --surface-2's value in both tiers, under --card-muted, which equals --muted — literal equals token"),
     ("muted",      "brand-tint", "text", "landing #notice-dismiss at 11.5px (build_landing_page — on body)"),
-    ("muted",      "brand-tint@surface", "text", "coverage-map .legend a:hover .mt at 11.5px — the legend is a --surface panel (build_coverage_map)"),
+    ("ink-3",      "brand-tint@surface", "text", "landing a.st:hover .st-scope at 12px — the state list sits on the --surface .coverage card, and the scope line darkens from --muted to --ink-3 with the row because --muted is the recorded shortfall on this tint (build_landing_page)"),
 
     # — the quiet tier: small labels, meta, placeholders — still TEXT —
-    ("faint",      "surface",    "text", ".dst-metro-menu-label 10px, .footer-meta 11px, .title-metro at 40px (large text, whose floor is 3.0 — this row holds the pair to the stricter 4.5 and it clears neither), .hover-foot (skin, as --slate-soft; .hover-foot is the literal #9aa3b2 on literal #fff in light); the app's search placeholder in LIGHT, whose --dst-sunken interior is #ffffff (== --surface); .empty-state-lede 12.5px (il TEMPLATE block); privacy td small 12px; coverage-map .legend h3 11px; landing .pill-n at rest"),
+    ("faint",      "surface",    "text", ".dst-metro-menu-label 10px, .footer-meta 11px, .title-metro at 40px (large text, whose floor is 3.0 — this row holds the pair to the stricter 4.5 and it clears neither), .hover-foot (skin, as --slate-soft; .hover-foot is the literal #9aa3b2 on literal #fff in light); the app's search placeholder in LIGHT, whose --dst-sunken interior is #ffffff (== --surface); .empty-state-lede 12.5px (il TEMPLATE block); privacy td small 12px; landing .pill-n at rest"),
     ("faint",      "paper",      "text", "landing h2 at 15px, .cta-note 13px (build_landing_page, shell); the app's search placeholder in DARK, whose --dst-sunken interior is #15131b (== --paper dark)"),
     ("faint",      "brand-tint", "text", "landing .pill:hover .pill-n at 12px (build_landing_page — on body)"),
     ("faint",      "brand-tint@surface", "text", "privacy.html `td small code.k` at 10.8px — .k sets a background and no colour, so inside the table's small text it inherits --faint and sits on the tint over the --surface card (build_privacy_page). The (ink, brand-tint@surface) row above is the same .k in body prose"),
@@ -271,7 +272,7 @@ PAIRS = [
     ("brand-warm", "surface",    "ui",   "focus ring on a card or the masthead; .group-safety .dot"),
     ("brand",      "surface",    "ui",   ".lookup-input and .lookup-go focus rings, drawn inside the --panel .lookup-card (shell); focused input border: .masthead .search-row input:focus (skin); .group-political .dot; the landing .search-input / .search-button rings inside .search-card"),
     ("brand",      "paper",      "ui",   "focus rings on the page ground: privacy :focus-visible on body links (build_privacy_page); landing .pill:focus-visible, drawn outside the pill over .pills, which has no background (build_landing_page)"),
-    ("data-500",   "surface",    "ui",   "legend dot / selected-boundary swatch: .dml-dot (skin; literals #1d5fd6 / #6ea8ff equal the token's two tiers)"),
+    ("data-500",   "surface",    "ui",   "legend dot / selected-boundary swatch: .dml-dot (skin; literals #1d5fd6 / #6ea8ff equal the token's two tiers); landing .st-dot and the .cov-key squares, the only mark that tells a covered state from one that is not (build_landing_page)"),
     ("border-dot@paper", "surface", "ui", "the question pages' .lookup-input RESTING border (shell), composited over its own --paper interior and seen against the --panel .lookup-card. The stronger of the two border tokens, chosen over --line because --line is the pair recorded below as perceivable on neither edge; it is still short, and is recorded rather than swapped for a value the palette does not have"),
     ("border@paper", "surface",  "ui",   "the masthead search input's RESTING border, composited over its own interior (--dst-sunken: #ffffff in light, where --border is opaque anyway; #15131b == --paper in dark) and seen against the --panel masthead — 1.4.11's text-input case, where the boundary is the field's only indicator once a reader types"),
 
@@ -379,15 +380,6 @@ ACCEPTED_SHORTFALLS = {
     ("muted", "brand-tint", "text", "light"): dict(
         measured=4.08, decided=False, date="2026-09-02",
         reason="same token on the landing page's pill tint, at 11.5px"),
-    ("muted", "brand-tint@surface", "text", "light"): dict(
-        measured=4.08, decided=False, date="2026-09-02",
-        reason="the coverage-map legend's hover: light --brand-tint is opaque, so "
-               "the ground under it changes nothing here"),
-    ("muted", "brand-tint@surface", "text", "dark"): dict(
-        measured=4.33, decided=False, date="2026-09-02",
-        reason="the same hover in dark, where --brand-tint is rgba(167,139,250,0.16) "
-               "over the legend's --surface panel — the pair the first draft of this "
-               "gate passed at 4.94:1 by compositing over --paper instead"),
     # (c) White on the dark accents: the polarity inversion. The dark tier
     # lifts every accent to a tint chosen so LINKS read on a dark ground, and
     # the engine paints the same tokens as BUTTON FACES under literal #fff.
