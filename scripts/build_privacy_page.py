@@ -330,13 +330,18 @@ def measure_address_list(src, name):
 # browser's answer, denied / timeout / unavailable / unsupported / other, or
 # that the reader is outside this app's area or in another app's) and which
 # app it was, as `locate-fail/<tag>/<reason>`. It never carries the position.
+# `map-link/` joined on 2026-10-13 with Google Maps and Apple Maps links in
+# the search box: `map-link/google`, `map-link/apple` or `map-link/coordinates`
+# when a reader selects the place a pasted link or coordinate pair names. It
+# records which kind was pasted and never the position, which is read in the
+# browser and sent nowhere.
 EXPECTED_EVENTS = ["address-search", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
                    "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
-                   "geolocate-success", "layer/", "locate-fail/", "metro-portal-go/", "more-item/", "more-open", "select",
+                   "geolocate-success", "layer/", "locate-fail/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "select",
                    "share-native", "share-open", "share-permalink", "share-qr"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
 

@@ -720,6 +720,39 @@ try {
     await context.close();
   }
 
+  // 1d2. A PASTED GOOGLE MAPS LINK is read in the browser by the shared
+  //      engine/shared/map-link.txt parser: the place it names becomes one
+  //      row, #q= selects it as it would a single address match, it is
+  //      counted by kind (never by position), and the geocoder is not asked.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    let geocoderCalls = 0;
+    const link = "https://www.google.com/maps/place/Daley+Plaza/@41.8836,-87.6314,17z/data=!3m1!4b1!8m2!3d41.88395!4d-87.63022";
+    const page = await booted(context, `${BASE}#q=${encodeURIComponent(link)}`, async (p) => {
+      await p.route("**/photon.komoot.io/**", (route) => {
+        geocoderCalls += 1;
+        route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ type: "FeatureCollection", features: [] }) });
+      });
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await p.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+      });
+    });
+    await page.waitForFunction((ns) => !!window[ns].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const got = await page.evaluate((ns) => ({
+      point: window[ns].state.selectedPoint,
+      events: (window.__gcEvents || []).filter((v) => v && v.event).map((v) => v.path),
+    }), EXPORTS_NAME);
+    check("a pasted Google Maps link selects the place it names",
+      !!got.point && Math.abs(got.point.lat - 41.88395) < 1e-6 && Math.abs(got.point.lng + 87.63022) < 1e-6,
+      JSON.stringify(got.point));
+    check("a pasted map link is never sent to the search geocoder", geocoderCalls === 0, `${geocoderCalls} Photon request(s)`);
+    check("selecting a pasted map link is counted by kind, once",
+      got.events.filter((e) => /^map-link\//.test(e)).join() === "map-link/google", JSON.stringify(got.events));
+    await context.close();
+  }
+
   // 1e. THE MASTHEAD NEVER WRAPS: its links fold into "More" from the end
   //     (dstFitMastheadActions) before the row would drop them below the
   //     search, which a reader saw as the search bar jumping from the middle

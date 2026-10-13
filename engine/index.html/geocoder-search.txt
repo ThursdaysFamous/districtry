@@ -572,6 +572,9 @@
   // Guarded by the text still being in the box, so a late index load never
   // draws suggestions for words the reader has since changed.
   function showDistrictsNow(q) {
+    // a link is read once, by the debounced search; its own words are not a
+    // district name
+    if (parseMapLink(q)) return Promise.resolve();
     return findDistricts(q).then(function (found) {
       if (geocodeInputEl.value.trim() !== q) return;
       renderDistrictSection(found);
@@ -581,7 +584,73 @@
     });
   }
 
+  /* ---------- a pasted Google Maps or Apple Maps link ----------
+   * parseMapLink (ENGINE map-link) reads it in the browser. A position
+   * becomes ONE row, so the reader still confirms it and #q= selects it as
+   * it would a single address match; a place name the link carries is
+   * searched as if it had been typed; a short link is followed by the lookup
+   * when there is one; and nothing a link carries goes to the geocoder as
+   * address text. */
+  var mapLinkController = null;
+  function showMapLink(link) {
+    var seq = ++districtSearchSeq;  // a newer search owns the list now
+    if (inFlightController) inFlightController.abort();
+    if (mapLinkController) mapLinkController.abort();
+    clearResultRows(true);
+    clearResultRows(false);
+    if (link.kind === "point") {
+      geoResultsList.appendChild(mapLinkRow(link));
+      syncResultCount();
+      return Promise.resolve();
+    }
+    if (link.kind !== "short") {
+      geoStatus.textContent = mapLinkMessage(link);
+      geoStatus.className = "geo-status err";
+      return Promise.resolve();
+    }
+    geoStatus.textContent = "Reading the link\u2026";
+    geoStatus.className = "geo-status";
+    mapLinkController = new AbortController();
+    return resolveShortMapLink(link, mapLinkController.signal).then(function (full) {
+      if (seq !== districtSearchSeq) return;
+      if (full.kind === "text") return runGeocodeSearch(full.text);
+      return showMapLink(full);
+    }, function (err) {
+      if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
+      geoStatus.textContent = mapLinkMessage(link);
+      geoStatus.className = "geo-status err";
+    });
+  }
+  function mapLinkRow(link) {
+    var li = document.createElement("li");
+    var btn = document.createElement("button");
+    btn.type = "button";
+    var where = link.lat.toFixed(5) + ", " + link.lng.toFixed(5);
+    btn.textContent = link.source === "coordinates" ? "The point " + where :
+      "The place in the " + (link.source === "apple" ? "Apple" : "Google") + " Maps link (" + where + ")";
+    btn.addEventListener("click", function () {
+      clearTimeout(debounceTimer);
+      if (inFlightController) inFlightController.abort();
+      trackEvent("map-link/" + link.source);
+      geoResultsList.innerHTML = "";
+      geoStatus.textContent = "Selected: " + where;
+      geoStatus.className = "geo-status";
+      collapseAfterSelect = true;
+      refreshSearchShellExpanded();
+      // A link can name a place anywhere, so it is routed like a click: a
+      // point another app answers for opens that app with the point selected.
+      if (!handoffSelection(link.lat, link.lng, "map-link", function () { setSelectedPoint(link.lat, link.lng); })) {
+        setSelectedPoint(link.lat, link.lng);
+      }
+    });
+    li.appendChild(btn);
+    return li;
+  }
+
   function runGeocodeSearch(q) {
+    var link = parseMapLink(q);
+    if (link && link.kind !== "text") return showMapLink(link);
+    if (link) q = link.text;
     var seq = ++districtSearchSeq;
     return findDistricts(q).then(function (found) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
