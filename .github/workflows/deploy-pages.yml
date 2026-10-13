@@ -208,6 +208,8 @@ jobs:
           mkdir _site
           EXCLUDES=(
             .git .github .claude scripts docs
+            # The short-link lookup runs on Deno Deploy, not on this site.
+            services
             il/data/source il/icons/source 'il/data/*.geojson'
             ny/data/source ny/icons/source 'ny/data/*.geojson'
             ca/data/source ca/icons/source 'ca/data/*.geojson'
