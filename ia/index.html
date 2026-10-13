@@ -13273,7 +13273,7 @@ function initIowaExplorer() {
     memberLabel: "Representative", capitolLabel: "D.C. Office",
     profileLabel: "Official website", directoryLabel: "U.S. House directory",
     directoryUrl: "https://www.house.gov/representatives",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
 
   /* ---------- 3-4. Iowa Senate + Iowa House ----------
@@ -13310,7 +13310,7 @@ function initIowaExplorer() {
     loadRoster: loadIaSenateMembers,
     memberLabel: "State Senator", capitolLabel: "Capitol Office",
     profileLabel: "Senator profile", directoryLabel: "Iowa Senate directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -13324,7 +13324,7 @@ function initIowaExplorer() {
     loadRoster: loadIaHouseMembers,
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "Iowa House directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
   /* ---------- 5. County Supervisor District — the flagship layer ----------
@@ -13407,8 +13407,8 @@ function initIowaExplorer() {
     overlay: {
       load: loadSupervisorDistricts,
       // the fleet's county-board blue, light fill (layer-concepts.json
-      // `colors`) — solid, so it reads apart from County's grey and the
-      // chambers' dashed/dotted strokes
+      // `colors`), reading apart from County's grey and the chambers'
+      // purples
       style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
@@ -13602,7 +13602,7 @@ function initIowaExplorer() {
     group: "schools",
     label: "School District (Unified)",
     loader: loadSchoolDistrictsUnified,
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05, dashArray: "8 3" },
+    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -13641,9 +13641,9 @@ function initIowaExplorer() {
     subOf: "school-district-unified",
     label: "School Director District",
     loader: loadSchoolDirectorDistricts,
-    // the fleet's school-board indigo and short dash (layer-concepts.json
-    // `colors` and `lines`), apart from the parent's long dash
-    style: { color: "#585EDD", weight: 2, dashArray: "2 2", fillColor: "#585EDD", fillOpacity: 0.14 },
+    // the fleet's school-board indigo (layer-concepts.json `colors`), over
+    // a stronger fill than the parent's so it reads as inside it
+    style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.14 },
     fields: [
       { name: "label", label: "Director district", keys: ["label"], primary: true },
       { name: "name", label: "School district", keys: ["name"] },
@@ -13756,8 +13756,8 @@ function initIowaExplorer() {
     subOf: "county",
     overlay: {
       load: loadCountySubdivisions,
-      // long-dash brown, matching the WI/IL rendering of this same concept
-      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05, dashArray: "7 3" }
+      // the fleet's township brown (layer-concepts.json `colors`), as in every app
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -14009,8 +14009,8 @@ function initIowaExplorer() {
       "kind — the County Subdivision card names the township it is in.",
     overlay: {
       load: loadPlaces,
-      // tight magenta dots, matching the WI/IL rendering of this same concept
-      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+      // the fleet's municipality magenta (layer-concepts.json `colors`), as in every app
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -14802,7 +14802,7 @@ function initIowaExplorer() {
     // `mps-school-board` when Racine Unified joined it.
     label: "City Council District",
     // the fleet's city-council blue (layer-concepts.json `colors`), darker than
-    // county-supervisor's blue above it, inside the magenta City dots
+    // county-supervisor's blue above it, inside the magenta City outline
     style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 },
     // DES MOINES FIRST, deliberately: §3.1 says to "order the table so the
     // cheapest already-cached coverage test sits first and short-circuits the
@@ -14930,8 +14930,8 @@ function initIowaExplorer() {
     // true. What is left is a point inside Iowa that no ZCTA covers, so the
     // note now says only what the query answered.
     emptyNote: "No ZIP Code Tabulation Area covers this point.",
-    // dotted outline (distinct pattern from County Subdivision's long dash) + different hue
-    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 4" },
+    // the fleet's ZIP mauve (layer-concepts.json `colors`), a hue no other layer here uses
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05 },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true }
     ],
@@ -15167,7 +15167,7 @@ function initIowaExplorer() {
     overlay: {
       load: loadIaJudicialDistricts,
       // the fleet's trial-court orchid (layer-concepts.json `colors`)
-      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05, dashArray: "6 3" }
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -15292,7 +15292,7 @@ function initIowaExplorer() {
     group: "schools",
     label: "Community College",
     loader: loadIaCommunityColleges,
-    style: { color: "#1A7789", weight: 2, fillColor: "#3D95A6", fillOpacity: 0.05, dashArray: "6 3" },
+    style: { color: "#1A7789", weight: 2, fillColor: "#3D95A6", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "College", keys: ["name"], primary: true },
       { name: "directorDistricts", label: "Director districts", keys: ["directordistricts"] },
@@ -15468,11 +15468,11 @@ function initIowaExplorer() {
     label: "Area Education Agency",
     overlay: {
       load: loadIaAeas,
-      // the fleet's education-agency olive and even dash (layer-concepts.json
-      // `colors` and `lines`): the schools family's largest fabric, read apart
+      // the fleet's education-agency olive (layer-concepts.json `colors`):
+      // the schools family's largest fabric, read apart
       // from the school-district greens inside it and the community-college
       // teal beside it
-      style: { color: "#6B6320", weight: 1.5, fillColor: "#B3A64A", fillOpacity: 0.05, dashArray: "4 4" }
+      style: { color: "#6B6320", weight: 1.5, fillColor: "#B3A64A", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var v = findPropCI(feature.properties || {}, ["name"]);

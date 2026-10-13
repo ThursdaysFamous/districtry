@@ -88,10 +88,12 @@ table — its `color:` and `fillColor:` (a point layer's `fill:`) set to that
 row's `line` and `fill` — and the generator fails on any other colour literal
 in its definition; a new concept row needs a `colors` entry too, with a line
 colour no other concept uses that reads 4.5:1 as the small label on a white
-card, which the generator also checks. It is drawn with that concept's line
-from the `lines` table as well — its `weight:` set to the row's `weight` and
-its `dashArray:` to the row's `dash`, or left out where `dash` is null — and a
-new concept row needs a `lines` entry (null for a concept drawn as map pins).
+card, which the generator also checks. It is drawn at that concept's line
+width from the `lines` table as well — its `weight:` set to the row's
+`weight` — and a new concept row needs a `lines` entry (null for a concept
+drawn as map pins). No layer, in a concept or not, sets a `dashArray:`: a dash
+on the map means a district crossing the edge of the one pinned for
+comparison, which the engine draws, and the generator refuses any other.
 Then one run:
 
 ```bash

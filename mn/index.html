@@ -13026,9 +13026,9 @@ function initMinnesotaExplorer() {
     overlay: {
       load: loadMnJudicialDistricts,
       // the broadest political tiling after Congress — a heavier stroke than
-      // the precinct layer and a dash, so ten big shapes read as a frame
+      // the precinct layer and a light fill, so ten big shapes read as a frame
       // rather than as fill competing with the legislative layers
-      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05, dashArray: "6 3" }
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -13160,8 +13160,8 @@ function initMinnesotaExplorer() {
       "petitioned for, so most of the state has none.",
     overlay: {
       load: loadMnWatershedDistricts,
-      // a water blue no other layer here uses, solid so it reads apart from
-      // the dashed political tilings drawn over the same ground
+      // a water blue no other layer here uses, so it reads apart from the
+      // political tilings drawn over the same ground
       style: { color: "#1C6E9C", weight: 1.5, fillColor: "#4BA3D3", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
@@ -13562,7 +13562,7 @@ function initMinnesotaExplorer() {
     memberLabel: "Representative", capitolLabel: "D.C. Office",
     profileLabel: "Official website", directoryLabel: "U.S. House directory",
     directoryUrl: "https://www.house.gov/representatives",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
 
   /* ---------- 3-4. Minnesota Senate + Minnesota House ----------
@@ -13602,7 +13602,7 @@ function initMinnesotaExplorer() {
     loadRoster: loadNoRoster,
     memberLabel: "State Senator", capitolLabel: "Capitol Office",
     profileLabel: "Senator profile", directoryLabel: "Minnesota Senate directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -13615,7 +13615,7 @@ function initMinnesotaExplorer() {
     loadRoster: loadNoRoster,
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "Minnesota House directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
   /* ---------- 5-9. live TIGERweb fabrics, point-first ----------
@@ -13823,7 +13823,7 @@ function initMinnesotaExplorer() {
     label: "School District (Unified)",
     overlay: {
       load: loadSchoolDistrictsUnified,
-      style: { color: "#2F6B3A", weight: 1.5, dashArray: "8 3", fillColor: "#4C8F59", fillOpacity: 0.06 }
+      style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13848,7 +13848,7 @@ function initMinnesotaExplorer() {
       "card is the one that answers.",
     overlay: {
       load: loadSchoolDistrictsElementary,
-      style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.07, dashArray: "3 3" }
+      style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.07 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13876,7 +13876,7 @@ function initMinnesotaExplorer() {
       "card answers.",
     overlay: {
       load: loadSchoolDistrictsSecondary,
-      style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.07, dashArray: "10 4" }
+      style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.07 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13951,9 +13951,9 @@ function initMinnesotaExplorer() {
       "names them.",
     overlay: {
       load: loadMnSchoolBoardDistricts,
-      // the fleet's school-board indigo and short dash (layer-concepts.json
-      // `colors` and `lines`), dashed like the other school tilings
-      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06, dashArray: "2 2" }
+      // the fleet's school-board indigo and line (layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       var p = feature.properties || {};
@@ -14129,7 +14129,7 @@ function initMinnesotaExplorer() {
     coverage: insideMinnesota,
     overlay: {
       load: loadZctas,
-      style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.04, dashArray: "1 4" }
+      style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.04 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["basename", "name"]);
@@ -14204,7 +14204,7 @@ function initMinnesotaExplorer() {
     subOf: "county",
     overlay: {
       load: loadCountySubdivisions,
-      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05, dashArray: "7 3" }
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -14313,7 +14313,7 @@ function initMinnesotaExplorer() {
       "at all — the Township or City card names what it is in.",
     overlay: {
       load: loadPlaces,
-      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);

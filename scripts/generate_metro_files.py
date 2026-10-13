@@ -1621,53 +1621,49 @@ def check_concept_colors(app_text, instance, concepts, colors):
     return problems
 
 
-DASH_RE = re.compile(r"^[0-9]+(\.[0-9]+)?( [0-9]+(\.[0-9]+)?)+$")
 WEIGHT_LIT = re.compile(r'(?<![\w.])weight\s*:\s*([^,}\s]+)')
 DASH_LIT = re.compile(r'(?<![\w.])dashArray\s*:\s*("[^"]*"|[^,}\s]+)')
+ENGINE_FENCE = re.compile(r'/\* ==== ENGINE:BEGIN ([\w-]+) ==== \*/.*?/\* ==== ENGINE:END \1 ==== \*/', re.S)
 
 
 def load_concept_lines(root, concepts):
-    """concept -> (weight, dash) or None from layer-concepts.json's `lines`,
-    checked: every concept has an entry and nothing else is listed; an entry is
-    null (a concept drawn as map pins, which keeps each app's own drawing) or
-    {"weight": a positive number, "dash": a Leaflet dashArray string or null}."""
+    """concept -> line width in pixels, or None, from layer-concepts.json's
+    `lines`, checked: every concept has an entry and nothing else is listed; an
+    entry is null (a concept drawn as map pins, which keeps each app's own) or
+    {"weight": a positive number}."""
     with open(os.path.join(root, LAYER_CONCEPTS_FILE), encoding="utf-8") as f:
         table = json.load(f).get("lines")
     if not isinstance(table, dict):
-        fail("%s: `lines` must be an object of concept -> {weight, dash} or null" % LAYER_CONCEPTS_FILE)
+        fail("%s: `lines` must be an object of concept -> {weight} or null" % LAYER_CONCEPTS_FILE)
     problems, out = [], {}
     for concept in concepts:
         if concept not in table:
-            problems.append("%s: needs a line style, or null if its layers are map pins" % concept)
+            problems.append("%s: needs a line width, or null if its layers are map pins" % concept)
             continue
         entry = table[concept]
         if entry is None:
             out[concept] = None
             continue
-        if not isinstance(entry, dict) or set(entry) != {"weight", "dash"}:
-            problems.append("%s: needs exactly {\"weight\": n, \"dash\": \"a b\" or null}" % concept)
+        if not isinstance(entry, dict) or set(entry) != {"weight"}:
+            problems.append("%s: needs exactly {\"weight\": n}" % concept)
             continue
-        weight, dash = entry["weight"], entry["dash"]
+        weight = entry["weight"]
         if isinstance(weight, bool) or not isinstance(weight, (int, float)) or weight <= 0:
             problems.append("%s: weight must be a positive number of pixels" % concept)
             continue
-        if dash is not None and not (isinstance(dash, str) and DASH_RE.match(dash)):
-            problems.append("%s: dash must be null (solid) or numbers separated by single spaces" % concept)
-            continue
-        out[concept] = (float(weight), dash)
+        out[concept] = float(weight)
     for extra in sorted(set(table) - set(concepts)):
-        problems.append("%s has a line style and no row in `concepts`" % extra)
+        problems.append("%s has a line width and no row in `concepts`" % extra)
     if problems:
         fail("%s `lines`:\n  %s" % (LAYER_CONCEPTS_FILE, "\n  ".join(problems)))
     return out
 
 
 def check_concept_lines(app_text, instance, concepts, lines):
-    """Every layer of this app that answers a concept with a line style draws
-    with it: each `weight:` literal in its registration is the concept's width
-    and each `dashArray:` its dash, where no `dashArray:` at all, or `null`,
-    is a solid line (the engine's default). A layer under two concepts takes
-    the first in file order, as its colours do. Returns problems."""
+    """Every layer of this app that answers a concept with a line width draws
+    with it: each `weight:` literal in its registration is the concept's width.
+    A layer under two concepts takes the first in file order, as its colours
+    do. Returns problems."""
     owner = {}
     for concept, cols in concepts.items():
         for lid in cols.get(instance, []):
@@ -1676,28 +1672,42 @@ def check_concept_lines(app_text, instance, concepts, lines):
     for lid, concept in owner.items():
         if lines[concept] is None:
             continue
-        weight, dash = lines[concept]
         body = layer_definition(app_text, lid)
         if body is None:
             problems.append("%s: cannot find the object that registers it" % lid)
             continue
-        weights, dashes = set(), set()
+        weights = set()
         for raw in WEIGHT_LIT.findall(body):
             try:
-                weights.add(float(raw))
+                weights.add("%g" % float(raw))
             except ValueError:
                 weights.add(raw)
-        for raw in DASH_LIT.findall(body):
-            dashes.add(None if raw == "null" else (raw[1:-1] if raw.startswith('"') else raw))
-        if not dashes:
-            dashes = {None}
-        if weights != {weight} or dashes != {dash}:
-            def show(v):
-                return "solid" if v is None else ('"%s"' % v if isinstance(v, str) else "%g" % v)
-            problems.append("%s draws weight %s dash %s; %s is weight %g dash %s"
-                            % (lid, ", ".join(sorted(show(w) for w in weights)) or "(none)",
-                               ", ".join(sorted(show(d) for d in dashes)),
-                               concept, weight, show(dash)))
+        if weights != {"%g" % lines[concept]}:
+            problems.append("%s draws weight %s; %s is weight %g"
+                            % (lid, ", ".join(sorted(weights)) or "(none)", concept, lines[concept]))
+    return problems
+
+
+def check_no_dashed_layers(app_text):
+    """No layer is drawn dashed by an app's own code, on the operator's rule of
+    2026-10-13: "The solid lines are for the district the selected point falls
+    under. The dashed lines are only for the comparison tool." A dash on the map
+    means a district crossing the edge of the one pinned for comparison (engine
+    `relationship-pinning`), so any `dashArray:` other than null outside the
+    ENGINE fences is refused, whether or not its layer is in a concept. A match
+    after `//` on its line, or on a line starting with `*`, is a comment and is
+    skipped. Returns problems."""
+    fences = [(m.start(), m.end()) for m in ENGINE_FENCE.finditer(app_text)]
+    problems = []
+    for m in DASH_LIT.finditer(app_text):
+        if m.group(1) == "null" or any(a <= m.start() < b for a, b in fences):
+            continue
+        ls = app_text.rfind("\n", 0, m.start()) + 1
+        head = app_text[ls:m.start()]
+        if "//" in head or head.lstrip().startswith("*"):
+            continue
+        line_no = app_text.count("\n", 0, m.start()) + 1
+        problems.append("line %d: %s" % (line_no, app_text[ls:app_text.find("\n", m.end())].strip()[:120]))
     return problems
 
 
@@ -1866,9 +1876,14 @@ def main():
                  % (app_path, LAYER_CONCEPTS_FILE, "\n  ".join(off_colour)))
         off_line = check_concept_lines(app_text, instance, layer_concepts, concept_lines)
         if off_line:
-            fail("%s: a layer is not drawn in its concept's line from %s `lines` — set "
-                 "its `weight:` and `dashArray:` to them (no `dashArray:` is a solid line):\n  %s"
+            fail("%s: a layer is not drawn at its concept's line width from %s `lines` — "
+                 "set its `weight:` to it:\n  %s"
                  % (app_path, LAYER_CONCEPTS_FILE, "\n  ".join(off_line)))
+        dashed = check_no_dashed_layers(app_text)
+        if dashed:
+            fail("%s: a layer is drawn dashed — dashes mean a district crossing the edge of "
+                 "the one pinned for comparison, so drop its `dashArray:` (%s `lines`):\n  %s"
+                 % (app_path, LAYER_CONCEPTS_FILE, "\n  ".join(dashed)))
         # The apple-touch-icon href is the one generated brand value naming a
         # file on disk rather than carrying its own bytes (the favicon is a
         # data: URI). A tag pointing at a missing PNG is invisible in every

@@ -13068,7 +13068,7 @@ function initKentuckyExplorer() {
     memberLabel: "Representative", capitolLabel: "D.C. Office",
     profileLabel: "Official website", directoryLabel: "U.S. House directory",
     directoryUrl: "https://www.house.gov/representatives",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
 
   /* ---------- 3-4. Kentucky Senate + Kentucky House ----------
@@ -13109,7 +13109,7 @@ function initKentuckyExplorer() {
     loadRoster: loadNoRoster,
     memberLabel: "State Senator", capitolLabel: "Capitol Office",
     profileLabel: "Senator profile", directoryLabel: "Kentucky Senate directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -13122,7 +13122,7 @@ function initKentuckyExplorer() {
     loadRoster: loadNoRoster,
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "Kentucky House directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
 
@@ -13275,7 +13275,7 @@ function initKentuckyExplorer() {
       "School District cards name them.",
     overlay: {
       load: loadSchoolDistrictsUnified,
-      style: { color: "#2F6B3A", weight: 1.5, dashArray: "8 3", fillColor: "#4C8F59", fillOpacity: 0.05 }
+      style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 }
     },
     hoverName: kyNameHover,
     query: kySchoolQuery(loadSchoolDistrictsUnified),
@@ -13293,7 +13293,7 @@ function initKentuckyExplorer() {
       "District card is the answer.",
     overlay: {
       load: loadSchoolDistrictsElementary,
-      style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.07, dashArray: "3 3" }
+      style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.07 }
     },
     hoverName: kyNameHover,
     query: kySchoolQuery(loadSchoolDistrictsElementary),
@@ -13310,7 +13310,7 @@ function initKentuckyExplorer() {
       "grade, and the Unified School District card is the answer.",
     overlay: {
       load: loadSchoolDistrictsSecondary,
-      style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.07, dashArray: "10 4" }
+      style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.07 }
     },
     hoverName: kyNameHover,
     query: kySchoolQuery(loadSchoolDistrictsSecondary),
@@ -13369,7 +13369,7 @@ function initKentuckyExplorer() {
       "the County card is the answer here, not a missing layer.",
     overlay: {
       load: loadKyPlaces,
-      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05 }
     },
     hoverName: kyNameHover,
     query: function (point, seq) {
@@ -13693,7 +13693,7 @@ function initKentuckyExplorer() {
     label: "Supreme Court District",
     overlay: {
       load: loadSupremeCourtDistricts,
-      style: { color: "#8A692C", weight: 2, dashArray: "7 3", fillColor: "#8A692C", fillOpacity: 0.05 }
+      style: { color: "#8A692C", weight: 2, fillColor: "#8A692C", fillOpacity: 0.05 }
     },
     hoverName: kyCourtHover("Supreme Court District"),
     query: kyCourtQuery(loadSupremeCourtDistricts, "supreme"),
@@ -13715,7 +13715,7 @@ function initKentuckyExplorer() {
       // The same ground as the Supreme Court, which is the statute's own
       // instruction, so the two overlays coincide on purpose.
       load: loadSupremeCourtDistricts,
-      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.05, dashArray: "10 4" }
+      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.05 }
     },
     hoverName: kyCourtHover("Court of Appeals District"),
     query: kyCourtQuery(loadSupremeCourtDistricts, "appeals"),
@@ -13737,7 +13737,7 @@ function initKentuckyExplorer() {
     label: "Circuit Court",
     overlay: {
       load: loadCircuitCourts,
-      style: { color: "#9550B2", weight: 1.5, dashArray: "6 3", fillColor: "#9550B2", fillOpacity: 0.05 }
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
     },
     hoverName: kyCourtHover("Circuit"),
     query: kyCourtQuery(loadCircuitCourts, "circuit"),
@@ -13759,7 +13759,7 @@ function initKentuckyExplorer() {
     label: "District Court",
     overlay: {
       load: loadDistrictCourts,
-      style: { color: "#2F7A6A", weight: 1.5, fillColor: "#4AA893", fillOpacity: 0.05, dashArray: "3 3" }
+      style: { color: "#2F7A6A", weight: 1.5, fillColor: "#4AA893", fillOpacity: 0.05 }
     },
     hoverName: kyCourtHover("District"),
     query: kyCourtQuery(loadDistrictCourts, "district"),

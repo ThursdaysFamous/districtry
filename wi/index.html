@@ -13338,7 +13338,7 @@ function initWisconsinExplorer() {
       load: loadSupervisoryDistricts,
       // solid county-board blue, light fill (layer-concepts.json `colors`) —
       // the only political layer drawn inside a county, so it reads against
-      // County's grey and the chambers' dashes
+      // County's grey and the chambers' purples
       style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
@@ -13564,8 +13564,8 @@ function initWisconsinExplorer() {
     label: "Court of Appeals District",
     overlay: {
       load: loadCoaDistricts,
-      // plum, long-dashed — the broadest political boundary after Congress
-      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.04, dashArray: "10 4" }
+      // the fleet's appellate-court brown (layer-concepts.json `colors`) — the broadest political boundary after Congress
+      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.04 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13661,8 +13661,8 @@ function initWisconsinExplorer() {
     overlay: {
       load: loadCircuitCourts,
       // the fleet's trial-court orchid (layer-concepts.json `colors`), distinct
-      // from every chamber dash
-      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05, dashArray: "6 3" }
+      // from every chamber's colour
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13786,8 +13786,8 @@ function initWisconsinExplorer() {
     subOf: "county",
     overlay: {
       load: loadCountySubdivisions,
-      // long-dash brown — reads apart from Municipality's tight magenta dots
-      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05, dashArray: "7 3" }
+      // the fleet's township brown (layer-concepts.json `colors`), apart from Municipality's magenta
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13934,8 +13934,8 @@ function initWisconsinExplorer() {
       "the County Subdivision card names the town it is in.",
     overlay: {
       load: loadPlaces,
-      // tight magenta dots; an empty card here honestly means "unincorporated"
-      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+      // the fleet's municipality magenta (layer-concepts.json `colors`); an empty card here honestly means "unincorporated"
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -14526,7 +14526,7 @@ function initWisconsinExplorer() {
     // tile-overlay block): the whole file is 2.3 MB gzipped, the tile under a
     // point about 1 KB. Built and gated by scripts/build_vector_tiles.py
     tiles: "data/app/tiles/school-district-unified.pmtiles",
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05, dashArray: "8 3" },
+    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -14573,7 +14573,7 @@ function initWisconsinExplorer() {
     memberLabel: "Representative", capitolLabel: "D.C. Office",
     profileLabel: "Official website", directoryLabel: "U.S. House directory",
     directoryUrl: "https://www.house.gov/representatives",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
 
   /* ---------- 6-7. Wisconsin State Senate + State Assembly ----------
@@ -14611,7 +14611,7 @@ function initWisconsinExplorer() {
     loadRoster: loadWiSenateMembers,
     memberLabel: "State Senator", capitolLabel: "Capitol Office",
     profileLabel: "Senator profile", directoryLabel: "WI Senate directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -14625,7 +14625,7 @@ function initWisconsinExplorer() {
     loadRoster: loadWiAssemblyMembers,
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "WI Assembly directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
   /* ---------- 8-9. School District (Union High / Elementary) ----------
@@ -14649,7 +14649,7 @@ function initWisconsinExplorer() {
     group: "schools",
     label: "School District (Union High)",
     loader: loadWiSchoolSecondary,
-    style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.05, dashArray: "10 4" },
+    style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -14663,7 +14663,7 @@ function initWisconsinExplorer() {
     group: "schools",
     label: "School District (Elementary)",
     loader: loadWiSchoolElementary,
-    style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.05, dashArray: "3 3" },
+    style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -14998,7 +14998,7 @@ function initWisconsinExplorer() {
     overlay: {
       load: loadElectedBoardDistricts,
       // the fleet's school-board indigo (layer-concepts.json `colors`)
-      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.05, dashArray: "2 2" }
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -15128,9 +15128,9 @@ function initWisconsinExplorer() {
     },
     overlay: {
       load: loadWtcsDistricts,
-      // a teal apart from the school-district greens, dashed like the
-      // other derived/administrative tilings
-      style: { color: "#1A7789", weight: 2, fillColor: "#3D95A6", fillOpacity: 0.05, dashArray: "6 3" }
+      // the fleet's community-college teal (layer-concepts.json `colors`),
+      // apart from the school-district greens
+      style: { color: "#1A7789", weight: 2, fillColor: "#3D95A6", fillOpacity: 0.05 }
     },
     query: function (point, seq) {
       return queryFeatureAt(loadWtcsDistricts, point).then(function (feature) {
@@ -15194,7 +15194,7 @@ function initWisconsinExplorer() {
     overlay: {
       load: loadMpdDistricts,
       // the reference instance's police-district crimson, kept for parity
-      style: { color: "#9C0B24", weight: 1.5, fillColor: "#C8102E", fillOpacity: 0.06, dashArray: "2 6" }
+      style: { color: "#9C0B24", weight: 1.5, fillColor: "#C8102E", fillOpacity: 0.06 }
     },
     // same hover the polygon factory derived: the primary field's raw value
     hoverName: function (feature) {
@@ -15272,7 +15272,7 @@ function initWisconsinExplorer() {
     coverage: milwaukeeCoverage,
     loader: loadMilwaukeeNeighborhoods,
     // the reference instance's community-area green, kept for parity
-    style: { color: "#3D6B49", weight: 1.5, fillColor: "#5C8F6B", fillOpacity: 0.06, dashArray: "5 3" },
+    style: { color: "#3D6B49", weight: 1.5, fillColor: "#5C8F6B", fillOpacity: 0.06 },
     fields: [
       { name: "name", label: "Neighborhood", keys: ["name"], primary: true }
     ],
@@ -15391,7 +15391,7 @@ function initWisconsinExplorer() {
     },
     loader: loadTidDistricts,
     // the reference instance's tif-district purple, kept for parity
-    style: { color: "#6A4A93", weight: 2, fillColor: "#8E6BB8", fillOpacity: 0.10, dashArray: "4 3" },
+    style: { color: "#6A4A93", weight: 2, fillColor: "#8E6BB8", fillOpacity: 0.10 },
     fields: [
       { name: "name", label: "TID", keys: ["name"], primary: true },
       { name: "tid", label: "District number", keys: ["tid"] },
@@ -15436,7 +15436,7 @@ function initWisconsinExplorer() {
       load: loadMadisonAssocs,
       // a sibling hue to the Milwaukee neighborhood green, one step bluer,
       // so the two city fabrics read as kin without colliding
-      style: { color: "#2F6B5E", weight: 1.5, fillColor: "#4E8F80", fillOpacity: 0.06, dashArray: "5 3" }
+      style: { color: "#2F6B5E", weight: 1.5, fillColor: "#4E8F80", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       var v = (feature.properties || {}).NAME;
@@ -15597,7 +15597,7 @@ function initWisconsinExplorer() {
     about: "A dispatch service area from the state's NG911 dataset — who responds here, not a taxing district and not an elected body.",
     loader: loadFireServiceAreas,
     // the reference instance's fire-district red, kept for parity
-    style: { color: "#B0342A", weight: 1.5, fillColor: "#D0564C", fillOpacity: 0.05, dashArray: "5 3" }
+    style: { color: "#B0342A", weight: 1.5, fillColor: "#D0564C", fillOpacity: 0.05 }
   });
   registerNg911ServiceLayer({
     id: "law-service",
@@ -15606,7 +15606,7 @@ function initWisconsinExplorer() {
     noun: "law-enforcement",
     about: "A dispatch service area from the state's NG911 dataset — who responds here, not a taxing district and not an elected body.",
     loader: loadLawServiceAreas,
-    style: { color: "#2F5D8C", weight: 1.5, fillColor: "#4A7BB0", fillOpacity: 0.05, dashArray: "5 3" }
+    style: { color: "#2F5D8C", weight: 1.5, fillColor: "#4A7BB0", fillOpacity: 0.05 }
   });
   registerNg911ServiceLayer({
     id: "ems-service",
@@ -15615,7 +15615,7 @@ function initWisconsinExplorer() {
     noun: "EMS",
     about: "A dispatch service area from the state's NG911 dataset — the emergency medical service dispatched here, not a taxing district and not an elected body.",
     loader: loadEmsServiceAreas,
-    style: { color: "#B45309", weight: 1.5, fillColor: "#D97706", fillOpacity: 0.05, dashArray: "5 3" }
+    style: { color: "#B45309", weight: 1.5, fillColor: "#D97706", fillOpacity: 0.05 }
   });
   registerNg911ServiceLayer({
     id: "psap-area",
@@ -15624,7 +15624,7 @@ function initWisconsinExplorer() {
     noun: "911 answering-point",
     about: "The public safety answering point from the state's NG911 dataset — the dispatch center that answers a 911 call placed here, not a taxing district and not an elected body.",
     loader: loadPsapAreas,
-    style: { color: "#0F766E", weight: 1.5, fillColor: "#14A38F", fillOpacity: 0.05, dashArray: "5 3" }
+    style: { color: "#0F766E", weight: 1.5, fillColor: "#14A38F", fillOpacity: 0.05 }
   });
 
   /* ---------- 10. ZIP Code (statewide ZCTA) ----------
@@ -15851,8 +15851,8 @@ function initWisconsinExplorer() {
     // true. What is left is a point inside Wisconsin that no ZCTA covers, so the
     // note now says only what the query answered.
     emptyNote: "No ZIP Code Tabulation Area covers this point.",
-    // dotted outline (distinct pattern from County Subdivision's long dash) + different hue
-    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 4" },
+    // the fleet's ZIP mauve (layer-concepts.json `colors`), a hue no other layer here uses
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05 },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true }
     ],
@@ -16093,7 +16093,7 @@ function initWisconsinExplorer() {
   //   id: "state-senate", label: "State Senate District", layerIndex: 1,
   //   districtFields: ["sldust", "sldu"], directoryUrl: "https://example.gov/senate/members",
   //   loadRoster: makeCached(function () { return fetchJSONWithRetry("data/app/state-senate-members.json", {}, 2); }),
-  //   style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+  //   style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   // });
 
   // registerNearestPointLayer — nearest-N amenity points (fire stations,

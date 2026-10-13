@@ -12169,8 +12169,8 @@ function initSFExplorer() {
     // about the archive, not about the place: the generic "isn't inside any
     // district" would be false for a point in, say, a neighbouring state's ZIP.
     emptyNote: "No ZIP code here. This map holds only the ZIP codes in and around San Francisco, so a point beyond them gets none.",
-    // dotted outline (distinct pattern from the Neighborhood layer) + different hue
-    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 4" },
+    // the fleet's ZIP mauve (layer-concepts.json `colors`), a hue no other layer here uses
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05 },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true }
     ],
@@ -12372,7 +12372,7 @@ function initSFExplorer() {
     },
     overlay: {
       load: loadBartDistricts,
-      style: { color: "#005E7C", weight: 2, fillColor: "#0099D8", fillOpacity: 0.05, dashArray: "6 3" }
+      style: { color: "#005E7C", weight: 2, fillColor: "#0099D8", fillOpacity: 0.05 }
     },
     query: function (point, seq) {
       return Promise.all([
@@ -12418,7 +12418,7 @@ function initSFExplorer() {
     group: "geography",
     label: "Neighborhood",
     loader: loadSfNeighborhoods,
-    style: { color: "#3D6B49", weight: 1.5, fillColor: "#5C8F6B", fillOpacity: 0.05, dashArray: "5 3" },
+    style: { color: "#3D6B49", weight: 1.5, fillColor: "#5C8F6B", fillOpacity: 0.05 },
     fields: [
       { name: "nhood", label: "Neighborhood", keys: ["nhood", "name", "neighborhood"], primary: true }
     ],
@@ -12434,7 +12434,7 @@ function initSFExplorer() {
     group: "safety",
     label: "Police District",
     loader: loadPoliceDistricts,
-    style: { color: "#9C0B24", weight: 1.5, dashArray: "2 6", fillColor: "#C8102E", fillOpacity: 0.05 },
+    style: { color: "#9C0B24", weight: 1.5, fillColor: "#C8102E", fillOpacity: 0.05 },
     fields: [
       { name: "district", label: "Police District", keys: ["district"], primary: true }
     ],
@@ -13072,7 +13072,7 @@ function initSFExplorer() {
     },
     overlay: {
       load: loadElementaryZones,
-      style: { color: "#6A3FA0", weight: 1.5, fillColor: "#6A3FA0", fillOpacity: 0.06, dashArray: "4 3" }
+      style: { color: "#6A3FA0", weight: 1.5, fillColor: "#6A3FA0", fillOpacity: 0.06 }
     },
     query: function (point, seq) {
       return featureSetAt(loadElementaryZones, point).then(function (geojson) {
@@ -13737,7 +13737,7 @@ function initSFExplorer() {
     districtPrefix: "CA-",
     memberLabel: "Representative", capitolLabel: "Washington Office",
     profileLabel: "Member profile", directoryLabel: "House member directory",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -13751,7 +13751,7 @@ function initSFExplorer() {
     loadRoster: loadCaSenateMembers,
     memberLabel: "State Senator", capitolLabel: "Capitol Office",
     profileLabel: "Senator profile", directoryLabel: "CA Senate directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -13765,7 +13765,7 @@ function initSFExplorer() {
     loadRoster: loadCaAssemblyMembers,
     memberLabel: "Assemblymember", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "CA Assembly directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
   /* ==== ENGINE:BEGIN hover-explorer ==== */

@@ -12673,7 +12673,7 @@ function initNycExplorer() {
     label: "Neighborhood (NTA)",
     coverage: nycCoverage,
     loader: loadNeighborhoods,
-    style: { color: "#3D6B49", weight: 1.5, dashArray: "5 3", fillColor: "#5C8F6B", fillOpacity: 0.06 },
+    style: { color: "#3D6B49", weight: 1.5, fillColor: "#5C8F6B", fillOpacity: 0.06 },
     compact: true, compactMetaField: "code", // 4b name-only card, NTA code as meta
     fields: [
       { name: "name", label: "Neighborhood", keys: ["ntaname"], primary: true },
@@ -12693,7 +12693,7 @@ function initNycExplorer() {
     label: "ZIP Code (MODZCTA)",
     coverage: nycCoverage,
     loader: makeCachedLoader("pri4-ifjk"),
-    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 4" },
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05 },
     pill: true, // ZIP identifier in the header pill (Handoff 3 §5b, "60564" style)
     fields: [
       // label shortened so the pill reads "ZIP 10001"; the MODZCTA nuance
@@ -12799,7 +12799,7 @@ function initNycExplorer() {
     // inside the state and outside the city that no ZCTA covers, so the note
     // now says only what the query answered.
     emptyNote: "No ZIP Code Tabulation Area covers this point.",
-    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 4" },
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05 },
     pill: true,
     fields: [
       { name: "zip", label: "ZIP", keys: ["zcta5", "zcta5ce10", "zip"], primary: true },
@@ -13023,7 +13023,7 @@ function initNycExplorer() {
     label: "Central High School District",
     coverage: centralHsCoverage,
     loader: loadNysCentralHsDistricts,
-    style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.05, dashArray: "10 4" },
+    style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["schooldist"], primary: true },
       { label: "What it runs", value: "The high schools for several component districts, each of which runs its own elementary schools and elects its own board. The School District layer names the component district this point is in." },
@@ -13044,7 +13044,7 @@ function initNycExplorer() {
     // the city's own words.
     coverage: outsideNycCoverage,
     loader: loadNysSchoolDistricts,
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.04, dashArray: "8 3" },
+    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.04 },
     fields: [
       { name: "name", label: "District", keys: ["schooldist"], primary: true },
       { name: "sed", label: "State education code", keys: ["sed_code_1"] },
@@ -13084,7 +13084,7 @@ function initNycExplorer() {
     group: "geography",
     label: "City or Town",
     loader: loadNyCitiesTowns,
-    style: { color: "#7A5C3E", weight: 1.5, dashArray: "7 3", fillColor: "#A98B6C", fillOpacity: 0.04 },
+    style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.04 },
     fields: [
       { name: "name", label: "Name", keys: ["name"], primary: true },
       { name: "type", label: "Kind", keys: ["muni_type"] },
@@ -13098,7 +13098,7 @@ function initNycExplorer() {
     label: "Village",
     subOf: "municipality",
     loader: loadNyVillages,
-    style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" },
+    style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05 },
     emptyNote: "This point is not in a village. Most of New York is not: a village is an extra layer of government inside a town.",
     fields: [
       { name: "name", label: "Village", keys: ["name"], primary: true },
@@ -13521,7 +13521,7 @@ function initNycExplorer() {
     id: "fire-district",
     group: "safety",
     label: "Fire District",
-    style: { color: "#B0342A", weight: 1.5, fillColor: "#D0564C", fillOpacity: 0.05, dashArray: "5 3" },
+    style: { color: "#B0342A", weight: 1.5, fillColor: "#D0564C", fillOpacity: 0.05 },
     counties: [sullivanDistrictEntry({
       loader: loadSullivanFireDistricts,
       governed: "A New York fire district is a district corporation governed by its own board of "
@@ -13539,7 +13539,7 @@ function initNycExplorer() {
     id: "library-district",
     group: "geography",
     label: "Library District",
-    style: { color: "#00695C", weight: 1.5, fillColor: "#4DB6AC", fillOpacity: 0.05, dashArray: "3 3" },
+    style: { color: "#00695C", weight: 1.5, fillColor: "#4DB6AC", fillOpacity: 0.05 },
     counties: [sullivanDistrictEntry({
       loader: loadSullivanLibraryDistricts,
       governed: "A New York library district is a district corporation whose trustees are elected "
@@ -13749,7 +13749,7 @@ function initNycExplorer() {
     group: "political",
     label: "NY Supreme Court Judicial District",
     loader: loadJudicialDistricts,
-    style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05, dashArray: "6 3" },
+    style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 },
     pill: true, // district identifier in the header pill (Handoff 3 §5b)
     fields: [
       // label shortened so the pill reads "District 1" (the layer name above
@@ -13784,7 +13784,7 @@ function initNycExplorer() {
     label: "Civil Court (Municipal Court) District",
     coverage: nycCoverage,
     loader: loadMunicipalCourtDistricts,
-    style: { color: "#1E7A8C", weight: 2, fillColor: "#1E7A8C", fillOpacity: 0.05, dashArray: "4 4" },
+    style: { color: "#1E7A8C", weight: 2, fillColor: "#1E7A8C", fillOpacity: 0.05 },
     fields: [
       { name: "label", label: "District", keys: ["label"], primary: true },
       { name: "borough", label: "Borough", keys: ["boro_name"] },
@@ -14162,7 +14162,7 @@ function initNycExplorer() {
     },
     overlay: {
       load: loadPolicePrecincts,
-      style: { color: "#9C0B24", weight: 1.5, fillColor: "#C8102E", fillOpacity: 0.06, dashArray: "2 6" }
+      style: { color: "#9C0B24", weight: 1.5, fillColor: "#C8102E", fillOpacity: 0.06 }
     },
     query: function (point, seq) {
       return Promise.all([
@@ -14398,7 +14398,7 @@ function initNycExplorer() {
     label: "FDNY Battalion",
     coverage: nycCoverage,
     loader: loadFireBattalions,
-    style: { color: "#B3261E", weight: 2, fillColor: "#E4572E", fillOpacity: 0.05, dashArray: "6 3" },
+    style: { color: "#B3261E", weight: 2, fillColor: "#E4572E", fillOpacity: 0.05 },
     fields: [
       { name: "battalion", label: "FDNY Battalion", keys: ["firebn"], primary: true }
     ]
@@ -14808,21 +14808,21 @@ function initNycExplorer() {
   registerNycZone({
     id: "es-zone", label: "Elementary School Zone", datasetId: "cmjf-yawu",
     tiles: "data/app/tiles/es-zone.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
-    style: { color: "#6A3FA0", weight: 1.5, dashArray: "4 3", fillColor: "#6A3FA0", fillOpacity: 0.12 },
+    style: { color: "#6A3FA0", weight: 1.5, fillColor: "#6A3FA0", fillOpacity: 0.12 },
     emptyNote: "No zoned elementary school found for this point.",
     moreLink: MYSCHOOLS_MORE
   });
   registerNycZone({
     id: "ms-zone", label: "Middle School Zone", datasetId: "t26j-jbq7",
     tiles: "data/app/tiles/ms-zone.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
-    style: { color: "#A15C00", weight: 1.5, fillColor: "#A15C00", fillOpacity: 0.12, dashArray: "6 2" },
+    style: { color: "#A15C00", weight: 1.5, fillColor: "#A15C00", fillOpacity: 0.12 },
     emptyNote: "No zoned middle school here — much of NYC middle-school admission is choice-based.",
     moreLink: MYSCHOOLS_MORE
   });
   registerNycZone({
     id: "hs-zone", label: "High School Zone", datasetId: "ruu9-egea",
     tiles: "data/app/tiles/hs-zone.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
-    style: { color: "#0F6F6F", weight: 1.5, fillColor: "#0F6F6F", fillOpacity: 0.12, dashArray: "1 3 4 3" },
+    style: { color: "#0F6F6F", weight: 1.5, fillColor: "#0F6F6F", fillOpacity: 0.12 },
     emptyNote: "Most NYC high schools admit by application citywide, not by zone.",
     moreLink: MYSCHOOLS_MORE
   });
@@ -14874,7 +14874,7 @@ function initNycExplorer() {
       var d = intField(findPropCI(feature.properties || {}, ["schooldist"]));
       return d != null ? "CEC " + d : null;
     },
-    overlay: { load: loadSchoolDistricts, style: { color: "#7048E8", weight: 2, fillColor: "#7048E8", fillOpacity: 0.05, dashArray: "6 3" } },
+    overlay: { load: loadSchoolDistricts, style: { color: "#7048E8", weight: 2, fillColor: "#7048E8", fillOpacity: 0.05 } },
     query: function (point, seq) {
       return Promise.all([loadSchoolDistricts(), loadCecMembers().catch(function () { return {}; })]).then(function (r) {
         var gj = r[0], roster = r[1] || {};
@@ -15340,7 +15340,7 @@ function initNycExplorer() {
         return (row && row.cb_chair) ? String(row.cb_chair) + " (Chair)" : null;
       }
     },
-    overlay: { load: loadCommunityDistricts, style: { color: "#B5179E", weight: 2, fillColor: "#F72585", fillOpacity: 0.05, dashArray: "5 3" } },
+    overlay: { load: loadCommunityDistricts, style: { color: "#B5179E", weight: 2, fillColor: "#F72585", fillOpacity: 0.05 } },
     query: function (point, seq) {
       return Promise.all([featureSetAt(loadCommunityDistricts, point), loadCommunityBoardInfo().catch(function () { return []; })]).then(function (r) {
         var gj = r[0], rows = r[1] || [];
@@ -15417,7 +15417,7 @@ function initNycExplorer() {
     districtPrefix: "NY-",
     directoryUrl: "https://www.house.gov/representatives",
     profileLabel: "Representative's website", directoryLabel: "House directory",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
   var loadNySenateMembers = makeCached(function () { return fetchJSONWithRetry("data/app/ny-senate-members.json", {}, 2); });
   // Geometry: pre-built same-origin (was live TIGERweb layer 1). Regenerate with
@@ -15433,7 +15433,7 @@ function initNycExplorer() {
     memberLabel: "State Senator", capitolLabel: "Albany Office",
     directoryUrl: "https://www.nysenate.gov/senators-committees",
     profileLabel: "Senator's page", directoryLabel: "NY Senate directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
   var loadNyAssemblyMembers = makeCached(function () { return fetchJSONWithRetry("data/app/ny-assembly-members.json", {}, 2); });
   // Geometry: pre-built same-origin (was live TIGERweb layer 2). Regenerate with
@@ -15449,7 +15449,7 @@ function initNycExplorer() {
     memberLabel: "Assembly Member", capitolLabel: "Albany Office",
     directoryUrl: "https://nyassembly.gov/mem/",
     profileLabel: "Member's page", directoryLabel: "NY Assembly directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" },
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 },
     onToggle: function (on) {
       // cascade the Election District sub-layer off when Assembly is turned off
       if (!on && state.layersOn["election-district"]) {
@@ -15625,7 +15625,7 @@ function initNycExplorer() {
   registerBoroughOfficeLayer({
     id: "district-attorney", label: "District Attorney", role: "da",
     tiles: "data/app/tiles/district-attorney.pmtiles", // vector tiles (engine tile-overlay block)
-    style: { color: "#6B4E8C", weight: 2.5, fillColor: "#8C6A2E", fillOpacity: 0.04, dashArray: "3 3" }
+    style: { color: "#6B4E8C", weight: 2.5, fillColor: "#8C6A2E", fillOpacity: 0.04 }
   });
 
 

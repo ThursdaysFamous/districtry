@@ -12945,7 +12945,7 @@ function initMichiganExplorer() {
     memberLabel: "Representative", capitolLabel: "D.C. Office",
     profileLabel: "Official website", directoryLabel: "U.S. House directory",
     directoryUrl: "https://www.house.gov/representatives",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
 
   /* ---------- 3-4. Michigan Senate + Michigan House ----------
@@ -12992,7 +12992,7 @@ function initMichiganExplorer() {
     loadRoster: loadMiSenateMembers,
     memberLabel: "State Senator", capitolLabel: "Capitol Office",
     profileLabel: "Senator profile", directoryLabel: "Michigan Senate directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -13006,7 +13006,7 @@ function initMichiganExplorer() {
     loadRoster: loadMiHouseMembers,
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "Michigan House directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
 
@@ -13380,10 +13380,10 @@ function initMichiganExplorer() {
     // stated rather than discovered: subOf hides a child whenever any ancestor
     // is off, so turning County off takes this card with it.
     subOf: "county",
-    // long-dash brown — reads apart from Municipality's tight magenta dots
+    // the fleet's township brown (layer-concepts.json `colors`), apart from Municipality's magenta
     overlay: {
       load: loadCountySubdivisions,
-      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05, dashArray: "7 3" }
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13504,8 +13504,8 @@ function initMichiganExplorer() {
       "township it is in.",
     overlay: {
       load: loadPlaces,
-      // tight magenta dots; an empty card here honestly means "unincorporated"
-      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+      // the fleet's municipality magenta (layer-concepts.json `colors`); an empty card here honestly means "unincorporated"
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13620,7 +13620,7 @@ function initMichiganExplorer() {
     emptyNote: "This point is not in a unified (K-12) school district. It is " +
       "in one of Michigan's 27 elementary school districts instead — the " +
       "School District (Elementary) card names it.",
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05, dashArray: "8 3" },
+    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -13639,7 +13639,7 @@ function initMichiganExplorer() {
     emptyNote: "This point is not in one of Michigan's 27 elementary school " +
       "districts. Almost all of the state is covered by a unified (K-12) " +
       "district instead — the School District (Unified) card names it.",
-    style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.05, dashArray: "3 3" },
+    style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -13893,8 +13893,8 @@ function initMichiganExplorer() {
     group: "political",
     label: "Court of Appeals District",
     loader: loadMiCoaDistricts,
-    // plum, long-dashed — the broadest political boundary this app draws
-    style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.04, dashArray: "10 4" },
+    // the fleet's appellate-court brown (layer-concepts.json `colors`) — the broadest political boundary this app draws
+    style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.04 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "countyCount", label: "Counties in this district", keys: ["county_count"] },
@@ -13913,7 +13913,7 @@ function initMichiganExplorer() {
     label: "Circuit Court",
     loader: loadMiCircuitCourts,
     // the fleet's trial-court orchid (layer-concepts.json `colors`)
-    style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05, dashArray: "6 3" },
+    style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "Circuit", keys: ["name"], primary: true },
       { name: "counties", label: "Covers", keys: ["counties"] },
@@ -13949,7 +13949,7 @@ function initMichiganExplorer() {
     emptyNote: "This point is not in a Michigan intermediate school district. " +
       "The state's map of them covers land only, so a point on one of the " +
       "Great Lakes, or outside Michigan, is in none.",
-    style: { color: "#6B6320", weight: 1.5, fillColor: "#B3A64A", fillOpacity: 0.04, dashArray: "4 4" },
+    style: { color: "#6B6320", weight: 1.5, fillColor: "#B3A64A", fillOpacity: 0.04 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { label: "How its board is chosen",
@@ -14054,8 +14054,8 @@ function initMichiganExplorer() {
     // true. What is left is a point inside Michigan that no ZCTA covers, so the
     // note now says only what the query answered.
     emptyNote: "No ZIP Code Tabulation Area covers this point.",
-    // dotted outline (a distinct pattern from Township or City's long dash) + its own hue
-    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 4" },
+    // the fleet's ZIP mauve (layer-concepts.json `colors`), a hue no other layer here uses
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05 },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true },
       { label: "About this boundary",

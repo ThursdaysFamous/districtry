@@ -13197,7 +13197,7 @@ function initIndianaExplorer() {
     memberLabel: "Representative", capitolLabel: "D.C. Office",
     profileLabel: "Official website", directoryLabel: "U.S. House directory",
     directoryUrl: "https://www.house.gov/representatives",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
 
   /* ---------- 3-4. Indiana Senate + Indiana House ----------
@@ -13239,7 +13239,7 @@ function initIndianaExplorer() {
     directoryUrl: "https://iga.in.gov/information/legislators",
     memberLabel: "State Senator", capitolLabel: "Statehouse Office",
     profileLabel: "Senator profile", directoryLabel: "Indiana General Assembly directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -13252,7 +13252,7 @@ function initIndianaExplorer() {
     directoryUrl: "https://iga.in.gov/information/legislators",
     memberLabel: "Representative", capitolLabel: "Statehouse Office",
     profileLabel: "Member profile", directoryLabel: "Indiana General Assembly directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
 
@@ -13311,10 +13311,10 @@ function initIndianaExplorer() {
     // stated rather than discovered: subOf hides a child whenever any ancestor
     // is off, so turning County off takes this card with it.
     subOf: "county",
-    // long-dash brown — reads apart from Municipality's tight magenta dots
+    // the fleet's township brown (layer-concepts.json `colors`), apart from Municipality's magenta
     overlay: {
       load: loadCountySubdivisions,
-      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05, dashArray: "7 3" }
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13438,8 +13438,8 @@ function initIndianaExplorer() {
       "township it is in.",
     overlay: {
       load: loadPlaces,
-      // tight magenta dots; an empty card here honestly means "unincorporated"
-      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+      // the fleet's municipality magenta (layer-concepts.json `colors`); an empty card here honestly means "unincorporated"
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13565,7 +13565,7 @@ function initIndianaExplorer() {
     // generic empty card is the right one here: inside Indiana it means the
     // point is outside every district, and outside Indiana it means the layer
     // does not reach.
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05, dashArray: "8 3" },
+    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -13676,8 +13676,8 @@ function initIndianaExplorer() {
     // that does mirror the layer. With coverage declared above, outside
     // Indiana the layer HIDES rather than printing a note, and inside Indiana
     // the engine's generic empty card is correct.
-    // dotted outline (a distinct pattern from Township or City's long dash) + its own hue
-    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 4" },
+    // the fleet's ZIP mauve (layer-concepts.json `colors`), a hue no other layer here uses
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05 },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true },
       { label: "About this boundary",
