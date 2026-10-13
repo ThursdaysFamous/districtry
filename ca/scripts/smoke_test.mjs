@@ -281,6 +281,18 @@ try {
       }, null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
     }
     if (await washPainted()) {
+      // THE PURPLE EDGE (2026-10-13). This app's coverage is its whole ground,
+      // so the glowing line is drawn along the coverage itself, as the apps
+      // with a wider region band always drew theirs. Until that day this one
+      // drew no line at all. The coverage key names it.
+      const edge = await page.evaluate(() => {
+        const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
+        const sw = document.querySelector(".districtry-map-legend .dml-items .dml-glow");
+        const label = sw && sw.parentElement.querySelector(".dml-label");
+        return { line: !!(pane && pane.querySelector("path.dst-glow")), label: label ? label.textContent : null };
+      });
+      check("the wash draws the purple edge along the coverage, and the key names it",
+        edge.line && !!edge.label, JSON.stringify(edge));
       await page.evaluate((p) => window.SFExplorer.setSelectedPoint(p[0], p[1]),
         NEGATIVE_POINT.split(",").map(Number));
       const beyond = await openGaps();

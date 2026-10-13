@@ -479,7 +479,8 @@
     "note": "Open Pacific west of Ocean Beach, beyond CA state waters - outside every layer, including the water-inclusive TIGERweb legislative chambers"
   },
   "coverage_key": {
-    "outside": "Outside San Francisco"
+    "outside": "Outside San Francisco",
+    "edge": "San Francisco"
   },
   "data_files": {
     "geometry": [
