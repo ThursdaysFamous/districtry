@@ -11,6 +11,11 @@
 <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<!-- The one web app manifest (scripts/build_manifests.py). The front door links
+     it like every app does, so districtry installs as the same single app from
+     here as from any state's map. -->
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="districtry" />
 <meta name="robots" content="index, follow" />
 <!-- Bing Webmaster Tools site ownership, added 2026-09-13. A PUBLIC ownership
      token like the IndexNow key, not a secret: it proves to Bing that whoever

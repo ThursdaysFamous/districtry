@@ -475,10 +475,14 @@ jobs:
       # surface said districtry while il/manifest.webmanifest still read
       # "Chicago District Explorer" in the pre-rebrand navy, so installing to
       # an Android home screen produced the old name and the old icon. NY and
-      # SF were the same. It is generated from each worksheet's brand block
-      # now, and this is the gate that keeps it that way. It also refuses to
-      # name an icon that is not on disk — a manifest pointing at a missing
-      # PNG installs a blank square and nothing else notices. Stdlib only.
+      # SF were the same. It is generated from the worksheets' brand blocks
+      # now, and this is the gate that keeps it that way. Since 2026-10-13 it
+      # is ONE manifest at the root, so districtry installs as one app from
+      # any page, and this also fails on a page linking any other manifest and
+      # on the launcher at /app/ drifting from the key the apps write. It
+      # refuses to name an icon that is not on disk — a manifest pointing at a
+      # missing PNG installs a blank square and nothing else notices. Stdlib
+      # only.
       - name: Install manifests match the brand keys
         if: ${{ !cancelled() }}
         run: python3 scripts/build_manifests.py --check

@@ -210,7 +210,7 @@ FLOORS = {"text": 4.5, "large": 3.0, "ui": 3.0, "decorative": None}
 # literal is the card palette's, which is the next gate's subject.
 PAIRS = [
     # — body text on the grounds —
-    ("ink",        "surface",    "text", "cards, panels, masthead: header.masthead, .layer-block, .share-popover (skin); the sub-page shell's .answer-card body"),
+    ("ink",        "surface",    "text", "cards, panels, masthead: header.masthead, .layer-block, .share-popover (skin); the sub-page shell's .answer-card body; the phone install invitation's .install-invite-text on its --panel bar (styles-app)"),
     ("ink",        "paper",      "text", "app ground: body (styles-app); every root page's body; the question pages' .lookup-input value, a --paper field inside the --panel .lookup-card (shell)"),
     ("ink",        "surface-2",  "text", ".layer-block-head in DARK only — the skin repaints it #262331 (== --surface-2 dark) under --card-ink #ece9f4 (== --ink dark); in light the head is styles-card-v2's literal #fff (== --surface), so the light half of this row re-measures (ink, surface). The --surface-2 VALUE reaches a light-tier reader through .card-section-label (the muted row below)"),
     ("ink",        "brand-tint", "text", "landing .notice-h and .pill; privacy .tldr (build_landing_page, build_privacy_page — children of body or of an unpainted main, i.e. on --paper)"),
@@ -218,7 +218,7 @@ PAIRS = [
     ("ink",        "border",     "text", ".gap-suggest:hover — text with the border colour as its ground (styles-footer; the gaps modal is composed outside the hidden footer)"),
     ("ink-2",      "surface",    "text", "history.html .tile-l (build_history_page)"),
     ("ink-2",      "paper",      "text", "history.html .intro, .entry p, code (build_history_page)"),
-    ("ink-3",      "surface",    "text", "the question pages' .lookup-label and .lookup-status on the --panel .lookup-card (shell); h1.title small, .masthead-action-link (skin, as --slate); .share-popover-note / -label (styles-app, on the #fff popover); the gaps panel's .gap-area, .gap-detail, .gaps-credit and its group caret .gaps-section-label::before — a state indicator repainted from --line-strong on 2026-09-02 (styles-footer); renderSourceUnavailable paints it from JS"),
+    ("ink-3",      "surface",    "text", "the question pages' .lookup-label and .lookup-status on the --panel .lookup-card (shell); h1.title small, .masthead-action-link (skin, as --slate); .share-popover-note / -label (styles-app, on the #fff popover); .install-invite-close, the invitation's dismiss glyph, as --slate on its --panel bar (styles-app); the gaps panel's .gap-area, .gap-detail, .gaps-credit and its group caret .gaps-section-label::before — a state indicator repainted from --line-strong on 2026-09-02 (styles-footer); renderSourceUnavailable paints it from JS"),
     ("ink-3",      "paper",      "text", "sub-page details body, landing h1 at <=560px, .kbd-select-btn (shell, root, styles-app); the .lookup-input PLACEHOLDER, which is --slate rather than the --slate-soft every other placeholder in the fleet uses \u2014 that pair is 2.28:1 on --paper and is the recorded (faint, paper) shortfall below, so a new field does not join it"),
     ("ink-3",      "surface-2",  "text", "privacy.html thead th at 12px (build_privacy_page)"),
     ("ink-3",      "brand-tint", "text", "landing .notice-b, footer .support (build_landing_page — on body)"),
@@ -237,7 +237,7 @@ PAIRS = [
     ("faint",      "dst-brand-tint-soft@surface", "text", ".dpf-support at 11px on all six app pages (styles-districtry-skin) — the one line in the panel foot a reader is asked to act on, as --slate-soft on the skin's own tint over the --panel foot"),
 
     # — links and accents as text —
-    ("brand-700",  "surface",    "text", "links on panels: .dpf-links a, .sibling-result-hint (skin, as --accent-deep). NOT .dpf-support a — its ground is the skin's own --dst-brand-tint-soft — and NOT footer.site-footer a, which the skin hides"),
+    ("brand-700",  "surface",    "text", "links on panels: .dpf-links a, .sibling-result-hint (skin, as --accent-deep); the invitation's .install-invite-go, an outlined button on its --panel bar (styles-app). NOT .dpf-support a — its ground is the skin's own --dst-brand-tint-soft — and NOT footer.site-footer a, which the skin hides"),
     ("brand-700",  "paper",      "text", "links on the app ground; privacy and history `a`; .locate-btn, .btn-secondary (styles-app, styles-footer)"),
     ("brand-700",  "brand-tint", "text", "landing footer .support a:hover (build_landing_page — on body)"),
     ("brand-700",  "brand-tint@surface", "text", "privacy .masthead-actions a:hover — the masthead is a --surface panel (build_privacy_page)"),
