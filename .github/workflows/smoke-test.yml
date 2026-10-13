@@ -771,6 +771,14 @@ jobs:
         if: ${{ !cancelled() }}
         run: node scripts/esri_rings_test.mjs
 
+      # The search box and the front door read pasted Google Maps and Apple
+      # Maps links with ONE parser, engine/shared/map-link.txt. This runs it
+      # as shipped over the link shapes the two apps hand out, and proves a
+      # short link is sent nowhere while no lookup is configured.
+      - name: Pasted map links are read as expected
+        if: ${{ !cancelled() }}
+        run: node scripts/map_link_test.mjs
+
       # THE SOCIAL CARD IS THE ONE PAGE ASSET NOBODY ON THE TEAM EVER LOOKS AT,
       # because it renders in somebody else's app. Adam shared an /il/ permalink
       # into a Signal group on 2026-09-13 and the preview showed "CHICAGO

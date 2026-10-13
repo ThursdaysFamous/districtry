@@ -148,6 +148,19 @@ def shared_theme_boot():
     """
     with open(THEME_BOOT, encoding="utf-8") as fh:
         return fh.read().rstrip("\n")
+MAP_LINK = os.path.join(REPO_ROOT, "engine", "shared", "map-link.txt")
+
+
+def shared_map_link():
+    """The map-link parser, read from its ONE source.
+
+    engine/shared/map-link.txt is an ENGINE fence in every app, spliced by
+    compose_app.py, and the address box here reads pasted links with the same
+    code, so the front door and the app it opens cannot read one link two
+    ways. Returned verbatim, like the theme boot.
+    """
+    with open(MAP_LINK, encoding="utf-8") as fh:
+        return fh.read().rstrip("\n")
 OUT = os.path.join(REPO_ROOT, "index.html")
 
 # The canonical host TODAY. R5 moves this to districtry.com along with
@@ -1586,6 +1599,8 @@ footer .support b { color: var(--ink); }
     return best;
   }
 
+%(maplink)s
+
   var form = document.getElementById("search-form");
   var input = document.getElementById("search-input");
   var button = document.getElementById("search-button");
@@ -1610,6 +1625,28 @@ footer .support b { color: var(--ink); }
     button.disabled = true;
     button.textContent = "Searching\\u2026";
     setStatus("Searching\\u2026", false);
+    // A pasted Google Maps or Apple Maps link, or a coordinate pair, is read
+    // here by the same parser every app runs (engine/shared/map-link.txt),
+    // so nothing it carries goes to the geocoder as address text.
+    var link = parseMapLink(q);
+    if (link && link.kind === "short") {
+      var signal = inFlight.signal;
+      resolveShortMapLink(link, signal).then(function (full) {
+        if (signal.aborted) return;
+        submitLink(full, full.kind === "text" ? full.text : q);
+      }, function (err) {
+        if (err && err.name === "AbortError") return;
+        resetButton();
+        setStatus(mapLinkMessage(link), true);
+      });
+      return;
+    }
+    submitLink(link, link && link.kind === "text" ? link.text : q);
+  });
+
+  function submitLink(link, q) {
+    if (link && link.kind === "point") { routePoint(link.lat, link.lng); return; }
+    if (link && link.kind !== "text") { resetButton(); setStatus(mapLinkMessage(link), true); return; }
     fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(q) + "&lang=en&limit=5",
       { signal: inFlight.signal, headers: { Accept: "application/json" } })
       .then(function (res) {
@@ -1642,7 +1679,19 @@ footer .support b { color: var(--ink); }
         resetButton();
         setStatus("Search failed \\u2014 try again, or pick a place below.", true);
       });
-  });
+  }
+
+  /* A position read from a link: the same routing a geocoded address gets. */
+  function routePoint(lat, lng) {
+    var feats = [{ geometry: { coordinates: [lng, lat] } }];
+    loadFleetOutlines().then(function (outlines) {
+      if (!outlines) return routeByRectangles(feats);
+      var metro = fleetOwner(lat, lng, outlines);
+      if (metro) { go(metro, { lat: lat, lng: lng }); return; }
+      resetButton();
+      setStatus("That place is outside every place districtry covers today \\u2014 see what's covered below.", true);
+    });
+  }
 
   function go(metro, hit) {
     setStatus("Opening " + metro.name + "\\u2026", false);
@@ -1693,6 +1742,7 @@ footer .support b { color: var(--ink); }
         "favicon": html.escape(favicon_uri, quote=True),
         "fontface": fontface + "\n" + FALLBACK_FACE,
         "themeboot": shared_theme_boot(),
+        "maplink": shared_map_link(),
         "light": token_css(LIGHT_TOKENS, light, ":root"),
         "dark": token_css(DARK_TOKENS, dark, '[data-theme="dark"]', DARK_EXTRA,
                           indent="    "),
