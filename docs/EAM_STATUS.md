@@ -54,6 +54,7 @@ different thing from one it failed.
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 10 of 13 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 12 | all | 7 of 13 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 13 | all | 8 of 13 levels |
+| tn | **EAM·** | 95 | 95/95 § | 548 | 939 | all | 11 | all | 6 of 13 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 265 | all | 11 of 13 levels |
 
 § Examined in part by a record covering the whole state rather
@@ -182,6 +183,21 @@ this instance is in maintenance.
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — South Carolina has no sub-county general-purpose government — outside a city or town limit the county governs. The 299 sub-county units the Census publishes for South Carolina are census county divisions: statistical areas, not governments.
+
+### tn — EAM·
+
+- **Examined by a statewide record:** `tn-county-commissioners` accounts for every county in the state, which is what Examined rests on here: 54 of 95 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`, `tn-commission-districts.json`, `tn-house-districts.json`, `tn-senate-districts.json`
+- **Covered: no.** 7 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+  - **4. The county governing body, in every county of the state** — open. 54 of 95 counties name a governing body
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 28 units at 25,000+ name a governing body; unanswered: Bartlett city, Brentwood city, Bristol city, Chattanooga city, Clarksville city, Cleveland city, Collierville town, Columbia city and 20 more
+  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
+  - **10. School boards elected by district** — open (required only where the state has the level)
+  - **11. Election precincts** — open (required only where the state has the level)
+  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
+  - **13. Tribal governments** — open (required only where the state has the level)
+- **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
+  - **9. Townships or other general-purpose sub-county governments** — Tennessee has no sub-county general-purpose government — outside a city or town limit the county governs. The 855 sub-county units the Census publishes for Tennessee are civil districts, which the Census records as having no functioning government.
 
 ### wi — EAM·
 
