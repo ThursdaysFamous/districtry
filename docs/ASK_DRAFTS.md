@@ -7122,11 +7122,16 @@ the next route.
 
 ## Ask il-chipoli-introduction — Chipoli (chipoli.org): two Chicago civic maps that fit together
 
-> **NOT YET ASKED — DRAFTED 2026-10-13**, on the operator's word that districtry should be working
-> with whoever runs Chipoli. To contact@chipoli.org, the only contact the site publishes. Nothing on
-> the site names who runs it: the domain was registered on 2026-09-01 through Squarespace with the
-> owner's details withheld, and the site is hosted on Vercel. No earlier contact: the operator's sent
-> mail has nothing mentioning Chipoli (searched 2026-10-13).
+> **ASKED 2026-10-13**, sent 14:01:30 UTC to contact@chipoli.org, the only contact the site
+> publishes. **No answer yet**; the follow-up clock runs to about 2026-11-03. The operator reworded
+> the draft below before sending, keeping its substance: the same counts, both errors, the three
+> ideas and the question of who runs the site. The bracketed choice went as "I am fixing this
+> week", and the third idea was put as asking what the two sites could jointly ask the city or
+> state to publish. Drafted the same day on the operator's word that districtry should be working
+> with whoever runs Chipoli. Nothing on the site names who runs it: the domain was registered on
+> 2026-09-01 through Squarespace with the owner's details withheld, and the site is hosted on
+> Vercel. No earlier contact: the operator's sent mail had nothing mentioning Chipoli (searched
+> 2026-10-13).
 
 **Why this is asked.** Chipoli is a Chicago-only civic site, about six weeks old on 2026-10-13. It
 draws six sets of boundaries (the 50 wards, 77 community areas, 22 police districts, and the state
