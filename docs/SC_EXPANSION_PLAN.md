@@ -43,7 +43,8 @@ numbers. Both cards, and both county pages, name all five members.
 
 - Published the folder: the blanket `'sc/**'` deploy exclude became the siblings' narrow set, and
   `sc` joined the deploy's presence loop. Tennessee stays dark behind its own blanket line.
-- Added the `metros.json` entry and ran `--sync-fleet`; added `sc` to the coverage map's `AREAS`
+- Added the `metros.json` entry, its hand-off box clipped at 35.16 N so it does not hold North
+  Carolina's own centre (`sc/WATCH.md` has the measurement), and ran `--sync-fleet`; added `sc` to the coverage map's `AREAS`
   (one tier, like North Carolina and Oklahoma) and to `fleet-outlines.json`'s sources.
 - Wrote `county-council.html` and turned on the `sc_councils` adapter in
   `scripts/build_county_pages.py`, which writes a page per county under `county-council/`. The
