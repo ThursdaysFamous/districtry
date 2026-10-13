@@ -12167,11 +12167,57 @@ function initChiExplorer() {
     // dropping the row: hasUsableGeometry is what decides a layer is unusable.
     return null;
   }
+  /* ---------- an ArcGIS error envelope is an ERROR, never an empty set.
+   *
+   * ArcGIS answers a refused query with HTTP 200 and a body of
+   * {"error":{"code":…,"message":…,"details":[…]}}, which parses as JSON and
+   * carries no features. Read as data it became an empty FeatureCollection,
+   * so a card said "returned no usable geometry" — or, from a loader that
+   * reads an empty set as an answer, that nothing is there — when what had
+   * happened was a refusal. Measured 2026-10-13 on Hamilton County's ArcGIS
+   * Online organisation: "API calls quota exceeded (6063 request units)!
+   * maximum allowed request units (6000) per Minute. Retry after 60 sec." The
+   * quota is per organisation and shared by everyone reading it, so whether a
+   * request is refused depends on what other readers did in the same minute.
+   *
+   * So the envelope becomes an Error naming its code and message, and a 429
+   * (the quota refusal) is asked again ONCE after the wait the server names,
+   * capped at ARCGIS_QUOTA_RETRY_CAP_MS so a card is not left loading for a
+   * full minute. A second refusal is reported, not retried again. ---------- */
+  var ARCGIS_QUOTA_RETRY_CAP_MS = 15000;
+  function arcgisErrorOf(payload) {
+    var e = payload && payload.error;
+    if (!e || typeof e !== "object") return null;
+    var err = new Error("ArcGIS error " + (e.code != null ? e.code : "(no code)") + ": " +
+      (e.message || "the service refused the query"));
+    err.arcgisCode = e.code;
+    var details = (e.details || []).join(" ");
+    var m = /retry after (\d+) ?s/i.exec(details);
+    if (m) err.retryAfterMs = Number(m[1]) * 1000;
+    return err;
+  }
+  function fetchArcGISJSON(url, opts, retries) {
+    function ask(quotaRetryLeft) {
+      return fetchJSONWithRetry(url, opts || {}, retries).then(function (payload) {
+        var err = arcgisErrorOf(payload);
+        if (!err) return payload;
+        if (err.arcgisCode === 429 && quotaRetryLeft) {
+          var wait = Math.min(err.retryAfterMs || 5000, ARCGIS_QUOTA_RETRY_CAP_MS);
+          return new Promise(function (resolve) { setTimeout(resolve, wait); })
+            .then(function () { return ask(false); });
+        }
+        throw err;
+      });
+    }
+    return ask(true);
+  }
   /* The contract is "produce what f=geojson should have produced", including
    * the transfer-cap flag the paged loader reads. `fieldNames` is optional; a
    * caller that requested outFields=* passes nothing and gets every attribute,
    * which is what the GeoJSON export does. */
   function esriToGeoJSON(payload, fieldNames) {
+    var refused = arcgisErrorOf(payload);
+    if (refused) throw refused;
     var src = (payload && payload.features) || [];
     var out = [];
     for (var i = 0; i < src.length; i++) {
@@ -12210,7 +12256,7 @@ function initChiExplorer() {
       return Promise.reject(new Error(
         "fetchArcGISAsGeoJSON needs f=json (the GeoJSON export unnests interior rings): " + url));
     }
-    return fetchJSONWithRetry(url, opts || {}, retries === undefined ? 2 : retries)
+    return fetchArcGISJSON(url, opts || {}, retries === undefined ? 2 : retries)
       .then(function (payload) { return esriToGeoJSON(payload, fieldNames); });
   }
   function loadArcGISGeoJSON(serviceUrl) {
@@ -12222,7 +12268,7 @@ function initChiExplorer() {
     // precision, so a builder that omits it measures a layer this app fetches
     // as clean. Esri JSON keeps the ring either way.
     var url = serviceUrl + "/query?where=1%3D1&outFields=*&f=json&outSR=4326&geometryPrecision=6";
-    return fetchJSONWithRetry(url, {}, 2)
+    return fetchArcGISJSON(url, {}, 2)
       .then(function (payload) {
         var geojson = esriToGeoJSON(payload);
         if (!hasUsableGeometry(geojson)) throw new Error("no usable geometry from " + serviceUrl);
@@ -12252,7 +12298,7 @@ function initChiExplorer() {
       "&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects" +
       "&outFields=" + encodeURIComponent(outFields || "*") +
       "&outSR=4326&f=json&geometryPrecision=6";
-    return fetchJSONWithRetry(url, {}, 1)
+    return fetchArcGISJSON(url, {}, 1)
       .then(function (payload) {
         var geojson = esriToGeoJSON(payload);
         if (!hasUsableGeometry(geojson)) throw new Error("point query returned no usable geometry: " + serviceUrl);
@@ -12278,8 +12324,8 @@ function initChiExplorer() {
       // f=json, not f=geojson: the GeoJSON export unnests interior rings (see
       // the arcgis-loader block for the measurement). esriToGeoJSON carries
       // exceededTransferLimit through, which is what this loop pages on.
-      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
-        .then(esriToGeoJSON).then(function (gj) {
+      return fetchArcGISJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+        .then(function (payload) { return esriToGeoJSON(payload); }).then(function (gj) {
         var feats = (gj && gj.features) || [];
         acc = acc.concat(feats);
         var more = gj && (gj.exceededTransferLimit || (gj.properties && gj.properties.exceededTransferLimit));
@@ -12292,8 +12338,9 @@ function initChiExplorer() {
         if (more && feats.length > 0) return page(offset + feats.length, acc);
         var out = { type: "FeatureCollection", features: acc };
         // Same "200 but useless" guard the unpaged loaders apply: an Esri error
-        // envelope 200s carrying no usable geometry; without this makeCached
-        // would retain that empty response as a permanent success.
+        // envelope now rejects in fetchArcGISJSON, but a service can still
+        // answer 200 with rows and no shapes; without this makeCached would
+        // retain that empty response as a permanent success.
         if (!hasUsableGeometry(out)) throw new Error("paged ArcGIS layer returned no usable geometry: " + layerUrl);
         return out;
       });
@@ -17530,30 +17577,20 @@ function initChiExplorer() {
         return geojson;
       });
   }
+  /* The precincts SHIP since 2026-10-13 (scripts/build_hamilton_precincts.py),
+   * named rows only, and are drawn from the county-precinct tile archive like
+   * the other shipped counties. They used to be read live from the org above,
+   * whose request quota is shared by everyone who reads it: measured that day
+   * it answered "API calls quota exceeded … per Minute" and a reader's card
+   * showed an error until somebody else's minute ran out. The fire layer
+   * still reads live. The polling place is joined in the entry's query rather
+   * than stamped onto the features, because a card answered from a tile holds
+   * only the file's own properties. */
   var loadHamiltonPrecincts = makeCached(function () {
-    return Promise.all([
-      loadHamiltonLayer(HAMILTON_ORG_SERVICE + "Voter_Precincts_Hamilton/FeatureServer/0",
-                        "Precinct_Name IS NOT NULL", "Precinct_Name", "precincts"),
-      fetchJSONWithRetry("data/app/hamilton-precinct-polling.json", {}, 2)
-        .catch(function () { return null; })
-    ]).then(function (results) {
-      var precincts = results[0], polling = results[1];
-      if (polling && polling.precincts) {
-        (precincts.features || []).forEach(function (f) {
-          var props = f.properties || {};
-          // The GIS writes "MCLEANSBORO 4 " with a trailing space — the
-          // normalization here is the same trim the card identifier does.
-          var name = String(findPropCI(props, ["precinct_name"]) || "")
-            .replace(/\s+/g, " ").trim().toUpperCase();
-          var entry = polling.precincts[name];
-          if (!entry) return;
-          props.dxPollingPlace = entry.place || null;
-          props.dxPollingAddress = entry.address || null;
-          props.dxPollingElection = polling.election || null;
-        });
-      }
-      return precincts;
-    });
+    return fetchJSONWithRetry("data/app/hamilton-precincts.json", {}, 2);
+  });
+  var loadHamiltonPolling = makeCached(function () {
+    return fetchJSONWithRetry("data/app/hamilton-precinct-polling.json", {}, 2);
   });
   var loadHamiltonFire = makeCached(function () {
     return loadHamiltonLayer(HAMILTON_ORG_SERVICE + "Fire_Districts_HamiltonIL/FeatureServer/0",
@@ -32753,8 +32790,8 @@ function initChiExplorer() {
       },
       // Hamilton — the county's sixteen precincts. The source layer has a
       // seventeenth row with a null name that duplicates DAHLGREN 1's polygon
-      // exactly and sorts ahead of it; loadHamiltonPrecincts drops unnamed rows
-      // so Dahlgren 1 answers with its own name instead of "Unknown". The
+      // exactly and sorts ahead of it; build_hamilton_precincts.py ships named
+      // rows only so Dahlgren 1 answers with its own name instead of "Unknown". The
       // layer carries no polling data; the polling place joins from the
       // Clerk's published election notice (data/app/hamilton-precinct-polling
       // .json), and the row is labelled with the election the notice names —
@@ -32768,17 +32805,25 @@ function initChiExplorer() {
           return (v == null || String(v).trim() === "") ? null : String(v).trim();
         },
         query: function (point, seq) {
-          return featureSetAt(loadHamiltonPrecincts, point).then(function (geojson) {
-            var feature = findFeatureContaining(geojson, point);
+          return Promise.all([
+            featureSetAt(loadHamiltonPrecincts, point),
+            // A polling failure costs the polling row, never the precinct.
+            loadHamiltonPolling().catch(function () { return null; })
+          ]).then(function (results) {
+            var feature = findFeatureContaining(results[0], point);
             if (!feature) return null;
             var props = feature.properties || {};
             var name = findPropCI(props, ["precinct_name"]);
+            name = name != null && String(name).trim() ? String(name).replace(/\s+/g, " ").trim() : null;
+            var polling = results[1];
+            var entry = (polling && polling.precincts && name)
+              ? polling.precincts[name.toUpperCase()] || null : null;
             return {
               seq: seq,
-              name: name != null && String(name).trim() ? String(name).trim() : null,
-              pollingPlace: props.dxPollingPlace || null,
-              pollingAddress: props.dxPollingAddress || null,
-              pollingElection: props.dxPollingElection || null
+              name: name,
+              pollingPlace: entry ? entry.place || null : null,
+              pollingAddress: entry ? entry.address || null : null,
+              pollingElection: entry ? polling.election || null : null
             };
           });
         },
