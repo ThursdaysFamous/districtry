@@ -3787,6 +3787,86 @@
    ]
   }
  },
+ "47129": {
+  "county": "Morgan County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://morgancountytn.gov/county-commission/",
+  "readAt": "2026-10-13",
+  "seats": 18,
+  "domains": [
+   "morgancountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Steve Walls"
+    },
+    {
+     "name": "Randy Roberts"
+    },
+    {
+     "name": "Terry Jackson"
+    }
+   ],
+   "2": [
+    {
+     "name": "John Lindsay"
+    },
+    {
+     "name": "Vera Scarbough"
+    },
+    {
+     "name": "Fred Snow"
+    }
+   ],
+   "3": [
+    {
+     "name": "David Hennessee"
+    },
+    {
+     "name": "Kenneth Morgan"
+    },
+    {
+     "name": "Vernon Justes"
+    }
+   ],
+   "4": [
+    {
+     "name": "Melissa Kries"
+    },
+    {
+     "name": "Margaret R. Gibson"
+    },
+    {
+     "name": "Doug Vespie"
+    }
+   ],
+   "5": [
+    {
+     "name": "Melissa Bryant"
+    },
+    {
+     "name": "Seth Stewart"
+    },
+    {
+     "name": "Gary Kennedy"
+    }
+   ],
+   "6": [
+    {
+     "name": "Tony Dagley"
+    },
+    {
+     "name": "Debra Lively"
+    },
+    {
+     "name": "Janet Adkission"
+    }
+   ]
+  }
+ },
  "47131": {
   "county": "Obion County",
   "seatTitle": "Commissioner",
