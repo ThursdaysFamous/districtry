@@ -1,31 +1,50 @@
 #!/usr/bin/env python3
-"""Emit each instance's PWA manifest from its worksheet's brand block.
+"""Emit the ONE web app manifest, and hold the pages that link it and the launcher to it.
 
-WHY THIS EXISTS. Every branded surface in this repo is generated from
-`brand` in the instance worksheet — the head block, the favicon, the theme
-colour, the analytics tag. The web app manifest was the one that was not, and
-it is the one that rotted: after the rebrand shipped, `il/manifest.webmanifest`
-still read `"Chicago District Explorer"` with the pre-rebrand navy
-`#0b3d91` and the old Chicago-flag star icons, so **installing the app to an
-Android home screen produced the old name and the old icon** while every
-other surface said districtry. NY and SF were the same story with their own
-old names. No gate could catch it, because nothing compared the manifest to
-anything.
+WHY THERE IS ONE. Until 2026-10-13 each instance shipped its own
+`<tag>/manifest.webmanifest` with scope `./` and no `id`, so installing
+districtry from Illinois and then from Wisconsin put two apps on a phone, both
+labelled "districtry", and an installed Illinois app ended at the state line:
+the sibling hand-off navigates to `/wi/`, which was outside its scope, so
+Android opened Wisconsin in a browser tab and the reader had left the app.
+districtry is one app that answers in many places, so it installs as one:
+`/manifest.webmanifest` at the root, `id` and `scope` `/`, so every page on the
+site is inside it and crossing a state line keeps the reader in the same
+window.
 
-So the manifest is generated now, and `--check` fails the build on drift.
+WHERE IT OPENS. `start_url` is `/app/`, a launcher that reads which state the
+reader used last and opens it (`app/index.html`). The key it reads is written
+by the engine block `engine/index.html/install-app.txt` on every app's boot, so
+the two are one claim read in two places, and `--check` holds them to each
+other: a key renamed on one side would leave every installed copy opening the
+front page with nothing failing. The launcher has a service worker of its own
+(`app/sw.js`, scope `/app/`) so an installed app still opens with no
+connection; it caches the launcher page and nothing else, and it deletes only
+its own caches, never an instance's.
 
-WHAT IS PRESERVED, DELIBERATELY. The icon *paths* are read out of the manifest
-being replaced rather than invented, because `sw.shell_urls` in the worksheet
-pins those exact filenames: NY keeps `icons/app/…`, IL and SF keep `icons/…`.
-Renaming an icon here would silently break the service worker's precache,
-which is a worse bug than the one this fixes. Replace the PNG bytes in place;
-never rename the file.
+WHY THE ROOT SERVICE WORKER IS NOT USED. `/sw.js` is the kill switch that
+retires the pre-R2.3 root registration. It must stay exactly that, and a
+manifest needs no worker at its own scope to be installable, so the launcher's
+worker lives at `/app/` and the root keeps none.
 
-A NOTE ON `start_url`. It is `./`, not `./index.html`. The two resolve to the
-same document, and the service worker precaches only `./` for exactly that
-reason — pointing the manifest at `./index.html` makes an installed app open a
-URL the shell cache does not hold, so the first launch of an offline install
-misses.
+WHAT IS STILL PER INSTANCE. The `INSTANCES` table, because each instance's
+worksheet must agree on the name and theme colour one app can only have once,
+and each instance's app page must link the root manifest (installs start
+there). `scripts/validate_instance_registration.py` holds this table to the
+tree. iOS takes its home-screen icon from each page's own
+`apple-touch-icon`, never from a manifest, which is why those stay per
+instance (generated into each app's head-theme region).
+
+WHAT `--check` ASSERTS, beyond byte-equality of the manifest:
+  * every worksheet agrees on `brand.product_name` and `brand.theme_color`;
+  * the three icons the manifest names are byte-identical to the brand's own
+    files under districtry/icons/ and are PNGs of the size declared;
+  * no instance ships a manifest of its own (a second app identity);
+  * every page that declares a manifest declares this one, once, and every
+    app page and the front door declare it;
+  * the launcher reads the key the engine writes, registers its own worker at
+    its own scope, is kept out of search, and names no other host;
+  * the launcher's worker names no cache outside its own prefix.
 
 Usage:
     python3 scripts/build_manifests.py            # write
@@ -34,8 +53,10 @@ Usage:
 
 import argparse
 import difflib
+import glob
 import json
 import os
+import re
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -58,10 +79,31 @@ INSTANCES = [
     ("tn", "tn/metro-worksheet.json"),
 ]
 
+MANIFEST = "manifest.webmanifest"
+MANIFEST_HREF = "/" + MANIFEST
+START_URL = "/app/"
+LAUNCHER = os.path.join("app", "index.html")
+LAUNCHER_SW = os.path.join("app", "sw.js")
+LAUNCHER_CACHE_PREFIX = "districtry-app-launch-v"
+ENGINE_BLOCK = os.path.join("engine", "index.html", "install-app.txt")
+
 # The splash background. Not the theme colour: the brand icons sit on a light
 # field, and a violet splash behind a light-field icon reads as a mistake on a
 # phone. This is the app's own paper tone.
 BACKGROUND = "#F4F7F9"
+
+# Root icon -> the brand file it is a copy of, and the size the manifest
+# declares for it. favicon-192.png is the front door's own 192px icon and was
+# already a byte-identical copy of the brand's; the two 512s are new at the
+# root with this manifest.
+ICONS = [
+    ("favicon-192.png", "districtry/icons/districtry-192.png", 192, "any"),
+    ("icon-512.png", "districtry/icons/districtry-512.png", 512, "any"),
+    ("icon-maskable-512.png", "districtry/icons/districtry-maskable-512.png", 512, "maskable"),
+]
+
+MANIFEST_LINK_RE = re.compile(r'<link\b[^>]*\brel=["\']manifest["\'][^>]*>', re.I)
+HREF_RE = re.compile(r'\bhref=["\']([^"\']*)["\']', re.I)
 
 
 def fail(msg):
@@ -69,107 +111,223 @@ def fail(msg):
     sys.exit(1)
 
 
-def short_name(app_name, product):
-    """The label under the icon on a home screen — roughly 12 characters before
-    Android truncates it. `app_name` is "districtry Illinois"; the product name
-    alone is what fits and what the brand spec calls the indivisible word."""
-    return product or app_name.split()[0]
+def rel(path):
+    return os.path.relpath(path, REPO)
 
 
-def icon_paths(existing):
-    """Icon srcs from the manifest being replaced — see the module docstring on
-    why these are preserved rather than chosen."""
-    srcs = [i.get("src") for i in (existing.get("icons") or []) if i.get("src")]
-    small = next((s for s in srcs if "192" in s), None)
-    large = next((s for s in srcs if "512" in s and "maskable" not in s), None)
-    if not small or not large:
+def read(path, what):
+    try:
+        with open(path, encoding="utf-8") as fh:
+            return fh.read()
+    except OSError as e:
+        fail("cannot read %s (%s): %s" % (what, rel(path), e))
+
+
+def brand_identity():
+    """The name and theme colour every instance must agree on. One app has one
+    of each; an instance that changed its own would change every installed
+    copy's colour the day it was regenerated, so disagreement fails rather than
+    picking a winner."""
+    names, colours = {}, {}
+    for inst, wpath in INSTANCES:
+        w = json.loads(read(os.path.join(REPO, wpath), "the %s worksheet" % inst))
+        brand = w.get("brand") or {}
+        if not brand.get("product_name") or not brand.get("theme_color"):
+            fail("%s: worksheet has no brand.product_name or brand.theme_color — "
+                 "the manifest cannot be generated without them" % wpath)
+        names.setdefault(brand["product_name"], []).append(inst)
+        colours.setdefault(brand["theme_color"], []).append(inst)
+    if len(names) != 1 or len(colours) != 1:
+        fail("the instances disagree about the app's name or theme colour "
+             "(names %s, colours %s). districtry installs as ONE app, which has "
+             "one of each." % (names, colours))
+    return next(iter(names)), next(iter(colours))
+
+
+def png_size(data):
+    if data[:8] != b"\x89PNG\r\n\x1a\n" or data[12:16] != b"IHDR":
         return None
-    # The maskable file sits beside the others; its name is fixed by this script
-    # because it is new, and it is added to sw.shell_urls in the same change.
-    maskable = large.replace("icon-512", "icon-maskable-512")
-    return small, large, maskable
+    return int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")
 
 
-def build(inst, worksheet_path):
-    wpath = os.path.join(REPO, worksheet_path)
-    with open(wpath, encoding="utf-8") as fh:
-        w = json.load(fh)
-    brand = w.get("brand") or {}
-    if not brand.get("app_name"):
-        fail("%s: worksheet has no brand.app_name — the manifest cannot be "
-             "generated without it (adopt the brand keys first)" % worksheet_path)
-
-    mpath = os.path.join(REPO, inst, "manifest.webmanifest")
-    if not os.path.exists(mpath):
-        fail("%s: no manifest to replace at %s" % (inst, mpath))
-    with open(mpath, encoding="utf-8") as fh:
-        existing = json.load(fh)
-
-    paths = icon_paths(existing)
-    if not paths:
-        fail("%s: could not read 192 and 512 icon paths out of the existing "
-             "manifest; refusing to guess filenames the service worker pins" % inst)
-    small, large, maskable = paths
-
-    for rel in (small, large, maskable):
-        if not os.path.exists(os.path.join(REPO, inst, rel)):
-            fail("%s: manifest would name %s, which does not exist on disk" % (inst, rel))
-
+def build_manifest():
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    try:
+        from build_landing_page import DESCRIPTION
+    finally:
+        sys.path.pop(0)
+    name, theme = brand_identity()
     doc = {
-        "name": brand["app_name"],
-        "short_name": short_name(brand["app_name"], brand.get("product_name")),
-        "description": (brand.get("head") or {}).get("description") or brand.get("tagline") or "",
-        "start_url": "./",
-        "scope": "./",
+        # The app's identity. Explicit so it survives a change of start_url;
+        # without it the identity IS the start_url, and moving the launcher
+        # would orphan every installed copy.
+        "id": "/",
+        "name": name,
+        "short_name": name,
+        "description": DESCRIPTION,
+        "lang": "en-US",
+        "dir": "ltr",
+        "start_url": START_URL,
+        "scope": "/",
         "display": "standalone",
         "background_color": BACKGROUND,
-        "theme_color": brand.get("theme_color") or BACKGROUND,
+        "theme_color": theme,
         "icons": [
-            {"src": small, "sizes": "192x192", "type": "image/png", "purpose": "any"},
-            {"src": large, "sizes": "512x512", "type": "image/png", "purpose": "any"},
-            # Without a maskable icon Android crops the square into its adaptive
-            # shape and letterboxes it on a white plate. This one carries the
-            # safe-zone padding the spec asks for.
-            {"src": maskable, "sizes": "512x512", "type": "image/png", "purpose": "maskable"},
+            # Without a maskable icon Android crops the square into its
+            # adaptive shape and letterboxes it on a white plate. That one
+            # carries the safe-zone padding the spec asks for.
+            {"src": "/" + icon, "sizes": "%dx%d" % (px, px), "type": "image/png",
+             "purpose": purpose}
+            for icon, _src, px, purpose in ICONS
         ],
     }
-    return mpath, json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
+    return json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
+
+
+def icons(check):
+    """Copy each root icon from the brand's own file, or check it still is one."""
+    drift = []
+    for icon, src, px, _purpose in ICONS:
+        with open(os.path.join(REPO, src), "rb") as fh:
+            want = fh.read()
+        size = png_size(want)
+        if size != (px, px):
+            fail("%s is %s, and the manifest declares %dx%d — the brand file "
+                 "changed size, so the declaration must follow it"
+                 % (src, "not a PNG" if size is None else "%dx%d" % size, px, px))
+        path = os.path.join(REPO, icon)
+        have = open(path, "rb").read() if os.path.exists(path) else None
+        if have == want:
+            continue
+        if check:
+            drift.append(icon)
+        else:
+            with open(path, "wb") as fh:
+                fh.write(want)
+            print("build-manifests: copied %s -> %s" % (src, icon))
+    if drift:
+        fail("%s no longer match%s the brand's own icon%s under districtry/icons/. "
+             "Run scripts/build_manifests.py rather than editing the copies: an "
+             "installed app shows these files on the home screen."
+             % (", ".join(drift), "es" if len(drift) == 1 else "",
+                "" if len(drift) == 1 else "s"))
+
+
+def pages():
+    """Every page the site publishes that could declare a manifest: the root's,
+    the launcher's, each instance's and one level of instance subdirectory
+    (the per-county pages). Discovered, the way validate_instance_assets.py
+    discovers them, so a new instance is covered the day it lands."""
+    out = sorted(glob.glob(os.path.join(REPO, "*.html")))
+    out += sorted(glob.glob(os.path.join(REPO, "app", "*.html")))
+    for inst, _w in INSTANCES:
+        out += sorted(glob.glob(os.path.join(REPO, inst, "*.html")))
+        out += sorted(glob.glob(os.path.join(REPO, inst, "*", "*.html")))
+    return out
+
+
+def check_pages():
+    must = {os.path.join(REPO, "index.html")}
+    must |= {os.path.join(REPO, inst, "index.html") for inst, _w in INSTANCES}
+    wrong, missing, linking = [], [], 0
+    for path in pages():
+        text = read(path, "a page")
+        links = MANIFEST_LINK_RE.findall(text)
+        if not links:
+            if path in must:
+                missing.append(rel(path))
+            continue
+        linking += 1
+        hrefs = [(HREF_RE.search(l) or [None, None])[1] for l in links]
+        if len(links) != 1 or hrefs[0] != MANIFEST_HREF:
+            wrong.append("%s (%s)" % (rel(path), ", ".join(str(h) for h in hrefs)))
+    if wrong:
+        fail("%d page(s) declare a manifest other than %s, or more than one: %s. "
+             "There is one districtry app; a page naming another manifest would "
+             "install a second one." % (len(wrong), MANIFEST_HREF, "; ".join(wrong)))
+    if missing:
+        fail("%s declare%s no manifest. Every app page and the front door must "
+             "link %s, because that is where a reader installs from."
+             % (", ".join(missing), "s" if len(missing) == 1 else "", MANIFEST_HREF))
+    for inst, _w in INSTANCES:
+        stray = os.path.join(REPO, inst, MANIFEST)
+        if os.path.exists(stray):
+            fail("%s exists. Instances no longer carry a manifest of their own: "
+                 "the one at %s is the app every page installs, and a second file "
+                 "is a second app identity waiting for a page to link it."
+                 % (rel(stray), MANIFEST_HREF))
+    return linking
+
+
+def check_launcher():
+    """The launcher is hand-written; these are the claims it must keep."""
+    engine = read(os.path.join(REPO, ENGINE_BLOCK), "the install-app engine block")
+    m = re.search(r'\bvar DST_LAST_APP_KEY = "([^"]+)";', engine)
+    if not m:
+        fail("%s no longer declares DST_LAST_APP_KEY as a string literal, so the "
+             "key the launcher must read cannot be established" % ENGINE_BLOCK)
+    key = m.group(1)
+    page = read(os.path.join(REPO, LAUNCHER), "the app launcher")
+    if 'localStorage.getItem("%s")' % key not in page:
+        fail("%s does not read localStorage %r, the key %s writes. Every installed "
+             "copy would open the front page instead of the reader's state, and "
+             "nothing else would fail." % (LAUNCHER, key, ENGINE_BLOCK))
+    if not re.search(r'serviceWorker\.register\(\s*"/app/sw\.js"\s*,\s*\{\s*scope:\s*"/app/"', page):
+        fail("%s does not register /app/sw.js at scope /app/ — without it an "
+             "installed app cannot open with no connection" % LAUNCHER)
+    if not re.search(r'<meta name="robots" content="noindex', page):
+        fail("%s is not marked noindex. It is a redirect, not a page a search "
+             "result should send anyone to." % LAUNCHER)
+    if re.search(r'rel=["\']canonical', page):
+        fail("%s carries a canonical. build_sitemap.py lists a page on its "
+             "canonical, and the launcher is not a destination." % LAUNCHER)
+    if re.search(r'''(?:src|href|action)\s*=\s*["'](?:https?:)?//''', page) or \
+            re.search(r'''["'](?:https?:)?//[a-z0-9.-]+\.[a-z]{2,}''', page, re.I):
+        fail("%s names another host. It runs on every launch of the installed "
+             "app, before any page the privacy page measures, so it must reach "
+             "nobody but this site." % LAUNCHER)
+    if not os.path.exists(os.path.join(REPO, START_URL.strip("/"), "index.html")):
+        fail("the manifest's start_url %s has no index.html behind it" % START_URL)
+    sw = read(os.path.join(REPO, LAUNCHER_SW), "the launcher's service worker")
+    names = set(re.findall(r'"(districtry-[^"]*)"', sw))
+    if names != {LAUNCHER_CACHE_PREFIX}:
+        fail("%s names %s. It may name only its own cache prefix %r: a worker "
+             "that names an instance's cache can delete it."
+             % (LAUNCHER_SW, sorted(names), LAUNCHER_CACHE_PREFIX))
+    return key
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--check", action="store_true",
-                    help="fail if any manifest differs from what the worksheets describe")
+                    help="fail if the manifest, its icons, a page or the launcher drifted")
     args = ap.parse_args()
 
-    drift = []
-    for inst, wpath in INSTANCES:
-        mpath, want = build(inst, wpath)
-        have = open(mpath, encoding="utf-8").read() if os.path.exists(mpath) else ""
-        if args.check:
-            if have != want:
-                drift.append((inst, have, want))
-        elif have != want:
-            with open(mpath, "w", encoding="utf-8") as fh:
-                fh.write(want)
-            print("build-manifests: wrote %s/manifest.webmanifest" % inst)
-        else:
-            print("build-manifests: %s/manifest.webmanifest already current" % inst)
-
+    want = build_manifest()
+    path = os.path.join(REPO, MANIFEST)
+    have = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
     if args.check:
-        if drift:
-            for inst, have, want in drift:
-                print("\n--- %s/manifest.webmanifest (on disk) vs worksheet ---" % inst)
-                sys.stdout.writelines(difflib.unified_diff(
-                    have.splitlines(keepends=True), want.splitlines(keepends=True),
-                    fromfile="on disk", tofile="from worksheet"))
-            fail("%d manifest(s) drifted from the brand keys. Regenerate rather "
-                 "than hand-editing: a manifest that disagrees with the app is "
-                 "what puts the wrong name on someone's home screen."
-                 % len(drift))
-        print("build-manifests: OK — all %d manifest(s) match their worksheets"
-              % len(INSTANCES))
+        if have != want:
+            sys.stdout.writelines(difflib.unified_diff(
+                have.splitlines(keepends=True), want.splitlines(keepends=True),
+                fromfile="on disk", tofile="from the brand keys"))
+            fail("%s drifted from the brand keys. Regenerate rather than "
+                 "hand-editing: a manifest that disagrees with the app is what "
+                 "puts the wrong name on someone's home screen." % MANIFEST)
+    elif have != want:
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(want)
+        print("build-manifests: wrote %s" % MANIFEST)
+    else:
+        print("build-manifests: %s already current" % MANIFEST)
+
+    icons(args.check)
+    linking = check_pages()
+    key = check_launcher()
+    print("build-manifests: OK — one manifest for %d instances, linked by %d "
+          "page(s); the launcher reads %r, the key the apps write"
+          % (len(INSTANCES), linking, key))
 
 
 if __name__ == "__main__":

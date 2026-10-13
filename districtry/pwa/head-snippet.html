@@ -1,5 +1,8 @@
 <!-- districtry PWA head wiring — paste into index.html <head> -->
-<link rel="manifest" href="manifest.webmanifest">
+<!-- ONE manifest for the whole site, at the root: scripts/build_manifests.py
+     writes it and fails on a page that links any other, because a second
+     manifest installs a second app. Never give an instance its own. -->
+<link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="icons/favicon.ico" sizes="32x32 16x16">
 <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">

@@ -51,7 +51,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "39.76860,-86.16260"; // the Indiana Statehouse, downtown Indianapolis (Marion County)
 const OFFLINE = ["county", "us-house", "in-senate", "in-house"];
 const EXPECT_DISTRICT = { "county": "Marion County", "us-house": "7", "in-senate": "46", "in-house": "97" };
-const NEGATIVE_POINT = "38.25270,-85.75850"; // downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json, which is what the pan hand-off reads — the same fix Iowa, Illinois and Wisconsin each made rather than moving their own point. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.
+const NEGATIVE_POINT = "38.25270,-85.75850"; // downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.
 const APP_NAME = "districtry Indiana";
 const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
@@ -245,21 +245,13 @@ try {
   //     so this needs no network.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    // THE FLEET FILE IS REFUSED FOR THE WHOLE OF THIS CHECK, because its
-    // coverage-band half selects NEGATIVE_POINT and setSelectedPoint PANS
-    // there, which puts the map's CENTRE outside Indiana and arms the pan
-    // hand-off (ENGINE metro-portal's moveend -> placeOwner ->
-    // offerMetroPortal, which sets window.location.href). This instance's
-    // negative point is in Louisville, and KENTUCKY WENT LIVE ON 2026-09-30,
-    // so from that day the file puts that point inside a sibling and this
-    // check would navigate to /ky/ mid-assertion. Refused, placeOwner's own
-    // error leg answers "nobody", which is the state this check is about.
-    // Iowa (#1267), Illinois (#1272) and Wisconsin (#1268) all settled on
-    // refusing the file rather than moving the point, and fleet routing is
-    // asserted on this instance's own points in check 1a2 instead.
-    const page = await booted(context, BASE, async (p) => {
-      await p.route("**/fleet-outlines.json", (r) => r.abort());
-    });
+    // The coverage-band half selects NEGATIVE_POINT, which is in Kentucky,
+    // and setSelectedPoint PANS there. Until 2026-10-13 that put the map's
+    // centre in a sibling's state and the pan hand-off navigated away
+    // mid-assertion, so this check refused ../fleet-outlines.json; panning no
+    // longer switches apps, so it refuses nothing. Fleet routing is asserted
+    // on this instance's own points in check 1a2.
+    const page = await booted(context, BASE);
     const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/coverage-gaps.json"), "utf8"));
     const expected = Object.keys(shipped).length;
 
@@ -337,6 +329,18 @@ try {
       }, null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
     }
     if (await washPainted()) {
+      // THE PURPLE EDGE (2026-10-13). This app's coverage is its whole ground,
+      // so the glowing line is drawn along the coverage itself, as the apps
+      // with a wider region band always drew theirs. Until that day this one
+      // drew no line at all. The coverage key names it.
+      const edge = await page.evaluate(() => {
+        const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
+        const sw = document.querySelector(".districtry-map-legend .dml-items .dml-glow");
+        const label = sw && sw.parentElement.querySelector(".dml-label");
+        return { line: !!(pane && pane.querySelector("path.dst-glow")), label: label ? label.textContent : null };
+      });
+      check("the wash draws the purple edge along the coverage, and the key names it",
+        edge.line && !!edge.label, JSON.stringify(edge));
       await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
         { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
       const beyond = await openGaps();
@@ -597,11 +601,6 @@ try {
       // verdict is the same on a runner that can reach TIGERweb and in a
       // sandbox that cannot.
       await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
-      // And the fleet file, for the reason given on the coverage-band check
-      // above: this permalink pans the map's centre to Louisville, which
-      // Kentucky's outline has covered since its 2026-09-30 go-live, so the
-      // pan hand-off would navigate away mid-assertion.
-      await p.route("**/fleet-outlines.json", (r) => r.abort());
     });
     for (const id of NEGATIVE_IDS) {
       if (NEGATIVE_HIDDEN.includes(id)) {

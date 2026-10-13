@@ -198,7 +198,7 @@ def head(tag, brand, app_name, page_file, title, description, og_desc):
 %(jsonld)s
 </script>
 
-<link rel="manifest" href="manifest.webmanifest">
+<link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="%(theme)s">
 
 <link rel="icon" type="image/svg+xml" href="%(favicon)s" />
