@@ -180,7 +180,7 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 # every county it has listed, by construction.
 STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   "ky": 120, "ny": 62, "in": 92,
-                  "nc": 100, "ok": 77}
+                  "nc": 100, "ok": 77, "sc": 46, "tn": 95}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -314,8 +314,9 @@ def load_rosters():
     with contextlib.redirect_stdout(quiet):
         # HELD_INSTANCES are read here and rendered nowhere: an instance whose
         # county-page adapter is settled while its pages wait for go-live
-        # (South Carolina). Without them its county tier read as naming
-        # nobody, which is what a state with no adapter looks like.
+        # (South Carolina was the first, until its go-live). Without them its
+        # county tier read as naming nobody, which is what a state with no
+        # adapter looks like.
         for inst in B.INSTANCES + B.HELD_INSTANCES:
             tag = inst["tag"]
             merged, read = {}, []
@@ -1744,6 +1745,73 @@ ANSWERS = {
         "special-districts": OPEN,
         # The fleet-wide tribal layer thread owns drawing Oklahoma's nations,
         # as census statistical areas labeled as such (Adam, 2026-10-10).
+        "tribal-government": OPEN,
+    },
+    # South Carolina, added at its go-live with its county councils.
+    "sc": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("sc-senate", "sc-house"),
+        "county-boundaries": answers("county"),
+        # Every county has been governed by an elected council since the Home
+        # Rule Act of 1975; the layer draws all 46 counties' council districts
+        # from the Revenue and Fiscal Affairs Office and names every one of
+        # the 334 seats from the Election Commission's certified results.
+        "county-government": depth("county-council"),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        # TIGER's unified tiling holds all 72 districts and the other two hold
+        # none, measured in sc/CLAUDE.md, so one layer is the whole level.
+        "school-district-boundaries": answers("school-district-unified"),
+        "courts-by-district": OPEN,
+        # SOUTH CAROLINA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 299
+        # county subdivisions TIGERweb carries for the state are census county
+        # divisions (LSADC 22, FUNCSTAT S). Recorded in sc/CLAUDE.md.
+        "sub-county-government": na(
+            "South Carolina has no sub-county general-purpose government — "
+            "outside a city or town limit the county governs. The 299 "
+            "sub-county units the Census publishes for South Carolina are "
+            "census county divisions: statistical areas, not governments."),
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # SHIPPED 2026-10-12: the Catawba Nation's reservation and its trust
+        # land in York County, the only tribal land in the state, named with
+        # the nation's executive committee.
+        "tribal-government": answers("tribal-government"),
+    },
+    # Tennessee, added at its go-live with the national tier and the county
+    # commission layer.
+    "tn": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("tn-senate", "tn-house"),
+        "county-boundaries": answers("county"),
+        # Every county elects its legislative body from districts, and the
+        # Comptroller publishes all 859 of them in one statewide layer; the
+        # members are named county by county from each county's own pages.
+        "county-government": depth("county-commissioner"),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        # All three tilings, because Tennessee uses all three: unified (127)
+        # districts cover most of the state, and fifteen elementary districts
+        # sit inside fifteen secondary ones. Recorded in tn/CLAUDE.md.
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary",
+            "school-district-secondary"),
+        "courts-by-district": OPEN,
+        # TENNESSEE HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 855 county
+        # subdivisions TIGERweb carries for the state are civil districts
+        # (LSADC 28, FUNCSTAT N): legal areas nobody is elected to run.
+        # Recorded in tn/CLAUDE.md with the method.
+        "sub-county-government": na(
+            "Tennessee has no sub-county general-purpose government — outside a "
+            "city or town limit the county governs. The 855 sub-county units "
+            "the Census publishes for Tennessee are civil districts, which the "
+            "Census records as having no functioning government."),
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # One piece of off-reservation trust land, 0.695 km2 near Henning; the
+        # fleet-wide tribal-government thread owns it.
         "tribal-government": OPEN,
     },
     "ny": {

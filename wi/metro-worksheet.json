@@ -755,7 +755,7 @@
   "negative_point": {
     "lat": 47.39,
     "lng": -92.97,
-    "note": "off the northwest corner of Wisconsin — outside the state and every starter layer. IT IS INSIDE MINNESOTA, AND IT CANNOT BE MOVED SOMEWHERE THAT IS NOBODY'S: sampling permalink_gate every 0.25 degrees and naming each point's state off TIGERweb, all 609 points land in a state and the 300 outside Wisconsin are Michigan (163), Minnesota (76), Iowa (47) and Illinois (14) — three of those are live instances today, so moving the point into one would break this test now rather than at Minnesota's go-live, and the Great Lakes are no refuge either (a control in open Lake Michigan returns Michigan). So the point stays and the checks that select it refuse ../fleet-outlines.json, which is the only thing the hand-off reads; Wisconsin asserts nothing about fleet routing."
+    "note": "off the northwest corner of Wisconsin — outside the state and every starter layer. IT IS INSIDE MINNESOTA, AND IT CANNOT BE MOVED SOMEWHERE THAT IS NOBODY'S: sampling permalink_gate every 0.25 degrees and naming each point's state off TIGERweb, all 609 points land in a state and the 300 outside Wisconsin are Michigan (163), Minnesota (76), Iowa (47) and Illinois (14) — three of those are live instances today, so moving the point into one would break this test now rather than at Minnesota's go-live, and the Great Lakes are no refuge either (a control in open Lake Michigan returns Michigan). So the point stays. Until 2026-10-13 the checks that select it refused ../fleet-outlines.json, because the map then switched apps whenever its centre crossed into a sibling's state; panning no longer does that, so they refuse nothing. Wisconsin asserts nothing about fleet routing."
   },
   "coverage_key": {
     "outside": "Outside Wisconsin",
@@ -2415,11 +2415,7 @@
     "cache_name": "districtry-wi-shell-v49",
     "shell_urls": [
       "./",
-      "./manifest.webmanifest",
-      "./icons/icon-192.png",
-      "./icons/icon-512.png",
       "./icons/apple-touch-icon.png",
-      "./icons/icon-maskable-512.png",
       "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
       "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
       "./vendor/leaflet-maplibre-gl.js"
@@ -2581,7 +2577,11 @@
     { "id": "northcarolina", "label": "North Carolina", "url": "https://districtry.com/nc/", "emoji": "🌳", "explorer_name": "districtry North Carolina",
       "bbox": { "minLng": -84.33, "minLat": 33.74, "maxLng": -75.39, "maxLat": 36.6 } },
     { "id": "oklahoma", "label": "Oklahoma", "url": "https://districtry.com/ok/", "emoji": "🌾", "explorer_name": "districtry Oklahoma",
-      "bbox": { "minLng": -103.01, "minLat": 33.61, "maxLng": -94.43, "maxLat": 37.01 } }
+      "bbox": { "minLng": -103.01, "minLat": 33.61, "maxLng": -94.43, "maxLat": 37.01 } },
+    { "id": "southcarolina", "label": "South Carolina", "url": "https://districtry.com/sc/", "emoji": "🌴", "explorer_name": "districtry South Carolina",
+      "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } },
+    { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
+      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } }
   ],
   "history_page": {
     "file": "history.html",

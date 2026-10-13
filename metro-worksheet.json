@@ -55,7 +55,11 @@
     { "id": "northcarolina", "label": "North Carolina", "url": "https://districtry.com/nc/", "emoji": "🌳", "explorer_name": "districtry North Carolina",
       "bbox": { "minLng": -84.33, "minLat": 33.74, "maxLng": -75.39, "maxLat": 36.6 } },
     { "id": "oklahoma", "label": "Oklahoma", "url": "https://districtry.com/ok/", "emoji": "🌾", "explorer_name": "districtry Oklahoma",
-      "bbox": { "minLng": -103.01, "minLat": 33.61, "maxLng": -94.43, "maxLat": 37.01 } }
+      "bbox": { "minLng": -103.01, "minLat": 33.61, "maxLng": -94.43, "maxLat": 37.01 } },
+    { "id": "southcarolina", "label": "South Carolina", "url": "https://districtry.com/sc/", "emoji": "🌴", "explorer_name": "districtry South Carolina",
+      "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } },
+    { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
+      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } }
   ],
   "hover_number_keys": [
     [
@@ -986,7 +990,7 @@
   "negative_point": {
     "lat": 41.7,
     "lng": -87.1,
-    "note": "Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Five of those are live instances (Indiana went live on 2026-10-07, and its outline contains this point) and Missouri is on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing \"where we serve\" bound to suit a test. So the point stays and the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; check 1i is where Illinois asserts fleet routing, on its own points."
+    "note": "Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Five of those are live instances (Indiana went live on 2026-10-07, and its outline contains this point) and Missouri is on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing \"where we serve\" bound to suit a test. So the point stays. Two checks put it at the map's centre, and until 2026-10-13 both had to refuse ../fleet-outlines.json, because the map then switched apps whenever its centre crossed into a sibling's state; panning no longer does that, so neither refuses anything, and a selection the app makes itself never leaves. Check 1i is where Illinois asserts fleet routing, on its own points, and that panning across a state line stays here."
   },
   "coverage_key": {
     "outside": "Outside Illinois",
@@ -1486,6 +1490,12 @@
         "min_features": 1,
         "max_features": 1,
         "note": "Hamilton County outline — the coverage test for the county's precinct and fire dispatch entries, and the SECOND island (pass 14, 2026-08-05): the ask campaign's first fruit, joined the day the Clerk answered. Shipped as a gap-location outline by pass 13 and promoted the next day."
+      },
+      {
+        "file": "hamilton-precincts.json",
+        "min_features": 16,
+        "max_features": 16,
+        "note": "Hamilton County's 16 voting precincts, read from the county's own ArcGIS Online layer (Voter_Precincts_Hamilton, named rows only; a seventeenth unnamed row duplicates DAHLGREN 1) by scripts/build_hamilton_precincts.py. Shipped 2026-10-13 instead of read live, because that organisation's per-minute request quota is shared by everyone who reads it and a refused query left readers with an error card. Bounds are an EQUALITY: the county and its Clerk both say sixteen precincts, and the build refuses any name the Clerk's polling notice does not join on."
       },
       {
         "file": "hancock-county-outline.json",
@@ -3343,14 +3353,10 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v40",
+    "cache_name": "districtry-il-shell-v41",
     "shell_urls": [
       "./",
       "./sources.html",
-      "./manifest.webmanifest",
-      "./icons/icon-192.png",
-      "./icons/icon-512.png",
-      "./icons/icon-maskable-512.png",
       "./icons/apple-touch-icon.png",
       "./icons/water-taxi.png",
       "./icons/seals/cook-county.png",
