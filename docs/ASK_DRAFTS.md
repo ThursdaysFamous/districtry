@@ -7119,3 +7119,125 @@ its date and the terms CTAS gives, and used the same way. Only names and distric
 from either; the directory's home addresses never are. A no: recorded in the gap with its date, the
 counties stay read one by one, and letters to the counties whose own pages are out of date remain
 the next route.
+
+## Ask il-chipoli-introduction — Chipoli (chipoli.org): two Chicago civic maps that fit together
+
+> **ASKED 2026-10-13**, sent 14:01:30 UTC to contact@chipoli.org, the only contact the site
+> publishes. **No answer yet**; the follow-up clock runs to about 2026-11-03. The operator reworded
+> the draft below before sending, keeping its substance: the same counts, both errors, the three
+> ideas and the question of who runs the site. The bracketed choice went as "I am fixing this
+> week", and the third idea was put as asking what the two sites could jointly ask the city or
+> state to publish. Drafted the same day on the operator's word that districtry should be working
+> with whoever runs Chipoli. Nothing on the site names who runs it: the domain was registered on
+> 2026-09-01 through Squarespace with the owner's details withheld, and the site is hosted on
+> Vercel. No earlier contact: the operator's sent mail had nothing mentioning Chipoli (searched
+> 2026-10-13).
+
+**Why this is asked.** Chipoli is a Chicago-only civic site, about six weeks old on 2026-10-13. It
+draws six sets of boundaries (the 50 wards, 77 community areas, 22 police districts, and the state
+house, state senate and congressional districts that cover the city) and goes deep on the people in
+them: a cited profile of every alderperson (record, platform, caucuses, and a section of
+controversies), City Council roll calls taken from Chicago Councilmatic, campaign contributions of
+$1,000 or more from the State Board of Elections' disclosure pages, lobbying, the 2027 city election,
+citywide and appointed officials, the Board of Education, every police district council member, 311
+requests, Block Club Chicago coverage matched to neighbourhoods, census figures and a public-meetings
+calendar. districtry draws far more boundaries across the whole state and carries only each
+officeholder's name and contact details from official sources, so the two are complementary: depth on
+one city against breadth across a state. It is also a second independent publisher meeting the same
+scattered sources districtry meets, which is what makes it worth hearing from for the larger goal of
+getting Illinois and the city to publish this information properly.
+
+**What was compared, 2026-10-13**, Chipoli's own published data files against districtry's shipped
+rosters, matching people by name. The same people hold every seat on both for the 50 wards
+(`il/data/source/ward-members.json`; thirteen differ only in a nickname or middle initial), the 63 named
+police district council members (`il/data/app/ccpsa-district-councils.json`), the 20 Board of
+Education districts (`il/data/app/school-board-members.json`; Chipoli also lists the board president,
+who holds no district) and the 67 state and federal legislators Chipoli lists (21 senators, 37
+representatives, 9 members of Congress, against the three legislator rosters). One error on each side:
+
+- **Chipoli's**: House District 28 is listed as `Robert \` with the page address `/legislators/robert`.
+  The General Assembly lists him as `Robert "Bob" Rita`, and the quotation marks cut the name short.
+- **districtry's**: wards 31 and 40 read `Jr., Felix Cardona` and `Jr., Andre Vasquez`, on the map's
+  ward card and in the table on `il/ward.html`. The city's dataset (`htai-wnw4`, read 2026-10-13 after
+  its robots.txt) writes `Cardona, Jr., Felix` and `Vasquez, Jr., Andre`, and both the app's
+  `formatAldermanName` and `scripts/build_chicago_ward_roster.py` split at the FIRST comma.
+
+One difference that is not an error on either side: Chipoli marks the 25th District Council as having
+a vacancy because it has two members of three; districtry records a vacancy only where the
+commission's own page lists one (the 3rd and the 12th), and shows the 25th's two members.
+
+> Subject: districtry and Chipoli: two Chicago maps that fit together
+>
+> Hi,
+>
+> I came across Chipoli recently and spent a while on it. The ward pages are thorough, and I like
+> that every claim carries its source.
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial website. You click a point on
+> the map or type an address, and it shows every district that covers it, from the voting precinct,
+> ward and police district up through the county board, judicial subcircuit, school, park and
+> library districts, the General Assembly and Congress, along with who represents you in each and
+> how to reach them. It started in Chicago and now covers most of Illinois and several other states.
+>
+> I think our two sites fit together more than they overlap. Chipoli goes deep on Chicago: how an
+> alderperson votes, who funds them, what residents are raising and what the local news says.
+> districtry goes wide: every district at an address, in the city and beyond it.
+>
+> To see how well our information agrees, I compared our lists of who holds each seat. The same
+> people are on both for all 50 wards, all 63 named police district council members, all 20 Board of
+> Education districts and the 67 state and federal legislators you list. I found one error on each
+> side:
+>
+> - Your legislators page shows Rep. Bob Rita (House District 28) as "Robert \". It looks like the
+>   quotation marks in the name the General Assembly lists, Robert "Bob" Rita, cut it short.
+> - Ours showed two alderpersons as "Jr., Felix Cardona" and "Jr., Andre Vasquez". The city's
+>   dataset writes "Cardona, Jr., Felix", and we split the name at the wrong comma. [CHOOSE ONE:
+>   "We've fixed it." / "We're fixing it this week."]
+>
+> That is the kind of thing two independent sites can do for each other. Here are a few ideas, and
+> I'd be glad to hear yours:
+>
+> 1. Check each other's lists from time to time. When two sites built separately agree, that's good
+>    evidence both are right, and when they don't, one of us has an error to fix.
+> 2. Point readers to each other where the other goes further. Chipoli could send people to
+>    districtry for the districts it doesn't map and for addresses outside the city, and districtry
+>    could point to Chipoli for votes, campaign money and local issues. I'd want to talk that through
+>    before either of us adds a link.
+> 3. The larger one. I want to change how Illinois publishes this information. A lot of what both our
+>    sites show has to be pieced together from scattered pages, PDFs and one-off datasets. I've
+>    started with precinct maps: I checked what all 102 counties publish
+>    (https://districtry.com/il/precinct-maps.html) and plan to ask the State Board of Elections to
+>    publish them in one place. I'd like to hear what Chipoli has had to put together by hand that the
+>    city or the state could publish in a form people can use. Two independent sites asking for the
+>    same thing carry more weight than one.
+>
+> Your site doesn't say who's behind it, which is fine. I'd still like to know a little about you,
+> and what you hope Chipoli becomes, before we link to each other.
+>
+> Thanks for building it.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+**Before sending:**
+
+- Choose the bracketed sentence: "We've fixed it" only once the wards 31 and 40 fix is live on
+  districtry.com, otherwise "We're fixing it this week".
+- Open Chipoli's legislators page in a browser and check House District 28 still reads "Robert \".
+  If they have fixed it, drop that bullet and say only that the lists matched apart from ours.
+- The link idea is an offer to talk, not a promise. A link to Chipoli from a districtry card would be
+  the Illinois app's first link from a card to a non-government civic site: today it links no
+  Ballotpedia, Wikipedia, Councilmatic or similar page. Chipoli also carries editorial summaries,
+  including a section of controversies on every alderperson, and the city election is on
+  23 February 2027. Decide on any link once you know who runs it.
+- Chipoli's campaign-money pages come from the State Board of Elections' disclosure site, whose
+  robots.txt asks every automated reader to stay out; districtry stopped reading that host on
+  2026-09-25. How Chipoli collects them is not known (it may be by hand), and nothing in this letter
+  asks for or offers that data. Keep any exchange of data to rosters both sites read from sources
+  that allow it.
+
+**Any answer is useful.** An introduction tells us who runs Chipoli and decides whether a link
+either way is worth discussing. An answer to the third idea is evidence for the letters to the State
+Board and, later, to the city. A polite no, or no answer, costs nothing: the comparison has already
+found one error of ours.
