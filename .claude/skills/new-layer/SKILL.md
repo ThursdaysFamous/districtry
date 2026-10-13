@@ -88,7 +88,11 @@ table — its `color:` and `fillColor:` (a point layer's `fill:`) set to that
 row's `line` and `fill` — and the generator fails on any other colour literal
 in its definition; a new concept row needs a `colors` entry too, with a line
 colour no other concept uses that reads 4.5:1 as the small label on a white
-card, which the generator also checks. Then one run:
+card, which the generator also checks. It is drawn with that concept's line
+from the `lines` table as well — its `weight:` set to the row's `weight` and
+its `dashArray:` to the row's `dash`, or left out where `dash` is null — and a
+new concept row needs a `lines` entry (null for a concept drawn as map pins).
+Then one run:
 
 ```bash
 python3 scripts/generate_metro_files.py

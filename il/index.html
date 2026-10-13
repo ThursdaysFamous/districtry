@@ -22006,7 +22006,7 @@ function initChiExplorer() {
     // a ward or Joliet a council district (the consolidation convention — the
     // municipality's own wording rides the card's pill and body).
     label: "City Ward",
-    style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.08, dashArray: "3 2 6 2" },
+    style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.08 },
     onToggle: function (on) {
       // Ward Precinct is a sub-selection of a visible ward, so if the ward is
       // turned off, cascade its precinct sub-selection off too (which restores
@@ -24255,7 +24255,7 @@ function initChiExplorer() {
     // at one site rather than being pasted into each of their renderers.
     officeFallback: countyBoardOfficeFallback,
     // one legend identity for the concept (the pre-consolidation Will blue)
-    style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.05, dashArray: "9 3 3 3" },
+    style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.05 },
     counties: [
       {
         key: "cook",
@@ -36501,18 +36501,18 @@ function initChiExplorer() {
   var DST_DARK_MAP_COLORS = { "#00695C": "#4DBDAA", "#06375E": "#528DC6", "#0B5394": "#4FA4FE",
     "#0B7A6B": "#4DCBB6", "#0E7C86": "#4DCBD9", "#0F6F6F": "#52C1C0", "#14181C": "#696F76",
     "#14B8A6": "#30FFE7", "#19A0AD": "#43E9FA", "#1B4F8C": "#5CA0F5", "#1B7A3D": "#58CD7A",
-    "#1E7A8C": "#57C8E1", "#1F6F6B": "#5DC0BA", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
-    "#2E7D46": "#68CE83", "#2F6B3A": "#6FBE7B", "#3949AB": "#849CFD", "#3B8FD4": "#A4D2FD",
-    "#3D3D7A": "#898CE2", "#3D6B49": "#7EBC8D", "#3E9A95": "#6CE3DD", "#41B6E6": "#C6EBFE",
-    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB93",
+    "#1E7A8C": "#57C9E1", "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
+    "#2E7D46": "#68CE83", "#2F6B3A": "#6FBE7B", "#3949AB": "#849CFE", "#3B8FD4": "#A5D2FD",
+    "#3D3D7A": "#898CE2", "#3D6B49": "#7EBC8D", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93",
     "#4DB6AC": "#70FAED", "#4FA06A": "#7FEAA1", "#585EDD": "#A7B4FE", "#5C6BC0": "#A7B7FD",
-    "#5C8F6B": "#95D9A8", "#5E3A8C": "#B283F5", "#63B57F": "#8EFAB2", "#6A3FA0": "#BA8BFE",
-    "#6A4A93": "#BC91F6", "#6B4FA0": "#B998FE", "#6B7280": "#B1BBCE", "#7A0A1C": "#EA5B61",
-    "#7A1E5C": "#E266B4", "#7A2D3D": "#E17587", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF",
-    "#88637C": "#DAA7C9", "#8A5A00": "#E4A241", "#8A692C": "#DDB061", "#8A6FBF": "#CEB8FE",
-    "#8C2E4A": "#F47294", "#8E6BB8": "#D3B3FE", "#9C0B24": "#FD6B6E", "#A05F00": "#FBA33D",
+    "#5C8F6B": "#95D9A9", "#5E3A8C": "#B283F5", "#63B57F": "#8EFAB2", "#6A3FA0": "#BA8BFE",
+    "#6A4A93": "#BC91F6", "#6B4FA0": "#B998FE", "#6B7280": "#B1BBCE", "#7A0A1C": "#EB5B61",
+    "#7A1E5C": "#E266B5", "#7A2D3D": "#E17587", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF",
+    "#88637C": "#DAA7C9", "#8A5A00": "#E4A241", "#8A692C": "#DDB061", "#8A6FBF": "#CEB8FF",
+    "#8C2E4A": "#F47294", "#8E6BB8": "#D3B3FE", "#9C0B24": "#FE6B6E", "#A05F00": "#FBA33D",
     "#A15C00": "#FD9F3D", "#A3341F": "#FE8269", "#A34A2A": "#FE916B", "#A98B6C": "#F3CBA1",
-    "#B0316E": "#FF87B8", "#B0342A": "#FF8B7C", "#C2744E": "#FFBD9E", "#C8102E": "#FE928F",
+    "#B0316E": "#FD88B8", "#B0342A": "#FF8B7C", "#C2744E": "#FFBD9E", "#C8102E": "#FE928F",
     "#D0564C": "#FEB1A7", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7", "#E4572E": "#FFBCA9"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */

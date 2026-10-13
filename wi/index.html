@@ -13281,7 +13281,7 @@ function initWisconsinExplorer() {
       // solid county-board blue, light fill (layer-concepts.json `colors`) —
       // the only political layer drawn inside a county, so it reads against
       // County's grey and the chambers' dashes
-      style: { color: "#1F6FB2", weight: 1.5, fillColor: "#3B8FD4", fillOpacity: 0.06 }
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       // same two properties the card's header and County row read, so hover
@@ -14266,10 +14266,10 @@ function initWisconsinExplorer() {
     // shape (docs/EXPANSION_GUIDE.md Part 4, nesting determination)
     overlay: {
       load: loadWards,
-      // fine dotted navy, the fleet's precinct colour (layer-concepts.json
-      // `colors`) — the smallest containment fabric on the map, kept visually
-      // below its county-subdivision parent's long brown dash
-      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.04, dashArray: "1 3" }
+      // thin solid navy, the fleet's precinct colour and line (layer-concepts.json
+      // `colors` and `lines`) — the smallest containment fabric on the map, kept
+      // visually below its county-subdivision parent by the thinner line
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.04 }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -14713,9 +14713,9 @@ function initWisconsinExplorer() {
     // plan chose deliberately for a layer that elects no one.
     overlay: {
       load: loadAldermanicDistricts,
-      // the fleet's city-council blue (layer-concepts.json `colors`), distinct
-      // from the judicial pair and the navy ward dots beneath it
-      style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "4 2" }
+      // the fleet's city-council blue and solid line (layer-concepts.json
+      // `colors` and `lines`), heavier than the navy wards beneath it
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -17997,19 +17997,19 @@ function initWisconsinExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#0F766E": "#50C7BC",
-    "#14181C": "#696F76", "#14A38F": "#40EDD2", "#1A7789": "#55C6DE", "#1B4F8C": "#5CA0F5",
-    "#1B7A3D": "#58CD7A", "#1F6F6B": "#5DC0BA", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
-    "#2F5D8C": "#6EACED", "#2F6B3A": "#6FBE7B", "#2F6B5E": "#6EBCAA", "#3B8FD4": "#A4D2FD",
-    "#3D6B49": "#7EBC8D", "#3D95A6": "#6BDEF5", "#3E9A95": "#6CE3DD", "#41B6E6": "#C6EBFE",
-    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4A7BB0": "#90C4FD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB93", "#4E8F80": "#83D9C5", "#585EDD": "#A7B4FE", "#5C8F6B": "#95D9A8",
+    "#14181C": "#696F76", "#14A38F": "#41EED2", "#1A7789": "#55C6DF", "#1B4F8C": "#5CA0F5",
+    "#1B7A3D": "#58CD7A", "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
+    "#2F5D8C": "#6EACED", "#2F6B3A": "#6FBE7B", "#2F6B5E": "#6EBDAA", "#3B8FD4": "#A5D2FD",
+    "#3D6B49": "#7EBC8D", "#3D95A6": "#6CDEF5", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4A7BB0": "#90C4FD", "#4B2E83": "#9E7BF1",
+    "#4C8F59": "#83DC93", "#4E8F80": "#83DAC5", "#585EDD": "#A7B4FE", "#5C8F6B": "#95D9A9",
     "#5E3A8C": "#B283F5", "#6A4A93": "#BC91F6", "#6B7280": "#B1BBCE", "#753B07": "#D7864B",
-    "#7A0A1C": "#EA5B61", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9",
-    "#8A5A00": "#E4A241", "#8C2E4A": "#F47294", "#8E6BB8": "#D3B3FE", "#9550B2": "#DF9BFE",
-    "#9C0B24": "#FD6B6E", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
-    "#B02E2E": "#FE887F", "#B0316E": "#FF87B8", "#B0342A": "#FF8B7C", "#B45309": "#FEA16D",
+    "#7A0A1C": "#EB5B61", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9",
+    "#8A5A00": "#E4A241", "#8C2E4A": "#F47294", "#8E6BB8": "#D3B3FE", "#9550B2": "#E09BFE",
+    "#9C0B24": "#FE6B6E", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
+    "#B02E2E": "#FE8880", "#B0316E": "#FD88B8", "#B0342A": "#FF8B7C", "#B45309": "#FEA16D",
     "#C8102E": "#FE928F", "#D0564C": "#FEB1A7", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7",
-    "#D97706": "#FEC9A0", "#E4572E": "#FFBCA9"};
+    "#D97706": "#FEC9A1", "#E4572E": "#FFBCA9"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

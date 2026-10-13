@@ -1621,6 +1621,86 @@ def check_concept_colors(app_text, instance, concepts, colors):
     return problems
 
 
+DASH_RE = re.compile(r"^[0-9]+(\.[0-9]+)?( [0-9]+(\.[0-9]+)?)+$")
+WEIGHT_LIT = re.compile(r'(?<![\w.])weight\s*:\s*([^,}\s]+)')
+DASH_LIT = re.compile(r'(?<![\w.])dashArray\s*:\s*("[^"]*"|[^,}\s]+)')
+
+
+def load_concept_lines(root, concepts):
+    """concept -> (weight, dash) or None from layer-concepts.json's `lines`,
+    checked: every concept has an entry and nothing else is listed; an entry is
+    null (a concept drawn as map pins, which keeps each app's own drawing) or
+    {"weight": a positive number, "dash": a Leaflet dashArray string or null}."""
+    with open(os.path.join(root, LAYER_CONCEPTS_FILE), encoding="utf-8") as f:
+        table = json.load(f).get("lines")
+    if not isinstance(table, dict):
+        fail("%s: `lines` must be an object of concept -> {weight, dash} or null" % LAYER_CONCEPTS_FILE)
+    problems, out = [], {}
+    for concept in concepts:
+        if concept not in table:
+            problems.append("%s: needs a line style, or null if its layers are map pins" % concept)
+            continue
+        entry = table[concept]
+        if entry is None:
+            out[concept] = None
+            continue
+        if not isinstance(entry, dict) or set(entry) != {"weight", "dash"}:
+            problems.append("%s: needs exactly {\"weight\": n, \"dash\": \"a b\" or null}" % concept)
+            continue
+        weight, dash = entry["weight"], entry["dash"]
+        if isinstance(weight, bool) or not isinstance(weight, (int, float)) or weight <= 0:
+            problems.append("%s: weight must be a positive number of pixels" % concept)
+            continue
+        if dash is not None and not (isinstance(dash, str) and DASH_RE.match(dash)):
+            problems.append("%s: dash must be null (solid) or numbers separated by single spaces" % concept)
+            continue
+        out[concept] = (float(weight), dash)
+    for extra in sorted(set(table) - set(concepts)):
+        problems.append("%s has a line style and no row in `concepts`" % extra)
+    if problems:
+        fail("%s `lines`:\n  %s" % (LAYER_CONCEPTS_FILE, "\n  ".join(problems)))
+    return out
+
+
+def check_concept_lines(app_text, instance, concepts, lines):
+    """Every layer of this app that answers a concept with a line style draws
+    with it: each `weight:` literal in its registration is the concept's width
+    and each `dashArray:` its dash, where no `dashArray:` at all, or `null`,
+    is a solid line (the engine's default). A layer under two concepts takes
+    the first in file order, as its colours do. Returns problems."""
+    owner = {}
+    for concept, cols in concepts.items():
+        for lid in cols.get(instance, []):
+            owner.setdefault(lid, concept)
+    problems = []
+    for lid, concept in owner.items():
+        if lines[concept] is None:
+            continue
+        weight, dash = lines[concept]
+        body = layer_definition(app_text, lid)
+        if body is None:
+            problems.append("%s: cannot find the object that registers it" % lid)
+            continue
+        weights, dashes = set(), set()
+        for raw in WEIGHT_LIT.findall(body):
+            try:
+                weights.add(float(raw))
+            except ValueError:
+                weights.add(raw)
+        for raw in DASH_LIT.findall(body):
+            dashes.add(None if raw == "null" else (raw[1:-1] if raw.startswith('"') else raw))
+        if not dashes:
+            dashes = {None}
+        if weights != {weight} or dashes != {dash}:
+            def show(v):
+                return "solid" if v is None else ('"%s"' % v if isinstance(v, str) else "%g" % v)
+            problems.append("%s draws weight %s dash %s; %s is weight %g dash %s"
+                            % (lid, ", ".join(sorted(show(w) for w in weights)) or "(none)",
+                               ", ".join(sorted(show(d) for d in dashes)),
+                               concept, weight, show(dash)))
+    return problems
+
+
 def check_shared_ids_carried(root, concepts, schema):
     """A layer id two LIVE apps both register is one a reader can switch on in
     either, and moving between them should keep it on — so it must sit under a
@@ -1750,6 +1830,7 @@ def main():
 
     layer_concepts = load_layer_concepts(args.root)
     concept_colors = load_concept_colors(args.root, layer_concepts)
+    concept_lines = load_concept_lines(args.root, layer_concepts)
     unshared = check_shared_ids_carried(args.root, layer_concepts, schema)
     if unshared:
         fail("%s — a layer two live apps share would not travel between them:\n  %s"
@@ -1777,11 +1858,17 @@ def main():
                                         if instance in cols]
         app_path = os.path.join(args.root, inst["app"], "index.html")
         with open(app_path, encoding="utf-8") as f:
-            off_colour = check_concept_colors(f.read(), instance, layer_concepts, concept_colors)
+            app_text = f.read()
+        off_colour = check_concept_colors(app_text, instance, layer_concepts, concept_colors)
         if off_colour:
             fail("%s: a layer is not drawn in its concept's colours from %s `colors` — set "
                  "its `color:` and `fillColor:` (or `fill:`) to them:\n  %s"
                  % (app_path, LAYER_CONCEPTS_FILE, "\n  ".join(off_colour)))
+        off_line = check_concept_lines(app_text, instance, layer_concepts, concept_lines)
+        if off_line:
+            fail("%s: a layer is not drawn in its concept's line from %s `lines` — set "
+                 "its `weight:` and `dashArray:` to them (no `dashArray:` is a solid line):\n  %s"
+                 % (app_path, LAYER_CONCEPTS_FILE, "\n  ".join(off_line)))
         # The apple-touch-icon href is the one generated brand value naming a
         # file on disk rather than carrying its own bytes (the favicon is a
         # data: URI). A tag pointing at a missing PNG is invisible in every

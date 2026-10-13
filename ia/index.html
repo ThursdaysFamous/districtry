@@ -13351,7 +13351,7 @@ function initIowaExplorer() {
       // the fleet's county-board blue, light fill (layer-concepts.json
       // `colors`) — solid, so it reads apart from County's grey and the
       // chambers' dashed/dotted strokes
-      style: { color: "#1F6FB2", weight: 1.5, fillColor: "#3B8FD4", fillOpacity: 0.06 }
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -13583,9 +13583,9 @@ function initIowaExplorer() {
     subOf: "school-district-unified",
     label: "School Director District",
     loader: loadSchoolDirectorDistricts,
-    // the fleet's school-board indigo (layer-concepts.json `colors`), solid
-    // rather than dashed so the sub-districts read apart from the parent
-    style: { color: "#585EDD", weight: 1, fillColor: "#585EDD", fillOpacity: 0.14 },
+    // the fleet's school-board indigo and short dash (layer-concepts.json
+    // `colors` and `lines`), apart from the parent's long dash
+    style: { color: "#585EDD", weight: 2, dashArray: "2 2", fillColor: "#585EDD", fillOpacity: 0.14 },
     fields: [
       { name: "label", label: "Director district", keys: ["label"], primary: true },
       { name: "name", label: "School district", keys: ["name"] },
@@ -14745,7 +14745,7 @@ function initIowaExplorer() {
     label: "City Council District",
     // the fleet's city-council blue (layer-concepts.json `colors`), darker than
     // county-supervisor's blue above it, inside the magenta City dots
-    style: { color: "#0B5394", weight: 1.6, fillColor: "#41B6E6", fillOpacity: 0.07 },
+    style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 },
     // DES MOINES FIRST, deliberately: §3.1 says to "order the table so the
     // cheapest already-cached coverage test sits first and short-circuits the
     // OR". Des Moines is the larger city and the one most traffic selects, so
@@ -15059,7 +15059,7 @@ function initIowaExplorer() {
     group: "political",
     label: "Precinct",
     loader: loadIaPrecincts,
-    style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.04, dashArray: "2 2" },
+    style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.04 },
     fields: [
       { name: "name", label: "Precinct", keys: ["name"], primary: true },
       { name: "county", label: "County", keys: ["county"] }
@@ -15234,7 +15234,7 @@ function initIowaExplorer() {
     group: "schools",
     label: "Community College",
     loader: loadIaCommunityColleges,
-    style: { color: "#1A7789", weight: 1.5, fillColor: "#3D95A6", fillOpacity: 0.05, dashArray: "8 3" },
+    style: { color: "#1A7789", weight: 2, fillColor: "#3D95A6", fillOpacity: 0.05, dashArray: "6 3" },
     fields: [
       { name: "name", label: "College", keys: ["name"], primary: true },
       { name: "directorDistricts", label: "Director districts", keys: ["directordistricts"] },
@@ -15277,9 +15277,10 @@ function initIowaExplorer() {
     label: "CC Director District",
     overlay: {
       load: loadCcDirectorDistricts,
-      // the parent's hue, one shade brighter and solid, so the sub-districts
+      // the parent's community-college teal (layer-concepts.json `colors`), a
+      // darker line over a lighter fill, thin and solid, so the sub-districts
       // read as inside their merged area rather than as a second fabric
-      style: { color: "#7A4B12", weight: 1, fillColor: "#D89A4E", fillOpacity: 0.14 }
+      style: { color: "#13606E", weight: 1, fillColor: "#5FB0BF", fillOpacity: 0.14 }
     },
     hoverName: function (feature) {
       var v = findPropCI(feature.properties || {}, ["label"]);
@@ -15409,10 +15410,11 @@ function initIowaExplorer() {
     label: "Area Education Agency",
     overlay: {
       load: loadIaAeas,
-      // olive-gold, wide dash: the schools family's largest fabric, read apart
+      // the fleet's education-agency olive and even dash (layer-concepts.json
+      // `colors` and `lines`): the schools family's largest fabric, read apart
       // from the school-district greens inside it and the community-college
-      // browns beside it
-      style: { color: "#6B6320", weight: 1.5, fillColor: "#B3A64A", fillOpacity: 0.05, dashArray: "10 4" }
+      // teal beside it
+      style: { color: "#6B6320", weight: 1.5, fillColor: "#B3A64A", fillOpacity: 0.05, dashArray: "4 4" }
     },
     hoverName: function (feature) {
       var v = findPropCI(feature.properties || {}, ["name"]);
@@ -17458,15 +17460,15 @@ function initIowaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
-    "#1A7789": "#55C6DE", "#1B4F8C": "#5CA0F5", "#1B7A3D": "#58CD7A", "#1F6F6B": "#5DC0BA",
-    "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A4D2FD",
-    "#3D95A6": "#6BDEF5", "#3E9A95": "#6CE3DD", "#41B6E6": "#C6EBFE", "#444B54": "#919BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB93", "#585EDD": "#A7B4FE",
-    "#6B6320": "#BAB05A", "#6B7280": "#B1BBCE", "#7A4B12": "#D79550", "#7A5C3E": "#CFA57D",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CBA1", "#B0316E": "#FF87B8", "#B3A64A": "#F5E46B", "#D06A9C": "#FFBDDA",
-    "#D89A4E": "#FEDFBD"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#13606E": "#57B3C6",
+    "#14181C": "#696F76", "#1A7789": "#55C6DF", "#1B4F8C": "#5CA0F5", "#1B7A3D": "#58CD7A",
+    "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
+    "#3B8FD4": "#A5D2FD", "#3D95A6": "#6CDEF5", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93",
+    "#585EDD": "#A7B4FE", "#5FB0BF": "#9DEFFF", "#6B6320": "#BAB05A", "#6B7280": "#B1BBCE",
+    "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#E09BFE",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B3A64A": "#F5E46B",
+    "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

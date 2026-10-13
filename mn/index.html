@@ -12970,7 +12970,7 @@ function initMinnesotaExplorer() {
       // the broadest political tiling after Congress — a heavier stroke than
       // the precinct layer and a dash, so ten big shapes read as a frame
       // rather than as fill competing with the legislative layers
-      style: { color: "#9550B2", weight: 2, fillColor: "#9550B2", fillOpacity: 0.05, dashArray: "6 4" }
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05, dashArray: "6 3" }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -13225,7 +13225,7 @@ function initMinnesotaExplorer() {
       load: loadMnCommissionerDistricts,
       // the fleet's county-board blue (layer-concepts.json `colors`), apart
       // from the purple legislative tilings
-      style: { color: "#1F6FB2", weight: 1.5, fillColor: "#3B8FD4", fillOpacity: 0.05, dashArray: "4 3" }
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -13765,7 +13765,7 @@ function initMinnesotaExplorer() {
     label: "School District (Unified)",
     overlay: {
       load: loadSchoolDistrictsUnified,
-      style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.06 }
+      style: { color: "#2F6B3A", weight: 1.5, dashArray: "8 3", fillColor: "#4C8F59", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13790,7 +13790,7 @@ function initMinnesotaExplorer() {
       "card is the one that answers.",
     overlay: {
       load: loadSchoolDistrictsElementary,
-      style: { color: "#A05F00", weight: 2, fillColor: "#D19133", fillOpacity: 0.07, dashArray: "6 3" }
+      style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.07, dashArray: "3 3" }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13818,7 +13818,7 @@ function initMinnesotaExplorer() {
       "card answers.",
     overlay: {
       load: loadSchoolDistrictsSecondary,
-      style: { color: "#5E3A8C", weight: 2, fillColor: "#8163AE", fillOpacity: 0.07, dashArray: "2 3" }
+      style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.07, dashArray: "10 4" }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13893,8 +13893,9 @@ function initMinnesotaExplorer() {
       "names them.",
     overlay: {
       load: loadMnSchoolBoardDistricts,
-      // a plum no other layer here uses, dashed like the other school tilings
-      style: { color: "#585EDD", weight: 1.5, fillColor: "#585EDD", fillOpacity: 0.06, dashArray: "5 3" }
+      // the fleet's school-board indigo and short dash (layer-concepts.json
+      // `colors` and `lines`), dashed like the other school tilings
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06, dashArray: "2 2" }
     },
     hoverName: function (feature) {
       var p = feature.properties || {};
@@ -14070,7 +14071,7 @@ function initMinnesotaExplorer() {
     coverage: insideMinnesota,
     overlay: {
       load: loadZctas,
-      style: { color: "#88637C", weight: 1, fillColor: "#88637C", fillOpacity: 0.04, dashArray: "3 4" }
+      style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.04, dashArray: "1 4" }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["basename", "name"]);
@@ -16496,13 +16497,13 @@ function initMinnesotaExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1C6E9C": "#57BCFB", "#1F6F6B": "#5DC0BA", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
-    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A4D2FD", "#3E9A95": "#6CE3DD", "#41B6E6": "#C6EBFE",
-    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4BA3D3": "#B0E0FE",
-    "#4C8F59": "#82DB93", "#585EDD": "#A7B4FE", "#5E3A8C": "#B283F5", "#6B7280": "#B1BBCE",
+    "#1C6E9C": "#57BCFB", "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
+    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4BA3D3": "#B0E0FE",
+    "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE", "#5E3A8C": "#B283F5", "#6B7280": "#B1BBCE",
     "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#9550B2": "#DF9BFE", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
-    "#B0316E": "#FF87B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
+    "#9550B2": "#E09BFE", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
+    "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
