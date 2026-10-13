@@ -297,7 +297,8 @@ try {
     // claims neither, so selecting a point first asserts against the app's
     // "we cannot tell yet" state. CI caught exactly that on the first draft.
     // Any path in the scope-mask pane means the coverage rings were retained;
-    // `dst-glow` is created only in the branch that also retains the region.
+    // `dst-glow` is created only in the branch that also retains the region (in
+    // an app that declares one, as this one does).
     async function washPainted(needRegion) {
       return page.waitForFunction((wantGlow) => {
         const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");

@@ -369,7 +369,8 @@
     "note": "near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side."
   },
   "coverage_key": {
-    "outside": "Outside Oklahoma"
+    "outside": "Outside Oklahoma",
+    "edge": "Oklahoma"
   },
   "data_files": {
     "geometry": [
@@ -448,11 +449,7 @@
     "cache_name": "districtry-ok-shell-v3",
     "shell_urls": [
       "./",
-      "./manifest.webmanifest",
-      "./icons/icon-192.png",
-      "./icons/icon-512.png",
       "./icons/apple-touch-icon.png",
-      "./icons/icon-maskable-512.png",
       "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
       "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
       "./vendor/leaflet-maplibre-gl.js"

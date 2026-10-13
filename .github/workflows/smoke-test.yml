@@ -475,10 +475,14 @@ jobs:
       # surface said districtry while il/manifest.webmanifest still read
       # "Chicago District Explorer" in the pre-rebrand navy, so installing to
       # an Android home screen produced the old name and the old icon. NY and
-      # SF were the same. It is generated from each worksheet's brand block
-      # now, and this is the gate that keeps it that way. It also refuses to
-      # name an icon that is not on disk — a manifest pointing at a missing
-      # PNG installs a blank square and nothing else notices. Stdlib only.
+      # SF were the same. It is generated from the worksheets' brand blocks
+      # now, and this is the gate that keeps it that way. Since 2026-10-13 it
+      # is ONE manifest at the root, so districtry installs as one app from
+      # any page, and this also fails on a page linking any other manifest and
+      # on the launcher at /app/ drifting from the key the apps write. It
+      # refuses to name an icon that is not on disk — a manifest pointing at a
+      # missing PNG installs a blank square and nothing else notices. Stdlib
+      # only.
       - name: Install manifests match the brand keys
         if: ${{ !cancelled() }}
         run: python3 scripts/build_manifests.py --check
@@ -1682,25 +1686,12 @@ jobs:
           rm -rf "$gates"
           mkdir -p "$gates"
           cat > "$gates/list" <<'GATES'
-          BASE_URL=http://localhost:8000/il/  node scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/ca/  node ca/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/ny/  node ny/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/wi/  node wi/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/ia/  node ia/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/mi/  node mi/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/mn/  node mn/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/in/  node in/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/nc/  node nc/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/ky/  node ky/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/ok/  node ok/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/sc/  node sc/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/tn/  node tn/scripts/smoke_test.mjs
-          # The root landing page and — the part that matters — its forwarding
-          # guard, which is what keeps every already-distributed share link and
-          # embed snippet built from the OLD root URL reaching the app. A regex
-          # typo there breaks other people's pages silently, on a page that still
-          # looks right and still passes its drift check.
-          BASE_URL=http://localhost:8000        node scripts/landing_test.mjs
+          # LONGEST FIRST. xargs hands out the list in order, so a long gate
+          # near the end runs alone after the others finish: measured on main
+          # 2026-10-13, page_consistency_test took 547s and started 15th, and
+          # the step took 1023s. Ordered by that run's per-gate times, the
+          # same 17 gates three at a time come to about 765s. Re-order from
+          # the per-gate times this step prints when a gate becomes slow.
           # Every page in the sitemap carries the same brand and the same
           # standing links. This exists because three published pages were found
           # on 2026-08-24 still serving the PRE-REBRAND skin — Inter, no theme
@@ -1713,6 +1704,11 @@ jobs:
           # expectations from the tree, so a new page is covered the day it
           # ships and a correct change cannot fail it.
           BASE_URL=http://localhost:8000        node scripts/page_consistency_test.mjs
+
+          BASE_URL=http://localhost:8000/il/  node scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/mi/  node mi/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ia/  node ia/scripts/smoke_test.mjs
+
           # Which layers send the reader's SELECTED POINT to a government
           # server. The privacy page publishes that number per app, and until
           # 2026-09-05 it counted `loadArcGISPointGeoJSON(` call sites —
@@ -1735,6 +1731,12 @@ jobs:
           # browser in its own step — reads the artifact and refuses to publish
           # when the apps have moved under it.
           BASE_URL=http://localhost:8000        node scripts/probe_point_transmission.mjs --check
+
+          BASE_URL=http://localhost:8000/ny/  node ny/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/nc/  node nc/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ok/  node ok/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/tn/  node tn/scripts/smoke_test.mjs
+
           # Every text node on every sitemap page, both themes, joined against
           # what validate_contrast.py measures. That gate tests a STATED table
           # of pairs — it has to, because no regex follows `color:` through the
@@ -1756,6 +1758,20 @@ jobs:
           # figure here is per-page cost x a page count that moves whenever a
           # county ships, so re-measure it rather than trust it.
           BASE_URL=http://localhost:8000        node scripts/probe_contrast_pairs.mjs
+
+          BASE_URL=http://localhost:8000/sc/  node sc/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/wi/  node wi/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/in/  node in/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ky/  node ky/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/mn/  node mn/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ca/  node ca/scripts/smoke_test.mjs
+
+          # The root landing page and — the part that matters — its forwarding
+          # guard, which is what keeps every already-distributed share link and
+          # embed snippet built from the OLD root URL reaching the app. A regex
+          # typo there breaks other people's pages silently, on a page that still
+          # looks right and still passes its drift check.
+          BASE_URL=http://localhost:8000        node scripts/landing_test.mjs
           GATES
           n=0
           while IFS= read -r cmd; do
@@ -1770,6 +1786,18 @@ jobs:
             echo $? > "${f%.cmd}.rc"
             echo $(( $(date +%s) - t0 )) > "${f%.cmd}.secs"
           ' _ {}
+          # The server's own log, only where it can explain something: a 404 on
+          # an asset, or a page that never answered. It is printed BEFORE the
+          # gates' own output, because it runs to thousands of lines and a log
+          # reader that keeps only the end (the GitHub tools these sessions
+          # use keep 5,000 lines) otherwise sees the server log and never the
+          # failing gate's message, which is how #1508's failure went unread
+          # on 2026-10-13.
+          if grep -qv '^0$' "$gates"/*.rc 2>/dev/null || [ "$(ls "$gates"/*.rc 2>/dev/null | wc -l)" != "$n" ]; then
+            echo "::group::http.server access log"
+            cat /tmp/http-server.log
+            echo "::endgroup::"
+          fi
           for f in "$gates"/*.cmd; do
             b=${f%.cmd}
             rc=$(cat "$b.rc" 2>/dev/null || echo 1)
@@ -1784,11 +1812,4 @@ jobs:
           done
           echo "browser gates: $n run, $BROWSER_GATE_JOBS at a time, $(( $(date +%s) - started ))s wall"
 
-          # The server's own log, only where it can explain something: a 404 on
-          # an asset, or a page that never answered.
-          if [ "$status" != 0 ]; then
-            echo "::group::http.server access log"
-            cat /tmp/http-server.log
-            echo "::endgroup::"
-          fi
           exit $status

@@ -3787,6 +3787,86 @@
    ]
   }
  },
+ "47129": {
+  "county": "Morgan County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://morgancountytn.gov/county-commission/",
+  "readAt": "2026-10-13",
+  "seats": 18,
+  "domains": [
+   "morgancountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "name": "Steve Walls"
+    },
+    {
+     "name": "Randy Roberts"
+    },
+    {
+     "name": "Terry Jackson"
+    }
+   ],
+   "2": [
+    {
+     "name": "John Lindsay"
+    },
+    {
+     "name": "Vera Scarbough"
+    },
+    {
+     "name": "Fred Snow"
+    }
+   ],
+   "3": [
+    {
+     "name": "David Hennessee"
+    },
+    {
+     "name": "Kenneth Morgan"
+    },
+    {
+     "name": "Vernon Justes"
+    }
+   ],
+   "4": [
+    {
+     "name": "Melissa Kries"
+    },
+    {
+     "name": "Margaret R. Gibson"
+    },
+    {
+     "name": "Doug Vespie"
+    }
+   ],
+   "5": [
+    {
+     "name": "Melissa Bryant"
+    },
+    {
+     "name": "Seth Stewart"
+    },
+    {
+     "name": "Gary Kennedy"
+    }
+   ],
+   "6": [
+    {
+     "name": "Tony Dagley"
+    },
+    {
+     "name": "Debra Lively"
+    },
+    {
+     "name": "Janet Adkission"
+    }
+   ]
+  }
+ },
  "47131": {
   "county": "Obion County",
   "seatTitle": "Commissioner",
@@ -4900,6 +4980,119 @@
     },
     {
      "name": "Jonathan G. Murphy"
+    }
+   ]
+  }
+ },
+ "47169": {
+  "county": "Trousdale County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://trousdalecountytn.gov/government/local_government/county_commission.php",
+  "readAt": "2026-10-13",
+  "seats": 20,
+  "domains": [
+   "trousdalecountytn.gov"
+  ],
+  "phones": false,
+  "districts": {
+   "1": [
+    {
+     "email": "Ddies@trousdalecountytn.gov",
+     "name": "Denise Dies"
+    },
+    {
+     "email": "bjohnson@trousdalecountytn.gov",
+     "name": "Ben Johnson"
+    }
+   ],
+   "2": [
+    {
+     "email": "Shane.Burton@trousdalecountytn.gov",
+     "name": "Shane Burton"
+    },
+    {
+     "email": "BEnoch@trousdalecountytn.gov",
+     "name": "Bobby Enoch"
+    }
+   ],
+   "3": [
+    {
+     "email": "lbruce@trousdalecountytn.gov",
+     "name": "Linda Bruce"
+    },
+    {
+     "email": "LJones@trousdalecountytn.gov",
+     "name": "Lacey Jones"
+    }
+   ],
+   "4": [
+    {
+     "email": "Terry.Gregory@trousdalecountytn.gov",
+     "name": "Terry \"Bubba\" Gregory"
+    },
+    {
+     "email": "Lonnie.Taylor@trousdalecountytn.gov",
+     "name": "Lonnie Taylor"
+    }
+   ],
+   "5": [
+    {
+     "email": "JBarnes@trousdalecountytn.gov",
+     "name": "Jeremey Barnes"
+    },
+    {
+     "email": "JFarley@trousdalecountytn.gov",
+     "name": "Johnny Farley"
+    }
+   ],
+   "6": [
+    {
+     "email": "JGreen@trousdalecountytn.gov",
+     "name": "Jace Green"
+    },
+    {
+     "email": "Amber.Russell@trousdalecountytn.gov",
+     "name": "Amber Russell"
+    }
+   ],
+   "7": [
+    {
+     "email": "Judy.Kerr@trousdalecountytn.gov",
+     "name": "Judy Kerr"
+    },
+    {
+     "email": "Chris.Gregory@trousdalecountytn.gov",
+     "name": "Chris Gregory"
+    }
+   ],
+   "8": [
+    {
+     "email": "bfergusson@trousdalecountytn.gov",
+     "name": "Bill Fergusson"
+    },
+    {
+     "name": "Steve Whittaker"
+    }
+   ],
+   "9": [
+    {
+     "email": "jgregory@trousdalecountytn.gov",
+     "name": "Jeff Gregory"
+    },
+    {
+     "email": "ELangford@trousdalecountytn.gov",
+     "name": "Eric Langford"
+    }
+   ],
+   "10": [
+    {
+     "email": "Beverly.Atwood@trousdalecountytn.gov",
+     "name": "Beverly Atwood"
+    },
+    {
+     "email": "Alan.Carman@trousdalecountytn.gov",
+     "name": "Alan Carman"
     }
    ]
   }
