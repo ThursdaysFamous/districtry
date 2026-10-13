@@ -16148,10 +16148,10 @@ function initSFExplorer() {
 
   /* ==== ENGINE:BEGIN install-app ==== */
   /* ==== install as an app: ONE districtry, opened where the reader left off ====
-     Every page links the one manifest at /manifest.webmanifest, whose scope is
-     the whole site, so an installed districtry crosses state lines without
-     leaving its window, and whose start_url is the launcher at /app/. This
-     block is the app's half of that arrangement, in three parts.
+     The apps and the front door link the one manifest at /manifest.webmanifest,
+     whose scope is the whole site, so an installed districtry crosses state
+     lines without leaving its window, and whose start_url is the launcher at
+     /app/. This block is the app's half of that arrangement, in three parts.
 
      1. WHICH STATE WAS OPEN LAST. Each boot writes this app's tag under
         DST_LAST_APP_KEY, and the launcher reads it to open that state.

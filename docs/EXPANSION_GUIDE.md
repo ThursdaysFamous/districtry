@@ -468,10 +468,10 @@ In the **instance**: (6) its own `scripts/` with `validate_index.py`, `smoke_tes
 `validate_sources.py` and its builders — imports resolving inside its own tree, which
 `validate_workflow_deps.py` enforces; (7) its row in `INSTANCES` in `build_manifests.py`, and
 nothing else for installing: since 2026-10-13 districtry installs as ONE app from a single
-generated `manifest.webmanifest` at the root, which every page links as
+generated `manifest.webmanifest` at the root, which the instance's `index.html` links as
 `/manifest.webmanifest`, so an instance ships no manifest and no install icons of its own
 (only its `icons/apple-touch-icon.png`), and `build_manifests.py --check` fails on a page that
-links anything else or a `<tag>/manifest.webmanifest` that reappears; (8) analytics — copy `brand.analytics.goatcounter_url` from a sibling
+links anything else, on an app that links nothing, or on a `<tag>/manifest.webmanifest` that reappears; (8) analytics — copy `brand.analytics.goatcounter_url` from a sibling
 worksheet: the fleet counts on ONE shared GoatCounter site keyed by path, and never add a
 `ga_id` (the schema says a rebrand must not add a tracker). CORRECTED 2026-09-02: this item
 used to say "its own GoatCounter site and tag", which no instance has ever shipped — all five

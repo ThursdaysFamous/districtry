@@ -292,8 +292,8 @@ jobs:
           # Every app fetches ../fleet-outlines.json to decide which app a
           # selected point belongs to; without it no reader is handed off.
           test -f _site/fleet-outlines.json || { echo "::error::assemble produced no fleet-outlines.json — the apps could not hand a reader to a sibling"; exit 1; }
-          # The installed app. Every page links the ONE manifest at the root,
-          # whose start_url is the launcher at /app/, which registers its own
+          # The installed app. The apps and the front door link the ONE manifest
+          # at the root, whose start_url is the launcher at /app/, which registers its own
           # worker; the three icons are the manifest's. An assemble that drops
           # any of them leaves every page looking right in a browser tab while
           # a phone that installs districtry opens to a 404 or a blank icon.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the ONE web app manifest, and hold every page and the launcher to it.
+"""Emit the ONE web app manifest, and hold the pages that link it and the launcher to it.
 
 WHY THERE IS ONE. Until 2026-10-13 each instance shipped its own
 `<tag>/manifest.webmanifest` with scope `./` and no `id`, so installing
