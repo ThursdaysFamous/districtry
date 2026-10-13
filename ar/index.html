@@ -4064,8 +4064,8 @@ function initArkansasExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ar-senate": "ars", "county": "co", "ar-house": "arh",
-    "school-district-unified": "su", "zip-code": "zp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "school-district-unified": "su", "zip-code": "zp", "quorum-court": "qc",
+    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -8467,6 +8467,7 @@ function initArkansasExplorer() {
     "ar-house",          // 100 House districts — smaller on average than a county, larger than a school district
     "school-district-unified", // 234 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
     "zip-code",          // 942 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Arkansas
+    "quorum-court",      // 775 justice of the peace districts in 75 counties, pre-built from the state's own layer; smaller on average than a ZIP Code area, larger than a city or town
     "municipality",      // 501 incorporated cities and towns, live from TIGERweb
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -12380,15 +12381,59 @@ function initArkansasExplorer() {
    * service-worker cached, so this layer answers even when every
    * third-party host is down.
    *
-   * IDENTITY ONLY IN THIS FIRST CHANGE. Every Arkansas county is governed by
-   * an elected county judge and an elected quorum court of justices of the
-   * peace. Neither is wired yet, so the card says the two exist and names
-   * nobody rather than leaving a reader to wonder. Recorded as gap
-   * `ar-quorum-court`.
+   * THE CARD NAMES THE COUNTY JUDGE AND THE QUORUM COURT. Every Arkansas
+   * county elects a county judge, who runs the county and presides over the
+   * quorum court, and a quorum court of 9 to 15 justices of the peace, each
+   * from a district (data/app/ar-county-officials.json, built by
+   * ar/scripts/build_ar_county_officials.py and refreshed weekly):
+   *   - the judge from the Arkansas Judiciary's own directory of county
+   *     judges and clerks, with the office telephone, and the office address
+   *     only where the Association of Arkansas Counties prints the same one.
+   *     Where the two name different judges a person reads a third source
+   *     and the builder records which is right; on 2026-10-13 that was Boone,
+   *     Cleveland, Desha, Jefferson and Sevier, and in all five the directory
+   *     was the stale one;
+   *   - the justices from the Association of Arkansas Counties' page for the
+   *     county, which lists them WITHOUT saying who sits for which district.
+   *     No government publishes their names statewide. On Adam's ruling of
+   *     2026-10-13 ("District, else list") a justice is matched to a district
+   *     only where the county's own site numbers them, and elsewhere the
+   *     association's list is shown here, credited and dated, with no district
+   *     claimed. The Quorum Court District layer names the justice for a
+   *     district only in the first case.
+   * A roster miss degrades to a sentence naming nobody, never to an error
+   * card. Recorded as gap `ar-quorum-court` while most counties' justices
+   * cannot be matched to a district.
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
   });
+  var loadArCountyOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-county-officials.json", {}, 2);
+  });
+  var AR_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  // "2026-10-13" -> "13 October 2026"; null for anything else, so a malformed
+  // date drops its clause rather than printing as something it is not.
+  function arReadDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return String(Number(m[3])) + " " + AR_MONTHS[Number(m[2]) - 1] + " " + m[1];
+  }
+  // Every justice of the peace and county judge is on the 3 November 2026
+  // ballot and the winners take office on 1 January 2027. Said only until
+  // then, so the sentence cannot outlive the fact.
+  function arElectionNote() {
+    return Date.now() < Date.UTC(2027, 0, 1)
+      ? "Every seat is on the ballot on 3 November 2026, and the winners take " +
+        "office on 1 January 2027; these are the people serving now."
+      : null;
+  }
+  function arJusticeCount(qc) {
+    var justices = (qc && qc.justices) || [];
+    var vacant = justices.filter(function (j) { return j && j.vacant; }).length;
+    return { all: justices.length, vacant: vacant, named: justices.length - vacant };
+  }
 
   registerLayer({
     id: "county",
@@ -12407,27 +12452,111 @@ function initArkansasExplorer() {
       return queryFeatureAt(loadStateCounties, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          officials: null
         };
+        // the roster's own failure is not this layer's failure: a miss
+        // degrades to the sentence naming nobody
+        return loadArCountyOfficials().then(function (roster) {
+          result.officials = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          return result;
+        });
       });
     },
     render: function (result) {
       var wrap = cardEl("div", "card-flush");
+      var county = result.name != null ? String(result.name) : "This county";
       wrap.appendChild(renderBodyIntro({
         title: result.name != null ? String(result.name) : "Unknown county",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      wrap.appendChild(renderFieldStack([{
-        label: "County judge and quorum court",
-        value: "Not named here yet. Every Arkansas county elects a county " +
-          "judge, who runs the county, and a quorum court of justices of " +
-          "the peace, each elected from a district. This map does not carry " +
-          "them yet, so it names no one here rather than guessing."
-      }]));
+      var o = result.officials;
+      if (!o) {
+        wrap.appendChild(renderFieldStack([{
+          label: "County judge and quorum court",
+          value: "Every Arkansas county elects a county judge, who runs the " +
+            "county, and a quorum court of justices of the peace, each elected " +
+            "from a district. The list of them did not load, so no one is " +
+            "named here."
+        }]));
+        return wrap;
+      }
+      var judge = o.judge || {};
+      if (judge.name) {
+        var person = { name: String(judge.name), badge: "County Judge" };
+        if (judge.phone) person.phone = String(judge.phone);
+        wrap.appendChild(renderPersonRows([person]));
+      }
+      var rows = [];
+      if (judge.office) rows.push({ label: "County judge's office", value: String(judge.office) });
+      // The builder names the source per county: the judiciary's directory,
+      // or — where it disagreed with the association and a person read a
+      // third source — the source that settled it, dated by when it was read.
+      var judgeRead = arReadDate(judge.asOf);
+      var judgeSource = judge.source ? String(judge.source)
+        : "the Arkansas Judiciary's directory of county judges and clerks";
+      rows.push({
+        label: "Where the judge's name comes from",
+        value: judgeSource.charAt(0).toUpperCase() + judgeSource.slice(1) +
+          (judgeRead ? ", read " + judgeRead : "") + "." +
+          (judge.weekly ? " This app reads it every week." : "") +
+          (judge.note ? " " + String(judge.note) : "")
+      });
+      var qc = o.quorumCourt || {};
+      var count = arJusticeCount(qc);
+      var seats = qc.seats != null ? Number(qc.seats) : count.all;
+      rows.push({
+        label: "Quorum court",
+        value: county + "'s legislative body: " + seats + " justices of the " +
+          "peace, each elected from a district, with the county judge presiding. " +
+          (qc.districts
+            ? "The Quorum Court District layer names the justice for yours."
+            : "Neither the county's own site nor the Association of Arkansas " +
+              "Counties says which justice sits for which district, so this app " +
+              "lists them below without matching a name to a district.")
+      });
+      var note = arElectionNote();
+      if (note) rows.push({ label: "The 2026 election", value: note });
+      wrap.appendChild(renderFieldStack(rows));
+      var people = [];
+      (qc.justices || []).forEach(function (j) {
+        if (!j || j.vacant || !j.name) return;
+        people.push({ name: String(j.name), badge: "Justice of the Peace" });
+      });
+      if (people.length) {
+        wrap.appendChild(renderSectionLabel("Justices of the peace"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
+      var listRead = arReadDate(qc.asOf);
+      var credit = [{
+        label: "Where these names come from",
+        value: "The Association of Arkansas Counties' page for " + county +
+          (listRead ? ", read " + listRead : "") + ", which lists the justices " +
+          "in one line and does not number them. This app reads it every week."
+      }];
+      if (count.vacant) {
+        credit.unshift({
+          label: "Vacant",
+          value: count.vacant + (count.vacant === 1 ? " seat is" : " seats are") +
+            " listed as vacant on the association's page."
+        });
+      }
+      wrap.appendChild(renderFieldStack(credit));
       return wrap;
+    },
+    primaryLink: function (result) {
+      var o = result && result.officials;
+      var site = o && safeHttpUrl(o.website);
+      if (site) return { label: String(result.name) + " website", url: site };
+      var page = o && o.quorumCourt && safeHttpUrl(o.quorumCourt.sourceUrl);
+      if (page) return { label: String(result.name) + " on the Association of Arkansas Counties' site", url: page };
+      return { label: "Association of Arkansas Counties: counties", url: "https://arcounties.org/counties/" };
     }
   });
 
@@ -12531,6 +12660,123 @@ function initArkansasExplorer() {
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "Arkansas Legislature member list",
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+  });
+
+  /* ---------- 5. Quorum Court District ----------
+   * Pre-built from the state's own statewide layer of every county's justice
+   * of the peace districts (gis.arkansas.gov Boundaries FeatureServer 19,
+   * credited to the Secretary of State;
+   * ar/scripts/build_ar_quorum_court_districts.py — 775 districts in 75
+   * counties, each county numbered 1..N at one of the four counts state law
+   * allows, Douglas-Peucker at 20 m under a 25 m ceiling, and every county's
+   * districts held to cover that county). Each district elects one justice
+   * of the peace to the county's quorum court.
+   *
+   * WHO HOLDS A DISTRICT IS NAMED ONLY WHERE THE COUNTY SAYS. No government
+   * publishes the justices statewide, and the Association of Arkansas
+   * Counties lists each county's justices without numbering them. On Adam's
+   * ruling of 2026-10-13 ("District, else list") this card names the justice
+   * only where the county's own site numbers them (a `districts` table in
+   * ar-county-officials.json, held to the association's names); everywhere
+   * else it says who it cannot name and why, and the County card carries the
+   * association's list, credited and dated. ---------- */
+  var loadArQuorumCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-quorum-court-districts.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "quorum-court",
+    group: "political",
+    label: "Quorum Court District",
+    overlay: {
+      load: loadArQuorumCourtDistricts,
+      style: { color: "#1B7A3D", weight: 2, fillColor: "#2E9E6B", fillOpacity: 0.06 }
+    },
+    // the same value the card's header pill shows, so hover and card cannot
+    // disagree about which district a polygon is
+    hoverName: function (feature) {
+      var district = findPropCI(feature.properties || {}, ["district"]);
+      return district != null ? "District " + String(district) : null;
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadArQuorumCourtDistricts, point),
+        loadArCountyOfficials().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var fips = findPropCI(props, ["countyfips"]);
+        var entry = (parts[1] && fips != null) ? parts[1][String(fips)] || null : null;
+        return {
+          seq: seq,
+          district: findPropCI(props, ["district"]),
+          county: findPropCI(props, ["county"]),
+          countyfips: fips,
+          entry: entry
+        };
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.district != null ? "District " + String(result.district) : "Unknown district";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var county = result.county != null ? String(result.county) + " County" : "This county";
+      var entry = result.entry;
+      var qc = (entry && entry.quorumCourt) || null;
+      var named = (qc && qc.districts && result.district != null)
+        ? qc.districts[String(result.district)] : null;
+      if (named && !/^vacant$/i.test(String(named))) {
+        wrap.appendChild(renderPersonRows([{ name: String(named), badge: "Justice of the Peace" }]));
+      }
+      var rows = [{ label: "County", value: county, primary: true }];
+      if (named && /^vacant$/i.test(String(named))) {
+        rows.push({ label: "Justice of the peace", value: "Vacant, as the county's own page says." });
+      }
+      if (named) {
+        var read = arReadDate(qc.districtAsOf);
+        rows.push({
+          label: "Where this name comes from",
+          value: county + "'s own list of its quorum court by district" +
+            (read ? ", read " + read : "") + "."
+        });
+      } else if (qc) {
+        var count = arJusticeCount(qc);
+        rows.push({
+          label: "Who represents this district",
+          value: "One of the " + (qc.seats != null ? String(qc.seats) : String(count.all)) +
+            " justices of the peace on " + county + "'s quorum court. Neither " +
+            "the county's own site nor the Association of Arkansas Counties says " +
+            "which of them sits for District " + String(result.district) +
+            ", so this card names no one rather than guessing. The County card " +
+            "lists all of them."
+        });
+      } else {
+        rows.push({
+          label: "Who represents this district",
+          value: "One justice of the peace on " + county + "'s quorum court. " +
+            "The list of the county's justices did not load, so no one is named here."
+        });
+      }
+      var judge = entry && entry.judge;
+      if (judge && judge.name) {
+        rows.push({ label: "Presiding", value: "County Judge " + String(judge.name) +
+          " presides over the quorum court." });
+      }
+      var note = arElectionNote();
+      if (note) rows.push({ label: "The 2026 election", value: note });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var qc = result && result.entry && result.entry.quorumCourt;
+      var own = qc && qc.districts && safeHttpUrl(qc.districtSourceUrl);
+      if (own) return { label: String(result.county) + " County quorum court", url: own };
+      var page = qc && safeHttpUrl(qc.sourceUrl);
+      if (page) return { label: String(result.county) + " County on the Association of Arkansas Counties' site", url: page };
+      return { label: "Association of Arkansas Counties: counties", url: "https://arcounties.org/counties/" };
+    }
   });
 
   /* No county-subdivision layer, on purpose. Arkansas's townships are legal
@@ -14429,7 +14675,7 @@ function initArkansasExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ar-senate", "ar-house",
+  var LAYER_SIDEBAR_RANK = ["us-house", "ar-senate", "ar-house", "quorum-court",
     "school-district-unified",
     "county", "municipality", "zip-code",
     "police-station", "fire-station", "post-office"];
@@ -14913,9 +15159,10 @@ function initArkansasExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE", "#8C2E4A": "#F47294",
-    "#A3341F": "#FE8269", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
+    "#1B7A3D": "#58CD7A", "#2E9E6B": "#5BEAA5", "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93",
+    "#6B7280": "#B1BBCE", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FD88B8",
+    "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

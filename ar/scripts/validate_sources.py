@@ -138,10 +138,44 @@ PROVENANCE = [
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
         "note": (
             "All 75 counties pre-built from TIGERweb by "
-            "ar/scripts/build_state_counties.py. The card is identity-only for "
-            "now: every county is governed by an elected county judge and quorum "
-            "court, recorded as gap ar-quorum-court until the quorum court "
-            "layer ships."
+            "ar/scripts/build_state_counties.py. The card names the county "
+            "judge and the justices of the peace from ar-county-officials.json."
+        ),
+    },
+    {
+        "layer": "quorum-court",
+        "app_file": "ar-quorum-court-districts.json",
+        "source_url": "https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/19",
+        "note": (
+            "All 775 justice of the peace districts in 75 counties, pre-built "
+            "from the state's own statewide layer (credited to the Secretary of "
+            "State) by ar/scripts/build_ar_quorum_court_districts.py. "
+            "update-ar-county-officials.yml compares the live layer with the "
+            "fingerprint recorded at build time every week and opens an issue "
+            "when a county redraws; this check only says the layer still "
+            "answers. Layer 55 of the same service is the 2011 plan and is not "
+            "read."
+        ),
+    },
+    {
+        "layer": "county",
+        "app_file": "ar-county-officials.json",
+        "source_url": "https://arcourts.gov/directories/county-judge-clerk",
+        "note": (
+            "The Arkansas Judiciary's directory of county judges and clerks, "
+            "which names all 75 county judges; rebuilt weekly by "
+            "ar/scripts/build_ar_county_officials.py."
+        ),
+    },
+    {
+        "layer": "quorum-court",
+        "app_file": "ar-county-officials.json",
+        "source_url": "https://arcounties.org/counties/",
+        "note": (
+            "The Association of Arkansas Counties' county pages, which list "
+            "each county's justices of the peace without numbering them; read "
+            "by the same builder at the 20 seconds a page the association's "
+            "robots.txt asks."
         ),
     },
     {

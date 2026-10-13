@@ -121,6 +121,7 @@
     "post-office": "po",
     "precinct": "pc",
     "psap-area": "pa",
+    "quorum-court": "qc",
     "sc-house": "sch",
     "sc-senate": "scs",
     "school-board": "sb",

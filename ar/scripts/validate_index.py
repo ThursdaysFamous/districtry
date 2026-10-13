@@ -87,7 +87,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 8
+MIN_REGISTER_LAYER = 9
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -95,8 +95,8 @@ MIN_REGISTER_LAYER = 8
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "ar-senate", "county", "ar-house", "school-district-unified",
-    "zip-code", "municipality", "police-station", "fire-station",
-    "post-office",
+    "zip-code", "quorum-court", "municipality", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -106,6 +106,7 @@ GEOMETRY_FILES = {
     "congress-districts.json": (4, 4),  # The 4 U.S. House districts, TIGERweb layer 0 (CD120).
     "ar-senate-districts.json": (35, 35),  # The 35 Arkansas Senate districts.
     "ar-house-districts.json": (100, 100),  # The 100 Arkansas House districts.
+    "ar-quorum-court-districts.json": (775, 775),  # The 775 justice of the peace districts of all 75 counties, from the state's own layer (ar/scripts/build_ar_quorum_court_districts.py).
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -113,6 +114,7 @@ ROSTER_FILES = {
     "congress-roster.json": 4,  # U.S. House (AR) roster, refreshed weekly by update-ar-congress-roster.yml.
     "ar-senate-members.json": 35,  # Arkansas Senate roster from the Arkansas State Legislature's own member list and pages, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size; Senate 1 and 18 read vacant on 2026-10-13.
     "ar-house-members.json": 100,  # Arkansas House roster on the same terms; House 8 read vacant on 2026-10-13.
+    "ar-county-officials.json": 75,  # Every county's judge (the Arkansas Judiciary's directory) and justices of the peace (the Association of Arkansas Counties), one record per county, refreshed weekly by update-ar-county-officials.yml.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 

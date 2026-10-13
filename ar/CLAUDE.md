@@ -8,13 +8,14 @@ districtry Arkansas: a single-file, dependency-light web app. Click a point in A
 search an address) and it reports every civic district containing that point and who represents
 you there. It serves at **districtry.com/ar/** as a folder of the consolidated districtry repo —
 following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. It ships TEN layers, and as of this PR **the instance is DARK**: no
+root-scripts shape. It ships ELEVEN layers, and **the instance is DARK**: no
 `metros.json` entry, `ar/**` excluded from the Pages deploy, nothing served and no landing card
 naming it. `ar/WATCH.md` lists what go-live has to do in one change.
 
-**The national tier** — everything ten layers answer today comes from a national publisher or
-the Arkansas State Legislature. **County** (75, Census TIGERweb, identity-only and the coverage
-ring), **U.S. House** (4 districts, TIGERweb geometry joined to the public-domain
+**The national tier** — ten of the eleven layers draw their shapes from a national publisher and
+name people from a national roster or the Arkansas State Legislature; the eleventh is the quorum
+court, below. **County** (75, Census TIGERweb, the coverage ring, and the card that names the
+county judge and lists the justices of the peace), **U.S. House** (4 districts, TIGERweb geometry joined to the public-domain
 unitedstates/congress-legislators roster), **Arkansas Senate** and **Arkansas House** (35 and 100
 districts, TIGERweb geometry joined to the legislature's own member list and member pages), the
 LIVE TIGERweb fabric — **City or Town** (`municipality`, 501), **School District** (234) and
@@ -57,14 +58,24 @@ live service answers with a neighbouring state's ZIP (the Texas negative point g
 against the Capitol's 72201, measured 2026-10-13). The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
 
-**THE FLAGSHIP THIS INSTANCE IS BUILDING TOWARD IS THE QUORUM COURT.** Every county elects a
-county judge, who runs the county, and a quorum court of 9 to 15 justices of the peace, each
-from a district. The state's mapping office draws all 775 districts in one service and the state
-courts' directory names all 75 county judges; no government names the justices, and the
-Association of Arkansas Counties lists them without saying who sits for which district. **Every
-one of those seats is on the 3 November 2026 ballot and the new terms start on 1 January 2027.**
-Recorded as gap `ar-quorum-court` until it ships, beside `ar-municipal-officeholders` and
-`ar-school-board-members`. When and how to name the justices is the operator's decision.
+**THE FLAGSHIP IS THE QUORUM COURT, AND ITS DISTRICTS AND ITS PEOPLE COME FROM DIFFERENT
+PLACES.** Every county elects a county judge, who runs the county, and a quorum court of 9 to 15
+justices of the peace, each from a district. The `quorum-court` layer draws all 775 districts from
+the state's mapping office (`ar/scripts/build_ar_quorum_court_districts.py`); the county judge
+comes from the state courts' directory and the justices from the Association of Arkansas
+Counties' county pages, which list each court WITHOUT districts (`ar/scripts/build_ar_county_officials.py`,
+weekly). On Adam's ruling of 2026-10-13 ("District, else list") a district's justice is named only
+where the county's own site numbers them — 20 counties, 218 districts, measured by surveying every
+county that day — and elsewhere the County card lists the whole court, credited and dated, and the
+district card says it names no one rather than guessing. **THE STATE COURTS' DIRECTORY WAS THE STALE
+PUBLISHER, NOT THE ASSOCIATION**: in all five counties where the two named different judges (Boone,
+Cleveland, Desha, Jefferson, Sevier) a third source sided with the association, so a government
+list is not the authority by being a government's, and each disagreement is recorded in
+`JUDGE_DISAGREES` with the source that settled it. **Every one of those seats is on the 3 November
+2026 ballot and the new terms start on 1 January 2027**; every county is re-read in January (Adam's
+"Now, then January"). The association also publishes its 2024 election results by district, and
+whether to name justices from it is Adam's decision, asked 2026-10-13. What is still missing is
+gap `ar-quorum-court`, beside `ar-municipal-officeholders` and `ar-school-board-members`.
 
 **NO TRIBAL LAYER, BECAUSE NO TRIBAL NATION'S LAND LIES IN ARKANSAS.** Measured with
 `scripts/tribal_areas.py --report Arkansas` on 2026-10-13: no federal reservation, no
@@ -93,9 +104,9 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Arkansas (`arkansas`) — https://districtry.com/ar/
 - Geocoders: address Photon (Arkansas-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Arkansas-bounded, serial >=1s queue)
-- Ground truth: 34.74650,-92.28960 (the State Capitol, Little Rock, Pulaski County) → county Pulaski County; us-house 2; ar-senate 14; ar-house 74. Negative point 33.40000,-94.40000 (near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.ArkansasExplorer`.
-- Scheduled workflows: `update-ar-congress-roster.yml` (Mon 17:23 UTC); `update-ar-legislature-roster.yml` (Tue 17:23 UTC); `ar-validate-sources.yml` (1st of month 19:43 UTC).
+- Ground truth: 34.74650,-92.28960 (the State Capitol, Little Rock, Pulaski County) → county Pulaski County; us-house 2; ar-senate 14; ar-house 74; quorum-court 6. Negative point 33.40000,-94.40000 (near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.).
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 9. Debug namespace `window.ArkansasExplorer`.
+- Scheduled workflows: `update-ar-congress-roster.yml` (Mon 17:23 UTC); `update-ar-legislature-roster.yml` (Tue 17:23 UTC); `update-ar-county-officials.yml` (Wed 17:23 UTC); `ar-validate-sources.yml` (1st of month 19:43 UTC).
 - Source registry: `ar/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 
@@ -174,10 +185,20 @@ COUNTY and the builder's county lookup would read the bare city name as that cou
 `state-counties.json` (`ar/scripts/build_state_counties.py`), and `congress-districts.json`,
 `ar-senate-districts.json`, `ar-house-districts.json` (`ar/scripts/build_legislative_boundaries.py`
 — statewide TIGERweb, mapshaper-simplified with Douglas-Peucker, refused unless BOTH the
-2,000-random-point agreement gate and the 25 m fidelity ceiling pass). Rosters:
+2,000-random-point agreement gate and the 25 m fidelity ceiling pass), and
+`ar-quorum-court-districts.json` (`ar/scripts/build_ar_quorum_court_districts.py` — the state's
+own layer of every county's justice of the peace districts, read four pages at a time at the
+state portal's 60 seconds, refused unless there are 775 districts in 75 counties, each county
+numbered 1..n at one of the four counts state law allows, the agreement gate and fidelity
+ceiling pass, and every county's districts cover that county's own outline; it records a
+fingerprint of the layer's attributes so the weekly workflow's `--watch` can say when a county
+redraws). Rosters:
 `congress-roster.json` (`ar/scripts/build_congress_roster.py`, from unitedstates/congress-legislators)
 and `ar-{senate,house}-members.json` (`ar/scripts/build_ar_legislature_roster.py`, from the
-legislature's own pages) — all count-guarded, all refreshed weekly by CI as reviewed PRs. The
+legislature's own pages) and `ar-county-officials.json` (`ar/scripts/build_ar_county_officials.py`
+— each county judge from the state courts' directory and each county's justices of the peace
+from the Association of Arkansas Counties' page for that county, paced at the association's
+20 seconds) — all count-guarded, all refreshed weekly by CI as reviewed PRs. The
 legislature builder writes neither file unless BOTH chambers pass: one record per seat (a member
 or a vacancy), no fewer than 30 senators and 90 representatives named, every district inside
 the chamber's range, the member page's own title, district and surname agreeing with the list, and at

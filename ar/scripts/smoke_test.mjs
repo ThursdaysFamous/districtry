@@ -49,11 +49,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "34.74650,-92.28960"; // the State Capitol, Little Rock, Pulaski County
-const OFFLINE = ["county", "us-house", "ar-senate", "ar-house"];
-const EXPECT_DISTRICT = { "county": "Pulaski County", "us-house": "2", "ar-senate": "14", "ar-house": "74" };
+const OFFLINE = ["county", "us-house", "ar-senate", "ar-house", "quorum-court"];
+const EXPECT_DISTRICT = { "county": "Pulaski County", "us-house": "2", "ar-senate": "14", "ar-house": "74", "quorum-court": "6" };
 const NEGATIVE_POINT = "33.40000,-94.40000"; // near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.
 const APP_NAME = "districtry Arkansas";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -878,6 +878,58 @@ try {
       check("zip-code hides outside Arkansas rather than naming a Texas ZIP",
         hidden && !leaked && stillOn,
         `hidden=${hidden} leaked=${leaked} layersOn=${stillOn} text=${(info.text || "").slice(0, 90)}`);
+      await context.close();
+    }
+  }
+
+  // 9. THE COUNTY JUDGE AND THE QUORUM COURT, at the Capitol (Pulaski
+  //    County, quorum court District 6). The expected names are read from
+  //    the shipped roster rather than written here, because the weekly
+  //    refresh changes them and a name in this file would fail a correct
+  //    rebuild. What is held: the County card names Pulaski's judge and every
+  //    justice the roster lists, and credits where both came from; the Quorum
+  //    Court District card names the presiding judge and EITHER the justice
+  //    the county's own page puts in District 6 OR says it names no one —
+  //    never a name the roster does not tie to District 6. Then the roster is
+  //    refused, and both cards must degrade to sentences naming nobody while
+  //    the district itself still classifies: a roster failure is not the
+  //    layer's failure.
+  {
+    const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ar-county-officials.json"), "utf8"));
+    const pulaski = roster["05119"];
+    const justices = pulaski.quorumCourt.justices.filter((j) => !j.vacant).map((j) => j.name);
+    const numbered = pulaski.quorumCourt.districts || null;
+    const inSix = numbered ? numbered["6"] : null;
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=county,quorum-court`);
+      const county = await cardText(page, "county");
+      const missing = justices.filter((n) => !county.text.includes(n));
+      check("county card names the county judge and every listed justice of the peace",
+        !county.error && county.text.includes(pulaski.judge.name) && missing.length === 0 &&
+          /Where the judge's name comes from/.test(county.text) &&
+          /Where these names come from/.test(county.text),
+        missing.length ? `missing=${missing.slice(0, 3)}` : county.text.slice(0, 90));
+      const qc = await cardText(page, "quorum-court");
+      const others = justices.filter((n) => n !== inSix && qc.text.includes(n));
+      const namedRight = inSix ? qc.text.includes(inSix) : /names no one rather than guessing/.test(qc.text);
+      check("quorum-court card names District 6's justice only where the county numbers them",
+        !qc.error && /District 6\b/.test(qc.text) && qc.text.includes(pulaski.judge.name) &&
+          namedRight && others.length === 0,
+        `inSix=${inSix} others=${others.slice(0, 3)} text=${qc.text.slice(0, 90)}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=county,quorum-court`, async (p) => {
+        await p.route("**/data/app/ar-county-officials.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const county = await cardText(page, "county");
+      const qc = await cardText(page, "quorum-court");
+      check("county and quorum-court cards degrade to naming nobody when the roster fails",
+        !county.error && /did not load/.test(county.text) && !county.text.includes(pulaski.judge.name) &&
+          !qc.error && /District 6\b/.test(qc.text) && /did not load/.test(qc.text),
+        `county=${county.text.slice(0, 60)} qc=${qc.text.slice(0, 60)}`);
       await context.close();
     }
   }

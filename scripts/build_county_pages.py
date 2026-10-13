@@ -3240,6 +3240,19 @@ NOT_COUNTY_BOARDS = {
                "county tier through it; the go-live change (sc/WATCH.md "
                "lists it) moves it into INSTANCES and this entry goes.",
     ),
+    "ar/data/app/ar-county-officials.json": dict(
+        date="2026-10-13",
+        reason="Arkansas's county judges and quorum courts, which ARE the "
+               "county's governing body and belong on these pages. They are "
+               "held back for the reason South Carolina's councils were: "
+               "Arkansas is dark, and a county page, its index and the about "
+               "page's officeholder count would describe an app nobody can "
+               "open yet. Its go-live change writes the adapter and this "
+               "entry goes. The adapter has a choice to make that no other "
+               "state has posed: outside the counties that number their own "
+               "justices, the roster lists a court's justices with no "
+               "district, so a page must not lay them out one per district.",
+    ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",
         reason="San Francisco's Board of Supervisors is a CITY council that "
