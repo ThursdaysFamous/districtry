@@ -216,6 +216,24 @@
       "landing_name": "South Carolina",
       "blurb": "All 46 counties and their county council districts: cities and towns, school districts, ZIP codes, the Catawba Nation's land, and the nearest police station, fire station and post office — plus the South Carolina Senate, House and U.S. House districts, with the member named for every seat. Each council seat names the winner of its most recent election in the State Election Commission's certified results. Nobody is named yet on the city councils or school boards, and the Data gaps panel says why.",
       "scope": "all 46 counties"
+    },
+    {
+      "id": "tennessee",
+      "explorer_name": "districtry Tennessee",
+      "label": "Tennessee",
+      "url": "https://districtry.com/tn/",
+      "emoji": "🎸",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -90.32,
+        "minLat": 34.98,
+        "maxLng": -81.64,
+        "maxLat": 36.68
+      },
+      "tag": "tn",
+      "landing_name": "Tennessee",
+      "blurb": "All 95 counties and their county commission districts: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Tennessee Senate, House and U.S. House districts, with who holds each seat. County commissioners are named from each county's own pages where the county publishes a current list, and the Data gaps panel lists the counties not named yet and why.",
+      "scope": "all 95 counties"
     }
   ]
 }

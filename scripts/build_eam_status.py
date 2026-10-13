@@ -180,7 +180,7 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 # every county it has listed, by construction.
 STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   "ky": 120, "ny": 62, "in": 92,
-                  "nc": 100, "ok": 77, "sc": 46}
+                  "nc": 100, "ok": 77, "sc": 46, "tn": 95}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -1778,6 +1778,41 @@ ANSWERS = {
         # land in York County, the only tribal land in the state, named with
         # the nation's executive committee.
         "tribal-government": answers("tribal-government"),
+    },
+    # Tennessee, added at its go-live with the national tier and the county
+    # commission layer.
+    "tn": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("tn-senate", "tn-house"),
+        "county-boundaries": answers("county"),
+        # Every county elects its legislative body from districts, and the
+        # Comptroller publishes all 859 of them in one statewide layer; the
+        # members are named county by county from each county's own pages.
+        "county-government": depth("county-commissioner"),
+        "municipal-boundaries": answers("municipality"),
+        "local-government": depth(),
+        # All three tilings, because Tennessee uses all three: unified (127)
+        # districts cover most of the state, and fifteen elementary districts
+        # sit inside fifteen secondary ones. Recorded in tn/CLAUDE.md.
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary",
+            "school-district-secondary"),
+        "courts-by-district": OPEN,
+        # TENNESSEE HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 855 county
+        # subdivisions TIGERweb carries for the state are civil districts
+        # (LSADC 28, FUNCSTAT N): legal areas nobody is elected to run.
+        # Recorded in tn/CLAUDE.md with the method.
+        "sub-county-government": na(
+            "Tennessee has no sub-county general-purpose government — outside a "
+            "city or town limit the county governs. The 855 sub-county units "
+            "the Census publishes for Tennessee are civil districts, which the "
+            "Census records as having no functioning government."),
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # One piece of off-reservation trust land, 0.695 km2 near Henning; the
+        # fleet-wide tribal-government thread owns it.
+        "tribal-government": OPEN,
     },
     "ny": {
         "us-house": answers("congress"),
