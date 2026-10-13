@@ -1251,6 +1251,120 @@ try {
     await context.close();
   }
 
+  // 1l. THE INSTALL INVITATION AND THE APP COUNTS (engine install-app). On a
+  //     phone-width screen the app holds Chrome's install event, so Chrome's
+  //     own mini-infobar never appears, and offers an Install button once the
+  //     reader has an answer on screen; pressing it hands over to the
+  //     browser's own dialog. It is offered ONCE: after a reload, with the
+  //     event fired again, nothing shows. On a computer the event is left
+  //     alone. An iPhone's Safari has no such event and gets a short tip with
+  //     no button. A launch of the installed app is counted once per window
+  //     and an install once, both by app and never by place. Chrome's real
+  //     event cannot be produced in a test, so a synthetic one carries the two
+  //     members the app uses, prompt() and userChoice.
+  {
+    const PHONE = { width: 390, height: 844 };
+    const TAG = APP_DIR.replace(/\/$/, "");
+    const VIEW = `${BASE}#p=41.8825,-87.6285&l=cg`;
+    const stubCounter = async (p) => {
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await p.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+      });
+    };
+    const fireInstallEvent = (p) => p.evaluate(() => {
+      const e = new Event("beforeinstallprompt", { cancelable: true });
+      window.__prompted = window.__prompted || 0;
+      e.prompt = () => { window.__prompted++; return Promise.resolve(); };
+      e.userChoice = Promise.resolve({ outcome: "accepted", platform: "web" });
+      window.dispatchEvent(e);
+      return e.defaultPrevented;
+    });
+    const installEvents = (p) => p.evaluate(() => (window.__gcEvents || [])
+      .filter((v) => v && v.event && /^(install-invite|app-install|app-launch)\//.test(v.path)).map((v) => v.path));
+
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      const page = await booted(context, VIEW, stubCounter);
+      const held = await fireInstallEvent(page);
+      const shown = await page.waitForSelector(".install-invite .install-invite-go", { timeout: 10000 }).then(() => true, () => false);
+      check("on a phone the app holds Chrome's install event and offers its own Install button after an answer",
+        held === true && shown, `held=${held} shown=${shown}`);
+      if (shown) await page.click(".install-invite-go");
+      await page.waitForTimeout(200);
+      const after = await page.evaluate(() => ({
+        prompted: window.__prompted,
+        bar: !!document.querySelector(".install-invite"),
+        seen: localStorage.getItem("districtry-install-invite"),
+        last: localStorage.getItem("districtry-last-app"),
+      }));
+      check("Install hands over to the browser's own dialog, and the invitation goes",
+        after.prompted === 1 && !after.bar && after.seen === "shown", JSON.stringify(after));
+      check("the app records which state was open last, for the installed app's launcher",
+        after.last === TAG, JSON.stringify(after.last));
+      await page.evaluate(() => window.dispatchEvent(new Event("appinstalled")));
+      await page.waitForTimeout(100);
+      const events = await installEvents(page);
+      check("the invitation, its answer and the install are each counted once, by app",
+        events.join() === `install-invite/shown,install-invite/accepted,app-install/${TAG}`, JSON.stringify(events));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      const heldAgain = await fireInstallEvent(page);
+      await page.waitForTimeout(4500);
+      const again = await page.evaluate(() => !!document.querySelector(".install-invite"));
+      check("the invitation is offered once: a later visit holds the event and shows nothing",
+        heldAgain === true && !again, `held=${heldAgain} shown=${again}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1280, height: 900 } });
+      const page = await booted(context, VIEW, stubCounter);
+      const held = await fireInstallEvent(page);
+      check("on a computer the browser's own install control is left alone", held === false, `held=${held}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await context.addInitScript(() => {
+        const real = window.matchMedia.bind(window);
+        window.matchMedia = (q) => /display-mode:\s*standalone/.test(q)
+          ? { matches: true, media: q, onchange: null, addListener() {}, removeListener() {},
+              addEventListener() {}, removeEventListener() {}, dispatchEvent() { return false; } }
+          : real(q);
+      });
+      const page = await booted(context, BASE, stubCounter);
+      await page.waitForTimeout(300);
+      const first = await installEvents(page);
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      await page.waitForTimeout(300);
+      const second = await installEvents(page);
+      check("a launch of the installed app is counted once per window, by app",
+        first.join() === `app-launch/${TAG}` && second.length === 0,
+        `first=${JSON.stringify(first)} after reload=${JSON.stringify(second)}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE,
+        userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1" });
+      const page = await booted(context, VIEW, stubCounter);
+      const tip = await page.waitForSelector(".install-invite", { timeout: 10000 }).then(() => true, () => false);
+      const bar = await page.evaluate(() => {
+        const el = document.querySelector(".install-invite");
+        return el ? { text: el.textContent, button: !!el.querySelector(".install-invite-go") } : null;
+      });
+      check("an iPhone's Safari gets the Add to Home Screen tip, with no Install button",
+        tip && !!bar && /Add to Home Screen/.test(bar.text) && !bar.button, JSON.stringify(bar));
+      if (tip) await page.click(".install-invite-close");
+      const gone = await page.evaluate(() => !document.querySelector(".install-invite"));
+      const events = await installEvents(page);
+      check("closing the tip removes it, and the tip and its closing are each counted once",
+        gone && events.join() === "install-invite/tip-shown,install-invite/tip-closed", JSON.stringify(events));
+      await context.close();
+    }
+  }
+
   // 1f. COMPARISON STATS. With Congress pinned at the Loop and the State
   //     House on, the pinned card carries "Stats", and the screen it opens
   //     counts people from the shipped Census block files: IL-7 holds

@@ -292,6 +292,14 @@ jobs:
           # Every app fetches ../fleet-outlines.json to decide which app a
           # selected point belongs to; without it no reader is handed off.
           test -f _site/fleet-outlines.json || { echo "::error::assemble produced no fleet-outlines.json — the apps could not hand a reader to a sibling"; exit 1; }
+          # The installed app. The apps and the front door link the ONE manifest
+          # at the root, whose start_url is the launcher at /app/, which registers its own
+          # worker; the three icons are the manifest's. An assemble that drops
+          # any of them leaves every page looking right in a browser tab while
+          # a phone that installs districtry opens to a 404 or a blank icon.
+          for installed in manifest.webmanifest app/index.html app/sw.js favicon-192.png icon-512.png icon-maskable-512.png; do
+            test -f "_site/$installed" || { echo "::error::assemble produced no $installed — the installed app needs it"; exit 1; }
+          done
           grep -q '^Content-Signal:' _site/robots.txt || { echo "::error::the published robots.txt carries no Content-Signal line"; exit 1; }
           # The FLOSS/fund manifest and its wellKnown proof. rsync -a copies
           # dotfolders (which is why .git/.github/.claude are excluded above),

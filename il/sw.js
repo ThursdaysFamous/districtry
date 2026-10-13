@@ -50,10 +50,6 @@ const CACHE_NAME = "districtry-il-shell-v41";
 const SHELL_URLS = [
   "./",
   "./sources.html",
-  "./manifest.webmanifest",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/icon-maskable-512.png",
   "./icons/apple-touch-icon.png",
   "./icons/water-taxi.png",
   "./icons/seals/cook-county.png",

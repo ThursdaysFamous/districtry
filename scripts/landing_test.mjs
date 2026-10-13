@@ -886,8 +886,105 @@ try {
       const r = await page.request.get(href);
       check(`${where}'s privacy link resolves`, r.status() === 200,
         `${href} -> HTTP ${r.status()}`);
+      // The same pages carry the ONE install manifest, at the root. A page
+      // still pointing at a per-state copy would install a second districtry
+      // beside the first; build_manifests.py --check reads the markup, and
+      // this reads where the browser actually resolves it.
+      const manifestHref = await page.evaluate(() => {
+        const l = document.querySelector('link[rel="manifest"]');
+        return l ? l.href : null;
+      });
+      check(`${where} links the one root manifest`,
+        manifestHref === new URL("/manifest.webmanifest", BASE).href, String(manifestHref));
     }
     await ctx.close();
+  }
+
+  // --- 9. the installed app opens the state the reader used last ------------
+  //
+  // The manifest's start_url is the launcher at /app/, which reads the tag
+  // every app writes under districtry-last-app and goes there. Nothing else
+  // ever opens /app/ — only an installed copy does — so a launcher sending
+  // readers to the wrong place would be found on a reader's phone and nowhere
+  // else. Every instance page is STUBBED, as in 1c, so what is measured is
+  // where the launcher goes, and a wrong destination shows as a wrong URL
+  // rather than as an app that failed to boot. A stored value that is not a
+  // plain two-letter tag must open the front page, never a path built from it.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    const manifest = await page.request.get(BASE + "/manifest.webmanifest")
+      .then((r) => r.json()).catch(() => null);
+    check("the root manifest is one app, opened at the launcher",
+      !!manifest && manifest.id === "/" && manifest.scope === "/" &&
+        manifest.start_url === "/app/" && manifest.display === "standalone" &&
+        manifest.name === "districtry",
+      JSON.stringify(manifest && { id: manifest.id, name: manifest.name, scope: manifest.scope,
+        start_url: manifest.start_url, display: manifest.display }));
+    await ctx.close();
+
+    const cases = [
+      { stored: TAGS.includes("wi") ? "wi" : TAGS[0], want: null },
+      { stored: null, want: "/" },
+      { stored: "../privacy.html", want: "/" },
+    ];
+    for (const c of cases) {
+      const want = c.want || `/${c.stored}/`;
+      const ctx2 = await browser.newContext({ serviceWorkers: "block" });
+      await ctx2.addInitScript((stored) => {
+        if (location.pathname !== "/app/") return;
+        try {
+          if (stored === null) localStorage.removeItem("districtry-last-app");
+          else localStorage.setItem("districtry-last-app", stored);
+        } catch (e) { /* private mode */ }
+      }, c.stored);
+      const p = await ctx2.newPage();
+      await stubInstances(p);
+      await p.route((url) => url.pathname === "/", (r) => r.fulfill({
+        status: 200, contentType: "text/html", body: "<!doctype html><title>front door stub</title>",
+      }));
+      await p.goto(BASE + "/app/", { waitUntil: "commit" });
+      await p.waitForURL((u) => u.pathname !== "/app/", { timeout: 5000, waitUntil: "commit" }).catch(() => {});
+      const at = new URL(p.url()).pathname;
+      check(`the launcher with ${c.stored === null ? "nothing" : JSON.stringify(c.stored)} stored opens ${want}`,
+        at === want, p.url());
+      await ctx2.close();
+    }
+
+    // OFFLINE, which is why the launcher has a worker of its own. The first
+    // launch installs it; a later launch with no connection must still get the
+    // launcher page, from that worker, or an installed districtry opens to the
+    // browser's offline error before it can reach a state whose own worker
+    // would have answered. Service workers are ALLOWED here and nowhere else
+    // in this file.
+    {
+      const ctx3 = await browser.newContext({ serviceWorkers: "allow" });
+      await ctx3.addInitScript(() => {
+        if (location.pathname !== "/app/") return;
+        try { localStorage.setItem("districtry-last-app", "il"); } catch (e) { /* private mode */ }
+      });
+      const p = await ctx3.newPage();
+      await stubInstances(p);
+      await p.goto(BASE + "/app/", { waitUntil: "commit" });
+      await p.waitForURL((u) => u.pathname === "/il/", { timeout: 5000, waitUntil: "commit" }).catch(() => {});
+      let stored = null;
+      for (let i = 0; i < 20 && !(stored && stored.hit); i++) {
+        stored = await p.evaluate(async () => {
+          const keys = (await caches.keys()).filter((k) => k.indexOf("districtry-app-launch-v") === 0);
+          const hit = keys.length === 1 && !!(await caches.match("/app/", { cacheName: keys[0] }));
+          return { keys, hit };
+        }).catch((e) => ({ error: String(e) }));
+        if (!(stored && stored.hit)) await p.waitForTimeout(250);
+      }
+      check("the first launch stores the launcher in its own cache, and only there",
+        !!stored && stored.hit === true, JSON.stringify(stored));
+      await ctx3.setOffline(true);
+      const resp = await p.goto(BASE + "/app/", { waitUntil: "commit" }).catch(() => null);
+      check("offline, the launcher is served by its own worker",
+        !!resp && resp.status() === 200 && resp.fromServiceWorker(),
+        resp ? `HTTP ${resp.status()} fromServiceWorker=${resp.fromServiceWorker()}` : "no response");
+      await ctx3.close();
+    }
   }
 } finally {
   await browser.close();
