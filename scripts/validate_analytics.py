@@ -31,7 +31,7 @@ THE RULE, in two halves:
   never counted the largest page set on the site: the 183 pages carrying 2,869
   officeholders. Adding a counter changes what those pages send, so it waited on
   the operator, who said to count them; 191 pages gained the tag on 2026-09-15
-  and the two deliberate exceptions are named below.
+  and the deliberate exceptions are named below.
 
   THE TAG NOW HAS ONE COPY, engine/shared/goatcounter.txt, read by every
   generated page's builder and spliced as an ENGINE fence into the authored ones
@@ -61,13 +61,14 @@ GC_BLOCK = os.path.join(REPO_ROOT, "engine", "shared", "goatcounter.txt")
 # HOW MANY PAGES CARRY NO COUNTER, held so the number cannot move unnoticed.
 # It was 193 when this gate was written and every one of them is now NAMED: the
 # operator's answer on 2026-09-15 was to count the other 191, so the gap is the
-# two deliberate exceptions below and nothing else.
-COUNTER_GAP = 2
-COUNTER_GAP_MEASURED = "2026-09-15"
+# deliberate exceptions below and nothing else. It was two until 2026-10-13,
+# when the installed app's launcher at /app/ became the third.
+COUNTER_GAP = 3
+COUNTER_GAP_MEASURED = "2026-10-13"
 
-# The two that are deliberate, with the reason. The gate fails on a third, in
-# either direction: a page that shipped uncounted, or one of these two that
-# gained a counter.
+# The ones that are deliberate, with the reason. The gate fails on one more, in
+# either direction: a page that shipped uncounted, or one of these that gained
+# a counter.
 NO_COUNTER = {
     "coverage-map.html": dict(
         date="2026-09-15",
@@ -78,6 +79,13 @@ NO_COUNTER = {
         date="2026-09-15",
         reason="served for a URL that does not exist. Counting it would put "
                "other people's broken links in the traffic report as pages."),
+    "app/index.html": dict(
+        date="2026-10-13",
+        reason="the installed app's launcher: the manifest opens it and it "
+               "sends the reader on to the state they used last before anything "
+               "is drawn. That state's own page counts the visit a moment "
+               "later and the app counts the launch itself (app-launch/<tag>), "
+               "so a counter here would count every launch twice."),
 }
 # The root redirect shells the R2.3 move left behind: a meta refresh and nothing
 # else. A counter on one would count a visit the destination counts a moment
@@ -112,11 +120,21 @@ def ga_id(tag):
     return ((w.get("brand") or {}).get("analytics") or {}).get("ga_id")
 
 
+# Root folders that hold pages and are not an instance: /app/ is the installed
+# app's launcher (scripts/build_manifests.py). Named rather than discovered,
+# because a folder with no data/app is otherwise indistinguishable from fonts/
+# or districtry/, and a page here must still be asked the question.
+PAGE_DIRS = ("app",)
+
+
 def pages():
     tags = instances()
     out = []
     for path in sorted(glob.glob(os.path.join(REPO_ROOT, "*.html"))):
         out.append((None, os.path.basename(path), path))
+    for sub in PAGE_DIRS:
+        for path in sorted(glob.glob(os.path.join(REPO_ROOT, sub, "*.html"))):
+            out.append((None, os.path.relpath(path, REPO_ROOT), path))
     for tag in tags:
         for path in sorted(glob.glob(os.path.join(REPO_ROOT, tag, "*.html"))):
             out.append((tag, "%s/%s" % (tag, os.path.basename(path)), path))

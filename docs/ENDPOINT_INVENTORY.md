@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **247 distinct hosts** those files
-name, **43 are fetched by the browser**; the other 204 are links.
+makes from a link a reader clicks. Of **248 distinct hosts** those files
+name, **44 are fetched by the browser**; the other 204 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -27,6 +27,17 @@ The most sensitive flow on the site: it is **the text a reader
 types**. `build_privacy_page.py` owns what each receives and links
 each one's policy; this table is held to that generator's own
 per-app measurement, so the two cannot disagree.
+
+### Map-link lookup — 1 host(s)
+
+| host | instances |
+|---|---|
+| `link-lookup.districtry.deno.net` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn |
+
+districtry's own service (`services/link-lookup/main.ts`, on Deno
+Deploy). It receives **a short Google Maps or Apple Maps link**, and
+only when a reader pastes one, and answers with the full link it leads
+to. `build_privacy_page.py` names it as a recipient.
 
 ### Basemap tiles — 3 host(s)
 
@@ -175,7 +186,7 @@ measured until the next run describes it.
 | ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
 | CPS High School Zone (`cps-high`) | `data.cityofchicago.org` | — |
 | CPS Middle School Zone (`cps-middle`) | `data.cityofchicago.org` | — |
-| Voting Precinct (`county-precinct`) | 37 of 83 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.macoupincountyil.gov`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.lasallecounty.org`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.grundyco.org`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`, `tigerweb.geo.census.gov`; 46 shipped with the app | — |
+| Voting Precinct (`county-precinct`) | 36 of 83 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.macoupincountyil.gov`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.lasallecounty.org`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.grundyco.org`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`, `tigerweb.geo.census.gov`; 47 shipped with the app | — |
 | Special Service Area (`ssa`) | `data.cityofchicago.org` | — |
 | TIF District (`tif-district`) | `gis.cookcountyil.gov` | — |
 | CPS Elementary School Zone (`cps-elementary`) | `data.cityofchicago.org` | — |
@@ -352,7 +363,7 @@ measured until the next run describes it.
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 131 | 392 | 6 |
+| il | 131 | 393 | 6 |
 | ny | 39 | 35 | 0 |
 | ca | 17 | 14 | 0 |
 | wi | 92 | 265 | 5 |
@@ -365,7 +376,7 @@ measured until the next run describes it.
 | ok | 17 | 12 | 0 |
 | sc | 17 | 13 | 0 |
 | tn | 17 | 11 | 0 |
-| **total** | **506** | **921** | **12** |
+| **total** | **506** | **922** | **12** |
 
 **145 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

@@ -32,6 +32,11 @@
   // refuses one), so the two cannot be confused.
   function layerFromLinkCode(token) { return layerIdOfCode[token] || token; }
 
+  // Concept -> this app's layer ids, for a hand-off's `carry=` (ENGINE
+  // metro-portal writes it when it sends a reader here from a sibling app).
+  // Guarded like LAYER_CODES: an app with no table turns nothing on from it.
+  var layerIdsOfConcept = (typeof LAYER_CONCEPTS === "object" && LAYER_CONCEPTS) ? LAYER_CONCEPTS : {};
+
   // Five decimals (about a metre), trailing zeros dropped: 41.88250 -> 41.8825.
   function linkCoord(n) { return String(+n.toFixed(5)); }
 
@@ -60,6 +65,12 @@
     }
     if (params.layers) params.layers.split(",").forEach(addLayer);
     if (params.l) params.l.split(",").forEach(function (t) { if (t) addLayer(layerFromLinkCode(t)); });
+    // `carry=`: the layers a reader had on in the sibling app they just left,
+    // named by what they mean. Each concept this app has turns on its own
+    // layers for it; one it lacks is dropped, like an unknown id.
+    if (params.carry) params.carry.split(",").forEach(function (c) {
+      if (Object.prototype.hasOwnProperty.call(layerIdsOfConcept, c)) layerIdsOfConcept[c].forEach(addLayer);
+    });
     return {
       point: pick("p", "point"),
       layers: layers,

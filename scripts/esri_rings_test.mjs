@@ -34,13 +34,13 @@ function lift(tag) {
     return m[0];
   };
   const body = grab("esriSignedRingArea") + grab("esriRingsToParts") + grab("pointInRing") +
-    grab("esriGeometryToGeoJSON") + grab("esriToGeoJSON") +
-    "\nreturn { esriRingsToParts, esriGeometryToGeoJSON, esriToGeoJSON };";
+    grab("esriGeometryToGeoJSON") + grab("arcgisErrorOf") + grab("esriToGeoJSON") +
+    "\nreturn { esriRingsToParts, esriGeometryToGeoJSON, esriToGeoJSON, arcgisErrorOf };";
   // eslint-disable-next-line no-new-func
   return new Function(body)();
 }
 
-const { esriRingsToParts, esriGeometryToGeoJSON, esriToGeoJSON } = lift(TAG);
+const { esriRingsToParts, esriGeometryToGeoJSON, esriToGeoJSON, arcgisErrorOf } = lift(TAG);
 
 // Esri winding: a CLOCKWISE ring is a shell, COUNTER-CLOCKWISE is a hole.
 // In screen/lng-lat order that makes a shell's signed area NEGATIVE.
@@ -128,6 +128,21 @@ check("field list narrows the properties",
   esriToGeoJSON({ features: [{ attributes: { A: 1, B: "x" } }] }, ["A"]).features[0].properties, { A: 1 });
 check("shapeless row is kept with null geometry", fc.features[1].geometry, null);
 check("exceededTransferLimit carries through", fc.exceededTransferLimit, true);
+
+// 10. AN ERROR ENVELOPE IS AN ERROR. ArcGIS answers a refused query with HTTP
+//     200 and {"error":{...}}; read as data it became an empty set, which a
+//     card reported as "no usable geometry" (Hamilton County's quota refusal,
+//     2026-10-13). The details string below is that refusal's own wording.
+const quota = { error: { code: 429, message: "Unable to perform query. Too many requests.",
+  details: ["API calls quota exceeded (6063 request units)! maximum allowed request units (6000) per Minute. Retry after 60 sec."] } };
+let thrown = null;
+try { esriToGeoJSON(quota); } catch (e) { thrown = e; }
+check("an error envelope throws instead of becoming an empty set", !!thrown, true);
+check("the thrown error names the code and message", thrown && thrown.message,
+  "ArcGIS error 429: Unable to perform query. Too many requests.");
+check("the 429's stated wait is read", thrown && thrown.retryAfterMs, 60000);
+check("an envelope with no wait carries none", arcgisErrorOf({ error: { code: 400, message: "Invalid query" } }).retryAfterMs, undefined);
+check("a payload without error is not an error", arcgisErrorOf({ features: [] }), null);
 
 if (failures) {
   console.error(`\n${failures} esri-ring check(s) failed`);

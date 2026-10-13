@@ -351,7 +351,8 @@
     "note": "the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable."
   },
   "coverage_key": {
-    "outside": "Outside North Carolina"
+    "outside": "Outside North Carolina",
+    "edge": "North Carolina"
   },
   "data_files": {
     "geometry": [
@@ -424,11 +425,7 @@
     "cache_name": "districtry-nc-shell-v3",
     "shell_urls": [
       "./",
-      "./manifest.webmanifest",
-      "./icons/icon-192.png",
-      "./icons/icon-512.png",
       "./icons/apple-touch-icon.png",
-      "./icons/icon-maskable-512.png",
       "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
       "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
       "./vendor/leaflet-maplibre-gl.js"

@@ -85,7 +85,7 @@
      markup must describe content the page actually shows, so leaving it
      here once the section left would be a schema violation rather than a
      leftover. -->
-<link rel="manifest" href="manifest.webmanifest">
+<link rel="manifest" href="/manifest.webmanifest">
 <!-- ==== GENERATED:BEGIN head-theme ==== -->
 <meta name="theme-color" content="#6d3fd1">
 
@@ -1378,6 +1378,62 @@ svg.leaflet-image-layer.leaflet-interactive path {
     padding: 2px 4px;
   }
   .tile-banner-dismiss:hover { color: var(--ink); }
+  /* The one-time invitation to add districtry to a phone's home screen
+     (engine install-app). Fixed to the foot of the SCREEN rather than of the
+     map, because on a phone the reader has usually scrolled down into the
+     cards by the time it appears. Its z-index sits above the skip link (1000)
+     and below the share popover (1100), the More menu (1200) and the feedback
+     form (2000), so it never covers any of them. Both buttons are 40px tall,
+     well clear of WCAG 2.5.8's 24px, because a miss lands on the page. */
+  .install-invite {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 1050;
+    max-width: 440px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel);
+    border: 1px solid var(--line-strong);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 18px rgba(20, 24, 28, 0.18);
+    padding: 8px 6px 8px 12px;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .install-invite-text { flex: 1 1 auto; margin: 0; line-height: 1.4; }
+  .install-invite-go {
+    flex: none;
+    min-height: 40px;
+    padding: 0 14px;
+    background: transparent;
+    color: var(--accent-deep, #0B5394);
+    border: 1px solid var(--accent-deep, #0B5394);
+    border-radius: 5px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .install-invite-close {
+    flex: none;
+    min-width: 40px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--slate);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .install-invite-close:hover { color: var(--ink); }
   .hover-toggle-btn {
     font-family: var(--font-body);
     font-size: 12px;
@@ -3020,7 +3076,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
      on approach. Same class as the flag stripe and the star — a city color
      written as a literal, not a token. */
   .feedback-actions .btn-primary:hover { background: var(--accent-deep); }
-  .share-copy-btn:hover { background: var(--dst-brand-tint-soft); }
+  .share-copy-btn:hover,
+  .install-invite-go:hover { background: var(--dst-brand-tint-soft); }
   .masthead .search-extra {
     position: absolute;
     top: calc(100% + 6px);
@@ -3592,7 +3649,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   [data-theme="dark"] .share-popover-url,
   [data-theme="dark"] .share-popover-embed { background: var(--dst-sunken); border-color: rgba(236, 233, 244, 0.16); color: var(--slate); }
   [data-theme="dark"] .layer-toggle-btn,
-  [data-theme="dark"] .map-tile-banner { box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55); }
+  [data-theme="dark"] .map-tile-banner,
+  [data-theme="dark"] .install-invite { box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55); }
   /* .search-shell is deliberately NOT in that list. In the engine it floats
      over the map as a card and earns a shadow; this skin moves the toolbar
      into the masthead and flattens the shell to nothing (transparent, no
@@ -4067,6 +4125,17 @@ function initOklahomaExplorer() {
     "school-district-unified": "su", "zip-code": "zp", "school-district-elementary": "se",
     "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po",
     "tribal-government": "tg", "county-commissioner": "cm" };
+  // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
+  // reader moving to a sibling app takes the concepts of the layers they have
+  // on (`carry=`), and the app they arrive in turns on its own layers for
+  // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
+  var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ok-senate"],
+    "state-house": ["ok-house"], "county": ["county"], "county-board": ["county-commissioner"],
+    "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
+    "school-district-elementary": ["school-district-elementary"],
+    "police-station": ["police-station"], "fire-station": ["fire-station"],
+    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4090,17 +4159,17 @@ function initOklahomaExplorer() {
   // an instance whose full coverage is a proper subset of a wider region its
   // statewide layers still answer in; it also requires that instance's boot
   // to hand drawOutOfScopeMask() the region geometry, because the key names
-  // only the bands that were actually drawn.
-  var COVERAGE_KEY = { outside: "Outside Oklahoma" };
+  // only the bands that were actually drawn. `edge` names the purple line
+  // around the coverage in an instance with no region.
+  var COVERAGE_KEY = { outside: "Outside Oklahoma", edge: "Oklahoma" };
   /* Sibling District Explorer deployments — one canonical list shared by every
    * metro fork. When a new metro launches, add its entry to every fork's
    * worksheet and regenerate (Conversion 3 will source this list from the
    * fleet manifest instead). THIS_METRO drops the fork's own entry so the
    * list is identical in every fork. `bbox` (greater metro area, mirroring
-   * that fork's PERMALINK_GATE) and `emoji` feed the sibling-metro portal
-   * easter egg (ENGINE metro-portal): wander the map into a sibling's bbox —
-   * or search/geolocate a point inside one — and the app offers to hand you
-   * off to that fork's explorer. */
+   * that fork's PERMALINK_GATE) and `emoji` feed the sibling hand-off
+   * (ENGINE metro-portal): click, search or geolocate a point a sibling
+   * answers for and the app sends you to that sibling, with your layers. */
   var METRO_EXPLORERS = [
     { id: "chicago", label: "Illinois", url: "https://districtry.com/il/", emoji: "🌭", explorerName: "districtry Illinois",
       bbox: { minLng: -91.52, minLat: 36.96, maxLng: -87.01, maxLat: 42.51 } },
@@ -5584,6 +5653,22 @@ function initOklahomaExplorer() {
     return biggest ? ringToLatLng(biggest) : null;
   }
 
+  // Every ring of the coverage outline (GeoJSON [lng,lat]) as a closed
+  // Leaflet line, for the edge drawn along it. All of them, because each is a
+  // place the wash stops: measured 2026-10-13, the ten outlines this draws
+  // hold one ring each except San Francisco's (the city and Treasure Island)
+  // and Kentucky's (the state and the Kentucky Bend), both covered ground.
+  function outlineEdgeLines(rings) {
+    var out = [];
+    for (var i = 0; i < (rings || []).length; i++) {
+      var r = rings[i];
+      if (!r || r.length < 4) continue;
+      var line = ringToLatLng(r);
+      out.push(line.concat([line[0]]));
+    }
+    return out;
+  }
+
   /* ---------- the coverage key ----------
    * A <details> rather than a <div>, and that is a layout decision rather
    * than a stylistic one: on desktop it is open and reads as a legend card,
@@ -5751,6 +5836,34 @@ function initOklahomaExplorer() {
         // Read by styleDistrictryCoverage: with no region ring to sit inside,
         // one band carries the whole claim and is drawn lighter for it.
         c.fallbackMask = true;
+        /* AND THE SAME PURPLE EDGE, around the coverage itself. Until
+           2026-10-13 only the three apps that pass a region (Illinois, New
+           York, Wisconsin) drew the glowing state line, so the nine whose
+           coverage IS their state, and San Francisco, whose coverage is its
+           city, showed the wash with no line along it, and the operator
+           noticed the difference. Their edge is the coverage outline, so the
+           line is drawn there: exactly where the wash stops.
+           Only for an app that DECLARES no region. One that declares a region
+           whose file failed to load keeps the two-band wash with no line, as
+           before: its line means the state line, and the coverage ring is
+           not that. So `dst-glow` still appears in a region-declaring app
+           only once the region band has painted, which is what Illinois's and
+           New York's smoke tests wait on. Unlike the region's line, which
+           keeps only the largest ring so a state's lake islands get no glow of
+           their own, this one goes round every ring: a separate piece of
+           coverage (Treasure Island, the Kentucky Bend) is ground the app
+           answers for, and the line marks where that stops. */
+        var edges = typeof loadRegionGeometry === "function" ? [] : outlineEdgeLines(outline);
+        if (edges.length) {
+          c.glow = L.polyline(edges, {
+            pane: "scope-mask", className: "dst-glow",
+            weight: 9, opacity: 0, interactive: false
+          }).addTo(map);
+          c.stateLine = L.polyline(edges, {
+            pane: "scope-mask", weight: 1.5, opacity: 0.9, interactive: false
+          }).addTo(map);
+          if (ck && ck.edge) bands.push({ swatch: "dml-glow", label: ck.edge });
+        }
       }
       if (ck) bands.push({ swatch: "dml-sw dml-out", label: ck.outside, rule: bands.length > 0 });
 
@@ -6289,6 +6402,11 @@ function initOklahomaExplorer() {
   // refuses one), so the two cannot be confused.
   function layerFromLinkCode(token) { return layerIdOfCode[token] || token; }
 
+  // Concept -> this app's layer ids, for a hand-off's `carry=` (ENGINE
+  // metro-portal writes it when it sends a reader here from a sibling app).
+  // Guarded like LAYER_CODES: an app with no table turns nothing on from it.
+  var layerIdsOfConcept = (typeof LAYER_CONCEPTS === "object" && LAYER_CONCEPTS) ? LAYER_CONCEPTS : {};
+
   // Five decimals (about a metre), trailing zeros dropped: 41.88250 -> 41.8825.
   function linkCoord(n) { return String(+n.toFixed(5)); }
 
@@ -6317,6 +6435,12 @@ function initOklahomaExplorer() {
     }
     if (params.layers) params.layers.split(",").forEach(addLayer);
     if (params.l) params.l.split(",").forEach(function (t) { if (t) addLayer(layerFromLinkCode(t)); });
+    // `carry=`: the layers a reader had on in the sibling app they just left,
+    // named by what they mean. Each concept this app has turns on its own
+    // layers for it; one it lacks is dropped, like an unknown id.
+    if (params.carry) params.carry.split(",").forEach(function (c) {
+      if (Object.prototype.hasOwnProperty.call(layerIdsOfConcept, c)) layerIdsOfConcept[c].forEach(addLayer);
+    });
     return {
       point: pick("p", "point"),
       layers: layers,
@@ -7406,15 +7530,23 @@ function initOklahomaExplorer() {
   /* =========================================================================
    * SIBLING-METRO HANDOFF — every instance knows where its siblings live
    * (fleet-outlines.json; METRO_EXPLORERS[].bbox for the search rows' coarse
-   * pass). When the map centre, a selected point, a searched address or a
-   * geolocation fix lands inside a sibling's area, the reader goes STRAIGHT
-   * there, carrying the zoom they were at (and the point, when there is one)
-   * so the map they arrive on is framed like the one they left.
+   * pass). When a selected point, a searched address or a geolocation fix
+   * lands inside a sibling's area, the reader goes STRAIGHT there, carrying
+   * the point, the zoom they were at and the layers they had on, so the map
+   * they arrive on is framed like the one they left.
    *
    * This was an easter egg until 2026-08-25: a card, a five-second countdown
    * and a "Stay" button. Retired at the operator's direction — it asked a
    * question whose answer was always yes, and made every reader who crossed a
    * state line watch a timer to get where they were already going.
+   *
+   * PANNING NO LONGER SWITCHES APPS (2026-10-13, the operator's ruling,
+   * reversing his own of 2026-09-30). Until then a `moveend` handler sent the
+   * reader on as soon as the map's CENTRE left this app's outline and a
+   * sibling's held it, so dragging the map across a state line opened another
+   * app. Only a SELECTION hands off now: a click, the keyboard select button,
+   * a searched address, a geolocation fix. Panning past the line shows the
+   * wash and stays here.
    * ======================================================================= */
 
   /* A metro without a (well-formed) bbox simply opts out of the handoff —
@@ -7447,16 +7579,56 @@ function initOklahomaExplorer() {
     return best;
   }
 
+  /* THE LAYERS THE READER HAS ON, AS WHAT THEY MEAN RATHER THAN WHAT THIS APP
+   * CALLS THEM. Layer ids differ between apps for one thing (Illinois's
+   * `congress` is Iowa's `us-house`, its `il-house` is Wisconsin's
+   * `wi-assembly`), and one id can mean two things (Illinois's `ward` is a
+   * city council ward, Wisconsin's an election ward). So a hand-off names
+   * CONCEPTS, from the fleet-wide layer-concepts.json, which
+   * generate_metro_files.py slices into each app as LAYER_CONCEPTS (concept ->
+   * this app's layer ids). The receiving app turns on its own layers for each
+   * concept it has and drops the rest (ENGINE permalink, `carry=`). A layer in
+   * no concept is not carried. Guarded, so an app with no table carries
+   * nothing rather than failing. */
+  function carriedLayerConcepts() {
+    if (typeof LAYER_CONCEPTS !== "object" || !LAYER_CONCEPTS) return [];
+    var out = [];
+    Object.keys(LAYER_CONCEPTS).forEach(function (concept) {
+      var ids = LAYER_CONCEPTS[concept] || [];
+      for (var i = 0; i < ids.length; i++) {
+        if (state.layersOn[ids[i]]) { out.push(concept); return; }
+      }
+    });
+    return out;
+  }
+
   /* The sibling's URL, framed like the view being left: the point when there
-   * is one (a click, a search hit, a geolocation fix) and the zoom always. A
-   * pan-triggered handoff carries zoom alone — the reader selected nothing, so
-   * arriving with a point selected for them would answer a question they never
-   * asked. */
+   * is one (a click, a search hit, a geolocation fix), the zoom when one is
+   * given, and the layers on now. The state menu and the footer row pass
+   * neither point nor zoom — the reader asked for another state, not for a
+   * place in it — so they carry the layers alone. Long form on purpose: these
+   * links are never shared, and the receiving app rewrites the hash to its own
+   * short form as soon as its layers are on. */
   function metroPortalUrl(metro, point, zoom) {
     var parts = [];
     if (point) parts.push("point=" + point.lat.toFixed(5) + "," + point.lng.toFixed(5));
-    if (isFinite(zoom)) parts.push("zoom=" + zoom);
+    if (zoom !== null && zoom !== undefined && isFinite(zoom)) parts.push("zoom=" + zoom);
+    var carry = carriedLayerConcepts();
+    if (carry.length) parts.push("carry=" + carry.join(","));
     return parts.length ? metro.url + "#" + parts.join("&") : metro.url;
+  }
+
+  /* A link to a sibling app that keeps its href current with the layers on.
+   * Rewritten as the reader reaches for it rather than when it is built,
+   * because the layers change after the menu exists: `pointerdown` comes
+   * before a click, a middle click and a right click's "open in new tab",
+   * `focus` before a keyboard Enter, and `click` itself runs before the
+   * browser follows the link. */
+  function carryLayersOnLink(a, metro) {
+    function refresh() { a.href = metroPortalUrl(metro); }
+    a.addEventListener("pointerdown", refresh);
+    a.addEventListener("focus", refresh);
+    a.addEventListener("click", refresh);
   }
 
   // One handoff per page load. Belt and braces beside the coverage guard
@@ -7476,7 +7648,7 @@ function initOklahomaExplorer() {
     // caller has already asked placeOwner(); this is the last word on it.
     if (here && servedHereNow(here.lat, here.lng) === true) return false;
     metroHandedOff = true;
-    trackEvent("metro-portal-go/" + metro.id, opts.source || "wander");
+    trackEvent("metro-portal-go/" + metro.id, opts.source || "select");
     window.location.href = metroPortalUrl(metro, here, map.getZoom());
     return true;
   }
@@ -7579,13 +7751,9 @@ function initOklahomaExplorer() {
    * `proceed` selects the point here, and runs unless the reader is sent on.
    * Returns true when it has taken over (the caller stops and `proceed` runs
    * later, if at all), false when the point is plainly this app's and the
-   * caller should select it now.
-   *
-   * Panning already hands off on `moveend`, but only when the CENTRE crosses.
-   * A reader looking at Illinois can click Wisconsin near the top of the map
-   * without the centre ever leaving Illinois, which is exactly the case this
-   * covers: the click carries the point, so they arrive with it selected
-   * rather than merely somewhere in the neighbourhood. */
+   * caller should select it now. The click carries the point, so the reader
+   * arrives with it selected rather than merely somewhere in the
+   * neighbourhood. */
   var handoffSeq = 0;
   function handoffSelection(lat, lng, source, proceed) {
     if (metroHandedOff) return false;
@@ -7599,21 +7767,6 @@ function initOklahomaExplorer() {
     });
     return true;
   }
-
-  var wanderSeq = 0;
-  map.on("moveend", function () {
-    if (metroHandedOff) return;
-    var c = map.getCenter();
-    // Only once this app's own outline has loaded and says the centre has left
-    // it. Before then, or while it is inside, the reader is looking at their
-    // own map near its edge.
-    if (servedHereNow(c.lat, c.lng) !== false) return;
-    var seq = ++wanderSeq;
-    placeOwner(c.lat, c.lng).then(function (owner) {
-      if (seq !== wanderSeq || !owner || owner === "here") return;
-      offerMetroPortal(owner, { source: "wander" });
-    });
-  });
   /* ==== ENGINE:END metro-portal ==== */
   /* =========================================================================
    * GEOCODER — Photon search box + Nominatim POI lookups, bounded to
@@ -7754,6 +7907,195 @@ function initOklahomaExplorer() {
         return hit ? { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon) } : null;
       });
   }
+
+  /* ==== ENGINE:BEGIN map-link ==== */
+  /* ---------- a pasted map link or coordinate pair ----------
+   * A reader who already has a place open in Google Maps or Apple Maps
+   * shares it as a link, and until 2026-10-13 the search box sent that link
+   * to the address geocoder as if it were a street address, which found
+   * nothing. parseMapLink reads the link IN THE BROWSER: the position is
+   * written into a full link, so no request is made to read it, and the link
+   * never reaches the geocoder.
+   *
+   * ONE COPY. This file is an ENGINE fence in every app (spliced by
+   * compose_app.py) and is inlined into the front door's address box by
+   * build_landing_page.py, so the app and the front door cannot read one
+   * link two ways. scripts/map_link_test.mjs runs it as shipped.
+   *
+   * Returns null when the text is not a link or a coordinate pair (the
+   * ordinary address search runs), or one of:
+   *   {kind: "point", lat, lng, source}  a position, read from the text
+   *   {kind: "text", text, source}       a place name or address the link
+   *                                      carries without a position: search it
+   *   {kind: "short", url, source}       a short link, whose destination only
+   *                                      Google or Apple knows
+   *   {kind: "unreadable", source}       a link this cannot read a place from
+   * source is "google", "apple", "coordinates" or "link".
+   *
+   * WHICH POSITION, when a Google link carries several: `!3d<lat>!4d<lng>` is
+   * the place the link is about, so it wins; a coordinate written in the
+   * query or the path is what the reader asked for, next; `@<lat>,<lng>` is
+   * only where the map was centred, so it is used last, and only when no
+   * place name is there to search instead unless it is zoomed in close
+   * (15z or more), where the centre and the place are a few metres apart. */
+  function mapLinkCoord(lat, lng) {
+    lat = parseFloat(lat); lng = parseFloat(lng);
+    if (!isFinite(lat) || !isFinite(lng)) return null;
+    if (Math.abs(lat) > 90 || Math.abs(lng) > 180) return null;
+    if (lat === 0 && lng === 0) return null;
+    return { lat: lat, lng: lng };
+  }
+
+  /* Plain decimal degrees ("41.8825, -87.6285", "41.8825 -87.6285") or
+   * degrees-minutes-seconds as Google prints them (41°52'57.0"N 87°37'42.6"W).
+   * Two bare whole numbers ("100 200") are left to the address search: that
+   * is an address far more often than a position. */
+  function parseCoordText(text) {
+    var t = String(text).replace(/\+/g, " ").trim();
+    var m = t.match(/^\(?\s*(-?\d{1,2}(?:\.\d+)?)\s*(,|\s)\s*(-?\d{1,3}(?:\.\d+)?)\s*\)?$/);
+    if (m && (m[2] === "," || (m[1].indexOf(".") >= 0 && m[3].indexOf(".") >= 0))) {
+      return mapLinkCoord(m[1], m[3]);
+    }
+    var part = "(\\d{1,3})\\s*[\\u00b0\\u00ba]\\s*(?:(\\d{1,2}(?:\\.\\d+)?)\\s*['\\u2032\\u2019]\\s*)?" +
+               "(?:(\\d{1,2}(?:\\.\\d+)?)\\s*(?:\"|\\u2033|''|\\u201d)\\s*)?([NSEW])";
+    var d = t.match(new RegExp("^" + part + "[\\s,]*" + part + "$", "i"));
+    if (d) {
+      var a = dmsValue(d[1], d[2], d[3], d[4]), b = dmsValue(d[5], d[6], d[7], d[8]);
+      var aLat = /[NS]/i.test(d[4]), bLat = /[NS]/i.test(d[8]);
+      if (aLat === bLat) return null;
+      return aLat ? mapLinkCoord(a, b) : mapLinkCoord(b, a);
+    }
+    return null;
+  }
+  function dmsValue(deg, min, sec, hemi) {
+    var v = parseFloat(deg) + (parseFloat(min) || 0) / 60 + (parseFloat(sec) || 0) / 3600;
+    return /[SW]/i.test(hemi) ? -v : v;
+  }
+
+  function mapLinkUrl(text) {
+    var t = String(text).trim();
+    var m = t.match(/https?:\/\/[^\s<>"]+/i);
+    var raw = m ? m[0] : null;
+    if (!raw && /^(?:www\.|maps\.)?(?:google\.[a-z.]+\/maps|maps\.google\.|maps\.app\.goo\.gl|goo\.gl\/maps|maps\.apple(?:\.com)?\/)/i.test(t)) {
+      raw = "https://" + t.split(/\s/)[0];
+    }
+    if (!raw) return null;
+    try { return new URL(raw.replace(/[.,;:!?)\]]+$/, "")); } catch (e) { return null; }
+  }
+
+  function mapLinkPathText(seg) {
+    try { seg = decodeURIComponent(seg); } catch (e) { /* keep it as written */ }
+    return seg.replace(/\+/g, " ").trim();
+  }
+
+  function parseGoogleMapLink(url) {
+    var href = url.href, path = url.pathname, params = url.searchParams;
+    var place = null, m, re = /!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/g;
+    while ((m = re.exec(href))) place = mapLinkCoord(m[1], m[2]);
+    if (place) return { kind: "point", lat: place.lat, lng: place.lng, source: "google" };
+    if (/^\/maps\/dir(\/|$)/.test(path)) return { kind: "unreadable", source: "google" };
+    var keys = ["q", "query", "ll", "center", "destination"], text = null, i, v, c;
+    for (i = 0; i < keys.length; i++) {
+      v = params.get(keys[i]);
+      if (!v) continue;
+      v = v.replace(/^loc:/i, "").trim();
+      c = parseCoordText(v);
+      if (c) return { kind: "point", lat: c.lat, lng: c.lng, source: "google" };
+      if (!text && (keys[i] === "q" || keys[i] === "query" || keys[i] === "destination")) text = v;
+    }
+    var seg = path.match(/^\/maps\/(?:place|search)\/([^\/]+)/);
+    if (seg) {
+      var s = mapLinkPathText(seg[1]);
+      c = parseCoordText(s);
+      if (c) return { kind: "point", lat: c.lat, lng: c.lng, source: "google" };
+      if (!text && s) text = s;
+    }
+    var at = href.match(/\/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)(?:,(\d+(?:\.\d+)?)z)?/);
+    if (at && (!text || (at[3] && parseFloat(at[3]) >= 15))) {
+      c = mapLinkCoord(at[1], at[2]);
+      if (c) return { kind: "point", lat: c.lat, lng: c.lng, source: "google" };
+    }
+    if (text) return { kind: "text", text: text, source: "google" };
+    return { kind: "unreadable", source: "google" };
+  }
+
+  function parseAppleMapLink(url) {
+    var params = url.searchParams, keys = ["coordinate", "ll", "q", "sll"], text = null, i, v, c;
+    if (params.get("daddr") && !params.get("q") && !params.get("ll") && !params.get("coordinate")) {
+      return { kind: "unreadable", source: "apple" };
+    }
+    for (i = 0; i < keys.length; i++) {
+      v = params.get(keys[i]);
+      if (!v) continue;
+      c = parseCoordText(v);
+      if (c) return { kind: "point", lat: c.lat, lng: c.lng, source: "apple" };
+    }
+    text = params.get("address") || params.get("q") || params.get("name");
+    if (text && text.trim()) return { kind: "text", text: text.trim(), source: "apple" };
+    return { kind: "unreadable", source: "apple" };
+  }
+
+  function parseMapLink(text) {
+    if (!text) return null;
+    var c = parseCoordText(text);
+    if (c) return { kind: "point", lat: c.lat, lng: c.lng, source: "coordinates" };
+    var url = mapLinkUrl(text);
+    if (!url) return null;
+    var host = url.hostname.toLowerCase().replace(/^www\./, "");
+    if (host === "maps.app.goo.gl" || (host === "goo.gl" && /^\/maps\//.test(url.pathname))) {
+      return { kind: "short", url: url.href, source: "google" };
+    }
+    if (host === "maps.apple") return { kind: "short", url: url.href, source: "apple" };
+    if ((/^(maps\.)?google\.[a-z]{2,3}(\.[a-z]{2})?$/.test(host) &&
+         (host.indexOf("maps.") === 0 || /^\/maps(\/|$)/.test(url.pathname)))) {
+      return parseGoogleMapLink(url);
+    }
+    if (host === "maps.apple.com") return parseAppleMapLink(url);
+    return { kind: "unreadable", source: "link" };
+  }
+
+  /* A SHORT LINK holds no position: only Google or Apple knows where it
+   * leads, and a page cannot ask them, because a browser does not let a page
+   * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
+   * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
+   * link and returns the full link it leads to; its own code stores nothing.
+   * Only a short link is ever sent to it, and only when a reader pastes one.
+   * The address is the app's own name on Deno, not the suffixed address
+   * Deno also serves it at. The lookup's host receives the short link, so
+   * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host
+   * here is a change there too. */
+  var MAP_LINK_LOOKUP = "https://link-lookup.districtry.deno.net/";
+
+  function resolveShortMapLink(link, signal) {
+    if (!MAP_LINK_LOOKUP) return Promise.reject(new Error("no short-link lookup"));
+    return fetch(MAP_LINK_LOOKUP + "?u=" + encodeURIComponent(link.url),
+      { signal: signal, headers: { Accept: "application/json" } })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        var full = data && typeof data.url === "string" ? parseMapLink(data.url) : null;
+        if (!full || full.kind === "short") throw new Error("the lookup returned no full link");
+        return full;
+      });
+  }
+
+  /* What the reader is told when a link cannot be read here. Kept beside the
+   * parser so the app and the front door say the same thing. */
+  function mapLinkMessage(link) {
+    var name = link.source === "apple" ? "Apple Maps" : link.source === "google" ? "Google Maps" : "";
+    if (link.kind === "short") {
+      return "That short " + name + " link couldn't be read. Open the link, " +
+        "then copy the full address from your browser's address bar and paste that.";
+    }
+    if (name) {
+      return "That " + name + " link doesn't say where a place is (a directions link, for one). " +
+        "Open it on a single place and share that, or type the address.";
+    }
+    return "That link isn't a Google Maps or Apple Maps link. Paste one of those, or type an address.";
+  }
+  /* ==== ENGINE:END map-link ==== */
 
   /* ==== ENGINE:BEGIN geocoder-search ==== */
   function renderGeocodeResults(results) {
@@ -8330,6 +8672,9 @@ function initOklahomaExplorer() {
   // Guarded by the text still being in the box, so a late index load never
   // draws suggestions for words the reader has since changed.
   function showDistrictsNow(q) {
+    // a link is read once, by the debounced search; its own words are not a
+    // district name
+    if (parseMapLink(q)) return Promise.resolve();
     return findDistricts(q).then(function (found) {
       if (geocodeInputEl.value.trim() !== q) return;
       renderDistrictSection(found);
@@ -8339,7 +8684,73 @@ function initOklahomaExplorer() {
     });
   }
 
+  /* ---------- a pasted Google Maps or Apple Maps link ----------
+   * parseMapLink (ENGINE map-link) reads it in the browser. A position
+   * becomes ONE row, so the reader still confirms it and #q= selects it as
+   * it would a single address match; a place name the link carries is
+   * searched as if it had been typed; a short link is followed by the lookup
+   * when there is one; and nothing a link carries goes to the geocoder as
+   * address text. */
+  var mapLinkController = null;
+  function showMapLink(link) {
+    var seq = ++districtSearchSeq;  // a newer search owns the list now
+    if (inFlightController) inFlightController.abort();
+    if (mapLinkController) mapLinkController.abort();
+    clearResultRows(true);
+    clearResultRows(false);
+    if (link.kind === "point") {
+      geoResultsList.appendChild(mapLinkRow(link));
+      syncResultCount();
+      return Promise.resolve();
+    }
+    if (link.kind !== "short") {
+      geoStatus.textContent = mapLinkMessage(link);
+      geoStatus.className = "geo-status err";
+      return Promise.resolve();
+    }
+    geoStatus.textContent = "Reading the link\u2026";
+    geoStatus.className = "geo-status";
+    mapLinkController = new AbortController();
+    return resolveShortMapLink(link, mapLinkController.signal).then(function (full) {
+      if (seq !== districtSearchSeq) return;
+      if (full.kind === "text") return runGeocodeSearch(full.text);
+      return showMapLink(full);
+    }, function (err) {
+      if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
+      geoStatus.textContent = mapLinkMessage(link);
+      geoStatus.className = "geo-status err";
+    });
+  }
+  function mapLinkRow(link) {
+    var li = document.createElement("li");
+    var btn = document.createElement("button");
+    btn.type = "button";
+    var where = link.lat.toFixed(5) + ", " + link.lng.toFixed(5);
+    btn.textContent = link.source === "coordinates" ? "The point " + where :
+      "The place in the " + (link.source === "apple" ? "Apple" : "Google") + " Maps link (" + where + ")";
+    btn.addEventListener("click", function () {
+      clearTimeout(debounceTimer);
+      if (inFlightController) inFlightController.abort();
+      trackEvent("map-link/" + link.source);
+      geoResultsList.innerHTML = "";
+      geoStatus.textContent = "Selected: " + where;
+      geoStatus.className = "geo-status";
+      collapseAfterSelect = true;
+      refreshSearchShellExpanded();
+      // A link can name a place anywhere, so it is routed like a click: a
+      // point another app answers for opens that app with the point selected.
+      if (!handoffSelection(link.lat, link.lng, "map-link", function () { setSelectedPoint(link.lat, link.lng); })) {
+        setSelectedPoint(link.lat, link.lng);
+      }
+    });
+    li.appendChild(btn);
+    return li;
+  }
+
   function runGeocodeSearch(q) {
+    var link = parseMapLink(q);
+    if (link && link.kind !== "text") return showMapLink(link);
+    if (link) q = link.text;
     var seq = ++districtSearchSeq;
     return findDistricts(q).then(function (found) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
@@ -11277,11 +11688,57 @@ function initOklahomaExplorer() {
     // dropping the row: hasUsableGeometry is what decides a layer is unusable.
     return null;
   }
+  /* ---------- an ArcGIS error envelope is an ERROR, never an empty set.
+   *
+   * ArcGIS answers a refused query with HTTP 200 and a body of
+   * {"error":{"code":…,"message":…,"details":[…]}}, which parses as JSON and
+   * carries no features. Read as data it became an empty FeatureCollection,
+   * so a card said "returned no usable geometry" — or, from a loader that
+   * reads an empty set as an answer, that nothing is there — when what had
+   * happened was a refusal. Measured 2026-10-13 on Hamilton County's ArcGIS
+   * Online organisation: "API calls quota exceeded (6063 request units)!
+   * maximum allowed request units (6000) per Minute. Retry after 60 sec." The
+   * quota is per organisation and shared by everyone reading it, so whether a
+   * request is refused depends on what other readers did in the same minute.
+   *
+   * So the envelope becomes an Error naming its code and message, and a 429
+   * (the quota refusal) is asked again ONCE after the wait the server names,
+   * capped at ARCGIS_QUOTA_RETRY_CAP_MS so a card is not left loading for a
+   * full minute. A second refusal is reported, not retried again. ---------- */
+  var ARCGIS_QUOTA_RETRY_CAP_MS = 15000;
+  function arcgisErrorOf(payload) {
+    var e = payload && payload.error;
+    if (!e || typeof e !== "object") return null;
+    var err = new Error("ArcGIS error " + (e.code != null ? e.code : "(no code)") + ": " +
+      (e.message || "the service refused the query"));
+    err.arcgisCode = e.code;
+    var details = (e.details || []).join(" ");
+    var m = /retry after (\d+) ?s/i.exec(details);
+    if (m) err.retryAfterMs = Number(m[1]) * 1000;
+    return err;
+  }
+  function fetchArcGISJSON(url, opts, retries) {
+    function ask(quotaRetryLeft) {
+      return fetchJSONWithRetry(url, opts || {}, retries).then(function (payload) {
+        var err = arcgisErrorOf(payload);
+        if (!err) return payload;
+        if (err.arcgisCode === 429 && quotaRetryLeft) {
+          var wait = Math.min(err.retryAfterMs || 5000, ARCGIS_QUOTA_RETRY_CAP_MS);
+          return new Promise(function (resolve) { setTimeout(resolve, wait); })
+            .then(function () { return ask(false); });
+        }
+        throw err;
+      });
+    }
+    return ask(true);
+  }
   /* The contract is "produce what f=geojson should have produced", including
    * the transfer-cap flag the paged loader reads. `fieldNames` is optional; a
    * caller that requested outFields=* passes nothing and gets every attribute,
    * which is what the GeoJSON export does. */
   function esriToGeoJSON(payload, fieldNames) {
+    var refused = arcgisErrorOf(payload);
+    if (refused) throw refused;
     var src = (payload && payload.features) || [];
     var out = [];
     for (var i = 0; i < src.length; i++) {
@@ -11320,7 +11777,7 @@ function initOklahomaExplorer() {
       return Promise.reject(new Error(
         "fetchArcGISAsGeoJSON needs f=json (the GeoJSON export unnests interior rings): " + url));
     }
-    return fetchJSONWithRetry(url, opts || {}, retries === undefined ? 2 : retries)
+    return fetchArcGISJSON(url, opts || {}, retries === undefined ? 2 : retries)
       .then(function (payload) { return esriToGeoJSON(payload, fieldNames); });
   }
   function loadArcGISGeoJSON(serviceUrl) {
@@ -11332,7 +11789,7 @@ function initOklahomaExplorer() {
     // precision, so a builder that omits it measures a layer this app fetches
     // as clean. Esri JSON keeps the ring either way.
     var url = serviceUrl + "/query?where=1%3D1&outFields=*&f=json&outSR=4326&geometryPrecision=6";
-    return fetchJSONWithRetry(url, {}, 2)
+    return fetchArcGISJSON(url, {}, 2)
       .then(function (payload) {
         var geojson = esriToGeoJSON(payload);
         if (!hasUsableGeometry(geojson)) throw new Error("no usable geometry from " + serviceUrl);
@@ -11362,7 +11819,7 @@ function initOklahomaExplorer() {
       "&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects" +
       "&outFields=" + encodeURIComponent(outFields || "*") +
       "&outSR=4326&f=json&geometryPrecision=6";
-    return fetchJSONWithRetry(url, {}, 1)
+    return fetchArcGISJSON(url, {}, 1)
       .then(function (payload) {
         var geojson = esriToGeoJSON(payload);
         if (!hasUsableGeometry(geojson)) throw new Error("point query returned no usable geometry: " + serviceUrl);
@@ -11380,8 +11837,8 @@ function initOklahomaExplorer() {
       // f=json, not f=geojson: the GeoJSON export unnests interior rings (see
       // the arcgis-loader block for the measurement). esriToGeoJSON carries
       // exceededTransferLimit through, which is what this loop pages on.
-      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
-        .then(esriToGeoJSON).then(function (gj) {
+      return fetchArcGISJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+        .then(function (payload) { return esriToGeoJSON(payload); }).then(function (gj) {
         var feats = (gj && gj.features) || [];
         acc = acc.concat(feats);
         var more = gj && (gj.exceededTransferLimit || (gj.properties && gj.properties.exceededTransferLimit));
@@ -11394,8 +11851,9 @@ function initOklahomaExplorer() {
         if (more && feats.length > 0) return page(offset + feats.length, acc);
         var out = { type: "FeatureCollection", features: acc };
         // Same "200 but useless" guard the unpaged loaders apply: an Esri error
-        // envelope 200s carrying no usable geometry; without this makeCached
-        // would retain that empty response as a permanent success.
+        // envelope now rejects in fetchArcGISJSON, but a service can still
+        // answer 200 with rows and no shapes; without this makeCached would
+        // retain that empty response as a permanent success.
         if (!hasUsableGeometry(out)) throw new Error("paged ArcGIS layer returned no usable geometry: " + layerUrl);
         return out;
       });
@@ -14836,6 +15294,8 @@ function initOklahomaExplorer() {
       if (metro.id === THIS_METRO) continue;
       var a = document.createElement("a");
       a.href = metro.url;
+      // the layers on now travel with the reader (ENGINE metro-portal)
+      if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, metro);
       a.target = "_blank";
       a.rel = "noopener";
       a.textContent = metro.label;
@@ -15409,6 +15869,9 @@ function initOklahomaExplorer() {
       if (m.id === THIS_METRO) continue;
       var a = document.createElement("a");
       a.href = m.url;
+      /* and the layers the reader has on travel with them (ENGINE
+         metro-portal), as they do when a click crosses a state line */
+      if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, m);
       a.setAttribute("role", "menuitem");
       if (m.emoji) {
         var e = document.createElement("span");
@@ -15851,6 +16314,182 @@ function initOklahomaExplorer() {
     else if (dstPhoneMQ.addListener) dstPhoneMQ.addListener(dstApplyPhoneLayout);
   }
   /* ==== ENGINE:END districtry-behavior ==== */
+
+  /* ==== ENGINE:BEGIN install-app ==== */
+  /* ==== install as an app: ONE districtry, opened where the reader left off ====
+     The apps and the front door link the one manifest at /manifest.webmanifest,
+     whose scope is the whole site, so an installed districtry crosses state
+     lines without leaving its window, and whose start_url is the launcher at
+     /app/. This block is the app's half of that arrangement, in three parts.
+
+     1. WHICH STATE WAS OPEN LAST. Each boot writes this app's tag under
+        DST_LAST_APP_KEY, and the launcher reads it to open that state.
+        scripts/build_manifests.py --check holds the launcher to this key. On an
+        iPhone an installed web app keeps storage apart from Safari's, so its
+        first launch has nothing to read and opens the front page; it remembers
+        from then on.
+
+     2. THE INVITATION, phones only and once. Android hands the page a
+        `beforeinstallprompt` event when Chrome judges the site installable;
+        it is held, and an Install button is offered once the reader has an
+        answer on screen. Safari has no such event, so an iPhone gets a short
+        tip saying where Add to Home Screen is. Never inside an iframe (an
+        embedded map is someone else's page), never once installed, and never
+        a second time: showing it records DST_INSTALL_INVITE_KEY.
+
+     3. THE COUNTS, by state and never by place: `app-install/<tag>` when the
+        browser reports an install, `app-launch/<tag>` once per launch of the
+        installed app (DST_APP_LAUNCH_KEY in session storage marks the window
+        as counted), and `install-invite/<what>` for the invitation: shown,
+        accepted, declined or closed, and tip-shown or tip-closed on an iPhone.
+        A launch is counted at boot, before GoatCounter's script has always
+        arrived, so these wait for it rather than being lost. */
+  var DST_LAST_APP_KEY = "districtry-last-app";
+  var DST_INSTALL_INVITE_KEY = "districtry-install-invite";
+  var DST_APP_LAUNCH_KEY = "districtry-app-launch";
+  var DST_INVITE_DELAY_MS = 3000;
+  var dstFramed = (function () {
+    try { return window.top !== window.self; } catch (e) { return true; }
+  })();
+  function dstCountWhenReady(name, tries) {
+    if (window.goatcounter && typeof window.goatcounter.count === "function") {
+      trackEvent(name);
+      return;
+    }
+    // up to ten seconds; a blocked or failed counter stays a no-op
+    if ((tries || 0) < 40) setTimeout(function () { dstCountWhenReady(name, (tries || 0) + 1); }, 250);
+  }
+  /* Every invitation event goes through here, so the name the privacy page
+     publishes is the one family `install-invite/` and the outcomes are its
+     suffixes. */
+  function dstInviteEvent(what) {
+    dstCountWhenReady("install-invite/" + what);
+  }
+  function dstInstalledLaunch() {
+    return !!((window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+      window.navigator.standalone === true);
+  }
+  function dstInviteSeen() {
+    try { return !!window.localStorage.getItem(DST_INSTALL_INVITE_KEY); } catch (e) { return true; }
+  }
+  function dstMarkInviteSeen(value) {
+    try { window.localStorage.setItem(DST_INSTALL_INVITE_KEY, value); } catch (e) { /* private mode: it may show again */ }
+  }
+  /* An iPhone's own Safari. Other iOS browsers and in-app views name
+     themselves in the user agent and put Share somewhere else, so the tip's
+     directions would be wrong there; an iPad reports itself as a Mac and is
+     not a phone. */
+  function dstIsIphoneSafari() {
+    var ua = window.navigator.userAgent || "";
+    if (!/\b(iPhone|iPod)\b/.test(ua)) return false;
+    if (/CriOS|FxiOS|EdgiOS|OPiOS|GSA\/|FBAN|FBAV|Instagram|Line\//.test(ua)) return false;
+    return /Version\/[\d.]+.*Safari\//.test(ua);
+  }
+  /* The invitation waits for the reader's first answer: a point selected,
+     then a moment to read the cards. */
+  function dstAfterFirstAnswer(fn) {
+    var poll = setInterval(function () {
+      if (!state.selectedPoint) return;
+      clearInterval(poll);
+      setTimeout(fn, DST_INVITE_DELAY_MS);
+    }, 500);
+  }
+  var dstInviteBar = null;
+  function dstHideInvite() {
+    if (dstInviteBar && dstInviteBar.parentNode) dstInviteBar.parentNode.removeChild(dstInviteBar);
+    dstInviteBar = null;
+  }
+  /* Built through the DOM with textContent, the way every card is. */
+  function dstShowInvite(text, onInstall) {
+    if (dstInviteBar || dstInstalledLaunch() || !dstIsPhone()) return false;
+    var bar = document.createElement("aside");
+    bar.className = "install-invite";
+    bar.setAttribute("aria-label", "Add districtry to your home screen");
+    var p = document.createElement("p");
+    p.className = "install-invite-text";
+    p.textContent = text;
+    bar.appendChild(p);
+    if (onInstall) {
+      var go = document.createElement("button");
+      go.type = "button";
+      go.className = "install-invite-go";
+      go.textContent = "Install";
+      go.addEventListener("click", onInstall);
+      bar.appendChild(go);
+    }
+    var close = document.createElement("button");
+    close.type = "button";
+    close.className = "install-invite-close";
+    close.setAttribute("aria-label", onInstall ? "Not now" : "Close");
+    close.textContent = "✕";
+    close.addEventListener("click", function () {
+      dstHideInvite();
+      dstInviteEvent(onInstall ? "closed" : "tip-closed");
+    });
+    bar.appendChild(close);
+    document.body.appendChild(bar);
+    dstInviteBar = bar;
+    return true;
+  }
+
+  if (!dstFramed) {
+    try { window.localStorage.setItem(DST_LAST_APP_KEY, METRO_BRAND.instanceTag); } catch (e) { /* the launcher then opens the front page */ }
+  }
+
+  if (dstInstalledLaunch()) {
+    var dstLaunchCounted = false;
+    try { dstLaunchCounted = !!window.sessionStorage.getItem(DST_APP_LAUNCH_KEY); } catch (e) { dstLaunchCounted = false; }
+    if (!dstLaunchCounted) {
+      try { window.sessionStorage.setItem(DST_APP_LAUNCH_KEY, "1"); } catch (e) { /* counted again on the next page in this window */ }
+      dstCountWhenReady("app-launch/" + METRO_BRAND.instanceTag);
+    }
+  }
+
+  window.addEventListener("appinstalled", function () {
+    dstHideInvite();
+    dstCountWhenReady("app-install/" + METRO_BRAND.instanceTag);
+  });
+
+  var dstHeldPrompt = null;
+  var dstInviteQueued = false;
+  window.addEventListener("beforeinstallprompt", function (e) {
+    /* On a computer, or inside someone else's page, the browser's own
+       install control is left exactly as it is. */
+    if (dstFramed || !dstIsPhone()) return;
+    e.preventDefault();
+    dstHeldPrompt = e;
+    if (dstInviteQueued || dstInviteSeen()) return;
+    dstInviteQueued = true;
+    dstAfterFirstAnswer(function () {
+      if (!dstHeldPrompt || dstInviteSeen()) return;
+      var shown = dstShowInvite("Add districtry to your home screen. It opens to the state you used last.", function () {
+        var held = dstHeldPrompt;
+        dstHeldPrompt = null;
+        dstHideInvite();
+        if (!held) return;
+        held.prompt();
+        held.userChoice.then(function (choice) {
+          dstInviteEvent(choice && choice.outcome === "accepted" ? "accepted" : "declined");
+        }, function () {});
+      });
+      if (shown) {
+        dstMarkInviteSeen("shown");
+        dstInviteEvent("shown");
+      }
+    });
+  });
+
+  if (!dstFramed && !dstInstalledLaunch() && dstIsIphoneSafari() && !dstInviteSeen()) {
+    dstAfterFirstAnswer(function () {
+      if (dstInviteSeen()) return;
+      var shown = dstShowInvite("Add districtry to your Home Screen: tap Share (in the ⋯ menu if you don’t see it), then Add to Home Screen.", null);
+      if (shown) {
+        dstMarkInviteSeen("tip-shown");
+        dstInviteEvent("tip-shown");
+      }
+    });
+  }
+  /* ==== ENGINE:END install-app ==== */
 }
 // Deferred Leaflet (above) executes before DOMContentLoaded, so L is ready by
 // the time this fires. Run immediately if the DOM is already parsed, else wait.
