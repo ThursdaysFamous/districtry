@@ -22,7 +22,7 @@
 | U.S. House | 9 (the 119th Congress's map) | pre-built | the representative, refreshed weekly |
 | Tennessee Senate | 33 | pre-built | the senator, from the Legislature's own map |
 | Tennessee House | 99 | pre-built | the representative, from the same map (two seats listed vacant) |
-| County Commission District | 859 in 95 counties | pre-built | the members, in the 55 counties whose own pages were read (gap `tn-county-commissioners`) |
+| County Commission District | 859 in 95 counties | pre-built | the members, in the 56 counties whose own pages were read (gap `tn-county-commissioners`) |
 | City or Town | 345 | live | nobody (gap `tn-municipal-officeholders`) |
 | School District (Unified) | 127 | live | nobody (gap `tn-school-board-members`) |
 | School District (Elementary) | 15 | live | nobody (same gap) |
@@ -62,7 +62,7 @@ county commission district numbers without being the same lines.
 **County commissioners are named county by county.** No state office publishes who sits on a
 county commission, so the names come from each county's own pages, one parser per county, each
 checked against that county's August 2026 results or a county document from after the election
-before it joins. At go-live 54 of 95 counties are named; Morgan joined later the same day, for 55. A single letter to the University of
+before it joins. At go-live 54 of 95 counties are named; Morgan and Trousdale joined later the same day, for 56. A single letter to the University of
 Tennessee's County Technical Assistance Service, sent by Adam on 2026-10-11, asks it to add each
 commissioner's district to the directory it already keeps, which would cover every county at
 once; the follow-up falls due about 1 November 2026.
