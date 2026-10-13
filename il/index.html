@@ -8465,12 +8465,14 @@ function initChiExplorer() {
   /* A SHORT LINK holds no position: only Google or Apple knows where it
    * leads, and a page cannot ask them, because a browser does not let a page
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
-   * lookup (services/link-lookup/main.ts), which follows the link and returns
-   * the full link it leads to, keeping no record. While it is null nothing is
-   * sent anywhere and the reader is told how to get the full link instead.
-   * Setting it is a privacy change: the lookup's host receives the short
-   * link, so build_privacy_page.py must name it in the same change. */
-  var MAP_LINK_LOOKUP = null;
+   * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
+   * link and returns the full link it leads to; its own code stores nothing.
+   * Only a short link is ever sent to it, and only when a reader pastes one.
+   * The address is the app's own name on Deno, not the suffixed address
+   * Deno also serves it at. The lookup's host receives the short link, so
+   * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host
+   * here is a change there too. */
+  var MAP_LINK_LOOKUP = "https://link-lookup.districtry.deno.net/";
 
   function resolveShortMapLink(link, signal) {
     if (!MAP_LINK_LOOKUP) return Promise.reject(new Error("no short-link lookup"));
@@ -8492,7 +8494,7 @@ function initChiExplorer() {
   function mapLinkMessage(link) {
     var name = link.source === "apple" ? "Apple Maps" : link.source === "google" ? "Google Maps" : "";
     if (link.kind === "short") {
-      return "Short " + name + " links can't be read here yet. Open the link, " +
+      return "That short " + name + " link couldn't be read. Open the link, " +
         "then copy the full address from your browser's address bar and paste that.";
     }
     if (name) {
@@ -20986,18 +20988,27 @@ function initChiExplorer() {
   var loadAldermen = makeCached(function () { return loadSocrataJSON("htai-wnw4"); });
 
   // The aldermen roster stores names "Last, First" (e.g. "La Spata, Daniel").
-  // Flip to display order "First Last" on the first comma only, leaving names
-  // without a comma untouched.
+  // Flip to display order "First Last", leaving names without a comma
+  // untouched. A suffix is written as its own comma part ("Cardona, Jr.,
+  // Felix", "Vasquez, Jr., Andre"), and flipping on the first comma alone
+  // printed "Jr., Felix Cardona", so a part that is only a suffix goes after
+  // the surname. scripts/build_chicago_ward_roster.py flips the same way.
+  var NAME_SUFFIX_RE = /^(jr|sr|ii|iii|iv|v)\.?$/i;
   function formatAldermanName(name) {
     if (!name) return name;
     var str = String(name);
-    var i = str.indexOf(",");
-    if (i === -1) return str.trim();
-    var last = str.slice(0, i).trim();
-    var first = str.slice(i + 1).trim();
-    if (!first) return last;
-    if (!last) return first;
-    return first + " " + last;
+    if (str.indexOf(",") === -1) return str.trim();
+    var parts = str.split(",");
+    var last = parts[0].trim();
+    var given = [];
+    var suffix = [];
+    for (var j = 1; j < parts.length; j++) {
+      var part = parts[j].trim();
+      if (!part) continue;
+      (NAME_SUFFIX_RE.test(part) ? suffix : given).push(part);
+    }
+    var out = given.concat(last ? [last] : [], suffix).join(" ");
+    return out || last;
   }
 
   /* ---------- Suburban municipal wards — the non-Chicago entries of this

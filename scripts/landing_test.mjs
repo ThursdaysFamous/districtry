@@ -116,33 +116,81 @@ try {
     const wordmark = await page.textContent(".wordmark").catch(() => null);
     check("wordmark renders", wordmark === "districtry", JSON.stringify(wordmark));
 
-    // The place rows beside the coverage map. This was a pill row until
-    // 2026-09-18; the row carries the same three facts plus the SCOPE, which
-    // used to sit in a title attribute no phone shows.
-    const places = await page.$$eval(".place", (els) =>
-      els.map((e) => ({
-        href: e.getAttribute("href"),
-        name: e.querySelector(".place-name")?.textContent?.trim(),
-        scope: e.querySelector(".place-scope")?.textContent?.trim(),
-        n: e.querySelector(".place-n")?.textContent?.trim(),
-      })));
-    check("every fleet place is listed", places.length === FLEET.length,
-      JSON.stringify(places.map((p) => p.name)) + " vs metros.json " + FLEET.length);
+    // The state list under the coverage map: every state and DC, once each,
+    // a link where a place answers and plain text where none does. It
+    // replaced a row per live place plus a folded "not yet" list on
+    // 2026-10-13, so it carries what both used to: the place's scope and its
+    // layer count, and an honest account of the rest of the country.
+    const states = await page.$$eval(".states li", (els) =>
+      els.map((li) => {
+        const a = li.querySelector("a.st");
+        return {
+          name: li.querySelector(".st-name")?.textContent?.trim(),
+          href: a ? a.getAttribute("href") : null,
+          part: !!(a && a.classList.contains("st-part")),
+          scope: li.querySelector(".st-scope")?.textContent?.replace(/\s+/g, " ").trim(),
+          n: li.querySelector(".st-n")?.textContent?.trim(),
+          text: li.textContent.replace(/\s+/g, " ").trim(),
+        };
+      }));
+    const linked = states.filter((s) => s.href);
+    check("the state list names every state and DC once",
+      states.length === 51 && new Set(states.map((s) => s.name)).size === 51,
+      `${states.length} row(s), ${new Set(states.map((s) => s.name)).size} distinct`);
+    check("every fleet place is linked exactly once",
+      linked.length === FLEET.length &&
+        FLEET.every((m) => linked.filter((l) => l.href === m.url).length === 1),
+      JSON.stringify(linked.map((l) => l.href)) + " vs metros.json " + FLEET.length);
     check("Illinois row points at /il/",
-      places.some((p) => p.name === "Illinois" && /\/il\/$/.test(p.href)),
-      places.find((p) => p.name === "Illinois")?.href);
-    check("every place links a fleet url",
-      places.every((p) => FLEET.some((m) => m.url === p.href)),
-      JSON.stringify(places.map((p) => p.href)));
+      linked.some((p) => p.name === "Illinois" && /\/il\/$/.test(p.href)),
+      linked.find((p) => p.name === "Illinois")?.href);
     // A layer count is the one number on this page a reader could act on, and
     // it is read from each instance's own worksheet — a row showing 0, blank
     // or NaN means the generator lost its grip on that file.
     check("every place states a positive layer count",
-      places.every((p) => /^\d+$/.test(p.n || "") && Number(p.n) > 0),
-      JSON.stringify(places.map((p) => p.n)));
+      linked.every((p) => /^\d+$/.test(p.n || "") && Number(p.n) > 0),
+      JSON.stringify(linked.map((p) => p.n)));
     check("every place states its scope",
-      places.every((p) => (p.scope || "").length > 2),
-      JSON.stringify(places.map((p) => p.scope)));
+      linked.every((p) => (p.scope || "").length > 2),
+      JSON.stringify(linked.map((p) => p.scope)));
+    // A city instance sits on its STATE's row and says the city is all that
+    // answers there. California reading as a covered state, or vanishing from
+    // the list because San Francisco is not a state, are the two ways to get
+    // this wrong, and each would tell a reader in Los Angeles something false.
+    const cities = FLEET.filter((m) => !states.some((s) => s.name === m.landing_name));
+    check("a city's row is its state's, and names the city",
+      cities.length > 0 && cities.every((m) => {
+        const row = linked.find((l) => l.href === m.url);
+        return row && row.part && row.name !== m.landing_name &&
+          (row.scope || "").startsWith(m.landing_name + " only");
+      }),
+      JSON.stringify(cities.map((m) => linked.find((l) => l.href === m.url))));
+    // An unlinked row is marked "not yet" by an empty square, which a screen
+    // reader cannot see, so the words have to be there too.
+    check("every state nobody covers says not yet",
+      states.filter((s) => !s.href).every((s) => /not yet$/.test(s.text)),
+      JSON.stringify(states.filter((s) => !s.href && !/not yet$/.test(s.text)).map((s) => s.name)));
+    // The count above the list and the sentence under the address box are one
+    // phrase from one function, and both must agree with the list itself.
+    const nStates = linked.filter((l) => !l.part && l.name !== "District of Columbia").length;
+    const countLine = (await textOrNull(page, ".cov-count strong") || "").replace(/\s+/g, " ").trim();
+    const helpLine = (await textOrNull(page, ".search-help") || "").replace(/\s+/g, " ").trim();
+    check("the count line counts the linked states",
+      new RegExp("^" + nStates + " states? ").test(countLine) &&
+        cities.every((m) => countLine.includes(m.landing_name)),
+      JSON.stringify(countLine) + ` vs ${nStates} state row(s)`);
+    check("the address box says the same count",
+      helpLine.includes(countLine.replace(/\.$/, "")), JSON.stringify(helpLine));
+    // On a screen wider than a phone the list is never folded and its toggle
+    // is not drawn; section 1h holds the phone half.
+    const wide = await page.evaluate(() => {
+      const box = document.querySelector(".states-box");
+      const t = document.querySelector(".states-toggle");
+      return { open: !!(box && box.open), toggle: t ? getComputedStyle(t).display : null,
+               shown: [...document.querySelectorAll(".states li")].filter((li) => li.checkVisibility()).length };
+    });
+    check("on a wide screen the state list is open with no toggle",
+      wide.open && wide.toggle === "none" && wide.shown === 51, JSON.stringify(wide));
 
     // THE QUESTION ROWS ARE THE FRONT DOOR'S INTERNAL LINKS, and the whole
     // reason this block exists: the 2026-09-15 search audit found the root
@@ -170,24 +218,6 @@ try {
     check("every question row has a heading and at least one place",
       rows.length > 3 && rows.every((r) => (r.q || "").length > 8 && r.n > 0),
       JSON.stringify(rows));
-
-    // The "not yet" disclosure is generated by subtracting the covered states
-    // from the 50+DC list, so a place that is BOTH live and listed as missing
-    // is a contradiction the page would state in two directions at once.
-    const notYet = await page.$$eval(".not-yet-list div", (els) =>
-      els.map((e) => e.textContent.trim()));
-    const liveNames = FLEET.map((m) => m.landing_name);
-    check("the not-yet list never names a place that already answers",
-      notYet.every((s) => !liveNames.includes(s)),
-      notYet.filter((s) => liveNames.includes(s)).join(", ") || "no overlap");
-    // THE FLOOR MOVES WITH THE FLEET. It was a literal 40 until South
-    // Carolina's go-live (2026-10-13) made the list exactly 40 long: every
-    // place that publishes takes one name off it, so the lower bound is the
-    // 50 states and DC less one per fleet entry, which a city entry only makes
-    // looser.
-    check("the not-yet list is non-empty and plausible",
-      notYet.length >= 51 - FLEET.length && notYet.length < 51,
-      `${notYet.length} (floor ${51 - FLEET.length})`);
 
     // Barlow must actually be applied, not silently falling back to system-ui.
     const font = await page.evaluate(() =>
@@ -438,21 +468,49 @@ try {
     check("a pasted Google Maps link is never sent to the geocoder", !photonAsked, String(photonAsked));
     await ctx.close();
   }
-  // ...and a short link, with no lookup configured, says how to get the full one
+  // ...a short link goes to districtry's own lookup, and the full link it
+  // answers opens the app that covers that place. The lookup is stubbed, so
+  // this asserts what the page ASKS for (only the short link, as `u=`) and
+  // does with the answer, not that Google still redirects the same way.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    let photonAsked = false;
+    const lookupAsked = [];
+    await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
+    await page.route("**/link-lookup.districtry.deno.net/**", (r) => {
+      lookupAsked.push(new URL(r.request().url()).searchParams.get("u"));
+      return r.fulfill({ status: 200, contentType: "application/json",
+        body: JSON.stringify({ url: "https://www.google.com/maps/place/Lambeau+Field/@44.50,-88.06,12z/data=!3m1!4b1!8m2!3d44.5013!4d-88.0622" }) });
+    });
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
+    await page.click("#search-button");
+    await page.waitForTimeout(700);
+    check("a short map link is sent to the lookup, and only the link",
+      lookupAsked.length === 1 && lookupAsked[0] === "https://maps.app.goo.gl/AbCdEf123", JSON.stringify(lookupAsked));
+    check("a short map link to Green Bay opens /wi/", new URL(page.url()).pathname === "/wi/", page.url());
+    check("a short map link is never sent to the geocoder", !photonAsked, String(photonAsked));
+    await ctx.close();
+  }
+  // ...and when the lookup cannot follow it, the page says how to get the full one
   {
     const ctx = await browser.newContext({ serviceWorkers: "block" });
     const page = await ctx.newPage();
     let photonAsked = false;
     await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
+    await page.route("**/link-lookup.districtry.deno.net/**", (r) =>
+      r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "could not follow the link" }) }));
     await stubInstances(page);
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
     await page.click("#search-button");
     await page.waitForTimeout(500);
     const msg = await textOrNull(page, "#search-status");
-    check("a short map link stays on the landing page and says what to paste instead",
+    check("a short map link the lookup cannot follow stays on the landing page and says what to paste instead",
       new URL(page.url()).pathname === "/" && /copy the full address/i.test(msg || ""), JSON.stringify(msg));
-    check("a short map link is never sent to the geocoder", !photonAsked, String(photonAsked));
+    check("a short map link is never sent to the geocoder, even when the lookup fails", !photonAsked, String(photonAsked));
     await ctx.close();
   }
 
@@ -505,13 +563,14 @@ try {
     await ctx.close();
   }
 
-  // --- 1f. the coverage map loads, draws, and lists every place -----------
+  // --- 1f. the coverage map loads, draws, and names every place ----------
   //
   // The map is a separate generated page embedded in an iframe, so the landing
-  // page's own checks say nothing about it. Its legend is the accessible,
-  // non-geometric statement of the same fact the polygons make — if the
-  // outlines fail to load, the legend is what a reader is left with, so it is
-  // what this asserts.
+  // page's own checks say nothing about it. It carries no legend since
+  // 2026-10-13 (the landing page's state list is the accessible statement of
+  // the same fact), so what is asserted here is what the map itself says: a
+  // tooltip per place assembled at runtime, a short label per place, and a
+  // link per place.
   {
     const ctx = await browser.newContext({ serviceWorkers: "block" });
     const page = await ctx.newPage();
@@ -532,33 +591,52 @@ try {
     check("coverage map rendered a Leaflet map",
       await page.evaluate(() => !!document.querySelector(".leaflet-container")),
       vendored ? "vendored Leaflet" : "CDN Leaflet");
-    const legend = await page.$$eval("#legend-rows a", (els) =>
-      els.map((e) => ({ name: e.querySelector(".nm")?.textContent,
-                        scope: e.querySelector(".mt")?.textContent,
-                        href: e.getAttribute("href") })));
-    check("coverage map legend lists every fleet place",
-      legend.length === FLEET.length,
-      JSON.stringify(legend.map((r) => r.name)) + " vs metros.json " + FLEET.length);
-    check("coverage map legend links the fleet urls",
-      legend.every((r) => FLEET.some((m) => m.url === r.href)),
-      JSON.stringify(legend.map((r) => r.href)));
-    // The scope is the one legend field ASSEMBLED AT RUNTIME: a two-tier area
+    const tips = await page.evaluate(() => {
+      const out = [], seen = new Set();
+      window.map.eachLayer((l) => {
+        const t = l.getTooltip && l.getTooltip();
+        if (!t || seen.has(t)) return;
+        seen.add(t);
+        const c = t.getContent();
+        out.push({ name: c.querySelector(".nm")?.textContent, scope: c.querySelector(".mt")?.textContent });
+      });
+      return out;
+    });
+    check("coverage map has a tooltip for every fleet place",
+      tips.length === FLEET.length && FLEET.every((m) => tips.some((t) => t.name === m.landing_name)),
+      JSON.stringify(tips.map((t) => t.name)) + " vs metros.json " + FLEET.length);
+    // The scope is the one tooltip field ASSEMBLED AT RUNTIME: a two-tier area
     // gets a "statewide, " prefix the generated file does not contain, so a
     // wrong scope here appears in no diff. New York's scope became
     // "statewide, 5 boroughs in depth" on 2026-09-23 and read
     // "statewide, statewide, 5 boroughs in depth" until the generator learned
     // not to prefix a scope that already says it. Both halves are asserted:
-    // every row still ends with its own metros.json scope (the prefix may not
-    // eat or reword it), and no row says statewide twice.
-    check("coverage map legend states each place's own scope",
-      legend.every((r) => {
-        const m = FLEET.find((f) => f.url === r.href);
-        return m && typeof r.scope === "string" && r.scope.endsWith(m.scope);
+    // every tooltip still ends with its own metros.json scope (the prefix may
+    // not eat or reword it), and none says statewide twice.
+    check("coverage map tooltips state each place's own scope",
+      tips.every((t) => {
+        const m = FLEET.find((f) => f.landing_name === t.name);
+        return m && typeof t.scope === "string" && t.scope.endsWith(m.scope);
       }),
-      JSON.stringify(legend.map((r) => r.scope)));
-    check("no legend scope repeats statewide",
-      legend.every((r) => (String(r.scope).toLowerCase().match(/statewide/g) || []).length <= 1),
-      JSON.stringify(legend.map((r) => r.scope)));
+      JSON.stringify(tips.map((t) => t.scope)));
+    check("no tooltip scope repeats statewide",
+      tips.every((t) => (String(t.scope).toLowerCase().match(/statewide/g) || []).length <= 1),
+      JSON.stringify(tips.map((t) => t.scope)));
+    const linkTargets = await page.evaluate(() =>
+      window.AREAS.map((a) => a.url).concat(window.CITIES.map((c) => c.url)));
+    check("coverage map opens every fleet url",
+      FLEET.every((m) => linkTargets.includes(m.url)) && linkTargets.length === FLEET.length,
+      JSON.stringify(linkTargets));
+    // One label per place, and at the fleet's own zoom most of them must be
+    // showing: a label hidden everywhere is the failure the fits-on-screen
+    // test could introduce without any error.
+    const labels = await page.$$eval(".tag-label", (els) =>
+      els.map((e) => ({ text: e.textContent, shown: !e.classList.contains("hidden") })));
+    check("coverage map labels every place once", labels.length === FLEET.length,
+      JSON.stringify(labels.map((l) => l.text)));
+    check("coverage map shows the labels that fit",
+      labels.filter((l) => l.shown).length * 2 >= labels.length,
+      JSON.stringify(labels));
     // The outlines each come from their own instance's data/app — a 404 on one
     // is exactly the "drew Illinois for everybody" failure the two-tier map
     // exists to avoid, and it would otherwise show only as a missing polygon.
@@ -582,6 +660,45 @@ try {
     check("landing page embeds the coverage map", src === "coverage-map.html", String(src));
     const r = await page.request.get(BASE + "/coverage-map.html");
     check("the embedded coverage map resolves", r.status() === 200, `HTTP ${r.status()}`);
+    await ctx.close();
+  }
+
+  // --- 1h. on a phone the state list starts folded, and one tap opens it ---
+  //
+  // Adam, 2026-10-13: fifty-one rows under a small map are a long scroll to
+  // the questions below. The list SHIPS open and a script folds it, so a
+  // broken script leaves a phone with the whole list rather than a toggle
+  // that does nothing, and that is what this would catch first: a list still
+  // open at 390px.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block", viewport: { width: 390, height: 844 } });
+    const page = await ctx.newPage();
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    // checkVisibility, not offsetParent: Chromium hides a closed <details>
+    // body with content-visibility rather than display, so offsetParent
+    // stays set on rows nobody can see and a folded list counts as 51.
+    const shown = () => page.evaluate(() =>
+      [...document.querySelectorAll(".states li")].filter((li) => li.checkVisibility()).length);
+    const folded = await page.evaluate(() => {
+      const box = document.querySelector(".states-box");
+      const t = document.querySelector(".states-toggle");
+      const r = t ? t.getBoundingClientRect() : null;
+      return { open: !!(box && box.open), toggle: t ? getComputedStyle(t).display : null,
+               label: t ? t.textContent.trim() : null, h: r ? Math.round(r.height) : 0 };
+    });
+    check("on a phone the state list starts folded",
+      !folded.open && folded.toggle !== "none" && (await shown()) === 0, JSON.stringify(folded));
+    check("the fold's toggle says what it holds and is a full-size target",
+      folded.label === "All 50 states and DC" && folded.h >= 44, JSON.stringify(folded));
+    await page.click(".states-toggle");
+    check("one tap on the toggle opens all 51 rows", (await shown()) === 51, `${await shown()} row(s) shown`);
+    // Turning a phone or widening a window past the fold's width must not
+    // leave the list shut with its toggle hidden — that would be a list
+    // nobody can open.
+    await page.click(".states-toggle");
+    await page.setViewportSize({ width: 1024, height: 844 });
+    await page.waitForTimeout(100);
+    check("widening a folded page opens the list again", (await shown()) === 51, `${await shown()} row(s) shown`);
     await ctx.close();
   }
 
