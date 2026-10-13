@@ -199,6 +199,28 @@ COMMON_RECIPIENTS = [
      "Every visit to a map.", "cdn"),
 ]
 
+# THE SHORT-LINK LOOKUP (from 2026-10-13). A short Google Maps or Apple Maps
+# link holds no position, and a browser cannot read where another site
+# redirects, so engine/shared/map-link.txt sends a pasted short link to
+# districtry's own lookup (services/link-lookup/main.ts, run on Deno Deploy),
+# which follows it and answers with the full link. It is a recipient in its own
+# right: hosted by Deno, it sees the reader's IP address and the short link.
+# Its presence is MEASURED per surface like CARTO's, so the row names exactly
+# the surfaces that carry the host, and a host change in the engine block that
+# is not made here fails the build (the row would name no surface).
+LINK_LOOKUP_HOST = "link-lookup.districtry.deno.net"
+LINK_LOOKUP_ROW = (
+    "Deno Deploy", "short map-link lookup", "https://deno.com/privacy",
+    "Only when you paste a <strong>short</strong> Google Maps or Apple Maps link "
+    "(maps.app.goo.gl, maps.apple) into a search box: that link, sent to districtry&#39;s "
+    "own lookup, which runs on Deno&#39;s servers, follows it to the full link and "
+    "sends that back. Deno receives your IP address and the short link. The lookup&#39;s "
+    "own code stores neither; Deno, not this project, keeps whatever request logs its "
+    "platform keeps. A full map link or a coordinate pair is read in "
+    "your browser and goes nowhere.",
+    "Only when you paste a short map link.", "link_lookup")
+
+
 # Geocoders, keyed by the host the measurement finds. What a geocoder receives is
 # the most sensitive flow on the page — it is the text you type — so each is
 # named individually rather than pooled into "address search".
@@ -334,7 +356,8 @@ def measure_address_list(src, name):
 # the search box: `map-link/google`, `map-link/apple` or `map-link/coordinates`
 # when a reader selects the place a pasted link or coordinate pair names. It
 # records which kind was pasted and never the position, which is read in the
-# browser and sent nowhere.
+# browser and sent nowhere. A SHORT link (maps.app.goo.gl, maps.apple) holds no
+# position, so it alone goes to the link lookup named by LINK_LOOKUP_HOST.
 # `app-install/`, `app-launch/` and `install-invite/` joined on 2026-10-13, when
 # districtry became installable as ONE app (engine `install-app`, the root
 # manifest built by scripts/build_manifests.py). `app-install/<tag>` records
@@ -482,6 +505,7 @@ def measure(rel, name, url, tag):
     # as requesting no tiles at all.
     app["tiles"] = "basemaps.cartocdn.com" in src_all
     app["cdn"] = "cdnjs.cloudflare.com" in src_all
+    app["link_lookup"] = LINK_LOOKUP_HOST in src_all
     # A layer drawn from a vector-tile archive (engine tile-overlay block)
     # asks this site's host for its map a piece at a time — the pieces under
     # the view and, for the card, the one under the selected point — where
@@ -975,7 +999,7 @@ def render_app_rows(apps):
 
 def render_recipient_rows(apps):
     rows = []
-    for label, sub, policy, what, when, key in COMMON_RECIPIENTS:
+    for label, sub, policy, what, when, key in COMMON_RECIPIENTS + [LINK_LOOKUP_ROW]:
         users = apps if key is None else [a for a in apps if a[key]]
         if not users:
             fail("no surface requests %s any more — the recipients table names it, "

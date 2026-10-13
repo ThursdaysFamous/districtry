@@ -438,21 +438,49 @@ try {
     check("a pasted Google Maps link is never sent to the geocoder", !photonAsked, String(photonAsked));
     await ctx.close();
   }
-  // ...and a short link, with no lookup configured, says how to get the full one
+  // ...a short link goes to districtry's own lookup, and the full link it
+  // answers opens the app that covers that place. The lookup is stubbed, so
+  // this asserts what the page ASKS for (only the short link, as `u=`) and
+  // does with the answer, not that Google still redirects the same way.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    let photonAsked = false;
+    const lookupAsked = [];
+    await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
+    await page.route("**/link-lookup.districtry.deno.net/**", (r) => {
+      lookupAsked.push(new URL(r.request().url()).searchParams.get("u"));
+      return r.fulfill({ status: 200, contentType: "application/json",
+        body: JSON.stringify({ url: "https://www.google.com/maps/place/Lambeau+Field/@44.50,-88.06,12z/data=!3m1!4b1!8m2!3d44.5013!4d-88.0622" }) });
+    });
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
+    await page.click("#search-button");
+    await page.waitForTimeout(700);
+    check("a short map link is sent to the lookup, and only the link",
+      lookupAsked.length === 1 && lookupAsked[0] === "https://maps.app.goo.gl/AbCdEf123", JSON.stringify(lookupAsked));
+    check("a short map link to Green Bay opens /wi/", new URL(page.url()).pathname === "/wi/", page.url());
+    check("a short map link is never sent to the geocoder", !photonAsked, String(photonAsked));
+    await ctx.close();
+  }
+  // ...and when the lookup cannot follow it, the page says how to get the full one
   {
     const ctx = await browser.newContext({ serviceWorkers: "block" });
     const page = await ctx.newPage();
     let photonAsked = false;
     await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
+    await page.route("**/link-lookup.districtry.deno.net/**", (r) =>
+      r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "could not follow the link" }) }));
     await stubInstances(page);
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
     await page.click("#search-button");
     await page.waitForTimeout(500);
     const msg = await textOrNull(page, "#search-status");
-    check("a short map link stays on the landing page and says what to paste instead",
+    check("a short map link the lookup cannot follow stays on the landing page and says what to paste instead",
       new URL(page.url()).pathname === "/" && /copy the full address/i.test(msg || ""), JSON.stringify(msg));
-    check("a short map link is never sent to the geocoder", !photonAsked, String(photonAsked));
+    check("a short map link is never sent to the geocoder, even when the lookup fails", !photonAsked, String(photonAsked));
     await ctx.close();
   }
 
