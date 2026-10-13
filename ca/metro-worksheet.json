@@ -479,7 +479,8 @@
     "note": "Open Pacific west of Ocean Beach, beyond CA state waters - outside every layer, including the water-inclusive TIGERweb legislative chambers"
   },
   "coverage_key": {
-    "outside": "Outside San Francisco"
+    "outside": "Outside San Francisco",
+    "edge": "San Francisco"
   },
   "data_files": {
     "geometry": [
@@ -563,11 +564,7 @@
     "cache_name": "district-explorer-shell-sf-v10",
     "shell_urls": [
       "./",
-      "./manifest.webmanifest",
-      "./icons/icon-192.png",
-      "./icons/icon-512.png",
       "./icons/apple-touch-icon.png",
-      "./icons/icon-maskable-512.png",
       "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
       "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
       "./vendor/leaflet-maplibre-gl.js"

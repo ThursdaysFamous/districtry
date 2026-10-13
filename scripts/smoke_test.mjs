@@ -44,7 +44,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "41.88250,-87.62850"; // downtown Loop — inside Cook County
 const OFFLINE = ["school-board", "il-supreme-court", "ccbr"];
 const EXPECT_DISTRICT = { "school-board": "District 6b", "il-supreme-court": "1", "ccbr": "3" };
-const NEGATIVE_POINT = "41.70000,-87.10000"; // Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Five of those are live instances (Indiana went live on 2026-10-07, and its outline contains this point) and Missouri is on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays and the two checks that put it at the map's CENTRE refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; check 1i is where Illinois asserts fleet routing, on its own points.
+const NEGATIVE_POINT = "41.70000,-87.10000"; // Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. Five of those are live instances (Indiana went live on 2026-10-07, and its outline contains this point) and Missouri is on the fleet's new-state list. Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays. Two checks put it at the map's centre, and until 2026-10-13 both had to refuse ../fleet-outlines.json, because the map then switched apps whenever its centre crossed into a sibling's state; panning no longer does that, so neither refuses anything, and a selection the app makes itself never leaves. Check 1i is where Illinois asserts fleet routing, on its own points, and that panning across a state line stays here.
 const APP_NAME = "districtry Illinois";
 const EXPECT_LAYERS = 41; // 17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) = 40 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07
 // ==== GENERATED:END smoke-config ====
@@ -257,24 +257,12 @@ try {
   //     so this needs no network.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    // THE FLEET FILE IS REFUSED FOR THE WHOLE OF THIS CHECK, because its
-    // coverage-band half selects NEGATIVE_POINT and setSelectedPoint PANS
-    // there, which puts the map's CENTRE outside Illinois and arms the pan
-    // hand-off (ENGINE metro-portal's moveend -> placeOwner -> offerMetroPortal,
-    // which sets window.location.href). Illinois's negative point is in
-    // Indiana's waters of Lake Michigan and every other point it could be is
-    // in a sibling's state too -- see the measured note on NEGATIVE_POINT at
-    // the top of this file -- so the day in/ enters fleet-outlines.json this
-    // check would navigate to /in/ mid-assertion. MEASURED 2026-09-29 against
-    // a synthetic fleet file carrying Indiana's TIGER outline and an Indiana
-    // METRO_EXPLORERS row: setSelectedPoint at the negative point left for
-    // https://districtry.com/in/#zoom=15 and the check never ran.
-    // Refused, placeOwner's own error leg answers "nobody", which is the
-    // state this check is about.
-    // Illinois asserts fleet routing in check 1i, which is unaffected.
-    const page = await booted(context, BASE, async (p) => {
-      await p.route("**/fleet-outlines.json", (r) => r.abort());
-    });
+    // The coverage-band half selects NEGATIVE_POINT, which is in Indiana, and
+    // setSelectedPoint PANS there. Until 2026-10-13 that put the map's centre
+    // in a sibling's state and the pan hand-off navigated away mid-assertion,
+    // so this check refused ../fleet-outlines.json; panning no longer switches
+    // apps, so it refuses nothing. Check 1i asserts the pan half directly.
+    const page = await booted(context, BASE);
     const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/coverage-gaps.json"), "utf8"));
     const expected = Object.keys(shipped).length;
 
@@ -366,8 +354,11 @@ try {
     // Illinois draws it at whenIdle behind two CDN fetches and the lede read
     // "Here is everything that is missing and why", the mask-not-loaded branch.
     // The signals are exact: any path in the scope-mask pane means the coverage
-    // rings were retained, and the `dst-glow` line is created ONLY in the branch
-    // that also retains the region polygons.
+    // rings were retained, and in an app that declares a region, as this one
+    // does, the `dst-glow` line is created ONLY in the branch that also retains
+    // the region polygons. (An app that declares none draws it along its
+    // coverage instead, since 2026-10-13; a region whose file fails still
+    // draws no line, so the signal here is unchanged.)
     async function washPainted(needRegion) {
       return page.waitForFunction((wantGlow) => {
         const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
@@ -925,6 +916,99 @@ try {
       }
       await context.close();
     }
+
+    // PANNING ACROSS A STATE LINE STAYS HERE (2026-10-13, the operator's
+    // ruling, reversing his own of 2026-09-30). Until that day the map opened
+    // a sibling's app as soon as its CENTRE crossed into that sibling's state.
+    // The map is moved to Gary with nothing selected, after the wash has
+    // painted (the retired hand-off read the wash's own outline first), and
+    // the page must still be this app a few seconds later. The sibling apps
+    // are stubbed, so a hand-off would show as a navigation rather than a
+    // failed load.
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, BASE, async (p) => {
+        await p.route("https://districtry.com/**", (route) =>
+          route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
+      });
+      const painted = await page.waitForFunction(() => {
+        const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
+        return !!(pane && pane.querySelector("path"));
+      }, null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
+      await page.evaluate((n) => window[n].map.setView([41.60, -87.34], 11, { animate: false }), EXPORTS_NAME);
+      const left = await page.waitForURL((u) => !u.href.startsWith(BASE), { timeout: 4000 })
+        .then(() => page.url(), () => null);
+      const centre = await page.evaluate((n) => window[n] && window[n].map.getCenter(), EXPORTS_NAME).catch(() => null);
+      check("panning the map into Indiana stays in Illinois (no switch on pan)",
+        painted && !left && !!centre && Math.abs(centre.lng - -87.34) < 0.01,
+        !painted ? "the wash never painted, so the pan was not tested" : left ? `navigated to ${left}` : page.url());
+      await context.close();
+    }
+
+    // THE LAYERS ON TRAVEL WITH THE READER, NAMED BY WHAT THEY MEAN. A
+    // hand-off names concepts from layer-concepts.json (carry=), because
+    // Illinois's `congress` is Iowa's `us-house` and Illinois's `ward` is a
+    // city council where Wisconsin's is an election ward. Three halves: a
+    // click that crosses a state line carries them, the state menu's link
+    // carries them, and an app booted with carry= turns on its own layers for
+    // each concept it has and drops the rest.
+    {
+      // Light layers on purpose, and the click waits for the network to go
+      // quiet. The page and every boundary file come from one HTTP/1.1 server
+      // here, which a browser gives six connections, and the hand-off's own
+      // outline request queues behind whatever is still downloading. With the
+      // ward layer on as well this check failed once in this sandbox: the
+      // outline file was asked for twice and the click was kept here, which
+      // is the app's answer when that file cannot be read. The ward-to-city
+      // council mapping is held by the boot half below instead.
+      const want = ["county", "state-house", "state-senate", "us-house"].join();
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, BASE + "#layers=congress,il-senate,il-house,county", async (p) => {
+        await p.route("https://districtry.com/**", (route) =>
+          route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
+      });
+      await page.waitForFunction((n) => {
+        const on = window[n].state.layersOn;
+        return on.congress && on["il-senate"] && on["il-house"] && on.county;
+      }, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      await page.waitForLoadState("networkidle", { timeout: QUERY_TIMEOUT }).catch(() => {});
+      const menuHref = await page.evaluate(() => {
+        const a = [...document.querySelectorAll(".dst-metro-menu a")]
+          .find((x) => /\/ia\/(#|$)/.test(x.getAttribute("href") || ""));
+        if (!a) return null;
+        a.dispatchEvent(new FocusEvent("focus"));
+        return a.getAttribute("href");
+      });
+      const menuCarry = menuHref && /[#&]carry=([^&]*)/.exec(menuHref);
+      check("the state menu's Iowa link carries the layers on, by concept",
+        !!menuCarry && menuCarry[1].split(",").sort().join() === want && !/[#&]point=/.test(menuHref),
+        menuHref || "no Iowa link in the state menu");
+      await page.evaluate((n) => window[n].map.fire("click", { latlng: window.L.latLng(41.52, -90.58) }), EXPORTS_NAME);
+      const went = await page.waitForURL((u) => u.href.startsWith("https://districtry.com/ia/#point="), { timeout: QUERY_TIMEOUT })
+        .then(() => page.url(), () => null);
+      const carry = went && /[#&]carry=([^&]*)/.exec(went);
+      check("a click on Davenport carries the layers on to Iowa, by concept",
+        !!carry && carry[1].split(",").sort().join() === want, went || page.url());
+      await context.close();
+    }
+    {
+      // `regional-education-agency` is Iowa's and Michigan's and not Illinois's,
+      // so it must be dropped rather than break the boot.
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, BASE + "#point=41.88250,-87.62850&carry=us-house,state-senate,county,city-council,regional-education-agency");
+      const on = await page.waitForFunction((n) => {
+        const s = window[n].state.layersOn;
+        return s.congress && s["il-senate"] && s.county && s.ward;
+      }, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+        .then(() => page.evaluate((n) => Object.keys(window[n].state.layersOn).filter((id) => window[n].state.layersOn[id]).sort(), EXPORTS_NAME), () => null);
+      check("an app opened with carry= turns on its own layer for each concept it has",
+        !!on && on.join() === ["congress", "county", "il-senate", "ward"].join(), JSON.stringify(on));
+      const hash = await page.waitForFunction(() => /[#&]l=/.test(location.hash), null, { timeout: QUERY_TIMEOUT })
+        .then(() => page.evaluate(() => location.hash), () => page.evaluate(() => location.hash));
+      check("the carried layers are rewritten as this app's own short link",
+        /[#&]l=/.test(hash) && !/carry=/.test(hash), hash);
+      await context.close();
+    }
   }
 
   // 1i2. THE OTHER HALF OF THE ZIP COVERAGE CHECK IN 2b. A hide test alone
@@ -1133,6 +1217,120 @@ try {
     const events = await page.evaluate(() => (window.__gcEvents || []).filter((v) => v && v.event && /^share-qr$/.test(v.path)).map((v) => v.path));
     check("drawing the QR is counted once", events.length === 1, JSON.stringify(events));
     await context.close();
+  }
+
+  // 1l. THE INSTALL INVITATION AND THE APP COUNTS (engine install-app). On a
+  //     phone-width screen the app holds Chrome's install event, so Chrome's
+  //     own mini-infobar never appears, and offers an Install button once the
+  //     reader has an answer on screen; pressing it hands over to the
+  //     browser's own dialog. It is offered ONCE: after a reload, with the
+  //     event fired again, nothing shows. On a computer the event is left
+  //     alone. An iPhone's Safari has no such event and gets a short tip with
+  //     no button. A launch of the installed app is counted once per window
+  //     and an install once, both by app and never by place. Chrome's real
+  //     event cannot be produced in a test, so a synthetic one carries the two
+  //     members the app uses, prompt() and userChoice.
+  {
+    const PHONE = { width: 390, height: 844 };
+    const TAG = APP_DIR.replace(/\/$/, "");
+    const VIEW = `${BASE}#p=41.8825,-87.6285&l=cg`;
+    const stubCounter = async (p) => {
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await p.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+      });
+    };
+    const fireInstallEvent = (p) => p.evaluate(() => {
+      const e = new Event("beforeinstallprompt", { cancelable: true });
+      window.__prompted = window.__prompted || 0;
+      e.prompt = () => { window.__prompted++; return Promise.resolve(); };
+      e.userChoice = Promise.resolve({ outcome: "accepted", platform: "web" });
+      window.dispatchEvent(e);
+      return e.defaultPrevented;
+    });
+    const installEvents = (p) => p.evaluate(() => (window.__gcEvents || [])
+      .filter((v) => v && v.event && /^(install-invite|app-install|app-launch)\//.test(v.path)).map((v) => v.path));
+
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      const page = await booted(context, VIEW, stubCounter);
+      const held = await fireInstallEvent(page);
+      const shown = await page.waitForSelector(".install-invite .install-invite-go", { timeout: 10000 }).then(() => true, () => false);
+      check("on a phone the app holds Chrome's install event and offers its own Install button after an answer",
+        held === true && shown, `held=${held} shown=${shown}`);
+      if (shown) await page.click(".install-invite-go");
+      await page.waitForTimeout(200);
+      const after = await page.evaluate(() => ({
+        prompted: window.__prompted,
+        bar: !!document.querySelector(".install-invite"),
+        seen: localStorage.getItem("districtry-install-invite"),
+        last: localStorage.getItem("districtry-last-app"),
+      }));
+      check("Install hands over to the browser's own dialog, and the invitation goes",
+        after.prompted === 1 && !after.bar && after.seen === "shown", JSON.stringify(after));
+      check("the app records which state was open last, for the installed app's launcher",
+        after.last === TAG, JSON.stringify(after.last));
+      await page.evaluate(() => window.dispatchEvent(new Event("appinstalled")));
+      await page.waitForTimeout(100);
+      const events = await installEvents(page);
+      check("the invitation, its answer and the install are each counted once, by app",
+        events.join() === `install-invite/shown,install-invite/accepted,app-install/${TAG}`, JSON.stringify(events));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      const heldAgain = await fireInstallEvent(page);
+      await page.waitForTimeout(4500);
+      const again = await page.evaluate(() => !!document.querySelector(".install-invite"));
+      check("the invitation is offered once: a later visit holds the event and shows nothing",
+        heldAgain === true && !again, `held=${heldAgain} shown=${again}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1280, height: 900 } });
+      const page = await booted(context, VIEW, stubCounter);
+      const held = await fireInstallEvent(page);
+      check("on a computer the browser's own install control is left alone", held === false, `held=${held}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await context.addInitScript(() => {
+        const real = window.matchMedia.bind(window);
+        window.matchMedia = (q) => /display-mode:\s*standalone/.test(q)
+          ? { matches: true, media: q, onchange: null, addListener() {}, removeListener() {},
+              addEventListener() {}, removeEventListener() {}, dispatchEvent() { return false; } }
+          : real(q);
+      });
+      const page = await booted(context, BASE, stubCounter);
+      await page.waitForTimeout(300);
+      const first = await installEvents(page);
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      await page.waitForTimeout(300);
+      const second = await installEvents(page);
+      check("a launch of the installed app is counted once per window, by app",
+        first.join() === `app-launch/${TAG}` && second.length === 0,
+        `first=${JSON.stringify(first)} after reload=${JSON.stringify(second)}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE,
+        userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1" });
+      const page = await booted(context, VIEW, stubCounter);
+      const tip = await page.waitForSelector(".install-invite", { timeout: 10000 }).then(() => true, () => false);
+      const bar = await page.evaluate(() => {
+        const el = document.querySelector(".install-invite");
+        return el ? { text: el.textContent, button: !!el.querySelector(".install-invite-go") } : null;
+      });
+      check("an iPhone's Safari gets the Add to Home Screen tip, with no Install button",
+        tip && !!bar && /Add to Home Screen/.test(bar.text) && !bar.button, JSON.stringify(bar));
+      if (tip) await page.click(".install-invite-close");
+      const gone = await page.evaluate(() => !document.querySelector(".install-invite"));
+      const events = await installEvents(page);
+      check("closing the tip removes it, and the tip and its closing are each counted once",
+        gone && events.join() === "install-invite/tip-shown,install-invite/tip-closed", JSON.stringify(events));
+      await context.close();
+    }
   }
 
   // 1f. COMPARISON STATS. With Congress pinned at the Loop and the State
@@ -1383,19 +1581,6 @@ try {
       // verdict is identical either way — aborting it is what keeps this
       // check's verdict independent of whether a runner can reach TIGERweb.
       await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
-      // And the fleet file, for the reason given on the gaps-panel check
-      // above: this permalink pans the map's centre into Indiana's waters, so
-      // once a sibling covers them the pan hand-off navigates away
-      // mid-assertion. THIS ONE IS A RACE RATHER THAN A CERTAINTY AND THAT IS
-      // WHY IT IS REFUSED TOO. Measured 2026-09-29 with Indiana live: the
-      // permalink restore alone did NOT leave, because Illinois paints its
-      // wash at whenIdle behind two CDN fetches and the restore pan happens
-      // first, so servedHereNow still answered null at that moveend. ONE
-      // FURTHER MOVE IS ENOUGH -- a 1px panBy after the wash painted left for
-      // https://districtry.com/in/#zoom=15 -- and which of the two lands first
-      // is a property of the runner's network, not of this check. A check that
-      // passes because a fetch was slow is not a check.
-      await p.route("**/fleet-outlines.json", (r) => r.abort());
     });
     for (const id of NEGATIVE_IDS) {
       if (NEGATIVE_HIDDEN.includes(id)) {
