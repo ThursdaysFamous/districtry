@@ -135,7 +135,7 @@ SUBPAGES = discover_subpages()
 # per-filename.
 SHARED_BLOCKS = {"styles-subpage", "tokens-brand", "footer-byline",
                  "footer-independence", "goatcounter", "theme-boot",
-                 "mono-faces"}
+                 "mono-faces", "map-link"}
 
 ENGINE_RE = re.compile(
     r"^[ \t]*(?:/\*|<!--|#|//)?[ \t]*==== ENGINE:(BEGIN|END) "
