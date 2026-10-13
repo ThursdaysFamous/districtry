@@ -4123,6 +4123,10 @@ function initArkansasExplorer() {
       bbox: { minLng: -84.33, minLat: 33.74, maxLng: -75.39, maxLat: 36.6 } },
     { id: "oklahoma", label: "Oklahoma", url: "https://districtry.com/ok/", emoji: "🌾", explorerName: "districtry Oklahoma",
       bbox: { minLng: -103.01, minLat: 33.61, maxLng: -94.43, maxLat: 37.01 } },
+    { id: "southcarolina", label: "South Carolina", url: "https://districtry.com/sc/", emoji: "🌴", explorerName: "districtry South Carolina",
+      bbox: { minLng: -83.36, minLat: 31.99, maxLng: -78.49, maxLat: 35.16 } },
+    { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
+      bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
     { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
       bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } }
   ];
@@ -12395,15 +12399,15 @@ function initArkansasExplorer() {
    *     was the stale one;
    *   - the justices from the Association of Arkansas Counties' page for the
    *     county, which lists them WITHOUT saying who sits for which district.
-   *     No government publishes their names statewide. On Adam's ruling of
-   *     2026-10-13 ("District, else list") a justice is matched to a district
-   *     only where the county's own site numbers them, and elsewhere the
-   *     association's list is shown here, credited and dated, with no district
-   *     claimed. The Quorum Court District layer names the justice for a
-   *     district only in the first case.
+   *     No government publishes their names statewide. The association's
+   *     list is shown here, credited and dated, with no district claimed;
+   *     the Quorum Court District layer names a district's justice from the
+   *     county's own numbered list or, elsewhere, from the association's
+   *     2024 election results while that winner is still on this list
+   *     (Adam's rulings of 2026-10-13).
    * A roster miss degrades to a sentence naming nobody, never to an error
-   * card. Recorded as gap `ar-quorum-court` while most counties' justices
-   * cannot be matched to a district.
+   * card. Recorded as gap `ar-quorum-court` for the districts no source
+   * names.
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
@@ -12517,9 +12521,12 @@ function initArkansasExplorer() {
           "peace, each elected from a district, with the county judge presiding. " +
           (qc.districts
             ? "The Quorum Court District layer names the justice for yours."
-            : "Neither the county's own site nor the Association of Arkansas " +
-              "Counties says which justice sits for which district, so this app " +
-              "lists them below without matching a name to a district.")
+            : (qc.results && qc.results.districts &&
+               Object.keys(qc.results.districts).length)
+              ? "The Quorum Court District layer names the justice for yours where " +
+                "the association's 2024 election results and its current list agree."
+              : "Nothing this app reads says which justice sits for which district, " +
+                "so this app lists them below without matching a name to a district.")
       });
       var note = arElectionNote();
       if (note) rows.push({ label: "The 2026 election", value: note });
@@ -12672,14 +12679,18 @@ function initArkansasExplorer() {
    * districts held to cover that county). Each district elects one justice
    * of the peace to the county's quorum court.
    *
-   * WHO HOLDS A DISTRICT IS NAMED ONLY WHERE THE COUNTY SAYS. No government
-   * publishes the justices statewide, and the Association of Arkansas
-   * Counties lists each county's justices without numbering them. On Adam's
-   * ruling of 2026-10-13 ("District, else list") this card names the justice
-   * only where the county's own site numbers them (a `districts` table in
-   * ar-county-officials.json, held to the association's names); everywhere
-   * else it says who it cannot name and why, and the County card carries the
-   * association's list, credited and dated. ---------- */
+   * WHO HOLDS A DISTRICT COMES FROM TWO PLACES. No government publishes the
+   * justices statewide, and the Association of Arkansas Counties' county
+   * pages list each court without numbering it. On Adam's rulings of
+   * 2026-10-13 this card names the justice from the county's own site where
+   * it numbers them ("District, else list": a `districts` table in
+   * ar-county-officials.json, held to the association's names), and
+   * elsewhere from the association's 2024 general election results ("Use
+   * 2024 list": `results.districts`), but only while the association's
+   * current list still includes that winner. A district whose winner has
+   * left, or cannot be matched, or had no winner, says so and names no one;
+   * the County card carries the association's whole list, credited and
+   * dated. ---------- */
   var loadArQuorumCourtDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ar-quorum-court-districts.json", {}, 2);
   });
@@ -12725,15 +12736,23 @@ function initArkansasExplorer() {
       var county = result.county != null ? String(result.county) + " County" : "This county";
       var entry = result.entry;
       var qc = (entry && entry.quorumCourt) || null;
-      var named = (qc && qc.districts && result.district != null)
-        ? qc.districts[String(result.district)] : null;
+      var key = result.district != null ? String(result.district) : null;
+      // The county's own numbered list wins wherever it exists; the 2024
+      // results answer only in a county that publishes none.
+      var named = (qc && qc.districts && key != null) ? qc.districts[key] : null;
+      var res = (qc && !qc.districts && qc.results) || null;
+      var elected = (res && res.districts && key != null) ? res.districts[key] : null;
       if (named && !/^vacant$/i.test(String(named))) {
         wrap.appendChild(renderPersonRows([{ name: String(named), badge: "Justice of the Peace" }]));
+      } else if (elected) {
+        wrap.appendChild(renderPersonRows([{ name: String(elected), badge: "Justice of the Peace" }]));
       }
       var rows = [{ label: "County", value: county, primary: true }];
       if (named && /^vacant$/i.test(String(named))) {
         rows.push({ label: "Justice of the peace", value: "Vacant, as the county's own page says." });
       }
+      var unnamed = "nothing this app reads says who holds the seat now, so this card " +
+        "names no one rather than guessing. The County card lists the current justices.";
       if (named) {
         var read = arReadDate(qc.districtAsOf);
         rows.push({
@@ -12741,14 +12760,46 @@ function initArkansasExplorer() {
           value: county + "'s own list of its quorum court by district" +
             (read ? ", read " + read : "") + "."
         });
+      } else if (elected) {
+        var updated = arReadDate(res.updated);
+        var checked = arReadDate(res.asOf);
+        rows.push({
+          label: "Where this name comes from",
+          value: "The Association of Arkansas Counties' 2024 general election results " +
+            "for justices of the peace" + (updated ? " (updated " + updated + ")" : "") +
+            ", which give the winner of each district. This app names that person " +
+            "only while the association's current list for " + county + " still " +
+            "includes them, and checks that every week" +
+            (checked ? "; last checked " + checked : "") + "."
+        });
+      } else if (res && key != null && (res.notOnList || []).indexOf(key) !== -1) {
+        rows.push({
+          label: "Who represents this district",
+          value: "The justice of the peace elected here in 2024 is no longer on the " +
+            "Association of Arkansas Counties' current list for " + county + ", and " + unnamed
+        });
+      } else if (res && key != null && (res.noWinner || []).indexOf(key) !== -1) {
+        rows.push({
+          label: "Who represents this district",
+          value: "The Association of Arkansas Counties' 2024 election results list no " +
+            "winner for District " + key + ", and " + unnamed
+        });
+      } else if (res && key != null && (res.unclear || []).indexOf(key) !== -1) {
+        rows.push({
+          label: "Who represents this district",
+          value: "The Association of Arkansas Counties' 2024 election results name a " +
+            "winner for District " + key + ", but that name cannot be matched with " +
+            "certainty to anyone on the association's current list for " + county +
+            ", so this card names no one rather than guessing. The County card lists " +
+            "the current justices."
+        });
       } else if (qc) {
         var count = arJusticeCount(qc);
         rows.push({
           label: "Who represents this district",
           value: "One of the " + (qc.seats != null ? String(qc.seats) : String(count.all)) +
-            " justices of the peace on " + county + "'s quorum court. Neither " +
-            "the county's own site nor the Association of Arkansas Counties says " +
-            "which of them sits for District " + String(result.district) +
+            " justices of the peace on " + county + "'s quorum court. Nothing this " +
+            "app reads says which of them sits for District " + String(result.district) +
             ", so this card names no one rather than guessing. The County card " +
             "lists all of them."
         });

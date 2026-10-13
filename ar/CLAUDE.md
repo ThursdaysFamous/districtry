@@ -64,18 +64,28 @@ justices of the peace, each from a district. The `quorum-court` layer draws all 
 the state's mapping office (`ar/scripts/build_ar_quorum_court_districts.py`); the county judge
 comes from the state courts' directory and the justices from the Association of Arkansas
 Counties' county pages, which list each court WITHOUT districts (`ar/scripts/build_ar_county_officials.py`,
-weekly). On Adam's ruling of 2026-10-13 ("District, else list") a district's justice is named only
-where the county's own site numbers them — 20 counties, 218 districts, measured by surveying every
-county that day — and elsewhere the County card lists the whole court, credited and dated, and the
-district card says it names no one rather than guessing. **THE STATE COURTS' DIRECTORY WAS THE STALE
+weekly). On Adam's rulings of 2026-10-13 a district's justice comes from TWO places: the county's
+own site where it numbers them ("District, else list" — 20 counties, 218 districts, measured by
+surveying every county that day), and everywhere else the association's 2024 general election
+results for justices of the peace ("Use 2024 list"), a winner being named ONLY while the
+association's current list for the county still includes that person, re-checked every week. **THE
+RESULTS ARE A RECORD OF AN ELECTION, NOT OF WHO SITS NOW, AND THE COUNTY'S OWN LIST WINS FOR A
+MEASURED REASON**: on the 20 counties that number their own, the rule named 203 districts and 202
+agreed with the county; the other was Carroll District 1, whose 2024 winner the county shows
+appointed to District 2 since — a move the results cannot show and the surname check cannot catch.
+The results live in `ar/data/source/aac-2024-jp-results.json`, read once by `--read-results` with
+the PDF's SHA-256, and `--check` re-derives every county's named districts from that file and the
+shipped list offline. On 2026-10-13 the cards named 737 of 775 districts; the other 38 are two seats
+the county lists vacant, 27 whose winner has left, 5 with no 2024 winner and 4 whose names cannot
+be matched with certainty, and each card says which. **THE STATE COURTS' DIRECTORY WAS THE STALE
 PUBLISHER, NOT THE ASSOCIATION**: in all five counties where the two named different judges (Boone,
 Cleveland, Desha, Jefferson, Sevier) a third source sided with the association, so a government
 list is not the authority by being a government's, and each disagreement is recorded in
 `JUDGE_DISAGREES` with the source that settled it. **Every one of those seats is on the 3 November
 2026 ballot and the new terms start on 1 January 2027**; every county is re-read in January (Adam's
-"Now, then January"). The association also publishes its 2024 election results by district, and
-whether to name justices from it is Adam's decision, asked 2026-10-13. What is still missing is
-gap `ar-quorum-court`, beside `ar-municipal-officeholders` and `ar-school-board-members`.
+"Now, then January"), when the 2026 results replace the 2024 ones if the association publishes
+them the same way. What is still missing is gap `ar-quorum-court`, beside
+`ar-municipal-officeholders` and `ar-school-board-members`.
 
 **NO TRIBAL LAYER, BECAUSE NO TRIBAL NATION'S LAND LIES IN ARKANSAS.** Measured with
 `scripts/tribal_areas.py --report Arkansas` on 2026-10-13: no federal reservation, no

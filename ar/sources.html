@@ -1121,13 +1121,13 @@ table.matrix code {
               </tr>
               <tr id="layer-quorum-court">
                 <th scope="row"><span class="layer-name">Quorum Court District</span><code>quorum-court</code></th>
-                <td data-label="What it answers">The justice of the peace district covering the point, its county, and the county judge who presides over the quorum court; the justice where the county's own site numbers them.</td>
+                <td data-label="What it answers">The justice of the peace district covering the point, its county, the county judge who presides over the quorum court, and the district's justice where a source says who it is.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://gis.arkansas.gov/arcgis/rest/services/FEATURESERVICES/Boundaries/FeatureServer/19" target="_blank" rel="noopener">Arkansas GIS Office — FEATURESERVICES/Boundaries, layer 19 (JUSTICE_PEACE_DISTRICT), credited to the Arkansas Secretary of State: every county's justice of the peace districts in one statewide layer, pre-built and shipped with the app; 775 districts in 75 counties, each county numbered 1 to N at one of the four counts Arkansas Code 14-14-402 allows, measured 2026-10-13. Simplified by Douglas-Peucker at a 20 m interval and refused over a 25 m fidelity ceiling.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">ar-county-officials.json, rebuilt weekly: each county judge from the Arkansas Judiciary's directory of county judges and clerks, and each county's justices of the peace from the Association of Arkansas Counties' page for that county. No government publishes the justices statewide, and the association does not say which justice sits for which district, so the card names a district's justice only where the county's own site numbers them and otherwise says it cannot; the County card lists the association's names, credited and dated. Recorded as gap ar-quorum-court.</td>
+                <td data-label="Who it names">ar-county-officials.json, rebuilt weekly: each county judge from the Arkansas Judiciary's directory of county judges and clerks, and each county's justices of the peace from the Association of Arkansas Counties' page for that county. A district's justice is named from the county's own site where it numbers them (20 counties, measured 2026-10-13), and elsewhere from the association's 2024 general election results for justices of the peace, updated 17 December 2024, only while the association's current list for the county still includes that winner; a district whose winner has left, or cannot be matched, says so and names no one. Recorded as gap ar-quorum-court.</td>
                 <td data-label="Where it applies">Arkansas — statewide, all 75 counties, 775 districts.</td>
               </tr>
             </tbody>
@@ -1213,7 +1213,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 75 features, measured 2026-10-13.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">ar-county-officials.json, rebuilt weekly: the county judge from the Arkansas Judiciary's directory of county judges and clerks (with the office telephone, and the office address only where the Association of Arkansas Counties prints the same one), and the county's justices of the peace from the Association of Arkansas Counties' page for the county, listed as the association lists them, without a district. Recorded as gap ar-quorum-court.</td>
+                <td data-label="Who it names">ar-county-officials.json, rebuilt weekly: the county judge from the Arkansas Judiciary's directory of county judges and clerks (with the office telephone, and the office address only where the Association of Arkansas Counties prints the same one), and the county's justices of the peace from the Association of Arkansas Counties' page for the county, listed as the association lists them, without a district; the Quorum Court District layer names each district's justice where a source says who it is. Recorded as gap ar-quorum-court.</td>
                 <td data-label="Where it applies">Arkansas — statewide, all 75 counties.</td>
               </tr>
               <tr id="layer-zip-code">
@@ -1317,7 +1317,7 @@ table.matrix code {
       "@id": "https://districtry.com/ar/sources.html#dataset-county",
       "identifier": "county",
       "name": "County",
-      "description": "Which county contains the point, its county judge, and the justices of the peace on its quorum court. ar-county-officials.json, rebuilt weekly: the county judge from the Arkansas Judiciary's directory of county judges and clerks (with the office telephone, and the office address only where the Association of Arkansas Counties prints the same one), and the county's justices of the peace from the Association of Arkansas Counties' page for the county, listed as the association lists them, without a district. Recorded as gap ar-quorum-court.",
+      "description": "Which county contains the point, its county judge, and the justices of the peace on its quorum court. ar-county-officials.json, rebuilt weekly: the county judge from the Arkansas Judiciary's directory of county judges and clerks (with the office telephone, and the office address only where the Association of Arkansas Counties prints the same one), and the county's justices of the peace from the Association of Arkansas Counties' page for the county, listed as the association lists them, without a district; the Quorum Court District layer names each district's justice where a source says who it is. Recorded as gap ar-quorum-court.",
       "url": "https://districtry.com/ar/sources.html#layer-county",
       "isPartOf": {
         "@id": "https://districtry.com/ar/sources.html#catalog"
@@ -1405,7 +1405,7 @@ table.matrix code {
       "@id": "https://districtry.com/ar/sources.html#dataset-quorum-court",
       "identifier": "quorum-court",
       "name": "Quorum Court District",
-      "description": "The justice of the peace district covering the point, its county, and the county judge who presides over the quorum court; the justice where the county's own site numbers them. ar-county-officials.json, rebuilt weekly: each county judge from the Arkansas Judiciary's directory of county judges and clerks, and each county's justices of the peace from the Association of Arkansas Counties' page for that county. No government publishes the justices statewide, and the association does not say which justice sits for which district, so the card names a district's justice only where the county's own site numbers them and otherwise says it cannot; the County card lists the association's names, credited and dated. Recorded as gap ar-quorum-court.",
+      "description": "The justice of the peace district covering the point, its county, the county judge who presides over the quorum court, and the district's justice where a source says who it is. ar-county-officials.json, rebuilt weekly: each county judge from the Arkansas Judiciary's directory of county judges and clerks, and each county's justices of the peace from the Association of Arkansas Counties' page for that county. A district's justice is named from the county's own site where it numbers them (20 counties, measured 2026-10-13), and elsewhere from the association's 2024 general election results for justices of the peace, updated 17 December 2024, only while the association's current list for the county still includes that winner; a district whose winner has left, or cannot be matched, says so and names no one. Recorded as gap ar-quorum-court.",
       "url": "https://districtry.com/ar/sources.html#layer-quorum-court",
       "isPartOf": {
         "@id": "https://districtry.com/ar/sources.html#catalog"

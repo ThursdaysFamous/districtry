@@ -366,13 +366,19 @@ try {
   //     DARK, so it has no entry in fleet-outlines.json at all and answers its
   //     own side from the coverage rings the wash retained — no fetch.
   //     Chicago proves the file is still read for ground far from here.
-  //     Tennessee is deliberately not a case: it was going live the day this
-  //     was written, and a case that changes answer with another state's
-  //     go-live belongs to that go-live.
+  //     Tennessee went live while this instance was being built, so Memphis
+  //     joined as a case when that go-live was merged in: Overton Park sits
+  //     about 6.5 km east of this instance's own outline (measured 2026-10-13
+  //     against the shipped ring and fleet-outlines.json's tennessee entry),
+  //     well clear of either outline's simplification. Its first run FAILED,
+  //     and correctly: this dark instance's sibling list (`metro_explorers`,
+  //     hand-seeded until go-live runs --sync-fleet) still lacked South
+  //     Carolina and Tennessee, so the hand-off had nowhere to send the point.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Sallisaw, Oklahoma", lat: 35.4604, lng: -94.7875, want: "https://districtry.com/ok/" },
+      { name: "Memphis, Tennessee", lat: 35.1440, lng: -89.9930, want: "https://districtry.com/tn/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -930,6 +936,45 @@ try {
         !county.error && /did not load/.test(county.text) && !county.text.includes(pulaski.judge.name) &&
           !qc.error && /District 6\b/.test(qc.text) && /did not load/.test(qc.text),
         `county=${county.text.slice(0, 60)} qc=${qc.text.slice(0, 60)}`);
+      await context.close();
+    }
+  }
+
+  // 9b. THE 2024 RESULTS, in two counties that publish no numbered list of
+  //    their own. Arkansas County District 1's 2024 winner was still on the
+  //    association's list and Benton County District 9's was not, measured
+  //    2026-10-13 — but what each card must say is read from the shipped
+  //    roster, not written here, because the weekly refresh moves a district
+  //    between those two states. Held: the card names the district's 2024
+  //    winner and credits the results where the roster names one, says it
+  //    names no one where it does not, and never prints another justice of
+  //    that county. The points are interior points of the two districts as
+  //    the state's map draws them (polylabel, 2026-10-13).
+  {
+    const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "ar-county-officials.json"), "utf8"));
+    const cases = [
+      { name: "Arkansas County District 1", lat: 34.461, lng: -91.42008, fips: "05001", district: "1" },
+      { name: "Benton County District 9", lat: 36.33671, lng: -94.2813, fips: "05007", district: "9" },
+    ];
+    for (const c of cases) {
+      const qcRoster = roster[c.fips].quorumCourt;
+      const own = qcRoster.districts ? qcRoster.districts[c.district] : null;
+      const res = qcRoster.districts ? null : qcRoster.results;
+      const elected = res && res.districts ? res.districts[c.district] || null : null;
+      const expected = own && !/^vacant$/i.test(own) ? own : elected;
+      const everyone = qcRoster.justices.filter((j) => !j.vacant).map((j) => j.name)
+        .concat(res ? Object.values(res.districts) : []);
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${c.lat},${c.lng}&layers=quorum-court`);
+      const qc = await cardText(page, "quorum-court");
+      const others = everyone.filter((n) => n !== expected && !(expected && expected.includes(n)) &&
+        qc.text.includes(n));
+      const said = expected
+        ? qc.text.includes(expected) && (own || /2024 general election results/.test(qc.text))
+        : /names no one rather than guessing/.test(qc.text);
+      check(`quorum-court card at ${c.name} names ${expected || "no one"} from the roster's own answer`,
+        !qc.error && new RegExp(`District ${c.district}\\b`).test(qc.text) && said && others.length === 0,
+        `expected=${expected} others=${others.slice(0, 3)} text=${qc.text.slice(0, 120)}`);
       await context.close();
     }
   }

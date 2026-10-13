@@ -27,7 +27,28 @@ TWO PUBLISHERS, AND WHAT EACH IS TRUSTED FOR:
   the rule Adam set on 2026-10-13 ("District, else list"): a justice is named
   by district only where the county's own site numbers them (`NUMBERED`
   below), and elsewhere the association's names go on the County card,
-  credited and dated, without a district.
+  credited and dated, without a district — and the district card takes the
+  2024 election results described next.
+
+  THE ASSOCIATION ALSO PUBLISHES WHO WON EACH DISTRICT, and on Adam's second
+  ruling of 2026-10-13 ("Use 2024 list") that names a district's justice
+  everywhere else. Its "2024 General Election Results — Justices of the Peace"
+  (updated 17 December 2024) gives the winner of every one of the 775 districts
+  by county and number. It is a dated record of an election, not a list of who
+  sits now, so a winner is named for a district ONLY while the association's
+  current page for the county still lists that person (`match_results`), and
+  that comparison is re-run on every weekly build. A winner who has left is
+  not named, and neither is the justice who replaced them, because the results
+  cannot say which district a replacement holds. The county's own numbered
+  list, where there is one, wins over the results. Measured 2026-10-13 on the
+  20 counties that number their own: the results named 203 of their
+  districts this way and 202 agreed with the county. The other was Carroll
+  District 1, where the county's own page says the 2024 winner was later
+  appointed to District 2 — a move the results cannot show, and the reason the
+  county's own list wins wherever it exists. The results are read into
+  ar/data/source/ once (`--read-results`) rather than weekly, because the
+  document is a dated record that does not change; its SHA-256 is kept with it
+  so a re-read can tell whether the association has revised it.
 
   The association's page also names each county judge, which is the witness
   for the judiciary's directory: a county where the two name different people
@@ -75,11 +96,15 @@ Usage:
     python3 ar/scripts/build_ar_county_officials.py                  # fetch, build, write
     python3 ar/scripts/build_ar_county_officials.py --cache DIR      # keep/reuse raw pages
     python3 ar/scripts/build_ar_county_officials.py --check          # offline gate
+    python3 ar/scripts/build_ar_county_officials.py --read-results   # re-read the results PDF
+    python3 ar/scripts/build_ar_county_officials.py --read-results --results-pdf FILE
 """
 
 import argparse
 import datetime
+import hashlib
 import html
+import io
 import json
 import os
 import re
@@ -104,6 +129,9 @@ AAC_BASE = "https://arcounties.org"
 AAC_INDEX = AAC_BASE + "/counties/"
 AAC_ROBOTS = AAC_BASE + "/robots.txt"
 DEFAULT_DELAY = 20.0  # what arcounties.org stated on 2026-10-13, if the read fails to say
+RESULTS_URL = AAC_BASE + "/site/assets/files/6331/2024_general_election_winners.pdf"
+RESULTS_FILE = os.path.join(INSTANCE, "data", "source", "aac-2024-jp-results.json")
+RESULTS_TITLE = "2024 General Election Results, Justices of the Peace"
 
 # Counties whose own website numbers its justices by district, read by a
 # person and recorded here: fips -> {"url": the county's page, "asOf": date,
@@ -626,6 +654,17 @@ class Fetcher:
                 f.write(text)
         return text
 
+    def get_bytes(self, url, delay=0.0):
+        require_robots_once(url, USER_AGENT, label="ar-county-officials")
+        host = re.sub(r"^https?://([^/]+).*$", r"\1", url)
+        wait = self.last.get(host, 0) + delay - time.time()
+        if wait > 0:
+            time.sleep(wait)
+        resp = self.session.get(url, headers={"User-Agent": USER_AGENT}, timeout=120)
+        self.last[host] = time.time()
+        resp.raise_for_status()
+        return resp.content
+
 
 def aac_delay():
     from robots_policy import fetch_verdict  # noqa: PLC0415
@@ -740,6 +779,217 @@ def is_vacant(name):
     return fold(name) in ("vacant", "vacancy", "open", "open seat")
 
 
+# ---------- the association's 2024 election results ----------
+def parse_results_pdf(body):
+    """{county name as printed: {district: printed line}} and the "Updated"
+    date, from the association's results PDF. The document is set in three
+    columns (measured 2026-10-13: 19 US-letter pages, columns starting near
+    x 36, 230 and 430 pt), each a run of a county heading in capitals, then
+    "District N" lines each followed by the winner, "Name* (R)", the
+    asterisk marking an incumbent. Words are read with their positions,
+    grouped into lines per column and read column by column, because a
+    flattened page reads across all three columns at once. A name that wraps
+    onto a second line is joined back to its district."""
+    # Optional on purpose: only --read-results parses the PDF, and the weekly
+    # refresh, which never does, installs no PDF library.
+    try:
+        import pdfplumber  # noqa: PLC0415
+    except ImportError:
+        fail("--read-results needs pdfplumber (pip install -c scripts/requirements.txt pdfplumber)")
+    lines = []
+    updated = None
+    with pdfplumber.open(io.BytesIO(body)) as pdf:
+        for pi, page in enumerate(pdf.pages):
+            if pi == 0:
+                # The cover page: centred title lines straddle the column
+                # split, so it is read as plain text, for its date alone. Its
+                # title is set twice over itself for weight, which reads as
+                # "UUppddaatteedd" until the duplicate characters are dropped.
+                m = re.search(r"Updated\s+([A-Z][a-z]+)\.?\s+(\d{1,2}),\s+(\d{4})",
+                              page.dedupe_chars().extract_text() or "")
+                if m:
+                    updated = datetime.datetime.strptime(
+                        "%s %s %s" % (m.group(1)[:3], m.group(2), m.group(3)),
+                        "%b %d %Y").date().isoformat()
+                continue
+            groups = {}
+            for w in page.extract_words():
+                col = 0 if w["x0"] < 200 else (1 if w["x0"] < 400 else 2)
+                groups.setdefault((col, round(w["top"])), []).append(w)
+            merged = []
+            for key in sorted(groups):
+                if merged and merged[-1][0][0] == key[0] and abs(merged[-1][0][1] - key[1]) <= 2:
+                    merged[-1][1].extend(groups[key])
+                else:
+                    merged.append([key, list(groups[key])])
+            for (col, top), words in merged:
+                words.sort(key=lambda w: w["x0"])
+                text = " ".join(w["text"] for w in words).strip()
+                if text:
+                    lines.append((pi, col, top, text))
+    lines.sort(key=lambda ln: (ln[0], ln[1], ln[2]))
+    out = {}
+    county = dist = None
+    stray = []
+    for _pi, _col, _top, t in lines:
+        if t in ("2025 JUSTICES OF THE PEACE", "*Denotes Incumbent"):
+            continue
+        m = re.match(r"^District (\d+)$", t)
+        if m:
+            dist = m.group(1)
+            continue
+        if re.match(r"^[A-Z][A-Z .']+$", t):
+            county = t
+            out[county] = {}
+            dist = None
+            continue
+        if county and dist:
+            out[county][dist] = (out[county][dist] + " " + t) if dist in out[county] else t
+            continue
+        stray.append(t)
+    if stray:
+        fail("the results PDF has lines outside any county and district: %r" % stray[:5])
+    if not updated:
+        fail("the results PDF's first page carries no \"Updated\" date")
+    return out, updated
+
+
+def results_record(printed):
+    """{"name", "party", "incumbent"} from one printed winner line, or
+    {"vacant": true} where the results print "Vacant" — five districts,
+    measured 2026-10-13 (Franklin 4, Howard 7, Union 6, Van Buren 1 and
+    White 13), where nobody won in 2024."""
+    if is_vacant(printed):
+        return {"vacant": True}
+    m = re.match(r"^(.*?)\s*\(([A-Z]{1,3})\)\s*$", printed)
+    name, party = (m.group(1), m.group(2)) if m else (printed, None)
+    incumbent = "*" in name
+    return {"name": re.sub(r"\s+", " ", name.replace("*", "")).strip(),
+            "party": party, "incumbent": incumbent}
+
+
+def read_results(body, today):
+    """The snapshot ar/data/source/ keeps: every county's winners keyed by its
+    Census FIPS and district, refused unless every county and every district
+    the state's map draws is there exactly once."""
+    printed, updated = parse_results_pdf(body)
+    counties = census_counties()
+    seats = seats_from_map()
+    by_fold = {fold(n): f for n, f in counties.items()}
+    out = {}
+    for name, dd in printed.items():
+        fips = by_fold.get(fold(name))
+        if not fips:
+            fail("the results name a county the Census does not: %r" % name)
+        if fips in out:
+            fail("the results print %r twice" % name)
+        if sorted(int(d) for d in dd) != list(range(1, seats[fips] + 1)):
+            fail("%s: the results give districts %s and the map draws 1..%d"
+                 % (name, sorted(int(d) for d in dd), seats[fips]))
+        recs = {d: results_record(t) for d, t in dd.items()}
+        for d, r in recs.items():
+            if not r.get("vacant") and not r["name"]:
+                fail("%s District %s: the results print no winner (%r)" % (name, d, dd[d]))
+        out[fips] = recs
+    if set(out) != set(seats):
+        fail("the results cover %d counties, the map %d" % (len(out), len(seats)))
+    return {
+        "$comment": "The Association of Arkansas Counties' 2024 general election "
+                    "results for justices of the peace, read by "
+                    "ar/scripts/build_ar_county_officials.py --read-results. A dated "
+                    "record of who won each district, kept here because it does not "
+                    "change; the weekly build names a winner only while the "
+                    "association's current list for the county still carries them.",
+        "title": RESULTS_TITLE,
+        "publisher": "Association of Arkansas Counties",
+        "url": RESULTS_URL,
+        "updated": updated,
+        "read": today,
+        "sha256": hashlib.sha256(body).hexdigest(),
+        "counties": {f: out[f] for f in sorted(out)},
+    }
+
+
+def load_results():
+    if not os.path.exists(RESULTS_FILE):
+        fail("%s is missing — run with --read-results" % os.path.relpath(RESULTS_FILE))
+    with open(RESULTS_FILE, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def given_names(name):
+    """Every word of a name but its surname and any suffix, folded — the first
+    name, middle names or initials, and a nickname printed in quotes or
+    brackets ('James G. (Jim) Anders', 'Roy “Chuck” Murphy')."""
+    parts = [p for p in fold(name).split() if p not in SUFFIXES]
+    return parts[:-1]
+
+
+def same_given_name(a, b):
+    """True when two names that share a surname plausibly name one person.
+    The two documents spell first names differently as a matter of course —
+    measured 2026-10-13, 33 of the 728 surname matches differ in the first
+    name, nearly all a nickname, an initial or a misspelling ('Michael' and
+    'Mike', 'C.J.' and 'CJ', 'Keith' and 'Kieth', 'Laurie \"Harrie\"' and
+    'Harrie') — so a name matches when a word of more than one letter is
+    shared, when one word begins another ('Brad', 'Bradley'), or when the
+    first names share an initial. Three did not, and are left unnamed rather
+    than guessed: 'Jonathon Davis' and 'Allen Davis' in Greene, 'Patrick
+    Robinson IV' and 'Alfred Robinson IV' in Phillips, and 'Danny Loggins' and
+    'Jerry Loggins' in Searcy."""
+    ga, gb = given_names(a), given_names(b)
+    if not ga or not gb:
+        return False
+    long_a = {w for w in ga if len(w) > 1}
+    long_b = {w for w in gb if len(w) > 1}
+    if long_a & long_b:
+        return True
+    for x in long_a:
+        for y in long_b:
+            if min(len(x), len(y)) >= 3 and (x.startswith(y) or y.startswith(x)):
+                return True
+    return ga[0][0] == gb[0][0]
+
+
+def match_results(winners, names):
+    """Which of a county's 2024 winners are still on the association's current
+    list. Returns ({district: winner's name}, [districts whose winner is not on
+    the list], [districts where the list cannot say], [districts the results
+    print as vacant]). A winner is matched by
+    surname; where the county has two justices of one surname (Ashley's two
+    Pippens, Conway's two Traffords) the whole name decides, then the first
+    name, and anything still ambiguous is left unnamed. No current justice is
+    matched to two districts."""
+    current = [n for n in names if not is_vacant(n)]
+    picked = {}
+    gone, unclear, empty = [], [], []
+    for d in sorted(winners, key=int):
+        if winners[d].get("vacant"):
+            empty.append(d)
+            continue
+        w = winners[d]["name"]
+        cands = [n for n in current if surname(n) == surname(w)]
+        if not cands:
+            gone.append(d)
+            continue
+        exact = [n for n in cands if fold(n) == fold(w)]
+        pick = exact if len(exact) == 1 else [n for n in cands if same_given_name(w, n)]
+        if len(pick) == 1:
+            picked[d] = pick[0]
+        else:
+            unclear.append(d)
+    used = {}
+    for d, n in picked.items():
+        used.setdefault(n, []).append(d)
+    for n, ds in used.items():
+        if len(ds) > 1:
+            unclear.extend(ds)
+            for d in ds:
+                del picked[d]
+    named = {d: winners[d]["name"] for d in sorted(picked, key=int)}
+    return named, gone, sorted(unclear, key=int), empty
+
+
 # ---------- build ----------
 def seats_from_map():
     with open(DISTRICTS_FILE, encoding="utf-8") as f:
@@ -770,6 +1020,7 @@ def build(fetcher, today):
              "unknown %s" % (len(judges), sorted(set(counties) - set(judges)),
                              sorted(set(judges) - set(counties))))
 
+    results = load_results()
     delay = aac_delay()
     index = parse_index(fetcher.get(AAC_INDEX))
     by_name = {n: u for u, n in index}
@@ -867,6 +1118,7 @@ def build(fetcher, today):
             entry["quorumCourt"]["districts"] = num["districts"]
             entry["quorumCourt"]["districtSourceUrl"] = num["url"]
             entry["quorumCourt"]["districtAsOf"] = num["asOf"]
+        entry["quorumCourt"]["results"] = results_block(results, fips, names, today)
         out[fips] = entry
     if problems:
         for p in problems:
@@ -876,6 +1128,25 @@ def build(fetcher, today):
         print("build-ar-county-officials: note: website not shipped, its host does not "
               "name the county: " + d)
     return out, addresses
+
+
+def results_block(results, fips, names, today):
+    """What the district card needs from the 2024 results for one county:
+    the winners still on the association's current list, by district, and
+    which districts the results cannot name and why. `asOf` is the day the
+    comparison was made, which is the day the current list was read."""
+    named, gone, unclear, empty = match_results(results["counties"][fips], names)
+    return {
+        "districts": named,
+        "notOnList": gone,
+        "unclear": unclear,
+        "noWinner": empty,
+        "sourceUrl": results["url"],
+        "publisher": results["publisher"],
+        "title": results["title"],
+        "updated": results["updated"],
+        "asOf": today,
+    }
 
 
 def check_shipped(doc):
@@ -910,15 +1181,93 @@ def check_shipped(doc):
     for fips in NUMBERED:
         if fips in doc and "districts" not in doc[fips]["quorumCourt"]:
             problems.append("%s is in NUMBERED and ships no districts — rebuild" % fips)
+    # The results block is re-derived from the snapshot and the shipped list,
+    # so a hand edit, a stale snapshot or a change to the matching rule that
+    # was not rebuilt all fail here, offline.
+    results = load_results()
+    if set(results["counties"]) != set(seats):
+        problems.append("the 2024 results snapshot covers %d counties, the map %d"
+                        % (len(results["counties"]), len(seats)))
+    for fips, recs in results["counties"].items():
+        if sorted(int(d) for d in recs) != list(range(1, seats.get(fips, 0) + 1)):
+            problems.append("%s: the 2024 results snapshot does not number 1..%r"
+                            % (fips, seats.get(fips)))
+    for fips, e in doc.items():
+        qc = e.get("quorumCourt") or {}
+        shipped = qc.get("results")
+        if fips not in results["counties"]:
+            continue
+        names = ["Vacant" if j.get("vacant") else j.get("name", "")
+                 for j in qc.get("justices") or []]
+        want = results_block(results, fips, names, (shipped or {}).get("asOf"))
+        if shipped != want:
+            problems.append("%s: the shipped 2024-results block is not what the snapshot "
+                            "and the shipped list give — rebuild" % fips)
     return problems
+
+
+def named_counts(doc):
+    """(districts the district card names, from the county's own list, from
+    the 2024 results) — the county's own list wins where it exists."""
+    own = res = 0
+    for e in doc.values():
+        qc = e["quorumCourt"]
+        for d in range(1, qc["seats"] + 1):
+            d = str(d)
+            if qc.get("districts") and d in qc["districts"]:
+                own += not is_vacant(qc["districts"][d])
+            elif d in ((qc.get("results") or {}).get("districts") or {}):
+                res += 1
+    return own + res, own, res
+
+
+def summary(doc):
+    n = sum(len(e["quorumCourt"]["justices"]) for e in doc.values())
+    vac = sum(1 for e in doc.values() for j in e["quorumCourt"]["justices"] if j.get("vacant"))
+    total, own, res = named_counts(doc)
+    gone = sum(len(e["quorumCourt"]["results"]["notOnList"]) for e in doc.values())
+    unclear = sum(len(e["quorumCourt"]["results"]["unclear"]) for e in doc.values())
+    return ("%d county judges, %d justice seats (%d vacant); the district card names "
+            "%d of %d districts — %d from the county's own list in %d counties, %d from "
+            "the 2024 results; across all 75 counties %d 2024 winners are no longer on "
+            "the current list and %d cannot be told apart from it"
+            % (len(doc), n, vac, total, sum(e["quorumCourt"]["seats"] for e in doc.values()),
+               own, sum(1 for e in doc.values() if "districts" in e["quorumCourt"]), res,
+               gone, unclear))
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.strip().split("\n")[0])
     ap.add_argument("--check", action="store_true", help="offline: hold the shipped file "
-                    "to the district map and its own registry")
+                    "to the district map, its own registry and the 2024 results snapshot")
     ap.add_argument("--cache", help="directory to keep raw pages in, and to reuse them from")
+    ap.add_argument("--read-results", action="store_true", help="read the association's "
+                    "2024 results PDF into ar/data/source/ (needs pdfplumber)")
+    ap.add_argument("--results-pdf", help="with --read-results: a saved copy of the PDF")
     args = ap.parse_args()
+
+    if args.read_results:
+        today = datetime.date.today().isoformat()
+        if args.results_pdf:
+            with open(args.results_pdf, "rb") as f:
+                body = f.read()
+        else:
+            body = Fetcher(None).get_bytes(RESULTS_URL)
+        snap = read_results(body, today)
+        if os.path.exists(RESULTS_FILE):
+            with open(RESULTS_FILE, encoding="utf-8") as f:
+                old = json.load(f)
+            if old.get("sha256") != snap["sha256"]:
+                print("build-ar-county-officials: the results PDF differs from the copy "
+                      "last read (%s); review the diff before committing"
+                      % old.get("read"))
+        with open(RESULTS_FILE, "w", encoding="utf-8") as f:
+            json.dump(snap, f, indent=1, ensure_ascii=False)
+            f.write("\n")
+        print("wrote %s: %d counties, %d districts, updated %s"
+              % (os.path.relpath(RESULTS_FILE), len(snap["counties"]),
+                 sum(len(v) for v in snap["counties"].values()), snap["updated"]))
+        return
 
     if args.check:
         with open(OUT_FILE, encoding="utf-8") as f:
@@ -928,13 +1277,7 @@ def main():
             for p in problems:
                 print("build-ar-county-officials: FAIL: " + p)
             raise SystemExit(1)
-        n = sum(len(e["quorumCourt"]["justices"]) for e in doc.values())
-        vac = sum(1 for e in doc.values() for j in e["quorumCourt"]["justices"]
-                  if j.get("vacant"))
-        print("build-ar-county-officials --check: OK — %d county judges, %d justice "
-              "seats (%d vacant), %d counties numbered by their own site"
-              % (len(doc), n, vac, sum(1 for e in doc.values()
-                                       if "districts" in e["quorumCourt"])))
+        print("build-ar-county-officials --check: OK — " + summary(doc))
         return
 
     today = datetime.date.today().isoformat()
@@ -947,11 +1290,8 @@ def main():
     with open(OUT_FILE, "w", encoding="utf-8") as f:
         json.dump(doc, f, indent=1, sort_keys=True, ensure_ascii=False)
         f.write("\n")
-    n = sum(len(e["quorumCourt"]["justices"]) for e in doc.values())
-    vac = sum(1 for e in doc.values() for j in e["quorumCourt"]["justices"] if j.get("vacant"))
-    print("wrote ar/data/app/%s: %d county judges (%d with an office both publishers "
-          "agree on), %d justice seats, %d vacant"
-          % (os.path.basename(OUT_FILE), len(doc), addresses, n, vac))
+    print("wrote ar/data/app/%s: %d judges with an office both publishers agree on; %s"
+          % (os.path.basename(OUT_FILE), addresses, summary(doc)))
 
 
 if __name__ == "__main__":

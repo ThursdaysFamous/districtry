@@ -13,7 +13,7 @@ Eleven layers, the national tier plus the Arkansas State Legislature's own membe
 | **Political** | U.S. House District (4) | U.S. Census TIGERweb boundary (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
 | | Arkansas Senate District (35) | TIGERweb Legislative boundary (pre-built, 2,000-point agreement gate and a 25 m fidelity ceiling) + the legislature's own member list and member pages: name, party, e-mail and the member's own page, and a vacant seat named as vacant with the reason |
 | | Arkansas House District (100) | Same boundary pair and the same roster source |
-| | Quorum Court District (775) | The state's own map of every county's justice of the peace districts (pre-built, Douglas-Peucker under a 25 m ceiling, each county's districts held to cover that county); the justice is named only where the county's own site says who sits for which district |
+| | Quorum Court District (775) | The state's own map of every county's justice of the peace districts (pre-built, Douglas-Peucker under a 25 m ceiling, each county's districts held to cover that county); the justice is named from the county's own numbered list where it has one, and elsewhere from the Association of Arkansas Counties' 2024 election results while that winner is still on the association's current list |
 | **Safety** | Police Station, Fire & EMS Station | USGS National Map structures, nearest-N by straight-line distance |
 | **Schools** | School District (234) | TIGERweb unified school districts, which tile the whole state; identity only, recorded as a gap |
 | **Geography** | County (75) | TIGERweb State_County, pre-built — the app's offline anchor and the coverage ring; names the county judge (the state courts' directory, checked against the Association of Arkansas Counties) and lists the county's justices of the peace as the association prints them, credited and dated |
@@ -28,9 +28,10 @@ excluded from the Pages deploy, so nothing is served and no landing card names i
 quorum court of justices of the peace, each from a district. The state's mapping office draws all
 775 districts and the state courts' directory names the 75 county judges; no government names the
 justices, and the Association of Arkansas Counties lists them without saying who sits for which
-district. So the justice is named by district only where the county's own site says, and
-elsewhere the County card carries the association's list, credited and dated (Adam's ruling,
-2026-10-13). Every one of those seats is on the 3 November 2026 ballot with new terms from
+district on its county pages. So a district's justice is named from the county's own site where
+it numbers them, and elsewhere from the association's 2024 election results, but only while the
+association's current list still includes that winner (Adam's rulings, 2026-10-13); the County
+card carries the association's whole list, credited and dated. Every one of those seats is on the 3 November 2026 ballot with new terms from
 1 January 2027, and every county is read again in January. There is no township layer: every
 county subdivision the Census carries for Arkansas is a nonfunctioning legal entity.
 

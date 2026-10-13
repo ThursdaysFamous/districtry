@@ -3332,9 +3332,10 @@ NOT_COUNTY_BOARDS = {
                "and the about page's officeholder count would describe an app "
                "nobody can open yet. Its go-live change writes the adapter and this "
                "entry goes. The adapter has a choice to make that no other "
-               "state has posed: outside the counties that number their own "
-               "justices, the roster lists a court's justices with no "
-               "district, so a page must not lay them out one per district.",
+               "state has posed: a district's justice comes from the county's "
+               "own numbered list or from the association's 2024 election "
+               "results, and some districts are deliberately left unnamed, "
+               "so a page must lay out only what the district cards name.",
     ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",
