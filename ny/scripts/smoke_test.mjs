@@ -438,6 +438,14 @@ try {
                                ["New York City, which absorbed its counties", NYC_POINT]]) {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${pt}&layers=county-legislature`);
+      // the coverage test reads an outline file, so the block hides only once
+      // that fetch answers; wait for it the way the ZIP check below does,
+      // then read the state either way so a real failure still reports it
+      await page.waitForFunction(() => {
+        const card = document.getElementById("card-county-legislature");
+        const block = card && card.closest(".layer-block");
+        return !!block && block.hidden === true;
+      }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
       const shown = await page.evaluate(() => {
         const card = document.getElementById("card-county-legislature");
         const block = card && card.closest(".layer-block");
@@ -500,6 +508,14 @@ try {
                                  ["New York City", NYC_POINT]]) {
         const context = await browser.newContext({ serviceWorkers: "block" });
         const page = await booted(context, `${BASE}#point=${pt}&layers=${layer}`);
+        // wait for the coverage test's outline fetch to answer before reading,
+        // as above: measured on PR #1513, a busy runner read the library
+        // card before it hid, {"card":true,"toggle":false}
+        await page.waitForFunction((id) => {
+          const card = document.getElementById("card-" + id);
+          const block = card && card.closest(".layer-block");
+          return !!block && block.hidden === true;
+        }, layer, { timeout: QUERY_TIMEOUT }).catch(() => {});
         const shown = await page.evaluate((id) => {
           const card = document.getElementById("card-" + id);
           const block = card && card.closest(".layer-block");
