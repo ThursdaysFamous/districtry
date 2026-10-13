@@ -360,17 +360,24 @@ try {
   //     the app, which reads exactly like correct behaviour.
   //
   //     NORTH CAROLINA'S OWN CASE IS THE ONE BELOW THAT MATTERS, and it is the
-  //     absence half: its four land neighbours (SC, VA, TN, GA) are all
-  //     uncovered, so a point just over the state line must be selected HERE,
-  //     where the app says nothing answers there, rather than handed to an app
-  //     with nothing to show. This instance is also DARK, so it has no entry in
-  //     fleet-outlines.json at all and answers its own side from the coverage
-  //     rings the wash retained — no fetch. The two positive cases prove the
-  //     file is still read for somebody else's ground.
+  //     absence half: a point just over the state line where no instance
+  //     answers must be selected HERE, where the app says nothing answers
+  //     there, rather than handed to an app with nothing to show. This app
+  //     answers its own side from the coverage rings the wash retained, with no
+  //     fetch; the positive cases prove fleet-outlines.json is still read for
+  //     somebody else's ground.
+  //
+  //     COLUMBIA, SOUTH CAROLINA WAS THE UNCOVERED CASE UNTIL SOUTH CAROLINA
+  //     WENT LIVE (2026-10-13), and publishing it put Columbia inside
+  //     fleet-outlines.json, so the same click now opens /sc/. It moved to the
+  //     positive cases in that change, the Kentucky go-live lesson run again:
+  //     a fixed point in a neighbour stops meaning "uncovered" the day that
+  //     neighbour publishes.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Milwaukee", lat: 43.04, lng: -87.91, want: "https://districtry.com/wi/" },
+      { name: "Columbia, South Carolina", lat: 34.0007, lng: -81.0348, want: "https://districtry.com/sc/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -388,11 +395,18 @@ try {
     }
   }
 
-  // 1a2-ii. The half that keeps 1a2 honest: Columbia, South Carolina is 120 km
-  //     from the state line and no districtry instance covers it, so the click
-  //     must stay HERE. A route to a sibling would be the same lie pointing the
-  //     other way, and the stub makes it visible: if the app navigated, the URL
-  //     would be the stubbed sibling rather than this app.
+  // 1a2-ii. The half that keeps 1a2 honest: Danville, Virginia, about 5 km
+  //     north of the state line, where no districtry instance answers, so the
+  //     click must stay HERE. A route to a sibling would be the same lie
+  //     pointing the other way, and the stub makes it visible: if the app
+  //     navigated, the URL would be the stubbed sibling rather than this app.
+  //
+  //     Measured 2026-10-13: TIGERweb's state layer names Virginia at this
+  //     point (controls: Raleigh returns North Carolina and Columbia South
+  //     Carolina), and no outline in fleet-outlines.json contains it. VIRGINIA
+  //     BECAUSE NO INSTANCE SERVES IT OR IS BEING BUILT FOR IT, where
+  //     Tennessee is next to go live. It is inside the worksheet's
+  //     permalink_gate (maxLat 36.75), so the click is handled.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await booted(context, BASE, async (p) => {
@@ -400,12 +414,14 @@ try {
         route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
     });
     await page.evaluate(({ n }) => {
-      window[n].map.fire("click", { latlng: window.L.latLng(34.0007, -81.0348) });
+      window[n].map.fire("click", { latlng: window.L.latLng(36.586, -79.395) });
     }, { n: EXPORTS_NAME });
     await page.waitForTimeout(3000);
     const url = page.url();
-    check("a click on Columbia, South Carolina stays in this app",
-      !/districtry\.com\/(il|wi|ia|mi|ny|ca)\//.test(url), url);
+    // Any sibling, not a list of them: a list goes stale the day a state
+    // publishes, which is exactly how Columbia stopped meaning "uncovered".
+    check("a click on Danville, Virginia stays in this app",
+      !/districtry\.com\//.test(url), url);
     await context.close();
   }
 

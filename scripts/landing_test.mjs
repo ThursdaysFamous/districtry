@@ -180,8 +180,14 @@ try {
     check("the not-yet list never names a place that already answers",
       notYet.every((s) => !liveNames.includes(s)),
       notYet.filter((s) => liveNames.includes(s)).join(", ") || "no overlap");
+    // THE FLOOR MOVES WITH THE FLEET. It was a literal 40 until South
+    // Carolina's go-live (2026-10-13) made the list exactly 40 long: every
+    // place that publishes takes one name off it, so the lower bound is the
+    // 50 states and DC less one per fleet entry, which a city entry only makes
+    // looser.
     check("the not-yet list is non-empty and plausible",
-      notYet.length > 40 && notYet.length < 51, String(notYet.length));
+      notYet.length >= 51 - FLEET.length && notYet.length < 51,
+      `${notYet.length} (floor ${51 - FLEET.length})`);
 
     // Barlow must actually be applied, not silently falling back to system-ui.
     const font = await page.evaluate(() =>
@@ -257,6 +263,26 @@ try {
         body: `<!doctype html><title>instance stub</title>`,
       }));
   }
+  // Wait for the address box to SETTLE, not for a fixed time. It reads
+  // fleet-outlines.json before it decides, and on a busy runner that took
+  // longer than the 700 ms these checks used to sleep: on 2026-10-13, with
+  // thirteen outlines in the file, Illinois (the first case, so the first
+  // fetch) read the landing page's own URL. Settled means the page navigated
+  // or the status line shows one of its error-class endings (outside every
+  // place, no matches, search failed). A navigation destroys the page's
+  // context, so the status test's rejection is swallowed rather than allowed
+  // to win the race before the new URL commits; the deadline falls through to
+  // the check, which reports what it found.
+  async function addressSettled(page) {
+    const timeout = 10000;
+    await Promise.race([
+      page.waitForURL((u) => u.pathname !== "/", { timeout, waitUntil: "commit" }),
+      page.waitForFunction(() => {
+        const s = document.getElementById("search-status");
+        return !!s && s.classList.contains("err");
+      }, null, { timeout }).catch(() => new Promise(() => {})),
+    ]).catch(() => {});
+  }
   for (const m of FLEET) {
     const lat = (m.bbox.minLat + m.bbox.maxLat) / 2;
     const lng = (m.bbox.minLng + m.bbox.maxLng) / 2;
@@ -273,7 +299,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "somewhere in " + m.landing_name);
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     const u = new URL(page.url());
     check(`an address in ${m.landing_name} opens /${m.tag}/`,
       u.pathname === `/${m.tag}/`, page.url());
@@ -321,7 +347,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", probe.name);
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     const u = new URL(page.url());
     check(`${probe.name} opens /${probe.tag}/ (${probe.why})`,
       u.pathname === `/${probe.tag}/`, page.url());
@@ -343,7 +369,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "Rock Island, Illinois");
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     check("with fleet-outlines.json unreachable, Rock Island still opens /il/ by the rectangle pass",
       new URL(page.url()).pathname === "/il/", page.url());
     await ctx.close();
@@ -368,7 +394,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "Clayton, Missouri");
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     check("Clayton, Missouri stays on the landing page though Illinois's bbox claims it",
       new URL(page.url()).pathname === "/", page.url());
     const msg = await textOrNull(page, "#search-status");
@@ -385,7 +411,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "Gary, Indiana");
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     check("Gary, Indiana opens /in/ though Illinois's bbox also claims it",
       new URL(page.url()).pathname === "/in/", page.url());
     await ctx.close();
@@ -451,7 +477,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "Dallas, Texas");
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     check("an uncovered address stays on the landing page",
       new URL(page.url()).pathname === "/", page.url());
     const msg = await textOrNull(page, "#search-status");
@@ -468,7 +494,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "200 S 9th St, Springfield IL");
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     const msg = await textOrNull(page, "#search-status");
     check("a failed search says so", /failed/i.test(msg || ""), JSON.stringify(msg));
     // The button must come back, or one flaky lookup bricks the box for the

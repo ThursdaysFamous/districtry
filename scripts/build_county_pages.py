@@ -312,6 +312,25 @@ INSTANCES = [
          adapters=("ky_county_governments",),
          index_provenance="each name as the Kentucky Department for Local "
                           "Government's county directory lists it"),
+    # SOUTH CAROLINA NAMES ELECTION WINNERS, from the State Election
+    # Commission's certified results, and reads each county's own council page
+    # beside them, so a seat the county lists differently says so on its line.
+    # Every county has had an elected council since the Home Rule Act of 1975.
+    # A chair, supervisor or at-large member elected countywide gets a section
+    # of its own, and Hampton and Jasper, whose members are all elected
+    # countywide, are the at-large shape.
+    dict(tag="sc", state="South Carolina", concept="county-council",
+         index_page="county-council.html",
+         heading="%(county)s County Council",
+         page_title="%(county)s County Council",
+         phrase="county council", index_label="County councils",
+         all_label="All South Carolina county councils",
+         app_name="districtry South Carolina", app_url="https://districtry.com/sc/",
+         district_word="District", member_word="Council member",
+         adapters=("sc_councils",),
+         index_provenance="each name the winner of that seat's most recent "
+                          "election in the South Carolina Election "
+                          "Commission's certified results, dated to it"),
     # TENNESSEE NAMES WHAT EACH COUNTY'S OWN PAGE LISTS, county by county as
     # the roster reaches them, so a county the roster has not read has no page
     # rather than one naming nobody. Every county elects its commission from
@@ -368,14 +387,12 @@ INSTANCES = [
 # AN INSTANCE WHOSE ADAPTER IS SETTLED AND WHOSE PAGES ARE HELD. Nothing here
 # renders, indexes or counts these: they exist so that build_eam_status.py's
 # scorecard reads the county tier through the same adapter the pages will use,
-# rather than through a second reader of the same file. South Carolina is held
-# because it is dark (its NOT_COUNTY_BOARDS entry says why); its go-live moves
-# this entry into INSTANCES with the page wording beside it and drops that
-# entry, and the adapter does not change.
-HELD_INSTANCES = [
-    dict(tag="sc", state="South Carolina", concept="county-council",
-         adapters=("sc_councils",)),
-]
+# rather than through a second reader of the same file. An instance is held
+# while it is dark, with a NOT_COUNTY_BOARDS entry saying so, and its go-live
+# moves it into INSTANCES with the page wording beside it and drops that
+# entry; the adapter does not change. South Carolina was the first, and moved
+# at its go-live; none is held today.
+HELD_INSTANCES = []
 
 
 def heading_of(inst, county, rec=None):
@@ -1806,11 +1823,41 @@ _MN_MONTHS = ("January", "February", "March", "April", "May", "June", "July",
               "August", "September", "October", "November", "December")
 
 
+SC_LEDE = ("These are the people who won each seat on %(county)s County "
+           "Council at its most recent election in the South Carolina Election "
+           "Commission's certified results, each dated to that election. They "
+           "are election winners, not a list the county keeps up to date, so a "
+           "seat that has changed hands since may still show the person who won "
+           "it. Where the county's own council page lists the seat differently, "
+           "the seat's line says so.")
+SC_STANDFIRST = ("Who won each seat on the %(heading)s at its most recent "
+                 "election, from the South Carolina Election Commission's results.")
+SC_DESC = ("Who won each seat on %(county)s County Council at its most recent "
+           "election, and the district each one represents.")
+SC_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above won an "
+                 "election the South Carolina Election Commission certified,\n"
+                 "and this page dates each name to that election rather than "
+                 "claiming the seat is still held.")
+SC_CTA_NOTE = ("Opens the map with the county council layer on. The district "
+               "lines come from the state Revenue and Fiscal Affairs Office; the "
+               "names come from the Election Commission's results and are dated "
+               "to them.")
+SC_CTA_NOTE_AT_LARGE = ("Opens the map with the county layer on. Every member "
+                        "of this council is elected countywide, so the members "
+                        "above are the answer for anywhere in the county.")
+# The Election Commission's results page, the one the roster builder reads
+# (RESULTS_PAGE in sc/scripts/build_sc_county_council_roster.py). Each seat's own
+# results page is in the roster; a page names one place for all of them.
+SC_RESULTS_URL = "https://scvotes.gov/elections-statistics/election-results/"
+
 # South Carolina's non-district seat kinds, in the words a page prints for them.
 SC_SEAT_LABELS = {"chair": "Chair, elected countywide",
                   "at-large": "Elected countywide",
                   "supervisor": "Supervisor, elected countywide",
-                  "township": "Elected by township"}
+                  # Jasper's four residence seats: elected by the whole
+                  # county, each member required to live in one township.
+                  "township": "Elected countywide from a residence township"}
 
 
 def sc_councils(inst):
@@ -1844,12 +1891,30 @@ def sc_councils(inst):
         def person(seat):
             when = _mn_date(seat.get("election"))
             p = {"name": seat["name"].strip()}
-            note = "Elected %s." % when if when else None
+            note = (("Elected %s to finish a term." if seat.get("unexpiredTerm")
+                     else "Elected %s.") % when) if when else None
+            # THE SAME FOUR READINGS THE CARD PRINTS (scCountySaysRow in
+            # sc/index.html), so a page and a card never describe one seat two
+            # ways. A reading this does not know FAILS rather than printing the
+            # winner with nothing beside it.
             says = seat.get("countySays") or {}
+            read = _mn_date(says.get("read"))
+            whose = "%s County's own council page" % name
+            said = None
             if (says.get("name") or "").strip():
-                note = ((note + " ") if note else "") + (
-                    "The county's own page names %s for this seat."
-                    % says["name"].strip())
+                said = "%s names %s for this seat." % (whose, says["name"].strip())
+            elif says.get("vacant"):
+                said = "%s lists this seat as vacant." % whose
+            elif says.get("former"):
+                said = "%s lists %s as a former member." % (whose, p["name"])
+            elif says.get("notListed"):
+                said = "%s lists the other members and not %s." % (whose, p["name"])
+            elif says:
+                problems.append("sc %s County: a countySays reading this page "
+                                "does not know: %r" % (name, sorted(says)))
+            if said:
+                note = ((note + " ") if note else "") + said + (
+                    " Read %s." % read if read else "")
             if note:
                 p["elected"] = note
             return p
@@ -1871,16 +1936,44 @@ def sc_councils(inst):
                      for label in sorted(by_district, key=district_sort_key)]
         extras = [(kind, SC_SEAT_LABELS[kind], extra[kind])
                   for kind in SC_SEAT_LABELS if kind in extra]
-        entry = {"districts": districts, "sourceUrl": rec.get("countyPage"),
+        # THE SOURCE LINK IS THE RESULTS, NOT THE COUNTY'S PAGE: the names
+        # are the Commission's, and a link labelled with its name that opened
+        # the county's site would say where they came from wrongly.
+        entry = {"districts": districts, "sourceUrl": SC_RESULTS_URL,
                  "source_label": "the South Carolina Election Commission's "
                                  "results",
                  "extras": extras, "skipped": [], "slug": county_slug(name),
-                 "at_large": False, "source_file": path}
+                 "at_large": False, "source_file": path,
+                 "lede": SC_LEDE, "standfirst": SC_STANDFIRST,
+                 "desc": SC_DESC, "disclaimer": SC_DISCLAIMER,
+                 "cta_note": SC_CTA_NOTE}
         if not districts:
             # A council elected wholly at large: its members are the record.
             entry["at_large"] = True
             entry["members"] = [m for _k, _l, ms in extras for m in ms]
             entry["extras"] = []
+            # Results name the seats, so a page whose seats differ says which
+            # is which: Jasper's members are one at large and four tied to a
+            # residence township, the labels the card prints (scSeatLabel in
+            # sc/index.html). Hampton's five are all at large and need none.
+            if extra.get("township"):
+                entry["members"] = []
+                for seat in seats:
+                    p = person(seat)
+                    label = ("%s Township seat." % str(seat["township"]).strip()
+                             if seat.get("seat") == "township" else "At large.")
+                    p["elected"] = label + (" " + p["elected"]
+                                            if p.get("elected") else "")
+                    entry["members"].append(p)
+            # These are election winners, not a sitting roster, so the search
+            # snippet says "won" where the fleet's flat pages say "sits".
+            entry["desc_lead"] = "Who won each seat on the"
+            entry["cta_note"] = SC_CTA_NOTE_AT_LARGE
+            # The flat page's description takes the member count positionally.
+            # Jasper's residence townships are on the page rather than in this
+            # sentence, which would otherwise run past validate_serp_lengths'
+            # 155 characters (measured: 169).
+            entry["desc"] = "%d members elected countywide"
         if not _count_named(districts, extras):
             if _nobody_key(inst, name) not in NAMES_NOBODY:
                 problems.append("sc %s County names nobody" % name)
@@ -2133,6 +2226,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "in_commissioners": in_commissioners,
             "ok_commissioners": ok_commissioners,
             "nc_commissioners": nc_commissioners,
+            "sc_councils": sc_councils,
             "ky_county_governments": ky_county_governments,
             "tn_commissioners": tn_commissioners,
             "ny_supervisors": ny_supervisors,
@@ -2845,8 +2939,8 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
         # the districted half of this same generator never carried it. The
         # em dash matches that half too — the two shapes were gratuitously
         # different.
-        desc = ("Who sits on the %s — %s, from %s."
-                % (head, (rec.get("desc")
+        desc = ("%s %s — %s, from %s."
+                % (rec.get("desc_lead") or "Who sits on the", head, (rec.get("desc")
                           or "%d members elected at large across the whole "
                              "county") % named,
                    rec.get("source_label") or "the county's own published roster"))
@@ -3228,17 +3322,6 @@ NOT_COUNTY_BOARDS = {
                "in-county-commissioners.json. The council's members are named "
                "on the app's County card from the same certified results; a "
                "section for them on these pages is its own change.",
-    ),
-    "sc/data/app/sc-county-council-members.json": dict(
-        date="2026-10-11",
-        reason="South Carolina's county councils, which ARE the county's "
-               "governing body and belong on these pages. They are held back "
-               "for one reason: South Carolina is dark, and a county page, its "
-               "index and the about page's officeholder count would describe an "
-               "app nobody can open yet. The adapter, sc_councils, landed "
-               "2026-10-13 under HELD_INSTANCES so the scorecard reads the "
-               "county tier through it; the go-live change (sc/WATCH.md "
-               "lists it) moves it into INSTANCES and this entry goes.",
     ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",
