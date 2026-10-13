@@ -180,8 +180,14 @@ try {
     check("the not-yet list never names a place that already answers",
       notYet.every((s) => !liveNames.includes(s)),
       notYet.filter((s) => liveNames.includes(s)).join(", ") || "no overlap");
+    // THE FLOOR MOVES WITH THE FLEET. It was a literal 40 until South
+    // Carolina's go-live (2026-10-13) made the list exactly 40 long: every
+    // place that publishes takes one name off it, so the lower bound is the
+    // 50 states and DC less one per fleet entry, which a city entry only makes
+    // looser.
     check("the not-yet list is non-empty and plausible",
-      notYet.length > 40 && notYet.length < 51, String(notYet.length));
+      notYet.length >= 51 - FLEET.length && notYet.length < 51,
+      `${notYet.length} (floor ${51 - FLEET.length})`);
 
     // Barlow must actually be applied, not silently falling back to system-ui.
     const font = await page.evaluate(() =>
