@@ -51,7 +51,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "42.04940,-92.90710"; // downtown Marshalltown, Marshall County
 const OFFLINE = ["county", "us-house", "ia-senate", "ia-house", "county-supervisor", "school-district-unified"];
 const EXPECT_DISTRICT = { "county": "Marshall County", "us-house": "4", "ia-senate": "26", "ia-house": "52", "county-supervisor": "At-large", "school-district-unified": "Marshalltown Community School District" };
-const NEGATIVE_POINT = "43.65000,-93.37000"; // inside Minnesota (near Albert Lea), north of the Iowa land border (~43.50) and inside permalink_gate's maxLat (43.70) so the point is still selectable. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: sampling permalink_gate every 0.25 degrees and naming each point's state off TIGERweb, the ground it reaches outside Iowa's own ring is Minnesota, Wisconsin, Illinois, Missouri, Nebraska and South Dakota and nothing else — one live instance, one published dark, four states that could each take one later. Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays and the two checks that select it refuse ../fleet-outlines.json instead, which is what the pan hand-off reads; Iowa asserts nothing about fleet routing.
+const NEGATIVE_POINT = "43.65000,-93.37000"; // inside Minnesota (near Albert Lea), north of the Iowa land border (~43.50) and inside permalink_gate's maxLat (43.70) so the point is still selectable. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: sampling permalink_gate every 0.25 degrees and naming each point's state off TIGERweb, the ground it reaches outside Iowa's own ring is Minnesota, Wisconsin, Illinois, Missouri, Nebraska and South Dakota and nothing else — one live instance, one published dark, four states that could each take one later. Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays. Until 2026-10-13 the two checks that select it refused ../fleet-outlines.json, because the map then switched apps whenever its centre crossed into a sibling's state; panning no longer does that, so neither refuses anything. Iowa asserts nothing about fleet routing.
 const APP_NAME = "districtry Iowa";
 const EXPECT_LAYERS = 21;
 // ==== GENERATED:END smoke-config ====
@@ -237,20 +237,12 @@ try {
   //     so this needs no network.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    // THE FLEET FILE IS REFUSED FOR THE WHOLE OF THIS CHECK, because its
-    // coverage-band half selects NEGATIVE_POINT and setSelectedPoint PANS
-    // there, which puts the map's CENTRE outside Iowa and arms the pan
-    // hand-off (ENGINE metro-portal's moveend → placeOwner → offerMetroPortal,
-    // which sets window.location.href). Iowa's negative point is in Minnesota
-    // and every other point it could be is in a sibling too — see the measured
-    // note on NEGATIVE_POINT at the top of this file — so the day mn/ enters
-    // fleet-outlines.json this check would navigate to /mn/ mid-assertion.
-    // Refused, placeOwner's own error leg answers "nobody", which is the
-    // state this check is about.
-    // Iowa asserts nothing about fleet routing, so nothing else here needs it.
-    const page = await booted(context, BASE, async (p) => {
-      await p.route("**/fleet-outlines.json", (r) => r.abort());
-    });
+    // The coverage-band half selects NEGATIVE_POINT, which is in Minnesota,
+    // and setSelectedPoint PANS there. Until 2026-10-13 that put the map's
+    // centre in a sibling's state and the pan hand-off navigated away
+    // mid-assertion, so this check refused ../fleet-outlines.json; panning no
+    // longer switches apps, so it refuses nothing.
+    const page = await booted(context, BASE);
     const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/coverage-gaps.json"), "utf8"));
     const expected = Object.keys(shipped).length;
 
@@ -328,6 +320,18 @@ try {
       }, null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
     }
     if (await washPainted()) {
+      // THE PURPLE EDGE (2026-10-13). This app's coverage is its whole ground,
+      // so the glowing line is drawn along the coverage itself, as the apps
+      // with a wider region band always drew theirs. Until that day this one
+      // drew no line at all. The coverage key names it.
+      const edge = await page.evaluate(() => {
+        const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
+        const sw = document.querySelector(".districtry-map-legend .dml-items .dml-glow");
+        const label = sw && sw.parentElement.querySelector(".dml-label");
+        return { line: !!(pane && pane.querySelector("path.dst-glow")), label: label ? label.textContent : null };
+      });
+      check("the wash draws the purple edge along the coverage, and the key names it",
+        edge.line && !!edge.label, JSON.stringify(edge));
       await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
         { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
       const beyond = await openGaps();
@@ -791,10 +795,6 @@ try {
       // verdict is identical either way — aborting it is what keeps this
       // check's verdict independent of whether a runner can reach TIGERweb.
       await p.route("**tigerweb.geo.census.gov/**", (r) => r.abort());
-      // And the fleet file, for the reason given on the coverage-band check
-      // above: this permalink pans the map's centre into Minnesota, so once a
-      // sibling covers it the pan hand-off navigates away mid-assertion.
-      await p.route("**/fleet-outlines.json", (r) => r.abort());
     });
     for (const id of NEGATIVE_IDS) {
       if (NEGATIVE_HIDDEN.includes(id)) {

@@ -2455,7 +2455,8 @@
       "/il/data/app/pike-precincts.json",
       "/il/data/app/saline-precincts.json",
       "/il/data/app/union-precincts.json",
-      "/il/data/app/wabash-precincts.json"
+      "/il/data/app/wabash-precincts.json",
+      "/il/data/app/hamilton-precincts.json"
      ],
      "whole_set": [
       "arcgispublicmap.co.st-clair.il.us",
@@ -2706,12 +2707,6 @@
         ]
        },
        {
-        "key": "hamilton",
-        "hosts": [
-         "services.arcgis.com"
-        ]
-       },
-       {
         "key": "coles",
         "hosts": [
          "services2.arcgis.com"
@@ -2770,7 +2765,8 @@
        "pike",
        "saline",
        "union",
-       "wabash"
+       "wabash",
+       "hamilton"
       ],
       "failed": [],
       "files": {
@@ -2911,6 +2907,9 @@
        ],
        "wabash": [
         "/il/data/app/wabash-precincts.json"
+       ],
+       "hamilton": [
+        "/il/data/app/hamilton-precincts.json"
        ]
       }
      },

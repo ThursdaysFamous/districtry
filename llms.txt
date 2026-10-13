@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Twelve instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma and South Carolina. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 13 instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina and Tennessee. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -166,6 +166,17 @@ All 46 counties and their county council districts: cities and towns, school dis
 - [Sources & data layers](https://districtry.com/sc/sources.html)
 - [Who is my SC legislator?](https://districtry.com/sc/state-legislature.html)
 - [District questions](https://districtry.com/sc/faq.html)
+
+## Tennessee
+
+All 95 counties and their county commission districts: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Tennessee Senate, House and U.S. House districts, with who holds each seat. County commissioners are named from each county's own pages where the county publishes a current list, and the Data gaps panel lists the counties not named yet and why.
+
+- [Tennessee district lookup](https://districtry.com/tn/): 13 layers, all 95 counties.
+- [Who is my U.S. representative?](https://districtry.com/tn/congress.html)
+- [County commission district lookup](https://districtry.com/tn/county-commissioner.html): links a page per county, 54 of them, each naming every member with whatever contact details that county publishes.
+- [Sources & data layers](https://districtry.com/tn/sources.html)
+- [Who is my Tennessee legislator?](https://districtry.com/tn/state-legislature.html)
+- [Tennessee district questions](https://districtry.com/tn/faq.html)
 
 ## Where the answers come from
 

@@ -80,7 +80,9 @@
     { "id": "oklahoma", "label": "Oklahoma", "url": "https://districtry.com/ok/", "emoji": "🌾", "explorer_name": "districtry Oklahoma",
       "bbox": { "minLng": -103.01, "minLat": 33.61, "maxLng": -94.43, "maxLat": 37.01 } },
     { "id": "southcarolina", "label": "South Carolina", "url": "https://districtry.com/sc/", "emoji": "🌴", "explorer_name": "districtry South Carolina",
-      "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } }
+      "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } },
+    { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
+      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } }
   ],
   "hover_number_keys": [
     [
@@ -353,7 +355,8 @@
     "note": "Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side."
   },
   "coverage_key": {
-    "outside": "Outside South Carolina"
+    "outside": "Outside South Carolina",
+    "edge": "South Carolina"
   },
   "data_files": {
     "geometry": [
@@ -437,11 +440,7 @@
     "cache_name": "districtry-sc-shell-v3",
     "shell_urls": [
       "./",
-      "./manifest.webmanifest",
-      "./icons/icon-192.png",
-      "./icons/icon-512.png",
       "./icons/apple-touch-icon.png",
-      "./icons/icon-maskable-512.png",
       "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
       "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
       "./vendor/leaflet-maplibre-gl.js"

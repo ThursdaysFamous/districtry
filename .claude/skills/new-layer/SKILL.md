@@ -78,13 +78,17 @@ root `layer-codes.json` — two or three lowercase letters or digits, starting
 with a letter, never a code already listed (retired ones included) and never
 another layer's id — because share links write layers by code and the code is
 permanent; the generator refuses a layer without one, and its `--check` fails
-on a code changed or removed against the base branch. Then one run:
+on a code changed or removed against the base branch. If another app has a
+layer that means the same thing, put this layer's id in that concept's row of
+the root `layer-concepts.json` (or add a row), so a reader who moves between
+apps keeps it switched on; the generator fails on an id the app does not
+register and on an id two live apps share that no row carries. Then one run:
 
 ```bash
 python3 scripts/generate_metro_files.py
 ```
 
-emits `LAYER_AREA_RANK`, `LAYER_CODES`, `EXPECT_LAYER_IDS` and `MIN_REGISTER_LAYER`, the
+emits `LAYER_AREA_RANK`, `LAYER_CODES`, `LAYER_CONCEPTS`, `EXPECT_LAYER_IDS` and `MIN_REGISTER_LAYER`, the
 `sw.js` URL lists, the smoke test's `EXPECT_LAYERS`, the `sources.html` matrix
 row and the instance `CLAUDE.md` layer count.
 

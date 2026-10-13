@@ -318,12 +318,13 @@
     }
   ],
   "negative_point": {
-    "lat": 36.4,
-    "lng": -86.5,
-    "note": "inside Sumner County, TENNESSEE, about 15 km south of the Kentucky line and north-east of Nashville — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (minLat 36.35) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-09-30: TIGERweb's county layer names Sumner County STATE 47 (control: the anchor returns Jefferson County STATE 21), and no outline in fleet-outlines.json contains it (control: the Louisville anchor is likewise in none of them, so the file genuinely has no Kentucky coverage rather than the test passing vacuously). TENNESSEE RATHER THAN ONE OF THE OTHER SIX NEIGHBOURS, deliberately. Illinois is live and borders Kentucky across the Ohio, so a point over there would sit inside an instance's own outline and the browser would hand the selection off to districtry.com/il/ and navigate away — which is how Minnesota's first candidate failed, silently, as a smoke-test timeout on a blank document rather than as a wrong answer. Indiana and North Carolina are in build as dark instances and will become live outlines, so they were avoided for the same reason one step ahead. Tennessee is in no instance and in no launch plan. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County."
+    "lat": 38.8,
+    "lng": -83.55,
+    "note": "near West Union, Adams County, OHIO, about 15 km north of the Ohio River — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (maxLat 39.30) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's state and county layers name Ohio and Adams County STATE 39 (controls: the Louisville anchor returns Kentucky and Jefferson County STATE 21, and Columbus returns Ohio and Franklin County STATE 39, so the query answers rather than failing), and no outline in fleet-outlines.json contains it, with Tennessee's outline in that file (control: the Louisville anchor IS inside Kentucky's outline there). THIS POINT WAS IN SUMNER COUNTY, TENNESSEE UNTIL TENNESSEE'S GO-LIVE, chosen on 2026-09-30 because no instance covered Tennessee; that change put Tennessee's outline in the fleet file with the old point inside it, so a Kentucky selection there would have handed off to districtry.com/tn/. OHIO RATHER THAN ANOTHER NEIGHBOUR: Illinois, Indiana and Tennessee are live, Missouri is on the fleet's new-state list, and the states planned next (Arkansas, Mississippi, Louisiana) do not border Kentucky, so this point should not have to move when they go live. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County."
   },
   "coverage_key": {
-    "outside": "Outside Kentucky"
+    "outside": "Outside Kentucky",
+    "edge": "Kentucky"
   },
   "data_files": {
     "geometry": [
@@ -408,11 +409,7 @@
     "cache_name": "districtry-ky-shell-v4",
     "shell_urls": [
       "./",
-      "./manifest.webmanifest",
-      "./icons/icon-192.png",
-      "./icons/icon-512.png",
       "./icons/apple-touch-icon.png",
-      "./icons/icon-maskable-512.png",
       "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
       "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
       "./vendor/leaflet-maplibre-gl.js"
@@ -484,7 +481,9 @@
     { "id": "oklahoma", "label": "Oklahoma", "url": "https://districtry.com/ok/", "emoji": "🌾", "explorer_name": "districtry Oklahoma",
       "bbox": { "minLng": -103.01, "minLat": 33.61, "maxLng": -94.43, "maxLat": 37.01 } },
     { "id": "southcarolina", "label": "South Carolina", "url": "https://districtry.com/sc/", "emoji": "🌴", "explorer_name": "districtry South Carolina",
-      "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } }
+      "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } },
+    { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
+      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } }
   ],
   "sources_page": {
     "file": "ky/sources.html",

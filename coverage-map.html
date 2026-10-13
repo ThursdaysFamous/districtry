@@ -180,71 +180,56 @@ html, body { margin: 0; height: 100%; background: var(--paper); font-family: var
 }
 .leaflet-bar a:hover { background-color: var(--brand-tint); }
 .leaflet-touch .leaflet-bar { border-color: var(--border); }
-.glow-pane { filter: blur(7px); }
 /* NO tile filter here, deliberately. An earlier draft rode OSM's own raster
    and had to fake both themes with saturate/brightness and an invert +
    hue-rotate pass. CARTO's Positron and Dark Matter ARE the two grounds this
    page wants, drawn that way rather than filtered into it — so the light
    basemap is genuinely pale and the dark one is genuinely dark, and the
-   coverage wash keeps its true colour on both. */
-.place-label {
-  font: 600 12.5px/1 var(--font-heading); color: var(--ink);
-  text-shadow: 0 0 4px var(--paper), 0 0 4px var(--paper), 0 0 8px var(--paper);
-  white-space: nowrap; background: none; border: none;
+   coverage wash keeps its true colour on both. They are the NO-LABELS styles
+   since 2026-10-13: the basemap's own country and sea names were the only
+   other words on the map, and they competed with ours. */
+/* One short label per area, the two-letter tag a reader already knows from an
+   envelope. The script hides any label whose area is too small on screen to
+   hold it, so neighbours never stack their names on top of each other. */
+.tag-label {
+  font: 700 12px/1 var(--font-heading); letter-spacing: .06em; color: var(--ink);
+  text-shadow: 0 0 3px var(--paper), 0 0 3px var(--paper), 0 0 6px var(--paper);
+  white-space: nowrap; background: none; border: none; pointer-events: none;
   display: flex; align-items: center; justify-content: center;
 }
+.tag-label.hidden { visibility: hidden; }
+.city-label { font-weight: 600; letter-spacing: 0; }
 .label-left { justify-content: flex-start; }
 .label-right { justify-content: flex-end; }
-.legend {
-  position: absolute; z-index: 500; right: 14px; bottom: 22px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-card); box-shadow: 0 1px 3px rgba(23,22,28,.06);
-  padding: 12px 14px 13px; width: 236px; max-width: calc(100% - 28px);
+/* The tooltip replaces the legend row: the place's name, how much of it is
+   covered, and that a click opens it. Theme tokens, so it flips with the page;
+   Leaflet's own tooltip is a white box with a pointer, both hardcoded. */
+.leaflet-tooltip.place-tip {
+  background: var(--surface); color: var(--ink); border: 1px solid var(--border);
+  border-radius: 8px; box-shadow: 0 4px 14px rgba(23,22,28,.12); padding: 7px 10px;
+  font: 13px/1.35 var(--font-body); white-space: nowrap;
 }
-.legend h3 {
-  margin: 0 0 9px; font: 600 11px/1 var(--font-heading);
-  letter-spacing: .09em; text-transform: uppercase; color: var(--faint);
-}
-.legend a {
-  display: flex; align-items: baseline; gap: 8px; padding: 3px 5px; margin: 0 -5px;
-  border-radius: 5px; text-decoration: none; color: var(--ink);
-  transition: background .14s ease;
-}
-.legend a:hover, .legend a:focus-visible { background: var(--brand-tint); }
-.legend .sw { width: 11px; height: 11px; flex: 0 0 auto; border-radius: 2px; position: relative; top: 2px; }
-.legend .nm { font: 600 14px/1.2 var(--font-heading); }
-.legend .mt { margin-left: auto; font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; line-height: 1.35; }
-.legend .key { margin: 9px 0 0; padding-top: 8px; border-top: 1px solid var(--border-soft); display: flex; flex-direction: column; gap: 5px; }
-.legend .key div { display: flex; gap: 7px; font-size: 11px; line-height: 1.35; color: var(--muted); }
-.legend .key .sw { top: 1px; }
-.legend p { margin: 8px 0 0; padding-top: 8px; border-top: 1px solid var(--border-soft); font-size: 11px; line-height: 1.45; color: var(--muted); }
-/* On a phone the floating legend is wider than half the viewport, so it sat
-   ON the map and hid whichever markers were behind it — New York's, at the
-   default framing. Below 560px it stops floating: the map gives up its bottom
-   strip and the legend fills it edge to edge. The landing page gives the
-   iframe extra height at the same breakpoint, so the map keeps a usable area
-   rather than being squeezed by the panel it just made room for. */
-@media (max-width: 560px) {
-  #map { inset: 0 0 208px 0; }
-  .legend { left: 8px; right: 8px; bottom: 8px; width: auto; max-width: none; }
+.leaflet-tooltip.place-tip::before { display: none; }
+.place-tip .nm { display: block; font: 600 15px/1.2 var(--font-heading); }
+.place-tip .mt { display: block; color: var(--muted); }
+.place-tip .go { display: block; margin-top: 2px; color: var(--brand-600); }
+/* Shown only if the outlines cannot be fetched: the place list under the frame
+   on the landing page still works, and the reader is told so. */
+.map-note {
+  position: absolute; z-index: 500; left: 12px; right: 12px; bottom: 22px; margin: 0;
+  padding: 10px 12px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-card); font-size: 12.5px; line-height: 1.45; color: var(--muted);
 }
 </style>
 </head>
 <body>
 <!-- No role="img" on the map: it holds Leaflet's own focusable zoom controls,
      and role="img" makes a subtree presentational, so it would hide them from
-     assistive tech. The legend below is the accessible statement of the same
-     fact — real links, one per place — and it is also what a reader is left
-     with if the outlines fail to fetch. -->
+     assistive tech. The accessible statement of the same fact is the landing
+     page's list of every state under this frame — real links, one per place —
+     and it is also what a reader is left with if the outlines fail to fetch. -->
 <div id="map"></div>
-<div class="legend">
-  <h3>Covered today</h3>
-  <div id="legend-rows"></div>
-  <div class="key">
-    <div><span class="sw" style="background:#1d5fd65c;border:1px solid #1d5fd6"></span><span>County-level layers reach here</span></div>
-    <div><span class="sw" style="background:#1d5fd62b;border:1px dashed #1d5fd6"></span><span>Statewide layers, whole state</span></div>
-  </div>
-</div>
+<p class="map-note" hidden>The coverage outlines could not be loaded. The list of places under this map still works.</p>
 <script>
 var AREAS = [
   { tag: "il", name: "Illinois", url: "https://districtry.com/il/", file: "il/data/app/metro-outline.json", state: "il/data/app/il-state-outline.json", scope: "93 counties" },
@@ -257,26 +242,30 @@ var AREAS = [
   { tag: "in", name: "Indiana", url: "https://districtry.com/in/", file: "in/data/app/metro-outline.json", state: null, scope: "all 92 counties" },
   { tag: "nc", name: "North Carolina", url: "https://districtry.com/nc/", file: "nc/data/app/metro-outline.json", state: null, scope: "all 100 counties" },
   { tag: "ok", name: "Oklahoma", url: "https://districtry.com/ok/", file: "ok/data/app/metro-outline.json", state: null, scope: "all 77 counties" },
-  { tag: "sc", name: "South Carolina", url: "https://districtry.com/sc/", file: "sc/data/app/metro-outline.json", state: null, scope: "all 46 counties" }
+  { tag: "sc", name: "South Carolina", url: "https://districtry.com/sc/", file: "sc/data/app/metro-outline.json", state: null, scope: "all 46 counties" },
+  { tag: "tn", name: "Tennessee", url: "https://districtry.com/tn/", file: "tn/data/app/metro-outline.json", state: null, scope: "all 95 counties" }
 ];
 var CITIES = [
-  { tag: "ca", name: "San Francisco", url: "https://districtry.com/ca/", lat: 37.775, lng: -122.45, scope: "1 city", cls: "label-left", anchor: [-9, 7] }
+  { tag: "ca", name: "San Francisco", url: "https://districtry.com/ca/", lat: 37.775, lng: -122.45, scope: "1 city", cls: "city-label label-left", anchor: [-9, 7] }
 ];
-var DATA = "#1d5fd6", BRAND = "#6d3fd1";
+var DATA = "#1d5fd6";
 var CARTO_KEY = "cb1_269e_1_18eecdd74aaa4bac77940fa4";
 
 if (typeof L === "undefined") {
   document.getElementById("map").outerHTML =
     '<p style="margin:24px;font:14px var(--font-body,sans-serif);color:var(--muted,#666)">' +
-    'The coverage map could not load. The list of places above still works.</p>';
+    'The coverage map could not load. The list of places under it still works.</p>';
 } else {
+  /* No zoom buttons in a frame narrower than a small tablet: on a phone the
+     frame is about 210px tall and the buttons took a quarter of it, while
+     pinching still zooms. */
   var map = L.map("map", {
-    zoomControl: true, scrollWheelZoom: false, attributionControl: true,
-    minZoom: 3, maxZoom: 9
+    zoomControl: window.innerWidth >= 480, scrollWheelZoom: false, attributionControl: true,
+    minZoom: 2, maxZoom: 9, zoomSnap: 0.25
   });
   /* The fleet's own basemap, raster tier. The apps upgrade to the MapLibre
      vector build; this page stays on raster on purpose — it is a static
-     overview inside a lazy iframe, and a 1 MB GL bundle to draw five
+     overview inside a lazy iframe, and a 1 MB GL bundle to draw a few dozen
      polygons at zoom 4 is not a trade worth making. The ATTRIBUTION IS THE
      LICENCE: CARTO's free tier is domain + quota enforced in exchange for
      the visible OSM + CARTO credit, so it is not decoration. */
@@ -284,44 +273,93 @@ if (typeof L === "undefined") {
     return "https://{s}.basemaps.cartocdn.com/" + kind + "/{z}/{x}/{y}{r}.png?key=" + CARTO_KEY;
   }
   var darkQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
-  function tileKind() { return darkQuery && darkQuery.matches ? "dark_all" : "light_all"; }
+  function isDark() { return !!(darkQuery && darkQuery.matches); }
+  function tileKind() { return isDark() ? "dark_nolabels" : "light_nolabels"; }
   var tiles = L.tileLayer(tileUrl(tileKind()), {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
       'contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
   }).addTo(map);
+  /* The statewide wash is lighter than the inner tier on both grounds, but a
+     light-ground opacity all but vanishes on Dark Matter, so it has its own. */
+  function washOpacity() { return isDark() ? 0.28 : 0.16; }
+  var washes = [];
   /* A reader who flips their system theme with this page open gets the other
      basemap, rather than a pale one on a dark page until they reload. */
   if (darkQuery) {
-    var onScheme = function () { tiles.setUrl(tileUrl(tileKind())); };
+    var onScheme = function () {
+      tiles.setUrl(tileUrl(tileKind()));
+      washes.forEach(function (w) { w.setStyle({ fillOpacity: washOpacity() }); });
+    };
     if (darkQuery.addEventListener) darkQuery.addEventListener("change", onScheme);
     else if (darkQuery.addListener) darkQuery.addListener(onScheme);
   }
-  map.fitBounds([[25.4, -123.8], [48.4, -68.4]], { padding: [8, 8] });
+  map.fitBounds([[24.6, -124.6], [49.2, -67.2]], { padding: [6, 6] });
   function open_(url) { window.open(url, "_blank", "noopener"); }
 
-  var glowPane = map.createPane("glow");
-  glowPane.classList.add("glow-pane");
-  glowPane.style.zIndex = 390;
-
-  var rows = document.getElementById("legend-rows");
-  function legendRow(color, name, meta, url) {
-    var a = document.createElement("a");
-    a.href = url;
-    a.innerHTML = '<span class="sw" style="background:' + color + '33;border:1px solid ' + color + '"></span>'
-      + '<span class="nm"></span><span class="mt"></span>';
-    a.querySelector(".nm").textContent = name;
-    a.querySelector(".mt").textContent = meta;
-    rows.appendChild(a);
-    return a;
+  /* The tooltip is built from DOM nodes and textContent, never a markup
+     string: every word in it comes from metros.json. */
+  function tip(name, meta) {
+    var el = document.createElement("div");
+    [["nm", name], ["mt", meta], ["go", "Open the map →"]].forEach(function (part) {
+      var s = document.createElement("span");
+      s.className = part[0];
+      s.textContent = part[1];
+      el.appendChild(s);
+    });
+    return el;
   }
 
+  /* Each label sits at the centre of its area's LARGEST part — Michigan's on
+     the lower peninsula, not in the lake between its two halves — and is shown
+     only while that part is big enough on screen to hold it. */
+  function ringArea(r) {
+    var a = 0;
+    for (var i = 0, j = r.length - 1; i < r.length; j = i++) a += (r[j][0] + r[i][0]) * (r[j][1] - r[i][1]);
+    return Math.abs(a / 2);
+  }
+  function ringCentre(r) {
+    var a = 0, x = 0, y = 0;
+    for (var i = 0, j = r.length - 1; i < r.length; j = i++) {
+      var f = r[j][0] * r[i][1] - r[i][0] * r[j][1];
+      a += f; x += (r[j][0] + r[i][0]) * f; y += (r[j][1] + r[i][1]) * f;
+    }
+    return [y / (3 * a), x / (3 * a)];
+  }
+  function largestRing(gj) {
+    var best = null, bestArea = 0;
+    (gj.features || [gj]).forEach(function (f) {
+      var g = f.geometry || f;
+      var polys = g.type === "Polygon" ? [g.coordinates] : g.type === "MultiPolygon" ? g.coordinates : [];
+      polys.forEach(function (p) {
+        var area = ringArea(p[0]);
+        if (area > bestArea) { bestArea = area; best = p[0]; }
+      });
+    });
+    return best;
+  }
+  var labels = [];
   function label(latlng, text, className, iconSize, iconAnchor) {
     var m = L.marker(latlng, {
       interactive: false,
       icon: L.divIcon({ className: className, html: "", iconSize: iconSize, iconAnchor: iconAnchor })
     }).addTo(map);
     m.getElement().textContent = text;
+    return m;
   }
+  function areaLabel(ring, text) {
+    var lats = ring.map(function (p) { return p[1]; }), lngs = ring.map(function (p) { return p[0]; });
+    var box = L.latLngBounds([Math.min.apply(null, lats), Math.min.apply(null, lngs)],
+                             [Math.max.apply(null, lats), Math.max.apply(null, lngs)]);
+    labels.push({ marker: label(ringCentre(ring), text, "tag-label", [40, 14], [20, 7]), box: box });
+  }
+  function fitLabels() {
+    labels.forEach(function (l) {
+      var nw = map.latLngToContainerPoint(l.box.getNorthWest());
+      var se = map.latLngToContainerPoint(l.box.getSouthEast());
+      l.marker.getElement().classList.toggle("hidden", (se.x - nw.x) < 30 || (se.y - nw.y) < 20);
+    });
+  }
+  map.on("zoomend", fitLabels);
 
   Promise.all(AREAS.map(function (a) {
     return Promise.all([
@@ -336,42 +374,43 @@ if (typeof L === "undefined") {
            anywhere in the state, and only the county-dispatched concepts stop at
            the coverage area (see the module docstring for why this differs from
            the "no coverage map" call the landing page used to make). */
-        L.geoJSON(sgj || gj, { pane: "glow", style: { color: BRAND, weight: 7, opacity: 0.22, fill: false } }).addTo(map);
+        var group = L.featureGroup().addTo(map);
         if (sgj) {
-          L.geoJSON(sgj, {
-            style: { color: DATA, weight: 1.2, opacity: 0.85, dashArray: "4 3", fillColor: DATA, fillOpacity: 0.17 }
-          }).addTo(map);
+          washes.push(L.geoJSON(sgj, {
+            style: { color: DATA, weight: 1, opacity: 0.7, fillColor: DATA, fillOpacity: washOpacity() }
+          }).addTo(group));
         }
-        var layer = L.geoJSON(gj, {
-          style: { color: DATA, weight: 1.1, opacity: 0.95, fillColor: DATA, fillOpacity: 0.36 }
-        }).addTo(map);
-        layer.on("mouseover", function () { layer.setStyle({ fillOpacity: 0.46 }); });
-        layer.on("mouseout", function () { layer.setStyle({ fillOpacity: 0.36 }); });
-        layer.on("click", function () { open_(a.url); });
-        var c = L.geoJSON(sgj || gj).getBounds().getCenter();
-        label(c, a.name, "place-label", [110, 14], [55, 7]);
-        /* The "statewide, " prefix marks the dashed wash, and it is PREPENDED
-           rather than assumed: ia and mi ship one tier, so they get no prefix.
-           A scope that already says statewide must not take it twice —
-           New York's is "statewide, 5 boroughs in depth", which read
-           "statewide, statewide, 5 boroughs in depth" before this test, and
-           the doubling was invisible in the generated diff because the prefix
-           is added HERE at runtime rather than written into the data above. */
+        L.geoJSON(gj, {
+          style: { color: DATA, weight: 1, opacity: 0.9, fillColor: DATA, fillOpacity: 0.42 }
+        }).addTo(group);
+        /* The "statewide, " prefix marks the lighter wash, and it is PREPENDED
+           rather than assumed: a one-tier area gets no prefix. A scope that
+           already says statewide must not take it twice — New York's is
+           "statewide, 5 boroughs in depth", which read "statewide, statewide,
+           5 boroughs in depth" before this test, and the doubling was invisible
+           in the generated diff because the prefix is added HERE at runtime
+           rather than written into the data above. */
         var scopeSaysStatewide = a.scope.toLowerCase().indexOf("statewide") === 0;
-        legendRow(DATA, a.name, (sgj && !scopeSaysStatewide ? "statewide, " : "") + a.scope, a.url);
+        group.bindTooltip(tip(a.name, (sgj && !scopeSaysStatewide ? "statewide, " : "") + a.scope), {
+          sticky: true, className: "place-tip", direction: "top", offset: [0, -8]
+        });
+        group.on("mouseover", function () { group.setStyle({ weight: 2 }); });
+        group.on("mouseout", function () { group.setStyle({ weight: 1 }); });
+        group.on("click", function () { open_(a.url); });
+        areaLabel(largestRing(sgj || gj), a.tag.toUpperCase());
       });
       CITIES.forEach(function (c) {
         L.circleMarker([c.lat, c.lng], {
           radius: 5.5, color: "#fff", weight: 1.6, fillColor: DATA, fillOpacity: 1
-        }).addTo(map).on("click", function () { open_(c.url); });
-        label([c.lat, c.lng], c.name, "place-label " + c.cls, [120, 14], c.anchor);
-        legendRow(DATA, c.name, c.scope, c.url);
+        }).addTo(map)
+          .bindTooltip(tip(c.name, c.scope), { className: "place-tip", direction: "top", offset: [0, -6] })
+          .on("click", function () { open_(c.url); });
+        label([c.lat, c.lng], c.name, "tag-label " + c.cls, [120, 14], c.anchor);
       });
+      fitLabels();
     })
     ["catch"](function () {
-      var note = document.createElement("p");
-      note.textContent = "The coverage outlines could not be loaded. The list of places above still works.";
-      document.querySelector(".legend").appendChild(note);
+      document.querySelector(".map-note").hidden = false;
     });
 }
 </script>
