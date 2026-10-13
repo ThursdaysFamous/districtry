@@ -181,6 +181,16 @@ try {
       JSON.stringify(countLine) + ` vs ${nStates} state row(s)`);
     check("the address box says the same count",
       helpLine.includes(countLine.replace(/\.$/, "")), JSON.stringify(helpLine));
+    // On a screen wider than a phone the list is never folded and its toggle
+    // is not drawn; section 1h holds the phone half.
+    const wide = await page.evaluate(() => {
+      const box = document.querySelector(".states-box");
+      const t = document.querySelector(".states-toggle");
+      return { open: !!(box && box.open), toggle: t ? getComputedStyle(t).display : null,
+               shown: [...document.querySelectorAll(".states li")].filter((li) => li.checkVisibility()).length };
+    });
+    check("on a wide screen the state list is open with no toggle",
+      wide.open && wide.toggle === "none" && wide.shown === 51, JSON.stringify(wide));
 
     // THE QUESTION ROWS ARE THE FRONT DOOR'S INTERNAL LINKS, and the whole
     // reason this block exists: the 2026-09-15 search audit found the root
@@ -563,6 +573,45 @@ try {
     check("landing page embeds the coverage map", src === "coverage-map.html", String(src));
     const r = await page.request.get(BASE + "/coverage-map.html");
     check("the embedded coverage map resolves", r.status() === 200, `HTTP ${r.status()}`);
+    await ctx.close();
+  }
+
+  // --- 1h. on a phone the state list starts folded, and one tap opens it ---
+  //
+  // Adam, 2026-10-13: fifty-one rows under a small map are a long scroll to
+  // the questions below. The list SHIPS open and a script folds it, so a
+  // broken script leaves a phone with the whole list rather than a toggle
+  // that does nothing, and that is what this would catch first: a list still
+  // open at 390px.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block", viewport: { width: 390, height: 844 } });
+    const page = await ctx.newPage();
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    // checkVisibility, not offsetParent: Chromium hides a closed <details>
+    // body with content-visibility rather than display, so offsetParent
+    // stays set on rows nobody can see and a folded list counts as 51.
+    const shown = () => page.evaluate(() =>
+      [...document.querySelectorAll(".states li")].filter((li) => li.checkVisibility()).length);
+    const folded = await page.evaluate(() => {
+      const box = document.querySelector(".states-box");
+      const t = document.querySelector(".states-toggle");
+      const r = t ? t.getBoundingClientRect() : null;
+      return { open: !!(box && box.open), toggle: t ? getComputedStyle(t).display : null,
+               label: t ? t.textContent.trim() : null, h: r ? Math.round(r.height) : 0 };
+    });
+    check("on a phone the state list starts folded",
+      !folded.open && folded.toggle !== "none" && (await shown()) === 0, JSON.stringify(folded));
+    check("the fold's toggle says what it holds and is a full-size target",
+      folded.label === "All 50 states and DC" && folded.h >= 44, JSON.stringify(folded));
+    await page.click(".states-toggle");
+    check("one tap on the toggle opens all 51 rows", (await shown()) === 51, `${await shown()} row(s) shown`);
+    // Turning a phone or widening a window past the fold's width must not
+    // leave the list shut with its toggle hidden — that would be a list
+    // nobody can open.
+    await page.click(".states-toggle");
+    await page.setViewportSize({ width: 1024, height: 844 });
+    await page.waitForTimeout(100);
+    check("widening a folded page opens the list again", (await shown()) === 51, `${await shown()} row(s) shown`);
     await ctx.close();
   }
 

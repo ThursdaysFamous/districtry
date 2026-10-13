@@ -553,7 +553,8 @@ def render_states(metros):
     lines of three and the not-yet list still had to be opened to see the rest,
     so a reader looking for their own state had to know which of the two to
     check. One alphabetical list answers both at a glance and stays the same
-    shape at fifty.
+    shape at fifty. On a phone the page template folds it behind one toggle
+    (the script after the list says why); these rows do not change for that.
 
     A covered state is a link with a filled square, its scope and its layer
     count (read from the instance's own worksheet). A state where only a city
@@ -1181,6 +1182,10 @@ h2 {
   list-style: none; margin: 0; padding: 0;
   columns: 4 190px; column-gap: 18px;
 }
+/* The fold is a phone's alone: on a wider screen the toggle is not drawn and
+   the list stays open (the script under the list holds it open). */
+.states-toggle { display: none; }
+.states-toggle::-webkit-details-marker { display: none; }
 .states li { break-inside: avoid; }
 .st {
   display: grid; grid-template-columns: 10px minmax(0, 1fr); column-gap: 9px;
@@ -1302,6 +1307,20 @@ footer .support b { color: var(--ink); }
   .search-row { flex-direction: column; }
   .notice { position: static; width: auto; max-width: none; margin: 0 0 26px; }
   .states { columns: 2; column-gap: 10px; }
+  .states-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 44px; padding: 0 6px; list-style: none; cursor: pointer;
+    border-top: 1px solid var(--border);
+    font: var(--font-heading-weight) 16px/1.25 var(--font-heading); color: var(--ink);
+  }
+  .states-toggle::after {
+    content: ""; width: 8px; height: 8px; margin-right: 4px;
+    border-right: 2px solid var(--ink-3); border-bottom: 2px solid var(--ink-3);
+    transform: translateY(-2px) rotate(45deg); transition: transform .14s ease;
+  }
+  .states-box[open] > .states-toggle::after { transform: translateY(2px) rotate(-135deg); }
+  .states-toggle:focus-visible { outline: 2px solid var(--brand-600); outline-offset: -2px; border-radius: var(--radius-btn); }
+  .states-box[open] > .states { margin-top: 8px; }
   /* One column, and the chips grow: a row of links is the shape WCAG 2.5.8
      catches, and 36px tall chips 7px apart are inside each other's 24px
      circle once they wrap on a narrow screen. */
@@ -1357,9 +1376,28 @@ footer .support b { color: var(--ink); }
 %(key_wash)s          <li><span class="sw sw-off" aria-hidden="true"></span>Not yet</li>
         </ul>
       </div>
-      <ul class="states">
+      <details class="states-box" open>
+        <summary class="states-toggle">All 50 states and DC</summary>
+        <ul class="states">
 %(states)s
-      </ul>
+        </ul>
+      </details>
+      <script>
+      /* Folded on a phone, open everywhere else (Adam, 2026-10-13): fifty-one
+         rows under a small map are a long scroll to the questions below them.
+         It ships open, so a reader with no script still gets the list, and this
+         runs right after the element, so a phone never paints it open first.
+         Widening a folded page opens it again, since the toggle is hidden there. */
+      (function () {
+        var box = document.currentScript.previousElementSibling;
+        if (!window.matchMedia || !box) return;
+        var phone = window.matchMedia("(max-width: 560px)");
+        box.open = !phone.matches;
+        var widen = function () { if (!phone.matches) box.open = true; };
+        if (phone.addEventListener) phone.addEventListener("change", widen);
+        else if (phone.addListener) phone.addListener(widen);
+      })();
+      </script>
     </div>
 
     <h2>Or start from a question</h2>
