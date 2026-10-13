@@ -81,6 +81,12 @@ import re
 import sys
 import urllib.parse
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# The coverage map's own table of areas, so the key under it names the lighter
+# statewide wash only while an area that draws one is live. One reader of which
+# areas have two tiers, not two.
+from build_coverage_map import AREAS  # noqa: E402
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFEST = os.path.join(REPO_ROOT, "metros.json")
 TOKENS = os.path.join(REPO_ROOT, "districtry", "tokens", "districtry.tokens.css")
@@ -105,9 +111,9 @@ FAVICON = os.path.join(REPO_ROOT, "districtry", "icons", "favicon.svg")
 # which is why the two are different files doing different jobs.
 MARK_SOURCE = os.path.join(REPO_ROOT, "il", "index.html")
 
-# Each instance's worksheet, for the layer count on its pill. A pill that states
-# a number must read it from the thing that owns it; a hand-typed count is the
-# drift this repo keeps writing generators to avoid.
+# Each instance's worksheet, for the layer count on its row in the state list.
+# A row that states a number must read it from the thing that owns it; a
+# hand-typed count is the drift this repo keeps writing generators to avoid.
 #
 # KEYED BY INSTANCE TAG — the folder, which is the URL, which is the state code
 # on the pill. R5 renamed sf/ -> ca/ and nyc/ -> ny/ (the tag is the STATE, not
@@ -333,11 +339,14 @@ INDEPENDENCE = (
 # before R2.3, so it is the only instance whose old links can be in the wild.
 FORWARD_TO = "/il/"
 
-# Every US state + DC, so the "not yet" disclosure never needs a hand-typed
-# list: it is this set minus whichever metros.json landing_name values are
-# themselves a full state (a city instance's landing_name — "New York City",
-# "San Francisco" — never matches one, so New York and California correctly
-# stay listed even though a city inside each already answers).
+# Every US state + DC, so the state list under the coverage map never needs a
+# hand-typed row: each one is a link when metros.json has an entry for it and
+# plain text when it does not. A metros.json entry whose landing_name is a
+# state ("Illinois") is that state's row. One whose landing_name is a city
+# ("San Francisco") is found through its tag, which is the state's postal code
+# (POSTAL_CODES below), and its row says the city is all that answers there —
+# so California is a link to /ca/ reading "San Francisco only", never a full
+# state and never missing.
 US_STATES_AND_DC = [
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
     "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia",
@@ -351,18 +360,41 @@ US_STATES_AND_DC = [
     "Wyoming",
 ]
 
+# Postal code -> state, for the one case above that needs it: an instance whose
+# landing_name is a city. Its tag is the folder and the URL path, and the fleet
+# rule is that a tag IS the state code (ny/ and ca/ serve one city each and are
+# still named for the state), so the tag is enough to find the row.
+POSTAL_CODES = {
+    "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas",
+    "CA": "California", "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware",
+    "DC": "District of Columbia", "FL": "Florida", "GA": "Georgia",
+    "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana",
+    "IA": "Iowa", "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana",
+    "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan",
+    "MN": "Minnesota", "MS": "Mississippi", "MO": "Missouri", "MT": "Montana",
+    "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire", "NJ": "New Jersey",
+    "NM": "New Mexico", "NY": "New York", "NC": "North Carolina",
+    "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon",
+    "PA": "Pennsylvania", "RI": "Rhode Island", "SC": "South Carolina",
+    "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas", "UT": "Utah",
+    "VT": "Vermont", "VA": "Virginia", "WA": "Washington",
+    "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming",
+}
+
 # Tokens this page actually sets. Naming them explicitly makes the token file a
 # CHECKED dependency: rename one upstream and this build fails by name instead
 # of emitting a page with a broken custom property.
 LIGHT_TOKENS = [
     "brand-600", "brand-700", "brand-warm", "brand-tint", "brand-border",
     "paper", "surface", "ink", "ink-3", "muted", "faint", "border", "error",
+    "data-500", "data-tint",
     "font-heading", "font-heading-weight", "font-body",
     "radius-card", "radius-btn", "shadow-card",
 ]
 DARK_TOKENS = [
     "brand-700", "brand-warm", "brand-tint", "brand-border",
     "paper", "surface", "ink", "ink-3", "muted", "faint", "border", "error",
+    "data-500", "data-tint",
     "shadow-card",
 ]
 # --brand-700 and --brand-warm now EXIST in the token file's dark tier, so the
@@ -451,7 +483,7 @@ def instance_layer_count(tag):
     rel = INSTANCE_WORKSHEET.get(tag)
     if not rel:
         fail("no worksheet mapped for instance %r — add it to INSTANCE_WORKSHEET "
-             "so its pill can state a layer count" % tag)
+             "so its row can state a layer count" % tag)
     try:
         w = json.loads(read(os.path.join(REPO_ROOT, rel), "the %s worksheet" % tag))
     except ValueError as e:
@@ -504,41 +536,91 @@ def render_independence():
     return ('    <p class="independence">%s</p>\n' % html.escape(INDEPENDENCE))
 
 
-def render_places(metros):
-    """One row per place: its tag, its name, how much of it is covered, and the
-    layer count read from its own worksheet.
+def state_rows(metros):
+    """Every state and DC, in alphabetical order, each paired with the fleet
+    entry that answers there (or None) and whether that entry covers the whole
+    state. Fails on an entry it cannot place and on two entries for one state,
+    because the list has one row per state and either would drop a place from
+    the front door without anyone noticing.
+    """
+    by_state = {}
+    for m in metros:
+        name = m["landing_name"]
+        if name in US_STATES_AND_DC:
+            state, whole = name, True
+        else:
+            state, whole = POSTAL_CODES.get(m["tag"].upper()), False
+            if not state:
+                fail("metros.json entry %r has a landing_name (%r) that is not a "
+                     "state and a tag (%r) that is not a state's postal code, so "
+                     "the state list has no row to put it on."
+                     % (m.get("id", "?"), name, m["tag"]))
+        if state in by_state:
+            fail("metros.json has two entries for %s (%r and %r). The state list "
+                 "has one row per state; decide how that row reads before adding "
+                 "the second." % (state, by_state[state][0]["tag"], m["tag"]))
+        by_state[state] = (m, whole)
+    return [(s, ) + by_state.get(s, (None, None)) for s in US_STATES_AND_DC]
 
-    This was a pill row until 2026-09-18. A pill could carry the name and a bare
-    number and nothing else, so the SCOPE — the one fact that says whether a
-    reader's county is in or out — sat in a `title` attribute no phone shows.
-    The row has room for it, and sits beside the coverage map rather than under
-    a heading of its own, which is the section this merges into one.
 
-    The count is bare in `.place-n` because the browser test reads that span as
-    an integer; the word it counts is its own span beside it, so the visible
-    text still reads "40 layers". The anchor's aria-label says the whole row in
-    one breath, since a screen reader otherwise gets four disconnected spans.
+def render_states(metros):
+    """One list of every state and DC, replacing two things that said the same
+    thing twice: the row per live place beside the map, and the folded "not
+    yet" list under it (2026-10-13). At thirteen places the rows ran to five
+    lines of three and the not-yet list still had to be opened to see the rest,
+    so a reader looking for their own state had to know which of the two to
+    check. One alphabetical list answers both at a glance and stays the same
+    shape at fifty. On a phone the page template folds it behind one toggle
+    (the script after the list says why); these rows do not change for that.
+
+    A covered state is a link with a filled square, its scope and its layer
+    count (read from the instance's own worksheet). A state where only a city
+    answers is a link with a half-filled square and says which city. Every
+    other state is plain text with an empty square and, for a screen reader,
+    the words "not yet", since the square alone says nothing to one.
+
+    The count is bare in `.st-n` because the browser test reads that span as an
+    integer; the word it counts sits beside it, so the visible text still reads
+    "41 layers".
     """
     rows = []
-    for m in metros:
-        n = instance_layer_count(m["tag"])
+    for state, m, whole in state_rows(metros):
+        if m is None:
+            rows.append(
+                '        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span>'
+                '<span class="st-name">%s</span><span class="vh">, not yet</span></span></li>'
+                % html.escape(state))
+            continue
+        scope = m["scope"] if whole else "%s only" % m["landing_name"]
         rows.append(
-            '        <li><a class="place" href="%s" title="%s" aria-label="%s, %s, %d layers">'
-            '<span class="place-tag">%s</span>'
-            '<span class="place-id"><span class="place-name">%s</span>'
-            '<span class="place-scope">%s</span></span>'
-            '<span class="place-n">%d</span><span class="place-n-unit">&nbsp;layers</span>'
-            '<span class="place-go" aria-hidden="true">&#8599;</span></a></li>'
-            % (html.escape(m["url"], quote=True),
-               html.escape(m["blurb"], quote=True),
-               html.escape(m["landing_name"], quote=True),
-               html.escape(m["scope"], quote=True), n,
-               html.escape(m["tag"]),
-               html.escape(m["landing_name"]),
-               html.escape(m["scope"]),
-               n)
-        )
+            '        <li><a class="st%s" href="%s">'
+            '<span class="st-dot" aria-hidden="true"></span>'
+            '<span class="st-name">%s</span>'
+            '<span class="st-scope">%s &#183; <span class="st-n">%d</span>&nbsp;layers</span></a></li>'
+            % ("" if whole else " st-part",
+               html.escape(m["url"], quote=True),
+               html.escape(state),
+               html.escape(scope),
+               instance_layer_count(m["tag"])))
     return "\n".join(rows)
+
+
+def answer_phrase(metros):
+    """How many places answer, said the way a reader counts them: "10 states
+    and San Francisco". A city instance is named rather than counted as a state
+    (California is not covered; San Francisco is), and DC is named rather than
+    counted, because it is not a state.
+    """
+    states = [m for m in metros
+              if m["landing_name"] in US_STATES_AND_DC and m["landing_name"] != DC]
+    others = ["DC" if m["landing_name"] == DC else m["landing_name"]
+              for m in metros if m not in states]
+    parts = []
+    if states:
+        parts.append("%d state%s" % (len(states), "" if len(states) == 1 else "s"))
+    parts += others
+    one = len(states) + len(others) == 1
+    return oxford_join(parts), ("answers" if one else "answer")
 
 
 def question_pages(metros):
@@ -649,25 +731,6 @@ def render_asks(metros):
 
 
 DC = "District of Columbia"
-
-
-def render_not_yet(metros):
-    """The uncovered list, and a summary phrase that counts it honestly.
-
-    DC is in the list but is not a state, so it is counted separately rather
-    than folded into the number — "47 states and DC", never "48 states and
-    DC", which is the off-by-one a hand-typed summary invites.
-    """
-    covered_states = set(m["landing_name"] for m in metros)
-    remaining = [s for s in US_STATES_AND_DC if s not in covered_states]
-    n_states = len([s for s in remaining if s != DC])
-    summary = "%d states" % n_states
-    if DC in remaining:
-        summary += " and DC"
-    items = "\n".join(
-        '        <div>%s</div>' % html.escape(s) for s in remaining
-    )
-    return summary, items
 
 
 def _landing_jsonld(metros, title, desc):
@@ -785,8 +848,12 @@ def build():
     desc = ("Enter an address or ZIP — districtry shows every civic district that covers "
             "that point on the map, and the people who hold those seats. Free, no login.")
 
-    live_names = oxford_join([m["landing_name"] for m in metros])
-    not_yet_summary, not_yet_items = render_not_yet(metros)
+    answer_count, answer_verb = answer_phrase(metros)
+    # The map's lighter wash is drawn only for an area with a second, wider
+    # outline, so the key names it only while one is live.
+    two_tier = any((AREAS.get(m["tag"]) or {}).get("state_outline") for m in metros)
+    key_wash = ('          <li><span class="sw sw-wash" aria-hidden="true"></span>'
+                'Statewide layers only</li>\n' if two_tier else "")
 
     return """<!DOCTYPE html>
 <html lang="en">
@@ -1070,62 +1137,95 @@ h2 {
   color: var(--muted); max-width: 52em;
 }
 
-/* The coverage map and the place list are ONE section, because they answer one
+/* The coverage map and the state list are ONE section, because they answer one
    question. They were two — a map under "Where it answers today", a pill row
    under "Or choose a place" — which asked a reader to find their state twice.
 
    The map keeps its iframe. It is a real Leaflet map: its areas are clickable,
-   its legend states how much of each place is covered, and it is generated and
-   drift-gated on its own (scripts/build_coverage_map.py).
+   pointing at one names it and says how much of it is covered, and it is
+   generated and drift-gated on its own (scripts/build_coverage_map.py).
 
-   THE MAP TAKES THE FULL WIDTH AND THE PLACES SIT UNDER IT. Side by side was
+   THE MAP TAKES THE FULL WIDTH AND THE LIST SITS UNDER IT. Side by side was
    tried first and the map cannot afford it: the fleet's bounds run from San
-   Francisco to New York, so a narrower frame zooms the whole country down,
-   and the map's own legend is a fixed 236px that then covers 40%% of it. The
-   places are a grid instead, so on a wide screen they take two rows of three
-   rather than a column six deep. */
+   Francisco to New York, so a narrower frame zooms the whole country down.
+
+   ONE LIST OF EVERY STATE AND DC, SINCE 2026-10-13. A row per live place beside
+   the map and a folded "not yet" list under it said the same thing twice, and
+   at thirteen places the rows ran five deep while the rest of the country was
+   still behind a click. The list flows down four columns on a wide screen and
+   two on a phone; its squares are the map's own key (filled: answers here;
+   half: one city only; empty: not yet), stated once in the line above it. */
 .coverage {
   display: flex; flex-direction: column; gap: 14px;
   padding: 14px; background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius-card); box-shadow: var(--shadow-card);
 }
+/* The frame follows the country's own shape rather than a fixed height: at a
+   fixed 424px a phone drew the fleet as a strip across the middle of a tall
+   box of sea and Canada. Twice as wide as it is tall is about what the lower 48
+   need, capped on a wide screen and floored on a phone so the map is never a
+   sliver. */
 .coverage-frame {
-  display: block; width: 100%%; height: 424px;
+  display: block; width: 100%%; height: auto; aspect-ratio: 2 / 1;
+  min-height: 210px; max-height: 400px;
   border: 1px solid var(--border); border-radius: var(--radius-btn);
   background: var(--paper);
 }
-.places {
+.cov-head {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: 6px 18px; padding: 2px 4px 0;
+}
+.cov-count { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink-3); }
+.cov-count strong {
+  font: var(--font-heading-weight) 17px/1.3 var(--font-heading); color: var(--ink);
+}
+.cov-key {
+  display: flex; flex-wrap: wrap; gap: 4px 16px; list-style: none; margin: 0; padding: 0;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted);
+}
+.cov-key li { display: flex; align-items: center; gap: 6px; }
+/* The squares. --data-500 is the map's own fill colour, so the key, the list
+   and the outlines are one vocabulary. The empty square takes --muted rather
+   than --faint: it is the only thing that marks a state as not covered, so it
+   has to be visible (1.4.11), and --faint is not. */
+.sw, .st-dot {
+  flex: 0 0 auto; width: 10px; height: 10px; border-radius: 2px;
+  background: var(--data-500); border: 1px solid var(--data-500);
+}
+.sw-wash { background: var(--data-tint); }
+.sw-off, .st-off .st-dot { background: none; border-color: var(--muted); }
+.st-part .st-dot { background: linear-gradient(135deg, var(--data-500) 50%%, transparent 50%%); }
+.states {
   list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(252px, 1fr));
-  gap: 0 16px;
+  columns: 4 190px; column-gap: 18px;
 }
-/* Every row carries the rule, not just the ones after the first: in a grid a
-   `li + li` border leaves the top of each column open and the row reads as
-   ragged. */
-.places li { border-top: 1px solid var(--border); }
-.place {
-  display: flex; align-items: center; gap: 11px; padding: 9px 8px;
-  min-height: 52px; text-decoration: none; color: var(--ink);
+/* The fold is a phone's alone: on a wider screen the toggle is not drawn and
+   the list stays open (the script under the list holds it open). */
+.states-toggle { display: none; }
+.states-toggle::-webkit-details-marker { display: none; }
+.states li { break-inside: avoid; }
+.st {
+  display: grid; grid-template-columns: 10px minmax(0, 1fr); column-gap: 9px;
+  align-items: baseline; min-height: 28px; padding: 4px 6px;
   border-radius: var(--radius-btn);
-  transition: background .14s ease;
 }
-.place:hover, .place:focus-visible { background: var(--brand-tint); }
-.place:focus-visible { outline: 2px solid var(--brand-600); outline-offset: -2px; }
-.place-tag {
-  flex: 0 0 auto; width: 24px;
-  font: 400 14px/1 var(--font-heading); color: var(--muted);
+a.st { text-decoration: none; color: var(--ink); transition: background .14s ease; }
+a.st:hover, a.st:focus-visible { background: var(--brand-tint); }
+a.st:focus-visible { outline: 2px solid var(--brand-600); outline-offset: -2px; }
+.st-name { font: var(--font-heading-weight) 16px/1.25 var(--font-heading); }
+.st-scope {
+  grid-column: 2; font-size: 12px; line-height: 1.3; color: var(--muted);
+  font-variant-numeric: tabular-nums;
 }
-.place-id { display: flex; flex-direction: column; gap: 1px; flex: 1 1 auto; min-width: 0; }
-.place-name { font: var(--font-heading-weight) 18px/1.15 var(--font-heading); color: var(--ink); }
-.place-scope { font-size: 12.5px; line-height: 1.3; color: var(--muted); }
-.place-n, .place-n-unit {
-  flex: 0 0 auto; font-size: 12.5px; color: var(--muted);
-  font-variant-numeric: tabular-nums; white-space: nowrap;
-}
-.place-go { flex: 0 0 auto; font-size: 14px; color: var(--brand-600); }
-.coverage-caption {
-  margin: 11px 0 0; font-size: 13px; line-height: 1.55; color: var(--muted);
-  max-width: 52em;
+/* --muted measures 4.08:1 on the light hover tint, under the 4.5 floor, so the
+   scope line darkens to --ink-3 with the row (validate_contrast.py holds the
+   pair). */
+a.st:hover .st-scope, a.st:focus-visible .st-scope { color: var(--ink-3); }
+.st-off { color: var(--muted); }
+.st-off .st-name { font: 400 15px/1.25 var(--font-heading); }
+.vh {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%%); white-space: nowrap;
 }
 
 /* THE QUESTION ROWS. One row per question, the places that answer it as chips.
@@ -1156,17 +1256,6 @@ h2 {
 .chip:hover, .chip:focus-visible { border-color: var(--brand-border); background: var(--brand-tint); }
 .chip:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
 .chip-topic { color: var(--ink-3); font-weight: 400; }
-
-.not-yet { margin: 14px 0 0; max-width: 52em; }
-.not-yet > summary {
-  cursor: pointer; font-size: 13px; line-height: 1.55; color: var(--ink-3);
-  min-height: 28px;
-}
-.not-yet > summary:hover, .not-yet > summary:focus-visible { color: var(--ink); }
-.not-yet-list {
-  margin: 10px 0 0; column-count: 3; column-gap: 22px;
-  font-size: 12.5px; line-height: 1.9; color: var(--muted);
-}
 
 .does { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 22px 26px; }
 .does > div { padding-top: 13px; border-top: 2px solid var(--border); }
@@ -1234,17 +1323,27 @@ footer .support b { color: var(--ink); }
   h2 { margin-top: 34px; }
   .search-row { flex-direction: column; }
   .notice { position: static; width: auto; max-width: none; margin: 0 0 26px; }
-  .not-yet-list { column-count: 2; }
+  .states { columns: 2; column-gap: 10px; }
+  .states-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 44px; padding: 0 6px; list-style: none; cursor: pointer;
+    border-top: 1px solid var(--border);
+    font: var(--font-heading-weight) 16px/1.25 var(--font-heading); color: var(--ink);
+  }
+  .states-toggle::after {
+    content: ""; width: 8px; height: 8px; margin-right: 4px;
+    border-right: 2px solid var(--ink-3); border-bottom: 2px solid var(--ink-3);
+    transform: translateY(-2px) rotate(45deg); transition: transform .14s ease;
+  }
+  .states-box[open] > .states-toggle::after { transform: translateY(2px) rotate(-135deg); }
+  .states-toggle:focus-visible { outline: 2px solid var(--brand-600); outline-offset: -2px; border-radius: var(--radius-btn); }
+  .states-box[open] > .states { margin-top: 8px; }
   /* One column, and the chips grow: a row of links is the shape WCAG 2.5.8
      catches, and 36px tall chips 7px apart are inside each other's 24px
      circle once they wrap on a narrow screen. */
   .ask { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 14px 0; }
   .chip { min-height: 40px; padding: 9px 14px; }
   .foot-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
-  /* Taller, not shorter: at this breakpoint the map's legend stops floating
-     and takes a strip along the bottom (see build_coverage_map.py), so the
-     frame needs the extra room or the map area is what pays for the panel. */
-  .coverage-frame { height: 560px; }
 }
 </style>
 </head>
@@ -1275,8 +1374,8 @@ footer .support b { color: var(--ink); }
                placeholder="Street address or ZIP" autocomplete="off" />
         <button type="submit" id="search-button" class="search-button">Show districts</button>
       </form>
-      <p class="search-help">districtry opens the map that covers the point. %(live_names)s answer
-         today — an address anywhere else says so instead of guessing.</p>
+      <p class="search-help">districtry opens the map that covers the point. %(answer_count)s
+         %(answer_verb)s today — an address anywhere else says so instead of guessing.</p>
       <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
     </div>
 
@@ -1286,21 +1385,37 @@ footer .support b { color: var(--ink); }
       <iframe class="coverage-frame" src="coverage-map.html"
               title="Map of the areas districtry covers today"
               loading="lazy"></iframe>
-      <ul class="places">
-%(places)s
-      </ul>
-    </div>
-    <p class="coverage-caption">Two tiers, because coverage is not one thing: the pale dashed area
-       is where the statewide layers answer — county, township, municipality, school district,
-       ZIP — and the solid fill is where the county-level layers reach as well. The map's own
-       legend states how much of each place that is; click an area to open its map.</p>
-    <details class="not-yet">
-      <summary>Not yet: %(not_yet_summary)s — what nobody covers yet is listed here
-        rather than quietly missing.</summary>
-      <div class="not-yet-list">
-%(not_yet_items)s
+      <div class="cov-head">
+        <p class="cov-count"><strong>%(answer_count)s %(answer_verb)s today.</strong>
+          Pick one to open its map.</p>
+        <ul class="cov-key" aria-label="Key">
+          <li><span class="sw sw-on" aria-hidden="true"></span>Answers here</li>
+%(key_wash)s          <li><span class="sw sw-off" aria-hidden="true"></span>Not yet</li>
+        </ul>
       </div>
-    </details>
+      <details class="states-box" open>
+        <summary class="states-toggle">All 50 states and DC</summary>
+        <ul class="states">
+%(states)s
+        </ul>
+      </details>
+      <script>
+      /* Folded on a phone, open everywhere else (Adam, 2026-10-13): fifty-one
+         rows under a small map are a long scroll to the questions below them.
+         It ships open, so a reader with no script still gets the list, and this
+         runs right after the element, so a phone never paints it open first.
+         Widening a folded page opens it again, since the toggle is hidden there. */
+      (function () {
+        var box = document.currentScript.previousElementSibling;
+        if (!window.matchMedia || !box) return;
+        var phone = window.matchMedia("(max-width: 560px)");
+        box.open = !phone.matches;
+        var widen = function () { if (!phone.matches) box.open = true; };
+        if (phone.addEventListener) phone.addEventListener("change", widen);
+        else if (phone.addListener) phone.addListener(widen);
+      })();
+      </script>
+    </div>
 
     <h2>Or start from a question</h2>
     <p class="section-note">One page per question and place: the answer in prose, the roster as it
@@ -1746,14 +1861,14 @@ footer .support b { color: var(--ink); }
         "light": token_css(LIGHT_TOKENS, light, ":root"),
         "dark": token_css(DARK_TOKENS, dark, '[data-theme="dark"]', DARK_EXTRA,
                           indent="    "),
-        "places": render_places(metros),
+        "states": render_states(metros),
         "asks": render_asks(metros),
         "mark": load_mark(),
         "notice": render_notice(),
         "independence": render_independence(),
-        "live_names": html.escape(live_names),
-        "not_yet_summary": html.escape(not_yet_summary),
-        "not_yet_items": not_yet_items,
+        "answer_count": html.escape(answer_count),
+        "answer_verb": answer_verb,
+        "key_wash": key_wash,
         "metros_js": render_metros_js(metros),
         "notice_seconds": NOTICE_SECONDS,
     }
