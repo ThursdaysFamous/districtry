@@ -131,14 +131,14 @@ general-purpose test above and not by a per-state exception.
 | North Carolina | 42 | — |
 | Indiana | 39 | — |
 | Wisconsin | 35 | — |
-| Tennessee (not yet live) | 28 | — |
+| Tennessee | 28 | — |
 | Iowa | 18 | — |
 | Kentucky | 17 | — |
-| South Carolina (not yet live) | 17 | — |
+| South Carolina | 17 | — |
 | Oklahoma | 16 | — |
 
-That is 530 governments across the ten statewide apps and the two not yet
-live. The first seven rows were measured 2026-10-01 and the rest 2026-10-11;
+That is 530 governments across the twelve statewide apps. The first seven rows
+were measured 2026-10-01 and the rest 2026-10-11;
 until then the scoring tool read a state it had not measured as one with nothing
 to answer, so Indiana, North Carolina and Oklahoma passed this entry unchecked.
 San Francisco is one city, so its city tier is the whole app.
