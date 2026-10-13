@@ -8465,12 +8465,14 @@ function initChiExplorer() {
   /* A SHORT LINK holds no position: only Google or Apple knows where it
    * leads, and a page cannot ask them, because a browser does not let a page
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
-   * lookup (services/link-lookup/main.ts), which follows the link and returns
-   * the full link it leads to, keeping no record. While it is null nothing is
-   * sent anywhere and the reader is told how to get the full link instead.
-   * Setting it is a privacy change: the lookup's host receives the short
-   * link, so build_privacy_page.py must name it in the same change. */
-  var MAP_LINK_LOOKUP = null;
+   * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
+   * link and returns the full link it leads to; its own code stores nothing.
+   * Only a short link is ever sent to it, and only when a reader pastes one.
+   * The address is the app's own name on Deno, not the suffixed address
+   * Deno also serves it at. The lookup's host receives the short link, so
+   * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host
+   * here is a change there too. */
+  var MAP_LINK_LOOKUP = "https://link-lookup.districtry.deno.net/";
 
   function resolveShortMapLink(link, signal) {
     if (!MAP_LINK_LOOKUP) return Promise.reject(new Error("no short-link lookup"));
@@ -8492,7 +8494,7 @@ function initChiExplorer() {
   function mapLinkMessage(link) {
     var name = link.source === "apple" ? "Apple Maps" : link.source === "google" ? "Google Maps" : "";
     if (link.kind === "short") {
-      return "Short " + name + " links can't be read here yet. Open the link, " +
+      return "That short " + name + " link couldn't be read. Open the link, " +
         "then copy the full address from your browser's address bar and paste that.";
     }
     if (name) {
