@@ -28,6 +28,7 @@ Usage:
 
 import json
 import os
+import re
 import sys
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -53,6 +54,25 @@ MIN_PHONES = 45
 MIN_OFFICES = 45
 
 
+# A suffix is written as its own comma part ("Cardona, Jr., Felix"), so it
+# follows the surname rather than leading the name. Flipping on the first comma
+# alone shipped "Jr., Felix Cardona" and "Jr., Andre Vasquez" until 2026-10-13,
+# on the card and on il/ward.html, found by comparing this roster with
+# chipoli.org's. il/index.html's formatAldermanName flips the same way.
+NAME_SUFFIX_RE = re.compile(r"^(jr|sr|ii|iii|iv|v)\.?$", re.I)
+
+
+def flip_name(name):
+    """'La Spata, Daniel' -> 'Daniel La Spata'; 'Cardona, Jr., Felix' ->
+    'Felix Cardona Jr.'."""
+    parts = [p.strip() for p in name.split(",")]
+    last, given, suffix = parts[0], [], []
+    for part in parts[1:]:
+        if part:
+            (suffix if NAME_SUFFIX_RE.match(part) else given).append(part)
+    return " ".join(given + ([last] if last else []) + suffix) or last
+
+
 def resolve(raw):
     rows = raw.get("wards") or []
     roster = {}
@@ -64,9 +84,7 @@ def resolve(raw):
         name = (row.get("alderman") or "").strip()
         if name:
             if "," in name:
-                last, _, first = name.partition(",")
-                last, first = last.strip(), first.strip()
-                name = ("%s %s" % (first, last)).strip()
+                name = flip_name(name)
             else:
                 unflipped.append((ward, name))
         rec = {"name": name or None}
