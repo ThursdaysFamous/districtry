@@ -379,6 +379,8 @@
   --faint: #9aa3b2;
   --border: #e8e7ef;
   --error: #c2410c;
+  --data-500: #1d5fd6;
+  --data-tint: #eef4fd;
   --font-heading: 'Barlow Condensed', sans-serif;
   --font-heading-weight: 600;
   --font-body: 'Barlow', 'Barlow Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -410,6 +412,8 @@
     --faint: #746e86;
     --border: rgba(236, 233, 244, 0.1);
     --error: #f97316;
+    --data-500: #6ea8ff;
+    --data-tint: rgba(110, 168, 255, 0.14);
     --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4);
     --brand-600: #a78bfa;
   }
@@ -427,6 +431,8 @@
     --faint: #746e86;
     --border: rgba(236, 233, 244, 0.1);
     --error: #f97316;
+    --data-500: #6ea8ff;
+    --data-tint: rgba(110, 168, 255, 0.14);
     --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4);
     --brand-600: #a78bfa;
 }
@@ -598,62 +604,91 @@ h2 {
   color: var(--muted); max-width: 52em;
 }
 
-/* The coverage map and the place list are ONE section, because they answer one
+/* The coverage map and the state list are ONE section, because they answer one
    question. They were two — a map under "Where it answers today", a pill row
    under "Or choose a place" — which asked a reader to find their state twice.
 
    The map keeps its iframe. It is a real Leaflet map: its areas are clickable,
-   its legend states how much of each place is covered, and it is generated and
-   drift-gated on its own (scripts/build_coverage_map.py).
+   pointing at one names it and says how much of it is covered, and it is
+   generated and drift-gated on its own (scripts/build_coverage_map.py).
 
-   THE MAP TAKES THE FULL WIDTH AND THE PLACES SIT UNDER IT. Side by side was
+   THE MAP TAKES THE FULL WIDTH AND THE LIST SITS UNDER IT. Side by side was
    tried first and the map cannot afford it: the fleet's bounds run from San
-   Francisco to New York, so a narrower frame zooms the whole country down,
-   and the map's own legend is a fixed 236px that then covers 40% of it. The
-   places are a grid instead, so on a wide screen they take two rows of three
-   rather than a column six deep. */
+   Francisco to New York, so a narrower frame zooms the whole country down.
+
+   ONE LIST OF EVERY STATE AND DC, SINCE 2026-10-13. A row per live place beside
+   the map and a folded "not yet" list under it said the same thing twice, and
+   at thirteen places the rows ran five deep while the rest of the country was
+   still behind a click. The list flows down four columns on a wide screen and
+   two on a phone; its squares are the map's own key (filled: answers here;
+   half: one city only; empty: not yet), stated once in the line above it. */
 .coverage {
   display: flex; flex-direction: column; gap: 14px;
   padding: 14px; background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius-card); box-shadow: var(--shadow-card);
 }
+/* The frame follows the country's own shape rather than a fixed height: at a
+   fixed 424px a phone drew the fleet as a strip across the middle of a tall
+   box of sea and Canada. Twice as wide as it is tall is about what the lower 48
+   need, capped on a wide screen and floored on a phone so the map is never a
+   sliver. */
 .coverage-frame {
-  display: block; width: 100%; height: 424px;
+  display: block; width: 100%; height: auto; aspect-ratio: 2 / 1;
+  min-height: 210px; max-height: 400px;
   border: 1px solid var(--border); border-radius: var(--radius-btn);
   background: var(--paper);
 }
-.places {
+.cov-head {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: 6px 18px; padding: 2px 4px 0;
+}
+.cov-count { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink-3); }
+.cov-count strong {
+  font: var(--font-heading-weight) 17px/1.3 var(--font-heading); color: var(--ink);
+}
+.cov-key {
+  display: flex; flex-wrap: wrap; gap: 4px 16px; list-style: none; margin: 0; padding: 0;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted);
+}
+.cov-key li { display: flex; align-items: center; gap: 6px; }
+/* The squares. --data-500 is the map's own fill colour, so the key, the list
+   and the outlines are one vocabulary. The empty square takes --muted rather
+   than --faint: it is the only thing that marks a state as not covered, so it
+   has to be visible (1.4.11), and --faint is not. */
+.sw, .st-dot {
+  flex: 0 0 auto; width: 10px; height: 10px; border-radius: 2px;
+  background: var(--data-500); border: 1px solid var(--data-500);
+}
+.sw-wash { background: var(--data-tint); }
+.sw-off, .st-off .st-dot { background: none; border-color: var(--muted); }
+.st-part .st-dot { background: linear-gradient(135deg, var(--data-500) 50%, transparent 50%); }
+.states {
   list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(252px, 1fr));
-  gap: 0 16px;
+  columns: 4 190px; column-gap: 18px;
 }
-/* Every row carries the rule, not just the ones after the first: in a grid a
-   `li + li` border leaves the top of each column open and the row reads as
-   ragged. */
-.places li { border-top: 1px solid var(--border); }
-.place {
-  display: flex; align-items: center; gap: 11px; padding: 9px 8px;
-  min-height: 52px; text-decoration: none; color: var(--ink);
+.states li { break-inside: avoid; }
+.st {
+  display: grid; grid-template-columns: 10px minmax(0, 1fr); column-gap: 9px;
+  align-items: baseline; min-height: 28px; padding: 4px 6px;
   border-radius: var(--radius-btn);
-  transition: background .14s ease;
 }
-.place:hover, .place:focus-visible { background: var(--brand-tint); }
-.place:focus-visible { outline: 2px solid var(--brand-600); outline-offset: -2px; }
-.place-tag {
-  flex: 0 0 auto; width: 24px;
-  font: 400 14px/1 var(--font-heading); color: var(--muted);
+a.st { text-decoration: none; color: var(--ink); transition: background .14s ease; }
+a.st:hover, a.st:focus-visible { background: var(--brand-tint); }
+a.st:focus-visible { outline: 2px solid var(--brand-600); outline-offset: -2px; }
+.st-name { font: var(--font-heading-weight) 16px/1.25 var(--font-heading); }
+.st-scope {
+  grid-column: 2; font-size: 12px; line-height: 1.3; color: var(--muted);
+  font-variant-numeric: tabular-nums;
 }
-.place-id { display: flex; flex-direction: column; gap: 1px; flex: 1 1 auto; min-width: 0; }
-.place-name { font: var(--font-heading-weight) 18px/1.15 var(--font-heading); color: var(--ink); }
-.place-scope { font-size: 12.5px; line-height: 1.3; color: var(--muted); }
-.place-n, .place-n-unit {
-  flex: 0 0 auto; font-size: 12.5px; color: var(--muted);
-  font-variant-numeric: tabular-nums; white-space: nowrap;
-}
-.place-go { flex: 0 0 auto; font-size: 14px; color: var(--brand-600); }
-.coverage-caption {
-  margin: 11px 0 0; font-size: 13px; line-height: 1.55; color: var(--muted);
-  max-width: 52em;
+/* --muted measures 4.08:1 on the light hover tint, under the 4.5 floor, so the
+   scope line darkens to --ink-3 with the row (validate_contrast.py holds the
+   pair). */
+a.st:hover .st-scope, a.st:focus-visible .st-scope { color: var(--ink-3); }
+.st-off { color: var(--muted); }
+.st-off .st-name { font: 400 15px/1.25 var(--font-heading); }
+.vh {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
 }
 
 /* THE QUESTION ROWS. One row per question, the places that answer it as chips.
@@ -684,17 +719,6 @@ h2 {
 .chip:hover, .chip:focus-visible { border-color: var(--brand-border); background: var(--brand-tint); }
 .chip:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
 .chip-topic { color: var(--ink-3); font-weight: 400; }
-
-.not-yet { margin: 14px 0 0; max-width: 52em; }
-.not-yet > summary {
-  cursor: pointer; font-size: 13px; line-height: 1.55; color: var(--ink-3);
-  min-height: 28px;
-}
-.not-yet > summary:hover, .not-yet > summary:focus-visible { color: var(--ink); }
-.not-yet-list {
-  margin: 10px 0 0; column-count: 3; column-gap: 22px;
-  font-size: 12.5px; line-height: 1.9; color: var(--muted);
-}
 
 .does { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 22px 26px; }
 .does > div { padding-top: 13px; border-top: 2px solid var(--border); }
@@ -762,17 +786,13 @@ footer .support b { color: var(--ink); }
   h2 { margin-top: 34px; }
   .search-row { flex-direction: column; }
   .notice { position: static; width: auto; max-width: none; margin: 0 0 26px; }
-  .not-yet-list { column-count: 2; }
+  .states { columns: 2; column-gap: 10px; }
   /* One column, and the chips grow: a row of links is the shape WCAG 2.5.8
      catches, and 36px tall chips 7px apart are inside each other's 24px
      circle once they wrap on a narrow screen. */
   .ask { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 14px 0; }
   .chip { min-height: 40px; padding: 9px 14px; }
   .foot-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
-  /* Taller, not shorter: at this breakpoint the map's legend stops floating
-     and takes a strip along the bottom (see build_coverage_map.py), so the
-     frame needs the extra room or the map area is what pays for the panel. */
-  .coverage-frame { height: 560px; }
 }
 </style>
 </head>
@@ -808,8 +828,8 @@ footer .support b { color: var(--ink); }
                placeholder="Street address or ZIP" autocomplete="off" />
         <button type="submit" id="search-button" class="search-button">Show districts</button>
       </form>
-      <p class="search-help">districtry opens the map that covers the point. Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina and Oklahoma answer
-         today — an address anywhere else says so instead of guessing.</p>
+      <p class="search-help">districtry opens the map that covers the point. 10 states and San Francisco
+         answer today — an address anywhere else says so instead of guessing.</p>
       <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
     </div>
 
@@ -820,71 +840,69 @@ footer .support b { color: var(--ink); }
       <iframe class="coverage-frame" src="coverage-map.html"
               title="Map of the areas districtry covers today"
               loading="lazy"></iframe>
-      <ul class="places">
-        <li><a class="place" href="https://districtry.com/il/" title="93 counties. Wards, county boards, police districts and beats, school zones, judicial subcircuits, and the people who hold those seats." aria-label="Illinois, 93 counties, 41 layers"><span class="place-tag">il</span><span class="place-id"><span class="place-name">Illinois</span><span class="place-scope">93 counties</span></span><span class="place-n">41</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
-        <li><a class="place" href="https://districtry.com/ny/" title="Counties, towns and villages, school and judicial districts across the state, plus the city&#x27;s boroughs, Council and community districts, NYPD precincts and school zones." aria-label="New York, statewide, 5 boroughs in depth, 39 layers"><span class="place-tag">ny</span><span class="place-id"><span class="place-name">New York</span><span class="place-scope">statewide, 5 boroughs in depth</span></span><span class="place-n">39</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
-        <li><a class="place" href="https://districtry.com/ca/" title="Supervisor districts, neighborhoods, police districts, school attendance areas, and the state and federal seats above them." aria-label="San Francisco, 1 city, 16 layers"><span class="place-tag">ca</span><span class="place-id"><span class="place-name">San Francisco</span><span class="place-scope">1 city</span></span><span class="place-n">16</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
-        <li><a class="place" href="https://districtry.com/wi/" title="County boards, circuit courts, wards and aldermanic districts across all 72 counties — clerk to Court of Appeals — plus school districts, cities, villages and towns, and the Assembly, Senate and U.S. House seats, and who holds those." aria-label="Wisconsin, all 72 counties, 32 layers"><span class="place-tag">wi</span><span class="place-id"><span class="place-name">Wisconsin</span><span class="place-scope">all 72 counties</span></span><span class="place-n">32</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
-        <li><a class="place" href="https://districtry.com/ia/" title="All 99 counties: supervisor districts with each county&#x27;s own election plan, townships and cities, school districts, ZIP codes and post offices — and the Iowa Senate, House and U.S. House seats, and who holds those." aria-label="Iowa, all 99 counties, 21 layers"><span class="place-tag">ia</span><span class="place-id"><span class="place-name">Iowa</span><span class="place-scope">all 99 counties</span></span><span class="place-n">21</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
-        <li><a class="place" href="https://districtry.com/mi/" title="All 83 counties: commissioner districts, compiled by the state from the plan each county&#x27;s apportionment commission files — plus townships and charter townships, cities and villages, school districts and intermediate school districts, circuit courts and Court of Appeals districts, and the Michigan Senate, House and U.S. House seats, and who holds those." aria-label="Michigan, all 83 counties, 19 layers"><span class="place-tag">mi</span><span class="place-id"><span class="place-name">Michigan</span><span class="place-scope">all 83 counties</span></span><span class="place-n">19</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
-        <li><a class="place" href="https://districtry.com/mn/" title="All 87 counties: county board districts in every one of them, judicial districts, townships and cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Minnesota Senate, House and U.S. House districts, and who holds the U.S. House seats. Nobody is named yet on the county boards, the judges&#x27; benches or the two state chambers, and the Data gaps panel says why." aria-label="Minnesota, all 87 counties, 19 layers"><span class="place-tag">mn</span><span class="place-id"><span class="place-name">Minnesota</span><span class="place-scope">all 87 counties</span></span><span class="place-n">19</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
-        <li><a class="place" href="https://districtry.com/ky/" title="All 120 counties: the county a point sits in, and the Kentucky Senate, House and U.S. House districts — with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the fiscal courts, and the Data gaps panel says why." aria-label="Kentucky, all 120 counties, 12 layers"><span class="place-tag">ky</span><span class="place-id"><span class="place-name">Kentucky</span><span class="place-scope">all 120 counties</span></span><span class="place-n">12</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
-        <li><a class="place" href="https://districtry.com/in/" title="All 92 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the county governments, and the Data gaps panel says why." aria-label="Indiana, all 92 counties, 12 layers"><span class="place-tag">in</span><span class="place-id"><span class="place-name">Indiana</span><span class="place-scope">all 92 counties</span></span><span class="place-n">12</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
-        <li><a class="place" href="https://districtry.com/nc/" title="All 100 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. Nobody is named yet on the county boards or city councils, and the Data gaps panel says why." aria-label="North Carolina, all 100 counties, 12 layers"><span class="place-tag">nc</span><span class="place-id"><span class="place-name">North Carolina</span><span class="place-scope">all 100 counties</span></span><span class="place-n">12</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
-        <li><a class="place" href="https://districtry.com/ok/" title="All 77 counties and their commissioner districts: cities and towns, school districts, ZIP codes, the tribal areas the Census draws, and the nearest police station, fire station and post office — plus the Oklahoma Senate, House and U.S. House districts, with a member named for every U.S. House seat and nearly every legislative one. Each county&#x27;s three commissioners are named from the State Election Board&#x27;s roster. Nobody is named yet on the city councils, and the Data gaps panel says why." aria-label="Oklahoma, all 77 counties, 13 layers"><span class="place-tag">ok</span><span class="place-id"><span class="place-name">Oklahoma</span><span class="place-scope">all 77 counties</span></span><span class="place-n">13</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
+      <div class="cov-head">
+        <p class="cov-count"><strong>10 states and San Francisco answer today.</strong>
+          Pick one to open its map.</p>
+        <ul class="cov-key" aria-label="Key">
+          <li><span class="sw sw-on" aria-hidden="true"></span>Answers here</li>
+          <li><span class="sw sw-wash" aria-hidden="true"></span>Statewide layers only</li>
+          <li><span class="sw sw-off" aria-hidden="true"></span>Not yet</li>
+        </ul>
+      </div>
+      <ul class="states">
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Alabama</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Alaska</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Arizona</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Arkansas</span><span class="vh">, not yet</span></span></li>
+        <li><a class="st st-part" href="https://districtry.com/ca/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">California</span><span class="st-scope">San Francisco only &#183; <span class="st-n">16</span>&nbsp;layers</span></a></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Colorado</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Connecticut</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Delaware</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">District of Columbia</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Florida</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Georgia</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Hawaii</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Idaho</span><span class="vh">, not yet</span></span></li>
+        <li><a class="st" href="https://districtry.com/il/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Illinois</span><span class="st-scope">93 counties &#183; <span class="st-n">41</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/in/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Indiana</span><span class="st-scope">all 92 counties &#183; <span class="st-n">12</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/ia/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Iowa</span><span class="st-scope">all 99 counties &#183; <span class="st-n">21</span>&nbsp;layers</span></a></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Kansas</span><span class="vh">, not yet</span></span></li>
+        <li><a class="st" href="https://districtry.com/ky/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Kentucky</span><span class="st-scope">all 120 counties &#183; <span class="st-n">12</span>&nbsp;layers</span></a></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Louisiana</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Maine</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Maryland</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Massachusetts</span><span class="vh">, not yet</span></span></li>
+        <li><a class="st" href="https://districtry.com/mi/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Michigan</span><span class="st-scope">all 83 counties &#183; <span class="st-n">19</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/mn/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Minnesota</span><span class="st-scope">all 87 counties &#183; <span class="st-n">19</span>&nbsp;layers</span></a></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Mississippi</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Missouri</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Montana</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Nebraska</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Nevada</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">New Hampshire</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">New Jersey</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">New Mexico</span><span class="vh">, not yet</span></span></li>
+        <li><a class="st" href="https://districtry.com/ny/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">New York</span><span class="st-scope">statewide, 5 boroughs in depth &#183; <span class="st-n">39</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/nc/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">North Carolina</span><span class="st-scope">all 100 counties &#183; <span class="st-n">12</span>&nbsp;layers</span></a></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">North Dakota</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Ohio</span><span class="vh">, not yet</span></span></li>
+        <li><a class="st" href="https://districtry.com/ok/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Oklahoma</span><span class="st-scope">all 77 counties &#183; <span class="st-n">13</span>&nbsp;layers</span></a></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Oregon</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Pennsylvania</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Rhode Island</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">South Carolina</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">South Dakota</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Tennessee</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Texas</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Utah</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Vermont</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Virginia</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Washington</span><span class="vh">, not yet</span></span></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">West Virginia</span><span class="vh">, not yet</span></span></li>
+        <li><a class="st" href="https://districtry.com/wi/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Wisconsin</span><span class="st-scope">all 72 counties &#183; <span class="st-n">32</span>&nbsp;layers</span></a></li>
+        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Wyoming</span><span class="vh">, not yet</span></span></li>
       </ul>
     </div>
-    <p class="coverage-caption">Two tiers, because coverage is not one thing: the pale dashed area
-       is where the statewide layers answer — county, township, municipality, school district,
-       ZIP — and the solid fill is where the county-level layers reach as well. The map's own
-       legend states how much of each place that is; click an area to open its map.</p>
-    <details class="not-yet">
-      <summary>Not yet: 40 states and DC — what nobody covers yet is listed here
-        rather than quietly missing.</summary>
-      <div class="not-yet-list">
-        <div>Alabama</div>
-        <div>Alaska</div>
-        <div>Arizona</div>
-        <div>Arkansas</div>
-        <div>California</div>
-        <div>Colorado</div>
-        <div>Connecticut</div>
-        <div>Delaware</div>
-        <div>District of Columbia</div>
-        <div>Florida</div>
-        <div>Georgia</div>
-        <div>Hawaii</div>
-        <div>Idaho</div>
-        <div>Kansas</div>
-        <div>Louisiana</div>
-        <div>Maine</div>
-        <div>Maryland</div>
-        <div>Massachusetts</div>
-        <div>Mississippi</div>
-        <div>Missouri</div>
-        <div>Montana</div>
-        <div>Nebraska</div>
-        <div>Nevada</div>
-        <div>New Hampshire</div>
-        <div>New Jersey</div>
-        <div>New Mexico</div>
-        <div>North Dakota</div>
-        <div>Ohio</div>
-        <div>Oregon</div>
-        <div>Pennsylvania</div>
-        <div>Rhode Island</div>
-        <div>South Carolina</div>
-        <div>South Dakota</div>
-        <div>Tennessee</div>
-        <div>Texas</div>
-        <div>Utah</div>
-        <div>Vermont</div>
-        <div>Virginia</div>
-        <div>Washington</div>
-        <div>West Virginia</div>
-        <div>Wyoming</div>
-      </div>
-    </details>
 
     <h2>Or start from a question</h2>
     <p class="section-note">One page per question and place: the answer in prose, the roster as it
