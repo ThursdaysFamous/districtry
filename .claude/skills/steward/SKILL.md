@@ -117,6 +117,7 @@ python3 scripts/validate_python_hygiene.py --selftest     # proves all four chec
 python3 scripts/validate_python_hygiene.py                # a name imported nowhere (Logan's missing `import os` filed a robots decline as an outage), a dict key set twice (Python keeps the LAST, as PyYAML does), a shared module shadowing an instance's own copy, and a bare sys.argv[1] opened for writing (a `--help` run wrote a file called `--help`)
 python3 scripts/validate_arcgis_format.py                # no app asks ArcGIS for f=geojson
 node scripts/esri_rings_test.mjs                          # ring nesting, on fixtures
+node scripts/map_link_test.mjs                            # pasted Google/Apple Maps links and coordinates, read by the one shared parser
 node scripts/build_og_image.mjs --check                    # every surface's social card is the one the renderer wrote, labelled with its metros.json tag (provenance, not pixels)
 python3 scripts/validate_instance_registration.py         # every instance named in every table
 python3 scripts/validate_instance_assets.py               # every same-origin asset a page names exists

@@ -99,7 +99,7 @@ the member, and this instance names none.
 
 - Metro: Kentucky (`kentucky`) — https://districtry.com/ky/
 - Geocoders: address Photon (Kentucky-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Kentucky-bounded, serial >=1s queue)
-- Ground truth: 38.25270,-85.75850 (downtown Louisville, Jefferson County) → county Jefferson County; us-house 3; ky-senate 33; ky-house 43. Negative point 36.40000,-86.50000 (inside Sumner County, TENNESSEE, about 15 km south of the Kentucky line and north-east of Nashville — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (minLat 36.35) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-09-30: TIGERweb's county layer names Sumner County STATE 47 (control: the anchor returns Jefferson County STATE 21), and no outline in fleet-outlines.json contains it (control: the Louisville anchor is likewise in none of them, so the file genuinely has no Kentucky coverage rather than the test passing vacuously). TENNESSEE RATHER THAN ONE OF THE OTHER SIX NEIGHBOURS, deliberately. Illinois is live and borders Kentucky across the Ohio, so a point over there would sit inside an instance's own outline and the browser would hand the selection off to districtry.com/il/ and navigate away — which is how Minnesota's first candidate failed, silently, as a smoke-test timeout on a blank document rather than as a wrong answer. Indiana and North Carolina are in build as dark instances and will become live outlines, so they were avoided for the same reason one step ahead. Tennessee is in no instance and in no launch plan. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.).
+- Ground truth: 38.25270,-85.75850 (downtown Louisville, Jefferson County) → county Jefferson County; us-house 3; ky-senate 33; ky-house 43. Negative point 38.80000,-83.55000 (near West Union, Adams County, OHIO, about 15 km north of the Ohio River — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (maxLat 39.30) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's state and county layers name Ohio and Adams County STATE 39 (controls: the Louisville anchor returns Kentucky and Jefferson County STATE 21, and Columbus returns Ohio and Franklin County STATE 39, so the query answers rather than failing), and no outline in fleet-outlines.json contains it, with Tennessee's outline in that file (control: the Louisville anchor IS inside Kentucky's outline there). THIS POINT WAS IN SUMNER COUNTY, TENNESSEE UNTIL TENNESSEE'S GO-LIVE, chosen on 2026-09-30 because no instance covered Tennessee; that change put Tennessee's outline in the fleet file with the old point inside it, so a Kentucky selection there would have handed off to districtry.com/tn/. OHIO RATHER THAN ANOTHER NEIGHBOUR: Illinois, Indiana and Tennessee are live, Missouri is on the fleet's new-state list, and the states planned next (Arkansas, Mississippi, Louisiana) do not border Kentucky, so this point should not have to move when they go live. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.).
 - Layers: 12 registered (political 7, schools 3, geography 2); `registerLayer(` floor 4. Debug namespace `window.KentuckyExplorer`.
 - Scheduled workflows: `update-ky-congress-roster.yml` (Mon 13:55 UTC); `update-ky-judges-roster.yml` (Tue 14:40 UTC); `update-ky-city-officials.yml` (Wed 14:50 UTC); `update-ky-county-officials.yml` (Thu 14:55 UTC).
 - Source registry: `ky/scripts/validate_sources.py` (machine-checked monthly)
@@ -133,23 +133,28 @@ python3 scripts/compose_app.py --check    # the CI drift gate
 python3 scripts/build_coverage_gaps.py --check --metro kentucky --out ky/data/app/coverage-gaps.json
 ```
 
-**THE NEGATIVE POINT IS IN TENNESSEE, AND THE REASON IT IS NOT IN ILLINOIS IS THE POINT.**
-`ky/metro-worksheet.json`'s `negative_point.note` carries the whole measurement. Kentucky has
-seven neighbours and most of them are unusable: Illinois is live, so a point over there sits
-inside an instance's own outline, `placeOwner` hands the selection to `districtry.com/il/`, and
-the browser LEAVES — which surfaces as a smoke-test timeout on a blank document rather than as a
-wrong answer, and is exactly how Minnesota's first candidate failed. Indiana and North Carolina
-are in build as dark instances and will become live outlines, so they were avoided one step
-ahead. Tennessee is in no instance and in no launch plan. **AND THE POINT IS ON LAND**: Kentucky's
-TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky and a
-point in open water on the northern border would be inside a Kentucky county — the same trap
-Minnesota hit in Lake Superior.
+**THE NEGATIVE POINT IS IN OHIO SINCE TENNESSEE'S GO-LIVE, AND THE REASON IT IS NOT IN ILLINOIS
+IS THE POINT.** `ky/metro-worksheet.json`'s `negative_point.note` carries the whole measurement.
+Kentucky has seven neighbours and most of them are unusable: Illinois is live, so a point over
+there sits inside an instance's own outline, `placeOwner` hands the selection to
+`districtry.com/il/`, and the browser LEAVES — which surfaces as a smoke-test timeout on a blank
+document rather than as a wrong answer, and is exactly how Minnesota's first candidate failed.
+The point was first placed in Sumner County, Tennessee (2026-09-30), when Tennessee was in no
+instance; Tennessee's go-live (2026-10-13) put its outline in the fleet file with that point
+inside it, so the same change moved the point to Adams County, Ohio, measured against TIGERweb
+with Louisville and Columbus as controls. Indiana and Tennessee are now live too, and Missouri
+is on the fleet's new-state list. **AND THE POINT IS ON LAND**: Kentucky's TIGER county fabric
+follows the Ohio River's north bank, so the river is INSIDE Kentucky and a point in open water
+on the northern border would be inside a Kentucky county — the same trap Minnesota hit in Lake
+Superior.
 
 **THIS INSTANCE'S SMOKE TEST REFUSES `fleet-outlines.json` IN TWO CHECKS RATHER THAN MOVING ITS
 POINT.** That is the fleet remedy (Iowa #1267, Illinois #1272): a check that puts a point outside
 the state at the map centre depends on no sibling outline existing there, which is a race the day
-a neighbour launches. Aborting the fetch makes the check test what it is for. A future Tennessee
-instance therefore cannot break it.
+a neighbour launches. Aborting the fetch makes the check test what it is for. Tennessee's
+go-live did not break those two checks, which is the remedy working; the point moved anyway,
+because the worksheet's own note says it is outside every instance and that sentence would
+otherwise have become false.
 
 **Sandboxed environments (Claude Code web):** the headless browser cannot reach the Leaflet
 CDN. The repo root's `.claude/settings.json` SessionStart hook runs `scripts/vendor_leaflet.sh`,

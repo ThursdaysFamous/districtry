@@ -51,7 +51,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "38.25270,-85.75850"; // downtown Louisville, Jefferson County
 const OFFLINE = ["county", "us-house", "ky-senate", "ky-house"];
 const EXPECT_DISTRICT = { "county": "Jefferson County", "us-house": "3", "ky-senate": "33", "ky-house": "43" };
-const NEGATIVE_POINT = "36.40000,-86.50000"; // inside Sumner County, TENNESSEE, about 15 km south of the Kentucky line and north-east of Nashville — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (minLat 36.35) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-09-30: TIGERweb's county layer names Sumner County STATE 47 (control: the anchor returns Jefferson County STATE 21), and no outline in fleet-outlines.json contains it (control: the Louisville anchor is likewise in none of them, so the file genuinely has no Kentucky coverage rather than the test passing vacuously). TENNESSEE RATHER THAN ONE OF THE OTHER SIX NEIGHBOURS, deliberately. Illinois is live and borders Kentucky across the Ohio, so a point over there would sit inside an instance's own outline and the browser would hand the selection off to districtry.com/il/ and navigate away — which is how Minnesota's first candidate failed, silently, as a smoke-test timeout on a blank document rather than as a wrong answer. Indiana and North Carolina are in build as dark instances and will become live outlines, so they were avoided for the same reason one step ahead. Tennessee is in no instance and in no launch plan. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.
+const NEGATIVE_POINT = "38.80000,-83.55000"; // near West Union, Adams County, OHIO, about 15 km north of the Ohio River — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (maxLat 39.30) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's state and county layers name Ohio and Adams County STATE 39 (controls: the Louisville anchor returns Kentucky and Jefferson County STATE 21, and Columbus returns Ohio and Franklin County STATE 39, so the query answers rather than failing), and no outline in fleet-outlines.json contains it, with Tennessee's outline in that file (control: the Louisville anchor IS inside Kentucky's outline there). THIS POINT WAS IN SUMNER COUNTY, TENNESSEE UNTIL TENNESSEE'S GO-LIVE, chosen on 2026-09-30 because no instance covered Tennessee; that change put Tennessee's outline in the fleet file with the old point inside it, so a Kentucky selection there would have handed off to districtry.com/tn/. OHIO RATHER THAN ANOTHER NEIGHBOUR: Illinois, Indiana and Tennessee are live, Missouri is on the fleet's new-state list, and the states planned next (Arkansas, Mississippi, Louisiana) do not border Kentucky, so this point should not have to move when they go live. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.
 const APP_NAME = "districtry Kentucky";
 const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
@@ -228,11 +228,13 @@ try {
     // there, which puts the map's CENTRE outside Kentucky and arms the pan
     // hand-off (ENGINE metro-portal's moveend -> placeOwner ->
     // offerMetroPortal, which sets window.location.href). The point is in
-    // Tennessee, which no instance and no launch plan covers TODAY — so unlike
-    // Iowa's and Wisconsin's cases nothing is broken now, and this is refused
-    // anyway, because the alternative is a check that passes until somebody
-    // ships a state and then fails as a TIMEOUT WAITING FOR A BUTTON ON A PAGE
-    // THAT HAS NAVIGATED AWAY, a symptom that names nothing about its cause.
+    // Ohio, which no instance covers TODAY — it was in Tennessee until
+    // Tennessee went live, which is the case this refusal was written for — so
+    // unlike Iowa's and Wisconsin's cases nothing is broken now, and this is
+    // refused anyway, because the alternative is a check that passes until
+    // somebody ships a state and then fails as a TIMEOUT WAITING FOR A BUTTON ON
+    // A PAGE THAT HAS NAVIGATED AWAY, a symptom that names nothing about its
+    // cause.
     // Iowa (#1267) and Wisconsin (#1268) both arrived at refusing the file
     // rather than moving the point; a new instance starts there instead of
     // waiting to be bitten. Refused, placeOwner's own error leg answers
