@@ -62,7 +62,8 @@ in the researched-but-unbuilt backlog.
   "northcarolina": ["us-house", "nc-senate", "nc-house", "school-district-unified", "county", "county-subdivision", "municipality", "zip-code", "tribal-government", "police-station", "fire-station", "post-office"],
   "oklahoma": ["us-house", "ok-senate", "county", "ok-house", "county-commissioner", "tribal-government", "school-district-unified", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"],
   "southcarolina": ["us-house", "sc-senate", "county", "school-district-unified", "sc-house", "county-council", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
-  "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "county-commissioner", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"]
+  "tennessee": ["us-house", "tn-senate", "county", "tn-house", "school-district-unified", "county-commissioner", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"],
+  "arkansas": ["us-house", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -3318,6 +3319,45 @@ trusted.
             "why": "Tennessee's school boards are elected, and no statewide list of their members has been read yet. The boundary this card draws carries the district's name and grades and nothing about its board.",
             "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
             "blocker": "Measured 2026-10-10 against TIGERweb's School service for STATE='47': 127 unified districts over 105,791.82 km2 of land, and 15 elementary plus 15 secondary districts over the same 980.06 km2 — Tennessee's city and special school districts, which run the lower grades while the county runs the high school there. Unified plus elementary is exactly the 95-county total. The boundary carries the district's name and grade range and no board member. The Comptroller's statewide redistricting service also carries school board districts (layer 5, 115 features, read during planning on 2026-10-09) for the boards elected by district; neither those nor the members are wired here. The route for the names is the state Department of Education or each board's own list; not attempted in this change."
+      }
+  ],
+  "arkansas": [
+      {
+            "id": "ar-quorum-court",
+            "concept": "County judge and quorum court",
+            "area": "Arkansas — all 75 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "Your County card names your Arkansas county and not your county judge, your justice of the peace or which quorum court district you live in.",
+            "why": "Every Arkansas county elects a county judge and a quorum court of justices of the peace, each from a district. This app has not built the districts or the names yet, so the card says the offices exist and names nobody.",
+            "wanted": "Nothing from a reader — this one is ours to build.",
+            "blocker": "UNBUILT, NOT UNPUBLISHED for the districts and the county judges, and NOT PUBLISHED BY ANY GOVERNMENT for the justices' names, measured during this instance's planning on 2026-10-09 and recorded so the silence on the County card is legible. THE DISTRICTS: the state's mapping office (gis.arkansas.gov, Boundaries FeatureServer layer 19, credited to the Secretary of State) draws all 775 quorum court districts; every county's are numbered from 1 with no gaps and none repeated, every county's seat count is the one state law sets for its size in all 75 counties, and the districts fill each county to within about a hundredth of a per cent. Layer 55 is the 2011 plan (783 seats) and its pop2020 field is wrong in 32 counties, so neither is read. That host publishes no robots.txt (its address redirects to a web page) and its portal asks for sixty seconds between requests, which the build would honour. THE COUNTY JUDGES: the state courts' directory (arcourts.gov/directories/county-judge-clerk) names all 75, a government source. THE JUSTICES: no state office publishes who sits for each district — the Secretary of State's candidate filings hold no justice-of-the-peace filings, its elected-officials page sends readers to the county association, county results leave out uncontested seats (Faulkner's official 2024 results show 4 contests for 13 seats), the state's county audits name no quorum court, and the courts' directory names county judges and clerks only. The Association of Arkansas Counties (arcounties.org, robots Crawl-delay 20) lists every county's justices, 775 names with three vacant, matching the state's seat count in all 75 counties, but its lists are not numbered by district; how many counties number their own justices on their websites is NOT measured. EVERY ONE OF THESE SEATS IS ON THE 3 NOVEMBER 2026 BALLOT and the new terms start on 1 January 2027, so names read now would all be re-read in January. When and how to name the justices is the operator's decision, asked 2026-10-13 with this instance's first change. Arkansas is dark as of this record."
+      },
+      {
+            "id": "ar-municipal-officeholders",
+            "concept": "City or town government",
+            "area": "Arkansas",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "This app can tell you which Arkansas city or town you are in, and not who your mayor or council members are.",
+            "why": "No statewide list of Arkansas's mayors and council members has been read yet. The boundary this card draws carries geography and no officeholder at all, and this app never guesses a name.",
+            "wanted": "A statewide roster of mayors and council members, or each city's own published list.",
+            "blocker": "The boundary is the Census's own incorporated-places layer, which carries a name, a code and a functional status and no officeholder field. Measured 2026-10-13: 501 places for STATE='05', 315 `<Name> city` and 186 `<Name> town`, every one FUNCSTAT A (active), covering 6,566 of the state's 134,659 km² of land. The card states the style the Census records and claims nothing about the form of government. The planning pass on 2026-10-09 found the Arkansas Municipal League's August 2026 directory and the state's ward map for all 19 cities over 25,000 people, and that Little Rock, Fort Smith, Hot Springs and Texarkana are run by a board of directors rather than a council; neither has been read into this instance. Not attempted in this change; the instance arrived on the national tier alone. The cities over 25,000 people are the part the fleet's done standard asks for first."
+      },
+      {
+            "id": "ar-school-board-members",
+            "concept": "School board",
+            "area": "Arkansas",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "This app names your school district and not the people elected to run it.",
+            "why": "Arkansas's school boards are elected, and no statewide list of their members has been read yet. The boundary this card draws carries the district's name and nothing about its board.",
+            "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
+            "blocker": "Measured 2026-10-13 against TIGERweb's School service for STATE='05': 234 unified districts, NO elementary and NO secondary district, and the unified districts' Census land area sums to the 75-county total (134,659 km²), so every point in the state is in exactly one. The boundary carries the district's name and no board member. The planning pass on 2026-10-09 read that the state maps board zones for 176 of its 238 school districts, that whether the other 62 elect at large is NOT measured, and that the state's school directory (adedata.arkansas.gov) lists no board members. Four of the state's 238 districts have no national code, so the Census's 234 is not a miscount. Not attempted in this change."
       }
   ]
 }

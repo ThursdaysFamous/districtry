@@ -111,6 +111,7 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro oklahoma --out ok/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro southcarolina --out sc/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro tennessee --out tn/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -1625,6 +1626,7 @@ jobs:
           python3 ok/scripts/validate_index.py ok/index.html
           python3 sc/scripts/validate_index.py sc/index.html
           python3 tn/scripts/validate_index.py tn/index.html
+          python3 ar/scripts/validate_index.py ar/index.html
 
       # ONE server, EVERY instance. Until R3 this ran il alone, which is what
       # the repo had — ca and ny were separate repos with their own CI. They
@@ -1687,6 +1689,7 @@ jobs:
           BASE_URL=http://localhost:8000/ok/  node ok/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/sc/  node sc/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/tn/  node tn/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ar/  node ar/scripts/smoke_test.mjs
           # The root landing page and — the part that matters — its forwarding
           # guard, which is what keeps every already-distributed share link and
           # embed snippet built from the OLD root URL reaching the app. A regex

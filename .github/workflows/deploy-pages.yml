@@ -230,6 +230,9 @@ jobs:
             # Tennessee arrives dark the same way, and goes live only on the
             # operator's word.
             'tn/**'
+            # Arkansas arrives dark the same way, and goes live only on the
+            # operator's word.
+            'ar/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full

@@ -23,6 +23,8 @@
   ],
   "codes": {
     "aldermanic-district": "ad",
+    "ar-house": "arh",
+    "ar-senate": "ars",
     "bart-director": "bt",
     "borough": "bo",
     "borough-president": "bp",
