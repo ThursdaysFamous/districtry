@@ -11,11 +11,10 @@ name: Update South Carolina legislature roster
 # office and business telephone and never the home address or home telephone
 # the same pages print.
 #
-# SOUTH CAROLINA IS DARK, so this job does not regenerate
-# sc/state-legislature.html: build_legislator_pages.py refuses an instance
-# metros.json does not carry, so that page is not built yet. Go-live adds the
-# step in the same change that adds sc to metros.json — sc/WATCH.md has the
-# list.
+# THE PAGE STEPS LANDED WITH THE GO-LIVE CHANGE.
+# `sc/state-legislature.html` carries a GENERATED table of both rosters, and
+# `about.html` and `sitemap.xml` count them, so all three are regenerated here
+# and staged in the same `git add`.
 
 on:
   schedule:
@@ -76,7 +75,10 @@ jobs:
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
           python3 sc/scripts/build_sc_legislature_roster.py
-          git add sc/data/app/sc-senate-members.json sc/data/app/sc-house-members.json
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add sc/data/app/sc-senate-members.json sc/data/app/sc-house-members.json sc/state-legislature.html about.html sitemap.xml
           git commit -m "Update South Carolina Senate + House rosters from the General Assembly"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

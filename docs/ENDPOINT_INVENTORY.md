@@ -12,29 +12,40 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **243 distinct hosts** those files
-name, **43 are fetched by the browser**; the other 200 are links.
+makes from a link a reader clicks. Of **248 distinct hosts** those files
+name, **44 are fetched by the browser**; the other 204 are links.
 
 ### Geocoder — 3 host(s)
 
 | host | instances |
 |---|---|
 | `geosearch.planninglabs.nyc` | ny |
-| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in, nc, ok |
-| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
+| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn |
+| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn |
 
 The most sensitive flow on the site: it is **the text a reader
 types**. `build_privacy_page.py` owns what each receives and links
 each one's policy; this table is held to that generator's own
 per-app measurement, so the two cannot disagree.
 
+### Map-link lookup — 1 host(s)
+
+| host | instances |
+|---|---|
+| `link-lookup.districtry.deno.net` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn |
+
+districtry's own service (`services/link-lookup/main.ts`, on Deno
+Deploy). It receives **a short Google Maps or Apple Maps link**, and
+only when a reader pastes one, and answers with the full link it leads
+to. `build_privacy_page.py` names it as a recipient.
+
 ### Basemap tiles — 3 host(s)
 
 | host | instances |
 |---|---|
-| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
-| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
-| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
+| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn |
+| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn |
+| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn |
 
 One service. Several host spellings appear because the tile URL is a
 `{s}.` template and some are `preconnect` hints — one recipient, not
@@ -44,7 +55,7 @@ several.
 
 | host | instances |
 |---|---|
-| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
+| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn |
 
 Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
@@ -52,7 +63,7 @@ Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
 | host | instances |
 |---|---|
-| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
+| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn |
 | `www.googletagmanager.com` | il, ny |
 
 ### Webfonts — none
@@ -65,7 +76,7 @@ a font CDN would be a recipient the privacy page does not name.
 
 | host | instances |
 |---|---|
-| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
+| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn |
 
 ### Socrata — 7 host(s)
 
@@ -84,7 +95,7 @@ a font CDN would be a recipient the privacy page does not name.
 | host | instances |
 |---|---|
 | `arcgispublicmap.co.st-clair.il.us` | il |
-| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok |
+| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok, sc, tn |
 | `gis.aurora.il.us` | il |
 | `gis.cookcountyil.gov` | il |
 | `gis.fultoncountyil.gov` | il |
@@ -131,6 +142,8 @@ prose.
 | in | 4 | 12 |
 | nc | 4 | 12 |
 | ok | 4 | 13 |
+| sc | 3 | 12 |
+| tn | 5 | 13 |
 
 ### Where each layer's shapes come from
 
@@ -173,7 +186,7 @@ measured until the next run describes it.
 | ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
 | CPS High School Zone (`cps-high`) | `data.cityofchicago.org` | — |
 | CPS Middle School Zone (`cps-middle`) | `data.cityofchicago.org` | — |
-| Voting Precinct (`county-precinct`) | 37 of 83 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.macoupincountyil.gov`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.lasallecounty.org`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.grundyco.org`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`, `tigerweb.geo.census.gov`; 46 shipped with the app | — |
+| Voting Precinct (`county-precinct`) | 36 of 83 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.macoupincountyil.gov`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.lasallecounty.org`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.grundyco.org`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`, `tigerweb.geo.census.gov`; 47 shipped with the app | — |
 | Special Service Area (`ssa`) | `data.cityofchicago.org` | — |
 | TIF District (`tif-district`) | `gis.cookcountyil.gov` | — |
 | CPS Elementary School Zone (`cps-elementary`) | `data.cityofchicago.org` | — |
@@ -321,11 +334,36 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `county-commissioner`.
 
+#### sc — 3 of 12 layers fetch their shapes
+
+| layer | whole set from | at the selected point from |
+|---|---|---|
+| School District (`school-district-unified`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
+| City or Town (`municipality`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+
+- Drawn from this site's own files: `us-house`, `sc-senate`, `county`, `sc-house`, `county-council`.
+- Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+- **Not measured** — declared since the probe ran: `tribal-government`.
+
+#### tn — 5 of 13 layers fetch their shapes
+
+| layer | whole set from | at the selected point from |
+|---|---|---|
+| School District (Unified) (`school-district-unified`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
+| School District (Elementary) (`school-district-elementary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| School District (Secondary) (`school-district-secondary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| City or Town (`municipality`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+
+- Drawn from this site's own files: `us-house`, `tn-senate`, `county`, `tn-house`, `county-commissioner`.
+- Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+
 ## 2. Build-time datasets
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 131 | 392 | 6 |
+| il | 131 | 393 | 6 |
 | ny | 39 | 35 | 0 |
 | ca | 17 | 14 | 0 |
 | wi | 92 | 265 | 5 |
@@ -336,9 +374,11 @@ measured until the next run describes it.
 | in | 14 | 12 | 0 |
 | nc | 17 | 11 | 0 |
 | ok | 17 | 12 | 0 |
-| **total** | **472** | **897** | **12** |
+| sc | 17 | 13 | 0 |
+| tn | 17 | 11 | 0 |
+| **total** | **506** | **922** | **12** |
 
-**141 distinct source hosts** across the six manifests. Each instance's
+**145 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check
