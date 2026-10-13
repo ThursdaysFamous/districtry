@@ -5595,19 +5595,20 @@ function initIowaExplorer() {
     return biggest ? ringToLatLng(biggest) : null;
   }
 
-  // The ring of largest area among GeoJSON [lng,lat] rings, as one Leaflet
-  // ring, or null. Area rather than vertex count, because the coverage outline
-  // is a flat list in which an enclave's hole is a ring like any other.
-  function largestRingLatLng(rings) {
-    var best = null, bestArea = 0;
+  // Every ring of the coverage outline (GeoJSON [lng,lat]) as a closed
+  // Leaflet line, for the edge drawn along it. All of them, because each is a
+  // place the wash stops: measured 2026-10-13, the ten outlines this draws
+  // hold one ring each except San Francisco's (the city and Treasure Island)
+  // and Kentucky's (the state and the Kentucky Bend), both covered ground.
+  function outlineEdgeLines(rings) {
+    var out = [];
     for (var i = 0; i < (rings || []).length; i++) {
-      var r = rings[i], a = 0;
+      var r = rings[i];
       if (!r || r.length < 4) continue;
-      for (var j = 0; j < r.length - 1; j++) a += r[j][0] * r[j + 1][1] - r[j + 1][0] * r[j][1];
-      a = Math.abs(a);
-      if (a > bestArea) { best = r; bestArea = a; }
+      var line = ringToLatLng(r);
+      out.push(line.concat([line[0]]));
     }
-    return best ? ringToLatLng(best) : null;
+    return out;
   }
 
   /* ---------- the coverage key ----------
@@ -5789,17 +5790,18 @@ function initIowaExplorer() {
            before: its line means the state line, and the coverage ring is
            not that. So `dst-glow` still appears in a region-declaring app
            only once the region band has painted, which is what Illinois's and
-           New York's smoke tests wait on. The largest ring only, by area,
-           for the reason regionOuterRing gives: an island would get a glow of
-           its own. */
-        var edge = typeof loadRegionGeometry === "function" ? null : largestRingLatLng(outline);
-        if (edge) {
-          var edgeClosed = edge.concat([edge[0]]);
-          c.glow = L.polyline(edgeClosed, {
+           New York's smoke tests wait on. Unlike the region's line, which
+           keeps only the largest ring so a state's lake islands get no glow of
+           their own, this one goes round every ring: a separate piece of
+           coverage (Treasure Island, the Kentucky Bend) is ground the app
+           answers for, and the line marks where that stops. */
+        var edges = typeof loadRegionGeometry === "function" ? [] : outlineEdgeLines(outline);
+        if (edges.length) {
+          c.glow = L.polyline(edges, {
             pane: "scope-mask", className: "dst-glow",
             weight: 9, opacity: 0, interactive: false
           }).addTo(map);
-          c.stateLine = L.polyline(edgeClosed, {
+          c.stateLine = L.polyline(edges, {
             pane: "scope-mask", weight: 1.5, opacity: 0.9, interactive: false
           }).addTo(map);
           if (ck && ck.edge) bands.push({ swatch: "dml-glow", label: ck.edge });
