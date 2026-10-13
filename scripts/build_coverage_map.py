@@ -99,6 +99,10 @@ AREAS = {
     # nc: its eleven layers are the national tier and every one answers over
     # the whole state. Its coverage_key carries `outside` alone.
     "ok": {"outline": "ok/data/app/metro-outline.json", "state_outline": None},
+    # South Carolina joined at its go-live. ONE tier, like ok and nc: its
+    # national-tier layers answer over the whole state and its county council
+    # districts tile all 46 counties. Its coverage_key carries `outside` alone.
+    "sc": {"outline": "sc/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,

@@ -32,10 +32,12 @@ name: Update South Carolina county councils
 # and nobody has read them, because from then on the names are owed a refresh —
 # see `owed()` in the builder and sc/WATCH.md.
 #
-# SOUTH CAROLINA IS DARK, so this job regenerates no county page:
-# scripts/build_county_pages.py records this roster in NOT_COUNTY_BOARDS until
-# go-live adds its adapter. Go-live adds the county-page steps here in the same
-# change — sc/WATCH.md has the list.
+# THE COUNTY PAGES LANDED WITH THE GO-LIVE CHANGE. scripts/build_county_pages.py
+# reads this roster through its sc_councils adapter into one page per county
+# (sc/county-council/<county>.html) and an index, and about.html, sitemap.xml,
+# llms.txt and docs/EAM_STATUS.md count what those pages carry, so all of them
+# are regenerated here and staged in the same `git add` — otherwise this
+# workflow's own bot PR fails their `--check` on numbers the PR is not about.
 
 on:
   schedule:
@@ -192,7 +194,12 @@ jobs:
           # carried over the checkout as an uncommitted change.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add sc/data/app/sc-county-council-members.json
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          python3 scripts/build_llms_txt.py
+          python3 scripts/build_eam_status.py
+          git add sc/data/app/sc-county-council-members.json sc/county-council sc/county-council.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
           git commit -m "Update South Carolina county councils from certified election results"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
