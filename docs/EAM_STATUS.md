@@ -44,14 +44,14 @@ different thing from one it failed.
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
 | ca | **--MC** | — | — | 0 | 0 | — | 14 | all | all 13 levels |
-| ia | **EAM·** | 99 | 99/99 | 77 | 77 | all | 65 | all | 10 of 13 levels |
+| ia | **EAM·** | 99 | 99/99 | 77 | 77 | all | 65 | all | 11 of 13 levels |
 | il | **EAM·** | 102 | 102/102 | 632 | 1,089 | all | 409 | all | 11 of 13 levels |
-| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 12 | all | 6 of 13 levels |
+| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 12 | all | 7 of 13 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 13 | all | 10 of 13 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 61 | all | 12 of 13 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 17 | all | 12 of 13 levels |
-| nc | **EAM·** | 100 | 100/100 § | 372 | 579 | all | 11 | all | 6 of 13 levels |
-| ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 9 of 13 levels |
+| nc | **EAM·** | 100 | 100/100 § | 372 | 579 | all | 11 | all | 7 of 13 levels |
+| ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 10 of 13 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 12 | all | 7 of 13 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,575 | all | 265 | all | 11 of 13 levels |
 
@@ -84,10 +84,9 @@ this instance is in maintenance.
 ### ia — EAM·
 
 - **Under a WATCH.md plan (47):** re-checked on a stated cadence rather than by a job — `adair-county-outline.json`, `black-hawk-county-outline.json`, `bremer-county-outline.json`, `butler-county-outline.json`, `calhoun-county-outline.json`, `cedar-rapids-wards.json`, `cerro-gordo-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `dickinson-county-outline.json`, `dsm-wards.json`, `floyd-county-outline.json`, `franklin-county-outline.json`, `guthrie-county-outline.json`, `hamilton-county-outline.json`, `humboldt-county-outline.json`, `ia-aeas.json`, `ia-cc-director-districts.json`, `ia-community-colleges.json`, `ia-county-board-directory.json`, `ia-house-districts.json`, `ia-judicial-districts.json`, `ia-precincts.json`, `ia-school-director-districts.json`, `ia-school-districts.json`, `ia-school-sites.json`, `ia-senate-districts.json`, `ia-supervisor-districts.json`, `johnson-county-outline.json`, `kossuth-county-outline.json`, `lee-county-outline.json`, `linn-county-outline.json`, `madison-county-outline.json`, `metro-outline.json`, `montgomery-county-outline.json`, `palo-alto-county-outline.json`, `pottawattamie-county-outline.json`, `sac-county-outline.json`, `state-counties.json`, `tama-county-outline.json`, `taylor-county-outline.json`, `warren-county-outline.json`, `waterloo-wards.json`, `webster-county-outline.json`, `winneshiek-county-outline.json`, `worth-county-outline.json`, `wright-county-outline.json`
-- **Covered: no.** 3 of the 13 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
+- **Covered: no.** 2 of the 13 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
   - **4. The county governing body, in every county of the state** — open. 97 of 99 counties name a governing body. A record declares this level and earns nothing: `ia-supervisor-count-disagrees` — County Auditor Amanda Meyer was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `ia-supervisor-count-impossible` — County Auditor Mary Ann Hanusa was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
 
 ### il — EAM·
 
@@ -100,14 +99,13 @@ this instance is in maintenance.
 ### in — EAM·
 
 - **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `in-house-districts.json`, `in-senate-districts.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 7 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 6 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 36 of 39 units at 25,000+ name a governing body; unanswered: Brownsburg town, Plainfield town, Schererville town
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
 
 ### ky — EAM·
 
@@ -139,14 +137,13 @@ this instance is in maintenance.
 
 - **Examined by a statewide record:** `nc-commissioner-districts` accounts for every county in the state, which is what Examined rests on here: 99 of 100 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `nc-house-districts.json`, `nc-senate-districts.json`, `state-counties.json`
-- **Covered: no.** 7 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 6 of the 13 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 99 of 100 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 42 units at 25,000+ name a governing body; unanswered: Apex town, Asheboro city, Asheville city, Burlington city, Cary town, Chapel Hill town, Charlotte city, Clayton town and 34 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — North Carolina's townships are boundaries without governments — the Census marks every one non-functioning — so outside a city or town limit the county governs.
 
@@ -154,11 +151,10 @@ this instance is in maintenance.
 
 - **Examined by a statewide record:** `ny-county-governing-body` accounts for every county in the state, which is what Examined rests on here: 11 of 62 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Under a WATCH.md plan (24):** re-checked on a stated cadence rather than by a job — `borough-boundaries.json`, `bronx-county-outline.json`, `brooklyn-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `judicial-districts.json`, `manhattan-county-outline.json`, `metro-outline.json`, `municipal-court-districts.json`, `ny-central-hs-districts.json`, `ny-cities-towns.json`, `ny-counties.json`, `ny-school-districts.json`, `ny-state-outline.json`, `ny-villages.json`, `queens-county-outline.json`, `state-assembly-districts.json`, `state-senate-districts.json`, `staten-island-county-outline.json`, `sullivan-county-outline.json`, `sullivan-fire-districts.json`, `sullivan-library-districts.json`, `tompkins-county-outline.json`, `tompkins-legislature-districts.json`
-- **Covered: no.** 4 of the 13 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
+- **Covered: no.** 3 of the 13 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
   - **4. The county governing body, in every county of the state** — open. 5 of 62 counties name a governing body. A record declares this level and earns nothing: `ny-county-governing-body` — no ask recorded, so it covers nothing yet under the standard
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 1 of 104 units at 25,000+ name a governing body; unanswered: Albany city, Amherst town, Auburn city, Babylon town, Bethlehem town, Binghamton city, Brighton town, Brookhaven town and 95 more. A record declares this level and earns nothing: `ny-local-governing-body` — no ask recorded, so it covers nothing yet under the standard
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level). A record declares this level and earns nothing: `ny-local-governing-body` — no ask recorded, so it covers nothing yet under the standard
-  - **13. Tribal governments** — open (required only where the state has the level)
 
 ### ok — EAM·
 
