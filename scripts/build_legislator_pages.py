@@ -291,6 +291,30 @@ INSTANCES = {
             layer="us-house", roster="congress-roster.json",
             state="South Carolina"),
     ),
+    # Tennessee joined at its go-live with both chambers named from the
+    # Legislature's own map on TNMap (a seat the map lists as vacant prints as
+    # a vacancy). Tenn. Const. art. II, sec. 3 sets senators' terms at four
+    # years and representatives' at two.
+    "tn": dict(
+        worksheet="tn/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Tennessee legislator?",
+            body="the Tennessee General Assembly",
+            short="Tennessee General Assembly",
+            term="Senators serve four-year terms and representatives two.",
+            chambers=[
+                dict(layer="tn-senate", name="Tennessee Senate", short="Senate",
+                     holder="Senator", roster="tn-senate-members.json"),
+                dict(layer="tn-house", name="Tennessee House of Representatives", short="House",
+                     holder="Representative", roster="tn-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Tennessee"),
+    ),
 }
 
 

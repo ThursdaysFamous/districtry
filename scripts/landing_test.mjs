@@ -293,6 +293,26 @@ try {
         body: `<!doctype html><title>instance stub</title>`,
       }));
   }
+  // Wait for the address box to SETTLE, not for a fixed time. It reads
+  // fleet-outlines.json before it decides, and on a busy runner that took
+  // longer than the 700 ms these checks used to sleep: on 2026-10-13, with
+  // thirteen outlines in the file, Illinois (the first case, so the first
+  // fetch) read the landing page's own URL. Settled means the page navigated
+  // or the status line shows one of its error-class endings (outside every
+  // place, no matches, search failed). A navigation destroys the page's
+  // context, so the status test's rejection is swallowed rather than allowed
+  // to win the race before the new URL commits; the deadline falls through to
+  // the check, which reports what it found.
+  async function addressSettled(page) {
+    const timeout = 10000;
+    await Promise.race([
+      page.waitForURL((u) => u.pathname !== "/", { timeout, waitUntil: "commit" }),
+      page.waitForFunction(() => {
+        const s = document.getElementById("search-status");
+        return !!s && s.classList.contains("err");
+      }, null, { timeout }).catch(() => new Promise(() => {})),
+    ]).catch(() => {});
+  }
   for (const m of FLEET) {
     const lat = (m.bbox.minLat + m.bbox.maxLat) / 2;
     const lng = (m.bbox.minLng + m.bbox.maxLng) / 2;
@@ -309,7 +329,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "somewhere in " + m.landing_name);
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     const u = new URL(page.url());
     check(`an address in ${m.landing_name} opens /${m.tag}/`,
       u.pathname === `/${m.tag}/`, page.url());
@@ -357,7 +377,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", probe.name);
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     const u = new URL(page.url());
     check(`${probe.name} opens /${probe.tag}/ (${probe.why})`,
       u.pathname === `/${probe.tag}/`, page.url());
@@ -379,7 +399,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "Rock Island, Illinois");
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     check("with fleet-outlines.json unreachable, Rock Island still opens /il/ by the rectangle pass",
       new URL(page.url()).pathname === "/il/", page.url());
     await ctx.close();
@@ -404,7 +424,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "Clayton, Missouri");
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     check("Clayton, Missouri stays on the landing page though Illinois's bbox claims it",
       new URL(page.url()).pathname === "/", page.url());
     const msg = await textOrNull(page, "#search-status");
@@ -421,9 +441,76 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "Gary, Indiana");
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     check("Gary, Indiana opens /in/ though Illinois's bbox also claims it",
       new URL(page.url()).pathname === "/in/", page.url());
+    await ctx.close();
+  }
+
+  // --- 1c-quinquies. a pasted map link is read here, never geocoded --------
+  //
+  // engine/shared/map-link.txt reads the position out of a full Google Maps
+  // link in the browser, so the front door opens the app that covers it and
+  // Photon is never asked. The Photon route records any request at all, so a
+  // build that sent the link to the geocoder as address text fails here even
+  // though the stub would have answered it.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    let photonAsked = false;
+    await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "https://www.google.com/maps/place/Lambeau+Field/@44.50,-88.06,12z/data=!3m1!4b1!8m2!3d44.5013!4d-88.0622");
+    await page.click("#search-button");
+    await page.waitForTimeout(700);
+    check("a pasted Google Maps link in Green Bay opens /wi/", new URL(page.url()).pathname === "/wi/", page.url());
+    check("a pasted Google Maps link is never sent to the geocoder", !photonAsked, String(photonAsked));
+    await ctx.close();
+  }
+  // ...a short link goes to districtry's own lookup, and the full link it
+  // answers opens the app that covers that place. The lookup is stubbed, so
+  // this asserts what the page ASKS for (only the short link, as `u=`) and
+  // does with the answer, not that Google still redirects the same way.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    let photonAsked = false;
+    const lookupAsked = [];
+    await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
+    await page.route("**/link-lookup.districtry.deno.net/**", (r) => {
+      lookupAsked.push(new URL(r.request().url()).searchParams.get("u"));
+      return r.fulfill({ status: 200, contentType: "application/json",
+        body: JSON.stringify({ url: "https://www.google.com/maps/place/Lambeau+Field/@44.50,-88.06,12z/data=!3m1!4b1!8m2!3d44.5013!4d-88.0622" }) });
+    });
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
+    await page.click("#search-button");
+    await page.waitForTimeout(700);
+    check("a short map link is sent to the lookup, and only the link",
+      lookupAsked.length === 1 && lookupAsked[0] === "https://maps.app.goo.gl/AbCdEf123", JSON.stringify(lookupAsked));
+    check("a short map link to Green Bay opens /wi/", new URL(page.url()).pathname === "/wi/", page.url());
+    check("a short map link is never sent to the geocoder", !photonAsked, String(photonAsked));
+    await ctx.close();
+  }
+  // ...and when the lookup cannot follow it, the page says how to get the full one
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    let photonAsked = false;
+    await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
+    await page.route("**/link-lookup.districtry.deno.net/**", (r) =>
+      r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "could not follow the link" }) }));
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
+    await page.click("#search-button");
+    await page.waitForTimeout(500);
+    const msg = await textOrNull(page, "#search-status");
+    check("a short map link the lookup cannot follow stays on the landing page and says what to paste instead",
+      new URL(page.url()).pathname === "/" && /copy the full address/i.test(msg || ""), JSON.stringify(msg));
+    check("a short map link is never sent to the geocoder, even when the lookup fails", !photonAsked, String(photonAsked));
     await ctx.close();
   }
 
@@ -448,7 +535,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "Dallas, Texas");
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     check("an uncovered address stays on the landing page",
       new URL(page.url()).pathname === "/", page.url());
     const msg = await textOrNull(page, "#search-status");
@@ -465,7 +552,7 @@ try {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "200 S 9th St, Springfield IL");
     await page.click("#search-button");
-    await page.waitForTimeout(700);
+    await addressSettled(page);
     const msg = await textOrNull(page, "#search-status");
     check("a failed search says so", /failed/i.test(msg || ""), JSON.stringify(msg));
     // The button must come back, or one flaky lookup bricks the box for the

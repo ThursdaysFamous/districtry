@@ -81,7 +81,7 @@
       "@type": "ItemList",
       "name": "districtry instances",
       "itemListOrder": "https://schema.org/ItemListUnordered",
-      "numberOfItems": 12,
+      "numberOfItems": 13,
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -154,6 +154,12 @@
           "position": 12,
           "name": "South Carolina",
           "url": "https://districtry.com/sc/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 13,
+          "name": "Tennessee",
+          "url": "https://districtry.com/tn/"
         }
       ]
     }
@@ -852,7 +858,7 @@ footer .support b { color: var(--ink); }
                placeholder="Street address or ZIP" autocomplete="off" />
         <button type="submit" id="search-button" class="search-button">Show districts</button>
       </form>
-      <p class="search-help">districtry opens the map that covers the point. 11 states and San Francisco
+      <p class="search-help">districtry opens the map that covers the point. 12 states and San Francisco
          answer today — an address anywhere else says so instead of guessing.</p>
       <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
     </div>
@@ -865,7 +871,7 @@ footer .support b { color: var(--ink); }
               title="Map of the areas districtry covers today"
               loading="lazy"></iframe>
       <div class="cov-head">
-        <p class="cov-count"><strong>11 states and San Francisco answer today.</strong>
+        <p class="cov-count"><strong>12 states and San Francisco answer today.</strong>
           Pick one to open its map.</p>
         <ul class="cov-key" aria-label="Key">
           <li><span class="sw sw-on" aria-hidden="true"></span>Answers here</li>
@@ -918,7 +924,7 @@ footer .support b { color: var(--ink); }
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Rhode Island</span><span class="vh">, not yet</span></span></li>
         <li><a class="st" href="https://districtry.com/sc/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">South Carolina</span><span class="st-scope">all 46 counties &#183; <span class="st-n">12</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">South Dakota</span><span class="vh">, not yet</span></span></li>
-        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Tennessee</span><span class="vh">, not yet</span></span></li>
+        <li><a class="st" href="https://districtry.com/tn/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Tennessee</span><span class="st-scope">all 95 counties &#183; <span class="st-n">13</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Texas</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Utah</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Vermont</span><span class="vh">, not yet</span></span></li>
@@ -966,6 +972,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/nc/congress.html">North Carolina<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/ok/congress.html">Oklahoma<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/sc/congress.html">South Carolina<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/tn/congress.html">Tennessee<span class="chip-topic"> &#183; U.S. House</span></a></li>
         </ul>
       </div>
       <div class="ask">
@@ -980,6 +987,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/nc/state-legislature.html">North Carolina<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/ok/state-legislature.html">Oklahoma<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/sc/state-legislature.html">South Carolina<span class="chip-topic"> &#183; Legislature</span></a></li>
+          <li><a class="chip" href="/tn/state-legislature.html">Tennessee<span class="chip-topic"> &#183; Legislature</span></a></li>
         </ul>
       </div>
       <div class="ask">
@@ -997,6 +1005,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/nc/county-commissioner.html">North Carolina<span class="chip-topic"> &#183; commissioners</span></a></li>
           <li><a class="chip" href="/ok/county-commissioner.html">Oklahoma<span class="chip-topic"> &#183; commissioners</span></a></li>
           <li><a class="chip" href="/sc/county-council.html">South Carolina<span class="chip-topic"> &#183; county council</span></a></li>
+          <li><a class="chip" href="/tn/county-commissioner.html">Tennessee<span class="chip-topic"> &#183; commissioners</span></a></li>
         </ul>
       </div>
       <div class="ask">
@@ -1189,7 +1198,10 @@ footer .support b { color: var(--ink); }
       bbox: { minLat: 33.61, maxLat: 37.01, minLng: -103.01, maxLng: -94.43 } },
     { id: "southcarolina", tag: "sc", name: "South Carolina", url: "https://districtry.com/sc/",
       outline: "sc/data/app/metro-outline.json",
-      bbox: { minLat: 31.99, maxLat: 35.16, minLng: -83.36, maxLng: -78.49 } }
+      bbox: { minLat: 31.99, maxLat: 35.16, minLng: -83.36, maxLng: -78.49 } },
+    { id: "tennessee", tag: "tn", name: "Tennessee", url: "https://districtry.com/tn/",
+      outline: "tn/data/app/metro-outline.json",
+      bbox: { minLat: 34.98, maxLat: 36.68, minLng: -90.32, maxLng: -81.64 } }
   ];
 
   function metrosClaiming(lat, lng) {
@@ -1376,6 +1388,193 @@ footer .support b { color: var(--ink); }
     return best;
   }
 
+  /* ---------- a pasted map link or coordinate pair ----------
+   * A reader who already has a place open in Google Maps or Apple Maps
+   * shares it as a link, and until 2026-10-13 the search box sent that link
+   * to the address geocoder as if it were a street address, which found
+   * nothing. parseMapLink reads the link IN THE BROWSER: the position is
+   * written into a full link, so no request is made to read it, and the link
+   * never reaches the geocoder.
+   *
+   * ONE COPY. This file is an ENGINE fence in every app (spliced by
+   * compose_app.py) and is inlined into the front door's address box by
+   * build_landing_page.py, so the app and the front door cannot read one
+   * link two ways. scripts/map_link_test.mjs runs it as shipped.
+   *
+   * Returns null when the text is not a link or a coordinate pair (the
+   * ordinary address search runs), or one of:
+   *   {kind: "point", lat, lng, source}  a position, read from the text
+   *   {kind: "text", text, source}       a place name or address the link
+   *                                      carries without a position: search it
+   *   {kind: "short", url, source}       a short link, whose destination only
+   *                                      Google or Apple knows
+   *   {kind: "unreadable", source}       a link this cannot read a place from
+   * source is "google", "apple", "coordinates" or "link".
+   *
+   * WHICH POSITION, when a Google link carries several: `!3d<lat>!4d<lng>` is
+   * the place the link is about, so it wins; a coordinate written in the
+   * query or the path is what the reader asked for, next; `@<lat>,<lng>` is
+   * only where the map was centred, so it is used last, and only when no
+   * place name is there to search instead unless it is zoomed in close
+   * (15z or more), where the centre and the place are a few metres apart. */
+  function mapLinkCoord(lat, lng) {
+    lat = parseFloat(lat); lng = parseFloat(lng);
+    if (!isFinite(lat) || !isFinite(lng)) return null;
+    if (Math.abs(lat) > 90 || Math.abs(lng) > 180) return null;
+    if (lat === 0 && lng === 0) return null;
+    return { lat: lat, lng: lng };
+  }
+
+  /* Plain decimal degrees ("41.8825, -87.6285", "41.8825 -87.6285") or
+   * degrees-minutes-seconds as Google prints them (41°52'57.0"N 87°37'42.6"W).
+   * Two bare whole numbers ("100 200") are left to the address search: that
+   * is an address far more often than a position. */
+  function parseCoordText(text) {
+    var t = String(text).replace(/\+/g, " ").trim();
+    var m = t.match(/^\(?\s*(-?\d{1,2}(?:\.\d+)?)\s*(,|\s)\s*(-?\d{1,3}(?:\.\d+)?)\s*\)?$/);
+    if (m && (m[2] === "," || (m[1].indexOf(".") >= 0 && m[3].indexOf(".") >= 0))) {
+      return mapLinkCoord(m[1], m[3]);
+    }
+    var part = "(\\d{1,3})\\s*[\\u00b0\\u00ba]\\s*(?:(\\d{1,2}(?:\\.\\d+)?)\\s*['\\u2032\\u2019]\\s*)?" +
+               "(?:(\\d{1,2}(?:\\.\\d+)?)\\s*(?:\"|\\u2033|''|\\u201d)\\s*)?([NSEW])";
+    var d = t.match(new RegExp("^" + part + "[\\s,]*" + part + "$", "i"));
+    if (d) {
+      var a = dmsValue(d[1], d[2], d[3], d[4]), b = dmsValue(d[5], d[6], d[7], d[8]);
+      var aLat = /[NS]/i.test(d[4]), bLat = /[NS]/i.test(d[8]);
+      if (aLat === bLat) return null;
+      return aLat ? mapLinkCoord(a, b) : mapLinkCoord(b, a);
+    }
+    return null;
+  }
+  function dmsValue(deg, min, sec, hemi) {
+    var v = parseFloat(deg) + (parseFloat(min) || 0) / 60 + (parseFloat(sec) || 0) / 3600;
+    return /[SW]/i.test(hemi) ? -v : v;
+  }
+
+  function mapLinkUrl(text) {
+    var t = String(text).trim();
+    var m = t.match(/https?:\/\/[^\s<>"]+/i);
+    var raw = m ? m[0] : null;
+    if (!raw && /^(?:www\.|maps\.)?(?:google\.[a-z.]+\/maps|maps\.google\.|maps\.app\.goo\.gl|goo\.gl\/maps|maps\.apple(?:\.com)?\/)/i.test(t)) {
+      raw = "https://" + t.split(/\s/)[0];
+    }
+    if (!raw) return null;
+    try { return new URL(raw.replace(/[.,;:!?)\]]+$/, "")); } catch (e) { return null; }
+  }
+
+  function mapLinkPathText(seg) {
+    try { seg = decodeURIComponent(seg); } catch (e) { /* keep it as written */ }
+    return seg.replace(/\+/g, " ").trim();
+  }
+
+  function parseGoogleMapLink(url) {
+    var href = url.href, path = url.pathname, params = url.searchParams;
+    var place = null, m, re = /!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/g;
+    while ((m = re.exec(href))) place = mapLinkCoord(m[1], m[2]);
+    if (place) return { kind: "point", lat: place.lat, lng: place.lng, source: "google" };
+    if (/^\/maps\/dir(\/|$)/.test(path)) return { kind: "unreadable", source: "google" };
+    var keys = ["q", "query", "ll", "center", "destination"], text = null, i, v, c;
+    for (i = 0; i < keys.length; i++) {
+      v = params.get(keys[i]);
+      if (!v) continue;
+      v = v.replace(/^loc:/i, "").trim();
+      c = parseCoordText(v);
+      if (c) return { kind: "point", lat: c.lat, lng: c.lng, source: "google" };
+      if (!text && (keys[i] === "q" || keys[i] === "query" || keys[i] === "destination")) text = v;
+    }
+    var seg = path.match(/^\/maps\/(?:place|search)\/([^\/]+)/);
+    if (seg) {
+      var s = mapLinkPathText(seg[1]);
+      c = parseCoordText(s);
+      if (c) return { kind: "point", lat: c.lat, lng: c.lng, source: "google" };
+      if (!text && s) text = s;
+    }
+    var at = href.match(/\/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)(?:,(\d+(?:\.\d+)?)z)?/);
+    if (at && (!text || (at[3] && parseFloat(at[3]) >= 15))) {
+      c = mapLinkCoord(at[1], at[2]);
+      if (c) return { kind: "point", lat: c.lat, lng: c.lng, source: "google" };
+    }
+    if (text) return { kind: "text", text: text, source: "google" };
+    return { kind: "unreadable", source: "google" };
+  }
+
+  function parseAppleMapLink(url) {
+    var params = url.searchParams, keys = ["coordinate", "ll", "q", "sll"], text = null, i, v, c;
+    if (params.get("daddr") && !params.get("q") && !params.get("ll") && !params.get("coordinate")) {
+      return { kind: "unreadable", source: "apple" };
+    }
+    for (i = 0; i < keys.length; i++) {
+      v = params.get(keys[i]);
+      if (!v) continue;
+      c = parseCoordText(v);
+      if (c) return { kind: "point", lat: c.lat, lng: c.lng, source: "apple" };
+    }
+    text = params.get("address") || params.get("q") || params.get("name");
+    if (text && text.trim()) return { kind: "text", text: text.trim(), source: "apple" };
+    return { kind: "unreadable", source: "apple" };
+  }
+
+  function parseMapLink(text) {
+    if (!text) return null;
+    var c = parseCoordText(text);
+    if (c) return { kind: "point", lat: c.lat, lng: c.lng, source: "coordinates" };
+    var url = mapLinkUrl(text);
+    if (!url) return null;
+    var host = url.hostname.toLowerCase().replace(/^www\./, "");
+    if (host === "maps.app.goo.gl" || (host === "goo.gl" && /^\/maps\//.test(url.pathname))) {
+      return { kind: "short", url: url.href, source: "google" };
+    }
+    if (host === "maps.apple") return { kind: "short", url: url.href, source: "apple" };
+    if ((/^(maps\.)?google\.[a-z]{2,3}(\.[a-z]{2})?$/.test(host) &&
+         (host.indexOf("maps.") === 0 || /^\/maps(\/|$)/.test(url.pathname)))) {
+      return parseGoogleMapLink(url);
+    }
+    if (host === "maps.apple.com") return parseAppleMapLink(url);
+    return { kind: "unreadable", source: "link" };
+  }
+
+  /* A SHORT LINK holds no position: only Google or Apple knows where it
+   * leads, and a page cannot ask them, because a browser does not let a page
+   * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
+   * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
+   * link and returns the full link it leads to; its own code stores nothing.
+   * Only a short link is ever sent to it, and only when a reader pastes one.
+   * The address is the app's own name on Deno, not the suffixed address
+   * Deno also serves it at. The lookup's host receives the short link, so
+   * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host
+   * here is a change there too. */
+  var MAP_LINK_LOOKUP = "https://link-lookup.districtry.deno.net/";
+
+  function resolveShortMapLink(link, signal) {
+    if (!MAP_LINK_LOOKUP) return Promise.reject(new Error("no short-link lookup"));
+    return fetch(MAP_LINK_LOOKUP + "?u=" + encodeURIComponent(link.url),
+      { signal: signal, headers: { Accept: "application/json" } })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        var full = data && typeof data.url === "string" ? parseMapLink(data.url) : null;
+        if (!full || full.kind === "short") throw new Error("the lookup returned no full link");
+        return full;
+      });
+  }
+
+  /* What the reader is told when a link cannot be read here. Kept beside the
+   * parser so the app and the front door say the same thing. */
+  function mapLinkMessage(link) {
+    var name = link.source === "apple" ? "Apple Maps" : link.source === "google" ? "Google Maps" : "";
+    if (link.kind === "short") {
+      return "That short " + name + " link couldn't be read. Open the link, " +
+        "then copy the full address from your browser's address bar and paste that.";
+    }
+    if (name) {
+      return "That " + name + " link doesn't say where a place is (a directions link, for one). " +
+        "Open it on a single place and share that, or type the address.";
+    }
+    return "That link isn't a Google Maps or Apple Maps link. Paste one of those, or type an address.";
+  }
+
   var form = document.getElementById("search-form");
   var input = document.getElementById("search-input");
   var button = document.getElementById("search-button");
@@ -1400,6 +1599,28 @@ footer .support b { color: var(--ink); }
     button.disabled = true;
     button.textContent = "Searching\u2026";
     setStatus("Searching\u2026", false);
+    // A pasted Google Maps or Apple Maps link, or a coordinate pair, is read
+    // here by the same parser every app runs (engine/shared/map-link.txt),
+    // so nothing it carries goes to the geocoder as address text.
+    var link = parseMapLink(q);
+    if (link && link.kind === "short") {
+      var signal = inFlight.signal;
+      resolveShortMapLink(link, signal).then(function (full) {
+        if (signal.aborted) return;
+        submitLink(full, full.kind === "text" ? full.text : q);
+      }, function (err) {
+        if (err && err.name === "AbortError") return;
+        resetButton();
+        setStatus(mapLinkMessage(link), true);
+      });
+      return;
+    }
+    submitLink(link, link && link.kind === "text" ? link.text : q);
+  });
+
+  function submitLink(link, q) {
+    if (link && link.kind === "point") { routePoint(link.lat, link.lng); return; }
+    if (link && link.kind !== "text") { resetButton(); setStatus(mapLinkMessage(link), true); return; }
     fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(q) + "&lang=en&limit=5",
       { signal: inFlight.signal, headers: { Accept: "application/json" } })
       .then(function (res) {
@@ -1432,7 +1653,19 @@ footer .support b { color: var(--ink); }
         resetButton();
         setStatus("Search failed \u2014 try again, or pick a place below.", true);
       });
-  });
+  }
+
+  /* A position read from a link: the same routing a geocoded address gets. */
+  function routePoint(lat, lng) {
+    var feats = [{ geometry: { coordinates: [lng, lat] } }];
+    loadFleetOutlines().then(function (outlines) {
+      if (!outlines) return routeByRectangles(feats);
+      var metro = fleetOwner(lat, lng, outlines);
+      if (metro) { go(metro, { lat: lat, lng: lng }); return; }
+      resetButton();
+      setStatus("That place is outside every place districtry covers today \u2014 see what's covered below.", true);
+    });
+  }
 
   function go(metro, hit) {
     setStatus("Opening " + metro.name + "\u2026", false);
