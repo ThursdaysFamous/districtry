@@ -10,7 +10,7 @@ Pick a point on the map. The app looks it up against every civic-district bounda
 
 ## The fleet
 
-This repo publishes eleven instances of the same app, one per place, each its own self-contained folder:
+This repo publishes twelve instances of the same app, one per place, each its own self-contained folder:
 
 | Metro | Live at | Covers |
 |---|---|---|
@@ -25,8 +25,9 @@ This repo publishes eleven instances of the same app, one per place, each its ow
 | **Indiana** | [districtry.com/in/](https://districtry.com/in/) | 92 counties — townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office, plus the Indiana Senate, House and U.S. House districts, with who holds the U.S. House seats |
 | **North Carolina** | [districtry.com/nc/](https://districtry.com/nc/) | 100 counties — townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office, plus the North Carolina Senate, House and U.S. House districts, with who holds every one of those seats |
 | **Oklahoma** | [districtry.com/ok/](https://districtry.com/ok/) | 77 counties — cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office, plus the Oklahoma Senate, House and U.S. House districts, with who holds the U.S. House seats and nearly every legislative one |
+| **South Carolina** | [districtry.com/sc/](https://districtry.com/sc/) | 46 counties — county council districts with the winner of every seat, cities and towns, school districts, ZIP codes, the Catawba Nation's land, and the nearest police station, fire station and post office, plus the South Carolina Senate, House and U.S. House districts, with who holds every one of those seats |
 
-They share one engine — the metro-agnostic core, layer-registration framework, and UI chrome live once under `engine/` and are spliced into each instance's own `index.html`/`sw.js` by `scripts/compose_app.py`, so there's nothing to keep in sync by hand. What's genuinely per-metro (which layers exist, their boundary sources, the officeholder rosters) lives in that instance's own `metro-worksheet.json`, `data/`, and layer modules. Illinois is by far the most built out — the rest of this README is mostly about it — and is the model the others follow when a feature or a county-expansion technique proves out. Wisconsin was the first state to expand IN PLACE as a folder rather than as a fork; Oklahoma is the newest.
+They share one engine — the metro-agnostic core, layer-registration framework, and UI chrome live once under `engine/` and are spliced into each instance's own `index.html`/`sw.js` by `scripts/compose_app.py`, so there's nothing to keep in sync by hand. What's genuinely per-metro (which layers exist, their boundary sources, the officeholder rosters) lives in that instance's own `metro-worksheet.json`, `data/`, and layer modules. Illinois is by far the most built out — the rest of this README is mostly about it — and is the model the others follow when a feature or a county-expansion technique proves out. Wisconsin was the first state to expand IN PLACE as a folder rather than as a fork; South Carolina is the newest.
 
 ## What it answers
 
@@ -104,7 +105,7 @@ Each instance is a stable core plus pluggable layer modules, all inside one `ind
 - **Layer modules**: each layer registers `{id, group, label, overlay:{load, style}, query(point, seq), render(result)}`. Overlays lazy-load on first toggle and are cached; `query` runs a local point-in-polygon test against the cached boundaries (or nearest-N haversine for station/school/amenity layers). A layer can declare a `coverage(point)` test — outside it, the layer hides rather than erroring. The six cross-county concepts (County Board, Judicial Subcircuit, Fire Protection District, Park District, Library District, Voting Precinct) each register through one `registerCountyLayer` dispatcher — a single toggle holding a per-county entry table, whose coverage is the OR of its counties' — so adding a county to a shipped concept is a dispatch-table entry, not a new layer.
 - **Result cards**: lead with the layer name, then the district identifier, then — wherever a verifiable source exists — the officeholder(s), office location, contact info, and a link to more detail, in that order. A layer with no representative (a ZIP, a community area) just omits those rows.
 - **Honesty rules, enforced in review**: officeholder data is never guessed — where no verifiable roster source exists, a card links to the official body instead of inventing a name. Every external string is sanitized or rendered via `textContent`.
-- **One engine, eleven instances**: the metro-agnostic parts — core, registry, UI chrome, sub-page shell — live once under `engine/`, fenced with `ENGINE:BEGIN/END` markers, and `scripts/compose_app.py` splices them into `il/`, `ny/`, `ca/`, `wi/`, `ia/`, `mi/`, `mn/`, `ky/`, `in/`, `nc/` and `ok/`'s own `index.html`/`sw.js`/sub-pages. `--check` recomposes in memory and fails on any drift, so there's no separate release channel to keep in step — the composed, committed files are exactly what gets served.
+- **One engine, twelve instances**: the metro-agnostic parts — core, registry, UI chrome, sub-page shell — live once under `engine/`, fenced with `ENGINE:BEGIN/END` markers, and `scripts/compose_app.py` splices them into `il/`, `ny/`, `ca/`, `wi/`, `ia/`, `mi/`, `mn/`, `ky/`, `in/`, `nc/`, `ok/` and `sc/`'s own `index.html`/`sw.js`/sub-pages. `--check` recomposes in memory and fails on any drift, so there's no separate release channel to keep in step — the composed, committed files are exactly what gets served.
 
 ### Data sources
 
@@ -189,7 +190,7 @@ ca/                                  SAN FRANCISCO — same shape as il/
 
 ## Validation
 
-`smoke-test.yml` runs on every pull request against all eleven instances. Roughly in order:
+`smoke-test.yml` runs on every pull request against every instance, the ones not yet published included. Roughly in order:
 
 - **Composition and generation drift gates** (stdlib-only Python, run before anything is installed): `generate_metro_files.py --check` (every `GENERATED:BEGIN/END` region matches what `metro-worksheet.json` renders), `compose_app.py --check` (every instance carries the shared `engine/` blocks byte-for-byte, nothing hand-edited in place), plus generators for the brand tokens, the coverage-gaps panel, the county-status table, the dark-mode map palette, the landing page, the privacy page (which *measures* each shipped app rather than trusting a manifest), the per-instance history page (whose stat tiles are measured from the shipped data files, so a roster refresh that moves a number must regenerate it), and the installable web-app manifest.
 - **Static merge gate** (`scripts/validate_index.py`, run once per instance): the inline script passes `node --check`, every declared layer id is still registered (41 for Illinois), no dataset is embedded inline, every `data/app/*.json` file is present and shape-checked, and the sources page covers every registered layer.
