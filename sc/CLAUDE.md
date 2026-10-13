@@ -8,9 +8,12 @@ districtry South Carolina: a single-file, dependency-light web app. Click a poin
 Carolina (or search an address) and it reports every civic district containing that point and
 who represents you there. It serves at **districtry.com/sc/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the
-Illinois root-scripts shape. It ships TWELVE layers, and **the instance is DARK**: no
-`metros.json` entry, `sc/**` excluded from the Pages deploy, nothing served and no landing card
-naming it. `sc/WATCH.md` lists what go-live has to do in one change.
+Illinois root-scripts shape. It ships TWELVE layers, and **the instance is LIVE since
+2026-10-13**, on Adam's word: it has a `metros.json` entry and a landing card, its folder is
+published with the siblings' narrow deploy excludes, and its question pages (`county-council.html`
+with a page per county under `county-council/`, `congress.html`, `state-legislature.html`) are in
+the sitemap. It arrived dark on 2026-10-10; `docs/SC_EXPANSION_PLAN.md` is the record of both
+changes.
 
 **The national tier** — ten of the twelve layers answer from a national publisher or the
 General Assembly. **County** (46, Census TIGERweb, identity-only and the coverage ring),

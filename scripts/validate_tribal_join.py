@@ -70,6 +70,8 @@ STATE_OF_INSTANCE = {
     "in": "Indiana",
     "nc": "North Carolina",
     "ok": "Oklahoma",
+    "sc": "South Carolina",
+    "tn": "Tennessee",
 }
 
 

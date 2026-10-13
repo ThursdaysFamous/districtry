@@ -6,8 +6,8 @@
       // f=json, not f=geojson: the GeoJSON export unnests interior rings (see
       // the arcgis-loader block for the measurement). esriToGeoJSON carries
       // exceededTransferLimit through, which is what this loop pages on.
-      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
-        .then(esriToGeoJSON).then(function (gj) {
+      return fetchArcGISJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+        .then(function (payload) { return esriToGeoJSON(payload); }).then(function (gj) {
         var feats = (gj && gj.features) || [];
         acc = acc.concat(feats);
         var more = gj && (gj.exceededTransferLimit || (gj.properties && gj.properties.exceededTransferLimit));
@@ -20,8 +20,9 @@
         if (more && feats.length > 0) return page(offset + feats.length, acc);
         var out = { type: "FeatureCollection", features: acc };
         // Same "200 but useless" guard the unpaged loaders apply: an Esri error
-        // envelope 200s carrying no usable geometry; without this makeCached
-        // would retain that empty response as a permanent success.
+        // envelope now rejects in fetchArcGISJSON, but a service can still
+        // answer 200 with rows and no shapes; without this makeCached would
+        // retain that empty response as a permanent success.
         if (!hasUsableGeometry(out)) throw new Error("paged ArcGIS layer returned no usable geometry: " + layerUrl);
         return out;
       });

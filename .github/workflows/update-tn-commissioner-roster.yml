@@ -25,11 +25,11 @@ name: Update Tennessee county commissioner roster
 # Crawl-delay is honoured; a managed challenge is left alone and the county is
 # recorded as unread.
 #
-# TENNESSEE IS DARK, and this job already runs the three root generators that
-# skip a dark instance (build_about_page.py, build_sitemap.py,
-# build_llms_txt.py), so nothing they write moves until go-live, and go-live
-# has nothing to add here. build_about_page.py --check fails a roster job that
-# does not run it, dark or not.
+# This job runs the three root generators that skipped Tennessee while it was
+# dark (build_about_page.py, build_sitemap.py, build_llms_txt.py); they were
+# wired before go-live so that go-live had nothing to add here, and since
+# go-live they count this roster's pages. build_about_page.py --check fails a
+# roster job that does not run it.
 
 on:
   schedule:
