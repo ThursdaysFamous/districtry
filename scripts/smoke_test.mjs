@@ -744,6 +744,37 @@ try {
     await context.close();
   }
 
+  // 1d3. A SHORT MAP LINK holds no position, so it goes to districtry's own
+  //      lookup (MAP_LINK_LOOKUP), stubbed here, and the full link it answers
+  //      is read like a pasted one. Asserts what is SENT: the short link alone,
+  //      to the lookup, and nothing to the geocoder.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    let geocoderCalls = 0;
+    const lookupAsked = [];
+    const shortLink = "https://maps.app.goo.gl/AbCdEf123";
+    const page = await booted(context, `${BASE}#q=${encodeURIComponent(shortLink)}`, async (p) => {
+      await p.route("**/photon.komoot.io/**", (route) => {
+        geocoderCalls += 1;
+        route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ type: "FeatureCollection", features: [] }) });
+      });
+      await p.route("**/link-lookup.districtry.deno.net/**", (route) => {
+        lookupAsked.push(new URL(route.request().url()).searchParams.get("u"));
+        route.fulfill({ status: 200, contentType: "application/json",
+          body: JSON.stringify({ url: "https://www.google.com/maps/place/Daley+Plaza/@41.8836,-87.6314,17z/data=!3m1!4b1!8m2!3d41.88395!4d-87.63022" }) });
+      });
+    });
+    await page.waitForFunction((ns) => !!window[ns].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const point = await page.evaluate((ns) => window[ns].state.selectedPoint, EXPORTS_NAME);
+    check("a short map link is sent to the lookup, and only the link",
+      lookupAsked.length === 1 && lookupAsked[0] === shortLink, JSON.stringify(lookupAsked));
+    check("a short map link selects the place its full link names",
+      !!point && Math.abs(point.lat - 41.88395) < 1e-6 && Math.abs(point.lng + 87.63022) < 1e-6,
+      JSON.stringify(point));
+    check("a short map link is never sent to the search geocoder", geocoderCalls === 0, `${geocoderCalls} Photon request(s)`);
+    await context.close();
+  }
+
   // 1e. THE MASTHEAD NEVER WRAPS: its links fold into "More" from the end
   //     (dstFitMastheadActions) before the row would drop them below the
   //     search, which a reader saw as the search bar jumping from the middle
