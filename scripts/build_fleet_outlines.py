@@ -87,6 +87,10 @@ SOURCES = {
     # statewide, so the dissolve of its 77 counties is the widest ground it
     # answers on.
     "ok": "ok/data/app/metro-outline.json",
+    # Tennessee's coverage ring IS its state outline: every layer answers
+    # statewide, so the dissolve of its 95 counties is the widest ground it
+    # answers on.
+    "tn": "tn/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

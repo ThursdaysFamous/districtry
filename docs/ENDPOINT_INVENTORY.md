@@ -12,16 +12,16 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **243 distinct hosts** those files
-name, **43 are fetched by the browser**; the other 200 are links.
+makes from a link a reader clicks. Of **245 distinct hosts** those files
+name, **43 are fetched by the browser**; the other 202 are links.
 
 ### Geocoder — 3 host(s)
 
 | host | instances |
 |---|---|
 | `geosearch.planninglabs.nyc` | ny |
-| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in, nc, ok |
-| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
+| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in, nc, ok, tn |
+| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, tn |
 
 The most sensitive flow on the site: it is **the text a reader
 types**. `build_privacy_page.py` owns what each receives and links
@@ -32,9 +32,9 @@ per-app measurement, so the two cannot disagree.
 
 | host | instances |
 |---|---|
-| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
-| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
-| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
+| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, tn |
+| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, tn |
+| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, tn |
 
 One service. Several host spellings appear because the tile URL is a
 `{s}.` template and some are `preconnect` hints — one recipient, not
@@ -44,7 +44,7 @@ several.
 
 | host | instances |
 |---|---|
-| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
+| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, tn |
 
 Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
@@ -52,7 +52,7 @@ Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
 | host | instances |
 |---|---|
-| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
+| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, tn |
 | `www.googletagmanager.com` | il, ny |
 
 ### Webfonts — none
@@ -65,7 +65,7 @@ a font CDN would be a recipient the privacy page does not name.
 
 | host | instances |
 |---|---|
-| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok |
+| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, tn |
 
 ### Socrata — 7 host(s)
 
@@ -84,7 +84,7 @@ a font CDN would be a recipient the privacy page does not name.
 | host | instances |
 |---|---|
 | `arcgispublicmap.co.st-clair.il.us` | il |
-| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok |
+| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok, tn |
 | `gis.aurora.il.us` | il |
 | `gis.cookcountyil.gov` | il |
 | `gis.fultoncountyil.gov` | il |
@@ -131,6 +131,7 @@ prose.
 | in | 4 | 12 |
 | nc | 4 | 12 |
 | ok | 4 | 13 |
+| tn | 5 | 13 |
 
 ### Where each layer's shapes come from
 
@@ -321,6 +322,19 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `county-commissioner`.
 
+#### tn — 5 of 13 layers fetch their shapes
+
+| layer | whole set from | at the selected point from |
+|---|---|---|
+| School District (Unified) (`school-district-unified`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
+| School District (Elementary) (`school-district-elementary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| School District (Secondary) (`school-district-secondary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| City or Town (`municipality`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+
+- Drawn from this site's own files: `us-house`, `tn-senate`, `county`, `tn-house`, `county-commissioner`.
+- Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+
 ## 2. Build-time datasets
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
@@ -336,9 +350,10 @@ measured until the next run describes it.
 | in | 14 | 12 | 0 |
 | nc | 17 | 11 | 0 |
 | ok | 17 | 12 | 0 |
-| **total** | **472** | **897** | **12** |
+| tn | 17 | 11 | 0 |
+| **total** | **489** | **908** | **12** |
 
-**141 distinct source hosts** across the six manifests. Each instance's
+**142 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check
