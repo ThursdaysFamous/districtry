@@ -267,6 +267,30 @@ INSTANCES = {
             layer="us-house", roster="congress-roster.json",
             state="Oklahoma"),
     ),
+    # South Carolina joined at its go-live with both chambers named from the
+    # General Assembly's own member pages (46 of 46 and 124 of 124 on
+    # 2026-10-10). S.C. Const. art. III, secs. 2 and 6 set representatives'
+    # terms at two years and senators' at four.
+    "sc": dict(
+        worksheet="sc/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my SC legislator?",
+            body="the South Carolina General Assembly",
+            short="South Carolina General Assembly",
+            term="Senators serve four-year terms and representatives two.",
+            chambers=[
+                dict(layer="sc-senate", name="South Carolina Senate", short="Senate",
+                     holder="Senator", roster="sc-senate-members.json"),
+                dict(layer="sc-house", name="South Carolina House of Representatives", short="House",
+                     holder="Representative", roster="sc-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="South Carolina"),
+    ),
     # Tennessee joined at its go-live with both chambers named from the
     # Legislature's own map on TNMap (a seat the map lists as vacant prints as
     # a vacancy). Tenn. Const. art. II, sec. 3 sets senators' terms at four
