@@ -7333,10 +7333,11 @@ found one error of ours.
 > after the November 3 results are certified, since that changes state legislators, members of
 > Congress and county board seats, and the next after the February 23 city election.
 >
-> Links: [LINK SENTENCE — see "Before sending"]. For links back, the most useful place is probably
-> your address lookup. A link like this one searches districtry for an address and opens it with
-> the districts Chipoli doesn't draw already showing: the Cook County board, the judicial
-> subcircuit, the Board of Review, the water reclamation district and the voting precinct.
+> Links: the link from each Chicago ward card to its Chipoli page is live on districtry now. For
+> links back, the most useful place is probably your address lookup. A link like this one searches
+> districtry for an address and opens it with the districts Chipoli doesn't draw already showing:
+> the Cook County board, the judicial subcircuit, the Board of Review, the water reclamation
+> district and the voting precinct.
 >
 > https://districtry.com/il/#q=233%20S%20Wacker%20Dr%2C%20Chicago&l=cb,jc,br,mw,wp
 >
@@ -7349,12 +7350,14 @@ found one error of ours.
 > Design feedback: yes, please. Specific notes or screenshots of what you'd change would be very
 > welcome.
 >
-> As for my goal: districtry started as a way to answer "who represents me here?" for every kind
-> of district at once. The longer aim is to change how states, starting with Illinois, compile and
-> publish this information, so that boundaries and officeholders come from one official place in a
-> usable form instead of being pieced together from scattered pages and PDFs. Asking the State
-> Board of Elections to publish precinct maps in one place is the first step. The site now covers
-> eleven states plus New York City and San Francisco, and I'd like it to cover all fifty.
+> As for my goal: I want districtry in all 50 states, so that anyone in the country can click
+> where they live and see every district they're in and who represents them there. It covers
+> eleven states plus New York City and San Francisco so far. Building it state by state shows
+> exactly where this information is hard to get: maps that exist only as PDFs, boards whose
+> members aren't listed anywhere, and counties that each publish in their own way. I want to use
+> those hurdles as the case for states publishing this information properly, in one place and in
+> a form people can use. In Illinois that starts with precinct maps: I plan to ask the State Board
+> of Elections to publish them in one place.
 >
 > On building something together: I want to keep districtry strictly nonpartisan, so I'm best
 > placed to help with tools that serve every voter the same way. If you have a specific idea along
@@ -7369,14 +7372,15 @@ found one error of ours.
 **Before sending:**
 
 - Fill in the owner's first name from the reply in the Gmail thread.
-- Replace the bracketed link sentence according to the operator's choice on whether to merge the
-  ward-card link now: if it is live, "The link from each Chicago ward card to its Chipoli page is
-  live on districtry now."; if held, "I'll switch on the link from each Chicago ward card to its
-  Chipoli page after the February election." Check districtry.com before writing "live".
-- The goal paragraph is drafted from the operator's stated goal (9 October project notes) and is
-  the operator's to rewrite. The count of places is the live fleet in `metros.json` on 2026-10-13
-  (thirteen instances: eleven states, New York City and San Francisco); recount if another state
-  goes live before this is sent.
+- The operator chose on 2026-10-13 at 20:20 UTC to merge the ward-card link now, so the links
+  sentence says it is live. Open a Chicago ward card on districtry.com and see the Chipoli line
+  before sending; if it is not there yet, the deploy has not finished.
+- The goal paragraph follows the operator's own words of 2026-10-13, 20:18 UTC: "My ultimate goal
+  is deployment of the app to all 50 states. But also to use the hurdles I run into as a call for
+  better data publication from the state level." It is the operator's to rewrite. The count of
+  places is the live fleet in `metros.json` on 2026-10-13 (thirteen instances: eleven states, New
+  York City and San Francisco); recount if another state goes live before this is sent. The State
+  Board letter is still held, so the paragraph says "plan to ask", as the first letter did.
 - The nonpartisan paragraph is deliberate: the owner said in the first reply that they are
   politically active, and mentioned election tools in the second. The city election is on
   23 February 2027.
