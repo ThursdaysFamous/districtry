@@ -110,6 +110,12 @@ FAVICON = os.path.join(REPO_ROOT, "districtry", "icons", "favicon.svg")
 # spec calls for below 24px — right for a browser tab, wrong for the front door,
 # which is why the two are different files doing different jobs.
 MARK_SOURCE = os.path.join(REPO_ROOT, "il", "index.html")
+# The site's one-sentence description. A module constant rather than a local
+# because the installed app says the same thing: build_manifests.py reads it for
+# the web app manifest's `description`, so the front door and the app a reader
+# installs from it cannot come to describe districtry two different ways.
+DESCRIPTION = ("Enter an address or ZIP — districtry shows every civic district that covers "
+               "that point on the map, and the people who hold those seats. Free, no login.")
 
 # Each instance's worksheet, for the layer count on its row in the state list.
 # A row that states a number must read it from the thing that owns it; a
@@ -845,8 +851,7 @@ def build():
     # Console shows the demand is phrased as a question ("what district am i
     # in"), and a brand nobody is searching for yet cannot earn the click.
     title = "What district am I in? Find your district — districtry"
-    desc = ("Enter an address or ZIP — districtry shows every civic district that covers "
-            "that point on the map, and the people who hold those seats. Free, no login.")
+    desc = DESCRIPTION
 
     answer_count, answer_verb = answer_phrase(metros)
     # The map's lighter wash is drawn only for an area with a second, wider
@@ -868,6 +873,11 @@ def build():
 <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<!-- The one web app manifest (scripts/build_manifests.py). The front door links
+     it like every app does, so districtry installs as the same single app from
+     here as from any state's map. -->
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="districtry" />
 <meta name="robots" content="index, follow" />
 <!-- Bing Webmaster Tools site ownership, added 2026-09-13. A PUBLIC ownership
      token like the IndexNow key, not a secret: it proves to Bing that whoever

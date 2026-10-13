@@ -143,7 +143,7 @@ OUT = os.path.join(REPO_ROOT, "privacy.html")
 POINT_TRANSMISSION = os.path.join(REPO_ROOT, "point-transmission.json")
 CANONICAL = "https://districtry.com/privacy.html"
 SITE = "https://districtry.com/"
-UPDATED = "24 August 2026"
+UPDATED = "13 October 2026"
 CONTACT = "adam@overberg.co"
 REPO_URL = "https://github.com/ThursdaysFamous/districtry"
 
@@ -358,13 +358,22 @@ def measure_address_list(src, name):
 # records which kind was pasted and never the position, which is read in the
 # browser and sent nowhere. A SHORT link (maps.app.goo.gl, maps.apple) holds no
 # position, so it alone goes to the link lookup named by LINK_LOOKUP_HOST.
-EXPECTED_EVENTS = ["address-search", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
+# `app-install/`, `app-launch/` and `install-invite/` joined on 2026-10-13, when
+# districtry became installable as ONE app (engine `install-app`, the root
+# manifest built by scripts/build_manifests.py). `app-install/<tag>` records
+# that the browser reported an install and from which app; `app-launch/<tag>`
+# that the installed app was opened, once per launch, and into which app; and
+# `install-invite/<what>` what became of the one-time invitation on a phone
+# (shown, accepted, declined or closed; tip-shown or tip-closed for the
+# iPhone's directions). All three are by app and never by place: the launch
+# event is sent at boot, before any point is selected.
+EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
                    "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
-                   "geolocate-success", "layer/", "locate-fail/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "select",
+                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "select",
                    "share-native", "share-open", "share-permalink", "share-qr"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
 
@@ -824,6 +833,9 @@ def gate_fleet_claims(apps):
 COUNT_WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five"}
 COUNTER_EXCEPTIONS = {
     "404.html": "served for a URL that does not exist",
+    "app/index.html":
+        "the installed app\u2019s launcher, which hands straight on to the state "
+        "you used last, where the visit is counted",
     "coverage-map.html":
         "the front door\u2019s iframe body, counted by the page that embeds it",
 }
@@ -889,6 +901,18 @@ def measure_counter_coverage(apps):
                  % (a["file"], "present" if mine else "absent",
                     "present" if theirs else "absent"))
     return {"counted": counted, "uncounted": uncounted}
+
+
+def launcher_reads():
+    """The storage key the installed app's launcher reads, established by the
+    gate that already holds it (scripts/build_manifests.py --check), so the
+    sentence naming the launcher and that gate cannot disagree."""
+    try:
+        import build_manifests
+    except ImportError as e:
+        fail("cannot import scripts/build_manifests.py (%s). The sentence about "
+             "the installed app's launcher is measured through it." % e)
+    return build_manifests.check_launcher()
 
 
 def counter_who():
@@ -1096,6 +1120,37 @@ def render_storage_paragraphs(apps):
                 "kept in %s under %s on %s, so the site does not flash white on your next "
                 "visit. It is one word, and it never leaves your browser.%s</p>"
                 % (code(store), code(key), esc(joined(users)), carried))
+        elif key == "districtry-last-app":
+            # The claim that the launcher READS this key is the manifest
+            # builder's to keep, and its --check fails when the launcher stops;
+            # asking it here means this sentence and that gate are one reader.
+            launcher_key = launcher_reads()
+            if launcher_key != key:
+                fail("the apps write %r and the installed app's launcher reads %r, "
+                     "so the sentence about it would be false" % (key, launcher_key))
+            out.append(
+                "<p><strong>Which state you used last.</strong> Each app keeps its own "
+                "two-letter tag (%s, %s and so on) in %s under %s on %s. The installed "
+                "app's launcher at %s reads it to open that state's map. It is two "
+                "letters, the next state you open replaces it, and it never leaves your "
+                "browser.</p>"
+                % (code("il"), code("ny"), code(store), code(key), esc(joined(users)),
+                   code("/app/")))
+        elif key == "districtry-install-invite":
+            out.append(
+                "<p><strong>The install invitation.</strong> On a phone, the map offers once "
+                "to add districtry to your home screen. It records that it has asked in %s "
+                "under %s, so it does not ask again. This is on %s. It is one word, and it "
+                "never leaves your browser.</p>"
+                % (code(store), code(key), esc(joined(users))))
+        elif key == "districtry-app-launch":
+            out.append(
+                "<p><strong>A launch already counted.</strong> When you open the installed "
+                "app, the launch is counted once. A mark in %s under %s records that, so "
+                "moving between states in the same window does not count it again. This "
+                "is on %s. It is erased when you close the app, and it never leaves your "
+                "browser.</p>"
+                % (code(store), code(key), esc(joined(users))))
         elif key == "districtry-boundary-streets":
             out.append(
                 "<p><strong>Boundary street names.</strong> If you switch the map's "
@@ -1512,6 +1567,9 @@ PRIVACY_BODY = """
         time you switch that layer on (for a layer drawn from vector tiles, the pieces of its
         map you have looked at), so the map loads fast and those layers work offline.
         It holds published public data — district shapes and rosters — not anything about you.</p>
+      <p><strong>If you install districtry,</strong> its launcher at %(launcher)s keeps one more
+        cache, holding only the launcher page itself, so the installed app opens with no
+        connection.</p>
       <p><strong>No app here sets a cookie of its own.</strong> Google Analytics, where it runs,
         sets its own.</p>
     </div>
@@ -1731,6 +1789,7 @@ def build():
             "storage": render_storage_paragraphs(apps),
             "appslede": render_apps_lede(apps),
             "analytics": render_analytics_section(apps),
+            "launcher": code("/app/"),
             "permalink": code("#p=41.8825,-87.6285"),
             "hash": code("#"),
             "dp": COORD_DECIMALS,

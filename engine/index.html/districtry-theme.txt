@@ -161,6 +161,9 @@
       if (m.id === THIS_METRO) continue;
       var a = document.createElement("a");
       a.href = m.url;
+      /* and the layers the reader has on travel with them (ENGINE
+         metro-portal), as they do when a click crosses a state line */
+      if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, m);
       a.setAttribute("role", "menuitem");
       if (m.emoji) {
         var e = document.createElement("span");

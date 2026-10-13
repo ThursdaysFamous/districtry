@@ -6,9 +6,12 @@ the published site by `.github/workflows/deploy-pages.yml` (it ships the whole
 
 ```
 icons/
-  app/                 PWA / manifest icons + the water marker
-    icon-192.png         referenced by manifest.webmanifest + sw.js shell cache
-    icon-512.png
+  app/                 the iPhone home-screen icon + the water marker
+    apple-touch-icon.png the icon an iPhone uses when districtry is added to
+                         its home screen. The install icons themselves are
+                         the site's own, at the root, beside the one
+                         manifest.webmanifest (scripts/build_manifests.py,
+                         2026-10-13)
     ferry.png            NYC Ferry logo — marker for clicks on water (see below)
   boroughs/            official borough seals — the selection-pin marker
     manhattan/

@@ -256,7 +256,7 @@ rather than re-running the failed sibling run.
 > in the changelog. A changelog that promises a clean adoption and doesn't
 > deliver one costs every sibling a red CI run and a manual repair.
 
-## Current ENGINE block inventory (65 in index.html + 2 in sw.js)
+## Current ENGINE block inventory (68 in index.html + 2 in sw.js)
 
 index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`,
 `basemap`, `body-map-toolbar`, `brand-names`, `cached-loaders`, `card-helpers`,
@@ -266,7 +266,7 @@ index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`,
 `fetch-retry`, `find-prop-ci`, `footer-independence`, `gaps-html`,
 `gaps-modal-html`,
 `geocoder-search`, `geocoder-shell`, `geolocation`, `geometry-measure`, `groups`, `haversine`,
-`hover-explorer`, `int-field`, `layer-registry`, `map-chrome-classes`,
+`hover-explorer`, `install-app`, `int-field`, `layer-registry`, `map-chrome-classes`, `map-link`,
 `map-pan-filter`, `metro-links`, `metro-links-html`, `metro-portal`,
 `nearest-point-factory`, `office-helpers`, `overlay-cards`, `permalink`,
 `poi-geocode`, `point-in-polygon`, `polygon-containment`,
@@ -287,7 +287,10 @@ real fences, missing `footer-independence` (added 2026-09-11 by #885) and
 `county-layer-dispatcher` (added by #903). Neither PR updated this list,
 and no gate fails on it — `scripts/fleet_status.py` names the missing
 blocks, but it is WARN-only on a weekly issue, so a stale list stays
-stale until someone reads that issue. The count line is a claim
+stale until someone reads that issue. Re-synced a fourth time 2026-10-13
+while adding `install-app`: the list missed `map-link`, added the same day
+by #1512, and its count line said 65 against the 66 names it listed. The
+count line is a claim
 `check_engine_parity.py` can refute; re-run it whenever a fence is added.)
 
 (`basemap` — promoted 2026-08-26, the day the basemap went vector: the
