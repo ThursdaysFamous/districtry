@@ -1021,6 +1021,38 @@ try {
     await context.close();
   }
 
+  // 1k2. THE CHICAGO WARD CARD LINKS THAT WARD'S CHIPOLI PAGE. The address is
+  //     built from the ward number at runtime, so the monthly link check
+  //     cannot probe it, and every path on chipoli.org answers 200 whatever
+  //     the number, so a wrong one would look fine from outside too. Both City
+  //     sources are stubbed so the ward is known: the card must carry exactly
+  //     one Chipoli link, to /alderpersons/42, opening in a new tab, beside
+  //     the line saying the site is not the City's.
+  {
+    const [plat, plng] = POINT.split(",").map(Number);
+    const d = 0.01;
+    const wards = JSON.stringify({ type: "FeatureCollection", features: [{ type: "Feature",
+      properties: { ward: "42" },
+      geometry: { type: "Polygon", coordinates: [[[plng - d, plat - d], [plng + d, plat - d],
+        [plng + d, plat + d], [plng - d, plat + d], [plng - d, plat - d]]] } }] });
+    const roster = JSON.stringify([{ ward: "42", alderman: "Hopkins, Brendan" }]);
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=ward`, async (p) => {
+      await p.route(/p293-wvbd/, (r) => r.fulfill({ status: 200, contentType: "application/json", body: wards }));
+      await p.route(/htai-wnw4/, (r) => r.fulfill({ status: 200, contentType: "application/json", body: roster }));
+    });
+    const card = await cardText(page, "ward");
+    const chipoli = await page.evaluate(() => Array.from(document.querySelectorAll("#card-ward a"))
+      .filter((a) => /chipoli\.org/.test(a.href))
+      .map((a) => ({ href: a.href, text: a.textContent, target: a.target, rel: a.rel })));
+    check("the Chicago ward card links that ward's Chipoli page and says the site is not the City's",
+      chipoli.length === 1 && chipoli[0].href === "https://chipoli.org/alderpersons/42" &&
+        chipoli[0].text.indexOf("Ward 42 on Chipoli") === 0 && chipoli[0].target === "_blank" &&
+        /noopener/.test(chipoli[0].rel) && /not run by the City/.test(card.text),
+      JSON.stringify({ chipoli, card: card.text.slice(0, 400) }));
+    await context.close();
+  }
+
   // 1h. THE REPORT FORM OPENS FROM A LINK. `#feedback=<text>` beside a point
   //     opens the form with that text filled in, counted once as opened by a
   //     link; "Copy a link to this form" hands back a link carrying the view

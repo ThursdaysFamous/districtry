@@ -21950,6 +21950,24 @@ function initChiExplorer() {
           offices: [{ label: "Ward Office", lines: [String(result.address)] }]
         }));
       }
+      // Chipoli (chipoli.org) keeps one page per ward on whoever holds the
+      // seat, at /alderpersons/<ward>, so the link follows the seat through
+      // turnover without a name match. It is the first link on an Illinois
+      // card to a site no government runs, so the row says so rather than
+      // reading like the City's own contact lines above it. Added on Adam's
+      // choice of 2026-10-13 after its owner offered to collaborate. Every
+      // path on that site answers 200 (an unknown ward renders "No such ward"
+      // in the page), so no link checker can catch a bad number: the ward is
+      // held to Chicago's 1-50 here instead.
+      var chipoliWard = result.ward ? String(result.ward) : "";
+      if (/^\d+$/.test(chipoliWard) && +chipoliWard >= 1 && +chipoliWard <= 50) {
+        wrap.appendChild(renderLinkRow({
+          title: "More about this alderperson",
+          note: "From Chipoli, an independent Chicago civic site. It is not run by the City.",
+          links: [{ label: "Ward " + chipoliWard + " on Chipoli ↗",
+                    url: "https://chipoli.org/alderpersons/" + chipoliWard }]
+        }));
+      }
       return wrap;
     },
     cardIdentifier: function (result) {

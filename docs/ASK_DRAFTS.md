@@ -7122,8 +7122,19 @@ the next route.
 
 ## Ask il-chipoli-introduction — Chipoli (chipoli.org): two Chicago civic maps that fit together
 
-> **ASKED 2026-10-13**, sent 14:01:30 UTC to contact@chipoli.org, the only contact the site
-> publishes. **No answer yet**; the follow-up clock runs to about 2026-11-03. The operator reworded
+> **ASKED 2026-10-13. ANSWERED 2026-10-13**, 47 minutes later, by the site's owner from a personal
+> address (the owner's name and contact details stay in the operator's mailbox; the site names
+> nobody, so this file does not either). The owner runs Chipoli independently, started it after
+> moving back to Chicago and finding it hard to get up to speed on local politics, is open to
+> collaborating on the ideas in the letter, and offered "a potential avenue of building something
+> together". The reply did not answer the third idea (what Chipoli has had to put together by
+> hand). On the operator's choice
+> of 2026-10-13 the next step is the reply drafted under **Reply 1** below: yes to cross-checking,
+> a link from each Chicago ward card to that ward's Chipoli page if he agrees, and two questions.
+> No follow-up clock runs while the reply is unsent.
+>
+> The first letter was sent 14:01:30 UTC to contact@chipoli.org, the only contact the site
+> publishes. The operator reworded
 > the draft below before sending, keeping its substance: the same counts, both errors, the three
 > ideas and the question of who runs the site. The bracketed choice went as "I am fixing this
 > week", and the third idea was put as asking what the two sites could jointly ask the city or
@@ -7241,3 +7252,56 @@ commission's own page lists one (the 3rd and the 12th), and shows the 25th's two
 either way is worth discussing. An answer to the third idea is evidence for the letters to the State
 Board and, later, to the city. A polite no, or no answer, costs nothing: the comparison has already
 found one error of ours.
+
+### Reply 1 — yes to cross-checking, a ward-card link if the owner agrees, and two questions
+
+> **DRAFTED 2026-10-13, NOT SENT.** Written on the operator's choice that day of "Add links too"
+> out of three options (data only; data plus links; building something together). It answers the
+> owner's reply in the same Gmail thread as the first letter, so it goes as a reply in that thread
+> to the owner's personal address, not to contact@chipoli.org.
+
+> Subject: Re: districtry and Chipoli: two Chicago maps that fit together
+>
+> Hi <OWNER'S FIRST NAME>,
+>
+> Thanks for writing back, and for the background. Getting up to speed on what is going on in your
+> own ward is exactly the problem both our sites are working on.
+>
+> The two alderperson names are fixed on districtry now: they read Felix Cardona Jr. and Andre
+> Vasquez Jr.
+>
+> Here is where I'd like to start:
+>
+> 1. Checking each other's lists. Every few weeks I can rerun the comparison I did and send you
+>    anything that looks wrong on your side, and you're welcome to do the same for ours. As of
+>    today your legislators page still shows House District 28 as "Robert \".
+> 2. A link from districtry to Chipoli. I'd like to add a line to each Chicago ward card on
+>    districtry that links to that ward's page on Chipoli (for example
+>    https://chipoli.org/alderpersons/42), saying it is an independent site. It's built, and I'll
+>    only switch it on once you tell me you're happy with it. If you'd like to link the other way,
+>    https://districtry.com/il/ is the place to point people, and I can send you link formats that
+>    open the map on an address with the right districts already showing.
+> 3. Two questions for you. What has Chipoli had to put together by hand that the city or the state
+>    should be publishing properly? And what do you have in mind when you say building something
+>    together?
+>
+> Thanks,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+**Before sending:**
+
+- Fill in the owner's first name from the reply in the Gmail thread. The site names nobody, so
+  this file does not either.
+- The owner offered a phone number for texting. It is not copied here or anywhere in the
+  repository. Whether to text instead of, or as well as, sending this is the operator's call.
+- Open Chipoli's legislators page and check House District 28 still reads "Robert \" (it did when
+  `https://chipoli.org/legislators.js` was read on 2026-10-13 at about 17:45 UTC). If it is fixed,
+  replace the last sentence of point 1 with a thank-you.
+- The link in point 2 is built and waits in a pull request that will not be merged until the owner
+  says yes. If the owner says no, or wants different wording, the pull request is changed or closed.
+- Keep any exchange of data to rosters both sites read from sources that allow it. Chipoli's
+  campaign-money data comes from the State Board of Elections' disclosure site, which districtry
+  does not read (see "Before sending" on the first letter).
