@@ -466,8 +466,12 @@ hand-kept list too, and the go-live PR extends it (Iowa's did), together with (1
 
 In the **instance**: (6) its own `scripts/` with `validate_index.py`, `smoke_test.mjs`,
 `validate_sources.py` and its builders — imports resolving inside its own tree, which
-`validate_workflow_deps.py` enforces; (7) PWA icons and `manifest.webmanifest` (generated —
-`build_manifests.py`); (8) analytics — copy `brand.analytics.goatcounter_url` from a sibling
+`validate_workflow_deps.py` enforces; (7) its row in `INSTANCES` in `build_manifests.py`, and
+nothing else for installing: since 2026-10-13 districtry installs as ONE app from a single
+generated `manifest.webmanifest` at the root, which the instance's `index.html` links as
+`/manifest.webmanifest`, so an instance ships no manifest and no install icons of its own
+(only its `icons/apple-touch-icon.png`), and `build_manifests.py --check` fails on a page that
+links anything else, on an app that links nothing, or on a `<tag>/manifest.webmanifest` that reappears; (8) analytics — copy `brand.analytics.goatcounter_url` from a sibling
 worksheet: the fleet counts on ONE shared GoatCounter site keyed by path, and never add a
 `ga_id` (the schema says a rebrand must not add a tracker). CORRECTED 2026-09-02: this item
 used to say "its own GoatCounter site and tag", which no instance has ever shipped — all five
@@ -665,7 +669,7 @@ appointees as it.
 At assembly and again before launch, grep the new instance for the reference's
 fingerprints — `chidistricts`, `cityofchicago`, `ChiExplorer`, `chicago`, the reference's
 `data-goatcounter` tag — across `index.html sw.js README.md CLAUDE.md WATCH.md
-manifest.webmanifest scripts/ .github/`. Allowlist: fence comments naming the reference,
+scripts/ .github/`. Allowlist: fence comments naming the reference,
 the reference's own `metro_explorers` entry, deliberate doc citations. **Everything else is
 a leftover.** Past escapes include a Chicago-biased geocoder shipping through five threads
 of another instance, Chicago SEO metadata, stale `validate_sources.py` manifests and

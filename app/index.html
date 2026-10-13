@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>districtry</title>
+<!-- THE INSTALLED APP'S LAUNCHER. The web app manifest (/manifest.webmanifest)
+     opens here, and this page opens the state the reader used last: every app
+     writes its two-letter tag under districtry-last-app when it boots
+     (engine/index.html/install-app.txt), and scripts/build_manifests.py --check
+     holds this page to that key. It is a redirect, so it is kept out of search
+     (noindex, no canonical, so build_sitemap.py does not list it) and it carries
+     no counter: the state's own page counts the visit a moment later, and the
+     app counts the launch itself. It contacts nobody but this site. -->
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#6d3fd1" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+  /* The manifest's splash colour, so the step from the splash to this page to
+     the map shows no flash; the dark tier's --paper where the system is dark. */
+  html { background: #F4F7F9; color: #17161c; }
+  @media (prefers-color-scheme: dark) { html { background: #15131b; color: #ece9f4; } }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  a { color: inherit; }
+  [hidden] { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <p id="opening">Opening districtry&hellip;</p>
+  <p id="offline" hidden>districtry needs a connection the first time it opens.
+    <a href="/app/">Try again</a></p>
+  <noscript><p><a href="/">Open districtry</a></p></noscript>
+</main>
+<script>
+(function () {
+  "use strict";
+  // Which state's map was open last. Two lowercase letters or nothing: the
+  // value is only ever written by this site's own apps, and the test keeps a
+  // stray value from turning into a path.
+  var tag = null;
+  try { tag = localStorage.getItem("districtry-last-app"); } catch (e) { tag = null; }
+  var to = /^[a-z]{2}$/.test(tag || "") ? "/" + tag + "/" : "/";
+  var gone = false;
+  function go() {
+    if (gone) return;
+    gone = true;
+    location.replace(to);
+  }
+  // The front page keeps no offline copy, so with no state remembered and no
+  // connection, going there would end on the browser's own error page. Say so
+  // here instead, and go as soon as the connection is back.
+  if (to === "/" && navigator.onLine === false) {
+    document.getElementById("opening").hidden = true;
+    document.getElementById("offline").hidden = false;
+    window.addEventListener("online", go);
+  }
+  if (!("serviceWorker" in navigator)) {
+    if (!(to === "/" && navigator.onLine === false)) go();
+    return;
+  }
+  // This page's own worker keeps a copy of it, so the installed app opens with
+  // no connection; each state's map has its own worker for the rest.
+  var registered = navigator.serviceWorker.register("/app/sw.js", { scope: "/app/" });
+  if (to === "/" && navigator.onLine === false) return;
+  if (navigator.serviceWorker.controller) { go(); return; }
+  // The first launch: give the worker a moment to finish installing, so the
+  // next launch works offline, but never hold the reader for long.
+  registered.then(function () { return navigator.serviceWorker.ready; }).then(go, go);
+  setTimeout(go, 1500);
+})();
+</script>
+</body>
+</html>
