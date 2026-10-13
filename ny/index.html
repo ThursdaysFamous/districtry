@@ -12615,7 +12615,7 @@ function initNycExplorer() {
     label: "Neighborhood (NTA)",
     coverage: nycCoverage,
     loader: loadNeighborhoods,
-    style: { color: "#2E7D5B", weight: 2, fillColor: "#2E7D5B", fillOpacity: 0.06 },
+    style: { color: "#3D6B49", weight: 2, fillColor: "#5C8F6B", fillOpacity: 0.06 },
     compact: true, compactMetaField: "code", // 4b name-only card, NTA code as meta
     fields: [
       { name: "name", label: "Neighborhood", keys: ["ntaname"], primary: true },
@@ -12635,7 +12635,7 @@ function initNycExplorer() {
     label: "ZIP Code (MODZCTA)",
     coverage: nycCoverage,
     loader: makeCachedLoader("pri4-ifjk"),
-    style: { color: "#4E6E9C", weight: 2, fillColor: "#4E6E9C", fillOpacity: 0.05, dashArray: "1 3" },
+    style: { color: "#88637C", weight: 2, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 3" },
     pill: true, // ZIP identifier in the header pill (Handoff 3 §5b, "60564" style)
     fields: [
       // label shortened so the pill reads "ZIP 10001"; the MODZCTA nuance
@@ -12741,7 +12741,7 @@ function initNycExplorer() {
     // inside the state and outside the city that no ZCTA covers, so the note
     // now says only what the query answered.
     emptyNote: "No ZIP Code Tabulation Area covers this point.",
-    style: { color: "#4E6E9C", weight: 1.5, fillColor: "#4E6E9C", fillOpacity: 0.05, dashArray: "1 4" },
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 4" },
     pill: true,
     fields: [
       { name: "zip", label: "ZIP", keys: ["zcta5", "zcta5ce10", "zip"], primary: true },
@@ -12965,7 +12965,7 @@ function initNycExplorer() {
     label: "Central High School District",
     coverage: centralHsCoverage,
     loader: loadNysCentralHsDistricts,
-    style: { color: "#0A4D5C", weight: 2.5, fillColor: "#0A4D5C", fillOpacity: 0.05, dashArray: "10 4" },
+    style: { color: "#5E3A8C", weight: 2.5, fillColor: "#8163AE", fillOpacity: 0.05, dashArray: "10 4" },
     fields: [
       { name: "name", label: "District", keys: ["schooldist"], primary: true },
       { label: "What it runs", value: "The high schools for several component districts, each of which runs its own elementary schools and elects its own board. The School District layer names the component district this point is in." },
@@ -12986,7 +12986,7 @@ function initNycExplorer() {
     // the city's own words.
     coverage: outsideNycCoverage,
     loader: loadNysSchoolDistricts,
-    style: { color: "#0B7285", weight: 1.5, fillColor: "#0B7285", fillOpacity: 0.04, dashArray: "4 3" },
+    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.04, dashArray: "4 3" },
     fields: [
       { name: "name", label: "District", keys: ["schooldist"], primary: true },
       { name: "sed", label: "State education code", keys: ["sed_code_1"] },
@@ -13026,7 +13026,7 @@ function initNycExplorer() {
     group: "geography",
     label: "City or Town",
     loader: loadNyCitiesTowns,
-    style: { color: "#7A6A55", weight: 1.5, fillColor: "#7A6A55", fillOpacity: 0.04 },
+    style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.04 },
     fields: [
       { name: "name", label: "Name", keys: ["name"], primary: true },
       { name: "type", label: "Kind", keys: ["muni_type"] },
@@ -13040,7 +13040,7 @@ function initNycExplorer() {
     label: "Village",
     subOf: "municipality",
     loader: loadNyVillages,
-    style: { color: "#8C6D3F", weight: 1.5, fillColor: "#8C6D3F", fillOpacity: 0.05, dashArray: "3 2" },
+    style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "3 2" },
     emptyNote: "This point is not in a village. Most of New York is not: a village is an extra layer of government inside a town.",
     fields: [
       { name: "name", label: "Village", keys: ["name"], primary: true },
@@ -13078,7 +13078,7 @@ function initNycExplorer() {
     group: "geography",
     label: "County",
     loader: loadNyCounties,
-    style: { color: "#5A6B7C", weight: 2, fillColor: "#5A6B7C", fillOpacity: 0.04 },
+    style: { color: "#444B54", weight: 2, fillColor: "#6B7280", fillOpacity: 0.04 },
     // findPropCI LOWERCASES THE PROPERTY KEY AND COMPARES IT TO THE CANDIDATE
     // AS GIVEN, so every key below is lowercase even though the state's data
     // ships them in capitals. Measured 2026-09-18: with ["NAME"] this card
@@ -13463,7 +13463,7 @@ function initNycExplorer() {
     id: "fire-district",
     group: "safety",
     label: "Fire District",
-    style: { color: "#B5462F", weight: 2, fillColor: "#D8613F", fillOpacity: 0.05, dashArray: "6 3" },
+    style: { color: "#B0342A", weight: 2, fillColor: "#D0564C", fillOpacity: 0.05, dashArray: "6 3" },
     counties: [sullivanDistrictEntry({
       loader: loadSullivanFireDistricts,
       governed: "A New York fire district is a district corporation governed by its own board of "
@@ -13481,7 +13481,7 @@ function initNycExplorer() {
     id: "library-district",
     group: "geography",
     label: "Library District",
-    style: { color: "#2F6E6B", weight: 2, fillColor: "#3F918D", fillOpacity: 0.05, dashArray: "6 3" },
+    style: { color: "#00695C", weight: 2, fillColor: "#4DB6AC", fillOpacity: 0.05, dashArray: "6 3" },
     counties: [sullivanDistrictEntry({
       loader: loadSullivanLibraryDistricts,
       governed: "A New York library district is a district corporation whose trustees are elected "
@@ -13656,7 +13656,7 @@ function initNycExplorer() {
     id: "county-supervisor",
     group: "political",
     label: "County Board Supervisor",
-    style: { color: "#0E5A8A", weight: 2, fillColor: "#2E7FAE", fillOpacity: 0.05, dashArray: "9 3 3 3" },
+    style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.05, dashArray: "9 3 3 3" },
     counties: [
       nySupervisorEntry("delaware", "Delaware"),
       nySupervisorEntry("saratoga", "Saratoga"),
@@ -13691,7 +13691,7 @@ function initNycExplorer() {
     group: "political",
     label: "NY Supreme Court Judicial District",
     loader: loadJudicialDistricts,
-    style: { color: "#6B4E8C", weight: 2, fillColor: "#6B4E8C", fillOpacity: 0.05, dashArray: "7 3" },
+    style: { color: "#9550B2", weight: 2, fillColor: "#9550B2", fillOpacity: 0.05, dashArray: "7 3" },
     pill: true, // district identifier in the header pill (Handoff 3 §5b)
     fields: [
       // label shortened so the pill reads "District 1" (the layer name above
@@ -14104,7 +14104,7 @@ function initNycExplorer() {
     },
     overlay: {
       load: loadPolicePrecincts,
-      style: { color: "#7A0A1C", weight: 1.5, fillColor: "#C8102E", fillOpacity: 0.06, dashArray: "2 6" }
+      style: { color: "#9C0B24", weight: 1.5, fillColor: "#C8102E", fillOpacity: 0.06, dashArray: "2 6" }
     },
     query: function (point, seq) {
       return Promise.all([
@@ -14254,7 +14254,7 @@ function initNycExplorer() {
     group: "safety",
     label: "Police Station",
     coverage: nycCoverage,
-    color: "#0B5394", fill: "#41B6E6",
+    color: "#1B4F8C", fill: "#7FA8D9",
     loader: loadPoliceStationPoints,
     intro: "Nearest NYPD station houses, straight-line distance:",
     line: function (p) {
@@ -14298,7 +14298,7 @@ function initNycExplorer() {
     id: "fire-station",
     group: "safety",
     label: "Fire Station",
-    color: "#B3261E", fill: "#E4572E",
+    color: "#A3341F", fill: "#E8927C",
     loader: loadFireStations,
     intro: "Nearest fire stations, straight-line distance:",
     // THE PHONE IS ON THE CARD BECAUSE THE STATE'S LAYER CARRIES IT.
@@ -14750,21 +14750,21 @@ function initNycExplorer() {
   registerNycZone({
     id: "es-zone", label: "Elementary School Zone", datasetId: "cmjf-yawu",
     tiles: "data/app/tiles/es-zone.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
-    style: { color: "#2E7D5B", weight: 1.5, fillColor: "#7CC49B", fillOpacity: 0.12 },
+    style: { color: "#6A3FA0", weight: 1.5, fillColor: "#6A3FA0", fillOpacity: 0.12 },
     emptyNote: "No zoned elementary school found for this point.",
     moreLink: MYSCHOOLS_MORE
   });
   registerNycZone({
     id: "ms-zone", label: "Middle School Zone", datasetId: "t26j-jbq7",
     tiles: "data/app/tiles/ms-zone.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
-    style: { color: "#1F6F5C", weight: 1.5, fillColor: "#5FB49C", fillOpacity: 0.12, dashArray: "5 3" },
+    style: { color: "#A15C00", weight: 1.5, fillColor: "#A15C00", fillOpacity: 0.12, dashArray: "5 3" },
     emptyNote: "No zoned middle school here — much of NYC middle-school admission is choice-based.",
     moreLink: MYSCHOOLS_MORE
   });
   registerNycZone({
     id: "hs-zone", label: "High School Zone", datasetId: "ruu9-egea",
     tiles: "data/app/tiles/hs-zone.pmtiles", // vector tiles mirrored from NYC Open Data (scripts/mirror_portal_tiles.py)
-    style: { color: "#155C4B", weight: 1.5, fillColor: "#4CA98F", fillOpacity: 0.12, dashArray: "2 4" },
+    style: { color: "#0F6F6F", weight: 1.5, fillColor: "#0F6F6F", fillOpacity: 0.12, dashArray: "2 4" },
     emptyNote: "Most NYC high schools admit by application citywide, not by zone.",
     moreLink: MYSCHOOLS_MORE
   });
@@ -14899,7 +14899,7 @@ function initNycExplorer() {
   var NYC_SCHOOL_SITE_COUNT = 3;
   var NYC_SCHOOL_CATS = ["Public", "Charter", "Private"];
   var NYC_SCHOOL_CAT_META = {
-    Public:  { full: "Public",  color: "#2E7D5B" }, // the layer's own green
+    Public:  { full: "Public",  color: "#1B7A3D" }, // the layer's own green (the fleet's school-site colour)
     Charter: { full: "Charter", color: "#A15C00" },
     Private: { full: "Private", color: "#6A3FA0" }
   };
@@ -14929,14 +14929,14 @@ function initNycExplorer() {
   registerLayer({
     id: "school-site", group: "schools",
     label: "School (nearest " + NYC_SCHOOL_SITE_COUNT + ")",
-    color: "#2E7D5B", // legend/accent color (matches overlay.style below)
+    color: "#1B7A3D", // legend/accent color (matches overlay.style below)
     overlay: {
       load: loadSchoolSites,
       // flat base kept for moduleColor()/baseStyleFor; the per-feature styler
       // paints each dot by type and hides filtered-off types. Explicit
       // fillOpacity everywhere — dots must not inherit the polygon-oriented
       // scaled fill.
-      style: { color: "#2E7D5B", weight: 1.5, fillColor: "#7CC49B", fillOpacity: 0.85 },
+      style: { color: "#1B7A3D", weight: 1.5, fillColor: "#63B57F", fillOpacity: 0.85 },
       styleForFeature: function (feature) {
         var cat = schoolSiteCategory(feature.properties);
         if (!schoolTypeFilter[cat]) return { opacity: 0, fillOpacity: 0 };
@@ -15182,7 +15182,7 @@ function initNycExplorer() {
         return row ? row.name : null;
       }
     },
-    overlay: { load: loadCouncilDistricts, style: { color: "#5B2A86", weight: 2, fillColor: "#7048E8", fillOpacity: 0.06 } },
+    overlay: { load: loadCouncilDistricts, style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.06 } },
     query: function (point, seq) {
       return Promise.all([featureSetAt(loadCouncilDistricts, point), loadCouncilMembers().catch(function () { return {}; })]).then(function (r) {
         var gj = r[0], roster = r[1] || {};
@@ -15359,7 +15359,7 @@ function initNycExplorer() {
     districtPrefix: "NY-",
     directoryUrl: "https://www.house.gov/representatives",
     profileLabel: "Representative's website", directoryLabel: "House directory",
-    style: { color: "#1D3557", weight: 2, fillColor: "#457B9D", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
   });
   var loadNySenateMembers = makeCached(function () { return fetchJSONWithRetry("data/app/ny-senate-members.json", {}, 2); });
   // Geometry: pre-built same-origin (was live TIGERweb layer 1). Regenerate with
@@ -15375,7 +15375,7 @@ function initNycExplorer() {
     memberLabel: "State Senator", capitolLabel: "Albany Office",
     directoryUrl: "https://www.nysenate.gov/senators-committees",
     profileLabel: "Senator's page", directoryLabel: "NY Senate directory",
-    style: { color: "#14532D", weight: 2, fillColor: "#2E7D5B", fillOpacity: 0.05, dashArray: "6 3" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "6 3" }
   });
   var loadNyAssemblyMembers = makeCached(function () { return fetchJSONWithRetry("data/app/ny-assembly-members.json", {}, 2); });
   // Geometry: pre-built same-origin (was live TIGERweb layer 2). Regenerate with
@@ -15391,7 +15391,7 @@ function initNycExplorer() {
     memberLabel: "Assembly Member", capitolLabel: "Albany Office",
     directoryUrl: "https://nyassembly.gov/mem/",
     profileLabel: "Member's page", directoryLabel: "NY Assembly directory",
-    style: { color: "#7C2D12", weight: 2, fillColor: "#C2410C", fillOpacity: 0.05, dashArray: "4 4" },
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "4 4" },
     onToggle: function (on) {
       // cascade the Election District sub-layer off when Assembly is turned off
       if (!on && state.layersOn["election-district"]) {
@@ -15453,7 +15453,7 @@ function initNycExplorer() {
       var s = splitElectDist(findPropCI(feature.properties || {}, ["electdist"]));
       return s ? ("AD " + s.ad + " · ED " + s.ed) : null;
     },
-    overlay: { load: loadElectionDistricts, style: { color: "#3A0CA3", weight: 0.5, fillColor: "#4361EE", fillOpacity: 0.12, dashArray: null } },
+    overlay: { load: loadElectionDistricts, style: { color: "#06375E", weight: 0.5, fillColor: "#2B8CC4", fillOpacity: 0.12, dashArray: null } },
     query: function (point, seq) {
       return loadElectionDistricts().then(function (gj) {
         var f = findFeatureContaining(gj, point);
@@ -18072,19 +18072,20 @@ function initNycExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#0A4D5C": "#53A0B5", "#0B5394": "#4CA1FB", "#0B7285": "#49BED8",
-    "#0E5A8A": "#4FA8EB", "#14181C": "#696F76", "#14532D": "#5AA872", "#155C4B": "#58AE96",
-    "#1D3557": "#6689BA", "#1E7A8C": "#53C4DD", "#1F5C3A": "#60AF7F", "#1F6F5C": "#5ABEA3",
-    "#1F6F6B": "#59BDB7", "#1F6FB2": "#6EB7FD", "#2E7D5B": "#63C99B", "#2E7FAE": "#69C5FE",
-    "#2F6E6B": "#69BBB6", "#3A0CA3": "#8178FE", "#3B8FD4": "#98CDFE", "#3E9A95": "#66DED7",
-    "#3F918D": "#6BD7D1", "#4361EE": "#9BB4FD", "#457B9D": "#7AC1EF", "#4B2E83": "#9C79EF",
-    "#4CA98F": "#70EAC8", "#4E6E9C": "#89B4F3", "#5A6B7C": "#9BB2CA", "#5B2A86": "#B172F0",
-    "#5FB49C": "#81F2D2", "#6A3FA0": "#B886FE", "#6B4E8C": "#B992E7", "#6B7280": "#ADB6C9",
-    "#7048E8": "#B0A7FE", "#7A0A1C": "#E8595F", "#7A1E5C": "#E063B2", "#7A5901": "#CDA040",
-    "#7A6A55": "#C4AF92", "#7C2D12": "#E27451", "#7CC49B": "#9EFDC7", "#8A5A00": "#E09E3C",
-    "#8C6A2E": "#DBAD5E", "#8C6D3F": "#D9AF72", "#A15C00": "#F99B38", "#B3261E": "#FE8171",
-    "#B5179E": "#FE79E3", "#B5462F": "#FD927A", "#B8860B": "#FEC141", "#C2410C": "#FF9776",
-    "#C8102E": "#FE8B89", "#D8613F": "#FEB39E", "#E4572E": "#FDB5A0", "#F72585": "#FDB1C7"};
+  var DST_DARK_MAP_COLORS = { "#00695C": "#4DBDAA", "#06375E": "#528DC6", "#0B5394": "#4FA4FE",
+    "#0B7285": "#4DC2DC", "#0F6F6F": "#52C1C0", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#1B7A3D": "#58CD7A", "#1E7A8C": "#57C8E1", "#1F5C3A": "#63B281", "#1F6F6B": "#5DC0BA",
+    "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A4D2FD",
+    "#3D6B49": "#7EBC8D", "#3E9A95": "#6CE3DD", "#41B6E6": "#C6EBFE", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB93", "#4DB6AC": "#70FAED",
+    "#5C8F6B": "#95D9A8", "#5E3A8C": "#B283F5", "#63B57F": "#8EFAB2", "#6A3FA0": "#BA8BFE",
+    "#6B4E8C": "#BC95EB", "#6B7280": "#B1BBCE", "#7048E8": "#B4ACFE", "#7A0A1C": "#EA5B61",
+    "#7A1E5C": "#E266B4", "#7A5901": "#D1A443", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF",
+    "#88637C": "#DAA7C9", "#8A5A00": "#E4A241", "#8C2E4A": "#F47294", "#8C6A2E": "#DFB163",
+    "#9550B2": "#DF9BFE", "#9C0B24": "#FD6B6E", "#A15C00": "#FD9F3D", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CBA1", "#B0316E": "#FF87B8", "#B0342A": "#FF8B7C", "#B3261E": "#FE8878",
+    "#B5179E": "#FF82E5", "#B8860B": "#FFC85E", "#C8102E": "#FE928F", "#D0564C": "#FEB1A7",
+    "#D06A9C": "#FFBDDA", "#E4572E": "#FFBCA9", "#F72585": "#FDBACD"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

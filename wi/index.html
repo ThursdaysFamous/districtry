@@ -13278,9 +13278,10 @@ function initWisconsinExplorer() {
     label: "County Board District",
     overlay: {
       load: loadSupervisoryDistricts,
-      // solid green, light fill — the only political layer drawn inside a
-      // county, so it reads against County's grey and the chambers' dashes
-      style: { color: "#1B5E3F", weight: 1.5, fillColor: "#2E9E6B", fillOpacity: 0.06 }
+      // solid county-board blue, light fill (layer-concepts.json `colors`) —
+      // the only political layer drawn inside a county, so it reads against
+      // County's grey and the chambers' dashes
+      style: { color: "#1F6FB2", weight: 1.5, fillColor: "#3B8FD4", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       // same two properties the card's header and County row read, so hover
@@ -13506,7 +13507,7 @@ function initWisconsinExplorer() {
     overlay: {
       load: loadCoaDistricts,
       // plum, long-dashed — the broadest political boundary after Congress
-      style: { color: "#5B2A86", weight: 2, fillColor: "#5B2A86", fillOpacity: 0.04, dashArray: "10 4" }
+      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.04, dashArray: "10 4" }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13601,8 +13602,9 @@ function initWisconsinExplorer() {
     label: "Circuit Court",
     overlay: {
       load: loadCircuitCourts,
-      // deep violet, the crib's judicial hue — distinct from every chamber dash
-      style: { color: "#4A2E8C", weight: 1.5, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "6 3" }
+      // the fleet's trial-court orchid (layer-concepts.json `colors`), distinct
+      // from every chamber dash
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05, dashArray: "6 3" }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -14264,9 +14266,10 @@ function initWisconsinExplorer() {
     // shape (docs/EXPANSION_GUIDE.md Part 4, nesting determination)
     overlay: {
       load: loadWards,
-      // fine dotted amber — the smallest containment fabric on the map, kept
-      // visually below its county-subdivision parent's long brown dash
-      style: { color: "#8C6D1F", weight: 1, fillColor: "#C9A227", fillOpacity: 0.04, dashArray: "1 3" }
+      // fine dotted navy, the fleet's precinct colour (layer-concepts.json
+      // `colors`) — the smallest containment fabric on the map, kept visually
+      // below its county-subdivision parent's long brown dash
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.04, dashArray: "1 3" }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -14602,7 +14605,7 @@ function initWisconsinExplorer() {
     group: "schools",
     label: "School District (Elementary)",
     loader: loadWiSchoolElementary,
-    style: { color: "#B26A00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.05, dashArray: "3 3" },
+    style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.05, dashArray: "3 3" },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -14710,9 +14713,9 @@ function initWisconsinExplorer() {
     // plan chose deliberately for a layer that elects no one.
     overlay: {
       load: loadAldermanicDistricts,
-      // warm sienna — a municipal-politics hue, distinct from the violet
-      // judicial pair and the amber ward dots beneath it
-      style: { color: "#A0522D", weight: 1.5, fillColor: "#A0522D", fillOpacity: 0.05, dashArray: "4 2" }
+      // the fleet's city-council blue (layer-concepts.json `colors`), distinct
+      // from the judicial pair and the navy ward dots beneath it
+      style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "4 2" }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -14936,8 +14939,8 @@ function initWisconsinExplorer() {
     },
     overlay: {
       load: loadElectedBoardDistricts,
-      // the reference instance's elected-school-board green, kept for parity
-      style: { color: "#2E8C6A", weight: 2, fillColor: "#2E8C6A", fillOpacity: 0.05, dashArray: "2 2" }
+      // the fleet's school-board indigo (layer-concepts.json `colors`)
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.05, dashArray: "2 2" }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -15069,7 +15072,7 @@ function initWisconsinExplorer() {
       load: loadWtcsDistricts,
       // a teal apart from the school-district greens, dashed like the
       // other derived/administrative tilings
-      style: { color: "#1F7A8C", weight: 2, fillColor: "#3D95A6", fillOpacity: 0.05, dashArray: "6 3" }
+      style: { color: "#1A7789", weight: 2, fillColor: "#3D95A6", fillOpacity: 0.05, dashArray: "6 3" }
     },
     query: function (point, seq) {
       return queryFeatureAt(loadWtcsDistricts, point).then(function (feature) {
@@ -15791,7 +15794,7 @@ function initWisconsinExplorer() {
     // note now says only what the query answered.
     emptyNote: "No ZIP Code Tabulation Area covers this point.",
     // dotted outline (distinct pattern from County Subdivision's long dash) + different hue
-    style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 4" },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true }
     ],
@@ -15880,8 +15883,8 @@ function initWisconsinExplorer() {
   registerNearestPointLayer({
     id: "police-station",
     group: "safety",
-    color: "#0B5394",
-    fill: "#41B6E6",
+    color: "#1B4F8C",
+    fill: "#7FA8D9",
     label: "Police Station",
     loader: usgsStructuresLoader(USGS_POLICE_LAYER, "USGS structures layer 53"),
     intro: "Nearest police stations (USGS National Map structures data), straight-line distance:",
@@ -15892,8 +15895,8 @@ function initWisconsinExplorer() {
   registerNearestPointLayer({
     id: "fire-station",
     group: "safety",
-    color: "#7A0B1E",
-    fill: "#C8102E",
+    color: "#A3341F",
+    fill: "#E8927C",
     label: "Fire Station",
     loader: usgsStructuresLoader(USGS_FIRE_LAYER, "USGS structures layer 51"),
     intro: "Nearest fire stations (USGS National Map structures data), straight-line distance:",
@@ -17993,19 +17996,20 @@ function initWisconsinExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#0F766E": "#50C7BC", "#14181C": "#696F76",
-    "#14A38F": "#41EED2", "#1B5E3F": "#5FB387", "#1B7A3D": "#58CD7A", "#1F6F6B": "#5DC0BB",
-    "#1F7A8C": "#58C8E1", "#2E8C6A": "#62DAAC", "#2E9E6B": "#5BEAA5", "#2F5D8C": "#6EACED",
-    "#2F6B3A": "#6FBE7B", "#2F6B5E": "#6EBDAA", "#3D6B49": "#7EBC8D", "#3D95A6": "#6CDEF5",
-    "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
-    "#4A7BB0": "#90C4FD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#4E8F80": "#83DAC5",
-    "#5B2A86": "#B375F2", "#5C8F6B": "#95D9A9", "#5E3A8C": "#B283F5", "#6A4A93": "#BC91F6",
-    "#6B7280": "#B1BBCE", "#7A0A1C": "#EB5B61", "#7A0B1E": "#EA5C63", "#7A5C3E": "#CFA57D",
-    "#8163AE": "#CAAAFF", "#8A5A00": "#E4A241", "#8C2E4A": "#F47294", "#8C6D1F": "#DEB452",
-    "#8E6BB8": "#D3B3FE", "#9C0B24": "#FE6B6E", "#A0522D": "#FE9666", "#A98B6C": "#F3CBA1",
-    "#B02E2E": "#FE8880", "#B0316E": "#FD88B8", "#B0342A": "#FF8B7C", "#B26A00": "#FFB15F",
-    "#B45309": "#FEA16D", "#C8102E": "#FE928F", "#C9A227": "#FEE195", "#D0564C": "#FEB1A7",
-    "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7", "#D97706": "#FEC9A1", "#E4572E": "#FFBCA9"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#0F766E": "#50C7BC",
+    "#14181C": "#696F76", "#14A38F": "#40EDD2", "#1A7789": "#55C6DE", "#1B4F8C": "#5CA0F5",
+    "#1B7A3D": "#58CD7A", "#1F6F6B": "#5DC0BA", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
+    "#2F5D8C": "#6EACED", "#2F6B3A": "#6FBE7B", "#2F6B5E": "#6EBCAA", "#3B8FD4": "#A4D2FD",
+    "#3D6B49": "#7EBC8D", "#3D95A6": "#6BDEF5", "#3E9A95": "#6CE3DD", "#41B6E6": "#C6EBFE",
+    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4A7BB0": "#90C4FD", "#4B2E83": "#9E7BF1",
+    "#4C8F59": "#82DB93", "#4E8F80": "#83D9C5", "#585EDD": "#A7B4FE", "#5C8F6B": "#95D9A8",
+    "#5E3A8C": "#B283F5", "#6A4A93": "#BC91F6", "#6B7280": "#B1BBCE", "#753B07": "#D7864B",
+    "#7A0A1C": "#EA5B61", "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9",
+    "#8A5A00": "#E4A241", "#8C2E4A": "#F47294", "#8E6BB8": "#D3B3FE", "#9550B2": "#DF9BFE",
+    "#9C0B24": "#FD6B6E", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
+    "#B02E2E": "#FE887F", "#B0316E": "#FF87B8", "#B0342A": "#FF8B7C", "#B45309": "#FEA16D",
+    "#C8102E": "#FE928F", "#D0564C": "#FEB1A7", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7",
+    "#D97706": "#FEC9A0", "#E4572E": "#FFBCA9"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -12930,9 +12930,9 @@ function initOklahomaExplorer() {
     label: "County Commissioner District",
     overlay: {
       load: loadOkCommissionerDistricts,
-      // a warm hue no other layer uses, so the county board reads apart from
-      // the legislative tilings
-      style: { color: "#9C4A14", weight: 1.5, fillColor: "#D9792E", fillOpacity: 0.05, dashArray: "4 3" }
+      // the fleet's county-board blue (layer-concepts.json `colors`), apart
+      // from the legislative tilings
+      style: { color: "#1F6FB2", weight: 1.5, fillColor: "#3B8FD4", fillOpacity: 0.05, dashArray: "4 3" }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -13410,7 +13410,7 @@ function initOklahomaExplorer() {
     emptyNote: "This point is in a unified school district rather than an " +
       "elementary one, which is true of most of Oklahoma. The School " +
       "District (Unified) card names it.",
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#7FC4A3", fillOpacity: 0.07, dashArray: "4 2" },
+    style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.07, dashArray: "4 2" },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -13502,7 +13502,7 @@ function initOklahomaExplorer() {
     // hidden and this card is never drawn.
     emptyNote: "No ZIP code here. The Census draws these areas around where mail is delivered, so ground with no delivery addresses can sit outside every one.",
     // dotted outline (a distinct pattern from City's tight dots) + its own hue
-    style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 4" },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true },
       { label: "About this boundary",
@@ -15641,11 +15641,12 @@ function initOklahomaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#0B5394": "#4CA1FB", "#14181C": "#696F76", "#1B4F8C": "#599DF2",
-    "#1F6F6B": "#59BCB7", "#2F6B3A": "#6BBB77", "#3E9A95": "#65DDD7", "#41B6E6": "#B3E6FF",
-    "#444B54": "#8F99A6", "#4A2E8C": "#9879FA", "#4B2E83": "#9C79EE", "#4C8F59": "#7DD68D",
-    "#6B7280": "#ACB6C9", "#7FC4A3": "#A0FBD0", "#8C2E4A": "#F06F91", "#9C4A14": "#FA8949",
-    "#A3341F": "#FD7C62", "#B0316E": "#FE80B4", "#D06A9C": "#FEB3D4", "#D9792E": "#FDC199"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
+    "#1F6FB2": "#77BBFD", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A4D2FD", "#3E9A95": "#6CE3DD",
+    "#41B6E6": "#C6EBFE", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
+    "#4C8F59": "#82DB93", "#6B7280": "#B1BBCE", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FFBDDA",
+    "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

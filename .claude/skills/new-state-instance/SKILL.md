@@ -235,7 +235,10 @@ loop; add the `metros.json` entry (`tag`, `landing_name`, `blurb`, `scope`,
 `python3 scripts/generate_metro_files.py --sync-fleet`; give the tag its
 column in the root `layer-concepts.json` (each row the instance has a layer
 for), because once it is live the generator fails on any id it shares with
-another live app that no row carries; add the tag to
+another live app that no row carries — and from then on every layer that
+column names must be drawn in its concept's colours from that file's `colors`
+table, which the generator also checks, so recolour them in the same PR; add
+the tag to
 `AREAS` in `scripts/build_coverage_map.py` (an outline pair, `state_outline`
 None for a single-tier instance — a `metros.json` tag in neither `AREAS` nor
 `CITY_TAGS` fails its `--check`, and a state is never a marker); every page

@@ -12112,7 +12112,7 @@ function initSFExplorer() {
     // district" would be false for a point in, say, a neighbouring state's ZIP.
     emptyNote: "No ZIP code here. This map holds only the ZIP codes in and around San Francisco, so a point beyond them gets none.",
     // dotted outline (distinct pattern from the Neighborhood layer) + different hue
-    style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 4" },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true }
     ],
@@ -12164,7 +12164,7 @@ function initSFExplorer() {
     },
     overlay: {
       load: loadSupervisorDistricts,
-      style: { color: "#8E2A22", weight: 2, fillColor: "#C0362C", fillOpacity: 0.06 }
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
     },
     query: function (point, seq) {
       return Promise.all([
@@ -12223,9 +12223,10 @@ function initSFExplorer() {
       load: loadElectionPrecincts,
       // solid thin outline + visible fill: with the supervisor district
       // dropped to outline-only, the precincts carry the interior fill.
-      // Same red family as the parent, a shade deeper so the two read as
-      // related (the Chicago ward/ward-precinct rule).
-      style: { color: "#6E1F19", weight: 1, fillColor: "#C0362C", fillOpacity: 0.12, dashArray: null }
+      // The fleet's precinct navy (layer-concepts.json `colors`), in the same
+      // blue family as the parent, a shade deeper, so the two read as related
+      // (the Chicago ward/ward-precinct rule).
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.12, dashArray: null }
     },
     query: function (point, seq) {
       return featureSetAt(loadElectionPrecincts, point).then(function (geojson) {
@@ -12359,7 +12360,7 @@ function initSFExplorer() {
     group: "geography",
     label: "Neighborhood",
     loader: loadSfNeighborhoods,
-    style: { color: "#124F63", weight: 1.5, fillColor: "#1D6F8B", fillOpacity: 0.05, dashArray: "4 3" },
+    style: { color: "#3D6B49", weight: 1.5, fillColor: "#5C8F6B", fillOpacity: 0.05, dashArray: "4 3" },
     fields: [
       { name: "nhood", label: "Neighborhood", keys: ["nhood", "name", "neighborhood"], primary: true }
     ],
@@ -12375,7 +12376,7 @@ function initSFExplorer() {
     group: "safety",
     label: "Police District",
     loader: loadPoliceDistricts,
-    style: { color: "#0B3D2E", weight: 2, fillColor: "#1B7F5A", fillOpacity: 0.05 },
+    style: { color: "#9C0B24", weight: 2, fillColor: "#C8102E", fillOpacity: 0.05 },
     fields: [
       { name: "district", label: "Police District", keys: ["district"], primary: true }
     ],
@@ -12614,9 +12615,10 @@ function initSFExplorer() {
   registerNearestPointLayer({
     id: "police-station",
     group: "safety",
-    // bay-blue marker, distinct from Fire Station's International-Orange one
-    color: "#124F63",
-    fill: "#1D6F8B",
+    // blue marker, distinct from Fire Station's red one (the fleet's colours,
+    // layer-concepts.json `colors`)
+    color: "#1B4F8C",
+    fill: "#7FA8D9",
     label: "Police Station",
     loader: loadPoliceStations,
     intro: "Nearest stations, straight-line distance:",
@@ -12652,8 +12654,8 @@ function initSFExplorer() {
   registerNearestPointLayer({
     id: "fire-station",
     group: "safety",
-    color: "#8E2A22",
-    fill: "#C0362C",
+    color: "#A3341F",
+    fill: "#E8927C",
     label: "Fire Station",
     loader: loadFireStations,
     intro: "Nearest stations, straight-line distance:",
@@ -13057,7 +13059,7 @@ function initSFExplorer() {
   var SF_SCHOOL_SITE_COUNT = 3;
   var SF_SCHOOL_CATS = ["Public", "Charter", "Private"];
   var SF_SCHOOL_CAT_META = {
-    Public:  { full: "Public",  color: "#0F6F6F" }, // the layer's own teal
+    Public:  { full: "Public",  color: "#1B7A3D" }, // the layer's own green (the fleet's school-site colour)
     Charter: { full: "Charter", color: "#A15C00" },
     Private: { full: "Private", color: "#6A3FA0" }
   };
@@ -13093,14 +13095,14 @@ function initSFExplorer() {
   registerLayer({
     id: "school-site", group: "schools",
     label: "School Location (nearest " + SF_SCHOOL_SITE_COUNT + ")",
-    color: "#0F6F6F", // legend/accent color (matches overlay.style below)
+    color: "#1B7A3D", // legend/accent color (matches overlay.style below)
     overlay: {
       load: loadSchoolSites,
       // flat base kept for moduleColor()/baseStyleFor; the per-feature styler
       // paints each dot by type and hides filtered-off types. Explicit
       // fillOpacity everywhere — dots must not inherit the polygon-oriented
       // scaled fill.
-      style: { color: "#0F6F6F", weight: 1.5, fillColor: "#4FB0A5", fillOpacity: 0.85 },
+      style: { color: "#1B7A3D", weight: 1.5, fillColor: "#63B57F", fillOpacity: 0.85 },
       styleForFeature: function (feature) {
         var cat = sfSchoolCategory(feature.properties);
         if (!schoolTypeFilter[cat]) return { opacity: 0, fillOpacity: 0 };
@@ -13677,7 +13679,7 @@ function initSFExplorer() {
     districtPrefix: "CA-",
     memberLabel: "Representative", capitolLabel: "Washington Office",
     profileLabel: "Member profile", directoryLabel: "House member directory",
-    style: { color: "#14181C", weight: 2, fillColor: "#1D6F8B", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
   });
 
   registerIlgaChamber({
@@ -15619,12 +15621,13 @@ function initSFExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#005E7C": "#4CB1DA", "#0099D8": "#9ED9FF", "#0B3D2E": "#59967F",
-    "#0B5394": "#4FA4FE", "#0F6F6F": "#52C1C0", "#124F63": "#59A4C0", "#14181C": "#696F76",
-    "#1B7F5A": "#56D09D", "#1D6F8B": "#59BEE5", "#41B6E6": "#C6EBFE", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4FB0A5": "#76F5E7", "#6A3FA0": "#BA8BFE", "#6B7280": "#B1BBCE",
-    "#6E1F19": "#D96B5E", "#7A1E5C": "#E266B5", "#8A5A00": "#E4A241", "#8C2E4A": "#F47294",
-    "#8E2A22": "#F97061", "#A15C00": "#FD9F3D", "#C0362C": "#FE988A"};
+  var DST_DARK_MAP_COLORS = { "#005E7C": "#4CB1DA", "#0099D8": "#9ED9FE", "#06375E": "#528DC6",
+    "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1B7A3D": "#58CD7A", "#1F6FB2": "#77BBFD",
+    "#2B8CC4": "#8FD1FE", "#3B8FD4": "#A4D2FD", "#3D6B49": "#7EBC8D", "#41B6E6": "#C6EBFE",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#5C8F6B": "#95D9A8", "#63B57F": "#8EFAB2",
+    "#6A3FA0": "#BA8BFE", "#6B7280": "#B1BBCE", "#7A1E5C": "#E266B4", "#88637C": "#DAA7C9",
+    "#8A5A00": "#E4A241", "#8C2E4A": "#F47294", "#9C0B24": "#FD6B6E", "#A15C00": "#FD9F3D",
+    "#A3341F": "#FE8269", "#C8102E": "#FE928F"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

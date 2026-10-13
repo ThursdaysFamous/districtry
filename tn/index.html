@@ -13041,7 +13041,7 @@ function initTennesseeExplorer() {
     label: "County Commission District",
     overlay: {
       load: loadTnCommissionDistricts,
-      style: { color: "#1B7A3D", weight: 2, fillColor: "#2E9E6B", fillOpacity: 0.06 }
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
     },
     // the same value the card's header pill shows, so hover and card cannot
     // disagree about which district a polygon is
@@ -13414,7 +13414,7 @@ function initTennesseeExplorer() {
       "(Secondary) cards name both.",
     overlay: {
       load: loadSchoolDistrictsUnified,
-      style: { color: "#1F6F4A", weight: 1.5, fillColor: "#3E9E72", fillOpacity: 0.05, dashArray: "8 3" }
+      style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05, dashArray: "8 3" }
     },
     hoverName: tnSchoolHover,
     primaryLink: tnSchoolLink,
@@ -13431,7 +13431,7 @@ function initTennesseeExplorer() {
       "District (Unified) card names it.",
     overlay: {
       load: loadSchoolDistrictsElementary,
-      style: { color: "#1F6F4A", weight: 1.5, fillColor: "#7FC4A3", fillOpacity: 0.07, dashArray: "4 2" }
+      style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.07, dashArray: "4 2" }
     },
     hoverName: tnSchoolHover,
     primaryLink: tnSchoolLink,
@@ -13450,7 +13450,7 @@ function initTennesseeExplorer() {
       "District (Unified) card names it.",
     overlay: {
       load: loadSchoolDistrictsSecondary,
-      style: { color: "#14503A", weight: 1.5, fillColor: "#2E7D5B", fillOpacity: 0.05, dashArray: "1 3" }
+      style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.05, dashArray: "1 3" }
     },
     hoverName: tnSchoolHover,
     primaryLink: tnSchoolLink,
@@ -13544,7 +13544,7 @@ function initTennesseeExplorer() {
     // is hidden and this card is never drawn.
     emptyNote: "No ZIP code here. The Census draws these areas around where mail is delivered, so ground with no delivery addresses can sit outside every one.",
     // dotted outline (a distinct pattern from City's tight dots) + its own hue
-    style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05, dashArray: "1 4" },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true },
       { label: "About this boundary",
@@ -15683,11 +15683,12 @@ function initTennesseeExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#0B5394": "#4CA1FB", "#14181C": "#696F76", "#14503A": "#5AA485",
-    "#1B4F8C": "#599DF2", "#1B7A3D": "#53C976", "#1F6F4A": "#5ABE8B", "#2E7D5B": "#63C99A",
-    "#2E9E6B": "#54E4A0", "#3E9E72": "#65E3A8", "#41B6E6": "#B3E6FF", "#444B54": "#8F99A6",
-    "#4A2E8C": "#9879FA", "#4B2E83": "#9C79EE", "#6B7280": "#ACB6C9", "#7FC4A3": "#A0FBD0",
-    "#8C2E4A": "#F06F91", "#A3341F": "#FD7C62", "#B0316E": "#FE80B4", "#D06A9C": "#FEB3D4"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6FB2": "#77BBFD",
+    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A4D2FD", "#41B6E6": "#C6EBFE", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB93", "#5E3A8C": "#B283F5",
+    "#6B7280": "#B1BBCE", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FFBDDA",
+    "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

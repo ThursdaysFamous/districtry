@@ -1479,6 +1479,148 @@ def load_layer_concepts(root):
     return out
 
 
+COLOR_RE = re.compile(r"^#[0-9A-F]{6}$")
+# The line colour is also the card's small coloured label (`.card-id-pill`,
+# 13px semibold, on a 9% tint of itself over the white card), so it is held to
+# WCAG's 4.5:1 for small text there, measured exactly as the browser paints it.
+PILL_TINT, PILL_MIN = 0.09, 4.5
+
+
+def _relative_luminance(hexs):
+    def ch(i):
+        c = int(hexs[i:i + 2], 16) / 255.0
+        return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    return 0.2126 * ch(1) + 0.7152 * ch(3) + 0.0722 * ch(5)
+
+
+def pill_contrast(hexs):
+    """Contrast of a line colour as the card pill's text against its own tint."""
+    ground = "#%02X%02X%02X" % tuple(
+        int(round(int(hexs[i:i + 2], 16) * PILL_TINT + 255 * (1 - PILL_TINT))) for i in (1, 3, 5))
+    a, b = sorted((_relative_luminance(hexs), _relative_luminance(ground)), reverse=True)
+    return (a + 0.05) / (b + 0.05)
+
+
+def load_concept_colors(root, concepts):
+    """concept -> (line, fill) from layer-concepts.json's `colors`, checked:
+    every concept has both, nothing else is listed, no two concepts share a
+    line colour, and every line colour reads at PILL_MIN as the card pill."""
+    with open(os.path.join(root, LAYER_CONCEPTS_FILE), encoding="utf-8") as f:
+        table = json.load(f).get("colors")
+    if not isinstance(table, dict):
+        fail("%s: `colors` must be an object of concept -> {line, fill}" % LAYER_CONCEPTS_FILE)
+    problems, out, by_line = [], {}, {}
+    for concept in concepts:
+        entry = table.get(concept)
+        if not isinstance(entry, dict) or set(entry) != {"line", "fill"}:
+            problems.append("%s: needs exactly {\"line\": \"#RRGGBB\", \"fill\": \"#RRGGBB\"}" % concept)
+            continue
+        line, fill = entry["line"], entry["fill"]
+        if not (isinstance(line, str) and COLOR_RE.match(line) and isinstance(fill, str) and COLOR_RE.match(fill)):
+            problems.append("%s: line and fill must be upper-case #RRGGBB" % concept)
+            continue
+        if line in by_line:
+            problems.append("%s and %s share the line colour %s — two kinds of layer drawn alike "
+                            "cannot be told apart" % (by_line[line], concept, line))
+        by_line.setdefault(line, concept)
+        ratio = pill_contrast(line)
+        if ratio < PILL_MIN:
+            problems.append("%s: %s reads at %.2f:1 as the card's coloured label, under %.1f:1 — "
+                            "darken it" % (concept, line, ratio, PILL_MIN))
+        out[concept] = (line, fill)
+    for extra in sorted(set(table) - set(concepts)):
+        problems.append("%s has colours and no row in `concepts`" % extra)
+    if problems:
+        fail("%s `colors`:\n  %s" % (LAYER_CONCEPTS_FILE, "\n  ".join(problems)))
+    return out
+
+
+def _skip_js_token(text, i):
+    """If text[i] opens a string or a comment, the index just past it; else None.
+    Enough JavaScript to find an object literal's braces in this repo's ES5."""
+    c = text[i]
+    if c in "\"'`":
+        j = i + 1
+        while j < len(text):
+            if text[j] == "\\":
+                j += 2
+                continue
+            if text[j] == c or (c != "`" and text[j] == "\n"):
+                return j + 1
+            j += 1
+        return j
+    if text.startswith("//", i):
+        j = text.find("\n", i)
+        return len(text) if j == -1 else j + 1
+    if text.startswith("/*", i):
+        j = text.find("*/", i + 2)
+        return len(text) if j == -1 else j + 2
+    return None
+
+
+def layer_definition(text, layer_id):
+    """The text of the object literal that registers `layer_id` — the innermost
+    { ... } around its first `id: "<layer_id>"` — or None. Measured against the
+    browser on 2026-10-13: for all 261 layers of the thirteen live apps this is
+    the registration, and its `color:` is the colour the card shows."""
+    m = re.search(r'\bid:\s*"%s"' % re.escape(layer_id), text)
+    if not m:
+        return None
+    i = text.rfind("\n", 0, max(0, m.start() - 6000)) + 1
+    stack = []
+    while i < m.start():
+        s = _skip_js_token(text, i)
+        if s is not None:
+            i = s
+            continue
+        if text[i] == "{":
+            stack.append(i)
+        elif text[i] == "}" and stack:
+            stack.pop()
+        i += 1
+    if not stack:
+        return None
+    depth, i = 0, stack[-1]
+    while i < len(text):
+        s = _skip_js_token(text, i)
+        if s is not None:
+            i = s
+            continue
+        if text[i] == "{":
+            depth += 1
+        elif text[i] == "}":
+            depth -= 1
+            if depth == 0:
+                return text[stack[-1]:i + 1]
+        i += 1
+    return None
+
+
+def check_concept_colors(app_text, instance, concepts, colors):
+    """Every layer of this app that answers a concept draws in that concept's
+    colours: each `color:` literal in its registration is the concept's line and
+    each `fillColor:`/`fill:` literal its fill. A layer under two concepts takes
+    the first in file order. Returns problems."""
+    owner = {}
+    for concept, cols in concepts.items():
+        for lid in cols.get(instance, []):
+            owner.setdefault(lid, concept)
+    problems = []
+    for lid, concept in owner.items():
+        line, fill = colors[concept]
+        body = layer_definition(app_text, lid)
+        if body is None:
+            problems.append("%s: cannot find the object that registers it" % lid)
+            continue
+        lines = {c.upper() for c in re.findall(r'\bcolor:\s*"(#[0-9A-Fa-f]{6})"', body)}
+        fills = {c.upper() for c in re.findall(r'\b(?:fillColor|fill):\s*"(#[0-9A-Fa-f]{6})"', body)}
+        if lines != {line} or fills != {fill}:
+            problems.append("%s draws line %s fill %s; %s is line %s fill %s"
+                            % (lid, ", ".join(sorted(lines)) or "(none)", ", ".join(sorted(fills)) or "(none)",
+                               concept, line, fill))
+    return problems
+
+
 def check_shared_ids_carried(root, concepts, schema):
     """A layer id two LIVE apps both register is one a reader can switch on in
     either, and moving between them should keep it on — so it must sit under a
@@ -1607,6 +1749,7 @@ def main():
                  % (LAYER_CODES_FILE, "\n  ".join(history)))
 
     layer_concepts = load_layer_concepts(args.root)
+    concept_colors = load_concept_colors(args.root, layer_concepts)
     unshared = check_shared_ids_carried(args.root, layer_concepts, schema)
     if unshared:
         fail("%s — a layer two live apps share would not travel between them:\n  %s"
@@ -1632,6 +1775,13 @@ def main():
                  % (inst["worksheet"], LAYER_CONCEPTS_FILE, instance, ", ".join(unknown_ids)))
         worksheet["_layer_concepts"] = [(c, cols[instance]) for c, cols in layer_concepts.items()
                                         if instance in cols]
+        app_path = os.path.join(args.root, inst["app"], "index.html")
+        with open(app_path, encoding="utf-8") as f:
+            off_colour = check_concept_colors(f.read(), instance, layer_concepts, concept_colors)
+        if off_colour:
+            fail("%s: a layer is not drawn in its concept's colours from %s `colors` — set "
+                 "its `color:` and `fillColor:` (or `fill:`) to them:\n  %s"
+                 % (app_path, LAYER_CONCEPTS_FILE, "\n  ".join(off_colour)))
         # The apple-touch-icon href is the one generated brand value naming a
         # file on disk rather than carrying its own bytes (the favicon is a
         # data: URI). A tag pointing at a missing PNG is invisible in every
