@@ -7,6 +7,34 @@
     "refuses to run if atpoint_sites or layer_ids have moved since this was written."
   ],
   "apps": {
+    "ar": {
+      "layers_sending_point": 3,
+      "layers": [
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_holding_hook_but_silent": [],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 2,
+      "layer_ids": [
+        "ar-house",
+        "ar-senate",
+        "county",
+        "fire-station",
+        "municipality",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
     "ca": {
       "layers_sending_point": 0,
       "layers": [],
