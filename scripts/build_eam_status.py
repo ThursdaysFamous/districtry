@@ -1436,9 +1436,11 @@ ANSWERS = {
         "local-government": depth("ward"),
         "school-district-boundaries": answers("school-district-unified", "school-district-elementary", "school-district-secondary"),
         # Illinois elects its circuit judges from subcircuits in nine counties.
-        # Drawn from the Census, which treats Chicago as one subdivision; Cook
-        # County's own map draws eight townships inside the city.
-        "subdivision-boundaries": answers("township"),
+        # Open (Adam, 2026-10-14): the township layer is drawn from the Census,
+        # which treats Chicago as one subdivision, "Chicago city", while Cook
+        # County's own map draws eight townships inside the city. It passes
+        # once those eight are drawn.
+        "subdivision-boundaries": OPEN,
         "courts-by-district": answers("judicial-subcircuit"),
         # Illinois townships are limited purpose, which is why they are NOT in
         # the 25,000 city tier above; they are owed here, and the app draws them
