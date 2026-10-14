@@ -36,8 +36,9 @@ per-app measurement, so the two cannot disagree.
 
 districtry's own service (`services/link-lookup/main.ts`, on Deno
 Deploy). It receives **a short Google Maps or Apple Maps link**, and
-only when a reader pastes one, and answers with the full link it leads
-to. `build_privacy_page.py` names it as a recipient.
+only when a reader pastes one or shares one into the installed app,
+and answers with the full link it leads to. `build_privacy_page.py`
+names it as a recipient.
 
 ### Basemap tiles — 3 host(s)
 
