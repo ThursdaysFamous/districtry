@@ -184,6 +184,22 @@
     return biggest ? ringToLatLng(biggest) : null;
   }
 
+  // Every ring of the coverage outline (GeoJSON [lng,lat]) as a closed
+  // Leaflet line, for the edge drawn along it. All of them, because each is a
+  // place the wash stops: measured 2026-10-13, the ten outlines this draws
+  // hold one ring each except San Francisco's (the city and Treasure Island)
+  // and Kentucky's (the state and the Kentucky Bend), both covered ground.
+  function outlineEdgeLines(rings) {
+    var out = [];
+    for (var i = 0; i < (rings || []).length; i++) {
+      var r = rings[i];
+      if (!r || r.length < 4) continue;
+      var line = ringToLatLng(r);
+      out.push(line.concat([line[0]]));
+    }
+    return out;
+  }
+
   /* ---------- the coverage key ----------
    * A <details> rather than a <div>, and that is a layout decision rather
    * than a stylistic one: on desktop it is open and reads as a legend card,
@@ -351,6 +367,34 @@
         // Read by styleDistrictryCoverage: with no region ring to sit inside,
         // one band carries the whole claim and is drawn lighter for it.
         c.fallbackMask = true;
+        /* AND THE SAME PURPLE EDGE, around the coverage itself. Until
+           2026-10-13 only the three apps that pass a region (Illinois, New
+           York, Wisconsin) drew the glowing state line, so the nine whose
+           coverage IS their state, and San Francisco, whose coverage is its
+           city, showed the wash with no line along it, and the operator
+           noticed the difference. Their edge is the coverage outline, so the
+           line is drawn there: exactly where the wash stops.
+           Only for an app that DECLARES no region. One that declares a region
+           whose file failed to load keeps the two-band wash with no line, as
+           before: its line means the state line, and the coverage ring is
+           not that. So `dst-glow` still appears in a region-declaring app
+           only once the region band has painted, which is what Illinois's and
+           New York's smoke tests wait on. Unlike the region's line, which
+           keeps only the largest ring so a state's lake islands get no glow of
+           their own, this one goes round every ring: a separate piece of
+           coverage (Treasure Island, the Kentucky Bend) is ground the app
+           answers for, and the line marks where that stops. */
+        var edges = typeof loadRegionGeometry === "function" ? [] : outlineEdgeLines(outline);
+        if (edges.length) {
+          c.glow = L.polyline(edges, {
+            pane: "scope-mask", className: "dst-glow",
+            weight: 9, opacity: 0, interactive: false
+          }).addTo(map);
+          c.stateLine = L.polyline(edges, {
+            pane: "scope-mask", weight: 1.5, opacity: 0.9, interactive: false
+          }).addTo(map);
+          if (ck && ck.edge) bands.push({ swatch: "dml-glow", label: ck.edge });
+        }
       }
       if (ck) bands.push({ swatch: "dml-sw dml-out", label: ck.outside, rule: bands.length > 0 });
 

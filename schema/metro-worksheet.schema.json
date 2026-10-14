@@ -547,6 +547,10 @@
           "type": "string",
           "description": "Names the washed band OUTSIDE this instance's coverage, in the reader's terms (e.g. \"Outside Illinois\", \"Outside San Francisco\"). NOT derivable from metro_name: Chicago's metro_name is \"Chicago\" while its coverage is 89 Illinois counties, so \"Outside Chicago\" would be plainly wrong."
         },
+        "edge": {
+          "type": "string",
+          "description": "Names the purple line drawn around the coverage in an instance that declares NO `region` (e.g. \"Iowa\", \"San Francisco\") — the same line `region.edge` names where there is a region. Ignored when `region` is present, because the line then follows the region instead."
+        },
         "region": {
           "type": "object",
           "additionalProperties": false,

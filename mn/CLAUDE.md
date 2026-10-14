@@ -244,7 +244,9 @@ were the only ones. **This instance's own negative point does NOT yet use that p
 that is a measured choice rather than an oversight: Cass County, North Dakota is outside every
 live instance, so `placeOwner` finds no owner and the app selects the point locally. It breaks
 the day a Dakotas instance ships, silently, as a timeout waiting for a masthead button —
-recorded in `mn/WATCH.md` as a Dakotas blocker.
+recorded in `mn/WATCH.md` as a Dakotas blocker. **That blocker closed on 2026-10-13**: the
+timeouts came from the map switching apps when its centre crossed into a sibling's state, and
+panning no longer does that, so a point the app selects itself stays here whoever covers it.
 
 **Sandboxed environments (Claude Code web):** the headless browser cannot reach the Leaflet
 CDN. The repo root's `.claude/settings.json` SessionStart hook runs `scripts/vendor_leaflet.sh`,

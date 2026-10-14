@@ -40,11 +40,13 @@
 "party": "Democratic/Working Families",
 "districtOffice": [
 "Room 3B-41-42, Hauppauge State Office Building 250 Veterans Highway, Hauppauge, NY 11788",
-"Phone: 631-341-7111"
+"Phone: 631-341-7111",
+"Fax: 631-382-9861"
 ],
 "capitolOffice": [
 "Room 903, Legislative Office Building, Albany, NY 12247",
-"Phone: 518-455-2765"
+"Phone: 518-455-2765",
+"Fax: 518-426-6925"
 ]
 },
 "5": {
@@ -101,12 +103,14 @@
 "name": "Patricia Canzoneri-Fitzpatrick",
 "party": "Republican/Conservative",
 "districtOffice": [
-"265 E. Merrick Road Suite 101, Valley Stream, NY 11580",
-"Phone: 516-766-8383"
+"42 Broadway Suite 3B, Lynbrook, NY 11563",
+"Phone: 516-766-8383",
+"Fax: 516-766-8011"
 ],
 "capitolOffice": [
 "Room 415, Legislative Office Building, Albany, NY 12247",
-"Phone: 518-455-2400"
+"Phone: 518-455-2400",
+"Fax: 518-426-6780"
 ]
 },
 "10": {
@@ -146,7 +150,8 @@
 "Albany, NY 12247",
 "Phone: 518-455-3486",
 "Fax: 518-426-6929"
-]
+],
+"preservedSince": "2026-10-12"
 },
 "13": {
 "name": "Jessica Ramos",
@@ -566,7 +571,7 @@
 "name": "Patricia Fahy",
 "party": "Democratic",
 "districtOffice": [
-"Amsterdam City Hall 61 Church St., Amsterdam, NY 12010",
+"Amsterdam City Hall 61 Church St., Third Floor, Amsterdam, NY 12010",
 "Phone: 518-842-2159"
 ],
 "capitolOffice": [
@@ -594,6 +599,7 @@
 "party": "Democratic/Working Families",
 "districtOffice": [
 "144 Genesee St., Suite 103, Auburn, NY 13021",
+"Phone: 315-478-8745",
 "Also: 333 E. Washington St. Suite 805, Syracuse, NY 13202 · Phone: 315-478-8745"
 ],
 "capitolOffice": [

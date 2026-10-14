@@ -15,8 +15,9 @@ regions, marked like the engine's fences but generator-owned:
 
 Targets (region name -> file):
     metro-config      -> index.html   (interior of the METRO config fence; it also
-                                       carries LAYER_CODES, read from the
-                                       fleet-wide layer-codes.json)
+                                       carries LAYER_CODES and LAYER_CONCEPTS, read
+                                       from the fleet-wide layer-codes.json and
+                                       layer-concepts.json)
     layer-area-rank   -> index.html   (the LAYER_AREA_RANK array)
     sw-metro-config   -> sw.js        (CACHE_NAME + shell/geometry/roster lists)
     validator-config  -> scripts/validate_index.py (floors + expected ids)
@@ -150,6 +151,7 @@ def render_metro_config(w):
     a("  // Permalink sanity gate: the *greater* metro area (wider than METRO_BBOX).")
     a("  var PERMALINK_GATE = %s;" % bbox_js(w["permalink_gate"], ["minLat", "maxLat", "minLng", "maxLng"]))
     L.extend(render_layer_codes(w))
+    L.extend(render_layer_concepts(w))
     # Emitted ONLY when the worksheet declares it. A fork whose layers are all
     # city-scoped keeps a byte-identical metro-config region, which is what
     # makes this safe to ship through the engine release: the bump workflow
@@ -223,6 +225,8 @@ def render_metro_config(w):
     if "coverage_key" in w:
         ck = w["coverage_key"]
         fields = ["outside: %s" % js_str(ck["outside"])]
+        if "edge" in ck:
+            fields.append("edge: %s" % js_str(ck["edge"]))
         if "region" in ck:
             r = ck["region"]
             rf = ["edge: %s" % js_str(r["edge"]), "label: %s" % js_str(r["label"])]
@@ -234,17 +238,17 @@ def render_metro_config(w):
         a("  // an instance whose full coverage is a proper subset of a wider region its")
         a("  // statewide layers still answer in; it also requires that instance's boot")
         a("  // to hand drawOutOfScopeMask() the region geometry, because the key names")
-        a("  // only the bands that were actually drawn.")
+        a("  // only the bands that were actually drawn. `edge` names the purple line")
+        a("  // around the coverage in an instance with no region.")
         a("  var COVERAGE_KEY = { %s };" % ", ".join(fields))
     a("  /* Sibling District Explorer deployments — one canonical list shared by every")
     a("   * metro fork. When a new metro launches, add its entry to every fork's")
     a("   * worksheet and regenerate (Conversion 3 will source this list from the")
     a("   * fleet manifest instead). THIS_METRO drops the fork's own entry so the")
     a("   * list is identical in every fork. `bbox` (greater metro area, mirroring")
-    a("   * that fork's PERMALINK_GATE) and `emoji` feed the sibling-metro portal")
-    a("   * easter egg (ENGINE metro-portal): wander the map into a sibling's bbox —")
-    a("   * or search/geolocate a point inside one — and the app offers to hand you")
-    a("   * off to that fork's explorer. */")
+    a("   * that fork's PERMALINK_GATE) and `emoji` feed the sibling hand-off")
+    a("   * (ENGINE metro-portal): click, search or geolocate a point a sibling")
+    a("   * answers for and the app sends you to that sibling, with your layers. */")
     a("  var METRO_EXPLORERS = [")
     for i, e in enumerate(w["metro_explorers"]):
         tail = "," if i != len(w["metro_explorers"]) - 1 else ""
@@ -292,6 +296,31 @@ def render_layer_codes(w):
     line = "  var LAYER_CODES = {"
     for i, (lid, code) in enumerate(pairs):
         item = "%s: %s" % (js_str(lid), js_str(code)) + ("," if i != len(pairs) - 1 else "")
+        if len(line) + 1 + len(item) > 96:
+            a(line)
+            line = "    " + item
+        else:
+            line += " " + item
+    a(line + " };")
+    return L
+
+
+def render_layer_concepts(w):
+    """The LAYER_CONCEPTS table for one instance: concept -> its own layer ids,
+    in layer-concepts.json's row order. Always emitted, empty when the instance
+    answers no concept, so the engine never has to tell a missing table from an
+    empty one."""
+    rows = w["_layer_concepts"]
+    L = []
+    a = L.append
+    a("  // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a")
+    a("  // reader moving to a sibling app takes the concepts of the layers they have")
+    a("  // on (`carry=`), and the app they arrive in turns on its own layers for")
+    a("  // each. ENGINE metro-portal writes it and ENGINE permalink reads it.")
+    line = "  var LAYER_CONCEPTS = {"
+    for i, (concept, ids) in enumerate(rows):
+        item = "%s: [%s]" % (js_str(concept), ", ".join(js_str(x) for x in ids)) \
+            + ("," if i != len(rows) - 1 else "")
         if len(line) + 1 + len(item) > 96:
             a(line)
             line = "    " + item
@@ -1056,6 +1085,7 @@ INSTANCES = {
     "ok":  {"app": "ok",  "scripts": "ok/scripts",  "docs": "ok",  "worksheet": "ok/metro-worksheet.json"},
     "sc":  {"app": "sc",  "scripts": "sc/scripts",  "docs": "sc",  "worksheet": "sc/metro-worksheet.json"},
     "tn":  {"app": "tn",  "scripts": "tn/scripts",  "docs": "tn",  "worksheet": "tn/metro-worksheet.json"},
+    "ar":  {"app": "ar",  "scripts": "ar/scripts",  "docs": "ar",  "worksheet": "ar/metro-worksheet.json"},
 }
 
 
@@ -1400,6 +1430,325 @@ def check_layer_code_history(root, codes):
     return problems
 
 
+LAYER_CONCEPTS_FILE = "layer-concepts.json"
+CONCEPT_RE = re.compile(r"^[a-z][a-z0-9-]*$")
+
+
+def load_layer_concepts(root):
+    """The fleet's concept -> {instance tag: [layer ids]} table, shape-checked.
+
+    Values are normalised to lists (a row may name one id as a bare string).
+    What the ids MEAN is checked per instance in main(), against the worksheet
+    that registers them."""
+    path = os.path.join(root, LAYER_CONCEPTS_FILE)
+    try:
+        with open(path, encoding="utf-8") as f:
+            doc = json.load(f)
+    except (OSError, ValueError) as e:
+        fail("cannot read %s: %s" % (path, e))
+    rows = doc.get("concepts") if isinstance(doc, dict) else None
+    if not isinstance(rows, dict) or not rows:
+        fail("%s: `concepts` must be a non-empty object of concept -> {tag: id}" % LAYER_CONCEPTS_FILE)
+    problems, out = [], {}
+    for concept, cols in rows.items():
+        if not CONCEPT_RE.match(concept):
+            problems.append("concept %r is not lowercase letters, digits and hyphens" % concept)
+            continue
+        if not isinstance(cols, dict):
+            problems.append("%s: must map instance tags to layer ids" % concept)
+            continue
+        # One app alone carries nothing anywhere: a row like that reads as a
+        # promise that the layer travels, and it never can.
+        if len(cols) < 2:
+            problems.append("%s: only %s answers it, so it carries nothing — drop the row "
+                            "until a second app has the same thing" % (concept, ", ".join(cols) or "no app"))
+        norm = {}
+        for tag, ids in cols.items():
+            if tag not in INSTANCES:
+                problems.append("%s: %r is not an instance (known: %s)"
+                                % (concept, tag, ", ".join(sorted(INSTANCES))))
+                continue
+            ids = [ids] if isinstance(ids, str) else ids
+            if (not isinstance(ids, list) or not ids or len(set(ids)) != len(ids)
+                    or not all(isinstance(x, str) and x for x in ids)):
+                problems.append("%s/%s: must be a layer id or a list of distinct ids" % (concept, tag))
+                continue
+            norm[tag] = ids
+        out[concept] = norm
+    if problems:
+        fail("%s:\n  %s" % (LAYER_CONCEPTS_FILE, "\n  ".join(problems)))
+    return out
+
+
+COLOR_RE = re.compile(r"^#[0-9A-F]{6}$")
+# The line colour is also the card's small coloured label (`.card-id-pill`,
+# 13px semibold, on a 9% tint of itself over the white card), so it is held to
+# WCAG's 4.5:1 for small text there, measured exactly as the browser paints it.
+PILL_TINT, PILL_MIN = 0.09, 4.5
+
+
+def _relative_luminance(hexs):
+    def ch(i):
+        c = int(hexs[i:i + 2], 16) / 255.0
+        return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    return 0.2126 * ch(1) + 0.7152 * ch(3) + 0.0722 * ch(5)
+
+
+def pill_contrast(hexs):
+    """Contrast of a line colour as the card pill's text against its own tint."""
+    ground = "#%02X%02X%02X" % tuple(
+        int(round(int(hexs[i:i + 2], 16) * PILL_TINT + 255 * (1 - PILL_TINT))) for i in (1, 3, 5))
+    a, b = sorted((_relative_luminance(hexs), _relative_luminance(ground)), reverse=True)
+    return (a + 0.05) / (b + 0.05)
+
+
+def load_concept_colors(root, concepts):
+    """concept -> (line, fill) from layer-concepts.json's `colors`, checked:
+    every concept has both, nothing else is listed, no two concepts share a
+    line colour, and every line colour reads at PILL_MIN as the card pill."""
+    with open(os.path.join(root, LAYER_CONCEPTS_FILE), encoding="utf-8") as f:
+        table = json.load(f).get("colors")
+    if not isinstance(table, dict):
+        fail("%s: `colors` must be an object of concept -> {line, fill}" % LAYER_CONCEPTS_FILE)
+    problems, out, by_line = [], {}, {}
+    for concept in concepts:
+        entry = table.get(concept)
+        if not isinstance(entry, dict) or set(entry) != {"line", "fill"}:
+            problems.append("%s: needs exactly {\"line\": \"#RRGGBB\", \"fill\": \"#RRGGBB\"}" % concept)
+            continue
+        line, fill = entry["line"], entry["fill"]
+        if not (isinstance(line, str) and COLOR_RE.match(line) and isinstance(fill, str) and COLOR_RE.match(fill)):
+            problems.append("%s: line and fill must be upper-case #RRGGBB" % concept)
+            continue
+        if line in by_line:
+            problems.append("%s and %s share the line colour %s — two kinds of layer drawn alike "
+                            "cannot be told apart" % (by_line[line], concept, line))
+        by_line.setdefault(line, concept)
+        ratio = pill_contrast(line)
+        if ratio < PILL_MIN:
+            problems.append("%s: %s reads at %.2f:1 as the card's coloured label, under %.1f:1 — "
+                            "darken it" % (concept, line, ratio, PILL_MIN))
+        out[concept] = (line, fill)
+    for extra in sorted(set(table) - set(concepts)):
+        problems.append("%s has colours and no row in `concepts`" % extra)
+    if problems:
+        fail("%s `colors`:\n  %s" % (LAYER_CONCEPTS_FILE, "\n  ".join(problems)))
+    return out
+
+
+def _skip_js_token(text, i):
+    """If text[i] opens a string or a comment, the index just past it; else None.
+    Enough JavaScript to find an object literal's braces in this repo's ES5."""
+    c = text[i]
+    if c in "\"'`":
+        j = i + 1
+        while j < len(text):
+            if text[j] == "\\":
+                j += 2
+                continue
+            if text[j] == c or (c != "`" and text[j] == "\n"):
+                return j + 1
+            j += 1
+        return j
+    if text.startswith("//", i):
+        j = text.find("\n", i)
+        return len(text) if j == -1 else j + 1
+    if text.startswith("/*", i):
+        j = text.find("*/", i + 2)
+        return len(text) if j == -1 else j + 2
+    return None
+
+
+def layer_definition(text, layer_id):
+    """The text of the object literal that registers `layer_id` — the innermost
+    { ... } around its first `id: "<layer_id>"` — or None. Measured against the
+    browser on 2026-10-13: for all 261 layers of the thirteen live apps this is
+    the registration, and its `color:` is the colour the card shows."""
+    m = re.search(r'\bid:\s*"%s"' % re.escape(layer_id), text)
+    if not m:
+        return None
+    i = text.rfind("\n", 0, max(0, m.start() - 6000)) + 1
+    stack = []
+    while i < m.start():
+        s = _skip_js_token(text, i)
+        if s is not None:
+            i = s
+            continue
+        if text[i] == "{":
+            stack.append(i)
+        elif text[i] == "}" and stack:
+            stack.pop()
+        i += 1
+    if not stack:
+        return None
+    depth, i = 0, stack[-1]
+    while i < len(text):
+        s = _skip_js_token(text, i)
+        if s is not None:
+            i = s
+            continue
+        if text[i] == "{":
+            depth += 1
+        elif text[i] == "}":
+            depth -= 1
+            if depth == 0:
+                return text[stack[-1]:i + 1]
+        i += 1
+    return None
+
+
+def check_concept_colors(app_text, instance, concepts, colors):
+    """Every layer of this app that answers a concept draws in that concept's
+    colours: each `color:` literal in its registration is the concept's line and
+    each `fillColor:`/`fill:` literal its fill. A layer under two concepts takes
+    the first in file order. Returns problems."""
+    owner = {}
+    for concept, cols in concepts.items():
+        for lid in cols.get(instance, []):
+            owner.setdefault(lid, concept)
+    problems = []
+    for lid, concept in owner.items():
+        line, fill = colors[concept]
+        body = layer_definition(app_text, lid)
+        if body is None:
+            problems.append("%s: cannot find the object that registers it" % lid)
+            continue
+        lines = {c.upper() for c in re.findall(r'\bcolor:\s*"(#[0-9A-Fa-f]{6})"', body)}
+        fills = {c.upper() for c in re.findall(r'\b(?:fillColor|fill):\s*"(#[0-9A-Fa-f]{6})"', body)}
+        if lines != {line} or fills != {fill}:
+            problems.append("%s draws line %s fill %s; %s is line %s fill %s"
+                            % (lid, ", ".join(sorted(lines)) or "(none)", ", ".join(sorted(fills)) or "(none)",
+                               concept, line, fill))
+    return problems
+
+
+WEIGHT_LIT = re.compile(r'(?<![\w.])weight\s*:\s*([^,}\s]+)')
+DASH_LIT = re.compile(r'(?<![\w.])dashArray\s*:\s*("[^"]*"|[^,}\s]+)')
+ENGINE_FENCE = re.compile(r'/\* ==== ENGINE:BEGIN ([\w-]+) ==== \*/.*?/\* ==== ENGINE:END \1 ==== \*/', re.S)
+
+
+def load_concept_lines(root, concepts):
+    """concept -> line width in pixels, or None, from layer-concepts.json's
+    `lines`, checked: every concept has an entry and nothing else is listed; an
+    entry is null (a concept drawn as map pins, which keeps each app's own) or
+    {"weight": a positive number}."""
+    with open(os.path.join(root, LAYER_CONCEPTS_FILE), encoding="utf-8") as f:
+        table = json.load(f).get("lines")
+    if not isinstance(table, dict):
+        fail("%s: `lines` must be an object of concept -> {weight} or null" % LAYER_CONCEPTS_FILE)
+    problems, out = [], {}
+    for concept in concepts:
+        if concept not in table:
+            problems.append("%s: needs a line width, or null if its layers are map pins" % concept)
+            continue
+        entry = table[concept]
+        if entry is None:
+            out[concept] = None
+            continue
+        if not isinstance(entry, dict) or set(entry) != {"weight"}:
+            problems.append("%s: needs exactly {\"weight\": n}" % concept)
+            continue
+        weight = entry["weight"]
+        if isinstance(weight, bool) or not isinstance(weight, (int, float)) or weight <= 0:
+            problems.append("%s: weight must be a positive number of pixels" % concept)
+            continue
+        out[concept] = float(weight)
+    for extra in sorted(set(table) - set(concepts)):
+        problems.append("%s has a line width and no row in `concepts`" % extra)
+    if problems:
+        fail("%s `lines`:\n  %s" % (LAYER_CONCEPTS_FILE, "\n  ".join(problems)))
+    return out
+
+
+def check_concept_lines(app_text, instance, concepts, lines):
+    """Every layer of this app that answers a concept with a line width draws
+    with it: each `weight:` literal in its registration is the concept's width.
+    A layer under two concepts takes the first in file order, as its colours
+    do. Returns problems."""
+    owner = {}
+    for concept, cols in concepts.items():
+        for lid in cols.get(instance, []):
+            owner.setdefault(lid, concept)
+    problems = []
+    for lid, concept in owner.items():
+        if lines[concept] is None:
+            continue
+        body = layer_definition(app_text, lid)
+        if body is None:
+            problems.append("%s: cannot find the object that registers it" % lid)
+            continue
+        weights = set()
+        for raw in WEIGHT_LIT.findall(body):
+            try:
+                weights.add("%g" % float(raw))
+            except ValueError:
+                weights.add(raw)
+        if weights != {"%g" % lines[concept]}:
+            problems.append("%s draws weight %s; %s is weight %g"
+                            % (lid, ", ".join(sorted(weights)) or "(none)", concept, lines[concept]))
+    return problems
+
+
+def check_no_dashed_layers(app_text):
+    """No layer is drawn dashed by an app's own code, on the operator's rule of
+    2026-10-13: "The solid lines are for the district the selected point falls
+    under. The dashed lines are only for the comparison tool." A dash on the map
+    means a district crossing the edge of the one pinned for comparison (engine
+    `relationship-pinning`), so any `dashArray:` other than null outside the
+    ENGINE fences is refused, whether or not its layer is in a concept. A match
+    after `//` on its line, or on a line starting with `*`, is a comment and is
+    skipped. Returns problems."""
+    fences = [(m.start(), m.end()) for m in ENGINE_FENCE.finditer(app_text)]
+    problems = []
+    for m in DASH_LIT.finditer(app_text):
+        if m.group(1) == "null" or any(a <= m.start() < b for a, b in fences):
+            continue
+        ls = app_text.rfind("\n", 0, m.start()) + 1
+        head = app_text[ls:m.start()]
+        if "//" in head or head.lstrip().startswith("*"):
+            continue
+        line_no = app_text.count("\n", 0, m.start()) + 1
+        problems.append("line %d: %s" % (line_no, app_text[ls:app_text.find("\n", m.end())].strip()[:120]))
+    return problems
+
+
+def check_shared_ids_carried(root, concepts, schema):
+    """A layer id two LIVE apps both register is one a reader can switch on in
+    either, and moving between them should keep it on — so it must sit under a
+    concept in each, or the hand-off silently drops it. Matching ids are not
+    assumed to mean the same thing (Illinois's `ward` and Wisconsin's do not),
+    which is why this asks for a row rather than carrying by id. A dark
+    instance is skipped: nobody can be sent to it, and its go-live is where
+    its column gets filled. Returns problems."""
+    try:
+        from validate_instance_registration import dark_instances
+        dark = dark_instances()
+    except ImportError:  # pragma: no cover — the module ships beside this one
+        dark = set()
+    live = [t for t in sorted(INSTANCES) if t not in dark]
+    owners = {}
+    for tag in live:
+        ws_path = os.path.join(root, INSTANCES[tag]["worksheet"])
+        try:
+            with open(ws_path, encoding="utf-8") as f:
+                ws = json.load(f)
+        except (OSError, ValueError):
+            continue  # load_worksheet reports an unreadable worksheet itself
+        for l in ws.get("layers", []):
+            owners.setdefault(l["id"], []).append(tag)
+    carried = {(tag, lid) for cols in concepts.values() for tag, ids in cols.items() for lid in ids}
+    problems = []
+    for lid, tags in sorted(owners.items()):
+        if len(tags) < 2:
+            continue
+        missing = [t for t in tags if (t, lid) not in carried]
+        if missing:
+            problems.append("`%s` is registered by %s but no row in %s carries it for %s — add "
+                            "it under the concept it answers (or a new row)"
+                            % (lid, ", ".join(tags), LAYER_CONCEPTS_FILE, ", ".join(missing)))
+    return problems
+
+
 def load_worksheet(ws_path, schema):
     """Read, schema-validate and sanity-check one instance's worksheet."""
     try:
@@ -1490,6 +1839,14 @@ def main():
             fail("%s — a shipped layer code changed or vanished:\n  %s"
                  % (LAYER_CODES_FILE, "\n  ".join(history)))
 
+    layer_concepts = load_layer_concepts(args.root)
+    concept_colors = load_concept_colors(args.root, layer_concepts)
+    concept_lines = load_concept_lines(args.root, layer_concepts)
+    unshared = check_shared_ids_carried(args.root, layer_concepts, schema)
+    if unshared:
+        fail("%s — a layer two live apps share would not travel between them:\n  %s"
+             % (LAYER_CONCEPTS_FILE, "\n  ".join(unshared)))
+
     drift, processed = [], 0
     for instance in ids:
         inst = INSTANCES[instance]
@@ -1502,6 +1859,32 @@ def main():
         # Private key, added AFTER schema validation: render_metro_config reads
         # it, and nothing writes the worksheet back.
         worksheet["_layer_codes"] = [(l["id"], layer_codes[l["id"]]) for l in worksheet["layers"]]
+        registered = {l["id"] for l in worksheet["layers"]}
+        unknown_ids = ["%s -> %s" % (c, x) for c, cols in layer_concepts.items()
+                       for x in cols.get(instance, []) if x not in registered]
+        if unknown_ids:
+            fail("%s: %s names layer(s) %s does not register: %s"
+                 % (inst["worksheet"], LAYER_CONCEPTS_FILE, instance, ", ".join(unknown_ids)))
+        worksheet["_layer_concepts"] = [(c, cols[instance]) for c, cols in layer_concepts.items()
+                                        if instance in cols]
+        app_path = os.path.join(args.root, inst["app"], "index.html")
+        with open(app_path, encoding="utf-8") as f:
+            app_text = f.read()
+        off_colour = check_concept_colors(app_text, instance, layer_concepts, concept_colors)
+        if off_colour:
+            fail("%s: a layer is not drawn in its concept's colours from %s `colors` — set "
+                 "its `color:` and `fillColor:` (or `fill:`) to them:\n  %s"
+                 % (app_path, LAYER_CONCEPTS_FILE, "\n  ".join(off_colour)))
+        off_line = check_concept_lines(app_text, instance, layer_concepts, concept_lines)
+        if off_line:
+            fail("%s: a layer is not drawn at its concept's line width from %s `lines` — "
+                 "set its `weight:` to it:\n  %s"
+                 % (app_path, LAYER_CONCEPTS_FILE, "\n  ".join(off_line)))
+        dashed = check_no_dashed_layers(app_text)
+        if dashed:
+            fail("%s: a layer is drawn dashed — dashes mean a district crossing the edge of "
+                 "the one pinned for comparison, so drop its `dashArray:` (%s `lines`):\n  %s"
+                 % (app_path, LAYER_CONCEPTS_FILE, "\n  ".join(dashed)))
         # The apple-touch-icon href is the one generated brand value naming a
         # file on disk rather than carrying its own bytes (the favicon is a
         # data: URI). A tag pointing at a missing PNG is invisible in every

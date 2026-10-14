@@ -74,10 +74,14 @@
     },
     "il:township": {
       "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2717%27&outFields=GEOID,NAME,BASENAME,STATE,COUNTY,LSADC&outSR=4326&f=json&geometryPrecision=5",
-      "fetched": "2026-09-27",
-      "features": 1695,
-      "data_sha256": "65c42b14cc17019329a40ab04674c194215681bf67bd409f486cd127c0434518",
-      "archive_sha256": "5a5eb533812572e30ff479c34e7059f618206dad08a43f074a9532c7a55315a9"
+      "fetched": "2026-10-14",
+      "features": 1702,
+      "data_sha256": "a4211c1365d3527670301ca978171ff86416a12c16c38e199e796a468a06d498",
+      "archive_sha256": "218cea2b8ca1c094e8fdf42c44fb25f11895fe7724174b18b1604469f0e6aa57",
+      "spliced": {
+        "file": "il/data/app/chicago-townships.json",
+        "sha256": "db086ffab0e91321dca9f9063fa38f7bbcf5c0abbe0fd8766185c14c8fff7302"
+      }
     },
     "il:zip-code": {
       "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query?where=1%3D1&geometry=%7B%22xmin%22%3A-91.6%2C%22ymin%22%3A36.9%2C%22xmax%22%3A-87.0%2C%22ymax%22%3A42.6%7D&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=ZCTA5&outSR=4326&f=json&geometryPrecision=5&orderByFields=OBJECTID",

@@ -61,6 +61,7 @@ BUILDERS = (
     "ca/scripts/build_ca_legislature_roster.py",
     "ia/scripts/build_ia_legislature_roster.py",
     "tn/scripts/build_tn_legislature_roster.py",
+    "ar/scripts/build_ar_legislature_roster.py",
 )
 
 
