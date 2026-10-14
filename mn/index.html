@@ -12936,7 +12936,7 @@ function initMinnesotaExplorer() {
       load: loadMnPrecincts,
       // the finest tiling on this map — light stroke so it reads under the
       // broader boundaries rather than competing with them
-      style: { color: "#7C5CBF", weight: 1, fillColor: "#A78BFA", fillOpacity: 0.05 }
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["pctname"]);
@@ -13033,9 +13033,9 @@ function initMinnesotaExplorer() {
     overlay: {
       load: loadMnJudicialDistricts,
       // the broadest political tiling after Congress — a heavier stroke than
-      // the precinct layer and a dash, so ten big shapes read as a frame
+      // the precinct layer and a light fill, so ten big shapes read as a frame
       // rather than as fill competing with the legislative layers
-      style: { color: "#1F6F5C", weight: 2, fillColor: "#3FA98C", fillOpacity: 0.05, dashArray: "6 4" }
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -13167,8 +13167,8 @@ function initMinnesotaExplorer() {
       "petitioned for, so most of the state has none.",
     overlay: {
       load: loadMnWatershedDistricts,
-      // a water blue no other layer here uses, solid so it reads apart from
-      // the dashed political tilings drawn over the same ground
+      // a water blue no other layer here uses, so it reads apart from the
+      // political tilings drawn over the same ground
       style: { color: "#1C6E9C", weight: 1.5, fillColor: "#4BA3D3", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
@@ -13288,9 +13288,9 @@ function initMinnesotaExplorer() {
     label: "County Commissioner District",
     overlay: {
       load: loadMnCommissionerDistricts,
-      // a warm hue no other layer uses, so a county board reads apart from the
-      // three green judicial/school tilings and the purple legislative ones
-      style: { color: "#9C4A14", weight: 1.5, fillColor: "#D9792E", fillOpacity: 0.05, dashArray: "4 3" }
+      // the fleet's county-board blue (layer-concepts.json `colors`), apart
+      // from the purple legislative tilings
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
@@ -13569,7 +13569,7 @@ function initMinnesotaExplorer() {
     memberLabel: "Representative", capitolLabel: "D.C. Office",
     profileLabel: "Official website", directoryLabel: "U.S. House directory",
     directoryUrl: "https://www.house.gov/representatives",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
 
   /* ---------- 3-4. Minnesota Senate + Minnesota House ----------
@@ -13609,7 +13609,7 @@ function initMinnesotaExplorer() {
     loadRoster: loadNoRoster,
     memberLabel: "State Senator", capitolLabel: "Capitol Office",
     profileLabel: "Senator profile", directoryLabel: "Minnesota Senate directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -13622,7 +13622,7 @@ function initMinnesotaExplorer() {
     loadRoster: loadNoRoster,
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "Minnesota House directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
   /* ---------- 5-9. live TIGERweb fabrics, point-first ----------
@@ -13830,7 +13830,7 @@ function initMinnesotaExplorer() {
     label: "School District (Unified)",
     overlay: {
       load: loadSchoolDistrictsUnified,
-      style: { color: "#2F6B4F", weight: 1.5, fillColor: "#4E9B75", fillOpacity: 0.06 }
+      style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13855,7 +13855,7 @@ function initMinnesotaExplorer() {
       "card is the one that answers.",
     overlay: {
       load: loadSchoolDistrictsElementary,
-      style: { color: "#1F7A6B", weight: 2, fillColor: "#3FA898", fillOpacity: 0.07, dashArray: "6 3" }
+      style: { color: "#A05F00", weight: 1.5, fillColor: "#D19133", fillOpacity: 0.07 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13883,7 +13883,7 @@ function initMinnesotaExplorer() {
       "card answers.",
     overlay: {
       load: loadSchoolDistrictsSecondary,
-      style: { color: "#155E52", weight: 2, fillColor: "#2E8C7C", fillOpacity: 0.07, dashArray: "2 3" }
+      style: { color: "#5E3A8C", weight: 1.5, fillColor: "#8163AE", fillOpacity: 0.07 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13958,8 +13958,9 @@ function initMinnesotaExplorer() {
       "names them.",
     overlay: {
       load: loadMnSchoolBoardDistricts,
-      // a plum no other layer here uses, dashed like the other school tilings
-      style: { color: "#7D2E68", weight: 1.5, fillColor: "#A8538F", fillOpacity: 0.06, dashArray: "5 3" }
+      // the fleet's school-board indigo and line (layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       var p = feature.properties || {};
@@ -14135,7 +14136,7 @@ function initMinnesotaExplorer() {
     coverage: insideMinnesota,
     overlay: {
       load: loadZctas,
-      style: { color: "#6B5B95", weight: 1, fillColor: "#8D7BB5", fillOpacity: 0.04, dashArray: "3 4" }
+      style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.04 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["basename", "name"]);
@@ -14210,7 +14211,7 @@ function initMinnesotaExplorer() {
     subOf: "county",
     overlay: {
       load: loadCountySubdivisions,
-      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05, dashArray: "7 3" }
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -14319,7 +14320,7 @@ function initMinnesotaExplorer() {
       "at all — the Township or City card names what it is in.",
     overlay: {
       load: loadPlaces,
-      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -14522,8 +14523,8 @@ function initMinnesotaExplorer() {
   registerNearestPointLayer({
     id: "fire-station",
     group: "safety",
-    color: "#B23A1E",
-    fill: "#F3A183",
+    color: "#A3341F",
+    fill: "#E8927C",
     label: "Fire & EMS Station",
     loader: loadFireStations,
     intro: "Nearest fire and EMS station buildings (USGS National Map structures " +
@@ -14538,8 +14539,8 @@ function initMinnesotaExplorer() {
   registerNearestPointLayer({
     id: "police-station",
     group: "safety",
-    color: "#1F4E79",
-    fill: "#9CC3E5",
+    color: "#1B4F8C",
+    fill: "#7FA8D9",
     label: "Police Station",
     loader: loadPoliceStations,
     intro: "Nearest police station buildings (USGS National Map structures " +
@@ -16560,15 +16561,14 @@ function initMinnesotaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#155E52": "#5AB3A1", "#1C6E9C": "#57BCFB",
-    "#1F4E79": "#62A0DD", "#1F6F5C": "#5EC1A7", "#1F6F6B": "#5DC0BB", "#1F7A6B": "#5ACBB6",
-    "#2E8C7C": "#61D9C3", "#2F6B4F": "#6FBD96", "#3E9A95": "#6CE4DD", "#3FA898": "#67F0DA",
-    "#3FA98C": "#67F1CA", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4BA3D3": "#B0E0FE", "#4E9B75": "#7FE5B2", "#6B5B95": "#B7A2F2",
-    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#7C5CBF": "#C2ABFF", "#7D2E68": "#E073C1",
-    "#8C2E4A": "#F47294", "#8D7BB5": "#D1BFFE", "#9C4A14": "#FE8E4D", "#A78BFA": "#E0DAFF",
-    "#A8538F": "#FF94DD", "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#B23A1E": "#FD9177",
-    "#D06A9C": "#FFBDDA", "#D9792E": "#FECAA8"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#1C6E9C": "#57BCFB", "#1F6F6B": "#5DC0BB", "#1F6FB2": "#77BBFD", "#2B8CC4": "#8FD1FE",
+    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
+    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4BA3D3": "#B0E0FE",
+    "#4C8F59": "#83DC93", "#585EDD": "#A7B4FE", "#5E3A8C": "#B283F5", "#6B7280": "#B1BBCE",
+    "#7A5C3E": "#CFA57D", "#8163AE": "#CAAAFF", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#9550B2": "#E09BFE", "#A05F00": "#FBA33D", "#A3341F": "#FE8269", "#A98B6C": "#F3CBA1",
+    "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA", "#D19133": "#FED7A7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

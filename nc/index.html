@@ -13140,7 +13140,7 @@ function initNorthCarolinaExplorer() {
     memberLabel: "Representative", capitolLabel: "D.C. Office",
     profileLabel: "Official website", directoryLabel: "U.S. House directory",
     directoryUrl: "https://www.house.gov/representatives",
-    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "8 3" }
+    style: { color: "#14181C", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.05 }
   });
 
   /* ---------- 3-4. N.C. Senate + N.C. House ----------
@@ -13201,7 +13201,7 @@ function initNorthCarolinaExplorer() {
     loadRoster: loadNcSenateMembers,
     memberLabel: "State Senator", capitolLabel: "Capitol Office",
     profileLabel: "Senator profile", directoryLabel: "N.C. Senate directory",
-    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05, dashArray: "1 5" }
+    style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
 
   registerIlgaChamber({
@@ -13214,7 +13214,7 @@ function initNorthCarolinaExplorer() {
     loadRoster: loadNcHouseMembers,
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "N.C. House directory",
-    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05, dashArray: "5 1 2 1" }
+    style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
 
@@ -13285,10 +13285,10 @@ function initNorthCarolinaExplorer() {
     // stated rather than discovered: subOf hides a child whenever any ancestor
     // is off, so turning County off takes this card with it.
     subOf: "county",
-    // long-dash brown — reads apart from Municipality's tight magenta dots
+    // the fleet's township brown (layer-concepts.json `colors`), apart from Municipality's magenta
     overlay: {
       load: loadCountySubdivisions,
-      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05, dashArray: "7 3" }
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13397,8 +13397,8 @@ function initNorthCarolinaExplorer() {
       "general-purpose local government there.",
     overlay: {
       load: loadPlaces,
-      // tight magenta dots; an empty card here honestly means "unincorporated"
-      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05, dashArray: "2 3" }
+      // the fleet's municipality magenta (layer-concepts.json `colors`); an empty card here honestly means "unincorporated"
+      style: { color: "#B0316E", weight: 1.5, fillColor: "#D06A9C", fillOpacity: 0.05 }
     },
     hoverName: function (feature) {
       var name = findPropCI(feature.properties || {}, ["name"]);
@@ -13508,7 +13508,7 @@ function initNorthCarolinaExplorer() {
     // this layer" would read as a lookup that failed.
     emptyNote: "No school district here. This map holds North Carolina's " +
       "school districts, so a point outside the state gets none.",
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05, dashArray: "8 3" },
+    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 },
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "geoid", label: "GEOID", keys: ["geoid"] }
@@ -13625,8 +13625,8 @@ function initNorthCarolinaExplorer() {
     // and need not be in a ZCTA. It deliberately does not say "outside North
     // Carolina": out there the layer is hidden and this card is never drawn.
     emptyNote: "No ZIP code here. The Census draws these areas around postal delivery routes, so open water inside the state can sit outside them all.",
-    // dotted outline (a distinct pattern from Township or City's long dash) + its own hue
-    style: { color: "#0B5394", weight: 1.5, fillColor: "#41B6E6", fillOpacity: 0.05, dashArray: "1 4" },
+    // the fleet's ZIP mauve (layer-concepts.json `colors`), a hue no other layer here uses
+    style: { color: "#88637C", weight: 1.5, fillColor: "#88637C", fillOpacity: 0.05 },
     fields: [
       { name: "zip", label: "ZIP Code", keys: ["zcta5", "zip", "zip_code", "zipcode", "zcta5ce10"], primary: true },
       { label: "About this boundary",
@@ -15787,10 +15787,10 @@ function initNorthCarolinaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1F6F6B": "#5DC0BB", "#2F6B3A": "#6FBE7B", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE",
-    "#444B54": "#929BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93",
-    "#6B7280": "#B1BBCE", "#7A5C3E": "#CFA57D", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BB",
+    "#2F6B3A": "#6FBE7B", "#3E9A95": "#6CE4DD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
+    "#7A5C3E": "#CFA57D", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
     "#A98B6C": "#F3CBA1", "#B0316E": "#FD88B8", "#D06A9C": "#FFBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
