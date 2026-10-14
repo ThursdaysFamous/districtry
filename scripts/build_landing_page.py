@@ -159,6 +159,20 @@ def shared_theme_boot():
     """
     with open(THEME_BOOT, encoding="utf-8") as fh:
         return fh.read().rstrip("\n")
+PLAY_APP = os.path.join(REPO_ROOT, "engine", "shared", "play-app.txt")
+
+
+def shared_play_app():
+    """The Google Play app's mark, read from its ONE source.
+
+    engine/shared/play-app.txt is an ENGINE fence in every app, every sources
+    page and the sponsorship page, spliced by compose_app.py. This page carries
+    it too because its footer asks for sponsorship, and a reader in the Play
+    app reaches it from any state's menu. Returned verbatim, like the theme
+    boot.
+    """
+    with open(PLAY_APP, encoding="utf-8") as fh:
+        return fh.read().rstrip("\n")
 MAP_LINK = os.path.join(REPO_ROOT, "engine", "shared", "map-link.txt")
 
 
@@ -952,6 +966,7 @@ def build():
 </script>
 <script>
 %(themeboot)s
+%(playapp)s
 </script>
 <style>
 %(fontface)s
@@ -1866,6 +1881,7 @@ footer .support b { color: var(--ink); }
         "favicon": html.escape(favicon_uri, quote=True),
         "fontface": fontface + "\n" + FALLBACK_FACE,
         "themeboot": shared_theme_boot(),
+        "playapp": shared_play_app(),
         "maplink": shared_map_link(),
         "light": token_css(LIGHT_TOKENS, light, ":root"),
         "dark": token_css(DARK_TOKENS, dark, '[data-theme="dark"]', DARK_EXTRA,

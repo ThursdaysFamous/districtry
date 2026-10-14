@@ -268,7 +268,7 @@ rather than re-running the failed sibling run.
 > in the changelog. A changelog that promises a clean adoption and doesn't
 > deliver one costs every sibling a red CI run and a manual repair.
 
-## Current ENGINE block inventory (67 in index.html + 2 in sw.js)
+## Current ENGINE block inventory (68 in index.html + 2 in sw.js)
 
 index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`, `basemap`,
 `body-map-toolbar`, `brand-names`, `cached-loaders`, `card-helpers`,
@@ -279,7 +279,7 @@ index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`, `basemap`,
 `geocoder-shell`, `geolocation`, `geometry-measure`, `groups`, `haversine`, `hover-explorer`, `install-app`,
 `int-field`, `layer-registry`, `map-chrome-classes`, `map-link`, `map-pan-filter`,
 `metro-links`, `metro-links-html`, `metro-portal`, `nearest-point-factory`,
-`office-helpers`, `overlay-cards`, `permalink`, `poi-geocode`,
+`office-helpers`, `overlay-cards`, `permalink`, `play-app`, `poi-geocode`,
 `point-in-polygon`, `polygon-containment`, `polygon-factory`,
 `probe-geometry-column`, `qr-code`, `relationship-pinning`, `render-helper`,
 `sanitize`, `school-zone-factory`, `scope-mask`, `selection-controls`,

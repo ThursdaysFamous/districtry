@@ -986,6 +986,95 @@ try {
       await ctx3.close();
     }
   }
+
+  // --- 10. inside the Google Play app the support links are hidden ----------
+  //
+  // The Play app is this site in a full-screen Chrome window, and Google Play
+  // does not allow an app to send readers to an outside payment page, so
+  // engine/shared/play-app.txt hides the GitHub Sponsors and sponsorship links
+  // in a window the app opened, and nowhere else. The app opens
+  // /app/?ref=play: the launcher must pass that one tag on, the page it lands
+  // on must mark the window, and the next page must read the mark with no tag
+  // in its address. Every half is asserted both ways, because a rule that
+  // hid the links everywhere would pass a hiding test on its own. The
+  // referrer path stands in for a shared link opened straight into the app,
+  // with a link from Gmail as the control.
+  {
+    const supportShown = (p) => p.evaluate(() => {
+      const visible = (el) => !!el && el.getClientRects().length > 0;
+      const all = (sel) => Array.prototype.slice.call(document.querySelectorAll(sel));
+      return {
+        marked: document.documentElement.classList.contains("dst-play-app"),
+        sponsors: all('a[href*="github.com/sponsors"]').map(visible),
+        policy: all('a[href*="sponsorship.html"]').map(visible),
+      };
+    });
+    const hidden = (s) => s.marked && s.sponsors.length > 0 && s.sponsors.every((v) => !v) &&
+      s.policy.every((v) => !v);
+    const kept = (s) => !s.marked && s.sponsors.length > 0 && s.sponsors.every((v) => v) &&
+      s.policy.length > 0 && s.policy.every((v) => v);
+
+    for (const stored of [TAGS.includes("wi") ? "wi" : TAGS[0], null]) {
+      const want = stored ? `/${stored}/` : "/";
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      await ctx.addInitScript((s) => {
+        if (location.pathname !== "/app/") return;
+        try {
+          if (s === null) localStorage.removeItem("districtry-last-app");
+          else localStorage.setItem("districtry-last-app", s);
+        } catch (e) { /* private mode */ }
+      }, stored);
+      const p = await ctx.newPage();
+      await stubInstances(p);
+      await p.route((url) => url.pathname === "/", (r) => r.fulfill({
+        status: 200, contentType: "text/html", body: "<!doctype html><title>front door stub</title>",
+      }));
+      await p.goto(BASE + "/app/?ref=play", { waitUntil: "commit" });
+      await p.waitForURL((u) => u.pathname !== "/app/", { timeout: 5000, waitUntil: "commit" }).catch(() => {});
+      const u = new URL(p.url());
+      check(`a launch from Google Play opens ${want} carrying ref=play and nothing else`,
+        u.pathname === want && u.search === "?ref=play", p.url());
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const p = await ctx.newPage();
+      await p.route("**/gc.zgo.at/**", (r) => r.abort());
+      await p.goto(BASE + "/?ref=play", { waitUntil: "domcontentloaded" });
+      const inApp = await supportShown(p);
+      check("in the Play app the front page hides its sponsorship paragraph and link",
+        hidden(inApp) && inApp.policy.length > 0, JSON.stringify(inApp));
+      await p.goto(BASE + "/sponsorship.html", { waitUntil: "domcontentloaded" });
+      const next = await supportShown(p);
+      check("the mark carries to the next page in the window, with no tag in its address",
+        hidden(next), JSON.stringify(next));
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const p = await ctx.newPage();
+      await p.route("**/gc.zgo.at/**", (r) => r.abort());
+      await p.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      const web = await supportShown(p);
+      check("on the website the front page keeps its sponsorship paragraph and link",
+        kept(web), JSON.stringify(web));
+      await ctx.close();
+    }
+    for (const [referrer, inside] of [["android-app://com.districtry.app/", true],
+                                       ["android-app://com.google.android.gm/", false]]) {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      await ctx.addInitScript((r) => {
+        Object.defineProperty(Document.prototype, "referrer", { get: () => r, configurable: true });
+      }, referrer);
+      const p = await ctx.newPage();
+      await p.route("**/gc.zgo.at/**", (r) => r.abort());
+      await p.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      const s = await supportShown(p);
+      check(`a page opened from ${referrer} ${inside ? "hides" : "keeps"} the sponsorship links`,
+        inside ? hidden(s) : kept(s), JSON.stringify(s));
+      await ctx.close();
+    }
+  }
 } finally {
   await browser.close();
 }

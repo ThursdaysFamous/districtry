@@ -1151,6 +1151,15 @@ def render_storage_paragraphs(apps):
                 "is on %s. It is erased when you close the app, and it never leaves your "
                 "browser.</p>"
                 % (code(store), code(key), esc(joined(users))))
+        elif key == "districtry-play-app":
+            out.append(
+                "<p><strong>Opened in the Google Play app.</strong> If you open districtry "
+                "from its Android app on Google Play, a mark in %s under %s records that, "
+                "so the pages in that window leave out the links asking for sponsorship: "
+                "Google Play does not allow an app from its store to send readers to an "
+                "outside payment page. The website keeps those links. This is on %s. It is "
+                "erased when you close the app, and it never leaves your browser.</p>"
+                % (code(store), code(key), esc(joined(users))))
         elif key == "districtry-boundary-streets":
             out.append(
                 "<p><strong>Boundary street names.</strong> If you switch the map's "
