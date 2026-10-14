@@ -40,7 +40,7 @@
 <main>
   <p id="opening">Opening districtry&hellip;</p>
   <p id="offline" hidden>districtry needs a connection the first time it opens.
-    <a href="/app/">Try again</a></p>
+    <a id="retry" href="/app/">Try again</a></p>
   <noscript><p><a href="/">Open districtry</a></p></noscript>
 </main>
 <script>
@@ -52,11 +52,17 @@
   var tag = null;
   try { tag = localStorage.getItem("districtry-last-app"); } catch (e) { tag = null; }
   var to = /^[a-z]{2}$/.test(tag || "") ? "/" + tag + "/" : "/";
+  // The Google Play app is built to open /app/?ref=play. That one tag is
+  // passed on, and nothing else from this address, so the page it opens knows
+  // it is inside the Play app (engine/shared/play-app.txt) and the traffic
+  // report can tell a launch from Google Play from one installed through the
+  // browser.
+  var fromPlay = /(?:^|&)ref=play(?:&|$)/.test(location.search.slice(1));
   var gone = false;
   function go() {
     if (gone) return;
     gone = true;
-    location.replace(to);
+    location.replace(fromPlay ? to + "?ref=play" : to);
   }
   // The front page keeps no offline copy, so with no state remembered and no
   // connection, going there would end on the browser's own error page. Say so
@@ -64,6 +70,7 @@
   if (to === "/" && navigator.onLine === false) {
     document.getElementById("opening").hidden = true;
     document.getElementById("offline").hidden = false;
+    if (fromPlay) document.getElementById("retry").setAttribute("href", "/app/?ref=play");
     window.addEventListener("online", go);
   }
   if (!("serviceWorker" in navigator)) {
