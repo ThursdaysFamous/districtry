@@ -22,13 +22,29 @@
      3. THE COUNTS, by state and never by place: `app-install/<tag>` when the
         browser reports an install, `app-launch/<tag>` once per launch of the
         installed app (DST_APP_LAUNCH_KEY in session storage marks the window
-        as counted), and `install-invite/<what>` for the invitation: shown,
-        accepted, declined or closed, and tip-shown or tip-closed on an iPhone.
-        A launch is counted at boot, before GoatCounter's script has always
-        arrived, so these wait for it rather than being lost. */
+        as counted), `install-invite/<what>` for the invitation: shown,
+        accepted, declined or closed, and tip-shown or tip-closed on an iPhone,
+        and `share-in/<tag>` when a place shared into the installed app opened
+        this app (below). A launch is counted at boot, before GoatCounter's
+        script has always arrived, so these wait for it rather than being lost.
+
+     4. A PLACE SHARED INTO THE APP. The manifest's share_target puts the
+        installed districtry in Android's Share menu and sends what was shared
+        to the launcher at /app/, which hands it here as #q= (the hash, which
+        never leaves the browser; the permalink block searches it) and leaves
+        DST_SHARE_IN_KEY in session storage. It is counted once and removed, so
+        the next page in the window does not count it again. The share arrives
+        in the address of a request for /app/, so the launcher's own worker
+        must answer it from its copy rather than the host: that worker is
+        registered here when districtry is installed and whenever the
+        installed app runs, so it is in place before the first share even if
+        the installed app has never been opened from its icon.
+        scripts/build_manifests.py --check holds the launcher to this key and
+        this block to the launcher's worker. */
   var DST_LAST_APP_KEY = "districtry-last-app";
   var DST_INSTALL_INVITE_KEY = "districtry-install-invite";
   var DST_APP_LAUNCH_KEY = "districtry-app-launch";
+  var DST_SHARE_IN_KEY = "districtry-share-in";
   var DST_INVITE_DELAY_MS = 3000;
   var dstFramed = (function () {
     try { return window.top !== window.self; } catch (e) { return true; }
@@ -50,6 +66,14 @@
   function dstInstalledLaunch() {
     return !!((window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
       window.navigator.standalone === true);
+  }
+  /* The launcher's worker (app/sw.js, scope /app/), so a place shared into
+     the installed app is answered from the launcher's copy on the phone. */
+  function dstRegisterLauncher() {
+    if (dstFramed || !("serviceWorker" in window.navigator)) return;
+    try {
+      window.navigator.serviceWorker.register("/app/sw.js", { scope: "/app/" })["catch"](function () {});
+    } catch (e) { /* the launcher registers it itself on its first launch */ }
   }
   function dstInviteSeen() {
     try { return !!window.localStorage.getItem(DST_INSTALL_INVITE_KEY); } catch (e) { return true; }
@@ -125,11 +149,22 @@
       try { window.sessionStorage.setItem(DST_APP_LAUNCH_KEY, "1"); } catch (e) { /* counted again on the next page in this window */ }
       dstCountWhenReady("app-launch/" + METRO_BRAND.instanceTag);
     }
+    dstRegisterLauncher();
+  }
+
+  if (!dstFramed) {
+    var dstSharedIn = false;
+    try {
+      dstSharedIn = !!window.sessionStorage.getItem(DST_SHARE_IN_KEY);
+      if (dstSharedIn) window.sessionStorage.removeItem(DST_SHARE_IN_KEY);
+    } catch (e) { dstSharedIn = false; }
+    if (dstSharedIn) dstCountWhenReady("share-in/" + METRO_BRAND.instanceTag);
   }
 
   window.addEventListener("appinstalled", function () {
     dstHideInvite();
     dstCountWhenReady("app-install/" + METRO_BRAND.instanceTag);
+    dstRegisterLauncher();
   });
 
   var dstHeldPrompt = null;

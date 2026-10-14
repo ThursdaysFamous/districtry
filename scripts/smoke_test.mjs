@@ -1345,6 +1345,43 @@ try {
         `first=${JSON.stringify(first)} after reload=${JSON.stringify(second)}`);
       await context.close();
     }
+    // A PLACE SHARED INTO THE APP. The launcher (/app/) hands it over as #q=,
+    // in the shape Android shares a Google Maps place (its name, then the
+    // link), and leaves districtry-share-in in session storage. The app must
+    // select the place the link names, read in the browser, and count the
+    // share once, by app and never by place; a reload counts nothing more.
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await context.addInitScript(() => {
+        try {
+          if (!sessionStorage.getItem("__shareSeeded")) {
+            sessionStorage.setItem("__shareSeeded", "1");
+            sessionStorage.setItem("districtry-share-in", "1");
+          }
+        } catch (e) { /* blocked storage: the count check below reports it */ }
+      });
+      const SHARED = "Willis Tower https://www.google.com/maps/place/Willis+Tower/@41.8789,-87.6359,17z/data=!3m1!4b1!8m2!3d41.8788761!4d-87.6359149";
+      const page = await booted(context, `${BASE}#q=${encodeURIComponent(SHARED)}`, stubCounter);
+      const sel = await page.waitForFunction((n) => !!window[n].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+        .then(() => page.evaluate((n) => window[n].state.selectedPoint, EXPORTS_NAME), () => null);
+      await page.waitForTimeout(300);
+      const shareEvents = () => page.evaluate(() => (window.__gcEvents || [])
+        .filter((v) => v && v.event && /^(share-in|map-link)\//.test(v.path)).map((v) => v.path));
+      const first = await shareEvents();
+      const mark = await page.evaluate(() => sessionStorage.getItem("districtry-share-in"));
+      check("a place shared into the app is selected from its link, read in the browser",
+        !!sel && Math.abs(sel.lat - 41.8788761) < 1e-5 && Math.abs(sel.lng - -87.6359149) < 1e-5,
+        JSON.stringify(sel));
+      check("the share is counted once, by app, and its mark removed",
+        first.filter((e) => e.indexOf("share-in/") === 0).join() === `share-in/${TAG}` && mark === null,
+        JSON.stringify({ events: first, mark }));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      await page.waitForTimeout(300);
+      const again = (await shareEvents()).filter((e) => e.indexOf("share-in/") === 0);
+      check("a reload in the same window counts the share no more", again.length === 0, JSON.stringify(again));
+      await context.close();
+    }
     {
       const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE,
         userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1" });

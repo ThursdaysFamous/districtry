@@ -1870,6 +1870,26 @@ footer .support b { color: var(--ink); }
           window.location.href = metro.url + "#point=" + hit.lat.toFixed(5) + "," + hit.lng.toFixed(5);
         });
   }
+
+  /* A PLACE HANDED OVER IN THE ADDRESS (#q=). A place shared into the
+   * installed app reaches its launcher (app/index.html), which opens the
+   * state the reader used last with #q=, or this page when no state has been
+   * opened yet. It is put in the box and sent exactly as if it had been
+   * pasted, so a map link is read here and routed, and anything else is an
+   * address search. The hash, never the query string, because the counter on
+   * this page reports the query string with every visit; and it is taken out
+   * of this page's address first, so going back here does not search it
+   * again and send the reader forward a second time. */
+  var handed = /(?:^#|&)q=([^&]*)/.exec(location.hash);
+  if (handed) {
+    var handedText = "";
+    try { handedText = decodeURIComponent(handed[1]).trim(); } catch (err) { handedText = ""; }
+    if (window.history && history.replaceState) history.replaceState(null, "", location.pathname + location.search);
+    if (handedText) {
+      input.value = handedText;
+      if (form.requestSubmit) form.requestSubmit(); else button.click();
+    }
+  }
 })();
 </script>
 </body>
