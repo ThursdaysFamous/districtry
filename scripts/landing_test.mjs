@@ -102,6 +102,10 @@ async function textOrNull(page, selector) {
   return page.textContent(selector, { timeout: 2000 }).catch(() => null);
 }
 
+// A service worker's own requests reach Playwright only behind this flag, and
+// block 9b counts the launcher worker's requests to prove a share never
+// leaves the phone. Read at launch, so it is set here rather than in the job.
+process.env.PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = "1";
 const browser = await chromium.launch();
 try {
   // --- 1. a bare visit renders the landing page, and does NOT forward -------
@@ -921,6 +925,11 @@ try {
         manifest.name === "districtry",
       JSON.stringify(manifest && { id: manifest.id, name: manifest.name, scope: manifest.scope,
         start_url: manifest.start_url, display: manifest.display }));
+    const st = manifest && manifest.share_target;
+    check("the manifest puts the app in the Share menu, sending title, text and url to the launcher by GET",
+      !!st && st.action === "/app/" && st.method === "GET" && !st.enctype &&
+        JSON.stringify(st.params) === JSON.stringify({ title: "title", text: "text", url: "url" }),
+      JSON.stringify(st));
     await ctx.close();
 
     const cases = [
@@ -984,6 +993,243 @@ try {
         !!resp && resp.status() === 200 && resp.fromServiceWorker(),
         resp ? `HTTP ${resp.status()} fromServiceWorker=${resp.fromServiceWorker()}` : "no response");
       await ctx3.close();
+    }
+  }
+
+  // --- 9b. a place shared into the installed app ----------------------------
+  //
+  // The manifest's share_target sends Android's Share menu to the launcher as
+  // /app/?title=…&text=…&url=…. The launcher must hand what was shared to the
+  // state used last as #q= (the hash, which never leaves the browser), or to
+  // the front page when none is remembered, which searches it like a pasted
+  // link; it must take the share out of its own address first, because that
+  // address is the next page's referrer and the counter there reports one;
+  // and its worker must answer a share from its copy and refresh that copy
+  // WITHOUT the share, or every share would reach the host. Android puts the
+  // link in `text`, often after the place's name and address, which is the
+  // shape used here; `url` alone stands in for a browser that fills it.
+  {
+    const MAPLINK = "https://www.google.com/maps/place/Lambeau+Field/@44.50,-88.06,12z/data=!3m1!4b1!8m2!3d44.5013!4d-88.0622";
+    const SHORT = "https://maps.app.goo.gl/AbCdEf123";
+    const wi = TAGS.includes("wi") ? "wi" : TAGS[0];
+    const launch = async ({ stored, query, referrer, workers }) => {
+      const ctx = await browser.newContext({ serviceWorkers: workers || "block" });
+      await ctx.addInitScript(({ s, r }) => {
+        if (location.pathname !== "/app/") return;
+        try {
+          if (s === null) localStorage.removeItem("districtry-last-app");
+          else localStorage.setItem("districtry-last-app", s);
+        } catch (e) { /* private mode */ }
+        if (r) Object.defineProperty(Document.prototype, "referrer", { get: () => r, configurable: true });
+      }, { s: stored, r: referrer || null });
+      const p = await ctx.newPage();
+      return { ctx, p };
+    };
+    const landed = (p) => p.evaluate(() => ({
+      path: location.pathname, search: location.search, hash: location.hash,
+      referrer: document.referrer,
+      mark: (function () { try { return sessionStorage.getItem("districtry-share-in"); } catch (e) { return "blocked"; } })(),
+    }));
+    const handed = (h) => { const m = /^#q=(.*)$/.exec(h || ""); return m ? decodeURIComponent(m[1]) : null; };
+
+    for (const c of [
+      { name: "a link Android puts in text, after the place's name and address",
+        query: "?title=" + encodeURIComponent("Lambeau Field") + "&text=" +
+          encodeURIComponent("Lambeau Field\n1265 Lombardi Ave, Green Bay, WI 54304\n" + SHORT),
+        want: "Lambeau Field 1265 Lombardi Ave, Green Bay, WI 54304 " + SHORT },
+      { name: "a link sent as url alone", query: "?url=" + encodeURIComponent(SHORT), want: SHORT },
+    ]) {
+      const { ctx, p } = await launch({ stored: wi });
+      await stubInstances(p);
+      await p.goto(BASE + "/app/" + c.query, { waitUntil: "commit" });
+      await p.waitForURL((u) => u.pathname !== "/app/", { timeout: 5000, waitUntil: "commit" }).catch(() => {});
+      await p.waitForLoadState("domcontentloaded").catch(() => {});
+      const at = await landed(p).catch((e) => ({ error: String(e) }));
+      check(`${c.name} opens /${wi}/ with the place in #q= and nothing in the query`,
+        at.path === `/${wi}/` && at.search === "" && handed(at.hash) === c.want, JSON.stringify(at));
+      check(`${c.name}: the page it opens is sent the launcher's address with the share taken out`,
+        at.referrer === BASE + "/app/", JSON.stringify(at.referrer));
+      check(`${c.name}: the map it opens finds the mark that counts a share`, at.mark === "1", JSON.stringify(at.mark));
+      await ctx.close();
+    }
+    {
+      const { ctx, p } = await launch({ stored: wi });
+      await stubInstances(p);
+      await p.goto(BASE + "/app/", { waitUntil: "commit" });
+      await p.waitForURL((u) => u.pathname !== "/app/", { timeout: 5000, waitUntil: "commit" }).catch(() => {});
+      await p.waitForLoadState("domcontentloaded").catch(() => {});
+      const at = await landed(p).catch((e) => ({ error: String(e) }));
+      check("an ordinary launch hands on no place and leaves no share mark",
+        at.path === `/${wi}/` && at.hash === "" && at.mark === null, JSON.stringify(at));
+      await ctx.close();
+    }
+    // A share into the Google Play app arrives with the app as the launcher's
+    // referrer and no ref=play: the launcher's Play-app block marks the
+    // window and the launcher passes ref=play on beside the place.
+    {
+      const { ctx, p } = await launch({ stored: wi, referrer: "android-app://com.districtry.app/" });
+      await stubInstances(p);
+      await p.goto(BASE + "/app/?text=" + encodeURIComponent(SHORT), { waitUntil: "commit" });
+      await p.waitForURL((u) => u.pathname !== "/app/", { timeout: 5000, waitUntil: "commit" }).catch(() => {});
+      await p.waitForLoadState("domcontentloaded").catch(() => {});
+      const at = await landed(p).catch((e) => ({ error: String(e) }));
+      const play = await p.evaluate(() => sessionStorage.getItem("districtry-play-app")).catch(() => null);
+      check("a share into the Google Play app keeps ref=play and the window's Play mark",
+        at.path === `/${wi}/` && at.search === "?ref=play" && handed(at.hash) === SHORT && play === "1",
+        JSON.stringify({ at, play }));
+      await ctx.close();
+    }
+    // No state remembered: the front page receives #q= and routes the place
+    // as if the link had been pasted into its box. Its own address loses the
+    // place before it searches, and the geocoder is never asked for a link.
+    {
+      const { ctx, p } = await launch({ stored: null });
+      let photonAsked = false;
+      await p.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
+      await stubInstances(p);
+      await p.goto(BASE + "/app/?text=" + encodeURIComponent("Lambeau Field " + MAPLINK), { waitUntil: "commit" });
+      await p.waitForURL((u) => u.pathname === `/${wi}/`, { timeout: 10000, waitUntil: "commit" }).catch(() => {});
+      check(`with no state remembered, a shared Google Maps link goes through the front page to /${wi}/`,
+        new URL(p.url()).pathname === `/${wi}/` && /^#point=44\.5013\d*,-88\.0622/.test(new URL(p.url()).hash),
+        p.url());
+      check("a shared map link is never sent to the geocoder", !photonAsked, String(photonAsked));
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const p = await ctx.newPage();
+      await p.route("**/photon.komoot.io/**", photonStub([photonFeature(44.5013, -88.0622)]));
+      await stubInstances(p);
+      await p.goto(BASE + "/#q=" + encodeURIComponent("1265 Lombardi Ave, Green Bay, WI"), { waitUntil: "domcontentloaded" });
+      const mid = await p.evaluate(() => location.hash).catch(() => "(left)");
+      await addressSettled(p);
+      check(`the front page searches an address handed over in #q= and opens /${wi}/`,
+        new URL(p.url()).pathname === `/${wi}/`, p.url());
+      check("the front page takes #q= out of its own address before it searches",
+        mid === "" || mid === "(left)", JSON.stringify(mid));
+      await ctx.close();
+    }
+    // THE WORKER. The first launch installs it; a share after that must be
+    // answered from its copy, and the copy refreshed by a request for /app/
+    // with no query. The worker's own requests are visible only behind
+    // PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS (set at the top of this
+    // file), so the check refuses to pass unless it saw the refresh at all.
+    {
+      const { ctx, p } = await launch({ stored: "il", workers: "allow" });
+      await stubInstances(p);
+      await p.goto(BASE + "/app/", { waitUntil: "commit" });
+      await p.waitForURL((u) => u.pathname === "/il/", { timeout: 5000, waitUntil: "commit" }).catch(() => {});
+      let ready = false;
+      for (let i = 0; i < 20 && !ready; i++) {
+        ready = await p.evaluate(async () => {
+          const keys = (await caches.keys()).filter((k) => k.indexOf("districtry-app-launch-v") === 0);
+          return keys.length === 1 && !!(await caches.match("/app/", { cacheName: keys[0] }));
+        }).catch(() => false);
+        if (!ready) await p.waitForTimeout(250);
+      }
+      const byWorker = [];
+      ctx.on("request", (r) => { if (r.serviceWorker()) byWorker.push(r.url()); });
+      const resp = await p.goto(BASE + "/app/?text=" + encodeURIComponent("Lambeau Field " + SHORT), { waitUntil: "commit" }).catch(() => null);
+      const fromWorker = !!resp && resp.fromServiceWorker();
+      await p.waitForURL((u) => u.pathname === "/il/", { timeout: 5000, waitUntil: "commit" }).catch(() => {});
+      await p.waitForTimeout(500);
+      const refresh = byWorker.filter((u) => new URL(u).pathname === "/app/");
+      const leaked = byWorker.filter((u) => /[?&](?:title|text|url)=/.test(u));
+      check("with its worker installed, a share is answered from the launcher's copy",
+        ready && fromWorker && handed(new URL(p.url()).hash) === "Lambeau Field " + SHORT,
+        JSON.stringify({ ready, fromWorker, url: p.url() }));
+      check("the worker refreshes its copy without the share, so the host never sees it",
+        refresh.length > 0 && leaked.length === 0, JSON.stringify({ refresh, leaked }));
+      await ctx.close();
+    }
+  }
+
+  // --- 10. inside the Google Play app the support links are hidden ----------
+  //
+  // The Play app is this site in a full-screen Chrome window, and Google Play
+  // does not allow an app to send readers to an outside payment page, so
+  // engine/shared/play-app.txt hides the GitHub Sponsors and sponsorship links
+  // in a window the app opened, and nowhere else. The app opens
+  // /app/?ref=play: the launcher must pass that one tag on, the page it lands
+  // on must mark the window, and the next page must read the mark with no tag
+  // in its address. Every half is asserted both ways, because a rule that
+  // hid the links everywhere would pass a hiding test on its own. The
+  // referrer path stands in for a shared link opened straight into the app,
+  // with a link from Gmail as the control.
+  {
+    const supportShown = (p) => p.evaluate(() => {
+      const visible = (el) => !!el && el.getClientRects().length > 0;
+      const all = (sel) => Array.prototype.slice.call(document.querySelectorAll(sel));
+      return {
+        marked: document.documentElement.classList.contains("dst-play-app"),
+        sponsors: all('a[href*="github.com/sponsors"]').map(visible),
+        policy: all('a[href*="sponsorship.html"]').map(visible),
+      };
+    });
+    const hidden = (s) => s.marked && s.sponsors.length > 0 && s.sponsors.every((v) => !v) &&
+      s.policy.every((v) => !v);
+    const kept = (s) => !s.marked && s.sponsors.length > 0 && s.sponsors.every((v) => v) &&
+      s.policy.length > 0 && s.policy.every((v) => v);
+
+    for (const stored of [TAGS.includes("wi") ? "wi" : TAGS[0], null]) {
+      const want = stored ? `/${stored}/` : "/";
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      await ctx.addInitScript((s) => {
+        if (location.pathname !== "/app/") return;
+        try {
+          if (s === null) localStorage.removeItem("districtry-last-app");
+          else localStorage.setItem("districtry-last-app", s);
+        } catch (e) { /* private mode */ }
+      }, stored);
+      const p = await ctx.newPage();
+      await stubInstances(p);
+      await p.route((url) => url.pathname === "/", (r) => r.fulfill({
+        status: 200, contentType: "text/html", body: "<!doctype html><title>front door stub</title>",
+      }));
+      await p.goto(BASE + "/app/?ref=play", { waitUntil: "commit" });
+      await p.waitForURL((u) => u.pathname !== "/app/", { timeout: 5000, waitUntil: "commit" }).catch(() => {});
+      const u = new URL(p.url());
+      check(`a launch from Google Play opens ${want} carrying ref=play and nothing else`,
+        u.pathname === want && u.search === "?ref=play", p.url());
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const p = await ctx.newPage();
+      await p.route("**/gc.zgo.at/**", (r) => r.abort());
+      await p.goto(BASE + "/?ref=play", { waitUntil: "domcontentloaded" });
+      const inApp = await supportShown(p);
+      check("in the Play app the front page hides its sponsorship paragraph and link",
+        hidden(inApp) && inApp.policy.length > 0, JSON.stringify(inApp));
+      await p.goto(BASE + "/sponsorship.html", { waitUntil: "domcontentloaded" });
+      const next = await supportShown(p);
+      check("the mark carries to the next page in the window, with no tag in its address",
+        hidden(next), JSON.stringify(next));
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const p = await ctx.newPage();
+      await p.route("**/gc.zgo.at/**", (r) => r.abort());
+      await p.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      const web = await supportShown(p);
+      check("on the website the front page keeps its sponsorship paragraph and link",
+        kept(web), JSON.stringify(web));
+      await ctx.close();
+    }
+    for (const [referrer, inside] of [["android-app://com.districtry.app/", true],
+                                       ["android-app://com.google.android.gm/", false]]) {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      await ctx.addInitScript((r) => {
+        Object.defineProperty(Document.prototype, "referrer", { get: () => r, configurable: true });
+      }, referrer);
+      const p = await ctx.newPage();
+      await p.route("**/gc.zgo.at/**", (r) => r.abort());
+      await p.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      const s = await supportShown(p);
+      check(`a page opened from ${referrer} ${inside ? "hides" : "keeps"} the sponsorship links`,
+        inside ? hidden(s) : kept(s), JSON.stringify(s));
+      await ctx.close();
     }
   }
 } finally {

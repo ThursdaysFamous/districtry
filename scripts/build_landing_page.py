@@ -139,6 +139,7 @@ INSTANCE_WORKSHEET = {
     "ok": "ok/metro-worksheet.json",
     "sc": "sc/metro-worksheet.json",
     "tn": "tn/metro-worksheet.json",
+    "ar": "ar/metro-worksheet.json",
 }
 FONTFACE = os.path.join(REPO_ROOT, "fonts", "barlow-fontface.css")
 THEME_BOOT = os.path.join(REPO_ROOT, "engine", "shared", "theme-boot.txt")
@@ -158,6 +159,20 @@ def shared_theme_boot():
     part of what ships.
     """
     with open(THEME_BOOT, encoding="utf-8") as fh:
+        return fh.read().rstrip("\n")
+PLAY_APP = os.path.join(REPO_ROOT, "engine", "shared", "play-app.txt")
+
+
+def shared_play_app():
+    """The Google Play app's mark, read from its ONE source.
+
+    engine/shared/play-app.txt is an ENGINE fence in every app, every sources
+    page and the sponsorship page, spliced by compose_app.py. This page carries
+    it too because its footer asks for sponsorship, and a reader in the Play
+    app reaches it from any state's menu. Returned verbatim, like the theme
+    boot.
+    """
+    with open(PLAY_APP, encoding="utf-8") as fh:
         return fh.read().rstrip("\n")
 MAP_LINK = os.path.join(REPO_ROOT, "engine", "shared", "map-link.txt")
 
@@ -952,6 +967,9 @@ def build():
 </script>
 <script>
 %(themeboot)s
+</script>
+<script>
+%(playapp)s
 </script>
 <style>
 %(fontface)s
@@ -1852,6 +1870,26 @@ footer .support b { color: var(--ink); }
           window.location.href = metro.url + "#point=" + hit.lat.toFixed(5) + "," + hit.lng.toFixed(5);
         });
   }
+
+  /* A PLACE HANDED OVER IN THE ADDRESS (#q=). A place shared into the
+   * installed app reaches its launcher (app/index.html), which opens the
+   * state the reader used last with #q=, or this page when no state has been
+   * opened yet. It is put in the box and sent exactly as if it had been
+   * pasted, so a map link is read here and routed, and anything else is an
+   * address search. The hash, never the query string, because the counter on
+   * this page reports the query string with every visit; and it is taken out
+   * of this page's address first, so going back here does not search it
+   * again and send the reader forward a second time. */
+  var handed = /(?:^#|&)q=([^&]*)/.exec(location.hash);
+  if (handed) {
+    var handedText = "";
+    try { handedText = decodeURIComponent(handed[1]).trim(); } catch (err) { handedText = ""; }
+    if (window.history && history.replaceState) history.replaceState(null, "", location.pathname + location.search);
+    if (handedText) {
+      input.value = handedText;
+      if (form.requestSubmit) form.requestSubmit(); else button.click();
+    }
+  }
 })();
 </script>
 </body>
@@ -1866,6 +1904,7 @@ footer .support b { color: var(--ink); }
         "favicon": html.escape(favicon_uri, quote=True),
         "fontface": fontface + "\n" + FALLBACK_FACE,
         "themeboot": shared_theme_boot(),
+        "playapp": shared_play_app(),
         "maplink": shared_map_link(),
         "light": token_css(LIGHT_TOKENS, light, ":root"),
         "dark": token_css(DARK_TOKENS, dark, '[data-theme="dark"]', DARK_EXTRA,

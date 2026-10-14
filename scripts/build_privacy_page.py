@@ -212,13 +212,14 @@ LINK_LOOKUP_HOST = "link-lookup.districtry.deno.net"
 LINK_LOOKUP_ROW = (
     "Deno Deploy", "short map-link lookup", "https://deno.com/privacy",
     "Only when you paste a <strong>short</strong> Google Maps or Apple Maps link "
-    "(maps.app.goo.gl, maps.apple) into a search box: that link, sent to districtry&#39;s "
+    "(maps.app.goo.gl, maps.apple) into a search box, or share one into the installed "
+    "app: that link, sent to districtry&#39;s "
     "own lookup, which runs on Deno&#39;s servers, follows it to the full link and "
     "sends that back. Deno receives your IP address and the short link. The lookup&#39;s "
     "own code stores neither; Deno, not this project, keeps whatever request logs its "
     "platform keeps. A full map link or a coordinate pair is read in "
     "your browser and goes nowhere.",
-    "Only when you paste a short map link.", "link_lookup")
+    "Only when you paste or share a short map link.", "link_lookup")
 
 
 # Geocoders, keyed by the host the measurement finds. What a geocoder receives is
@@ -367,6 +368,11 @@ def measure_address_list(src, name):
 # (shown, accepted, declined or closed; tip-shown or tip-closed for the
 # iPhone's directions). All three are by app and never by place: the launch
 # event is sent at boot, before any point is selected.
+# `share-in/` joined on 2026-10-14, when the installed app joined Android's
+# Share menu (the manifest's share_target): `share-in/<tag>` records that a
+# place shared into the app opened that app, and nothing about the place,
+# which travels in the address hash and reaches analytics only as the
+# rounded `select` any selection sends.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
@@ -374,7 +380,7 @@ EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "boundary-st
                    "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
                    "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "select",
-                   "share-native", "share-open", "share-permalink", "share-qr"]
+                   "share-in/", "share-native", "share-open", "share-permalink", "share-qr"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
 
 
@@ -903,16 +909,27 @@ def measure_counter_coverage(apps):
     return {"counted": counted, "uncounted": uncounted}
 
 
-def launcher_reads():
-    """The storage key the installed app's launcher reads, established by the
-    gate that already holds it (scripts/build_manifests.py --check), so the
-    sentence naming the launcher and that gate cannot disagree."""
+def launcher_keys():
+    """The storage keys the installed app's launcher reads (the state used last)
+    and writes (a place shared into the app), established by the gate that
+    already holds both (scripts/build_manifests.py --check), so the sentences
+    naming the launcher and that gate cannot disagree."""
     try:
         import build_manifests
     except ImportError as e:
-        fail("cannot import scripts/build_manifests.py (%s). The sentence about "
-             "the installed app's launcher is measured through it." % e)
+        fail("cannot import scripts/build_manifests.py (%s). The sentences about "
+             "the installed app's launcher are measured through it." % e)
     return build_manifests.check_launcher()
+
+
+def launcher_reads():
+    """The storage key the installed app's launcher reads."""
+    return launcher_keys()[0]
+
+
+def launcher_shares():
+    """The session key the launcher leaves when a place is shared into the app."""
+    return launcher_keys()[1]
 
 
 def counter_who():
@@ -1151,6 +1168,38 @@ def render_storage_paragraphs(apps):
                 "is on %s. It is erased when you close the app, and it never leaves your "
                 "browser.</p>"
                 % (code(store), code(key), esc(joined(users))))
+        elif key == "districtry-play-app":
+            # The launcher is not one of the surfaces this page measures, so
+            # the claim that it sets the mark too is the manifest gate's: its
+            # check fails unless the launcher carries this block.
+            launcher_keys()
+            out.append(
+                "<p><strong>Opened in the Google Play app.</strong> If you open districtry "
+                "from its Android app on Google Play, a mark in %s under %s records that, "
+                "so the pages in that window leave out the links asking for sponsorship: "
+                "Google Play does not allow an app from its store to send readers to an "
+                "outside payment page. The website keeps those links. This is on %s, and "
+                "on the installed app's launcher at %s. It is erased when you close the "
+                "app, and it never leaves your browser.</p>"
+                # "The front door" heads a table cell; in the middle of this
+                # sentence it takes a small letter.
+                % (code(store), code(key), esc(re.sub(r"^The ", "the ", joined(users))),
+                   code("/app/")))
+        elif key == "districtry-share-in":
+            # The apps read and remove this key; the launcher writes it. That
+            # half is held by the manifest gate, as the last-app key is.
+            share_key = launcher_shares()
+            if share_key != key:
+                fail("the apps count a shared place under %r and the installed app's "
+                     "launcher marks it under %r, so the sentence about it would be "
+                     "false" % (key, share_key))
+            out.append(
+                "<p><strong>A place shared into the app.</strong> When you share a place "
+                "into the installed app, its launcher at %s leaves a mark in %s under %s, "
+                "so the map it opens can count that a share arrived. The map removes the "
+                "mark as soon as it has counted it. This is on %s. It says nothing about "
+                "the place, and it never leaves your browser.</p>"
+                % (code("/app/"), code(store), code(key), esc(joined(users))))
         elif key == "districtry-boundary-streets":
             out.append(
                 "<p><strong>Boundary street names.</strong> If you switch the map's "
@@ -1639,6 +1688,17 @@ PRIVACY_BODY = """
         someone can send you a form that already says what to check. That text, and a copied link
         to the form with what you typed, travel after the <span class="k">#</span> in the address,
         which your browser never sends to a server or to analytics.</p>
+      <p><strong>Places you share into the app.</strong> Once districtry is installed on an
+        Android phone it is in the Share menu, so a place open in Google Maps can be shared
+        straight to it. What you share arrives in the address of a request for the installed
+        app's launcher at %(launcher)s, and the launcher's own copy on your phone answers that
+        request. The launcher hands it to the map after the <span class="k">#</span>, and the map
+        reads it as it would a link pasted into its search box: a link that carries its position
+        is read on your phone, a short link goes to the short-link lookup in the table above, and
+        a place name or an address goes to the address search. The launcher keeps that copy from
+        the first time the installed app opens, or from the moment you install districtry from a
+        state's map. A share sent before then reaches this site's host, GitHub Pages, in the
+        address of that request.</p>
     </div>
   </section>
 

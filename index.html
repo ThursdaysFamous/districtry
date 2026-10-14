@@ -269,6 +269,91 @@
   }
 })();
 </script>
+<script>
+/* THE GOOGLE PLAY APP'S MARK, in ONE copy, for the pages that show a
+   support link: every app, every sources page, the front page and the
+   sponsorship page. The installed app's launcher (/app/) carries it too,
+   though it shows no support link, because a place shared into the app
+   arrives there (see below).
+
+   districtry's Android app on Google Play is this site in a full-screen
+   Chrome window (a Trusted Web Activity), so it shows these same pages.
+   Google Play's Payments policy does not let an app lead a reader to a
+   payment method other than Google's own billing, and Google applies that
+   to donations: in February 2022 it rejected an update of StreetComplete,
+   an open-source map app, for asking for donations, rejected it again once
+   the donation links were gone and a link to the project's GitHub page,
+   which asks for donations, was left, and accepted it when that link went
+   too (github.com/streetcomplete/StreetComplete/issues/3768). So inside the
+   Play app the links to GitHub Sponsors and to the sponsorship page are
+   hidden. The website keeps them, and so does a copy installed from the
+   browser's own menu, which no store reviews.
+
+   THE LINKS TO THIS PROJECT'S CODE ON GITHUB STAY, and that is a judgement
+   rather than a measurement. They sit in no sentence about money, which the
+   StreetComplete link did, but the repository's page shows a Sponsor
+   button. If a review objects to them, they join the rule below and the app
+   itself needs no rebuild, because it loads these pages.
+
+   THIS BLOCK IS ITS OWN <script> ELEMENT on every page, never a second
+   block inside the theme script, because scripts/question_page.py copies a
+   sources page's theme script into the question pages it generates, and
+   those pages carry no support link.
+
+   HOW A WINDOW IS KNOWN TO BE THE PLAY APP. The app is built to open
+   /app/?ref=play, and the launcher passes ref=play on, and nothing else, to
+   the page it opens: a URL is how the Trusted Web Activity documentation
+   says an app passes data to its pages. A page whose referrer is the app
+   itself (android-app://com.districtry.app, the package name the setup
+   guide builds) is marked too. Chrome names the Android app that opened a
+   page as its referrer, which is how a link tapped in Gmail arrives as
+   android-app://com.google.android.gm, so this should cover a shared link
+   opened straight into the app rather than through its icon. A place shared
+   from another app's Share menu takes that path into the LAUNCHER (the
+   manifest's share_target), which hands on with location.replace, so the
+   page it opens sees the launcher as its referrer rather than the app: the
+   launcher carries this block for that reason, and passes ref=play on when
+   it finds the mark. The referrer path is not yet measured on a phone; the
+   first is the one the app's own launches take, and both are tested here
+   with the referrer stood in for. Either sets a mark in session
+   storage, so every later page in the same window (another state, a sources
+   page, the front page) hides the links as well, and the mark goes when the
+   app is closed. Session storage belongs to one window, so the mark never
+   reaches the reader's ordinary browser tabs.
+
+   WHAT IS HIDDEN is matched by address rather than by a class, so a support
+   link added later to any page carrying this block is hidden in the Play app
+   without anyone remembering to mark it: every link to github.com/sponsors
+   or to sponsorship.html, and the paragraph or list item around one, because
+   a sentence asking for sponsorship reads wrong with its link taken out.
+   The :has() selectors are a rule of their own because a browser that does
+   not know :has() drops every selector in a rule that names it, and the
+   app panel's sponsorship sentence, .dpf-support, is named by class in the
+   first rule for that browser.
+
+   It runs in the head, before first paint, so the links never flash, and an
+   ordinary visit adds no style at all. */
+(function () {
+  var opened = /(?:^|&)ref=play(?:&|$)/.test(location.search.slice(1)) ||
+    /^android-app:\/\/com\.districtry\.app(?:\/|$)/.test(document.referrer || "");
+  var marked = opened;
+  try {
+    if (opened) sessionStorage.setItem("districtry-play-app", "1");
+    else marked = sessionStorage.getItem("districtry-play-app") === "1";
+  } catch (e) { /* blocked storage: only the page the app opened is marked */ }
+  if (!marked) return;
+  document.documentElement.classList.add("dst-play-app");
+  var css = document.createElement("style");
+  css.textContent =
+    ".dst-play-app a[href*=\"github.com/sponsors\"]," +
+    ".dst-play-app a[href*=\"sponsorship.html\"]," +
+    ".dst-play-app .dpf-support{display:none!important}" +
+    ".dst-play-app p:has(a[href*=\"github.com/sponsors\"])," +
+    ".dst-play-app li:has(a[href*=\"github.com/sponsors\"])," +
+    ".dst-play-app li:has(a[href*=\"sponsorship.html\"]){display:none!important}";
+  document.head.appendChild(css);
+})();
+</script>
 <style>
 /* ==== SELF-HOSTED FONTS:BEGIN — generated by scripts/build_fonts.py; do
    NOT hand-edit. Was fonts.googleapis.com; self-hosted so the two font
@@ -1543,7 +1628,8 @@ footer .support b { color: var(--ink); }
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
    * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
    * link and returns the full link it leads to; its own code stores nothing.
-   * Only a short link is ever sent to it, and only when a reader pastes one.
+   * Only a short link is ever sent to it, and only when a reader pastes one
+   * or shares one into the installed app.
    * The address is the app's own name on Deno, not the suffixed address
    * Deno also serves it at. The lookup's host receives the short link, so
    * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host
@@ -1706,6 +1792,26 @@ footer .support b { color: var(--ink); }
           setStatus("Opening " + metro.name + "\u2026", false);
           window.location.href = metro.url + "#point=" + hit.lat.toFixed(5) + "," + hit.lng.toFixed(5);
         });
+  }
+
+  /* A PLACE HANDED OVER IN THE ADDRESS (#q=). A place shared into the
+   * installed app reaches its launcher (app/index.html), which opens the
+   * state the reader used last with #q=, or this page when no state has been
+   * opened yet. It is put in the box and sent exactly as if it had been
+   * pasted, so a map link is read here and routed, and anything else is an
+   * address search. The hash, never the query string, because the counter on
+   * this page reports the query string with every visit; and it is taken out
+   * of this page's address first, so going back here does not search it
+   * again and send the reader forward a second time. */
+  var handed = /(?:^#|&)q=([^&]*)/.exec(location.hash);
+  if (handed) {
+    var handedText = "";
+    try { handedText = decodeURIComponent(handed[1]).trim(); } catch (err) { handedText = ""; }
+    if (window.history && history.replaceState) history.replaceState(null, "", location.pathname + location.search);
+    if (handedText) {
+      input.value = handedText;
+      if (form.requestSubmit) form.requestSubmit(); else button.click();
+    }
   }
 })();
 </script>
