@@ -1874,8 +1874,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
     flex: none;
     font-size: 13px;
     font-weight: 600;
-    /* Handoff 3 §5a: the pill is tinted with the layer's own color */
-    color: var(--layer-accent, var(--card-link));
+    /* Handoff 3 §5a: the pill is tinted with the layer's own color — but
+       as TEXT it cannot be the layer's colour itself. A map colour is chosen
+       to read as a line on the map (3:1 at best), and painted as 13px text it
+       read 1.1:1 for "IL-7" on a dark card and 2.2:1 for a pale fill colour
+       on a light one. Mixed half and half with the card's own ink, every
+       layer colour in every app clears 4.5:1 in both themes, which
+       validate_contrast.py measures (check_layer_pills) and fails on if this
+       declaration changes shape. */
+    color: color-mix(in srgb, var(--layer-accent, var(--card-link)) 50%, var(--card-ink));
     background: color-mix(in srgb, currentColor 9%, transparent);
     padding: 3px 10px;
     border-radius: 999px;
@@ -22152,6 +22159,24 @@ function initChiExplorer() {
           offices: [{ label: "Ward Office", lines: [String(result.address)] }]
         }));
       }
+      // Chipoli (chipoli.org) keeps one page per ward on whoever holds the
+      // seat, at /alderpersons/<ward>, so the link follows the seat through
+      // turnover without a name match. It is the first link on an Illinois
+      // card to a site no government runs, so the row says so rather than
+      // reading like the City's own contact lines above it. Added on Adam's
+      // choice of 2026-10-13 after its owner offered to collaborate. Every
+      // path on that site answers 200 (an unknown ward renders "No such ward"
+      // in the page), so no link checker can catch a bad number: the ward is
+      // held to Chicago's 1-50 here instead.
+      var chipoliWard = result.ward ? String(result.ward) : "";
+      if (/^\d+$/.test(chipoliWard) && +chipoliWard >= 1 && +chipoliWard <= 50) {
+        wrap.appendChild(renderLinkRow({
+          title: "More about this alderperson",
+          note: "From Chipoli, an independent Chicago civic site. It is not run by the City.",
+          links: [{ label: "Ward " + chipoliWard + " on Chipoli ↗",
+                    url: "https://chipoli.org/alderpersons/" + chipoliWard }]
+        }));
+      }
       return wrap;
     },
     cardIdentifier: function (result) {
@@ -36833,6 +36858,12 @@ function initChiExplorer() {
         }
       }
     }
+    /* The cards were built before these getters existed, so a page that
+       BOOTS dark carried every card's light colour — the stripe, the dot and
+       the district pill — until the reader flipped the theme. Measured at the
+       Loop on 2026-10-13: U.S. House kept #14181C on a #262331 card head.
+       A flip repaints through dstRepaintLayers, so boot does the same. */
+    if (dstDark) dstRepaintLayers();
   })();
   /* The selection highlight is "the layer's own colour, shifted away from it so
      the matched region pops". The engine spells that DARKEN, which is right on

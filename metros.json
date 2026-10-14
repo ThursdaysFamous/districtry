@@ -124,7 +124,7 @@
       },
       "tag": "mn",
       "landing_name": "Minnesota",
-      "blurb": "All 87 counties: county board districts in every one of them, judicial districts, townships and cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Minnesota Senate, House and U.S. House districts, and who holds the U.S. House seats. Nobody is named yet on the county boards, the judges' benches or the two state chambers, and the Data gaps panel says why.",
+      "blurb": "All 87 counties and their county commissioner districts: judicial and watershed districts, townships and cities, voting precincts, school districts and school board districts, ZIP codes, tribal land, and the nearest police station, fire station and post office — plus the Minnesota Senate, House and U.S. House districts, and who holds the U.S. House seats. County commissioners, school board members and the councils of the cities over 25,000 people are named for the winner of each seat's most recent election in the Secretary of State's results, and a tribal council is named where the nation publishes its own list. Nobody is named yet on the judges' benches, the two state chambers or the smaller cities' councils, and the Data gaps panel says why.",
       "scope": "all 87 counties"
     },
     {
@@ -142,7 +142,7 @@
       },
       "tag": "ky",
       "landing_name": "Kentucky",
-      "blurb": "All 120 counties: the county a point sits in, and the Kentucky Senate, House and U.S. House districts \u2014 with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the fiscal courts, and the Data gaps panel says why.",
+      "blurb": "All 120 counties: each county's fiscal court and elected officers, cities with their mayors and councils, school districts, and the Supreme Court, Court of Appeals, circuit court and district court districts — plus the Kentucky Senate, House and U.S. House districts, with the member named for each U.S. House seat. County and city officials are named from the Department for Local Government's directories, and judges from the Court of Justice's own pages. Nobody is named yet on the two state chambers or the school boards, and the Data gaps panel says why.",
       "scope": "all 120 counties"
     },
     {
@@ -160,7 +160,7 @@
       },
       "tag": "in",
       "landing_name": "Indiana",
-      "blurb": "All 92 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. Nobody is named yet on the two state chambers or the county governments, and the Data gaps panel says why.",
+      "blurb": "All 92 counties: each county's commissioners and county council, townships, cities and towns, school districts, ZIP codes, the Pokagon Band's trust land, and the nearest police station, fire station and post office — plus the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. County officials, and the mayors and councils of most places over 25,000 people, are named for the winner of each seat's most recent election in the Election Division's certified results; the Pokagon Band's council is named from its own page. Nobody is named yet on the two state chambers, the school boards, the township boards or the smaller towns' councils, and the Data gaps panel says why.",
       "scope": "all 92 counties"
     },
     {
@@ -178,7 +178,7 @@
       },
       "tag": "nc",
       "landing_name": "North Carolina",
-      "blurb": "All 100 counties: townships, cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. Nobody is named yet on the county boards or city councils, and the Data gaps panel says why.",
+      "blurb": "All 100 counties: each county's board of commissioners, townships, cities and towns, school districts, ZIP codes, the Eastern Band of Cherokee Indians' land, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. County commissioners are named for the winner of each seat's most recent election in the State Board of Elections' results. Nobody is named yet on the city councils, the school boards or the Eastern Band's council, and the Data gaps panel says why.",
       "scope": "all 100 counties"
     },
     {

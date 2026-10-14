@@ -1136,6 +1136,38 @@ try {
     await context.close();
   }
 
+  // 1k2. THE CHICAGO WARD CARD LINKS THAT WARD'S CHIPOLI PAGE. The address is
+  //     built from the ward number at runtime, so the monthly link check
+  //     cannot probe it, and every path on chipoli.org answers 200 whatever
+  //     the number, so a wrong one would look fine from outside too. Both City
+  //     sources are stubbed so the ward is known: the card must carry exactly
+  //     one Chipoli link, to /alderpersons/42, opening in a new tab, beside
+  //     the line saying the site is not the City's.
+  {
+    const [plat, plng] = POINT.split(",").map(Number);
+    const d = 0.01;
+    const wards = JSON.stringify({ type: "FeatureCollection", features: [{ type: "Feature",
+      properties: { ward: "42" },
+      geometry: { type: "Polygon", coordinates: [[[plng - d, plat - d], [plng + d, plat - d],
+        [plng + d, plat + d], [plng - d, plat + d], [plng - d, plat - d]]] } }] });
+    const roster = JSON.stringify([{ ward: "42", alderman: "Hopkins, Brendan" }]);
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=ward`, async (p) => {
+      await p.route(/p293-wvbd/, (r) => r.fulfill({ status: 200, contentType: "application/json", body: wards }));
+      await p.route(/htai-wnw4/, (r) => r.fulfill({ status: 200, contentType: "application/json", body: roster }));
+    });
+    const card = await cardText(page, "ward");
+    const chipoli = await page.evaluate(() => Array.from(document.querySelectorAll("#card-ward a"))
+      .filter((a) => /chipoli\.org/.test(a.href))
+      .map((a) => ({ href: a.href, text: a.textContent, target: a.target, rel: a.rel })));
+    check("the Chicago ward card links that ward's Chipoli page and says the site is not the City's",
+      chipoli.length === 1 && chipoli[0].href === "https://chipoli.org/alderpersons/42" &&
+        chipoli[0].text.indexOf("Ward 42 on Chipoli") === 0 && chipoli[0].target === "_blank" &&
+        /noopener/.test(chipoli[0].rel) && /not run by the City/.test(card.text),
+      JSON.stringify({ chipoli, card: card.text.slice(0, 400) }));
+    await context.close();
+  }
+
   // 1h. THE REPORT FORM OPENS FROM A LINK. `#feedback=<text>` beside a point
   //     opens the form with that text filled in, counted once as opened by a
   //     link; "Copy a link to this form" hands back a link carrying the view
@@ -2277,6 +2309,51 @@ try {
       });
     }
     check("tile failure shows dismissible banner", shown && hiddenAfterDismiss === true, `shown=${shown} hiddenAfterDismiss=${hiddenAfterDismiss}`);
+    await context.close();
+  }
+
+  // 1i2. A CARD'S DISTRICT PILL IS LEGIBLE IN A PAGE THAT BOOTS DARK. Two
+  //      defects read "IL-7" at 1.1:1 on a dark card (2026-10-13): the cards
+  //      were built before the dark palette's getters were installed, so a page
+  //      that booted dark kept every card's LIGHT colour (#14181C for the House)
+  //      until the theme was flipped; and the pill painted the layer colour
+  //      itself as text. validate_contrast.py measures the pill's mix for every
+  //      layer colour statically; this is the half only a browser can see — the
+  //      accent a card actually carries after a dark boot, and the ratio the
+  //      browser actually paints.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=41.88250,-87.62850&layers=congress`, async (p) => {
+      await p.addInitScript(() => { try { localStorage.setItem("districtry-theme", "dark"); } catch (e) {} });
+    });
+    const pill = await page.waitForFunction(() => {
+      const cb = document.getElementById("toggle-congress");
+      const block = cb && cb.closest(".layer-block");
+      const el = block && block.querySelector(".card-id-pill");
+      if (!el || el.hidden || !el.textContent.trim()) return null;
+      const rgb = (v) => {
+        const m = v.match(/^color\(srgb ([\d.e-]+) ([\d.e-]+) ([\d.e-]+)(?: \/ ([\d.e-]+))?\)$/);
+        if (m) return [+m[1] * 255, +m[2] * 255, +m[3] * 255, m[4] === undefined ? 1 : +m[4]];
+        const n = v.match(/[\d.]+/g).map(Number);
+        return [n[0], n[1], n[2], n.length > 3 ? n[3] : 1];
+      };
+      const lum = (c) => {
+        const f = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+        return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+      };
+      const text = rgb(getComputedStyle(el).color);
+      const tint = rgb(getComputedStyle(el).backgroundColor);
+      const head = rgb(getComputedStyle(el.parentElement).backgroundColor);
+      const ground = [0, 1, 2].map((i) => tint[i] * tint[3] + head[i] * (1 - tint[3]));
+      const a = lum(text), b = lum(ground);
+      return { text: el.textContent.trim(), theme: document.documentElement.getAttribute("data-theme"),
+               accent: block.style.getPropertyValue("--layer-accent").trim().toUpperCase(),
+               ratio: (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05) };
+    }, null, { timeout: QUERY_TIMEOUT }).then((h) => h.jsonValue(), () => null);
+    check("a page that boots dark gives its cards the dark layer colour, not the light one",
+      !!pill && pill.theme === "dark" && !!pill.accent && pill.accent !== "#14181C", JSON.stringify(pill));
+    check("the U.S. House card's district pill reads at 4.5:1 or better on a dark card",
+      !!pill && pill.ratio >= 4.5, JSON.stringify(pill));
     await context.close();
   }
 
