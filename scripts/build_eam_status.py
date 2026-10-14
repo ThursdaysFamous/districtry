@@ -1330,6 +1330,10 @@ FUNCTIONS = (
     (12, "special-districts",
      "Special districts the state's own law creates", False),
     (13, "tribal-government", "Tribal governments", False),
+    # Added 2026-10-14 (Adam). Numbered 14 so every earlier level keeps its
+    # number; it is a boundary level owed in every state, like 3, 5 and 7.
+    (14, "subdivision-boundaries",
+     "Township or county subdivision boundaries", True),
 )
 
 # Two entries have a SIZE in them rather than a layer, so they are measured
@@ -1432,6 +1436,9 @@ ANSWERS = {
         "local-government": depth("ward"),
         "school-district-boundaries": answers("school-district-unified", "school-district-elementary", "school-district-secondary"),
         # Illinois elects its circuit judges from subcircuits in nine counties.
+        # Drawn from the Census, which treats Chicago as one subdivision; Cook
+        # County's own map draws eight townships inside the city.
+        "subdivision-boundaries": answers("township"),
         "courts-by-district": answers("judicial-subcircuit"),
         # Illinois townships are limited purpose, which is why they are NOT in
         # the 25,000 city tier above; they are owed here, and the app draws them
@@ -1460,6 +1467,7 @@ ANSWERS = {
         "municipal-boundaries": answers("municipality"),
         "local-government": depth("aldermanic-district"),
         "school-district-boundaries": answers("school-district-unified", "school-district-elementary", "school-district-secondary"),
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("wi-circuit-court", "wi-court-of-appeals"),
         # A Wisconsin town IS the general-purpose government outside a village
         # or city, and the app draws it — but what it names there is the town
@@ -1489,6 +1497,7 @@ ANSWERS = {
         "municipal-boundaries": answers("municipality"),
         "local-government": depth("city-ward"),
         "school-district-boundaries": answers("school-district-unified"),
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("ia-judicial-district"),
         # Iowa townships are limited purpose and none reaches the city floor.
         # The app DRAWS them and, since 2026-10-01, names the clerk and trustees
@@ -1519,6 +1528,7 @@ ANSWERS = {
         # Built 2026-10-01 from statute as unions of whole counties; the judges
         # are not named (gap mi-judge-roster: the court system's site refuses
         # every client).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("mi-court-of-appeals", "mi-circuit-court"),
         # A Michigan township governs everyone outside a village or city, so
         # the 34 that clear 25,000 are already owed under the city tier; the
@@ -1565,6 +1575,7 @@ ANSWERS = {
         # the app draws all ten. It names no judge: www.mncourts.gov serves a
         # Cloudflare managed challenge to every client, which is an access
         # control (gap mn-judicial-roster).
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("mn-judicial-district"),
         "sub-county-government": OPEN,
         # SETTLED 2026-10-01 by this instance's own thread: the level exists
@@ -1624,6 +1635,7 @@ ANSWERS = {
         # named since 2026-10-07 (Louisville's from the three Jefferson court
         # sites its Court of Justice page links), though the standard asks
         # whether the app answers the level and would count it without them.
+        "subdivision-boundaries": OPEN,
         "courts-by-district": answers(
             "ky-supreme-court", "ky-court-of-appeals", "ky-circuit-court",
             "ky-district-court"),
@@ -1679,6 +1691,7 @@ ANSWERS = {
         # school layers both answer zero features for STATE='18' (measured
         # 2026-09-29), so there is no second tiling to ship.
         "school-district-boundaries": answers("school-district-unified"),
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         "sub-county-government": OPEN,
         "school-boards-by-district": OPEN,
@@ -1697,6 +1710,7 @@ ANSWERS = {
         "municipal-boundaries": answers("municipality"),
         "local-government": depth(),
         "school-district-boundaries": answers("school-district-unified"),
+        "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": OPEN,
         # NORTH CAROLINA'S TOWNSHIPS GOVERN NOBODY. The Census carries every
         # one with FUNCSTAT N (non-functioning): the boundaries exist and the
@@ -1730,6 +1744,7 @@ ANSWERS = {
         # and the secondary tiling is empty. Recorded in ok/CLAUDE.md.
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary"),
+        "subdivision-boundaries": OPEN,
         "courts-by-district": OPEN,
         # OKLAHOMA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 305 county
         # subdivisions TIGERweb carries for the state are census county
@@ -1762,6 +1777,7 @@ ANSWERS = {
         # TIGER's unified tiling holds all 72 districts and the other two hold
         # none, measured in sc/CLAUDE.md, so one layer is the whole level.
         "school-district-boundaries": answers("school-district-unified"),
+        "subdivision-boundaries": OPEN,
         "courts-by-district": OPEN,
         # SOUTH CAROLINA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 299
         # county subdivisions TIGERweb carries for the state are census county
@@ -1797,6 +1813,7 @@ ANSWERS = {
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary",
             "school-district-secondary"),
+        "subdivision-boundaries": OPEN,
         "courts-by-district": OPEN,
         # TENNESSEE HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 855 county
         # subdivisions TIGERweb carries for the state are civil districts
@@ -1830,6 +1847,9 @@ ANSWERS = {
         "municipal-boundaries": answers("municipality", "village"),
         "local-government": depth("council"),
         "school-district-boundaries": answers("nys-school-district", "nys-central-hs-district"),
+        # New York's cities and towns ARE its county subdivisions, so the
+        # city-and-town layer is this map.
+        "subdivision-boundaries": answers("municipality"),
         "courts-by-district": answers("judicial-district", "municipal-court"),
         # A New York town governs everyone outside a village or city, so the 67
         # that clear 25,000 are owed under the city tier; the rest are owed
@@ -1865,6 +1885,7 @@ ANSWERS = {
         # Neither is an absence anybody has to ask a publisher about: the
         # level does not exist inside this city, which is the standard's
         # "a state genuinely lacks a level" case.
+        "subdivision-boundaries": na(CITY_INSTANCE),
         "courts-by-district": na(SF_NO_COURT_DISTRICTS),
         "sub-county-government": na(CITY_INSTANCE),
         "school-boards-by-district": na(SF_SCHOOL_BOARDS_AT_LARGE),

@@ -78,6 +78,7 @@ which entries apply does.
 6. The governing body of every local government above 25,000 people that
    governs its residents generally (see below).
 7. School district boundaries.
+14. Township or county subdivision boundaries (added 2026-10-14; see below).
 
 **Required where the state has them**
 
@@ -94,6 +95,34 @@ A level in the second group is covered when either the app answers it or a
 record states that the state does not have it. Where a state genuinely lacks a
 level — a state with no townships, say — the entry is covered by that fact
 rather than by work, and the record states the fact and where it was checked.
+
+## Township and county subdivision boundaries
+
+Added on 2026-10-14 at Adam's request: the layer that tells a reader which
+township, town or county subdivision a point is in is expected in every state,
+like the county, municipal and school district maps beside it. It is numbered
+14 rather than slotted in beside them so that every earlier level keeps the
+number the reports and threads already use.
+
+It is a **boundary** level, and it is separate from entry 9. Entry 9 asks
+whether the app names the sub-county *government* where one exists. This one
+asks whether the app draws the map at all. Every state is divided into county
+subdivisions: in some they are governments (Illinois and Indiana townships,
+Michigan and Wisconsin towns and townships, New York towns), and in others they
+are areas the Census draws for counting only (Kentucky, North Carolina,
+Oklahoma, South Carolina, Tennessee). The map is owed either way; where the
+units govern nobody, the card says so rather than implying a government.
+
+**The Census map is the default source, not the last word.** Where a county
+publishes finer lines than the Census does, the county's lines are the better
+answer. The case that prompted this is Chicago: the Census treats the whole city
+as one subdivision, "Chicago city", while Cook County's own map draws the eight
+townships inside it. A layer that answers "Chicago city" there is drawn and
+passes this level; drawing the eight townships is the improvement, owned by the
+state's thread.
+
+San Francisco is one city and one county, so the level does not apply to it, for
+the same reason levels 3, 5, 7 and 9 do not.
 
 ## Where the city line sits, and which units count
 
