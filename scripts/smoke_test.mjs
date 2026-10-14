@@ -2312,6 +2312,51 @@ try {
     await context.close();
   }
 
+  // 1i2. A CARD'S DISTRICT PILL IS LEGIBLE IN A PAGE THAT BOOTS DARK. Two
+  //      defects read "IL-7" at 1.1:1 on a dark card (2026-10-13): the cards
+  //      were built before the dark palette's getters were installed, so a page
+  //      that booted dark kept every card's LIGHT colour (#14181C for the House)
+  //      until the theme was flipped; and the pill painted the layer colour
+  //      itself as text. validate_contrast.py measures the pill's mix for every
+  //      layer colour statically; this is the half only a browser can see — the
+  //      accent a card actually carries after a dark boot, and the ratio the
+  //      browser actually paints.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=41.88250,-87.62850&layers=congress`, async (p) => {
+      await p.addInitScript(() => { try { localStorage.setItem("districtry-theme", "dark"); } catch (e) {} });
+    });
+    const pill = await page.waitForFunction(() => {
+      const cb = document.getElementById("toggle-congress");
+      const block = cb && cb.closest(".layer-block");
+      const el = block && block.querySelector(".card-id-pill");
+      if (!el || el.hidden || !el.textContent.trim()) return null;
+      const rgb = (v) => {
+        const m = v.match(/^color\(srgb ([\d.e-]+) ([\d.e-]+) ([\d.e-]+)(?: \/ ([\d.e-]+))?\)$/);
+        if (m) return [+m[1] * 255, +m[2] * 255, +m[3] * 255, m[4] === undefined ? 1 : +m[4]];
+        const n = v.match(/[\d.]+/g).map(Number);
+        return [n[0], n[1], n[2], n.length > 3 ? n[3] : 1];
+      };
+      const lum = (c) => {
+        const f = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+        return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+      };
+      const text = rgb(getComputedStyle(el).color);
+      const tint = rgb(getComputedStyle(el).backgroundColor);
+      const head = rgb(getComputedStyle(el.parentElement).backgroundColor);
+      const ground = [0, 1, 2].map((i) => tint[i] * tint[3] + head[i] * (1 - tint[3]));
+      const a = lum(text), b = lum(ground);
+      return { text: el.textContent.trim(), theme: document.documentElement.getAttribute("data-theme"),
+               accent: block.style.getPropertyValue("--layer-accent").trim().toUpperCase(),
+               ratio: (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05) };
+    }, null, { timeout: QUERY_TIMEOUT }).then((h) => h.jsonValue(), () => null);
+    check("a page that boots dark gives its cards the dark layer colour, not the light one",
+      !!pill && pill.theme === "dark" && !!pill.accent && pill.accent !== "#14181C", JSON.stringify(pill));
+    check("the U.S. House card's district pill reads at 4.5:1 or better on a dark card",
+      !!pill && pill.ratio >= 4.5, JSON.stringify(pill));
+    await context.close();
+  }
+
   // 6. Dark mode (R4.2) — the one function the re-skin ADDS, so it is the one
   //    that has no prior behaviour to fall back on if it breaks. Asserted
   //    through the surfaces a CSS-only check cannot see: the theme attribute,

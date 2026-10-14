@@ -308,12 +308,57 @@ MIDDLE_INITIAL_COMMA = re.compile(r"^(?P<given>.+?)\s+(?P<initial>[A-Z]),\s+(?P<
 NAME_SUFFIXES = {"jr", "sr", "ii", "iii", "iv", "v", "phd", "md", "esq", "cpa"}
 
 
-def normalise_filed_name(name, unit_label, warnings):
-    """A filed name with a middle initial's comma restored to a period.
+# A NAME FILED IN CAPITALS IS SHIPPED IN ORDINARY CASE (Adam, 2026-10-13: "fix
+# the formatting of the all caps submissions"). Some filers type the whole form
+# in capitals ("MARLIN DONLEY", Kempton Fire Protection District FY2026), and a
+# card that prints one district's board in capitals beside another's in mixed
+# case reads as two different sources. Only a name with NO lower-case letter is
+# touched, so a filer's own mixed-case spelling (McCleary, DeMoss) is never
+# second-guessed. Each word is capitalised; "Mc" is the one internal capital
+# supplied, as `platinum_canvass.name_case` does, and a letter after an
+# apostrophe or hyphen starts a new word (O'Brien, Smith-Jones). A filed
+# generational suffix stays in capitals (II, III, IV) and Jr./Sr. take the
+# usual case. Prefixes this cannot decide (De-, Van-, La-) are left as plain
+# capitalised words rather than guessed.
+CAPS_SUFFIXES = {"II", "III", "IV", "V"}
 
-    Returns the name unchanged when the pattern does not match. Appends a
-    warning naming both spellings when it does, so no correction is silent.
+
+def _case_word(word):
+    if word.rstrip(".,") in CAPS_SUFFIXES:
+        return word
+    out = []
+    for i, piece in enumerate(re.split(r"([-'’])", word)):
+        if piece in ("-", "'", "’") or not piece:
+            out.append(piece)
+        elif len(piece) > 3 and piece.upper().startswith("MC"):
+            out.append("Mc" + piece[2:].capitalize())
+        else:
+            out.append(piece.capitalize())
+    return "".join(out)
+
+
+def case_capitals(name):
+    """`name` in ordinary case when it was filed with no lower-case letter."""
+    if not name or not any(ch.isalpha() for ch in name) \
+            or any(ch.islower() for ch in name):
+        return name
+    return " ".join(_case_word(w) for w in name.split())
+
+
+def normalise_filed_name(name, unit_label, warnings):
+    """A filed name in ordinary case, with a middle initial's comma restored
+    to a period.
+
+    Returns the name unchanged when neither applies. Appends a warning naming
+    both spellings when either does, so no correction is silent.
     """
+    cased = case_capitals(name)
+    if cased != name:
+        said = ("%s: filed name %r is in capitals; shipped as %r"
+                % (unit_label, name, cased))
+        if said not in warnings:
+            warnings.append(said)
+        name = cased
     m = MIDDLE_INITIAL_COMMA.match(name or "")
     if not m:
         return name
@@ -926,6 +971,24 @@ def _selftest():
           [n for n in got if "Martinez" in n], ["Juan Martinez, Jr."])
     check("and does not call a filed suffix suspect",
           suspect_name("Juan Martinez, Jr."), None)
+
+    # CAPITALS, cased and printed; a filer's own mixed case left alone.
+    got, warned = officers(["MARLIN", "DONLEY", "Brenda", "Helms",
+                            "ROGER", "GUALANDI", "Dee", "Fox"])
+    # Slot C is a published slot (slot A ships only under a board title).
+    check("ships a name filed in capitals in ordinary case",
+          [n for n in got if "GUALANDI" in n.upper()], ["Roger Gualandi"])
+    check("never ships the capitals spelling",
+          any(n in ("MARLIN DONLEY", "ROGER GUALANDI") for n in got), False)
+    check("prints the casing it applied",
+          any("is in capitals" in w for w in warned), True)
+    for raw, want in (("SCOTT MCDONALD", "Scott McDonald"),
+                      ("MARY O'BRIEN-SMITH", "Mary O'Brien-Smith"),
+                      ("JOHN SHEA, JR.", "John Shea, Jr."),
+                      ("JAMES DOE III", "James Doe III"),
+                      ("Ann DeMoss", "Ann DeMoss"),
+                      ("Ric Warhol", "Ric Warhol")):
+        check("cases %r as %r" % (raw, want), case_capitals(raw), want)
 
     check("calls an unexplained comma suspect",
           suspect_name("Jaclyn G, Trujillo") is not None, True)
