@@ -10,11 +10,11 @@
             },
             {
               "name": "Jeff Hart",
-              "role": "Sec./Treas."
+              "role": "Treasurer"
             }
           ],
           "comptrollerCode": "075/010/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Pike",
           "office": {
             "address": "867 Main Street",
@@ -48,15 +48,15 @@
         "Bowen Fire": {
           "board": [
             {
-              "name": "LYLE PABEN",
+              "name": "Lyle Paben",
               "role": "Trustee"
             },
             {
-              "name": "BEVERLY HELLYER",
+              "name": "Beverly Hellyer",
               "role": "Trustee"
             },
             {
-              "name": "LYLE WANER",
+              "name": "Lyle Waner",
               "role": "Trustee"
             }
           ],
@@ -72,7 +72,7 @@
         "Camp Point Fire": {
           "board": [
             {
-              "name": "NATHAN JANSSEN",
+              "name": "Nathan Janssen",
               "role": "Treasurer"
             }
           ],
@@ -80,7 +80,7 @@
           "filedFor": "2025",
           "heads": [
             {
-              "name": "NATHAN JANSSEN",
+              "name": "Nathan Janssen",
               "role": "Treas./Admin."
             }
           ],
@@ -89,7 +89,7 @@
         "Central Adams Fire": {
           "board": [
             {
-              "name": "WARREN HUSEMANN",
+              "name": "Warren Husemann",
               "role": "President"
             }
           ],
@@ -110,7 +110,7 @@
               "role": "President"
             },
             {
-              "name": "JAMES GIEKER",
+              "name": "James Gieker",
               "role": "Treasurer"
             }
           ],
@@ -199,7 +199,7 @@
             }
           ],
           "comptrollerCode": "001/090/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "email": "paysonfire@adams.net"
           }
@@ -350,16 +350,16 @@
               "role": "President"
             },
             {
-              "name": "Steve Schwartz",
+              "name": "Kyle Hill",
               "role": "Secretary"
             }
           ],
           "comptrollerCode": "101/020/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Winnebago",
           "heads": [
             {
-              "name": "Bill LeFevre",
+              "name": "Doug Edwards",
               "role": "Treas./Admin."
             }
           ],
@@ -389,7 +389,7 @@
             }
           ],
           "comptrollerCode": "016/010/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "22222 N. Pepper RD",
             "city": "Lake Barrington IL 60010",
@@ -436,7 +436,7 @@
         "CENTRAL STICKNEY FIRE PROTECTION DIST": {
           "board": [
             {
-              "name": "BRUCE ZELASKO",
+              "name": "Bruce Zelasko",
               "role": "President"
             }
           ],
@@ -444,7 +444,7 @@
           "filedFor": "2025",
           "heads": [
             {
-              "name": "BRIAN MCMAHON",
+              "name": "Brian McMahon",
               "role": "Chief"
             }
           ],
@@ -535,7 +535,7 @@
         "GLENBROOK FIRE DISTRICT": {
           "board": [
             {
-              "name": "DANIEL BARRETT",
+              "name": "Daniel Barrett",
               "role": "President"
             }
           ],
@@ -543,7 +543,7 @@
           "filedFor": "2025",
           "heads": [
             {
-              "name": "TIM RUECKERT",
+              "name": "Tim Rueckert",
               "role": "Treas./Admin."
             }
           ],
@@ -771,12 +771,12 @@
               "role": "President"
             },
             {
-              "name": "Ric Warchol",
+              "name": "Ric Warhol",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "016/150/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "740 Dundee Rd",
             "city": "Northbrook IL 60062",
@@ -785,7 +785,7 @@
         },
         "NORTHWEST HOMER FIRE PROTECTION DISTRICT": {
           "comptrollerCode": "099/110/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Will",
           "heads": [
             {
@@ -826,7 +826,7 @@
         "OLYMPIA GARDENS FIRE PROTECTION DISTRICT": {
           "board": [
             {
-              "name": "WILLIAM TUCKER",
+              "name": "William Tucker",
               "role": "President"
             },
             {
@@ -864,10 +864,10 @@
         },
         "PALOS FIRE PROTECTION DISTRICT": {
           "comptrollerCode": "016/250/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
-              "name": "Christopher Courtney",
+              "name": "Michael Gabriele",
               "role": "Fire Chief"
             },
             {
@@ -1112,11 +1112,11 @@
           "filesIn": "Lake",
           "heads": [
             {
-              "name": "TERESA JENNINGS",
+              "name": "Teresa Jennings",
               "role": "Director"
             },
             {
-              "name": "LEE HOWARD",
+              "name": "Lee Howard",
               "role": "Accountant"
             }
           ],
@@ -1719,23 +1719,21 @@
           }
         },
         "GOLF MAINE PARK DISTRICT": {
-          "board": [
-            {
-              "name": "Jamal Liddell",
-              "role": "President"
-            }
-          ],
           "comptrollerCode": "016/280/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
+              "name": "Kevin Hubka",
+              "role": "Director"
+            },
+            {
               "name": "Dina Weymouth",
-              "role": "Manager"
+              "role": "Accountant"
             }
           ],
           "office": {
             "address": "8800 Kathy Lane",
-            "city": "Niles IL 60714",
+            "city": "Feldman Park IL 60714",
             "phone": "(847) 297-3000"
           }
         },
@@ -1849,11 +1847,11 @@
         "INVERNESS PARK DISTRICT": {
           "board": [
             {
-              "name": "KASIA MASTRANGELI",
+              "name": "Kasia Mastrangeli",
               "role": "President"
             },
             {
-              "name": "CHRISTINE KNOX",
+              "name": "Christine Knox",
               "role": "Treasurer"
             }
           ],
@@ -2257,7 +2255,7 @@
         },
         "OAK LAWN PARK DISTRICT": {
           "comptrollerCode": "016/530/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Tom Hartwig",
@@ -2372,20 +2370,17 @@
         "PHOENIX PARK DISTRICT": {
           "board": [
             {
-              "name": "LaToya Crowder",
+              "name": "Mildred Garcia",
               "role": "Commissioner"
             },
             {
               "name": "Mildred Garcia",
-              "role": "Commissioner"
+              "role": "Treasurer"
             }
           ],
           "comptrollerCode": "016/590/12",
-          "filedFor": "2025",
-          "office": {
-            "address": "155th & 9th Avenue",
-            "city": "Phoenix IL 60426"
-          }
+          "filedFor": "2026",
+          "office": {}
         },
         "PLEASANTDALE PARK DISTRICT": {
           "board": [
@@ -2568,11 +2563,11 @@
           "filedFor": "2026",
           "heads": [
             {
-              "name": "DIANE HILGERS",
+              "name": "Diane Hilgers",
               "role": "Director"
             },
             {
-              "name": "DIANE HILGERS",
+              "name": "Diane Hilgers",
               "role": "C.F.O."
             }
           ],
@@ -2606,7 +2601,7 @@
           "filedFor": "2025",
           "heads": [
             {
-              "name": "MICHELLE TUFT",
+              "name": "Michelle Tuft",
               "role": "Director"
             },
             {
@@ -2647,7 +2642,7 @@
               "role": "Supervisor"
             },
             {
-              "name": "SHERRI HARRY",
+              "name": "Sherri Harry",
               "role": "Accountant"
             }
           ],
@@ -2698,7 +2693,7 @@
         },
         "VETERANS PARK DISTRICT": {
           "comptrollerCode": "016/770/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "William Otte",
@@ -2995,7 +2990,7 @@
         "Lee Fire": {
           "board": [
             {
-              "name": "JERRY OLSON",
+              "name": "Jerry Olson",
               "role": "President"
             }
           ],
@@ -3004,7 +2999,7 @@
           "filesIn": "Lee",
           "heads": [
             {
-              "name": "DAN PRESTEGAARD",
+              "name": "Dan Prestegaard",
               "role": "Treas./Admin."
             }
           ],
@@ -3013,11 +3008,11 @@
         "Leland Fire": {
           "board": [
             {
-              "name": "JACQUES WESSON",
+              "name": "Jacques Wesson",
               "role": "President"
             },
             {
-              "name": "BRIAN BYWATER",
+              "name": "Brian Bywater",
               "role": "Treasurer"
             }
           ],
@@ -3029,11 +3024,11 @@
         "Malta Fire": {
           "board": [
             {
-              "name": "TOM PLOTE",
+              "name": "Tom Plote",
               "role": "President"
             },
             {
-              "name": "STEPHANIE MOHNS",
+              "name": "Stephanie Mohns",
               "role": "Treasurer"
             }
           ],
@@ -3092,11 +3087,11 @@
         "Sandwich Fire": {
           "board": [
             {
-              "name": "JEFF BEVERAGE",
+              "name": "Jeff Beverage",
               "role": "Trustee"
             },
             {
-              "name": "MATT WEISMILLER",
+              "name": "Matt Weismiller",
               "role": "Trustee"
             }
           ],
@@ -3385,7 +3380,7 @@
         },
         "Bloomingdale": {
           "comptrollerCode": "022/070/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Matthew Beyer",
@@ -3405,7 +3400,7 @@
         },
         "Carol Stream": {
           "comptrollerCode": "022/090/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Robert Schultz",
@@ -3481,21 +3476,22 @@
         },
         "Glenside": {
           "comptrollerCode": "022/135/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Rich Cassady",
               "role": "Chief"
             },
             {
-              "name": "James Howard",
-              "role": "Comptroller"
+              "name": "Laura Haiden",
+              "role": "Executive"
             }
           ],
           "office": {
             "address": "1608 Bloomingdale Rd",
             "city": "Glendale Heights IL 60139",
-            "email": "RCassady@glensidefire.org"
+            "email": "RCassady@glensidefire.org",
+            "phone": "(630) 668-5323"
           }
         },
         "Golfview Hills": {
@@ -3767,12 +3763,12 @@
         "Winfield": {
           "board": [
             {
-              "name": "Robb Hannen",
+              "name": "Lucas Allen",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "022/230/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Steven Evans",
@@ -3782,7 +3778,7 @@
           "office": {
             "address": "0N525 County Farm Rd",
             "city": "Winfield IL 60190",
-            "email": "rkyoungberg@winfieldfpd.org",
+            "email": "klezza@winfieldfpd.org",
             "phone": "(630) 653-5050"
           }
         },
@@ -3969,15 +3965,15 @@
             }
           ],
           "comptrollerCode": "022/040/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
-              "name": "Chuck Szoke",
+              "name": "Jack Savage",
               "role": "Director"
             }
           ],
           "office": {
-            "address": "21W730 Butterfield Rd",
+            "address": "210W730 Butterfield Rd",
             "city": "Lombard IL 60148",
             "phone": "(630) 858-2229"
           }
@@ -4043,7 +4039,7 @@
         },
         "Darien": {
           "comptrollerCode": "022/065/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Stephanie Gurgone",
@@ -4317,11 +4313,11 @@
           "filedFor": "2026",
           "heads": [
             {
-              "name": "SHANNON ELSEY",
+              "name": "Shannon Elsey",
               "role": "C.E.O."
             },
             {
-              "name": "VICTORIA RISPENS",
+              "name": "Victoria Rispens",
               "role": "C.F.O."
             }
           ],
@@ -4373,7 +4369,7 @@
         "Tri-State": {
           "board": [
             {
-              "name": "STEVE INCIS",
+              "name": "Steve Incis",
               "role": "President"
             }
           ],
@@ -4381,7 +4377,7 @@
           "filedFor": "2025",
           "heads": [
             {
-              "name": "HUZEFA RAJA",
+              "name": "Huzefa Raja",
               "role": "Treas./Admin."
             }
           ],
@@ -4509,11 +4505,11 @@
           "filedFor": "2025",
           "heads": [
             {
-              "name": "JON MARQUARDT",
+              "name": "Jon Marquardt",
               "role": "Director"
             },
             {
-              "name": "VICTORIA MONTEJO",
+              "name": "Victoria Montejo",
               "role": "Fin. Officer"
             }
           ],
@@ -4570,11 +4566,11 @@
         "Altamont": {
           "board": [
             {
-              "name": "DAN ROEDL",
+              "name": "Dan Roedl",
               "role": "President"
             },
             {
-              "name": "BRIAN LUSTIG",
+              "name": "Brian Lustig",
               "role": "Treasurer"
             }
           ],
@@ -4585,15 +4581,15 @@
         "Dieterich": {
           "board": [
             {
-              "name": "PAUL NIEMERG",
+              "name": "Paul Niemerg",
               "role": "President"
             },
             {
-              "name": "KEN CAMPTON",
+              "name": "Ken Campton",
               "role": "Treasurer"
             },
             {
-              "name": "GARY HORN",
+              "name": "Gary Horn",
               "role": "Secretary"
             }
           ],
@@ -4629,10 +4625,14 @@
             {
               "name": "Darrell Schaal",
               "role": "Treasurer"
+            },
+            {
+              "name": "Clint Storck",
+              "role": "Secretary"
             }
           ],
           "comptrollerCode": "026/020/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Fayette",
           "office": {}
         },
@@ -4643,17 +4643,16 @@
               "role": "President"
             },
             {
-              "name": "Alan Griffy",
+              "name": "Randy McNeely",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "013/020/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Clay",
           "office": {
             "address": "PO Box 502",
-            "city": "Flora IL 62839",
-            "phone": "(618) 662-6022"
+            "city": "Flora IL 62839"
           }
         },
         "Shumway": {
@@ -4764,17 +4763,17 @@
             }
           ],
           "comptrollerCode": "025/040/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "Tri-County": {
           "board": [
             {
-              "name": "ANTHONY SCHLANSER",
+              "name": "Anthony Schlanser",
               "role": "President"
             },
             {
-              "name": "DAVID PETTY",
+              "name": "David Petty",
               "role": "Treasurer"
             }
           ],
@@ -4785,11 +4784,11 @@
         "Watson": {
           "board": [
             {
-              "name": "ERIC WEBB",
+              "name": "Eric Webb",
               "role": "President"
             },
             {
-              "name": "D. ALAN DAVIS",
+              "name": "D. Alan Davis",
               "role": "Treasurer"
             }
           ],
@@ -4813,6 +4812,25 @@
           "comptrollerCode": "025/030/12",
           "filedFor": "2025",
           "office": {}
+        },
+        "Effingham": {
+          "board": [
+            {
+              "name": "Matt Dasenbrock",
+              "role": "President"
+            },
+            {
+              "name": "Serena Buzzard",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "025/010/12",
+          "filedFor": "2024",
+          "office": {
+            "address": "1906 South 4th Street",
+            "city": "Effingham IL 62401",
+            "phone": "(217) 342-4415"
+          }
         },
         "Mason": {
           "board": [
@@ -5064,11 +5082,11 @@
         "Gilman": {
           "board": [
             {
-              "name": "JAMES HUBERT",
+              "name": "James Hubert",
               "role": "President"
             },
             {
-              "name": "CINDY GUTTENDORF",
+              "name": "Cindy Guttendorf",
               "role": "Sec./Treas."
             }
           ],
@@ -5079,11 +5097,11 @@
         "Iroquois-Ford": {
           "board": [
             {
-              "name": "BOB LANGE",
+              "name": "Bob Lange",
               "role": "Trustee"
             },
             {
-              "name": "HAROLD CRAWFORD",
+              "name": "Harold Crawford",
               "role": "Trustee"
             }
           ],
@@ -5103,7 +5121,7 @@
             }
           ],
           "comptrollerCode": "027/010/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Ford",
           "office": {}
         },
@@ -5146,11 +5164,11 @@
         "Milford": {
           "board": [
             {
-              "name": "ROYCE FOLEY",
+              "name": "Royce Foley",
               "role": "President"
             },
             {
-              "name": "PAM SCHIPPERT",
+              "name": "Pam Schippert",
               "role": "Treasurer"
             }
           ],
@@ -5166,7 +5184,7 @@
         "Onarga": {
           "board": [
             {
-              "name": "JOHN TALBERT",
+              "name": "John Talbert",
               "role": "Trustee"
             }
           ],
@@ -5174,7 +5192,7 @@
           "filedFor": "2025",
           "heads": [
             {
-              "name": "MARTIN TILSTRA",
+              "name": "Martin Tilstra",
               "role": "C.F.O."
             }
           ],
@@ -5185,11 +5203,11 @@
         "Otto": {
           "board": [
             {
-              "name": "WILLIAM SURPRENANT",
+              "name": "William Surprenant",
               "role": "President"
             },
             {
-              "name": "JOE ABRASSART",
+              "name": "Joe Abrassart",
               "role": "Trustee"
             }
           ],
@@ -5205,16 +5223,18 @@
         "Papineu": {
           "board": [
             {
-              "name": "MYRON MUNYON",
-              "role": "Trustee"
-            },
-            {
-              "name": "CHRIS JOHNSON",
+              "name": "Chris Johnson",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "038/160/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
+          "heads": [
+            {
+              "name": "Myron Munyon",
+              "role": "C.E.O."
+            }
+          ],
           "office": {}
         },
         "Pilot": {
@@ -5252,11 +5272,11 @@
         "Sheldon": {
           "board": [
             {
-              "name": "KEN HRODEY",
+              "name": "Ken Hrodey",
               "role": "President"
             },
             {
-              "name": "DIANE MOLTER",
+              "name": "Diane Molter",
               "role": "Treasurer"
             }
           ],
@@ -5303,11 +5323,11 @@
         "Woodland": {
           "board": [
             {
-              "name": "MARK CLIFTON",
+              "name": "Mark Clifton",
               "role": "President"
             },
             {
-              "name": "TRACY GIROUX",
+              "name": "Tracy Giroux",
               "role": "Treasurer"
             }
           ],
@@ -5376,7 +5396,7 @@
         },
         "MONTGOMERY FPD": {
           "comptrollerCode": "045/120/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Kane",
           "heads": [
             {
@@ -5458,11 +5478,11 @@
         "SANDWICH FPD": {
           "board": [
             {
-              "name": "JEFF BEVERAGE",
+              "name": "Jeff Beverage",
               "role": "Trustee"
             },
             {
-              "name": "MATT WEISMILLER",
+              "name": "Matt Weismiller",
               "role": "Trustee"
             }
           ],
@@ -5652,7 +5672,7 @@
             }
           ],
           "comptrollerCode": "016/010/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Cook",
           "office": {
             "address": "22222 N. Pepper RD",
@@ -5683,11 +5703,11 @@
         "Cary Fire Protection District": {
           "board": [
             {
-              "name": "LANCE NEUSES",
+              "name": "Lance Neuses",
               "role": "Treasurer"
             },
             {
-              "name": "MARK GUERRA",
+              "name": "Mark Guerra",
               "role": "President"
             }
           ],
@@ -6085,11 +6105,11 @@
           "filedFor": "2025",
           "heads": [
             {
-              "name": "TERESA JENNINGS",
+              "name": "Teresa Jennings",
               "role": "Director"
             },
             {
-              "name": "LEE HOWARD",
+              "name": "Lee Howard",
               "role": "Accountant"
             }
           ],
@@ -6539,15 +6559,15 @@
         "BUREAU CO/WALNUT FIRE": {
           "board": [
             {
-              "name": "SCOTT CARLSON",
+              "name": "Scott Carlson",
               "role": "President"
             },
             {
-              "name": "STEVE HARDY",
+              "name": "Steve Hardy",
               "role": "Trustee"
             },
             {
-              "name": "JEFF MONIER",
+              "name": "Jeff Monier",
               "role": "Trustee"
             }
           ],
@@ -6669,11 +6689,11 @@
         "ROCK FALLS FIRE": {
           "board": [
             {
-              "name": "MERLE GAULRAPP",
+              "name": "Merle Gaulrapp",
               "role": "President"
             },
             {
-              "name": "MARK VANDERSNICK",
+              "name": "Mark Vandersnick",
               "role": "Treasurer"
             }
           ],
@@ -6722,11 +6742,11 @@
         "WEST BROOKLYN FIRE": {
           "board": [
             {
-              "name": "RICHARD STUDEBAKER",
+              "name": "Richard Studebaker",
               "role": "President"
             },
             {
-              "name": "DONNA JUNGELS",
+              "name": "Donna Jungels",
               "role": "Trustee"
             }
           ],
@@ -6741,7 +6761,7 @@
         "Bethany": {
           "board": [
             {
-              "name": "JACKIE MCLAIN",
+              "name": "Jackie McLain",
               "role": "President"
             }
           ],
@@ -6750,7 +6770,7 @@
           "filesIn": "Moultrie",
           "heads": [
             {
-              "name": "TRACY ELLIS",
+              "name": "Tracy Ellis",
               "role": "Treas./Admin."
             }
           ],
@@ -6807,7 +6827,7 @@
             }
           ],
           "comptrollerCode": "074/030/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Piatt",
           "office": {}
         },
@@ -6971,11 +6991,11 @@
         "Niantic": {
           "board": [
             {
-              "name": "JAMES MATICH",
+              "name": "James Matich",
               "role": "President"
             },
             {
-              "name": "WESLEY HENNE",
+              "name": "Wesley Henne",
               "role": "Treasurer"
             }
           ],
@@ -7250,7 +7270,7 @@
             }
           ],
           "comptrollerCode": "016/010/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Cook",
           "office": {
             "address": "22222 N. Pepper RD",
@@ -7261,11 +7281,11 @@
         "CARY FIRE DIST": {
           "board": [
             {
-              "name": "LANCE NEUSES",
+              "name": "Lance Neuses",
               "role": "Treasurer"
             },
             {
-              "name": "MARK GUERRA",
+              "name": "Mark Guerra",
               "role": "President"
             }
           ],
@@ -7353,7 +7373,7 @@
             }
           ],
           "comptrollerCode": "063/050/06",
-          "filedFor": "2024",
+          "filedFor": "2025",
           "office": {
             "address": "PO Box 263",
             "city": "Harvard IL 60033",
@@ -7580,7 +7600,7 @@
         "WOODSTOCK FIRE RESCUE": {
           "board": [
             {
-              "name": "PATRICK BURKE",
+              "name": "Patrick Burke",
               "role": "Treasurer"
             }
           ],
@@ -7588,7 +7608,7 @@
           "filedFor": "2025",
           "heads": [
             {
-              "name": "MATT HEDGES",
+              "name": "Matt Hedges",
               "role": "Asst. Chief"
             }
           ],
@@ -7605,7 +7625,7 @@
         "Columbia Volunteer Fire Department": {
           "board": [
             {
-              "name": "GLENN STUMPF",
+              "name": "Glenn Stumpf",
               "role": "President"
             }
           ],
@@ -7613,7 +7633,7 @@
           "filedFor": "2026",
           "heads": [
             {
-              "name": "SCOTT HARRES",
+              "name": "Scott Harres",
               "role": "Treas./Admin."
             }
           ],
@@ -7645,15 +7665,15 @@
         "Maeystown Volunteer Fire Department": {
           "board": [
             {
-              "name": "RANDY RUSTEBERG",
+              "name": "Randy Rusteberg",
               "role": "President"
             },
             {
-              "name": "BRIAN COATS",
+              "name": "Brian Coats",
               "role": "Treasurer"
             },
             {
-              "name": "PAUL MINTON",
+              "name": "Paul Minton",
               "role": "V-President"
             }
           ],
@@ -7668,17 +7688,19 @@
         "New Athens Volunteer Fire Department": {
           "board": [
             {
-              "name": "DOUGLASS KINZINGER",
+              "name": "Douglas Kinzinger",
               "role": "President"
-            },
-            {
-              "name": "SCOTT HARRISS",
-              "role": "Treasurer"
             }
           ],
           "comptrollerCode": "088/170/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "St. Clair",
+          "heads": [
+            {
+              "name": "Scott Harriss",
+              "role": "Treas./Admin."
+            }
+          ],
           "office": {
             "address": "909 SPOTSYLVANIA ST",
             "city": "NEW ATHENS IL 62264",
@@ -7696,7 +7718,7 @@
           "filedFor": "2026",
           "heads": [
             {
-              "name": "NATHAN WILSON",
+              "name": "Nathan Wilson",
               "role": "Chief"
             }
           ],
@@ -7710,11 +7732,11 @@
         "Waterloo Community Fire Protection District": {
           "board": [
             {
-              "name": "MATTHEW LINDHORST",
+              "name": "Matthew Lindhorst",
               "role": "President"
             },
             {
-              "name": "GABE HOPKINS",
+              "name": "Gabe Hopkins",
               "role": "Treasurer"
             }
           ],
@@ -7785,11 +7807,11 @@
         "BUFFALO PRAIRIE FPD": {
           "board": [
             {
-              "name": "WADE HOFER",
+              "name": "Wade Hofer",
               "role": "President"
             },
             {
-              "name": "STANLEY BORUFF",
+              "name": "Stanley Boruff",
               "role": "Treasurer"
             }
           ],
@@ -8046,11 +8068,11 @@
         "AUBURN FPD": {
           "board": [
             {
-              "name": "BENJAMIN LADAGE",
+              "name": "Benjamin Ladage",
               "role": "President"
             },
             {
-              "name": "SCOTT BORNTREGER",
+              "name": "Scott Borntreger",
               "role": "Treasurer"
             }
           ],
@@ -8113,11 +8135,11 @@
         "DIVERNON FPD": {
           "board": [
             {
-              "name": "JAMES SPELMAN",
+              "name": "James Spelman",
               "role": "President"
             },
             {
-              "name": "WILLIAM BEATY",
+              "name": "William Beaty",
               "role": "Trustee"
             }
           ],
@@ -8142,7 +8164,7 @@
             }
           ],
           "comptrollerCode": "083/060/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "ELKHART FPD": {
@@ -8269,13 +8291,13 @@
             }
           ],
           "comptrollerCode": "083/130/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "PAWNEE FPD": {
           "board": [
             {
-              "name": "TIM BOBLITT",
+              "name": "Tim Boblitt",
               "role": "President"
             }
           ],
@@ -8294,11 +8316,11 @@
         "PLEASANT PLAINS FPD": {
           "board": [
             {
-              "name": "WAYNE HEIDEMAN",
+              "name": "Wayne Heideman",
               "role": "President"
             },
             {
-              "name": "LORI NIEMEIER",
+              "name": "Lori Niemeier",
               "role": "Treasurer"
             }
           ],
@@ -8316,7 +8338,7 @@
               "role": "President"
             },
             {
-              "name": "JAY WATTS",
+              "name": "Jay Watts",
               "role": "Treasurer"
             }
           ],
@@ -8522,11 +8544,11 @@
           "filedFor": "2025",
           "heads": [
             {
-              "name": "KEVIN ROBBINS",
+              "name": "Kevin Robbins",
               "role": "C.E.O."
             },
             {
-              "name": "DAVID NULSEN",
+              "name": "David Nulsen",
               "role": "Treas./Admin."
             }
           ],
@@ -8592,7 +8614,7 @@
         "Columbia Fire Dept.": {
           "board": [
             {
-              "name": "GLENN STUMPF",
+              "name": "Glenn Stumpf",
               "role": "President"
             }
           ],
@@ -8601,7 +8623,7 @@
           "filesIn": "Monroe",
           "heads": [
             {
-              "name": "SCOTT HARRES",
+              "name": "Scott Harres",
               "role": "Treas./Admin."
             }
           ],
@@ -8705,11 +8727,11 @@
         "Marissa Fire Dept.": {
           "board": [
             {
-              "name": "TOMMY THOMPSON",
+              "name": "Tommy Thompson",
               "role": "President"
             },
             {
-              "name": "CRAIG RAHLFS",
+              "name": "Craig Rahlfs",
               "role": "Treasurer"
             }
           ],
@@ -8773,16 +8795,18 @@
         "New Athens Fire Dept.": {
           "board": [
             {
-              "name": "DOUGLASS KINZINGER",
+              "name": "Douglas Kinzinger",
               "role": "President"
-            },
-            {
-              "name": "SCOTT HARRISS",
-              "role": "Treasurer"
             }
           ],
           "comptrollerCode": "088/170/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
+          "heads": [
+            {
+              "name": "Scott Harriss",
+              "role": "Treas./Admin."
+            }
+          ],
           "office": {
             "address": "909 SPOTSYLVANIA ST",
             "city": "NEW ATHENS IL 62264",
@@ -8924,11 +8948,11 @@
         "Tilden Fire Dept.": {
           "board": [
             {
-              "name": "EARL DORF",
+              "name": "Earl Dorf",
               "role": "President"
             },
             {
-              "name": "LARRY HERMANNS",
+              "name": "Larry Hermanns",
               "role": "Treasurer"
             }
           ],
@@ -8961,11 +8985,11 @@
         "Waterloo Fire Dept.": {
           "board": [
             {
-              "name": "MATTHEW LINDHORST",
+              "name": "Matthew Lindhorst",
               "role": "President"
             },
             {
-              "name": "GABE HOPKINS",
+              "name": "Gabe Hopkins",
               "role": "Treasurer"
             }
           ],
@@ -9381,7 +9405,7 @@
       }
     }
   },
-  "generated": "2026-09-28T22:57:39Z",
+  "generated": "2026-10-12T21:32:47Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"

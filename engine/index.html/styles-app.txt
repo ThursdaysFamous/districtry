@@ -101,6 +101,62 @@
     padding: 2px 4px;
   }
   .tile-banner-dismiss:hover { color: var(--ink); }
+  /* The one-time invitation to add districtry to a phone's home screen
+     (engine install-app). Fixed to the foot of the SCREEN rather than of the
+     map, because on a phone the reader has usually scrolled down into the
+     cards by the time it appears. Its z-index sits above the skip link (1000)
+     and below the share popover (1100), the More menu (1200) and the feedback
+     form (2000), so it never covers any of them. Both buttons are 40px tall,
+     well clear of WCAG 2.5.8's 24px, because a miss lands on the page. */
+  .install-invite {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 1050;
+    max-width: 440px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel);
+    border: 1px solid var(--line-strong);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 18px rgba(20, 24, 28, 0.18);
+    padding: 8px 6px 8px 12px;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .install-invite-text { flex: 1 1 auto; margin: 0; line-height: 1.4; }
+  .install-invite-go {
+    flex: none;
+    min-height: 40px;
+    padding: 0 14px;
+    background: transparent;
+    color: var(--accent-deep, #0B5394);
+    border: 1px solid var(--accent-deep, #0B5394);
+    border-radius: 5px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .install-invite-close {
+    flex: none;
+    min-width: 40px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--slate);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .install-invite-close:hover { color: var(--ink); }
   .hover-toggle-btn {
     font-family: var(--font-body);
     font-size: 12px;

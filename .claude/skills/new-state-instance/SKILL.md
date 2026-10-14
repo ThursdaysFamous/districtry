@@ -87,7 +87,7 @@ instance until §11. Dark, in the first PR:
 
 - `INSTANCES` in `scripts/generate_metro_files.py` — app, scripts, docs and worksheet paths per instance; nothing generates for a tag that is not here.
 - `INSTANCES` and `SUBPAGES` in `scripts/compose_app.py` — the app files and EVERY sub-page; an unlisted tag is skipped by compose AND by its `--check`, so hand-copied fences pass the parity gate green while carrying whatever bytes they were cloned with (Iowa's `faq.html` was found missing from `SUBPAGES` at go-live).
-- `INSTANCE_WORKSHEET` in `scripts/build_landing_page.py`; the instance rows in `scripts/build_manifests.py` (PWA icons and `manifest.webmanifest`), `scripts/build_history_page.py` and `FACE_CARRIERS` in `scripts/build_brand_tokens.py`.
+- `INSTANCE_WORKSHEET` in `scripts/build_landing_page.py`; the instance row in `scripts/build_manifests.py` (which holds the instance's pages to the one root `manifest.webmanifest`; an instance ships no manifest of its own), `scripts/build_history_page.py` and `FACE_CARRIERS` in `scripts/build_brand_tokens.py`.
 - the `INSTANCES` array in `scripts/vendor_leaflet.sh` — until the tag is here the sandbox smoke test really does die on `L is not defined`, and the timeout is yours, not environmental.
 - `.github/workflows/smoke-test.yml` — three lines: the instance's `validate_index.py`, its `smoke_test.mjs`, and `python3 scripts/build_coverage_gaps.py --check --metro <this_metro> --out <tag>/data/app/coverage-gaps.json`; an ungated folder merges through CI while nothing looks at it.
 - a `<this_metro>` array in the guidebook's `GUIDEBOOK:BEGIN gaps` block (empty is allowed), `coverage-gaps.json` in the worksheet's `data_files.rosters`, and the guidebook's coverage map, inventory, matrix and each drop with its structural reason.
@@ -235,7 +235,14 @@ loop; add the `metros.json` entry (`tag`, `landing_name`, `blurb`, `scope`,
 `python3 scripts/generate_metro_files.py --sync-fleet`; give the tag its
 column in the root `layer-concepts.json` (each row the instance has a layer
 for), because once it is live the generator fails on any id it shares with
-another live app that no row carries; add the tag to
+another live app that no row carries — and from then on every layer that
+column names must be drawn in its concept's colours from that file's `colors`
+table and at its line width from its `lines` table, which the generator
+also checks, so restyle them in the same PR; and no layer in the app may draw
+its own outline dashed, live or dark, because a dash means a district crossing
+the edge of the one pinned for comparison — the generator refuses any
+`dashArray:` but null outside the engine, so drop them as the app is built; add
+the tag to
 `AREAS` in `scripts/build_coverage_map.py` (an outline pair, `state_outline`
 None for a single-tier instance — a `metros.json` tag in neither `AREAS` nor
 `CITY_TAGS` fails its `--check`, and a state is never a marker); every page

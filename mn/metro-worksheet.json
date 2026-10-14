@@ -148,7 +148,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "Not yet shipped. Minnesota's 87 county boards are elected by district (447 districts), and the districts and their members arrive together in a later change; the card names no officeholder rather than guessing one. Recorded as the coverage gap mn-county-commissioner.",
+        "people": "The county board is on the County Commissioner District layer, which names each district's most recently elected commissioner. This card names no county officer (auditor, sheriff, attorney): Minnesota publishes no statewide list of them and no county's own has been read yet. Recorded as the coverage gap mn-county-officers.",
         "applies": "Minnesota — statewide."
       }
     },
@@ -344,7 +344,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "NO OFFICEHOLDER. A statutory city elects a mayor and council members, with a clerk and treasurer or a combined clerk-treasurer depending on its plan (Minn. Stat. 412.02, read at revisor.mn.gov on 2026-09-29); a home rule charter city's own charter governs instead. No statewide roster of Minnesota's mayors and council members was found, so the card names nobody. Recorded as the coverage gap mn-municipal-officeholders.",
+        "people": "In the 43 cities above 25,000 people, the mayor and council members, each the winner of the most recent election for that seat, from the Office of the Minnesota Secretary of State's city results files (electionresultsfiles.sos.mn.gov), dated to that election: 249 of 268 seats. A winner is not a claim about who sits today, and the card says so; a seat decided in later ranked-choice rounds, which the state's file does not carry, names nobody and says why. Built weekly by mn/scripts/build_mn_city_councils.py. The 813 smaller cities name nobody yet, recorded as the coverage gap mn-municipal-officeholders.",
         "applies": "Minnesota — statewide, answering only inside an incorporated city."
       }
     },
@@ -598,11 +598,7 @@
     "cache_name": "districtry-mn-shell-v8",
     "shell_urls": [
       "./",
-      "./manifest.webmanifest",
-      "./icons/icon-192.png",
-      "./icons/icon-512.png",
       "./icons/apple-touch-icon.png",
-      "./icons/icon-maskable-512.png",
       "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
       "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
       "./vendor/leaflet-maplibre-gl.js"
